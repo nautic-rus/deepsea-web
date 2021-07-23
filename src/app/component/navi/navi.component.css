@@ -8,25 +8,26 @@
   background-color: #0E364A;
   z-index: 9;
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 5fr 1fr 0.5fr;
 }
 .left-panel{
   position: absolute;
   left: 0;
-  bottom: 0;
-  height: 100vh;
+  top: var(--navi-height);
+  height: calc(100% - var(--navi-height));
+  min-height: 400px;
   width: var(--navi-width);
   z-index: 8;
   box-shadow: 5px 5px 22px 0px rgba(34, 34, 34, 0.2);
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 4fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 4fr;
 }
 .menu{
-  display: grid;
-  grid-template-rows: 50px 30px;
-  font-family: TTRoundsNeue-CompRegular, serif;
-  color: #262626;
+  height: 100px;
+  font-family: TTRoundsNeue-CompMedium, serif;
+  color: #616161;
   font-size: 13px;
+  cursor: pointer;
 }
 .menu:hover{
   background-color: #efefef;
