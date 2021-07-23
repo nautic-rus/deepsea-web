@@ -26,6 +26,7 @@
   grid-template-rows: 50px 30px;
   font-family: TTRoundsNeue-CompRegular, serif;
   color: #262626;
+  font-size: 13px;
 }
 .menu:hover{
   background-color: #efefef;
