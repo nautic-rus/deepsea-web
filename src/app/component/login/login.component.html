@@ -1,0 +1,31 @@
+<div class="background cx cy">
+  <div class="login">
+    <div class="logo cx cy">
+      <img src="assets/deepsea_blue.svg" height="35">
+    </div>
+    <div class="logo-text">Логин</div>
+    <div class="input">
+      <input type="text" size="40" [(ngModel)]="login">
+    </div>
+    <div class="logo-text mt-3">Пароль</div>
+    <div class="input">
+      <input type="text" size="40" [(ngModel)]="password">
+    </div>
+    <div class="check mt-3">
+      <div class="check-box cx cy" *ngIf="saveMeChecked" (click)="saveMeCheckedToggle()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-check-lg check-ok" viewBox="0 0 16 16">
+          <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>
+        </svg>
+      </div>
+      <div class="check-box-off" *ngIf="!saveMeChecked" (click)="saveMeCheckedToggle()">
+      </div>
+      <div class="check-text cxy">Запомнить меня</div>
+    </div>
+    <div class="enter-button cxy mt-3" [class.input-button]="isFilled()">Продолжить</div>
+    <div class="mt-3 text-help"> ⃰ Если вы не являетесь зарегистрированным пользователем, для получения логина и пароля обратитесь к системному администратору.
+
+    </div>
+
+  </div>
+</div>
+

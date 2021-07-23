@@ -27,7 +27,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/fonts/TTRoundsNeue-CompLight.css",
+              "src/assets/fonts/TTRoundsNeue-CompRegular.css"
             ],
             "scripts": []
           },
