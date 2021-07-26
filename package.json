@@ -18,8 +18,15 @@
     "@angular/platform-browser": "~12.0.3",
     "@angular/platform-browser-dynamic": "~12.0.3",
     "@angular/router": "~12.0.3",
+    "@types/underscore": "^1.11.3",
+    "bpmn-js": "^8.7.1",
+    "bpmn-js-properties-panel": "^0.44.0",
+    "camunda-bpmn-moddle": "^5.1.2",
+    "font-awesome": "^4.7.0",
+    "ngx-cookie-service": "^12.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
+    "underscore": "^1.13.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

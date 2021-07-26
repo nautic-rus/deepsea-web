@@ -1,0 +1,25 @@
+<div class="modeler">
+  <div class="canvas" id="canvas" #canvas></div>
+  <div class="properties-panel" id="properties"></div>
+  <div class="buttons">
+    <button class="button" (click)="createNew()">NEW <i class="fa fa-file"></i></button>
+    <button class="button" (click)="save()">SAVE <i class="fa fa-save"></i></button>
+    <button class="button" (click)="inputFile.click()">OPEN <i class="fa fa-folder-open"></i></button>
+    <input #inputFile hidden type="file" name="name" accept=".bpmn" (change)="uploadFile($event)"/>
+  </div>
+  <div class="test-buttons" hidden>
+    <div class="prop">
+      <button (click)="uploadModel()">UPLOAD MODEL</button>
+      <button (click)="getStatus()">GET STATUS</button>
+      <div>{{statusValue}}</div>
+    </div>
+    <div class="prop">
+      <input type="text" [(ngModel)]="taskNumber">
+      <button (click)="setTaskNumber()">SET NUMBER</button>
+    </div>
+    <div class="prop">
+      <input type="text" [(ngModel)]="taskName">
+      <button (click)="setTaskName()">SET NAME</button>
+    </div>
+  </div>
+</div>

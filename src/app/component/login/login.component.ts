@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {AuthManagerService} from "../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-login',
@@ -9,9 +11,13 @@ export class LoginComponent implements OnInit {
   saveMeChecked = true;
   login = '';
   password = '';
-  constructor() { }
+  redirect = '';
+  constructor(private route: ActivatedRoute, private auth: AuthManagerService) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(param => {
+      this.redirect = param['redirect'];
+    });
   }
 
   saveMeCheckedToggle() {
@@ -20,5 +26,11 @@ export class LoginComponent implements OnInit {
 
   isFilled() {
     return this.login.trim() != '' && this.password.trim() != '';
+  }
+
+  processLogin() {
+    if (this.isFilled()){
+      this.auth.login(this.login.trim().toLowerCase(), this.password, this.redirect, this.saveMeChecked);
+    }
   }
 }
