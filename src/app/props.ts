@@ -1,1 +1,1 @@
-export const http = 'https://deepseadebug-server.nautic-rus.ru/';
+export const http = 'https://deepseadebug.nautic-rus.ru/rest';
