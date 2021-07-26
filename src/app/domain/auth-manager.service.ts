@@ -25,7 +25,8 @@ export class AuthManagerService {
         if (user != null){
           this.setUser(user, save);
           if (redirect != ''){
-            this.router.navigate([redirect]);
+            location.replace(location.origin + redirect);
+            //this.router.navigate([redirect]);
           }
         }
         console.log(data);
