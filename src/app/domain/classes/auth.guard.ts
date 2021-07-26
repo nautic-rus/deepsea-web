@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
-  CanActivate,
+  CanActivate, Params,
   Router,
   RouterStateSnapshot,
   UrlTree
@@ -19,7 +19,12 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.auth.checkAuth(state.url);
+    let params = Object();
+    let paramsMap = route.queryParamMap;
+    paramsMap.keys.forEach(k => params[k] = paramsMap.get(k));
+    params['redirect'] = location.pathname;
+    params['guard'] = '1';
+    return this.auth.checkAuth(params);
   }
 
 }

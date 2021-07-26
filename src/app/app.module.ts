@@ -9,6 +9,7 @@ import { NaviComponent } from './component/navi/navi.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { BpmnComponent } from './component/bpmn/bpmn.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BpmnComponent } from './component/bpmn/bpmn.component';
         BrowserModule,
         AppRoutingModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        BrowserAnimationsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,7 @@
   <div class="navi" *ngIf="auth.isAuth()">
     <app-navi></app-navi>
   </div>
-  <div class="content" [class.content-navi]="auth.isAuth()">
-    <router-outlet></router-outlet>
+  <div class="content" [@routeAnimations]="prepareRoute(outlet)" [class.content-navi]="auth.isAuth()">
+    <router-outlet #outlet="outlet"></router-outlet>
   </div>
 </div>

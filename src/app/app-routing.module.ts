@@ -6,9 +6,9 @@ import {AuthGuard} from "./domain/classes/auth.guard";
 import {BpmnComponent} from "./component/bpmn/bpmn.component";
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'bpmn', component: BpmnComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent }
+  { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
+  { path: 'bpmn', component: BpmnComponent, canActivate: [AuthGuard], data: {animation: 'BpmnComponent'} },
+  { path: 'login', component: LoginComponent, data: {animation: 'LoginComponent'} }
 ];
 
 @NgModule({

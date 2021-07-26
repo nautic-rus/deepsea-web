@@ -2,8 +2,8 @@
   position: relative;
 }
 .properties-panel {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: var(--navi-height);
   bottom: 0;
   right: 0;
   width: 400px;

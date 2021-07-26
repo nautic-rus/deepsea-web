@@ -18,15 +18,14 @@ export class AuthManagerService {
 
   }
 
-  login(login: string, password: string, redirect = '', save = true){
+  login(login: string, password: string, redirectUrl = '', redirect = true, save = true){
     this.http.get(props.http + '/login', {params: {login: login, password: password}}).subscribe({
       next: data => {
         let user = data as User;
         if (user != null){
           this.setUser(user, save);
-          if (redirect != ''){
-            location.replace(location.origin + redirect);
-            //this.router.navigate([redirect]);
+          if (redirect){
+            this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
           }
         }
         console.log(data);
@@ -48,7 +47,7 @@ export class AuthManagerService {
     this.authenticated = true;
   }
 
-  async checkAuth(state: string = '') {
+  async checkAuth(qParams: any = null, noGuard = false) {
     if (this.authenticated){
       return true;
     }
@@ -58,10 +57,13 @@ export class AuthManagerService {
       const user = data as User;
       if (user != null && (data as string) != 'wrong-token'){
         this.setUser(user);
+        if (noGuard){
+          await this.router.navigate(['']);
+        }
         return true;
       }
       else{
-        await this.router.navigate(['login'], {queryParams: {redirect: state}});
+        await this.router.navigate(['login'], {queryParams: qParams});
         return false;
       }
     }
