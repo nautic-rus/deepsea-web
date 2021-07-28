@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AuthManagerService} from "./domain/auth-manager.service";
 import {RouterOutlet} from "@angular/router";
 import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
+import {PrimeNGConfig} from "primeng/api";
 
 @Component({
   selector: 'app-root',
@@ -39,7 +40,8 @@ import {animate, animateChild, group, query, style, transition, trigger} from '@
 })
 export class AppComponent {
   title = 'deepsea';
-  constructor(public auth: AuthManagerService) {
+  constructor(public auth: AuthManagerService, private primengConfig: PrimeNGConfig) {
+    this.primengConfig.ripple = true;
   }
 
   prepareRoute(outlet: RouterOutlet): any {
