@@ -47,3 +47,11 @@ body,p{
 .cursor-pointer{
   cursor: pointer;
 }
+.dfl{
+  display: flex;
+  justify-content: flex-start;
+}
+.dfr{
+  display: flex;
+  justify-content: flex-end;
+}

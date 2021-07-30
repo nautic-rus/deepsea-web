@@ -12,12 +12,17 @@
   [filterDelay]="0"
   [globalFilterFields]="['name','country.name','representative.name','status']">
   <ng-template pTemplate="caption">
-    <div>
-      TASK LIST
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input #input pInputText type="text" (input)="dt.filterGlobal(input.value, 'contains')" placeholder="Global Search" />
-      </span>
+    <div class="top-menu">
+      <div class="dfl">
+
+      </div>
+      <div class="dfr">
+        TASK LIST
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input #input pInputText type="text" (input)="dt.filterGlobal(input.value, 'contains')" placeholder="Global Search" />
+        </span>
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -105,7 +110,6 @@
           </p-columnFilter>
         </div>
       </th>
-      <th style="width: 8rem"></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-customer>
@@ -133,9 +137,6 @@
       </td>
       <td>
         <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
-      </td>
-      <td style="text-align: center">
-        <button pButton type="button" class="p-button-secondary" icon="pi pi-cog"></button>
       </td>
     </tr>
   </ng-template>
