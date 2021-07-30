@@ -18,8 +18,7 @@ import {ProgressBarModule} from "primeng/progressbar";
 import {ButtonModule} from "primeng/button";
 import {SliderModule} from "primeng/slider";
 import {DropdownModule} from "primeng/dropdown";
-import {TooltipModule} from "primeng/tooltip";
-import {PasswordModule} from "primeng/password";                  //api
+import {TooltipModule} from "primeng/tooltip";                  //api
 
 @NgModule({
   declarations: [
@@ -29,23 +28,22 @@ import {PasswordModule} from "primeng/password";                  //api
     NaviComponent,
     BpmnComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AccordionModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        ProgressBarModule,
-        ButtonModule,
-        SliderModule,
-        DropdownModule,
-        TooltipModule,
-        PasswordModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ProgressBarModule,
+    ButtonModule,
+    SliderModule,
+    DropdownModule,
+    TooltipModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
