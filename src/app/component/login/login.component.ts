@@ -37,4 +37,9 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.login.trim().toLowerCase(), this.password, this.redirect, true, this.saveMeChecked);
     }
   }
+
+  toggleVisibility(input: HTMLInputElement, img: HTMLImageElement) {
+    input.type = input.type.includes('password') ? 'text' : 'password';
+    img.src = img.src.includes('assets/visibility_1.svg') ? 'assets/visibility.svg' : 'assets/visibility_1.svg';
+  }
 }

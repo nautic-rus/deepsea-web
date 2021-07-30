@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Customer, Representative} from "../../customer";
 import {CustomerService} from "../../customer.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -15,12 +16,16 @@ export class HomeComponent implements OnInit {
   statuses: any[] = [];
   loading: boolean = true;
   activityValues: number[] = [0, 100];
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService, private router: Router) { }
 
   ngOnInit() {
     this.customerService.getCustomersLarge().then(customers => {
       this.customers = customers;
       this.loading = false;
     });
+  }
+
+  createNewTask() {
+    this.router.navigate(['create-task']);
   }
 }

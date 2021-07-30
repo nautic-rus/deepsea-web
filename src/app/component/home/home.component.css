@@ -1,3 +1,7 @@
 .task-table{
   height: 60vh;
 }
+.top-menu{
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+}
