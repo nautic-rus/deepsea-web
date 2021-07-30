@@ -8,8 +8,9 @@
       <input type="text" size="40" [(ngModel)]="login">
     </div>
     <div class="logo-text mt-3">Пароль</div>
-    <div>
-      <p-password [feedback]="false" [toggleMask]="true" [(ngModel)]="password"></p-password>
+    <div class="input">
+      <input type="password" size="40" [(ngModel)]="password">
+      <img class="eye" src="assets/visibility_1.svg" height="20">
     </div>
     <div class="check mt-3">
       <div class="check-box cxy" *ngIf="saveMeChecked" (click)="saveMeCheckedToggle()">
