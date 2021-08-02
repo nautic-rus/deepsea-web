@@ -64,3 +64,7 @@ cdk-virtual-scroll-viewport{
 .p-d-flex {
   display: flex!important;
 }
+.all-page{
+  background-color: #f8f9fa;
+  padding: 20px;
+}

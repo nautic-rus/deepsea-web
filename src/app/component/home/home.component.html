@@ -12,7 +12,7 @@
           <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
           <span class="p-input-icon-left p-ml-auto">
           <i class="pi pi-search"></i>
-          <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Search keyword" />
+          <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." />
         </span>
         </div>
       </ng-template>
