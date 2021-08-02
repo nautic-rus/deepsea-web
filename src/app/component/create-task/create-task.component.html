@@ -1,8 +1,23 @@
 <p>Select project:</p>
 <select [(ngModel)]="taskProject">
-  <option *ngFor="let proj of issueManager.issueProjects">{{proj.name}}</option>
+  <option *ngFor="let proj of issueManager.issueProjects" [value]="proj.id">{{proj.name}}</option>
 </select>
 <p>Select type:</p>
 <select [(ngModel)]="taskType">
-  <option *ngFor="let type of issueManager.issueTypes">{{type.name}}</option>
+  <option *ngFor="let type of issueManager.issueTypes" [value]="type.id">{{type.name}}</option>
 </select>
+<div *ngIf="taskType == 3">
+  <div>Summary:</div>
+  <input type="text" [(ngModel)]="taskSummary">
+  <div>Enter description:</div>
+  <p-editor [(ngModel)]="taskDetails" [style]="{'height':'320px'}"></p-editor>
+  <input #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+  <div *ngIf="awaitForLoad.length > 0">
+    Loading:
+    <div *ngFor="let file of awaitForLoad">{{file}}</div>
+  </div>
+  <div *ngIf="loaded.length > 0">
+    Loaded:
+    <div *ngFor="let file of loaded">{{file.name}}</div>
+  </div>
+</div>

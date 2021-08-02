@@ -20,7 +20,8 @@ import {SliderModule} from "primeng/slider";
 import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
 import {ToastModule} from "primeng/toast";
-import { CreateTaskComponent } from './component/create-task/create-task.component';                  //api
+import { CreateTaskComponent } from './component/create-task/create-task.component';
+import {EditorModule} from "primeng/editor";                  //api
 
 @NgModule({
   declarations: [
@@ -31,23 +32,24 @@ import { CreateTaskComponent } from './component/create-task/create-task.compone
     BpmnComponent,
     CreateTaskComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AccordionModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        ProgressBarModule,
-        ButtonModule,
-        SliderModule,
-        DropdownModule,
-        TooltipModule,
-        ToastModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ProgressBarModule,
+    ButtonModule,
+    SliderModule,
+    DropdownModule,
+    TooltipModule,
+    ToastModule,
+    EditorModule,
+  ],
   providers: [MessageService],
   bootstrap: [AppComponent]
 })

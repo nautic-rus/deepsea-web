@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import * as props from "../props";
 import {IdName} from "./classes/id-name";
+import {FileAttachment} from "./classes/file-attachment";
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +28,10 @@ export class IssueManagerService {
     this.http.get<IdName[]>(props.http + '/issueTypes').subscribe(data => {
       this.issueTypes = data;
     });
+  }
+  async uploadFile(file: File) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData).toPromise();
   }
 }
