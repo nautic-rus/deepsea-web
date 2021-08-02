@@ -1,4 +1,5 @@
 <div class="all-page">
+  <button (click)="newTask()">NEW TASK</button>
   <div class="card">
     <p-table
       #dt [value]="products"
@@ -33,6 +34,7 @@
       </ng-template>
     </p-table>
   </div>
-
-
 </div>
+<p-dialog modal="true" header="Title" [(visible)]="newTaskVisible">
+  <app-create-task></app-create-task>
+</p-dialog>

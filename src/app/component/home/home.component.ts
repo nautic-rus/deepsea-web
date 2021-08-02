@@ -10,10 +10,14 @@ import {ProductService} from "./product.service";
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];
-
+  newTaskVisible = false;
   constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit() {
     this.productService.getProductsSmall().then(data => this.products = data);
     };
+
+  newTask() {
+    this.newTaskVisible = true;
   }
+}
