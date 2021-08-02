@@ -1,0 +1,8 @@
+<p>Select project:</p>
+<select [(ngModel)]="taskProject">
+  <option *ngFor="let proj of issueManager.issueProjects">{{proj.name}}</option>
+</select>
+<p>Select type:</p>
+<select [(ngModel)]="taskType">
+  <option *ngFor="let type of issueManager.issueTypes">{{type.name}}</option>
+</select>

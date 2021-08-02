@@ -4,6 +4,7 @@ import * as props from '../props';
 import {CookieService} from "ngx-cookie-service";
 import {User} from "./classes/user";
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthManagerService {
   private authenticated = false;
   private user: User = new User();
 
-  constructor(private cookie: CookieService, private http: HttpClient, private router: Router) {
+  constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService) {
 
   }
 
@@ -22,7 +23,10 @@ export class AuthManagerService {
     this.http.get(props.http + '/login', {params: {login: login, password: password}}).subscribe({
       next: data => {
         let user = data as User;
-        if (user != null){
+        if (data as string == 'wrong-password'){
+          this.messageService.add({severity:'error', summary:'Authentication', detail:'Wrong Password'});
+        }
+        else if (user != null){
           this.setUser(user, save);
           if (redirect){
             this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});

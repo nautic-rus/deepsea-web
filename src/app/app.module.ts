@@ -10,7 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { BpmnComponent } from './component/bpmn/bpmn.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
-import {MenuItem} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 import {TableModule} from "primeng/table";
 import {MultiSelectModule} from "primeng/multiselect";
 import {InputTextModule} from "primeng/inputtext";
@@ -18,7 +18,9 @@ import {ProgressBarModule} from "primeng/progressbar";
 import {ButtonModule} from "primeng/button";
 import {SliderModule} from "primeng/slider";
 import {DropdownModule} from "primeng/dropdown";
-import {TooltipModule} from "primeng/tooltip";                  //api
+import {TooltipModule} from "primeng/tooltip";
+import {ToastModule} from "primeng/toast";
+import { CreateTaskComponent } from './component/create-task/create-task.component';                  //api
 
 @NgModule({
   declarations: [
@@ -27,24 +29,26 @@ import {TooltipModule} from "primeng/tooltip";                  //api
     HomeComponent,
     NaviComponent,
     BpmnComponent,
+    CreateTaskComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AccordionModule,
-    TableModule,
-    MultiSelectModule,
-    InputTextModule,
-    ProgressBarModule,
-    ButtonModule,
-    SliderModule,
-    DropdownModule,
-    TooltipModule,
-  ],
-  providers: [],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        AccordionModule,
+        TableModule,
+        MultiSelectModule,
+        InputTextModule,
+        ProgressBarModule,
+        ButtonModule,
+        SliderModule,
+        DropdownModule,
+        TooltipModule,
+        ToastModule,
+    ],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
