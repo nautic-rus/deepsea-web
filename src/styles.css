@@ -55,3 +55,12 @@ body,p{
   display: flex;
   justify-content: flex-end;
 }
+cdk-virtual-scroll-viewport{
+  overflow: hidden;
+}
+.p-ml-auto{
+  margin-left: auto!important;
+}
+.p-d-flex {
+  display: flex!important;
+}
