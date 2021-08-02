@@ -5,6 +5,7 @@ import {CookieService} from "ngx-cookie-service";
 import {User} from "./classes/user";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -57,19 +58,37 @@ export class AuthManagerService {
     }
     else{
       this.token = this.cookie.check('token') ? this.cookie.get('token') : '';
-      const data = await this.http.get(props.http + '/login', {params: {token: this.token}}).toPromise();
-      const user = data as User;
-      if (user != null && (data as string) != 'wrong-token'){
-        this.setUser(user);
-        if (noGuard){
-          await this.router.navigate(['']);
+      return await this.http.get(props.http + '/login', {params: {token: this.token}}).toPromise().then(response => {
+        const user = response as User;
+        if (user != null && (response as string) != 'wrong-token'){
+          this.setUser(user);
+          if (noGuard){
+            this.router.navigate(['']);
+          }
+          return true;
         }
-        return true;
-      }
-      else{
-        await this.router.navigate(['login'], {queryParams: qParams});
+        else{
+          this.router.navigate(['login'], {queryParams: qParams});
+          return false;
+        }
+      }).catch(error => {
+        alert('SERVER IS UNAVAILABLE');
+        this.router.navigate(['login'], {queryParams: qParams});
         return false;
-      }
+      });
+      // const data = await this.http.get(props.http + '/login', {params: {token: this.token}}).toPromise();
+      // const user = data as User;
+      // if (user != null && (data as string) != 'wrong-token'){
+      //   this.setUser(user);
+      //   if (noGuard){
+      //     await this.router.navigate(['']);
+      //   }
+      //   return true;
+      // }
+      // else{
+      //   await this.router.navigate(['login'], {queryParams: qParams});
+      //   return false;
+      // }
     }
   }
   isAuth(){
