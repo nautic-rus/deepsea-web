@@ -21,6 +21,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {TooltipModule} from "primeng/tooltip";
 import {ToastModule} from "primeng/toast";
 import { CreateTaskComponent } from './component/create-task/create-task.component';
+import { TaskComponent } from './component/task/task.component';                  //api
 import {EditorModule} from "primeng/editor";                  //api
 
 @NgModule({
@@ -31,25 +32,26 @@ import {EditorModule} from "primeng/editor";                  //api
     NaviComponent,
     BpmnComponent,
     CreateTaskComponent,
+    TaskComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AccordionModule,
-    TableModule,
-    MultiSelectModule,
-    InputTextModule,
-    ProgressBarModule,
-    ButtonModule,
-    SliderModule,
-    DropdownModule,
-    TooltipModule,
-    ToastModule,
-    EditorModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        AccordionModule,
+        TableModule,
+        MultiSelectModule,
+        InputTextModule,
+        ProgressBarModule,
+        ButtonModule,
+        SliderModule,
+        DropdownModule,
+        TooltipModule,
+        ToastModule,
+        EditorModule,
+    ],
   providers: [MessageService],
   bootstrap: [AppComponent]
 })
