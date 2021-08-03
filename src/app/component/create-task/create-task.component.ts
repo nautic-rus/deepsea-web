@@ -1,16 +1,16 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {IssueManagerService} from "../../domain/issue-manager.service";
+import {HttpClient} from "@angular/common/http";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {Issue} from "../../domain/classes/issue";
 import {AuthManagerService} from "../../domain/auth-manager.service";
-import {Editor} from "primeng/editor";
 
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.css']
 })
-export class CreateTaskComponent implements OnInit, AfterViewInit {
+export class CreateTaskComponent implements OnInit {
   taskId = '';
   taskSummary = '';
   taskDetails = '';
@@ -20,15 +20,9 @@ export class CreateTaskComponent implements OnInit, AfterViewInit {
   taskProject = '';
   taskType = 'IT';
   loaded: FileAttachment[] = [];
-
-  // @ts-ignore
-  @ViewChild('editor') editor: Editor;
-
+  taskResponsible: any;
+  taskStart: any;
   constructor(public issues: IssueManagerService, private auth: AuthManagerService) { }
-
-  ngAfterViewInit(): void {
-    this.editor.getQuill().imageHandler = () => { console.log('image') };
-  }
 
   ngOnInit(): void {
     this.issues.initIssue(this.auth.getUser().login).then(issueDef => {
@@ -37,6 +31,7 @@ export class CreateTaskComponent implements OnInit, AfterViewInit {
       this.taskTypes = issueDef.issueTypes;
     });
   }
+
   handleFileInput(files: FileList | null) {
     if (files != null){
       for (let x = 0; x < files.length; x++){
@@ -63,16 +58,10 @@ export class CreateTaskComponent implements OnInit, AfterViewInit {
 
   createTask() {
     const issue = new Issue();
-    issue.id = this.taskId;
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
-    issue.taskType = 'IT';
+    issue.taskModelType = 'IT';
     issue.startedBy = this.auth.getUser().login;
-    issue.project = this.taskProject;
-    this.issues.processIssue(issue);
-  }
-
-  test() {
-    console.log('test');
+    this.issues.startIssue(issue);
   }
 }

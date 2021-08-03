@@ -6,20 +6,50 @@
   <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes">
   </p-dropdown>
 
+  <div *ngIf="taskType == 'RKD'">
+    <div class="big-text mb-1 mt-1">Название задачи</div>
+    <input type="text" pInputText [(ngModel)]="taskSummary">
+    <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
+    <div class="big-text mb-1 mt-1">Исполнитель</div>
+
+
+    <p-dropdown [style]="{'width':'300px'}" placeholder="Не назначен" class="select" [(ngModel)]="taskResponsible" [options]="taskProjects" optionLabel="name" optionValue="id">
+    </p-dropdown>
+
+    <div class="link-text mb-1">Назначить мне</div>
+
+
+    <div class="big-text mb-1 mt-1">Дата начала</div>
+    <p-calendar [(ngModel)]="taskStart" [showWeek]="true" dateFormat="dd.mm.yy"></p-calendar>
+    <div class="small-text mb-1">Позволяет установить запланированную дату начала работы.</div>
+    <div class="big-text mb-1 mt-1">Срок исполнения</div>
+    <p-calendar [(ngModel)]="taskStart" [showWeek]="true" dateFormat="dd.mm.yy"></p-calendar>
+    <div class="big-text mb-1 mt-1">Вложение</div>
+    <div class="upload">
+      <div class="cx cy loading">
+        <div class="cxy" (click)="selectFiles.click()" (drop)="selectFiles.ondrop">
+          <img class="mr-1" src="assets/upload.svg" height="28">
+          <span class="normal-text">Перетащите файлы или нажмите для загрузки</span>
+        </div>
+      </div>
+    </div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div *ngIf="awaitForLoad.length > 0">
+      Loading:
+      <div *ngFor="let file of awaitForLoad">{{file}}</div>
+    </div>
+    <div *ngIf="loaded.length > 0">
+      Loaded:
+      <div *ngFor="let file of loaded">{{file.name}}</div>
+    </div>
+  </div>
   <div *ngIf="taskType == 'IT'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor #editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}">
-<!--      <p-header>-->
-<!--         <span class="ql-formats">-->
-<!--           <button class="ql-bold" aria-label="Bold"></button>-->
-<!--           <button class="ql-italic" aria-label="Italic"></button>-->
-<!--           <button class="ql-underline" aria-label="Underline"></button>-->
-<!--           <button class="ql-strike" aria-label="Strike"></button>-->
-<!--         </span>-->
-<!--      </p-header>-->
-    </p-editor>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
+
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
       <div class="cx cy loading">
@@ -47,4 +77,5 @@
   </div>
   <div pButton label="Отмена" class="button-cancel ml-1"></div>
 </div>
+
 

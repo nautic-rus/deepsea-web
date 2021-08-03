@@ -17,6 +17,21 @@
   font-family: inherit;
   font-weight: 400;
 }
+.small-text{
+  color: #6c798f;
+  font-size: 12px;
+  font-family: inherit;
+}
+.link-text{
+  font-size: 15px;
+  color: #0052cc;
+  cursor: pointer;
+  width: fit-content;
+}
+.link-text:hover{
+  text-decoration: underline;
+  color: #3572b0;
+}
 select{
   padding: 10px;
   border-radius: 4px;
@@ -47,8 +62,10 @@ select:focus {
   flex-direction: column;
 }
 .center{
-  height: 610px;
+  height: fit-content;
   overflow: auto;
+  max-height: 650px;
+  padding: 3px;
 }
 .form-footer{
   height: 50px;
@@ -60,11 +77,10 @@ select:focus {
 .button{
   border: none;
   margin-right: 4px;
-  height: 32px;
+  height: 39px;
   min-width: 24px;
   border-radius: 3px;
   text-shadow: none;
-  line-height: 32px;
   padding: 0 10px;
   color: #fff;
   background: #17a2b8;
@@ -73,13 +89,15 @@ select:focus {
 .button-cancel{
   border: none;
   margin-right: 4px;
-  height: 32px;
+  height: 39px;
   min-width: 24px;
   border-radius: 3px;
   text-shadow: none;
-  line-height: 32px;
   padding: 0 10px;
   color: #17a2b8;
   background: #fff;
   transition: background .1s
+}
+::ng-deep.p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1rem 1.5rem;
 }
