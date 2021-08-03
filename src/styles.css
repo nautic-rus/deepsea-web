@@ -8,6 +8,9 @@ body,p{
 .w-100{
   width: 100%;
 }
+.h100{
+  height: 100;
+}
 .cy{
   display: flex;
   justify-content: center;
@@ -36,6 +39,9 @@ body,p{
 }
 .ml-1{
   margin-left: 1rem;
+}
+.mr-1{
+  margin-right: 1rem;
 }
 .text-center{
   text-align: center;
@@ -67,4 +73,13 @@ cdk-virtual-scroll-viewport{
 .all-page{
   background-color: #f8f9fa;
   padding: 20px;
+}
+.mr-2{
+  margin-right: 2rem;
+}
+.mb-2{
+  margin-bottom: 2rem;
+}
+.mb-1{
+  margin-bottom: 0.2rem;
 }

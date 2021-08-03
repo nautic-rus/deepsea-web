@@ -23,7 +23,8 @@ import {ToastModule} from "primeng/toast";
 import { CreateTaskComponent } from './component/create-task/create-task.component';
 import { TaskComponent } from './component/task/task.component';                  //api
 import {EditorModule} from "primeng/editor";
-import {DialogModule} from "primeng/dialog";                  //api
+import {DialogModule} from "primeng/dialog";
+import {CascadeSelectModule} from "primeng/cascadeselect";                  //api
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {DialogModule} from "primeng/dialog";                  //api
     ToastModule,
     EditorModule,
     DialogModule,
+    CascadeSelectModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
