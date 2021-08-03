@@ -11,17 +11,25 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
-  taskType = 3;
-  taskProject = 1;
+  taskId = '';
   taskSummary = '';
   taskDetails = '';
+  taskProjects: string[] = [];
+  taskTypes: string[] = [];
   awaitForLoad: string[] = [];
+  taskProject = '';
+  taskType = 'IT';
   loaded: FileAttachment[] = [];
-  taskStart = '';
-  taskResponsible = '';
-  constructor(public issueManager: IssueManagerService, private issues: IssueManagerService, private auth: AuthManagerService) { }
+  taskResponsible: any;
+  taskStart: any;
+  constructor(public issues: IssueManagerService, private auth: AuthManagerService) { }
 
   ngOnInit(): void {
+    this.issues.initIssue(this.auth.getUser().login).then(issueDef => {
+      this.taskId = issueDef.id;
+      this.taskProjects = issueDef.issueProjects;
+      this.taskTypes = issueDef.issueTypes;
+    });
   }
 
   handleFileInput(files: FileList | null) {

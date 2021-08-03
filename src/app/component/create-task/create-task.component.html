@@ -1,20 +1,21 @@
 <div class="center">
   <div class="big-text mb-1">Проект</div>
-  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" optionLabel="name" optionValue="id">
+  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects">
   </p-dropdown>
   <div class="big-text mb-1 mt-1">Тип задачи</div>
-  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="name" optionValue="id">
+  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes">
   </p-dropdown>
 
   <div *ngIf="taskType == 'IT'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}"></p-editor>
     <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
     <div class="big-text mb-1 mt-1">Исполнитель</div>
 
 
-    <p-dropdown [style]="{'width':'300px'}" placeholder="Не назначен" class="select" [(ngModel)]="taskResponsible" [options]="issueManager.issueProjects" optionLabel="name" optionValue="id">
+    <p-dropdown [style]="{'width':'300px'}" placeholder="Не назначен" class="select" [(ngModel)]="taskResponsible" [options]="taskProjects" optionLabel="name" optionValue="id">
     </p-dropdown>
 
     <div class="link-text mb-1">Назначить мне</div>
@@ -52,4 +53,5 @@
   </div>
   <div pButton label="Отмена" class="button-cancel ml-1"></div>
 </div>
+
 
