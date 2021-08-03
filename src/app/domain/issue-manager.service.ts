@@ -7,6 +7,7 @@ import * as props from "../props";
 import {IdName} from "./classes/id-name";
 import {FileAttachment} from "./classes/file-attachment";
 import {Issue} from "./classes/issue";
+import {IssueDef} from "./classes/issue-def";
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,9 @@ export class IssueManagerService {
     this.http.post(props.http + '/startIssue', JSON.stringify(issue)).subscribe(data => {
       console.log(data);
     });
+  }
+
+  async initIssue(user: string) {
+    return await this.http.get<IssueDef>(props.http + '/initIssue', {params: {user: user}}).toPromise();
   }
 }

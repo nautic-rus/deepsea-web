@@ -39,5 +39,5 @@
   </div>
 </div>
 <p-dialog [modal]="true" header="Создать задачу" [(visible)]="newTaskVisible">
-  <app-create-task></app-create-task>
+  <app-create-task *ngIf="newTaskVisible"></app-create-task>
 </p-dialog>
