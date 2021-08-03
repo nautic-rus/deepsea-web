@@ -53,7 +53,7 @@ import {CascadeSelectModule} from "primeng/cascadeselect";                  //ap
     TooltipModule,
     ToastModule,
     EditorModule,
-    DialogModule,
+    DialogModule
     CascadeSelectModule,
   ],
   providers: [MessageService],

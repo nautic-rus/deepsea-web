@@ -10,4 +10,6 @@ export class User {
   tcid: number = 0;
   avatar: string = '';
   token: string = '';
+  groups: string[] = [];
+  permissions: string[] = [];
 }

@@ -6,6 +6,7 @@ import {MessageService} from "primeng/api";
 import * as props from "../props";
 import {IdName} from "./classes/id-name";
 import {FileAttachment} from "./classes/file-attachment";
+import {Issue} from "./classes/issue";
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,10 @@ export class IssueManagerService {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData).toPromise();
+  }
+  startIssue(issue: Issue){
+    this.http.get(props.http + '/startIssue', {params: {issue: JSON.stringify(issue)}}).subscribe(data => {
+      console.log(data);
+    });
   }
 }
