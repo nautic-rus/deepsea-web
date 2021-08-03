@@ -36,7 +36,7 @@ export class IssueManagerService {
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData).toPromise();
   }
   startIssue(issue: Issue){
-    this.http.get(props.http + '/startIssue', {params: {issue: JSON.stringify(issue)}}).subscribe(data => {
+    this.http.post(props.http + '/startIssue', JSON.stringify(issue)).subscribe(data => {
       console.log(data);
     });
   }

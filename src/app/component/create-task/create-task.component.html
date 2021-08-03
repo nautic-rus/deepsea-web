@@ -14,7 +14,7 @@
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
       <div class="cx cy loading">
-        <div class="cxy">
+        <div class="cxy" (click)="selectFiles.click()" (drop)="selectFiles.ondrop">
           <img class="mr-1" src="assets/upload.svg" height="28">
           <span class="normal-text">Перетащите файлы или нажмите для загрузки</span>
         </div>
@@ -34,7 +34,7 @@
 
 <div class="form-footer">
   <div class="mr-1 cx">
-    <div pButton label="Создать" class="button"></div>
+    <div (click)="createTask()" pButton label="Создать" class="button"></div>
   </div>
   <div pButton label="Отмена" class="button-cancel ml-1"></div>
 </div>
