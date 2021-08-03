@@ -41,6 +41,7 @@ export class AuthManagerService {
     });
   }
   setUser(user: User, save = true){
+    console.log(user);
     this.token = user.token;
     this.authenticated = true;
     let now = new Date(),
@@ -51,11 +52,12 @@ export class AuthManagerService {
     this.user = user;
     this.authenticated = true;
   }
-
+  getUser(): User{
+    return this.user;
+  }
   async checkAuth(qParams: any = null, noGuard = false) {
-    this.authenticated = true;
-    return true;
-
+    // this.authenticated = true;
+    // return true;
     if (this.authenticated){
       return true;
     }
@@ -79,19 +81,6 @@ export class AuthManagerService {
         this.router.navigate(['login'], {queryParams: qParams});
         return false;
       });
-      // const data = await this.http.get(props.http + '/login', {params: {token: this.token}}).toPromise();
-      // const user = data as User;
-      // if (user != null && (data as string) != 'wrong-token'){
-      //   this.setUser(user);
-      //   if (noGuard){
-      //     await this.router.navigate(['']);
-      //   }
-      //   return true;
-      // }
-      // else{
-      //   await this.router.navigate(['login'], {queryParams: qParams});
-      //   return false;
-      // }
     }
   }
   isAuth(){
