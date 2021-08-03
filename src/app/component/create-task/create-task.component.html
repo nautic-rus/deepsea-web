@@ -6,11 +6,10 @@
   <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes">
   </p-dropdown>
 
-  <div *ngIf="taskType == 'IT'">
+  <div *ngIf="taskType == 'RKD'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}"></p-editor>
     <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
     <div class="big-text mb-1 mt-1">Исполнитель</div>
 
@@ -26,6 +25,31 @@
     <div class="small-text mb-1">Позволяет установить запланированную дату начала работы.</div>
     <div class="big-text mb-1 mt-1">Срок исполнения</div>
     <p-calendar [(ngModel)]="taskStart" [showWeek]="true" dateFormat="dd.mm.yy"></p-calendar>
+    <div class="big-text mb-1 mt-1">Вложение</div>
+    <div class="upload">
+      <div class="cx cy loading">
+        <div class="cxy" (click)="selectFiles.click()" (drop)="selectFiles.ondrop">
+          <img class="mr-1" src="assets/upload.svg" height="28">
+          <span class="normal-text">Перетащите файлы или нажмите для загрузки</span>
+        </div>
+      </div>
+    </div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div *ngIf="awaitForLoad.length > 0">
+      Loading:
+      <div *ngFor="let file of awaitForLoad">{{file}}</div>
+    </div>
+    <div *ngIf="loaded.length > 0">
+      Loaded:
+      <div *ngFor="let file of loaded">{{file.name}}</div>
+    </div>
+  </div>
+  <div *ngIf="taskType == 'IT'">
+    <div class="big-text mb-1 mt-1">Название задачи</div>
+    <input type="text" pInputText [(ngModel)]="taskSummary">
+    <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
+
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
       <div class="cx cy loading">
