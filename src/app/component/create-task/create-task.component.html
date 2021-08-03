@@ -1,12 +1,12 @@
 <div class="center">
   <div class="big-text mb-1">Проект</div>
-  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="issueManager.issueProjects" optionLabel="name" optionValue="id">
+  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" optionLabel="name" optionValue="id">
   </p-dropdown>
   <div class="big-text mb-1 mt-1">Тип задачи</div>
-  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="issueManager.issueTypes" optionLabel="name" optionValue="id">
+  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="name" optionValue="id">
   </p-dropdown>
 
-  <div *ngIf="taskType == 3">
+  <div *ngIf="taskType == 'IT'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
