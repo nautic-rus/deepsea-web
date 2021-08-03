@@ -58,10 +58,12 @@ export class CreateTaskComponent implements OnInit {
 
   createTask() {
     const issue = new Issue();
+    issue.id = this.taskId;
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
-    issue.taskModelType = 'IT';
+    issue.taskType = 'IT';
     issue.startedBy = this.auth.getUser().login;
-    this.issues.startIssue(issue);
+    issue.project = this.taskProject;
+    this.issues.processIssue(issue);
   }
 }
