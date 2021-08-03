@@ -17,6 +17,8 @@ export class CreateTaskComponent implements OnInit {
   taskDetails = '';
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
+  taskStart = '';
+  taskResponsible = '';
   constructor(public issueManager: IssueManagerService, private issues: IssueManagerService, private auth: AuthManagerService) { }
 
   ngOnInit(): void {

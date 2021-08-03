@@ -10,7 +10,21 @@
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}"></p-editor>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
+    <div class="big-text mb-1 mt-1">Исполнитель</div>
+
+
+    <p-dropdown [style]="{'width':'300px'}" placeholder="Не назначен" class="select" [(ngModel)]="taskResponsible" [options]="issueManager.issueProjects" optionLabel="name" optionValue="id">
+    </p-dropdown>
+
+    <div class="link-text mb-1">Назначить мне</div>
+
+
+    <div class="big-text mb-1 mt-1">Дата начала</div>
+    <p-calendar [(ngModel)]="taskStart" [showWeek]="true" dateFormat="dd.mm.yy"></p-calendar>
+    <div class="small-text mb-1">Позволяет установить запланированную дату начала работы.</div>
+    <div class="big-text mb-1 mt-1">Срок исполнения</div>
+    <p-calendar [(ngModel)]="taskStart" [showWeek]="true" dateFormat="dd.mm.yy"></p-calendar>
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
       <div class="cx cy loading">

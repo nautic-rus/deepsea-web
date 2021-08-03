@@ -24,7 +24,8 @@ import { CreateTaskComponent } from './component/create-task/create-task.compone
 import { TaskComponent } from './component/task/task.component';                  //api
 import {EditorModule} from "primeng/editor";
 import {DialogModule} from "primeng/dialog";
-import {CascadeSelectModule} from "primeng/cascadeselect";                  //api
+import {CascadeSelectModule} from "primeng/cascadeselect";
+import {CalendarModule} from "primeng/calendar";                  //api
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {CascadeSelectModule} from "primeng/cascadeselect";                  //ap
     EditorModule,
     DialogModule,
     CascadeSelectModule,
+    CalendarModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
