@@ -1,13 +1,11 @@
-import {IssueMessage} from "./issue-message";
-
 export class Issue {
-  id: number = 0;
+  id: string = '';
   status: string = '';
+  project: string = '';
   department: string = '';
   startedBy: string = '';
-  taskModelType: string = '';
+  taskType: string = '';
   name: string = '';
   details: string = '';
   assignedTo: string = '';
-  messages: IssueMessage[] = [];
 }

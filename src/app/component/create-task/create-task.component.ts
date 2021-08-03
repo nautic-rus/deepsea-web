@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {IssueManagerService} from "../../domain/issue-manager.service";
-import {HttpClient} from "@angular/common/http";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {Issue} from "../../domain/classes/issue";
 import {AuthManagerService} from "../../domain/auth-manager.service";
+import {Editor} from "primeng/editor";
 
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
   styleUrls: ['./create-task.component.css']
 })
-export class CreateTaskComponent implements OnInit {
+export class CreateTaskComponent implements OnInit, AfterViewInit {
   taskId = '';
   taskSummary = '';
   taskDetails = '';
@@ -18,20 +18,25 @@ export class CreateTaskComponent implements OnInit {
   taskTypes: string[] = [];
   awaitForLoad: string[] = [];
   taskProject = '';
-  taskType = '';
+  taskType = 'IT';
   loaded: FileAttachment[] = [];
+
+  // @ts-ignore
+  @ViewChild('editor') editor: Editor;
+
   constructor(public issues: IssueManagerService, private auth: AuthManagerService) { }
+
+  ngAfterViewInit(): void {
+    this.editor.getQuill().imageHandler = () => { console.log('image') };
+  }
 
   ngOnInit(): void {
     this.issues.initIssue(this.auth.getUser().login).then(issueDef => {
       this.taskId = issueDef.id;
       this.taskProjects = issueDef.issueProjects;
       this.taskTypes = issueDef.issueTypes;
-      this.taskType = this.taskTypes[0];
-      this.taskProject = this.taskProjects[0];
     });
   }
-
   handleFileInput(files: FileList | null) {
     if (files != null){
       for (let x = 0; x < files.length; x++){
@@ -58,10 +63,16 @@ export class CreateTaskComponent implements OnInit {
 
   createTask() {
     const issue = new Issue();
+    issue.id = this.taskId;
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
-    issue.taskModelType = 'IT';
+    issue.taskType = 'IT';
     issue.startedBy = this.auth.getUser().login;
-    this.issues.startIssue(issue);
+    issue.project = this.taskProject;
+    this.issues.processIssue(issue);
+  }
+
+  test() {
+    console.log('test');
   }
 }

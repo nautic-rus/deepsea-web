@@ -1,16 +1,25 @@
 <div class="center">
   <div class="big-text mb-1">Проект</div>
-  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" optionLabel="name" optionValue="id">
+  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects">
   </p-dropdown>
   <div class="big-text mb-1 mt-1">Тип задачи</div>
-  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="name" optionValue="id">
+  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes">
   </p-dropdown>
 
   <div *ngIf="taskType == 'IT'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}"></p-editor>
+    <p-editor #editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}">
+<!--      <p-header>-->
+<!--         <span class="ql-formats">-->
+<!--           <button class="ql-bold" aria-label="Bold"></button>-->
+<!--           <button class="ql-italic" aria-label="Italic"></button>-->
+<!--           <button class="ql-underline" aria-label="Underline"></button>-->
+<!--           <button class="ql-strike" aria-label="Strike"></button>-->
+<!--         </span>-->
+<!--      </p-header>-->
+    </p-editor>
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
       <div class="cx cy loading">
