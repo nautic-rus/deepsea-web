@@ -46,3 +46,40 @@ select:focus {
   height: 100%!important;
   flex-direction: column;
 }
+.center{
+  height: 610px;
+  overflow: auto;
+}
+.form-footer{
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 16px;
+}
+.button{
+  border: none;
+  margin-right: 4px;
+  height: 32px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  line-height: 32px;
+  padding: 0 10px;
+  color: #fff;
+  background: #17a2b8;
+  transition: background .1s
+}
+.button-cancel{
+  border: none;
+  margin-right: 4px;
+  height: 32px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  line-height: 32px;
+  padding: 0 10px;
+  color: #17a2b8;
+  background: #fff;
+  transition: background .1s
+}

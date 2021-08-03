@@ -1,35 +1,41 @@
-<div class="big-text mb-1">Проект</div>
-<p-dropdown class="select" [(ngModel)]="taskProject" [options]="issueManager.issueProjects" optionLabel="name" optionValue="id">
-</p-dropdown>
-<div class="big-text mb-1 mt-1">Тип задачи</div>
-<p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="issueManager.issueTypes" optionLabel="name" optionValue="id">
-</p-dropdown>
+<div class="center">
+  <div class="big-text mb-1">Проект</div>
+  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="issueManager.issueProjects" optionLabel="name" optionValue="id">
+  </p-dropdown>
+  <div class="big-text mb-1 mt-1">Тип задачи</div>
+  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="issueManager.issueTypes" optionLabel="name" optionValue="id">
+  </p-dropdown>
 
-<div *ngIf="taskType == 3">
-  <div class="big-text mb-1 mt-1">Название задачи</div>
-  <input type="text" pInputText [(ngModel)]="taskSummary">
-  <div class="big-text mb-1 mt-1">Описание задачи</div>
-  <p-editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}"></p-editor>
-  <div class="big-text mb-1 mt-1">Вложение</div>
-  <div class="upload">
-    <div class="cx cy loading">
-      <div class="cxy">
-        <img class="mr-1" src="assets/upload.svg" height="28">
-        <span class="normal-text">Перетащите файлы или нажмите для загрузки</span>
+  <div *ngIf="taskType == 3">
+    <div class="big-text mb-1 mt-1">Название задачи</div>
+    <input type="text" pInputText [(ngModel)]="taskSummary">
+    <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'250px'}"></p-editor>
+    <div class="big-text mb-1 mt-1">Вложение</div>
+    <div class="upload">
+      <div class="cx cy loading">
+        <div class="cxy">
+          <img class="mr-1" src="assets/upload.svg" height="28">
+          <span class="normal-text">Перетащите файлы или нажмите для загрузки</span>
+        </div>
       </div>
     </div>
-  </div>
-  <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
-  <div *ngIf="awaitForLoad.length > 0">
-    Loading:
-    <div *ngFor="let file of awaitForLoad">{{file}}</div>
-  </div>
-  <div *ngIf="loaded.length > 0">
-    Loaded:
-    <div *ngFor="let file of loaded">{{file.name}}</div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div *ngIf="awaitForLoad.length > 0">
+      Loading:
+      <div *ngFor="let file of awaitForLoad">{{file}}</div>
+    </div>
+    <div *ngIf="loaded.length > 0">
+      Loaded:
+      <div *ngFor="let file of loaded">{{file.name}}</div>
+    </div>
   </div>
 </div>
+
 <div class="form-footer">
-  <button>CREATE TASK</button>
+  <div class="mr-1 cx">
+    <div pButton label="Создать" class="button"></div>
+  </div>
+  <div pButton label="Отмена" class="button-cancel ml-1"></div>
 </div>
 
