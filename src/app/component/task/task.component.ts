@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Product} from "../home/product";
 
 @Component({
   selector: 'app-task',
