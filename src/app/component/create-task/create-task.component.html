@@ -94,7 +94,7 @@
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
       <div class="cx cy loading">
-        <div class="cxy" (click)="selectFiles.click()" (drop)="selectFiles.ondrop">
+        <div class="cxy" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onDrop($event)" (dragover)="$event.stopPropagation(); $event.preventDefault()">
           <img class="mr-1" src="assets/upload.svg" height="28">
           <span class="normal-text">Перетащите файлы или нажмите для загрузки</span>
         </div>

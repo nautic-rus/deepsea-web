@@ -52,12 +52,7 @@ export class CreateTaskComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           this.issues.uploadFile(file).then(res => {
-            console.log(res);
             this.loaded.push(res);
-            // const find = this.awaitForLoad.find(x => x == res.name);
-            // if (find != null){
-            //   this.awaitForLoad.splice(this.awaitForLoad.indexOf(find), 1);
-            // }
           });
         }
       }
@@ -101,5 +96,11 @@ export class CreateTaskComponent implements OnInit {
 
   close() {
     this.ref.close();
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    // @ts-ignore
+    this.handleFileInput(event.dataTransfer.files);
   }
 }
