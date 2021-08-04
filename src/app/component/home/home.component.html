@@ -2,10 +2,14 @@
 
   <div class="card">
     <p-table
-      #dt [value]="issues"
+      #dt
+      dataKey="id"
+      [value]="issues"
       [scrollable]="true" scrollHeight="calc(100vh - 280px)"
       styleClass="p-datatable-striped"
-      [globalFilterFields]="['code','name','category','quantity']"
+      [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status']"
+      [reorderableColumns]="true"
+      [columns]="selectedColumns"
     >
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
@@ -13,26 +17,38 @@
             <button pButton label="Clear" class="p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
           </div>
           <button pButton label="Новая задача" class="p-button-info" (click)="newTask()"></button>
+          <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+                         selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
           <span class="p-input-icon-left p-ml-auto">
           <i class="pi pi-search"></i>
           <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." />
         </span>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template pTemplate="header" let-columns>
         <tr>
-          <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
-          <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-          <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
-          <th pSortableColumn="quantity">Quantity <p-sortIcon field="quantity"></p-sortIcon></th>
+          <th *ngFor="let col of columns" pReorderableColumn [pSortableColumn]="col.variable">
+            {{col.header}}
+            <p-sortIcon [field]="col.variable"></p-sortIcon>
+            <p-columnFilter [field]="col.variable" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="value" [options]="getFilters(issues, col.variable)" placeholder="Any" (onChange)="filter($event.value)">
+                  <ng-template let-option pTemplate="item">
+                    <div class="p-multiselect-representative-option">
+                      <span class="p-ml-1">{{option}}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-product>
+      <ng-template pTemplate="body" let-columns="columns" let-issue>
         <tr>
-          <td>{{product.code}}</td>
-          <td>{{product.name}}</td>
-          <td>{{product.category}}</td>
-          <td>{{product.quantity}}</td>
+          <td *ngFor="let col of columns">
+            {{this.issue[col.variable]}}
+          </td>
         </tr>
       </ng-template>
     </p-table>

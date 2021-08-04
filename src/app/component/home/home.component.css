@@ -16,3 +16,6 @@
 .new-task{
   background-color: #adb7bc;
 }
+::ng-deep .p-datatable-scrollable-body{
+  overflow-y: auto !important;
+}
