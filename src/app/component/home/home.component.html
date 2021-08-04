@@ -2,7 +2,7 @@
 
   <div class="card">
     <p-table
-      #dt [value]="products"
+      #dt [value]="issues"
       [scrollable]="true" scrollHeight="calc(100vh - 280px)"
       styleClass="p-datatable-striped"
       [globalFilterFields]="['code','name','category','quantity']"
@@ -13,6 +13,7 @@
             <button pButton label="Clear" class="p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
           </div>
           <button pButton label="Новая задача" class="p-button-info" (click)="newTask()"></button>
+          <button pButton label="Просмотреть задачу" class="p-button-info" (click)="viewTask()"></button>
           <span class="p-input-icon-left p-ml-auto">
           <i class="pi pi-search"></i>
           <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." />

@@ -5,6 +5,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {Issue} from "../../domain/classes/issue";
+import {TaskComponent} from "../task/task.component";
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,12 @@ export class HomeComponent implements OnInit {
   newTask() {
     this.dynamicDialogRef = this.dialogService.open(CreateTaskComponent, {
       header: 'Создать задачу',
+      modal: true
+    });
+  }
+  viewTask() {
+    this.dynamicDialogRef = this.dialogService.open(TaskComponent, {
+      header: 'Задача №1',
       modal: true
     });
   }
