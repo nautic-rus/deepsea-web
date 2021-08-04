@@ -101,3 +101,7 @@ select:focus {
 ::ng-deep.p-dialog .p-dialog-content {
   padding: 0 1.5rem 1rem 1.5rem;
 }
+.file-loading{
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
+}

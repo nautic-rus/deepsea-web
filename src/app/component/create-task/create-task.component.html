@@ -48,7 +48,9 @@
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'min-width':'650px', 'max-width':'650px'}">
+
+    </p-editor>
 
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
@@ -60,17 +62,13 @@
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
-    <div *ngIf="awaitForLoad.length > 0">
-      Loading:
-      <div *ngFor="let file of awaitForLoad">{{file}}</div>
-    </div>
-    <div *ngIf="loaded.length > 0">
-      Loaded:
-      <div *ngFor="let file of loaded">{{file.name}}</div>
+    <div class="file-loading" *ngFor="let file of awaitForLoad">
+      <div><i class="pi pi-file{{getFileExtensionIcon(file)}} mr-2"></i>{{file}}</div>
+      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+      <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
     </div>
   </div>
 </div>
-
 <div class="form-footer">
   <div class="mr-1 cx">
     <div (click)="createTask()" pButton label="Создать" class="button"></div>

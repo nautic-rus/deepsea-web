@@ -25,7 +25,8 @@ import { TaskComponent } from './component/task/task.component';                
 import {EditorModule} from "primeng/editor";
 import {DialogModule} from "primeng/dialog";
 import {CascadeSelectModule} from "primeng/cascadeselect";
-import {CalendarModule} from "primeng/calendar";                  //api
+import {CalendarModule} from "primeng/calendar";
+import {ProgressSpinnerModule} from "primeng/progressspinner";                  //api
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {CalendarModule} from "primeng/calendar";                  //api
     DialogModule,
     CascadeSelectModule,
     CalendarModule,
+    ProgressSpinnerModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
