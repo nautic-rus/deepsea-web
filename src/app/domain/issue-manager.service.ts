@@ -32,9 +32,7 @@ export class IssueManagerService {
       console.log(data);
     });
   }
-  getIssues(login: string) {
-    this.http.get(props.http + '/issues', {params: {user: login}}).subscribe(data => {
-      console.log(data);
-    });
+  async getIssues(login: string) {
+    return await this.http.get<Issue[]>(props.http + '/issues', {params: {user: login}}).toPromise();
   }
 }

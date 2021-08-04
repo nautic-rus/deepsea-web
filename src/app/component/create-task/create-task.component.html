@@ -5,7 +5,6 @@
   <div class="big-text mb-1 mt-1">Тип задачи</div>
   <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes">
   </p-dropdown>
-
   <div *ngIf="taskType == 'RKD'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
