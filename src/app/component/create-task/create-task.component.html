@@ -91,7 +91,6 @@
         </span>
       </p-header>
     </p-editor>
-
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div class="upload">
       <div class="cx cy loading">
@@ -113,7 +112,7 @@
   <div class="mr-1 cx">
     <div (click)="createTask()" pButton label="Создать" class="button"></div>
   </div>
-  <div pButton label="Отмена" class="button-cancel ml-1"></div>
+  <div (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
 </div>
 
 

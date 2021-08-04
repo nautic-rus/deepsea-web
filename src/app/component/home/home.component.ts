@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {ProductService} from "./product.service";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {CreateTaskComponent} from "../create-task/create-task.component";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,9 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 export class HomeComponent implements OnInit {
   products: Product[] = [];
   newTaskVisible = false;
-  constructor(private productService: ProductService, private router: Router, private issues: IssueManagerService, private auth: AuthManagerService) { }
+  // @ts-ignore
+  dynamicDialogRef: DynamicDialogRef;
+  constructor(private productService: ProductService, private router: Router, private issues: IssueManagerService, private auth: AuthManagerService, private dialogService: DialogService) { }
 
   ngOnInit() {
     this.productService.getProductsSmall().then(data => this.products = data);
@@ -21,6 +25,8 @@ export class HomeComponent implements OnInit {
   }
 
   newTask() {
-    this.newTaskVisible = true;
-  }
+    this.dynamicDialogRef = this.dialogService.open(CreateTaskComponent, {
+      header: 'Создать задачу',
+      modal: true
+    });  }
 }

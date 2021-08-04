@@ -26,7 +26,8 @@ import {EditorModule} from "primeng/editor";
 import {DialogModule} from "primeng/dialog";
 import {CascadeSelectModule} from "primeng/cascadeselect";
 import {CalendarModule} from "primeng/calendar";
-import {ProgressSpinnerModule} from "primeng/progressspinner";                  //api
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";                  //api
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";                  
     CalendarModule,
     ProgressSpinnerModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, DialogService, DynamicDialogRef],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ import {FileAttachment} from "../../domain/classes/file-attachment";
 import {Issue} from "../../domain/classes/issue";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Editor} from "primeng/editor";
+import {DynamicDialogRef} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-create-task',
@@ -23,7 +24,7 @@ export class CreateTaskComponent implements OnInit {
   loaded: FileAttachment[] = [];
   taskResponsible: any;
   taskStart: any;
-  constructor(public issues: IssueManagerService, private auth: AuthManagerService) { }
+  constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef) { }
 
 
   ngOnInit(): void {
@@ -96,5 +97,9 @@ export class CreateTaskComponent implements OnInit {
       case 'xlsx': return '-excel';
       default: return '';
     }
+  }
+
+  close() {
+    this.ref.close();
   }
 }
