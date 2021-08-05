@@ -59,9 +59,11 @@ export class HomeComponent implements OnInit {
   }
   viewTask(id: string) {
     this.issueManager.getIssueDetails(id, this.auth.getUser().login).then(res => {
+      console.log(res);
       this.dialogService.open(TaskComponent, {
         header: 'Задача: ' + res.name,
-        modal: true
+        modal: true,
+        data: res
       });
     });
   }
