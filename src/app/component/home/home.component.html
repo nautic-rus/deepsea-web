@@ -28,19 +28,21 @@
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns" pReorderableColumn [pSortableColumn]="col.variable">
-            {{col.header}}
-            <p-sortIcon *ngIf="col.sort == true" [field]="col.variable"></p-sortIcon>
-            <p-columnFilter *ngIf="col.filter == true" [field]="col.variable" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [ngModel]="value" [options]="getFilters(issues, col.variable)" placeholder="Any" (onChange)="filter($event.value)">
-                  <ng-template let-option pTemplate="item">
-                    <div class="p-multiselect-representative-option">
-                      <span class="p-ml-1">{{option}}</span>
-                    </div>
-                  </ng-template>
-                </p-multiSelect>
-              </ng-template>
-            </p-columnFilter>
+            <div class="header">
+              {{col.header}}
+              <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.variable"></p-sortIcon>
+              <p-columnFilter class="filter" *ngIf="col.filter == true" [field]="col.variable" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [ngModel]="value" [options]="getFilters(issues, col.variable)" placeholder="Any" (onChange)="filter($event.value)">
+                    <ng-template let-option pTemplate="item">
+                      <div class="p-multiselect-representative-option">
+                        <span class="p-ml-1">{{option}}</span>
+                      </div>
+                    </ng-template>
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </div>
           </th>
         </tr>
       </ng-template>

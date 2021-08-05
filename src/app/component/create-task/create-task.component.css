@@ -59,9 +59,10 @@ select:focus {
 }
 .center{
   height: fit-content;
-  overflow: auto;
   max-height: 650px;
   padding: 3px;
+  overflow-y: auto;
+  width: 700px;
 }
 .form-footer{
   height: 50px;
@@ -99,9 +100,33 @@ select:focus {
 }
 .file-loading{
   display: grid;
-  grid-template-columns: 4fr 1fr 1fr;
+  grid-template-columns: 0.5fr 4fr 0.5fr 0.5fr;
+
 }
 .file-drag{
   opacity: 0.4;
-  border: 1px solid black;
+  border: 2px dashed #ff6600;
+}
+.file-name{
+  color: #333;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 12px;
+  width: 100%;
+}
+@keyframes p-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #10374b;
+  }
+  40% {
+    stroke: #51a1c1;
+  }
+  66% {
+    stroke: #8dd2e9;
+  }
+  80%,
+  90% {
+    stroke: #2e798e;
+  }
 }

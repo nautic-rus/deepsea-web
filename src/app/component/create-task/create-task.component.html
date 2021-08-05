@@ -9,7 +9,7 @@
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'max-width':'650px'}"></p-editor>
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px'}"></p-editor>
     <div class="big-text mb-1 mt-1">Исполнитель</div>
 
 
@@ -47,7 +47,7 @@
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px', 'min-width':'650px', 'max-width':'650px'}">
+    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px'}">
       <p-header>
         <span class="ql-formats">
           <select class="ql-header" tabindex="-1">
@@ -91,16 +91,17 @@
       </p-header>
     </p-editor>
     <div class="big-text mb-1 mt-1">Вложение</div>
-    <div class="upload cx cy loading">
-      <div [class.file-drag]="dragOver" class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onDrop($event)" (dragover)="$event.stopPropagation(); $event.preventDefault()">
-        <img class="mr-1" src="assets/upload.svg" height="28">
+    <div [class.file-drag]="dragOver" class="upload cx cy loading">
+      <div  class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1 image no-actions" src="assets/upload.svg" height="28">
         <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
-    <div class="file-loading" *ngFor="let file of awaitForLoad">
-      <div><i class="pi pi-file{{getFileExtensionIcon(file)}} mr-2"></i>{{file}}</div>
-      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+    <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+      <i class="pi pi-file{{getFileExtensionIcon(file)}}"></i>
+      <div>{{file}}</div>
+      <div class="cxy"><p-progressSpinner *ngIf="!isLoaded(file)"></p-progressSpinner><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
       <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
     </div>
   </div>
