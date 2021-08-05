@@ -9,13 +9,23 @@
       </div>
     </div>
     <div class="big-text mb-1 mt-2">Описание задачи</div>
-    <div class="text description">Убрать узлы крепления у позиций, которые обозначены в спецификации как "вырез".</div>
+    <div class="text description"><span [innerHTML]="issue.details"></span></div>
     <div class="big-text mb-1 mt-40">Активность</div>
     <div class="df">
       <div class="description mt-5">Показать:</div>
       <div class="button">
         <span>Все</span>
       </div>
+    </div>
+    <div class="issue-message" *ngFor="let msg of getMessages(issue)">
+      <div *ngIf="msg.owner == 'camunda'">
+        <div>User {{msg.author}} completed "<span [innerHTML]="msg.content"></span>" at {{getDate(msg.date)}}</div>
+        <div>Variables:</div>
+        <div *ngFor="let varMap of msg.variables">
+          {{varMap.name}} -> <span [innerHTML]="varMap.value"></span>
+        </div>
+      </div>
+
     </div>
   </div>
   <div class="right-content">
@@ -24,27 +34,31 @@
       <div class="table">
         <div class="df mb-2 mt-1">
           <div class="normal-text w-50">Статус</div>
-          <div class="descr-task w-50">В работе</div>
+          <div class="descr-task w-50">{{issue.status}}</div>
         </div>
         <div class="df mb-2 mt-1">
           <div class="normal-text w-50">Исполнитель</div>
-          <div class="descr-task w-50">Исаев Богдан</div>
+          <div class="descr-task w-50">{{issue.assignedTo}}</div>
+        </div>
+<!--        <div class="df mb-2 mt-1">-->
+<!--          <div class="normal-text w-50">Срок исполнения</div>-->
+<!--          <div class="descr-task w-50">01.09.2021</div>-->
+<!--        </div>-->
+        <div class="df mb-2 mt-1">
+          <div class="normal-text w-50">Проект</div>
+          <div class="descr-task w-50">{{issue.project}}</div>
         </div>
         <div class="df mb-2 mt-1">
-          <div class="normal-text w-50">Срок исполнения</div>
-          <div class="descr-task w-50">01.09.2021</div>
-        </div>
-        <div class="df mb-2 mt-1">
-          <div class="normal-text w-50">Метки</div>
-          <div class="descr-task w-50">корпус</div>
+          <div class="normal-text w-50">Отдел</div>
+          <div class="descr-task w-50">{{issue.department}}</div>
         </div>
         <div class="df mb-2 mt-1">
           <div class="normal-text w-50">Автор</div>
-          <div class="descr-task w-50">Исаев Богдан</div>
+          <div class="descr-task w-50">{{issue.startedBy}}</div>
         </div>
       </div>
     </div>
-    <div class="mt-2 min-text">Создано 04 августа 2021г., 11:14</div>
+    <div class="mt-2 min-text">Создано {{getDate(issue.startedDate)}}</div>
   </div>
 
 
