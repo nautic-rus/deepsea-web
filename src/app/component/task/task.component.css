@@ -116,5 +116,26 @@
   color: rgb(107, 119, 140);
 }
 .issue-message{
-
+  padding: 0px 6px;
+}
+.bold-text{
+  font-size: 0.9em;
+  font-style: inherit;
+  font-weight: 500;
+  letter-spacing: -0.003em;
+  color: rgb(23, 43, 77);
+}
+.text-descr{
+  color: rgb(23, 43, 77);
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+.px-5{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.text-date{
+  color: rgb(66, 82, 110);
+  font-size: 0.9em;
+  white-space: nowrap;
 }

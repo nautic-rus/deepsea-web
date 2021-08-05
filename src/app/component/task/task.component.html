@@ -19,13 +19,15 @@
     </div>
     <div class="issue-message" *ngFor="let msg of getMessages(issue)">
       <div *ngIf="msg.owner == 'camunda'">
-        <div>User {{msg.author}} completed "<span [innerHTML]="msg.content"></span>" at {{getDate(msg.date)}}</div>
-        <div>Variables:</div>
-        <div *ngFor="let varMap of msg.variables">
-          {{varMap.name}} -> <span [innerHTML]="varMap.value"></span>
+        <div class="px-10"><span class="bold-text">{{msg.author}}</span><span class="text-descr"> completed </span>  <span class="bold-text" [innerHTML]="msg.content"></span><span class="text-descr"> at </span><span class="text-date"> {{getDate(msg.date)}} </span>
         </div>
-      </div>
+        <span class="px-10" *ngFor="let varMap of msg.variables">
+          <div class="px-10">
+            <span class="bold-text">{{msg.author}}</span><span class="text-descr"> changed </span><span class="bold-text">{{varMap.name}}</span><span class=""><img src="assets/right-arrow.svg" height="15"></span><span [innerHTML]="varMap.value"></span>
 
+          </div>
+        </span>
+      </div>
     </div>
   </div>
   <div class="right-content">
