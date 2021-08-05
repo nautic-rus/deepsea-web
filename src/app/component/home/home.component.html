@@ -16,7 +16,10 @@
           <div class="mr-2">
             <button pButton label="Clear" class="p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
           </div>
-          <button pButton label="Новая задача" class="p-button-info" (click)="newTask()"></button>
+          <div class="mr-2">
+            <button pButton label="Новая задача" class="p-button-info" (click)="newTask()"></button>
+          </div>
+
           <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
                          selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
           <span class="p-input-icon-left p-ml-auto">
