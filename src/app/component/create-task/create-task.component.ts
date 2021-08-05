@@ -24,6 +24,7 @@ export class CreateTaskComponent implements OnInit {
   loaded: FileAttachment[] = [];
   taskResponsible: any;
   taskStart: any;
+  dragOver = false;
   constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef) { }
 
 

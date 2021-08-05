@@ -57,10 +57,6 @@ select:focus {
   border: 1px dashed #ccc;
   cursor: pointer;
 }
-.loading{
-  height: 100%!important;
-  flex-direction: column;
-}
 .center{
   height: fit-content;
   overflow: auto;
@@ -104,4 +100,8 @@ select:focus {
 .file-loading{
   display: grid;
   grid-template-columns: 4fr 1fr 1fr;
+}
+.file-drag{
+  opacity: 0.4;
+  border: 1px solid black;
 }

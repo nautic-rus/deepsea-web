@@ -91,12 +91,10 @@
       </p-header>
     </p-editor>
     <div class="big-text mb-1 mt-1">Вложение</div>
-    <div class="upload">
-      <div class="cx cy loading">
-        <div class="cxy" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onDrop($event)" (dragover)="$event.stopPropagation(); $event.preventDefault()">
-          <img class="mr-1" src="assets/upload.svg" height="28">
-          <span class="normal-text">Перетащите файлы или нажмите для загрузки</span>
-        </div>
+    <div class="upload cx cy loading">
+      <div [class.file-drag]="dragOver" class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onDrop($event)" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1" src="assets/upload.svg" height="28">
+        <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>

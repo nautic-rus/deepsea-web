@@ -101,3 +101,6 @@ cdk-virtual-scroll-viewport{
 .mb-1{
   margin-bottom: 0.2rem;
 }
+.no-actions{
+  pointer-events: none;
+}
