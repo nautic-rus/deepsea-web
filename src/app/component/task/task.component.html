@@ -35,8 +35,9 @@
       <div class="header text-head">Сведения</div>
       <div class="table">
         <div class="df mb-2 mt-1">
-          <div class="normal-text w-50">Статус</div>
-          <div class="descr-task w-50">{{issue.status}}</div>
+          <div class="normal-text">Статус</div>
+          <p-dropdown styleClass="descr-task" [(ngModel)]="issue.status" [options]="getAvailableStatuses(issue)" (ngModelChange)="statusChanged()">
+          </p-dropdown>
         </div>
         <div class="df mb-2 mt-1">
           <div class="normal-text w-50">Исполнитель</div>

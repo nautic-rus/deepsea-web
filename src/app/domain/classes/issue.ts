@@ -11,4 +11,5 @@ export class Issue {
   details: string = '';
   assignedTo: string = '';
   messages: IssueMessage[] = [];
+  availableStatuses: string[] = [];
 }

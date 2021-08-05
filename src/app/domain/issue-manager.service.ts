@@ -36,6 +36,9 @@ export class IssueManagerService {
   async getIssueDetails(id: string, login: string): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id: id, user: login}}).toPromise();
   }
+  async setIssueStatus(id: string, user: string, status: string): Promise<Issue> {
+    return await this.http.get<Issue>(props.http + '/setIssueStatus', {params: {id: id, user: user, status: status}}).toPromise();
+  }
   removeIssue(id: string){
     this.http.get(props.http + '/removeIssue', {params: {id: id}}).subscribe(res => {
       console.log("Removing task with id " + id + ": " + res);
