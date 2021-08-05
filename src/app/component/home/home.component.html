@@ -29,8 +29,8 @@
         <tr>
           <th *ngFor="let col of columns" pReorderableColumn [pSortableColumn]="col.variable">
             {{col.header}}
-            <p-sortIcon [field]="col.variable"></p-sortIcon>
-            <p-columnFilter [field]="col.variable" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <p-sortIcon *ngIf="col.sort == true" [field]="col.variable"></p-sortIcon>
+            <p-columnFilter *ngIf="col.filter == true" [field]="col.variable" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [ngModel]="value" [options]="getFilters(issues, col.variable)" placeholder="Any" (onChange)="filter($event.value)">
                   <ng-template let-option pTemplate="item">
@@ -45,9 +45,10 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-columns="columns" let-issue>
-        <tr>
+        <tr (click)="viewTask(issue.id)">
           <td *ngFor="let col of columns">
-            {{this.issue[col.variable]}}
+            <div *ngIf="col.skip == false">{{this.issue[col.variable]}}</div>
+            <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
           </td>
         </tr>
       </ng-template>

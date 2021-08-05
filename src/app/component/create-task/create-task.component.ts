@@ -32,6 +32,13 @@ export class CreateTaskComponent implements OnInit {
       this.taskId = issueDef.id;
       this.taskProjects = issueDef.issueProjects;
       this.taskTypes = issueDef.issueTypes;
+      this.taskProject = this.taskProjects[0];
+      this.taskType = this.taskTypes[0];
+    });
+    this.ref.onClose.subscribe(res => {
+      if (res != 'success'){
+        this.issues.removeIssue(this.taskId)
+      }
     });
   }
 
@@ -64,10 +71,12 @@ export class CreateTaskComponent implements OnInit {
     issue.id = this.taskId;
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
-    issue.taskType = 'IT';
+    issue.taskType = this.taskType;
     issue.startedBy = this.auth.getUser().login;
     issue.project = this.taskProject;
-    this.issues.processIssue(issue);
+    this.issues.processIssue(issue).then(res => {
+      this.ref.close(res);
+    });
   }
 
   isLoaded(file: string) {

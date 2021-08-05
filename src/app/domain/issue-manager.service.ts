@@ -27,12 +27,18 @@ export class IssueManagerService {
   async initIssue(user: string) {
     return await this.http.get<IssueDef>(props.http + '/initIssue', {params: {user: user}}).toPromise();
   }
-  processIssue(issue: Issue){
-    this.http.post(props.http + '/processIssue', JSON.stringify(issue)).subscribe(data => {
-      console.log(data);
-    });
+  async processIssue(issue: Issue){
+    return await this.http.post(props.http + '/processIssue', JSON.stringify(issue)).toPromise();
   }
   async getIssues(login: string): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/issues', {params: {user: login}}).toPromise();
+  }
+  async getIssueDetails(id: string, login: string): Promise<Issue> {
+    return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id: id, user: login}}).toPromise();
+  }
+  removeIssue(id: string){
+    this.http.get(props.http + '/removeIssue', {params: {id: id}}).subscribe(res => {
+      console.log("Removing task with id " + id + ": " + res);
+    });
   }
 }
