@@ -29,3 +29,6 @@
 ::ng-deep .p-datatable-scrollable-header-box	{
   padding: 0 !important;
 }
+.task-row:hover{
+  background-color: #F3F2F1;
+}
