@@ -66,6 +66,12 @@
 
 
     <div class="issue-message" *ngFor="let msg of getMessages(issue)">
+      <div *ngIf="msg.owner == 'human'">
+        <div class="px-10">
+          <span class="bold-text">{{msg.author}}</span><span class="text-descr"> posted message at <span class="text-date"> {{getDate(msg.date)}} </span></span>
+          <div [innerHTML]="msg.content"></div>
+        </div>
+      </div>
       <div *ngIf="msg.owner == 'camunda'">
         <div class="px-10"><span class="bold-text">{{msg.author}}</span><span class="text-descr"> completed </span>  <span class="bold-text" [innerHTML]="msg.content"></span><span class="text-descr"> at </span><span class="text-date"> {{getDate(msg.date)}} </span>
         </div>

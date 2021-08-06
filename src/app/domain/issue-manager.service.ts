@@ -41,7 +41,7 @@ export class IssueManagerService {
     return await this.http.get<Issue>(props.http + '/setIssueStatus', {params: {id: id, user: user, status: status}}).toPromise();
   }
   async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
-    return await this.http.post<string>(props.http + '/setIssueStatus', JSON.stringify(message), {params: {id: id}}).toPromise();
+    return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id: id}}).toPromise();
   }
   removeIssue(id: string){
     this.http.get(props.http + '/removeIssue', {params: {id: id}}).subscribe(res => {
