@@ -70,8 +70,14 @@ export class TaskComponent implements OnInit {
     switch (file.toLowerCase().split('.').pop()){
       case 'pdf': return 'pdf.svg';
       case 'dwg': return 'dwg.svg';
-      case 'xls': return '';
-      case 'xlsx': return '';
+      case 'xls': return 'xls.svg';
+      case 'xlsx': return 'xls.svg';
+      case 'doc': return 'doc.svg';
+      case 'docx': return 'doc.svg';
+      case 'png': return 'png.svg';
+      case 'jpg': return 'jpg.svg';
+      case 'txt': return 'txt.svg';
+      case 'zip': return 'zip.svg';
       default: return 'file.svg';
     }
   }
