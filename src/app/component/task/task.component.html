@@ -18,8 +18,6 @@
         <div (click)="openFile(file.url)">{{file.name}}</div>
       </div>
     </div>
-
-
     <div class="big-text mb-1 mt-40">Активность</div>
     <div class="df">
       <div class="description mt-5">Показать:</div>
@@ -27,6 +25,46 @@
         <span>Все</span>
       </div>
     </div>
+
+
+    <input [hidden]="comment" (click)="showComment(editor)" type="text" pInputText placeholder="Enter comment here" />
+    <div [hidden]="!comment">
+      <p-editor #editor [(ngModel)]="message" [style]="{'height':'fit-content', 'min-height':'100px'}">
+        <p-header>
+        <span class="ql-formats">
+          <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+          <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+          <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+        </span>
+          <span class="ql-formats">
+          <select class="ql-color" tabindex="-1"></select>
+          <select class="ql-background" tabindex="-1"></select>
+        </span>
+          <span class="ql-formats">
+          <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+          <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+          <select class="ql-align" tabindex="-1">
+            <option selected tabindex="-1"></option>
+            <option value="center" tabindex="-1"></option>
+            <option value="right" tabindex="-1"></option>
+            <option value="justify" tabindex="-1"></option>
+          </select>
+        </span>
+          <span class="ql-formats">
+          <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+          <button class="ql-image" aria-label="Insert Image" tabindex="-1"></button>
+          <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+        </span>
+          <span class="ql-formats">
+          <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+        </span>
+        </p-header>
+      </p-editor>
+      <button (click)="sendMessage()" pButton type="button" label="Save" icon="pi pi-check"></button>
+      <button (click)="comment = false" pButton type="button" label="Cancel" icon="pi pi-times"></button>
+    </div>
+
+
     <div class="issue-message" *ngFor="let msg of getMessages(issue)">
       <div *ngIf="msg.owner == 'camunda'">
         <div class="px-10"><span class="bold-text">{{msg.author}}</span><span class="text-descr"> completed </span>  <span class="bold-text" [innerHTML]="msg.content"></span><span class="text-descr"> at </span><span class="text-date"> {{getDate(msg.date)}} </span>
@@ -34,7 +72,6 @@
         <span class="px-10" *ngFor="let varMap of msg.variables">
           <div class="px-10">
             <span class="bold-text">{{msg.author}}</span><span class="text-descr"> changed </span><span class="bold-text">{{varMap.name}}</span><span class="py-10"><img src="assets/right-arrow.svg" height="10"></span><span [innerHTML]="varMap.value"></span>
-
           </div>
         </span>
       </div>

@@ -4,6 +4,8 @@ import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
+import {Editor} from "primeng/editor";
+import {IssueMessage} from "../../domain/classes/issue-message";
 
 @Component({
   selector: 'app-task',
@@ -13,6 +15,8 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 export class TaskComponent implements OnInit {
 
   issue: Issue = new Issue();
+  message = '';
+  comment = false;
   constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, private auth: AuthManagerService) { }
 
   ngOnInit(): void {
@@ -50,5 +54,20 @@ export class TaskComponent implements OnInit {
 
   openFile(url: string) {
     window.open(url);
+  }
+
+  showComment(editor: Editor) {
+    this.comment = true;
+    setTimeout(() => {
+      editor.quill.focus();
+    })
+  }
+
+  sendMessage() {
+    let message = new IssueMessage();
+    message.date = new Date().getTime();
+    message.author = this.auth.getUser().login;
+    message.content = this.message;
+    this.issueManager.setIssueMessage(this.issue.id, message);
   }
 }

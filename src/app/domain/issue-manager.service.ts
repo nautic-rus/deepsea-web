@@ -8,6 +8,7 @@ import {IdName} from "./classes/id-name";
 import {FileAttachment} from "./classes/file-attachment";
 import {Issue} from "./classes/issue";
 import {IssueDef} from "./classes/issue-def";
+import {IssueMessage} from "./classes/issue-message";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,9 @@ export class IssueManagerService {
   }
   async setIssueStatus(id: string, user: string, status: string): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/setIssueStatus', {params: {id: id, user: user, status: status}}).toPromise();
+  }
+  async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
+    return await this.http.post<string>(props.http + '/setIssueStatus', JSON.stringify(message), {params: {id: id}}).toPromise();
   }
   removeIssue(id: string){
     this.http.get(props.http + '/removeIssue', {params: {id: id}}).subscribe(res => {
