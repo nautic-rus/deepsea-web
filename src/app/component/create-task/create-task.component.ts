@@ -75,6 +75,7 @@ export class CreateTaskComponent implements OnInit {
     issue.taskType = this.taskType;
     issue.startedBy = this.auth.getUser().login;
     issue.project = this.taskProject;
+    issue.fileAttachments = this.loaded;
     this.issues.processIssue(issue).then(res => {
       this.ref.close(res);
     });

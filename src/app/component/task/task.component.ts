@@ -13,9 +13,6 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 export class TaskComponent implements OnInit {
 
   issue: Issue = new Issue();
-  monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
-    "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
-  ];
   constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, private auth: AuthManagerService) { }
 
   ngOnInit(): void {
@@ -23,7 +20,12 @@ export class TaskComponent implements OnInit {
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
-    return date.getDay() + " " + this.monthNames[date.getMonth()] + " " + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes();
+    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
+    let mo = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date);
+    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
+    let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
+    return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
 
   getMessages(issue: Issue) {
@@ -43,5 +45,9 @@ export class TaskComponent implements OnInit {
     this.issueManager.setIssueStatus(this.issue.id, this.auth.getUser().login, this.issue.status).then(issue => {
       this.issue = issue;
     });
+  }
+
+  openFile(url: string) {
+    window.open(url);
   }
 }

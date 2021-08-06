@@ -1,4 +1,5 @@
 import {IssueMessage} from "./issue-message";
+import {FileAttachment} from "./file-attachment";
 export class Issue {
   id: string = '';
   status: string = '';
@@ -11,5 +12,6 @@ export class Issue {
   details: string = '';
   assignedTo: string = '';
   messages: IssueMessage[] = [];
+  fileAttachments: FileAttachment[] = [];
   availableStatuses: string[] = [];
 }
