@@ -75,6 +75,7 @@ export class CreateTaskComponent implements OnInit {
     issue.taskType = this.taskType;
     issue.startedBy = this.auth.getUser().login;
     issue.project = this.taskProject;
+    // @ts-ignore
     issue.fileAttachments = this.loaded;
     this.issues.processIssue(issue).then(res => {
       this.ref.close(res);
@@ -95,15 +96,22 @@ export class CreateTaskComponent implements OnInit {
       this.awaitForLoad.splice(this.awaitForLoad.indexOf(findAwait), 1);
     }
   }
-
   getFileExtensionIcon(file: string) {
     switch (file.toLowerCase().split('.').pop()){
-      case 'pdf': return '-pdf';
-      case 'xls': return '-excel';
-      case 'xlsx': return '-excel';
-      default: return '';
+      case 'pdf': return 'pdf.svg';
+      case 'dwg': return 'dwg.svg';
+      case 'xls': return 'xls.svg';
+      case 'xlsx': return 'xls.svg';
+      case 'doc': return 'doc.svg';
+      case 'docx': return 'doc.svg';
+      case 'png': return 'png.svg';
+      case 'jpg': return 'jpg.svg';
+      case 'txt': return 'txt.svg';
+      case 'zip': return 'zip.svg';
+      default: return 'file.svg';
     }
   }
+
 
   close() {
     this.ref.close();

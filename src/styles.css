@@ -41,6 +41,12 @@ body,p{
 .mt-5{
   margin-top: 5px;
 }
+.mr-10{
+  margin-right: 10px;
+}
+.ml-10{
+  margin-left: 10px;
+}
 .mt-40{
   margin-top: 40px;
 }

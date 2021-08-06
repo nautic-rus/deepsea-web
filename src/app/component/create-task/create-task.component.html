@@ -99,8 +99,8 @@
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
     <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
-      <i class="pi pi-file{{getFileExtensionIcon(file)}}"></i>
-      <div>{{file}}</div>
+      <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+      <div class="cy">{{file}}</div>
       <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
       <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
     </div>
