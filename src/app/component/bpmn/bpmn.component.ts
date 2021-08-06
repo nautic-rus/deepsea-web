@@ -10,6 +10,8 @@ import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json'
 // @ts-ignore
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import * as _ from 'underscore';
+import * as props from "../../props";
+import {FileAttachment} from "../../domain/classes/file-attachment";
 
 @Component({
   selector: 'app-bpmn',
@@ -135,6 +137,17 @@ export class BpmnComponent implements OnInit {
       error: error => {
         console.log(error);
       }
+    });
+  }
+
+  depoloy() {
+    const formData: FormData = new FormData();
+    // @ts-ignore
+    this.modeler.saveXML().then(res => {
+      formData.append('file', encodeURIComponent(res.xml), 'upload');
+      this.http.post(props.http + '/deployProcess', formData).subscribe(res => {
+        alert('success');
+      });
     });
   }
 }

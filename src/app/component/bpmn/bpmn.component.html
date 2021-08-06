@@ -5,6 +5,7 @@
     <button class="button" (click)="createNew()">NEW <i class="fa fa-file"></i></button>
     <button class="button" (click)="save()">SAVE <i class="fa fa-save"></i></button>
     <button class="button" (click)="inputFile.click()">OPEN <i class="fa fa-folder-open"></i></button>
+    <button class="button" (click)="depoloy()">PUBLISH <i class="pi pi-check"></i></button>
     <input #inputFile hidden type="file" name="name" accept=".bpmn" (change)="uploadFile($event)"/>
   </div>
   <div class="test-buttons" hidden>
