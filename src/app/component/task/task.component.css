@@ -139,3 +139,10 @@
   font-size: 0.9em;
   white-space: nowrap;
 }
+::ng-deep.p-dropdown .p-dropdown-label {
+  width: 120px;
+}
+.py-10{
+  padding-right: 10px;
+  padding-left: 10px;
+}
