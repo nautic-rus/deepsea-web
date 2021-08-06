@@ -48,7 +48,9 @@ export class TaskComponent implements OnInit {
 
   statusChanged() {
     this.issueManager.setIssueStatus(this.issue.id, this.auth.getUser().login, this.issue.status).then(issue => {
-      this.issue = issue;
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+        this.issue = issue;
+      });
     });
   }
 
