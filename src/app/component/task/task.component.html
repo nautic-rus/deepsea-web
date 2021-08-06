@@ -33,7 +33,7 @@
         </div>
         <span class="px-10" *ngFor="let varMap of msg.variables">
           <div class="px-10">
-            <span class="bold-text">{{msg.author}}</span><span class="text-descr"> changed </span><span class="bold-text">{{varMap.name}}</span><span class=""><img src="assets/right-arrow.svg" height="15"></span><span [innerHTML]="varMap.value"></span>
+            <span class="bold-text">{{msg.author}}</span><span class="text-descr"> changed </span><span class="bold-text">{{varMap.name}}</span><span class="py-10"><img src="assets/right-arrow.svg" height="10"></span><span [innerHTML]="varMap.value"></span>
 
           </div>
         </span>
@@ -45,9 +45,11 @@
       <div class="header text-head">Сведения</div>
       <div class="table">
         <div class="df mb-2 mt-1">
-          <div class="normal-text">Статус</div>
-          <p-dropdown styleClass="descr-task" [(ngModel)]="issue.status" [options]="getAvailableStatuses(issue)" (ngModelChange)="statusChanged()">
-          </p-dropdown>
+          <div class="normal-text w-50">Статус</div>
+          <div class="descr-task">
+            <p-dropdown [(ngModel)]="issue.status" [options]="getAvailableStatuses(issue)" (ngModelChange)="statusChanged()">
+            </p-dropdown>
+          </div>
         </div>
         <div class="df mb-2 mt-1">
           <div class="normal-text w-50">Исполнитель</div>

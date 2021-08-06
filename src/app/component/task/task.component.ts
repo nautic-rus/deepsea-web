@@ -29,6 +29,7 @@ export class TaskComponent implements OnInit {
   }
 
   getMessages(issue: Issue) {
+    // @ts-ignore
     return _.sortBy(issue.messages, x => x.date);
   }
 
