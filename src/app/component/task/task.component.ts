@@ -20,9 +20,6 @@ export class TaskComponent implements OnInit {
   constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, private auth: AuthManagerService) { }
 
   ngOnInit(): void {
-    this.refreshIssue();
-  }
-  refreshIssue(){
     this.issue = this.conf.data as Issue;
   }
   getDate(dateLong: number): string{
@@ -68,12 +65,13 @@ export class TaskComponent implements OnInit {
 
   sendMessage() {
     let message = new IssueMessage();
-    message.date = new Date().getTime();
     message.author = this.auth.getUser().login;
     message.content = this.message;
     this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
-      console.log(res);
-      this.refreshIssue();
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+        this.issue = issue;
+      });
     });
+    this.comment = false;
   }
 }

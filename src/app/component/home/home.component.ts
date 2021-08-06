@@ -64,6 +64,8 @@ export class HomeComponent implements OnInit {
         header: 'Задача: ' + res.name,
         modal: true,
         data: res
+      }).onClose.subscribe(res => {
+        this.fillIssues();
       });
     });
   }
