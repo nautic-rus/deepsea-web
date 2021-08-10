@@ -103,7 +103,7 @@
         </div>
         <span class="px-10" *ngFor="let varMap of msg.variables">
           <div class="px-10 df">
-            <span class="bold-text">{{msg.author}}</span><span class="text-descr py-5"> changed </span><span class="bold-text">{{varMap.name}}</span><span class="py-10"><img src="assets/right-arrow.svg" height="13"></span><span [innerHTML]="varMap.value"></span>
+            <span class="bold-text">{{msg.author}}</span><span class="text-descr py-5"> changed </span><span class="bold-text">{{varMap.name}}</span><span class="py-10"><span [innerHTML]="getPrevValue(issue.messages, varMap.name, msg.date)"></span><img src="assets/right-arrow.svg" height="13"></span><span [innerHTML]="varMap.value"></span>
           </div>
         </span>
       </div>

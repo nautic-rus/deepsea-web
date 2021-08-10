@@ -43,7 +43,7 @@
       <div *ngFor="let file of loaded">{{file.name}}</div>
     </div>
   </div>
-  <div *ngIf="taskType == 'IT'">
+  <div *ngIf="taskType == 'it-task'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>

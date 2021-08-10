@@ -25,11 +25,14 @@ export class IssueManagerService {
   }
 
 
-  async initIssue(user: string) {
-    return await this.http.get<IssueDef>(props.http + '/initIssue', {params: {user: user}}).toPromise();
+  async getIssueProjects() {
+    return await this.http.get<string[]>(props.http + '/issueProjects').toPromise();
   }
-  async processIssue(issue: Issue){
-    return await this.http.post(props.http + '/processIssue', JSON.stringify(issue)).toPromise();
+  async getIssueTypes() {
+    return await this.http.get<string[]>(props.http + '/issueTypes').toPromise();
+  }
+  async startIssue(user: string, issue: Issue){
+    return await this.http.post(props.http + '/startIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();
   }
   async getIssues(login: string): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/issues', {params: {user: login}}).toPromise();

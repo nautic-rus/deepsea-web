@@ -52,9 +52,7 @@ export class HomeComponent implements OnInit {
       header: 'Создать задачу',
       modal: true
     }).onClose.subscribe(res => {
-      if (res == 'success'){
-        this.fillIssues();
-      }
+      this.fillIssues();
     });
   }
   viewTask(id: string) {
