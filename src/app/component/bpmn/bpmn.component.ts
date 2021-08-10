@@ -132,6 +132,7 @@ export class BpmnComponent implements OnInit {
       this.http.post<string>(props.http + '/deployProcess', formData).subscribe(res => {
         if (res == "success"){
           this.messageService.add({severity:'success', summary:'Deployment', detail:'You have uploaded this model to server'});
+          this.getModels();
         }
       });
     });
