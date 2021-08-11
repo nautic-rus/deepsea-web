@@ -80,6 +80,7 @@ export class TaskComponent implements OnInit {
       case 'jpg': return 'jpg.svg';
       case 'txt': return 'txt.svg';
       case 'zip': return 'zip.svg';
+      case 'mp4': return 'mp4.svg';
       default: return 'file.svg';
     }
   }
@@ -106,4 +107,6 @@ export class TaskComponent implements OnInit {
       return input;
     }
   }
+
+
 }

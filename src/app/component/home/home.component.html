@@ -32,7 +32,7 @@
         <tr>
           <th *ngFor="let col of columns" pReorderableColumn [pSortableColumn]="col.variable">
             <div class="header">
-              {{col.header}}
+              {{localeHeader(col.header)}}
               <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.variable"></p-sortIcon>
               <p-columnFilter class="filter" *ngIf="col.filter == true" [field]="col.variable" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">

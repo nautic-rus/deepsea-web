@@ -1,13 +1,12 @@
 .center{
-  height: fit-content;
-  max-height: 650px;
-  min-height: 500px;
-  min-width: 900px;
+  height: 650px;
+  width: 1000px!important;
   display: flex;
 }
 .left-content{
   width: calc(1.2 * min(1680px, 100%) + -12px);
   overflow-y: auto;
+  padding-right: 15px;
 }
 .button-new{
   background-color: rgba(9, 30, 66, 0.04);
@@ -178,7 +177,7 @@
 .attachment{
   border-radius: 3px;
   border: 1px solid #ccc;
-  width: 150px;
+  width: 135px;
   height: 120px;
   transition: all 0.3s ease 0s;
   position: relative;
@@ -186,7 +185,7 @@
 }
 .attachments{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   max-height: 250px;
   overflow-y: auto;
@@ -208,6 +207,19 @@
   background: rgb(80, 95, 121);
   color: rgb(244, 245, 247) !important
 }
+.check-button:hover{
+  background: rgb(80, 95, 121);
+  color: rgb(244, 245, 247) !important
+}
 .attachment-center{
   height: calc(100% - 36px);
+}
+.content-task{
+  height: 50%;
+  overflow-y: auto;
+}
+.descr-task{
+  width: 96%;
+  text-align: justify;
+  padding-right: 15px;
 }

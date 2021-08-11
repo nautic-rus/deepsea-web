@@ -9,11 +9,8 @@
       </div>
     </div>
     <div class="big-text mb-1 mt-2">Описание задачи</div>
-    <div class="text description"><span [innerHTML]="issue.details"></span></div>
-
-
+    <div class="text description descr-task"><span [innerHTML]="issue.details"></span></div>
     <div class="big-text mb-1 mt-2">Вложения</div>
-
       <div class="attachments">
         <div *ngFor="let file of issue.fileAttachments">
           <div (click)="openFile(file.url)" class="attachment">

@@ -73,4 +73,17 @@ export class HomeComponent implements OnInit {
   getFilters(issues: any[], variable: string): any[] {
     return _.uniq(issues, x => x[variable]).map(x => x[variable]);
   }
+  localeHeader(input: string): string{
+    switch (input) {
+      case 'TaskId': return 'ID';
+      case 'Author': return 'Автор';
+      case 'Project': return 'Проект';
+      case 'Department': return 'Отдел';
+      case 'Summary': return 'Название';
+      case 'Assigned To': return 'Исполнитель';
+      case 'Status': return 'Статус';
+      default: return input;
+
+    }
+  }
 }
