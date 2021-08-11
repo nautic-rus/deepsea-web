@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 // import Modeler from 'bpmn-js/lib/Modeler.js';
 // @ts-ignore
@@ -12,6 +12,7 @@ import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import * as _ from 'underscore';
 import * as props from "../../props";
 import {FileAttachment} from "../../domain/classes/file-attachment";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-bpmn',
@@ -21,11 +22,12 @@ import {FileAttachment} from "../../domain/classes/file-attachment";
 export class BpmnComponent implements OnInit {
 
   modeler: BpmnJS;
-
+  selectedModel = '';
+  models: string[] = [];
   // @ts-ignore
   @ViewChild('canvas') canvesRef: ElementRef;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -48,9 +50,27 @@ export class BpmnComponent implements OnInit {
     this.modeler.on('import.done', ({some}) => {
       this.modeler.get('canvas').zoom('fit-viewport', 'auto');
     });
-    this.createNew();
+    this.getModels();
   }
-
+  getModels(){
+    this.http.get<string[]>(props.http + '/getUploadedDeployments').subscribe(res => {
+      this.models = res;
+      if (this.models.length > 0){
+        this.selectedModel = this.models[0];
+        this.getModel();
+      }
+    });
+  }
+  getModel(){
+    this.http.get(props.http + '/getDeploymentResource', { responseType: 'arraybuffer', params: {id: this.selectedModel}}).subscribe(res => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.modeler.importXML(reader.result);
+      };
+      let blob = new Blob([new Uint8Array(res)]);
+      reader.readAsText(blob);
+    });
+  }
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -98,56 +118,27 @@ export class BpmnComponent implements OnInit {
       document.body.removeChild(element);
     });
   }
-  statusValue = 'noValue';
-  taskNumber = 'aa';
-  taskName = 'bbb';
-  getStatus() {
-    this.http.get('http://localhost:8080/get-process-status', {responseType: 'text'}).subscribe({
-      next: data => {
-        this.statusValue = data;
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
-  }
-  setTaskNumber() {
-    this.http.post('http://localhost:8080/set-task-number', null, {params: {taskNumber: this.taskNumber}, responseType: 'text'}).subscribe({
-      next: data => {
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
-  }
-  setTaskName() {
-    this.http.post('http://localhost:8080/set-task-name', null, {params: {taskName: this.taskName}, responseType: 'text'}).subscribe({
-      next: data => {
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
-  }
-
-  uploadModel() {
-    this.http.post('http://localhost:8080/upload', null, {responseType: 'text'}).subscribe({
-      next: data => {
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
-  }
-
   depoloy() {
     const formData: FormData = new FormData();
     // @ts-ignore
     this.modeler.saveXML().then(res => {
-      formData.append('file', encodeURIComponent(res.xml), 'upload');
-      this.http.post(props.http + '/deployProcess', formData).subscribe(res => {
-        alert('success');
+      let utf8 = unescape(encodeURIComponent(res.xml));
+      let arr = [];
+      for (let i = 0; i < utf8.length; i++) {
+        arr.push(utf8.charCodeAt(i));
+      }
+      let blob = new Blob([new Uint8Array(arr)]);
+      formData.append('file', blob, 'upload.bpmn');
+      this.http.post<string>(props.http + '/deployProcess', formData).subscribe(res => {
+        if (res == "success"){
+          this.messageService.add({severity:'success', summary:'Deployment', detail:'You have uploaded this model to server'});
+          this.getModels();
+        }
       });
     });
+  }
+
+  onModelChanged() {
+    this.getModel();
   }
 }

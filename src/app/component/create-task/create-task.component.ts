@@ -13,7 +13,6 @@ import {DynamicDialogRef} from "primeng/dynamicdialog";
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
-  taskId = '';
   taskSummary = '';
   taskDetails = '';
   taskProjects: string[] = [];
@@ -29,16 +28,16 @@ export class CreateTaskComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.issues.initIssue(this.auth.getUser().login).then(issueDef => {
-      this.taskId = issueDef.id;
-      this.taskProjects = issueDef.issueProjects;
-      this.taskTypes = issueDef.issueTypes;
-      this.taskProject = this.taskProjects[0];
-      this.taskType = this.taskTypes[0];
+    this.issues.getIssueTypes().then(types => {
+      this.taskTypes = types;
+      if (this.taskTypes.length > 0){
+        this.taskType = this.taskTypes[0];
+      }
     });
-    this.ref.onClose.subscribe(res => {
-      if (res != 'success'){
-        this.issues.removeIssue(this.taskId)
+    this.issues.getIssueProjects().then(projects => {
+      this.taskProjects = projects;
+      if (this.taskProjects.length > 0){
+        this.taskProject = this.taskProjects[0];
       }
     });
   }
@@ -69,7 +68,6 @@ export class CreateTaskComponent implements OnInit {
 
   createTask() {
     const issue = new Issue();
-    issue.id = this.taskId;
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
     issue.taskType = this.taskType;
@@ -77,7 +75,7 @@ export class CreateTaskComponent implements OnInit {
     issue.project = this.taskProject;
     // @ts-ignore
     issue.fileAttachments = this.loaded;
-    this.issues.processIssue(issue).then(res => {
+    this.issues.startIssue(this.auth.getUser().login, issue).then(res => {
       this.ref.close(res);
     });
   }

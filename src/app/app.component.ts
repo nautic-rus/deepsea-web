@@ -10,6 +10,21 @@ import {PrimeNGConfig} from "primeng/api";
   styleUrls: ['./app.component.css'],
   animations: [
     trigger('routeAnimations', [
+      transition('* => BpmnComponent', [
+        query(':enter, :leave', [
+          style({
+            position: 'fixed',
+            width: '100%',
+            height: '100%',
+            opacity: 0
+          })
+        ], { optional: true } ),
+        query(':enter', [
+          animate('.5s',
+            style({ opacity: 1 })
+          ),
+        ], { optional: true } ),
+      ]),
       transition('* <=> LoginComponent', [
         query(':enter, :leave', [
           style({
