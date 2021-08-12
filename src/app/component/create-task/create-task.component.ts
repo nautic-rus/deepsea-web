@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IssueManagerService} from "../../domain/issue-manager.service";
-import {HttpClient} from "@angular/common/http";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {Issue} from "../../domain/classes/issue";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Editor} from "primeng/editor";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
+import { mouseWheelZoom } from 'mouse-wheel-zoom';
 
 @Component({
   selector: 'app-create-task',
@@ -24,8 +24,12 @@ export class CreateTaskComponent implements OnInit {
   taskResponsible: any;
   taskStart: any;
   dragOver = false;
+  image = '';
+  showImages = false;
+  // @ts-ignore
+  @ViewChild('editor') editor: Editor;
+  // @ts-ignore
   constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef) { }
-
 
   ngOnInit(): void {
     this.issues.getIssueTypes().then(types => {
@@ -65,7 +69,31 @@ export class CreateTaskComponent implements OnInit {
       }
     }
   }
-
+  handleImageInput(files: FileList | null) {
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          // @ts-ignore
+          const find = this.loaded.find(x => x.name == file.name);
+          if (find != null){
+            this.loaded.splice(this.loaded.indexOf(find), 1);
+          }
+          this.awaitForLoad.push(file.name);
+        }
+      }
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          const q = "'";
+          this.issues.uploadFile(file).then(res => {
+            this.editor.quill.root.innerHTML += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            this.loaded.push(res);
+          });
+        }
+      }
+    }
+  }
   createTask() {
     const issue = new Issue();
     issue.name = this.taskSummary;
@@ -119,5 +147,36 @@ export class CreateTaskComponent implements OnInit {
     event.preventDefault();
     // @ts-ignore
     this.handleFileInput(event.dataTransfer.files);
+  }
+
+  editorClicked(event: any) {
+    if (event.target.localName == 'img'){
+      this.showImage(event.target.currentSrc);
+      //window.open(event.target.currentSrc);
+    }
+  }
+  // @ts-ignore
+  @ViewChild('img') img;
+  // @ts-ignore
+  wz;
+  showImage(url: string){
+    this.image = url;
+    this.showImages = true;
+    setTimeout(() => {
+      if (this.wz == null){
+        this.wz = mouseWheelZoom({
+          // @ts-ignore
+          element: document.querySelector('[data-wheel-zoom]'),
+          zoomStep: .25
+        });
+      }
+      this.wz.setSrcAndReset(url);
+    });
+  }
+
+  closeShowImage() {
+    this.showImages = false;
+    this.img = '';
+    this.wz.setSrcAndReset('');
   }
 }

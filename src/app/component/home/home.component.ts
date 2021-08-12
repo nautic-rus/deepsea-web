@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
@@ -7,7 +7,6 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
 import {TaskComponent} from "../task/task.component";
-import {User} from "../../domain/classes/user";
 
 @Component({
   selector: 'app-home',

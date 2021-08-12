@@ -28,7 +28,8 @@ import {CascadeSelectModule} from "primeng/cascadeselect";
 import {CalendarModule} from "primeng/calendar";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
-import {MessagesModule} from "primeng/messages";                  //api
+import {MessagesModule} from "primeng/messages";
+import {GalleriaModule} from "primeng/galleria";                  //api
 
 @NgModule({
   declarations: [
@@ -40,29 +41,30 @@ import {MessagesModule} from "primeng/messages";                  //api
     CreateTaskComponent,
     TaskComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AccordionModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        ProgressBarModule,
-        ButtonModule,
-        SliderModule,
-        DropdownModule,
-        TooltipModule,
-        ToastModule,
-        EditorModule,
-        DialogModule,
-        CascadeSelectModule,
-        CalendarModule,
-        ProgressSpinnerModule,
-        MessagesModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ProgressBarModule,
+    ButtonModule,
+    SliderModule,
+    DropdownModule,
+    TooltipModule,
+    ToastModule,
+    EditorModule,
+    DialogModule,
+    CascadeSelectModule,
+    CalendarModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+    GalleriaModule,
+  ],
   providers: [MessageService, DialogService, DynamicDialogRef],
   bootstrap: [AppComponent]
 })
