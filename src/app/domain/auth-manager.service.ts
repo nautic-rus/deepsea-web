@@ -32,7 +32,7 @@ export class AuthManagerService {
       return find.surname + ' ' + find.name;
     }
     else{
-      return '';
+      return login;
     }
   }
   login(login: string, password: string, redirectUrl = '', redirect = true, save = true){
