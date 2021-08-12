@@ -63,6 +63,7 @@ select:focus {
   padding: 3px;
   overflow-y: auto;
   width: 700px;
+  min-height: 300px;
 }
 .form-footer{
   height: 50px;

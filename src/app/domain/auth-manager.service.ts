@@ -6,6 +6,7 @@ import {User} from "./classes/user";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {Observable} from "rxjs";
+import {Issue} from "./classes/issue";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,25 @@ export class AuthManagerService {
   private token = '';
   private authenticated = false;
   private user: User = new User();
+  users: User[] = [];
 
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService) {
-
+    this.fillUsers();
   }
-
+  fillUsers(){
+    this.getUsers().then(data => {
+      this.users = data;
+    });
+  }
+  getUserName(login: string){
+    let find = this.users.find(x => x.login == login);
+    if (find != null){
+      return find.surname + ' ' + find.name;
+    }
+    else{
+      return '';
+    }
+  }
   login(login: string, password: string, redirectUrl = '', redirect = true, save = true){
     this.http.get(props.http + '/login', {params: {login: login, password: password}}).subscribe({
       next: data => {
@@ -54,6 +69,9 @@ export class AuthManagerService {
   }
   getUser(): User{
     return this.user;
+  }
+  async getUsers(): Promise<User[]> {
+    return await this.http.get<User[]>(props.http + '/users').toPromise();
   }
   async checkAuth(qParams: any = null, noGuard = false) {
     // this.authenticated = true;

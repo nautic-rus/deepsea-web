@@ -7,6 +7,7 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
 import {TaskComponent} from "../task/task.component";
+import {User} from "../../domain/classes/user";
 
 @Component({
   selector: 'app-home',
@@ -42,11 +43,9 @@ export class HomeComponent implements OnInit {
   }
   fillIssues(){
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
-      console.log(data);
       this.issues = data;
     });
   }
-
   newTask() {
    this.dialogService.open(CreateTaskComponent, {
       header: 'Создать задачу',

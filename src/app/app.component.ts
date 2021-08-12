@@ -25,7 +25,7 @@ import {PrimeNGConfig} from "primeng/api";
           ),
         ], { optional: true } ),
       ]),
-      transition('* <=> LoginComponent', [
+      transition('* => LoginComponent', [
         query(':enter, :leave', [
           style({
             position: 'fixed',
