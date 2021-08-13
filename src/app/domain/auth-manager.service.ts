@@ -35,6 +35,15 @@ export class AuthManagerService {
       return '';
     }
   }
+  getUserAvatar(login: string){
+    let find = this.users.find(x => x.login == login);
+    if (find != null){
+      return find.avatar;
+    }
+    else{
+      return '';
+    }
+  }
   login(login: string, password: string, redirectUrl = '', redirect = true, save = true){
     this.http.get(props.http + '/login', {params: {login: login, password: password}}).subscribe({
       next: data => {

@@ -18,10 +18,13 @@ export class TaskComponent implements OnInit {
   message = '';
   comment = false;
   messageFilter = 'all';
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, private auth: AuthManagerService) { }
+  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
+  }
+  close(){
+    this.ref.close('exit');
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);

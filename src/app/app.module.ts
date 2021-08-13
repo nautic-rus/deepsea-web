@@ -28,7 +28,8 @@ import {CascadeSelectModule} from "primeng/cascadeselect";
 import {CalendarModule} from "primeng/calendar";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
-import {MessagesModule} from "primeng/messages";                  //api
+import {MessagesModule} from "primeng/messages";
+import { SafeHtmlPipe } from './domain/safe-html.pipe';                  //api
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {MessagesModule} from "primeng/messages";                  //api
     BpmnComponent,
     CreateTaskComponent,
     TaskComponent,
+    SafeHtmlPipe,
   ],
     imports: [
         BrowserModule,

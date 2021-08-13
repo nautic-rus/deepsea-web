@@ -51,4 +51,14 @@ export class IssueManagerService {
       console.log("Removing task with id " + id + ": " + res);
     });
   }
+  localeStatus(input: string): string {
+    switch (input) {
+      case 'In Work': return 'В работе';
+      case 'Resolved': return 'Исполнено';
+      case 'New': return 'Новый';
+      case 'Rejected': return 'Отклонено';
+      case 'Check': return 'На проверке';
+      default: return input;
+    }
+  }
 }

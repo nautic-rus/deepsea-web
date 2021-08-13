@@ -1,6 +1,6 @@
 .center{
   height: 650px;
-  width: 1000px!important;
+  width: 60vw!important;
   display: flex;
 }
 .left-content{
@@ -222,4 +222,26 @@
   width: 96%;
   text-align: justify;
   padding-right: 15px;
+}
+.task-header{
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  height: 70px;
+  padding-top: 2rem;
+  margin-bottom: 1rem;
+}
+.task-name{
+  font-size: x-large;
+  font-weight: 600;
+}
+.task-buttons{
+  display: flex;
+  justify-content: flex-end;
+}
+.task-button{
+  border-radius: 2px;
+  margin-left: 8px;
+}
+.task-button:hover{
+  background-color: rgba(224, 224, 224, 0.84);
 }
