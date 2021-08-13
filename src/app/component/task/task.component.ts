@@ -24,7 +24,7 @@ export class TaskComponent implements OnInit {
   // @ts-ignore
   @ViewChild('editor') editor;
 
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, private auth: AuthManagerService) { }
+  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
