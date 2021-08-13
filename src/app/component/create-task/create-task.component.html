@@ -47,7 +47,7 @@
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px'}">
+    <p-editor (click)="editorClicked($event)" #editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px'}">
       <p-header>
 <!--        <span class="ql-formats">-->
 <!--          <select class="ql-header" tabindex="-1">-->
@@ -82,7 +82,10 @@
         </span>
         <span class="ql-formats">
           <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
-          <button class="ql-image" aria-label="Insert Image" tabindex="-1"></button>
+          <button (click)="selectImage.click()">
+            <i class="pi pi-image"></i>
+          </button>
+          <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
           <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
         </span>
         <span class="ql-formats">
@@ -114,3 +117,11 @@
 </div>
 
 
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+
+  </div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>

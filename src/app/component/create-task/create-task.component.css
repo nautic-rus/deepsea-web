@@ -131,3 +131,25 @@ select:focus {
     stroke: #2e798e;
   }
 }
+.image-preview-backdrop{
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: calc(100%*4);
+  height: calc(100%*4);
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.image-preview-scale{
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+  overflow: hidden;
+}
+.image-preview{
+  max-width: 95vw;
+  max-height: 95vh;
+}

@@ -32,7 +32,7 @@ export class AuthManagerService {
       return find.surname + ' ' + find.name;
     }
     else{
-      return '';
+      return login;
     }
   }
   getUserAvatar(login: string){

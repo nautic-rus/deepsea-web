@@ -30,6 +30,7 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {MessagesModule} from "primeng/messages";
 import { SafeHtmlPipe } from './domain/safe-html.pipe';                  //api
+import {GalleriaModule} from "primeng/galleria";                  //api
 
 @NgModule({
   declarations: [
@@ -42,29 +43,30 @@ import { SafeHtmlPipe } from './domain/safe-html.pipe';                  //api
     TaskComponent,
     SafeHtmlPipe,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AccordionModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        ProgressBarModule,
-        ButtonModule,
-        SliderModule,
-        DropdownModule,
-        TooltipModule,
-        ToastModule,
-        EditorModule,
-        DialogModule,
-        CascadeSelectModule,
-        CalendarModule,
-        ProgressSpinnerModule,
-        MessagesModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ProgressBarModule,
+    ButtonModule,
+    SliderModule,
+    DropdownModule,
+    TooltipModule,
+    ToastModule,
+    EditorModule,
+    DialogModule,
+    CascadeSelectModule,
+    CalendarModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+    GalleriaModule,
+  ],
   providers: [MessageService, DialogService, DynamicDialogRef],
   bootstrap: [AppComponent]
 })
