@@ -95,7 +95,7 @@
     </p-editor>
     <div class="big-text mb-1 mt-1">Вложение</div>
     <div [class.file-drag]="dragOver" class="upload cx cy loading">
-      <div  class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+      <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
         <img class="mr-1 image no-actions" src="assets/upload.svg" height="28">
         <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
       </div>

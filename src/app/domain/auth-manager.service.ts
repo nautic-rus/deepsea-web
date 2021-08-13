@@ -21,6 +21,11 @@ export class AuthManagerService {
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService) {
     this.fillUsers();
   }
+  exit(){
+    this.setUser(new User(), true);
+    this.authenticated = false;
+    this.router.navigate(['login']);
+  }
   fillUsers(){
     this.getUsers().then(data => {
       this.users = data;
