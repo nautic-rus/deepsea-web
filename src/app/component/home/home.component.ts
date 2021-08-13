@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   issues: Issue[] = [];
   cols: any[] = [];
   _selectedColumns: any[] = [];
-  constructor(private router: Router, private issueManager: IssueManagerService, private auth: AuthManagerService, private dialogService: DialogService) { }
+  constructor(private router: Router, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
   }

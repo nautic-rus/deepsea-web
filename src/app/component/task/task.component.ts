@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
@@ -6,6 +6,7 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Editor} from "primeng/editor";
 import {IssueMessage} from "../../domain/classes/issue-message";
+import {FileAttachment} from "../../domain/classes/file-attachment";
 
 @Component({
   selector: 'app-task',
@@ -18,6 +19,11 @@ export class TaskComponent implements OnInit {
   message = '';
   comment = false;
   messageFilter = 'all';
+  awaitForLoad: string[] = [];
+  loaded: FileAttachment[] = [];
+  // @ts-ignore
+  @ViewChild('editor') editor;
+
   constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, private auth: AuthManagerService) { }
 
   ngOnInit(): void {
@@ -88,6 +94,8 @@ export class TaskComponent implements OnInit {
     let message = new IssueMessage();
     message.author = this.auth.getUser().login;
     message.content = this.message;
+    message.fileAttachments = this.loaded;
+
     // @ts-ignore
     this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
       this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
@@ -107,7 +115,67 @@ export class TaskComponent implements OnInit {
       return input;
     }
   }
+  handleImageInput(files: FileList | null) {
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          // @ts-ignore
+          const find = this.loaded.find(x => x.name == file.name);
+          if (find != null){
+            this.loaded.splice(this.loaded.indexOf(find), 1);
+          }
+          this.awaitForLoad.push(file.name);
+        }
+      }
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          this.issueManager.uploadFile(file).then(res => {
+            this.editor.quill.root.innerHTML += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            this.loaded.push(res);
+          });
+        }
+      }
+    }
+  }
+  handleFileInput(files: FileList | null) {
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          // @ts-ignore
+          const find = this.loaded.find(x => x.name == file.name);
+          if (find != null){
+            this.loaded.splice(this.loaded.indexOf(find), 1);
+          }
+          this.awaitForLoad.push(file.name);
+        }
+      }
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          this.issueManager.uploadFile(file).then(res => {
+            this.loaded.push(res);
+          });
+        }
+      }
+    }
+  }
+  isLoaded(file: string) {
+    return this.loaded.find(x => x.name == file);
+  }
 
+  remove(file: string) {
+    let find = this.loaded.find(x => x.name == file);
+    if (find != null){
+      this.loaded.splice(this.loaded.indexOf(find), 1);
+    }
+    let findAwait = this.awaitForLoad.find(x => x == file);
+    if (findAwait != null){
+      this.awaitForLoad.splice(this.awaitForLoad.indexOf(findAwait), 1);
+    }
+  }
   getPrevValue(messages: IssueMessage[], name: string, date: number): string {
     let res = '';
     messages.filter(x => x.date < date).forEach(x => {

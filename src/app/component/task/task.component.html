@@ -11,7 +11,7 @@
     <div class="big-text mb-1 mt-2">Описание задачи</div>
     <div class="text description descr-task"><span [innerHTML]="issue.details"></span></div>
     <div class="big-text mb-1 mt-2">Вложения</div>
-      <div class="attachments">
+    <div class="attachments">
         <div *ngFor="let file of issue.fileAttachments">
           <div (click)="openFile(file.url)" class="attachment">
             <div class="cxy attachment-center">
@@ -66,7 +66,14 @@
         </span>
           <span class="ql-formats">
           <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
-          <button class="ql-image" aria-label="Insert Image" tabindex="-1"></button>
+          <button (click)="selectImage.click()">
+            <i class="pi pi-image"></i>
+          </button>
+          <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+          <button (click)="selectFiles.click()">
+            <i class="pi pi-file"></i>
+          </button>
+          <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
           <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
         </span>
           <span class="ql-formats">
@@ -74,6 +81,12 @@
         </span>
         </p-header>
       </p-editor>
+      <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+        <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+        <div class="cy">{{file}}</div>
+        <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+        <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+      </div>
       <div class="df mt-5">
         <div class="mr-5">
           <div (click)="sendMessage()" pButton label="Save" class="button"></div>
@@ -93,6 +106,19 @@
         <div class="px-10">
           <span class="bold-text">{{msg.author}}</span><span class="text-descr"> posted message at <span class="text-date"> {{getDate(msg.date)}} </span></span>
           <div [innerHTML]="msg.content"></div>
+          <div class="attachments">
+            <div *ngFor="let file of msg.fileAttachments">
+              <div (click)="openFile(file.url)" class="attachment">
+                <div class="cxy attachment-center">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
+                </div>
+                <div class="attachment-footer">
+                  <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
+                  <div>06 авг. 2021, 13:57</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div *ngIf="(messageFilter == 'all' || messageFilter == 'camunda') && msg.owner == 'camunda'">

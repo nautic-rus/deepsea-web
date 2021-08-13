@@ -1,4 +1,5 @@
 import {VarMap} from "./var-map";
+import {FileAttachment} from "./file-attachment";
 
 export class IssueMessage {
   owner: string = '';
@@ -6,4 +7,5 @@ export class IssueMessage {
   content: string = '';
   date: number = 0;
   variables: VarMap[] = [];
+  fileAttachments: FileAttachment[] = [];
 }
