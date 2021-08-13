@@ -8,6 +8,9 @@ body,p{
 .w-100{
   width: 100%;
 }
+.w-60{
+  width: 60vw;
+}
 .w-50{
   width: 50%;
 }

@@ -58,6 +58,7 @@ export class IssueManagerService {
       case 'New': return 'Новый';
       case 'Rejected': return 'Отклонено';
       case 'Check': return 'На проверке';
+      case 'In rework': return 'На доработке';
       default: return input;
     }
   }

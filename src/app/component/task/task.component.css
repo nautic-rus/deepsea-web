@@ -1,12 +1,15 @@
 .center{
   height: 650px;
-  width: 60vw!important;
   display: flex;
 }
 .left-content{
-  width: calc(1.2 * min(1680px, 100%) + -12px);
+  width: 65%;
   overflow-y: auto;
   padding-right: 15px;
+}
+.right-content{
+  width: 35%;
+  padding-left: 15px;
 }
 .button-new{
   background-color: rgba(9, 30, 66, 0.04);
@@ -55,10 +58,7 @@
 .text:hover{
   background-color: rgb(235, 236, 240);
 }
-.right-content{
-  width: calc(0.8 * min(1680px, 100%) + 12px);
-  padding-left: 15px;
-}
+
 .header{
   position: relative;
   display: flex;
@@ -235,13 +235,15 @@
   font-weight: 600;
 }
 .task-buttons{
+  height: 32px;
   display: flex;
   justify-content: flex-end;
 }
 .task-button{
-  border-radius: 2px;
+  padding: 5px;
+  border-radius: 3px;
   margin-left: 8px;
 }
 .task-button:hover{
-  background-color: rgba(224, 224, 224, 0.84);
+  background-color: rgb(235, 236, 240);
 }
