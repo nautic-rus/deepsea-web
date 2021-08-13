@@ -51,7 +51,7 @@
       <ng-template pTemplate="body" let-columns="columns" let-issue>
         <tr class="task-row" (click)="viewTask(issue.id)">
           <td class="cursor-pointer" *ngFor="let col of columns">
-            <div *ngIf="col.skip == false">{{this.issue[col.variable]}}</div>
+            <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.variable], col.variable) | safeHtml"></div></div>
             <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
           </td>
         </tr>

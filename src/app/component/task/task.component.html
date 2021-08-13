@@ -1,3 +1,12 @@
+<div class="view-task-header task-header">
+  <div class="task-name">Задача:</div>
+  <div class="task-buttons">
+    <div class="task-button">O </div>
+    <div class="task-button">3</div>
+    <div class="task-button" (click)="close()">x</div>
+  </div>
+
+</div>
 <div class="center">
   <div class="left-content">
     <div class="buttons">
@@ -145,7 +154,7 @@
         </div>
         <div class="df mb-2 mt-1">
           <div class="normal-text w-50">Исполнитель</div>
-          <div class="descr-task w-50">{{issue.assignedTo}}</div>
+          <div class="descr-task w-50">{{auth.getUserName(issue.assignedTo)}}</div>
         </div>
 <!--        <div class="df mb-2 mt-1">-->
 <!--          <div class="normal-text w-50">Срок исполнения</div>-->
@@ -161,7 +170,7 @@
         </div>
         <div class="df mb-2 mt-1">
           <div class="normal-text w-50">Автор</div>
-          <div class="descr-task w-50">{{issue.startedBy}}</div>
+          <div class="descr-task w-50">{{auth.getUserName(issue.startedBy)}}</div>
         </div>
       </div>
     </div>

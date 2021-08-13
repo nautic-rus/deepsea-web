@@ -29,6 +29,7 @@ import {CalendarModule} from "primeng/calendar";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {MessagesModule} from "primeng/messages";
+import { SafeHtmlPipe } from './domain/safe-html.pipe';                  //api
 import {GalleriaModule} from "primeng/galleria";                  //api
 
 @NgModule({
@@ -40,6 +41,7 @@ import {GalleriaModule} from "primeng/galleria";                  //api
     BpmnComponent,
     CreateTaskComponent,
     TaskComponent,
+    SafeHtmlPipe,
   ],
   imports: [
     BrowserModule,

@@ -29,6 +29,9 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
   }
+  close(){
+    this.ref.close('exit');
+  }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
     let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);

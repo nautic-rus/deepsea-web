@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
     this.issueManager.getIssueDetails(id, this.auth.getUser().login).then(res => {
       console.log(res);
       this.dialogService.open(TaskComponent, {
-        header: 'Задача: ' + res.name,
+        showHeader: false,
         modal: true,
         data: res
       }).onClose.subscribe(res => {
@@ -80,6 +80,26 @@ export class HomeComponent implements OnInit {
       case 'Status': return 'Статус';
       default: return input;
 
+    }
+  }
+
+  localeColumn(issueElement: string, variable: string): string {
+    if (variable == 'startedBy'){
+      return this.auth.getUserName(issueElement);
+    }
+    else if (variable == 'assignedTo'){
+      if (issueElement == ''){
+        return '';
+      }
+      else {
+        return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
+      }
+    }
+    else if (variable == 'status'){
+      return this.issueManager.localeStatus(issueElement);
+    }
+    else{
+      return issueElement;
     }
   }
 }
