@@ -11,6 +11,7 @@ export class Issue {
   name: string = '';
   details: string = '';
   assignedTo: string = '';
+  profession: string = '';
   messages: IssueMessage[] = [];
   fileAttachments: FileAttachment[] = [];
   availableStatuses: string[] = [];

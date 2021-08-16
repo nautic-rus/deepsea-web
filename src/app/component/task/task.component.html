@@ -24,7 +24,9 @@
         </div>
       </div>
       <div class="big-text mb-1 mt-2">Описание задачи</div>
-      <div class="text description descr-task"><span [innerHTML]="issue.details"></span></div>
+      <div class="text description descr-task">
+        <quill-view [content]="issue.details" (contextmenu)="editorClicked($event)"></quill-view>
+      </div>
       <div class="big-text mb-1 mt-2">Вложения</div>
     <div class="attachments">
         <div *ngFor="let file of issue.fileAttachments">
@@ -166,7 +168,7 @@
           </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50"></div>
-            <div class="descr-task w-50">01.09.2021</div>
+            <div class="descr-task w-50">{{issue.profession}}</div>
           </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Срок исполнения</div>
