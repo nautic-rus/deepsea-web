@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
 
   localeColumn(issueElement: string, variable: string): string {
     if (variable == 'startedBy'){
-      return this.auth.getUserName(issueElement);
+      return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
     }
     else if (variable == 'assignedTo'){
       if (issueElement == ''){
