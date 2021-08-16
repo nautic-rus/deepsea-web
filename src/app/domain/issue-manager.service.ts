@@ -46,10 +46,8 @@ export class IssueManagerService {
   async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
     return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id: id}}).toPromise();
   }
-  removeIssue(id: string){
-    this.http.get(props.http + '/removeIssue', {params: {id: id}}).subscribe(res => {
-      console.log("Removing task with id " + id + ": " + res);
-    });
+  async removeIssue(id: string): Promise<string>{
+    return await this.http.get<string>(props.http + '/removeIssue', {params: {id: id}}).toPromise();
   }
   localeStatus(input: string): string {
     switch (input) {

@@ -30,7 +30,14 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {MessagesModule} from "primeng/messages";
 import { SafeHtmlPipe } from './domain/safe-html.pipe';                  //api
-import {GalleriaModule} from "primeng/galleria";                  //api
+import {GalleriaModule} from "primeng/galleria";
+import {QuillModule} from "ngx-quill";
+import Quill from "quill";                  //api
+// @ts-ignore
+import ImageResize from 'quill-image-resize-module';
+Quill.register('modules/imageResize', ImageResize);
+
+
 
 @NgModule({
   declarations: [
@@ -66,6 +73,12 @@ import {GalleriaModule} from "primeng/galleria";                  //api
     ProgressSpinnerModule,
     MessagesModule,
     GalleriaModule,
+    QuillModule.forRoot(),
+    QuillModule.forRoot({
+      modules:{
+        imageResize: {}
+      }
+    })
   ],
   providers: [MessageService, DialogService, DynamicDialogRef],
   bootstrap: [AppComponent]

@@ -7,6 +7,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Editor} from "primeng/editor";
 import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
+import {mouseWheelZoom} from "mouse-wheel-zoom";
 
 @Component({
   selector: 'app-task',
@@ -21,8 +22,14 @@ export class TaskComponent implements OnInit {
   messageFilter = 'all';
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
+  image = '';
+  showImages = false;
   // @ts-ignore
-  @ViewChild('editor') editor;
+  @ViewChild('img') img;
+  // @ts-ignore
+  wz;
+  // @ts-ignore
+  editor;
 
   constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, public auth: AuthManagerService) { }
 
@@ -71,10 +78,10 @@ export class TaskComponent implements OnInit {
     window.open(url);
   }
 
-  showComment(editor: Editor) {
+  showComment() {
     this.comment = true;
     setTimeout(() => {
-      editor.quill.focus();
+      this.editor.focus();
     })
   }
   getFileExtensionIcon(file: string) {
@@ -135,7 +142,7 @@ export class TaskComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           this.issueManager.uploadFile(file).then(res => {
-            this.editor.quill.root.innerHTML += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
             this.loaded.push(res);
           });
         }
@@ -168,7 +175,41 @@ export class TaskComponent implements OnInit {
   isLoaded(file: string) {
     return this.loaded.find(x => x.name == file);
   }
-
+  closeShowImage() {
+    this.showImages = false;
+    this.img = '';
+    this.wz.setSrcAndReset('');
+  }
+  onImagesDrop(event: DragEvent) {
+    event.preventDefault();
+    // @ts-ignore
+    this.handleImageInput(event.dataTransfer.files);
+  }
+  onEditorDrop(event: any) {
+    this.onImagesDrop(event);
+  }
+  editorClicked(event: any) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.target.localName == 'img'){
+      this.showImage(event.target.currentSrc);
+      //window.open(event.target.currentSrc);
+    }
+  }
+  showImage(url: string){
+    this.image = url;
+    this.showImages = true;
+    setTimeout(() => {
+      if (this.wz == null){
+        this.wz = mouseWheelZoom({
+          // @ts-ignore
+          element: document.querySelector('[data-wheel-zoom]'),
+          zoomStep: .25
+        });
+      }
+      this.wz.setSrcAndReset(url);
+    });
+  }
   remove(file: string) {
     let find = this.loaded.find(x => x.name == file);
     if (find != null){
@@ -188,5 +229,13 @@ export class TaskComponent implements OnInit {
       }
     });
     return res;
+  }
+
+  removeIssue() {
+    this.issueManager.removeIssue(this.issue.id);
+  }
+
+  editorInit(event: any) {
+    this.editor = event;
   }
 }

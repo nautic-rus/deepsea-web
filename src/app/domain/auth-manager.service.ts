@@ -21,6 +21,9 @@ export class AuthManagerService {
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService) {
     this.fillUsers();
   }
+  hasPerms(permissions: string): boolean{
+    return this.user.permissions.includes(permissions);
+  }
   exit(){
     this.setUser(new User(), true);
     this.authenticated = false;

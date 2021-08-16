@@ -254,7 +254,37 @@
   padding: 5px;
   border-radius: 3px;
   margin-left: 8px;
+  cursor: pointer;
 }
 .task-button:hover{
   background-color: rgb(235, 236, 240);
+}
+.button-disabled{
+  pointer-events: none;
+  opacity: 0.5;
+}
+/deep/ .ql-editor{
+  min-height: 150px;
+}
+.image-preview-backdrop{
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: calc(100%*4);
+  height: calc(100%*4);
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.image-preview-scale{
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+  overflow: hidden;
+}
+.image-preview{
+  max-width: 95vw;
+  max-height: 95vh;
 }

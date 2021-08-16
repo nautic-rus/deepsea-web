@@ -104,6 +104,13 @@ select:focus {
   grid-template-columns: 0.5fr 4fr 0.5fr 0.5fr;
 
 }
+.resizable {
+  display: inline-block;
+  background: red;
+  resize: both;
+  overflow: hidden;
+  line-height: 0;
+}
 .file-drag{
   opacity: 0.4;
   border: 2px dashed #ff6600;
@@ -152,4 +159,7 @@ select:focus {
 .image-preview{
   max-width: 95vw;
   max-height: 95vh;
+}
+/deep/ .ql-editor{
+  min-height: 150px;
 }

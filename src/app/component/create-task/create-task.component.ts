@@ -7,6 +7,8 @@ import {Editor} from "primeng/editor";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
 import { mouseWheelZoom } from 'mouse-wheel-zoom';
 
+
+
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
@@ -27,11 +29,18 @@ export class CreateTaskComponent implements OnInit {
   image = '';
   showImages = false;
   // @ts-ignore
-  @ViewChild('editor') editor: Editor;
+  @ViewChild('editor') editor;
   // @ts-ignore
+  @ViewChild('toolbar') toolbar;
+  // @ts-ignore
+  @ViewChild('img') img;
+  // @ts-ignore
+  wz;
   constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
+
+
     this.issues.getIssueTypes().then(types => {
       this.taskTypes = types;
       if (this.taskTypes.length > 0){
@@ -87,7 +96,7 @@ export class CreateTaskComponent implements OnInit {
         if (file != null){
           const q = "'";
           this.issues.uploadFile(file).then(res => {
-            this.editor.quill.root.innerHTML += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            this.taskDetails += '<img style="cursor: pointer; width: 200px; height: 200px" src="' + res.url + '"/>';
             this.loaded.push(res);
           });
         }
@@ -143,22 +152,25 @@ export class CreateTaskComponent implements OnInit {
     this.ref.close();
   }
 
-  onDrop(event: DragEvent) {
+  onFilesDrop(event: DragEvent) {
     event.preventDefault();
     // @ts-ignore
     this.handleFileInput(event.dataTransfer.files);
   }
-
+  onImagesDrop(event: DragEvent) {
+    event.preventDefault();
+    // @ts-ignore
+    this.handleImageInput(event.dataTransfer.files);
+  }
   editorClicked(event: any) {
+    event.preventDefault();
+    event.stopPropagation();
     if (event.target.localName == 'img'){
       this.showImage(event.target.currentSrc);
       //window.open(event.target.currentSrc);
     }
   }
-  // @ts-ignore
-  @ViewChild('img') img;
-  // @ts-ignore
-  wz;
+
   showImage(url: string){
     this.image = url;
     this.showImages = true;
@@ -178,5 +190,9 @@ export class CreateTaskComponent implements OnInit {
     this.showImages = false;
     this.img = '';
     this.wz.setSrcAndReset('');
+  }
+
+  onEditorDrop(event: any) {
+    this.onImagesDrop(event);
   }
 }
