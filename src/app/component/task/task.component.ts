@@ -107,7 +107,7 @@ export class TaskComponent implements OnInit {
     });
     this.comment = false;
   }
-  trimFileName(input: string, length: number = 12): string{
+  trimFileName(input: string, length: number = 9): string{
     let split = input.split('.');
     let name = split[0];
     let extension = split[1];
