@@ -1,6 +1,6 @@
 <div class="w-60">
   <div class="view-task-header task-header">
-    <div class="task-name">Задача:</div>
+    <div class="task-name">Задача: {{issue.name}}</div>
     <div class="task-buttons">
       <div class="task-button cxy" pTooltip="Копировать задачу">
         <img src="assets/copy.svg" height="20">
@@ -162,10 +162,14 @@
             <div class="normal-text w-50">Исполнитель</div>
             <div class="descr-task w-50">{{auth.getUserName(issue.assignedTo)}}</div>
           </div>
-          <!--        <div class="df mb-2 mt-1">-->
-          <!--          <div class="normal-text w-50">Срок исполнения</div>-->
-          <!--          <div class="descr-task w-50">01.09.2021</div>-->
-          <!--        </div>-->
+          <div class="df mb-2 mt-1">
+            <div class="normal-text w-50"></div>
+            <div class="descr-task w-50">01.09.2021</div>
+          </div>
+          <div class="df mb-2 mt-1">
+            <div class="normal-text w-50">Срок исполнения</div>
+            <div class="descr-task w-50">01.09.2021</div>
+          </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Проект</div>
             <div class="descr-task w-50">{{issue.project}}</div>
