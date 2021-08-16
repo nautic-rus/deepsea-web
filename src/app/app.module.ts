@@ -10,7 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { BpmnComponent } from './component/bpmn/bpmn.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
-import {MenuItem, MessageService} from 'primeng/api';
+import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
 import {TableModule} from "primeng/table";
 import {MultiSelectModule} from "primeng/multiselect";
 import {InputTextModule} from "primeng/inputtext";
@@ -35,6 +35,7 @@ import {QuillModule} from "ngx-quill";
 import Quill from "quill";                  //api
 // @ts-ignore
 import ImageResize from 'quill-image-resize-module';
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -75,12 +76,13 @@ Quill.register('modules/imageResize', ImageResize);
     GalleriaModule,
     QuillModule.forRoot(),
     QuillModule.forRoot({
-      modules:{
+      modules: {
         imageResize: {}
       }
-    })
+    }),
+    ConfirmDialogModule
   ],
-  providers: [MessageService, DialogService, DynamicDialogRef],
+  providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,7 @@ import {Editor} from "primeng/editor";
 import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
+import {ConfirmationService} from "primeng/api";
 
 @Component({
   selector: 'app-task',
@@ -31,7 +32,7 @@ export class TaskComponent implements OnInit {
   // @ts-ignore
   editor;
 
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, public auth: AuthManagerService) { }
+  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
@@ -232,9 +233,17 @@ export class TaskComponent implements OnInit {
   }
 
   removeIssue() {
-    this.issueManager.removeIssue(this.issue.id);
+    this.confirmRemove();
   }
-
+  confirmRemove() {
+    this.confirmationService.confirm({
+      message: 'Вы подтверждаете удаление задачи?',
+      accept: () => {
+        this.issueManager.removeIssue(this.issue.id);
+        this.ref.close();
+      }
+    });
+  }
   editorInit(event: any) {
     this.editor = event;
   }
