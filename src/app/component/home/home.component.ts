@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     return this._selectedColumns;
   }
   // @ts-ignore
-  @ViewChild('dt') dt;
+  @ViewChild('dt') dt: Table;
   set selectedColumns(val: any[]) {
     //restore original order
     this._selectedColumns = this.cols.filter(col => val.includes(col));
@@ -43,15 +43,22 @@ export class HomeComponent implements OnInit {
   }
   fillIssues(){
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
-      data.forEach(d => {
-        let find = this.issues.find(x => x.id == d.id);
-        if (find != null){
-          this.issues[this.issues.indexOf(find)] = d;
-        }
-        else{
-          this.issues.push(d);
-        }
-      });
+      this.updateIssues(data);
+    });
+  }
+  updateIssues(newIssues: Issue[]){
+    let newMap = newIssues.map(x => x.id);
+    this.issues.filter(x => !newMap.includes(x.id)).forEach(x => {
+      this.issues.splice(this.issues.indexOf(x), 1);
+    });
+    newIssues.forEach(issue => {
+      let find = this.issues.find(x => x.id == issue.id);
+      if (find != null){
+        this.issues[this.issues.indexOf(find)] = issue;
+      }
+      else{
+        this.issues.push(issue);
+      }
     });
   }
   newTask() {
