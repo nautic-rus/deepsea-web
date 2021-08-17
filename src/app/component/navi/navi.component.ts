@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthManagerService} from "../../domain/auth-manager.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-navi',
@@ -8,7 +9,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 })
 export class NaviComponent implements OnInit {
 
-  constructor(public auth: AuthManagerService) { }
+  constructor(public auth: AuthManagerService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }

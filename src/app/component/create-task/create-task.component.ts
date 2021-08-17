@@ -195,4 +195,11 @@ export class CreateTaskComponent implements OnInit {
   onEditorDrop(event: any) {
     this.onImagesDrop(event);
   }
+
+  isCreateTaskDisabled() {
+    switch (this.taskType) {
+      case 'it-task': return this.taskSummary.trim() == '' || this.taskDetails.trim() == '' || this.awaitForLoad.length > 0;
+      default: return false;
+    }
+  }
 }

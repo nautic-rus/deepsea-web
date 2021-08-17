@@ -163,3 +163,7 @@ select:focus {
 /deep/ .ql-editor{
   min-height: 150px;
 }
+.disabled-button{
+  pointer-events: none;
+  opacity: 0.5;
+}

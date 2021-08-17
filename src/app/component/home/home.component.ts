@@ -47,9 +47,11 @@ export class HomeComponent implements OnInit {
     });
   }
   updateIssues(newIssues: Issue[]){
-    let newMap = newIssues.map(x => x.id);
-    this.issues.filter(x => !newMap.includes(x.id)).forEach(x => {
-      this.issues.splice(this.issues.indexOf(x), 1);
+    this.issues.forEach(x => {
+      let find = newIssues.find(issue => issue.id == x.id);
+      if (find == null){
+        this.issues.splice(this.issues.indexOf(x), 1);
+      }
     });
     newIssues.forEach(issue => {
       let find = this.issues.find(x => x.id == issue.id);

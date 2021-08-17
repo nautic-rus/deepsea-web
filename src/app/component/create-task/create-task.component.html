@@ -101,7 +101,7 @@
 </div>
 <div class="form-footer">
   <div class="mr-1 cx">
-    <div (click)="createTask()" pButton label="Создать" class="button"></div>
+    <div [class.disabled-button]="isCreateTaskDisabled()" (click)="createTask()" pButton label="Создать" class="button"></div>
   </div>
   <div (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
 </div>
