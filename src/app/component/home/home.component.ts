@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
@@ -21,7 +21,8 @@ export class HomeComponent implements OnInit {
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
   }
-
+  // @ts-ignore
+  @ViewChild('dt') dt;
   set selectedColumns(val: any[]) {
     //restore original order
     this._selectedColumns = this.cols.filter(col => val.includes(col));
@@ -42,7 +43,15 @@ export class HomeComponent implements OnInit {
   }
   fillIssues(){
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
-      this.issues = data;
+      data.forEach(d => {
+        let find = this.issues.find(x => x.id == d.id);
+        if (find != null){
+          this.issues[this.issues.indexOf(find)] = d;
+        }
+        else{
+          this.issues.push(d);
+        }
+      });
     });
   }
   newTask() {
@@ -55,7 +64,6 @@ export class HomeComponent implements OnInit {
   }
   viewTask(id: string) {
     this.issueManager.getIssueDetails(id, this.auth.getUser().login).then(res => {
-      console.log(res);
       this.dialogService.open(TaskComponent, {
         showHeader: false,
         modal: true,
