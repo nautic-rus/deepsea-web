@@ -33,11 +33,13 @@ export class TaskComponent implements OnInit {
   // @ts-ignore
   editor;
   showHistory = ['_taskStatus'];
+  availableStatuses: any[] = [];
 
   constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
+    this.availableStatuses = this.getAvailableStatuses(this.issue);
   }
   close(){
     this.ref.close('exit');
@@ -73,6 +75,7 @@ export class TaskComponent implements OnInit {
     this.issueManager.setIssueStatus(this.issue.id, this.auth.getUser().login, this.issue.status).then(issue => {
       this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
         this.issue = issue;
+        this.availableStatuses = this.getAvailableStatuses(issue);
       });
     });
   }

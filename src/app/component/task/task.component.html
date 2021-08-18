@@ -170,7 +170,7 @@
           <div class="df mb-1 mt-1">
             <div class="normal-text w-50">Статус</div>
             <div class="descr-task">
-              <p-dropdown [(ngModel)]="issue.status" optionLabel="label"  [options]="getAvailableStatuses(issue)" (onChange)="statusChanged()">
+              <p-dropdown [(ngModel)]="issue.status" optionLabel="label" optionValue="value" [options]="availableStatuses" (onChange)="statusChanged()">
               </p-dropdown>
             </div>
           </div>
