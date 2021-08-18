@@ -49,15 +49,22 @@ export class IssueManagerService {
   async removeIssue(id: string): Promise<string>{
     return await this.http.get<string>(props.http + '/removeIssue', {params: {id: id}}).toPromise();
   }
-  localeStatus(input: string): string {
+  localeStatus(input: string, styled = true): string {
     switch (input) {
-      case 'In Work': return '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">В работе</span>';
-      case 'Resolved': return '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Исполнено</span>';
-      case 'New': return '<span style="color: #23547b; background-color: #b3e5fc; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Новый</span>';
-      case 'Rejected': return '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отклонено</span>';
-      case 'Check': return '<span style="color: #694382; background-color: #eccfff; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На проверке</span>';
-      case 'In rework': return '<span style="color: #3f6b73; background-color: #8AC6D1; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На доработке</span>';
-      case 'Paused': return '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Пристановлено</span>';
+      case 'In Work': return styled ? '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">В работе</span>' : 'В работе';
+      case 'Resolved': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Исполнено</span>' : 'Исполнено';
+      case 'New': return styled ? '<span style="color: #23547b; background-color: #b3e5fc; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Новый</span>' : 'Новый';
+      case 'Rejected': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отклонено</span>' : 'Отклонено';
+      case 'Check': return styled ? '<span style="color: #694382; background-color: #eccfff; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На проверке</span>' : 'На проверке';
+      case 'In rework': return styled ? '<span style="color: #3f6b73; background-color: #8AC6D1; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На доработке</span>' : 'На доработке';
+      case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Пристановлено</span>' : 'Пристановлено';
+      case 'Archive': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: .25em .5rem; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Архив</span>' : 'Архив';
+      default: return input;
+    }
+  }
+  localeHistory(input: string){
+    switch (input) {
+      case '_taskStatus': return 'Статус';
       default: return input;
     }
   }

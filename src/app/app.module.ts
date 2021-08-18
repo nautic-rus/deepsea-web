@@ -36,6 +36,7 @@ import Quill from "quill";                  //api
 // @ts-ignore
 import ImageResize from 'quill-image-resize-module';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import { NgInitDirective } from './domain/ng-init.directive';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -50,6 +51,7 @@ Quill.register('modules/imageResize', ImageResize);
     CreateTaskComponent,
     TaskComponent,
     SafeHtmlPipe,
+    NgInitDirective,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {ConfirmationService} from "primeng/api";
+import {VarMap} from "../../domain/classes/var-map";
 
 @Component({
   selector: 'app-task',
@@ -31,8 +32,9 @@ export class TaskComponent implements OnInit {
   wz;
   // @ts-ignore
   editor;
+  showHistory = ['_taskStatus'];
 
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, private issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService) { }
+  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
@@ -59,10 +61,10 @@ export class TaskComponent implements OnInit {
     const res = [];
     // @ts-ignore
     if (!issue.availableStatuses.includes(issue.status)){
-      res.push(issue.status);
+      res.push({label: this.issueManager.localeStatus(issue.status, false), value: issue.status});
     }
     // @ts-ignore
-    issue.availableStatuses.forEach(x => res.push(x));
+    issue.availableStatuses.forEach(x => res.push({label: this.issueManager.localeStatus(x, false), value: x}));
     return res;
   }
 
@@ -246,5 +248,13 @@ export class TaskComponent implements OnInit {
   }
   editorInit(event: any) {
     this.editor = event;
+  }
+
+  filterVariables(variables: VarMap[]) {
+    return variables.filter(x => this.showHistory.includes(x.name));
+  }
+
+  getAuthor(author: string) {
+    return this.auth.getUserName(author);
   }
 }

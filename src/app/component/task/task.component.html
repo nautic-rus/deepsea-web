@@ -120,34 +120,46 @@
     </div>
 
 
-    <div class="issue-message" *ngFor="let msg of getMessages(issue)">
-      <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
-        <div class="px-10">
-          <span class="bold-text">{{msg.author}}</span><span class="text-descr"> posted message at <span class="text-date"> {{getDate(msg.date)}} </span></span>
-          <div [innerHTML]="msg.content"></div>
-          <div class="attachments">
-            <div *ngFor="let file of msg.fileAttachments">
-              <div (click)="openFile(file.url)" class="attachment">
-                <div class="cxy attachment-center">
-                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
-                </div>
-                <div class="attachment-footer">
-                  <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
-                  <div>06 авг. 2021, 13:57</div>
+      <div class="issue-message" *ngFor="let msg of getMessages(issue)">
+        <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
+          <div class="px-10">
+            <span class="bold-text">{{msg.author}}</span><span class="text-descr"> posted message at <span class="text-date"> {{getDate(msg.date)}} </span></span>
+            <div [innerHTML]="msg.content"></div>
+            <div class="attachments">
+              <div *ngFor="let file of msg.fileAttachments">
+                <div (click)="openFile(file.url)" class="attachment">
+                  <div class="cxy attachment-center">
+                    <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
+                  </div>
+                  <div class="attachment-footer">
+                    <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
+                    <div>06 авг. 2021, 13:57</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="(messageFilter == 'all' || messageFilter == 'camunda') && msg.owner == 'camunda'">
-        <div class="px-10 df"><span class="bold-text">{{msg.author}}</span><span class="text-descr py-5"> completed </span>  <span class="bold-text" [innerHTML]="msg.content"></span><span class="text-descr"> at </span><span class="text-date py-5"> {{getDate(msg.date)}} </span>
+        <div *ngIf="(messageFilter == 'all' || messageFilter == 'camunda') && msg.owner == 'camunda'">
+          <span class="px-10" *ngFor="let varMap of filterVariables(msg.variables)">
+            <div class="px-10 df">
+              <span class="bold-text">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr py-5"> изменил </span>
+              <span class="bold-text">{{issueManager.localeHistory(varMap.name)}}</span>
+              <div [innerHTML]="issueManager.localeStatus(getPrevValue(issue.messages, varMap.name, msg.date))"></div>
+              <span class="py-10">
+                <img src="assets/right-arrow.svg" height="13">
+              </span>
+              <div [innerHTML]="issueManager.localeStatus(varMap.value)"></div>
+            </div>
+          </span>
         </div>
-        <span class="px-10" *ngFor="let varMap of msg.variables">
-          <div class="px-10 df">
-            <span class="bold-text">{{msg.author}}</span><span class="text-descr py-5"> changed </span><span class="bold-text">{{varMap.name}}</span><span class="py-10"><span [innerHTML]="getPrevValue(issue.messages, varMap.name, msg.date)"></span><img src="assets/right-arrow.svg" height="13"></span><span [innerHTML]="varMap.value"></span>
+      </div>
+      <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'camunda')">
+        <div>
+          <div class="px-10">
+            <span class="bold-text">{{auth.getUserName(issue.startedBy)}}</span><span class="text-descr"> создал задачу <span class="text-date"> {{getDate(issue.startedDate)}} </span></span>
           </div>
-        </span>
         </div>
       </div>
     </div>
@@ -158,7 +170,7 @@
           <div class="df mb-1 mt-1">
             <div class="normal-text w-50">Статус</div>
             <div class="descr-task">
-              <p-dropdown [(ngModel)]="issue.status" [options]="getAvailableStatuses(issue)" (onChange)="statusChanged()">
+              <p-dropdown [(ngModel)]="issue.status" optionLabel="label"  [options]="getAvailableStatuses(issue)" (onChange)="statusChanged()">
               </p-dropdown>
             </div>
           </div>

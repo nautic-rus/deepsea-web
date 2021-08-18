@@ -42,9 +42,20 @@ export class HomeComponent implements OnInit {
     this._selectedColumns = this.cols;
   }
   fillIssues(){
+    let scroll = 0;
+    if (this.dt != null){
+      scroll = this.dt.el.nativeElement.querySelector('.p-datatable-scrollable-body').scrollTop;
+      this.dt.style = {opacity: 0};
+    }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
-      this.updateIssues(data);
+      this.issues = data;
     });
+    if (this.dt != null){
+      setTimeout(() => {
+        this.dt.scrollTo({top: scroll});
+        this.dt.style = {opacity: 1, transition: '0.1s'};
+      }, 100);
+    }
   }
   updateIssues(newIssues: Issue[]){
     this.issues.forEach(x => {

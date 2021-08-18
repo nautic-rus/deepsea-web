@@ -198,7 +198,7 @@ export class CreateTaskComponent implements OnInit {
 
   isCreateTaskDisabled() {
     switch (this.taskType) {
-      case 'it-task': return this.taskSummary.trim() == '' || this.taskDetails.trim() == '' || this.awaitForLoad.length > 0;
+      case 'it-task': return this.taskSummary.trim() == '' || this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       default: return false;
     }
   }
