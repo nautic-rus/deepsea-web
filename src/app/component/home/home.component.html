@@ -19,11 +19,12 @@
             <button pButton label="Новая задача" class="p-button-info" (click)="newTask(null)"></button>
           </div>
           <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="headerLocale"
-                         selectedItemsLabel="{0} выбрано колонок" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
+                         selectedItemsLabel="{0} выбрано колонок" [style]="{minWidth: '200px'}" placeholder="Choose Columns">
+          </p-multiSelect>
           <span class="p-input-icon-left p-ml-auto">
-          <i class="pi pi-search"></i>
-          <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." />
-        </span>
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." />
+          </span>
         </div>
       </ng-template>
       <ng-template pTemplate="header" let-columns>

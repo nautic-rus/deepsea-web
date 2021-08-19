@@ -5,22 +5,17 @@
   <div></div>
   <div class="user">
     <div>
-
-
     </div>
     <div>
-
     </div>
+  </div>
 
+  <div class="avatar">
+    <img src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
   </div>
   <div class="exit cxy">
     <img (click)="auth.exit()" src="assets/exit.svg" height="25" class="cursor-pointer">
-
-
-
   </div>
-
-
 </div>
 <div class="left-panel">
   <div class="cy menu"  routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}">
