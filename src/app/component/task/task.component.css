@@ -288,3 +288,6 @@
   max-width: 95vw;
   max-height: 95vh;
 }
+/deep/.ql-snow .ql-editor img{
+  cursor: pointer;
+}

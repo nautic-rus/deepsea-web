@@ -25,7 +25,7 @@
       </div>
       <div class="big-text mb-1 mt-2">Описание задачи</div>
       <div class="text description descr-task">
-        <quill-view [content]="issue.details" (contextmenu)="editorClicked($event)"></quill-view>
+        <quill-view [content]="issue.details" (click)="editorClicked($event)"></quill-view>
       </div>
       <div class="big-text mb-1 mt-2">Вложения</div>
     <div class="attachments">

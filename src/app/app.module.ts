@@ -77,11 +77,11 @@ Quill.register('modules/imageResize', ImageResize);
     MessagesModule,
     GalleriaModule,
     QuillModule.forRoot(),
-    QuillModule.forRoot({
-      modules: {
-        imageResize: {}
-      }
-    }),
+    // QuillModule.forRoot({
+    //   modules: {
+    //     imageResize: {}
+    //   }
+    // }),
     ConfirmDialogModule
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],

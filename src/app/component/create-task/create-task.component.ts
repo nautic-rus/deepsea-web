@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ApplicationRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {Issue} from "../../domain/classes/issue";
@@ -6,7 +6,12 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Editor} from "primeng/editor";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
 import { mouseWheelZoom } from 'mouse-wheel-zoom';
-
+import {QuillModule} from "ngx-quill";
+// @ts-ignore
+import ImageResize from 'quill-image-resize-module';
+import Quill from "quill";
+import Delta from "quill-delta";
+Quill.register('modules/imageResize', ImageResize);
 
 
 @Component({
@@ -29,18 +34,59 @@ export class CreateTaskComponent implements OnInit {
   image = '';
   showImages = false;
   // @ts-ignore
-  @ViewChild('editor') editor;
-  // @ts-ignore
-  @ViewChild('toolbar') toolbar;
+  editor;
   // @ts-ignore
   @ViewChild('img') img;
   // @ts-ignore
   wz;
-  constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef) { }
-
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+  quillModules =
+    {
+      imageResize: {},
+      clipboard: {
+        matchers: [
+            // @ts-ignore
+            ['img', (node, delta) => {
+              let image = delta.ops[0].insert.image;
+              if ((image.indexOf(";base64")) != -1){
+                let ext = image.substring("data:image/".length, image.indexOf(";base64"))
+                let fileName = 'clip' + this.generateId(8)  + '.' + ext;
+                const find = this.loaded.find(x => x.name == fileName);
+                if (find != null){
+                  this.loaded.splice(this.loaded.indexOf(find), 1);
+                }
+                this.awaitForLoad.push(fileName);
+                this.appRef.tick();
+                fetch(image).then(res => res.blob()).then(blob => {
+                  const file = new File([blob], fileName,{ type: "image/png" });
+                  this.issues.uploadFile(file).then(res => {
+                    this.loaded.push(res);
+                    this.appRef.tick();
+                    this.editor.updateContents(new Delta().insert({image: res.url}));
+                    this.appRef.tick();
+                  });
+                });
+                return new Delta();
+              }
+              else{
+                return delta;
+              }
+              //return delta;
+            }]
+        ]
+      }
+    }
+  constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef) { }
   ngOnInit(): void {
-
-
     this.issues.getIssueTypes().then(types => {
       this.taskTypes = types;
       if (this.taskTypes.length > 0){
@@ -72,6 +118,7 @@ export class CreateTaskComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           this.issues.uploadFile(file).then(res => {
+            console.log(res);
             this.loaded.push(res);
           });
         }
@@ -97,6 +144,7 @@ export class CreateTaskComponent implements OnInit {
           const q = "'";
           this.issues.uploadFile(file).then(res => {
             this.taskDetails += '<img style="cursor: pointer; width: 200px; height: 200px" src="' + res.url + '"/>';
+            console.log(res);
             this.loaded.push(res);
           });
         }
@@ -193,13 +241,46 @@ export class CreateTaskComponent implements OnInit {
   }
 
   onEditorDrop(event: any) {
-    this.onImagesDrop(event);
+    event.preventDefault();
+    let files = event.dataTransfer.files;
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          const acceptedImageTypes = ['.jpg', '.jpeg', '.png'];
+          let isImage = false;
+          acceptedImageTypes.forEach(x => {
+            if (file.name.includes(x)){
+              isImage = true;
+            }
+          });
+          if (isImage) {
+            const find = this.loaded.find(x => x.name == file.name);
+            if (find != null) {
+              this.loaded.splice(this.loaded.indexOf(find), 1);
+            }
+            this.awaitForLoad.push(file.name);
+            this.issues.uploadFile(file).then(res => {
+              this.taskDetails += '<img src="' + res.url + '"/>';
+              this.loaded.push(res);
+            });
+          }
+        }
+      }
+    }
   }
 
   isCreateTaskDisabled() {
     switch (this.taskType) {
-      case 'it-task': return this.taskSummary.trim() == '' || this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
+      case 'it-task': return this.taskSummary.trim() == '' || (this.editor != null && this.editor.getLength() == 0) || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       default: return false;
     }
+  }
+  quillPaste(event: ClipboardEvent) {
+    console.log(event);
+  }
+
+  quillCreated(event: any) {
+    this.editor = event;
   }
 }
