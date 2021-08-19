@@ -4,6 +4,7 @@ export class User {
   password: string = '';
   name: string = '';
   surname: string = '';
+  profession: string = '';
   birthday: number = 0;
   email: string = '';
   phone: string = '';

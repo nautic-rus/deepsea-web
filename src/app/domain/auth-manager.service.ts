@@ -121,4 +121,14 @@ export class AuthManagerService {
   isAuth(){
     return this.authenticated;
   }
+
+  getUserProfession(login: string) {
+    let find = this.users.find(x => x.login == login);
+    if (find != null){
+      return find.profession;
+    }
+    else{
+      return login;
+    }
+  }
 }

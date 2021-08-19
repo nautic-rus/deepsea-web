@@ -12,7 +12,6 @@ export class Issue {
   details: string = '';
   assignedTo: string = '';
   dueDate: number = 0;
-  profession: string = '';
   messages: IssueMessage[] = [];
   fileAttachments: FileAttachment[] = [];
   availableStatuses: string[] = [];
