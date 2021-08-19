@@ -16,7 +16,7 @@
             <button pButton label="Clear" class="p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
           </div>
           <div class="mr-2">
-            <button pButton label="Новая задача" class="p-button-info" (click)="newTask()"></button>
+            <button pButton label="Новая задача" class="p-button-info" (click)="newTask(null)"></button>
           </div>
           <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="headerLocale"
                          selectedItemsLabel="{0} выбрано колонок" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>

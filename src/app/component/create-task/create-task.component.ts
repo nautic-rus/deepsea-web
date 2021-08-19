@@ -4,7 +4,7 @@ import {FileAttachment} from "../../domain/classes/file-attachment";
 import {Issue} from "../../domain/classes/issue";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Editor} from "primeng/editor";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import { mouseWheelZoom } from 'mouse-wheel-zoom';
 import {QuillModule} from "ngx-quill";
 // @ts-ignore
@@ -96,8 +96,16 @@ export class CreateTaskComponent implements OnInit {
         }
       }
     }
-  constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef) { }
+  constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
+    let issue = this.conf.data as Issue;
+    if (issue != null && issue.id != null){
+      this.taskSummary = issue.name;
+      this.taskType = issue.taskType;
+      this.taskDetails = issue.details;
+      this.loaded = issue.fileAttachments;
+      this.awaitForLoad = issue.fileAttachments.map(x => x.name);
+    }
     this.issues.getIssueTypes().then(types => {
       types.forEach(type => {
         this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});

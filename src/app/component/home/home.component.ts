@@ -59,10 +59,11 @@ export class HomeComponent implements OnInit {
       }, 100);
     }
   }
-  newTask() {
+  newTask(issue: object | null) {
    this.dialogService.open(CreateTaskComponent, {
       header: 'Создать задачу',
-      modal: true
+      modal: true,
+      data: issue
     }).onClose.subscribe(res => {
       this.fillIssues();
     });
@@ -76,8 +77,8 @@ export class HomeComponent implements OnInit {
       }).onClose.subscribe(res => {
         this.fillIssues();
         let issue = res as Issue;
-        if (issue != null){
-          console.log(issue);
+        if (issue.id != null){
+          this.newTask(issue);
         }
       });
     });
