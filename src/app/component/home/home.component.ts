@@ -30,14 +30,16 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.fillIssues();
     this.cols = [
-      { variable: 'id', header: 'TaskId', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'startedBy', header: 'Author', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'project', header: 'Project', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'department', header: 'Department', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'name', header: 'Summary', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'startedDate', header: 'Создана', headerLocale: 'Создана', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'taskType', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'startedBy', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: true, skip: false, defaultValue: '' },
       // { variable: 'details', header: 'Details', sort: false, filter: false, skip: true, defaultValue: 'View Details' },
-      { variable: 'assignedTo', header: 'Assigned To', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'status', header: 'Status', sort: true, filter: true, skip: false, defaultValue: '' }
+      { variable: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, skip: false, defaultValue: '' },
+      { variable: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, defaultValue: '' }
     ];
     this._selectedColumns = this.cols;
   }
@@ -56,23 +58,6 @@ export class HomeComponent implements OnInit {
         this.dt.style = {opacity: 1, transition: '0.1s'};
       }, 100);
     }
-  }
-  updateIssues(newIssues: Issue[]){
-    this.issues.forEach(x => {
-      let find = newIssues.find(issue => issue.id == x.id);
-      if (find == null){
-        this.issues.splice(this.issues.indexOf(x), 1);
-      }
-    });
-    newIssues.forEach(issue => {
-      let find = this.issues.find(x => x.id == issue.id);
-      if (find != null){
-        this.issues[this.issues.indexOf(find)] = issue;
-      }
-      else{
-        this.issues.push(issue);
-      }
-    });
   }
   newTask() {
    this.dialogService.open(CreateTaskComponent, {
@@ -93,22 +78,17 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
   getFilters(issues: any[], variable: string): any[] {
     return _.uniq(issues, x => x[variable]).map(x => x[variable]);
   }
-  localeHeader(input: string): string{
-    switch (input) {
-      case 'TaskId': return 'ID';
-      case 'Author': return 'Автор';
-      case 'Project': return 'Проект';
-      case 'Department': return 'Отдел';
-      case 'Summary': return 'Название';
-      case 'Assigned To': return 'Исполнитель';
-      case 'Status': return 'Статус';
-      default: return input;
-
-    }
+  getDate(dateLong: number): string{
+    let date = new Date(dateLong);
+    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
+    let mo = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date);
+    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
+    let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
+    return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
 
   localeColumn(issueElement: string, variable: string): string {
@@ -125,6 +105,12 @@ export class HomeComponent implements OnInit {
     }
     else if (variable == 'status'){
       return this.issueManager.localeStatus(issueElement);
+    }
+    else if (variable == 'startedDate'){
+      return this.getDate(+issueElement);
+    }
+    else if (variable == 'taskType'){
+      return this.issueManager.localeTaskType(issueElement);
     }
     else{
       return issueElement;

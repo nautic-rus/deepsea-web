@@ -3,7 +3,7 @@
   <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects">
   </p-dropdown>
   <div class="big-text mb-1 mt-1">Тип задачи</div>
-  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes">
+  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value">
   </p-dropdown>
   <div *ngIf="taskType == 'RKD'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
@@ -45,7 +45,7 @@
   </div>
   <div *ngIf="taskType == 'it-task'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
-    <input type="text" pInputText [(ngModel)]="taskSummary">
+    <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
@@ -101,9 +101,9 @@
 </div>
 <div class="form-footer">
   <div class="mr-1 cx">
-    <div [class.disabled-button]="isCreateTaskDisabled()" (click)="createTask()" pButton label="Создать" class="button"></div>
+    <div tabindex="10" [class.disabled-button]="isCreateTaskDisabled()" (click)="createTask()" pButton label="Создать" class="button"></div>
   </div>
-  <div (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
+  <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
 </div>
 
 

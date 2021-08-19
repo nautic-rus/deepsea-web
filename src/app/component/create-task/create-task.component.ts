@@ -23,7 +23,7 @@ export class CreateTaskComponent implements OnInit {
   taskSummary = '';
   taskDetails = '';
   taskProjects: string[] = [];
-  taskTypes: string[] = [];
+  taskTypes: any[] = [];
   awaitForLoad: string[] = [];
   taskProject = '';
   taskType = 'IT';
@@ -71,7 +71,8 @@ export class CreateTaskComponent implements OnInit {
                   this.issues.uploadFile(file).then(res => {
                     this.loaded.push(res);
                     this.appRef.tick();
-                    this.editor.updateContents(new Delta().insert({image: res.url}));
+                    this.taskDetails += '<img src="' + res.url + '"/>';
+                    // this.editor.updateContents(new Delta().insert({image: res.url}));
                     this.appRef.tick();
                   });
                 });
@@ -83,14 +84,26 @@ export class CreateTaskComponent implements OnInit {
               //return delta;
             }]
         ]
+      },
+      keyboard: {
+        bindings: {
+          tab: {
+            key: 9,
+            handler: function () {
+              return true;
+            }
+          }
+        }
       }
     }
   constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef) { }
   ngOnInit(): void {
     this.issues.getIssueTypes().then(types => {
-      this.taskTypes = types;
+      types.forEach(type => {
+        this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
+      });
       if (this.taskTypes.length > 0){
-        this.taskType = this.taskTypes[0];
+        this.taskType = this.taskTypes[0].value;
       }
     });
     this.issues.getIssueProjects().then(projects => {
@@ -143,7 +156,7 @@ export class CreateTaskComponent implements OnInit {
         if (file != null){
           const q = "'";
           this.issues.uploadFile(file).then(res => {
-            this.taskDetails += '<img style="cursor: pointer; width: 200px; height: 200px" src="' + res.url + '"/>';
+            this.taskDetails += '<img src="' + res.url + '"/>';
             console.log(res);
             this.loaded.push(res);
           });
@@ -272,7 +285,7 @@ export class CreateTaskComponent implements OnInit {
 
   isCreateTaskDisabled() {
     switch (this.taskType) {
-      case 'it-task': return this.taskSummary.trim() == '' || (this.editor != null && this.editor.getLength() == 0) || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
+      case 'it-task': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       default: return false;
     }
   }

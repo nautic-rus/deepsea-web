@@ -69,6 +69,16 @@ export class TaskComponent implements OnInit {
             //return delta;
           }]
         ]
+      },
+      keyboard: {
+        bindings: {
+          tab: {
+            key: 9,
+            handler: function () {
+              return true;
+            }
+          }
+        }
       }
     }
   generateId(length: number): string {
@@ -331,5 +341,11 @@ export class TaskComponent implements OnInit {
 
   getAuthor(author: string) {
     return this.auth.getUserName(author);
+  }
+
+  onEditorPressed(event: KeyboardEvent) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      this.sendMessage();
+    }
   }
 }

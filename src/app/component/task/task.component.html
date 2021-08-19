@@ -36,7 +36,7 @@
             </div>
             <div class="attachment-footer">
               <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
-              <div>06 авг. 2021, 13:57</div>
+              <div>{{getDate(issue.startedDate)}}</div>
             </div>
           </div>
         </div>
@@ -60,7 +60,7 @@
       </div>
 
       <div [hidden]="!comment">
-        <quill-editor (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
+        <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
           <div quill-editor-toolbar>
             <p-header>
             <span class="ql-formats">
@@ -126,7 +126,7 @@
             <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
             <span class="text-descr"> оставил сообщение </span>
             <span class="text-date"> {{getDate(msg.date)}} </span>
-            <div [innerHTML]="msg.content"></div>
+            <quill-view [content]="msg.content" (click)="editorClicked($event)"></quill-view>
             <div class="attachments">
               <div *ngFor="let file of msg.fileAttachments">
                 <div (click)="openFile(file.url)" class="attachment">
@@ -153,7 +153,7 @@
                 <img src="assets/right-arrow.svg" height="13">
               </span>
               <div [innerHTML]="issueManager.localeStatus(varMap.value)"></div>
-              <span class="text-date"> {{getDate(issue.startedDate)}} </span>
+              <span class="text-date"> {{getDate(msg.date)}} </span>
             </div>
           </span>
         </div>

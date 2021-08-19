@@ -69,4 +69,10 @@ export class IssueManagerService {
       default: return input;
     }
   }
+  localeTaskType(input: string){
+    switch (input) {
+      case 'it-task': return 'IT';
+      default: return input;
+    }
+  }
 }
