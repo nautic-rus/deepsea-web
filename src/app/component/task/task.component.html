@@ -54,11 +54,9 @@
           <span>История</span>
         </div>
       </div>
-
-      <div class="mt-1 big-text">
+      <div class="mt-1 big-text pb-20">
         <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText placeholder="Напишите комментарий здесь..." />
       </div>
-
       <div [hidden]="!comment">
         <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
           <div quill-editor-toolbar>
@@ -100,42 +98,44 @@
             </p-header>
           </div>
         </quill-editor>
-      <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
-        <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
-        <div class="cy">{{file}}</div>
-        <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
-        <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
-      </div>
-      <div class="df mt-5">
-        <div class="mr-5">
-          <div (click)="sendMessage()" pButton label="Save" class="button"></div>
+        <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+          <div class="cy">{{file}}</div>
+          <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+          <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
         </div>
-        <div>
-          <div (click)="comment = false" pButton label="Cancel" class="button-cancel"></div>
+        <div class="df mt-5">
+          <div class="mr-5">
+            <div (click)="sendMessage()" pButton label="Save" class="button"></div>
+          </div>
+          <div>
+            <div (click)="comment = false" pButton label="Cancel" class="button-cancel"></div>
+          </div>
         </div>
-
-
       </div>
-
-    </div>
-
-
       <div class="issue-message" *ngFor="let msg of getMessages(issue)">
         <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
-          <div class="px-10">
-            <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
-            <span class="text-descr"> оставил сообщение </span>
-            <span class="text-date"> {{getDate(msg.date)}} </span>
-            <quill-view [content]="msg.content" (click)="editorClicked($event)"></quill-view>
-            <div class="attachments">
-              <div *ngFor="let file of msg.fileAttachments">
-                <div (click)="openFile(file.url)" class="attachment">
-                  <div class="cxy attachment-center">
-                    <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
-                  </div>
-                  <div class="attachment-footer">
-                    <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
-                    <div>{{getDate(msg.date)}}</div>
+          <div class="df pb-20">
+            <div class="pt-5 mr-10">
+              <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
+            </div>
+            <div>
+              <div class="">
+                <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
+                <span class="text-descr"> оставил сообщение </span>
+                <span class="text-date"> {{getDate(msg.date)}} </span>
+                <quill-view [content]="msg.content" (click)="editorClicked($event)"></quill-view>
+                <div class="attachments">
+                  <div *ngFor="let file of msg.fileAttachments">
+                    <div (click)="openFile(file.url)" class="attachment">
+                      <div class="cxy attachment-center">
+                        <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
+                      </div>
+                      <div class="attachment-footer">
+                        <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
+                        <div>{{getDate(msg.date)}}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -144,33 +144,33 @@
         </div>
         <div *ngIf="(messageFilter == 'all' || messageFilter == 'camunda') && msg.owner == 'camunda'">
           <span class="" *ngFor="let varMap of filterVariables(msg.variables)">
-            <div class="df">
-              <div>
-                <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32">
+            <div class="df pb-30">
+              <div class="pt-5 mr-10">
+                <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
               </div>
-
-
               <div>
                 <span class="bold-text">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr py-5"> изменил </span>
                 <span class="bold-text">{{issueManager.localeHistory(varMap.name)}}</span>
                 <span class="text-date pl-5"> {{getDate(msg.date)}} </span>
-              <div class="df">
-                <div class="pl-5" [innerHTML]="issueManager.localeStatus(getPrevValue(issue.messages, varMap.name, msg.date))"></div>
+              <div class="df pt-5">
+                <div class="" [innerHTML]="issueManager.localeStatus(getPrevValue(issue.messages, varMap.name, msg.date)) | safeHtml"></div>
                 <span class="py-10">
                   <img src="assets/right-arrow.svg" height="13">
                 </span>
-                <div [innerHTML]="issueManager.localeStatus(varMap.value, true)"></div>
+                <div [innerHTML]="issueManager.localeStatus(varMap.value) | safeHtml"></div>
               </div>
               </div>
-
             </div>
           </span>
         </div>
       </div>
       <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'camunda')">
-        <div>
-          <div class="px-10">
+        <div class="df">
+          <div class="pt-5 mr-10">
+            <img src="{{auth.getUserAvatar(issue.startedBy)}}" height="32" width="32" style="border-radius: 16px">
+          </div>
+          <div class="">
             <span class="bold-text">{{auth.getUserName(issue.startedBy)}}</span>
             <span class="text-descr"> создал задачу</span>
             <span class="text-date"> {{getDate(issue.startedDate)}} </span>
