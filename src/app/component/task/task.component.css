@@ -198,7 +198,7 @@
 }
 .attachments{
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   max-height: 250px;
   overflow-y: auto;
@@ -289,4 +289,7 @@
 }
 /deep/.ql-snow .ql-editor img{
   cursor: pointer;
+}
+.profession{
+  margin-top: -25px;
 }
