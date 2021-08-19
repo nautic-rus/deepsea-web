@@ -276,10 +276,6 @@ export class CreateTaskComponent implements OnInit {
       default: return false;
     }
   }
-  quillPaste(event: ClipboardEvent) {
-    console.log(event);
-  }
-
   quillCreated(event: any) {
     this.editor = event;
   }

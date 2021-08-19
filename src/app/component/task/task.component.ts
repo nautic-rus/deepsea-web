@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
@@ -10,6 +10,7 @@ import {FileAttachment} from "../../domain/classes/file-attachment";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {ConfirmationService} from "primeng/api";
 import {VarMap} from "../../domain/classes/var-map";
+import Delta from "quill-delta";
 
 @Component({
   selector: 'app-task',
@@ -34,8 +35,53 @@ export class TaskComponent implements OnInit {
   editor;
   showHistory = ['_taskStatus'];
   availableStatuses: any[] = [];
-
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService) { }
+  quillModules =
+    {
+      imageResize: {},
+      clipboard: {
+        matchers: [
+          // @ts-ignore
+          ['img', (node, delta) => {
+            let image = delta.ops[0].insert.image;
+            if ((image.indexOf(";base64")) != -1){
+              let ext = image.substring("data:image/".length, image.indexOf(";base64"))
+              let fileName = 'clip' + this.generateId(8)  + '.' + ext;
+              const find = this.loaded.find(x => x.name == fileName);
+              if (find != null){
+                this.loaded.splice(this.loaded.indexOf(find), 1);
+              }
+              this.awaitForLoad.push(fileName);
+              this.appRef.tick();
+              fetch(image).then(res => res.blob()).then(blob => {
+                const file = new File([blob], fileName,{ type: "image/png" });
+                this.issueManager.uploadFile(file).then(res => {
+                  this.loaded.push(res);
+                  this.appRef.tick();
+                  this.editor.updateContents(new Delta().insert({image: res.url}));
+                  this.appRef.tick();
+                });
+              });
+              return new Delta();
+            }
+            else{
+              return delta;
+            }
+            //return delta;
+          }]
+        ]
+      }
+    }
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
@@ -192,7 +238,33 @@ export class TaskComponent implements OnInit {
     this.handleImageInput(event.dataTransfer.files);
   }
   onEditorDrop(event: any) {
-    this.onImagesDrop(event);
+    event.preventDefault();
+    let files = event.dataTransfer.files;
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          const acceptedImageTypes = ['.jpg', '.jpeg', '.png'];
+          let isImage = false;
+          acceptedImageTypes.forEach(x => {
+            if (file.name.includes(x)){
+              isImage = true;
+            }
+          });
+          if (isImage) {
+            const find = this.loaded.find(x => x.name == file.name);
+            if (find != null) {
+              this.loaded.splice(this.loaded.indexOf(find), 1);
+            }
+            this.awaitForLoad.push(file.name);
+            this.issueManager.uploadFile(file).then(res => {
+              this.message += '<img src="' + res.url + '"/>';
+              this.loaded.push(res);
+            });
+          }
+        }
+      }
+    }
   }
   editorClicked(event: any) {
     event.preventDefault();
@@ -254,7 +326,7 @@ export class TaskComponent implements OnInit {
   }
 
   filterVariables(variables: VarMap[]) {
-    return variables.filter(x => this.showHistory.includes(x.name));
+    return variables.filter(x => this.showHistory.includes(x.name) && !(x.name == '_taskStatus' && x.value == 'New'));
   }
 
   getAuthor(author: string) {

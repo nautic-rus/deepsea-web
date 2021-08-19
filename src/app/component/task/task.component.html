@@ -60,7 +60,7 @@
       </div>
 
       <div [hidden]="!comment">
-        <quill-editor (onEditorCreated)="editorInit($event)" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
+        <quill-editor (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
           <div quill-editor-toolbar>
             <p-header>
             <span class="ql-formats">
@@ -123,7 +123,9 @@
       <div class="issue-message" *ngFor="let msg of getMessages(issue)">
         <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
           <div class="px-10">
-            <span class="bold-text">{{msg.author}}</span><span class="text-descr"> posted message at <span class="text-date"> {{getDate(msg.date)}} </span></span>
+            <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
+            <span class="text-descr"> оставил сообщение </span>
+            <span class="text-date"> {{getDate(msg.date)}} </span>
             <div [innerHTML]="msg.content"></div>
             <div class="attachments">
               <div *ngFor="let file of msg.fileAttachments">
@@ -133,7 +135,7 @@
                   </div>
                   <div class="attachment-footer">
                     <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
-                    <div>06 авг. 2021, 13:57</div>
+                    <div>{{getDate(msg.date)}}</div>
                   </div>
                 </div>
               </div>
@@ -151,6 +153,7 @@
                 <img src="assets/right-arrow.svg" height="13">
               </span>
               <div [innerHTML]="issueManager.localeStatus(varMap.value)"></div>
+              <span class="text-date"> {{getDate(issue.startedDate)}} </span>
             </div>
           </span>
         </div>
@@ -158,7 +161,9 @@
       <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'camunda')">
         <div>
           <div class="px-10">
-            <span class="bold-text">{{auth.getUserName(issue.startedBy)}}</span><span class="text-descr"> создал задачу <span class="text-date"> {{getDate(issue.startedDate)}} </span></span>
+            <span class="bold-text">{{auth.getUserName(issue.startedBy)}}</span>
+            <span class="text-descr"> создал задачу</span>
+            <span class="text-date"> {{getDate(issue.startedDate)}} </span>
           </div>
         </div>
       </div>
