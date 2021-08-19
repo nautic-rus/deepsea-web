@@ -348,4 +348,19 @@ export class TaskComponent implements OnInit {
       this.sendMessage();
     }
   }
+
+  copyIssue() {
+    this.ref.close(this.issue);
+  }
+
+  getAssignedTo(user: string) {
+    let res = this.auth.getUserName(user);
+    if (res == ''){
+      res = 'Не назначен';
+    }
+    return res;
+  }
+  getDueDate(date: number){
+    return date == 0 ? '-' : this.getDate(date);
+  }
 }

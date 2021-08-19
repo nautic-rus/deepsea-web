@@ -75,6 +75,10 @@ export class HomeComponent implements OnInit {
         data: res
       }).onClose.subscribe(res => {
         this.fillIssues();
+        let issue = res as Issue;
+        if (issue != null){
+          console.log(issue);
+        }
       });
     });
   }

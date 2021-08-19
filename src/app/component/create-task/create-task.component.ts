@@ -17,7 +17,7 @@ Quill.register('modules/imageResize', ImageResize);
 @Component({
   selector: 'app-create-task',
   templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.css']
+  styleUrls: ['./create-task.component.css'],
 })
 export class CreateTaskComponent implements OnInit {
   taskSummary = '';

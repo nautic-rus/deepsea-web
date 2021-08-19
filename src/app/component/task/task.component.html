@@ -2,7 +2,7 @@
   <div class="view-task-header task-header">
     <div class="task-name">Задача: {{issue.name}}</div>
     <div class="task-buttons">
-      <div class="task-button cxy" pTooltip="Копировать задачу">
+      <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
         <img src="assets/copy.svg" height="20">
       </div>
       <div class="task-button cxy mr-2" pTooltip="Удалить задачу" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.startedBy)">
@@ -191,15 +191,15 @@
           </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Исполнитель</div>
-            <div class="descr-task w-50">{{auth.getUserName(issue.assignedTo)}}</div>
+            <div class="descr-task w-50">{{getAssignedTo(issue.assignedTo)}}</div>
           </div>
-          <div class="df mb-2 mt-1">
+          <div class="df mb-2 mt-1" *ngIf="issue.assignedTo != ''">
             <div class="normal-text w-50"></div>
-            <div class="descr-task w-50">{{issue.profession}}</div>
+            <div class="descr-task w-50">{{auth.getUserProfession(issue.assignedTo)}}</div>
           </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Срок исполнения</div>
-            <div class="descr-task w-50">{{issue.dueDate}}</div>
+            <div class="descr-task w-50">{{getDueDate(issue.dueDate)}}</div>
           </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Проект</div>
