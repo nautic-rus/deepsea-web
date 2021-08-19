@@ -283,6 +283,9 @@ export class TaskComponent implements OnInit {
       this.showImage(event.target.currentSrc);
       //window.open(event.target.currentSrc);
     }
+    if (event.target.localName == 'a'){
+      window.open(event.target.href, '_blank');
+    }
   }
   showImage(url: string){
     this.image = url;

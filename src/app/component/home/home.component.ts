@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
       }).onClose.subscribe(res => {
         this.fillIssues();
         let issue = res as Issue;
-        if (issue.id != null){
+        if (issue != null && issue.id != null){
           this.newTask(issue);
         }
       });
