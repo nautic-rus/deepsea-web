@@ -93,14 +93,14 @@ export class HomeComponent implements OnInit {
 
   localeColumn(issueElement: string, variable: string): string {
     if (variable == 'startedBy'){
-      return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
+      return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
     }
     else if (variable == 'assignedTo'){
       if (issueElement == ''){
         return '';
       }
       else {
-        return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
+        return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
       }
     }
     else if (variable == 'status'){

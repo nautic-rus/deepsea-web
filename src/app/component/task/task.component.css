@@ -13,12 +13,13 @@
 }
 .button-new{
   background-color: rgba(9, 30, 66, 0.04);
+  font-size: 0.9em;
   border-radius: 3px;
   font-weight: 500;
   position: relative;
   text-align: center;
   cursor: pointer;
-  padding: 6px;
+  padding: 2px 6px;
   color: rgb(66, 82, 110) !important;
   transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
   display: flex;
@@ -31,7 +32,7 @@
   display: flex;
 }
 .big-text{
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-style: inherit;
   font-weight: 600;
   letter-spacing: -0.003em;
@@ -47,6 +48,7 @@
   letter-spacing: -0.005em;
   color: rgb(23, 43, 77);
   border-radius: 3px;
+  height: auto;
   transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
 }
 .descr-task{
@@ -123,7 +125,7 @@
   color: rgb(107, 119, 140);
 }
 .issue-message{
-  padding: 0px 6px;
+
 }
 .bold-text{
   font-size: 0.9em;
@@ -262,9 +264,6 @@
 .button-disabled{
   pointer-events: none;
   opacity: 0.5;
-}
-/deep/ .ql-editor{
-  min-height: 150px;
 }
 .image-preview-backdrop{
   top: 0;
