@@ -293,3 +293,6 @@
 .profession{
   margin-top: -25px;
 }
+/deep/ quill-editor .ql-editor{
+  min-height: 100px;
+}

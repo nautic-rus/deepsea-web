@@ -57,7 +57,7 @@ export class TaskComponent implements OnInit {
                 this.issueManager.uploadFile(file).then(res => {
                   this.loaded.push(res);
                   this.appRef.tick();
-                  this.editor.updateContents(new Delta().insert({image: res.url}));
+                  this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
                   this.appRef.tick();
                 });
               });
@@ -142,6 +142,9 @@ export class TaskComponent implements OnInit {
 
   showComment() {
     this.comment = true;
+    this.message = '';
+    this.awaitForLoad = [];
+    this.loaded = [];
     setTimeout(() => {
       this.editor.focus();
     })

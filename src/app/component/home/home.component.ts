@@ -29,17 +29,18 @@ export class HomeComponent implements OnInit {
   }
   ngOnInit() {
     this.fillIssues();
+  }
+  setCols(){
     this.cols = [
-      { variable: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'startedDate', header: 'Создана', headerLocale: 'Создана', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'taskType', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'startedBy', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: true, skip: false, defaultValue: '' },
-      // { variable: 'details', header: 'Details', sort: false, filter: false, skip: true, defaultValue: 'View Details' },
-      { variable: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, skip: false, defaultValue: '' },
-      { variable: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, defaultValue: '' }
+      { variable: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '' },
+      { variable: 'startedDate', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'startedDate'), skip: false, defaultValue: '' },
+      { variable: 'taskType', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'taskType'), skip: false, defaultValue: '' },
+      { variable: 'startedBy', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'startedBy'), skip: false, defaultValue: '' },
+      { variable: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, filters: this.getFilters(this.issues, 'project'), skip: false, defaultValue: '' },
+      { variable: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, filters: this.getFilters(this.issues, 'department'), skip: false, defaultValue: '' },
+      { variable: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: false, filters: this.getFilters(this.issues, 'name'), skip: false, defaultValue: '' },
+      { variable: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assignedTo'), skip: false, defaultValue: '' },
+      { variable: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '' }
     ];
     this._selectedColumns = this.cols;
   }
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
     }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
       this.issues = data;
+      this.setCols();
     });
     if (this.dt != null){
       setTimeout(() => {
@@ -84,7 +86,24 @@ export class HomeComponent implements OnInit {
     });
   }
   getFilters(issues: any[], variable: string): any[] {
-    return _.uniq(issues, x => x[variable]).map(x => x[variable]);
+    let res: any[] = [];
+    let uniq = _.uniq(issues, x => x[variable]);
+    uniq.forEach(x => {
+      res.push({
+        label: this.localeFilter(variable, x[variable]),
+        value: x[variable]
+      })
+    });
+    return _.sortBy(res, x => x.label);
+  }
+  localeFilter(column: string, variable: string): string{
+    switch (column) {
+      case 'taskType': return this.issueManager.localeTaskType(variable);
+      case 'startedBy': return this.auth.getUserName(variable);
+      case 'assignedTo': return this.auth.getUserName(variable);
+      case 'status': return this.issueManager.localeStatus(variable, false);
+      default: return variable;
+    }
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
@@ -120,5 +139,9 @@ export class HomeComponent implements OnInit {
     else{
       return issueElement;
     }
+  }
+
+  test(event: any) {
+    console.log(event);
   }
 }
