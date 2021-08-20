@@ -316,7 +316,7 @@ export class TaskComponent implements OnInit {
   }
   getPrevValue(messages: IssueMessage[], name: string, date: number): string {
     let res = '';
-    messages.filter(x => x.date < date).forEach(x => {
+    _.sortBy(messages.filter(x => x.date < date), x => x.date).forEach(x => {
       let find = x.variables.find(v => v.name == name);
       if (find != null){
         res = find.value;
