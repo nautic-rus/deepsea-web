@@ -15,4 +15,5 @@ export class Issue {
   messages: IssueMessage[] = [];
   fileAttachments: FileAttachment[] = [];
   availableStatuses: string[] = [];
+  priority: string = '';
 }

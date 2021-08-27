@@ -11,14 +11,9 @@
     <div class="big-text mb-1 mt-1">Описание задачи</div>
     <p-editor [(ngModel)]="taskDetails" [style]="{'height':'fit-content', 'min-height':'100px'}"></p-editor>
     <div class="big-text mb-1 mt-1">Исполнитель</div>
-
-
     <p-dropdown [style]="{'width':'300px'}" placeholder="Не назначен" class="select" [(ngModel)]="taskResponsible" [options]="taskProjects" optionLabel="name" optionValue="id">
     </p-dropdown>
-
     <div class="link-text mb-1">Назначить мне</div>
-
-
     <div class="big-text mb-1 mt-1">Дата начала</div>
     <p-calendar [(ngModel)]="taskStart" [showWeek]="true" dateFormat="dd.mm.yy"></p-calendar>
     <div class="small-text mb-1">Позволяет установить запланированную дату начала работы.</div>
@@ -104,7 +99,7 @@
     <div class="df space-between">
       <div>
         <div class="big-text mb-1 mt-1">Назначить ответственного</div>
-        <p-dropdown [options]="getUsers()" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
+        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
                     [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-250">
           <ng-template let-user pTemplate="item">
             <div class="df">
@@ -113,14 +108,13 @@
             </div>
           </ng-template>
         </p-dropdown>
+        <p-calendar [(ngModel)]="dueDate"></p-calendar>
       </div>
-      <div >
+      <div>
         <div class="big-text mb-1 mt-1">Приоритет</div>
         <p-dropdown class="select" styleClass="width-200" [(ngModel)]="taskPriority" [options]="taskPriorities">
         </p-dropdown>
       </div>
-
-
     </div>
     <div class="big-text mb-1 mt-1">Описание задачи</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">

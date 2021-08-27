@@ -1,16 +1,16 @@
-import {AfterViewInit, ApplicationRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {Issue} from "../../domain/classes/issue";
 import {AuthManagerService} from "../../domain/auth-manager.service";
-import {Editor} from "primeng/editor";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import { mouseWheelZoom } from 'mouse-wheel-zoom';
-import {QuillModule} from "ngx-quill";
+import {mouseWheelZoom} from 'mouse-wheel-zoom';
 // @ts-ignore
 import ImageResize from 'quill-image-resize-module';
 import Quill from "quill";
 import Delta from "quill-delta";
+import {User} from "../../domain/classes/user";
+
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -22,6 +22,8 @@ Quill.register('modules/imageResize', ImageResize);
 export class CreateTaskComponent implements OnInit {
   taskSummary = '';
   taskDetails = '';
+  users: User[] = [];
+  dueDate: Date = new Date();
   taskProjects: string[] = [];
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
@@ -101,12 +103,15 @@ export class CreateTaskComponent implements OnInit {
     }
   constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
+    this.users = this.auth.users;
     let issue = this.conf.data as Issue;
     if (issue != null && issue.id != null){
       this.taskSummary = issue.name;
       this.taskType = issue.taskType;
       this.taskDetails = issue.details;
       this.loaded = issue.fileAttachments;
+      this.taskPriority = issue.priority;
+      this.selectedUser = issue.assignedTo;
       this.awaitForLoad = issue.fileAttachments.map(x => x.name);
     }
     this.issues.getIssueTypes().then(types => {
@@ -190,6 +195,9 @@ export class CreateTaskComponent implements OnInit {
     issue.taskType = this.taskType;
     issue.startedBy = this.auth.getUser().login;
     issue.project = this.taskProject;
+    issue.assignedTo = this.selectedUser;
+    issue.priority = this.taskPriority;
+    issue.dueDate = this.dueDate.getDate();
     // @ts-ignore
     issue.fileAttachments = this.loaded;
     this.issues.startIssue(this.auth.getUser().login, issue).then(res => {
