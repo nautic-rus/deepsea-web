@@ -8,7 +8,7 @@
       styleClass="p-datatable-striped"
       [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status']"
       [reorderableColumns]="true"
-      [resizableColumns]="true"
+      [resizableColumns]="false"
       [columns]="cols"
       stateStorage="local"
       stateKey="state"
@@ -32,7 +32,7 @@
       </ng-template>
       <ng-template pTemplate="colgroup">
         <colgroup>
-          <col style="width:15%" *ngFor="let col of cols" [hidden]="col.hidden">
+          <col style="width:15%" *ngFor="let col of cols" [hidden]="col.hidden" [ngStyle]="getColWidth(col.header)">
         </colgroup>
       </ng-template>
       <ng-template pTemplate="header" let-columns>

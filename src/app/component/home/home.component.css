@@ -32,3 +32,6 @@
 .task-row:hover{
   background-color: #F3F2F1;
 }
+.hidden-column{
+  width: 0;
+}

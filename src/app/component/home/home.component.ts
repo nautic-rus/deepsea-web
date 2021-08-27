@@ -57,6 +57,8 @@ export class HomeComponent implements OnInit {
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
       //this.setCols();
+      console.log(this.cols);
+
     });
     if (this.dt != null){
       setTimeout(() => {
@@ -163,5 +165,17 @@ export class HomeComponent implements OnInit {
     this.dt.restoreState();
     localStorage.setItem('selectedCols', JSON.stringify(this.selectedCols));
     this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
+    console.log(this.dt.columnWidthsState);
+  }
+
+  getColWidth(header: any) {
+    if (header == 'ID'){
+      return {
+        width: '5%'
+      };
+    }
+    else{
+      return {};
+    }
   }
 }
