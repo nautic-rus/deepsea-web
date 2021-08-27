@@ -77,6 +77,7 @@ export class IssueManagerService {
     switch (input) {
       case 'it-task': return 'IT';
       case 'simple-task': return 'Прочее';
+      case 'Simple': return 'Прочее';
       default: return input;
     }
   }
