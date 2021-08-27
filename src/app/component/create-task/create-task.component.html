@@ -1,9 +1,19 @@
 <div class="center">
-  <div class="big-text mb-1">Проект</div>
-  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-150">
-  </p-dropdown>
+  <div class="df space-between">
+    <div>
+      <div class="big-text mb-1">Проект</div>
+      <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-200">
+      </p-dropdown>
+    </div>
+    <div>
+      <div class="big-text mb-1">Приоритет</div>
+      <p-dropdown class="select" styleClass="width-270" [(ngModel)]="taskPriority" [options]="taskPriorities">
+      </p-dropdown>
+    </div>
+  </div>
+
   <div class="big-text mb-1 mt-1">Тип задачи</div>
-  <p-dropdown styleClass="dark-panel width-150" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value">
+  <p-dropdown styleClass="dark-panel width-200" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value">
   </p-dropdown>
   <div *ngIf="taskType == 'RKD'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
@@ -108,12 +118,11 @@
             </div>
           </ng-template>
         </p-dropdown>
-        <p-calendar [(ngModel)]="dueDate"></p-calendar>
+
       </div>
       <div>
-        <div class="big-text mb-1 mt-1">Приоритет</div>
-        <p-dropdown class="select" styleClass="width-200" [(ngModel)]="taskPriority" [options]="taskPriorities">
-        </p-dropdown>
+        <div class="big-text mb-1 mt-1">Срок завершения</div>
+        <p-calendar [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
       </div>
     </div>
     <div class="big-text mb-1 mt-1">Описание задачи</div>
