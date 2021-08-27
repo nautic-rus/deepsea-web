@@ -46,9 +46,10 @@ select :hover{
 select:focus {
   border-color: #262626;
 }
-::ng-deep.p-dropdown .p-dropdown-label{
-  width: 150px;
-}::ng-deep .p-inputtext{
+/*::ng-deep.p-dropdown .p-dropdown-label{*/
+/*  width: 150px;*/
+/*}*/
+::ng-deep .p-inputtext{
   width: 100%;
 }
 .upload{

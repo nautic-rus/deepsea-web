@@ -1,9 +1,9 @@
 <div class="center">
   <div class="big-text mb-1">Проект</div>
-  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects">
+  <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-150">
   </p-dropdown>
   <div class="big-text mb-1 mt-1">Тип задачи</div>
-  <p-dropdown styleClass="dark-panel" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value">
+  <p-dropdown styleClass="dark-panel width-150" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value">
   </p-dropdown>
   <div *ngIf="taskType == 'RKD'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
@@ -105,12 +105,18 @@
       <div>
         <div class="big-text mb-1 mt-1">Назначить ответственного</div>
         <p-dropdown [options]="getUsers()" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-                    [showClear]="true" placeholder="Назначить">
+                    [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-250">
+          <ng-template let-user pTemplate="item">
+            <div class="df">
+              <img src="{{user.avatar}}" width="32px" height="32px" style="border-radius: 16px"/>
+              <div class="cx cy">{{user.userName}}</div>
+            </div>
+          </ng-template>
         </p-dropdown>
       </div>
       <div >
         <div class="big-text mb-1 mt-1">Приоритет</div>
-        <p-dropdown class="select" [(ngModel)]="taskPriority" [options]="taskPriorities">
+        <p-dropdown class="select" styleClass="width-200" [(ngModel)]="taskPriority" [options]="taskPriorities">
         </p-dropdown>
       </div>
 
