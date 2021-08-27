@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
     let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
-    let mo = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date);
+    let mo = new Intl.DateTimeFormat('ru', { month: 'short' }).format(date);
     let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
     let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
     let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);

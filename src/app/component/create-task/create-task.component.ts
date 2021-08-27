@@ -311,4 +311,8 @@ export class CreateTaskComponent implements OnInit {
   quillCreated(event: any) {
     this.editor = event;
   }
+
+  getUsers() {
+    return this.auth.users.filter(x => x.visibility.includes('c'));
+  }
 }

@@ -14,4 +14,5 @@ export class User {
   groups: string[] = [];
   permissions: string[] = [];
   userName: string = '';
+  visibility: string = '';
 }

@@ -101,11 +101,21 @@
   <div *ngIf="taskType == 'simple-task'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
-    <p-dropdown [options]="auth.users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-                [showClear]="true" placeholder="Назначить">
-    </p-dropdown>
-    <p-dropdown class="select" [(ngModel)]="taskPriority" [options]="taskPriorities">
-    </p-dropdown>
+    <div class="df space-between">
+      <div>
+        <div class="big-text mb-1 mt-1">Назначить ответственного</div>
+        <p-dropdown [options]="getUsers()" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
+                    [showClear]="true" placeholder="Назначить">
+        </p-dropdown>
+      </div>
+      <div >
+        <div class="big-text mb-1 mt-1">Приоритет</div>
+        <p-dropdown class="select" [(ngModel)]="taskPriority" [options]="taskPriorities">
+        </p-dropdown>
+      </div>
+
+
+    </div>
     <div class="big-text mb-1 mt-1">Описание задачи</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>

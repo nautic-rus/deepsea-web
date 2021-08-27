@@ -146,3 +146,6 @@ cdk-virtual-scroll-viewport{
   background: rgba(0, 0, 0, 0.32);
   border-radius: 4px;
 }
+.space-between{
+  justify-content: space-between;
+}
