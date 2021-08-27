@@ -1,6 +1,11 @@
 <div class="w-60">
   <div class="view-task-header task-header">
-    <div class="task-name">Задача: {{issue.name}}</div>
+    <div class="task-name" [hidden]="issueNameEdit" (click)="editIssueName()">Задача: {{issue.name}}</div>
+    <div class="task-name" [hidden]="!issueNameEdit">
+      Задача: <input type="text" pInputText [(ngModel)]="issue.name"/>
+      <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+    </div>
     <div class="task-buttons">
       <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
         <img src="assets/copy.svg" height="20">

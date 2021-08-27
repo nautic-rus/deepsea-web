@@ -47,7 +47,7 @@
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
-    <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="taskDetails">
+    <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
         <p-header>
           <span class="ql-formats">
@@ -78,6 +78,66 @@
             <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
           </span>
             <span class="ql-formats">
+            <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+          </span>
+        </p-header>
+      </div>
+    </quill-editor>
+    <div class="big-text mb-1 mt-1">Вложение</div>
+    <div [class.file-drag]="dragOver" class="upload cx cy loading">
+      <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1 image no-actions" src="assets/upload.svg" height="28">
+        <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
+      </div>
+    </div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+      <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+      <div class="cy">{{file}}</div>
+      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+      <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+    </div>
+  </div>
+  <div *ngIf="taskType == 'simple-task'">
+    <div class="big-text mb-1 mt-1">Название задачи</div>
+    <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
+    <p-dropdown [options]="auth.users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
+                [showClear]="true" placeholder="Назначить">
+    </p-dropdown>
+    <p-dropdown class="select" [(ngModel)]="taskPriority" [options]="taskPriorities">
+    </p-dropdown>
+    <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
+      <div quill-editor-toolbar>
+        <p-header>
+          <span class="ql-formats">
+            <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+            <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+            <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-color" tabindex="-1"></select>
+            <select class="ql-background" tabindex="-1"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+            <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+            <select class="ql-align" tabindex="-1">
+              <option selected tabindex="-1"></option>
+              <option value="center" tabindex="-1"></option>
+              <option value="right" tabindex="-1"></option>
+              <option value="justify" tabindex="-1"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+            <button (click)="selectImage.click()">
+              <i class="pi pi-image"></i>
+            </button>
+            <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+            <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+          </span>
+          <span class="ql-formats">
             <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
           </span>
         </p-header>

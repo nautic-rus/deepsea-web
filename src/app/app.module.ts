@@ -37,6 +37,7 @@ import Quill from "quill";                  //api
 import ImageResize from 'quill-image-resize-module';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import { NgInitDirective } from './domain/ng-init.directive';
+import {RippleModule} from "primeng/ripple";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -53,37 +54,38 @@ Quill.register('modules/imageResize', ImageResize);
     SafeHtmlPipe,
     NgInitDirective,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AccordionModule,
-    TableModule,
-    MultiSelectModule,
-    InputTextModule,
-    ProgressBarModule,
-    ButtonModule,
-    SliderModule,
-    DropdownModule,
-    TooltipModule,
-    ToastModule,
-    EditorModule,
-    DialogModule,
-    CascadeSelectModule,
-    CalendarModule,
-    ProgressSpinnerModule,
-    MessagesModule,
-    GalleriaModule,
-    QuillModule.forRoot(),
-    // QuillModule.forRoot({
-    //   modules: {
-    //     imageResize: {}
-    //   }
-    // }),
-    ConfirmDialogModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        AccordionModule,
+        TableModule,
+        MultiSelectModule,
+        InputTextModule,
+        ProgressBarModule,
+        ButtonModule,
+        SliderModule,
+        DropdownModule,
+        TooltipModule,
+        ToastModule,
+        EditorModule,
+        DialogModule,
+        CascadeSelectModule,
+        CalendarModule,
+        ProgressSpinnerModule,
+        MessagesModule,
+        GalleriaModule,
+        QuillModule.forRoot(),
+        // QuillModule.forRoot({
+        //   modules: {
+        //     imageResize: {}
+        //   }
+        // }),
+        ConfirmDialogModule,
+        RippleModule
+    ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })

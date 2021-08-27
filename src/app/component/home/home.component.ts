@@ -7,6 +7,7 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
 import {TaskComponent} from "../task/task.component";
+import {J} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-home',
@@ -16,33 +17,34 @@ import {TaskComponent} from "../task/task.component";
 export class HomeComponent implements OnInit {
   issues: Issue[] = [];
   cols: any[] = [];
-  _selectedColumns: any[] = [];
+  filters = {};
+  selectedCols: string[] = [];
+  colHeaders: string[] = [];
   constructor(private router: Router, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
-  @Input() get selectedColumns(): any[] {
-    return this._selectedColumns;
-  }
   // @ts-ignore
   @ViewChild('dt') dt: Table;
-  set selectedColumns(val: any[]) {
-    //restore original order
-    this._selectedColumns = this.cols.filter(col => val.includes(col));
-  }
   ngOnInit() {
+    this.setCols();
     this.fillIssues();
   }
   setCols(){
     this.cols = [
-      { variable: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '' },
-      { variable: 'startedDate', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'startedDate'), skip: false, defaultValue: '' },
-      { variable: 'taskType', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'taskType'), skip: false, defaultValue: '' },
-      { variable: 'startedBy', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'startedBy'), skip: false, defaultValue: '' },
-      { variable: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, filters: this.getFilters(this.issues, 'project'), skip: false, defaultValue: '' },
-      { variable: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, filters: this.getFilters(this.issues, 'department'), skip: false, defaultValue: '' },
-      { variable: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: false, filters: this.getFilters(this.issues, 'name'), skip: false, defaultValue: '' },
-      { variable: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assignedTo'), skip: false, defaultValue: '' },
-      { variable: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '' }
+      { field: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '', hidden: false },
+      { field: 'startedDate', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'startedDate'), skip: false, defaultValue: '', hidden: false },
+      { field: 'taskType', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'taskType'), skip: false, defaultValue: '', hidden: false },
+      { field: 'startedBy', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'startedBy'), skip: false, defaultValue: '', hidden: false },
+      { field: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, filters: this.getFilters(this.issues, 'project'), skip: false, defaultValue: '', hidden: false },
+      { field: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, filters: this.getFilters(this.issues, 'department'), skip: false, defaultValue: '', hidden: false },
+      { field: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: false, filters: this.getFilters(this.issues, 'name'), skip: false, defaultValue: '', hidden: false },
+      { field: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assignedTo'), skip: false, defaultValue: '', hidden: false },
+      { field: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '', hidden: false }
     ];
-    this._selectedColumns = this.cols;
+    this.colHeaders = this.cols.map(x => x.headerLocale);
+    let selectedColsValue = localStorage.getItem('selectedCols');
+    let selectedCols = selectedColsValue ? JSON.parse(selectedColsValue) as string[] : this.colHeaders;
+    if (selectedCols.length > 0){
+      this.selectedCols = this.colHeaders.filter(x => selectedCols.includes(x));
+    }
   }
   fillIssues(){
     let scroll = 0;
@@ -52,7 +54,9 @@ export class HomeComponent implements OnInit {
     }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
       this.issues = data;
-      this.setCols();
+      this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
+      this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
+      //this.setCols();
     });
     if (this.dt != null){
       setTimeout(() => {
@@ -85,24 +89,24 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-  getFilters(issues: any[], variable: string): any[] {
+  getFilters(issues: any[], field: string): any[] {
     let res: any[] = [];
-    let uniq = _.uniq(issues, x => x[variable]);
+    let uniq = _.uniq(issues, x => x[field]);
     uniq.forEach(x => {
       res.push({
-        label: this.localeFilter(variable, x[variable]),
-        value: x[variable]
+        label: this.localeFilter(field, x[field]),
+        value: x[field]
       })
     });
     return _.sortBy(res, x => x.label);
   }
-  localeFilter(column: string, variable: string): string{
+  localeFilter(column: string, field: string): string{
     switch (column) {
-      case 'taskType': return this.issueManager.localeTaskType(variable);
-      case 'startedBy': return this.auth.getUserName(variable);
-      case 'assignedTo': return this.auth.getUserName(variable);
-      case 'status': return this.issueManager.localeStatus(variable, false);
-      default: return variable;
+      case 'taskType': return this.issueManager.localeTaskType(field);
+      case 'startedBy': return this.auth.getUserName(field);
+      case 'assignedTo': return this.auth.getUserName(field);
+      case 'status': return this.issueManager.localeStatus(field, false);
+      default: return field;
     }
   }
   getDate(dateLong: number): string{
@@ -115,11 +119,11 @@ export class HomeComponent implements OnInit {
     return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
 
-  localeColumn(issueElement: string, variable: string): string {
-    if (variable == 'startedBy'){
+  localeColumn(issueElement: string, field: string): string {
+    if (field == 'startedBy'){
       return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
     }
-    else if (variable == 'assignedTo'){
+    else if (field == 'assignedTo'){
       if (issueElement == ''){
         return '';
       }
@@ -127,21 +131,37 @@ export class HomeComponent implements OnInit {
         return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
       }
     }
-    else if (variable == 'status'){
+    else if (field == 'status'){
       return this.issueManager.localeStatus(issueElement);
     }
-    else if (variable == 'startedDate'){
+    else if (field == 'startedDate'){
       return this.getDate(+issueElement);
     }
-    else if (variable == 'taskType'){
+    else if (field == 'taskType'){
       return this.issueManager.localeTaskType(issueElement);
     }
     else{
       return issueElement;
     }
   }
+  saveFilters() {
+    console.log(this.filters);
+    localStorage.setItem('filters', JSON.stringify(this.filters));
+  }
 
-  test(event: any) {
+  onStateRestore(event: any) {
+    console.log('load: ');
     console.log(event);
+  }
+  onStateSave(event: any) {
+    console.log('save: ');
+    console.log(event);
+  }
+
+  saveSelectedCols() {
+    this.dt.clearState();
+    this.dt.restoreState();
+    localStorage.setItem('selectedCols', JSON.stringify(this.selectedCols));
+    this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
   }
 }

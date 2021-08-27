@@ -31,6 +31,9 @@ export class IssueManagerService {
   async getIssueTypes() {
     return await this.http.get<string[]>(props.http + '/issueTypes').toPromise();
   }
+  async getTaskPriorities() {
+    return await this.http.get<string[]>(props.http + '/issuePriorities').toPromise();
+  }
   async startIssue(user: string, issue: Issue){
     return await this.http.post(props.http + '/startIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();
   }
@@ -73,6 +76,12 @@ export class IssueManagerService {
   localeTaskType(input: string){
     switch (input) {
       case 'it-task': return 'IT';
+      case 'simple-task': return 'Прочее';
+      default: return input;
+    }
+  }
+  localeTaskPriority(input: string){
+    switch (input) {
       default: return input;
     }
   }

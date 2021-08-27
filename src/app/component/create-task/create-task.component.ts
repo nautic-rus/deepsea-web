@@ -24,9 +24,12 @@ export class CreateTaskComponent implements OnInit {
   taskDetails = '';
   taskProjects: string[] = [];
   taskTypes: any[] = [];
+  taskPriorities: any[] = [];
+  selectedUser = '';
   awaitForLoad: string[] = [];
   taskProject = '';
   taskType = 'IT';
+  taskPriority = '';
   loaded: FileAttachment[] = [];
   taskResponsible: any;
   taskStart: any;
@@ -96,7 +99,7 @@ export class CreateTaskComponent implements OnInit {
         }
       }
     }
-  constructor(public issues: IssueManagerService, private auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
+  constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
     let issue = this.conf.data as Issue;
     if (issue != null && issue.id != null){
@@ -107,11 +110,19 @@ export class CreateTaskComponent implements OnInit {
       this.awaitForLoad = issue.fileAttachments.map(x => x.name);
     }
     this.issues.getIssueTypes().then(types => {
-      types.forEach(type => {
+      types.filter(x => this.issues.localeTaskType(x) != x).forEach(type => {
         this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
       });
       if (this.taskTypes.length > 0){
         this.taskType = this.taskTypes[0].value;
+      }
+    });
+    this.issues.getTaskPriorities().then(priorities => {
+      priorities.forEach(priority => {
+        this.taskPriorities.push({label: this.issues.localeTaskType(priority), value: priority});
+      });
+      if (this.taskPriorities.length > 0){
+        this.taskPriority = this.taskPriorities[0].value;
       }
     });
     this.issues.getIssueProjects().then(projects => {

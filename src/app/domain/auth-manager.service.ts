@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {Observable} from "rxjs";
 import {Issue} from "./classes/issue";
+import _ from "underscore";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,8 @@ export class AuthManagerService {
   fillUsers(){
     this.getUsers().then(data => {
       this.users = data;
+      this.users.forEach(user => user.userName = this.getUserName(user.login));
+      this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
     });
   }
   getUserName(login: string){

@@ -35,6 +35,7 @@ export class TaskComponent implements OnInit {
   editor;
   showHistory = ['_taskStatus'];
   availableStatuses: any[] = [];
+  issueNameEdit = false;
   quillModules =
     {
       imageResize: {},
@@ -368,5 +369,9 @@ export class TaskComponent implements OnInit {
   }
   getDueDate(date: number){
     return date == 0 ? '-' : this.getDate(date);
+  }
+
+  editIssueName() {
+    this.issueNameEdit = true;
   }
 }

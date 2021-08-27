@@ -8,7 +8,10 @@
       styleClass="p-datatable-striped"
       [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status']"
       [reorderableColumns]="true"
-      [columns]="selectedColumns"
+      [resizableColumns]="true"
+      [columns]="cols"
+      stateStorage="local"
+      stateKey="state"
     >
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
@@ -18,8 +21,8 @@
           <div class="mr-2">
             <button pButton label="Новая задача" class="p-button-info" (click)="newTask(null)"></button>
           </div>
-          <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="headerLocale"
-                         selectedItemsLabel="{0} выбрано колонок" [style]="{minWidth: '200px'}" placeholder="Choose Columns">
+          <p-multiSelect [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
+                         selectedItemsLabel="{0} выбрано колонок" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
           </p-multiSelect>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
@@ -27,15 +30,20 @@
           </span>
         </div>
       </ng-template>
+      <ng-template pTemplate="colgroup">
+        <colgroup>
+          <col style="width:15%" *ngFor="let col of cols" [hidden]="col.hidden">
+        </colgroup>
+      </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns" pReorderableColumn [pSortableColumn]="col.variable">
+          <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
             <div class="header">
               {{col.header}}
-              <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.variable"></p-sortIcon>
-              <p-columnFilter class="filter" *ngIf="col.filter == true" [field]="col.variable" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+              <p-columnFilter class="filter" *ngIf="col.filter == true" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" placeholder="Все" (onChange)="filter($event.value);test($event)">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" placeholder="Все" (onChange)="filter($event.value);">
                   </p-multiSelect>
                 </ng-template>
               </p-columnFilter>
@@ -45,8 +53,8 @@
       </ng-template>
       <ng-template pTemplate="body" let-columns="columns" let-issue>
         <tr class="task-row" (click)="viewTask(issue.id)">
-          <td class="cursor-pointer" *ngFor="let col of columns">
-            <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.variable], col.variable) | safeHtml"></div></div>
+          <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
+            <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field) | safeHtml"></div></div>
             <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
           </td>
         </tr>

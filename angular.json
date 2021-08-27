@@ -35,18 +35,18 @@
               "node_modules/bpmn-js/dist/assets/diagram-js.css",
               "node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css",
               "node_modules/bpmn-js-properties-panel/styles/properties.less",
-              "primeng/resources/themes/fluent-light/theme.css",
+              "node_modules/primeng/resources/themes/fluent-light/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/quill/dist/quill.core.css",
               "node_modules/quill/dist/quill.bubble.css",
-              "node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css",
             ],
             "scripts": [
               "node_modules/quill/dist/quill.js",
               "node_modules/quill/dist/quill.min.js",
-              "node_modules/quill-image-resize-module/image-resize.min.js"
+              "node_modules/quill-image-resize-module/image-resize.min.js",
             ]
           },
           "configurations": {
@@ -59,8 +59,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "100mb",
+                  "maximumError": "100mb"
                 }
               ],
               "fileReplacements": [

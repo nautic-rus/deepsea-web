@@ -14,6 +14,7 @@ import * as props from "../../props";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {MessageService} from "primeng/api";
 
+
 @Component({
   selector: 'app-bpmn',
   templateUrl: './bpmn.component.html',
@@ -40,10 +41,13 @@ export class BpmnComponent implements OnInit {
       },
       additionalModules: [
         propertiesPanelModule,
-        propertiesProviderModule
+        propertiesProviderModule,
       ],
       moddleExtensions: {
         camunda: camundaModdleDescriptor
+      },
+      keyboard: {
+        bindTo: document
       }
     });
     // @ts-ignore

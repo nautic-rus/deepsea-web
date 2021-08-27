@@ -13,4 +13,5 @@ export class User {
   token: string = '';
   groups: string[] = [];
   permissions: string[] = [];
+  userName: string = '';
 }
