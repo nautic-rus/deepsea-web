@@ -37,7 +37,9 @@ export class HomeComponent implements OnInit {
       { field: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, filters: this.getFilters(this.issues, 'department'), skip: false, defaultValue: '', hidden: false },
       { field: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: false, filters: this.getFilters(this.issues, 'name'), skip: false, defaultValue: '', hidden: false },
       { field: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assignedTo'), skip: false, defaultValue: '', hidden: false },
-      { field: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '', hidden: false }
+      { field: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '', hidden: false },
+      { field: 'priority', header: 'Приоритет', headerLocale: 'Приоритет', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'priority'), defaultValue: '', hidden: false },
+      { field: 'dueDate', header: 'Срок исполнения', headerLocale: 'Срок исполнения', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'dueDate'), defaultValue: '', hidden: false }
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -120,7 +122,13 @@ export class HomeComponent implements OnInit {
     let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
     return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
-
+  getDateNoTime(dateLong: number): string{
+    let date = new Date(dateLong);
+    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
+    let mo = new Intl.DateTimeFormat('ru', { month: 'short' }).format(date);
+    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    return da + ' ' + mo + ' ' + ye + ' ';
+  }
   localeColumn(issueElement: string, field: string): string {
     if (field == 'startedBy'){
       return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
@@ -141,6 +149,9 @@ export class HomeComponent implements OnInit {
     }
     else if (field == 'taskType'){
       return this.issueManager.localeTaskType(issueElement);
+    }
+    else if (field == 'dueDate'){
+      return +issueElement == 0 ? '-' : this.getDateNoTime(+issueElement);
     }
     else{
       return issueElement;
@@ -166,16 +177,5 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('selectedCols', JSON.stringify(this.selectedCols));
     this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
     console.log(this.dt.columnWidthsState);
-  }
-
-  getColWidth(header: any) {
-    if (header == 'ID'){
-      return {
-        width: '5%'
-      };
-    }
-    else{
-      return {};
-    }
   }
 }

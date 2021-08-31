@@ -110,7 +110,16 @@ export class TaskComponent implements OnInit {
     let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
     return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
-
+  getDateNoTime(dateLong: number): string{
+    let date = new Date(dateLong);
+    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
+    let mo = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date);
+    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    return da + ' ' + mo + ' ' + ye + ' ';
+  }
+  getWithNoResult(value: string){
+    return value == '' ? '-' : value;
+  }
   getMessages(issue: Issue) {
     // @ts-ignore
     return _.sortBy(issue.messages, x => x.date).reverse();

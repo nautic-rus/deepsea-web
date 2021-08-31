@@ -24,6 +24,7 @@ export class CreateTaskComponent implements OnInit {
   taskDetails = '';
   users: User[] = [];
   dueDate: Date = new Date();
+  today: Date = new Date();
   taskProjects: string[] = [];
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
@@ -197,7 +198,7 @@ export class CreateTaskComponent implements OnInit {
     issue.project = this.taskProject;
     issue.assignedTo = this.selectedUser;
     issue.priority = this.taskPriority;
-    issue.dueDate = this.dueDate.getDate();
+    issue.dueDate = this.dueDate.getTime();
     // @ts-ignore
     issue.fileAttachments = this.loaded;
     this.issues.startIssue(this.auth.getUser().login, issue).then(res => {

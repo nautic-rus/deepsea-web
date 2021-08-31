@@ -122,7 +122,7 @@
       </div>
       <div>
         <div class="big-text mb-1 mt-1">Срок завершения</div>
-        <p-calendar [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+        <p-calendar [minDate]="today" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
       </div>
     </div>
     <div class="big-text mb-1 mt-1">Описание задачи</div>
