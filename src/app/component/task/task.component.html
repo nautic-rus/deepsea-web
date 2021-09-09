@@ -27,6 +27,12 @@
         </span>
           <span>Прикрепить</span>
         </div>
+        <div class="button-new" (click)="assignTask()" *ngIf="issue.activity == 'Assign Task'">
+          <span class="mr-10">
+            <img src="assets/paperclip.svg" height="18">
+          </span>
+          <span>Назначить</span>
+        </div>
       </div>
       <div class="big-text mb-1 mt-2">Описание задачи</div>
       <div class="text description descr-task">

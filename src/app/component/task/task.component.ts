@@ -1,5 +1,5 @@
 import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
 import {IssueManagerService} from "../../domain/issue-manager.service";
@@ -11,6 +11,7 @@ import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {ConfirmationService} from "primeng/api";
 import {VarMap} from "../../domain/classes/var-map";
 import Delta from "quill-delta";
+import {AssignComponent} from "./assign/assign.component";
 
 @Component({
   selector: 'app-task',
@@ -26,6 +27,7 @@ export class TaskComponent implements OnInit {
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
   image = '';
+  selectedUser = '';
   showImages = false;
   // @ts-ignore
   @ViewChild('img') img;
@@ -82,6 +84,8 @@ export class TaskComponent implements OnInit {
         }
       }
     }
+  constructor(public ref: DynamicDialogRef, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -92,8 +96,17 @@ export class TaskComponent implements OnInit {
     }
     return result;
   }
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
-
+  assignTask(){
+    this.dialogService.open(AssignComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
+        this.issue = res;
+      });
+    });
+  }
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
     this.availableStatuses = this.getAvailableStatuses(this.issue);

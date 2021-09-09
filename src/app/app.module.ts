@@ -38,6 +38,8 @@ import ImageResize from 'quill-image-resize-module';
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import { NgInitDirective } from './domain/ng-init.directive';
 import {RippleModule} from "primeng/ripple";
+import { AssignComponent } from './component/task/assign/assign.component';
+import {InputSwitchModule} from "primeng/inputswitch";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -53,39 +55,41 @@ Quill.register('modules/imageResize', ImageResize);
     TaskComponent,
     SafeHtmlPipe,
     NgInitDirective,
+    AssignComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AccordionModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        ProgressBarModule,
-        ButtonModule,
-        SliderModule,
-        DropdownModule,
-        TooltipModule,
-        ToastModule,
-        EditorModule,
-        DialogModule,
-        CascadeSelectModule,
-        CalendarModule,
-        ProgressSpinnerModule,
-        MessagesModule,
-        GalleriaModule,
-        QuillModule.forRoot(),
-        // QuillModule.forRoot({
-        //   modules: {
-        //     imageResize: {}
-        //   }
-        // }),
-        ConfirmDialogModule,
-        RippleModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ProgressBarModule,
+    ButtonModule,
+    SliderModule,
+    DropdownModule,
+    TooltipModule,
+    ToastModule,
+    EditorModule,
+    DialogModule,
+    CascadeSelectModule,
+    CalendarModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+    GalleriaModule,
+    QuillModule.forRoot(),
+    // QuillModule.forRoot({
+    //   modules: {
+    //     imageResize: {}
+    //   }
+    // }),
+    ConfirmDialogModule,
+    RippleModule,
+    InputSwitchModule
+  ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })

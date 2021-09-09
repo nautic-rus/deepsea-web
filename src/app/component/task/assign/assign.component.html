@@ -1,0 +1,11 @@
+<div style="height: 400px; width: 400px">
+  <p-dropdown *ngIf="issue.activity == 'Assign Task'" [options]="auth.users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
+              [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-250">
+  </p-dropdown>
+  <div>
+    <div class="big-text mb-1 mt-1">Срок завершения</div>
+    <p-calendar [minDate]="today" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+  </div>
+  <p-inputSwitch [(ngModel)]="overtime"></p-inputSwitch>
+  <button (click)="commit()">OK</button>
+</div>

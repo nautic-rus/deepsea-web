@@ -23,8 +23,12 @@ export class IssueManagerService {
     formData.append('file', file, file.name);
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData).toPromise();
   }
-
-
+  async assignUser(id: string, user: string, dueDate: string, overtime: string){
+    return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, dueDate, overtime}}).toPromise();
+  }
+  async getIssueDepartments() {
+    return await this.http.get<string[]>(props.http + '/issueDepartments').toPromise();
+  }
   async getIssueProjects() {
     return await this.http.get<string[]>(props.http + '/issueProjects').toPromise();
   }
@@ -78,6 +82,7 @@ export class IssueManagerService {
       case 'it-task': return 'IT';
       case 'simple-task': return 'Прочее';
       case 'Simple': return 'Прочее';
+      case 'task-rkd': return 'РКД';
       default: return input;
     }
   }

@@ -16,4 +16,7 @@ export class Issue {
   fileAttachments: FileAttachment[] = [];
   availableStatuses: string[] = [];
   priority: string = '';
+  docNumber: string = '';
+  activity: string = '';
+  responsible: string = '';
 }

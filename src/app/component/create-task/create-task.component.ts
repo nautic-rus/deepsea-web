@@ -22,10 +22,13 @@ Quill.register('modules/imageResize', ImageResize);
 export class CreateTaskComponent implements OnInit {
   taskSummary = '';
   taskDetails = '';
+  taskDocNumber = '';
+  taskDepartment = '';
   users: User[] = [];
   dueDate: Date = new Date();
   today: Date = new Date();
   taskProjects: string[] = [];
+  taskDepartments: string[] = [];
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
   selectedUser = '';
@@ -137,6 +140,12 @@ export class CreateTaskComponent implements OnInit {
         this.taskProject = this.taskProjects[0];
       }
     });
+    this.issues.getIssueDepartments().then(departments => {
+      this.taskDepartments = departments;
+      if (this.taskDepartments.length > 0){
+        this.taskDepartment = this.taskDepartments[0];
+      }
+    });
   }
 
   handleFileInput(files: FileList | null) {
@@ -199,6 +208,9 @@ export class CreateTaskComponent implements OnInit {
     issue.assignedTo = this.selectedUser;
     issue.priority = this.taskPriority;
     issue.dueDate = this.dueDate.getTime();
+    issue.department = this.taskDepartment;
+    issue.docNumber = this.taskDocNumber;
+    issue.responsible = this.selectedUser;
     // @ts-ignore
     issue.fileAttachments = this.loaded;
     this.issues.startIssue(this.auth.getUser().login, issue).then(res => {
@@ -323,5 +335,9 @@ export class CreateTaskComponent implements OnInit {
 
   getUsers() {
     return this.auth.users.filter(x => x.visibility.includes('c'));
+  }
+
+  taskTypeChanged() {
+    this.selectedUser = this.auth.getUser().login;
   }
 }

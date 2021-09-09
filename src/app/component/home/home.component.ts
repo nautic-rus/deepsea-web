@@ -80,6 +80,7 @@ export class HomeComponent implements OnInit {
   }
   viewTask(id: string) {
     this.issueManager.getIssueDetails(id, this.auth.getUser().login).then(res => {
+      console.log(res);
       this.dialogService.open(TaskComponent, {
         showHeader: false,
         modal: true,
