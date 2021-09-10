@@ -126,11 +126,16 @@ export class TaskComponent implements OnInit {
     return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
   getDateNoTime(dateLong: number): string{
-    let date = new Date(dateLong);
-    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
-    let mo = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date);
-    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
-    return da + ' ' + mo + ' ' + ye + ' ';
+    if (dateLong == 0){
+      return '-';
+    }
+    else{
+      let date = new Date(dateLong);
+      let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
+      let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+      let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+      return da + '/' + mo + '/' + ye;
+    }
   }
   getWithNoResult(value: string){
     return value == '' ? '-' : value;

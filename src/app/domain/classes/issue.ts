@@ -19,4 +19,6 @@ export class Issue {
   docNumber: string = '';
   activity: string = '';
   responsible: string = '';
+  humanId: number = 0;
+  overtime: string = '';
 }

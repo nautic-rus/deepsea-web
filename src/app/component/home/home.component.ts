@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   }
   setCols(){
     this.cols = [
-      { field: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '', hidden: false },
+      { field: 'humanId', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '', hidden: false },
       { field: 'startedDate', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'startedDate'), skip: false, defaultValue: '', hidden: false },
       { field: 'taskType', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'taskType'), skip: false, defaultValue: '', hidden: false },
       { field: 'startedBy', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'startedBy'), skip: false, defaultValue: '', hidden: false },
@@ -39,11 +39,12 @@ export class HomeComponent implements OnInit {
       { field: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assignedTo'), skip: false, defaultValue: '', hidden: false },
       { field: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '', hidden: false },
       { field: 'priority', header: 'Приоритет', headerLocale: 'Приоритет', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'priority'), defaultValue: '', hidden: false },
-      { field: 'dueDate', header: 'Срок исполнения', headerLocale: 'Срок исполнения', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'dueDate'), defaultValue: '', hidden: false }
+      { field: 'dueDate', header: 'Срок исполнения', headerLocale: 'Срок исполнения', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'dueDate'), defaultValue: '', hidden: false },
+      { field: 'overtime', header: 'Сверхурочные', headerLocale: 'Сверхурочные', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'overtime'), defaultValue: '', hidden: false }
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
-    let selectedCols = selectedColsValue ? JSON.parse(selectedColsValue) as string[] : this.colHeaders;
+    let selectedCols = selectedColsValue ? JSON.parse(selectedColsValue) as string[] : ['ID', 'Тип задачи', 'Автор', 'Проект', 'Название', 'Статус', 'Срок исполнения', 'Приоритет'];
     if (selectedCols.length > 0){
       this.selectedCols = this.colHeaders.filter(x => selectedCols.includes(x));
     }
@@ -123,6 +124,13 @@ export class HomeComponent implements OnInit {
     let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
     return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
+  getDateOnly(dateLong: number): string{
+    let date = new Date(dateLong);
+    let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
+    let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    return da + '/' + mo + '/' + ye;
+  }
   getDateNoTime(dateLong: number): string{
     let date = new Date(dateLong);
     let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
@@ -146,7 +154,7 @@ export class HomeComponent implements OnInit {
       return this.issueManager.localeStatus(issueElement);
     }
     else if (field == 'startedDate'){
-      return this.getDate(+issueElement);
+      return this.getDateOnly(+issueElement);
     }
     else if (field == 'taskType'){
       return this.issueManager.localeTaskType(issueElement);
