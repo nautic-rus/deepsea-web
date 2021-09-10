@@ -37,6 +37,7 @@ export class TaskComponent implements OnInit {
   editor;
   showHistory = ['_taskStatus'];
   availableStatuses: any[] = [];
+  availableStatusesNoCurrent: any[] = [];
   issueNameEdit = false;
   quillModules =
     {
@@ -110,6 +111,7 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
     this.availableStatuses = this.getAvailableStatuses(this.issue);
+    this.availableStatusesNoCurrent = this.getAvailableStatuses(this.issue, true);
   }
   close(){
     this.ref.close('exit');
@@ -138,14 +140,16 @@ export class TaskComponent implements OnInit {
     return _.sortBy(issue.messages, x => x.date).reverse();
   }
 
-  getAvailableStatuses(issue: Issue) {
+  getAvailableStatuses(issue: Issue, skipCurrent = false) {
     const res = [];
-    // @ts-ignore
-    if (!issue.availableStatuses.includes(issue.status)){
-      res.push({label: this.issueManager.localeStatus(issue.status, false), value: issue.status});
+    if (!skipCurrent){
+      // @ts-ignore
+      if (!issue.availableStatuses.includes(issue.status)){
+        res.push({label: this.issueManager.localeStatusAsButton(issue.status, false), value: issue.status});
+      }
     }
     // @ts-ignore
-    issue.availableStatuses.forEach(x => res.push({label: this.issueManager.localeStatus(x, false), value: x}));
+    issue.availableStatuses.forEach(x => res.push({label: this.issueManager.localeStatusAsButton(x, false), value: x}));
     return res;
   }
 
@@ -155,6 +159,7 @@ export class TaskComponent implements OnInit {
       this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
         this.issue = issue;
         this.availableStatuses = this.getAvailableStatuses(issue);
+        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
       });
     });
   }
@@ -395,5 +400,10 @@ export class TaskComponent implements OnInit {
 
   editIssueName() {
     this.issueNameEdit = true;
+  }
+
+  changeStatus(value: string) {
+    this.issue.status = value;
+    this.statusChanged();
   }
 }

@@ -21,17 +21,20 @@
   <div class="center">
     <div class="left-content">
       <div class="buttons">
-        <div class="button-new">
-        <span class="mr-10">
-          <img src="assets/paperclip.svg" height="18">
-        </span>
-          <span>Прикрепить</span>
-        </div>
+<!--        <div class="button-new">-->
+<!--        <span class="mr-10">-->
+<!--          <img src="assets/paperclip.svg" height="18">-->
+<!--        </span>-->
+<!--          <span>Прикрепить</span>-->
+<!--        </div>-->
         <div class="button-new" (click)="assignTask()" *ngIf="issue.activity == 'Assign Task'">
           <span class="mr-10">
             <img src="assets/paperclip.svg" height="18">
           </span>
           <span>Назначить</span>
+        </div>
+        <div class="button-new" *ngFor="let status of availableStatusesNoCurrent">
+          <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
         </div>
       </div>
       <div class="big-text mb-1 mt-2">Описание задачи</div>
@@ -196,8 +199,9 @@
           <div class="df mb-1 mt-1">
             <div class="normal-text w-50">Статус</div>
             <div class="descr-task">
-              <p-dropdown [(ngModel)]="issue.status" optionLabel="label" optionValue="value" [options]="availableStatuses" (onChange)="statusChanged()">
-              </p-dropdown>
+              <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
+<!--              <p-dropdown [(ngModel)]="issue.status" optionLabel="label" optionValue="value" [options]="availableStatuses" (onChange)="statusChanged()">-->
+<!--              </p-dropdown>-->
             </div>
           </div>
           <div class="df mb-2 mt-1">
