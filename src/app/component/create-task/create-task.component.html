@@ -16,10 +16,18 @@
   <p-dropdown styleClass="dark-panel width-200" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
   </p-dropdown>
   <div *ngIf="taskType == 'task-rkd'">
-    <div class="big-text mb-1 mt-1">Название задачи</div>
-    <input type="text" pInputText [(ngModel)]="taskSummary">
-    <div class="big-text mb-1 mt-1">Номер чертежа</div>
-    <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
+    <div class="df space-between">
+      <div style="width: 200px">
+        <div class="big-text mb-1 mt-1">Номер чертежа</div>
+        <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
+      </div>
+      <div style="width: 68%">
+        <div class="big-text mb-1 mt-1">Название задачи</div>
+        <input type="text" pInputText [(ngModel)]="taskSummary">
+      </div>
+
+    </div>
+
     <div class="df space-between">
       <div>
         <div class="big-text mb-1 mt-1">Назначить ответственного</div>
@@ -32,9 +40,9 @@
             </div>
           </ng-template>
         </p-dropdown>
-
       </div>
       <div>
+        <div class="big-text mb-1 mt-1">Специализация</div>
         <p-dropdown class="select" styleClass="width-270" [(ngModel)]="taskDepartment" [options]="taskDepartments">
         </p-dropdown>
       </div>

@@ -6,6 +6,7 @@
   width: 65%;
   overflow-y: auto;
   padding-right: 15px;
+  padding-top: 10px;
 }
 .right-content{
   width: 35%;
@@ -27,6 +28,10 @@
 }
 .button-new:hover {
   background-color: rgb(235, 236, 240);
+}
+.button-status{
+  cursor: pointer;
+  margin-right: 10px;
 }
 .buttons{
   display: flex;
