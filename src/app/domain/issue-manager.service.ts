@@ -98,6 +98,7 @@ export class IssueManagerService {
       case 'simple-task': return 'Прочее';
       case 'Simple': return 'Прочее';
       case 'task-rkd': return 'РКД';
+      case 'RKD': return 'РКД';
       default: return input;
     }
   }
