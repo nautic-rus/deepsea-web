@@ -142,7 +142,7 @@ export class TaskComponent implements OnInit {
   }
   getMessages(issue: Issue) {
     // @ts-ignore
-    return _.sortBy(issue.messages, x => x.date).reverse();
+    return _.sortBy(issue.messages, x => x.date).reverse().slice(0, issue.messages.length - 1);
   }
 
   getAvailableStatuses(issue: Issue, skipCurrent = false) {
@@ -165,6 +165,7 @@ export class TaskComponent implements OnInit {
         this.issue = issue;
         this.availableStatuses = this.getAvailableStatuses(issue);
         this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
+        console.log(issue);
       });
     });
   }
@@ -375,7 +376,7 @@ export class TaskComponent implements OnInit {
   }
 
   filterVariables(variables: VarMap[]) {
-    return variables.filter(x => this.showHistory.includes(x.name) && !(x.name == '_taskStatus' && x.value == 'New'));
+    return variables.filter(x => this.showHistory.includes(x.name));
   }
 
   getAuthor(author: string) {
@@ -408,6 +409,9 @@ export class TaskComponent implements OnInit {
   }
 
   changeStatus(value: string) {
+    if (value == 'Send to Approval'){
+      return;
+    }
     this.issue.status = value;
     this.statusChanged();
   }

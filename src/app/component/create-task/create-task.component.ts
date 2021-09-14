@@ -25,10 +25,13 @@ export class CreateTaskComponent implements OnInit {
   taskDocNumber = '';
   taskDepartment = '';
   users: User[] = [];
+  startDate: Date = new Date();
   dueDate: Date = new Date();
   today: Date = new Date();
   taskProjects: string[] = [];
   taskDepartments: string[] = [];
+  taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
+  taskPeriod: string = this.taskPeriods[0];
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
   selectedUser = '';
@@ -108,16 +111,6 @@ export class CreateTaskComponent implements OnInit {
   constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
     this.users = this.auth.users;
-    let issue = this.conf.data as Issue;
-    if (issue != null && issue.id != null){
-      this.taskSummary = issue.name;
-      this.taskType = issue.taskType;
-      this.taskDetails = issue.details;
-      this.loaded = issue.fileAttachments;
-      this.taskPriority = issue.priority;
-      this.selectedUser = issue.assignedTo;
-      this.awaitForLoad = issue.fileAttachments.map(x => x.name);
-    }
     this.issues.getIssueTypes().then(types => {
       types.filter(x => this.issues.localeTaskType(x) != x).forEach(type => {
         this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
@@ -146,6 +139,23 @@ export class CreateTaskComponent implements OnInit {
         this.taskDepartment = this.taskDepartments[0];
       }
     });
+
+    let issue = this.conf.data as Issue;
+    if (issue != null && issue.id != null){
+      this.taskSummary = issue.name;
+      this.taskType = issue.taskType;
+      this.taskDetails = issue.details;
+      this.loaded = issue.fileAttachments;
+      this.taskPriority = issue.priority;
+      this.selectedUser = issue.assignedTo;
+      this.awaitForLoad = issue.fileAttachments.map(x => x.name);
+      this.taskProject = issue.project;
+      this.taskDepartment = issue.department;
+      this.taskPriority = issue.priority;
+      this.taskDocNumber = issue.docNumber;
+      this.taskResponsible = issue.responsible;
+      this.taskPeriod = issue.period;
+    }
   }
 
   handleFileInput(files: FileList | null) {
@@ -207,10 +217,12 @@ export class CreateTaskComponent implements OnInit {
     issue.project = this.taskProject;
     issue.assignedTo = this.selectedUser;
     issue.priority = this.taskPriority;
+    issue.startDate = this.startDate.getTime();
     issue.dueDate = this.dueDate.getTime();
     issue.department = this.taskDepartment;
     issue.docNumber = this.taskDocNumber;
     issue.responsible = this.selectedUser;
+    issue.period = this.taskPeriod;
     // @ts-ignore
     issue.fileAttachments = this.loaded;
     this.issues.startIssue(this.auth.getUser().login, issue).then(res => {

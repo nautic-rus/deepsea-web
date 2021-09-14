@@ -11,6 +11,7 @@ export class Issue {
   name: string = '';
   details: string = '';
   assignedTo: string = '';
+  startDate: number = 0;
   dueDate: number = 0;
   messages: IssueMessage[] = [];
   fileAttachments: FileAttachment[] = [];
@@ -21,4 +22,5 @@ export class Issue {
   responsible: string = '';
   humanId: number = 0;
   overtime: string = '';
+  period: string = '';
 }
