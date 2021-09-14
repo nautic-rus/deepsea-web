@@ -109,16 +109,6 @@ export class CreateTaskComponent implements OnInit {
   constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
     this.users = this.auth.users;
-    let issue = this.conf.data as Issue;
-    if (issue != null && issue.id != null){
-      this.taskSummary = issue.name;
-      this.taskType = issue.taskType;
-      this.taskDetails = issue.details;
-      this.loaded = issue.fileAttachments;
-      this.taskPriority = issue.priority;
-      this.selectedUser = issue.assignedTo;
-      this.awaitForLoad = issue.fileAttachments.map(x => x.name);
-    }
     this.issues.getIssueTypes().then(types => {
       types.filter(x => this.issues.localeTaskType(x) != x).forEach(type => {
         this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
@@ -147,6 +137,22 @@ export class CreateTaskComponent implements OnInit {
         this.taskDepartment = this.taskDepartments[0];
       }
     });
+
+    let issue = this.conf.data as Issue;
+    if (issue != null && issue.id != null){
+      this.taskSummary = issue.name;
+      this.taskType = issue.taskType;
+      this.taskDetails = issue.details;
+      this.loaded = issue.fileAttachments;
+      this.taskPriority = issue.priority;
+      this.selectedUser = issue.assignedTo;
+      this.awaitForLoad = issue.fileAttachments.map(x => x.name);
+      this.taskProject = issue.project;
+      this.taskDepartment = issue.department;
+      this.taskPriority = issue.priority;
+      this.taskDocNumber = issue.docNumber;
+      this.taskResponsible = issue.responsible;
+    }
   }
 
   handleFileInput(files: FileList | null) {

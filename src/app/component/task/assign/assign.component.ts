@@ -29,7 +29,7 @@ export class AssignComponent implements OnInit {
   }
 
   commit() {
-    this.issueManager.assignUser(this.issue.id, this.selectedUser, this.startDate.getTime().toString(), this.dueDate.getTime().toString(), this.overtime ? 'Yes' : 'No').then(res => {
+    this.issueManager.assignUser(this.issue.id, this.selectedUser, this.startDate.getTime().toString(), this.dueDate.getTime().toString(), this.overtime ? 'Да' : 'Нет').then(res => {
       this.ref.close();
     });
   }
