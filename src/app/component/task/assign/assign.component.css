@@ -1,7 +1,6 @@
 .task-header{
   display: flex;
   justify-content: space-between;
-  height: 60px;
   padding-top: 1rem;
   margin-bottom: 2rem;
 }
@@ -22,14 +21,12 @@
   font-weight: 600;
 }
 .space{
-  height: 180px;
+  height: 150px;
 }
 .form-footer{
-  height: 50px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 16px;
 }
 .button{
   border: none;

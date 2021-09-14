@@ -35,3 +35,6 @@
 .hidden-column{
   width: 0;
 }
+.new-task-button{
+  border-radius: 3px;
+}

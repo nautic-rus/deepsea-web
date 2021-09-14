@@ -170,10 +170,11 @@
   min-width: 24px;
   border-radius: 3px;
   text-shadow: none;
-  padding: 6px;
+  padding: 3px 6px;
   color: #fff;
   background: #00b7c3;
-  transition: background .1s
+  transition: background .1s;
+  font-size: 0.9rem;
 }
 .button:hover{
   background-color: #17a2b8;
@@ -184,10 +185,11 @@
   min-width: 24px;
   border-radius: 3px;
   text-shadow: none;
-  padding: 6px;
+  padding: 3px 6px;
   color: #17a2b8;
   background: #fff;
-  transition: background .1s
+  transition: background .1s;
+  font-size: 0.9rem;
 }
 .button-cancel:hover{
   background-color: rgb(235, 236, 240);
@@ -300,4 +302,7 @@
 }
 /deep/ quill-editor .ql-editor{
   min-height: 100px;
+}
+::ng-deep.p-inputtext{
+  font-size: 14px;
 }
