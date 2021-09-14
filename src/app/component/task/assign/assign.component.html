@@ -10,6 +10,8 @@
               [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-270">
   </p-dropdown>
   <div>
+    <div class="big-text mb-1 mt-1">Дата начала</div>
+    <p-calendar [minDate]="today" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
     <div class="big-text mb-1 mt-1">Срок завершения</div>
     <p-calendar [minDate]="today" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
   </div>

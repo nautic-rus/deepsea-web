@@ -22,4 +22,5 @@ export class Issue {
   responsible: string = '';
   humanId: number = 0;
   overtime: string = '';
+  period: string = '';
 }

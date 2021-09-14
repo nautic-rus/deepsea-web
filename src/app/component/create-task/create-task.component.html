@@ -47,6 +47,11 @@
         </p-dropdown>
       </div>
     </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Этап</div>
+      <p-dropdown class="select" styleClass="width-270" [(ngModel)]="taskPeriod" [options]="taskPeriods">
+      </p-dropdown>
+    </div>
     <div class="big-text mb-1 mt-1">Описание задачи</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>

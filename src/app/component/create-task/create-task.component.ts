@@ -30,6 +30,8 @@ export class CreateTaskComponent implements OnInit {
   today: Date = new Date();
   taskProjects: string[] = [];
   taskDepartments: string[] = [];
+  taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
+  taskPeriod: string = this.taskPeriods[0];
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
   selectedUser = '';
@@ -152,6 +154,7 @@ export class CreateTaskComponent implements OnInit {
       this.taskPriority = issue.priority;
       this.taskDocNumber = issue.docNumber;
       this.taskResponsible = issue.responsible;
+      this.taskPeriod = issue.period;
     }
   }
 
@@ -219,6 +222,7 @@ export class CreateTaskComponent implements OnInit {
     issue.department = this.taskDepartment;
     issue.docNumber = this.taskDocNumber;
     issue.responsible = this.selectedUser;
+    issue.period = this.taskPeriod;
     // @ts-ignore
     issue.fileAttachments = this.loaded;
     this.issues.startIssue(this.auth.getUser().login, issue).then(res => {

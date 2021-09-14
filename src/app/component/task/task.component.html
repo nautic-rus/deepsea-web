@@ -1,6 +1,6 @@
 <div class="w-60">
   <div class="view-task-header task-header">
-    <div class="task-name" [hidden]="issueNameEdit" (click)="editIssueName()">Задача: {{issue.name}} {{issue.docNumber}}</div>
+    <div class="task-name" [hidden]="issueNameEdit" (click)="editIssueName()">Задача: {{issue.docNumber}} {{issue.name}}</div>
     <div class="task-name" [hidden]="!issueNameEdit">
       Задача: <input type="text" pInputText [(ngModel)]="issue.name"/>
       <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
@@ -27,7 +27,7 @@
 <!--        </span>-->
 <!--          <span>Прикрепить</span>-->
 <!--        </div>-->
-        <div class="button-new" (click)="assignTask()" *ngIf="issue.activity == 'Assign Task'">
+        <div class="button-new" (click)="assignTask()" *ngIf="issue.activity == 'Assign Task' && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
           <span class="mr-10">
             <img src="assets/paperclip.svg" height="18">
           </span>
@@ -204,14 +204,14 @@
 <!--              </p-dropdown>-->
             </div>
           </div>
-          <div class="df mb-2 mt-1">
-            <div class="normal-text w-50">Исполнитель</div>
-            <div class="descr-task w-50">{{getAssignedTo(issue.assignedTo)}}</div>
-          </div>
 <!--          <div class="df profession" *ngIf="issue.assignedTo != ''">-->
 <!--            <div class="normal-text w-50"></div>-->
 <!--            <div class="descr-task w-50">{{auth.getUserProfession(issue.assignedTo)}}</div>-->
 <!--          </div>-->
+          <div class="df mb-2 mt-1">
+            <div class="normal-text w-50">Дата начала</div>
+            <div class="descr-task w-50">{{getDateNoTime(issue.startDate)}}</div>
+          </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Срок исполнения</div>
             <div class="descr-task w-50">{{getDateNoTime(issue.dueDate)}}</div>
@@ -229,12 +229,20 @@
             <div class="descr-task w-50">{{auth.getUserName(issue.startedBy)}}</div>
           </div>
           <div class="df mb-2 mt-1">
+            <div class="normal-text w-50">Отвественный</div>
+            <div class="descr-task w-50">{{auth.getUserName(issue.responsible)}}</div>
+          </div>
+          <div class="df mb-2 mt-1">
+            <div class="normal-text w-50">Исполнитель</div>
+            <div class="descr-task w-50">{{getAssignedTo(issue.assignedTo)}}</div>
+          </div>
+          <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Приоритет</div>
             <div class="descr-task w-50">{{getWithNoResult(issue.priority)}}</div>
           </div>
           <div class="df mb-2 mt-1">
-            <div class="normal-text w-50">Номер чертежа</div>
-            <div class="descr-task w-50">{{issue.docNumber}}</div>
+            <div class="normal-text w-50">Этап</div>
+            <div class="descr-task w-50">{{issue.period}}</div>
           </div>
           <div class="df mb-2 mt-1">
             <div class="normal-text w-50">Сверхурочные</div>
