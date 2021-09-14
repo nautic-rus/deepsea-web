@@ -25,6 +25,7 @@ export class CreateTaskComponent implements OnInit {
   taskDocNumber = '';
   taskDepartment = '';
   users: User[] = [];
+  startDate: Date = new Date();
   dueDate: Date = new Date();
   today: Date = new Date();
   taskProjects: string[] = [];
@@ -207,6 +208,7 @@ export class CreateTaskComponent implements OnInit {
     issue.project = this.taskProject;
     issue.assignedTo = this.selectedUser;
     issue.priority = this.taskPriority;
+    issue.startDate = this.startDate.getTime();
     issue.dueDate = this.dueDate.getTime();
     issue.department = this.taskDepartment;
     issue.docNumber = this.taskDocNumber;

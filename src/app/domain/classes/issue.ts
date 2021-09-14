@@ -11,6 +11,7 @@ export class Issue {
   name: string = '';
   details: string = '';
   assignedTo: string = '';
+  startDate: number = 0;
   dueDate: number = 0;
   messages: IssueMessage[] = [];
   fileAttachments: FileAttachment[] = [];

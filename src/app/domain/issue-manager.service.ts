@@ -23,8 +23,8 @@ export class IssueManagerService {
     formData.append('file', file, file.name);
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData).toPromise();
   }
-  async assignUser(id: string, user: string, dueDate: string, overtime: string){
-    return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, dueDate, overtime}}).toPromise();
+  async assignUser(id: string, user: string, startDate: string, dueDate: string, overtime: string){
+    return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime}}).toPromise();
   }
   async getIssueDepartments() {
     return await this.http.get<string[]>(props.http + '/issueDepartments').toPromise();
