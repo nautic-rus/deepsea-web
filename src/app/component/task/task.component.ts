@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
@@ -16,7 +16,8 @@ import {AssignComponent} from "./assign/assign.component";
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.css']
+  styleUrls: ['./task.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TaskComponent implements OnInit {
 

@@ -63,29 +63,28 @@ export class IssueManagerService {
       case 'New': return styled ? '<span style="color: #23547b; background-color: #b3e5fc; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Новый</span>' : 'Новый';
       case 'Rejected': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отклонено</span>' : 'Отклонено';
       case 'Check': return styled ? '<span style="color: #694382; background-color: #eccfff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На проверке</span>' : 'На проверке';
-      case 'In rework': return styled ? '<span style="color: #3f6b73; background-color: #8AC6D1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На доработке</span>' : 'На доработке';
-      case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Пристановлено</span>' : 'Пристановлено';
+      case 'In Rework': return styled ? '<span style="color: #3f6b73; background-color: #8AC6D1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На доработке</span>' : 'На доработке';
+      case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Приостановлено</span>' : 'Приостановлено';
       case 'Archive': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Архив</span>' : 'Архив';
       case 'Not resolved': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не исполнено</span>' : 'Не исполнено';
       case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Закрыто</span>' : 'Закрыто';
-      case 'In Rework': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На доработке</span>' : 'На доработке';
       case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На согласовании</span>' : 'На согласовании';
       default: return input;
     }
   }
   localeStatusAsButton(input: string, styled = true): string {
     switch (input) {
-      case 'In Work': return styled ? '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">В работу</span>' : 'В работу';
-      case 'Resolved': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Исполнено</span>' : 'Исполнено';
+      case 'In Work': return styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'На проверку';
+      case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/resolved.svg"></span><span class="cxy button-text">Исполнено</span></div>' : 'Исполнено';
       case 'New': return styled ? '<span style="color: #23547b; background-color: #b3e5fc; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Новый</span>' : 'Новый';
-      case 'Rejected': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отклонить</span>' : 'Отклонить';
-      case 'Check': return styled ? '<span style=" color: #694382; background-color: #eccfff; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На проверку</span>' : 'На проверку';
-      case 'In Rework': return styled ? '<span style="color: #3f6b73; background-color: #8AC6D1; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На доработку</span>' : 'На доработку';
-      case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Пристановить</span>' : 'Пристановить';
+      case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
+      case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/check.svg"></span><span class="cxy button-text">На проверку</span></div>' : 'На проверку';
+      case 'In Rework': return styled ? '<div class="buttons-pick-rework"><span class="icon-rework cxy"><img src="assets/rework.svg"></span><span class="cxy button-text">На доработку</span></div>' : 'На доработку';
+      case 'Paused': return styled ? '<div class="buttons-pick-pause"><span class="icon-pause cxy"><img src="assets/pause.svg"></span><span class="cxy button-text">Приостановить</span></div>' : 'Приостановить';
       case 'Archive': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">В архив</span>' : 'В архив';
       case 'Not resolved': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не исполнено</span>' : 'Не исполнено';
       case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 8px 10px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Закрыть</span>' : 'Закрыть';
-      case 'Send to Approval': return styled ? '<span style="pointer-events: none; opacity: 0.5; color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На согласовании</span>' : 'На согласование';
+      case 'Send to Approval': return styled ? '<div class="buttons-pick-approval"><span class="icon-approval cxy"><img src="assets/approval.svg"></span><span class="cxy button-text">На согласование</span></div>' : 'На согласование';
       default: return input;
     }
   }

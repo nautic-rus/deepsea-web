@@ -2,19 +2,27 @@
   <div class="df space-between">
     <div>
       <div class="big-text mb-1">Проект</div>
-      <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-200">
+      <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-300 font-14">
       </p-dropdown>
     </div>
     <div>
       <div class="big-text mb-1">Приоритет</div>
-      <p-dropdown class="select" styleClass="width-270" [(ngModel)]="taskPriority" [options]="taskPriorities">
+      <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPriority" [options]="taskPriorities">
       </p-dropdown>
     </div>
   </div>
-
-  <div class="big-text mb-1 mt-1">Тип задачи</div>
-  <p-dropdown styleClass="dark-panel width-200" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
-  </p-dropdown>
+  <div class="df space-between">
+    <div>
+      <div class="big-text mb-1 mt-1">Тип задачи</div>
+      <p-dropdown styleClass="dark-panel width-300" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
+      </p-dropdown>
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Этап</div>
+      <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPeriod" [options]="taskPeriods">
+      </p-dropdown>
+    </div>
+  </div>
   <div *ngIf="taskType == 'task-rkd'">
     <div class="df space-between">
       <div style="width: 200px">
@@ -25,17 +33,15 @@
         <div class="big-text mb-1 mt-1">Название задачи</div>
         <input type="text" pInputText [(ngModel)]="taskSummary">
       </div>
-
     </div>
-
     <div class="df space-between">
       <div>
         <div class="big-text mb-1 mt-1">Назначить ответственного</div>
         <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-                    [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-250">
+                    [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-300">
           <ng-template let-user pTemplate="item">
             <div class="df">
-              <img src="{{user.avatar}}" width="32px" height="32px" style="border-radius: 16px"/>
+              <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
               <div class="cx cy pl-10">{{user.userName}}</div>
             </div>
           </ng-template>
@@ -43,14 +49,9 @@
       </div>
       <div>
         <div class="big-text mb-1 mt-1">Специализация</div>
-        <p-dropdown class="select" styleClass="width-270" [(ngModel)]="taskDepartment" [options]="taskDepartments">
+        <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskDepartment" [options]="taskDepartments">
         </p-dropdown>
       </div>
-    </div>
-    <div>
-      <div class="big-text mb-1 mt-1">Этап</div>
-      <p-dropdown class="select" styleClass="width-270" [(ngModel)]="taskPeriod" [options]="taskPeriods">
-      </p-dropdown>
     </div>
     <div class="big-text mb-1 mt-1">Описание задачи</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">

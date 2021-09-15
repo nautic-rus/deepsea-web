@@ -38,3 +38,33 @@
 .new-task-button{
   border-radius: 3px;
 }
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+}
+/deep/.pi{
+  font-size: 14px;
+}
+.buttons-pick{
+  color: white;
+  background-color: #ae5e9b;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  border-bottom-left-radius: 2px;
+}
+.icon{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #79426c;
+}
+.button-text{
+  padding-right: 8px;
+  padding-left: 8px;
+}

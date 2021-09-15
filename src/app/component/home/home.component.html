@@ -1,10 +1,11 @@
 <div class="all-page">
+
   <div class="card">
     <p-table
       #dt
       dataKey="id"
       [value]="issues"
-      [scrollable]="true" scrollHeight="calc(100vh - 280px)"
+      [scrollable]="true" scrollHeight="calc(100vh - 280px)" scrollDirection="both"
       styleClass="p-datatable-striped"
       [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status']"
       [reorderableColumns]="true"
@@ -32,7 +33,7 @@
       </ng-template>
       <ng-template pTemplate="colgroup">
         <colgroup>
-          <col style="width:15%" *ngFor="let col of cols" [hidden]="col.hidden">
+          <col style="width:200px" *ngFor="let col of cols" [hidden]="col.hidden">
         </colgroup>
       </ng-template>
       <ng-template pTemplate="header" let-columns>

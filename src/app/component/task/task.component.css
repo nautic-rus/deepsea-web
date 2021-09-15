@@ -6,7 +6,6 @@
   width: 65%;
   overflow-y: auto;
   padding-right: 15px;
-  padding-top: 10px;
 }
 .right-content{
   width: 35%;
@@ -306,3 +305,163 @@
 ::ng-deep.p-inputtext{
   font-size: 14px;
 }
+.buttons-pick-check{
+  color: white;
+  background-color: #ae5e9b;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-check:hover{
+  background: #824774;
+  transition: 0.3s;
+}
+.icon-check{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #864a77;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-work{
+  color: white;
+  background-color: #01b169;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-work:hover{
+  background: #017c49;
+  transition: 0.3s;
+}
+.icon-work{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #017c49;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-reject{
+  color: white;
+  background-color: #f26c63;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-reject:hover{
+  background: #a94b45;
+  transition: 0.3s;
+}
+.icon-reject{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #a94b45;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-pause{
+  color: white;
+  background-color: #f8b243;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-pause:hover{
+  background: #ad7c2f;
+  transition: 0.3s;
+}
+.icon-pause{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #ad7c2f;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-resolved{
+  color: white;
+  background-color: #80a8cc;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-resolved:hover{
+  background: #59758e;
+  transition: 0.3s;
+}
+.icon-resolved{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #59758e;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-rework{
+  color: white;
+  background-color: #52be7f;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-rework:hover{
+  background: #398559;
+  transition: 0.3s;
+}
+.icon-rework{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #398559;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-approval{
+  color: white;
+  background-color: #fc7736;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-approval:hover{
+  background: #b05326;
+  transition: 0.3s;
+}
+.icon-approval{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #b05326;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.button-text{
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+

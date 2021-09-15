@@ -29,8 +29,17 @@ body,p{
 .width-270{
   width: 270px;
 }
+.width-300{
+  width: 300px;
+}
 .h100{
   height: 100%;
+}
+.font-14{
+  font-size: 14px;
+}
+.p-2{
+  padding: 2px;
 }
 .df{
   display: flex;
@@ -169,4 +178,7 @@ cdk-virtual-scroll-viewport{
 }
 .border-none{
   border: none;
+}
+/deep/.p-component{
+  font-size: 14px!important;
 }
