@@ -17,7 +17,7 @@
       <p-dropdown styleClass="dark-panel width-300" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
       </p-dropdown>
     </div>
-    <div>
+    <div *ngIf="taskType == 'task-rkd'">
       <div class="big-text mb-1 mt-1">Этап</div>
       <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPeriod" [options]="taskPeriods">
       </p-dropdown>
