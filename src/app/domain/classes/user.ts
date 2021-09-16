@@ -15,4 +15,5 @@ export class User {
   permissions: string[] = [];
   userName: string = '';
   visibility: string = '';
+  gender: string = '';
 }

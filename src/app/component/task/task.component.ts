@@ -201,6 +201,9 @@ export class TaskComponent implements OnInit {
       this.editor.focus();
     })
   }
+  localeGender(gender: string){
+    return gender == 'female' ? 'а' : '';
+  }
   getFileExtensionIcon(file: string) {
     switch (file.toLowerCase().split('.').pop()){
       case 'pdf': return 'pdf.svg';

@@ -132,7 +132,7 @@ export class HomeComponent implements OnInit {
     let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
     let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
     let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
-    return da + '/' + mo + '/' + ye;
+    return da + '.' + mo + '.' + ye;
   }
   getDateNoTime(dateLong: number): string{
     let date = new Date(dateLong);
