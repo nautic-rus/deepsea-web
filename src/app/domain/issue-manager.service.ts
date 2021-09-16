@@ -75,10 +75,10 @@ export class IssueManagerService {
   localeStatusAsButton(input: string, styled = true): string {
     switch (input) {
       case 'In Work': return styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'На проверку';
-      case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/resolved.svg"></span><span class="cxy button-text">Исполнено</span></div>' : 'Исполнено';
+      case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/like.svg"></span><span class="cxy button-text">Исполнено</span></div>' : 'Исполнено';
       case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
       case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/check.svg"></span><span class="cxy button-text">На проверку</span></div>' : 'На проверку';
-      case 'Not resolved': return styled ? '<div class="buttons-pick-not-resolved"><span class="icon-not-resolved cxy"><img src="assets/not-resolved.svg"></span><span class="cxy button-text">Не исполнено</span></div>' : 'Не исполнено';
+      case 'Not resolved': return styled ? '<div class="buttons-pick-not-resolved"><span class="icon-not-resolved cxy"><img src="assets/dislike.svg"></span><span class="cxy button-text">Не исполнено</span></div>' : 'Не исполнено';
       case 'Closed': return styled ? '<div class="buttons-pick-close"><span class="icon-close cxy"><img src="assets/close-task.svg"></span><span class="cxy button-text">Закрыть</span></div>' : 'Закрыть';
       case 'Archive': return styled ? '<div class="buttons-pick-archive"><span class="icon-archive cxy"><img src="assets/archive.svg"></span><span class="cxy button-text">В архив</span></div>' : 'В архив';
       case 'In Rework': return styled ? '<div class="buttons-pick-rework"><span class="icon-rework cxy"><img src="assets/rework.svg"></span><span class="cxy button-text">На доработку</span></div>' : 'На доработку';
