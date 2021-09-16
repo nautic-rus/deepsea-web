@@ -459,6 +459,50 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-archive{
+  color: white;
+  background-color: #9a6362;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-archive:hover{
+  background: #6b4544;
+  transition: 0.3s;
+}
+.icon-archive{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #6b4544;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-close{
+  color: white;
+  background-color: #2ecc71;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-close:hover{
+  background: #208e4f;
+  transition: 0.3s;
+}
+.icon-close{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #208e4f;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .button-text{
   padding-right: 8px;
   padding-left: 8px;
