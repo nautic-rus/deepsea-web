@@ -503,6 +503,28 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-not-resolved{
+  color: white;
+  background-color: #fc7736;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-not-resolved:hover{
+  background: #b05326;
+  transition: 0.3s;
+}
+.icon-not-resolved{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #b05326;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .button-text{
   padding-right: 8px;
   padding-left: 8px;
