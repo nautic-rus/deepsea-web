@@ -58,7 +58,7 @@ select:focus {
   border: 1px dashed #ccc;
   cursor: pointer;
 }
-.center{
+.center-create{
   height: fit-content;
   max-height: 650px;
   padding: 3px;
