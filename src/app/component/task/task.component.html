@@ -1,10 +1,10 @@
 <div class="w-60">
   <div class="view-task-header task-header">
-    <div class="task-name" [hidden]="issueNameEdit" (click)="editIssueName()">Задача: {{issue.docNumber}} {{issue.name}}</div>
-    <div class="task-name" [hidden]="!issueNameEdit">
+    <div class="task-name" [hidden]="edit == 'name'" (click)="edit = 'name'">Задача: {{issue.docNumber}} {{issue.name}}</div>
+    <div class="task-name" [hidden]="edit != 'name'">
       Задача: <input type="text" pInputText [(ngModel)]="issue.name"/>
-      <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
-      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+      <button (click)="commitIssueEdit()" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+      <button (click)="cancelIssueEdit()" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
     </div>
     <div class="task-buttons">
       <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
@@ -39,7 +39,48 @@
       </div>
       <div class="big-text mb-1 mt-2">Описание задачи</div>
       <div class="text description descr-task">
-        <quill-view [content]="issue.details" (click)="editorClicked($event)"></quill-view>
+        <div (click)="edit = 'description'">EDIT</div>
+        <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
+      </div>
+      <div class="task-name" [hidden]="edit != 'description'">
+        <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.details">
+          <div quill-editor-toolbar>
+            <p-header>
+          <span class="ql-formats">
+            <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+            <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+            <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+          </span>
+              <span class="ql-formats">
+            <select class="ql-color" tabindex="-1"></select>
+            <select class="ql-background" tabindex="-1"></select>
+          </span>
+              <span class="ql-formats">
+            <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+            <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+            <select class="ql-align" tabindex="-1">
+              <option selected tabindex="-1"></option>
+              <option value="center" tabindex="-1"></option>
+              <option value="right" tabindex="-1"></option>
+              <option value="justify" tabindex="-1"></option>
+            </select>
+          </span>
+              <span class="ql-formats">
+            <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+            <button (click)="selectImage.click()">
+              <i class="pi pi-image"></i>
+            </button>
+            <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+            <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+          </span>
+              <span class="ql-formats">
+            <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+          </span>
+            </p-header>
+          </div>
+        </quill-editor>
+        <button (click)="commitIssueEdit()" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+        <button (click)="cancelIssueEdit()" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
       </div>
       <div class="big-text mb-1 mt-2">Вложения</div>
     <div class="attachments">
@@ -218,11 +259,23 @@
           </div>
           <div class="df mb-1 mt-1">
             <div class="normal-text w-50">Проект</div>
-            <div class="descr-task w-50">{{issue.project}}</div>
+            <div [hidden]="edit == 'project'" (click)="edit = 'project'" class="descr-task w-50">{{issue.project}}</div>
+            <div [hidden]="edit != 'project'">
+              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-300 font-14">
+              </p-dropdown>
+              <button (click)="commitIssueEdit()" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+              <button (click)="cancelIssueEdit()" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+            </div>
           </div>
           <div class="df mb-1 mt-1">
             <div class="normal-text w-50">Отдел</div>
-            <div class="descr-task w-50">{{getWithNoResult(issue.department)}}</div>
+            <div [hidden]="edit == 'department'" (click)="edit = 'department'" class="descr-task w-50">{{getWithNoResult(issue.department)}}</div>
+            <div [hidden]="edit != 'department'">
+              <p-dropdown class="select" [(ngModel)]="issue.department" [options]="taskDepartments" styleClass="width-300 font-14">
+              </p-dropdown>
+              <button (click)="commitIssueEdit()" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
+              <button (click)="cancelIssueEdit()" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
+            </div>
           </div>
           <div class="df mb-1 mt-1">
             <div class="normal-text w-50">Автор</div>
@@ -266,3 +319,4 @@
   </div>
 </div>
 <p-confirmDialog acceptLabel="Да" rejectLabel="Нет" header="Подтверждение" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast position="bottom-center"></p-toast>

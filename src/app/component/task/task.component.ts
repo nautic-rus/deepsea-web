@@ -8,7 +8,7 @@ import {Editor} from "primeng/editor";
 import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {VarMap} from "../../domain/classes/var-map";
 import Delta from "quill-delta";
 import {AssignComponent} from "./assign/assign.component";
@@ -27,6 +27,7 @@ export class TaskComponent implements OnInit {
   messageFilter = 'all';
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
+  edit = '';
   image = '';
   selectedUser = '';
   showImages = false;
@@ -39,6 +40,8 @@ export class TaskComponent implements OnInit {
   showHistory = ['_taskStatus'];
   availableStatuses: any[] = [];
   availableStatusesNoCurrent: any[] = [];
+  taskDepartments: string[] = [];
+  taskProjects: string[] = [];
   issueNameEdit = false;
   quillModules =
     {
@@ -86,7 +89,7 @@ export class TaskComponent implements OnInit {
         }
       }
     }
-  constructor(public ref: DynamicDialogRef, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   generateId(length: number): string {
     let result = '';
@@ -113,6 +116,12 @@ export class TaskComponent implements OnInit {
     this.issue = this.conf.data as Issue;
     this.availableStatuses = this.getAvailableStatuses(this.issue);
     this.availableStatusesNoCurrent = this.getAvailableStatuses(this.issue, true);
+    this.issueManager.getIssueDepartments().then(departments => {
+      this.taskDepartments = departments;
+    });
+    this.issueManager.getIssueProjects().then(projects => {
+      this.taskProjects = projects;
+    });
   }
   close(){
     this.ref.close('exit');
@@ -125,6 +134,9 @@ export class TaskComponent implements OnInit {
     let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
     let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
     return da + ' ' + this.localeMonth(mo) + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+  }
+  quillCreated(event: any) {
+    this.editor = event;
   }
   localeMonth(month: string) {
     switch (month){
@@ -262,7 +274,12 @@ export class TaskComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           this.issueManager.uploadFile(file).then(res => {
-            this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            if (this.edit == 'description'){
+              this.issue.details += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            }
+            else{
+              this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            }
             this.loaded.push(res);
           });
         }
@@ -326,7 +343,12 @@ export class TaskComponent implements OnInit {
             }
             this.awaitForLoad.push(file.name);
             this.issueManager.uploadFile(file).then(res => {
-              this.message += '<img src="' + res.url + '"/>';
+              if (this.edit == 'description'){
+                this.issue.details += '<img src="' + res.url + '"/>';
+              }
+              else{
+                this.message += '<img src="' + res.url + '"/>';
+              }
               this.loaded.push(res);
             });
           }
@@ -425,15 +447,27 @@ export class TaskComponent implements OnInit {
     return date == 0 ? '-' : this.getDate(date);
   }
 
-  editIssueName() {
-    this.issueNameEdit = true;
-  }
-
   changeStatus(value: string) {
     if (value == 'Send to Approval'){
       return;
     }
     this.issue.status = value;
     this.statusChanged();
+  }
+
+  commitIssueEdit() {
+    this.issueManager.updateIssue(this.auth.getUser().login, this.issue).then(res => {
+      if (res == 'success'){
+        this.edit = '';
+        this.messageService.add({severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+      }
+    });
+  }
+
+  cancelIssueEdit() {
+    this.edit = '';
+    this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
+      this.issue = res;
+    });
   }
 }
