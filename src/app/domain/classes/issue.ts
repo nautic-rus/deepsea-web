@@ -23,4 +23,5 @@ export class Issue {
   humanId: number = 0;
   overtime: string = '';
   period: string = '';
+  periodEndDate: number = 0;
 }

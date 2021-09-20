@@ -40,6 +40,7 @@ import { NgInitDirective } from './domain/ng-init.directive';
 import {RippleModule} from "primeng/ripple";
 import { AssignComponent } from './component/task/assign/assign.component';
 import {InputSwitchModule} from "primeng/inputswitch";
+import { ImportxlsComponent } from './component/home/importxls/importxls.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -56,6 +57,7 @@ Quill.register('modules/imageResize', ImageResize);
     SafeHtmlPipe,
     NgInitDirective,
     AssignComponent,
+    ImportxlsComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,9 @@ import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
 import {TaskComponent} from "../task/task.component";
 import {J} from "@angular/cdk/keycodes";
+import * as XLSX from 'xlsx';
+import {AssignComponent} from "../task/assign/assign.component";
+import {ImportxlsComponent} from "./importxls/importxls.component";
 
 @Component({
   selector: 'app-home',
@@ -200,5 +203,11 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('selectedCols', JSON.stringify(this.selectedCols));
     this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
     console.log(this.dt.columnWidthsState);
+  }
+  importXls(){
+    this.dialogService.open(ImportxlsComponent, {
+      showHeader: false,
+      modal: true,
+    });
   }
 }
