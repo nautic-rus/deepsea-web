@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DynamicDialogRef} from "primeng/dynamicdialog";
 import * as XLSX from "xlsx";
 import {Issue} from "../../../domain/classes/issue";
+import {IssueManagerService} from "../../../domain/issue-manager.service";
 
 @Component({
   selector: 'app-importxls',
@@ -10,7 +11,7 @@ import {Issue} from "../../../domain/classes/issue";
 })
 export class ImportxlsComponent implements OnInit {
 
-  constructor(public ref: DynamicDialogRef) { }
+  constructor(public ref: DynamicDialogRef, private issueManager: IssueManagerService) { }
 
   ngOnInit(): void {
   }
@@ -43,6 +44,9 @@ export class ImportxlsComponent implements OnInit {
               issue.details = row[++col];
               issue.period = row[++col];
               issue.periodEndDate = +row[++col];
+              this.issueManager.startIssue(issue.startedBy, issue).then(res => {
+                console.log(res);
+              });
             });
 
           };
@@ -52,4 +56,7 @@ export class ImportxlsComponent implements OnInit {
     }
   }
 
+  getTemplate() {
+    window.open('/assets/importIssues.xlsx');
+  }
 }
