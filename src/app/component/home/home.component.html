@@ -1,7 +1,7 @@
 <div class="all-page">
 
   <div class="card">
-    <p-table
+    <p-table *ngIf="issues.length > 0"
       #dt
       dataKey="id"
       [value]="issues"
@@ -11,6 +11,7 @@
       [reorderableColumns]="true"
       [resizableColumns]="false"
       [columns]="cols"
+      [virtualScroll]="true"
       stateStorage="local"
       stateKey="state"
     >

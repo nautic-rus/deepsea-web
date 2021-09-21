@@ -41,6 +41,7 @@ import {RippleModule} from "primeng/ripple";
 import { AssignComponent } from './component/task/assign/assign.component';
 import {InputSwitchModule} from "primeng/inputswitch";
 import { ImportxlsComponent } from './component/home/importxls/importxls.component';
+import { SendToApprovalComponent } from './component/task/send-to-approval/send-to-approval.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -58,6 +59,7 @@ Quill.register('modules/imageResize', ImageResize);
     NgInitDirective,
     AssignComponent,
     ImportxlsComponent,
+    SendToApprovalComponent,
   ],
   imports: [
     BrowserModule,
