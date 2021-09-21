@@ -40,6 +40,7 @@ export class ImportxlsComponent implements OnInit {
               issue.docNumber = row[++col];
               issue.name = row[++col];
               issue.startedBy = row[++col];
+              issue.responsible = row[++col];
               issue.department = row[++col];
               issue.details = row[++col];
               issue.period = row[++col];
