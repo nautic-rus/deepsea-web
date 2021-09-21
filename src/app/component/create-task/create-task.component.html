@@ -26,11 +26,11 @@
   <div *ngIf="taskType == 'task-rkd'">
     <div class="df space-between">
       <div style="width: 200px">
-        <div class="big-text mb-1 mt-1">Номер чертежа</div>
+        <div class="big-text mb-1 mt-1">Номер документа</div>
         <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
       </div>
       <div style="width: 68%">
-        <div class="big-text mb-1 mt-1">Название задачи</div>
+        <div class="big-text mb-1 mt-1">Название документа</div>
         <input type="text" pInputText [(ngModel)]="taskSummary">
       </div>
     </div>
@@ -48,7 +48,7 @@
         </p-dropdown>
       </div>
       <div>
-        <div class="big-text mb-1 mt-1">Специализация</div>
+        <div class="big-text mb-1 mt-1">Отдел</div>
         <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskDepartment" [options]="taskDepartments">
         </p-dropdown>
       </div>

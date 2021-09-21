@@ -164,7 +164,7 @@ export class TaskComponent implements OnInit {
       let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
       let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
       let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
-      return da + '/' + mo + '/' + ye;
+      return da + '.' + mo + '.' + ye;
     }
   }
   getWithNoResult(value: string){

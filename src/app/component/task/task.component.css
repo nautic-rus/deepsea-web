@@ -64,7 +64,9 @@
 .text:hover{
   background-color: rgb(235, 236, 240);
 }
-
+.hover-task:hover{
+  background-color: #ebecf0;
+}
 .header-information{
   position: relative;
   display: flex;
@@ -156,10 +158,18 @@
   width: 120px;
 }
 .py-10{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.py-5{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.px-10{
   padding-right: 10px;
   padding-left: 10px;
 }
-.py-5{
+.px-5{
   padding-right: 5px;
   padding-left: 5px;
 }
@@ -237,10 +247,13 @@
   height: 50%;
   overflow-y: auto;
 }
-.descr-task{
-  width: 96%;
-  text-align: justify;
-  padding-right: 15px;
+.description-task{
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: -0.005em;
+  color: rgb(94, 108, 132);
 }
 .task-header{
   display: grid;
@@ -551,5 +564,11 @@
   padding-right: 8px;
   padding-left: 8px;
 }
-
-
+.edit{
+  position: absolute;
+  right: 35px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}

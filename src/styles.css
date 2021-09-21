@@ -8,6 +8,9 @@ body,p{
 .w-100{
   width: 100%;
 }
+.w-40{
+  width: 40vw;
+}
 .w-60{
   width: 60vw;
 }
@@ -16,6 +19,18 @@ body,p{
 }
 .w-150{
   width: 150%;
+}
+.width-15{
+  width: 15%;
+}
+.width-40{
+  width: 40%;
+}
+.width-45{
+  width: 45%;
+}
+.width-60{
+  width: 60%;
 }
 .width-150{
   width: 150px;
@@ -31,6 +46,9 @@ body,p{
 }
 .width-300{
   width: 300px;
+}
+.h-32{
+  height: 32px;
 }
 .h100{
   height: 100%;
@@ -83,17 +101,29 @@ body,p{
 .mt-100{
   margin-top: 100px;
 }
+.pl-3{
+  padding-left: 3px;
+}
 .pl-5{
   padding-left: 5px;
 }
 .pl-10{
   padding-left: 10px;
 }
+.pl-20{
+  padding-left: 10px;
+}
 .pt-5{
   padding-top: 5px;
 }
+.pt-6{
+  padding-top: 6px;
+}
 .pt-10{
   padding-top: 10px;
+}
+.pb-5{
+  padding-bottom: 5px;
 }
 .pb-10{
   padding-bottom: 10px;
@@ -166,13 +196,19 @@ cdk-virtual-scroll-viewport{
 }
 ::-webkit-scrollbar{
   width: 7px;
-  height: 10px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track-piece{
   background: rgba(0, 0, 0, 0.14);
 }
 ::-webkit-scrollbar-thumb:vertical{
   height:10px;
+  background: rgba(0, 0, 0, 0.32);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:horizontal{
+  height:3px;
+  max-width: 50px;
   background: rgba(0, 0, 0, 0.32);
   border-radius: 4px;
 }
@@ -184,4 +220,10 @@ cdk-virtual-scroll-viewport{
 }
 /deep/.p-component{
   font-size: 14px!important;
+}
+.text-y{
+  align-items: center;
+}
+.position-relative{
+  position: relative;
 }
