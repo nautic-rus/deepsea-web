@@ -11,6 +11,7 @@ import {J} from "@angular/cdk/keycodes";
 import * as XLSX from 'xlsx';
 import {AssignComponent} from "../task/assign/assign.component";
 import {ImportxlsComponent} from "./importxls/importxls.component";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
   filters = {};
   selectedCols: string[] = [];
   colHeaders: string[] = [];
-  constructor(private router: Router, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
+  constructor(private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
   // @ts-ignore
   @ViewChild('dt') dt: Table;
   ngOnInit() {
@@ -208,6 +209,10 @@ export class HomeComponent implements OnInit {
     this.dialogService.open(ImportxlsComponent, {
       showHeader: false,
       modal: true,
+    }).onClose.subscribe(message => {
+      if (message == 'imported'){
+        this.messageService.add({severity:'success', summary:'Deployment', detail:'You have uploaded this model to server'});
+      }
     });
   }
 }

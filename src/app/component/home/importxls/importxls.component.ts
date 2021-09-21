@@ -46,7 +46,7 @@ export class ImportxlsComponent implements OnInit {
               issue.period = row[++col];
               issue.periodEndDate = +row[++col];
               this.issueManager.startIssue(issue.startedBy, issue).then(res => {
-                console.log(res);
+                this.ref.close('imported');
               });
             });
 
