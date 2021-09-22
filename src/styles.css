@@ -252,3 +252,6 @@ cdk-virtual-scroll-viewport{
   position: absolute;
   right: 0;
 }
+.background{
+  background-color: transparent;
+}
