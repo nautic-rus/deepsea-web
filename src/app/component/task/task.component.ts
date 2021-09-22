@@ -473,7 +473,7 @@ export class TaskComponent implements OnInit {
         this.edit = '';
         this.issue.startDate = this.startDate.getTime();
         this.issue.dueDate = this.dueDate.getTime();
-        this.messageService.add({severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+        this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
       }
     });
   }
