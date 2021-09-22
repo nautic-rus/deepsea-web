@@ -279,7 +279,7 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text width-40">Срок исполнения</div>
-            <div [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 df text-y h-32 cursor-pointer description-task hover-task width-45">{{getDateNoTime(issue.dueDate)}}</div>
+            <div [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-45">{{getDateNoTime(issue.dueDate)}}</div>
             <p-calendar [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background w-100 h-32"></p-calendar>
             <div class="width-15 df">
               <div [hidden]="edit != 'dueDate'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
