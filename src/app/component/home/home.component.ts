@@ -166,6 +166,9 @@ export class HomeComponent implements OnInit {
     else if (field == 'taskType'){
       return this.issueManager.localeTaskType(issueElement);
     }
+    else if (field == 'name'){
+      return this.trim(issueElement);
+    }
     else if (field == 'dueDate'){
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     }
@@ -214,5 +217,13 @@ export class HomeComponent implements OnInit {
         this.messageService.add({severity:'success', summary:'Deployment', detail:'You have uploaded this model to server'});
       }
     });
+  }
+  trim(input: string, length: number = 55): string{
+    if (input.length <= length){
+      return input;
+    }
+    else {
+      return input.substr(0, length) + '...';
+    }
   }
 }

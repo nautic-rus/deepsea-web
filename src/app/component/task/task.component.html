@@ -1,6 +1,6 @@
 <div class="w-60">
   <div class="task-header">
-    <div class="text-head text-bottom">Задача: </div>
+    <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.taskType)}}</div>
     <div class="task-buttons">
       <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
         <img src="assets/copy.svg" height="20">
