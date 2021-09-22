@@ -207,7 +207,7 @@ export class HomeComponent implements OnInit {
   }
   importXls(){
     this.dialogService.open(ImportxlsComponent, {
-      showHeader: false,
+      header: 'Импорт задач',
       modal: true,
     }).onClose.subscribe(message => {
       if (message == 'imported'){

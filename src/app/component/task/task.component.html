@@ -1,11 +1,6 @@
 <div class="w-60">
-  <div class="view-task-header task-header">
-    <div class="task-name" [hidden]="edit == 'name'" (click)="edit = 'name'">Задача: {{issue.docNumber}} {{issue.name}}</div>
-    <div class="task-name" [hidden]="edit != 'name'">
-      Задача: <input type="text" pInputText [(ngModel)]="issue.name"/>
-      <button (click)="commitIssueEdit()" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"></button>
-      <button (click)="cancelIssueEdit()" pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"></button>
-    </div>
+  <div class="task-header">
+    <div class="text-head text-bottom">Задача: </div>
     <div class="task-buttons">
       <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
         <img src="assets/copy.svg" height="20">
@@ -20,13 +15,21 @@
   </div>
   <div class="center">
     <div class="left-content">
+      <div class="pb-10">
+        <div class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.docNumber}} {{issue.name}}</div>
+        <div class="task-name" [hidden]="edit != 'name'">
+          <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
+          <div class="content-end">
+            <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
+              <img src="assets/tick.svg">
+            </div>
+            <div class="task-name-button cxy" (click)="cancelIssueEdit()">
+              <img src="assets/cancel.svg">
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="buttons">
-<!--        <div class="button-new">-->
-<!--        <span class="mr-10">-->
-<!--          <img src="assets/paperclip.svg" height="18">-->
-<!--        </span>-->
-<!--          <span>Прикрепить</span>-->
-<!--        </div>-->
         <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="issue.activity == 'Assign Task' && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
           <span class="icon-assign cxy">
             <img src="assets/user.svg">
@@ -37,9 +40,14 @@
           <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
         </div>
       </div>
-      <div class="big-text mb-1 mt-2">Описание задачи</div>
+      <div class="df">
+        <div class="big-text mb-1 mt-2">Описание задачи</div>
+        <div class="big-text mb-1 mt-2 pl-20 task-button cxy" pTooltip="Редактировать описание" (click)="edit = 'description'">
+          <img src="assets/pencil.svg">
+        </div>
+      </div>
+
       <div class="text description descr-task">
-        <div (click)="edit = 'description'">EDIT</div>
         <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
       </div>
       <div class="task-name" [hidden]="edit != 'description'">
@@ -288,10 +296,10 @@
               </p-dropdown>
             </div>
             <div class="width-15 df">
-              <div [hidden]="edit != 'department'" class="px-5" pTooltip="Отменить">
+              <div [hidden]="edit != 'department'" (click)="cancelIssueEdit()" class="px-5" pTooltip="Отменить">
                 <img class="cursor-pointer" src="assets/error.svg">
               </div>
-              <div [hidden]="edit != 'department'" class="px-5" pTooltip="Сохранить">
+              <div [hidden]="edit != 'department'" (click)="commitIssueEdit()" class="px-5" pTooltip="Сохранить">
                 <img class="cursor-pointer" src="assets/checked.svg">
               </div>
             </div>
@@ -310,12 +318,37 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text width-40">Приоритет</div>
-            <div class="pl-3 df text-y h-32 cursor-pointer description-task width-45">{{getWithNoResult(issue.priority)}}</div>
+            <div [hidden]="edit == 'priority'" (click)="edit = 'priority'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-45">{{getWithNoResult(issue.priority)}}</div>
+            <div class="width-45" [hidden]="edit != 'priority'">
+              <p-dropdown class="select" [(ngModel)]="issue.priority" [options]="taskPriorities" styleClass="w-100 h-32">
+              </p-dropdown>
+            </div>
+            <div class="width-15 df">
+              <div [hidden]="edit != 'priority'" (click)="cancelIssueEdit()" class="px-5" pTooltip="Отменить">
+                <img class="cursor-pointer" src="assets/error.svg">
+              </div>
+              <div [hidden]="edit != 'priority'" (click)="commitIssueEdit()" class="px-5" pTooltip="Сохранить">
+                <img class="cursor-pointer" src="assets/checked.svg">
+              </div>
+            </div>
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text width-40">Этап</div>
-            <div class="pl-3 df text-y h-32 cursor-pointer description-task width-45">{{issue.period}}</div>
+            <div [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-45">{{getWithNoResult(issue.period)}}</div>
+            <div class="width-45" [hidden]="edit != 'period'">
+              <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" styleClass="w-100 h-32">
+              </p-dropdown>
+            </div>
+            <div class="width-15 df">
+              <div [hidden]="edit != 'period'" (click)="cancelIssueEdit()" class="px-5" pTooltip="Отменить">
+                <img class="cursor-pointer" src="assets/error.svg">
+              </div>
+              <div [hidden]="edit != 'period'" (click)="commitIssueEdit()" class="px-5" pTooltip="Сохранить">
+                <img class="cursor-pointer" src="assets/checked.svg">
+              </div>
+            </div>
           </div>
+
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text width-40">Сверхурочные</div>
             <div class="pl-3 df text-y h-32 cursor-pointer description-task width-45">{{issue.overtime}}</div>

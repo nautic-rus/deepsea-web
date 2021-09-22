@@ -41,6 +41,8 @@ export class TaskComponent implements OnInit {
   availableStatuses: any[] = [];
   availableStatusesNoCurrent: any[] = [];
   taskDepartments: string[] = [];
+  taskPriorities: any[] = [];
+  taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
   taskProjects: string[] = [];
   issueNameEdit = false;
   quillModules =
@@ -121,6 +123,11 @@ export class TaskComponent implements OnInit {
     });
     this.issueManager.getIssueProjects().then(projects => {
       this.taskProjects = projects;
+    });
+    this.issueManager.getTaskPriorities().then(priorities => {
+      priorities.forEach(priority => {
+        this.taskPriorities.push({label: this.issueManager.localeTaskType(priority), value: priority});
+      });
     });
   }
   close(){

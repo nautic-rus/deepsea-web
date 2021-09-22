@@ -18,16 +18,16 @@
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-2">
-            <button pButton label="Clear" class="new-task-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
+            <button pButton label="Очистить" class="new-task-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
           </div>
           <div class="mr-2">
             <button pButton label="Новая задача" class="new-task-button p-button-info" (click)="newTask(null)"></button>
           </div>
           <p-multiSelect class="new-task-button" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
-                         selectedItemsLabel="{0} выбрано колонок" [style]="{minWidth: '200px'}" placeholder="Выберите колонки">
+                         selectedItemsLabel="{0} выбрано колонок" styleClass="width-200 border-select" placeholder="Выберите колонки">
           </p-multiSelect>
-          <div>
-            <button (click)="importXls()">IMPORT XLS</button>
+          <div class="mr-2 ml-2">
+            <button pButton label="Импорт" class="new-task-button p-button-outlined p-button-info" icon="pi pi-download" (click)="importXls()"></button>
           </div>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
