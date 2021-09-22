@@ -45,6 +45,9 @@ export class TaskComponent implements OnInit {
   taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
   taskProjects: string[] = [];
   issueNameEdit = false;
+  startDate: Date = new Date();
+  dueDate: Date = new Date();
+  today: Date = new Date();
   quillModules =
     {
       imageResize: {},
@@ -129,6 +132,8 @@ export class TaskComponent implements OnInit {
         this.taskPriorities.push({label: this.issueManager.localeTaskType(priority), value: priority});
       });
     });
+    this.startDate = new Date(this.issue.startDate);
+    this.dueDate = new Date(this.issue.dueDate);
   }
   close(){
     this.ref.close('exit');
@@ -466,6 +471,8 @@ export class TaskComponent implements OnInit {
     this.issueManager.updateIssue(this.auth.getUser().login, this.issue).then(res => {
       if (res == 'success'){
         this.edit = '';
+        this.issue.startDate = this.startDate.getTime();
+        this.issue.dueDate = this.dueDate.getTime();
         this.messageService.add({severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
       }
     });
@@ -473,6 +480,8 @@ export class TaskComponent implements OnInit {
 
   cancelIssueEdit() {
     this.edit = '';
+    this.startDate = new Date(this.issue.startDate);
+    this.dueDate = new Date(this.issue.dueDate);
     this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
       this.issue = res;
     });
