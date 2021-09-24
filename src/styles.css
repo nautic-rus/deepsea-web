@@ -20,6 +20,12 @@ body,p{
 .w-150{
   width: 150%;
 }
+.w-5{
+  width: 5%;
+}
+.width-10{
+  width: 10%;
+}
 .width-15{
   width: 15%;
 }
@@ -31,6 +37,9 @@ body,p{
 }
 .width-60{
   width: 60%;
+}
+.width-100{
+  width: 100px;
 }
 .width-150{
   width: 150px;
