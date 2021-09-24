@@ -1,5 +1,5 @@
 
-<p-table [value]="materials" styleClass="p-datatable-striped" responsiveLayout="scroll">
+<p-table [value]="materials" [scrollable]="true" [scrollHeight]="'80vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
   <ng-template pTemplate="caption">
     <div class="p-d-flex">
       <div class="mr-1">

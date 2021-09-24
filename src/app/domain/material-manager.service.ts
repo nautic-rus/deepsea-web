@@ -12,7 +12,7 @@ import {Material} from "./classes/material";
 export class MaterialManagerService {
 
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService) { }
-  async getMaterials() {
-    return await this.http.get<Material[]>(props.http + '/materials').toPromise();
+  async getMaterials(project: string) {
+    return await this.http.get<Material[]>(props.http + '/materials', {params: {project}}).toPromise();
   }
 }
