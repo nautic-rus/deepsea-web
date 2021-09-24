@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Material} from "../../domain/classes/material";
+import {MaterialManagerService} from "../../domain/material-manager.service";
 
 @Component({
   selector: 'app-materials',
@@ -11,9 +13,13 @@ export class MaterialsComponent implements OnInit {
   project = this.projects[0];
   categories: string[] = ['00002 (Заказ материалов)', '09003 (Трубный прокат)', '09004 (Расход кабелей)', '12116 (Дельные вещи)', '13112 (Изоляция и зашивка)', '13124 (Мебель)', '14109 (Мех. оборуд.)', '14122 (КИП)', '15107 (Арматура)', '16101 (Электрооборудование)', '17108 (АСИ и ППИ)', '18123 (Инв. имущество)', '19127 (ЗИП)', '30000 (МСЧ)', '30005 (Компл. оборудование)'];
   selectedCategories: string[] = this.categories;
-  constructor() { }
+  materials: Material[] = [];
+  constructor(private materialManager: MaterialManagerService) { }
 
   ngOnInit(): void {
+    this.materialManager.getMaterials().then(res => {
+      this.materials = res;
+    });
   }
 
 }
