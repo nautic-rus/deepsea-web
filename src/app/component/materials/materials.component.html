@@ -1,81 +1,87 @@
-
-<p-table [value]="materials" [scrollable]="true" [scrollHeight]="'80vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
-  <ng-template pTemplate="caption">
-    <div class="p-d-flex">
-      <div class="mr-1">
-        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-1">
-        <p-multiSelect [options]="categories" placeholder="ВЕДОМОСТЬ" styleClass="width-250 border" [maxSelectedLabels]="0" selectedItemsLabel="{0} выбрано" [(ngModel)]="selectedCategories"></p-multiSelect>
-<!--        <p-dropdown placeholder="ВЕДОМОСТЬ" class="select" [(ngModel)]="category" [options]="categories" styleClass="width-220">-->
-<!--        </p-dropdown>-->
-      </div>
-      <div class="cxy mr-1">
-        <div class="icon-categories cursor-pointer" pTooltip="Добавить">
-          <img src="assets/plus.svg" height="22">
-        </div>
-      </div>
-      <div class="cxy mr-1">
-        <div class="icon-categories cursor-pointer" pTooltip="Редактировать">
-          <img src="assets/draw.svg" height="22">
-        </div>
-      </div>
-      <div class="cxy mr-1">
-        <div class="icon-categories cursor-pointer" pTooltip="Копировать">
-          <img src="assets/copy-1.svg" height="22">
-        </div>
-      </div>
-      <div class="cxy mr-1">
-        <div class="icon-categories cursor-pointer" pTooltip="Удалить">
-          <img src="assets/trash-1.svg" height="22">
-        </div>
-      </div>
-      <div class="cxy mr-1">
-        <div class="icon-categories cursor-pointer" pTooltip="Экспорт XLS">
-          <img src="assets/xls-file.svg" height="22">
-        </div>
-      </div>
-      <div class="p-ml-auto">
+<div class="all-page">
+  <div class="card">
+    <p-table [value]="materials" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="mr-1">
+            <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+            </p-dropdown>
+          </div>
+          <div class="mr-1">
+            <p-multiSelect [options]="categories" placeholder="ВЕДОМОСТЬ" styleClass="width-250 border" [maxSelectedLabels]="0" selectedItemsLabel="{0} выбрано" [(ngModel)]="selectedCategories"></p-multiSelect>
+            <!--        <p-dropdown placeholder="ВЕДОМОСТЬ" class="select" [(ngModel)]="category" [options]="categories" styleClass="width-220">-->
+            <!--        </p-dropdown>-->
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Добавить">
+              <img src="assets/plus.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Редактировать">
+              <img src="assets/draw.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Копировать">
+              <img src="assets/copy-1.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Удалить">
+              <img src="assets/trash-1.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Экспорт XLS">
+              <img src="assets/xls-file.svg" height="22">
+            </div>
+          </div>
+          <div class="p-ml-auto">
         <span class="p-input-icon-left ">
         <i class="pi pi-search"></i>
         <input #search pInputText type="text" placeholder="Поиск..." />
       </span>
-      </div>
+          </div>
 
-    </div>
-  </ng-template>
-  <ng-template pTemplate="header">
-    <tr>
-      <th class="w-5">Проект</th>
-      <th class="width-15">Наименование</th>
-      <th>Обозначение</th>
-      <th>КВЗ</th>
-      <th>Коэф.</th>
-      <th>Вес</th>
-      <th>КЕИ</th>
-      <th>Документ</th>
-      <th>Поставщик</th>
-      <th>Примечания</th>
-      <th>Код материала</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-material>
-    <tr>
-      <td class="w-5">{{material.project}}</td>
-      <td class="width-15">{{material.name}}</td>
-      <td>{{material.description}}</td>
-      <td>{{material.category}}</td>
-      <td>{{0}}</td>
-      <td>{{material.singleWeight}}</td>
-      <td>{{material.units}}</td>
-      <td>{{material.document}}</td>
-      <td>{{material.provider}}</td>
-      <td>{{material.note}}</td>
-      <td>{{material.trmCode}}</td>
-    </tr>
-  </ng-template>
-</p-table>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="w-5">Проект</th>
+          <th class="w-20">Наименование</th>
+          <th class="w-11">Обозначение</th>
+          <th class="w-6">КВЗ</th>
+          <th class="w-6">Коэф.</th>
+          <th class="w-6">Вес</th>
+          <th class="w-6">КЕИ</th>
+          <th class="w-10">Документ</th>
+          <th class="w-10">Поставщик</th>
+          <th class="w-10">Примечания</th>
+          <th class="w-10">Код материала</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-material>
+        <tr>
+          <td class="w-5 text-12">{{material.project}}</td>
+          <td class="w-20 text-10">{{material.name}}</td>
+          <td class="w-11 text-12">{{material.description}}</td>
+          <td class="w-6 text-12">{{material.category}}</td>
+          <td class="w-6 text-12">{{0}}</td>
+          <td class="w-6 text-12">{{material.singleWeight}}</td>
+          <td class="w-6 text-12">{{material.units}}</td>
+          <td class="w-10 text-12">{{material.document}}</td>
+          <td class="w-10 text-12">{{material.provider}}</td>
+          <td class="w-10 text-12">{{material.note}}</td>
+          <td class="w-10 text-12">{{material.trmCode}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+
+</div>
 
 
 

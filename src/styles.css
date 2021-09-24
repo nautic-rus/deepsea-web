@@ -23,8 +23,17 @@ body,p{
 .w-5{
   width: 5%;
 }
-.width-10{
+.w-6{
+  width: 5%;
+}
+.w-10{
   width: 10%;
+}
+.w-11{
+  width: 11%;
+}
+.w-20{
+  width: 11%;
 }
 .width-15{
   width: 15%;
