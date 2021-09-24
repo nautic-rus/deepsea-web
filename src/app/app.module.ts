@@ -43,6 +43,7 @@ import {InputSwitchModule} from "primeng/inputswitch";
 import { ImportxlsComponent } from './component/home/importxls/importxls.component';
 import { SendToApprovalComponent } from './component/task/send-to-approval/send-to-approval.component';
 import {InputTextareaModule} from "primeng/inputtextarea";
+import { MaterialsComponent } from './component/materials/materials.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -61,6 +62,7 @@ Quill.register('modules/imageResize', ImageResize);
     AssignComponent,
     ImportxlsComponent,
     SendToApprovalComponent,
+    MaterialsComponent,
   ],
     imports: [
         BrowserModule,

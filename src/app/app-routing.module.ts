@@ -6,6 +6,7 @@ import {AuthGuard} from "./domain/classes/auth.guard";
 import {BpmnComponent} from "./component/bpmn/bpmn.component";
 import {CreateTaskComponent} from "./component/create-task/create-task.component";
 import {TaskComponent} from "./component/task/task.component";
+import {MaterialsComponent} from "./component/materials/materials.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, data: {animation: 'LoginComponent'} },
   { path: 'create-task', component: CreateTaskComponent, canActivate: [AuthGuard], data: {animation: 'CreateTaskComponent'} },
   { path: 'task', component: TaskComponent, canActivate: [AuthGuard], data: {animation: 'TaskComponent'} },
+  { path: 'materials', component: MaterialsComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsComponent'} },
 ];
 
 @NgModule({

@@ -68,3 +68,6 @@
   padding-right: 8px;
   padding-left: 8px;
 }
+/deep/.p-multiselect-header {
+  display: none!important;
+}
