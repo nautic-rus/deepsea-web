@@ -3,6 +3,9 @@ import {Material} from "../../domain/classes/material";
 import {MaterialManagerService} from "../../domain/material-manager.service";
 import {MessageService} from "primeng/api";
 import { v4 as uuidv4 } from 'uuid';
+import {ImportxlsComponent} from "../home/importxls/importxls.component";
+import {DialogService} from "primeng/dynamicdialog";
+import {AddMaterialComponent} from "./add-material/add-material.component";
 
 @Component({
   selector: 'app-materials',
@@ -17,7 +20,7 @@ export class MaterialsComponent implements OnInit {
   selectedCategories: string[] = this.categories;
   materials: Material[] = [];
   selectedMaterial: Material | null = null;
-  constructor(private materialManager: MaterialManagerService, private messageService: MessageService) { }
+  constructor(private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     let proj = this.project.replace('170701', 'P701');
@@ -44,6 +47,10 @@ export class MaterialsComponent implements OnInit {
     }
   }
   addMaterial(){
+    this.dialogService.open(AddMaterialComponent, {
+      header: 'Добавление материала',
+      modal: true,
+    })
     if (this.selectedMaterial != null){
       this.selectedMaterial.id = uuidv4();
       this.updateMaterial();
