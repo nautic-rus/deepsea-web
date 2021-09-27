@@ -10,4 +10,5 @@ export class Material {
   document: string = '';
   provider: string = '';
   note: string = '';
+  removed: number = 0;
 }
