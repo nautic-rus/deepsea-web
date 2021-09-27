@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   filters = {};
   selectedCols: string[] = [];
   colHeaders: string[] = [];
+  filled = false;
   constructor(private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
   // @ts-ignore
   @ViewChild('dt') dt: Table;
@@ -68,7 +69,7 @@ export class HomeComponent implements OnInit {
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
       //this.setCols();
       console.log(this.cols);
-
+      this.filled = true;
     });
     if (this.dt != null){
       setTimeout(() => {

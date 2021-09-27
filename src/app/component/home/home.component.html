@@ -1,7 +1,7 @@
 <div class="all-page">
 
   <div class="card">
-    <p-table *ngIf="issues.length > 0"
+    <p-table
       #dt
       dataKey="id"
       [value]="issues"
@@ -14,6 +14,7 @@
       [virtualScroll]="true"
       stateStorage="local"
       stateKey="state"
+      *ngIf="filled"
     >
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
