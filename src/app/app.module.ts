@@ -45,6 +45,7 @@ import { SendToApprovalComponent } from './component/task/send-to-approval/send-
 import {InputTextareaModule} from "primeng/inputtextarea";
 import { MaterialsComponent } from './component/materials/materials.component';
 import { AddMaterialComponent } from './component/materials/add-material/add-material.component';
+import {InputNumberModule} from "primeng/inputnumber";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -66,40 +67,41 @@ Quill.register('modules/imageResize', ImageResize);
     MaterialsComponent,
     AddMaterialComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AccordionModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        ProgressBarModule,
-        ButtonModule,
-        SliderModule,
-        DropdownModule,
-        TooltipModule,
-        ToastModule,
-        EditorModule,
-        DialogModule,
-        CascadeSelectModule,
-        CalendarModule,
-        ProgressSpinnerModule,
-        MessagesModule,
-        GalleriaModule,
-        QuillModule.forRoot(),
-        // QuillModule.forRoot({
-        //   modules: {
-        //     imageResize: {}
-        //   }
-        // }),
-        ConfirmDialogModule,
-        RippleModule,
-        InputSwitchModule,
-        InputTextareaModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ProgressBarModule,
+    ButtonModule,
+    SliderModule,
+    DropdownModule,
+    TooltipModule,
+    ToastModule,
+    EditorModule,
+    DialogModule,
+    CascadeSelectModule,
+    CalendarModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+    GalleriaModule,
+    QuillModule.forRoot(),
+    // QuillModule.forRoot({
+    //   modules: {
+    //     imageResize: {}
+    //   }
+    // }),
+    ConfirmDialogModule,
+    RippleModule,
+    InputSwitchModule,
+    InputTextareaModule,
+    InputNumberModule
+  ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })

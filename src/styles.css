@@ -71,6 +71,18 @@ body,p{
 .width-300{
   width: 300px;
 }
+.width-450{
+  width: 450px;
+}
+.width-480{
+  width: 480px;
+}
+.width-530{
+  width: 530px;
+}
+.w80{
+  width: 80%;
+}
 .h-32{
   height: 32px;
 }
@@ -136,6 +148,12 @@ body,p{
 }
 .pl-20{
   padding-left: 10px;
+}
+.pr-10{
+  padding-right: 10px;
+}
+.pr-20{
+  padding-right: 10px;
 }
 .pt-5{
   padding-top: 5px;
@@ -281,4 +299,12 @@ cdk-virtual-scroll-viewport{
 }
 .border{
   border-radius: 3px!important;
+}
+.border-material{
+  border: 1px solid #ced4da!important;
+  border-radius: 3px!important;
+  color: #495057!important;
+}
+.dropdown{
+  padding: 0.5rem 0.5rem!important;
 }
