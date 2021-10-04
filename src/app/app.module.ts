@@ -46,6 +46,8 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import { MaterialsComponent } from './component/materials/materials.component';
 import { AddMaterialComponent } from './component/materials/add-material/add-material.component';
 import {InputNumberModule} from "primeng/inputnumber";
+import { ChangeResponsibleComponent } from './component/task/change-responsible/change-responsible.component';
+import {CheckboxModule} from "primeng/checkbox";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -66,42 +68,44 @@ Quill.register('modules/imageResize', ImageResize);
     SendToApprovalComponent,
     MaterialsComponent,
     AddMaterialComponent,
+    ChangeResponsibleComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AccordionModule,
-    TableModule,
-    MultiSelectModule,
-    InputTextModule,
-    ProgressBarModule,
-    ButtonModule,
-    SliderModule,
-    DropdownModule,
-    TooltipModule,
-    ToastModule,
-    EditorModule,
-    DialogModule,
-    CascadeSelectModule,
-    CalendarModule,
-    ProgressSpinnerModule,
-    MessagesModule,
-    GalleriaModule,
-    QuillModule.forRoot(),
-    // QuillModule.forRoot({
-    //   modules: {
-    //     imageResize: {}
-    //   }
-    // }),
-    ConfirmDialogModule,
-    RippleModule,
-    InputSwitchModule,
-    InputTextareaModule,
-    InputNumberModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        AccordionModule,
+        TableModule,
+        MultiSelectModule,
+        InputTextModule,
+        ProgressBarModule,
+        ButtonModule,
+        SliderModule,
+        DropdownModule,
+        TooltipModule,
+        ToastModule,
+        EditorModule,
+        DialogModule,
+        CascadeSelectModule,
+        CalendarModule,
+        ProgressSpinnerModule,
+        MessagesModule,
+        GalleriaModule,
+        QuillModule.forRoot(),
+        // QuillModule.forRoot({
+        //   modules: {
+        //     imageResize: {}
+        //   }
+        // }),
+        ConfirmDialogModule,
+        RippleModule,
+        InputSwitchModule,
+        InputTextareaModule,
+        InputNumberModule,
+        CheckboxModule
+    ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })

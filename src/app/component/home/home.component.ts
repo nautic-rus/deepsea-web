@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
   fillIssues(){
     let scroll = 0;
     if (this.dt != null){
-      scroll = this.dt.el.nativeElement.querySelector('.p-datatable-scrollable-body').scrollTop;
+      scroll = this.dt.el.nativeElement.querySelector('.p-datatable-virtual-scrollable-body').scrollTop;
       this.dt.style = {opacity: 0};
     }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {

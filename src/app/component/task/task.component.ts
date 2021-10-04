@@ -12,6 +12,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {VarMap} from "../../domain/classes/var-map";
 import Delta from "quill-delta";
 import {AssignComponent} from "./assign/assign.component";
+import {SendToApprovalComponent} from "./send-to-approval/send-to-approval.component";
+import {ChangeResponsibleComponent} from "./change-responsible/change-responsible.component";
 
 @Component({
   selector: 'app-task',
@@ -464,12 +466,24 @@ export class TaskComponent implements OnInit {
 
   changeStatus(value: string) {
     if (value == 'Send to Approval'){
-      return;
+      this.askForSendToApproval();
     }
-    this.issue.status = value;
-    this.statusChanged();
+    else{
+      this.issue.status = value;
+      this.statusChanged();
+    }
   }
-
+  askForSendToApproval(){
+    this.dialogService.open(SendToApprovalComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
+        this.issue = res;
+      });
+    });
+  }
   commitIssueEdit() {
     this.issueManager.updateIssue(this.auth.getUser().login, this.issue).then(res => {
       if (res == 'success'){
@@ -487,6 +501,18 @@ export class TaskComponent implements OnInit {
     this.dueDate = new Date(this.issue.dueDate);
     this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
       this.issue = res;
+    });
+  }
+
+  changeResponsible() {
+    this.dialogService.open(ChangeResponsibleComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
+        this.issue = res;
+      });
     });
   }
 }

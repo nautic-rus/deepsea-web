@@ -30,11 +30,17 @@
         </div>
       </div>
       <div class="buttons">
-        <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="issue.activity == 'Assign Task' && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
+        <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
           <span class="icon-assign cxy">
             <img src="assets/user.svg">
           </span>
           <span class="cxy button-text">Назначить</span>
+        </div>
+        <div class="buttons-pick-assign cursor-pointer" (click)="changeResponsible()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
+          <span class="icon-assign cxy">
+            <img src="assets/user.svg">
+          </span>
+          <span class="cxy button-text">Сменить ответственного</span>
         </div>
         <div class="button-status" *ngFor="let status of availableStatusesNoCurrent">
           <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>

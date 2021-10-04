@@ -9,6 +9,7 @@ import {FileAttachment} from "./classes/file-attachment";
 import {Issue} from "./classes/issue";
 import {IssueDef} from "./classes/issue-def";
 import {IssueMessage} from "./classes/issue-message";
+import {List} from "underscore";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,12 @@ export class IssueManagerService {
   }
   async assignUser(id: string, user: string, startDate: string, dueDate: string, overtime: string){
     return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime}}).toPromise();
+  }
+  async changeResponsible(id: string, user: string){
+    return await this.http.get<string[]>(props.http + '/changeResponsible', {params: {id, user}}).toPromise();
+  }
+  async sendToApproval(id: string, users: string[], taskName: string, taskProject: string, filesToApproval: FileAttachment[], textToApproval: string){
+    return await this.http.get<string[]>(props.http + '/sendToApproval', {params: {id, users: JSON.stringify(users), taskName, taskProject, filesToApproval: JSON.stringify(filesToApproval), textToApproval}}).toPromise();
   }
   async getIssueDepartments() {
     return await this.http.get<string[]>(props.http + '/issueDepartments').toPromise();

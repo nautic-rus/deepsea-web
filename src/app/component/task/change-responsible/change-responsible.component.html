@@ -7,18 +7,8 @@
   </div>
   <div class="big-text mb-1 mt-1">Ответственный</div>
   <p-dropdown *ngIf="issue.activities.includes('Assign Task')" [options]="auth.users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-              [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-270">
+              [showClear]="true" placeholder="Назначить ответственного" class="p-dropdown-150" styleClass="width-270">
   </p-dropdown>
-  <div>
-    <div class="big-text mb-1 mt-1">Дата начала</div>
-    <p-calendar [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
-    <div class="big-text mb-1 mt-1">Срок завершения</div>
-    <p-calendar [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
-  </div>
-  <div>
-    <div class="big-text mb-1 mt-1">Сделать задачу сверхурочной</div>
-  </div>
-  <p-inputSwitch [(ngModel)]="overtime"></p-inputSwitch>
   <div class="form-footer pt-10">
     <div class="mr-1 cx">
       <div tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>

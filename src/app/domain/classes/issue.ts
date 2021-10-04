@@ -18,7 +18,7 @@ export class Issue {
   availableStatuses: string[] = [];
   priority: string = '';
   docNumber: string = '';
-  activity: string = '';
+  activities: string = '';
   responsible: string = '';
   humanId: number = 0;
   overtime: string = '';
