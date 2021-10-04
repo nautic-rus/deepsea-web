@@ -561,6 +561,7 @@
   font-size: 14px;
   letter-spacing: .3px;
   height: 30px;
+  margin-right: 10px;
 }
 .buttons-pick-assign:hover{
   background: #246a99;
@@ -572,6 +573,29 @@
   padding-right: 8px;
   padding-left: 8px;
   background-color: #246a99;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-change{
+  color: white;
+  background-color: #80a8cc;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-change:hover{
+  background: #5b7992;
+  transition: 0.3s;
+}
+.icon-change{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #5b7992;
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }

@@ -36,9 +36,9 @@
           </span>
           <span class="cxy button-text">Назначить</span>
         </div>
-        <div class="buttons-pick-assign cursor-pointer" (click)="changeResponsible()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
-          <span class="icon-assign cxy">
-            <img src="assets/user.svg">
+        <div class="buttons-pick-change cursor-pointer" (click)="changeResponsible()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
+          <span class="icon-change cxy">
+            <img src="assets/change.svg">
           </span>
           <span class="cxy button-text">Сменить ответственного</span>
         </div>

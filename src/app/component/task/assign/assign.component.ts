@@ -4,6 +4,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {ConfirmationService} from "primeng/api";
+import {User} from "../../../domain/classes/user";
 
 @Component({
   selector: 'app-assign',
@@ -18,10 +19,13 @@ export class AssignComponent implements OnInit {
   dueDate: Date = new Date();
   today: Date = new Date();
   overtime = false;
+  users: User[] = [];
+
   constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
+    this.users = this.getUsers();
   }
 
   close(){
@@ -32,5 +36,8 @@ export class AssignComponent implements OnInit {
     this.issueManager.assignUser(this.issue.id, this.selectedUser, this.startDate.getTime().toString(), this.dueDate.getTime().toString(), this.overtime ? 'Да' : 'Нет').then(res => {
       this.ref.close();
     });
+  }
+  getUsers() {
+    return this.auth.users.filter(x => x.visibility.includes('c'));
   }
 }
