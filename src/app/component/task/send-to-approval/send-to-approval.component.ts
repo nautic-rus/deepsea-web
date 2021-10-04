@@ -17,7 +17,8 @@ export class SendToApprovalComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
-  selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+  // selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+  selectedUsers: string[] = ['isaev'];
   issue: Issue = new Issue();
   users: User[] = [];
 
@@ -240,9 +241,8 @@ export class SendToApprovalComponent implements OnInit {
     return result;
   }
   commit() {
-    console.log(this.selectedUsers);
-    return;
-    this.issues.sendToApproval(this.issue.id, this.selectedUsers, 'Согласование ' + this.issue.docNumber, this.issue.project, this.loaded, this.taskDetails).then(res => {
+    //return;
+    this.issues.sendToApproval(this.issue.id, this.selectedUsers, this.issue.docNumber, this.issue.project, this.loaded, this.taskDetails, 'Send to Approval').then(res => {
       console.log(res);
     });
   }
