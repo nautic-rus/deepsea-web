@@ -110,7 +110,8 @@ export class CreateTaskComponent implements OnInit {
     }
   constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
-    this.users = this.auth.users;
+    //this.users = this.auth.users;
+    this.users = this.getUsers();
     this.issues.getIssueTypes().then(types => {
       types.filter(x => this.issues.localeTaskType(x) != x).forEach(type => {
         this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
