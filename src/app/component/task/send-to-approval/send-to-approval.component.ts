@@ -28,7 +28,7 @@ export class SendToApprovalComponent implements OnInit {
     this.users = this.getUsersApproval();
   }
   getUsersApproval() {
-    return this.auth.users.filter(x => x.visibility.includes('a'));
+    return this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
   }
   handleFileInput(files: FileList | null) {
     if (files != null){
