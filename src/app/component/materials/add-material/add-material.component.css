@@ -1,6 +1,6 @@
 .dialog{
   width: 630px;
-  height: 500px;
+  height: 520px;
 }
 .double-row{
   width: 600px;
@@ -21,4 +21,23 @@
 }
 :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
   padding: 0.5rem 0.5rem;
+}
+.form-footer{
+  height: 70px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+}
+.button{
+  border: none;
+  margin-right: 4px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #17a2b8;
+  transition: background .1s;
+  width: 100px;
 }
