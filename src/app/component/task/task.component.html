@@ -48,11 +48,7 @@
       </div>
       <div class="df">
         <div class="big-text mb-1 mt-2">Описание задачи</div>
-<!--        <div class="big-text mb-1 mt-2 pl-20 task-button cxy" pTooltip="Редактировать описание" (click)="edit = 'description'">-->
-<!--          <img src="assets/pencil.svg">-->
-<!--        </div>-->
       </div>
-
       <div class="text description descr-task">
         <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
       </div>
@@ -226,7 +222,7 @@
               </div>
               <div>
                 <span class="bold-text">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr px-5"> изменил </span>
+                <span class="text-descr px-5"> изменил{{localeGender(auth.getUser().gender)}} </span>
                 <span class="bold-text">{{issueManager.localeHistory(varMap.name)}}</span>
                 <span class="text-date pl-5"> {{getDate(msg.date)}} </span>
               <div class="df pt-5">
@@ -248,7 +244,7 @@
           </div>
           <div class="">
             <span class="bold-text">{{auth.getUserName(issue.startedBy)}}</span>
-            <span class="text-descr"> создал задачу</span>
+            <span class="text-descr"> создал{{localeGender(auth.getUser().gender)}} задачу</span>
             <span class="text-date"> {{getDate(issue.startedDate)}} </span>
           </div>
         </div>
