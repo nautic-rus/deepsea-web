@@ -30,7 +30,7 @@
   font-weight: 600;
 }
 /deep/.ql-container{
-  height: auto;
+  min-height: 100px;
 }
 .form-footer{
   display: flex;
