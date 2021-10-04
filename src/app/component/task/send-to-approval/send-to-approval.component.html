@@ -53,10 +53,7 @@
     <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
     <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
   </div>
-  <p-checkbox name="users" value="lvov" label="Львов" [(ngModel)]="users"></p-checkbox>
-  <p-checkbox name="users" value="druzhinina" label="Дружинина" [(ngModel)]="users"></p-checkbox>
-  <p-checkbox name="users" value="nnovikov" label="Новиков" [(ngModel)]="users"></p-checkbox>
-  <p-checkbox name="users" value="stropilov" label="Стропилов" [(ngModel)]="users"></p-checkbox>
+  <p-multiSelect optionValue="login" optionLabel="userName" [options]="users" styleClass="width-250 border" [maxSelectedLabels]="0" selectedItemsLabel="{0} выбрано" [(ngModel)]="selectedUsers"></p-multiSelect>
   <div class="commit" (click)="commit()">OK</div>
 </div>
 <div [hidden]="!showImages">

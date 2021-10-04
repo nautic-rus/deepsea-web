@@ -6,6 +6,7 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {Issue} from "../../../domain/classes/issue";
+import {User} from "../../../domain/classes/user";
 
 @Component({
   selector: 'app-send-to-approval',
@@ -16,13 +17,18 @@ export class SendToApprovalComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
-  users: string[] = [];
+  selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'nnovikov'];
   issue: Issue = new Issue();
+  users: User[] = [];
 
   constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
     this.issue = conf.data;
   }
   ngOnInit(): void {
+    this.users = this.getUsers();
+  }
+  getUsers() {
+    return this.auth.users.filter(x => x.visibility.includes('c'));
   }
   handleFileInput(files: FileList | null) {
     if (files != null){
@@ -234,8 +240,9 @@ export class SendToApprovalComponent implements OnInit {
     return result;
   }
   commit() {
+    console.log(this.selectedUsers);
     return;
-    this.issues.sendToApproval(this.issue.id, this.users, 'Согласование ' + this.issue.docNumber, this.issue.project, this.loaded, this.taskDetails).then(res => {
+    this.issues.sendToApproval(this.issue.id, this.selectedUsers, 'Согласование ' + this.issue.docNumber, this.issue.project, this.loaded, this.taskDetails).then(res => {
       console.log(res);
     });
   }
