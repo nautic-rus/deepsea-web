@@ -48,7 +48,7 @@
     </div>
     <div class="cxy text-center mt-10">ВЕДОМОСТИ</div>
   </div>
-  <div class="cy menu" routerLink="bpmn" routerLinkActive="selected-menu">
+  <div *ngIf="auth.getUser().visibility.includes('b')" class="cy menu" routerLink="bpmn" routerLinkActive="selected-menu">
     <div class="cxy">
       <img src="assets/bpmn.svg" height="28">
     </div>

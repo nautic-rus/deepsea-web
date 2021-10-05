@@ -35,6 +35,13 @@
 .hidden-column{
   width: 0;
 }
+.icon-categories{
+  border-radius: 3px;
+  padding: 6px;
+  border: 1px solid #605e5c;
+  height: 35px;
+  width: 35px;
+}
 .new-task-button{
   border-radius: 3px;
 }
