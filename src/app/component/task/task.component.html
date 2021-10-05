@@ -16,7 +16,8 @@
   <div class="center">
     <div class="left-content">
       <div class="pb-10">
-        <div class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.docNumber}} {{issue.name}}</div>
+        <div *ngIf="issue.taskType != 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.docNumber}} {{issue.name}}</div>
+        <div *ngIf="issue.taskType == 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">Согласование {{issue.docNumber}}</div>
         <div class="task-name" [hidden]="edit != 'name'">
           <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
           <div class="content-end">
@@ -100,18 +101,22 @@
 
       </div>
       <div class="big-text mb-1 mt-2">Вложения</div>
-    <div class="attachments">
-        <div *ngFor="let file of issue.fileAttachments">
-          <div (click)="openFile(file.url)" class="attachment">
-            <div class="cxy attachment-center">
-              <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
-            </div>
-            <div class="attachment-footer">
-              <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
-              <div>{{getDate(issue.startedDate)}}</div>
+      <div class="attachments">
+          <div *ngFor="let file of issue.fileAttachments">
+            <div (click)="openFile(file.url)" class="attachment">
+              <div class="cxy attachment-center">
+                <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
+              </div>
+              <div class="attachment-footer">
+                <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
+                <div>{{getDate(issue.startedDate)}}</div>
+              </div>
             </div>
           </div>
         </div>
+      <div class="big-text mb-1 mt-2">Поздадачи</div>
+      <div>
+        <div *ngFor="let childIssue of issue.childIssues">{{childIssue.name}}</div>
       </div>
       <div class="big-text mb-1 mt-40">Активность</div>
       <div class="df">

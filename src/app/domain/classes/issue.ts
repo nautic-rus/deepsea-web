@@ -24,4 +24,5 @@ export class Issue {
   overtime: string = '';
   period: string = '';
   periodEndDate: number = 0;
+  childIssues: Issue[] = [];
 }

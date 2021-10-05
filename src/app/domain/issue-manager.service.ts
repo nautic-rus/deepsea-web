@@ -118,7 +118,7 @@ export class IssueManagerService {
       case 'Simple': return 'Прочее';
       case 'task-rkd': return 'РКД';
       case 'RKD': return 'РКД';
-      case 'Approval': return 'На согласовании';
+      case 'Approval': return 'Согласование';
       default: return input;
     }
   }

@@ -114,8 +114,10 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
-        this.issue = res;
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+        this.issue = issue;
+        this.availableStatuses = this.getAvailableStatuses(issue);
+        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
       });
     });
   }
@@ -479,8 +481,10 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
-        this.issue = res;
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+        this.issue = issue;
+        this.availableStatuses = this.getAvailableStatuses(issue);
+        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
       });
     });
   }
