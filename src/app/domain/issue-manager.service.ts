@@ -79,6 +79,10 @@ export class IssueManagerService {
       case 'Not resolved': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не исполнено</span>' : 'Не исполнено';
       case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Закрыто</span>' : 'Закрыто';
       case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На согласовании</span>' : 'На согласовании';
+      case 'Approved': return styled ? '<span style="color: #5d9980; background-color: #82d8b5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Согласовано</span>' : 'Согласовано';
+      case 'Not approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не согласовано</span>' : 'Не согласовано';
+      case 'Ready to send': return styled ? '<span style="color: #4A7863; background-color: #DCEFED; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Готов к отправке</span>' : 'Готов к отправке';
+
       default: return input;
     }
   }
@@ -93,7 +97,11 @@ export class IssueManagerService {
       case 'Archive': return styled ? '<div class="buttons-pick-archive"><span class="icon-archive cxy"><img src="assets/archive.svg"></span><span class="cxy button-text">В архив</span></div>' : 'В архив';
       case 'In Rework': return styled ? '<div class="buttons-pick-rework"><span class="icon-rework cxy"><img src="assets/rework.svg"></span><span class="cxy button-text">На доработку</span></div>' : 'На доработку';
       case 'Paused': return styled ? '<div class="buttons-pick-pause"><span class="icon-pause cxy"><img src="assets/pause.svg"></span><span class="cxy button-text">Приостановить</span></div>' : 'Приостановить';
-      case 'Send to Approval': return styled ? '<div class="buttons-pick-approval"><span class="icon-approval cxy"><img src="assets/approval.svg"></span><span class="cxy button-text">На согласование</span></div>' : 'На согласование';
+      case 'Send to Approval': return styled ? '<div class="buttons-pick-send-approval"><span class="icon-send-approval cxy"><img src="assets/approval.svg"></span><span class="cxy button-text">На согласование</span></div>' : 'На согласование';
+      case 'Approved': return styled ? '<div class="buttons-pick-approval"><span class="icon-approval cxy"><img src="assets/like.svg"></span><span class="cxy button-text">Согласовано</span></div>' : 'Согласовано';
+      case 'Not approved': return styled ? '<div class="buttons-pick-not-approval"><span class="icon-not-approval cxy"><img src="assets/dislike.svg"></span><span class="cxy button-text">Не согласовано</span></div>' : 'Не согласовано';
+      case 'Ready to send': return styled ? '<div class="buttons-pick-send"><span class="icon-send cxy"><img src="assets/send.png" height="18"></span><span class="cxy button-text">Готов к отправке</span></div>' : 'Готов к отправке';
+
       default: return input;
     }
   }
@@ -110,6 +118,7 @@ export class IssueManagerService {
       case 'Simple': return 'Прочее';
       case 'task-rkd': return 'РКД';
       case 'RKD': return 'РКД';
+      case 'Approval': return 'На согласовании';
       default: return input;
     }
   }

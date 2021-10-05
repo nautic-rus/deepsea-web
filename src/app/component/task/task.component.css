@@ -465,7 +465,7 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
-.buttons-pick-approval{
+.buttons-pick-send-approval{
   color: white;
   background-color: #fc7736;
   border-radius: 2px;
@@ -474,11 +474,11 @@
   letter-spacing: .3px;
   height: 30px;
 }
-.buttons-pick-approval:hover{
+.buttons-pick-send-approval:hover{
   background: #b05326;
   transition: 0.3s;
 }
-.icon-approval{
+.icon-send-approval{
   display: flex;
   justify-content: flex-start;
   padding-right: 8px;
@@ -596,6 +596,75 @@
   padding-right: 8px;
   padding-left: 8px;
   background-color: #5b7992;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-approval{
+  color: white;
+  background-color: #52be80;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-approval:hover{
+  background: #3e875d;
+  transition: 0.3s;
+}
+.icon-approval{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #3e875d;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-not-approval{
+  color: white;
+  background-color: #e84c3d;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-not-approval:hover{
+  background: #a13830;
+  transition: 0.3s;
+}
+.icon-not-approval{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #a13830;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-send{
+  color: white;
+  background-color: #9d9a27;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-send:hover{
+  background: #726d20;
+  transition: 0.3s;
+}
+.icon-send{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #726d20;
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }

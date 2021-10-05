@@ -1,5 +1,4 @@
 <div class="all-page">
-
   <div class="card">
     <p-table
       #dt
@@ -19,7 +18,7 @@
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-2">
-            <button pButton label="Очистить" class="new-task-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
+            <button pButton label="Очистить" class="border p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
           </div>
           <div class="mr-2">
             <button pButton label="Новая задача" class="new-task-button p-button-info" (click)="newTask(null)"></button>
@@ -32,7 +31,7 @@
           </div>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." />
+            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." class="border" />
           </span>
         </div>
       </ng-template>

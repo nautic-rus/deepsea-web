@@ -160,7 +160,7 @@ select:focus {
   max-height: 95vh;
 }
 /deep/ quill-editor .ql-editor{
-  min-height: 150px;
+  min-height: 100px;
 }
 .disabled-button{
   pointer-events: none;
