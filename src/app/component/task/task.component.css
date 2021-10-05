@@ -4,8 +4,11 @@
 }
 .left-content{
   width: 65%;
-  overflow-y: auto;
   padding-right: 15px;
+}
+.overflow{
+  overflow-y: auto;
+  height: 600px;
 }
 .right-content{
   width: 35%;
