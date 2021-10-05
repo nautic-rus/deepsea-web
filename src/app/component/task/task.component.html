@@ -53,7 +53,7 @@
         <div class="text description descr-task">
           <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
         </div>
-        <div class="task-name" [hidden]="edit != 'description'">
+        <div class="" [hidden]="edit != 'description'">
           <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.details">
             <div quill-editor-toolbar>
               <p-header>
@@ -197,7 +197,7 @@
                   <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
                   <span class="text-descr"> создал{{localeGender(auth.getUser().gender)}} сообщение </span>
                   <span class="text-date"> {{getDate(msg.date)}} </span>
-                  <quill-view [content]="msg.content" (click)="editorClicked($event)"></quill-view>
+                  <quill-view [content]="msg.content"></quill-view>
                   <div class="attachments">
                     <div *ngFor="let file of msg.fileAttachments">
                       <div (click)="openFile(file.url)" class="attachment">
