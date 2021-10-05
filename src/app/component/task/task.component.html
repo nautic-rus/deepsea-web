@@ -16,7 +16,8 @@
   <div class="center">
     <div class="left-content">
       <div class="pb-10">
-        <div class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.docNumber}} {{issue.name}}</div>
+        <div *ngIf="issue.taskType != 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.docNumber}} {{issue.name}}</div>
+        <div *ngIf="issue.taskType == 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">Согласование {{issue.docNumber}}</div>
         <div class="task-name" [hidden]="edit != 'name'">
           <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
           <div class="content-end">
