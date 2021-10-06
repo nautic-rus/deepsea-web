@@ -57,8 +57,8 @@ export class IssueManagerService {
   async updateIssue(user: string, issue: Issue) {
     return await this.http.post(props.http + '/updateIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();
   }
-  async setIssueStatus(id: string, user: string, status: string): Promise<Issue> {
-    return await this.http.get<Issue>(props.http + '/setIssueStatus', {params: {id: id, user: user, status: status}}).toPromise();
+  async setIssueStatus(id: string, user: string, status: string): Promise<string> {
+    return await this.http.get<string>(props.http + '/setIssueStatus', {params: {id: id, user: user, status: status}}).toPromise();
   }
   async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
     return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id: id}}).toPromise();

@@ -206,12 +206,19 @@ export class TaskComponent implements OnInit {
 
   statusChanged() {
     // @ts-ignore
-    this.issueManager.setIssueStatus(this.issue.id, this.auth.getUser().login, this.issue.status).then(issue => {
+    this.issueManager.setIssueStatus(this.issue.id, this.auth.getUser().login, this.issue.status).then(status => {
+      console.log(status);
       this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
-        this.issue = issue;
-        this.availableStatuses = this.getAvailableStatuses(issue);
-        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
-        console.log(issue);
+        if (issue.id != null){
+          this.issue = issue;
+          this.availableStatuses = this.getAvailableStatuses(issue);
+          this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
+          console.log(issue);
+        }
+        else{
+          this.availableStatuses = [];
+          this.availableStatusesNoCurrent = [];
+        }
       });
     });
   }
