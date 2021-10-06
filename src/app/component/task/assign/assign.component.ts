@@ -3,7 +3,7 @@ import {Issue} from "../../../domain/classes/issue";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {ConfirmationService} from "primeng/api";
+import {ConfirmationService, PrimeNGConfig} from "primeng/api";
 import {User} from "../../../domain/classes/user";
 
 @Component({
@@ -21,13 +21,17 @@ export class AssignComponent implements OnInit {
   overtime = false;
   users: User[] = [];
 
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
     this.users = this.getUsers();
+    this.config.setTranslation({
+      dayNamesMin: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
+      weekHeader: "№",
+      monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+    });
   }
-
   close(){
     this.ref.close('exit');
   }
