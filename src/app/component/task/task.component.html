@@ -115,6 +115,12 @@
             </div>
           </div>
         </div>
+        <div class="big-text mb-1 mt-2">Подзадачи</div>
+        <div>
+          <div *ngFor="let childIssue of issue.childIssues">
+            <div *ngIf="childIssue.taskType == 'Approval'">Согласование {{childIssue.docNumber}}</div>
+          </div>
+        </div>
         <div class="big-text mb-1 mt-40">Активность</div>
         <div class="df">
           <div class="description mt-5">Показать:</div>
