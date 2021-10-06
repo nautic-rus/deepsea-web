@@ -136,8 +136,8 @@ export class TaskComponent implements OnInit {
         this.taskPriorities.push({label: this.issueManager.localeTaskType(priority), value: priority});
       });
     });
-    this.startDate = new Date(this.issue.startDate);
-    this.dueDate = new Date(this.issue.dueDate);
+    this.startDate = this.issue.startDate != 0 ? new Date(this.issue.startDate) : new Date();
+    this.dueDate = this.issue.startDate != 0 ? new Date(this.issue.dueDate) : new Date();
   }
   close(){
     this.ref.close('exit');
