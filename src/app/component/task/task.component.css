@@ -671,6 +671,29 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-reapproval{
+  color: white;
+  background-color: #d65106;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-reapproval:hover{
+  background: #993d00;
+  transition: 0.3s;
+}
+.icon-reapproval{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #993d00;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .button-text{
   padding-right: 8px;
   padding-left: 8px;
