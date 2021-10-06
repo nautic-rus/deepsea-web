@@ -17,9 +17,9 @@
   </p-dropdown>
   <div>
     <div class="big-text mb-1 mt-1">Дата начала</div>
-    <p-calendar [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+    <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
     <div class="big-text mb-1 mt-1">Срок завершения</div>
-    <p-calendar [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+    <p-calendar [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
   </div>
   <div>
     <div class="big-text mb-1 mt-1">Сделать задачу сверхурочной</div>

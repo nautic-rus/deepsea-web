@@ -51,6 +51,7 @@ export class CreateTaskComponent implements OnInit {
   @ViewChild('img') img;
   // @ts-ignore
   wz;
+
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -116,7 +117,7 @@ export class CreateTaskComponent implements OnInit {
       types.filter(x => this.issues.localeTaskType(x) != x).forEach(type => {
         this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
       });
-      if (this.taskTypes.length > 0){
+      if (this.taskTypes.length > 0) {
         this.taskType = this.taskTypes[0].value;
       }
     });
@@ -124,25 +125,25 @@ export class CreateTaskComponent implements OnInit {
       priorities.forEach(priority => {
         this.taskPriorities.push({label: this.issues.localeTaskType(priority), value: priority});
       });
-      if (this.taskPriorities.length > 0){
+      if (this.taskPriorities.length > 0) {
         this.taskPriority = this.taskPriorities[0].value;
       }
     });
     this.issues.getIssueProjects().then(projects => {
       this.taskProjects = projects;
-      if (this.taskProjects.length > 0){
+      if (this.taskProjects.length > 0) {
         this.taskProject = this.taskProjects[0];
       }
     });
     this.issues.getIssueDepartments().then(departments => {
       this.taskDepartments = departments;
-      if (this.taskDepartments.length > 0){
+      if (this.taskDepartments.length > 0) {
         this.taskDepartment = this.taskDepartments[0];
       }
     });
 
     let issue = this.conf.data as Issue;
-    if (issue != null && issue.id != null){
+    if (issue != null && issue.id != null) {
       this.taskSummary = issue.name;
       this.taskType = issue.taskType;
       this.taskDetails = issue.details;
@@ -157,6 +158,7 @@ export class CreateTaskComponent implements OnInit {
       this.taskResponsible = issue.responsible;
       this.taskPeriod = issue.period;
     }
+
   }
 
   handleFileInput(files: FileList | null) {
