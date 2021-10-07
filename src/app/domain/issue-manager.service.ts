@@ -121,6 +121,7 @@ export class IssueManagerService {
       case 'task-rkd': return 'РКД';
       case 'RKD': return 'РКД';
       case 'Approval': return 'Согласование';
+      case 'task-rkd-2': return 'Turkey';
       default: return input;
     }
   }

@@ -2,6 +2,9 @@
   <div class="task-header">
     <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.taskType)}}</div>
     <div class="task-buttons">
+      <div class="task-button cxy" pTooltip="Копировать ссылку задачи" (click)="copyIssueUrl()">
+        <img src="assets/copy.svg" height="20">
+      </div>
       <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
         <img src="assets/copy.svg" height="20">
       </div>
@@ -118,7 +121,7 @@
         <div class="big-text mb-1 mt-2">Подзадачи</div>
         <div>
           <div *ngFor="let childIssue of issue.childIssues">
-            <div *ngIf="childIssue.taskType == 'Approval'">Согласование {{childIssue.docNumber}}</div>
+            <div (click)="openIssue(childIssue.id)" *ngIf="childIssue.taskType == 'Approval'">Согласование {{childIssue.docNumber + ' ' + childIssue.status + ' ' + childIssue.assignedTo}}</div>
           </div>
         </div>
         <div class="big-text mb-1 mt-40">Активность</div>

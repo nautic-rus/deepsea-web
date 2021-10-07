@@ -10,6 +10,7 @@ import ImageResize from 'quill-image-resize-module';
 import Quill from "quill";
 import Delta from "quill-delta";
 import {User} from "../../domain/classes/user";
+import {LanguageService} from "../../domain/language.service";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -109,7 +110,7 @@ export class CreateTaskComponent implements OnInit {
         }
       }
     }
-  constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
+  constructor(public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
     //this.users = this.auth.users;
     this.users = this.getUsers();

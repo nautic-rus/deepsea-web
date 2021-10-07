@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
@@ -25,12 +25,18 @@ export class HomeComponent implements OnInit {
   selectedCols: string[] = [];
   colHeaders: string[] = [];
   filled = false;
-  constructor(private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
   // @ts-ignore
   @ViewChild('dt') dt: Table;
   ngOnInit() {
     this.setCols();
     this.fillIssues();
+    this.route.queryParams.subscribe(params => {
+      let taskId = params.taskId != null ? params.taskId : '';
+      if (taskId != ''){
+        this.viewTask(taskId);
+      }
+    });
   }
   setCols(){
     this.cols = [

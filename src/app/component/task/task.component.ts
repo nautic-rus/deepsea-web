@@ -14,6 +14,7 @@ import Delta from "quill-delta";
 import {AssignComponent} from "./assign/assign.component";
 import {SendToApprovalComponent} from "./send-to-approval/send-to-approval.component";
 import {ChangeResponsibleComponent} from "./change-responsible/change-responsible.component";
+import {SendToCloudComponent} from "./send-to-cloud/send-to-cloud.component";
 
 @Component({
   selector: 'app-task',
@@ -477,10 +478,26 @@ export class TaskComponent implements OnInit {
     if (value == 'Send to Approval'){
       this.askForSendToApproval();
     }
+    else if (value == 'Send to ShipYard'){
+      this.askForSendToCloud();
+    }
     else{
       this.issue.status = value;
       this.statusChanged();
     }
+  }
+  askForSendToCloud(){
+    this.dialogService.open(SendToCloudComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+        this.issue = issue;
+        this.availableStatuses = this.getAvailableStatuses(issue);
+        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
+      });
+    });
   }
   askForSendToApproval(){
     this.dialogService.open(SendToApprovalComponent, {
@@ -525,5 +542,14 @@ export class TaskComponent implements OnInit {
         this.issue = res;
       });
     });
+  }
+
+  openIssue(id: string) {
+    window.open('/?taskId=' + id, '_blank');
+  }
+
+  copyIssueUrl() {
+    navigator.clipboard.writeText(location.href + '?taskId=' + this.issue.id);
+    this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
   }
 }

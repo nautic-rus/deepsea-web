@@ -17,8 +17,8 @@ export class SendToApprovalComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
-  // selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
-  selectedUsers: string[] = ['isaev'];
+  selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+  //selectedUsers: string[] = ['isaev'];
   issue: Issue = new Issue();
   users: User[] = [];
 

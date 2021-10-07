@@ -1,24 +1,24 @@
 <div class="center-create">
   <div class="df space-between">
     <div>
-      <div class="big-text mb-1">Проект</div>
+      <div class="big-text mb-1">{{lang.tr('Проект')}}</div>
       <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-300 font-14">
       </p-dropdown>
     </div>
     <div>
-      <div class="big-text mb-1">Приоритет</div>
+      <div class="big-text mb-1">{{lang.tr('Приоритет')}}</div>
       <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPriority" [options]="taskPriorities">
       </p-dropdown>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text mb-1 mt-1">Тип задачи</div>
+      <div class="big-text mb-1 mt-1">{{lang.tr('Тип задачи')}}</div>
       <p-dropdown styleClass="dark-panel width-300" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
       </p-dropdown>
     </div>
     <div *ngIf="taskType == 'task-rkd'">
-      <div class="big-text mb-1 mt-1">Этап</div>
+      <div class="big-text mb-1 mt-1">{{lang.tr('Этап')}}</div>
       <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPeriod" [options]="taskPeriods">
       </p-dropdown>
     </div>
@@ -234,6 +234,90 @@
       <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
     </div>
   </div>
+
+  <div *ngIf="taskType == 'task-rkd-2'">
+    <div class="df space-between">
+      <div style="width: 200px">
+        <div class="big-text mb-1 mt-1">Document Number</div>
+        <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
+      </div>
+      <div style="width: 68%">
+        <div class="big-text mb-1 mt-1">Document Name</div>
+        <input type="text" pInputText [(ngModel)]="taskSummary">
+      </div>
+    </div>
+    <div class="df space-between">
+      <div>
+        <div class="big-text mb-1 mt-1">Assign responsible</div>
+        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
+                    [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-300">
+          <ng-template let-user pTemplate="item">
+            <div class="df">
+              <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+              <div class="cx cy pl-10">{{user.userName}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div>
+        <div class="big-text mb-1 mt-1">Department</div>
+        <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskDepartment" [options]="taskDepartments">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="big-text mb-1 mt-1">Task Description</div>
+    <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
+      <div quill-editor-toolbar>
+        <p-header>
+          <span class="ql-formats">
+            <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+            <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+            <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-color" tabindex="-1"></select>
+            <select class="ql-background" tabindex="-1"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+            <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+            <select class="ql-align" tabindex="-1">
+              <option selected tabindex="-1"></option>
+              <option value="center" tabindex="-1"></option>
+              <option value="right" tabindex="-1"></option>
+              <option value="justify" tabindex="-1"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+            <button (click)="selectImage.click()">
+              <i class="pi pi-image"></i>
+            </button>
+            <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+            <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+          </span>
+        </p-header>
+      </div>
+    </quill-editor>
+    <div class="big-text mb-1 mt-1">Attachments</div>
+    <div [class.file-drag]="dragOver" class="upload cx cy loading">
+      <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1 image no-actions" src="assets/upload.svg" height="28">
+        <span class="normal-text no-actions">Drop files here to upload</span>
+      </div>
+    </div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+      <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+      <div class="cy">{{file}}</div>
+      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+      <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+    </div>
+  </div>
+
 </div>
 <div class="form-footer">
   <div class="mr-1 cx">
