@@ -89,20 +89,20 @@ export class IssueManagerService {
   }
   localeStatusAsButton(input: string, styled = true): string {
     switch (input) {
-      case 'In Work': return styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'На проверку';
-      case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/like.svg"></span><span class="cxy button-text">Исполнено</span></div>' : 'Исполнено';
-      case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
-      case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/check.svg"></span><span class="cxy button-text">На проверку</span></div>' : 'На проверку';
-      case 'Not resolved': return styled ? '<div class="buttons-pick-not-resolved"><span class="icon-not-resolved cxy"><img src="assets/dislike.svg"></span><span class="cxy button-text">Не исполнено</span></div>' : 'Не исполнено';
-      case 'Closed': return styled ? '<div class="buttons-pick-close"><span class="icon-close cxy"><img src="assets/close-task.svg"></span><span class="cxy button-text">Закрыть</span></div>' : 'Закрыть';
-      case 'Archive': return styled ? '<div class="buttons-pick-archive"><span class="icon-archive cxy"><img src="assets/archive.svg"></span><span class="cxy button-text">В архив</span></div>' : 'В архив';
-      case 'In Rework': return styled ? '<div class="buttons-pick-rework"><span class="icon-rework cxy"><img src="assets/rework.svg"></span><span class="cxy button-text">На доработку</span></div>' : 'На доработку';
-      case 'Paused': return styled ? '<div class="buttons-pick-pause"><span class="icon-pause cxy"><img src="assets/pause.svg"></span><span class="cxy button-text">Приостановить</span></div>' : 'Приостановить';
-      case 'Send to Approval': return styled ? '<div class="buttons-pick-send-approval"><span class="icon-send-approval cxy"><img src="assets/approval.svg"></span><span class="cxy button-text">На согласование</span></div>' : 'На согласование';
-      case 'Approved': return styled ? '<div class="buttons-pick-approval"><span class="icon-approval cxy"><img src="assets/like.svg"></span><span class="cxy button-text">Согласовано</span></div>' : 'Согласовано';
-      case 'Not approved': return styled ? '<div class="buttons-pick-not-approval"><span class="icon-not-approval cxy"><img src="assets/dislike.svg"></span><span class="cxy button-text">Не согласовано</span></div>' : 'Не согласовано';
-      case 'Ready to send': return styled ? '<div class="buttons-pick-send"><span class="icon-send cxy"><img src="assets/send.png" height="18"></span><span class="cxy button-text">Готов к отправке</span></div>' : 'Готов к отправке';
-      case 'On reApproval': return styled ? '<div class="buttons-pick-reapproval"><span class="icon-reapproval cxy"><img src="assets/approval.svg" height="18"></span><span class="cxy button-text">Повторное согласование</span></div>' : 'Повторное согласование';
+      case 'In Work': return styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'В работу';
+      case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/icons/like.svg"></span><span class="cxy button-text">Исполнено</span></div>' : 'Исполнено';
+      case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
+      case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/icons/check.svg"></span><span class="cxy button-text">На проверку</span></div>' : 'На проверку';
+      case 'Not resolved': return styled ? '<div class="buttons-pick-not-resolved"><span class="icon-not-resolved cxy"><img src="assets/icons/dislike.svg"></span><span class="cxy button-text">Не исполнено</span></div>' : 'Не исполнено';
+      case 'Closed': return styled ? '<div class="buttons-pick-close"><span class="icon-close cxy"><img src="assets/icons/close-task.svg"></span><span class="cxy button-text">Закрыть</span></div>' : 'Закрыть';
+      case 'Archive': return styled ? '<div class="buttons-pick-archive"><span class="icon-archive cxy"><img src="assets/icons/archive.svg"></span><span class="cxy button-text">В архив</span></div>' : 'В архив';
+      case 'In Rework': return styled ? '<div class="buttons-pick-rework"><span class="icon-rework cxy"><img src="assets/icons/rework.svg"></span><span class="cxy button-text">На доработку</span></div>' : 'На доработку';
+      case 'Paused': return styled ? '<div class="buttons-pick-pause"><span class="icon-pause cxy"><img src="assets/icons/pause.svg"></span><span class="cxy button-text">Приостановить</span></div>' : 'Приостановить';
+      case 'Send to Approval': return styled ? '<div class="buttons-pick-send-approval"><span class="icon-send-approval cxy"><img src="assets/icons/approval.svg"></span><span class="cxy button-text">На согласование</span></div>' : 'На согласование';
+      case 'Approved': return styled ? '<div class="buttons-pick-approval"><span class="icon-approval cxy"><img src="assets/icons/like.svg"></span><span class="cxy button-text">Согласовано</span></div>' : 'Согласовано';
+      case 'Not approved': return styled ? '<div class="buttons-pick-not-approval"><span class="icon-not-approval cxy"><img src="assets/icons/dislike.svg"></span><span class="cxy button-text">Не согласовано</span></div>' : 'Не согласовано';
+      case 'Ready to send': return styled ? '<div class="buttons-pick-send"><span class="icon-send cxy"><img src="assets/icons/send.png" height="18"></span><span class="cxy button-text">Готов к отправке</span></div>' : 'Готов к отправке';
+      case 'On reApproval': return styled ? '<div class="buttons-pick-reapproval"><span class="icon-reapproval cxy"><img src="assets/icons/approval.svg" height="18"></span><span class="cxy button-text">Повторное согласование</span></div>' : 'Повторное согласование';
 
       default: return input;
     }

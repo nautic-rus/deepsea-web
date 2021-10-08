@@ -1,0 +1,80 @@
+.picture{
+  width: 1830px;
+  height: 848px;
+  position: relative;
+}
+.ship{
+  position: absolute;
+}
+.sections{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  padding-top: 260px;
+  display: grid;
+  grid-template-columns: 5.7% 7% 8.5% 10.8% 11% 11% 10.8% 11% 10.2% 8% 6%;
+  grid-template-rows: 80px 65px 80px 70px 60px 70px 120px;
+  position: relative;
+}
+.number {
+  position: relative;
+}
+.circle{
+  position: absolute;
+}
+.number-card{
+  width: 50px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: white;
+  border: 1px solid black;
+}
+.text-end-center{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.seven{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-left: 70px;
+}
+.fifth-y{
+  display: grid;
+  grid-template-rows: 0.1fr 1fr 1fr 1fr 0.2fr;
+}
+.triple-y{
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.double-y{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.double-x{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.text-xy{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.text-end{
+  display: flex;
+  justify-content: flex-end;
+}
+.green{
+  background-color: #e7ecca;
+  border: 1px solid #606a26;
+  color: #606a26;
+}
+.yellow{
+  background-color: #feeccd;
+  border: 1px solid #d78a16;
+  color: #d78a16;
+}
+.red{
+  background-color: #f7cecd;
+  border: 1px solid #aa1f1c;
+  color: #aa1f1c;
+}

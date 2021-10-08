@@ -4,11 +4,8 @@
 }
 .left-content{
   width: 65%;
-  padding-right: 15px;
-}
-.overflow{
   overflow-y: auto;
-  height: 600px;
+  padding-right: 15px;
 }
 .right-content{
   width: 35%;
@@ -716,4 +713,26 @@
 }
 .task-name-button:hover{
   background-color: rgba(9, 30, 66, 0.08);
+}
+::ng-deep.ql-snow .ql-editor img {
+  transform: translate(-50%, -50%)!important;
+  width: 200px!important;
+}
+.quill-button{
+  border-radius: 3px;
+}
+.quill-button:hover{
+  background-color: rgba(9, 30, 66, 0.08)!important;
+}
+.quill-button:active{
+  background-color: #d1e5ff !important;
+}
+.ql-snow.ql-toolbar button.ql-active{
+  background: rgba(80, 95, 121, 0.7);
+  text-decoration: inherit;
+  transition-duration: 0s, 0.15s;
+  color: white!important;
+}
+.ql-snow.ql-toolbar button.ql-active:hover{
+  background: rgba(80, 95, 121, 0.7)!important;
 }

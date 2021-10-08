@@ -43,7 +43,13 @@
   width: 35px;
 }
 .new-task-button{
-  border-radius: 3px;
+  background-color: rgba(50, 49, 48, 0.07);
+}
+.new-task-button:hover{
+  background-color: rgba(50, 49, 48, 0.18)!important;
+}
+.normal-button:hover{
+  background-color: rgba(50, 49, 48, 0.07) !important;
 }
 /deep/.p-component{
   font-size: 14px!important;
@@ -62,7 +68,6 @@
   font-size: 14px;
   letter-spacing: .3px;
   height: 30px;
-  border-bottom-left-radius: 2px;
 }
 .icon{
   display: flex;

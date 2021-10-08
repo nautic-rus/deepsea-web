@@ -49,6 +49,8 @@ import {InputNumberModule} from "primeng/inputnumber";
 import { ChangeResponsibleComponent } from './component/task/change-responsible/change-responsible.component';
 import {CheckboxModule} from "primeng/checkbox";
 import { SendToCloudComponent } from './component/task/send-to-cloud/send-to-cloud.component';
+import { GanttComponent } from './component/gantt/gantt.component';
+import { SectionsComponent } from './component/sections/sections.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -70,6 +72,8 @@ Quill.register('modules/imageResize', ImageResize);
     MaterialsComponent,
     AddMaterialComponent,
     ChangeResponsibleComponent,
+    GanttComponent,
+    SectionsComponent,
     SendToCloudComponent,
   ],
   imports: [

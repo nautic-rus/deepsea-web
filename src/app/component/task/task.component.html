@@ -3,16 +3,16 @@
     <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.taskType)}}</div>
     <div class="task-buttons">
       <div class="task-button cxy" pTooltip="Копировать ссылку задачи" (click)="copyIssueUrl()">
-        <img src="assets/copy.svg" height="20">
+        <img src="assets/icons/link.svg" height="20">
       </div>
       <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
-        <img src="assets/copy.svg" height="20">
+        <img src="assets/icons/copy.svg" height="20">
       </div>
       <div class="task-button cxy mr-2" pTooltip="Удалить задачу" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.startedBy)">
-        <img src="assets/trash.svg" height="20">
+        <img src="assets/icons/trash.svg" height="20">
       </div>
       <div class="task-button cxy" (click)="close()">
-        <img src="assets/close.svg" height="20">
+        <img src="assets/icons/close.svg" height="20">
       </div>
     </div>
   </div>
@@ -25,32 +25,31 @@
           <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
           <div class="content-end">
             <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
-              <img src="assets/tick.svg">
+              <img src="assets/icons/tick.svg">
             </div>
             <div class="task-name-button cxy" (click)="cancelIssueEdit()">
-              <img src="assets/cancel.svg">
+              <img src="assets/icons/cancel.svg">
             </div>
           </div>
         </div>
       </div>
-      <div class="overflow">
-        <div class="buttons">
-          <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
-          <span class="icon-assign cxy">
-            <img src="assets/user.svg">
-          </span>
-            <span class="cxy button-text">Назначить</span>
-          </div>
-          <div class="buttons-pick-change cursor-pointer" (click)="changeResponsible()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
-          <span class="icon-change cxy">
-            <img src="assets/change.svg">
-          </span>
-            <span class="cxy button-text">Сменить ответственного</span>
-          </div>
-          <div class="button-status" *ngFor="let status of availableStatusesNoCurrent">
-            <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
-          </div>
+      <div class="buttons">
+        <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
+        <span class="icon-assign cxy">
+          <img src="assets/icons/user.svg">
+        </span>
+          <span class="cxy button-text">Назначить</span>
         </div>
+        <div class="buttons-pick-change cursor-pointer" (click)="changeResponsible()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login || issue.responsible == auth.getUser().login)">
+        <span class="icon-change cxy">
+          <img src="assets/icons/change.svg">
+        </span>
+          <span class="cxy button-text">Сменить ответственного</span>
+        </div>
+        <div class="button-status" *ngFor="let status of availableStatusesNoCurrent">
+          <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
+        </div>
+      </div>
         <div class="df">
           <div class="big-text mb-1 mt-2">Описание задачи</div>
         </div>
@@ -62,34 +61,34 @@
             <div quill-editor-toolbar>
               <p-header>
           <span class="ql-formats">
-            <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
-            <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
-            <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+            <button class="ql-bold quill-button" pTooltip="Полужирный Ctrl+B" tooltipPosition="top" aria-label="Bold" tabindex="-1"></button>
+            <button class="ql-italic quill-button" pTooltip="Курсив Ctrl+I" tooltipPosition="top" aria-label="Italic" tabindex="-1"></button>
+            <button class="ql-underline quill-button" pTooltip="Подчеркнутый Ctrl+U" tooltipPosition="top" aria-label="Underline" tabindex="-1"></button>
           </span>
-                <span class="ql-formats">
-            <select class="ql-color" tabindex="-1"></select>
-            <select class="ql-background" tabindex="-1"></select>
+          <span class="ql-formats">
+            <select class="ql-color quill-button" pTooltip="Цвет текста" tooltipPosition="top" tabindex="-1"></select>
+            <select class="ql-background quill-button" pTooltip="Фон текста" tooltipPosition="top" tabindex="-1"></select>
           </span>
-                <span class="ql-formats">
-            <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
-            <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
-            <select class="ql-align" tabindex="-1">
+          <span class="ql-formats">
+            <button class="ql-list quill-button" pTooltip="Нумерованный список" tooltipPosition="top" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+            <button class="ql-list quill-button" pTooltip="Маркированный список" tooltipPosition="top" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+            <select class="ql-align quill-button" pTooltip="Выравнивание" tooltipPosition="top" tabindex="-1">
               <option selected tabindex="-1"></option>
               <option value="center" tabindex="-1"></option>
               <option value="right" tabindex="-1"></option>
               <option value="justify" tabindex="-1"></option>
             </select>
           </span>
-                <span class="ql-formats">
-            <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
-            <button (click)="selectImage.click()">
+          <span class="ql-formats">
+            <button class="ql-link quill-button" pTooltip="Ссылка Ctrl+K" tooltipPosition="top" aria-label="Insert Link" tabindex="-1"></button>
+            <button class="quill-button" pTooltip="Файлы и изображения" tooltipPosition="top" (click)="selectImage.click()">
               <i class="pi pi-image"></i>
             </button>
             <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
-            <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+            <button class="ql-code-block quill-button" pTooltip="Фрагмент кода" tooltipPosition="top" aria-label="Insert Code Block" tabindex="-1"></button>
           </span>
-                <span class="ql-formats">
-            <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+          <span class="ql-formats">
+            <button class="ql-clean quill-button" pTooltip="Отменить форматирование" tooltipPosition="top" aria-label="Remove Styles" tabindex="-1"></button>
           </span>
               </p-header>
             </div>
@@ -239,7 +238,7 @@
               <div class="df pt-5">
                 <div class="" [innerHTML]="issueManager.localeStatus(getPrevValue(issue.messages, varMap.name, msg.date)) | safeHtml"></div>
                 <span class="px-10">
-                  <img src="assets/right-arrow.svg" height="13">
+                  <img src="assets/icons/right-arrow.svg" height="13">
                 </span>
                 <div [innerHTML]="issueManager.localeStatus(varMap.value) | safeHtml"></div>
               </div>
@@ -260,7 +259,6 @@
             </div>
           </div>
         </div>
-      </div>
       </div>
 
     <div class="right-content">
@@ -285,10 +283,10 @@
             <p-calendar [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background w-100 h-32"></p-calendar>
             <div class="width-15 df">
               <div [hidden]="edit != 'startDate'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
-                <img class="cursor-pointer" src="assets/error.svg">
+                <img class="cursor-pointer" src="assets/icons/error.svg">
               </div>
               <div [hidden]="edit != 'startDate'" (click)="commitIssueEdit()" class="px-5 pt-8" pTooltip="Сохранить">
-                <img class="cursor-pointer" src="assets/checked.svg">
+                <img class="cursor-pointer" src="assets/icons/checked.svg">
               </div>
             </div>
           </div>
@@ -298,10 +296,10 @@
             <p-calendar [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background w-100 h-32"></p-calendar>
             <div class="width-15 df">
               <div [hidden]="edit != 'dueDate'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
-                <img class="cursor-pointer" src="assets/error.svg">
+                <img class="cursor-pointer" src="assets/icons/error.svg">
               </div>
               <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit()" class="px-5 pt-8" pTooltip="Сохранить">
-                <img class="cursor-pointer" src="assets/checked.svg">
+                <img class="cursor-pointer" src="assets/icons/checked.svg">
               </div>
             </div>
           </div>
@@ -314,10 +312,10 @@
             </div>
             <div class="width-15 df">
               <div [hidden]="edit != 'project'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
-                <img class="cursor-pointer" src="assets/error.svg">
+                <img class="cursor-pointer" src="assets/icons/error.svg">
               </div>
               <div [hidden]="edit != 'project'" (click)="commitIssueEdit()" class="px-5 pt-8" pTooltip="Сохранить">
-                <img class="cursor-pointer" src="assets/checked.svg">
+                <img class="cursor-pointer" src="assets/icons/checked.svg">
               </div>
             </div>
           </div>
@@ -330,10 +328,10 @@
             </div>
             <div class="width-15 df">
               <div [hidden]="edit != 'department'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
-                <img class="cursor-pointer" src="assets/error.svg">
+                <img class="cursor-pointer" src="assets/icons/error.svg">
               </div>
               <div [hidden]="edit != 'department'" (click)="commitIssueEdit()" class="px-5 pt-8" pTooltip="Сохранить">
-                <img class="cursor-pointer" src="assets/checked.svg">
+                <img class="cursor-pointer" src="assets/icons/checked.svg">
               </div>
             </div>
           </div>
@@ -358,10 +356,10 @@
             </div>
             <div class="width-15 df">
               <div [hidden]="edit != 'priority'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
-                <img class="cursor-pointer" src="assets/error.svg">
+                <img class="cursor-pointer" src="assets/icons/error.svg">
               </div>
               <div [hidden]="edit != 'priority'" (click)="commitIssueEdit()" class="px-5 pt-8" pTooltip="Сохранить">
-                <img class="cursor-pointer" src="assets/checked.svg">
+                <img class="cursor-pointer" src="assets/icons/checked.svg">
               </div>
             </div>
           </div>
@@ -374,10 +372,10 @@
             </div>
             <div class="width-15 df">
               <div [hidden]="edit != 'period'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
-                <img class="cursor-pointer" src="assets/error.svg">
+                <img class="cursor-pointer" src="assets/icons/error.svg">
               </div>
               <div [hidden]="edit != 'period'" (click)="commitIssueEdit()" class="px-5 pt-8" pTooltip="Сохранить">
-                <img class="cursor-pointer" src="assets/checked.svg">
+                <img class="cursor-pointer" src="assets/icons/checked.svg">
               </div>
             </div>
           </div>
