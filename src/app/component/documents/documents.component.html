@@ -1,6 +1,6 @@
 <div class="all-page">
   <div class="card">
-    <p-table [value]="materials" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
+    <p-table [value]="issues" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-1">
@@ -28,32 +28,21 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th class="w-5">Проект</th>
-          <th class="w-20">Наименование</th>
-          <th class="w-11">Обозначение</th>
-          <th class="w-6">КВЗ</th>
-          <th class="w-6">Коэф.</th>
-          <th class="w-6">Вес</th>
-          <th class="w-6">КЕИ</th>
-          <th class="w-10">Документ</th>
-          <th class="w-10">Поставщик</th>
-          <th class="w-10">Примечания</th>
-          <th class="w-10">Код материала</th>
+          <th class="w-5">Номер чертежа</th>
+          <th class="w-20">Ревизия</th>
+          <th class="w-11">Название</th>
+          <th class="w-6">Документ</th>
+          <th class="w-6">Дата отправки</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-material>
+      <ng-template pTemplate="body" let-issue>
         <tr>
-          <td class="w-5 text-14">{{material.project}}</td>
-          <td class="w-20 text-14">{{material.name}}</td>
-          <td class="w-11 text-14">{{material.description}}</td>
-          <td class="w-6 text-14">{{material.category}}</td>
+          <td class="w-5 text-14">{{issue.docNumber}}</td>
+          <td class="w-20 text-14">{{0}}</td>
+          <td class="w-11 text-14">{{issue.name}}</td>
           <td class="w-6 text-14">{{0}}</td>
-          <td class="w-6 text-14">{{material.singleWeight}}</td>
-          <td class="w-6 text-14">{{material.units}}</td>
-          <td class="w-10 text-14">{{material.document}}</td>
-          <td class="w-10 text-14">{{material.provider}}</td>
-          <td class="w-10 text-14">{{material.note}}</td>
-          <td class="w-10 text-14">{{material.trmCode}}</td>
+          <td class="w-6 text-14">{{0}}</td>
+
         </tr>
       </ng-template>
     </p-table>

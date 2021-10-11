@@ -52,6 +52,7 @@ import { SendToCloudComponent } from './component/task/send-to-cloud/send-to-clo
 import { GanttComponent } from './component/gantt/gantt.component';
 import { SectionsComponent } from './component/sections/sections.component';
 import { DocumentsComponent } from './component/documents/documents.component';
+import { EmployeesComponent } from './component/employees/employees.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -77,6 +78,7 @@ Quill.register('modules/imageResize', ImageResize);
     SectionsComponent,
     SendToCloudComponent,
     DocumentsComponent,
+    EmployeesComponent,
   ],
   imports: [
     BrowserModule,

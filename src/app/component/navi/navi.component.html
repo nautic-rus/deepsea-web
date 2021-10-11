@@ -30,12 +30,6 @@
     </div>
     <div class="cxy mt-10">МАТЕРИАЛЫ</div>
   </div>
-  <div class="cy menu">
-    <div class="cxy">
-      <img src="assets/icons/materialsPDSP.svg" height="30">
-    </div>
-    <div class="cxy text-center mt-10">МАТЕРИАЛЫ ПДСП</div>
-  </div>
   <div class="cy menu" routerLink="documents" routerLinkActive="selected-menu">
     <div class="cxy">
       <img src="assets/icons/blueprint.svg" height="30">
@@ -48,19 +42,19 @@
     </div>
     <div class="cxy text-center mt-10">ГАНТ</div>
   </div>
-  <div class="cy menu">
-    <div class="cxy">
-      <img src="assets/icons/report.svg" height="32">
-    </div>
-    <div class="cxy text-center mt-10">ВЕДОМОСТИ</div>
-  </div>
   <div *ngIf="auth.getUser().visibility.includes('b')" class="cy menu" routerLink="bpmn" routerLinkActive="selected-menu">
     <div class="cxy">
       <img src="assets/icons/bpmn.svg" height="28">
     </div>
     <div class="cxy text-center mt-10">BPMN</div>
   </div>
-  <div *ngIf="auth.getUser().visibility.includes('s')" class="cy menu" routerLink="sections" routerLinkActive="selected-menu">
+  <div *ngIf="auth.getUser().visibility.includes('z')" class="cy menu" routerLink="employees" routerLinkActive="selected-menu">
+    <div class="cxy">
+      <img src="assets/icons/group.svg" height="36">
+    </div>
+    <div class="cxy text-center mt-10">СОТРУДНИКИ</div>
+  </div>
+  <div class="cy menu" routerLink="sections" routerLinkActive="selected-menu">
     <div class="cxy">
       <img src="assets/icons/sections.svg" height="28">
     </div>

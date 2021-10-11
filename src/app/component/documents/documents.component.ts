@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Material} from "../../domain/classes/material";
 import {MaterialManagerService} from "../../domain/material-manager.service";
+import {Issue} from "../../domain/classes/issue";
+import {IssueManagerService} from "../../domain/issue-manager.service";
 
 @Component({
   selector: 'app-documents',
@@ -8,16 +10,15 @@ import {MaterialManagerService} from "../../domain/material-manager.service";
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  materials: Material[] = [];
-  projects: string[] = ['NR-002', '170701'];
-  project = this.projects[1];
+  projects: string[] = ['NR-002'];
+  project = this.projects[0];
+  issues: Issue[] = [];
 
-  constructor(private materialManager: MaterialManagerService) { }
+  constructor(private issueManager: IssueManagerService) { }
 
   ngOnInit(): void {
-    let proj = this.project.replace('170701', 'P701');
-    this.materialManager.getMaterials(proj).then(res => {
-      this.materials = res;
+    this.issueManager.getIssues('op').then(data => {
+      this.issues = data;
     });
   }
 

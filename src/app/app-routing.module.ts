@@ -10,6 +10,7 @@ import {MaterialsComponent} from "./component/materials/materials.component";
 import {GanttComponent} from "./component/gantt/gantt.component";
 import {SectionsComponent} from "./component/sections/sections.component";
 import {DocumentsComponent} from "./component/documents/documents.component";
+import {EmployeesComponent} from "./component/employees/employees.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'gantt', component: GanttComponent, canActivate: [AuthGuard], data: {animation: 'GanttComponent'} },
   { path: 'sections', component: SectionsComponent, canActivate: [AuthGuard], data: {animation: 'SectionsComponent'} },
   { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard], data: {animation: 'DocumentsComponent'} },
+  { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: {animation: 'EmployeesComponent'} },
 ];
 
 @NgModule({
