@@ -18,7 +18,7 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.issueManager.getIssues('op').then(data => {
-      this.issues = data;
+      this.issues = data.filter(x => x.taskType == 'RKD');
     });
   }
 

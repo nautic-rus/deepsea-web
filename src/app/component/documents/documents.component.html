@@ -28,20 +28,20 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th class="w-5">Номер чертежа</th>
-          <th class="w-20">Ревизия</th>
-          <th class="w-11">Название</th>
-          <th class="w-6">Документ</th>
-          <th class="w-6">Дата отправки</th>
+          <th class="w-10">Номер чертежа</th>
+          <th class="w-10">Ревизия</th>
+          <th class="w-50">Название</th>
+          <th class="w-20">Документ</th>
+          <th class="w-10">Дата отправки</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
         <tr>
-          <td class="w-5 text-14">{{issue.docNumber}}</td>
+          <td class="w-10 text-14">{{issue.docNumber}}</td>
+          <td class="w-10 text-14">{{0}}</td>
+          <td class="w-50 text-14">{{issue.name}}</td>
           <td class="w-20 text-14">{{0}}</td>
-          <td class="w-11 text-14">{{issue.name}}</td>
-          <td class="w-6 text-14">{{0}}</td>
-          <td class="w-6 text-14">{{0}}</td>
+          <td class="w-10 text-14">{{0}}</td>
 
         </tr>
       </ng-template>
