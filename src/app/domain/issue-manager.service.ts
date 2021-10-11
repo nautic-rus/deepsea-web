@@ -24,6 +24,11 @@ export class IssueManagerService {
     formData.append('file', file, file.name);
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData).toPromise();
   }
+  async uploadFileToCloud(file: File, filePath: string, login: string, password: string) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    return await this.http.post<FileAttachment>(props.http + '/createFileCloudUrl', formData, {params: {filePath, login, password}}).toPromise();
+  }
   async assignUser(id: string, user: string, startDate: string, dueDate: string, overtime: string){
     return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime}}).toPromise();
   }

@@ -19,7 +19,7 @@ export class LanguageService {
           case 'Приоритет': return 'Priority';
           case 'Тип задачи': return 'Task Type';
           case 'Этап': return 'Priority';
-          case '': return '';
+          case 'Перетащите файлы или нажмите для загрузки': return 'Drop files here or click this to upload';
           case '': return '';
           case '': return '';
           case '': return '';

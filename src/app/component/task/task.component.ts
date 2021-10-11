@@ -137,6 +137,7 @@ export class TaskComponent implements OnInit {
         this.taskPriorities.push({label: this.issueManager.localeTaskType(priority), value: priority});
       });
     });
+    console.log(this.issue.startDate);
     this.startDate = this.issue.startDate != 0 ? new Date(this.issue.startDate) : new Date();
     this.dueDate = this.issue.startDate != 0 ? new Date(this.issue.dueDate) : new Date();
   }
@@ -515,9 +516,13 @@ export class TaskComponent implements OnInit {
   commitIssueEdit() {
     this.issueManager.updateIssue(this.auth.getUser().login, this.issue).then(res => {
       if (res == 'success'){
+        if (this.edit == 'startDate'){
+          this.issue.startDate = this.startDate.getTime();
+        }
+        if (this.edit == 'dueDate'){
+          this.issue.dueDate = this.dueDate.getTime();
+        }
         this.edit = '';
-        this.issue.startDate = this.startDate.getTime();
-        this.issue.dueDate = this.dueDate.getTime();
         this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
       }
     });
@@ -549,7 +554,7 @@ export class TaskComponent implements OnInit {
   }
 
   copyIssueUrl() {
-    navigator.clipboard.writeText(location.href + '?taskId=' + this.issue.id);
+    navigator.clipboard.writeText(location.origin + '?taskId=' + this.issue.id);
     this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
   }
 }
