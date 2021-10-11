@@ -26,6 +26,7 @@
   border-radius: 12px;
   background-color: white;
   border: 1px solid black;
+  cursor: pointer;
 }
 .text-end-center{
   display: flex;

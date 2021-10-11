@@ -51,6 +51,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import { SendToCloudComponent } from './component/task/send-to-cloud/send-to-cloud.component';
 import { GanttComponent } from './component/gantt/gantt.component';
 import { SectionsComponent } from './component/sections/sections.component';
+import { DocumentsComponent } from './component/documents/documents.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -75,6 +76,7 @@ Quill.register('modules/imageResize', ImageResize);
     GanttComponent,
     SectionsComponent,
     SendToCloudComponent,
+    DocumentsComponent,
   ],
   imports: [
     BrowserModule,

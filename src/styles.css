@@ -5,47 +5,53 @@
 body,p{
   margin: 0;
 }
-.w-100{
-  width: 100%;
-}
-.w-40{
+.w40{
   width: 40vw;
 }
-.w-60{
+.w60{
   width: 60vw;
 }
-.w-50{
-  width: 50%;
+.w70{
+  width: 70vw;
 }
 .w-150{
   width: 150%;
 }
-.w-5{
-  width: 5%;
+.w-100{
+  width: 100%;
 }
-.w-6{
-  width: 5%;
+.w-80{
+  width: 80%;
 }
-.w-10{
-  width: 10%;
+.w-60{
+  width: 60%;
 }
-.w-11{
-  width: 11%;
+.w-50{
+  width: 50%;
+}
+.w-45{
+  width: 45%;
+}
+.w-40{
+  width: 40%;
 }
 .w-20{
   width: 11%;
 }
-.width-15{
+.w-15{
   width: 15%;
 }
-.width-40{
-  width: 40%;
+.w-11{
+  width: 11%;
 }
-.width-45{
-  width: 45%;
+.w-10{
+  width: 10%;
 }
-.width-60{
-  width: 60%;
+.w-6{
+  width: 5%;
+}
+.w-5{
+  width: 5%;
 }
 .width-100{
   width: 100px;
@@ -79,9 +85,6 @@ body,p{
 }
 .width-530{
   width: 530px;
-}
-.w80{
-  width: 80%;
 }
 .h-32{
   height: 32px;
