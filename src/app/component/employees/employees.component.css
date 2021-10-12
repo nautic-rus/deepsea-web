@@ -81,6 +81,25 @@
 .everyone-day{
   display: grid;
   grid-template-columns: repeat(31, 1fr);
-  grid-template-rows: repeat(50, 45px);
+  grid-template-rows: repeat(10, 45px);
   border-bottom: 1px solid #f3f2f1;
+}
+.one-day-everyone{
+  border-bottom: 1px solid #f3f2f1;
+  border-right: 1px solid #f3f2f1;
+  color: #42526ec7;
+  font-weight: 500;
+  cursor: default;
+}
+.today-day-everyone{
+  background-color: #0037ff0a!important;
+}
+.vacation-day{
+  background-color: rgba(89, 255, 0, 0.04);
+}
+.sick-day{
+  background-color: rgba(166, 0, 255, 0.04);
+}
+.compensatory-day{
+  background-color: rgba(255, 0, 0, 0.04);
 }
