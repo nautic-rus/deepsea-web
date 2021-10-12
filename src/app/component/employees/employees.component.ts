@@ -15,7 +15,10 @@ export class EmployeesComponent implements OnInit {
   constructor(private auth: AuthManagerService) { }
 
   ngOnInit(): void {
-    this.users = this.auth.users;
+    this.users = this.getUsersEmployees();
+  }
+  getUsersEmployees() {
+    return this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('k'));
   }
 
 }
