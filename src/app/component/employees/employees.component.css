@@ -5,3 +5,82 @@
   border-radius: 4px;
   height: calc(100vh - 116px);
 }
+.datatable-header{
+  height: 65px;
+  color: #323130;
+  border: 1px solid #f3f2f1;
+  border-width: 1px 0 1px 0;
+  padding: 0.75rem 0.75rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: flex-end;
+}
+.calendar{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.calendar-header{
+  height: 65px;
+  color: #323130;
+  border: 1px solid #f3f2f1;
+  border-width: 1px 0 1px 0;
+  padding: 0.75rem 0 0.75rem;
+  font-weight: 600;
+  display: flex;
+}
+.month-name{
+  font-size: 24px;
+  font-weight: 500;
+}
+.today{
+  border-width: 0px;
+  border-radius: 3px;
+  font-size: inherit;
+  font-style: normal;
+  font-family: inherit;
+  font-weight: 500;
+  max-width: 100%;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+  white-space: nowrap;
+  background: rgba(9,30,66,0.04);
+  cursor: pointer;
+  height: 2.28571em;
+  line-height: 2.28571em;
+  padding: 0px 10px;
+  vertical-align: middle;
+  -webkit-box-pack: center;
+  justify-content: center;
+  color: #42526E !important;
+}
+.today:hover{
+  background-color: rgba(9,30,66,0.08);
+}
+.month-date{
+  display: grid;
+  grid-template-columns: repeat(31, 1fr);
+  height: 45px;
+  border-bottom: 1px solid #f3f2f1;
+}
+.day-number{
+  border-right: 1px solid #f3f2f1;
+  color: #172b4d;
+}
+.off-day{
+  background-color: hsla(220, 11%, 97%, 1);
+}
+.today-day{
+  background-color: #0037ff0a;
+  border-top: 3px solid #0553CC;
+}
+.all-days{
+  overflow-y: auto;
+  height: 700px;
+}
+.everyone-day{
+  display: grid;
+  grid-template-columns: repeat(31, 1fr);
+  grid-template-rows: repeat(50, 45px);
+  border-bottom: 1px solid #f3f2f1;
+}
