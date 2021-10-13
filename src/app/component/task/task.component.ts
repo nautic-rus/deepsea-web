@@ -137,9 +137,8 @@ export class TaskComponent implements OnInit {
         this.taskPriorities.push({label: this.issueManager.localeTaskType(priority), value: priority});
       });
     });
-    console.log(this.issue.startDate);
     this.startDate = this.issue.startDate != 0 ? new Date(this.issue.startDate) : new Date();
-    this.dueDate = this.issue.startDate != 0 ? new Date(this.issue.dueDate) : new Date();
+    this.dueDate = this.issue.dueDate != 0 ? new Date(this.issue.dueDate) : new Date();
   }
   close(){
     this.ref.close('exit');
@@ -514,14 +513,14 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit() {
+    if (this.edit == 'startDate'){
+      this.issue.startDate = this.startDate.getTime();
+    }
+    if (this.edit == 'dueDate'){
+      this.issue.dueDate = this.dueDate.getTime();
+    }
     this.issueManager.updateIssue(this.auth.getUser().login, this.issue).then(res => {
       if (res == 'success'){
-        if (this.edit == 'startDate'){
-          this.issue.startDate = this.startDate.getTime();
-        }
-        if (this.edit == 'dueDate'){
-          this.issue.dueDate = this.dueDate.getTime();
-        }
         this.edit = '';
         this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
       }
