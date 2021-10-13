@@ -10,7 +10,7 @@
     <div class="logo-text mt-3">Пароль</div>
     <div class="input">
       <input #input type="password" size="40" [(ngModel)]="password">
-      <img #img (click)="toggleVisibility(input, img)" class="eye" src="assets/visibility_1.svg" height="20">
+      <img #img (click)="toggleVisibility(input, img)" class="eye" src="assets/icons/visibility_1.svg" height="20">
     </div>
     <div class="check mt-3">
       <div class="check-box cxy" *ngIf="saveMeChecked" (click)="saveMeCheckedToggle()">
