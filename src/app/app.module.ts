@@ -53,6 +53,7 @@ import { GanttComponent } from './component/gantt/gantt.component';
 import { SectionsComponent } from './component/sections/sections.component';
 import { DocumentsComponent } from './component/documents/documents.component';
 import { EmployeesComponent } from './component/employees/employees.component';
+import { DeleteComponent } from './component/task/delete/delete.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -79,6 +80,7 @@ Quill.register('modules/imageResize', ImageResize);
     SendToCloudComponent,
     DocumentsComponent,
     EmployeesComponent,
+    DeleteComponent,
   ],
   imports: [
     BrowserModule,
