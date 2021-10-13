@@ -15,6 +15,7 @@ import {AssignComponent} from "./assign/assign.component";
 import {SendToApprovalComponent} from "./send-to-approval/send-to-approval.component";
 import {ChangeResponsibleComponent} from "./change-responsible/change-responsible.component";
 import {SendToCloudComponent} from "./send-to-cloud/send-to-cloud.component";
+import {DeleteComponent} from "./delete/delete.component";
 
 @Component({
   selector: 'app-task',
@@ -430,7 +431,16 @@ export class TaskComponent implements OnInit {
   }
 
   removeIssue() {
-    this.confirmRemove();
+    this.dialogService.open(DeleteComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+    // this.confirmRemove();
   }
   confirmRemove() {
     this.confirmationService.confirm({

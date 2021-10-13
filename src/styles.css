@@ -217,6 +217,10 @@ body,p{
 .text-center{
   text-align: center;
 }
+.mx-1{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
 .px-10{
   padding-right: 10px;
   padding-left: 10px;
@@ -329,3 +333,4 @@ cdk-virtual-scroll-viewport{
 /deep/.ql-snow .ql-editor img {
   max-width: 400px!important;
 }
+

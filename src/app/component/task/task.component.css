@@ -736,3 +736,6 @@
 .ql-snow.ql-toolbar button.ql-active:hover{
   background: rgba(80, 95, 121, 0.7)!important;
 }
+.p-dialog .p-dialog-content {
+  border-radius: 5px!important;
+}

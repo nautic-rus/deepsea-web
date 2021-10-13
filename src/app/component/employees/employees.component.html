@@ -1,309 +1,59 @@
-<div class="all-page">
-  <div class="card df">
-    <div class="w-20">
-      <p-table [value]="users" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
-        <ng-template pTemplate="caption">
-          <div class="p-d-flex">
-            <div class="mr-1">
-              <p-dropdown placeholder="ОТДЕЛ" class="select" [(ngModel)]="department" [options]="departments" styleClass="width-270 border">
-              </p-dropdown>
-            </div>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th class="w-5">Сотрудник</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-user>
-          <tr>
-            <td class="w-5 text-14">{{user.userName}}</td>
-          </tr>
-        </ng-template>
-      </p-table>
+<div class="all-page calendar">
+  <div class="card">
 
-    </div>
-
-
-    <div class="w-80">
-
-      <div class="calendar w-100">
-        <div class="calendar-header">
-          <div class="cxy pr-10">
-            <button class="today">
-              <span class="today-in">Сегодня</span>
-            </button>
-          </div>
-          <div class="cxy pr-10">
-            <button class="today cxy">
-              <img src="assets/icons/left-arrow.png" height="12">
-            </button>
-            <button class="today cxy">
-              <img src="assets/icons/right-arrow.png" height="12">
-            </button>
-          </div>
-          <div class="month-name">Октябрь 2021
-
-          </div>
-
-        </div>
-        <div class="month-date">
-          <div class="day-number cxy">1</div>
-          <div class="day-number off-day cxy">2</div>
-          <div class="day-number off-day cxy">3</div>
-          <div class="day-number cxy">4</div>
-          <div class="day-number cxy">5</div>
-          <div class="day-number cxy">6</div>
-          <div class="day-number cxy">7</div>
-          <div class="day-number cxy">8</div>
-          <div class="day-number off-day cxy">9</div>
-          <div class="day-number off-day cxy">10</div>
-          <div class="day-number cxy">11</div>
-          <div class="day-number today-day cxy">12</div>
-          <div class="day-number cxy">13</div>
-          <div class="day-number cxy">14</div>
-          <div class="day-number cxy">15</div>
-          <div class="day-number off-day cxy">16</div>
-          <div class="day-number off-day cxy">17</div>
-          <div class="day-number cxy">18</div>
-          <div class="day-number cxy">19</div>
-          <div class="day-number cxy">20</div>
-          <div class="day-number cxy">21</div>
-          <div class="day-number cxy">22</div>
-          <div class="day-number off-day cxy">23</div>
-          <div class="day-number off-day cxy">24</div>
-          <div class="day-number cxy">25</div>
-          <div class="day-number cxy">26</div>
-          <div class="day-number cxy">27</div>
-          <div class="day-number cxy">28</div>
-          <div class="day-number cxy">29</div>
-          <div class="day-number off-day cxy">30</div>
-          <div class="day-number off-day cxy">31</div>
-        </div>
-        <div class="all-days">
-          <div class="everyone-day">
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone today-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone cxy vacation-day">О</div>
-            <div class="one-day-everyone cxy vacation-day">О</div>
-            <div class="one-day-everyone off-day cxy vacation-day">О</div>
-            <div class="one-day-everyone off-day cxy vacation-day">О</div>
-            <div class="one-day-everyone cxy vacation-day">О</div>
-            <div class="one-day-everyone cxy today-day-everyone vacation-day">О</div>
-            <div class="one-day-everyone cxy vacation-day">О</div>
-            <div class="one-day-everyone cxy vacation-day">О</div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone today-day-everyone"></div>
-            <div class="one-day-everyone cxy compensatory-day">В</div>
-            <div class="one-day-everyone cxy compensatory-day">В</div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone today-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone cxy one-day-everyone sick-day">Б</div>
-            <div class="one-day-everyone cxy one-day-everyone sick-day">Б</div>
-            <div class="one-day-everyone off-day cxy one-day-everyone sick-day">Б</div>
-            <div class="one-day-everyone off-day cxy one-day-everyone sick-day">Б</div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone today-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone today-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone today-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone"></div>
-            <div class="one-day-everyone off-day"></div>
-            <div class="one-day-everyone off-day"></div>
-
-          </div>
-        </div>
+    <div class="calendar-header">
+      <div class="p-d-flex mr-1">
+        <p-dropdown placeholder="ОТДЕЛ" class="select" [(ngModel)]="department" [options]="departments" styleClass="width-270 border">
+        </p-dropdown>
+      </div>
+      <div class="cxy pr-10">
+        <button class="today" (click)="setToday()">
+          <span class="today-in">Сегодня</span>
+        </button>
+      </div>
+      <div class="cxy pr-10">
+        <button class="today cxy" (click)="prevMonth()">
+          <img src="assets/icons/left-arrow.png" height="12">
+        </button>
+        <button class="today cxy" (click)="nextMonth()">
+          <img src="assets/icons/right-arrow.png" height="12">
+        </button>
+      </div>
+      <div class="month-name">{{getMonth() + ' ' + this.currentYear}}
+      </div>
+      <div class="p-ml-auto status-buttons mr-1 cxy">
+        <div class="privat-status sick cxy mx-1">Б</div>
+        <div class="privat-status vacation cxy mx-1">О</div>
+        <div class="privat-status off cxy mx-1">В</div>
 
       </div>
     </div>
+    <div class="users-days">
+      <div class="df sticky">
+        <div class="w-20 users pl-10 header-users">
+          Сотрудники
+        </div>
+        <div class="w-80">
+          <div class="calendar w-100">
+            <div class="month-date">
+              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="df hover-user" *ngFor="let user of getUsers()">
+        <div class="w-20 users pl-10">
+          {{user.userName}}
+        </div>
+        <div class="w-80">
+          <div class="calendar w-100">
+            <div class="month-date">
+              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
