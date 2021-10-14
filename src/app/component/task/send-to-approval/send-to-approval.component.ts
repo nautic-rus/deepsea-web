@@ -24,6 +24,13 @@ export class SendToApprovalComponent implements OnInit {
 
   constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
     this.issue = conf.data;
+    console.log(this.issue);
+    if (this.issue.taskType == 'RKD'){
+      this.selectedUsers = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+    }
+    if (this.issue.taskType == 'RKD-TURK'){
+      this.selectedUsers = ['isaev'];
+    }
   }
   ngOnInit(): void {
     this.users = this.getUsersApproval();
