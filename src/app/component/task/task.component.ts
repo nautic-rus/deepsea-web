@@ -8,7 +8,7 @@ import {Editor} from "primeng/editor";
 import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
-import {ConfirmationService, MessageService} from "primeng/api";
+import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
 import {VarMap} from "../../domain/classes/var-map";
 import Delta from "quill-delta";
 import {AssignComponent} from "./assign/assign.component";
@@ -98,7 +98,7 @@ export class TaskComponent implements OnInit {
         }
       }
     }
-  constructor(public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   generateId(length: number): string {
     let result = '';
@@ -124,6 +124,11 @@ export class TaskComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.config.setTranslation({
+      dayNamesMin: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
+      weekHeader: "№",
+      monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+    });
     this.issue = this.conf.data as Issue;
     this.availableStatuses = this.getAvailableStatuses(this.issue);
     this.availableStatusesNoCurrent = this.getAvailableStatuses(this.issue, true);
