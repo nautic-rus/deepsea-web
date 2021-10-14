@@ -691,6 +691,29 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-shipyard{
+  color: white;
+  background-color: #e898bb;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-shipyard:hover{
+  background: #a46c85;
+  transition: 0.3s;
+}
+.icon-shipyard{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #a46c85;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .button-text{
   padding-right: 8px;
   padding-left: 8px;
