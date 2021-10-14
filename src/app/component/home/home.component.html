@@ -57,7 +57,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-columns="columns" let-issue>
-        <tr class="task-row" (click)="viewTask(issue.id)">
+        <tr [class.task-new]="isTaskNew(issue.id)" [class.task-updated]="isTaskUpdated(issue.id, issue.lastUpdate)" class="task-row" (click)="viewTask(issue.id)">
           <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
             <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field) | safeHtml"></div></div>
             <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>

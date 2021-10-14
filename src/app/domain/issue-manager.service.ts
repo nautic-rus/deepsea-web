@@ -10,12 +10,12 @@ import {Issue} from "./classes/issue";
 import {IssueDef} from "./classes/issue-def";
 import {IssueMessage} from "./classes/issue-message";
 import {List} from "underscore";
+import {ViewedIssue} from "./classes/viewed-issue";
 
 @Injectable({
   providedIn: 'root'
 })
 export class IssueManagerService {
-
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService) {
 
   }
@@ -56,6 +56,9 @@ export class IssueManagerService {
   async getIssues(login: string): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/issues', {params: {user: login}}).toPromise();
   }
+  async getIssuesViewed(login: string): Promise<ViewedIssue[]> {
+    return await this.http.get<ViewedIssue[]>(props.http + '/issuesViewed', {params: {user: login}}).toPromise();
+  }
   async getIssueDetails(id: string, login: string): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id: id, user: login}}).toPromise();
   }
@@ -70,6 +73,9 @@ export class IssueManagerService {
   }
   async removeIssue(id: string): Promise<string>{
     return await this.http.get<string>(props.http + '/removeIssue', {params: {id: id}}).toPromise();
+  }
+  async setIssueViewed(id: string, user: string): Promise<string>{
+    return await this.http.get<string>(props.http + '/setIssueViewed', {params: {id, user}}).toPromise();
   }
   localeStatus(input: string, styled = true): string {
     switch (input) {

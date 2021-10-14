@@ -12,6 +12,8 @@ import * as XLSX from 'xlsx';
 import {AssignComponent} from "../task/assign/assign.component";
 import {ImportxlsComponent} from "./importxls/importxls.component";
 import {MessageService} from "primeng/api";
+import {stringify} from "uuid";
+import {ViewedIssue} from "../../domain/classes/viewed-issue";
 
 @Component({
   selector: 'app-home',
@@ -25,6 +27,7 @@ export class HomeComponent implements OnInit {
   selectedCols: string[] = [];
   colHeaders: string[] = [];
   filled = false;
+  viewedIssues: ViewedIssue[] = [];
   constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
   // @ts-ignore
   @ViewChild('dt') dt: Table;
@@ -36,6 +39,10 @@ export class HomeComponent implements OnInit {
       if (taskId != ''){
         this.viewTask(taskId);
       }
+    });
+    this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
+      console.log(res);
+      this.viewedIssues = res;
     });
   }
   setCols(){
@@ -74,7 +81,6 @@ export class HomeComponent implements OnInit {
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
       //this.setCols();
-      console.log(this.cols);
       this.filled = true;
     });
     if (this.dt != null){
@@ -94,6 +100,7 @@ export class HomeComponent implements OnInit {
     });
   }
   viewTask(id: string) {
+    this.setIssueViewed(id);
     this.issueManager.getIssueDetails(id, this.auth.getUser().login).then(res => {
       console.log(res);
       this.dialogService.open(TaskComponent, {
@@ -194,26 +201,12 @@ export class HomeComponent implements OnInit {
       return issueElement;
     }
   }
-  saveFilters() {
-    console.log(this.filters);
-    localStorage.setItem('filters', JSON.stringify(this.filters));
-  }
-
-  onStateRestore(event: any) {
-    console.log('load: ');
-    console.log(event);
-  }
-  onStateSave(event: any) {
-    console.log('save: ');
-    console.log(event);
-  }
 
   saveSelectedCols() {
     this.dt.clearState();
     this.dt.restoreState();
     localStorage.setItem('selectedCols', JSON.stringify(this.selectedCols));
     this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
-    console.log(this.dt.columnWidthsState);
   }
   importXls(){
     this.dialogService.open(ImportxlsComponent, {
@@ -232,5 +225,21 @@ export class HomeComponent implements OnInit {
     else {
       return input.substr(0, length) + '...';
     }
+  }
+
+  isTaskNew(id: string) {
+    return this.viewedIssues.find(x => x.issue == id) == null;
+  }
+
+  isTaskUpdated(id: string, update: string) {
+    return !this.isTaskNew(id) && this.viewedIssues.find(x => x.issue == id && +update <= x.date) == null;
+  }
+
+  setIssueViewed(id: string){
+    this.issueManager.setIssueViewed(id, this.auth.getUser().login).then(res => {
+      this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
+        this.viewedIssues = res;
+      });
+    });
   }
 }
