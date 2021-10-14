@@ -279,8 +279,8 @@
 <!--          </div>-->
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">Дата начала</div>
-            <div [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task w-45">{{getDateNoTime(issue.startDate)}}</div>
-            <p-calendar [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background w-100 h-32"></p-calendar>
+            <div [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-200">{{getDateNoTime(issue.startDate)}}</div>
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background w-100 h-32"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'startDate'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
                 <img class="cursor-pointer" src="assets/icons/error.svg">
@@ -293,7 +293,7 @@
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">Срок исполнения</div>
             <div [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task w-45">{{getDateNoTime(issue.dueDate)}}</div>
-            <p-calendar [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background w-100 h-32"></p-calendar>
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background w-100 h-32"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'dueDate'" (click)="cancelIssueEdit()" class="px-5 pt-8" pTooltip="Отменить">
                 <img class="cursor-pointer" src="assets/icons/error.svg">

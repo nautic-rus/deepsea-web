@@ -179,7 +179,7 @@
       </div>
       <div>
         <div class="big-text mb-1 mt-1">Срок завершения</div>
-        <p-calendar [minDate]="today" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
       </div>
     </div>
     <div class="big-text mb-1 mt-1">Описание задачи</div>

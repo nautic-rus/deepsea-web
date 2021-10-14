@@ -11,6 +11,7 @@ import Quill from "quill";
 import Delta from "quill-delta";
 import {User} from "../../domain/classes/user";
 import {LanguageService} from "../../domain/language.service";
+import {PrimeNGConfig} from "primeng/api";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -21,6 +22,7 @@ Quill.register('modules/imageResize', ImageResize);
   styleUrls: ['./create-task.component.css'],
 })
 export class CreateTaskComponent implements OnInit {
+  issue: Issue = new Issue();
   taskSummary = '';
   taskDetails = '';
   taskDocNumber = '';
@@ -110,8 +112,14 @@ export class CreateTaskComponent implements OnInit {
         }
       }
     }
-  constructor(public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
+  constructor(private config: PrimeNGConfig, public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
+    this.issue = this.conf.data as Issue;
+    this.config.setTranslation({
+      dayNamesMin: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
+      weekHeader: "№",
+      monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+    });
     //this.users = this.auth.users;
     this.users = this.getUsers();
     this.issues.getIssueTypes().then(types => {
