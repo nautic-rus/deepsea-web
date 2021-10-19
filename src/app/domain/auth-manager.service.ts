@@ -46,6 +46,15 @@ export class AuthManagerService {
       return login;
     }
   }
+  getUserTrimName(login: string){
+    let find = this.users.find(x => x.login == login);
+    if (find != null){
+      return find.surname + ' ' + find.name.substr(0,1) + '.';
+    }
+    else{
+      return login;
+    }
+  }
   getUserAvatar(login: string){
     let find = this.users.find(x => x.login == login);
     if (find != null){

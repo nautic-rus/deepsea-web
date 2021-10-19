@@ -68,12 +68,12 @@
 }
 .day-number-header{
   border-right: 1px solid #f3f2f1;
-  color: #172b4d;
+  color: #333;
   background-color: white;
 }
 .day-number{
   border-right: 1px solid #f3f2f1;
-  color: #172b4d;
+  color: #333;
 }
 .off-day{
   background-color: hsla(220, 11%, 97%, 1);

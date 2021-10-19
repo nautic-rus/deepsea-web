@@ -83,9 +83,15 @@
 /deep/.p-multiselect-header {
   display: none!important;
 }
-.task-new{
-  background-color: rgba(91, 189, 91, 0.38) !important;
+.new-task{
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  background-color: rgba(1, 177, 105, 0.71);
 }
-.task-updated{
-  background-color: rgba(152, 152, 208, 0.46) !important;
+.update-task{
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  background-color: #af79c4;
 }

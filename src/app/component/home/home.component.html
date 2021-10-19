@@ -37,12 +37,13 @@
       </ng-template>
       <ng-template pTemplate="colgroup">
         <colgroup>
+          <col style="width: 30px"/>
           <col style="width:200px" *ngFor="let col of cols" [hidden]="col.hidden">
         </colgroup>
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th>header</th>
+          <th></th>
           <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
             <div class="header">
               {{col.header}}
@@ -58,8 +59,11 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-columns="columns" let-issue>
-        <tr [class.task-new]="isTaskNew(issue.id)" [class.task-updated]="isTaskUpdated(issue.id, issue.lastUpdate)" class="task-row" (click)="viewTask(issue.id)">
-          <td>test</td>
+        <tr class="task-row" (click)="viewTask(issue.id)">
+          <td class="cursor-pointer">
+            <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.lastUpdate)"></div>
+            <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
+          </td>
           <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
             <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field) | safeHtml"></div></div>
             <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>

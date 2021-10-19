@@ -571,4 +571,13 @@ export class TaskComponent implements OnInit {
     navigator.clipboard.writeText(location.origin + '?taskId=' + this.issue.id);
     this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
   }
+
+  trim(input: string, length: number = 55): string{
+    if (input.length <= length){
+      return input;
+    }
+    else {
+      return input.substr(0, length) + '...';
+    }
+  }
 }

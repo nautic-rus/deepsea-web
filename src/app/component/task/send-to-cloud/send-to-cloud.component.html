@@ -1,4 +1,4 @@
-<div style="height: 350px; width: 400px;">
+<div style="height: 330px; width: 400px;">
   <div class="task-header-assign">
     <div class="task-name">{{lang.tr('Отправить файлы')}}</div>
     <div class="task-button cxy" (click)="close()">
@@ -25,11 +25,11 @@
     </div>
     <div class="big-text mb-1 df">
       <div class="w-45 mr-2">
-        <p-dropdown appendTo = "body" [(ngModel)]="revNumber" [options]="revNumbers" styleClass="w-100 h-32">
+        <p-dropdown appendTo = "body" [(ngModel)]="revNumber" [options]="revNumbers" styleClass="w-100 h-32 cxy">
         </p-dropdown>
       </div>
       <div class="w-45">
-        <p-dropdown appendTo = "body" [(ngModel)]="revLetter" [options]="revLetters" styleClass="w-100 h-32">
+        <p-dropdown appendTo = "body" [(ngModel)]="revLetter" [options]="revLetters" styleClass="w-100 h-32 cxy">
         </p-dropdown>
       </div>
     </div>
