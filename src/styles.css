@@ -339,4 +339,17 @@ cdk-virtual-scroll-viewport{
 /deep/.ql-snow .ql-editor img {
   max-width: 400px!important;
 }
-
+.wh100{
+  height: 100%;
+  width: 100%;
+}
+.fw{
+  flex-wrap: wrap;
+}
+.ovf{
+  overflow-y: scroll;
+}
+.my-1{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

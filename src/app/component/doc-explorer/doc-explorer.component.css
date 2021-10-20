@@ -1,0 +1,16 @@
+.list-and-details{
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+}
+.issue-details{
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+}
+.issue-list-control{
+  top: 0;
+  position: sticky;
+  background-color: rgb(231, 228, 228);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 50px;
+}
