@@ -29,7 +29,7 @@
               </div>
             </div>
           </div>
-          <div class="issue-messages pl-10 w-100 ovf-auto">
+          <div class="issue-messages pl-10 pr-10 w-100 ovf-auto">
             <div *ngIf="selectedIssue.docNumber == ''" class="pt-100">
               <div class="confirm-text-issues">Select issue to view its history and messages</div>
               <div class="cx">
@@ -42,7 +42,7 @@
                 <div class="df">
                   <div class="description-issues mt-5 mr-1">Show:</div>
                   <div [class.check-button-issues]="messageFilter == 'all'" class="button-new-issues mr-10 ml-10" (click)="messageFilter = 'all'">
-                    <span>ALL</span>
+                    <span>All</span>
                   </div>
                   <div [class.check-button-issues]="messageFilter == 'human'" class="button-new-issues mr-10" (click)="messageFilter = 'human'">
                     <span>Messages</span>
@@ -51,7 +51,10 @@
                     <span>History</span>
                   </div>
                 </div>
-                <div [hidden]="!comment" class="pt-10 comment-issues">
+                <div class="big-text pb-10 pt-10">
+                  <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" class="border" pInputText placeholder="Post your message here..."  />
+                </div>
+                <div [hidden]="!comment" class="pb-10 comment-issues">
                   <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
                     <div quill-editor-toolbar>
                       <p-header>
@@ -109,9 +112,7 @@
                 </div>
               </div>
 
-              <div class="mt-1 big-text pb-20">
-                <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText placeholder="Post your message here..." />
-              </div>
+
               <div class="issue-message w-100" *ngFor="let msg of getMessages(selectedIssue)">
                 <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
                   <div class="df pb-20">
@@ -153,11 +154,11 @@
                 <span class="bold-text-issues">{{issueManager.localeHistoryEn(varMap.name)}}</span>
                 <span class="text-date-issues pl-5">{{getDate(msg.date)}} </span>
               <div class="df pt-5">
-                <div class="" [innerHTML]="issueManager.localeStatus(getPrevValue(selectedIssue.messages, varMap.name, msg.date)) | safeHtml"></div>
+                <div class="" [innerHTML]="issueManager.localeStatusEn(getPrevValue(selectedIssue.messages, varMap.name, msg.date)) | safeHtml"></div>
                 <span class="px-10">
                   <img src="assets/icons/right-arrow.svg" height="13">
                 </span>
-                <div [innerHTML]="issueManager.localeStatus(varMap.value) | safeHtml"></div>
+                <div [innerHTML]="issueManager.localeStatusEn(varMap.value) | safeHtml"></div>
               </div>
               </div>
             </div>
