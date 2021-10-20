@@ -30,6 +30,17 @@
   font-weight: 600;
   background-color: white;
 }
+.activity-issues{
+  top: 0;
+  position: sticky;
+  background-color: white;
+  z-index: 10;
+  padding-bottom: 20px;
+}
+.comment-issues{
+  background-color: white;
+  z-index: 10;
+}
 .issue-list-item:hover{
   background-color: hsla(220, 11%, 97%, 1);
 }
@@ -61,4 +72,128 @@
   text-align: center;
   text-transform: none;
   word-wrap: break-word;
+}
+.bold-text-issues{
+  font-size: 0.9em;
+  font-style: inherit;
+  font-weight: 500;
+  letter-spacing: -0.003em;
+  color: rgb(23, 43, 77);
+}
+.text-descr-issues{
+  color: rgb(23, 43, 77);
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+.text-date-issues{
+  color: rgba(66, 82, 110, 0.82);
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+.attachments-issues{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+.attachment-issues{
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  width: 135px;
+  height: 120px;
+  transition: all 0.3s ease 0s;
+  position: relative;
+  font-size: 11px;
+}
+.attachment-issues:hover{
+  background-color: #dcdcdc;
+}
+.attachment-center{
+  height: calc(100% - 36px);
+}
+.attachment-footer{
+  background-color: rgba(255, 255, 255, 0.8);
+  height: 36px;
+  padding: 4px 8px;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.big-text-issues{
+  font-size: 0.9em;
+  font-style: inherit;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  line-height: 24px;
+  color: rgb(23, 43, 77);
+  overflow-wrap: break-word;
+  min-width: 0px;
+}
+.description-issues{
+  font-size: 14px;
+  line-height: 1.714;
+  font-weight: normal;
+  letter-spacing: -0.005em;
+  color: rgb(23, 43, 77);
+  border-radius: 3px;
+  height: auto;
+  transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+}
+.button-new-issues{
+  background-color: rgba(9, 30, 66, 0.04);
+  font-size: 0.9em;
+  border-radius: 3px;
+  font-weight: 500;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  padding: 2px 6px;
+  color: rgb(66, 82, 110) !important;
+  transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+  display: flex;
+  align-items: center;
+}
+.button-new-issues:hover {
+  background-color: rgb(235, 236, 240);
+}
+.check-button-issues{
+  background: rgb(80, 95, 121);
+  color: rgb(244, 245, 247) !important
+}
+.check-button-issues:hover{
+  background: rgb(80, 95, 121);
+  color: rgb(244, 245, 247) !important
+}
+.button{
+  border: none;
+  margin-right: 4px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 3px 6px;
+  color: #fff;
+  background: #00b7c3;
+  transition: background .1s;
+  font-size: 0.9rem;
+}
+.button:hover{
+  background-color: #17a2b8;
+}
+.button-cancel{
+  border: none;
+  margin-right: 4px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 3px 6px;
+  color: #17a2b8;
+  background: #fff;
+  transition: background .1s;
+  font-size: 0.9rem;
+}
+.button-cancel:hover{
+  background-color: rgb(235, 236, 240);
 }

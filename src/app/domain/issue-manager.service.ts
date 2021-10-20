@@ -126,6 +126,12 @@ export class IssueManagerService {
       default: return input;
     }
   }
+  localeHistoryEn(input: string){
+    switch (input) {
+      case '_taskStatus': return 'status';
+      default: return input;
+    }
+  }
   localeTaskType(input: string){
     switch (input) {
       case 'it-task': return 'IT';

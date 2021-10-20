@@ -29,83 +29,86 @@
               </div>
             </div>
           </div>
-          <div class="issue-messages pl-10 w-100 ovf-auto cxy">
-            <div *ngIf="selectedIssue.docNumber == ''">
+          <div class="issue-messages pl-10 w-100 ovf-auto">
+            <div *ngIf="selectedIssue.docNumber == ''" class="pt-100">
               <div class="confirm-text-issues">Select issue to view its history and messages</div>
               <div class="cx">
                 <img src="assets/icons/chat.png">
               </div>
             </div>
             <div class="w-100" *ngIf="selectedIssue.docNumber != ''">
-              <div class="big-text mb-1 mt-40">Activity</div>
-              <div class="df">
-                <div class="description mt-5">Show:</div>
-                <div [class.check-button]="messageFilter == 'all'" class="button-new mr-10 ml-10" (click)="messageFilter = 'all'">
-                  <span>ALL</span>
+              <div class="activity-issues">
+                <div class="big-text-issues mb-1">Activity</div>
+                <div class="df">
+                  <div class="description-issues mt-5 mr-1">Show:</div>
+                  <div [class.check-button-issues]="messageFilter == 'all'" class="button-new-issues mr-10 ml-10" (click)="messageFilter = 'all'">
+                    <span>ALL</span>
+                  </div>
+                  <div [class.check-button-issues]="messageFilter == 'human'" class="button-new-issues mr-10" (click)="messageFilter = 'human'">
+                    <span>Messages</span>
+                  </div>
+                  <div [class.check-button-issues]="messageFilter == 'camunda'" class="button-new-issues" (click)="messageFilter = 'camunda'">
+                    <span>History</span>
+                  </div>
                 </div>
-                <div [class.check-button]="messageFilter == 'human'" class="button-new mr-10" (click)="messageFilter = 'human'">
-                  <span>Messages</span>
-                </div>
-                <div [class.check-button]="messageFilter == 'camunda'" class="button-new" (click)="messageFilter = 'camunda'">
-                  <span>History</span>
+                <div [hidden]="!comment" class="pt-10 comment-issues">
+                  <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
+                    <div quill-editor-toolbar>
+                      <p-header>
+                      <span class="ql-formats">
+                        <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+                        <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+                        <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+                      </span>
+                        <span class="ql-formats">
+                        <select class="ql-color" tabindex="-1"></select>
+                        <select class="ql-background" tabindex="-1"></select>
+                      </span>
+                        <span class="ql-formats">
+                        <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+                        <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+                        <select class="ql-align" tabindex="-1">
+                          <option selected tabindex="-1"></option>
+                          <option value="center" tabindex="-1"></option>
+                          <option value="right" tabindex="-1"></option>
+                          <option value="justify" tabindex="-1"></option>
+                        </select>
+                      </span>
+                        <span class="ql-formats">
+                        <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+                        <button (click)="selectImage.click()">
+                          <i class="pi pi-image"></i>
+                        </button>
+                        <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+                        <button (click)="selectFiles.click()">
+                          <i class="pi pi-file"></i>
+                        </button>
+                        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+                        <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+                      </span>
+                        <span class="ql-formats">
+                        <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+                      </span>
+                      </p-header>
+                    </div>
+                  </quill-editor>
+                  <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+                    <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+                    <div class="cy">{{file}}</div>
+                    <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+                    <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+                  </div>
+                  <div class="df mt-5">
+                    <div class="mr-5">
+                      <div (click)="sendMessage()" pButton label="Сохранить" class="button"></div>
+                    </div>
+                    <div>
+                      <div (click)="comment = false" pButton label="Отменить" class="button-cancel"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div [hidden]="!comment">
-                <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
-                  <div quill-editor-toolbar>
-                    <p-header>
-            <span class="ql-formats">
-              <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
-              <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
-              <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
-            </span>
-                      <span class="ql-formats">
-              <select class="ql-color" tabindex="-1"></select>
-              <select class="ql-background" tabindex="-1"></select>
-            </span>
-                      <span class="ql-formats">
-              <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
-              <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
-              <select class="ql-align" tabindex="-1">
-                <option selected tabindex="-1"></option>
-                <option value="center" tabindex="-1"></option>
-                <option value="right" tabindex="-1"></option>
-                <option value="justify" tabindex="-1"></option>
-              </select>
-            </span>
-                      <span class="ql-formats">
-              <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
-              <button (click)="selectImage.click()">
-                <i class="pi pi-image"></i>
-              </button>
-              <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
-              <button (click)="selectFiles.click()">
-                <i class="pi pi-file"></i>
-              </button>
-              <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
-              <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
-            </span>
-                      <span class="ql-formats">
-              <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
-            </span>
-                    </p-header>
-                  </div>
-                </quill-editor>
-                <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
-                  <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
-                  <div class="cy">{{file}}</div>
-                  <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
-                  <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
-                </div>
-                <div class="df mt-5">
-                  <div class="mr-5 pb-20">
-                    <div (click)="sendMessage()" pButton label="Сохранить" class="button"></div>
-                  </div>
-                  <div>
-                    <div (click)="comment = false" pButton label="Отменить" class="button-cancel"></div>
-                  </div>
-                </div>
-              </div>
+
               <div class="mt-1 big-text pb-20">
                 <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText placeholder="Post your message here..." />
               </div>
@@ -117,13 +120,13 @@
                     </div>
                     <div>
                       <div class="">
-                        <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
-                        <span class="text-descr"> posted message </span>
-                        <span class="text-date"> {{getDate(msg.date)}} </span>
+                        <span class="bold-text-issues">{{auth.getUserName(msg.author)}}</span>
+                        <span class="text-descr-issues"> posted message </span>
+                        <span class="text-date-issues"> {{getDate(msg.date)}} </span>
                         <quill-view [content]="msg.content"></quill-view>
-                        <div class="attachments">
+                        <div class="attachments-issues">
                           <div *ngFor="let file of msg.fileAttachments">
-                            <div (click)="openFile(file.url)" class="attachment">
+                            <div (click)="openFile(file.url)" class="attachment-issues">
                               <div class="cxy attachment-center">
                                 <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
                               </div>
@@ -145,10 +148,10 @@
                 <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
               </div>
               <div>
-                <span class="bold-text">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr px-5">changed</span>
-                <span class="bold-text">{{issueManager.localeHistory(varMap.name)}}</span>
-                <span class="text-date pl-5">{{getDate(msg.date)}} </span>
+                <span class="bold-text-issues">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr-issues px-5"> changed </span>
+                <span class="bold-text-issues">{{issueManager.localeHistoryEn(varMap.name)}}</span>
+                <span class="text-date-issues pl-5">{{getDate(msg.date)}} </span>
               <div class="df pt-5">
                 <div class="" [innerHTML]="issueManager.localeStatus(getPrevValue(selectedIssue.messages, varMap.name, msg.date)) | safeHtml"></div>
                 <span class="px-10">
@@ -167,9 +170,9 @@
                     <img src="{{auth.getUserAvatar(selectedIssue.startedBy)}}" height="32" width="32" style="border-radius: 16px">
                   </div>
                   <div class="">
-                    <span class="bold-text">{{auth.getUserName(selectedIssue.startedBy)}}</span>
-                    <span class="text-descr"> created issue </span>
-                    <span class="text-date"> {{getDate(selectedIssue.startedDate)}} </span>
+                    <span class="bold-text-issues">{{auth.getUserName(selectedIssue.startedBy)}}</span>
+                    <span class="text-descr-issues"> created issue </span>
+                    <span class="text-date-issues"> {{getDate(selectedIssue.startedDate)}} </span>
                   </div>
                 </div>
               </div>
