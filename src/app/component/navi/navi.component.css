@@ -8,7 +8,7 @@
   background-color: #0E364A;
   z-index: 9;
   display: grid;
-  grid-template-columns: 1fr 7fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 1fr 15fr 0.5fr 0.5fr 0.5fr;
 }
 .left-panel{
   position: absolute;

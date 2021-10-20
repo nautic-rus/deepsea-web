@@ -212,7 +212,7 @@
               <div>
                 <div class="">
                   <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
-                  <span class="text-descr"> создал{{localeGender(auth.getUser().gender)}} сообщение </span>
+                  <span class="text-descr"> создал{{localeGender(msg.author)}} сообщение </span>
                   <span class="text-date"> {{getDate(msg.date)}} </span>
                   <quill-view [content]="msg.content"></quill-view>
                   <div class="attachments">
@@ -240,7 +240,7 @@
               </div>
               <div>
                 <span class="bold-text">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr px-5">изменил{{localeGender(auth.getUser().gender)}}</span>
+                <span class="text-descr px-5">изменил{{localeGender(msg.author)}}</span>
                 <span class="bold-text">{{issueManager.localeHistory(varMap.name)}}</span>
                 <span class="text-date pl-5">{{getDate(msg.date)}} </span>
               <div class="df pt-5">
@@ -262,7 +262,7 @@
             </div>
             <div class="">
               <span class="bold-text">{{auth.getUserName(issue.startedBy)}}</span>
-              <span class="text-descr"> создал{{localeGender(auth.getUser().gender)}} задачу</span>
+              <span class="text-descr"> создал{{localeGender(issue.startedBy)}} задачу</span>
               <span class="text-date"> {{getDate(issue.startedDate)}} </span>
             </div>
           </div>
