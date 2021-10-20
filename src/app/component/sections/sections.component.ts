@@ -13,6 +13,8 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 })
 export class SectionsComponent implements OnInit {
   issues: Issue[] = [];
+  projects: string[] = ['NR-002', 'NR-004'];
+  project = this.projects[1];
 
   constructor(private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
 

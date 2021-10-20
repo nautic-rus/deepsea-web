@@ -1,5 +1,5 @@
 .dialog{
-  width: 630px;
+  width: 595px;
   height: 520px;
 }
 .double-row{
@@ -28,6 +28,7 @@
   justify-content: flex-end;
   align-items: center;
   margin-top: 10px;
+  position: relative;
 }
 .button{
   border: none;

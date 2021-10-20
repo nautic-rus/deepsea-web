@@ -1,6 +1,6 @@
 <div class="all-page">
   <div class="card">
-    <p-table [value]="materials" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
+    <p-table [rowHover]="true" [value]="materials" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped cursor-pointer" responsiveLayout="scroll">
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-1">
@@ -8,7 +8,11 @@
             </p-dropdown>
           </div>
           <div class="mr-1">
-            <p-multiSelect [options]="categories" placeholder="ВЕДОМОСТЬ" styleClass="width-250 border" [maxSelectedLabels]="0" selectedItemsLabel="{0} выбрано" [(ngModel)]="selectedCategories"></p-multiSelect>
+            <p-dropdown placeholder="Тип материалов" class="select" [(ngModel)]="typeMaterial" [options]="typesMaterial" styleClass="width-180 border">
+            </p-dropdown>
+          </div>
+          <div class="mr-1">
+            <p-multiSelect [options]="categories" placeholder="ВЕДОМОСТЬ" styleClass="width-250 border" [maxSelectedLabels]="0" selectedItemsLabel="Ведомости ({0} выбрано)" [(ngModel)]="selectedCategories"></p-multiSelect>
             <!--        <p-dropdown placeholder="ВЕДОМОСТЬ" class="select" [(ngModel)]="category" [options]="categories" styleClass="width-220">-->
             <!--        </p-dropdown>-->
           </div>
@@ -38,16 +42,18 @@
             </div>
           </div>
           <div class="p-ml-auto">
-        <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input #search pInputText type="text" placeholder="Поиск..." class="border" />
-      </span>
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input #search pInputText type="text" placeholder="Поиск..." class="border" />
+            </span>
           </div>
-
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th class="w-3">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
           <th class="w-5">Проект</th>
           <th class="w-20">Наименование</th>
           <th class="w-11">Обозначение</th>
@@ -63,16 +69,19 @@
       </ng-template>
       <ng-template pTemplate="body" let-material>
         <tr>
+          <td class="w-3">
+            <p-tableCheckbox [value]="material"></p-tableCheckbox>
+          </td>
           <td class="w-5 text-14">{{material.project}}</td>
-          <td class="w-20 text-14">{{material.name}}</td>
-          <td class="w-11 text-14">{{material.description}}</td>
+          <td class="w-19 text-14">{{material.name}}</td>
+          <td class="w-10 text-14">{{material.description}}</td>
           <td class="w-6 text-14">{{material.category}}</td>
           <td class="w-6 text-14">{{0}}</td>
           <td class="w-6 text-14">{{material.singleWeight}}</td>
           <td class="w-6 text-14">{{material.units}}</td>
           <td class="w-10 text-14">{{material.document}}</td>
           <td class="w-10 text-14">{{material.provider}}</td>
-          <td class="w-10 text-14">{{material.note}}</td>
+          <td class="w-9 text-14">{{material.note}}</td>
           <td class="w-10 text-14">{{material.trmCode}}</td>
         </tr>
       </ng-template>
