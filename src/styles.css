@@ -382,6 +382,9 @@ cdk-virtual-scroll-viewport{
 .ovf{
   overflow-y: scroll;
 }
+.ovf-auto{
+  overflow-y: auto;
+}
 .my-1{
   margin-top: 10px;
   margin-bottom: 10px;

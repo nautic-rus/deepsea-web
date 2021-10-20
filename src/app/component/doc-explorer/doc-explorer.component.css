@@ -1,16 +1,64 @@
+.card{
+  background: var(--surface-e);
+  box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 4px;
+  height: calc(100vh - 116px);
+  position: relative;
+  padding: 20px;
+  color: #323130;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
 .list-and-details{
   display: grid;
   grid-template-columns: 2fr 3fr;
 }
 .issue-details{
+  height: 100%;
   display: grid;
-  grid-template-rows: 1fr 5fr;
+  grid-template-rows: 2fr 3fr;
 }
 .issue-list-control{
   top: 0;
   position: sticky;
-  background-color: rgb(231, 228, 228);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 50px;
+  height: 65px;
+  color: #323130;
+  border: 1px solid #f3f2f1;
+  border-width: 1px 0 1px 0;
+  padding: 0.75rem 0 0.75rem;
+  font-weight: 600;
+  background-color: white;
+}
+.issue-list-item:hover{
+  background-color: hsla(220, 11%, 97%, 1);
+}
+.issue-list-control-header{
+  font-size: 24px;
+  font-weight: 500;
+}
+.issues{
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  font-size: 14px;
+  color: #323130;
+  border-bottom: 1px solid #f3f2f1;
+  border-right: 1px solid #f3f2f1;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.issue-messages{
+
+}
+.confirm-text-issues{
+  position: relative;
+  max-width: 100%;
+  margin: 0 0 .4em;
+  padding: 0;
+  color: #595959;
+  font-size: 1.375em;
+  font-weight: 600;
+  text-align: center;
+  text-transform: none;
+  word-wrap: break-word;
 }
