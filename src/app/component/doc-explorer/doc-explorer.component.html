@@ -25,29 +25,27 @@
           </div>
         </div>
         <div class="cy">
-          <div class="issues-pic-end">
-            <div *ngIf="selectedIssue.docNumber == ''" class="">
-              <div class="confirm-text-issues">Select issue to view its files</div>
-              <div class="cx">
-                <img src="assets/icons/message.png">
-              </div>
-            </div>
-          </div>
-          <div class="issues-two-pic-end">
-            <div *ngIf="selectedIssue.docNumber == ''" class="pt-100">
-              <div class="confirm-text-issues">Select issue to view its history and messages</div>
-              <div class="cx">
-                <img src="assets/icons/chat.png">
-              </div>
-            </div>
-          </div>
+<!--          <div class="issues-pic-end">-->
+<!--            <div *ngIf="selectedIssue.docNumber == ''" class="">-->
+<!--              <div class="confirm-text-issues">Select issue to view its files</div>-->
+<!--              <div class="cx">-->
+<!--                <img src="assets/icons/message.png">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="issues-two-pic-end">-->
+<!--            <div *ngIf="selectedIssue.docNumber == ''" class="pt-100">-->
+<!--              <div class="confirm-text-issues">Select issue to view its history and messages</div>-->
+<!--              <div class="cx">-->
+<!--                <img src="assets/icons/chat.png">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
         <div class="issue-details ovf-auto">
           <div class="issue-files cxy">
-
           </div>
           <div class="pl-10 w-100 ovf-auto">
-
             <div class="w-100" *ngIf="selectedIssue.docNumber != ''">
               <div class="activity-issues">
                 <div class="big-text-issues mb-1">Activity</div>
@@ -191,6 +189,28 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="pictures" *ngIf="selectedIssue.docNumber == ''">
+          <div class="pt-15per confirm-text-issues">Select issue to view its materials, files, history and messages</div>
+          <div class="row-pic">
+            <div class="picture-end">
+              <img src="assets/icons/message.png">
+            </div>
+            <div></div>
+            <div></div>
+            <div>
+              <img src="assets/icons/chat.png">
+            </div>
+            <div></div>
+            <div class="cxy">
+              <img src="assets/icons/materials-issue.png">
+            </div>
+            <div class="cxy">
+              <img src="assets/icons/history.png">
+            </div>
+            <div></div>
+          </div>
+          <div></div>
         </div>
       </div>
     </div>
