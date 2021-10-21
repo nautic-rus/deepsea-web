@@ -12,6 +12,7 @@
   display: grid;
   grid-template-columns: 1fr 4fr 2fr;
   grid-template-rows: 65px 1fr;
+  position: relative;
 }
 .issue-details{
   height: 100%;
@@ -65,11 +66,12 @@
   margin: 0 0 .4em;
   padding: 0;
   color: #595959;
-  font-size: 1.375em;
+  font-size: 1.215em;
   font-weight: 600;
   text-align: center;
   text-transform: none;
   word-wrap: break-word;
+  text-transform: uppercase;
 }
 .bold-text-issues{
   font-size: 0.9em;
@@ -213,4 +215,27 @@
   display: flex;
   justify-content: flex-end;
   margin-right: 10%;
+}
+.pictures{
+  position: absolute;
+  width: 85%;
+  height: 100%;
+  margin-left: 15%;
+  flex-direction: column;
+}
+.pt-15per{
+  padding-top: 15%;
+}
+.one-row-picture{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.row-pic{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 2fr;
+}
+.picture-end{
+  display: flex;
+  justify-content: flex-end;
 }
