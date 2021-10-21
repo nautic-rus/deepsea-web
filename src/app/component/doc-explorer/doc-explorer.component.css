@@ -10,12 +10,13 @@
 }
 .list-and-details{
   display: grid;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-rows: 65px 1fr;
 }
 .issue-details{
   height: 100%;
   display: grid;
-  grid-template-rows: 2fr 3fr;
+  grid-template-rows: 1.5fr 4fr;
 }
 .issue-list-control{
   top: 0;
@@ -196,4 +197,13 @@
 }
 .button-cancel:hover{
   background-color: rgb(235, 236, 240);
+}
+.issues-header{
+  height: 65px;
+  color: #323130;
+  border: 1px solid #f3f2f1;
+  border-width: 1px 0 1px 0;
+  padding: 0.75rem 0 0.75rem;
+  font-weight: 600;
+  display: flex;
 }

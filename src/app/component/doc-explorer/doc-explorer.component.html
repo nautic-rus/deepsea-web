@@ -2,26 +2,30 @@
   <div class="card">
     <div class="wh100">
       <div class="list-and-details h100">
-        <div class="issue-list cxy fw ovf">
-          <div class="issue-list-control w-100">
-            <div class="issue-list-control-header cy pl-10">List of Issues</div>
-            <div class="issue-list-control-project cxy">
-              <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
-              </p-dropdown>
-            </div>
-            <div class="issue-list-search cxy">
-              <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input #search pInputText type="text" placeholder="Search..." class="border width-180" />
-            </span>
-            </div>
+        <div class="issues-header">
+          <div class="issue-list-control-header pl-10">List of Issues</div>
+          <div class="cxy ml-30">
+            <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+            </p-dropdown>
           </div>
+          <div></div>
+        </div>
+        <div class="issues-header"></div>
+        <div class="issues-header">
+          <div class="p-ml-auto">
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input #search pInputText type="text" placeholder="Search..." class="border width-200" />
+              </span>
+          </div>
+        </div>
+        <div class="issue-list cxy fw ovf">
           <div class="issue-list-item w-100" *ngFor="let issue of issues">
             <div class="issues cursor-pointer" (click)="selectIssue(issue)">{{issue.docNumber}} {{issue.name}}</div>
           </div>
         </div>
-        <div class="issue-details ovf-auto">
-          <div class="issue-files cxy">
+        <div class="cy">
+          <div class="cxy ">
             <div *ngIf="selectedIssue.docNumber == ''">
               <div class="confirm-text-issues">Select issue to view its files</div>
               <div class="cx">
@@ -29,13 +33,21 @@
               </div>
             </div>
           </div>
-          <div class="issue-messages pl-10 pr-10 w-100 ovf-auto">
+          <div>
             <div *ngIf="selectedIssue.docNumber == ''" class="pt-100">
               <div class="confirm-text-issues">Select issue to view its history and messages</div>
               <div class="cx">
                 <img src="assets/icons/chat.png">
               </div>
             </div>
+          </div>
+        </div>
+        <div class="issue-details ovf-auto">
+          <div class="issue-files cxy">
+
+          </div>
+          <div class="pl-10 pr-10 w-100 ovf-auto">
+
             <div class="w-100" *ngIf="selectedIssue.docNumber != ''">
               <div class="activity-issues">
                 <div class="big-text-issues mb-1">Activity</div>
