@@ -4,13 +4,13 @@
       <div class="list-and-details h100">
         <div class="issues-header">
           <div class="issue-list-control-header pl-10">List of Issues</div>
+        </div>
+        <div class="issues-header">
           <div class="cxy ml-30">
             <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
             </p-dropdown>
           </div>
-          <div></div>
         </div>
-        <div class="issues-header"></div>
         <div class="issues-header">
           <div class="p-ml-auto">
               <span class="p-input-icon-left">
@@ -25,15 +25,15 @@
           </div>
         </div>
         <div class="cy">
-          <div class="cxy ">
-            <div *ngIf="selectedIssue.docNumber == ''">
+          <div class="issues-pic-end">
+            <div *ngIf="selectedIssue.docNumber == ''" class="">
               <div class="confirm-text-issues">Select issue to view its files</div>
               <div class="cx">
                 <img src="assets/icons/message.png">
               </div>
             </div>
           </div>
-          <div>
+          <div class="issues-two-pic-end">
             <div *ngIf="selectedIssue.docNumber == ''" class="pt-100">
               <div class="confirm-text-issues">Select issue to view its history and messages</div>
               <div class="cx">
@@ -46,7 +46,7 @@
           <div class="issue-files cxy">
 
           </div>
-          <div class="pl-10 pr-10 w-100 ovf-auto">
+          <div class="pl-10 w-100 ovf-auto">
 
             <div class="w-100" *ngIf="selectedIssue.docNumber != ''">
               <div class="activity-issues">

@@ -10,7 +10,7 @@
 }
 .list-and-details{
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-columns: 1fr 4fr 2fr;
   grid-template-rows: 65px 1fr;
 }
 .issue-details{
@@ -58,9 +58,6 @@
   display: flex;
   align-items: center;
   padding: 10px;
-}
-.issue-messages{
-
 }
 .confirm-text-issues{
   position: relative;
@@ -206,4 +203,14 @@
   padding: 0.75rem 0 0.75rem;
   font-weight: 600;
   display: flex;
+}
+.issues-pic-end{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20%;
+}
+.issues-two-pic-end{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10%;
 }
