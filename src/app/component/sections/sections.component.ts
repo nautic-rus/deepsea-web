@@ -38,13 +38,13 @@ export class SectionsComponent implements OnInit {
       case 'Check': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       case 'In Rework': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       case 'Paused': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Archive': return {'background-color': '#e7ecca', border: '1px solid #606a26', color: '#606a26'};
+      case 'Archive': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
       case 'Not resolved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Closed': return {'background-color': '#e7ecca', border: '1px solid #606a26', color: '#606a26'};
-      case 'Send to Approval': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
+      case 'Closed': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
+      case 'Send to Approval': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
       case 'Approved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       case 'Not approved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Ready to send': return {'background-color': '#e7ecca', border: '1px solid #606a26', color: '#606a26'};
+      case 'Ready to send': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
       case 'On reApproval': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       default: {
       }

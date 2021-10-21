@@ -2,7 +2,8 @@
   background: var(--surface-e);
   box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
   border-radius: 4px;
-  height: calc(100vh - 116px);
+  width: 1794px;
+  height: 850px;
   position: relative;
 }
 .project-number{
@@ -12,8 +13,8 @@
   left: 20px;
 }
 .picture{
-  width: 100%;
-  height: 100%;
+  width: 1794px;
+  height: 828px;
   position: relative;
 }
 .ship{
@@ -46,8 +47,9 @@
   height: 24px;
   border-radius: 12px;
   background-color: white;
-  border: 1px solid black;
+  border: 1px solid #333;
   cursor: pointer;
+  color: #333;
 }
 .number-right{
   display: flex;
@@ -108,4 +110,41 @@
 .number-bottom{
   display: flex;
   align-items: flex-end;
+}
+.legend{
+  height: 183px;
+  width: 300px;
+  position: absolute;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: repeat(5, 1fr);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  font-size: 14px;
+  color: #333;
+}
+.new-status{
+  background-color: #f7cecd;
+  border: 1px solid #aa1f1c;
+  color: #aa1f1c;
+}
+.in-work-status{
+  background-color: #feeccd;
+  border: 1px solid #d78a16;
+  color: #d78a16;
+}
+.check-status{
+  background-color: #C4E1A8;
+  border: 1px solid #606a26;
+  color: #606a26;
+}
+.sent-status{
+  background-color: #D9E4ED;
+  border: 1px solid #5D8DB6;
+  color: #5D8DB6;
+}
+.close-status{
+  background-color: #D3C7E0;
+  border: 1px solid #815DA8;
+  color: #815DA8;
 }

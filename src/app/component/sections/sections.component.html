@@ -4,6 +4,38 @@
       <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
       </p-dropdown>
     </div>
+    <div class="legend">
+      <div class="cxy">
+        <div class="number-card cxy new-status"></div>
+      </div>
+      <div class="cy">
+        <div>Новый</div>
+      </div>
+      <div class="cxy">
+        <div class="number-card cxy in-work-status"></div>
+      </div>
+      <div class="cy">
+        <div>В работе</div>
+      </div>
+      <div class="cxy">
+        <div class="number-card cxy check-status"></div>
+      </div>
+      <div class="cy">
+        <div>На согласовании</div>
+      </div>
+      <div class="cxy">
+        <div class="number-card cxy sent-status"></div>
+      </div>
+      <div class="cy">
+        <div>Отправлена заказчику</div>
+      </div>
+      <div class="cxy">
+        <div class="number-card cxy close-status"></div>
+      </div>
+      <div class="cy">
+        <div>Поставлена</div>
+      </div>
+    </div>
     <div *ngIf="project == 'NR-002'">
       <div class="picture">
         <div class="ship">
