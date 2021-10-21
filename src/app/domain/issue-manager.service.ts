@@ -36,8 +36,8 @@ export class IssueManagerService {
   async changeResponsible(id: string, user: string){
     return await this.http.get<string[]>(props.http + '/changeResponsible', {params: {id, user}}).toPromise();
   }
-  async sendToApproval(id: string, users: string[], filesToApproval: FileAttachment[], textToApproval: string, taskStatus: string){
-    return await this.http.get<string[]>(props.http + '/sendToApproval', {params: {id, users: JSON.stringify(users), filesToApproval: JSON.stringify(filesToApproval), textToApproval, taskStatus, taskStatusApproval: 'New', taskTypeApproval: 'Approval'}}).toPromise();
+  async sendToApproval(id: string, users: string[], filesToApproval: FileAttachment[], textToApproval: string, taskStatus: string, taskRevision: string){
+    return await this.http.get<string[]>(props.http + '/sendToApproval', {params: {id, users: JSON.stringify(users), filesToApproval: JSON.stringify(filesToApproval), textToApproval, taskStatus, taskStatusApproval: 'New', taskTypeApproval: 'Approval', taskRevision}}).toPromise();
   }
   async getIssueDepartments() {
     return await this.http.get<string[]>(props.http + '/issueDepartments').toPromise();

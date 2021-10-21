@@ -25,14 +25,12 @@
     </div>
     <div class="big-text mb-1 df">
       <div class="w-45 mr-2">
-        <p-dropdown appendTo = "body" [(ngModel)]="revNumber" [options]="revNumbers" styleClass="w-100 h-32 cxy">
-        </p-dropdown>
-      </div>
-      <div class="w-45">
-        <p-dropdown appendTo = "body" [(ngModel)]="revLetter" [options]="revLetters" styleClass="w-100 h-32 cxy">
+        <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
         </p-dropdown>
       </div>
     </div>
+    <div class="big-text mb-1 mt-1">На согласование:</div>
+    <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-250 border" [maxSelectedLabels]="5" selectedItemsLabel="{0} выбрано" [(ngModel)]="selectedUsers"></p-multiSelect>
   </div>
   <div class="form-footer pt-50">
     <div class="mr-1 cx">

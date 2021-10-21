@@ -18,15 +18,12 @@ export class SendToCloudComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
-  selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
-  //selectedUsers: string[] = ['isaev'];
+  //selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+  selectedUsers: string[] = ['isaev'];
   issue: Issue = new Issue();
   users: User[] = [];
-  revNumbers = ['-', '0', '1', '2', '3', '4', '5'];
-  revLetters = ['-', 'A', 'B', 'C', 'D', 'E', 'F'];
-  revNumber = '';
-  revLetter = '';
-
+  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'F'];
+  rev = '-';
   constructor(public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
     this.issue = conf.data;
   }
@@ -246,13 +243,27 @@ export class SendToCloudComponent implements OnInit {
     return result;
   }
   commit() {
-    return;
-    this.issues.sendToApproval(this.issue.id, this.selectedUsers, this.loaded, this.taskDetails, 'Send to Approval').then(res => {
+    this.issues.sendToApproval(this.issue.id, this.selectedUsers, this.loaded, this.taskDetails, 'Send to Approval', this.getRevision()).then(res => {
       console.log(res);
       this.ref.close();
     });
   }
-
+  getIssuePath(issue: Issue){
+    return 'RKD' + '/' + issue.project + '/' + issue.department + '/' + issue.docNumber + '/' + this.getRevision() + '/';
+  }
+  localeDepartment(department: string){
+    switch (department) {
+      case 'Корпус': return 'Hull';
+      case 'Системы': return 'System';
+      case 'Электрика': return 'Electric';
+      case 'Устройства': return 'Equipment';
+      case 'Достройка': return 'Outfitting';
+      default: return department;
+    }
+  }
+  getRevision(){
+    return (this.rev);
+  }
   close(){
     this.ref.close('exit');
   }

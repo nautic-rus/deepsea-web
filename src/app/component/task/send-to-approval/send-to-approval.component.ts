@@ -249,7 +249,7 @@ export class SendToApprovalComponent implements OnInit {
   }
   commit() {
     //return;
-    this.issues.sendToApproval(this.issue.id, this.selectedUsers, this.loaded, this.taskDetails, 'Send to Approval').then(res => {
+    this.issues.sendToApproval(this.issue.id, this.selectedUsers, this.loaded, this.taskDetails, 'Send to Approval', '').then(res => {
       console.log(res);
       this.ref.close();
     });
