@@ -15,12 +15,12 @@
           <div class="p-ml-auto">
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
-                <input #search pInputText type="text" placeholder="Search..." class="border width-200" />
+                <input [(ngModel)]="searchValue" #search pInputText type="text" placeholder="Search..." class="border width-200" />
               </span>
           </div>
         </div>
         <div class="issue-list cxy fw ovf">
-          <div class="issue-list-item w-100" *ngFor="let issue of issues">
+          <div class="issue-list-item w-100" *ngFor="let issue of getIssues()">
             <div class="issues cursor-pointer" (click)="selectIssue(issue)">{{issue.docNumber}} {{issue.name}}</div>
           </div>
         </div>
@@ -134,7 +134,7 @@
                         <span class="bold-text-issues">{{auth.getUserName(msg.author)}}</span>
                         <span class="text-descr-issues"> posted message </span>
                         <span class="text-date-issues"> {{getDate(msg.date)}} </span>
-                        <quill-view [content]="msg.content"></quill-view>
+                        <quill-view (click)="editorClicked($event)" [content]="msg.content"></quill-view>
                         <div class="attachments-issues">
                           <div *ngFor="let file of msg.fileAttachments">
                             <div (click)="openFile(file.url)" class="attachment-issues">

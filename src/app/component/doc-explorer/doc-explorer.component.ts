@@ -15,8 +15,8 @@ import {mouseWheelZoom} from "mouse-wheel-zoom";
   styleUrls: ['./doc-explorer.component.css']
 })
 export class DocExplorerComponent implements OnInit {
-  projects: string[] = ['NR002'];
-  project = this.projects[0];
+  projects: string[] = ['NR002', 'NR003', 'NR004'];
+  project = this.projects[2];
   issues: Issue[] = [];
   selectedIssue: Issue = new Issue();
   messageFilter = 'all';
@@ -79,12 +79,16 @@ export class DocExplorerComponent implements OnInit {
         }
       }
     }
+  searchValue = '';
   constructor(public issueManager: IssueManagerService, public auth: AuthManagerService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.issueManager.getIssues('op').then(data => {
       this.issues = _.sortBy(data.filter(x => x.taskType == 'RKD' || x.taskType == 'RKD-TURK'), x => x.docNumber);
     });
+  }
+  getIssues(){
+    return this.issues.filter(x => x.project == this.project).filter(x => this.searchValue.trim() == '' || (x.name + x.docNumber).toLowerCase().includes(this.searchValue));
   }
   showComment() {
     this.comment = true;
@@ -254,7 +258,6 @@ export class DocExplorerComponent implements OnInit {
     event.stopPropagation();
     if (event.target.localName == 'img'){
       this.showImage(event.target.currentSrc);
-      //window.open(event.target.currentSrc);
     }
     else if (event.target.localName == 'a'){
       window.open(event.target.href, '_blank');
