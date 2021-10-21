@@ -19,8 +19,8 @@
               </span>
           </div>
         </div>
-        <div class="issue-list cxy fw ovf">
-          <div class="issue-list-item w-100" *ngFor="let issue of getIssues()">
+        <div class="issue-list fw ovf">
+          <div [class.select-issue]="selectedIssue.id != null && selectedIssue.id == issue.id" class="issue-list-item w-100" *ngFor="let issue of getIssues()">
             <div class="issues cursor-pointer" (click)="selectIssue(issue)">{{issue.docNumber}} {{issue.name}}</div>
           </div>
         </div>
@@ -191,7 +191,7 @@
           </div>
         </div>
         <div class="pictures" *ngIf="selectedIssue.docNumber == ''">
-          <div class="pt-15per confirm-text-issues">Select issue to view its materials, files, history and messages</div>
+          <div class="pt-10per confirm-text-issues">Select issue to view its materials, files, history and messages</div>
           <div class="row-pic">
             <div class="picture-end">
               <img src="assets/icons/message.png">

@@ -92,7 +92,7 @@
 }
 .attachments-issues{
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   max-height: 250px;
   overflow-y: auto;
@@ -219,13 +219,13 @@
 .pictures{
   position: absolute;
   width: 85%;
-  height: 90%;
+  height: 95%;
   margin-left: 15%;
   flex-direction: column;
-  margin-top: 10%;
+  margin-top: 5%;
 }
-.pt-15per{
-  padding-top: 15%;
+.pt-10per{
+  padding-top: 10%;
 }
 .one-row-picture{
   display: grid;
@@ -261,4 +261,13 @@
 .image-preview{
   max-width: 95vw;
   max-height: 95vh;
+}
+::ng-deep.ql-editor{
+  width: 100%;
+}
+.select-issue{
+  background-color: rgb(235, 236, 240);
+}
+.select-issue:hover{
+  background-color: rgb(235, 236, 240);
 }
