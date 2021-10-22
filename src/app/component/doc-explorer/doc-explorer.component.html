@@ -32,8 +32,8 @@
             <p-table [value]="spec.content" styleClass="p-datatable-striped cursor-pointer">
               <ng-template pTemplate="header">
                 <tr class="sticky">
-                  <th class="w-6">Part</th>
-                  <th class="w-18">Name</th>
+                  <th pSortableColumn="CODE" class="w-6">Part <p-sortIcon field="CODE"></p-sortIcon></th>
+                  <th pSortableColumn="DESCRIPTION" class="w-18">Name <p-sortIcon field="DESCRIPTION"></p-sortIcon></th>
                   <th class="w-8">Weight</th>
                   <th class="w-19">Stock Code</th>
                   <th class="w-30">Node Path</th>
@@ -79,9 +79,9 @@
         <div class="issue-details ovf-auto" [class.border-left]="selectedIssue.docNumber != ''">
           <div class="issue-files border-bottom pl-10 ovf-auto" *ngIf="selectedIssue.docNumber != ''">
             <div class="big-text-issues mb-10 mt-5">Attachments</div>
-            <div class="attachments">
+            <div class="">
               <div *ngFor="let file of selectedIssue.fileAttachmentsInCloud">
-                <div (click)="openFile(file.url)" class="attachment df mb-10 cursor-pointer">
+                <div (click)="openFile(file.url)" class="attachment-issues df mb-10 cursor-pointer">
                   <div class="cxy">
                     <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                   </div>
@@ -161,16 +161,14 @@
                   </div>
                   <div class="df mt-5">
                     <div class="mr-5">
-                      <div (click)="sendMessage()" pButton label="Сохранить" class="button"></div>
+                      <div (click)="sendMessage()" pButton label="Save" class="button"></div>
                     </div>
                     <div>
-                      <div (click)="comment = false" pButton label="Отменить" class="button-cancel"></div>
+                      <div (click)="comment = false" pButton label="Cancel" class="button-cancel"></div>
                     </div>
                   </div>
                 </div>
               </div>
-
-
               <div class="issue-message w-100" *ngFor="let msg of getMessages(selectedIssue)">
                 <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
                   <div class="df pb-20">

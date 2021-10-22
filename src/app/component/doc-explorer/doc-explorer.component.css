@@ -98,15 +98,6 @@
   max-height: 250px;
   overflow-y: auto;
 }
-.attachment-issues{
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  width: 135px;
-  height: 120px;
-  transition: all 0.3s ease 0s;
-  position: relative;
-  font-size: 11px;
-}
 .attachment-issues:hover{
   background-color: #dcdcdc;
 }
@@ -117,12 +108,15 @@
   width: 100%;
   font-size: calc(0.73rem + 0.1vw);
 }
-.attachment{
-  padding: 4px;
+.attachment-issues{
+  padding: 3px;
   border-radius: 3px;
 }
-.attachment:hover{
+.attachment-issues:hover{
   background-color: rgba(161, 140, 140, 0.05);
+}
+.attachment-footer{
+  font-size: calc(0.73rem + 0.1vw);
 }
 .big-text-issues{
   font-size: 0.9em;

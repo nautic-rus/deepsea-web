@@ -151,7 +151,7 @@
           </div>
         </div>
         <div class="mt-1 big-text pb-20">
-          <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText placeholder="Напишите комментарий здесь..." />
+          <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText placeholder="Post your message here..." />
         </div>
         <div [hidden]="!comment">
           <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">

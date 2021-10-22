@@ -38,3 +38,6 @@
 .selected-menu{
   background-color: #efefef;
 }
+.hidden-menu{
+  display: none;
+}

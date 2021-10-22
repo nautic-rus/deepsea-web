@@ -25,7 +25,7 @@ export class LanguageService {
           case 'На согласовании': return 'On Approval';
           case 'Отправлен заказчику': return 'Send To ShipYard';
           case 'Поставлен': return 'Approved';
-          case 'Секции': return 'Sections';
+          case 'СЕКЦИИ': return 'SECTIONS';
           case 'Описание задачи': return 'Issue Description';
           case 'Вложения': return 'File Attachments';
           case 'Сведения': return 'Details';
@@ -45,7 +45,7 @@ export class LanguageService {
           case 'История': return 'History';
           case 'создал': return 'created';
           case 'задачу': return 'issue';
-          case '': return '';
+          case 'ДОКУМЕНТЫ': return 'DOCUMENTS';
           case '': return '';
           case '': return '';
           case '': return '';
