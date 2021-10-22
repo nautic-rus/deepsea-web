@@ -25,4 +25,5 @@ export class Issue {
   period: string = '';
   periodEndDate: number = 0;
   childIssues: Issue[] = [];
+  fileAttachmentsInCloud: FileAttachment[] = [];
 }
