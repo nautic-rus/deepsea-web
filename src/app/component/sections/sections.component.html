@@ -9,31 +9,31 @@
         <div class="number-card cxy new-status"></div>
       </div>
       <div class="cy">
-        <div>Новый</div>
+        <div>{{t.tr('Новый')}}</div>
       </div>
       <div class="cxy">
         <div class="number-card cxy in-work-status"></div>
       </div>
       <div class="cy">
-        <div>В работе</div>
+        <div>{{t.tr('В работе')}}</div>
       </div>
       <div class="cxy">
         <div class="number-card cxy check-status"></div>
       </div>
       <div class="cy">
-        <div>На согласовании</div>
+        <div>{{t.tr('На согласовании')}}</div>
       </div>
       <div class="cxy">
         <div class="number-card cxy sent-status"></div>
       </div>
       <div class="cy">
-        <div>Отправлен заказчику</div>
+        <div>{{t.tr('Отправлен заказчику')}}</div>
       </div>
       <div class="cxy">
         <div class="number-card cxy close-status"></div>
       </div>
       <div class="cy">
-        <div>Поставлен</div>
+        <div>{{t.tr('Поставлен')}}</div>
       </div>
     </div>
     <div *ngIf="project == 'NR-002'">
@@ -343,7 +343,7 @@
           <div class="cxy"></div>
           <div class="cxy"></div>
           <div class="number number-right">
-            <div class="number-card cxy mr-20">101</div>
+            <div (click)="viewTask('101')" [ngStyle]="getStyle('101')" class="number-card cxy mr-20">101</div>
           </div>
           <div class="cxy"></div>
           <div class="cxy"></div>

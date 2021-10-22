@@ -5,6 +5,7 @@ import {Issue} from "../../domain/classes/issue";
 import {TaskComponent} from "../task/task.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {CreateTaskComponent} from "../create-task/create-task.component";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-sections',
@@ -16,7 +17,7 @@ export class SectionsComponent implements OnInit {
   projects: string[] = ['NR-002', 'NR-004'];
   project = this.projects[1];
 
-  constructor(private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
+  constructor(public t: LanguageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.issueManager.getIssues('op').then(data => {
@@ -25,7 +26,10 @@ export class SectionsComponent implements OnInit {
   }
 
   getStyle(s: string) {
-    let find = this.issues.find(x => x.name.includes('Секция ' + s));
+    let find = this.issues.find(x => x.name.includes('Block ' + s));
+    if (find == null){
+      find = this.issues.find(x => x.name.includes('Секция ' + s) || x.name.includes('Block ' + s));
+    }
     let status = '';
     if (find != null){
       status = find.status;
@@ -53,7 +57,7 @@ export class SectionsComponent implements OnInit {
   }
 
   viewTask(s: string) {
-    let find = this.issues.find(x => x.name.includes('Секция ' + s));
+    let find = this.issues.find(x => x.name.includes('Секция ' + s) || x.name.includes('Block ' + s));
     if (find != null){
       this.issueManager.getIssueDetails(find.id, this.auth.getUser().login).then(res => {
         this.dialogService.open(TaskComponent, {

@@ -18,6 +18,7 @@ import {SendToCloudComponent} from "./send-to-cloud/send-to-cloud.component";
 import {DeleteComponent} from "./delete/delete.component";
 import {IdName} from "../../domain/classes/id-name";
 import {LV} from "../../domain/classes/lv";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-task',
@@ -100,7 +101,7 @@ export class TaskComponent implements OnInit {
         }
       }
     }
-  constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   generateId(length: number): string {
     let result = '';
@@ -248,7 +249,7 @@ export class TaskComponent implements OnInit {
     })
   }
   localeGender(gender: string){
-    return gender == 'female' ? 'а' : '';
+    return gender == 'female' && this.t.language == 'ru' ? 'а' : '';
   }
   getFileExtensionIcon(file: string) {
     switch (file.toLowerCase().split('.').pop()){
