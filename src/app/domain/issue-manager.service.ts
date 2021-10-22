@@ -12,6 +12,7 @@ import {IssueMessage} from "./classes/issue-message";
 import {List} from "underscore";
 import {ViewedIssue} from "./classes/viewed-issue";
 import {AuthManagerService} from "./auth-manager.service";
+import {HullPL} from "./classes/hull-pl";
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,12 @@ export class IssueManagerService {
   }
   async getIssueDetails(id: string, login: string): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id: id, user: login}}).toPromise();
+  }
+  async getHullPartList(docNum: string): Promise<HullPL> {
+    return await this.http.get<HullPL>(props.httpMaterials + '/getHullPartList', {params: {docNum}}).toPromise();
+  }
+  async initHullPartList(project: string, taskId: string, docNum: string, docName: string, user: string): Promise<string> {
+    return await this.http.get<string>(props.httpMaterials + '/initHullPartList', {params: {project, taskId, docNum, docName, user}}).toPromise();
   }
   async updateIssue(user: string, issue: Issue) {
     return await this.http.post(props.http + '/updateIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();

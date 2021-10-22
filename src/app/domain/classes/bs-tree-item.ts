@@ -1,0 +1,24 @@
+export class BsTreeItem {
+  PP_OID: number = 0;
+  EXPL_OID: number = 0;
+  BLOCK: string = '';
+  CODE: string = '';
+  PART_TYPE: number = 0;
+  DESCRIPTION: string = '';
+  PARENT_NODE: number = 0;
+  ATOM_TYPE: number = 0;
+  ORDINAL: number = 0;
+  TYPE_ATOM_TYPE: number = 0;
+  SYMBOL: string = '';
+  WEIGHT: number = 0;
+  X_COG: number = 0;
+  Y_COG: number = 0;
+  Z_COG: number = 0;
+  PRF_LENGTH: number = 0;
+  LINE_NAME: string = '';
+  LINE_TYPE: string = '';
+  LINE_TYPE_DESCRIPTION: string = '';
+  BS_ADN: string = '';
+  KSE: string = '';
+  STOCKCODE: string = '';
+}

@@ -13,6 +13,9 @@
         </div>
         <div class="issues-header">
           <div class="p-ml-auto">
+            <button [disabled]="selectedIssue.id == null" (click)="initHullPartList(this.selectedIssue)">INIT</button>
+          </div>
+          <div class="p-ml-auto">
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input [(ngModel)]="searchValue" #search pInputText type="text" placeholder="Search..." class="border width-200" />
@@ -24,7 +27,29 @@
             <div class="issues cursor-pointer" (click)="selectIssue(issue)">{{issue.docNumber}} {{issue.name}}</div>
           </div>
         </div>
-        <div class="cy">
+        <div>
+          <div *ngIf="spec != null && spec.name != null">
+            <div class="spec-row">
+              <div>Part</div>
+              <div>Name</div>
+              <div>Weight</div>
+              <div>StockCode</div>
+              <div>NodePath</div>
+              <div>COG</div>
+            </div>
+            <div class="spec-row" *ngFor="let specRow of spec.content">
+              <div>{{specRow.CODE}}</div>
+              <div>{{specRow.DESCRIPTION}}</div>
+              <div>{{round(specRow.WEIGHT)}}</div>
+              <div>{{specRow.STOCKCODE}}</div>
+              <div>{{specRow.BS_ADN}}</div>
+              <div class="spec-row-cog">
+                <div>X: {{round(specRow.X_COG)}}</div>
+                <div>Y: {{round(specRow.Y_COG)}}</div>
+                <div>Z: {{round(specRow.Z_COG)}}</div>
+              </div>
+            </div>
+          </div>
 <!--          <div class="issues-pic-end">-->
 <!--            <div *ngIf="selectedIssue.docNumber == ''" class="">-->
 <!--              <div class="confirm-text-issues">Select issue to view its files</div>-->
@@ -44,6 +69,7 @@
         </div>
         <div class="issue-details ovf-auto">
           <div class="issue-files cxy">
+
           </div>
           <div class="pl-10 w-100 ovf-auto">
             <div class="w-100" *ngIf="selectedIssue.docNumber != ''">

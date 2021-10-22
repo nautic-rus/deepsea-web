@@ -8,6 +8,7 @@ import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
+import {HullPL} from "../../domain/classes/hull-pl";
 
 @Component({
   selector: 'app-doc-explorer',
@@ -33,6 +34,7 @@ export class DocExplorerComponent implements OnInit {
   wz;
   // @ts-ignore
   editor;
+  spec = new HullPL();
   quillModules =
     {
       imageResize: {},
@@ -103,6 +105,13 @@ export class DocExplorerComponent implements OnInit {
     this.issueManager.getIssueDetails(issue.id, this.auth.getUser().login).then(issue => {
       this.selectedIssue = issue;
     });
+    this.issueManager.getHullPartList(issue.docNumber).then(spec => {
+      console.log(spec);
+      this.spec = spec;
+    });
+  }
+  initHullPartList(issue: Issue){
+    this.issueManager.initHullPartList(issue.project, issue.id, issue.docNumber, issue.name, this.auth.getUser().name);
   }
   getMessages(issue: Issue) {
     // @ts-ignore
@@ -313,5 +322,9 @@ export class DocExplorerComponent implements OnInit {
     if (event.ctrlKey && event.key === 'Enter') {
       this.sendMessage();
     }
+  }
+
+  round(value: number) {
+    return Math.round(value * 10) / 10;
   }
 }
