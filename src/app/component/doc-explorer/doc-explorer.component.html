@@ -77,7 +77,7 @@
 <!--          </div>-->
         </div>
         <div class="issue-details ovf-auto" [class.border-left]="selectedIssue.docNumber != ''">
-          <div class="issue-files border-bottom pl-10" *ngIf="selectedIssue.docNumber != ''">
+          <div class="issue-files border-bottom pl-10 ovf-auto" *ngIf="selectedIssue.docNumber != ''">
             <div class="big-text-issues mb-10 mt-5">Attachments</div>
             <div class="attachments">
               <div *ngFor="let file of selectedIssue.fileAttachmentsInCloud">

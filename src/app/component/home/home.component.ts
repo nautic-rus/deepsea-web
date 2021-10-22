@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
       setTimeout(() => {
         this.dt.scrollTo({top: scroll});
         this.dt.style = {opacity: 1, transition: '0.1s'};
-      }, 100);
+      }, 500);
     }
   }
   newTask(issue: object | null) {
@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit {
     let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
     return da + ' ' + mo + ' ' + ye + ' ';
   }
-  localeColumn(issueElement: string, field: string): string {
+  localeColumn(issueElement: string, field: string, issue: Issue): string {
     if (field == 'startedBy'){
       return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
     }
@@ -181,7 +181,12 @@ export class HomeComponent implements OnInit {
       return this.issueManager.localeTaskType(issueElement);
     }
     else if (field == 'name'){
-      return this.trim(issueElement);
+      if (issue.taskType == 'Approval'){
+        return 'Согласование ' + issue.docNumber;
+      }
+      else{
+        return this.trim(issueElement);
+      }
     }
     else if (field == 'dueDate'){
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);

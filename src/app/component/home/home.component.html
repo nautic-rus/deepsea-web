@@ -64,7 +64,7 @@
             <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
           </td>
           <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
-            <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field) | safeHtml"></div></div>
+            <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
             <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
           </td>
         </tr>
