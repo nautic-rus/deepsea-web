@@ -108,6 +108,12 @@
           <div *ngFor="let file of issue.fileAttachments">
             <div (click)="openFile(file.url)" class="attachment">
               <div class="cxy attachment-center">
+                <div>
+                  <img src="">
+                </div>
+                <div>
+
+                </div>
                 <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
               </div>
               <div class="attachment-footer">

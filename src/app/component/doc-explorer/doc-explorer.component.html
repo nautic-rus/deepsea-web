@@ -42,9 +42,10 @@
 <!--            </div>-->
 <!--          </div>-->
         </div>
-        <div class="issue-details ovf-auto">
+        <div class="issue-details ovf-auto" [class.border-left]="selectedIssue.docNumber != ''">
           <div class="issue-files cxy">
           </div>
+
           <div class="pl-10 w-100 ovf-auto">
             <div class="w-100" *ngIf="selectedIssue.docNumber != ''">
               <div class="activity-issues">

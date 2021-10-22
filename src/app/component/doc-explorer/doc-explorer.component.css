@@ -15,9 +15,10 @@
   position: relative;
 }
 .issue-details{
-  height: 100%;
+  height: calc(100% - 20px);
   display: grid;
   grid-template-rows: 1.5fr 4fr;
+  margin-top: 20px;
 }
 .issue-list-control{
   top: 0;
@@ -270,4 +271,7 @@
 }
 .select-issue:hover{
   background-color: rgb(235, 236, 240);
+}
+.border-left{
+  border-left: 1px solid #f3f2f1;
 }

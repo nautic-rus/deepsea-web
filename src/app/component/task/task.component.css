@@ -220,7 +220,7 @@
   overflow-y: auto;
 }
 .attachment:hover{
-  background-color: #dcdcdc;
+  background-color: rgba(9, 30, 66, 0.48);
 }
 .attachment-footer{
   background-color: rgba(255, 255, 255, 0.8);
@@ -242,6 +242,7 @@
 }
 .attachment-center{
   height: calc(100% - 36px);
+  position: relative;
 }
 .content-task{
   height: 50%;
