@@ -188,6 +188,12 @@ export class HomeComponent implements OnInit {
         return this.trim(issueElement);
       }
     }
+    else if (field == 'priority'){
+      return this.issueManager.localeTaskPriority(issueElement);
+    }
+    else if (field == 'department'){
+      return this.issueManager.localeTaskDepartment(issueElement);
+    }
     else if (field == 'dueDate'){
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     }

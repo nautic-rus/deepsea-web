@@ -175,6 +175,19 @@ export class IssueManagerService {
   }
   localeTaskPriority(input: string){
     switch (input) {
+      case 'Low': return 'Низкий';
+      case 'Medium': return 'Средний';
+      case 'High': return 'Высокий';
+      default: return input;
+    }
+  }
+  localeTaskDepartment(input: string){
+    switch (input) {
+      case 'Hull': return 'Корпус';
+      case 'System': return 'Системы';
+      case 'Electric': return 'Электрика';
+      case 'Equipment': return 'Устройства';
+      case 'Outfitting': return 'Достройка';
       default: return input;
     }
   }

@@ -16,6 +16,8 @@ import {SendToApprovalComponent} from "./send-to-approval/send-to-approval.compo
 import {ChangeResponsibleComponent} from "./change-responsible/change-responsible.component";
 import {SendToCloudComponent} from "./send-to-cloud/send-to-cloud.component";
 import {DeleteComponent} from "./delete/delete.component";
+import {IdName} from "../../domain/classes/id-name";
+import {LV} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-task',
@@ -44,8 +46,8 @@ export class TaskComponent implements OnInit {
   showHistory = ['_taskStatus'];
   availableStatuses: any[] = [];
   availableStatusesNoCurrent: any[] = [];
-  taskDepartments: string[] = [];
-  taskPriorities: any[] = [];
+  taskDepartments: LV[] = [];
+  taskPriorities: LV[] = [];
   taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
   taskProjects: string[] = [];
   issueNameEdit = false;
@@ -133,14 +135,16 @@ export class TaskComponent implements OnInit {
     this.availableStatuses = this.getAvailableStatuses(this.issue);
     this.availableStatusesNoCurrent = this.getAvailableStatuses(this.issue, true);
     this.issueManager.getIssueDepartments().then(departments => {
-      this.taskDepartments = departments;
+      departments.forEach(d => {
+        this.taskDepartments.push(new LV(this.issueManager.localeTaskDepartment(d), d));
+      })
     });
     this.issueManager.getIssueProjects().then(projects => {
       this.taskProjects = projects;
     });
     this.issueManager.getTaskPriorities().then(priorities => {
       priorities.forEach(priority => {
-        this.taskPriorities.push({label: this.issueManager.localeTaskType(priority), value: priority});
+        this.taskPriorities.push(new LV(this.issueManager.localeTaskPriority(priority), priority));
       });
     });
     this.startDate = this.issue.startDate != 0 ? new Date(this.issue.startDate) : new Date();
