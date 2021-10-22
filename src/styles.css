@@ -392,3 +392,7 @@ cdk-virtual-scroll-viewport{
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.column-reverse{
+  display: flex;
+  flex-direction: column-reverse;
+}

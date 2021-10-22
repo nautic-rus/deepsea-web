@@ -55,7 +55,7 @@
   color: #42526E !important;
 }
 .today:hover{
-  background-color: rgba(9,30,66,0.08);
+  background-color: #f7f7f8!important;
 }
 .today-in{
 
@@ -76,14 +76,14 @@
   color: #333;
 }
 .off-day{
-  background-color: hsla(220, 11%, 97%, 1);
+  background-color: #f7f7f8;
 }
 .today-day{
   background-color: #f5f7ff;
   border-top: 3px solid #0553CC;
 }
 .today-days{
-  background-color: #0037ff0a;
+  background-color: #f5f7ff;
 }
 .all-days{
   overflow-y: auto;
