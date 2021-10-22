@@ -40,6 +40,6 @@ export class LoginComponent implements OnInit {
 
   toggleVisibility(input: HTMLInputElement, img: HTMLImageElement) {
     input.type = input.type.includes('password') ? 'text' : 'password';
-    img.src = img.src.includes('assets/visibility_1.svg') ? 'assets/visibility.svg' : 'assets/visibility_1.svg';
+    img.src = img.src.includes('assets/icons/visibility_1.svg') ? 'assets/icons/visibility.svg' : 'assets/icons/visibility_1.svg';
   }
 }

@@ -38,11 +38,23 @@ body,p{
 .w-40{
   width: 40%;
 }
+.w-30{
+  width: 30%;
+}
+.w-25{
+  width: 25%;
+}
 .w-20{
   width: 20%;
 }
 .w-19{
   width: 19%;
+}
+.w-17{
+  width: 17%;
+}
+.w-18{
+  width: 18%;
 }
 .w-15{
   width: 15%;
@@ -55,6 +67,9 @@ body,p{
 }
 .w-9{
   width: 9%;
+}
+.w-8{
+  width: 8%;
 }
 .w-6{
   width: 6%;
@@ -395,4 +410,9 @@ cdk-virtual-scroll-viewport{
 .column-reverse{
   display: flex;
   flex-direction: column-reverse;
+}
+.sticky{
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }

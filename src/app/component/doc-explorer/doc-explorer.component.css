@@ -18,7 +18,6 @@
   height: calc(100% - 20px);
   display: grid;
   grid-template-rows: 1.5fr 4fr;
-  margin-top: 20px;
 }
 .issue-list-control{
   top: 0;
@@ -46,6 +45,7 @@
 }
 .issue-list-item:hover{
   background-color: hsla(220, 11%, 97%, 1);
+  font-size: calc(0.73rem + 0.1vw);
 }
 .issue-list-control-header{
   font-size: 24px;
@@ -110,18 +110,19 @@
 .attachment-issues:hover{
   background-color: #dcdcdc;
 }
-.attachment-center{
-  height: calc(100% - 36px);
-}
-.attachment-footer{
-  background-color: rgba(255, 255, 255, 0.8);
-  height: 36px;
-  padding: 4px 8px;
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
+.attachment-footer-issue{
   display: flex;
-  flex-direction: column;
+  align-items: flex-end;
+  padding: 4px 8px;
+  width: 100%;
+  font-size: calc(0.73rem + 0.1vw);
+}
+.attachment{
+  padding: 4px;
+  border-radius: 3px;
+}
+.attachment:hover{
+  background-color: rgba(161, 140, 140, 0.05);
 }
 .big-text-issues{
   font-size: 0.9em;
@@ -273,9 +274,40 @@
   background-color: rgb(235, 236, 240);
 }
 .spec-row{
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
+  text-align: left;
+  padding: 0.75rem 0.75rem;
+  font-weight: 600;
+  color: #323130;
+  background: #ffffff;
+  transition: box-shadow 0.2s;
+  font-size: 14px;
+  width: 100%;
+
+}
+.spec-row-table{
+  display: flex;
+  text-align: left;
+  padding: 0.75rem 0.75rem;
+  font-size: 14px;
+  width: 100%;
 }
 .border-left{
   border-left: 1px solid #f3f2f1;
+}
+.border-top{
+  border-top: 1px solid #f3f2f1;
+}
+.border-bottom{
+   border-bottom: 1px solid #f3f2f1;
+}
+.bold{
+  font-weight: 500;
+}
+.last-col{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.text-table{
+  font-size: calc(0.73rem + 0.1vw);
 }

@@ -120,11 +120,11 @@ export class DocExplorerComponent implements OnInit {
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
     let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
-    let mo = new Intl.DateTimeFormat('en', { month: 'long' }).format(date);
+    let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date);
     let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
-    let hours = new Intl.DateTimeFormat('en', { hour: '2-digit' }).format(date);
-    let minutes = new Intl.DateTimeFormat('en', { minute: '2-digit' }).format(date);
-    return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+    let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
+    let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
+    return da + '.' + mo + '.' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
   openFile(url: string) {
     window.open(url);

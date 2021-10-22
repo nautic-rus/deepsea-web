@@ -12,9 +12,9 @@
           </div>
         </div>
         <div class="issues-header">
-          <div class="p-ml-auto">
-            <button [disabled]="selectedIssue.id == null" (click)="initHullPartList(this.selectedIssue)">INIT</button>
-          </div>
+<!--          <div class="p-ml-auto">-->
+<!--            <button [disabled]="selectedIssue.id == null" (click)="initHullPartList(this.selectedIssue)">INIT</button>-->
+<!--          </div>-->
           <div class="p-ml-auto">
               <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
@@ -27,29 +27,38 @@
             <div class="issues cursor-pointer" (click)="selectIssue(issue)">{{issue.docNumber}} {{issue.name}}</div>
           </div>
         </div>
-        <div>
+        <div class="ovf-auto" *ngIf="selectedIssue.docNumber != ''">
           <div *ngIf="spec != null && spec.name != null">
-            <div class="spec-row">
-              <div>Part</div>
-              <div>Name</div>
-              <div>Weight</div>
-              <div>StockCode</div>
-              <div>NodePath</div>
-              <div>COG</div>
-            </div>
-            <div class="spec-row" *ngFor="let specRow of spec.content">
-              <div>{{specRow.CODE}}</div>
-              <div>{{specRow.DESCRIPTION}}</div>
-              <div>{{round(specRow.WEIGHT)}}</div>
-              <div>{{specRow.STOCKCODE}}</div>
-              <div>{{specRow.BS_ADN}}</div>
-              <div class="spec-row-cog">
-                <div>X: {{round(specRow.X_COG)}}</div>
-                <div>Y: {{round(specRow.Y_COG)}}</div>
-                <div>Z: {{round(specRow.Z_COG)}}</div>
-              </div>
-            </div>
+            <p-table [value]="spec.content" styleClass="p-datatable-striped cursor-pointer">
+              <ng-template pTemplate="header">
+                <tr class="sticky">
+                  <th class="w-6">Part</th>
+                  <th class="w-18">Name</th>
+                  <th class="w-8">Weight</th>
+                  <th class="w-19">Stock Code</th>
+                  <th class="w-30">Node Path</th>
+                  <th class="w-19">COG</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-specRow>
+                <tr class="">
+                  <td class="w-6 text-table">{{specRow.CODE}}</td>
+                  <td class="w-20 text-table">{{specRow.DESCRIPTION}}</td>
+                  <td class="w-10 text-table">{{round(specRow.WEIGHT)}}</td>
+                  <td class="w-19 text-table">{{specRow.STOCKCODE}}</td>
+                  <td class="w-25 text-table">{{specRow.BS_ADN}}</td>
+                  <td class="w-20 text-table">
+                    <span><span class="bold">X:</span> {{round(specRow.X_COG) + ' '}}</span>
+                    <span><span class="bold">Y:</span> {{round(specRow.Y_COG) + ' '}}</span>
+                    <span><span class="bold">Z:</span> {{round(specRow.Z_COG)}}</span>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
           </div>
+
+
+
 <!--          <div class="issues-pic-end">-->
 <!--            <div *ngIf="selectedIssue.docNumber == ''" class="">-->
 <!--              <div class="confirm-text-issues">Select issue to view its files</div>-->
@@ -68,29 +77,24 @@
 <!--          </div>-->
         </div>
         <div class="issue-details ovf-auto" [class.border-left]="selectedIssue.docNumber != ''">
-          <div class="issue-files cxy">
+          <div class="issue-files border-bottom pl-10" *ngIf="selectedIssue.docNumber != ''">
+            <div class="big-text-issues mb-10 mt-5">Attachments</div>
             <div class="attachments">
               <div *ngFor="let file of selectedIssue.fileAttachmentsInCloud">
-                <div (click)="openFile(file.url)" class="attachment">
-                  <div class="cxy attachment-center">
-                    <div>
-                      <img src="">
-                    </div>
-                    <div>
-
-                    </div>
-                    <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
+                <div (click)="openFile(file.url)" class="attachment df mb-10 cursor-pointer">
+                  <div class="cxy">
+                    <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                   </div>
-                  <div class="attachment-footer">
-                    <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
-                    <div>{{getDate(selectedIssue.startedDate)}}</div>
+                  <div class="attachment-footer-issue">
+                    <span class="mr-5" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
+                    <span>{{' ' + getDate(selectedIssue.startedDate)}}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="pl-10 w-100 ovf-auto">
-            <div class="w-100" *ngIf="selectedIssue.docNumber != ''">
+          <div class="pl-10 w-100 ovf-auto mt-2" *ngIf="selectedIssue.docNumber != ''">
+            <div class="w-100" >
               <div class="activity-issues">
                 <div class="big-text-issues mb-1">Activity</div>
                 <div class="df">
@@ -197,26 +201,26 @@
                   </div>
                 </div>
                 <div *ngIf="(messageFilter == 'all' || messageFilter == 'camunda') && msg.owner == 'camunda'">
-          <span class="" *ngFor="let varMap of filterVariables(msg.variables)">
-            <div class="df pb-30">
-              <div class="pt-5 mr-10">
-                <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
-              </div>
-              <div>
-                <span class="bold-text-issues">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr-issues px-5"> changed </span>
-                <span class="bold-text-issues">{{issueManager.localeHistoryEn(varMap.name)}}</span>
-                <span class="text-date-issues pl-5">{{getDate(msg.date)}} </span>
-              <div class="df pt-5">
-                <div class="" [innerHTML]="issueManager.localeStatusEn(getPrevValue(selectedIssue.messages, varMap.name, msg.date)) | safeHtml"></div>
-                <span class="px-10">
-                  <img src="assets/icons/right-arrow.svg" height="13">
+                <span class="" *ngFor="let varMap of filterVariables(msg.variables)">
+                  <div class="df pb-30">
+                    <div class="pt-5 mr-10">
+                      <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
+                    </div>
+                    <div>
+                      <span class="bold-text-issues">{{getAuthor(msg.author)}}</span>
+                      <span class="text-descr-issues px-5"> changed </span>
+                      <span class="bold-text-issues">{{issueManager.localeHistoryEn(varMap.name)}}</span>
+                      <span class="text-date-issues pl-5">{{getDate(msg.date)}} </span>
+                    <div class="df pt-5">
+                      <div class="" [innerHTML]="issueManager.localeStatusEn(getPrevValue(selectedIssue.messages, varMap.name, msg.date)) | safeHtml"></div>
+                      <span class="px-10">
+                        <img src="assets/icons/right-arrow.svg" height="13">
+                      </span>
+                      <div [innerHTML]="issueManager.localeStatusEn(varMap.value) | safeHtml"></div>
+                    </div>
+                    </div>
+                  </div>
                 </span>
-                <div [innerHTML]="issueManager.localeStatusEn(varMap.value) | safeHtml"></div>
-              </div>
-              </div>
-            </div>
-          </span>
                 </div>
               </div>
               <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'camunda')">

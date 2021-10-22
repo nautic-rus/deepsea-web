@@ -220,7 +220,7 @@
   overflow-y: auto;
 }
 .attachment:hover{
-  background-color: rgba(9, 30, 66, 0.48);
+  background-color: #dcdcdc;
 }
 .attachment-footer{
   background-color: rgba(255, 255, 255, 0.8);
@@ -242,7 +242,6 @@
 }
 .attachment-center{
   height: calc(100% - 36px);
-  position: relative;
 }
 .content-task{
   height: 50%;
@@ -775,15 +774,12 @@
   background: rgb(255, 255, 255);
   border-radius: 3px;
   cursor: pointer;
+  display: flex;
   position: relative;
   height: 40px;
   padding: 0px 6px;
   margin: 0px 2px;
   border-bottom: 1px solid rgb(235, 236, 240);
-  font-size: 14px;
-  font-weight: normal;
-  letter-spacing: -0.005em;
-  color: rgb(94, 108, 132);
 }
 .subtask-grid{
   display: grid;

@@ -121,11 +121,7 @@
   height: calc(100vh - 210px);
   overflow-y: auto;
 }
-.sticky{
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+
 .users{
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   font-size: 14px;
