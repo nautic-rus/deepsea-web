@@ -10,7 +10,7 @@
 }
 .list-and-details{
   display: grid;
-  grid-template-columns: 1fr 4fr 2fr;
+  grid-template-columns: 1.2fr 4fr 2fr;
   grid-template-rows: 65px 1fr;
   position: relative;
 }
@@ -57,7 +57,8 @@
   color: #323130;
   border-bottom: 1px solid #f3f2f1;
   border-right: 1px solid #f3f2f1;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.7fr 0.9fr 1fr;
   align-items: center;
   padding: 10px;
 }
@@ -207,6 +208,16 @@
   justify-content: flex-end;
   margin-right: 20%;
 }
+.issues-header-one{
+  display: grid;
+  grid-template-columns: 2.3fr 1.5fr;
+  height: 65px;
+  color: #323130;
+  border: 1px solid #f3f2f1;
+  border-width: 1px 0 1px 0;
+  padding: 0.75rem 0 0.75rem;
+  font-weight: 600;
+}
 .issues-two-pic-end{
   display: flex;
   justify-content: flex-end;
@@ -215,7 +226,7 @@
 .pictures{
   position: absolute;
   width: 85%;
-  height: 95%;
+  height: 94%;
   margin-left: 15%;
   flex-direction: column;
   margin-top: 5%;
@@ -304,4 +315,16 @@
 }
 .text-table{
   font-size: calc(0.73rem + 0.1vw);
+}
+.only-completed{
+  background-color: #b8d39e!important;
+}
+.button-check{
+  height: 30px;
+  width: 30px;
+  border-radius: 3px;
+  background-color: #C4E1A8;
+}
+.button-check:hover{
+  background-color: #b8d39e;
 }

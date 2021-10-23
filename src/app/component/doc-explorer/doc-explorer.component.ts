@@ -82,6 +82,7 @@ export class DocExplorerComponent implements OnInit {
       }
     }
   searchValue = '';
+  filterCompleted = false;
   constructor(public issueManager: IssueManagerService, public auth: AuthManagerService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
@@ -90,7 +91,7 @@ export class DocExplorerComponent implements OnInit {
     });
   }
   getIssues(){
-    return this.issues.filter(x => x.project == this.project).filter(x => this.searchValue.trim() == '' || (x.name + x.docNumber).toLowerCase().includes(this.searchValue));
+    return this.issues.filter(x => x.project == this.project).filter(x => this.searchValue.trim() == '' || (x.name + x.docNumber).toLowerCase().includes(this.searchValue)).filter(x => !this.filterCompleted || x.status == 'Completed');
   }
   showComment() {
     this.comment = true;
@@ -326,5 +327,29 @@ export class DocExplorerComponent implements OnInit {
 
   round(value: number) {
     return Math.round(value * 10) / 10;
+  }
+  getStyledStatus(input: string, styled = true) {
+    switch (input) {
+      case 'In Work': return styled ? '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'In Work';
+      case 'Resolved': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Completed</span>' : 'Completed';
+      case 'New': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">New</span>' : 'New';
+      case 'Rejected': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'Declined';
+      case 'Check': return styled ? '<span style="color: #694382; background-color: #eccfff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'On Check';
+      case 'In Rework': return styled ? '<span style="color: #3f6b73; background-color: #cbebf1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'In Rework';
+      case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'Stopped';
+      case 'Archive': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Archive</span>' : 'Archive';
+      case 'Not resolved': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'Not resolved';
+      case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Completed</span>' : 'Closed';
+      case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'On Approval';
+      case 'Approved': return styled ? '<span style="color: #5d9980; background-color: #c1fde5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'Approved';
+      case 'Not approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'Not Approved';
+      case 'Ready to send': return styled ? '<span style="color: #4A7863; background-color: #DCEFED; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'Ready to Send';
+      case 'On reApproval': return styled ? '<span style="color: #813A18; background-color: #FFB38F; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'Retry Approval';
+      default: return input;
+    }
+  }
+
+  switchIssuesStatusFilter() {
+    this.filterCompleted = !this.filterCompleted;
   }
 }
