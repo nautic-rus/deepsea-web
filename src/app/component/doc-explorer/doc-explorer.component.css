@@ -105,7 +105,7 @@
 .attachment-footer-issue{
   display: flex;
   align-items: flex-end;
-  padding: 4px 8px;
+  padding: 0px 8px;
   width: 100%;
   font-size: calc(0.73rem + 0.1vw);
 }
@@ -327,4 +327,16 @@
 }
 .button-check:hover{
   background-color: #b8d39e;
+}
+.cloud-download{
+  color: #9999;
+}
+.upload{
+  height: 30px;
+  width: 30px;
+  border-radius: 3px;
+}
+.cloud-download:hover{
+  color: rgb(69, 69, 69);
+  transition: 0.2s;
 }
