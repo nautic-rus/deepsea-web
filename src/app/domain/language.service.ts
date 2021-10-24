@@ -46,7 +46,10 @@ export class LanguageService {
           case 'создал': return 'created';
           case 'задачу': return 'issue';
           case 'ДОКУМЕНТЫ': return 'DOCUMENTS';
-          case '': return '';
+          case 'Логин': return 'Login';
+          case 'Пароль': return 'Password';
+          case 'Запомнить меня': return 'Remember me';
+          case 'Если вы не являетесь зарегистрированным пользователем, для получения логина и пароля обратитесь к системному администратору.': return 'If you are not a registered user, contact your system administrator to obtain a username and password.';
           case '': return '';
           case '': return '';
           case '': return '';

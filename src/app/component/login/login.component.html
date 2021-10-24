@@ -3,11 +3,11 @@
     <div class="logo cxy">
       <img src="assets/deepsea_blue.svg" height="35">
     </div>
-    <div class="logo-text">Логин</div>
+    <div class="logo-text">{{t.tr('Логин')}}</div>
     <div class="input">
       <input type="text" size="40" [(ngModel)]="login">
     </div>
-    <div class="logo-text mt-3">Пароль</div>
+    <div class="logo-text mt-3">{{t.tr('Пароль')}}</div>
     <div class="input">
       <input #input type="password" size="40" [(ngModel)]="password">
       <img #img (click)="toggleVisibility(input, img)" class="eye" src="assets/icons/visibility_1.svg" height="20">
@@ -20,10 +20,10 @@
       </div>
       <div class="check-box-off" *ngIf="!saveMeChecked" (click)="saveMeCheckedToggle()">
       </div>
-      <div class="check-text cxy">Запомнить меня</div>
+      <div class="check-text cxy">{{t.tr('Запомнить меня')}}</div>
     </div>
     <div class="enter-button cxy mt-3" [class.input-button]="isFilled()" (click)="processLogin()">Продолжить</div>
-    <div class="mt-3 text-help"> ⃰ Если вы не являетесь зарегистрированным пользователем, для получения логина и пароля обратитесь к системному администратору.
+    <div class="mt-3 text-help">* {{t.tr('Если вы не являетесь зарегистрированным пользователем, для получения логина и пароля обратитесь к системному администратору.')}}
     </div>
   </div>
 </div>
