@@ -253,4 +253,21 @@ export class HomeComponent implements OnInit {
       });
     });
   }
+
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+  exportXls() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.issues);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
+  }
 }

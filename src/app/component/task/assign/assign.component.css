@@ -68,9 +68,7 @@
 /deep/.p-dialog .p-dialog-content{
   padding-bottom: 1rem;
 }
-
-
-
-
-
-
+.disabled-button{
+  opacity: 0.5;
+  pointer-events: none;
+}

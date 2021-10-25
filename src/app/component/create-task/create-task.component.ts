@@ -12,6 +12,7 @@ import Delta from "quill-delta";
 import {User} from "../../domain/classes/user";
 import {LanguageService} from "../../domain/language.service";
 import {PrimeNGConfig} from "primeng/api";
+import {LV} from "../../domain/classes/lv";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -32,7 +33,7 @@ export class CreateTaskComponent implements OnInit {
   dueDate: Date = new Date();
   today: Date = new Date();
   taskProjects: string[] = [];
-  taskDepartments: string[] = [];
+  taskDepartments: LV[] = [];
   taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
   taskPeriod: string = this.taskPeriods[0];
   taskTypes: any[] = [];
@@ -132,8 +133,9 @@ export class CreateTaskComponent implements OnInit {
     });
     this.issues.getTaskPriorities().then(priorities => {
       priorities.forEach(priority => {
-        this.taskPriorities.push({label: this.issues.localeTaskType(priority), value: priority});
+        this.taskPriorities.push(new LV(this.issues.localeTaskPriority(priority), priority));
       });
+      this.taskPriorities = this.taskPriorities.reverse();
       if (this.taskPriorities.length > 0) {
         this.taskPriority = this.taskPriorities[0].value;
       }
@@ -145,9 +147,12 @@ export class CreateTaskComponent implements OnInit {
       }
     });
     this.issues.getIssueDepartments().then(departments => {
-      this.taskDepartments = departments;
+      departments.forEach(d => {
+        this.taskDepartments.push(new LV(this.issues.localeTaskDepartment(d), d));
+      })
+      this.taskDepartments = this.taskDepartments.reverse();
       if (this.taskDepartments.length > 0) {
-        this.taskDepartment = this.taskDepartments[0];
+        this.taskDepartment = this.taskDepartments[0].value;
       }
     });
 
@@ -350,6 +355,7 @@ export class CreateTaskComponent implements OnInit {
   isCreateTaskDisabled() {
     switch (this.taskType) {
       case 'it-task': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
+      case 'task-rkd': return this.taskDocNumber.trim() != '' && this.taskSummary.trim() != '' && this.taskResponsible != '';
       default: return false;
     }
   }

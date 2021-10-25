@@ -27,7 +27,7 @@
   <p-inputSwitch [(ngModel)]="overtime"></p-inputSwitch>
   <div class="form-footer pt-10">
     <div class="mr-1 cx">
-      <div tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
+      <div [class.disabled-button]="selectedUser == '' || dueDate.getTime() == 0" tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
     </div>
     <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
   </div>
