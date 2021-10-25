@@ -788,3 +788,33 @@
 .subtask:hover{
   background-color: rgb(235, 236, 240);
 }
+.attachments-issue{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  max-height: 115px;
+  overflow-y: auto;
+}
+.attachment-issues{
+  padding: 3px;
+  border-radius: 3px;
+}
+.attachment-issues:hover{
+  background-color: #dadada;
+}
+.attachment-footer-issue{
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  font-size: calc(0.73rem + 0.1vw);
+}
+.cloud-download{
+  color: #ffff;
+}
+.cloud-download:hover{
+  color: rgb(69, 69, 69);
+  transition: 0.2s;
+}
+.upload-file{
+  width: 30px;
+  border-radius: 3px;
+}

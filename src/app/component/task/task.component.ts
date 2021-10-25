@@ -163,6 +163,15 @@ export class TaskComponent implements OnInit {
     let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
     return da + ' ' + this.localeMonth(mo) + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
+  getFileDate(dateLong: number): string{
+    let date = new Date(dateLong);
+    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
+    let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
+    let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
+    return da + ' ' + this.localeMonth(mo) + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+  }
   quillCreated(event: any) {
     this.editor = event;
   }
@@ -281,12 +290,12 @@ export class TaskComponent implements OnInit {
     });
     this.comment = false;
   }
-  trimFileName(input: string, length: number = 9): string{
+  trimFileName(input: string, length: number = 8): string{
     let split = input.split('.');
     let name = split[0];
     let extension = split[1];
     if (input.length > length){
-      return name.substr(0, length) + '...' + name.substr(name.length - 2, 2) + '.' + extension;
+      return name.substr(0, length) + '..' + name.substr(name.length - 2, 2) + '.' + extension;
     }
     else{
       return input;

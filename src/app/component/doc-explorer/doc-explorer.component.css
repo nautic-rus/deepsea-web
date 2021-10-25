@@ -99,9 +99,6 @@
   max-height: 250px;
   overflow-y: auto;
 }
-.attachment-issues:hover{
-  background-color: #dcdcdc;
-}
 .attachment-footer-issue{
   display: flex;
   align-items: flex-end;
@@ -331,12 +328,13 @@
 .cloud-download{
   color: #9999;
 }
+.cloud-download:hover{
+  color: rgb(69, 69, 69);
+  transition: 0.2s;
+}
 .upload{
   height: 30px;
   width: 30px;
   border-radius: 3px;
 }
-.cloud-download:hover{
-  color: rgb(69, 69, 69);
-  transition: 0.2s;
-}
+

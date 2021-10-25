@@ -309,6 +309,9 @@ cdk-virtual-scroll-viewport{
 .mb-1{
   margin-bottom: 0.2rem;
 }
+.mb-5{
+  margin-bottom: 5px;
+}
 .mb-10{
   margin-bottom: 10px;
 }
