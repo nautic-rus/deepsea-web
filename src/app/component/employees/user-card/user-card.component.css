@@ -1,0 +1,73 @@
+.header-user-card{
+  border-bottom: 0 none;
+  background: #ffffff;
+  color: #323130;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+}
+.header-text{
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.task-button-user{
+  color: #605e5c;
+  width: 2rem;
+  height: 2rem;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-user:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.body-user-card{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+}
+.user-photo{
+  margin-top: 18px;
+}
+.user-name{
+  width: 90%;
+  border: 1px solid #dadada;
+  border-radius: 3px;
+  color: #323130;
+  font-weight: normal;
+  height: 37px;
+  padding: 8px;
+  font-size: 14px;
+}
+.big-text{
+  color: #5e6c84;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.min-text{
+  font-size: 12px;
+  padding-right: 4px;
+  color: rgb(107, 119, 140);
+  text-decoration: none;
+}
+.user-avatar{
+  display: flex;
+  flex-direction: column;
+}
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 5px!important;
+}
+.message-button{
+  border: 1px solid #dadada;
+  width: 90%;
+  height: 37px;
+  border-radius: 3px;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}

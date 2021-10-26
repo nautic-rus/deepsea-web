@@ -55,6 +55,7 @@ import { DocumentsComponent } from './component/documents/documents.component';
 import { EmployeesComponent } from './component/employees/employees.component';
 import { DeleteComponent } from './component/task/delete/delete.component';
 import { DocExplorerComponent } from './component/doc-explorer/doc-explorer.component';
+import { UserCardComponent } from './component/employees/user-card/user-card.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -83,6 +84,7 @@ Quill.register('modules/imageResize', ImageResize);
     EmployeesComponent,
     DeleteComponent,
     DocExplorerComponent,
+    UserCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -27,7 +27,6 @@ import {LanguageService} from "../../domain/language.service";
   encapsulation: ViewEncapsulation.None,
 })
 export class TaskComponent implements OnInit {
-
   issue: Issue = new Issue();
   message = '';
   comment = false;

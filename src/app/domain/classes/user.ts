@@ -16,4 +16,6 @@ export class User {
   userName: string = '';
   visibility: string = '';
   gender: string = '';
+  department: string = '';
+  avatar_full: string = '';
 }

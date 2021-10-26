@@ -133,6 +133,11 @@
           </div>
         </div>
         <div class="big-text mb-1 mt-2" *ngIf="issue.childIssues.length > 0">Подзадачи</div>
+        <p-accordion>
+          <p-accordionTab header="Header 1">
+            Content 1
+          </p-accordionTab>
+        </p-accordion>
         <div class="subtasks" *ngIf="issue.childIssues.length > 0">
           <div class="subtask cy" *ngFor="let childIssue of issue.childIssues">
             <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.taskType == 'Approval'">

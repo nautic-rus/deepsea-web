@@ -1,0 +1,66 @@
+<div style="height: 500px; width: 600px;">
+  <div class="header-user-card">
+    <div class="header-text">Информация о пользователе</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="body-user-card">
+    <div>
+      <div class="common-row mb-15">
+        <div class="big-text mb-1">Имя</div>
+        <div class="user-name">{{user.name}}</div>
+      </div>
+      <div class="common-row mb-15">
+        <div class="big-text mb-1">Фамилия</div>
+        <div class="user-name">{{user.surname}}</div>
+      </div>
+      <div class="common-row mb-15">
+        <div class="big-text mb-1">Отдел</div>
+        <div class="user-name">{{user.department}}</div>
+      </div>
+      <div class="common-row mb-15">
+        <div class="big-text mb-1">Должность</div>
+        <div class="user-name">{{user.profession}}</div>
+      </div>
+      <div class="common-row mb-15">
+        <div class="big-text mb-1">Телефон</div>
+        <div class="user-name">{{user.phone}}</div>
+      </div>
+      <div class="common-row mb-15">
+        <div class="big-text mb-1">Адрес эл. почты</div>
+        <div class="user-name">{{user.email}}</div>
+      </div>
+    </div>
+    <div class="user-avatar">
+      <div class="user-photo">
+        <img src="{{user.avatar_full}}" height="180" width="180" style="border-radius: 5px">
+      </div>
+      <div class="message-button mt-30">
+        <div class="cxy">
+          <img src="assets/icons/rocket.png">
+        </div>
+        <div class="cxy">
+          <a class="min-text" [href]="'rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + user.login">Написать в Rocket Chat</a>
+        </div>
+
+
+
+      </div>
+      <div class="text-center">
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="footer-delete mt-2">
+<!--    <div class="mr-1 cx">-->
+<!--      <div tabindex="10" (click)="commit()" pButton label="Да" class="button-delete"></div>-->
+<!--    </div>-->
+<!--    <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>-->
+  </div>
+</div>

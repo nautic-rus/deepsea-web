@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../../domain/classes/user";
 import {AuthManagerService} from "../../domain/auth-manager.service";
+import {DeleteComponent} from "../task/delete/delete.component";
+import {DialogService} from "primeng/dynamicdialog";
+import {UserCardComponent} from "./user-card/user-card.component";
 
 @Component({
   selector: 'app-employees',
@@ -15,7 +18,7 @@ export class EmployeesComponent implements OnInit {
   currentMonth = this.today.getMonth();
   currentYear = this.today.getFullYear();
 
-  constructor(public auth: AuthManagerService) { }
+  constructor(public auth: AuthManagerService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
 
@@ -74,5 +77,12 @@ export class EmployeesComponent implements OnInit {
       case 11: return 'Декабрь';
       default: return this.currentMonth;
     }
+  }
+
+  showUserCard() {
+    this.dialogService.open(UserCardComponent, {
+      showHeader: false,
+      modal: true,
+    });
   }
 }
