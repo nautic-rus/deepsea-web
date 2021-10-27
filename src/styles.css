@@ -423,3 +423,7 @@ cdk-virtual-scroll-viewport{
   top: 0;
   z-index: 10;
 }
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}

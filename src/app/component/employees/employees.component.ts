@@ -79,10 +79,11 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  showUserCard() {
+  showUserCard(user: User) {
     this.dialogService.open(UserCardComponent, {
       showHeader: false,
       modal: true,
+      data: user
     });
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {User} from "../../../domain/classes/user";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-user-card',
@@ -11,12 +12,21 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 export class UserCardComponent implements OnInit {
   user = new User();
 
-  constructor(public ref: DynamicDialogRef, public auth: AuthManagerService) { }
+  constructor(public ref: DynamicDialogRef, public auth: AuthManagerService, private sanitizer: DomSanitizer, public conf: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.user = this.auth.getUser();
+    this.user = this.conf.data as User;
   }
   close(){
     this.ref.close('exit');
+  }
+  sanitize(url:string){
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  getStyle(avatar_full: string) {
+    return {
+      'background-image': 'url(' + avatar_full + ')'
+    };
   }
 }

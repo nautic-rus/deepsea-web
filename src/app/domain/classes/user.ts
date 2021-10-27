@@ -18,4 +18,5 @@ export class User {
   gender: string = '';
   department: string = '';
   avatar_full: string = '';
+  rocket_login: string = '';
 }

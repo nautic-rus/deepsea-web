@@ -1,4 +1,4 @@
-<div style="height: 500px; width: 600px;">
+<div style="height: 470px; width: 600px;">
   <div class="header-user-card">
     <div class="header-text">Информация о пользователе</div>
     <div class="task-button-user cxy" (click)="close()">
@@ -7,60 +7,61 @@
   </div>
   <div class="body-user-card">
     <div>
-      <div class="common-row mb-15">
+      <div class="common-row mb-10">
         <div class="big-text mb-1">Имя</div>
         <div class="user-name">{{user.name}}</div>
       </div>
-      <div class="common-row mb-15">
+      <div class="common-row mb-10">
         <div class="big-text mb-1">Фамилия</div>
         <div class="user-name">{{user.surname}}</div>
       </div>
-      <div class="common-row mb-15">
+      <div class="common-row mb-10">
         <div class="big-text mb-1">Отдел</div>
         <div class="user-name">{{user.department}}</div>
       </div>
-      <div class="common-row mb-15">
+      <div class="common-row mb-10">
         <div class="big-text mb-1">Должность</div>
         <div class="user-name">{{user.profession}}</div>
       </div>
-      <div class="common-row mb-15">
+      <div class="common-row mb-10">
         <div class="big-text mb-1">Телефон</div>
         <div class="user-name">{{user.phone}}</div>
       </div>
-      <div class="common-row mb-15">
+      <div class="common-row mb-10">
         <div class="big-text mb-1">Адрес эл. почты</div>
         <div class="user-name">{{user.email}}</div>
       </div>
     </div>
     <div class="user-avatar">
-      <div class="user-photo">
-        <img src="{{user.avatar_full}}" height="180" width="180" style="border-radius: 5px">
+      <div class="position-relative">
+        <section class="image">
+          <div class="image__src" [ngStyle]="getStyle(user.avatar_full)"></div>
+        </section>
       </div>
-      <div class="message-button mt-30">
-        <div class="cxy">
-          <img src="assets/icons/rocket.png">
-        </div>
-        <div class="cxy">
-          <a class="min-text" [href]="'rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + user.login">Написать в Rocket Chat</a>
-        </div>
-
-
-
+      <div class="cxy mt-30">
+        <div class="big-text mb-10">Написать</div>
       </div>
-      <div class="text-center">
+      <div class="messengers">
+        <div class="cy">
+          <a [href]="sanitize('rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + user.rocket_login)">
+            <img src="assets/icons/rocket.png">
+          </a>
+          <div class="min-text">Rocket</div>
+        </div>
+        <div class="cxy cy">
+          <a [href]="sanitize('https://web.whatsapp.com/send?phone=' + user.phone)">
+            <img src="assets/icons/whatsapp.png">
+          </a>
+          <div class="min-text">WhatsApp</div>
+        </div>
+        <div class="content-flex-end">
 
-
-
+          <a [href]="sanitize('mailto:' + user.email)">
+            <img src="assets/icons/mail.png">
+          </a>
+          <div class="min-text">Mail.ru</div>
+        </div>
       </div>
     </div>
-  </div>
-
-
-
-  <div class="footer-delete mt-2">
-<!--    <div class="mr-1 cx">-->
-<!--      <div tabindex="10" (click)="commit()" pButton label="Да" class="button-delete"></div>-->
-<!--    </div>-->
-<!--    <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>-->
   </div>
 </div>
