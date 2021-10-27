@@ -5,7 +5,7 @@
       dataKey="id"
       [value]="issues"
       [scrollable]="true" scrollHeight="calc(100vh - 280px)" scrollDirection="both"
-      [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status']"
+      [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status', 'docNumber']"
       [reorderableColumns]="true"
       [resizableColumns]="false"
       [columns]="cols"
@@ -17,7 +17,7 @@
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-2">
-            <button pButton label="Очистить" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear()"></button>
+            <button pButton label="Очистить" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
           </div>
           <div class="mr-2">
             <button pButton label="Новая задача" class="border new-task-button p-button-info" (click)="newTask(null)"></button>
@@ -32,7 +32,7 @@
             <button pButton label="Экспорт" class="border normal-button p-button-outlined " icon="pi pi-upload" (click)="exportXls()"></button>
           </div>
           <div class="ml-2 cxy">
-            Количество задач: {{issues.length}}
+            Количество задач: {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} (Всего: {{dt.value.length}})
           </div>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>

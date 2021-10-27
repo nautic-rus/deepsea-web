@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterContentChecked, AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
@@ -20,7 +20,7 @@ import {ViewedIssue} from "../../domain/classes/viewed-issue";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterContentChecked {
   issues: Issue[] = [];
   cols: any[] = [];
   filters = {};
@@ -30,7 +30,17 @@ export class HomeComponent implements OnInit {
   viewedIssues: ViewedIssue[] = [];
   constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
   // @ts-ignore
+  @ViewChild('search') search;
+  // @ts-ignore
   @ViewChild('dt') dt: Table;
+
+  resetSearch = false;
+  ngAfterContentChecked(): void {
+    if (!this.resetSearch && this.dt != null){
+      this.dt.filterGlobal('', 'content');
+      this.resetSearch = true;
+    }
+  }
   ngOnInit() {
     this.setCols();
     this.fillIssues();
@@ -39,10 +49,6 @@ export class HomeComponent implements OnInit {
       if (taskId != ''){
         this.viewTask(taskId);
       }
-    });
-    this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
-      console.log(res);
-      this.viewedIssues = res;
     });
   }
   setCols(){
@@ -82,6 +88,10 @@ export class HomeComponent implements OnInit {
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
       //this.setCols();
       this.filled = true;
+      this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
+        console.log(res);
+        this.viewedIssues = res;
+      });
     });
     if (this.dt != null){
       setTimeout(() => {
@@ -103,17 +113,23 @@ export class HomeComponent implements OnInit {
     this.setIssueViewed(id);
     this.issueManager.getIssueDetails(id, this.auth.getUser().login).then(res => {
       console.log(res);
-      this.dialogService.open(TaskComponent, {
-        showHeader: false,
-        modal: true,
-        data: res
-      }).onClose.subscribe(res => {
-        this.fillIssues();
-        let issue = res as Issue;
-        if (issue != null && issue.id != null){
-          this.newTask(issue);
-        }
-      });
+      if (res.id != null){
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        }).onClose.subscribe(res => {
+          this.fillIssues();
+          let issue = res as Issue;
+          if (issue != null && issue.id != null){
+            this.newTask(issue);
+          }
+          this.router.navigate([''], {queryParams: {taskId: null}});
+        });
+      }
+      else{
+        this.messageService.add({severity:'error', summary:'Url Issue', detail:'Cannot find issue defined in url.'});
+      }
     });
   }
   getFilters(issues: any[], field: string): any[] {
@@ -266,7 +282,28 @@ export class HomeComponent implements OnInit {
   }
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.issues);
+    let data: any[] = [];
+    let issues = this.dt.filteredValue as Issue[];
+    data.push(['ID', 'Статус', 'Отдел', 'Создал', 'Дата создания', 'Тип задачи', 'Наименование', 'Номер документа', 'Ответственный', 'Назначена', 'Дата окончания', 'Описание']);
+    issues.forEach(v => {
+      data.push(
+        [
+          v.humanId,
+          this.issueManager.localeStatus(v.status, false),
+          this.issueManager.localeTaskDepartment(v.department),
+          this.auth.getUserName(v.startedBy),
+          this.getDateNoTime(v.startedDate),
+          this.issueManager.localeTaskType(v.taskType),
+          v.name,
+          v.docNumber,
+          this.auth.getUserName(v.responsible),
+          this.auth.getUserName(v.assignedTo),
+          this.getDateNoTime(v.dueDate),
+          v.details
+        ]
+      );
+    });
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
   }

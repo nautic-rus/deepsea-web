@@ -54,7 +54,7 @@ export class IssueManagerService {
     return await this.http.get<string[]>(props.http + '/issuePriorities').toPromise();
   }
   async startIssue(user: string, issue: Issue){
-    return await this.http.post(props.http + '/startIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();
+    return await this.http.post<string>(props.http + '/startIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();
   }
   async getIssues(login: string): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/issues', {params: {user: login}}).toPromise();

@@ -76,7 +76,16 @@ export class TaskComponent implements OnInit {
                 this.issueManager.uploadFile(file).then(res => {
                   this.loaded.push(res);
                   this.appRef.tick();
-                  this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
+                  let newDelta = new Delta();
+                  newDelta.retain(this.editor.getSelection().index);
+                  newDelta.insert({image: res.url});
+                  this.editor.updateContents(newDelta);
+                  this.editor.setSelection(this.editor.getLength());
+                  // this.editor.insertEmbed(this.editor.getLength(), 'image', res.url);
+                  // this.editor.insertText(this.editor.getLength() + 1, "\u00a0", 'user');
+                  // this.editor.setSelection();
+
+                  //this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
                   this.appRef.tick();
                 });
               });
@@ -233,7 +242,7 @@ export class TaskComponent implements OnInit {
           this.issue = issue;
           this.availableStatuses = this.getAvailableStatuses(issue);
           this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
-          console.log(issue);
+          this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
         }
         else{
           this.availableStatuses = [];
@@ -409,7 +418,7 @@ export class TaskComponent implements OnInit {
     else if (event.target.localName == 'a'){
       window.open(event.target.href, '_blank');
     }
-    else{
+    else if (this.isEditable()){
       this.edit = 'description';
     }
   }
@@ -551,6 +560,7 @@ export class TaskComponent implements OnInit {
       if (res == 'success'){
         this.edit = '';
         this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+        this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
       }
     });
   }
@@ -592,5 +602,9 @@ export class TaskComponent implements OnInit {
     else {
       return input.substr(0, length) + '...';
     }
+  }
+
+  isEditable() {
+    return this.auth.getUser().login == this.issue.startedBy || this.auth.getUser().login == this.issue.responsible;
   }
 }
