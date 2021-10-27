@@ -19,6 +19,7 @@ import {DeleteComponent} from "./delete/delete.component";
 import {IdName} from "../../domain/classes/id-name";
 import {LV} from "../../domain/classes/lv";
 import {LanguageService} from "../../domain/language.service";
+import {UserCardComponent} from "../employees/user-card/user-card.component";
 
 @Component({
   selector: 'app-task',
@@ -265,8 +266,9 @@ export class TaskComponent implements OnInit {
       this.editor.focus();
     })
   }
-  localeGender(gender: string){
-    return gender == 'female' && this.t.language == 'ru' ? 'а' : '';
+  localeGender(userId: string){
+    let find = this.auth.users.find(x => x.login == userId);
+    return find != null && find.gender == 'female' && this.t.language == 'ru' ? 'а' : '';
   }
   getFileExtensionIcon(file: string) {
     switch (file.toLowerCase().split('.').pop()){
@@ -606,5 +608,13 @@ export class TaskComponent implements OnInit {
 
   isEditable() {
     return this.auth.getUser().login == this.issue.startedBy || this.auth.getUser().login == this.issue.responsible;
+  }
+
+  openUserInfo(author: string) {
+    this.dialogService.open(UserCardComponent, {
+      showHeader: false,
+      modal: true,
+      data: author
+    });
   }
 }

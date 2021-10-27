@@ -4,6 +4,9 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {DeleteComponent} from "../task/delete/delete.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {UserCardComponent} from "./user-card/user-card.component";
+import {DayCalendar} from "../../domain/classes/day-calendar";
+import {IssueManagerService} from "../../domain/issue-manager.service";
+import _ from "underscore";
 
 @Component({
   selector: 'app-employees',
@@ -12,16 +15,31 @@ import {UserCardComponent} from "./user-card/user-card.component";
 })
 export class EmployeesComponent implements OnInit {
 
-  departments: string[] = ['Корпусный отдел', 'Системный отдел', 'Электротехнический отдел', 'IT-отдел', 'Отдел дизайна'];
-  department = this.departments[1];
+  departments: string[] = [];
+  department = '';
   today = new Date();
   currentMonth = this.today.getMonth();
   currentYear = this.today.getFullYear();
+  days: DayCalendar[] = [];
+  selectedStatus = '';
+  users: User[] = [];
 
-  constructor(public auth: AuthManagerService, private dialogService: DialogService) { }
+  constructor(public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
   ngOnInit(): void {
-
+    this.issues.getCalendar().then(res =>{
+      this.days = res;
+    });
+    this.auth.getUsers().then(res =>{
+      this.users = res;
+      this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
+      this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
+      this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null));
+      this.departments = _.sortBy(this.departments, x => x).reverse();
+      this.departments.push('Все');
+      this.departments = this.departments.reverse();
+      this.department = 'Все';
+    });
   }
   getDaysInMonth() {
     let daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -32,7 +50,7 @@ export class EmployeesComponent implements OnInit {
     return array;
   }
   getUsers(){
-    return this.auth.users.filter(x => x.visibility.includes('k'));
+    return this.users.filter(x => x.visibility.includes('k')).filter(x => x.department == this.department || this.department == 'Все');
   }
   isWeekend(day: number) {
     let date = new Date(this.currentYear, this.currentMonth, day).getDay();
@@ -83,7 +101,52 @@ export class EmployeesComponent implements OnInit {
     this.dialogService.open(UserCardComponent, {
       showHeader: false,
       modal: true,
-      data: user
+      data: user.login
     });
+  }
+
+  setDayCalendar(user: string, day: string, status: string){
+    this.issues.setDayCalendar(user, day, status).then(() => {
+      this.issues.getCalendar().then(res => {
+        this.days = res;
+      });
+    });
+  }
+
+  getDayStyle(user: string, day: string) {
+    let find = this.days.find(x => x.day == day && x.user == user);
+    if (find != null){
+      switch (find.status) {
+        case 'sick': return { background: 'rgba(166, 0, 255, 0.1)', 'border-radius': '5px', 'cursor': 'default','font-weight': '600', 'color': '#323130' };
+        case 'vacation': return { background: 'rgba(80, 200, 120, 0.27)', 'border-radius': '5px', 'cursor': 'default', 'font-weight': '600', 'color': '#323130' };
+        case 'off': return { background: 'rgba(255, 0, 0, 0.15)', 'border-radius': '5px', 'cursor': 'default', 'font-weight': '600', 'color': '#323130' };
+        default: return {};
+      }
+    }
+    else {
+      return {};
+    }
+  }
+  getDayLetter(user: string, day: string) {
+    let find = this.days.find(x => x.day == day && x.user == user);
+    if (find != null){
+      switch (find.status) {
+        case 'sick': return 'Б';
+        case 'vacation': return 'О';
+        case 'off': return 'В';
+        default: return '';
+      }
+    }
+    else {
+      return '';
+    }
+  }
+
+  selectStatus(status: string) {
+    this.selectedStatus = status;
+  }
+
+  getDay(day: number) {
+    return 'D' + day + 'M' + this.currentMonth + 'Y' + this.currentYear;
   }
 }

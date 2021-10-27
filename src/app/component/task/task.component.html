@@ -12,7 +12,7 @@
         <img src="assets/icons/trash.svg" height="20">
       </div>
       <div class="task-button cxy" (click)="close()">
-        <img src="assets/icons/close.svg" height="20">
+        <i class="pi pi-times"></i>
       </div>
     </div>
   </div>
@@ -133,7 +133,6 @@
           </div>
         </div>
         <div class="big-text mb-1 mt-2" *ngIf="issue.childIssues.length > 0">Подзадачи</div>
-
         <div class="subtasks" *ngIf="issue.childIssues.length > 0">
           <div class="subtask cy" *ngFor="let childIssue of issue.childIssues">
             <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.taskType == 'Approval'">
@@ -222,13 +221,13 @@
         <div class="issue-message" *ngFor="let msg of getMessages(issue)">
           <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
             <div class="df pb-20">
-              <div class="pt-5 mr-10">
-                <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
+              <div class="pt-5 mr-10" (click)="openUserInfo(msg.author)">
+                <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
               </div>
               <div>
                 <div class="">
-                  <span class="bold-text">{{auth.getUserName(msg.author)}}</span>
-                  <span class="text-descr"> {{t.tr('создал')}} {{localeGender(msg.author)}} {{t.tr('сообщение')}} </span>
+                  <span class="bold-text cursor-pointer" (click)="openUserInfo(msg.author)">{{auth.getUserName(msg.author)}}</span>
+                  <span class="text-descr"> {{t.tr('создал')}}{{localeGender(msg.author)}} {{t.tr('сообщение')}} </span>
                   <span class="text-date"> {{getDate(msg.date)}} </span>
                   <quill-view *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
                   <div class="">
@@ -282,21 +281,21 @@
           <div *ngIf="(messageFilter == 'all' || messageFilter == 'camunda') && msg.owner == 'camunda'">
           <span class="" *ngFor="let varMap of filterVariables(msg.variables)">
             <div class="df pb-30">
-              <div class="pt-5 mr-10">
-                <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
+              <div class="pt-5 mr-10" (click)="openUserInfo(msg.author)">
+                <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
               </div>
               <div>
-                <span class="bold-text">{{getAuthor(msg.author)}}</span>
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
                 <span class="bold-text">{{issueManager.localeHistory(varMap.name)}}</span>
                 <span class="text-date pl-5">{{getDate(msg.date)}} </span>
-              <div class="df pt-5">
-                <div class="" [innerHTML]="issueManager.localeStatus(getPrevValue(issue.messages, varMap.name, msg.date)) | safeHtml"></div>
-                <span class="px-10">
-                  <img src="assets/icons/right-arrow.svg" height="13">
-                </span>
-                <div [innerHTML]="issueManager.localeStatus(varMap.value) | safeHtml"></div>
-              </div>
+                <div class="df pt-5">
+                  <div class="" [innerHTML]="issueManager.localeStatus(getPrevValue(issue.messages, varMap.name, msg.date)) | safeHtml"></div>
+                  <span class="px-10">
+                    <img src="assets/icons/right-arrow.svg" height="13">
+                  </span>
+                  <div [innerHTML]="issueManager.localeStatus(varMap.value) | safeHtml"></div>
+                </div>
               </div>
             </div>
           </span>
@@ -304,11 +303,11 @@
         </div>
         <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'camunda')">
           <div class="df">
-            <div class="pt-5 mr-10">
-              <img src="{{auth.getUserAvatar(issue.startedBy)}}" height="32" width="32" style="border-radius: 16px">
+            <div (click)="openUserInfo(issue.startedBy)" class="pt-5 mr-10">
+              <img src="{{auth.getUserAvatar(issue.startedBy)}}" height="32" width="32" style="border-radius: 16px; cursor: pointer">
             </div>
             <div class="">
-              <span class="bold-text">{{auth.getUserName(issue.startedBy)}}</span>
+              <span (click)="openUserInfo(issue.startedBy)" class="bold-text cursor-pointer">{{auth.getUserName(issue.startedBy)}}</span>
               <span class="text-descr"> {{t.tr('создал')}}{{localeGender(issue.startedBy)}} {{t.tr('задачу')}}</span>
               <span class="text-date"> {{getDate(issue.startedDate)}} </span>
             </div>

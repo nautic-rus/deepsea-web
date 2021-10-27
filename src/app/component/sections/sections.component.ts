@@ -26,10 +26,7 @@ export class SectionsComponent implements OnInit {
   }
 
   getStyle(s: string) {
-    let find = this.issues.find(x => x.name.includes('Block ' + s));
-    if (find == null){
-      find = this.issues.find(x => x.name.includes('Секция ' + s) || x.name.includes('Block ' + s));
-    }
+    let find = this.issues.find(x => x.name.includes('Секция ' + s));
     let status = '';
     if (find != null){
       status = find.status;

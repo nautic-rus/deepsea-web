@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   newTask(issue: object | null) {
    this.dialogService.open(CreateTaskComponent, {
-      header: 'Создать задачу',
+      showHeader: false,
       modal: true,
       data: issue
     }).onClose.subscribe(res => {
@@ -237,7 +237,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   importXls(){
     this.dialogService.open(ImportxlsComponent, {
-      header: 'Импорт задач',
+      showHeader: false,
       modal: true,
     }).onClose.subscribe(message => {
       if (message == 'imported'){

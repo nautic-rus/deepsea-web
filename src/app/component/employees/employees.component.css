@@ -158,10 +158,10 @@
   background-color: rgba(166, 0, 255, 0.1);
 }
 .vacation{
-  background-color: rgba(89, 255, 0, 0.1);
+  background-color: rgba(80, 200, 120, 0.15);
 }
 .vacation:hover{
-  background-color: rgba(89, 255, 0, 0.2);
+  background-color: rgba(80, 200, 120, 0.27);
 }
 .off{
   background-color: rgba(255, 0, 0, 0.09);
@@ -169,3 +169,19 @@
 .off:hover{
   background-color: rgba(255, 0, 0, 0.15);
 }
+.sick-selected{
+  background-color: rgba(166, 0, 255, 0.1);
+  outline: 1px solid rgba(166, 0, 255, 0.1);
+  outline-offset: -1px;
+}
+.vacation-selected{
+  background-color: rgba(80, 200, 120, 0.27);
+  outline: 1px solid rgba(80, 200, 120, 0.27);
+  outline-offset: -1px;
+}
+.off-selected{
+  background-color: rgba(255, 0, 0, 0.15);
+  outline: 1px solid rgba(255, 0, 0, 0.15);
+  outline-offset: -1px;
+}
+

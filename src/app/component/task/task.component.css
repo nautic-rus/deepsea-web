@@ -287,13 +287,19 @@
   justify-content: flex-end;
 }
 .task-button{
-  padding: 5px;
-  border-radius: 3px;
-  margin-left: 8px;
+  color: #605e5c;
+  width: 2rem;
+  height: 2rem;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
 .task-button:hover{
-  background-color: rgb(235, 236, 240);
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
 }
 .button-disabled{
   pointer-events: none;

@@ -22,9 +22,9 @@
       <div class="month-name">{{getMonth() + ' ' + this.currentYear}}
       </div>
       <div class="p-ml-auto status-buttons mr-1 cxy">
-        <div class="privat-status sick cxy mx-1">Б</div>
-        <div class="privat-status vacation cxy mx-1">О</div>
-        <div class="privat-status off cxy mx-1">В</div>
+        <div [class.sick-selected]="selectedStatus == 'sick'" (click)="selectStatus('sick')" class="privat-status sick cxy mx-1">Б</div>
+        <div [class.vacation-selected]="selectedStatus == 'vacation'" (click)="selectStatus('vacation')"  class="privat-status vacation cxy mx-1">О</div>
+        <div [class.off-selected]="selectedStatus == 'off'" (click)="selectStatus('off')"  class="privat-status off cxy mx-1">В</div>
       </div>
     </div>
     <div class="users-days">
@@ -47,7 +47,9 @@
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
-              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>
+              <div *ngFor="let day of getDaysInMonth()" (click)="setDayCalendar(user.login, getDay(day), selectedStatus)" (contextmenu)="$event.preventDefault(); setDayCalendar(user.login, getDay(day), 'removed');" [ngStyle]="getDayStyle(user.login, getDay(day))" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
+                {{getDayLetter(user.login, getDay(day))}}
+              </div>
             </div>
           </div>
         </div>

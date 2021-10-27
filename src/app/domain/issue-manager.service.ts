@@ -14,6 +14,7 @@ import {ViewedIssue} from "./classes/viewed-issue";
 import {AuthManagerService} from "./auth-manager.service";
 import {HullPL} from "./classes/hull-pl";
 import {LanguageService} from "./language.service";
+import {DayCalendar} from "./classes/day-calendar";
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +86,12 @@ export class IssueManagerService {
   }
   async setIssueViewed(id: string, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/setIssueViewed', {params: {id, user}}).toPromise();
+  }
+  async setDayCalendar(user: string, day: string, status: string): Promise<string>{
+    return await this.http.get<string>(props.http + '/setDayCalendar', {params: {user, day, status}}).toPromise();
+  }
+  async getCalendar(): Promise<DayCalendar[]>{
+    return await this.http.get<DayCalendar[]>(props.http + '/daysCalendar').toPromise();
   }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {

@@ -15,7 +15,14 @@ export class UserCardComponent implements OnInit {
   constructor(public ref: DynamicDialogRef, public auth: AuthManagerService, private sanitizer: DomSanitizer, public conf: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.user = this.conf.data as User;
+    let login = this.conf.data as string
+    let find = this.auth.users.find(x => x.login == login);
+    if (find != null){
+      this.user = find;
+    }
+    else{
+      this.ref.close('user not found');
+    }
   }
   close(){
     this.ref.close('exit');

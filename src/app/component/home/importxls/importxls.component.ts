@@ -60,4 +60,7 @@ export class ImportxlsComponent implements OnInit {
   getTemplate() {
     window.open('/assets/importIssues.xlsx');
   }
+  close(){
+    this.ref.close('exit');
+  }
 }
