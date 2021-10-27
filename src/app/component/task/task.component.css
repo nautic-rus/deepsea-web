@@ -818,3 +818,7 @@
   width: 30px;
   border-radius: 3px;
 }
+.no-edit{
+  pointer-events: none;
+  cursor: default !important;
+}
