@@ -18,6 +18,7 @@ export class EmployeesComponent implements OnInit {
   departments: string[] = [];
   department = '';
   today = new Date();
+  todayStatic = new Date();
   currentMonth = this.today.getMonth();
   currentYear = this.today.getFullYear();
   days: DayCalendar[] = [];
@@ -58,7 +59,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   isCurrentDay(day: any) {
-    return day == this.today.getDate() && this.currentMonth == this.today.getMonth();
+    return day == this.todayStatic.getDate() && this.currentMonth == this.todayStatic.getMonth();
   }
 
   prevMonth() {
