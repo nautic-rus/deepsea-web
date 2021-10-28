@@ -55,6 +55,7 @@ export class TaskComponent implements OnInit {
   startDate: Date = new Date();
   dueDate: Date = new Date();
   today: Date = new Date();
+  collapsed: string[] = [];
   quillModules =
     {
       imageResize: {},
@@ -616,5 +617,8 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: author
     });
+  }
+  contentClick(content: string): void{
+    this.collapsed.includes(content) ? this.collapsed.splice(this.collapsed.indexOf(content), 1) : this.collapsed.push(content);
   }
 }

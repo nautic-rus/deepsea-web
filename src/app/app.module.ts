@@ -56,6 +56,7 @@ import { EmployeesComponent } from './component/employees/employees.component';
 import { DeleteComponent } from './component/task/delete/delete.component';
 import { DocExplorerComponent } from './component/doc-explorer/doc-explorer.component';
 import { UserCardComponent } from './component/employees/user-card/user-card.component';
+import {NgxCollapseModule} from "ngx-collapse";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -121,6 +122,7 @@ Quill.register('modules/imageResize', ImageResize);
     InputTextareaModule,
     InputNumberModule,
     CheckboxModule,
+    NgxCollapseModule
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

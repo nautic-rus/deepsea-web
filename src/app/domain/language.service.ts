@@ -39,7 +39,7 @@ export class LanguageService {
           case 'Сверхурочные': return 'Out of Work';
           case 'ID задачи': return 'Issue ID';
           case 'Активность': return 'Activity';
-          case 'Показть': return 'Show';
+          case 'Показать': return 'Show';
           case 'Все': return 'All';
           case 'Комментарии': return 'Messages';
           case 'История': return 'History';
