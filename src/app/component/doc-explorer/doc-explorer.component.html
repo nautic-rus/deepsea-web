@@ -38,21 +38,21 @@
             <p-table [value]="spec.content" styleClass="p-datatable-striped cursor-pointer">
               <ng-template pTemplate="header">
                 <tr class="sticky">
-                  <th pSortableColumn="CODE" class="w-10">Part <p-sortIcon field="CODE"></p-sortIcon></th>
+                  <th pSortableColumn="CODE" class="w-12">Part <p-sortIcon field="CODE"></p-sortIcon></th>
                   <th pSortableColumn="DESCRIPTION" class="w-17">Name <p-sortIcon field="DESCRIPTION"></p-sortIcon></th>
                   <th class="w-8">Weight</th>
                   <th class="w-19">Stock Code</th>
-                  <th class="w-30">Node Path</th>
+                  <th class="w-28">Node Path</th>
                   <th class="w-19">COG</th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-specRow>
                 <tr class="">
-                  <td class="w-10 text-table">{{specRow.CODE}}</td>
+                  <td class="w-12 text-table">{{specRow.CODE}}</td>
                   <td class="w-17 text-table">{{specRow.DESCRIPTION}}</td>
                   <td class="w-8 text-table">{{round(specRow.WEIGHT)}}</td>
                   <td class="w-19 text-table">{{specRow.STOCKCODE}}</td>
-                  <td class="w-30 text-table">{{specRow.BS_ADN}}</td>
+                  <td class="w-28 text-table">{{specRow.BS_ADN}}</td>
                   <td class="w-19 text-table">
                     <span><span class="bold">X:</span> {{round(specRow.X_COG) + ' '}}</span>
                     <span><span class="bold">Y:</span> {{round(specRow.Y_COG) + ' '}}</span>
