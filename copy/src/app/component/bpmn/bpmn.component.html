@@ -1,0 +1,15 @@
+<div class="modeler">
+  <div class="canvas" id="canvas" #canvas></div>
+  <div class="properties-panel" id="properties"></div>
+  <div class="buttons">
+    <button class="button" (click)="createNew()">NEW MODEL<i class="fa fa-file"></i></button>
+    <button class="button" (click)="save()">SAVE FILE <i class="fa fa-save"></i></button>
+    <button class="button" (click)="inputFile.click()">OPEN FILE <i class="fa fa-folder-open"></i></button>
+    <input #inputFile hidden type="file" name="name" accept=".bpmn" (change)="uploadFile($event)"/>
+    <select [(ngModel)]="selectedModel" (ngModelChange)="onModelChanged()">
+      <option *ngFor="let model of models">{{model}}</option>
+    </select>
+    <button class="button" (click)="depoloy()">PUBLISH MODEL<i class="pi pi-check"></i></button>
+  </div>
+</div>
+<p-toast position="bottom-center"></p-toast>

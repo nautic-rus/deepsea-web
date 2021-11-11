@@ -1,0 +1,81 @@
+<div class="all-page">
+  <div class="card">
+    <p-table
+      #dt
+      dataKey="id"
+      [value]="issues"
+      [scrollable]="true" scrollHeight="calc(100vh - 280px)" scrollDirection="both"
+      [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status', 'docNumber']"
+      [reorderableColumns]="true"
+      [resizableColumns]="false"
+      [columns]="cols"
+      [virtualScroll]="true"
+      stateStorage="local"
+      stateKey="state"
+      *ngIf="filled"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="mr-2">
+            <button pButton label="Очистить" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
+          </div>
+          <div class="mr-2">
+            <button pButton label="Новая задача" class="border new-task-button p-button-info" (click)="newTask(null)"></button>
+          </div>
+          <p-multiSelect class="" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
+                         selectedItemsLabel="{0} выбрано колонок" styleClass="width-200 new-task-button" placeholder="Выберите колонки">
+          </p-multiSelect>
+          <div class="ml-2">
+            <button pButton label="Импорт" class="border normal-button p-button-outlined " icon="pi pi-download" (click)="importXls()"></button>
+          </div>
+          <div class="ml-2">
+            <button pButton label="Экспорт" class="border normal-button p-button-outlined " icon="pi pi-upload" (click)="exportXls()"></button>
+          </div>
+          <div class="ml-2 cxy">
+            Количество задач: {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} (Всего: {{dt.value.length}})
+          </div>
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." class="border" />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup">
+        <colgroup>
+          <col style="width: 30px"/>
+          <col style="width:200px" *ngFor="let col of cols" [hidden]="col.hidden">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th></th>
+          <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
+            <div class="header">
+              {{col.header}}
+              <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+              <p-columnFilter class="filter" *ngIf="col.filter == true" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" placeholder="Все" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-columns="columns" let-issue>
+        <tr [class.task-update]="isTaskUpdated(issue.id, issue.lastUpdate)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
+          <td class="cursor-pointer">
+            <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.lastUpdate)"></div>
+            <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
+          </td>
+          <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
+            <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
+            <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-toast position="bottom-center"></p-toast>

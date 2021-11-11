@@ -72,8 +72,8 @@ export class IssueManagerService {
   async initHullPartList(project: string, taskId: string, docNum: string, docName: string, user: string): Promise<string> {
     return await this.http.get<string>(props.httpMaterials + '/initHullPartList', {params: {project, taskId, docNum, docName, user}}).toPromise();
   }
-  async updateIssue(user: string, issue: Issue) {
-    return await this.http.post(props.http + '/updateIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();
+  async updateIssue(user: string, message: string, issue: Issue): Promise<Issue> {
+    return await this.http.post<Issue>(props.http + '/updateIssue', JSON.stringify(issue), {params: {user, message}}).toPromise();
   }
   async setIssueStatus(id: string, user: string, status: string): Promise<string> {
     return await this.http.get<string>(props.http + '/setIssueStatus', {params: {id: id, user: user, status: status}}).toPromise();
@@ -81,8 +81,8 @@ export class IssueManagerService {
   async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
     return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id: id}}).toPromise();
   }
-  async removeIssue(id: string): Promise<string>{
-    return await this.http.get<string>(props.http + '/removeIssue', {params: {id: id}}).toPromise();
+  async removeIssue(id: string, user: string): Promise<string>{
+    return await this.http.get<string>(props.http + '/removeIssue', {params: {id, user}}).toPromise();
   }
   async setIssueViewed(id: string, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/setIssueViewed', {params: {id, user}}).toPromise();

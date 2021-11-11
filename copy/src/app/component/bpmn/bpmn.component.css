@@ -1,0 +1,53 @@
+.modeler{
+  position: relative;
+}
+.properties-panel {
+  position: fixed;
+  top: var(--navi-height);
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  z-index: 10;
+  border-left: 1px solid #ccc;
+  overflow: auto;
+}
+.canvas{
+  position: relative;
+  height: calc(100vh - var(--navi-height));
+  width: calc(100% - 400px);
+}
+.properties-panel:empty {
+  display: none;
+}
+
+.properties-panel > .djs-properties-panel {
+  padding-bottom: 70px;
+  min-height: 100%;
+}
+/deep/.bpp-properties-panel{
+  padding-right: 10%;
+}
+.buttons{
+  position: absolute;
+  left: 100px;
+  top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  z-index: 11;
+}
+.button{
+  margin: 0 5px 0 5px;
+}
+.test-buttons{
+  position: absolute;
+  top: 20px;
+  left: calc(50% - 450px / 2);
+  transform: translate(-50%, 0);
+  height: 200px;
+  width: 400px;
+  background: rgba(217, 214, 104, 0.89);
+}
+.prop{
+  display: flex;
+  flex-wrap: wrap;
+}

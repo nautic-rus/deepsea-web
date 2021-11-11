@@ -1,0 +1,47 @@
+<div style="height: 330px; width: 400px;">
+  <div class="task-header-assign">
+    <div class="task-name">{{lang.tr('Отправить файлы')}}</div>
+    <div class="task-button cxy" (click)="close()">
+      <img src="assets/icons/close.svg" height="20">
+    </div>
+  </div>
+  <div class="body-approval">
+    <div class="big-text mb-1 mt-1">{{lang.tr('Вложение')}}</div>
+    <div [class.file-drag]="dragOver" class="upload cx cy loading">
+      <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+        <span class="normal-text no-actions">{{lang.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+      </div>
+    </div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+      <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+      <div class="cy">{{file}}</div>
+      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+      <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Выберите номер ревизии</div>
+    </div>
+    <div class="big-text mb-1 df">
+      <div class="w-45 mr-2">
+        <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="big-text mb-1 mt-1">На согласование:</div>
+    <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-250 border" [maxSelectedLabels]="5" selectedItemsLabel="{0} выбрано" [(ngModel)]="selectedUsers"></p-multiSelect>
+  </div>
+  <div class="form-footer pt-50">
+    <div class="mr-1 cx">
+      <div tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
+    </div>
+    <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
+  </div>
+</div>
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()"></div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>

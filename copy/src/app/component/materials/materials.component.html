@@ -1,0 +1,94 @@
+<div class="all-page">
+  <div class="card">
+    <p-table [rowHover]="true" [value]="materials" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped cursor-pointer" responsiveLayout="scroll">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="mr-1">
+            <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+            </p-dropdown>
+          </div>
+          <div class="mr-1">
+            <p-dropdown placeholder="Тип материалов" class="select" [(ngModel)]="typeMaterial" [options]="typesMaterial" styleClass="width-180 border">
+            </p-dropdown>
+          </div>
+          <div class="mr-1">
+            <p-multiSelect [options]="categories" placeholder="ВЕДОМОСТЬ" styleClass="width-250 border" [maxSelectedLabels]="0" selectedItemsLabel="Ведомости ({0} выбрано)" [(ngModel)]="selectedCategories"></p-multiSelect>
+            <!--        <p-dropdown placeholder="ВЕДОМОСТЬ" class="select" [(ngModel)]="category" [options]="categories" styleClass="width-220">-->
+            <!--        </p-dropdown>-->
+          </div>
+          <div class="cxy mr-1">
+            <div (click)="addMaterial()" class="icon-categories cursor-pointer" pTooltip="Добавить">
+              <img src="assets/icons/plus.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Редактировать">
+              <img src="assets/icons/draw.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Копировать">
+              <img src="assets/icons/copy-1.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Удалить">
+              <img src="assets/icons/trash-1.svg" height="22">
+            </div>
+          </div>
+          <div class="cxy mr-1">
+            <div class="icon-categories cursor-pointer" pTooltip="Экспорт XLS">
+              <img src="assets/icons/xls-file.svg" height="22">
+            </div>
+          </div>
+          <div class="p-ml-auto">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input #search pInputText type="text" placeholder="Поиск..." class="border" />
+            </span>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="w-3">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th class="w-5">Проект</th>
+          <th class="w-20">Наименование</th>
+          <th class="w-11">Обозначение</th>
+          <th class="w-6">КВЗ</th>
+          <th class="w-6">Коэф.</th>
+          <th class="w-6">Вес</th>
+          <th class="w-6">КЕИ</th>
+          <th class="w-10">Документ</th>
+          <th class="w-10">Поставщик</th>
+          <th class="w-10">Примечания</th>
+          <th class="w-10">Код материала</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-material>
+        <tr>
+          <td class="w-3">
+            <p-tableCheckbox [value]="material"></p-tableCheckbox>
+          </td>
+          <td class="w-5 text-14">{{material.project}}</td>
+          <td class="w-19 text-14">{{material.name}}</td>
+          <td class="w-10 text-14">{{material.description}}</td>
+          <td class="w-6 text-14">{{material.category}}</td>
+          <td class="w-6 text-14">{{0}}</td>
+          <td class="w-6 text-14">{{material.singleWeight}}</td>
+          <td class="w-6 text-14">{{material.units}}</td>
+          <td class="w-10 text-14">{{material.document}}</td>
+          <td class="w-10 text-14">{{material.provider}}</td>
+          <td class="w-9 text-14">{{material.note}}</td>
+          <td class="w-10 text-14">{{material.trmCode}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+
+
+</div>
+<p-toast position="bottom-center"></p-toast>

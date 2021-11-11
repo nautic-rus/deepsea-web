@@ -1,6 +1,6 @@
 <div class="w70">
   <div class="task-header">
-    <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.taskType)}}</div>
+    <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.issue_type)}}</div>
     <div class="task-buttons">
       <div class="task-button cxy" pTooltip="Копировать ссылку задачи" (click)="copyIssueUrl()">
         <img src="assets/icons/link.svg" height="20">
@@ -8,7 +8,7 @@
       <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
         <img src="assets/icons/copy.svg" height="20">
       </div>
-      <div class="task-button cxy mr-2" pTooltip="Удалить задачу" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.startedBy)">
+      <div class="task-button cxy mr-2" pTooltip="Удалить задачу" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by)">
         <img src="assets/icons/trash.svg" height="20">
       </div>
       <div class="task-button cxy" (click)="close()">
@@ -19,8 +19,8 @@
   <div class="center">
     <div class="left-content">
       <div class="pb-10">
-        <div [class.no-edit]="!isEditable()" *ngIf="issue.taskType != 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.docNumber}} {{issue.name}}</div>
-        <div [class.no-edit]="!isEditable()" *ngIf="issue.taskType == 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">Согласование {{issue.docNumber}}</div>
+        <div [class.no-edit]="!isEditable()" *ngIf="issue.issue_type != 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.doc_number}} {{issue.name}}</div>
+        <div [class.no-edit]="!isEditable()" *ngIf="issue.issue_type == 'Approval'" class="task-name hover-task cursor-pointer padding-8" [hidden]="edit == 'name'" (click)="edit = 'name'">Согласование {{issue.doc_number}}</div>
         <div class="task-name" [hidden]="edit != 'name'">
           <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
           <div class="content-end">
@@ -35,20 +35,20 @@
       </div>
       <div class="buttons">
 
-        <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="issue.activities.includes('Assign Task') && (issue.responsible == auth.getUser().login)">
+        <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="(issue.responsible == auth.getUser().login)">
           <span class="icon-assign cxy">
             <img src="assets/icons/user.svg">
           </span>
           <span class="cxy button-text">Назначить</span>
         </div>
-        <div class="buttons-pick-change cursor-pointer" (click)="changeResponsible()" *ngIf="issue.activities.includes('Assign Task') && (issue.startedBy == auth.getUser().login)">
+        <div class="buttons-pick-change cursor-pointer" (click)="changeResponsible()" *ngIf="(issue.started_by == auth.getUser().login)">
           <span class="icon-change cxy">
             <img src="assets/icons/change.svg">
           </span>
           <span class="cxy button-text">Сменить ответственного</span>
         </div>
 
-        <div class="button-status" *ngFor="let status of availableStatusesNoCurrent">
+        <div class="button-status" *ngFor="let status of availableActions">
           <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
         </div>
       </div>
@@ -105,9 +105,9 @@
           </div>
 
         </div>
-        <div class="big-text mb-1 mt-2">{{t.tr('Вложения')}} ({{issue.fileAttachments.length}})</div>
+        <div class="big-text mb-1 mt-2">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
         <div class="attachments-issue">
-          <div *ngFor="let file of issue.fileAttachments">
+          <div *ngFor="let file of issue.file_attachments">
             <div (click)="openFile(file.url)" class="attachment-issues df mb-5 cursor-pointer">
               <div class="cxy">
                 <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
@@ -132,22 +132,22 @@
             </div>
           </div>
         </div>
-        <div [collapse]="content" class="big-text mb-1 mt-2 collapse-header" *ngIf="issue.childIssues.length > 0" (click)="contentClick('content')">
+        <div [collapse]="content" class="big-text mb-1 mt-2 collapse-header" *ngIf="issue.child_issues.length > 0" (click)="contentClick('content')">
           <div>Согласование</div>
           <div class="p-ml-auto cy arrow-up" [class.arrow-down]="collapsed.includes('content')">
             <img src="assets/icons/down-arrow.png">
           </div>
         </div>
         <div collapseContent #content="collapseContent" class="collapse-body">
-          <div class="" *ngIf="issue.childIssues.length > 0">
-            <div class="subtask cy" *ngFor="let childIssue of issue.childIssues">
-              <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.taskType == 'Approval'">
+          <div class="" *ngIf="issue.child_issues.length > 0">
+            <div class="subtask cy" *ngFor="let childIssue of issue.child_issues">
+              <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.issue_type == 'Approval'">
                 <div>Согласование</div>
                 <div>
-                  <span>{{childIssue.docNumber}}</span>
+                  <span>{{childIssue.doc_number}}</span>
 <!--                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>-->
                 </div>
-                <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assignedTo)"></div>
+                <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
                 <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
               </div>
             </div>
@@ -310,13 +310,13 @@
         </div>
         <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'camunda')">
           <div class="df">
-            <div (click)="openUserInfo(issue.startedBy)" class="pt-5 mr-10">
-              <img src="{{auth.getUserAvatar(issue.startedBy)}}" height="32" width="32" style="border-radius: 16px; cursor: pointer">
+            <div (click)="openUserInfo(issue.started_by)" class="pt-5 mr-10">
+              <img src="{{auth.getUserAvatar(issue.started_by)}}" height="32" width="32" style="border-radius: 16px; cursor: pointer">
             </div>
             <div class="">
-              <span (click)="openUserInfo(issue.startedBy)" class="bold-text cursor-pointer">{{auth.getUserName(issue.startedBy)}}</span>
-              <span class="text-descr"> {{t.tr('создал')}}{{localeGender(issue.startedBy)}} {{t.tr('задачу')}}</span>
-              <span class="text-date"> {{getDate(issue.startedDate)}} </span>
+              <span (click)="openUserInfo(issue.started_by)" class="bold-text cursor-pointer">{{auth.getUserName(issue.started_by)}}</span>
+              <span class="text-descr"> {{t.tr('создал')}}{{localeGender(issue.started_by)}} {{t.tr('задачу')}}</span>
+              <span class="text-date"> {{getDate(issue.started_date)}} </span>
             </div>
           </div>
         </div>
@@ -340,7 +340,7 @@
 <!--          </div>-->
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Дата начала')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.startDate)}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.start_date)}}</div>
             <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-180 h-32 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'startDate'" (click)="commitIssueEdit()">
@@ -357,7 +357,7 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Срок исполнения')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.dueDate)}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.due_date)}}</div>
             <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-180 h-32 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit()">
@@ -414,7 +414,7 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Автор')}}</div>
-            <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.startedBy)}}</div>
+            <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.started_by)}}</div>
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Отвественный')}}</div>
@@ -422,7 +422,7 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Исполнитель')}}</div>
-            <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{getAssignedTo(issue.assignedTo)}}</div>
+            <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{getAssignedTo(issue.assigned_to)}}</div>
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Приоритет')}}</div>
@@ -470,11 +470,11 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('ID задачи')}}</div>
-            <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{issue.humanId}}</div>
+            <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{issue.id}}</div>
           </div>
         </div>
       </div>
-      <div class="mt-2 min-text">{{t.tr('')}}{{t.tr('')}}Создано {{getDate(issue.startedDate)}}</div>
+      <div class="mt-2 min-text">{{t.tr('')}}{{t.tr('')}}Создано {{getDate(issue.started_date)}}</div>
     </div>
   </div>
 </div>

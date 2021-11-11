@@ -1,0 +1,286 @@
+<div class="all-page">
+  <div class="card">
+    <div class="wh100">
+      <div class="list-and-details h100">
+        <div class="issues-header-one">
+          <div class="issue-list-control-header pl-10">List of Issues</div>
+          <div class="ml-30 button-check cxy cursor-pointer" [class.only-completed]="filterCompleted == true" (click)="switchIssuesStatusFilter()" pTooltip="Status Completed">
+            <img src="assets/icons/check.png">
+          </div>
+        </div>
+        <div class="issues-header">
+          <div class="cxy ml-30">
+            <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="issues-header">
+<!--          <div class="p-ml-auto">-->
+<!--            <button [disabled]="selectedIssue.id == null" (click)="initHullPartList(this.selectedIssue)">INIT</button>-->
+<!--          </div>-->
+          <div class="p-ml-auto">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input [(ngModel)]="searchValue" #search pInputText type="text" placeholder="Search..." class="border width-200" />
+            </span>
+          </div>
+        </div>
+        <div class="issue-list fw ovf">
+          <div [class.select-issue]="selectedIssue.id != null && selectedIssue.id == issue.id" class="issue-list-item w-100" *ngFor="let issue of getIssues()">
+            <div class="issues cursor-pointer" (click)="selectIssue(issue)">
+              <div>{{issue.docNumber}}</div>
+              <div>{{issue.name}}</div>
+              <span [innerHTML]="getStyledStatus(issue.status) | safeHtml"></span></div>
+          </div>
+        </div>
+        <div class="ovf-auto" *ngIf="selectedIssue.docNumber != ''">
+          <div *ngIf="spec != null && spec.name != null">
+            <p-table [value]="spec.content" styleClass="p-datatable-striped cursor-pointer">
+              <ng-template pTemplate="header">
+                <tr class="sticky">
+                  <th pSortableColumn="CODE" class="w-10">Part <p-sortIcon field="CODE"></p-sortIcon></th>
+                  <th pSortableColumn="DESCRIPTION" class="w-17">Name <p-sortIcon field="DESCRIPTION"></p-sortIcon></th>
+                  <th class="w-8">Weight</th>
+                  <th class="w-19">Stock Code</th>
+                  <th class="w-30">Node Path</th>
+                  <th class="w-19">COG</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-specRow>
+                <tr class="">
+                  <td class="w-10 text-table">{{specRow.CODE}}</td>
+                  <td class="w-17 text-table">{{specRow.DESCRIPTION}}</td>
+                  <td class="w-8 text-table">{{round(specRow.WEIGHT)}}</td>
+                  <td class="w-19 text-table">{{specRow.STOCKCODE}}</td>
+                  <td class="w-30 text-table">{{specRow.BS_ADN}}</td>
+                  <td class="w-19 text-table">
+                    <span><span class="bold">X:</span> {{round(specRow.X_COG) + ' '}}</span>
+                    <span><span class="bold">Y:</span> {{round(specRow.Y_COG) + ' '}}</span>
+                    <span><span class="bold">Z:</span> {{round(specRow.Z_COG)}}</span>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+
+
+<!--          <div class="issues-pic-end">-->
+<!--            <div *ngIf="selectedIssue.docNumber == ''" class="">-->
+<!--              <div class="confirm-text-issues">Select issue to view its files</div>-->
+<!--              <div class="cx">-->
+<!--                <img src="assets/icons/message.png">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="issues-two-pic-end">-->
+<!--            <div *ngIf="selectedIssue.docNumber == ''" class="pt-100">-->
+<!--              <div class="confirm-text-issues">Select issue to view its history and messages</div>-->
+<!--              <div class="cx">-->
+<!--                <img src="assets/icons/chat.png">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div class="issue-details ovf-auto" [class.border-left]="selectedIssue.docNumber != ''">
+          <div class="issue-files border-bottom pl-10 ovf-auto" *ngIf="selectedIssue.docNumber != ''">
+            <div class="big-text-issues mb-10 mt-5">Attachments</div>
+            <div class="">
+              <div *ngFor="let file of selectedIssue.fileAttachmentsInCloud">
+                <div (click)="openFile(file.url)" class="attachment-issues df mb-10 cursor-pointer">
+                  <div class="cxy">
+                    <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                  </div>
+                  <div class="attachment-footer-issue">
+                    <span class="mr-5" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
+                    <span>{{' ' + getDate(selectedIssue.startedDate)}}</span>
+                    <div class="p-ml-auto">
+                      <div class="upload cxy">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-cloud-download cloud-download" viewBox="0 0 16 16">
+                          <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                          <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pl-10 w-100 ovf-auto mt-2" *ngIf="selectedIssue.docNumber != ''">
+            <div class="w-100" >
+              <div class="activity-issues">
+                <div class="big-text-issues mb-1">Activity</div>
+                <div class="df">
+                  <div class="description-issues mt-5 mr-1">Show:</div>
+                  <div [class.check-button-issues]="messageFilter == 'all'" class="button-new-issues mr-10 ml-10" (click)="messageFilter = 'all'">
+                    <span>All</span>
+                  </div>
+                  <div [class.check-button-issues]="messageFilter == 'human'" class="button-new-issues mr-10" (click)="messageFilter = 'human'">
+                    <span>Messages</span>
+                  </div>
+                  <div [class.check-button-issues]="messageFilter == 'camunda'" class="button-new-issues" (click)="messageFilter = 'camunda'">
+                    <span>History</span>
+                  </div>
+                </div>
+                <div class="big-text pb-10 pt-10">
+                  <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" class="border" pInputText placeholder="Post your message here..."  />
+                </div>
+                <div [hidden]="!comment" class="pb-10 comment-issues">
+                  <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
+                    <div quill-editor-toolbar>
+                      <p-header>
+                      <span class="ql-formats">
+                        <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+                        <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+                        <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+                      </span>
+                        <span class="ql-formats">
+                        <select class="ql-color" tabindex="-1"></select>
+                        <select class="ql-background" tabindex="-1"></select>
+                      </span>
+                        <span class="ql-formats">
+                        <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+                        <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+                        <select class="ql-align" tabindex="-1">
+                          <option selected tabindex="-1"></option>
+                          <option value="center" tabindex="-1"></option>
+                          <option value="right" tabindex="-1"></option>
+                          <option value="justify" tabindex="-1"></option>
+                        </select>
+                      </span>
+                        <span class="ql-formats">
+                        <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+                        <button (click)="selectImage.click()">
+                          <i class="pi pi-image"></i>
+                        </button>
+                        <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+                        <button (click)="selectFiles.click()">
+                          <i class="pi pi-file"></i>
+                        </button>
+                        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+                        <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+                      </span>
+                        <span class="ql-formats">
+                        <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+                      </span>
+                      </p-header>
+                    </div>
+                  </quill-editor>
+                  <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+                    <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+                    <div class="cy">{{file}}</div>
+                    <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+                    <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+                  </div>
+                  <div class="df mt-5">
+                    <div class="mr-5">
+                      <div (click)="sendMessage()" pButton label="Save" class="button"></div>
+                    </div>
+                    <div>
+                      <div (click)="comment = false" pButton label="Cancel" class="button-cancel"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="issue-message w-100" *ngFor="let msg of getMessages(selectedIssue)">
+                <div *ngIf="(messageFilter == 'all' || messageFilter == 'human') && msg.owner == 'human'">
+                  <div class="df pb-20">
+                    <div class="pt-5 mr-10">
+                      <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
+                    </div>
+                    <div>
+                      <div class="">
+                        <span class="bold-text-issues">{{auth.getUserName(msg.author)}}</span>
+                        <span class="text-descr-issues"> posted message </span>
+                        <span class="text-date-issues"> {{getDate(msg.date)}} </span>
+                        <quill-view (click)="editorClicked($event)" [content]="msg.content"></quill-view>
+                        <div class="attachments-issues">
+                          <div *ngFor="let file of msg.fileAttachments">
+                            <div (click)="openFile(file.url)" class="attachment-issues">
+                              <div class="cxy attachment-center">
+                                <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="45"/>
+                              </div>
+                              <div class="attachment-footer">
+                                <div [pTooltip]="file.name">{{trimFileName(file.name)}}</div>
+                                <div>{{getDate(msg.date)}}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="(messageFilter == 'all' || messageFilter == 'camunda') && msg.owner == 'camunda'">
+                <span class="" *ngFor="let varMap of filterVariables(msg.variables)">
+                  <div class="df pb-30">
+                    <div class="pt-5 mr-10">
+                      <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px">
+                    </div>
+                    <div>
+                      <span class="bold-text-issues">{{getAuthor(msg.author)}}</span>
+                      <span class="text-descr-issues px-5"> changed </span>
+                      <span class="bold-text-issues">{{issueManager.localeHistoryEn(varMap.name)}}</span>
+                      <span class="text-date-issues pl-5">{{getDate(msg.date)}} </span>
+                    <div class="df pt-5">
+                      <div class="" [innerHTML]="issueManager.localeStatusEn(getPrevValue(selectedIssue.messages, varMap.name, msg.date)) | safeHtml"></div>
+                      <span class="px-10">
+                        <img src="assets/icons/right-arrow.svg" height="13">
+                      </span>
+                      <div [innerHTML]="issueManager.localeStatusEn(varMap.value) | safeHtml"></div>
+                    </div>
+                    </div>
+                  </div>
+                </span>
+                </div>
+              </div>
+              <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'camunda')">
+                <div class="df">
+                  <div class="pt-5 mr-10">
+                    <img src="{{auth.getUserAvatar(selectedIssue.startedBy)}}" height="32" width="32" style="border-radius: 16px">
+                  </div>
+                  <div class="">
+                    <span class="bold-text-issues">{{auth.getUserName(selectedIssue.startedBy)}}</span>
+                    <span class="text-descr-issues"> created issue </span>
+                    <span class="text-date-issues"> {{getDate(selectedIssue.startedDate)}} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pictures" *ngIf="selectedIssue.docNumber == ''">
+          <div class="pt-10per confirm-text-issues">Select issue to view its materials, files, history and messages</div>
+          <div class="row-pic">
+            <div class="picture-end">
+              <img src="assets/icons/message.png">
+            </div>
+            <div></div>
+            <div></div>
+            <div>
+              <img src="assets/icons/chat.png">
+            </div>
+            <div></div>
+            <div class="cxy">
+              <img src="assets/icons/materials-issue.png">
+            </div>
+            <div class="cxy">
+              <img src="assets/icons/history.png">
+            </div>
+            <div></div>
+          </div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>

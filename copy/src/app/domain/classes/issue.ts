@@ -1,0 +1,29 @@
+import {IssueMessage} from "./issue-message";
+import {FileAttachment} from "./file-attachment";
+export class Issue {
+  id: string = '';
+  status: string = '';
+  project: string = '';
+  department: string = '';
+  startedBy: string = '';
+  startedDate: number = 0;
+  taskType: string = '';
+  name: string = '';
+  details: string = '';
+  assignedTo: string = '';
+  startDate: number = 0;
+  dueDate: number = 0;
+  messages: IssueMessage[] = [];
+  fileAttachments: FileAttachment[] = [];
+  availableStatuses: string[] = [];
+  priority: string = '';
+  docNumber: string = '';
+  activities: string = '';
+  responsible: string = '';
+  humanId: number = 0;
+  overtime: string = '';
+  period: string = '';
+  periodEndDate: number = 0;
+  childIssues: Issue[] = [];
+  fileAttachmentsInCloud: FileAttachment[] = [];
+}

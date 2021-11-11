@@ -35,17 +35,16 @@ export class ImportxlsComponent implements OnInit {
               let row = x as any[];
               let col = -1;
               let issue = new Issue();
-              issue.taskType = row[++col];
+              issue.issue_type = row[++col];
               issue.project = row[++col];
-              issue.docNumber = row[++col];
+              issue.doc_number = row[++col];
               issue.name = row[++col];
-              issue.startedBy = row[++col];
+              issue.started_by = row[++col];
               issue.responsible = row[++col];
               issue.department = row[++col];
               issue.details = row[++col];
               issue.period = row[++col];
-              issue.periodEndDate = +row[++col];
-              this.issueManager.startIssue(issue.startedBy, issue).then(res => {
+              this.issueManager.startIssue(issue.started_by, issue).then(res => {
                 this.ref.close('imported');
               });
             });

@@ -5,7 +5,7 @@
       dataKey="id"
       [value]="issues"
       [scrollable]="true" scrollHeight="calc(100vh - 280px)" scrollDirection="both"
-      [globalFilterFields]="['id','startedBy','project','department', 'name', 'assignedTo', 'status', 'docNumber']"
+      [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
       [reorderableColumns]="true"
       [resizableColumns]="false"
       [columns]="cols"
@@ -64,7 +64,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-columns="columns" let-issue>
-        <tr [class.task-update]="isTaskUpdated(issue.id, issue.lastUpdate)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
+        <tr [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
           <td class="cursor-pointer">
             <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.lastUpdate)"></div>
             <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>

@@ -53,20 +53,20 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   setCols(){
     this.cols = [
-      { field: 'humanId', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '', hidden: false },
-      { field: 'startedDate', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'startedDate'), skip: false, defaultValue: '', hidden: false },
-      { field: 'taskType', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'taskType'), skip: false, defaultValue: '', hidden: false },
-      { field: 'startedBy', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'startedBy'), skip: false, defaultValue: '', hidden: false },
+      { field: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '', hidden: false },
+      { field: 'started_date', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'started_date'), skip: false, defaultValue: '', hidden: false },
+      { field: 'issue_type', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'issue_type'), skip: false, defaultValue: '', hidden: false },
+      { field: 'started_by', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'started_by'), skip: false, defaultValue: '', hidden: false },
       { field: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, filters: this.getFilters(this.issues, 'project'), skip: false, defaultValue: '', hidden: false },
       { field: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, filters: this.getFilters(this.issues, 'department'), skip: false, defaultValue: '', hidden: false },
       { field: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: false, filters: this.getFilters(this.issues, 'name'), skip: false, defaultValue: '', hidden: false },
-      { field: 'assignedTo', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assignedTo'), skip: false, defaultValue: '', hidden: false },
+      { field: 'assigned_to', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assigned_to'), skip: false, defaultValue: '', hidden: false },
       { field: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '', hidden: false },
       { field: 'priority', header: 'Приоритет', headerLocale: 'Приоритет', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'priority'), defaultValue: '', hidden: false },
-      { field: 'dueDate', header: 'Срок исполнения', headerLocale: 'Срок исполнения', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'dueDate'), defaultValue: '', hidden: false },
+      { field: 'due_date', header: 'Срок исполнения', headerLocale: 'Срок исполнения', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'due_date'), defaultValue: '', hidden: false },
       { field: 'overtime', header: 'Сверхурочные', headerLocale: 'Сверхурочные', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'overtime'), defaultValue: '', hidden: false },
       { field: 'responsible', header: 'Ответственный', headerLocale: 'Ответственный', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'responsible'), defaultValue: '', hidden: false },
-      { field: 'docNumber', header: 'Номер чертежа', headerLocale: 'Номер чертежа', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'docNumber'), defaultValue: '', hidden: false },
+      { field: 'doc_number', header: 'Номер чертежа', headerLocale: 'Номер чертежа', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'doc_number'), defaultValue: '', hidden: false },
       { field: 'period', header: 'Этап', headerLocale: 'Этап', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'period'), defaultValue: '', hidden: false }
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
@@ -83,6 +83,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       this.dt.style = {opacity: 0};
     }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
+      console.log(data);
       this.issues = data;
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
@@ -145,9 +146,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   localeFilter(column: string, field: string): string{
     switch (column) {
-      case 'taskType': return this.issueManager.localeTaskType(field);
-      case 'startedBy': return this.auth.getUserName(field);
-      case 'assignedTo': return this.auth.getUserName(field);
+      case 'issue_type': return this.issueManager.localeTaskType(field);
+      case 'started_by': return this.auth.getUserName(field);
+      case 'assigned_to': return this.auth.getUserName(field);
       case 'status': return this.issueManager.localeStatus(field, false);
       default: return field;
     }
@@ -176,10 +177,10 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     return da + ' ' + mo + ' ' + ye + ' ';
   }
   localeColumn(issueElement: string, field: string, issue: Issue): string {
-    if (field == 'startedBy'){
+    if (field == 'started_by'){
       return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
     }
-    else if (field == 'assignedTo'){
+    else if (field == 'assigned_to'){
       if (issueElement == ''){
         return '';
       }
@@ -190,15 +191,15 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     else if (field == 'status'){
       return this.issueManager.localeStatus(issueElement);
     }
-    else if (field == 'startedDate'){
+    else if (field == 'started_date'){
       return this.getDateOnly(+issueElement);
     }
-    else if (field == 'taskType'){
+    else if (field == 'issue_type'){
       return this.issueManager.localeTaskType(issueElement);
     }
     else if (field == 'name'){
-      if (issue.taskType == 'Approval'){
-        return 'Согласование ' + issue.docNumber;
+      if (issue.issue_type == 'Approval'){
+        return 'Согласование ' + issue.doc_number;
       }
       else{
         return this.trim(issueElement);
@@ -210,7 +211,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     else if (field == 'department'){
       return this.issueManager.localeTaskDepartment(issueElement);
     }
-    else if (field == 'dueDate'){
+    else if (field == 'due_date'){
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     }
     else if (field == 'responsible'){
@@ -221,7 +222,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         return '<div class="df"><img src="' + this.auth.getUserAvatar(issueElement) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(issueElement) + '</div></div>';
       }
     }
-    else if (field == 'docNumber'){
+    else if (field == 'doc_number'){
       return issueElement != '' ? issueElement : '-';
     }
     else{
@@ -254,12 +255,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  isTaskNew(id: string) {
+  isTaskNew(id: number) {
     return this.viewedIssues.find(x => x.issue == id) == null;
   }
 
-  isTaskUpdated(id: string, update: string) {
-    return !this.isTaskNew(id) && this.viewedIssues.find(x => x.issue == id && +update <= x.date) == null;
+  isTaskUpdated(id: number, update: number) {
+    return !this.isTaskNew(id) && this.viewedIssues.find(x => x.issue == id && update <= x.date) == null;
   }
 
   setIssueViewed(id: string){
@@ -285,25 +286,25 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     let data: any[] = [];
     let issues = this.dt.filteredValue as Issue[];
     data.push(['ID', 'Статус', 'Отдел', 'Создал', 'Дата создания', 'Тип задачи', 'Наименование', 'Номер документа', 'Ответственный', 'Назначена', 'Дата окончания', 'Описание']);
-    issues.forEach(v => {
-      data.push(
-        [
-          v.humanId,
-          this.issueManager.localeStatus(v.status, false),
-          this.issueManager.localeTaskDepartment(v.department),
-          this.auth.getUserName(v.startedBy),
-          this.getDateNoTime(v.startedDate),
-          this.issueManager.localeTaskType(v.taskType),
-          v.name,
-          v.docNumber,
-          this.auth.getUserName(v.responsible),
-          this.auth.getUserName(v.assignedTo),
-          this.getDateNoTime(v.dueDate),
-          v.details
-        ]
-      );
-    });
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    // issues.forEach(v => {
+    //   data.push(
+    //     [
+    //       v.humanId,
+    //       this.issueManager.localeStatus(v.status, false),
+    //       this.issueManager.localeTaskDepartment(v.department),
+    //       this.auth.getUserName(v.startedBy),
+    //       this.getDateNoTime(v.startedDate),
+    //       this.issueManager.localeTaskType(v.taskType),
+    //       v.name,
+    //       v.docNumber,
+    //       this.auth.getUserName(v.responsible),
+    //       this.auth.getUserName(v.assignedTo),
+    //       this.getDateNoTime(v.dueDate),
+    //       v.details
+    //     ]
+    //   );
+    // });
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(issues);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
   }

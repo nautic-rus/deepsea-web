@@ -87,11 +87,11 @@ export class DocExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     this.issueManager.getIssues('op').then(data => {
-      this.issues = _.sortBy(data.filter(x => x.taskType == 'RKD' || x.taskType == 'RKD-TURK'), x => x.docNumber);
+      this.issues = _.sortBy(data.filter(x => x.issue_type == 'RKD' || x.issue_type == 'RKD-TURK'), x => x.doc_number);
     });
   }
   getIssues(){
-    return this.issues.filter(x => x.project == this.project).filter(x => this.searchValue.trim() == '' || (x.name + x.docNumber).toLowerCase().includes(this.searchValue)).filter(x => !this.filterCompleted || x.status == 'Completed');
+    return this.issues.filter(x => x.project == this.project).filter(x => this.searchValue.trim() == '' || (x.name + x.doc_number).toLowerCase().includes(this.searchValue)).filter(x => !this.filterCompleted || x.status == 'Completed');
   }
   showComment() {
     this.comment = true;
@@ -106,13 +106,13 @@ export class DocExplorerComponent implements OnInit {
     this.issueManager.getIssueDetails(issue.id, this.auth.getUser().login).then(issue => {
       this.selectedIssue = issue;
     });
-    this.issueManager.getHullPartList(issue.docNumber).then(spec => {
+    this.issueManager.getHullPartList(issue.doc_number).then(spec => {
       console.log(spec);
       this.spec = spec;
     });
   }
   initHullPartList(issue: Issue){
-    this.issueManager.initHullPartList(issue.project, issue.id, issue.docNumber, issue.name, this.auth.getUser().name);
+    this.issueManager.initHullPartList(issue.project, issue.id, issue.doc_number, issue.name, this.auth.getUser().name);
   }
   getMessages(issue: Issue) {
     // @ts-ignore

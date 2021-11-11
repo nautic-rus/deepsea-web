@@ -25,10 +25,10 @@ export class SendToApprovalComponent implements OnInit {
   constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
     this.issue = conf.data;
     console.log(this.issue);
-    if (this.issue.taskType == 'RKD'){
+    if (this.issue.issue_type == 'RKD'){
       this.selectedUsers = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
     }
-    if (this.issue.taskType == 'RKD-TURK'){
+    if (this.issue.issue_type == 'RKD-TURK'){
       this.selectedUsers = ['isaev'];
     }
   }

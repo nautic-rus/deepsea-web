@@ -1,0 +1,111 @@
+.task-table{
+  height: 60vh;
+}
+.top-menu{
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
+}
+.card{
+  background: var(--surface-e);
+  padding: 20px;
+  box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 4px;
+  height: calc(100vh - 116px);
+}
+.new-task{
+  background-color: #adb7bc;
+}
+::ng-deep .p-datatable-scrollable-body{
+  overflow-y: auto !important;
+}
+.filter{
+  margin-left: auto;
+}
+.header{
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+::ng-deep .p-datatable-scrollable-header-box	{
+  padding: 0 !important;
+}
+.task-row:hover{
+  background-color: #F3F2F1!important;
+}
+.hidden-column{
+  width: 0;
+}
+.icon-categories{
+  border-radius: 3px;
+  padding: 6px;
+  border: 1px solid #605e5c;
+  height: 35px;
+  width: 35px;
+}
+.new-task-button{
+  background-color: rgba(50, 49, 48, 0.07);
+}
+.new-task-button:hover{
+  background-color: rgba(50, 49, 48, 0.18)!important;
+}
+.normal-button:hover{
+  background-color: rgba(50, 49, 48, 0.07) !important;
+}
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+}
+/deep/.pi{
+  font-size: 14px;
+}
+.buttons-pick{
+  color: white;
+  background-color: #ae5e9b;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.icon{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #79426c;
+}
+.button-text{
+  padding-right: 8px;
+  padding-left: 8px;
+}
+/deep/.p-multiselect-header {
+  display: none!important;
+}
+.new-task{
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  background-color: rgba(1, 177, 105, 0.71);
+}
+.update-task{
+  height: 8px;
+  width: 8px;
+  border-radius: 4px;
+  background-color: #af79c4;
+}
+.task-update{
+  font-weight: 500;
+  font-size: 14px;
+}
+.task-new{
+  font-weight: 500;
+  font-size: 14px;
+  background-color: rgba(134, 151, 203, 0.15) !important;
+}
+.task-update{
+  font-weight: 500;
+  font-size: 14px;
+  background-color: rgba(134, 151, 203, 0.15) !important;
+}

@@ -1,0 +1,123 @@
+.background{
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(315deg, rgb(72, 132, 150), rgb(202, 228, 225) 50%, rgb(166, 191, 211));
+  min-height: 800px;
+}
+.login{
+  height: 650px;
+  width: 320px;
+  background-color: white;
+  padding: 24px;
+  border-radius: 8px;
+}
+.logo{
+  padding-bottom: 32px;
+  padding-top: 20px;
+  display: flex;
+}
+.logo-text{
+  margin-bottom: 8px;
+  font-family: 'SBSans' , arial;
+  font-size: 14px;
+  color: #262626;
+  cursor: default;
+}
+.check-text{
+  font-family: 'SBSans' , arial;
+  font-size: 14px;
+  color: #262626;
+  cursor: default;
+  margin-left: 15px;
+  height: 24px;
+}
+.check{
+  display: flex;
+  flex-wrap: wrap;
+}
+input[type="text"] {
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  padding: 15px;
+  background: #ffffff !important;
+  outline: none;
+  width: 100%;
+  color: black;
+  font-family: 'SBSans' , arial;
+}
+input:focus {
+  border-color: #262626;
+}
+.check-box{
+  height: 20px;
+  width: 20px;
+  border-radius: 4px;
+  background-color: #76a7b5;
+  border: 1px solid #76a7b5;
+}
+.check-box:hover{
+  background-color: #3b7085;
+  border: 1px solid #3b7085;
+}
+.check-ok{
+  color: white;
+}
+.check-box-off{
+  height: 20px;
+  width: 20px;
+  border-radius: 4px;
+  border: 1px solid #d6d6d6;
+}
+.check-box-off:hover{
+  border: 1px solid #3b9ebb;
+}
+.enter-button{
+  width: 100%;
+  background-color: #76a7b5;
+  padding: 15px;
+  border-radius: 4px;
+  color: white;
+  font-size: medium;
+  font-family: 'SBSans' , arial;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+}
+.text-help{
+  font-family: 'SBSans' , arial;
+  color: #ccc;
+  font-size: 12px;
+  text-align: justify;
+}
+.input-button{
+  background-color: #3b7085;
+}
+
+input[type="password"] {
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  padding: 15px;
+  background: #ffffff !important;
+  outline: none;
+  width: 100%;
+  color: black;
+  font-family: 'SBSans' , arial;
+}
+input:focus {
+  border-color: #262626;
+}
+.input{
+  position: relative;
+}
+.eye{
+  position: absolute;
+  right: 15px;
+  top: 30%;
+  cursor: pointer;
+}

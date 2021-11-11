@@ -20,6 +20,7 @@ import {IdName} from "../../domain/classes/id-name";
 import {LV} from "../../domain/classes/lv";
 import {LanguageService} from "../../domain/language.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
+import {all} from "underscore";
 
 @Component({
   selector: 'app-task',
@@ -45,8 +46,7 @@ export class TaskComponent implements OnInit {
   // @ts-ignore
   editor;
   showHistory = ['_taskStatus'];
-  availableStatuses: any[] = [];
-  availableStatusesNoCurrent: any[] = [];
+  availableActions: any[] = [];
   taskDepartments: LV[] = [];
   taskPriorities: LV[] = [];
   taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
@@ -131,8 +131,7 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
         this.issue = issue;
-        this.availableStatuses = this.getAvailableStatuses(issue);
-        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
+        this.availableActions = this.getAvailableActions(issue);
       });
     });
   }
@@ -143,8 +142,7 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
     this.issue = this.conf.data as Issue;
-    this.availableStatuses = this.getAvailableStatuses(this.issue);
-    this.availableStatusesNoCurrent = this.getAvailableStatuses(this.issue, true);
+    this.availableActions = this.getAvailableActions(this.issue);
     this.issueManager.getIssueDepartments().then(departments => {
       departments.forEach(d => {
         this.taskDepartments.push(new LV(this.issueManager.localeTaskDepartment(d), d));
@@ -158,8 +156,8 @@ export class TaskComponent implements OnInit {
         this.taskPriorities.push(new LV(this.issueManager.localeTaskPriority(priority), priority));
       });
     });
-    this.startDate = this.issue.startDate != 0 ? new Date(this.issue.startDate) : new Date();
-    this.dueDate = this.issue.dueDate != 0 ? new Date(this.issue.dueDate) : new Date();
+    this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
+    this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
   }
   close(){
     this.ref.close('exit');
@@ -222,35 +220,32 @@ export class TaskComponent implements OnInit {
     return _.sortBy(issue.messages, x => x.date).reverse().slice(0, issue.messages.length - 1);
   }
 
-  getAvailableStatuses(issue: Issue, skipCurrent = false) {
-    const res = [];
-    if (!skipCurrent){
-      // @ts-ignore
-      if (!issue.availableStatuses.includes(issue.status)){
-        res.push({label: this.issueManager.localeStatusAsButton(issue.status, false), value: issue.status});
+  getAvailableActions(issue: Issue) {
+    const res: any[] = [];
+    issue.actions.forEach(action => {
+      let allow = false;
+      allow = action.rule.includes('r') && issue.responsible == this.auth.getUser().login || allow;
+      allow = action.rule.includes('a') && issue.assigned_to == this.auth.getUser().login || allow;
+      allow = action.rule.includes('s') && issue.started_by == this.auth.getUser().login || allow;
+      allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != 'Approved').length == 0 && allow : allow;
+      if (allow){
+        res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
       }
-    }
-    // @ts-ignore
-    issue.availableStatuses.forEach(x => res.push({label: this.issueManager.localeStatusAsButton(x, false), value: x}));
+    });
     return res;
   }
 
   statusChanged() {
     // @ts-ignore
-    this.issueManager.setIssueStatus(this.issue.id, this.auth.getUser().login, this.issue.status).then(status => {
-      console.log(status);
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
-        if (issue.id != null){
-          this.issue = issue;
-          this.availableStatuses = this.getAvailableStatuses(issue);
-          this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
-          this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
-        }
-        else{
-          this.availableStatuses = [];
-          this.availableStatusesNoCurrent = [];
-        }
-      });
+    this.issueManager.updateIssue(this.auth.getUser().login, "status", this.issue).then(issue => {
+      if (issue.id != null){
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+        this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
+      }
+      else{
+        this.availableActions = [];
+      }
     });
   }
 
@@ -470,16 +465,6 @@ export class TaskComponent implements OnInit {
         this.ref.close();
       }
     });
-    // this.confirmRemove();
-  }
-  confirmRemove() {
-    this.confirmationService.confirm({
-      message: 'Вы подтверждаете удаление задачи?',
-      accept: () => {
-        this.issueManager.removeIssue(this.issue.id);
-        this.ref.close();
-      }
-    });
   }
   editorInit(event: any) {
     this.editor = event;
@@ -523,6 +508,7 @@ export class TaskComponent implements OnInit {
     }
     else{
       this.issue.status = value;
+      this.issue.action = value;
       this.statusChanged();
     }
   }
@@ -534,8 +520,7 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
         this.issue = issue;
-        this.availableStatuses = this.getAvailableStatuses(issue);
-        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
+        this.availableActions = this.getAvailableActions(issue);
       });
     });
   }
@@ -547,21 +532,21 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
         this.issue = issue;
-        this.availableStatuses = this.getAvailableStatuses(issue);
-        this.availableStatusesNoCurrent = this.getAvailableStatuses(issue, true);
+        this.availableActions = this.getAvailableActions(issue);
       });
     });
   }
   commitIssueEdit() {
     if (this.edit == 'startDate'){
-      this.issue.startDate = this.startDate.getTime();
+      this.issue.start_date = this.startDate.getTime();
     }
     if (this.edit == 'dueDate'){
-      this.issue.dueDate = this.dueDate.getTime();
+      this.issue.due_date = this.dueDate.getTime();
     }
-    this.issueManager.updateIssue(this.auth.getUser().login, this.issue).then(res => {
-      if (res == 'success'){
-        this.edit = '';
+    this.issueManager.updateIssue(this.auth.getUser().login, "edit-" + this.edit, this.issue).then(issue => {
+      this.edit = '';
+      if (issue.id != null){
+        this.issue = issue as Issue;
         this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
         this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
       }
@@ -570,8 +555,8 @@ export class TaskComponent implements OnInit {
 
   cancelIssueEdit() {
     this.edit = '';
-    this.startDate = new Date(this.issue.startDate);
-    this.dueDate = new Date(this.issue.dueDate);
+    this.startDate = new Date(this.issue.start_date);
+    this.dueDate = new Date(this.issue.due_date);
     this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
       this.issue = res;
     });
@@ -608,7 +593,7 @@ export class TaskComponent implements OnInit {
   }
 
   isEditable() {
-    return this.auth.getUser().login == this.issue.startedBy || this.auth.getUser().login == this.issue.responsible;
+    return this.auth.getUser().login == this.issue.started_by || this.auth.getUser().login == this.issue.responsible;
   }
 
   openUserInfo(author: string) {

@@ -56,7 +56,7 @@ import { EmployeesComponent } from './component/employees/employees.component';
 import { DeleteComponent } from './component/task/delete/delete.component';
 import { DocExplorerComponent } from './component/doc-explorer/doc-explorer.component';
 import { UserCardComponent } from './component/employees/user-card/user-card.component';
-import {NgxCollapseModule} from "ngx-collapse";
+import {NgxCollapseModule} from 'ngx-collapse';
 Quill.register('modules/imageResize', ImageResize);
 
 

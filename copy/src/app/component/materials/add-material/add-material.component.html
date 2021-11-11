@@ -1,0 +1,82 @@
+<div class="dialog">
+  <div class="double-row">
+    <div class="df">
+      <div class="cy left-text">Проект:</div>
+      <div class="ml-1">
+        <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-200 border-material">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy right-text">Коэф. доп.:</div>
+      <div class="ml-1">
+        <input type="text" pInputText class="width-200 border-material">
+      </div>
+    </div>
+  </div>
+  <div class="double-row mt-2">
+    <div class="df">
+      <div class="cy left-text">КВЗ:</div>
+      <div class="ml-1">
+        <p-dropdown placeholder="" class="select" [(ngModel)]="category" [options]="categories" styleClass="width-200 border-material">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy right-text">Поставщик:</div>
+      <div class="ml-1">
+        <input type="text" pInputText class="width-200 border-material">
+      </div>
+    </div>
+  </div>
+  <div class="double-row mt-2">
+    <div class="df">
+      <div class="cy left-text">КЕИ:</div>
+      <div class="ml-1">
+        <p-dropdown placeholder="" class="select" styleClass="width-200 border-material">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy right-text">Вес:</div>
+      <div class="ml-1">
+        <input type="text" pInputText class="width-200 border-material">
+      </div>
+    </div>
+  </div>
+  <div class="single-row mt-2">
+    <div class="cy left-text-one-row">Наименование:</div>
+    <div class="ml-1">
+      <input type="text" pInputText class="width-480 border-material">
+    </div>
+  </div>
+  <div class="single-row mt-2">
+    <div class="cy left-text-one-row">Обозначение:</div>
+    <div class="ml-1">
+      <input type="text" pInputText class="width-480 border-material">
+    </div>
+  </div>
+  <div class="single-row mt-2">
+    <div class="cy left-text-one-row">Код материала:</div>
+    <div class="ml-1">
+      <input type="text" pInputText class="width-480 border-material">
+    </div>
+  </div>
+  <div class="single-row mt-2">
+    <div class="cy left-text-one-row">Документ:</div>
+    <div class="ml-1">
+      <input type="text" pInputText class="width-480 border-material">
+    </div>
+  </div>
+  <div class="single-row mt-2">
+    <div class="cy left-text-one-row">Примечание:</div>
+    <div class="ml-1">
+      <input type="text" pInputText class="width-480 border-material">
+    </div>
+  </div>
+  <div class="form-footer cxy">
+    <div class="cy content-end">
+      <div tabindex="10" pButton label="Создать" class="button"></div>
+    </div>
+  </div>
+</div>

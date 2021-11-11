@@ -1,0 +1,20 @@
+<div style="height: 250px; width: 400px;">
+  <div class="task-header-assign mt-40">
+    <div class=" question cxy">
+      <div class="question-icon">?</div>
+    </div>
+  </div>
+  <div>
+    <div class="confirm-text">Подтверждение</div>
+  </div>
+  <div class="mt-1 cxy">
+    <div class="delete-text">Вы подтверждаете удаление задачи?</div>
+  </div>
+
+  <div class="footer-delete mt-2">
+    <div class="mr-1 cx">
+      <div tabindex="10" (click)="commit()" pButton label="Да" class="button-delete"></div>
+    </div>
+    <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
+  </div>
+</div>

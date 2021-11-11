@@ -1,0 +1,15 @@
+<div class="center-import">
+  <div class="header-user-card">
+    <div class="header-text">Импорт задач</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="mt-3 mb-2">
+    <button pButton label="Скачать шаблон" class="border-radius p-button-outlined p-button-info w-100" icon="pi pi-sign-in" (click)="getTemplate()"></button>
+  </div>
+  <div>
+    <button pButton label="Импортировать" class="border-radius p-button-info w-100" icon="pi pi-download" (click)="importXls.click()"></button>
+  </div>
+</div>
+<input hidden #importXls type="file" (change)="handleFileImport(importXls.files)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">

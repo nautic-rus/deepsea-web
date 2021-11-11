@@ -249,7 +249,7 @@ export class SendToCloudComponent implements OnInit {
     });
   }
   getIssuePath(issue: Issue){
-    return 'RKD' + '/' + issue.project + '/' + issue.department + '/' + issue.docNumber + '/' + this.getRevision() + '/';
+    return 'RKD' + '/' + issue.project + '/' + issue.department + '/' + issue.doc_number + '/' + this.getRevision() + '/';
   }
   localeDepartment(department: string){
     switch (department) {

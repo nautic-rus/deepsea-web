@@ -159,16 +159,16 @@ export class CreateTaskComponent implements OnInit {
     let issue = this.conf.data as Issue;
     if (issue != null && issue.id != null) {
       this.taskSummary = issue.name;
-      this.taskType = issue.taskType;
+      this.taskType = issue.issue_type;
       this.taskDetails = issue.details;
-      this.loaded = issue.fileAttachments;
+      this.loaded = issue.file_attachments;
       this.taskPriority = issue.priority;
-      this.selectedUser = issue.assignedTo;
-      this.awaitForLoad = issue.fileAttachments.map(x => x.name);
+      this.selectedUser = issue.assigned_to;
+      this.awaitForLoad = issue.file_attachments.map(x => x.name);
       this.taskProject = issue.project;
       this.taskDepartment = issue.department;
       this.taskPriority = issue.priority;
-      this.taskDocNumber = issue.docNumber;
+      this.taskDocNumber = issue.doc_number;
       this.taskResponsible = issue.responsible;
       this.taskPeriod = issue.period;
     }
@@ -229,15 +229,15 @@ export class CreateTaskComponent implements OnInit {
     const issue = new Issue();
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
-    issue.taskType = this.taskType;
-    issue.startedBy = this.auth.getUser().login;
+    issue.issue_type = this.taskType;
+    issue.started_by = this.auth.getUser().login;
     issue.project = this.taskProject;
-    issue.assignedTo = this.selectedUser;
+    issue.assigned_to = this.selectedUser;
     issue.priority = this.taskPriority;
-    issue.startDate = this.startDate.getTime();
-    issue.dueDate = this.dueDate.getTime();
+    issue.start_date = this.startDate.getTime();
+    issue.due_date = this.dueDate.getTime();
     issue.department = this.taskDepartment;
-    issue.docNumber = this.taskDocNumber;
+    issue.doc_number = this.taskDocNumber;
     issue.responsible = this.selectedUser;
     issue.period = this.taskPeriod;
     // @ts-ignore
