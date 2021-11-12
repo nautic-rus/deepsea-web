@@ -201,6 +201,9 @@ export class IssueManagerService {
           case 'OTHER': return 'Прочее';
           case 'RKD': return 'РКД';
           case 'RKD-TURK': return 'РКД-Т';
+          case 'APPROVAL': return 'Согласование';
+          case 'PDSP': return 'ПДСП';
+          case 'ORIZ': return 'Корректировка';
           default: return input;
         }
       }
@@ -210,6 +213,9 @@ export class IssueManagerService {
           case 'OTHER': return 'Other';
           case 'RKD': return 'RKD';
           case 'RKD-TURK': return 'RKD-T';
+          case 'APPROVAL': return 'Approval';
+          case 'PDSP': return 'PDSP';
+          case 'ORIZ': return 'Adjustment';
           default: return input;
         }
       }
@@ -235,6 +241,7 @@ export class IssueManagerService {
     switch (this.lang.language) {
       case 'ru':{
         switch (input) {
+          case 'General': return 'Общепроектные';
           case 'Hull': return 'Корпус';
           case 'System': return 'Системы';
           case 'Electric': return 'Электрика';

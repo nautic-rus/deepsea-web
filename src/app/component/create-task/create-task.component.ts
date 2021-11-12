@@ -116,7 +116,7 @@ export class CreateTaskComponent implements OnInit {
         }
       }
     }
-  constructor(private config: PrimeNGConfig, public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
+  constructor(private config: PrimeNGConfig, public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, public l: LanguageService) { }
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
     this.config.setTranslation({

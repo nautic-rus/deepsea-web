@@ -17,27 +17,27 @@
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-2">
-            <button pButton label="Очистить" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
+            <button pButton [label]="l.tr('Очистить')" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
           </div>
           <div class="mr-2">
-            <button pButton label="Новая задача" class="border new-task-button p-button-info" (click)="newTask(null)"></button>
+            <button pButton [label]="l.tr('Новая задача')" class="border new-task-button p-button-info" (click)="newTask(null)"></button>
           </div>
           <p-multiSelect class="" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
-                         selectedItemsLabel="{0} выбрано колонок" styleClass="width-200 new-task-button" placeholder="Выберите колонки">
+                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button" placeholder="Выберите колонки">
           </p-multiSelect>
           <div class="ml-2">
-            <button pButton label="Импорт" class="border normal-button p-button-outlined " icon="pi pi-download" (click)="importXls()"></button>
+            <button pButton [label]="l.tr('Импорт')" class="border normal-button p-button-outlined " icon="pi pi-download" (click)="importXls()"></button>
           </div>
           <div class="ml-2">
-            <button pButton label="Экспорт" class="border normal-button p-button-outlined " icon="pi pi-upload" (click)="exportXls()"></button>
+            <button pButton [label]="l.tr('Экспорт')" class="border normal-button p-button-outlined " icon="pi pi-upload" (click)="exportXls()"></button>
           </div>
           <div class="ml-2 cxy">
-            Количество задач: {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} (Всего: {{dt.value.length}})
+            {{l.tr('Количество задач:')}} {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} {{l.tr('(Всего:')}} {{dt.value.length}})
           </div>
           <p-toggleButton onLabel="Hide completed" offLabel="Show completed" onIcon="pi pi-times" offIcon="pi pi-check" [(ngModel)]="showCompleted"></p-toggleButton>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." class="border" />
+            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
           </span>
         </div>
       </ng-template>
@@ -52,7 +52,7 @@
           <th></th>
           <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
             <div class="header">
-              {{col.header}}
+              {{l.tr(col.header)}}
               <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
               <p-columnFilter class="filter" *ngIf="col.filter == true" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">

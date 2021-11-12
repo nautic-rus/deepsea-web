@@ -443,3 +443,6 @@ cdk-virtual-scroll-viewport{
   overflow: hidden;
   transition: height 0.35s ease;
 }
+.max-height-190{
+  max-height: 150px!important;
+}

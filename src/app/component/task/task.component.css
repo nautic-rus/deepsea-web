@@ -112,24 +112,14 @@
   text-overflow: ellipsis;
   font-weight: bold;
 }
-.upload{
-  width: 100%;
-  height: 39px;
-  border: 1px dashed #ccc;
-  cursor: pointer;
-}
 .file-loading{
   display: grid;
   grid-template-columns: 0.5fr 4fr 0.5fr 0.5fr;
-
 }
 .min-text{
   font-size: 12px;
   padding-right: 4px;
   color: rgb(107, 119, 140);
-}
-.issue-message{
-
 }
 .bold-text{
   font-size: 0.9em;

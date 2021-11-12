@@ -14,6 +14,7 @@ import {ImportxlsComponent} from "./importxls/importxls.component";
 import {MessageService} from "primeng/api";
 import {stringify} from "uuid";
 import {ViewedIssue} from "../../domain/classes/viewed-issue";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   filled = false;
   viewedIssues: ViewedIssue[] = [];
   showCompleted: boolean = false;
-  constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
   // @ts-ignore
   @ViewChild('search') search;
   // @ts-ignore
@@ -196,12 +197,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       return this.issueManager.localeTaskType(issueElement);
     }
     else if (field == 'name'){
-      if (issue.issue_type == 'Approval'){
-        return 'Согласование ' + issue.doc_number;
-      }
-      else{
-        return this.trim(issueElement);
-      }
+      return this.trim(issueElement);
     }
     else if (field == 'priority'){
       return this.issueManager.localeTaskPriority(issueElement);

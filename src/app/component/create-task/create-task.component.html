@@ -1,30 +1,30 @@
 <div class="center-create">
   <div class="header-create-card">
-    <div class="header-create-text">Создать задачу</div>
+    <div class="header-create-text">{{lang.tr('Создать задачу')}}</div>
     <div class="task-button-create cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text mb-1">{{lang.tr('Проект')}}</div>
+      <div class="big-text-create mb-1">{{lang.tr('Проект')}}</div>
       <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-300 font-14">
       </p-dropdown>
     </div>
     <div>
-      <div class="big-text mb-1">{{lang.tr('Приоритет')}}</div>
+      <div class="big-text-create mb-1">{{lang.tr('Приоритет')}}</div>
       <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-300" [(ngModel)]="taskPriority" [options]="taskPriorities">
       </p-dropdown>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text mb-1 mt-1">{{lang.tr('Тип задачи')}}</div>
+      <div class="big-text-create mb-1 mt-1">{{lang.tr('Тип задачи')}}</div>
       <p-dropdown styleClass="dark-panel width-300" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
       </p-dropdown>
     </div>
     <div *ngIf="taskType == 'RKD'">
-      <div class="big-text mb-1 mt-1">{{lang.tr('Этап')}}</div>
+      <div class="big-text-create mb-1 mt-1">{{lang.tr('Этап')}}</div>
       <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPeriod" [options]="taskPeriods">
       </p-dropdown>
     </div>
@@ -32,34 +32,35 @@
   <div *ngIf="taskType == 'RKD'">
     <div class="df space-between">
       <div style="width: 200px">
-        <div class="big-text mb-1 mt-1">Номер документа</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Номер документа')}}</div>
         <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
       </div>
       <div style="width: 68%">
-        <div class="big-text mb-1 mt-1">Название документа</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>
         <input type="text" pInputText [(ngModel)]="taskSummary">
       </div>
     </div>
     <div class="df space-between">
       <div>
-        <div class="big-text mb-1 mt-1">Назначить ответственного</div>
-        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-                    [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-300">
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного')}}</div>
+        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
+                    [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-300 max-height-190">
           <ng-template let-user pTemplate="item">
             <div class="df">
               <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-              <div class="cx cy pl-10">{{user.userName}}</div>
+              <div *ngIf="l.language == 'ru'" class="cx cy pl-10">{{user.userName}}</div>
+              <div *ngIf="l.language == 'en'" class="cx cy pl-10">{{user.userNameEn}}</div>
             </div>
           </ng-template>
         </p-dropdown>
       </div>
       <div>
-        <div class="big-text mb-1 mt-1">Отдел</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Отдел')}}</div>
         <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-300" [(ngModel)]="taskDepartment" [options]="taskDepartments">
         </p-dropdown>
       </div>
     </div>
-    <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
         <p-header>
@@ -96,11 +97,11 @@
         </p-header>
       </div>
     </quill-editor>
-    <div class="big-text mb-1 mt-1">Вложение</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Вложение')}}</div>
     <div [class.file-drag]="dragOver" class="upload cx cy loading">
       <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
         <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
-        <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
+        <span class="normal-text no-actions">{{lang.tr('Перетащите файлы или нажмите для загрузки')}}</span>
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
@@ -112,9 +113,9 @@
     </div>
   </div>
   <div *ngIf="taskType == 'IT'">
-    <div class="big-text mb-1 mt-1">Название задачи</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Название задачи')}}</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
-    <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
         <p-header>
@@ -151,11 +152,11 @@
         </p-header>
       </div>
     </quill-editor>
-    <div class="big-text mb-1 mt-1">Вложение</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Вложение')}}</div>
     <div [class.file-drag]="dragOver" class="upload cx cy loading">
       <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
         <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
-        <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
+        <span class="normal-text no-actions">{{lang.tr('Перетащите файлы или нажмите для загрузки')}}</span>
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
@@ -167,28 +168,28 @@
     </div>
   </div>
   <div *ngIf="taskType == 'OTHER'">
-    <div class="big-text mb-1 mt-1">Название задачи</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Название задачи')}}</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="df space-between">
       <div>
-        <div class="big-text mb-1 mt-1">Назначить ответственного</div>
-        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-                    [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-250">
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного')}}</div>
+        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
+                    [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-300 max-height-190">
           <ng-template let-user pTemplate="item">
             <div class="df">
               <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-              <div class="cx cy pl-10">{{user.userName}}</div>
+              <div *ngIf="l.language == 'ru'" class="cx cy pl-10">{{user.userName}}</div>
+              <div *ngIf="l.language == 'en'" class="cx cy pl-10">{{user.userNameEn}}</div>
             </div>
           </ng-template>
         </p-dropdown>
-
       </div>
       <div>
-        <div class="big-text mb-1 mt-1">Срок завершения</div>
-        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>
+        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
       </div>
     </div>
-    <div class="big-text mb-1 mt-1">Описание задачи</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
         <p-header>
@@ -225,11 +226,11 @@
         </p-header>
       </div>
     </quill-editor>
-    <div class="big-text mb-1 mt-1">Вложение</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Вложение')}}</div>
     <div [class.file-drag]="dragOver" class="upload cx cy loading">
       <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
         <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
-        <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
+        <span class="normal-text no-actions">{{lang.tr('Перетащите файлы или нажмите для загрузки')}}</span>
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
@@ -244,34 +245,35 @@
   <div *ngIf="taskType == 'RKD-TURK'">
     <div class="df space-between">
       <div style="width: 200px">
-        <div class="big-text mb-1 mt-1">Document Number</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Номер документа')}}</div>
         <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
       </div>
       <div style="width: 68%">
-        <div class="big-text mb-1 mt-1">Document Name</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>
         <input type="text" pInputText [(ngModel)]="taskSummary">
       </div>
     </div>
     <div class="df space-between">
       <div>
-        <div class="big-text mb-1 mt-1">Assign responsible</div>
-        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-                    [showClear]="true" placeholder="Назначить" class="p-dropdown-150" styleClass="width-300">
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного')}}</div>
+        <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
+                    [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-300 max-height-190">
           <ng-template let-user pTemplate="item">
             <div class="df">
               <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-              <div class="cx cy pl-10">{{user.userName}}</div>
+              <div *ngIf="l.language == 'ru'" class="cx cy pl-10">{{user.userName}}</div>
+              <div *ngIf="l.language == 'en'" class="cx cy pl-10">{{user.userNameEn}}</div>
             </div>
           </ng-template>
         </p-dropdown>
       </div>
       <div>
-        <div class="big-text mb-1 mt-1">Department</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Отдел')}}</div>
         <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskDepartment" [options]="taskDepartments">
         </p-dropdown>
       </div>
     </div>
-    <div class="big-text mb-1 mt-1">Task Description</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
         <p-header>
@@ -308,11 +310,11 @@
         </p-header>
       </div>
     </quill-editor>
-    <div class="big-text mb-1 mt-1">Attachments</div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Вложение')}}</div>
     <div [class.file-drag]="dragOver" class="upload cx cy loading">
       <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
         <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
-        <span class="normal-text no-actions">Drop files here to upload</span>
+        <span class="normal-text no-actions">{{lang.tr('Перетащите файлы или нажмите для загрузки')}}</span>
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
@@ -325,11 +327,11 @@
   </div>
 
 </div>
-<div class="form-footer">
+<div class="form-footer-create">
   <div class="mr-1 cx">
-    <div tabindex="10" [class.disabled-button]="isCreateTaskDisabled()" (click)="createTask()" pButton label="Создать" class="button"></div>
+    <div tabindex="10" [class.disabled-button]="isCreateTaskDisabled()" (click)="createTask()" pButton [label]="l.tr('Создать')" class="button"></div>
   </div>
-  <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
+  <div tabindex="11" (click)="close()" pButton [label]="l.tr('Отмена')" class="button-cancel ml-1"></div>
 </div>
 
 

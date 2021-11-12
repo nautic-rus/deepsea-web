@@ -36,6 +36,7 @@ export class AuthManagerService {
     this.getUsers().then(data => {
       this.users = data;
       this.users.forEach(user => user.userName = this.getUserName(user.login));
+      this.users.forEach(user => user.userNameEn = tr(user.userName));
       this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
     });
   }
