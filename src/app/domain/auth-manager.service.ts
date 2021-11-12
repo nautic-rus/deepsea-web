@@ -8,6 +8,8 @@ import {MessageService} from "primeng/api";
 import {Observable} from "rxjs";
 import {Issue} from "./classes/issue";
 import _ from "underscore";
+import {LanguageService} from "./language.service";
+import { transliterate as tr, slugify } from 'transliteration';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,7 @@ export class AuthManagerService {
   private user: User = new User();
   users: User[] = [];
 
-  constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService) {
+  constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, private l: LanguageService) {
     this.fillUsers();
   }
   hasPerms(permissions: string): boolean{
@@ -40,7 +42,12 @@ export class AuthManagerService {
   getUserName(login: string){
     let find = this.users.find(x => x.login == login);
     if (find != null){
-      return find.surname + ' ' + find.name;
+      if (this.l.language == 'ru'){
+        return find.surname + ' ' + find.name;
+      }
+      else{
+        return tr(find.surname + ' ' + find.name);
+      }
     }
     else{
       return login;

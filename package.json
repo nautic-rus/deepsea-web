@@ -37,6 +37,7 @@
     "quill-delta": "^4.2.2",
     "quill-image-resize-module": "^3.0.0",
     "rxjs": "~6.6.0",
+    "transliteration": "^2.2.0",
     "tslib": "^2.1.0",
     "underscore": "^1.13.1",
     "uuid": "^8.3.2",
