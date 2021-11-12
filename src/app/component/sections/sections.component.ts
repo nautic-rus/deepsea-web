@@ -83,7 +83,7 @@ export class SectionsComponent implements OnInit {
   viewTask(s: string) {
     let find = this.issues.find(x => x.name.includes('Секция ' + s) || x.name.includes('Block ' + s));
     if (find != null){
-      this.issueManager.getIssueDetails(find.id, this.auth.getUser().login).then(res => {
+      this.issueManager.getIssueDetails(find.id).then(res => {
         this.dialogService.open(TaskComponent, {
           showHeader: false,
           modal: true,
@@ -97,7 +97,7 @@ export class SectionsComponent implements OnInit {
   viewTaskTurk(s: string) {
     let find = this.issues.find(x => x.name.includes('Unit ' + s));
     if (find != null){
-      this.issueManager.getIssueDetails(find.id, this.auth.getUser().login).then(res => {
+      this.issueManager.getIssueDetails(find.id).then(res => {
         this.dialogService.open(TaskComponent, {
           showHeader: false,
           modal: true,

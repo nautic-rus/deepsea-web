@@ -44,7 +44,7 @@ export class ImportxlsComponent implements OnInit {
               issue.department = row[++col];
               issue.details = row[++col];
               issue.period = row[++col];
-              this.issueManager.startIssue(issue.started_by, issue).then(res => {
+              this.issueManager.startIssue(issue).then(res => {
                 this.ref.close('imported');
               });
             });

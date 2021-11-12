@@ -84,6 +84,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
       console.log(data);
+      console.log('fill');
       this.issues = data;
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
@@ -112,7 +113,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   viewTask(id: string) {
     this.setIssueViewed(id);
-    this.issueManager.getIssueDetails(id, this.auth.getUser().login).then(res => {
+    this.issueManager.getIssueDetails(id).then(res => {
       console.log(res);
       if (res.id != null){
         this.dialogService.open(TaskComponent, {

@@ -75,7 +75,7 @@ export class TaskComponent implements OnInit {
               this.appRef.tick();
               fetch(image).then(res => res.blob()).then(blob => {
                 const file = new File([blob], fileName,{ type: "image/png" });
-                this.issueManager.uploadFile(file).then(res => {
+                this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
                   this.loaded.push(res);
                   this.appRef.tick();
                   let newDelta = new Delta();
@@ -83,11 +83,6 @@ export class TaskComponent implements OnInit {
                   newDelta.insert({image: res.url});
                   this.editor.updateContents(newDelta);
                   this.editor.setSelection(this.editor.getLength());
-                  // this.editor.insertEmbed(this.editor.getLength(), 'image', res.url);
-                  // this.editor.insertText(this.editor.getLength() + 1, "\u00a0", 'user');
-                  // this.editor.setSelection();
-
-                  //this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
                   this.appRef.tick();
                 });
               });
@@ -129,7 +124,7 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
         this.availableActions = this.getAvailableActions(issue);
       });
@@ -216,8 +211,11 @@ export class TaskComponent implements OnInit {
     return value == '' ? '-' : value;
   }
   getMessages(issue: Issue) {
+    let res: any[] = [];
+    issue.messages.forEach(x => res.push(x));
+    issue.history.forEach(x => res.push(x));
     // @ts-ignore
-    return _.sortBy(issue.messages, x => x.date).reverse().slice(0, issue.messages.length - 1);
+    return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
   }
 
   getAvailableActions(issue: Issue) {
@@ -290,7 +288,7 @@ export class TaskComponent implements OnInit {
 
     // @ts-ignore
     this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
       });
     });
@@ -323,7 +321,7 @@ export class TaskComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          this.issueManager.uploadFile(file).then(res => {
+          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
             if (this.edit == 'description'){
               this.issue.details += '<img style="cursor: pointer" src="' + res.url + '"/>';
             }
@@ -352,7 +350,7 @@ export class TaskComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          this.issueManager.uploadFile(file).then(res => {
+          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
             this.loaded.push(res);
           });
         }
@@ -392,7 +390,7 @@ export class TaskComponent implements OnInit {
               this.loaded.splice(this.loaded.indexOf(find), 1);
             }
             this.awaitForLoad.push(file.name);
-            this.issueManager.uploadFile(file).then(res => {
+            this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
               if (this.edit == 'description'){
                 this.issue.details += '<img src="' + res.url + '"/>';
               }
@@ -443,16 +441,6 @@ export class TaskComponent implements OnInit {
     if (findAwait != null){
       this.awaitForLoad.splice(this.awaitForLoad.indexOf(findAwait), 1);
     }
-  }
-  getPrevValue(messages: IssueMessage[], name: string, date: number): string {
-    let res = '';
-    _.sortBy(messages.filter(x => x.date < date), x => x.date).forEach(x => {
-      let find = x.variables.find(v => v.name == name);
-      if (find != null){
-        res = find.value;
-      }
-    });
-    return res;
   }
 
   removeIssue() {
@@ -518,7 +506,7 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
         this.availableActions = this.getAvailableActions(issue);
       });
@@ -530,7 +518,7 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(issue => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
         this.availableActions = this.getAvailableActions(issue);
       });
@@ -557,7 +545,7 @@ export class TaskComponent implements OnInit {
     this.edit = '';
     this.startDate = new Date(this.issue.start_date);
     this.dueDate = new Date(this.issue.due_date);
-    this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
+    this.issueManager.getIssueDetails(this.issue.id).then(res => {
       this.issue = res;
     });
   }
@@ -568,7 +556,7 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id, this.auth.getUser().login).then(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(res => {
         this.issue = res;
       });
     });

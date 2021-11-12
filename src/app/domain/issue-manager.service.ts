@@ -23,10 +23,10 @@ export class IssueManagerService {
   constructor(private lang: LanguageService, private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, public auth: AuthManagerService) {
 
   }
-  async uploadFile(file: File) {
+  async uploadFile(file: File, user: string) {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
-    return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData).toPromise();
+    return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData, {params: {user}}).toPromise();
   }
   async uploadFileToCloud(file: File, filePath: string, login: string, password: string) {
     const formData: FormData = new FormData();
@@ -54,8 +54,8 @@ export class IssueManagerService {
   async getTaskPriorities() {
     return await this.http.get<string[]>(props.http + '/issuePriorities').toPromise();
   }
-  async startIssue(user: string, issue: Issue){
-    return await this.http.post<string>(props.http + '/startIssue', JSON.stringify(issue), {params: {user: user}}).toPromise();
+  async startIssue(issue: Issue){
+    return await this.http.post<string>(props.http + '/startIssue', JSON.stringify(issue)).toPromise();
   }
   async getIssues(login: string): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/issues', {params: {user: login}}).toPromise();
@@ -63,8 +63,8 @@ export class IssueManagerService {
   async getIssuesViewed(login: string): Promise<ViewedIssue[]> {
     return await this.http.get<ViewedIssue[]>(props.http + '/issuesViewed', {params: {user: login}}).toPromise();
   }
-  async getIssueDetails(id: string, login: string): Promise<Issue> {
-    return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id: id, user: login}}).toPromise();
+  async getIssueDetails(id: string): Promise<Issue> {
+    return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id}}).toPromise();
   }
   async getHullPartList(docNum: string): Promise<HullPL> {
     return await this.http.get<HullPL>(props.httpMaterials + '/getHullPartList', {params: {docNum}}).toPromise();
@@ -79,7 +79,7 @@ export class IssueManagerService {
     return await this.http.get<string>(props.http + '/setIssueStatus', {params: {id: id, user: user, status: status}}).toPromise();
   }
   async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
-    return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id: id}}).toPromise();
+    return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id}}).toPromise();
   }
   async removeIssue(id: string, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/removeIssue', {params: {id, user}}).toPromise();
@@ -183,13 +183,13 @@ export class IssueManagerService {
   }
   localeHistory(input: string){
     switch (input) {
-      case '_taskStatus': return 'Статус';
+      case 'status': return 'Статус';
       default: return input;
     }
   }
   localeHistoryEn(input: string){
     switch (input) {
-      case '_taskStatus': return 'status';
+      case 'status': return 'status';
       default: return input;
     }
   }
@@ -197,27 +197,19 @@ export class IssueManagerService {
     switch (this.lang.language) {
       case 'ru':{
         switch (input) {
-          case 'it-task': return 'IT';
-          case 'simple-task': return 'Прочее';
-          case 'Simple': return 'Прочее';
-          case 'task-rkd': return 'РКД';
+          case 'IT': return 'IT';
+          case 'OTHER': return 'Прочее';
           case 'RKD': return 'РКД';
-          case 'Approval': return 'Согласование';
-          case 'task-rkd-2': return 'РКД-Т';
           case 'RKD-TURK': return 'РКД-Т';
           default: return input;
         }
       }
       default:{
         switch (input) {
-          case 'it-task': return 'IT';
-          case 'simple-task': return 'Other';
-          case 'Simple': return 'Other';
-          case 'task-rkd': return 'RKD';
+          case 'IT': return 'IT';
+          case 'OTHER': return 'Other';
           case 'RKD': return 'RKD';
-          case 'Approval': return 'Approval';
-          case 'task-rkd-2': return 'RKD';
-          case 'RKD-TURK': return 'RKD';
+          case 'RKD-TURK': return 'RKD-T';
           default: return input;
         }
       }

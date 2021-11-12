@@ -23,13 +23,13 @@
       <p-dropdown styleClass="dark-panel width-300" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
       </p-dropdown>
     </div>
-    <div *ngIf="taskType == 'task-rkd'">
+    <div *ngIf="taskType == 'RKD'">
       <div class="big-text mb-1 mt-1">{{lang.tr('Этап')}}</div>
       <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPeriod" [options]="taskPeriods">
       </p-dropdown>
     </div>
   </div>
-  <div *ngIf="taskType == 'task-rkd'">
+  <div *ngIf="taskType == 'RKD'">
     <div class="df space-between">
       <div style="width: 200px">
         <div class="big-text mb-1 mt-1">Номер документа</div>
@@ -111,7 +111,7 @@
       <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
     </div>
   </div>
-  <div *ngIf="taskType == 'it-task'">
+  <div *ngIf="taskType == 'IT'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="big-text mb-1 mt-1">Описание задачи</div>
@@ -166,7 +166,7 @@
       <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
     </div>
   </div>
-  <div *ngIf="taskType == 'simple-task'">
+  <div *ngIf="taskType == 'OTHER'">
     <div class="big-text mb-1 mt-1">Название задачи</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="df space-between">
@@ -241,7 +241,7 @@
     </div>
   </div>
 
-  <div *ngIf="taskType == 'task-rkd-2'">
+  <div *ngIf="taskType == 'RKD-TURK'">
     <div class="df space-between">
       <div style="width: 200px">
         <div class="big-text mb-1 mt-1">Document Number</div>

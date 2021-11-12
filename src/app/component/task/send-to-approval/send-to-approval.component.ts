@@ -54,7 +54,7 @@ export class SendToApprovalComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          this.issues.uploadFile(file).then(res => {
+          this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
             console.log(res);
             this.loaded.push(res);
           });
@@ -117,7 +117,7 @@ export class SendToApprovalComponent implements OnInit {
               this.appRef.tick();
               fetch(image).then(res => res.blob()).then(blob => {
                 const file = new File([blob], fileName,{ type: "image/png" });
-                this.issues.uploadFile(file).then(res => {
+                this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
                   this.loaded.push(res);
                   this.appRef.tick();
                   this.taskDetails += '<img src="' + res.url + '"/>';
@@ -199,7 +199,7 @@ export class SendToApprovalComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           const q = "'";
-          this.issues.uploadFile(file).then(res => {
+          this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
             this.taskDetails += '<img src="' + res.url + '"/>';
             console.log(res);
             this.loaded.push(res);
@@ -228,7 +228,7 @@ export class SendToApprovalComponent implements OnInit {
               this.loaded.splice(this.loaded.indexOf(find), 1);
             }
             this.awaitForLoad.push(file.name);
-            this.issues.uploadFile(file).then(res => {
+            this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
               this.taskDetails += '<img src="' + res.url + '"/>';
               this.loaded.push(res);
             });

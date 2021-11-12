@@ -1,6 +1,7 @@
 import {IssueMessage} from "./issue-message";
 import {FileAttachment} from "./file-attachment";
 import {IssueAction} from "./issue-action";
+import {IssueHistory} from "./issue-history";
 export class Issue {
   id: string = '';
   status: string = '';
@@ -15,6 +16,7 @@ export class Issue {
   start_date: number = 0;
   due_date: number = 0;
   messages: IssueMessage[] = [];
+  history: IssueHistory[] = [];
   file_attachments: FileAttachment[] = [];
   priority: string = '';
   doc_number: string = '';

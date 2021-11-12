@@ -21,7 +21,8 @@ export class DeleteComponent implements OnInit {
     this.ref.close('exit');
   }
   commit() {
-    this.issueManager.removeIssue(this.issue.id, this.auth.getUser().login);
-    this.ref.close('success');
+    this.issueManager.removeIssue(this.issue.id, this.auth.getUser().login).then(res => {
+      this.ref.close('success');
+    });
   }
 }

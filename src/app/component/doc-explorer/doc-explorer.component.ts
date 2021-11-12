@@ -54,7 +54,7 @@ export class DocExplorerComponent implements OnInit {
               this.appRef.tick();
               fetch(image).then(res => res.blob()).then(blob => {
                 const file = new File([blob], fileName,{ type: "image/png" });
-                this.issueManager.uploadFile(file).then(res => {
+                this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
                   this.loaded.push(res);
                   this.appRef.tick();
                   this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
@@ -103,7 +103,7 @@ export class DocExplorerComponent implements OnInit {
     })
   }
   selectIssue(issue: Issue) {
-    this.issueManager.getIssueDetails(issue.id, this.auth.getUser().login).then(issue => {
+    this.issueManager.getIssueDetails(issue.id).then(issue => {
       this.selectedIssue = issue;
     });
     this.issueManager.getHullPartList(issue.doc_number).then(spec => {
@@ -164,16 +164,6 @@ export class DocExplorerComponent implements OnInit {
   getAuthor(author: string) {
     return this.auth.getUserName(author);
   }
-  getPrevValue(messages: IssueMessage[], name: string, date: number): string {
-    let res = '';
-    _.sortBy(messages.filter(x => x.date < date), x => x.date).forEach(x => {
-      let find = x.variables.find(v => v.name == name);
-      if (find != null){
-        res = find.value;
-      }
-    });
-    return res;
-  }
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -200,7 +190,7 @@ export class DocExplorerComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          this.issueManager.uploadFile(file).then(res => {
+          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
             this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
             this.loaded.push(res);
           });
@@ -224,7 +214,7 @@ export class DocExplorerComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          this.issueManager.uploadFile(file).then(res => {
+          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
             this.loaded.push(res);
           });
         }
@@ -254,7 +244,7 @@ export class DocExplorerComponent implements OnInit {
               this.loaded.splice(this.loaded.indexOf(find), 1);
             }
             this.awaitForLoad.push(file.name);
-            this.issueManager.uploadFile(file).then(res => {
+            this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
               this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
               this.loaded.push(res);
             });
@@ -309,8 +299,8 @@ export class DocExplorerComponent implements OnInit {
     message.fileAttachments = this.loaded;
 
     // @ts-ignore
-    this.issueManager.setIssueMessage(this.selectedIssue.id, message).then(res => {
-      this.issueManager.getIssueDetails(this.selectedIssue.id, this.auth.getUser().login).then(issue => {
+    this.issueManager.setIssueMessage(this.selectedIssue.id, this.auth.getUser().login, message).then(res => {
+      this.issueManager.getIssueDetails(this.selectedIssue.id).then(issue => {
         this.selectedIssue = issue;
       });
     });

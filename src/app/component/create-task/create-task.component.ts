@@ -85,11 +85,14 @@ export class CreateTaskComponent implements OnInit {
                 this.appRef.tick();
                 fetch(image).then(res => res.blob()).then(blob => {
                   const file = new File([blob], fileName,{ type: "image/png" });
-                  this.issues.uploadFile(file).then(res => {
+                  this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
                     this.loaded.push(res);
                     this.appRef.tick();
-                    this.taskDetails += '<img src="' + res.url + '"/>';
-                    // this.editor.updateContents(new Delta().insert({image: res.url}));
+                    let newDelta = new Delta();
+                    newDelta.retain(this.editor.getSelection().index);
+                    newDelta.insert({image: res.url});
+                    this.editor.updateContents(newDelta, 'user');
+                    this.editor.setSelection(this.editor.getLength());
                     this.appRef.tick();
                   });
                 });
@@ -124,7 +127,7 @@ export class CreateTaskComponent implements OnInit {
     //this.users = this.auth.users;
     this.users = this.getUsers();
     this.issues.getIssueTypes().then(types => {
-      types.filter(x => this.issues.localeTaskType(x) != x).forEach(type => {
+      types.forEach(type => {
         this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
       });
       if (this.taskTypes.length > 0) {
@@ -191,7 +194,7 @@ export class CreateTaskComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          this.issues.uploadFile(file).then(res => {
+          this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
             console.log(res);
             this.loaded.push(res);
           });
@@ -216,9 +219,8 @@ export class CreateTaskComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           const q = "'";
-          this.issues.uploadFile(file).then(res => {
+          this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
             this.taskDetails += '<img src="' + res.url + '"/>';
-            console.log(res);
             this.loaded.push(res);
           });
         }
@@ -240,9 +242,12 @@ export class CreateTaskComponent implements OnInit {
     issue.doc_number = this.taskDocNumber;
     issue.responsible = this.selectedUser;
     issue.period = this.taskPeriod;
+    issue.started_by = this.auth.getUser().login;
+    issue.status = 'New';
+    issue.action = 'New';
     // @ts-ignore
-    issue.fileAttachments = this.loaded;
-    this.issues.startIssue(this.auth.getUser().login, issue).then(res => {
+    issue.file_attachments = this.loaded;
+    this.issues.startIssue(issue).then(res => {
       this.issues.setIssueViewed(res, this.auth.getUser().login).then(() => {
         this.ref.close(res);
       });
@@ -344,7 +349,7 @@ export class CreateTaskComponent implements OnInit {
               this.loaded.splice(this.loaded.indexOf(find), 1);
             }
             this.awaitForLoad.push(file.name);
-            this.issues.uploadFile(file).then(res => {
+            this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
               this.taskDetails += '<img src="' + res.url + '"/>';
               this.loaded.push(res);
             });
