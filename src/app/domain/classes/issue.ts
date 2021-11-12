@@ -27,4 +27,5 @@ export class Issue {
   action: string = '';
   actions: IssueAction[] = [];
   last_update: number = 0;
+  closing_status: string = '';
 }

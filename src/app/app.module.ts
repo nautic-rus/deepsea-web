@@ -57,6 +57,7 @@ import { DeleteComponent } from './component/task/delete/delete.component';
 import { DocExplorerComponent } from './component/doc-explorer/doc-explorer.component';
 import { UserCardComponent } from './component/employees/user-card/user-card.component';
 import {NgxCollapseModule} from 'ngx-collapse';
+import {ToggleButtonModule} from "primeng/togglebutton";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -87,43 +88,44 @@ Quill.register('modules/imageResize', ImageResize);
     DocExplorerComponent,
     UserCardComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AccordionModule,
-    TableModule,
-    MultiSelectModule,
-    InputTextModule,
-    ProgressBarModule,
-    ButtonModule,
-    SliderModule,
-    DropdownModule,
-    TooltipModule,
-    ToastModule,
-    EditorModule,
-    DialogModule,
-    CascadeSelectModule,
-    CalendarModule,
-    ProgressSpinnerModule,
-    MessagesModule,
-    GalleriaModule,
-    QuillModule.forRoot(),
-    // QuillModule.forRoot({
-    //   modules: {
-    //     imageResize: {}
-    //   }
-    // }),
-    ConfirmDialogModule,
-    RippleModule,
-    InputSwitchModule,
-    InputTextareaModule,
-    InputNumberModule,
-    CheckboxModule,
-    NgxCollapseModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        AccordionModule,
+        TableModule,
+        MultiSelectModule,
+        InputTextModule,
+        ProgressBarModule,
+        ButtonModule,
+        SliderModule,
+        DropdownModule,
+        TooltipModule,
+        ToastModule,
+        EditorModule,
+        DialogModule,
+        CascadeSelectModule,
+        CalendarModule,
+        ProgressSpinnerModule,
+        MessagesModule,
+        GalleriaModule,
+        QuillModule.forRoot(),
+        // QuillModule.forRoot({
+        //   modules: {
+        //     imageResize: {}
+        //   }
+        // }),
+        ConfirmDialogModule,
+        RippleModule,
+        InputSwitchModule,
+        InputTextareaModule,
+        InputNumberModule,
+        CheckboxModule,
+        NgxCollapseModule,
+        ToggleButtonModule
+    ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })

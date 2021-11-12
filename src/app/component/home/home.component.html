@@ -34,6 +34,7 @@
           <div class="ml-2 cxy">
             Количество задач: {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} (Всего: {{dt.value.length}})
           </div>
+          <p-toggleButton onLabel="Hide completed" offLabel="Show completed" onIcon="pi pi-times" offIcon="pi pi-check" [(ngModel)]="showCompleted"></p-toggleButton>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
             <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" placeholder="Поиск..." class="border" />
@@ -64,9 +65,9 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-columns="columns" let-issue>
-        <tr [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
+        <tr *ngIf="showCompleted || !showCompleted && issue.status != issue.closing_status" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
           <td class="cursor-pointer">
-            <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.lastUpdate)"></div>
+            <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
             <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
           </td>
           <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
