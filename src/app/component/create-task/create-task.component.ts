@@ -38,13 +38,13 @@ export class CreateTaskComponent implements OnInit {
   taskPeriod: string = this.taskPeriods[0];
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
-  selectedUser = '';
+  assignedToUser = '';
+  responsibleUser = '';
   awaitForLoad: string[] = [];
   taskProject = '';
   taskType = 'IT';
   taskPriority = '';
   loaded: FileAttachment[] = [];
-  taskResponsible: any;
   taskStart: any;
   dragOver = false;
   image = '';
@@ -166,13 +166,13 @@ export class CreateTaskComponent implements OnInit {
       this.taskDetails = issue.details;
       this.loaded = issue.file_attachments;
       this.taskPriority = issue.priority;
-      this.selectedUser = issue.assigned_to;
+      this.assignedToUser = issue.assigned_to;
+      this.responsibleUser = issue.responsible;
       this.awaitForLoad = issue.file_attachments.map(x => x.name);
       this.taskProject = issue.project;
       this.taskDepartment = issue.department;
       this.taskPriority = issue.priority;
       this.taskDocNumber = issue.doc_number;
-      this.taskResponsible = issue.responsible;
       this.taskPeriod = issue.period;
     }
 
@@ -234,13 +234,13 @@ export class CreateTaskComponent implements OnInit {
     issue.issue_type = this.taskType;
     issue.started_by = this.auth.getUser().login;
     issue.project = this.taskProject;
-    issue.assigned_to = this.selectedUser;
+    issue.assigned_to = this.assignedToUser;
     issue.priority = this.taskPriority;
     issue.start_date = this.startDate.getTime();
     issue.due_date = this.dueDate.getTime();
     issue.department = this.taskDepartment;
     issue.doc_number = this.taskDocNumber;
-    issue.responsible = this.selectedUser;
+    issue.responsible = this.responsibleUser;
     issue.period = this.taskPeriod;
     issue.started_by = this.auth.getUser().login;
     issue.status = 'New';
@@ -362,7 +362,7 @@ export class CreateTaskComponent implements OnInit {
   isCreateTaskDisabled() {
     switch (this.taskType) {
       case 'it-task': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
-      case 'task-rkd': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.taskResponsible == '';
+      case 'task-rkd': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
       default: return false;
     }
   }
@@ -375,6 +375,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   taskTypeChanged() {
-    this.selectedUser = this.auth.getUser().login;
+    this.assignedToUser = this.auth.getUser().login;
+    this.responsibleUser = this.auth.getUser().login;
   }
 }

@@ -49,7 +49,7 @@ export class TaskComponent implements OnInit {
   availableActions: any[] = [];
   taskDepartments: LV[] = [];
   taskPriorities: LV[] = [];
-  taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
+  taskPeriods: string[] = [];
   taskProjects: string[] = [];
   issueNameEdit = false;
   startDate: Date = new Date();
@@ -145,6 +145,9 @@ export class TaskComponent implements OnInit {
     });
     this.issueManager.getIssueProjects().then(projects => {
       this.taskProjects = projects;
+    });
+    this.issueManager.getIssuePeriods().then(periods => {
+      this.taskPeriods = periods;
     });
     this.issueManager.getTaskPriorities().then(priorities => {
       priorities.forEach(priority => {
@@ -488,11 +491,10 @@ export class TaskComponent implements OnInit {
   }
 
   changeStatus(value: string) {
-    if (value == 'Send to Approval'){
-      this.askForSendToApproval();
-    }
-    else if (value == 'Send to ShipYard'){
-      this.askForSendToCloud();
+    if (value == 'AssignedTo'){
+      this.issue.status = value;
+      this.issue.action = value;
+      this.assignTask();
     }
     else{
       this.issue.status = value;
@@ -593,5 +595,14 @@ export class TaskComponent implements OnInit {
   }
   contentClick(content: string): void{
     this.collapsed.includes(content) ? this.collapsed.splice(this.collapsed.indexOf(content), 1) : this.collapsed.push(content);
+  }
+
+  deleteFile(url: string) {
+    this.issueManager.deleteFile(url).then(() => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
+    });
   }
 }

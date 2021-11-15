@@ -33,8 +33,8 @@ export class IssueManagerService {
     formData.append('file', file, file.name);
     return await this.http.post<FileAttachment>(props.http + '/createFileCloudUrl', formData, {params: {filePath, login, password}}).toPromise();
   }
-  async assignUser(id: string, user: string, startDate: string, dueDate: string, overtime: string){
-    return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime}}).toPromise();
+  async assignUser(id: string, user: string, startDate: string, dueDate: string, overtime: string, action: string, author: string){
+    return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime, action, author}}).toPromise();
   }
   async changeResponsible(id: string, user: string){
     return await this.http.get<string[]>(props.http + '/changeResponsible', {params: {id, user}}).toPromise();
@@ -47,6 +47,9 @@ export class IssueManagerService {
   }
   async getIssueProjects() {
     return await this.http.get<string[]>(props.http + '/issueProjects').toPromise();
+  }
+  async getIssuePeriods() {
+    return await this.http.get<string[]>(props.http + '/issuePeriods').toPromise();
   }
   async getIssueTypes() {
     return await this.http.get<string[]>(props.http + '/issueTypes').toPromise();
@@ -83,6 +86,9 @@ export class IssueManagerService {
   }
   async removeIssue(id: string, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/removeIssue', {params: {id, user}}).toPromise();
+  }
+  async deleteFile(url: string): Promise<string>{
+    return await this.http.get<string>(props.http + '/deleteFile', {params: {url}}).toPromise();
   }
   async setIssueViewed(id: string, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/setIssueViewed', {params: {id, user}}).toPromise();
@@ -162,7 +168,7 @@ export class IssueManagerService {
   }
   localeStatusAsButton(input: string, styled = true): string {
     switch (input) {
-      case 'In Work': return styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'В работу';
+      case 'In Work': return (this.lang.language == 'ru' ? (styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'В работу') : (styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">In Work</span></div>' : 'In Work'));
       case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/icons/like.svg"></span><span class="cxy button-text">Исполнено</span></div>' : 'Исполнено';
       case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
       case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/icons/check.svg"></span><span class="cxy button-text">На проверку</span></div>' : 'На проверку';
@@ -177,6 +183,7 @@ export class IssueManagerService {
       case 'Ready to send': return styled ? '<div class="buttons-pick-send"><span class="icon-send cxy"><img src="assets/icons/send.png" height="18"></span><span class="cxy button-text">Готов к отправке</span></div>' : 'Готов к отправке';
       case 'On reApproval': return styled ? '<div class="buttons-pick-reapproval"><span class="icon-reapproval cxy"><img src="assets/icons/approval.svg" height="18"></span><span class="cxy button-text">Повторное согласование</span></div>' : 'Повторное согласование';
       case 'Send to ShipYard': return styled ? '<div class="buttons-pick-shipyard"><span class="icon-shipyard cxy"><img src="assets/icons/anchor.png" height="16"></span><span class="cxy button-text">Отправить на верфь</span></div>' : 'Отправить на верфь';
+      case 'AssignedTo': return styled ? '<div class="buttons-pick-shipyard"><span class="icon-shipyard cxy"><img src="assets/icons/anchor.png" height="16"></span><span class="cxy button-text">Назначить</span></div>' : 'Назначить';
 
       default: return input;
     }
