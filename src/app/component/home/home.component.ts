@@ -69,7 +69,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       { field: 'overtime', header: 'Сверхурочные', headerLocale: 'Сверхурочные', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'overtime'), defaultValue: '', hidden: false },
       { field: 'responsible', header: 'Ответственный', headerLocale: 'Ответственный', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'responsible'), defaultValue: '', hidden: false },
       { field: 'doc_number', header: 'Номер чертежа', headerLocale: 'Номер чертежа', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'doc_number'), defaultValue: '', hidden: false },
-      { field: 'period', header: 'Этап', headerLocale: 'Этап', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'period'), defaultValue: '', hidden: false }
+      { field: 'period', header: 'Этап', headerLocale: 'Этап', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'period'), defaultValue: '', hidden: false },
+      { field: 'last_update', header: 'Дата обновления', headerLocale: 'Дата обновления', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'last_update'), defaultValue: '', hidden: false }
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -206,6 +207,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       return this.issueManager.localeTaskDepartment(issueElement);
     }
     else if (field == 'due_date'){
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    }
+    else if (field == 'last_update'){
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     }
     else if (field == 'responsible'){

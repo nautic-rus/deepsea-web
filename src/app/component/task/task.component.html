@@ -289,6 +289,19 @@
                 <div>{{auth.getUserName(msg.new_value)}}</div>
               </div>
             </div>
+            <div *ngIf="msg.update_message.includes('edit')">
+              <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+              <span class="bold-text">{{t.tr('информацию')}}</span>
+              <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+              <div class="df pt-5">
+                <div>{{auth.getUserName(msg.prev_value)}}</div>
+                <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                <div>{{auth.getUserName(msg.new_value)}}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
