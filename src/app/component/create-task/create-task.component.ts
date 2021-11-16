@@ -30,7 +30,7 @@ export class CreateTaskComponent implements OnInit {
   taskDepartment = '';
   users: User[] = [];
   startDate: Date = new Date();
-  dueDate: Date = new Date();
+  dueDate: Date = new Date(this.startDate.getTime() + 259200000);
   today: Date = new Date();
   taskProjects: string[] = [];
   taskDepartments: LV[] = [];
@@ -151,7 +151,7 @@ export class CreateTaskComponent implements OnInit {
     });
     this.taskPeriods.splice(0, this.taskPeriods.length);
     this.issues.getIssuePeriods().then(periods => {
-      periods.filter(x => x.project = this.taskProject).forEach(period => {
+      periods.filter(x => x.project == this.taskProject).forEach(period => {
         this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
       });
       if (this.taskPeriods.length > 0) {
@@ -384,15 +384,15 @@ export class CreateTaskComponent implements OnInit {
   }
 
   taskTypeChanged() {
-    this.assignedToUser = this.auth.getUser().login;
-    this.responsibleUser = this.auth.getUser().login;
+    // this.assignedToUser = this.auth.getUser().login;
+    // this.responsibleUser = this.auth.getUser().login;
   }
 
   taskProjectChanged() {
     this.taskPeriods.splice(0, this.taskPeriods.length);
     this.issues.getIssuePeriods().then(periods => {
       console.log(periods);
-      periods.filter(x => x.project = this.taskProject).forEach(period => {
+      periods.filter(x => x.project == this.taskProject).forEach(period => {
         this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
       });
       if (this.taskPeriods.length > 0) {

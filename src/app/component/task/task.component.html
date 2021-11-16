@@ -442,9 +442,9 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Этап')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getWithNoResult(issue.period)}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getWithNoResult(issueManager.localeTaskPeriod(issue.period))}}</div>
             <div class="mr-5" [hidden]="edit != 'period'">
-              <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" styleClass="width-180 h-32">
+              <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" optionValue="value" optionLabel="label" styleClass="width-180 h-32">
               </p-dropdown>
             </div>
             <div class="w-15 df">

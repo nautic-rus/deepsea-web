@@ -17,7 +17,7 @@ export class SendToApprovalComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
-  selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+  selectedUsers: string[] = ['stropilov', 'lvov', 'n.novikov'];
   //selectedUsers: string[] = ['isaev'];
   issue: Issue = new Issue();
   users: User[] = [];
@@ -26,10 +26,10 @@ export class SendToApprovalComponent implements OnInit {
     this.issue = conf.data;
     console.log(this.issue);
     if (this.issue.issue_type == 'RKD'){
-      this.selectedUsers = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+      this.selectedUsers = ['stropilov', 'lvov', 'n.novikov'];
     }
     if (this.issue.issue_type == 'RKD-TURK'){
-      this.selectedUsers = ['isaev'];
+      this.selectedUsers = ['stropilov', 'lvov', 'n.novikov'];
     }
   }
   ngOnInit(): void {
@@ -248,10 +248,23 @@ export class SendToApprovalComponent implements OnInit {
     return result;
   }
   commit() {
-    //return;
-    this.issues.sendToApproval(this.issue.id, this.selectedUsers, this.loaded, this.taskDetails, 'Send to Approval', '').then(res => {
-      console.log(res);
-      this.ref.close();
+    this.selectedUsers.forEach(user => {
+      const issue = new Issue();
+      issue.name = 'Согласование ' + this.issue.doc_number;
+      issue.details = this.taskDetails;
+      issue.issue_type = 'APPROVAL';
+      issue.started_by = this.auth.getUser().login;
+      issue.assigned_to = user;
+      issue.status = 'New';
+      issue.action = 'New';
+      issue.file_attachments = this.loaded;
+      this.issues.startIssue(issue).then(res => {
+        this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+          this.issues.setIssueViewed(res, this.auth.getUser().login).then(() => {
+            this.ref.close(res);
+          });
+        });
+      });
     });
   }
 

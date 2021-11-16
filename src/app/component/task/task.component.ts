@@ -499,6 +499,11 @@ export class TaskComponent implements OnInit {
       this.issue.action = value;
       this.assignTask();
     }
+    else if (value == 'Send to Approval'){
+      this.issue.status = value;
+      this.issue.action = value;
+      this.askForSendToApproval();
+    }
     else{
       this.issue.status = value;
       this.issue.action = value;
