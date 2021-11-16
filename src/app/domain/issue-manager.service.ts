@@ -15,6 +15,7 @@ import {AuthManagerService} from "./auth-manager.service";
 import {HullPL} from "./classes/hull-pl";
 import {LanguageService} from "./language.service";
 import {DayCalendar} from "./classes/day-calendar";
+import {IssuePeriod} from "./classes/issue-period";
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,7 @@ export class IssueManagerService {
     return await this.http.get<string[]>(props.http + '/issueProjects').toPromise();
   }
   async getIssuePeriods() {
-    return await this.http.get<string[]>(props.http + '/issuePeriods').toPromise();
+    return await this.http.get<IssuePeriod[]>(props.http + '/issuePeriods').toPromise();
   }
   async getIssueTypes() {
     return await this.http.get<string[]>(props.http + '/issueTypes').toPromise();
@@ -283,5 +284,14 @@ export class IssueManagerService {
       res = 'Не назначен';
     }
     return res;
+  }
+
+  localeTaskPeriod(stage_name: string) {
+    if (this.lang.language == 'ru'){
+      return stage_name.replace("Stage", "Этап");
+    }
+    else{
+      return  stage_name;
+    }
   }
 }

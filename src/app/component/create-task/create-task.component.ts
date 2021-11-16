@@ -34,8 +34,8 @@ export class CreateTaskComponent implements OnInit {
   today: Date = new Date();
   taskProjects: string[] = [];
   taskDepartments: LV[] = [];
-  taskPeriods: string[] = ['Этап 1', 'Этап 2', 'Этап 3', 'Этап 4', 'Этап 5'];
-  taskPeriod: string = this.taskPeriods[0];
+  taskPeriods: LV[] = [];
+  taskPeriod: string = '';
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
   assignedToUser = '';
@@ -147,6 +147,15 @@ export class CreateTaskComponent implements OnInit {
       this.taskProjects = projects;
       if (this.taskProjects.length > 0) {
         this.taskProject = this.taskProjects[0];
+      }
+    });
+    this.taskPeriods.splice(0, this.taskPeriods.length);
+    this.issues.getIssuePeriods().then(periods => {
+      periods.filter(x => x.project = this.taskProject).forEach(period => {
+        this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
+      });
+      if (this.taskPeriods.length > 0) {
+        this.taskPeriod = this.taskPeriods[0].value;
       }
     });
     this.issues.getIssueDepartments().then(departments => {
@@ -377,5 +386,18 @@ export class CreateTaskComponent implements OnInit {
   taskTypeChanged() {
     this.assignedToUser = this.auth.getUser().login;
     this.responsibleUser = this.auth.getUser().login;
+  }
+
+  taskProjectChanged() {
+    this.taskPeriods.splice(0, this.taskPeriods.length);
+    this.issues.getIssuePeriods().then(periods => {
+      console.log(periods);
+      periods.filter(x => x.project = this.taskProject).forEach(period => {
+        this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
+      });
+      if (this.taskPeriods.length > 0) {
+        this.taskPeriod = this.taskPeriods[0].value;
+      }
+    });
   }
 }

@@ -49,7 +49,7 @@ export class TaskComponent implements OnInit {
   availableActions: any[] = [];
   taskDepartments: LV[] = [];
   taskPriorities: LV[] = [];
-  taskPeriods: string[] = [];
+  taskPeriods: LV[] = [];
   taskProjects: string[] = [];
   issueNameEdit = false;
   startDate: Date = new Date();
@@ -147,7 +147,9 @@ export class TaskComponent implements OnInit {
       this.taskProjects = projects;
     });
     this.issueManager.getIssuePeriods().then(periods => {
-      this.taskPeriods = periods;
+      periods.filter(x => x.project == this.issue.project).forEach(x => {
+        this.taskPeriods.push(new LV(this.issueManager.localeTaskPeriod(x.name), x.name));
+      });
     });
     this.issueManager.getTaskPriorities().then(priorities => {
       priorities.forEach(priority => {
@@ -228,6 +230,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('r') && issue.responsible == this.auth.getUser().login || allow;
       allow = action.rule.includes('a') && issue.assigned_to == this.auth.getUser().login || allow;
       allow = action.rule.includes('s') && issue.started_by == this.auth.getUser().login || allow;
+      allow = action.rule.includes('g') && this.auth.getUser().groups.includes(issue.issue_type) || allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != 'Approved').length == 0 && allow : allow;
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
