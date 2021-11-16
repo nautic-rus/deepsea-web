@@ -196,12 +196,8 @@
     </div>
   </div>
   <div *ngIf="taskType == 'APPROVAL'">
-    <div class="df space-between">
-      <div style="width: 68%">
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название')}}</div>
-        <input type="text" pInputText [(ngModel)]="taskSummary">
-      </div>
-    </div>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Название задачи')}}</div>
+    <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="df space-between">
       <div>
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного')}}</div>
