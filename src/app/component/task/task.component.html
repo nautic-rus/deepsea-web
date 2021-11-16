@@ -2,13 +2,13 @@
   <div class="task-header">
     <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.issue_type)}}</div>
     <div class="task-buttons">
-      <div class="task-button cxy" pTooltip="Копировать ссылку задачи" (click)="copyIssueUrl()">
+      <div class="task-button cxy" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">
         <img src="assets/icons/link.svg" height="20">
       </div>
-      <div class="task-button cxy" pTooltip="Копировать задачу" (click)="copyIssue()">
+      <div class="task-button cxy" [pTooltip]="t.tr('Копировать задачу')" (click)="copyIssue()">
         <img src="assets/icons/copy.svg" height="20">
       </div>
-      <div class="task-button cxy mr-2" pTooltip="Удалить задачу" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by)">
+      <div class="task-button cxy mr-2" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by)">
         <img src="assets/icons/trash.svg" height="20">
       </div>
       <div class="task-button cxy" (click)="close()">
@@ -62,18 +62,18 @@
           <div quill-editor-toolbar>
             <p-header>
             <span class="ql-formats">
-              <button class="ql-bold quill-button" pTooltip="Полужирный Ctrl+B" tooltipPosition="top" aria-label="Bold" tabindex="-1"></button>
-              <button class="ql-italic quill-button" pTooltip="Курсив Ctrl+I" tooltipPosition="top" aria-label="Italic" tabindex="-1"></button>
-              <button class="ql-underline quill-button" pTooltip="Подчеркнутый Ctrl+U" tooltipPosition="top" aria-label="Underline" tabindex="-1"></button>
+              <button class="ql-bold quill-button" [pTooltip]="t.tr('Полужирный Ctrl+B')" tooltipPosition="top" aria-label="Bold" tabindex="-1"></button>
+              <button class="ql-italic quill-button" [pTooltip]="t.tr('Курсив Ctrl+I')" tooltipPosition="top" aria-label="Italic" tabindex="-1"></button>
+              <button class="ql-underline quill-button" [pTooltip]="t.tr('Подчеркнутый Ctrl+U')" tooltipPosition="top" aria-label="Underline" tabindex="-1"></button>
             </span>
             <span class="ql-formats">
-              <select class="ql-color quill-button" pTooltip="Цвет текста" tooltipPosition="top" tabindex="-1"></select>
-              <select class="ql-background quill-button" pTooltip="Фон текста" tooltipPosition="top" tabindex="-1"></select>
+              <select class="ql-color quill-button" [pTooltip]="t.tr('Цвет текста')" tooltipPosition="top" tabindex="-1"></select>
+              <select class="ql-background quill-button" [pTooltip]="t.tr('Фон текста')" tooltipPosition="top" tabindex="-1"></select>
             </span>
             <span class="ql-formats">
-              <button class="ql-list quill-button" pTooltip="Нумерованный список" tooltipPosition="top" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
-              <button class="ql-list quill-button" pTooltip="Маркированный список" tooltipPosition="top" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
-              <select class="ql-align quill-button" pTooltip="Выравнивание" tooltipPosition="top" tabindex="-1">
+              <button class="ql-list quill-button" [pTooltip]="t.tr('Нумерованный список')" tooltipPosition="top" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+              <button class="ql-list quill-button" [pTooltip]="t.tr('Маркированный список')" tooltipPosition="top" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+              <select class="ql-align quill-button" [pTooltip]="t.tr('Выравнивание')" tooltipPosition="top" tabindex="-1">
                 <option selected tabindex="-1"></option>
                 <option value="center" tabindex="-1"></option>
                 <option value="right" tabindex="-1"></option>
@@ -81,25 +81,25 @@
               </select>
             </span>
             <span class="ql-formats">
-              <button class="ql-link quill-button" pTooltip="Ссылка Ctrl+K" tooltipPosition="top" aria-label="Insert Link" tabindex="-1"></button>
-              <button class="quill-button" pTooltip="Файлы и изображения" tooltipPosition="top" (click)="selectImage.click()">
+              <button class="ql-link quill-button" [pTooltip]="t.tr('Ссылка Ctrl+K')" tooltipPosition="top" aria-label="Insert Link" tabindex="-1"></button>
+              <button class="quill-button" [pTooltip]="t.tr('Файлы и изображения')" tooltipPosition="top" (click)="selectImage.click()">
                 <i class="pi pi-image"></i>
               </button>
               <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
-              <button class="ql-code-block quill-button" pTooltip="Фрагмент кода" tooltipPosition="top" aria-label="Insert Code Block" tabindex="-1"></button>
+              <button class="ql-code-block quill-button" [pTooltip]="t.tr('Фрагмент кода')" tooltipPosition="top" aria-label="Insert Code Block" tabindex="-1"></button>
             </span>
             <span class="ql-formats">
-              <button class="ql-clean quill-button" pTooltip="Отменить форматирование" tooltipPosition="top" aria-label="Remove Styles" tabindex="-1"></button>
+              <button class="ql-clean quill-button" [pTooltip]="t.tr('Отменить форматирование')" tooltipPosition="top" aria-label="Remove Styles" tabindex="-1"></button>
             </span>
             </p-header>
           </div>
         </quill-editor>
         <div class="df mt-5">
           <div class="mr-5 pb-20">
-            <div (click)="commitIssueEdit()" pRipple pButton label="Сохранить" class="button"></div>
+            <div (click)="commitIssueEdit()" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
           </div>
           <div>
-            <div (click)="cancelIssueEdit()" pRipple pButton label="Отменить" class="button-cancel"></div>
+            <div (click)="cancelIssueEdit()" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
           </div>
         </div>
 
@@ -132,7 +132,7 @@
         </div>
       </div>
       <div [collapse]="content" class="big-text mb-1 mt-2 collapse-header" *ngIf="issue.child_issues.length > 0" (click)="contentClick('content')">
-        <div>Согласование</div>
+        <div>{{t.tr('Согласование')}}</div>
         <div class="p-ml-auto cy arrow-up" [class.arrow-down]="collapsed.includes('content')">
           <img src="assets/icons/down-arrow.png">
         </div>
@@ -141,7 +141,7 @@
         <div class="" *ngIf="issue.child_issues.length > 0">
           <div class="subtask cy" *ngFor="let childIssue of issue.child_issues">
             <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.issue_type == 'Approval'">
-              <div>Согласование</div>
+              <div>{{t.tr('Согласование')}}</div>
               <div>
                 <span>{{childIssue.doc_number}}</span>
 <!--                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>-->
@@ -166,7 +166,7 @@
         </div>
       </div>
       <div class="mt-1 big-text pb-20">
-        <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText placeholder="Post your message here..." />
+        <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText [placeholder]="t.tr('Добавить комментарий...')" />
       </div>
       <div [hidden]="!comment">
         <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
@@ -217,10 +217,10 @@
         </div>
         <div class="df mt-5">
           <div class="mr-5 pb-20">
-            <div (click)="sendMessage()" pButton label="Сохранить" class="button"></div>
+            <div (click)="sendMessage()" pButton [label]="t.tr('Сохранить')" class="button"></div>
           </div>
           <div>
-            <div (click)="comment = false" pButton label="Отменить" class="button-cancel"></div>
+            <div (click)="comment = false" pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
           </div>
         </div>
       </div>
@@ -470,7 +470,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-2 min-text">{{t.tr('')}}{{t.tr('')}}Создано {{getDate(issue.started_date)}}</div>
+      <div class="mt-2 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
     </div>
   </div>
 </div>
@@ -481,5 +481,5 @@
     <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
   </div>
 </div>
-<p-confirmDialog acceptLabel="Да" rejectLabel="Нет" header="Подтверждение" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-confirmDialog [acceptLabel]="t.tr('Да')" [rejectLabel]="t.tr('Нет')" [header]="t.tr('Подтверждение')" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 <p-toast key="task" position="bottom-center"></p-toast>
