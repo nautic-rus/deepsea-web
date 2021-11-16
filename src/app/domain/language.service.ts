@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageService {
   language = 'ru';
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(res => {
       this.language = res.lang != null ? res.lang : 'ru';
+    });
+  }
+  switchLang(){
+    let lang = this.language == 'ru' ? 'en' : 'ru';
+    this.router.navigate([], {queryParams: {lang}, queryParamsHandling: 'merge'}).then(() => {
+      location.reload();
     });
   }
   tr(input: string){
@@ -69,11 +75,10 @@ export class LanguageService {
           case 'Отмена': return 'Cancel';
           case 'Название задачи': return 'Task name';
           case 'Срок завершения': return 'Date due';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'МОЯ СТРАНИЦА': return 'HOME';
+          case 'МАТЕРИАЛЫ': return 'MATERIALS';
+          case 'СОТРУДНИКИ': return 'EMPLOYEES';
+          case 'Выйти': return 'Exit';
           case '': return '';
           case '': return '';
           case '': return '';

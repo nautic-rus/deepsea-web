@@ -4,6 +4,12 @@
   </div>
   <div></div>
   <div class="cxy">
+    <div (click)="t.switchLang()">
+      <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/russia.png">
+      <img *ngIf="t.language == 'en'" class="cursor-pointer" src="assets/icons/en.png">
+    </div>
+  </div>
+  <div class="cxy">
     <div pTooltip="Cloud" tooltipPosition="bottom">
       <a href="https://cloud.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/cloud.png"></a>
     </div>
@@ -17,7 +23,7 @@
     <img src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
   </div>
   <div class="exit cxy">
-    <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" pTooltip="Выйти" tooltipPosition="bottom">
+    <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">
   </div>
   <div></div>
 </div>
@@ -26,19 +32,19 @@
     <div class="cxy">
       <img src="assets/icons/home.svg" height="27">
     </div>
-    <div class="cxy text-center mt-10">МОЯ СТРАНИЦА</div>
+    <div class="cxy text-center mt-10">{{t.tr('МОЯ СТРАНИЦА')}}</div>
   </div>
   <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="materials" routerLinkActive="selected-menu">
     <div class="cxy">
       <img src="assets/icons/materials.svg" height="30">
     </div>
-    <div class="cxy mt-10">МАТЕРИАЛЫ</div>
+    <div class="cxy mt-10">{{t.tr('МАТЕРИАЛЫ')}}</div>
   </div>
   <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="documents" routerLinkActive="selected-menu">
     <div class="cxy">
       <img src="assets/icons/blueprint.svg" height="30">
     </div>
-    <div class="cxy text-center mt-10">ДОКУМЕНТЫ</div>
+    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>
   </div>
 <!--  <div class="cy menu" routerLink="gantt" routerLinkActive="selected-menu">-->
 <!--    <div class="cxy">-->
@@ -46,17 +52,11 @@
 <!--    </div>-->
 <!--    <div class="cxy text-center mt-10">ГАНТ</div>-->
 <!--  </div>-->
-  <div *ngIf="auth.getUser().visibility.includes('b')" class="cy menu" routerLink="bpmn" routerLinkActive="selected-menu">
-    <div class="cxy">
-      <img src="assets/icons/bpmn.svg" height="28">
-    </div>
-    <div class="cxy text-center mt-10">BPMN</div>
-  </div>
   <div *ngIf="auth.getUser().visibility.includes('z')" class="cy menu" routerLink="employees" routerLinkActive="selected-menu">
     <div class="cxy">
       <img src="assets/icons/group.svg" height="36">
     </div>
-    <div class="cxy text-center mt-10">СОТРУДНИКИ</div>
+    <div class="cxy text-center mt-10">{{t.tr('СОТРУДНИКИ')}}</div>
   </div>
   <div *ngIf="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="doc-explorer" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
