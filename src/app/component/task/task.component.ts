@@ -81,7 +81,7 @@ export class TaskComponent implements OnInit {
                   let newDelta = new Delta();
                   newDelta.retain(this.editor.getSelection().index);
                   newDelta.insert({image: res.url});
-                  this.editor.updateContents(newDelta);
+                  this.editor.updateContents(newDelta, 'user');
                   this.editor.setSelection(this.editor.getLength());
                   this.appRef.tick();
                 });
