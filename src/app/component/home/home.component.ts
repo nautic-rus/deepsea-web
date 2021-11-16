@@ -306,4 +306,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
   }
+
+  applyFilter(filter: string) {
+    switch (filter) {
+      case 'assigned':{
+        break;
+      }
+      case 'author/responsible':{
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
 }
