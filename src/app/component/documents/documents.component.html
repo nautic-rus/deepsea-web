@@ -1,10 +1,10 @@
 <div class="all-page">
   <div class="card">
-    <p-table [value]="issues" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
+    <p-table #table [value]="issues" [scrollable]="true" [scrollHeight]="'72vh'" [virtualScroll]="true" [virtualRowHeight]="40" styleClass="p-datatable-striped" responsiveLayout="scroll">
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-1">
-            <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+            <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
             </p-dropdown>
           </div>
           <div class="cxy mr-1">
@@ -18,36 +18,31 @@
             </div>
           </div>
           <div class="p-ml-auto">
-        <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input #search pInputText type="text" placeholder="Search..." class="border" />
-      </span>
-          </div>
-
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" placeholder="Search..." class="border" />
+          </span>
+        </div>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th class="w-10">Номер чертежа</th>
-          <th class="w-10">Ревизия</th>
-          <th class="w-50">Название</th>
-          <th class="w-20">Документ</th>
-          <th class="w-10">Дата отправки</th>
+          <th class="w-10">{{l.tr('Номер чертежа')}}</th>
+          <th class="w-50">{{l.tr('Название')}}</th>
+          <th class="w-10">{{l.tr('Ревизия')}}</th>
+          <th class="w-10">{{l.tr('Статус')}}</th>
+          <th class="w-10">{{l.tr('Дата поставки')}}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
-        <tr>
-          <td class="w-10 text-14">{{issue.docNumber}}</td>
-          <td class="w-10 text-14">{{0}}</td>
+        <tr (click)="viewTask(issue.id)">
+          <td class="w-10 text-14">{{issue.doc_number}}</td>
           <td class="w-50 text-14">{{issue.name}}</td>
-          <td class="w-20 text-14">{{0}}</td>
-          <td class="w-10 text-14">{{0}}</td>
-
+          <td class="w-10 text-14">{{issue.revision}}</td>
+          <td class="w-10 text-14"><span [innerHTML]="getDeliveredStatus(issue.status)"></span></td>
+          <td class="w-10 text-14">{{getDeliveredDate('')}}</td>
         </tr>
       </ng-template>
     </p-table>
-
   </div>
-
-
 </div>
