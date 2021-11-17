@@ -501,6 +501,12 @@ export class TaskComponent implements OnInit {
       this.issue.action = value;
       this.askForSendToApproval();
     }
+    else if (value == 'Paused'){
+      this.issue.status = value;
+      this.issue.action = value;
+      this.issue.assigned_to = '';
+      this.statusChanged();
+    }
     else{
       this.issue.status = value;
       this.issue.action = value;

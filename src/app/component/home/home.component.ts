@@ -310,9 +310,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   applyFilter(filter: string) {
     switch (filter) {
       case 'assigned':{
+        this.dt.filter(this.auth.getUser().login, 'assigned_to', 'equals');
         break;
       }
       case 'author/responsible':{
+        this.dt.filter(this.auth.getUser().login, 'responsible', 'equals');
+        this.dt.filter(this.auth.getUser().login, 'started_by', 'equals');
         break;
       }
       default: {
