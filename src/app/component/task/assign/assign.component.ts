@@ -5,6 +5,7 @@ import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {ConfirmationService, PrimeNGConfig} from "primeng/api";
 import {User} from "../../../domain/classes/user";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-assign',
@@ -21,7 +22,7 @@ export class AssignComponent implements OnInit {
   overtime = false;
   users: User[] = [];
 
-  constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef,public t: LanguageService) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;

@@ -5,6 +5,7 @@ import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {ConfirmationService} from "primeng/api";
 import {User} from "../../../domain/classes/user";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-change-responsible',
@@ -17,7 +18,7 @@ export class ChangeResponsibleComponent implements OnInit {
   selectedUser: string = '';
   users: User[] = [];
 
-  constructor(public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(public t: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, ) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;

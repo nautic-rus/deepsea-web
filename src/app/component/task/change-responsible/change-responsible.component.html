@@ -1,13 +1,13 @@
 <div style="height: 250px; width: 400px;">
   <div class="task-header-assign">
-    <div class="task-name">Сменить ответственного</div>
+    <div class="task-name">{{t.tr('Сменить ответственного')}}</div>
     <div class="task-button cxy" (click)="close()">
       <img src="assets/icons/close.svg" height="20">
     </div>
   </div>
   <div class="big-text mb-1 mt-1">Ответственный</div>
   <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-              [showClear]="true" placeholder="Сменить ответственного" class="p-dropdown-150" styleClass="width-270">
+              [showClear]="true" [placeholder]="t.tr('Сменить ответственного')" class="p-dropdown-150" styleClass="width-270">
     <ng-template let-user pTemplate="item">
       <div class="df">
         <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
@@ -19,6 +19,6 @@
     <div class="mr-1 cx">
       <div tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
     </div>
-    <div tabindex="11" (click)="close()" pButton label="Отмена" class="button-cancel ml-1"></div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>
 </div>

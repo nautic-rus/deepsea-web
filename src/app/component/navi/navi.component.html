@@ -28,19 +28,19 @@
   <div></div>
 </div>
 <div class="left-panel">
-  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}">
+  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/home.svg" height="27">
     </div>
     <div class="cxy text-center mt-10">{{t.tr('МОЯ СТРАНИЦА')}}</div>
   </div>
-  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="materials" routerLinkActive="selected-menu">
+  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/materials.svg" height="30">
     </div>
     <div class="cxy mt-10">{{t.tr('МАТЕРИАЛЫ')}}</div>
   </div>
-  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="documents" routerLinkActive="selected-menu">
+  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/blueprint.svg" height="30">
     </div>
@@ -52,7 +52,7 @@
 <!--    </div>-->
 <!--    <div class="cxy text-center mt-10">ГАНТ</div>-->
 <!--  </div>-->
-  <div *ngIf="auth.getUser().visibility.includes('z')" class="cy menu" routerLink="employees" routerLinkActive="selected-menu">
+  <div *ngIf="auth.getUser().visibility.includes('z')" class="cy menu" routerLink="employees" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/group.svg" height="36">
     </div>

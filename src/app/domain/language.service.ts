@@ -106,11 +106,10 @@ export class LanguageService {
           case 'Нет': return 'No';
           case 'Подтверждение': return 'Confirmation';
           case 'Создано': return 'Created';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Назначение задачи': return 'Task assign';
+          case 'Ответственный': return 'Responsible';
+          case 'Сделать задачу сверхурочной': return 'Overtime work';
+          case 'Сменить ответственного': return 'Change responsible';
           case '': return '';
           case '': return '';
           case '': return '';

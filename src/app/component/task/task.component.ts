@@ -162,20 +162,20 @@ export class TaskComponent implements OnInit {
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
-    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
-    let mo = new Intl.DateTimeFormat('ru', { month: 'long' }).format(date);
-    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
-    let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
-    let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
+    let ye = new Intl.DateTimeFormat(this.t.language, { year: 'numeric' }).format(date);
+    let mo = new Intl.DateTimeFormat(this.t.language, { month: 'long' }).format(date);
+    let da = new Intl.DateTimeFormat(this.t.language, { day: '2-digit' }).format(date);
+    let hours = new Intl.DateTimeFormat(this.t.language, { hour: '2-digit' }).format(date);
+    let minutes = new Intl.DateTimeFormat(this.t.language, { minute: '2-digit' }).format(date);
     return da + ' ' + this.localeMonth(mo) + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
   getFileDate(dateLong: number): string{
     let date = new Date(dateLong);
-    let ye = new Intl.DateTimeFormat('ru', { year: 'numeric' }).format(date);
-    let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
-    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
-    let hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date);
-    let minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date);
+    let ye = new Intl.DateTimeFormat(this.t.language, { year: 'numeric' }).format(date);
+    let mo = new Intl.DateTimeFormat(this.t.language, { month: '2-digit' }).format(date);
+    let da = new Intl.DateTimeFormat(this.t.language, { day: '2-digit' }).format(date);
+    let hours = new Intl.DateTimeFormat(this.t.language, { hour: '2-digit' }).format(date);
+    let minutes = new Intl.DateTimeFormat(this.t.language, { minute: '2-digit' }).format(date);
     return da + ' ' + this.localeMonth(mo) + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
   }
   quillCreated(event: any) {
