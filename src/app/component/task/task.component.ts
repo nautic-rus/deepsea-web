@@ -18,7 +18,6 @@ import {DeleteComponent} from "./delete/delete.component";
 import {LV} from "../../domain/classes/lv";
 import {LanguageService} from "../../domain/language.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
-import {all} from "underscore";
 
 @Component({
   selector: 'app-task',

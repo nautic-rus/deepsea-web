@@ -58,7 +58,6 @@ import { DocExplorerComponent } from './component/doc-explorer/doc-explorer.comp
 import { UserCardComponent } from './component/employees/user-card/user-card.component';
 import {NgxCollapseModule} from 'ngx-collapse';
 import {ToggleButtonModule} from "primeng/togglebutton";
-import { BirthdayComponent } from './component/birthday/birthday.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -88,7 +87,6 @@ Quill.register('modules/imageResize', ImageResize);
     DeleteComponent,
     DocExplorerComponent,
     UserCardComponent,
-    BirthdayComponent,
   ],
     imports: [
         BrowserModule,
