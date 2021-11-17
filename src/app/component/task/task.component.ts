@@ -502,10 +502,12 @@ export class TaskComponent implements OnInit {
       this.askForSendToApproval();
     }
     else if (value == 'Paused'){
-      this.issue.status = value;
-      this.issue.action = value;
       this.issue.assigned_to = '';
-      this.statusChanged();
+      this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+        this.issue.status = value;
+        this.issue.action = value;
+        this.statusChanged();
+      });
     }
     else{
       this.issue.status = value;
