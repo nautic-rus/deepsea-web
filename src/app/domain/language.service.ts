@@ -111,11 +111,11 @@ export class LanguageService {
           case 'Сделать задачу сверхурочной': return 'Overtime work';
           case 'Сменить ответственного': return 'Change responsible';
           case 'Вы подтверждаете удаление задачи?': return 'Are you sure you want to delete this task?';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Отправить на согласование': return 'Send to approval';
+          case 'Описание': return 'Description';
+          case 'На согласование:': return 'For approval:';
+          case '{0} выбрано': return '{0} selected';
+          case 'Выберите номер ревизии': return 'Select the revision number';
           case '': return '';
           case '': return '';
           case '': return '';

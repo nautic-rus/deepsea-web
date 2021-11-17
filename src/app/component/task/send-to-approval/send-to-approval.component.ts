@@ -7,6 +7,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {Issue} from "../../../domain/classes/issue";
 import {User} from "../../../domain/classes/user";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-send-to-approval',
@@ -22,7 +23,7 @@ export class SendToApprovalComponent implements OnInit {
   issue: Issue = new Issue();
   users: User[] = [];
 
-  constructor(public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
+  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
     this.issue = conf.data;
     console.log(this.issue);
     if (this.issue.issue_type == 'RKD'){

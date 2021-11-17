@@ -24,7 +24,7 @@ export class SendToCloudComponent implements OnInit {
   users: User[] = [];
   revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'F'];
   rev = '-';
-  constructor(public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
+  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
     this.issue = conf.data;
   }
   ngOnInit(): void {

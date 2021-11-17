@@ -23,7 +23,7 @@
             <button pButton [label]="l.tr('Новая задача')" class="border new-task-button p-button-info" (click)="newTask(null)"></button>
           </div>
           <p-multiSelect class="" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
-                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button" placeholder="Выберите колонки">
+                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button" [placeholder]="l.tr('Выберите колонки')">
           </p-multiSelect>
           <div class="ml-2">
             <button pButton [label]="l.tr('Импорт')" class="border normal-button p-button-outlined " icon="pi pi-download" (click)="importXls()"></button>
