@@ -4,6 +4,7 @@ import {ConfirmationService, PrimeNGConfig} from "primeng/api";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {Issue} from "../../../domain/classes/issue";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-delete',
@@ -12,7 +13,7 @@ import {Issue} from "../../../domain/classes/issue";
 })
 export class DeleteComponent implements OnInit {
   issue: Issue = new Issue();
-  constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;

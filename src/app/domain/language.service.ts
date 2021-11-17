@@ -110,7 +110,7 @@ export class LanguageService {
           case 'Ответственный': return 'Responsible';
           case 'Сделать задачу сверхурочной': return 'Overtime work';
           case 'Сменить ответственного': return 'Change responsible';
-          case '': return '';
+          case 'Вы подтверждаете удаление задачи?': return 'Are you sure you want to delete this task?';
           case '': return '';
           case '': return '';
           case '': return '';
