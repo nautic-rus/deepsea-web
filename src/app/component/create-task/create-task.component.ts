@@ -257,7 +257,7 @@ export class CreateTaskComponent implements OnInit {
     // @ts-ignore
     issue.file_attachments = this.loaded;
     this.issues.startIssue(issue).then(res => {
-      this.issues.setIssueViewed(res, this.auth.getUser().login).then(() => {
+      this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
         this.ref.close(res);
       });
     });

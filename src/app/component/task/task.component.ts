@@ -4,7 +4,6 @@ import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
-import {Editor} from "primeng/editor";
 import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
@@ -16,7 +15,6 @@ import {SendToApprovalComponent} from "./send-to-approval/send-to-approval.compo
 import {ChangeResponsibleComponent} from "./change-responsible/change-responsible.component";
 import {SendToCloudComponent} from "./send-to-cloud/send-to-cloud.component";
 import {DeleteComponent} from "./delete/delete.component";
-import {IdName} from "../../domain/classes/id-name";
 import {LV} from "../../domain/classes/lv";
 import {LanguageService} from "../../domain/language.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
@@ -572,7 +570,7 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  openIssue(id: string) {
+  openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
   }
 

@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       this.fillIssues();
     });
   }
-  viewTask(id: string) {
+  viewTask(id: number) {
     this.setIssueViewed(id);
     this.issueManager.getIssueDetails(id).then(res => {
       console.log(res);
@@ -261,7 +261,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     return !this.isTaskNew(id) && this.viewedIssues.find(x => x.issue == id && update <= x.date) == null;
   }
 
-  setIssueViewed(id: string){
+  setIssueViewed(id: number){
     this.issueManager.setIssueViewed(id, this.auth.getUser().login).then(res => {
       this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
         this.viewedIssues = res;

@@ -3,7 +3,7 @@ import {FileAttachment} from "./file-attachment";
 import {IssueAction} from "./issue-action";
 import {IssueHistory} from "./issue-history";
 export class Issue {
-  id: string = '';
+  id: number = 0;
   status: string = '';
   project: string = '';
   department: string = '';
@@ -28,4 +28,5 @@ export class Issue {
   actions: IssueAction[] = [];
   last_update: number = 0;
   closing_status: string = '';
+  parent_id: number = 0;
 }

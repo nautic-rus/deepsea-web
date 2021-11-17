@@ -258,9 +258,10 @@ export class SendToApprovalComponent implements OnInit {
       issue.status = 'New';
       issue.action = 'New';
       issue.file_attachments = this.loaded;
+      issue.parent_id = this.issue.id;
       this.issues.startIssue(issue).then(res => {
         this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-          this.issues.setIssueViewed(res, this.auth.getUser().login).then(() => {
+          this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
             this.ref.close(res);
           });
         });

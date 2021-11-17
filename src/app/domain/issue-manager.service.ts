@@ -34,13 +34,13 @@ export class IssueManagerService {
     formData.append('file', file, file.name);
     return await this.http.post<FileAttachment>(props.http + '/createFileCloudUrl', formData, {params: {filePath, login, password}}).toPromise();
   }
-  async assignUser(id: string, user: string, startDate: string, dueDate: string, overtime: string, action: string, author: string){
+  async assignUser(id: number, user: string, startDate: string, dueDate: string, overtime: string, action: string, author: string){
     return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime, action, author}}).toPromise();
   }
-  async changeResponsible(id: string, user: string){
+  async changeResponsible(id: number, user: string){
     return await this.http.get<string[]>(props.http + '/changeResponsible', {params: {id, user}}).toPromise();
   }
-  async sendToApproval(id: string, users: string[], filesToApproval: FileAttachment[], textToApproval: string, taskStatus: string, taskRevision: string){
+  async sendToApproval(id: number, users: string[], filesToApproval: FileAttachment[], textToApproval: string, taskStatus: string, taskRevision: string){
     return await this.http.get<string[]>(props.http + '/sendToApproval', {params: {id, users: JSON.stringify(users), filesToApproval: JSON.stringify(filesToApproval), textToApproval, taskStatus, taskStatusApproval: 'New', taskTypeApproval: 'Approval', taskRevision}}).toPromise();
   }
   async getIssueDepartments() {
@@ -67,13 +67,13 @@ export class IssueManagerService {
   async getIssuesViewed(login: string): Promise<ViewedIssue[]> {
     return await this.http.get<ViewedIssue[]>(props.http + '/issuesViewed', {params: {user: login}}).toPromise();
   }
-  async getIssueDetails(id: string): Promise<Issue> {
+  async getIssueDetails(id: number): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id}}).toPromise();
   }
   async getHullPartList(docNum: string): Promise<HullPL> {
     return await this.http.get<HullPL>(props.httpMaterials + '/getHullPartList', {params: {docNum}}).toPromise();
   }
-  async initHullPartList(project: string, taskId: string, docNum: string, docName: string, user: string): Promise<string> {
+  async initHullPartList(project: string, taskId: number, docNum: string, docName: string, user: string): Promise<string> {
     return await this.http.get<string>(props.httpMaterials + '/initHullPartList', {params: {project, taskId, docNum, docName, user}}).toPromise();
   }
   async updateIssue(user: string, message: string, issue: Issue): Promise<Issue> {
@@ -85,13 +85,13 @@ export class IssueManagerService {
   async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
     return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id}}).toPromise();
   }
-  async removeIssue(id: string, user: string): Promise<string>{
+  async removeIssue(id: number, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/removeIssue', {params: {id, user}}).toPromise();
   }
   async deleteFile(url: string): Promise<string>{
     return await this.http.get<string>(props.http + '/deleteFile', {params: {url}}).toPromise();
   }
-  async setIssueViewed(id: string, user: string): Promise<string>{
+  async setIssueViewed(id: number, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/setIssueViewed', {params: {id, user}}).toPromise();
   }
   async setDayCalendar(user: string, day: string, status: string): Promise<string>{
