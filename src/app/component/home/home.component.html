@@ -16,31 +16,34 @@
     >
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
-          <div class="mr-2">
-            <button pButton [label]="l.tr('Очистить')" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
-          </div>
-          <div class="mr-2">
+          <div class="mr-1">
             <button pButton [label]="l.tr('Новая задача')" class="border new-task-button p-button-info" (click)="newTask(null)"></button>
           </div>
-          <p-multiSelect class="" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
-                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button" [placeholder]="l.tr('Выберите колонки')">
+          <p-multiSelect class="mr-1" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
+                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-button-info" [placeholder]="l.tr('Выберите колонки')">
           </p-multiSelect>
-          <div class="ml-2">
-            <button pButton [label]="l.tr('Импорт')" class="border normal-button p-button-outlined " icon="pi pi-download" (click)="importXls()"></button>
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
           </div>
-          <div class="ml-2">
-            <button pButton [label]="l.tr('Экспорт')" class="border normal-button p-button-outlined " icon="pi pi-upload" (click)="exportXls()"></button>
+
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-download" (click)="importXls()"></button>
           </div>
-          <div class="ml-2">
-            <button pButton [label]="l.tr('Исполнитель')" class="border normal-button p-button-outlined " icon="pi pi-upload" (click)="applyFilter('assigned')"></button>
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Экспорт')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-upload" (click)="exportXls()"></button>
           </div>
-          <div class="ml-2">
-            <button pButton [label]="l.tr('Автор/ответственный')" class="border normal-button p-button-outlined " icon="pi pi-upload" (click)="applyFilter('author/responsible')"></button>
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-star-o" (click)="applyFilter('assigned')"></button>
           </div>
-          <div class="ml-2 cxy">
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Автор/ответственный')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-star" (click)="applyFilter('author/responsible')"></button>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" [(ngModel)]="showCompleted"></p-toggleButton>
+          </div>
+          <div class="mr-1 cxy">
             {{l.tr('Количество задач:')}} {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} {{l.tr('(Всего:')}} {{dt.value.length}})
           </div>
-          <p-toggleButton onLabel="Hide completed" offLabel="Show completed" onIcon="pi pi-times" offIcon="pi pi-check" [(ngModel)]="showCompleted"></p-toggleButton>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
             <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />

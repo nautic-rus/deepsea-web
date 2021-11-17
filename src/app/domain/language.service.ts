@@ -116,11 +116,11 @@ export class LanguageService {
           case 'На согласование:': return 'For approval:';
           case '{0} выбрано': return '{0} selected';
           case 'Выберите номер ревизии': return 'Select the revision number';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Очистить фильтры': return 'Clear filters';
+          case 'Скрыть исполненные': return 'Hide completed';
+          case 'Показать исполненные': return 'Show completed';
+          case 'Автор/ответственный': return 'Author/responsible';
+          case 'Изменилось описание к задаче': return 'Task description has changed';
           case '': return '';
           case '': return '';
           case '': return '';
