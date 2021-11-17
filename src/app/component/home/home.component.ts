@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
           if (issue != null && issue.id != null){
             this.newTask(issue);
           }
-          this.router.navigate([''], {queryParams: {taskId: null}});
+          this.router.navigate([''], {queryParams: {taskId: null}, queryParamsHandling: 'merge'});
         });
       }
       else{
