@@ -228,6 +228,8 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('a') && issue.assigned_to == this.auth.getUser().login || allow;
       allow = action.rule.includes('s') && issue.started_by == this.auth.getUser().login || allow;
       allow = action.rule.includes('g') && this.auth.getUser().groups.includes(issue.issue_type) || allow;
+      allow = action.rule.includes('h') ? issue.child_issues.length == 0 && allow : allow;
+      allow = action.rule.includes('n') ? issue.child_issues.length != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != 'Approved').length == 0 && allow : allow;
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
@@ -492,17 +494,24 @@ export class TaskComponent implements OnInit {
 
   changeStatus(value: string) {
     if (value == 'AssignedTo'){
-      this.issue.status = value;
-      this.issue.action = value;
       this.assignTask();
     }
     else if (value == 'Send to Approval'){
-      this.issue.status = value;
-      this.issue.action = value;
       this.askForSendToApproval();
     }
     else if (value == 'Paused'){
       this.issue.assigned_to = '';
+      this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+        this.issue.status = value;
+        this.issue.action = value;
+        this.statusChanged();
+      });
+    }
+    else if (value == 'Delivered'){
+      this.askForSendToCloud();
+    }
+    else if (value == 'Send to Yard Approval'){
+      this.issue.first_send_date = new Date().getTime();
       this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
         this.issue.status = value;
         this.issue.action = value;

@@ -39,7 +39,11 @@ export class AssignComponent implements OnInit {
 
   commit() {
     this.issueManager.assignUser(this.issue.id, this.selectedUser, this.startDate.getTime().toString(), this.dueDate.getTime().toString(), this.overtime ? 'Да' : 'Нет', this.issue.action, this.auth.getUser().login).then(res => {
-      this.ref.close();
+      this.issue.status = 'AssignedTo';
+      this.issue.action = this.issue.status;
+      this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+        this.ref.close();
+      });
     });
   }
   getUsers() {
