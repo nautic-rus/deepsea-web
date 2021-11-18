@@ -284,24 +284,24 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     let data: any[] = [];
     let issues = this.dt.filteredValue as Issue[];
     data.push(['ID', 'Статус', 'Отдел', 'Создал', 'Дата создания', 'Тип задачи', 'Наименование', 'Номер документа', 'Ответственный', 'Назначена', 'Дата окончания', 'Описание']);
-    // issues.forEach(v => {
-    //   data.push(
-    //     [
-    //       v.humanId,
-    //       this.issueManager.localeStatus(v.status, false),
-    //       this.issueManager.localeTaskDepartment(v.department),
-    //       this.auth.getUserName(v.startedBy),
-    //       this.getDateNoTime(v.startedDate),
-    //       this.issueManager.localeTaskType(v.taskType),
-    //       v.name,
-    //       v.docNumber,
-    //       this.auth.getUserName(v.responsible),
-    //       this.auth.getUserName(v.assignedTo),
-    //       this.getDateNoTime(v.dueDate),
-    //       v.details
-    //     ]
-    //   );
-    // });
+    issues.forEach(v => {
+      data.push(
+        [
+          v.id,
+          this.issueManager.localeStatus(v.status, false),
+          this.issueManager.localeTaskDepartment(v.department),
+          this.auth.getUserName(v.started_by),
+          this.getDateNoTime(v.started_date),
+          this.issueManager.localeTaskType(v.issue_type),
+          v.name,
+          v.doc_number,
+          this.auth.getUserName(v.responsible),
+          this.auth.getUserName(v.assigned_to),
+          this.getDateNoTime(v.due_date),
+          v.details
+        ]
+      );
+    });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(issues);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
@@ -310,9 +310,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   applyFilter(filter: string) {
     switch (filter) {
       case 'assigned':{
+        this.dt.filter(this.auth.getUser().login, 'assigned_to', 'equals');
         break;
       }
       case 'author/responsible':{
+        this.dt.filter(this.auth.getUser().login, 'responsible', 'equals');
+        this.dt.filter(this.auth.getUser().login, 'started_by', 'equals');
         break;
       }
       default: {
