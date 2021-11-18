@@ -708,6 +708,121 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-delivery{
+  color: white;
+  background-color: #7C749A;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-delivery:hover{
+  background: #595470;
+  transition: 0.3s;
+}
+.icon-delivery{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #595470;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-delivered{
+  color: white;
+  background-color: #47C9AF;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-delivered:hover{
+  background: #339077;
+  transition: 0.3s;
+}
+.icon-delivered{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #339077;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-rs{
+  color: white;
+  background-color: #00A2D3;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-rs:hover{
+  background: #037496;
+  transition: 0.3s;
+}
+.icon-rs{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #037496;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-approved-rs{
+  color: white;
+  background-color: #00acd3;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-approved-rs:hover{
+  background: #03778d;
+  transition: 0.3s;
+}
+.icon-approved-rs{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #03778d;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-owner{
+  color: white;
+  background-color: #F26C63;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+  margin-right: 10px;
+}
+.buttons-pick-owner:hover{
+  background: #AC4E42;
+  transition: 0.3s;
+}
+.icon-owner{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #AC4E42;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .button-text{
   padding-right: 8px;
   padding-left: 8px;

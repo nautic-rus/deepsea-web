@@ -1,4 +1,4 @@
-<div class="w70">
+<div class="w75">
   <div class="task-header">
     <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.issue_type)}}</div>
     <div class="task-buttons">
@@ -339,8 +339,8 @@
 <!--          </div>-->
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Дата начала')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.start_date)}}</div>
-            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-180 h-32 mr-5"></p-calendar>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.start_date)}}</div>
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-130 h-32 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'startDate'" (click)="commitIssueEdit()">
                 <div  class="task-name-button cxy mr-5">
@@ -356,8 +356,8 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Срок исполнения')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.due_date)}}</div>
-            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-180 h-32 mr-5"></p-calendar>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.due_date)}}</div>
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-130 h-32 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit()">
                 <div  class="task-name-button cxy mr-5">
@@ -373,9 +373,9 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y line-text normal-text w-40">{{t.tr('Проект')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{issue.project}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-130">{{issue.project}}</div>
             <div [hidden]="edit != 'project'" class="mr-5">
-              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-180 h-32">
+              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-130 h-32">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -393,9 +393,9 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Отдел')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'department'" (click)="edit = 'department'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getWithNoResult(issueManager.localeTaskDepartment(issue.department))}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'department'" (click)="edit = 'department'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskDepartment(issue.department))}}</div>
             <div class="mr-5" [hidden]="edit != 'department'">
-              <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.department" [options]="taskDepartments" styleClass="width-180 h-32">
+              <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.department" [options]="taskDepartments" styleClass="width-130 h-32">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -425,9 +425,9 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Приоритет')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'priority'" (click)="edit = 'priority'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'priority'" (click)="edit = 'priority'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
             <div class="mr-5" [hidden]="edit != 'priority'">
-              <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.priority" [options]="taskPriorities" styleClass="width-180 h-32">
+              <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.priority" [options]="taskPriorities" styleClass="width-130 h-32">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -445,9 +445,9 @@
           </div>
           <div class="df mt-5">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Этап')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-180">{{getWithNoResult(issueManager.localeTaskPeriod(issue.period))}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 h-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPeriod(issue.period))}}</div>
             <div class="mr-5" [hidden]="edit != 'period'">
-              <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" optionValue="value" optionLabel="label" styleClass="width-180 h-32">
+              <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" optionValue="value" optionLabel="label" styleClass="width-130 h-32">
               </p-dropdown>
             </div>
             <div class="w-15 df">
