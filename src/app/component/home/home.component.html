@@ -17,26 +17,25 @@
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-1">
-            <button pButton [label]="l.tr('Новая задача')" class="border new-task-button p-button-info" (click)="newTask(null)"></button>
+            <button pButton [label]="l.tr('Новая задача')" class="border new-task-button" (click)="newTask(null)"></button>
           </div>
           <p-multiSelect class="mr-1" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
-                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-button-info" [placeholder]="l.tr('Выберите колонки')">
+                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
           </p-multiSelect>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
-          </div>
-
-          <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-download" (click)="importXls()"></button>
+            <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
           </div>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Экспорт')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-upload" (click)="exportXls()"></button>
+            <button pButton [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="importXls()"></button>
           </div>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-star-o" (click)="applyFilter('assigned')"></button>
+            <button pButton [pTooltip]="l.tr('Экспорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-upload" (click)="exportXls()"></button>
           </div>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Автор/ответственный')" tooltipPosition="top" class="border normal-button p-button-outlined p-button-info" icon="pi pi-star" (click)="applyFilter('author/responsible')"></button>
+            <button pButton [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" class="border normal-button p-button-outlined focus-button" icon="pi pi-star-o" (click)="applyFilter('assigned')"></button>
+          </div>
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Автор/ответственный')" tooltipPosition="top" class="border normal-button p-button-outlined focus-button" icon="pi pi-star" (click)="applyFilter('author/responsible')"></button>
           </div>
           <div class="mr-1">
             <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" [(ngModel)]="showCompleted"></p-toggleButton>

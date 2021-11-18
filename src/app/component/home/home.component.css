@@ -119,3 +119,11 @@
   border-radius: 3px!important;
   height: 37px;
 }
+/deep/.p-button:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: none;
+}
+.focus-button:focus{
+  background-color: rgba(50, 49, 48, 0.07);
+}
