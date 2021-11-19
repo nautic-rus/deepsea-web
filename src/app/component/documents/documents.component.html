@@ -35,7 +35,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
-        <tr (click)="viewTask(issue.id)">
+        <tr class="cursor-pointer" (click)="viewTask(issue.id)">
           <td class="w-10 text-14">{{issue.doc_number}}</td>
           <td class="w-50 text-14">{{issue.name}}</td>
           <td class="w-10 text-14">{{issue.revision}}</td>

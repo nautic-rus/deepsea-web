@@ -1,6 +1,6 @@
-<div style="width: 450px;">
+<div style="width: 465px;">
   <div class="task-header-assign">
-    <div class="task-name">{{t.tr('Отправить на согласование')}}</div>
+    <div class="task-name">{{t.tr('Отправить на согласование на верфь')}}</div>
     <div class="task-button cxy" (click)="close()">
       <img src="assets/icons/close.svg" height="20">
     </div>
@@ -61,7 +61,7 @@
 
   </div>
   <div class="big-text mb-1 mt-1">{{t.tr('На согласование:')}}</div>
-  <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-250 border" [maxSelectedLabels]="5" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
+  <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-465 border" [maxSelectedLabels]="5" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
   <div class="form-footer pt-50">
     <div class="mr-1 cx">
       <div tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
