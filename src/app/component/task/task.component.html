@@ -140,11 +140,11 @@
       <div collapseContent #content="collapseContent" class="collapse-body">
         <div class="" *ngIf="issue.child_issues.length > 0">
           <div class="subtask cy" *ngFor="let childIssue of issue.child_issues">
-            <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.issue_type == 'Approval'">
+            <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.issue_type == 'APPROVAL'">
               <div>{{t.tr('Согласование')}}</div>
               <div>
                 <span>{{childIssue.doc_number}}</span>
-<!--                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>-->
+                <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
               </div>
               <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
               <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
@@ -473,6 +473,7 @@
           </div>
         </div>
       </div>
+      <div *ngIf="issue.parent_id != 0" class="mt-2 min-text" (click)="openIssue(issue.parent_id)">{{t.tr('Родительская задача')}}</div>
       <div class="mt-2 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
     </div>
   </div>

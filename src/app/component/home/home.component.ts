@@ -80,11 +80,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
   fillIssues(){
-    let scroll = 0;
-    if (this.dt != null){
-      scroll = this.dt.el.nativeElement.querySelector('.p-datatable-virtual-scrollable-body').scrollTop;
-      this.dt.style = {opacity: 0};
-    }
+    // let scroll = 0;
+    // if (this.dt != null){
+    //   scroll = this.dt.el.nativeElement.querySelector('.p-datatable-virtual-scrollable-body').scrollTop;
+    //   this.dt.style = {opacity: 0};
+    // }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
       this.issues = data;
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
@@ -94,12 +94,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         this.viewedIssues = res;
       });
     });
-    if (this.dt != null){
-      setTimeout(() => {
-        this.dt.scrollTo({top: scroll});
-        this.dt.style = {opacity: 1, transition: '0.1s'};
-      }, 500);
-    }
+    // if (this.dt != null){
+    //   setTimeout(() => {
+    //     this.dt.scrollTo({top: scroll});
+    //     this.dt.style = {opacity: 1, transition: '0.1s'};
+    //   }, 500);
+    // }
   }
   newTask(issue: object | null) {
    this.dialogService.open(CreateTaskComponent, {
