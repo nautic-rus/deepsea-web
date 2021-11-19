@@ -322,7 +322,7 @@
   margin-top: -25px;
 }
 /deep/ quill-editor .ql-editor{
-  min-height: 100px;
+  height: 100px!important;
 }
 ::ng-deep.p-inputtext{
   font-size: 14px;
