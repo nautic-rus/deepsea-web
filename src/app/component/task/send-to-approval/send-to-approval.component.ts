@@ -3,7 +3,7 @@ import {FileAttachment} from "../../../domain/classes/file-attachment";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import Delta from "quill-delta";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {Issue} from "../../../domain/classes/issue";
 import {User} from "../../../domain/classes/user";
@@ -23,7 +23,7 @@ export class SendToApprovalComponent implements OnInit {
   issue: Issue = new Issue();
   users: User[] = [];
 
-  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) {
+  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig,  private dialogService: DialogService) {
     this.issue = conf.data;
     console.log(this.issue);
     if (this.issue.issue_type == 'RKD'){
@@ -249,6 +249,28 @@ export class SendToApprovalComponent implements OnInit {
     return result;
   }
   commit() {
+    let alreadyExists = false;
+    this.selectedUsers.forEach(user => {
+      if (this.issue.child_issues.find(x => x.assigned_to == user) != null){
+        alreadyExists = true;
+      }
+    });
+    if (alreadyExists){
+      this.dialogService.open(SendToApprovalComponent, {
+        showHeader: false,
+        modal: true,
+        data: this.issue
+      }).onClose.subscribe(res => {
+        if (res == 'yes'){
+          this.sendCommit();
+        }
+      });
+    }
+    else{
+      this.sendCommit();
+    }
+  }
+  sendCommit(){
     this.selectedUsers.forEach(user => {
       const issue = new Issue();
       issue.name = 'Согласование ' + this.issue.doc_number;
@@ -275,7 +297,6 @@ export class SendToApprovalComponent implements OnInit {
       });
     });
   }
-
   close(){
     this.ref.close('exit');
   }
