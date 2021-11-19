@@ -42,7 +42,7 @@ export class LanguageService {
           case 'Автор': return 'Author';
           case 'Отвественный': return 'Responsible';
           case 'Исполнитель': return 'Assignee';
-          case 'Сверхурочные': return 'Out of Work';
+          case 'Сверхурочные': return 'Out of work';
           case 'ID задачи': return 'Task ID';
           case 'Активность': return 'Activity';
           case 'Показать': return 'Show';

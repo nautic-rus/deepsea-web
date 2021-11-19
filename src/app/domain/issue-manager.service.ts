@@ -125,6 +125,7 @@ export class IssueManagerService {
           case 'Send to RS': return styled ? '<span style="color: #082128; background-color: #cee4eb; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отправлен в РС</span>' : 'Отправлен в РС';
           case 'Approved by RS': return styled ? '<span style="color: #ab433f; background-color: #fde0e0; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Согласовано в РС</span>' : 'Отправлен в РС';
           case 'Send to Owner': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отправлен заказчику</span>' : 'Отправлен заказчику';
+          case 'AssignedTo': return styled ? '<span style="color: #875638; background-color: #ffcfb3; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Назначен</span>' : 'Назначен';
 
           default: return input;
         }
