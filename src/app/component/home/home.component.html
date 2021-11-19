@@ -4,14 +4,17 @@
       #dt
       dataKey="id"
       [value]="issues"
-      [scrollable]="true" scrollHeight="calc(100vh - 280px)" scrollDirection="both"
+      [scrollable]="true"
       [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
       [reorderableColumns]="true"
       [resizableColumns]="false"
       [columns]="cols"
       [virtualScroll]="true"
+      [scrollHeight]="'72vh'"
+      [virtualRowHeight]="57"
       stateStorage="local"
       stateKey="state"
+      styleClass="p-datatable-striped"
       *ngIf="filled"
     >
       <ng-template pTemplate="caption">
