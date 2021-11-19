@@ -294,4 +294,8 @@ export class SendToCloudComponent implements OnInit {
   close(){
     this.ref.close('exit');
   }
+
+  isDisabled() {
+    return this.selectedUsers.length == 0;
+  }
 }

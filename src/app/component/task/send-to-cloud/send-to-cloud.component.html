@@ -34,7 +34,7 @@
   </div>
   <div class="form-footer pt-50">
     <div class="mr-1 cx">
-      <div tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
+      <div [class.button-disabled]="isDisabled()" tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
     </div>
     <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>

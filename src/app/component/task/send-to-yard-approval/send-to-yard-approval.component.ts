@@ -282,8 +282,11 @@ export class SendToYardApprovalComponent implements OnInit {
 
 
   }
-
+  isDisabled() {
+    return this.selectedUsers.length == 0;
+  }
   close(){
     this.ref.close('exit');
   }
+
 }
