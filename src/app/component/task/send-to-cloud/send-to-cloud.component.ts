@@ -260,10 +260,17 @@ export class SendToCloudComponent implements OnInit {
         });
       });
     });
-    this.issue.status = 'Send to Approval';
-    this.issue.action = this.issue.status;
-    this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-      this.ref.close();
+    this.issue.revision = this.rev;
+    this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+      this.issue.status = 'Send to Approval';
+      this.issue.action = this.issue.status;
+      this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+        this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+          this.issues.setRevisionFiles(this.issue.id, this.rev, JSON.stringify(this.loaded)).then(() => {
+            this.ref.close();
+          });
+        });
+      });
     });
   }
   getIssuePath(issue: Issue){

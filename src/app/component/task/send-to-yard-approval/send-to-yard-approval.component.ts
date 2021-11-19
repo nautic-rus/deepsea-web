@@ -1,20 +1,20 @@
 import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {FileAttachment} from "../../../domain/classes/file-attachment";
-import {IssueManagerService} from "../../../domain/issue-manager.service";
-import Delta from "quill-delta";
-import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {Issue} from "../../../domain/classes/issue";
 import {User} from "../../../domain/classes/user";
 import {LanguageService} from "../../../domain/language.service";
+import {IssueManagerService} from "../../../domain/issue-manager.service";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import Delta from "quill-delta";
+import {mouseWheelZoom} from "mouse-wheel-zoom";
 
 @Component({
-  selector: 'app-send-to-approval',
-  templateUrl: './send-to-approval.component.html',
-  styleUrls: ['./send-to-approval.component.css']
+  selector: 'app-send-to-yard-approval',
+  templateUrl: './send-to-yard-approval.component.html',
+  styleUrls: ['./send-to-yard-approval.component.css']
 })
-export class SendToApprovalComponent implements OnInit {
+export class SendToYardApprovalComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
@@ -266,13 +266,19 @@ export class SendToApprovalComponent implements OnInit {
         });
       });
     });
-    this.issue.status = 'Send to Approval';
-    this.issue.action = this.issue.status;
-    this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-      this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
-        this.ref.close();
+
+    this.issue.first_send_date = new Date().getTime();
+    this.issues.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+      this.issue.status = 'Send to Yard Approval';
+      this.issue.action = this.issue.status;
+      this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+        this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+          this.ref.close();
+        });
       });
     });
+
+
   }
 
   close(){

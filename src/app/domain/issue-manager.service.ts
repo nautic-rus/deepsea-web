@@ -97,6 +97,9 @@ export class IssueManagerService {
   async setDayCalendar(user: string, day: string, status: string): Promise<string>{
     return await this.http.get<string>(props.http + '/setDayCalendar', {params: {user, day, status}}).toPromise();
   }
+  async setRevisionFiles(id: number, revision: string, files: string): Promise<string>{
+    return await this.http.get<string>(props.http + '/setRevisionFiles', {params: {id, revision, files}}).toPromise();
+  }
   async getCalendar(): Promise<DayCalendar[]>{
     return await this.http.get<DayCalendar[]>(props.http + '/daysCalendar').toPromise();
   }

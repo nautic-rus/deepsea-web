@@ -18,6 +18,7 @@ import {DeleteComponent} from "./delete/delete.component";
 import {LV} from "../../domain/classes/lv";
 import {LanguageService} from "../../domain/language.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
+import {SendToYardApprovalComponent} from "./send-to-yard-approval/send-to-yard-approval.component";
 
 @Component({
   selector: 'app-task',
@@ -513,12 +514,7 @@ export class TaskComponent implements OnInit {
       this.askForSendToCloud();
     }
     else if (value == 'Send to Yard Approval'){
-      this.issue.first_send_date = new Date().getTime();
-      this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
-        this.issue.status = value;
-        this.issue.action = value;
-        this.statusChanged();
-      });
+      this.askForSendToYardToApproval();
     }
     else{
       this.issue.status = value;
@@ -540,6 +536,18 @@ export class TaskComponent implements OnInit {
   }
   askForSendToApproval(){
     this.dialogService.open(SendToApprovalComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
+    });
+  }
+  askForSendToYardToApproval(){
+    this.dialogService.open(SendToYardApprovalComponent, {
       showHeader: false,
       modal: true,
       data: this.issue
