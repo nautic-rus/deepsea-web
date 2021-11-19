@@ -153,6 +153,7 @@ export class IssueManagerService {
           case 'Send to RS': return styled ? '<span style="color: #082128; background-color: #cee4eb; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Sent to RS</span>' : 'Sent to RS';
           case 'Approved by RS': return styled ? '<span style="color: #ab433f; background-color: #fde0e0; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Approved by RS</span>' : 'Approved by RS';
           case 'Send to Owner': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Sent to Owner</span>' : 'Sent to Owner';
+          case 'AssignedTo': return styled ? '<span style="color: #875638; background-color: #ffcfb3; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Assigned</span>' : 'Assigned';
 
           default: return input;
         }
