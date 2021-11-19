@@ -29,4 +29,8 @@ export class Issue {
   last_update: number = 0;
   closing_status: string = '';
   parent_id: number = 0;
+  delivered_date: number = 0;
+  issue_comment: string = '';
+  first_send_date: number = 0;
+  revision: string = '';
 }
