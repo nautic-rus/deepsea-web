@@ -5,5 +5,5 @@ export class IssueMessage {
   author: string = '';
   content: string = '';
   date: number = 0;
-  fileAttachments: FileAttachment[] = [];
+  file_attachments: FileAttachment[] = [];
 }
