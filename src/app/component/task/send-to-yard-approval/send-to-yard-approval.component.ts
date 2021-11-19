@@ -9,6 +9,7 @@ import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dyna
 import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {SendToApprovalComponent} from "../send-to-approval/send-to-approval.component";
+import {ConfirmAlreadyExistComponent} from "../confirm-already-exist/confirm-already-exist.component";
 
 @Component({
   selector: 'app-send-to-yard-approval',
@@ -257,7 +258,7 @@ export class SendToYardApprovalComponent implements OnInit {
       }
     });
     if (alreadyExists){
-      this.dialogService.open(SendToApprovalComponent, {
+      this.dialogService.open(ConfirmAlreadyExistComponent, {
         showHeader: false,
         modal: true,
         data: this.issue

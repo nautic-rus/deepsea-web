@@ -8,6 +8,7 @@ import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {Issue} from "../../../domain/classes/issue";
 import {User} from "../../../domain/classes/user";
 import {LanguageService} from "../../../domain/language.service";
+import {ConfirmAlreadyExistComponent} from "../confirm-already-exist/confirm-already-exist.component";
 
 @Component({
   selector: 'app-send-to-approval',
@@ -256,7 +257,7 @@ export class SendToApprovalComponent implements OnInit {
       }
     });
     if (alreadyExists){
-      this.dialogService.open(SendToApprovalComponent, {
+      this.dialogService.open(ConfirmAlreadyExistComponent, {
         showHeader: false,
         modal: true,
         data: this.issue

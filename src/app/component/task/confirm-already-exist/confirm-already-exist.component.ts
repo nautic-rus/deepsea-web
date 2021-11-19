@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LanguageService} from "../../../domain/language.service";
+import {DynamicDialogRef} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-confirm-already-exist',
@@ -8,8 +9,14 @@ import {LanguageService} from "../../../domain/language.service";
 })
 export class ConfirmAlreadyExistComponent implements OnInit {
 
-  constructor(public t: LanguageService,) { }
+  constructor(public t: LanguageService, private ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
+  }
+  yes(){
+    this.ref.close('yes');
+  }
+  no(){
+    this.ref.close('no');
   }
 }

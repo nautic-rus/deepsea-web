@@ -9,6 +9,7 @@ import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {LanguageService} from "../../../domain/language.service";
 import {SendToApprovalComponent} from "../send-to-approval/send-to-approval.component";
+import {ConfirmAlreadyExistComponent} from "../confirm-already-exist/confirm-already-exist.component";
 
 @Component({
   selector: 'app-send-to-cloud',
@@ -251,7 +252,7 @@ export class SendToCloudComponent implements OnInit {
       }
     });
     if (alreadyExists){
-      this.dialogService.open(SendToApprovalComponent, {
+      this.dialogService.open(ConfirmAlreadyExistComponent, {
         showHeader: false,
         modal: true,
         data: this.issue

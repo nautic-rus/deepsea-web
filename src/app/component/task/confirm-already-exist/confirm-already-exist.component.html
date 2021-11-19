@@ -12,8 +12,8 @@
   </div>
   <div class="footer-delete mt-2">
     <div class="mr-1 cx">
-      <div tabindex="10" pButton [label]="t.tr ('Да')" class="button-delete"></div>
+      <div (click)="yes()" tabindex="10" pButton [label]="t.tr ('Да')" class="button-delete"></div>
     </div>
-    <div tabindex="11" pButton [label]="t.tr ('Отмена')" class="button-cancel ml-1"></div>
+    <div (click)="no()" tabindex="11" pButton [label]="t.tr ('Отмена')" class="button-cancel ml-1"></div>
   </div>
 </div>

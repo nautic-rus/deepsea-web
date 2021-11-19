@@ -11,7 +11,7 @@ import {J} from "@angular/cdk/keycodes";
 import * as XLSX from 'xlsx';
 import {AssignComponent} from "../task/assign/assign.component";
 import {ImportxlsComponent} from "./importxls/importxls.component";
-import {MessageService} from "primeng/api";
+import {MessageService, SortEvent} from "primeng/api";
 import {stringify} from "uuid";
 import {ViewedIssue} from "../../domain/classes/viewed-issue";
 import {LanguageService} from "../../domain/language.service";
@@ -322,5 +322,41 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         break;
       }
     }
+  }
+
+  customSort(event: SortEvent) {
+    // @ts-ignore
+    event.data.sort((data1, data2) => {
+
+
+      // @ts-ignore
+      let value1 = data1[event.field];
+      // @ts-ignore
+      let value2 = data2[event.field];
+      let result = null;
+
+      if (event.field == 'priority'){
+        let value1 = data1[event.field] == '' ? -1 : data1[event.field] == 'Low' ? 0 : data1[event.field] == 'Medium' ? 1 : 2;
+        let value2 = data2[event.field] == '' ? -1 : data2[event.field] == 'Low' ? 0 : data2[event.field] == 'Medium' ? 1 : 2;
+        result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;}
+      else{
+        if (value1 == null && value2 != null)
+          result = -1;
+        else if (value1 != null && value2 == null)
+          result = 1;
+        else if (value1 == null && value2 == null)
+          result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+          result = value1.localeCompare(value2);
+        else
+          result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+      }
+
+
+
+      // @ts-ignore
+      return (event.order * result);
+    });
+    this.issues = [...this.issues];
   }
 }
