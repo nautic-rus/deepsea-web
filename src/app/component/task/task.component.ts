@@ -292,7 +292,7 @@ export class TaskComponent implements OnInit {
     let message = new IssueMessage();
     message.author = this.auth.getUser().login;
     message.content = this.message;
-    message.fileAttachments = this.loaded;
+    message.file_attachments = this.loaded;
 
     // @ts-ignore
     this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
