@@ -254,6 +254,8 @@ export class SendToCloudComponent implements OnInit {
       issue.action = 'New';
       issue.file_attachments = this.loaded;
       issue.parent_id = this.issue.id;
+      issue.doc_number = this.issue.doc_number;
+
       this.issues.startIssue(issue).then(res => {
         this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
 
