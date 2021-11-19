@@ -230,6 +230,8 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('g') && this.auth.getUser().groups.includes(issue.issue_type) || allow;
       allow = action.rule.includes('h') ? issue.child_issues.length == 0 && allow : allow;
       allow = action.rule.includes('n') ? issue.child_issues.length != 0 && allow : allow;
+      allow = action.rule.includes('f') ? issue.first_send_date != 0 && allow : allow;
+      allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != 'Approved').length == 0 && allow : allow;
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});

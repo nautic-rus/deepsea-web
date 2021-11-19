@@ -243,8 +243,26 @@ export class SendToCloudComponent implements OnInit {
     return result;
   }
   commit() {
-    this.issues.sendToApproval(this.issue.id, this.selectedUsers, this.loaded, this.taskDetails, 'Send to Approval', this.getRevision()).then(res => {
-      console.log(res);
+    this.selectedUsers.forEach(user => {
+      const issue = new Issue();
+      issue.name = 'Согласование ' + this.issue.doc_number;
+      issue.details = this.taskDetails;
+      issue.issue_type = 'APPROVAL';
+      issue.started_by = this.auth.getUser().login;
+      issue.assigned_to = user;
+      issue.status = 'New';
+      issue.action = 'New';
+      issue.file_attachments = this.loaded;
+      issue.parent_id = this.issue.id;
+      this.issues.startIssue(issue).then(res => {
+        this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
+
+        });
+      });
+    });
+    this.issue.status = 'Send to Approval';
+    this.issue.action = this.issue.status;
+    this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
       this.ref.close();
     });
   }
