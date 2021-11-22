@@ -17,6 +17,7 @@
       styleClass="p-datatable-striped"
       [customSort]="true"
       (sortFunction)="customSort($event)"
+      scrollDirection="both"
       *ngIf="filled"
     >
       <ng-template pTemplate="caption">
