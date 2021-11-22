@@ -324,6 +324,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  lastSortField: any = '';
   customSort(event: SortEvent) {
     // @ts-ignore
     event.data.sort((data1, data2) => {
@@ -352,11 +353,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
           result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
       }
 
-
-
       // @ts-ignore
       return (event.order * result);
     });
-    this.issues = [...this.issues];
+    if (this.lastSortField != (event.field + '' + event.order)){
+      this.lastSortField = event.field + '' + event.order;
+      this.issues = [...this.issues];
+    }
   }
 }
