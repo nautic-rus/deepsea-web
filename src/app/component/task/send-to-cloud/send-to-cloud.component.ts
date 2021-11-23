@@ -245,50 +245,12 @@ export class SendToCloudComponent implements OnInit {
     return result;
   }
   commit() {
-    let alreadyExists = false;
-    this.selectedUsers.forEach(user => {
-      if (this.issue.child_issues.find(x => x.assigned_to == user) != null){
-        alreadyExists = true;
-      }
-    });
-    if (alreadyExists){
-      this.dialogService.open(ConfirmAlreadyExistComponent, {
-        showHeader: false,
-        modal: true,
-        data: this.issue
-      }).onClose.subscribe(res => {
-        if (res == 'yes'){
-          this.sendCommit();
-        }
-      });
-    }
-    else{
-      this.sendCommit();
-    }
+    this.sendCommit();
   }
   sendCommit(){
-    this.selectedUsers.forEach(user => {
-      const issue = new Issue();
-      issue.name = 'Согласование ' + this.issue.doc_number;
-      issue.details = this.taskDetails;
-      issue.issue_type = 'APPROVAL';
-      issue.started_by = this.auth.getUser().login;
-      issue.assigned_to = user;
-      issue.status = 'New';
-      issue.action = 'New';
-      issue.file_attachments = this.loaded;
-      issue.parent_id = this.issue.id;
-      issue.doc_number = this.issue.doc_number;
-
-      this.issues.startIssue(issue).then(res => {
-        this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
-
-        });
-      });
-    });
     this.issue.revision = this.rev;
     this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-      this.issue.status = 'Send to Approval';
+      this.issue.status = 'Delivered';
       this.issue.action = this.issue.status;
       this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
         this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
