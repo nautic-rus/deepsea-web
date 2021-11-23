@@ -119,7 +119,7 @@ export class IssueManagerService {
           case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Закрыто</span>' : 'Закрыто';
           case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На согласовании</span>' : 'На согласовании';
           case 'Approved': return styled ? '<span style="color: #2e604b; background-color: #ceede1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Согласовано</span>' : 'Согласовано';
-          case 'Not approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не согласовано</span>' : 'Не согласовано';
+          case 'Not Approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не согласовано</span>' : 'Не согласовано';
           case 'Ready to Send': return styled ? '<span style="color: #4A7863; background-color: #DCEFED; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Готов к отправке</span>' : 'Готов к отправке';
           case 'On reApproval': return styled ? '<span style="color: #813A18; background-color: #FFB38F; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Повторное согласование</span>' : 'Повторное согласование';
           case 'Send to Yard Approval': return styled ? '<span style="color: #895169; background-color: #f8c1d5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отправлен на верфь</span>' : 'Отправлен на верфь';
@@ -129,6 +129,7 @@ export class IssueManagerService {
           case 'Approved by RS': return styled ? '<span style="color: #ab433f; background-color: #fde0e0; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Согласовано в РС</span>' : 'Отправлен в РС';
           case 'Send to Owner': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отправлен заказчику</span>' : 'Отправлен заказчику';
           case 'AssignedTo': return styled ? '<span style="color: #875638; background-color: #ffcfb3; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Назначен</span>' : 'Назначен';
+          case 'Comments fixed': return styled ? '<span style="color: #9d7900; background-color: #ffefb2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Замечания устранены</span>' : 'Замечания устранены';
 
           default: return input;
         }
@@ -147,7 +148,7 @@ export class IssueManagerService {
           case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Closed</span>' : 'Closed';
           case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">On Approval</span>' : 'On Approval';
           case 'Approved': return styled ? '<span style="color: #2e604b; background-color: #ceede1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Approved</span>' : 'Approved';
-          case 'Not approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Not Approved</span>' : 'Not Approved';
+          case 'Not Approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Not Approved</span>' : 'Not Approved';
           case 'Ready to Send': return styled ? '<span style="color: #3e6654; background-color: #DCEFED; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Ready to Send</span>' : 'Ready to Send';
           case 'On reApproval': return styled ? '<span style="color: #813A18; background-color: #FFB38F; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Retry Approval</span>' : 'Retry Approval';
           case 'Send to Yard Approval': return styled ? '<span style="color: #895169; background-color: #f8c1d5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Sent to shipyard</span>' : 'Sent to shipyard';
@@ -157,6 +158,7 @@ export class IssueManagerService {
           case 'Approved by RS': return styled ? '<span style="color: #ab433f; background-color: #fde0e0; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Approved by RS</span>' : 'Approved by RS';
           case 'Send to Owner': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Sent to Owner</span>' : 'Sent to Owner';
           case 'AssignedTo': return styled ? '<span style="color: #875638; background-color: #ffcfb3; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Assigned</span>' : 'Assigned';
+          case 'Comments fixed': return styled ? '<span style="color: #9d7900; background-color: #ffefb2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Comments fixed</span>' : 'Comments fixed';
 
           default: return input;
         }
@@ -189,6 +191,7 @@ export class IssueManagerService {
           case 'Send to RS': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/rs.png"></span><span class="cxy button-text">Отправлен в РС</span></div>' : 'Отправлен в РС';
           case 'Approved by RS': return styled ? '<div class="buttons-pick-approved-rs"><span class="icon-approved-rs cxy"><img src="assets/icons/rs.png"></span><span class="cxy button-text">Согласовано в РС</span></div>' : 'Согласовано в РС';
           case 'Send to Owner': return styled ? '<div class="buttons-pick-owner"><span class="icon-owner cxy"><img src="assets/icons/owner.png"></span><span class="cxy button-text">Отправлен заказчику</span></div>' : 'Отправлен заказчику';
+          case 'Comments fixed': return styled ? '<div class="buttons-pick-fixed"><span class="icon-fixed cxy"><img src="assets/icons/fixed.svg"></span><span class="cxy button-text">Замечания устранены</span></div>' : 'Замечания устранены';
 
           default: return input;
         }
@@ -216,6 +219,7 @@ export class IssueManagerService {
           case 'Send to RS': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/rs.png"></span><span class="cxy button-text">Sent to RS</span></div>' : 'Send to RS';
           case 'Approved by RS': return styled ? '<div class="buttons-pick-approved-rs"><span class="icon-approved-rs cxy"><img src="assets/icons/rs.png"></span><span class="cxy button-text">Approved by RS</span></div>' : 'Approved by RS';
           case 'Send to Owner': return styled ? '<div class="buttons-pick-owner"><span class="icon-owner cxy"><img src="assets/icons/owner.png"></span><span class="cxy button-text">Sent to Owner</span></div>' : 'Sent to Owner';
+          case 'Comments fixed': return styled ? '<div class="buttons-pick-fixed"><span class="icon-fixed cxy"><img src="assets/icons/fixed.svg"></span><span class="cxy button-text">Comments fixed</span></div>' : 'Comments fixed';
 
           default: return input;
         }

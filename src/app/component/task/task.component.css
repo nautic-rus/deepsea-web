@@ -811,6 +811,28 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-fixed{
+  color: white;
+  background-color: #7F7399;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-fixed:hover{
+  background: #5A5470;
+  transition: 0.3s;
+}
+.icon-fixed{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #5A5470;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .button-text{
   padding-right: 8px;
   padding-left: 8px;
