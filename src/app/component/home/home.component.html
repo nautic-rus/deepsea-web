@@ -2,6 +2,7 @@
   <div class="card">
     <p-table
       #dt
+      id="dt"
       dataKey="id"
       [value]="issues"
       [scrollable]="true"
@@ -36,6 +37,9 @@
           </div>
           <div class="mr-1">
             <button pButton [pTooltip]="l.tr('Экспорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-upload" (click)="exportXls()"></button>
+          </div>
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Экспорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-upload" (click)="exportPDF()"></button>
           </div>
           <div class="mr-1">
             <button pButton [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" class="border normal-button p-button-outlined focus-button" icon="pi pi-star-o" (click)="applyFilter('assigned')"></button>

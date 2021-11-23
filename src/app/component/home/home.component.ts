@@ -1,4 +1,13 @@
-import {AfterContentChecked, AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
@@ -15,6 +24,7 @@ import {MessageService, SortEvent} from "primeng/api";
 import {stringify} from "uuid";
 import {ViewedIssue} from "../../domain/classes/viewed-issue";
 import {LanguageService} from "../../domain/language.service";
+import { jsPDF } from "jspdf";
 
 @Component({
   selector: 'app-home',
@@ -164,10 +174,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   getDateOnly(dateLong: number): string{
     let date = new Date(dateLong);
-    let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
-    let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
-    let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
-    return da + '.' + mo + '.' + ye;
+    return ('0' + date.getDate()).slice(-2) + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear();
+    // let date = new Date(dateLong);
+    // let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
+    // let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+    // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    // return da + '.' + mo + '.' + ye;
   }
   getDateNoTime(dateLong: number): string{
     let date = new Date(dateLong);
@@ -305,6 +317,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(issues);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
+  }
+  // @ts-ignore
+  exportPDF(){
+    const doc = new jsPDF();
+    doc.save('test.pdf');
   }
 
   applyFilter(filter: string) {
