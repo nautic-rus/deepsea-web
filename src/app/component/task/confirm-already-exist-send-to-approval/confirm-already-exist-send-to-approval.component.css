@@ -4,7 +4,7 @@
   justify-content: center;
   width: 5em;
   height: 5em;
-  margin: 1.25em auto 1.875em;
+  margin: 1.05em auto 1.875em;
   border: .25em solid transparent;
   border-radius: 50%;
   border-color: #000;
@@ -22,7 +22,6 @@
 .confirm-text{
   position: relative;
   max-width: 100%;
-  margin: 0 0 .4em;
   padding: 0;
   color: #595959;
   font-size: 1.875em;
@@ -39,34 +38,34 @@
   display: flex;
   justify-content: center;
 }
-.button-delete{
+.button-delete-approval{
   border: none;
   margin-right: 4px;
-  height: 39px;
+  height: 60px;
   min-width: 100px;
   border-radius: 3px;
   text-shadow: none;
-  padding: 0 10px;
+  padding: 5px 10px;
   color: #fff;
   background: #17a2b8;
   transition: background .1s
 }
-.button-delete:hover{
+.button-delete-approval:hover{
   background: #1598ac;
 }
-.button-cancel{
+.button-cancel-approval{
   margin-right: 4px;
-  height: 39px;
+  height: 60px;
   min-width: 100px;
   border-radius: 3px;
   text-shadow: none;
-  padding: 0 10px;
+  padding: 5px 10px;
   color: #17a2b8;
   background: #fff;
   border: 1px solid rgba(23, 162, 184, 0.5);
   transition: background .1s
 }
-.button-cancel:hover{
+.button-cancel-approval:hover{
   background: #f6f6f6;
 }
 .p-dialog .p-dialog-content {
