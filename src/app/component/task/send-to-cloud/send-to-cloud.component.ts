@@ -320,6 +320,6 @@ export class SendToCloudComponent implements OnInit {
   }
 
   isDisabled() {
-    return this.selectedUsers.length == 0;
+    return this.loaded.length == 0 || this.rev == '-';
   }
 }

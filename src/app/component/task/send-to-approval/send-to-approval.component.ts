@@ -290,11 +290,16 @@ export class SendToApprovalComponent implements OnInit {
         });
       });
     });
-    this.issue.status = 'Send to Approval';
-    this.issue.action = this.issue.status;
-    this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-      this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
-        this.ref.close();
+
+
+    this.issue.first_local_approval_date = new Date().getTime();
+    this.issues.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+      this.issue.status = 'Send to Approval';
+      this.issue.action = this.issue.status;
+      this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+        this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+          this.ref.close();
+        });
       });
     });
   }

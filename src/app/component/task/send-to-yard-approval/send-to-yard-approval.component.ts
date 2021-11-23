@@ -251,26 +251,7 @@ export class SendToYardApprovalComponent implements OnInit {
     return result;
   }
   commit() {
-    let alreadyExists = false;
-    this.selectedUsers.forEach(user => {
-      if (this.issue.child_issues.find(x => x.assigned_to == user) != null){
-        alreadyExists = true;
-      }
-    });
-    if (alreadyExists){
-      this.dialogService.open(ConfirmAlreadyExistComponent, {
-        showHeader: false,
-        modal: true,
-        data: this.issue
-      }).onClose.subscribe(res => {
-        if (res == 'yes'){
-          this.sendCommit();
-        }
-      });
-    }
-    else{
-      this.sendCommit();
-    }
+    this.sendCommit();
   }
   sendCommit(){
     this.selectedUsers.forEach(user => {

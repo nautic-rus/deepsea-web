@@ -60,6 +60,8 @@ import {NgxCollapseModule} from 'ngx-collapse';
 import {ToggleButtonModule} from "primeng/togglebutton";
 import { SendToYardApprovalComponent } from './component/task/send-to-yard-approval/send-to-yard-approval.component';
 import { ConfirmAlreadyExistComponent } from './component/task/confirm-already-exist/confirm-already-exist.component';
+import { ConfirmAlreadyExistSendToApprovalComponent } from './component/task/confirm-already-exist-send-to-approval/confirm-already-exist-send-to-approval.component';
+import { ConfirmAlreadyExistSendToYardComponent } from './component/task/confirm-already-exist-send-to-yard/confirm-already-exist-send-to-yard.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -91,6 +93,8 @@ Quill.register('modules/imageResize', ImageResize);
     UserCardComponent,
     SendToYardApprovalComponent,
     ConfirmAlreadyExistComponent,
+    ConfirmAlreadyExistSendToApprovalComponent,
+    ConfirmAlreadyExistSendToYardComponent,
   ],
     imports: [
         BrowserModule,

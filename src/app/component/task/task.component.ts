@@ -19,6 +19,8 @@ import {LV} from "../../domain/classes/lv";
 import {LanguageService} from "../../domain/language.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
 import {SendToYardApprovalComponent} from "./send-to-yard-approval/send-to-yard-approval.component";
+import {ConfirmAlreadyExistComponent} from "./confirm-already-exist/confirm-already-exist.component";
+import {ConfirmAlreadyExistSendToApprovalComponent} from "./confirm-already-exist-send-to-approval/confirm-already-exist-send-to-approval.component";
 
 @Component({
   selector: 'app-task',
@@ -500,7 +502,22 @@ export class TaskComponent implements OnInit {
       this.assignTask();
     }
     else if (value == 'Send to Approval'){
-      this.askForSendToApproval();
+      if (this.issue.first_local_approval_date != 0){
+        this.dialogService.open(ConfirmAlreadyExistSendToApprovalComponent, {
+          showHeader: false,
+          modal: true,
+          data: this.issue
+        }).onClose.subscribe(res => {
+          if (res == 'yes'){
+            this.issue.status = 'Send to Approval';
+            this.issue.action = 'Send to Approval';
+            this.statusChanged();
+          }
+          else{
+            this.askForSendToApproval();
+          }
+        });
+      }
     }
     else if (value == 'Paused'){
       this.issue.assigned_to = '';
@@ -514,7 +531,22 @@ export class TaskComponent implements OnInit {
       this.askForSendToCloud();
     }
     else if (value == 'Send to Yard Approval'){
-      this.askForSendToYardToApproval();
+      if (this.issue.first_send_date != 0){
+        this.dialogService.open(ConfirmAlreadyExistSendToApprovalComponent, {
+          showHeader: false,
+          modal: true,
+          data: this.issue
+        }).onClose.subscribe(res => {
+          if (res == 'yes'){
+            this.issue.status = 'Send to Yard Approval';
+            this.issue.action = 'Send to Yard Approval';
+            this.statusChanged();
+          }
+          else{
+            this.askForSendToYardToApproval();
+          }
+        });
+      }
     }
     else{
       this.issue.status = value;

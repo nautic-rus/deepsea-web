@@ -32,5 +32,6 @@ export class Issue {
   delivered_date: number = 0;
   issue_comment: string = '';
   first_send_date: number = 0;
+  first_local_approval_date: number = 0;
   revision: string = '';
 }
