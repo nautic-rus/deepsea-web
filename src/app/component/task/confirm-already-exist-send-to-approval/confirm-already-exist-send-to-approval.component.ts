@@ -19,5 +19,8 @@ export class ConfirmAlreadyExistSendToApprovalComponent implements OnInit {
   no(){
     this.ref.close('no');
   }
+  close(){
+    this.ref.close('exit');
+  }
 
 }

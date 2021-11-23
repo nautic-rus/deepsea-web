@@ -518,6 +518,9 @@ export class TaskComponent implements OnInit {
           }
         });
       }
+      else{
+        this.askForSendToApproval();
+      }
     }
     else if (value == 'Paused'){
       this.issue.assigned_to = '';
@@ -546,6 +549,9 @@ export class TaskComponent implements OnInit {
             this.askForSendToYardToApproval();
           }
         });
+      }
+      else{
+        this.askForSendToYardToApproval();
       }
     }
     else{
