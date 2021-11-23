@@ -121,7 +121,7 @@ export class LanguageService {
           case 'Показать исполненные': return 'Show completed';
           case 'Автор/ответственный': return 'Author/responsible';
           case 'Изменилось описание к задаче': return 'Task description has changed';
-          case '': return '';
+          case 'Внимание': return 'Attention';
           case '': return '';
           case '': return '';
           case '': return '';
