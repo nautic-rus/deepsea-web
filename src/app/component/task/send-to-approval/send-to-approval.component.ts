@@ -29,6 +29,7 @@ export class SendToApprovalComponent implements OnInit {
     console.log(this.issue);
     if (this.issue.issue_type == 'RKD'){
       this.selectedUsers = ['stropilov', 'lvov', 'n.novikov'];
+      this.selectedUsers = ['isaev'];
     }
     if (this.issue.issue_type == 'RKD-TURK'){
       this.selectedUsers = ['stropilov', 'lvov', 'n.novikov'];
@@ -286,7 +287,6 @@ export class SendToApprovalComponent implements OnInit {
       issue.doc_number = this.issue.doc_number;
       this.issues.startIssue(issue).then(res => {
         this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
-
         });
       });
     });
