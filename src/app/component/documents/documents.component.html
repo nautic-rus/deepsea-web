@@ -39,7 +39,7 @@
           <td class="w-10 text-14">{{issue.doc_number}}</td>
           <td class="w-50 text-14">{{issue.name}}</td>
           <td class="w-10 text-14">{{issue.revision}}</td>
-          <td class="w-10 text-14"><span [innerHTML]="getDeliveredStatus(issue.status)"></span></td>
+          <td class="w-10 text-14"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
           <td class="w-10 text-14">{{getDeliveredDate('')}}</td>
         </tr>
       </ng-template>

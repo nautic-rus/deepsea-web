@@ -66,7 +66,7 @@ export class DocumentsComponent implements OnInit {
       return '<span>Not completed</span>'
     }
     else if (status != 'Delivered' && this.l.language == 'ru'){
-      return '<span>В работе</span>'
+      return '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">В работе</span>'
     }
   }
 }

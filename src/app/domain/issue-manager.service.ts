@@ -273,6 +273,7 @@ export class IssueManagerService {
           case 'APPROVAL': return 'Согласование';
           case 'PDSP': return 'ПДСП';
           case 'ORIZ': return 'Корректировка';
+          case 'DEVELOPMENT': return 'Задание на разработку';
           default: return input;
         }
       }
@@ -285,6 +286,7 @@ export class IssueManagerService {
           case 'APPROVAL': return 'Approval';
           case 'PDSP': return 'PDSP';
           case 'ORIZ': return 'Adjustment';
+          case 'DEVELOPMENT': return 'Development';
           default: return input;
         }
       }
