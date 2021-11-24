@@ -258,10 +258,16 @@
 }
 .task-name-change{
   font-size: x-large;
-  font-weight: 600;
   border-radius: 3px;
   text-align: justify;
   position: relative;
+}
+.task-name-change-commit{
+  font-size: x-large;
+  border-radius: 3px;
+  text-align: justify;
+  position: relative;
+  height: 32px!important;
 }
 .padding-8{
   padding: 8px;
