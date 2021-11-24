@@ -122,9 +122,9 @@ export class LanguageService {
           case 'Автор/ответственный': return 'Author/responsible';
           case 'Изменилось описание к задаче': return 'Task description has changed';
           case 'Внимание': return 'Attention';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Номер чертежа': return 'Document number';
+          case 'Ревизия': return 'Revision';
+          case 'Дата поставки': return 'Delivery date';
           case '': return '';
           case '': return '';
           case '': return '';
