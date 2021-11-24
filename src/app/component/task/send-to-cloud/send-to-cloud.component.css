@@ -29,6 +29,19 @@
   font-family: inherit;
   font-weight: 600;
 }
+.upload-send-cloud{
+  width: 100%;
+  border: 1px dashed #ccc;
+  cursor: pointer;
+  padding: 5px;
+}
+.dish-line{
+  border-bottom: 1px dashed #ccc;
+}
+.loading-files{
+  height: 105px;
+  overflow: auto;
+}
 /deep/.ql-container{
   min-height: 100px;
 }
@@ -73,12 +86,7 @@
   font-family: inherit;
   font-weight: 400;
 }
-.big-text{
-  color: #5e6c84;
-  font-size: 12px;
-  font-family: inherit;
-  font-weight: 600;
-}
+
 .button-disabled{
   opacity: 0.5;
   pointer-events: none;
