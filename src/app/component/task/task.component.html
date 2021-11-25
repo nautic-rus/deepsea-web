@@ -296,11 +296,11 @@
               <span class="bold-text">{{t.tr('информацию')}}</span>
               <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
               <div class="df pt-5" *ngIf="!msg.name_value.includes('details')">
-                <div>{{msg.prev_value}}</div>
+                <div [innerHTML]="getSmth(msg.prev_value) | safeHtml"></div>
                 <span class="px-10">
                   <img src="assets/icons/right-arrow.svg" height="13">
                 </span>
-                <div>{{msg.new_value}}</div>
+                <div [innerHTML]="getSmth(msg.new_value) | safeHtml"></div>
               </div>
               <div class="df pt-5" *ngIf="msg.name_value.includes('details')">
                 {{t.tr('Изменилось описание к задаче')}}
