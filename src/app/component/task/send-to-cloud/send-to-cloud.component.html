@@ -1,50 +1,40 @@
-<div style="height: 400px; width: 420px;">
-  <div class="task-header-assign">
-    <div class="task-name">{{t.tr('Отправить файлы')}}</div>
-    <div class="task-button cxy" (click)="close()">
+<div class="center-cloud">
+  <div class="header-cloud-card">
+    <div class="header-cloud-text">{{t.tr('Отправить файлы')}}</div>
+    <div class="task-button-create cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="body-approval">
-    <div class="big-text mb-1 mt-1">{{t.tr('Вложение')}}</div>
-    <div class="upload-send-cloud">
-      <div [class.file-drag]="dragOver" class="cx cy dish-line">
-        <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
-          <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
-          <span class="normal-text no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
-        </div>
-      </div>
-      <div class="loading-files">
-        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
-        <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
-          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
-          <div class="cy">{{file}}</div>
-          <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
-          <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="big-text mb-1 mt-1">{{t.tr('Выберите номер ревизии')}}</div>
-    </div>
-    <div class="big-text mb-1 df">
-      <div class="w-45 mr-2">
-        <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
-        </p-dropdown>
-      </div>
+  <div class="df space-between"></div>
+  <div>
+    <div class="big-text mb-1 mt-1">{{t.tr('Выберите номер ревизии')}}</div>
+  </div>
+  <div class="big-text mb-1 df">
+    <div class="w-45 mr-2">
+      <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
+      </p-dropdown>
     </div>
   </div>
-  <div class="form-footer pt-20">
-    <div class="mr-1 cx">
-      <div [class.button-disabled]="isDisabled()" tabindex="10" (click)="commit()" pButton label="ОК" class="button"></div>
+  <div>
+    <div class="big-text-create mb-1 mt-1">{{t.tr('Вложение')}}</div>
+    <div [class.file-drag]="dragOver" class="upload cx cy">
+      <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+        <span class="normal-text no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+      </div>
     </div>
-    <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+      <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+      <div class="cy">{{file}}</div>
+      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+      <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+    </div>
   </div>
 </div>
-<div [hidden]="!showImages">
-  <div class="image-preview-backdrop" (click)="closeShowImage()"></div>
-  <div class="image-preview-scale">
-    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+<div class="form-footer-create">
+  <div class="mr-1 cx">
+    <div tabindex="10" [class.disabled-button]="isDisabled()" (click)="commit()" pButton label="ОК" class="button"></div>
   </div>
+  <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
 </div>

@@ -129,7 +129,6 @@ select:focus {
 .file-loading{
   display: grid;
   grid-template-columns: 0.5fr 4fr 0.5fr 0.5fr;
-
 }
 .resizable {
   display: inline-block;
