@@ -65,22 +65,22 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   setCols(){
     this.cols = [
-      { field: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '', hidden: false },
-      { field: 'started_date', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'started_date'), skip: false, defaultValue: '', hidden: false },
-      { field: 'issue_type', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'issue_type'), skip: false, defaultValue: '', hidden: false },
-      { field: 'started_by', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'started_by'), skip: false, defaultValue: '', hidden: false },
-      { field: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, filters: this.getFilters(this.issues, 'project'), skip: false, defaultValue: '', hidden: false },
-      { field: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, filters: this.getFilters(this.issues, 'department'), skip: false, defaultValue: '', hidden: false },
-      { field: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: false, filters: this.getFilters(this.issues, 'name'), skip: false, defaultValue: '', hidden: false },
-      { field: 'assigned_to', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assigned_to'), skip: false, defaultValue: '', hidden: false },
-      { field: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '', hidden: false },
-      { field: 'priority', header: 'Приоритет', headerLocale: 'Приоритет', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'priority'), defaultValue: '', hidden: false },
-      { field: 'due_date', header: 'Срок исполнения', headerLocale: 'Срок исполнения', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'due_date'), defaultValue: '', hidden: false },
-      { field: 'overtime', header: 'Сверхурочные', headerLocale: 'Сверхурочные', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'overtime'), defaultValue: '', hidden: false },
-      { field: 'responsible', header: 'Ответственный', headerLocale: 'Ответственный', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'responsible'), defaultValue: '', hidden: false },
-      { field: 'doc_number', header: 'Номер чертежа', headerLocale: 'Номер чертежа', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'doc_number'), defaultValue: '', hidden: false },
-      { field: 'period', header: 'Этап', headerLocale: 'Этап', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'period'), defaultValue: '', hidden: false },
-      { field: 'last_update', header: 'Дата обновления', headerLocale: 'Дата обновления', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'last_update'), defaultValue: '', hidden: false },
+      { field: 'id', header: 'ID', headerLocale: 'ID', sort: true, filter: false, filters: this.getFilters(this.issues, 'id'), skip: false, defaultValue: '', hidden: false, date: false },
+      { field: 'started_date', header: 'Создана', headerLocale: 'Создана', sort: true, filter: false, filters: this.getFilters(this.issues, 'started_date'), skip: false, defaultValue: '', hidden: false, date: true },
+      { field: 'issue_type', header: 'Тип задачи', headerLocale: 'Тип задачи', sort: true, filter: true, filters: this.getFilters(this.issues, 'issue_type'), skip: false, defaultValue: '', hidden: false, date: false },
+      { field: 'started_by', header: 'Автор', headerLocale: 'Автор', sort: true, filter: true, filters: this.getFilters(this.issues, 'started_by'), skip: false, defaultValue: '', hidden: false, date: false },
+      { field: 'project', header: 'Проект', headerLocale: 'Проект', sort: true, filter: true, filters: this.getFilters(this.issues, 'project'), skip: false, defaultValue: '', hidden: false, date: false },
+      { field: 'department', header: 'Отдел', headerLocale: 'Отдел', sort: true, filter: true, filters: this.getFilters(this.issues, 'department'), skip: false, defaultValue: '', hidden: false, date: false },
+      { field: 'name', header: 'Название', headerLocale: 'Название', sort: true, filter: false, filters: this.getFilters(this.issues, 'name'), skip: false, defaultValue: '', hidden: false, date: false },
+      { field: 'assigned_to', header: 'Исполнитель', headerLocale: 'Исполнитель', sort: true, filter: true, filters: this.getFilters(this.issues, 'assigned_to'), skip: false, defaultValue: '', hidden: false, date: false },
+      { field: 'status', header: 'Статус', headerLocale: 'Статус', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'status'), defaultValue: '', hidden: false, date: false },
+      { field: 'priority', header: 'Приоритет', headerLocale: 'Приоритет', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'priority'), defaultValue: '', hidden: false, date: false },
+      { field: 'due_date', header: 'Срок исполнения', headerLocale: 'Срок исполнения', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'due_date'), defaultValue: '', hidden: false, date: true },
+      { field: 'overtime', header: 'Сверхурочные', headerLocale: 'Сверхурочные', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'overtime'), defaultValue: '', hidden: false, date: false },
+      { field: 'responsible', header: 'Ответственный', headerLocale: 'Ответственный', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'responsible'), defaultValue: '', hidden: false, date: false },
+      { field: 'doc_number', header: 'Номер чертежа', headerLocale: 'Номер чертежа', sort: true, filter: false, skip: false, filters: this.getFilters(this.issues, 'doc_number'), defaultValue: '', hidden: false, date: false },
+      { field: 'period', header: 'Этап', headerLocale: 'Этап', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'period'), defaultValue: '', hidden: false, date: false },
+      { field: 'last_update', header: 'Дата обновления', headerLocale: 'Дата обновления', sort: true, filter: true, skip: false, filters: this.getFilters(this.issues, 'last_update'), defaultValue: '', hidden: false, date: true },
      ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -97,6 +97,10 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     // }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
       this.issues = data;
+      this.issues.forEach(issue => {
+        issue.start_date = new Date(issue.start_date);
+        issue.due_date = new Date(issue.due_date);
+      });
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
       this.filled = true;

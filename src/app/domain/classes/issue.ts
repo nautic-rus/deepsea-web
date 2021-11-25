@@ -13,8 +13,8 @@ export class Issue {
   name: string = '';
   details: string = '';
   assigned_to: string = '';
-  start_date: number = 0;
-  due_date: number = 0;
+  start_date: any = 0;
+  due_date: any = 0;
   messages: IssueMessage[] = [];
   history: IssueHistory[] = [];
   file_attachments: FileAttachment[] = [];
