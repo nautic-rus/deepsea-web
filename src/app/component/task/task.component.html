@@ -551,9 +551,12 @@
             <div class="df text-y h-32 normal-text w-40">{{t.tr('ID задачи')}}</div>
             <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{issue.id}}</div>
           </div>
+          <div class="df mt-5" *ngIf="issue.parent_id != 0">
+            <div class="df text-y h-32 normal-text w-40">{{t.tr('Родительская задача')}}</div>
+            <div  (click)="openIssue(issue.parent_id)" class="pl-3 df text-y h-32 cursor-pointer parent-task w-45">{{issue.parent_id}}</div>
+          </div>
         </div>
       </div>
-      <div *ngIf="issue.parent_id != 0" class="mt-2 min-text" (click)="openIssue(issue.parent_id)">{{t.tr('Родительская задача')}}</div>
       <div class="mt-1 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
     </div>
   </div>
