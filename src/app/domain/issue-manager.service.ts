@@ -251,10 +251,21 @@ export class IssueManagerService {
   //   }
   // }
   localeHistory(input: string){
-    switch (input) {
-      case 'status': return 'Статус';
-      default: return input;
+    switch (this.lang.language) {
+      case 'ru':{
+        switch (input) {
+          case 'status': return 'Статус';
+          default: return input;
+        }
+      }
+      default:{
+        switch (input) {
+          case 'status': return 'Status';
+          default: return input;
+        }
+      }
     }
+
   }
   localeHistoryEn(input: string){
     switch (input) {

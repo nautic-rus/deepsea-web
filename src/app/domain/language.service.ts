@@ -125,9 +125,9 @@ export class LanguageService {
           case 'Номер чертежа': return 'Document number';
           case 'Ревизия': return 'Revision';
           case 'Дата поставки': return 'Delivery date';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Родительская задача': return 'Parent task';
+          case 'Примечение': return 'Note';
+          case 'сообщение': return 'message';
           case '': return '';
           case '': return '';
           case '': return '';
