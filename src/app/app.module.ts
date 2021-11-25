@@ -62,6 +62,7 @@ import { SendToYardApprovalComponent } from './component/task/send-to-yard-appro
 import { ConfirmAlreadyExistComponent } from './component/task/confirm-already-exist/confirm-already-exist.component';
 import { ConfirmAlreadyExistSendToApprovalComponent } from './component/task/confirm-already-exist-send-to-approval/confirm-already-exist-send-to-approval.component';
 import { ConfirmAlreadyExistSendToYardComponent } from './component/task/confirm-already-exist-send-to-yard/confirm-already-exist-send-to-yard.component';
+import { ViewDocumentComponent } from './component/documents/view-document/view-document.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -95,6 +96,7 @@ Quill.register('modules/imageResize', ImageResize);
     ConfirmAlreadyExistComponent,
     ConfirmAlreadyExistSendToApprovalComponent,
     ConfirmAlreadyExistSendToYardComponent,
+    ViewDocumentComponent,
   ],
     imports: [
         BrowserModule,

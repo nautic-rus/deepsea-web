@@ -130,6 +130,11 @@ export class DocExplorerComponent implements OnInit {
   openFile(url: string) {
     window.open(url);
   }
+  getDateOnly(dateLong: number): string{
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear();
+  }
+
   getFileExtensionIcon(file: string) {
     switch (file.toLowerCase().split('.').pop()){
       case 'pdf': return 'pdf.svg';
