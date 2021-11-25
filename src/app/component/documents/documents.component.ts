@@ -7,6 +7,7 @@ import {LanguageService} from "../../domain/language.service";
 import {Table} from "primeng/table";
 import {TaskComponent} from "../task/task.component";
 import {DialogService} from "primeng/dynamicdialog";
+import {ViewDocumentComponent} from "./view-document/view-document.component";
 
 @Component({
   selector: 'app-documents',
@@ -45,8 +46,9 @@ export class DocumentsComponent implements OnInit {
   }
   viewTask(id: number) {
     this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
       if (res.id != null){
-        this.dialogService.open(TaskComponent, {
+        this.dialogService.open(ViewDocumentComponent, {
           showHeader: false,
           modal: true,
           data: res
@@ -54,7 +56,6 @@ export class DocumentsComponent implements OnInit {
       }
     });
   }
-
   getDeliveredStatus(status: string): any {
     if (status == 'Delivered' && this.l.language == 'en'){
       return '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Completed</span>'

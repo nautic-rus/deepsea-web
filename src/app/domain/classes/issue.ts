@@ -34,4 +34,5 @@ export class Issue {
   first_send_date: number = 0;
   first_local_approval_date: number = 0;
   revision: string = '';
+  revision_files: FileAttachment[] = [];
 }
