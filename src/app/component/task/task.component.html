@@ -291,47 +291,19 @@
               </div>
             </div>
             <div *ngIf="msg.update_message.includes('edit')">
-              <div *ngIf="msg.name_value == 'priority'">
-                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
-                <span class="bold-text">{{issueManager.localeHistory(msg.name_value)}}</span>
-                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
-                <div class="df pt-5">
-                  <div class="" [innerHTML]="issueManager.localeStatus(msg.prev_value) | safeHtml"></div>
-                  <span class="px-10">
-                    <img src="assets/icons/right-arrow.svg" height="13">
-                  </span>
-                  <div [innerHTML]="issueManager.localeStatus(msg.new_value) | safeHtml"></div>
-                </div>
-              </div>
-              <div *ngIf="msg.name_value == 'comment'">
-                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
-                <span class="bold-text">{{issueManager.localeHistory(msg.name_value)}}</span>
-                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
-                <div class="df pt-5">
-                  <div class="" [innerHTML]="issueManager.localeStatus(msg.prev_value) | safeHtml"></div>
-                  <span class="px-10">
-                    <img src="assets/icons/right-arrow.svg" height="13">
-                  </span>
-                  <div [innerHTML]="issueManager.localeStatus(msg.new_value) | safeHtml"></div>
-                </div>
-              </div>
-              <div *ngIf="!['priority', 'comment'].includes(msg.name_value)">
-                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
-                <span class="bold-text">{{t.tr('информацию')}}</span>
-                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
-                <div class="df pt-5" *ngIf="!msg.name_value.includes('details')">
-                  <div>{{msg.prev_value}}</div>
-                  <span class="px-10">
+              <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+              <span class="bold-text">{{t.tr('информацию')}}</span>
+              <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+              <div class="df pt-5" *ngIf="!msg.name_value.includes('details')">
+                <div [innerHTML]="getSmth(msg.prev_value) | safeHtml"></div>
+                <span class="px-10">
                   <img src="assets/icons/right-arrow.svg" height="13">
                 </span>
-                  <div>{{msg.new_value}}</div>
-                </div>
-                <div class="df pt-5" *ngIf="msg.name_value.includes('details')">
-                  {{t.tr('Изменилось описание к задаче')}}
-                </div>
+                <div [innerHTML]="getSmth(msg.new_value) | safeHtml"></div>
+              </div>
+              <div class="df pt-5" *ngIf="msg.name_value.includes('details')">
+                {{t.tr('Изменилось описание к задаче')}}
               </div>
             </div>
           </div>
@@ -353,7 +325,7 @@
     <div class="right-content">
       <div class="information">
         <div class="header-information text-head">{{t.tr('Сведения')}}</div>
-        <div class="table">
+        <div class="table table-overflow">
           <div class="df mt-5">
             <div class="df text-y line-text normal-text w40">{{t.tr('Статус')}}</div>
             <div class="df text-y line-text cursor-pointer description-task w60">
@@ -498,14 +470,18 @@
           </div>
           <div class="df mt-5" (click)="edit = 'issue_comment'">
             <div class="df text-y h-32 normal-text w-40">{{t.tr('Примечение')}}</div>
-            <div *ngIf="edit != 'issue_comment'" class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{issue.issue_comment}}</div>
-            <textarea *ngIf="edit == 'issue_comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.issue_comment" class="w-100 task-name-change font"></textarea>
-            <div class="content-end">
-              <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
-                <img src="assets/icons/tick.svg">
+            <div *ngIf="edit != 'issue_comment'" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{issue.issue_comment}}</div>
+            <textarea *ngIf="edit == 'issue_comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.issue_comment" class="w-40 cy task-name-change-commit"></textarea>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'issue_comment'" (click)="commitIssueEdit()">
+                <div class="task-name-button cxy ml-5 mr-5" >
+                  <img src="assets/icons/tick.svg">
+                </div>
               </div>
-              <div class="task-name-button cxy" (click)="cancelIssueEdit()">
-                <img src="assets/icons/cancel.svg">
+              <div [hidden]="edit != 'issue_comment'" (click)="cancelIssueEdit()">
+                <div class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
               </div>
             </div>
           </div>
@@ -524,7 +500,7 @@
         </div>
       </div>
       <div *ngIf="issue.parent_id != 0" class="mt-2 min-text" (click)="openIssue(issue.parent_id)">{{t.tr('Родительская задача')}}</div>
-      <div class="mt-2 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
+      <div class="mt-1 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
     </div>
   </div>
 </div>

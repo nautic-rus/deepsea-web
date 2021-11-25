@@ -39,7 +39,7 @@ body,p{
   width: 45%;
 }
 .w-40{
-  width: 40%;
+  width: 40% !important;
 }
 .w-30{
   width: 30%;
@@ -223,6 +223,9 @@ body,p{
 }
 .pt-10{
   padding-top: 10px;
+}
+.pt-20{
+  padding-top: 20px;
 }
 .pt-50{
   padding-top: 50px;
@@ -452,6 +455,6 @@ cdk-virtual-scroll-viewport{
   overflow: hidden;
   transition: height 0.35s ease;
 }
-.max-height-190{
+.max-height-150{
   max-height: 150px!important;
 }

@@ -80,3 +80,6 @@
   opacity: 0.5;
   pointer-events: none;
 }
+/deep/.p-multiselect-items-wrapper {
+  max-height: 150px !IMPORTANT;
+}

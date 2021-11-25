@@ -675,4 +675,8 @@ export class TaskComponent implements OnInit {
       });
     });
   }
+
+  getSmth(input: string) {
+    return input.length == 0? '<div class="text-none">Нет</div>' : input;
+  }
 }
