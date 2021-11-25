@@ -3,13 +3,16 @@
   <div class="task-header">
     <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.issue_type)}}</div>
     <div class="task-buttons">
-      <div class="task-button cxy" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">
+      <div class="task-button cxy mr-5 button-disabled" tooltipPosition="top" [pTooltip]="t.tr('Трудоемкость')">
+        <img src="assets/icons/laboriousness.svg" height="20">
+      </div>
+      <div class="task-button cxy mr-5" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">
         <img src="assets/icons/link.svg" height="20">
       </div>
-      <div class="task-button cxy" [pTooltip]="t.tr('Копировать задачу')" (click)="copyIssue()">
+      <div class="task-button cxy mr-5" tooltipPosition="top" [pTooltip]="t.tr('Копировать задачу')" (click)="copyIssue()">
         <img src="assets/icons/copy.svg" height="20">
       </div>
-      <div class="task-button cxy mr-2" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by)">
+      <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by)">
         <img src="assets/icons/trash.svg" height="20">
       </div>
       <div class="task-button cxy" (click)="close()">

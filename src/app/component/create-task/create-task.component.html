@@ -403,23 +403,6 @@
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Название задачи')}}</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="df space-between">
-      <div>
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного')}}</div>
-        <p-dropdown [options]="users" [(ngModel)]="responsibleUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
-                    [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-300 max-height-150">
-          <ng-template let-user pTemplate="item">
-            <div class="df">
-              <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-              <div *ngIf="l.language == 'ru'" class="cx cy pl-10">{{user.userName}}</div>
-              <div *ngIf="l.language == 'en'" class="cx cy pl-10">{{user.userNameEn}}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-      <div>
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>
-        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
-      </div>
     </div>
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
