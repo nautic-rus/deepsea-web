@@ -357,4 +357,13 @@ export class IssueManagerService {
       return  stage_name;
     }
   }
+  getDateOnly(dateLong: number): string{
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    // let date = new Date(dateLong);
+    // let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
+    // let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+    // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    // return da + '.' + mo + '.' + ye;
+  }
 }
