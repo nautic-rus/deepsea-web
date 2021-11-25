@@ -251,10 +251,21 @@ export class IssueManagerService {
   //   }
   // }
   localeHistory(input: string){
-    switch (input) {
-      case 'status': return 'Статус';
-      default: return input;
+    switch (this.lang.language) {
+      case 'ru':{
+        switch (input) {
+          case 'status': return 'Статус';
+          default: return input;
+        }
+      }
+      default:{
+        switch (input) {
+          case 'status': return 'Status';
+          default: return input;
+        }
+      }
     }
+
   }
   localeHistoryEn(input: string){
     switch (input) {
@@ -356,5 +367,14 @@ export class IssueManagerService {
     else{
       return  stage_name;
     }
+  }
+  getDateOnly(dateLong: number): string{
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    // let date = new Date(dateLong);
+    // let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
+    // let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+    // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    // return da + '.' + mo + '.' + ye;
   }
 }

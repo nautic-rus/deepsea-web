@@ -247,6 +247,17 @@
   letter-spacing: -0.005em;
   color: rgb(94, 108, 132);
 }
+.parent-task{
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: -0.005em;
+  color: #0052CC;
+}
+.parent-task:hover{
+  text-decoration: underline;
+}
 .task-header{
   display: grid;
   grid-template-columns: 7fr 1fr;
