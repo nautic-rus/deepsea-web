@@ -48,7 +48,13 @@
             <button pButton [pTooltip]="l.tr('Автор/ответственный')" tooltipPosition="top" class="border normal-button p-button-outlined focus-button" icon="pi pi-star" (click)="applyFilter('author/responsible')"></button>
           </div>
           <div class="mr-1">
-            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" [(ngModel)]="showCompleted"></p-toggleButton>
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showAssigned ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" [(ngModel)]="showAssigned"></p-toggleButton>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showResponsible ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" [(ngModel)]="showResponsible"></p-toggleButton>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" (ngModelChange)="dt.reset()" [(ngModel)]="showCompleted"></p-toggleButton>
           </div>
           <div class="mr-1 cxy">
             {{l.tr('Количество задач:')}} {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} {{l.tr('(Всего:')}} {{dt.value.length}})
@@ -84,7 +90,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-columns="columns" let-issue>
-        <tr *ngIf="showCompleted || !showCompleted && issue.status != issue.closing_status" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
+        <tr *ngIf="showIssue(issue)" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
           <td class="cursor-pointer">
             <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
             <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>

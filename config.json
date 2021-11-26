@@ -1,4 +1,5 @@
 { 
+	"build-args": "",
 	"ftp-ip": "192.168.1.24",
 	"ftp-user": "root",
 	"ftp-password": "Whatab0utus",
