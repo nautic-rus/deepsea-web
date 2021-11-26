@@ -48,7 +48,8 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th class="w-10">{{l.tr('Статус')}}
+          <th pSortableColumn="status" class="w-10">{{l.tr('Статус')}}
+            <p-sortIcon field="code"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" placeholder="Все" (onChange)="filter($event.value);">
@@ -56,7 +57,8 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th class="w-10">{{l.tr('Дата поставки')}}
+          <th pSortableColumn="delivered_date" class="w-10">{{l.tr('Дата поставки')}}
+            <p-sortIcon field="code"></p-sortIcon>
             <p-columnFilter type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
           </th>
         </tr>
