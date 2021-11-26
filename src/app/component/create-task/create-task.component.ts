@@ -128,7 +128,7 @@ export class CreateTaskComponent implements OnInit {
     this.users = this.getUsers();
     this.issues.getIssueTypes().then(types => {
       types.forEach(type => {
-        this.taskTypes.push({label: this.issues.localeTaskType(type), value: type});
+        this.taskTypes.push({label: this.issues.localeTaskType(type.type_name), value: type.type_name});
       });
       if (this.taskTypes.length > 0) {
         this.taskType = this.taskTypes[0].value;
