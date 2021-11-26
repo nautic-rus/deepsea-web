@@ -29,6 +29,9 @@ body,p{
 .w-80{
   width: 80%;
 }
+.w-65{
+  width: 65%;
+}
 .w-60{
   width: 60%;
 }
@@ -40,6 +43,9 @@ body,p{
 }
 .w-40{
   width: 40% !important;
+}
+.w-35{
+  width: 35%;
 }
 .w-30{
   width: 30%;
@@ -265,6 +271,9 @@ body,p{
 .ml-10{
   margin-left: 10px;
 }
+.ml-20{
+  margin-left: 20px;
+}
 .ml-30{
   margin-left: 30px;
 }
@@ -289,6 +298,10 @@ body,p{
 .mx-1{
   margin-left: 1rem;
   margin-right: 1rem;
+}
+.mx-10{
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .px-10{
   padding-right: 10px;
@@ -457,4 +470,8 @@ cdk-virtual-scroll-viewport{
 }
 .max-height-150{
   max-height: 150px!important;
+}
+.flex-unset{
+  display: flex;
+  flex-direction: unset;
 }

@@ -64,8 +64,11 @@ export class ViewDocumentComponent implements OnInit {
     }
   }
   getDate(dateLong: number): string{
+    if (dateLong == 0){
+      return '--/--/----';
+    }
     let date = new Date(dateLong);
-    return ('0' + date.getDate()).slice(-2) + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear();
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   showOlderRevisions(){
     return _.uniq(this.issue.revision_files.map(x => x.revision)).length > 1;

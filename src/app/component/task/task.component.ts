@@ -7,7 +7,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {IssueMessage} from "../../domain/classes/issue-message";
 import {FileAttachment} from "../../domain/classes/file-attachment";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
-import {ConfirmationService, MessageService, PrimeNGConfig} from "primeng/api";
+import {ConfirmationService, MenuItem, MessageService, PrimeNGConfig} from "primeng/api";
 import {VarMap} from "../../domain/classes/var-map";
 import Delta from "quill-delta";
 import {AssignComponent} from "./assign/assign.component";
@@ -106,6 +106,23 @@ export class TaskComponent implements OnInit {
         }
       }
     }
+
+
+  viewers: MenuItem[] = [{
+    label: 'File',
+    items: [
+      {label: 'New', icon: 'pi pi-plus'},
+      {label: 'Open', icon: 'pi pi-download'}
+    ]
+  },
+    {
+      label: 'Edit',
+      items: [
+        {label: 'Undo', icon: 'pi pi-refresh'},
+        {label: 'Redo', icon: 'pi pi-repeat'}
+      ]
+    }];
+
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
   generateId(length: number): string {

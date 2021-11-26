@@ -63,6 +63,7 @@ import { ConfirmAlreadyExistComponent } from './component/task/confirm-already-e
 import { ConfirmAlreadyExistSendToApprovalComponent } from './component/task/confirm-already-exist-send-to-approval/confirm-already-exist-send-to-approval.component';
 import { ConfirmAlreadyExistSendToYardComponent } from './component/task/confirm-already-exist-send-to-yard/confirm-already-exist-send-to-yard.component';
 import { ViewDocumentComponent } from './component/documents/view-document/view-document.component';
+import {MenuModule} from "primeng/menu";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -134,7 +135,8 @@ Quill.register('modules/imageResize', ImageResize);
         InputNumberModule,
         CheckboxModule,
         NgxCollapseModule,
-        ToggleButtonModule
+        ToggleButtonModule,
+        MenuModule
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
