@@ -11,7 +11,7 @@
         <p-menu #menu id="config_menu" [popup]="true" [model]="viewers"></p-menu>
       </div>
 
-      <div class="task-button cxy mr-10 button-disabled" tooltipPosition="top" [pTooltip]="t.tr('Трудоемкость')">
+      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Трудоемкость')" (click)="openLaboriousness()">
         <img src="assets/icons/laboriousness.svg" height="20">
       </div>
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">

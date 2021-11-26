@@ -64,6 +64,7 @@ import { ConfirmAlreadyExistSendToApprovalComponent } from './component/task/con
 import { ConfirmAlreadyExistSendToYardComponent } from './component/task/confirm-already-exist-send-to-yard/confirm-already-exist-send-to-yard.component';
 import { ViewDocumentComponent } from './component/documents/view-document/view-document.component';
 import {MenuModule} from "primeng/menu";
+import { LaboriousnessComponent } from './component/task/laboriousness/laboriousness.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -98,6 +99,7 @@ Quill.register('modules/imageResize', ImageResize);
     ConfirmAlreadyExistSendToApprovalComponent,
     ConfirmAlreadyExistSendToYardComponent,
     ViewDocumentComponent,
+    LaboriousnessComponent,
   ],
     imports: [
         BrowserModule,

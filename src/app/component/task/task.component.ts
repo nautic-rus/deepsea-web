@@ -21,6 +21,7 @@ import {UserCardComponent} from "../employees/user-card/user-card.component";
 import {SendToYardApprovalComponent} from "./send-to-yard-approval/send-to-yard-approval.component";
 import {ConfirmAlreadyExistComponent} from "./confirm-already-exist/confirm-already-exist.component";
 import {ConfirmAlreadyExistSendToApprovalComponent} from "./confirm-already-exist-send-to-approval/confirm-already-exist-send-to-approval.component";
+import {LaboriousnessComponent} from "./laboriousness/laboriousness.component";
 
 @Component({
   selector: 'app-task',
@@ -458,6 +459,17 @@ export class TaskComponent implements OnInit {
 
   removeIssue() {
     this.dialogService.open(DeleteComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+  }
+  openLaboriousness(){
+    this.dialogService.open(LaboriousnessComponent, {
       showHeader: false,
       modal: true,
       data: this.issue

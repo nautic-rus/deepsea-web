@@ -18,7 +18,7 @@ import * as _ from 'underscore';
 import {TaskComponent} from "../task/task.component";
 import * as XLSX from 'xlsx';
 import {ImportxlsComponent} from "./importxls/importxls.component";
-import {MessageService, SortEvent} from "primeng/api";
+import {MessageService, PrimeNGConfig, SortEvent} from "primeng/api";
 import {ViewedIssue} from "../../domain/classes/viewed-issue";
 import {LanguageService} from "../../domain/language.service";
 import {jsPDF} from "jspdf";
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showAssigned: boolean = false;
   showResponsible: boolean = false;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
+  constructor(private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
   }
 
   // @ts-ignore
@@ -69,6 +69,21 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         this.viewTask(taskId);
       }
     });
+    if (this.l.language == 'ru'){
+      this.config.setTranslation({
+        clear: "Очистить",
+        apply: "Принять",
+        removeRule: "Удалить условие",
+        addRule: "Добавить условие",
+        dateIs: "Выбраная дата",
+        dateIsNot: "Кроме даты",
+        matchAll: "Все условия",
+        matchAny: "Любое условие",
+        dateBefore: "До выбраной даты",
+        dateAfter: "После выбраной даты",
+        monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+      });
+    }
   }
 
   setCols() {
@@ -83,7 +98,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: false
+        date: false,
       },
       {
         field: 'started_date',
@@ -119,7 +134,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: false
+        date: false,
       },
       {
         field: 'project',
@@ -283,6 +298,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
       this.issues = data;
       this.issues.forEach(issue => {
+        issue.started_date = new Date(issue.started_date);
         issue.start_date = new Date(issue.start_date);
         issue.due_date = new Date(issue.due_date);
       });

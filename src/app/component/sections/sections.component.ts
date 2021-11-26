@@ -14,7 +14,7 @@ import {LanguageService} from "../../domain/language.service";
 })
 export class SectionsComponent implements OnInit {
   issues: Issue[] = [];
-  projects: string[] = ['NR-002', 'NR-004'];
+  projects: string[] = ['NR002', 'NR004'];
   project = this.projects[1];
 
   constructor(public t: LanguageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }

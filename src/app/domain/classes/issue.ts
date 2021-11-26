@@ -8,7 +8,7 @@ export class Issue {
   project: string = '';
   department: string = '';
   started_by: string = '';
-  started_date: number = 0;
+  started_date: any = 0;
   issue_type: string = '';
   name: string = '';
   details: string = '';
