@@ -61,6 +61,8 @@ export class LanguageService {
           case 'Новая задача': return 'New task';
           case '{0} выбрано колонок': return '{0} columns selected';
           case 'Импорт': return 'Import';
+          case 'Экспорт XLS': return 'Export XLS';
+          case 'Экспорт PDF': return 'Export PDF';
           case 'Экспорт': return 'Export';
           case 'Поиск...': return 'Search...';
           case 'Количество задач:': return 'Number of tasks';

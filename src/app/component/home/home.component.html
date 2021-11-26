@@ -30,28 +30,22 @@
                          [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
           </p-multiSelect>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
+            <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top"  class="border normal-button p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear();"></button>
           </div>
           <div class="mr-1">
             <button pButton [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="importXls()"></button>
           </div>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Экспорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-upload" (click)="exportXls()"></button>
+            <button pButton [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
           </div>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Экспорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-upload" (click)="exportPDF()"></button>
+            <button pButton [pTooltip]="l.tr('Экспорт PDF')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-pdf" (click)="exportPDF()"></button>
           </div>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" class="border normal-button p-button-outlined focus-button" icon="pi pi-star-o" (click)="applyFilter('assigned')"></button>
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" onIcon="pi pi-star-o" offIcon="pi pi-star-o" [(ngModel)]="showAssigned"></p-toggleButton>
           </div>
           <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Автор/ответственный')" tooltipPosition="top" class="border normal-button p-button-outlined focus-button" icon="pi pi-star" (click)="applyFilter('author/responsible')"></button>
-          </div>
-          <div class="mr-1">
-            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showAssigned ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" [(ngModel)]="showAssigned"></p-toggleButton>
-          </div>
-          <div class="mr-1">
-            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showResponsible ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" [(ngModel)]="showResponsible"></p-toggleButton>
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Автор/ответственный')" tooltipPosition="top" onIcon="pi pi-star" offIcon="pi pi-star" [(ngModel)]="showResponsible"></p-toggleButton>
           </div>
           <div class="mr-1">
             <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" (ngModelChange)="dt.reset()" [(ngModel)]="showCompleted"></p-toggleButton>
