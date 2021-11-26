@@ -535,7 +535,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   // @ts-ignore
   exportPDF() {
-    const doc = new jsPDF('l', 'mm', [297, 210]);
+    const doc = new jsPDF('l', 'mm', [500, 210]);
     this.http.get('/assets/fonts/roboto.txt', {responseType: 'text'}).subscribe(data => {
       // @ts-ignore
       doc.addFileToVFS("Roboto.ttf", data);
