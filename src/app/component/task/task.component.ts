@@ -164,39 +164,25 @@ export class TaskComponent implements OnInit {
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
-    let ye = new Intl.DateTimeFormat(this.t.language, { year: 'numeric' }).format(date);
-    let mo = new Intl.DateTimeFormat(this.t.language, { month: 'long' }).format(date);
-    let da = new Intl.DateTimeFormat(this.t.language, { day: '2-digit' }).format(date);
-    let hours = new Intl.DateTimeFormat(this.t.language, { hour: '2-digit' }).format(date);
-    let minutes = new Intl.DateTimeFormat(this.t.language, { minute: '2-digit' }).format(date);
-    return da + ' ' + this.localeMonth(mo) + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
-  }
-  getFileDate(dateLong: number): string{
-    let date = new Date(dateLong);
-    let ye = new Intl.DateTimeFormat(this.t.language, { year: 'numeric' }).format(date);
-    let mo = new Intl.DateTimeFormat(this.t.language, { month: '2-digit' }).format(date);
-    let da = new Intl.DateTimeFormat(this.t.language, { day: '2-digit' }).format(date);
-    let hours = new Intl.DateTimeFormat(this.t.language, { hour: '2-digit' }).format(date);
-    let minutes = new Intl.DateTimeFormat(this.t.language, { minute: '2-digit' }).format(date);
-    return da + ' ' + this.localeMonth(mo) + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
   }
   quillCreated(event: any) {
     this.editor = event;
   }
-  localeMonth(month: string) {
+  localeMonth(month: number) {
     switch (month){
-      case 'январь': return 'января';
-      case 'февраль': return 'февраля';
-      case 'март': return 'марта';
-      case 'апрель': return 'апреля';
-      case 'май': return 'мая';
-      case 'июнь': return 'июня';
-      case 'июль': return 'июля';
-      case 'август': return 'августа';
-      case 'сентябрь': return 'сентября';
-      case 'октябрь': return 'октября';
-      case 'ноябрь': return 'ноября';
-      case 'декабрь': return 'декабрь';
+      case 1: return 'января';
+      case 2: return 'февраля';
+      case 3: return 'марта';
+      case 4: return 'апреля';
+      case 5: return 'мая';
+      case 6: return 'июня';
+      case 7: return 'июля';
+      case 8: return 'августа';
+      case 9: return 'сентября';
+      case 10: return 'октября';
+      case 11: return 'ноября';
+      case 12: return 'декабрь';
       default: return month;
     }
   }
