@@ -318,6 +318,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
           modal: true,
           data: res
         }).onClose.subscribe(res => {
+          if (this.dt != null) {
+            this.dt.resetScrollTop = function() { }
+          }
           this.fillIssues();
           let issue = res as Issue;
           if (issue != null && issue.id != null) {
