@@ -248,14 +248,17 @@ export class SendToCloudComponent implements OnInit {
     this.sendCommit();
   }
   sendCommit(){
-    this.issue.revision = this.rev;
+    this.issue.delivered_date = new Date().getTime();
     this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-      this.issue.status = 'Delivered';
-      this.issue.action = this.issue.status;
-      this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-        this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
-          this.issues.setRevisionFiles(this.issue.id, this.rev, JSON.stringify(this.loaded)).then(() => {
-            this.ref.close();
+      this.issue.revision = this.rev;
+      this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+        this.issue.status = 'Delivered';
+        this.issue.action = this.issue.status;
+        this.issues.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+          this.issues.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+            this.issues.setRevisionFiles(this.issue.id, this.rev, JSON.stringify(this.loaded)).then(() => {
+              this.ref.close();
+            });
           });
         });
       });

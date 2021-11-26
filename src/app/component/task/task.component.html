@@ -248,7 +248,7 @@
               <span class="bold-text cursor-pointer" (click)="openUserInfo(msg.author)">{{auth.getUserName(msg.author)}}</span>
               <span class="text-descr"> {{t.tr('создал')}}{{localeGender(msg.author)}} {{t.tr('сообщение')}} </span>
               <span class="text-date"> {{getDate(+msg.date)}} </span>
-              <quill-view *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
+              <quill-view class="db" *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
               <div *ngFor="let file of msg.file_attachments">
                 <div (click)="openFile(file.url)" class="attachment-issues df mb-5 cursor-pointer">
                   <div class="cxy">

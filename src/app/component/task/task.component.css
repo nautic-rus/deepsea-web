@@ -988,3 +988,6 @@
 .text-none{
   color: rgb(137, 147, 164);
 }
+.db{
+  display: block;
+}
