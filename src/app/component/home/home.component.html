@@ -51,7 +51,10 @@
             <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" (ngModelChange)="dt.reset()" [(ngModel)]="showCompleted"></p-toggleButton>
           </div>
           <div class="mr-1 cxy">
-            {{l.tr('Количество задач:')}} {{(dt.filteredValue != null) ? dt.filteredValue.length : dt.value.length}} {{l.tr('(Всего:')}} {{dt.value.length}})
+            {{l.tr('Количество задач:')}}
+            <div class="px-10" *ngIf="dt != null && dt.filteredValue != null">{{dt.filteredValue != null ? dt.filteredValue.length : dt.value.length}}</div>
+            <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
+            {{l.tr('(Всего:')}} {{dt.value.length}})
           </div>
           <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>

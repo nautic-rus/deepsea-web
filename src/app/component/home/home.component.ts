@@ -24,6 +24,7 @@ import {LanguageService} from "../../domain/language.service";
 import {jsPDF} from "jspdf";
 import 'jspdf-autotable';
 import {HttpClient} from "@angular/common/http";
+import {retry} from "rxjs/operators";
 
 @Component({
   selector: 'app-home',
@@ -540,7 +541,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   // @ts-ignore
   exportPDF() {
-    const doc = new jsPDF('l', 'mm', [500, 210]);
+    console.log(this.dt);
+    const doc = new jsPDF('l', 'mm', [297, 210]);
     this.http.get('/assets/fonts/roboto.txt', {responseType: 'text'}).subscribe(data => {
       // @ts-ignore
       doc.addFileToVFS("Roboto.ttf", data);
@@ -655,5 +657,13 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       show = false;
     }
     return show;
+  }
+
+  getIssuesLength() {
+    return this.issues.filter(x => this.showIssue(x)).length;
+  }
+
+  showIssuesLength() {
+    return this.dt != null && this.dt.value != null;
   }
 }
