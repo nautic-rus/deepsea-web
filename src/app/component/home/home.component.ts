@@ -678,7 +678,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   getIssuesLength() {
     return this.issues.filter(x => this.showIssue(x)).length;
   }
-
+  getCompletedLength(issues: Issue[]) {
+    return issues.filter(x => x.closing_status == x.status).length;
+  }
   showIssuesLength() {
     return this.dt != null && this.dt.value != null;
   }
