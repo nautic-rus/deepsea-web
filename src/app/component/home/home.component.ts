@@ -39,6 +39,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   filled = false;
   viewedIssues: ViewedIssue[] = [];
   showCompleted: boolean = false;
+  showAssigned: boolean = false;
+  showResponsible: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
   }
@@ -639,5 +641,19 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       this.lastSortField = event.field + '' + event.order;
       this.issues = [...this.issues];
     }
+  }
+
+  showIssue(issue: Issue) {
+    let show = true;
+    if (this.showAssigned && issue.assigned_to != this.auth.getUser().login){
+      show = false;
+    }
+    if (this.showResponsible && (issue.responsible != this.auth.getUser().login && issue.started_by != this.auth.getUser().login)){
+      show = false;
+    }
+    if (!this.showCompleted && issue.closing_status == issue.status){
+      show = false;
+    }
+    return show;
   }
 }
