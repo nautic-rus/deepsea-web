@@ -143,11 +143,13 @@
           </div>
         </div>
       </div>
-      <div [collapse]="content" class="big-text mb-1 mt-2 collapse-header" *ngIf="issue.child_issues.length > 0" (click)="contentClick('content')">
-        <div>{{t.tr('Согласование')}}</div>
-        <div class="p-ml-auto cy arrow-up" [class.arrow-down]="collapsed.includes('content')">
-          <img src="assets/icons/down-arrow.png">
+      <div *ngIf="issue.child_issues.length > 0" class="big-text mb-1 mt-2">{{t.tr('Подзадачи')}}</div>
+      <div [collapse]="content" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('content')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('content')">
+          <img src="assets/icons/arrow-right.png">
         </div>
+        <div>{{t.tr('Согласование')}}</div>
+
       </div>
       <div collapseContent #content="collapseContent" class="collapse-body">
         <div class="" *ngIf="issue.child_issues.length > 0">
