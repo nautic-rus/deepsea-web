@@ -5,35 +5,44 @@
       </p-dropdown>
     </div>
     <div class="legend">
-      <div class="cxy">
-        <div class="number-card cxy new-status"></div>
+      <div class="cy">
+        <div class="status mt-5 cy new-status">{{t.tr('Новый')}}</div>
       </div>
       <div class="cy">
-        <div>{{t.tr('Новый')}}</div>
-      </div>
-      <div class="cxy">
-        <div class="number-card cxy in-work-status"></div>
+        <div class="status mt-5 cy assigned-status">{{t.tr('Назначен')}}</div>
       </div>
       <div class="cy">
-        <div>{{t.tr('В работе')}}</div>
-      </div>
-      <div class="cxy">
-        <div class="number-card cxy check-status"></div>
+        <div class="status mt-5 cy in-work-status">{{t.tr('В работе')}}</div>
       </div>
       <div class="cy">
-        <div>{{t.tr('На согласовании')}}</div>
-      </div>
-      <div class="cxy">
-        <div class="number-card cxy sent-status"></div>
+        <div class="status mt-5 cy paused-status">{{t.tr('Приостановлено')}}</div>
       </div>
       <div class="cy">
-        <div>{{t.tr('Отправлен заказчику')}}</div>
-      </div>
-      <div class="cxy">
-        <div class="number-card cxy close-status"></div>
+        <div class="status mt-5 cy checkup-status">{{t.tr('На проверке')}}</div>
       </div>
       <div class="cy">
-        <div>{{t.tr('Поставлен')}}</div>
+        <div class="status mt-5 cy check-status">{{t.tr('На согласовании')}}</div>
+      </div>
+      <div class="cy">
+        <div class="status mt-5 cy approved-status">{{t.tr('Согласовано')}}</div>
+      </div>
+      <div class="cy">
+        <div class="status mt-5 cy not-approved-status">{{t.tr('Не согласовано')}}</div>
+      </div>
+      <div class="cy">
+        <div class="status mt-5 cy rework-status">{{t.tr('На доработке')}}</div>
+      </div>
+      <div class="cy">
+        <div class="status mt-5 cy ready-to-send-status">{{t.tr('Готов к отправке')}}</div>
+      </div>
+      <div class="cy">
+        <div class="status mt-5 cy ready-to-delivery-status">{{t.tr('Готов к поставке')}}</div>
+      </div>
+      <div class="cy">
+        <div class="status mt-5 cy sent-to-yard-status">{{t.tr('Отправлен на верфь')}}</div>
+      </div>
+      <div class="cy">
+        <div class="status mt-5 cy close-status">{{t.tr('Поставлен')}}</div>
       </div>
     </div>
     <div *ngIf="project == 'NR002'">

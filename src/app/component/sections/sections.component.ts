@@ -32,21 +32,25 @@ export class SectionsComponent implements OnInit {
       status = find.status;
     }
     switch (status){
-      case 'In Work': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
+      case 'In Work': return {'background-color': '#c8e6c9', border: 'none', color: '#256029', 'font-weight': 600};
       case 'Resolved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'New': return {'background-color': '#f7cecd', border: '1px solid #aa1f1c', color: '#aa1f1c'};
+      case 'New': return {'background-color': '#b3e5fc', border: 'none', color: '#23547b', 'font-weight': 600};
+      case 'AssignedTo': return {'background-color': '#dbe9a0', border: 'none', color: '#606a33', 'font-weight': 600};
       case 'Rejected': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Check': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'In Rework': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Paused': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
+      case 'Check': return {'background-color': '#eccfff', border: 'none', color: '#694382', 'font-weight': 600};
+      case 'In Rework': return {'background-color': '#cbebf1', border: 'none', color: '#3f6b73', 'font-weight': 600};
+      case 'Paused': return {'background-color': '#feedaf', border: 'none', color: '#8a5340', 'font-weight': 600};
       case 'Archive': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
       case 'Not resolved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       case 'Closed': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
-      case 'Send to Approval': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
-      case 'Approved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Not approved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Ready to send': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
-      case 'On reApproval': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
+      case 'Send to Approval': return {'background-color': '#ffd8b2', border: 'none', color: '#805b36', 'font-weight': 600};
+      case 'Approved': return {'background-color': '#ceede1', border: 'none', color: '#2e604b', 'font-weight': 600};
+      case 'Not approved': return {'background-color': '#F5BBB2', border: 'none', color: '#a3392b', 'font-weight': 600};
+      case 'Ready to send': return {'background-color': '#DCEFED', border: 'none', color: '#4A7863', 'font-weight': 600};
+      case 'On reApproval': return {'background-color': '#feeccd', border: 'none', color: '#d78a16', 'font-weight': 600};
+      case 'Ready to Delivery': return {'background-color': '#cbc4d7', border: 'none', color: '#393346', 'font-weight': 600};
+      case 'Send to Yard Approval': return {'background-color': '#f8c1d5', border: 'none', color: '#895169', 'font-weight': 600};
+      case 'Delivered': return {'background-color': '#dae4ff', border: 'none', color: '#454955', 'font-weight': 600};
       default: {
       }
     }
@@ -59,21 +63,25 @@ export class SectionsComponent implements OnInit {
       status = find.status;
     }
     switch (status){
-      case 'In Work': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
+      case 'In Work': return {'background-color': '#c8e6c9', border: 'none', color: '#256029', 'font-weight': 600};
       case 'Resolved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'New': return {'background-color': '#f7cecd', border: '1px solid #aa1f1c', color: '#aa1f1c'};
+      case 'New': return {'background-color': '#b3e5fc', border: 'none', color: '#23547b', 'font-weight': 600};
+      case 'AssignedTo': return {'background-color': '#ffcfb3', border: 'none', color: '#875638', 'font-weight': 600};
       case 'Rejected': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Check': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'In Rework': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Paused': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
+      case 'Check': return {'background-color': '#eccfff', border: 'none', color: '#694382', 'font-weight': 600};
+      case 'In Rework': return {'background-color': '#cbebf1', border: 'none', color: '#3f6b73', 'font-weight': 600};
+      case 'Paused': return {'background-color': '#feedaf', border: 'none', color: '#8a5340', 'font-weight': 600};
       case 'Archive': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
       case 'Not resolved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       case 'Closed': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
-      case 'Send to Approval': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
-      case 'Approved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Not approved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
-      case 'Ready to send': return {'background-color': '#C4E1A8', border: '1px solid #606a26', color: '#606a26'};
-      case 'On reApproval': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
+      case 'Send to Approval': return {'background-color': '#ffd8b2', border: 'none', color: '#805b36', 'font-weight': 600};
+      case 'Approved': return {'background-color': '#ceede1', border: 'none', color: '#2e604b', 'font-weight': 600};
+      case 'Not approved': return {'background-color': '#F5BBB2', border: 'none', color: '#a3392b', 'font-weight': 600};
+      case 'Ready to send': return {'background-color': '#DCEFED', border: 'none', color: '#4A7863', 'font-weight': 600};
+      case 'On reApproval': return {'background-color': '#feeccd', border: 'none', color: '#d78a16', 'font-weight': 600};
+      case 'Ready to Delivery': return {'background-color': '#cbc4d7', border: 'none', color: '#393346', 'font-weight': 600};
+      case 'Send to Yard Approval': return {'background-color': '#f8c1d5', border: 'none', color: '#895169', 'font-weight': 600};
+      case 'Delivered': return {'background-color': '#dae4ff', border: 'none', color: '#454955', 'font-weight': 600};
       default: {
       }
     }
