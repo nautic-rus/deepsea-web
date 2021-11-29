@@ -97,3 +97,31 @@
 .task-button-approval:hover{
   background-color: rgb(235, 236, 240);
 }
+.button-delete-approval{
+  border: none;
+  margin-right: 4px;
+  min-width: 100px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 5px 10px;
+  color: #fff;
+  background: #17a2b8;
+  transition: background .1s
+}
+.button-delete-approval:hover{
+  background: #1598ac;
+}
+.button-cancel-approval{
+  margin-right: 4px;
+  min-width: 100px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 5px 10px;
+  color: #17a2b8;
+  background: #fff;
+  border: 1px solid rgba(23, 162, 184, 0.5);
+  transition: background .1s
+}
+.button-cancel-approval:hover{
+  background: #f6f6f6;
+}
