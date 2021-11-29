@@ -136,11 +136,11 @@ export class LanguageService {
           case 'Файлы ревизии': return 'Revisions files';
           case 'Электронная СП': return 'Specification';
           case 'Дата первой отправки': return 'First send date';
-          case 'Трудоемкость': return 'Labor';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Трудоемкость': return 'Laboriousness';
+          case 'Продолжить без создания задачи на согласование': return 'Continue without creating a task for approval';
+          case 'Создать новую задачу на согласование': return 'Create new task for approval';
+          case 'Задача уже была в статусе "Отправлен на верфь", выберете дальнейшее действие:': return 'Task was already in status "Sent to shipyard", choose the next action:';
+          case 'Задача уже была в статусе "На согласовании", выберете дальнейшее действие:': return 'Task was already in status "To approval", choose the next action:';
           case '': return '';
           case '': return '';
           case '': return '';

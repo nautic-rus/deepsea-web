@@ -22,6 +22,7 @@ import {SendToYardApprovalComponent} from "./send-to-yard-approval/send-to-yard-
 import {ConfirmAlreadyExistComponent} from "./confirm-already-exist/confirm-already-exist.component";
 import {ConfirmAlreadyExistSendToApprovalComponent} from "./confirm-already-exist-send-to-approval/confirm-already-exist-send-to-approval.component";
 import {LaboriousnessComponent} from "./laboriousness/laboriousness.component";
+import {ConfirmAlreadyExistSendToYardComponent} from "./confirm-already-exist-send-to-yard/confirm-already-exist-send-to-yard.component";
 
 @Component({
   selector: 'app-task',
@@ -550,7 +551,7 @@ export class TaskComponent implements OnInit {
     }
     else if (value == 'Send to Yard Approval'){
       if (this.issue.first_send_date != 0){
-        this.dialogService.open(ConfirmAlreadyExistSendToApprovalComponent, {
+        this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
           showHeader: false,
           modal: true,
           data: this.issue
