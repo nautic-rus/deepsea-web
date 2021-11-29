@@ -529,7 +529,7 @@ export class TaskComponent implements OnInit {
             this.issue.action = 'Send to Approval';
             this.statusChanged();
           }
-          else{
+          else if (res == 'no'){
             this.askForSendToApproval();
           }
         });
@@ -561,7 +561,7 @@ export class TaskComponent implements OnInit {
             this.issue.action = 'Send to Yard Approval';
             this.statusChanged();
           }
-          else{
+          else if (res == 'no'){
             this.askForSendToYardToApproval();
           }
         });

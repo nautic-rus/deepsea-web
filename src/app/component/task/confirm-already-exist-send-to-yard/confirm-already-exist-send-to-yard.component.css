@@ -72,3 +72,28 @@
 .p-dialog .p-dialog-content {
   border-radius: 5px!important;
 }
+.task-button{
+  padding: 5px;
+  border-radius: 3px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.task-button:hover{
+  background-color: rgb(235, 236, 240);
+}
+.task-button-approval{
+  width: 2rem;
+  height: 2rem;
+  border-radius: 3px;
+  margin-right: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.task-button-approval:hover{
+  background-color: rgb(235, 236, 240);
+}

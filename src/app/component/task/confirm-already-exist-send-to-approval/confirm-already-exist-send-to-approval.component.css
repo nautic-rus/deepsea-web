@@ -41,7 +41,6 @@
 .button-delete-approval{
   border: none;
   margin-right: 4px;
-  height: 60px;
   min-width: 100px;
   border-radius: 3px;
   text-shadow: none;
@@ -55,7 +54,6 @@
 }
 .button-cancel-approval{
   margin-right: 4px;
-  height: 60px;
   min-width: 100px;
   border-radius: 3px;
   text-shadow: none;
@@ -72,7 +70,8 @@
   border-radius: 5px!important;
 }
 .task-button-approval{
-  padding: 5px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 3px;
   margin-right: 20px;
   margin-top: 20px;

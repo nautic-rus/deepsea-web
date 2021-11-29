@@ -1,4 +1,7 @@
 <div style="height: 270px; width: 363px;">
+  <div class="task-button-approval cxy" (click)="close()">
+    <i class="pi pi-times"></i>
+  </div>
   <div class="task-header-assign mt-40">
     <div class=" question cxy">
       <div class="question-icon">!</div>
@@ -8,12 +11,12 @@
     <div class="confirm-text">{{t.tr('Внимание')}}</div>
   </div>
   <div class="mt-1 cxy">
-    <div class="delete-text">{{t.tr('Задача уже была в статусе "На согласовании", выберете дальнейшее действие:')}}</div>
+    <div class="delete-text">{{t.tr('Задача уже была в статусе "На согласовании". Хотите создать новую задачу на согласование или продолжить без создания задачи на согласование?')}}</div>
   </div>
   <div class="footer-delete mt-1">
     <div class="mr-1 cx">
-      <div (click)="yes()" tabindex="10" pButton [label]="t.tr ('Продолжить без создания задачи на согласование')" class="button-delete-approval"></div>
+      <div (click)="yes()" tabindex="10" pButton [label]="t.tr ('Не создавать')" class="button-delete-approval"></div>
     </div>
-    <div (click)="no()" tabindex="11" pButton [label]="t.tr ('Создать новую задачу на согласование')" class="button-cancel-approval ml-1"></div>
+    <div (click)="no()" tabindex="11" pButton [label]="t.tr ('Создать')" class="button-cancel-approval ml-1"></div>
   </div>
 </div>

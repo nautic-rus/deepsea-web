@@ -19,5 +19,8 @@ export class ConfirmAlreadyExistSendToYardComponent implements OnInit {
   no(){
     this.ref.close('no');
   }
+  close(){
+    this.ref.close('exit');
+  }
 
 }
