@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showCompleted: boolean = false;
   showAssigned: boolean = false;
   showResponsible: boolean = false;
+  showStartedBy: boolean = false;
 
   constructor(private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
   }
@@ -666,7 +667,10 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     if (this.showAssigned && issue.assigned_to != this.auth.getUser().login){
       show = false;
     }
-    if (this.showResponsible && (issue.responsible != this.auth.getUser().login && issue.started_by != this.auth.getUser().login)){
+    if (this.showResponsible && issue.responsible != this.auth.getUser().login){
+      show = false;
+    }
+    if (this.showStartedBy && issue.started_by != this.auth.getUser().login){
       show = false;
     }
     if (!this.showCompleted && issue.closing_status == issue.status){

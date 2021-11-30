@@ -45,7 +45,10 @@
             <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" onIcon="pi pi-star-o" offIcon="pi pi-star-o" [(ngModel)]="showAssigned"></p-toggleButton>
           </div>
           <div class="mr-1">
-            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Автор/ответственный')" tooltipPosition="top" onIcon="pi pi-star" offIcon="pi pi-star" [(ngModel)]="showResponsible"></p-toggleButton>
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Автор')" tooltipPosition="top" onIcon="pi pi-star" offIcon="pi pi-star" [(ngModel)]="showStartedBy"></p-toggleButton>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Ответственный')" tooltipPosition="top" onIcon="pi pi-star" offIcon="pi pi-star" [(ngModel)]="showResponsible"></p-toggleButton>
           </div>
           <div class="mr-1">
             <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" (ngModelChange)="dt.reset()" [(ngModel)]="showCompleted"></p-toggleButton>

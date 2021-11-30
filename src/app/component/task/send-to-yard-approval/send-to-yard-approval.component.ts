@@ -8,8 +8,6 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
-import {SendToApprovalComponent} from "../send-to-approval/send-to-approval.component";
-import {ConfirmAlreadyExistComponent} from "../confirm-already-exist/confirm-already-exist.component";
 
 @Component({
   selector: 'app-send-to-yard-approval',
@@ -21,19 +19,17 @@ export class SendToYardApprovalComponent implements OnInit {
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
   selectedUsers: string[] = ['stropilov', 'lvov', 'n.novikov'];
-  //selectedUsers: string[] = ['isaev'];
   issue: Issue = new Issue();
   users: User[] = [];
 
   constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
     this.issue = conf.data;
-    console.log(this.issue);
-    if (this.issue.issue_type == 'RKD'){
-      this.selectedUsers = ['stropilov', 'lvov', 'n.novikov'];
-    }
-    if (this.issue.issue_type == 'RKD-TURK'){
-      this.selectedUsers = ['stropilov', 'lvov', 'n.novikov'];
-    }
+    this.issues.getIssueTypes().then(res => {
+      var findType = res.find(x => x.type_name == this.issue.issue_type);
+      if (findType != null){
+        this.selectedUsers = findType.yard_approval.split(',');
+      }
+    });
   }
   ngOnInit(): void {
     this.users = this.getUsersApproval();
