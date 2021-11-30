@@ -55,7 +55,7 @@
           </div>
           <div class="mr-1 cxy">
             {{l.tr('Количество задач:')}}
-            <div class="px-10" *ngIf="dt != null && dt.filteredValue != null">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
+            <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
             <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
             {{l.tr('(Всего:')}} {{dt.value.length}})
           </div>

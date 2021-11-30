@@ -680,6 +680,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   getIssuesLength() {
+    if (this.dt?.filteredValue?.length > 0){
+      return this.dt?.filteredValue?.filter((x: any) => this.showIssue(x as Issue)).length;
+    }
     return this.issues.filter(x => this.showIssue(x)).length;
   }
   getCompletedLength(issues: Issue[]) {

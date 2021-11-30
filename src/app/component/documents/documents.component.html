@@ -40,7 +40,8 @@
           <th pSortableColumn="name" class="w-50">{{l.tr('Название')}}
             <p-sortIcon field="code"></p-sortIcon>
           </th>
-          <th class="w-10">{{l.tr('Ревизия')}}
+          <th pSortableColumn="revision" class="w-10">{{l.tr('Ревизия')}}
+            <p-sortIcon field="code"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.revision" optionValue="value" optionLabel="label" placeholder="Все" (onChange)="filter($event.value);">
