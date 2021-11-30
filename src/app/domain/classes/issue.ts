@@ -35,4 +35,5 @@ export class Issue {
   first_local_approval_date: number = 0;
   revision: string = '';
   revision_files: FileAttachment[] = [];
+  labor: number = 0;
 }

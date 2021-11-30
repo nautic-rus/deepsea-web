@@ -241,6 +241,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('f') ? issue.first_send_date != 0 && allow : allow;
       allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != 'Approved').length == 0 && allow : allow;
+      allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
       }
@@ -476,6 +477,7 @@ export class TaskComponent implements OnInit {
       data: this.issue
     }).onClose.subscribe(res => {
       if (res == 'success'){
+        this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue labor.'});
         this.ref.close();
       }
     });

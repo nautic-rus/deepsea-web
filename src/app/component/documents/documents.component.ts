@@ -32,12 +32,7 @@ export class DocumentsComponent implements OnInit {
       this.projects = projects;
       if (projects.length > 1){
         this.project = projects[1];
-        this.issueManager.getIssues('op').then(data => {
-          this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project);
-          this.filters.status = this.getFilters(this.issues, 'status');
-          this.filters.revision = this.getFilters(this.issues, 'revision');
-          this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
-        });
+        this.projectChanged();
       }
     });
   }
@@ -63,7 +58,7 @@ export class DocumentsComponent implements OnInit {
       case 'priority':
         return this.issueManager.localeTaskPriority(field);
       case 'status':
-        return this.issueManager.localeStatus(field, false);
+        return this.getDeliveredStatus(field, false);
       default:
         return field;
     }
@@ -75,6 +70,17 @@ export class DocumentsComponent implements OnInit {
   projectChanged() {
     this.issueManager.getIssues('op').then(data => {
       this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project);
+      this.issues.forEach(issue => {
+        if (issue.status == issue.closing_status){
+          issue.status = 'Completed';
+        }
+        else{
+          issue.status = 'In Work';
+        }
+      })
+      this.filters.status = this.getFilters(this.issues, 'status');
+      this.filters.revision = this.getFilters(this.issues, 'revision');
+      this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
     });
   }
   viewTask(id: number) {
@@ -89,18 +95,24 @@ export class DocumentsComponent implements OnInit {
       }
     });
   }
-  getDeliveredStatus(status: string): any {
-    if (status == 'Delivered' && this.l.language == 'en'){
-      return '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Completed</span>'
+  getDeliveredStatus(status: string, styled = true): any {
+    let tr = this.localeStatus(status);
+    switch (status){
+      case 'Completed': return styled ? '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
+      case 'In Work': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
+      default: return status;
     }
-    else if (status == 'Delivered' && this.l.language == 'ru'){
-      return '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Завершён</span>'
+  }
+  localeStatus(status: string){
+    if (this.l.language == 'ru'){
+      switch (status) {
+        case 'Completed' : return 'Завершён';
+        case 'In Work': return 'В работе';
+        default: return status;
+      }
     }
-    else if (status != 'Delivered' && this.l.language == 'en'){
-      return '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Not completed</span>'
-    }
-    else if (status != 'Delivered' && this.l.language == 'ru'){
-      return '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">В работе</span>'
+    else{
+      return status;
     }
   }
   getDate(dateLong: number): string{
