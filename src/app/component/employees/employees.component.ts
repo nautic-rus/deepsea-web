@@ -7,6 +7,7 @@ import {UserCardComponent} from "./user-card/user-card.component";
 import {DayCalendar} from "../../domain/classes/day-calendar";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import _ from "underscore";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-employees',
@@ -25,21 +26,21 @@ export class EmployeesComponent implements OnInit {
   selectedStatus = '';
   users: User[] = [];
 
-  constructor(public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
+  constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
   ngOnInit(): void {
     this.issues.getCalendar().then(res =>{
       this.days = res;
     });
     this.auth.getUsers().then(res =>{
-      this.users = res;
+      this.users = res.filter(x => x.visibility.includes('k'));
       this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
+      this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
       this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
       this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null));
-      this.departments = _.sortBy(this.departments, x => x).reverse();
-      this.departments.push('Все');
-      this.departments = this.departments.reverse();
-      this.department = 'Все';
+      this.departments = _.sortBy(this.departments, x => x);
+      this.departments.push(this.t.tr('Все'));
+      this.department = this.t.tr('Все');
     });
   }
   getDaysInMonth() {
@@ -51,7 +52,7 @@ export class EmployeesComponent implements OnInit {
     return array;
   }
   getUsers(){
-    return this.users.filter(x => x.visibility.includes('k')).filter(x => x.department == this.department || this.department == 'Все');
+    return this.users.filter(x => x.visibility.includes('k')).filter(x => x.department == this.department || this.department == this.t.tr('Все'));
   }
   isWeekend(day: number) {
     let date = new Date(this.currentYear, this.currentMonth, day).getDay();
@@ -82,18 +83,18 @@ export class EmployeesComponent implements OnInit {
 
   getMonth() {
     switch (this.currentMonth){
-      case 0: return 'Январь';
-      case 1: return 'Февраль';
-      case 2: return 'Март';
-      case 3: return 'Апрель';
-      case 4: return 'Май';
-      case 5: return 'Июнь';
-      case 6: return 'Июль';
-      case 7: return 'Август';
-      case 8: return 'Сентябрь';
-      case 9: return 'Октябрь';
-      case 10: return 'Ноябрь';
-      case 11: return 'Декабрь';
+      case 0: return this.t.tr('Январь');
+      case 1: return this.t.tr('Февраль');
+      case 2: return this.t.tr('Март');
+      case 3: return this.t.tr('Апрель');
+      case 4: return this.t.tr('Май');
+      case 5: return this.t.tr('Июнь');
+      case 6: return this.t.tr('Июль');
+      case 7: return this.t.tr('Август');
+      case 8: return this.t.tr('Сентябрь');
+      case 9: return this.t.tr('Октябрь');
+      case 10: return this.t.tr('Ноябрь');
+      case 11: return this.t.tr('Декабрь');
       default: return this.currentMonth;
     }
   }
@@ -132,9 +133,9 @@ export class EmployeesComponent implements OnInit {
     let find = this.days.find(x => x.day == day && x.user == user);
     if (find != null){
       switch (find.status) {
-        case 'sick': return 'Б';
-        case 'vacation': return 'О';
-        case 'off': return 'В';
+        case 'sick': return this.t.tr('Б');
+        case 'vacation': return this.t.tr('О');
+        case 'off': return this.t.tr('В');
         default: return '';
       }
     }

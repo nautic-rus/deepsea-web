@@ -11,6 +11,7 @@ import {ViewDocumentComponent} from "./view-document/view-document.component";
 import * as _ from "underscore";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {any, object} from "underscore";
+import {PrimeNGConfig} from "primeng/api";
 
 @Component({
   selector: 'app-documents',
@@ -23,7 +24,7 @@ export class DocumentsComponent implements OnInit {
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[] } = { status: [], revision: [] };
 
-  constructor(public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService) { }
+  constructor(private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService) { }
 
   // @ts-ignore
   @ViewChild('table') table: Table;
@@ -35,6 +36,21 @@ export class DocumentsComponent implements OnInit {
         this.projectChanged();
       }
     });
+    if (this.l.language == 'ru'){
+      this.config.setTranslation({
+        clear: "Очистить",
+        apply: "Принять",
+        removeRule: "Удалить условие",
+        addRule: "Добавить условие",
+        dateIs: "Выбраная дата",
+        dateIsNot: "Кроме даты",
+        matchAll: "Все условия",
+        matchAny: "Любое условие",
+        dateBefore: "До выбраной даты",
+        dateAfter: "После выбраной даты",
+        monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+      });
+    }
   }
   getFilters(issues: any[], field: string): any[] {
     let res: any[] = [];

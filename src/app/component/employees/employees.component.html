@@ -3,12 +3,12 @@
 
     <div class="calendar-header">
       <div class="p-d-flex mr-1">
-        <p-dropdown placeholder="ОТДЕЛ" class="select" [(ngModel)]="department" [options]="departments" styleClass="width-270 border">
+        <p-dropdown [placeholder]="t.tr('ОТДЕЛ')" class="select" [(ngModel)]="department" [options]="departments" styleClass="width-270 border">
         </p-dropdown>
       </div>
       <div class="cxy pr-10">
         <button class="today" (click)="setToday()">
-          <span class="today-in">Сегодня</span>
+          <span class="today-in">{{t.tr('Сегодня')}}</span>
         </button>
       </div>
       <div class="cxy pr-10">
@@ -22,16 +22,14 @@
       <div class="month-name">{{getMonth() + ' ' + this.currentYear}}
       </div>
       <div class="p-ml-auto status-buttons mr-1 cxy">
-        <div [class.sick-selected]="selectedStatus == 'sick'" (click)="selectStatus('sick')" class="privat-status sick cxy mx-1">Б</div>
-        <div [class.vacation-selected]="selectedStatus == 'vacation'" (click)="selectStatus('vacation')"  class="privat-status vacation cxy mx-1">О</div>
-        <div [class.off-selected]="selectedStatus == 'off'" (click)="selectStatus('off')"  class="privat-status off cxy mx-1">В</div>
+        <div [class.sick-selected]="selectedStatus == 'sick'" (click)="selectStatus('sick')" class="privat-status sick cxy mx-1">{{t.tr('Б')}}</div>
+        <div [class.vacation-selected]="selectedStatus == 'vacation'" (click)="selectStatus('vacation')"  class="privat-status vacation cxy mx-1">{{t.tr('О')}}</div>
+        <div [class.off-selected]="selectedStatus == 'off'" (click)="selectStatus('off')"  class="privat-status off cxy mx-1">{{t.tr('В')}}</div>
       </div>
     </div>
     <div class="users-days">
       <div class="df sticky">
-        <div class="w-20 users pl-10 header-users">
-          Сотрудники
-        </div>
+        <div class="w-20 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">

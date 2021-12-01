@@ -1,7 +1,7 @@
 <div class="all-page">
   <div class="card">
     <div class="mr-1 project-number">
-      <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+      <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="changeProject()" styleClass="width-170 border">
       </p-dropdown>
     </div>
     <div class="legend">

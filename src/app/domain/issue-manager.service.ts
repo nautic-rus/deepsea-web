@@ -146,7 +146,7 @@ export class IssueManagerService {
           case 'Rejected': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Declined</span>' : 'Declined';
           case 'Check': return styled ? '<span style="color: #694382; background-color: #eccfff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">On Check</span>' : 'On Check';
           case 'In Rework': return styled ? '<span style="color: #3f6b73; background-color: #cbebf1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Rework</span>' : 'In Rework';
-          case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Paused</span>' : 'Paused';
+          case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Paused</span>' : 'Stopped';
           case 'Archive': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Archive</span>' : 'Archive';
           case 'Not resolved': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Not resolved</span>' : 'Not resolved';
           case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Closed</span>' : 'Closed';
@@ -333,6 +333,26 @@ export class IssueManagerService {
           case 'Electric': return 'Электрика';
           case 'Equipment': return 'Устройства';
           case 'Outfitting': return 'Достройка';
+          default: return input;
+        }
+      }
+      default:{
+        return input;
+      }
+    }
+  }
+  localeUserDepartment(input: string){
+    switch (this.lang.language) {
+      case 'ru':{
+        switch (input) {
+          case 'Management': return 'Руководство';
+          case 'Hull department': return 'Корпусный отдел';
+          case 'System department': return 'Системный отдел';
+          case 'Electrical department': return 'Электротехнический отдел';
+          case 'Devices department': return 'Отдел устройств';
+          case 'Outfitting department': return 'Отдел достройки';
+          case 'Design department': return 'Отдел дизайна';
+          case 'IT': return 'IT-отдел';
           default: return input;
         }
       }

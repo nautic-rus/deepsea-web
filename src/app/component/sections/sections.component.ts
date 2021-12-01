@@ -6,6 +6,7 @@ import {TaskComponent} from "../task/task.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {LanguageService} from "../../domain/language.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-sections',
@@ -15,13 +16,16 @@ import {LanguageService} from "../../domain/language.service";
 export class SectionsComponent implements OnInit {
   issues: Issue[] = [];
   projects: string[] = ['NR002', 'NR004'];
-  project = this.projects[1];
+  project = this.projects[0];
 
-  constructor(public t: LanguageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService) { }
+  constructor(public t: LanguageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.issueManager.getIssues('op').then(data => {
       this.issues = data;
+    });
+    this.route.queryParams.subscribe(params => {
+      this.project = params.project != null ? params.project : this.project;
     });
   }
 
@@ -113,5 +117,9 @@ export class SectionsComponent implements OnInit {
         })
       });
     }
+  }
+
+  changeProject() {
+    this.router.navigate([], {queryParams: {project: this.project}});
   }
 }

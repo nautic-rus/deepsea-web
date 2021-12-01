@@ -15,19 +15,19 @@
             </p-dropdown>
           </div>
           <div class="cxy mr-1">
-            <div class="icon-categories cursor-pointer" tooltipPosition="top" pTooltip="Export XLS">
+            <div class="icon-categories cursor-pointer" tooltipPosition="top" [pTooltip]="l.tr('Экспорт XLS')">
               <img src="assets/icons/xls-file.svg" height="24">
             </div>
           </div>
           <div class="cxy mr-1">
-            <div class="icon-categories cursor-pointer" tooltipPosition="top" pTooltip="Export PDF">
+            <div class="icon-categories cursor-pointer" tooltipPosition="top" [pTooltip]="l.tr('Экспорт PDF')">
               <img src="assets/icons/pdf_2.png" height="24">
             </div>
           </div>
           <div class="p-ml-auto">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" placeholder="Search..." class="border" />
+            <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
           </span>
         </div>
         </div>
@@ -44,7 +44,7 @@
             <p-sortIcon field="code"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.revision" optionValue="value" optionLabel="label" placeholder="Все" (onChange)="filter($event.value);">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.revision" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
@@ -53,7 +53,7 @@
             <p-sortIcon field="code"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" placeholder="Все" (onChange)="filter($event.value);">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
