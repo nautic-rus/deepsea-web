@@ -30,7 +30,7 @@ export class DocumentsComponent implements OnInit {
   @ViewChild('table') table: Table;
   ngOnInit(): void {
     this.issueManager.getIssueProjects().then(projects => {
-      this.projects = projects;
+      this.projects = projects.filter(x => this.auth.getUser().visible_projects.includes(x));
       if (projects.length > 1){
         this.project = projects[1];
         this.projectChanged();
