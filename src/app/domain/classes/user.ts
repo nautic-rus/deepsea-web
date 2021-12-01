@@ -20,4 +20,5 @@ export class User {
   department: string = '';
   avatar_full: string = '';
   rocket_login: string = '';
+  visible_projects: string[] = [];
 }
