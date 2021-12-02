@@ -28,7 +28,7 @@
   <div></div>
 </div>
 <div class="left-panel">
-  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
+  <div *ngIf="auth.getUser().visible_pages.includes('home')" class="cy menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/home.svg" height="27">
     </div>
@@ -40,7 +40,7 @@
 <!--    </div>-->
 <!--    <div class="cxy mt-10">{{t.tr('МАТЕРИАЛЫ')}}</div>-->
 <!--  </div>-->
-  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
+  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="cy menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/blueprint.svg" height="30">
     </div>
@@ -58,13 +58,13 @@
     </div>
     <div class="cxy text-center mt-10">{{t.tr('СОТРУДНИКИ')}}</div>
   </div>
-  <div *ngIf="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="doc-explorer" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy">
-      <img src="assets/icons/doc-explorer.png">
-    </div>
-    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>
-  </div>
-  <div class="cy menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="cy menu" routerLink="doc-explorer" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy">-->
+<!--      <img src="assets/icons/doc-explorer.png">-->
+<!--    </div>-->
+<!--    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
+<!--  </div>-->
+  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="cy menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/sections1.png">
     </div>

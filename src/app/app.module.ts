@@ -65,6 +65,8 @@ import { ConfirmAlreadyExistSendToYardComponent } from './component/task/confirm
 import { ViewDocumentComponent } from './component/documents/view-document/view-document.component';
 import {MenuModule} from "primeng/menu";
 import { LaboriousnessComponent } from './component/task/laboriousness/laboriousness.component';
+import { StatsComponent } from './component/stats/stats.component';
+import { TimeControlComponent } from './component/time-control/time-control.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -100,6 +102,8 @@ Quill.register('modules/imageResize', ImageResize);
     ConfirmAlreadyExistSendToYardComponent,
     ViewDocumentComponent,
     LaboriousnessComponent,
+    StatsComponent,
+    TimeControlComponent,
   ],
     imports: [
         BrowserModule,

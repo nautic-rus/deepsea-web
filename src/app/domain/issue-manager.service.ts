@@ -17,6 +17,7 @@ import {LanguageService} from "./language.service";
 import {DayCalendar} from "./classes/day-calendar";
 import {IssuePeriod} from "./classes/issue-period";
 import {IssueType} from "./classes/issue-type";
+import {TimeControlInterval} from "./classes/time-control-interval";
 
 @Injectable({
   providedIn: 'root'
@@ -106,6 +107,9 @@ export class IssueManagerService {
   }
   async getCalendar(): Promise<DayCalendar[]>{
     return await this.http.get<DayCalendar[]>(props.http + '/daysCalendar').toPromise();
+  }
+  async getTimeControl(user: number){
+    return await this.http.get<TimeControlInterval[]>(props.http + '/timeControl', {params: {user}}).toPromise();
   }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {

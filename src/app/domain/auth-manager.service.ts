@@ -10,6 +10,8 @@ import {Issue} from "./classes/issue";
 import _ from "underscore";
 import {LanguageService} from "./language.service";
 import { transliterate as tr, slugify } from 'transliteration';
+import {DayCalendar} from "./classes/day-calendar";
+import {TimeControlInterval} from "./classes/time-control-interval";
 
 @Injectable({
   providedIn: 'root'
@@ -141,7 +143,6 @@ export class AuthManagerService {
   isAuth(){
     return this.authenticated;
   }
-
   getUserProfession(login: string) {
     let find = this.users.find(x => x.login == login);
     if (find != null){

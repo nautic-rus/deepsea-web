@@ -1,0 +1,10 @@
+<div>На работе:</div><span>{{isOnline()}}</span>
+<div>Интервалы присутствия на сегодняшний день</div>
+<div *ngFor="let t of getDateIntervals()">
+  {{getTime(t.startTime)}} -  {{getTime(t.endTime)}} <span *ngIf="!t.closeDoor">*</span>
+</div>
+<div>Время за предыдущий месяц</div>
+<div *ngFor="let d of getPrevDays()">
+  Дата: {{getDate(d)}} Отработано: {{formatTime(getWorkedTime(d))}} Переработано (8 ч.): {{formatTime(getOverWorkTime(d), true, true)}}
+</div>
+<div>Всего отработано: {{formatTime(getTotalWork(), false, false, false)}} при норме в месяц {{formatTime(getTotalNorm(), false, false, false)}} Переработок за месяц: {{formatTime(getTotalOverWork(), true, false, false)}}</div>

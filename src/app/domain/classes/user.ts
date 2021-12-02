@@ -21,4 +21,5 @@ export class User {
   avatar_full: string = '';
   rocket_login: string = '';
   visible_projects: string[] = [];
+  visible_pages: string[] = [];
 }
