@@ -33,6 +33,7 @@ export class CreateTaskComponent implements OnInit {
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
   today: Date = new Date();
   taskProjects: string[] = [];
+  sfiCodes: LV[] = [];
   taskDepartments: LV[] = [];
   taskPeriods: LV[] = [];
   taskPeriod: string = '';
@@ -42,6 +43,7 @@ export class CreateTaskComponent implements OnInit {
   responsibleUser = '';
   awaitForLoad: string[] = [];
   taskProject = '';
+  sfiCode = '';
   taskType = 'IT';
   taskPriority = '';
   loaded: FileAttachment[] = [];
@@ -170,6 +172,18 @@ export class CreateTaskComponent implements OnInit {
         this.taskPeriod = this.taskPeriods[0].value;
       }
     });
+
+    this.sfiCodes.splice(0, this.sfiCodes.length);
+    this.issues.getSfiCodes().then(sfiCodes => {
+      console.log(sfiCodes);
+      sfiCodes.map(x => new LV(this.l.language == 'ru' ? (x.code + ' - ' + x.ru) : (x.code + ' - ' + x.en), x.code)).forEach(sfiCode => {
+        this.sfiCodes.push(sfiCode);
+      });
+      if (this.sfiCodes.length > 0) {
+        this.sfiCode = this.sfiCodes[0].value;
+      }
+    });
+
     this.issues.getIssueDepartments().then(departments => {
       departments.forEach(d => {
         this.taskDepartments.push(new LV(this.issues.localeTaskDepartment(d), d));
@@ -383,7 +397,7 @@ export class CreateTaskComponent implements OnInit {
   isCreateTaskDisabled() {
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
-      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
+      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || !((new RegExp('^NR\\d{3}-\\d{3}-\\d{3}$')).test(this.taskDocNumber));
       case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
       default: return false;
     }
@@ -397,6 +411,10 @@ export class CreateTaskComponent implements OnInit {
   }
 
   taskTypeChanged() {
+    if (this.taskType == 'RKD' || this.taskType == 'PDSP'){
+      this.taskProject = this.taskProjects[1];
+      this.taskProjectChanged();
+    }
     // this.assignedToUser = this.auth.getUser().login;
     // this.responsibleUser = this.auth.getUser().login;
   }
@@ -404,7 +422,6 @@ export class CreateTaskComponent implements OnInit {
   taskProjectChanged() {
     this.taskPeriods.splice(0, this.taskPeriods.length);
     this.issues.getIssuePeriods().then(periods => {
-      console.log(periods);
       periods.filter(x => x.project == this.taskProject).forEach(period => {
         this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
       });
@@ -412,5 +429,9 @@ export class CreateTaskComponent implements OnInit {
         this.taskPeriod = this.taskPeriods[0].value;
       }
     });
+    this.sfiCodeChanged();
+  }
+  sfiCodeChanged(){
+    this.taskDocNumber = this.taskProject + '-' + this.sfiCode + '-';
   }
 }

@@ -18,6 +18,7 @@ import {DayCalendar} from "./classes/day-calendar";
 import {IssuePeriod} from "./classes/issue-period";
 import {IssueType} from "./classes/issue-type";
 import {TimeControlInterval} from "./classes/time-control-interval";
+import {SfiCode} from "./classes/sfi-code";
 
 @Injectable({
   providedIn: 'root'
@@ -113,6 +114,9 @@ export class IssueManagerService {
   }
   async shareRights(user: string, with_user: string){
     return await this.http.get<string>(props.http + '/shareRights', {params: {user, with_user}}).toPromise();
+  }
+  async getSfiCodes(){
+    return await this.http.get<SfiCode[]>(props.http + '/sfiCodes').toPromise();
   }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
