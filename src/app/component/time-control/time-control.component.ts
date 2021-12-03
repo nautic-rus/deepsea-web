@@ -22,7 +22,7 @@ export class TimeControlComponent implements OnInit {
       labels: [],
       datasets: [
         {
-          label: 'Productivity',
+          label: 'Продуктивность',
           data: [],
           fill: false,
           borderColor: '#42A5F5',
