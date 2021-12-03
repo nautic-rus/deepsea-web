@@ -111,6 +111,9 @@ export class IssueManagerService {
   async getTimeControl(user: number){
     return await this.http.get<TimeControlInterval[]>(props.http + '/timeControl', {params: {user}}).toPromise();
   }
+  async shareRights(user: string, with_user: string){
+    return await this.http.get<string>(props.http + '/shareRights', {params: {user, with_user}}).toPromise();
+  }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{

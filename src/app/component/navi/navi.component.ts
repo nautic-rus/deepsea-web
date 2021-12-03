@@ -33,7 +33,15 @@ export class NaviComponent implements OnInit {
       return (t.getFullYear() == d.getFullYear() && t.getMonth() == d.getMonth() && t.getDate() == d.getDate());
     }), x => x.startTime);
   }
-
+  getSharedWith(){
+    let res: string[] = [];
+    this.auth.users.forEach(user => {
+      user.shared_access.filter(x => x == this.auth.getUser().login).forEach(sh => {
+        res.push(sh);
+      })
+    });
+    return res;
+  }
   shareRights() {
     this.dialogService.open(ShareRightsComponent, {
       showHeader: false,
