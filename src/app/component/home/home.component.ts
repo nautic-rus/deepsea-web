@@ -565,6 +565,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       doc.addFileToVFS("Roboto.ttf", data);
       doc.addFont("Roboto.ttf", "Roboto", "regular");
       doc.setFont("Roboto", 'regular');
+
       // @ts-ignore
       let headers: any[] = this.cols.filter(x => this.selectedCols.includes(x.header)).map(col => ({
         title: col.header,

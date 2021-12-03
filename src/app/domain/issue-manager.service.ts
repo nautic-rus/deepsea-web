@@ -262,13 +262,13 @@ export class IssueManagerService {
     switch (this.lang.language) {
       case 'ru':{
         switch (input) {
-          case 'status': return 'Статус';
+          case 'status': return 'статус';
           default: return input;
         }
       }
       default:{
         switch (input) {
-          case 'status': return 'Status';
+          case 'status': return 'status';
           default: return input;
         }
       }

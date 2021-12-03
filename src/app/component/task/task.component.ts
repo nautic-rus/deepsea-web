@@ -183,7 +183,7 @@ export class TaskComponent implements OnInit {
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
-    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear() + ' ' + date.getHours() + ':' + ('0' + (date.getMinutes())).slice(-2);
   }
   quillCreated(event: any) {
     this.editor = event;
@@ -695,7 +695,10 @@ export class TaskComponent implements OnInit {
   }
 
   getNoneZeroResult(input: string) {
-    return input.length == 0? '<div class="text-none">Нет</div>' : input;
+    return input.length == 0 ? '<div class="text-none">Нет</div>' : input;
+  }
+  getNoneZeroInput(input: string) {
+    return input == '-' ? '<div class="text-none">Нет</div>' : input;
   }
 
   getDateOnly(dateLong: number): string{

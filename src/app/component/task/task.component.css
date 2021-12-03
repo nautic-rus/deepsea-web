@@ -937,6 +937,14 @@
   max-height: 115px;
   overflow-y: auto;
 }
+.attachment-issues-files{
+  padding: 3px;
+  border-radius: 3px;
+  width: 280px;
+}
+.attachment-issues-files:hover{
+  background-color: #dadada;
+}
 .attachment-issues{
   padding: 3px;
   border-radius: 3px;

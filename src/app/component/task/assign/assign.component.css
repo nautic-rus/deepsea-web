@@ -10,6 +10,8 @@
   margin-left: 8px;
   cursor: pointer;
   transition: 0.3s;
+  width: 2rem;
+  height: 2rem;
 }
 .task-button:hover{
   background-color: rgb(235, 236, 240);
