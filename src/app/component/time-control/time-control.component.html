@@ -8,3 +8,7 @@
   Дата: {{getDate(d)}} Отработано: {{formatTime(getWorkedTime(d))}} Переработано (8 ч.): {{formatTime(getOverWorkTime(d), true, true)}}
 </div>
 <div>Всего отработано: {{formatTime(getTotalWork(), false, false, false)}} при норме в месяц {{formatTime(getTotalNorm(), false, false, false)}} Переработок за месяц: {{formatTime(getTotalOverWork(), true, false, false)}}</div>
+<div class="card">
+  <h5>График производительности за месяц</h5>
+  <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+</div>

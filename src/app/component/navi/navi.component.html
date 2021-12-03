@@ -20,7 +20,15 @@
     </div>
   </div>
   <div class="cxy">
-    <img src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+    <img (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+    <div *ngIf="isOnline()">ONLINE</div>
+    <div *ngIf="!isOnline()">OFFLINE</div>
+    <p-overlayPanel #user>
+      <ng-template pTemplate>
+        <div (click)="user.hide()" routerLink="time-control">Open TimeControl</div>
+        <div (click)="shareRights()">Share Rights</div>
+      </ng-template>
+    </p-overlayPanel>
   </div>
   <div class="exit cxy">
     <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">
