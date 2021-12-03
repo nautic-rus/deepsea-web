@@ -18,29 +18,35 @@ export class TimeControlComponent implements OnInit {
   basicOptions: any;
 
   ngOnInit(): void {
-    // this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
-    this.issueManager.getTimeControl(13).then(res => {
-      this.tc = res;
-    });
     this.basicData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: [],
       datasets: [
         {
-          label: 'First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'Productivity',
+          data: [],
           fill: false,
           borderColor: '#42A5F5',
           tension: .4
         },
-        {
-          label: 'Second Dataset',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-          borderColor: '#FFA726',
-          tension: .4
-        }
       ]
     };
+    // this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
+    this.issueManager.getTimeControl(13).then(res => {
+      this.tc = res;
+      let days: string[] = [];
+      let sets: any[] = [];
+      this.getPrevDays().forEach(d => {
+        days.push(this.getDate(d));
+        let overWork = this.getOverWorkTime(d) / 60 / 60 / 1000;
+        if ([0, 6].includes(new Date(d).getDay()) && overWork < 0){
+          overWork = 0;
+        }
+        sets.push(overWork);
+      });
+      this.basicData.labels = days;
+      this.basicData.datasets[0].data = sets;
+    });
+
     this.basicOptions = {
       plugins: {
         legend: {
