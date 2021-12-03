@@ -67,6 +67,9 @@ import {MenuModule} from "primeng/menu";
 import { LaboriousnessComponent } from './component/task/laboriousness/laboriousness.component';
 import { StatsComponent } from './component/stats/stats.component';
 import { TimeControlComponent } from './component/time-control/time-control.component';
+import {OverlayPanelModule} from "primeng/overlaypanel";
+import { ShareRightsComponent } from './component/navi/share-rights/share-rights.component';
+import {ChartModule} from "primeng/chart";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -104,6 +107,7 @@ Quill.register('modules/imageResize', ImageResize);
     LaboriousnessComponent,
     StatsComponent,
     TimeControlComponent,
+    ShareRightsComponent,
   ],
     imports: [
         BrowserModule,
@@ -142,7 +146,9 @@ Quill.register('modules/imageResize', ImageResize);
         CheckboxModule,
         NgxCollapseModule,
         ToggleButtonModule,
-        MenuModule
+        MenuModule,
+        OverlayPanelModule,
+        ChartModule
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
