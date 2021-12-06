@@ -64,3 +64,6 @@
   letter-spacing: .3px;
   cursor: default;
 }
+/deep/.p-component{
+  font-size: 14px!important;
+}
