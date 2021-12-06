@@ -16,21 +16,21 @@
       <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-200 font-14" (ngModelChange)="taskProjectChanged()">
       </p-dropdown>
     </div>
-    <div *ngIf="taskType.includes('RKD') || taskType == 'PDSP'">
-      <div class="big-text-create mb-1">{{lang.tr('Код SFI')}}</div>
-      <p-dropdown class="select" [(ngModel)]="sfiCode" [options]="sfiCodes" styleClass="width-200 font-14" (ngModelChange)="sfiCodeChanged()">
+    <div>
+      <div class="big-text-create mb-1 ">{{lang.tr('Приоритет')}}</div>
+      <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-200" [(ngModel)]="taskPriority" [options]="taskPriorities">
       </p-dropdown>
     </div>
   </div>
   <div class="df space-between">
-    <div>
-      <div class="big-text-create mb-1 mt-1">{{lang.tr('Приоритет')}}</div>
-      <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-200" [(ngModel)]="taskPriority" [options]="taskPriorities">
+    <div *ngIf="taskType.includes('RKD') || taskType == 'PDSP'">
+      <div class="big-text-create mb-1 mt-1">{{lang.tr('Этап')}}</div>
+      <p-dropdown class="select" styleClass="width-200" [(ngModel)]="taskPeriod" [options]="taskPeriods" optionLabel="label" optionValue="value">
       </p-dropdown>
     </div>
     <div *ngIf="taskType.includes('RKD') || taskType == 'PDSP'">
-      <div class="big-text-create mb-1 mt-1">{{lang.tr('Этап')}}</div>
-      <p-dropdown class="select" styleClass="width-300" [(ngModel)]="taskPeriod" [options]="taskPeriods" optionLabel="label" optionValue="value">
+      <div class="big-text-create mb-1 mt-1">{{lang.tr('Код SFI')}}</div>
+      <p-dropdown optionLabel="label" optionValue="value" class="select" appendTo = "body" [(ngModel)]="sfiCode" [options]="sfiCodes" styleClass="width-450 font-14" (ngModelChange)="sfiCodeChanged()">
       </p-dropdown>
     </div>
   </div>
@@ -40,7 +40,7 @@
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Номер документа')}}</div>
         <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
       </div>
-      <div style="width: 68%">
+      <div style="width: 450px">
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>
         <input type="text" pInputText [(ngModel)]="taskSummary">
       </div>

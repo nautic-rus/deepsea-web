@@ -30,8 +30,8 @@ export class TimeControlComponent implements OnInit {
         },
       ]
     };
-    // this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
-    this.issueManager.getTimeControl(13).then(res => {
+    this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
+    //this.issueManager.getTimeControl(13).then(res => {
       this.tc = res;
       let days: string[] = [];
       let sets: any[] = [];

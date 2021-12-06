@@ -166,8 +166,8 @@ export class LanguageService {
           case 'Октябрь': return 'October';
           case 'Ноябрь': return 'November';
           case 'Декабрь': return 'December';
-          case '': return '';
-          case '': return '';
+          case 'Контроль времени': return 'Time Control';
+          case 'Передать права': return 'Share Rights';
           case '': return '';
           case '': return '';
           case '': return '';

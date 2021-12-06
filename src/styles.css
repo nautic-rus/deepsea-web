@@ -475,3 +475,6 @@ cdk-virtual-scroll-viewport{
   display: flex;
   flex-direction: unset;
 }
+.display-flex{
+  display: flex;
+}

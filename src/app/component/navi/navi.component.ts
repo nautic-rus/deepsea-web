@@ -19,13 +19,15 @@ export class NaviComponent implements OnInit {
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private route: ActivatedRoute, private issueManager: IssueManagerService, private dialogService: DialogService) { }
   tc: TimeControlInterval[] = [];
+  tcFilled = false;
   ngOnInit(): void {
     this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
       this.tc = res;
+      this.tcFilled = true;
     });
   }
   isOnline(){
-    return this.getDateIntervals().find(x => x.closeDoor == 0) != null;
+    return !this.tcFilled || this.getDateIntervals().find(x => x.closeDoor == 0) != null;
   }
   getDateIntervals(t = new Date()){
     return _.sortBy(this.tc.filter(x => {

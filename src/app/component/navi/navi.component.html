@@ -20,13 +20,28 @@
     </div>
   </div>
   <div class="cxy">
-    <img (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
-    <div *ngIf="isOnline()">ONLINE</div>
-    <div *ngIf="!isOnline()">OFFLINE</div>
-    <p-overlayPanel #user>
+    <div>
+      <div *ngIf="isOnline()" class="image-online cursor-pointer">
+        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+      </div>
+      <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
+        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+      </div>
+    </div>
+    <p-overlayPanel #user [style]="{width: '240px', 'border-radius': '4px'}">
       <ng-template pTemplate>
-        <div (click)="user.hide()" routerLink="time-control">Open TimeControl</div>
-        <div (click)="shareRights()">Share Rights</div>
+        <div class="display-flex border-bottom all-row-user-menu">
+          <div class="cxy mx-1">
+            <div class="pi pi-clock"></div>
+          </div>
+          <div class="row-user-menu" (click)="user.hide()" routerLink="time-control">{{t.tr('Контроль времени')}}</div>
+        </div>
+        <div class="display-flex all-row-user-menu">
+          <div class="cxy mx-1">
+            <div class="pi pi-sort-alt icon-turn"></div>
+          </div>
+          <div class="row-user-menu" (click)="shareRights()">{{t.tr('Передать права')}}</div>
+        </div>
       </ng-template>
     </p-overlayPanel>
   </div>
