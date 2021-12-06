@@ -1,14 +1,53 @@
-<div>На работе:</div><span>{{isOnline()}}</span>
-<div>Интервалы присутствия на сегодняшний день</div>
-<div *ngFor="let t of getDateIntervals()">
-  {{getTime(t.startTime)}} -  {{getTime(t.endTime)}} <span *ngIf="!t.closeDoor">*</span>
+<div class="all-page time-control" xmlns="http://www.w3.org/1999/html">
+  <div class="card">
+    <div class="time-control-header">
+      <div class="p-d-flex mr-1">
+        <span class="status-work" *ngIf="isOnline()">На работе</span><span class="status-not-work" *ngIf="!isOnline()">Отсутствует</span>
+      </div>
+      <div class="p-d-flex mr-1">
+        <div class="text-bold">Интервалы присутствия: </div>
+        <div class="mx-1 text-thin" *ngFor="let t of getDateIntervals()">
+          {{' ' + getTime(t.startTime)}} - <span *ngIf="t.closeDoor">{{getTime(t.endTime)}}</span><span *ngIf="!t.closeDoor">*</span>
+        </div>
+      </div>
+    </div>
+    <div class="df card-body">
+      <div class="table-time-control w-20">
+        <p-table #d [value]="tcTable"
+                 [scrollable]="true"
+                 [scrollHeight]="'68vh'"
+                 [virtualScroll]="true"
+                 [virtualRowHeight]="40"
+                 styleClass="p-datatable-striped">
+          <ng-template pTemplate="header">
+            <tr>
+              <th class="w-10">дата</th>
+              <th class="w-10">Отработано</th>
+              <th class="w-10">Переработано</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-tcRow>
+            <tr class="cursor-pointer">
+              <td class="w-10 text-14">{{tcRow.date}}</td>
+              <td class="w-10 text-14">{{tcRow.work}}</td>
+              <td class="w-10 text-14">{{tcRow.overWork}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="chart w-80">
+        <p-chart #chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="text-bold">Всего отработано:</div><span class="text-thin mx-1"> {{formatTime(getTotalWork(), false, false, false)}}</span><span class="text-bold"> Норма в месяц: </span><span class="text-thin mx-1">{{formatTime(getTotalNorm(), false, false, false)}}</span><span class="text-bold"> Переработок за месяц: </span><span class="text-thin mx-1">{{formatTime(getTotalOverWork(), true, false, false)}}</span>
+
+    </div>
+  </div>
 </div>
-<div>Время за предыдущий месяц</div>
-<div *ngFor="let d of getPrevDays()">
-  Дата: {{getDate(d)}} Отработано: {{formatTime(getWorkedTime(d))}} Переработано (8 ч.): {{formatTime(getOverWorkTime(d), true, true)}}
-</div>
-<div>Всего отработано: {{formatTime(getTotalWork(), false, false, false)}} при норме в месяц {{formatTime(getTotalNorm(), false, false, false)}} Переработок за месяц: {{formatTime(getTotalOverWork(), true, false, false)}}</div>
-<div class="card">
-  <h5>График производительности за месяц</h5>
-  <p-chart type="line" [data]="basicData" [options]="basicOptions"></p-chart>
-</div>
+
+
+
+
+
+

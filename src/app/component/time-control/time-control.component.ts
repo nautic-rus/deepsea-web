@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {TimeControlInterval} from "../../domain/classes/time-control-interval";
@@ -11,11 +11,15 @@ import _ from "underscore";
 })
 export class TimeControlComponent implements OnInit {
 
-  constructor(private auth: AuthManagerService, public issueManager: IssueManagerService) { }
   tc: TimeControlInterval[] = [];
+  tcTable: any[] = [];
 
   basicData: any;
   basicOptions: any;
+  @ViewChild('chart') chart: any;
+
+
+  constructor(private auth: AuthManagerService, public issueManager: IssueManagerService) { }
 
   ngOnInit(): void {
     this.basicData = {
@@ -25,28 +29,11 @@ export class TimeControlComponent implements OnInit {
           label: 'Продуктивность',
           data: [],
           fill: false,
-          borderColor: '#42A5F5',
+          borderColor: '#FF6384',
           tension: .4
         },
       ]
     };
-    this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
-    //this.issueManager.getTimeControl(13).then(res => {
-      this.tc = res;
-      let days: string[] = [];
-      let sets: any[] = [];
-      this.getPrevDays().forEach(d => {
-        days.push(this.getDate(d));
-        let overWork = this.getOverWorkTime(d) / 60 / 60 / 1000;
-        if ([0, 6].includes(new Date(d).getDay()) && overWork < 0){
-          overWork = 0;
-        }
-        sets.push(overWork);
-      });
-      this.basicData.labels = days;
-      this.basicData.datasets[0].data = sets;
-    });
-
     this.basicOptions = {
       plugins: {
         legend: {
@@ -74,6 +61,33 @@ export class TimeControlComponent implements OnInit {
         }
       }
     };
+
+    // this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
+    this.issueManager.getTimeControl(13).then(res => {
+      this.tc = res;
+      let days: string[] = [];
+      let sets: any[] = [];
+      this.getPrevDays().forEach(d => {
+        days.push(this.getDate(d));
+        let overWork = this.getOverWorkTime(d) / 60 / 60 / 1000;
+        if ([0, 6].includes(new Date(d).getDay()) && overWork < 0){
+          overWork = 0;
+        }
+        sets.push(overWork);
+      });
+      this.basicData.labels = days;
+      this.basicData.datasets[0].data = sets;
+      this.chart.refresh();
+
+      this.getPrevDays().forEach(d => {
+        this.tcTable.push({
+          date: this.getDate(d),
+          work: this.formatTime(this.getWorkedTime(d)),
+          overWork: this.formatTime(this.getOverWorkTime(d), true, true)
+        })
+        this.tcTable = [...this.tcTable];
+      });
+    });
   }
   getDateIntervals(t = new Date()){
     return _.sortBy(this.tc.filter(x => {
