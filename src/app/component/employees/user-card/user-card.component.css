@@ -1,11 +1,13 @@
 .header-user-card{
   border-bottom: 0 none;
-  background: #ffffff;
+  background: linear-gradient(90deg, rgba(226,226,233,1) 49%, rgba(174,180,193,1) 100%);
   color: #323130;
   padding: 1.5rem 0;
   display: flex;
   justify-content: space-between;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  z-index: 10;
+  position: relative;
 }
 .header-text{
   font-weight: 600;
@@ -24,7 +26,7 @@
 .task-button-user:hover{
   color: #605e5c;
   border-color: transparent;
-  background: #f3f2f1;
+  background: #99A1B1;
 }
 .body-user-card{
   display: grid;
@@ -43,6 +45,7 @@
   height: 37px;
   padding: 8px;
   font-size: 14px;
+  background-color: white;
 }
 .bigger-text{
   color: #5e6c84;
@@ -58,6 +61,9 @@
 .user-avatar{
   display: flex;
   flex-direction: column;
+}
+.user-info{
+  position: relative;
 }
 /deep/.p-dialog .p-dialog-content {
   border-radius: 5px!important;
@@ -81,15 +87,14 @@
   align-items: flex-end;
 }
 .image{
-
   width: 200px;
   height: 200px;
   top: 50%;
   left: 50%;
   transform: translate(0%, 0%);
-  border: 4px solid transparent;
+  border: 1px solid transparent;
   border-radius: 50%;
-  background-image: linear-gradient(white, white), radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  background-image: linear-gradient(white, white), radial-gradient(circle at 30% 107%, #FFFFFF 0%, #FFFFFF 5%, #FFFFFF 45%,#FFFFFF 60%,#FFFFFF 90%);
   background-origin: border-box;
   background-clip: content-box, border-box;
 }
@@ -101,4 +106,16 @@
   left: 4px;
   border-radius: 50%;
   background-size: cover;
+}
+.user-background{
+  background: linear-gradient(90deg, rgba(226,226,233,1) 49%, rgba(169,176,189,1) 100%);
+
+  position: absolute;
+  height: 184px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }

@@ -5,8 +5,9 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
+  <div class="user-background"></div>
   <div class="body-user-card">
-    <div>
+    <div class="user-info">
       <div class="common-row mb-10">
         <div class="bigger-text mb-1">Имя</div>
         <div class="user-name">{{user.name}}</div>
@@ -55,7 +56,6 @@
           <div class="mini-text">WhatsApp</div>
         </div>
         <div class="content-flex-end">
-
           <a [href]="sanitize('mailto:' + user.email)">
             <img src="assets/icons/mail.png">
           </a>
