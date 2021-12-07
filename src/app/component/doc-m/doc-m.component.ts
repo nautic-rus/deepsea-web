@@ -1,41 +1,36 @@
-import {ApplicationRef, Component, OnInit} from '@angular/core';
-import {LanguageService} from "../../../domain/language.service";
-import {IssueManagerService} from "../../../domain/issue-manager.service";
-import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {Issue} from "../../../domain/classes/issue";
-import {TaskComponent} from "../../task/task.component";
+import { Component, OnInit} from '@angular/core';
+import {Issue} from "../../domain/classes/issue";
+import {LanguageService} from "../../domain/language.service";
+import {IssueManagerService} from "../../domain/issue-manager.service";
+import {AuthManagerService} from "../../domain/auth-manager.service";
 import _ from "underscore";
-import {QrCodeComponent} from "ng-qrcode";
-import * as props from '../../../props';
-import {timeout} from "rxjs/operators";
-import { Clipboard } from '@angular/cdk/clipboard';
-
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-view-document',
-  templateUrl: './view-document.component.html',
-  styleUrls: ['./view-document.component.css']
+  selector: 'app-doc-m',
+  templateUrl: './doc-m.component.html',
+  styleUrls: ['./doc-m.component.css']
 })
-export class ViewDocumentComponent implements OnInit {
-  issue: Issue = new Issue();
-  qrCodeValue: any;
+export class DocMComponent implements OnInit {
 
-  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
-    this.issue = this.conf.data;
-    this.qrCodeValue = (props.baseUrl + 'doc-m/?id=' + this.issue.id).toString();
+  issue: Issue = new Issue();
+
+  constructor(public route: ActivatedRoute, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService) {
   }
 
   ngOnInit(): void {
-
+    this.route.queryParams.subscribe(params => {
+      let id = params.id ? params.id : 0;
+      this.issues.getIssueDetails(id).then(res => {
+        this.issue = res;
+      });
+    });
   }
 
   commit() {
-    this.ref.close();
   }
 
   close() {
-    this.ref.close();
   }
 
   getRevisionFiles(revision: string) {

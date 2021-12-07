@@ -70,6 +70,8 @@ import { TimeControlComponent } from './component/time-control/time-control.comp
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import { ShareRightsComponent } from './component/navi/share-rights/share-rights.component';
 import {ChartModule} from "primeng/chart";
+import {QrCodeModule} from "ng-qrcode";
+import { DocMComponent } from './component/doc-m/doc-m.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -108,6 +110,7 @@ Quill.register('modules/imageResize', ImageResize);
     StatsComponent,
     TimeControlComponent,
     ShareRightsComponent,
+    DocMComponent,
   ],
     imports: [
         BrowserModule,
@@ -133,11 +136,6 @@ Quill.register('modules/imageResize', ImageResize);
         MessagesModule,
         GalleriaModule,
         QuillModule.forRoot(),
-        // QuillModule.forRoot({
-        //   modules: {
-        //     imageResize: {}
-        //   }
-        // }),
         ConfirmDialogModule,
         RippleModule,
         InputSwitchModule,
@@ -148,7 +146,8 @@ Quill.register('modules/imageResize', ImageResize);
         ToggleButtonModule,
         MenuModule,
         OverlayPanelModule,
-        ChartModule
+        ChartModule,
+        QrCodeModule
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

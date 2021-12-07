@@ -13,6 +13,7 @@ import {DocumentsComponent} from "./component/documents/documents.component";
 import {EmployeesComponent} from "./component/employees/employees.component";
 import {DocExplorerComponent} from "./component/doc-explorer/doc-explorer.component";
 import {TimeControlComponent} from "./component/time-control/time-control.component";
+import {DocMComponent} from "./component/doc-m/doc-m.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: {animation: 'EmployeesComponent'} },
   { path: 'doc-explorer', component: DocExplorerComponent, canActivate: [AuthGuard], data: {animation: 'DocExplorerComponent'} },
   { path: 'time-control', component: TimeControlComponent, canActivate: [AuthGuard], data: {animation: 'TimeControlComponent'} },
+  { path: 'doc-m', component: DocMComponent, data: {animation: 'DocMComponent'} },
 ];
 
 @NgModule({
