@@ -9,35 +9,33 @@
       <span class="task-button-user cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Электронная СП')">
         <i class="pi pi-th-large"></i>
       </span>
-        <span class="task-button-user cxy" (click)="close()">
-        <i class="pi pi-times"></i>
-      </span>
       </div>
     </div>
     <div>
       <div class="df mt-5 row-info">
-        <div class="cy normal-text w-35">{{t.tr('Номер документа')}}:</div>
-        <div class="pl-3 cy description-task w-65">{{issue.doc_number}}</div>
+        <div class="cy normal-text w-45">{{t.tr('Номер документа')}}:</div>
+        <div class="pl-3 cy description-task w-55">{{issue.doc_number}}</div>
       </div>
       <div class="df mt-5 row-info">
-        <div class="cy normal-text w-35">{{t.tr('Название документа')}}:</div>
-        <div class="pl-3 cy description-task w-65">{{issue.name}}</div>
+        <div class="cy normal-text w-45">{{t.tr('Название документа')}}:</div>
+        <div class="pl-3 cy description-task w-55">{{issue.name}}</div>
       </div>
       <div class="df mt-5 row-info">
-        <div class="cy normal-text w-35">{{t.tr('Текущая ревизия')}}:</div>
-        <div class="pl-3 cy description-task w-65">{{issue.revision}}</div>
+        <div class="cy normal-text w-45">{{t.tr('Текущая ревизия')}}:</div>
+        <div class="pl-3 cy description-task w-55">{{issue.revision}}</div>
       </div>
       <div class="df mt-5 row-info">
-        <div class="cy normal-text w-35">{{t.tr('Дата обновления')}}:</div>
-        <div class="pl-3 cy description-task w-65">{{getDate(issue.last_update)}}</div>
+        <div class="cy normal-text w-45">{{t.tr('Дата обновления')}}:</div>
+        <div class="pl-3 cy description-task w-55">{{getDate(issue.last_update)}}</div>
       </div>
       <div class="df mt-5 row-info">
-        <div class="cy normal-text w-35">{{t.tr('Дата поставки')}}:</div>
-        <div class="pl-3 cy description-task w-65">{{getDate(issue.first_send_date)}}</div>
+        <div class="cy normal-text w-45">{{t.tr('Дата поставки')}}:</div>
+        <div class="pl-3 cy description-task w-55">{{getDate(issue.first_send_date)}}</div>
       </div>
       <div class="df mt-5 row-info">
-        <div class="cy normal-text w-35">{{t.tr('Файлы ревизии')}}:</div>
-        <div class="pl-3 cy description-task w-65">
+        <div class="cy normal-text">{{t.tr('Файлы ревизии')}}:</div>
+      </div>
+        <div class="pl-3 cy description-files w-60">
           <div *ngFor="let file of getRevisionFiles(issue.revision)">
             <div (click)="openFile(file.url)" class="attachment-files df mb-10 cursor-pointer">
               <div class="cxy">
@@ -54,7 +52,7 @@
             </div>
           </div>
         </div>
-      </div>
+
       <div class="underline" *ngIf="showOlderRevisions()">
         <div class="df mt-5 row-info">
           <div class="cy normal-text w-40">{{t.tr('Предыдущие ревизии')}}:</div>

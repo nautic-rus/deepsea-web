@@ -1,6 +1,6 @@
 <div class="center-viewer">
   <div class="header-user-card">
-    <div class="header-text">{{t.tr('Сведения')}}</div>
+    <qr-code [value]="qrCodeValue" size="110"></qr-code>
     <div class="flex-unset">
       <span class="task-button-user cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Электронная СП')">
         <i class="pi pi-th-large"></i>
@@ -9,8 +9,10 @@
         <i class="pi pi-times"></i>
       </span>
     </div>
-    <qr-code [value]="qrCodeValue" size="200"></qr-code>
   </div>
+
+
+
   <div>
     <div class="df mt-5 row-info">
       <div class="cy normal-text w-35">{{t.tr('Номер документа')}}:</div>
