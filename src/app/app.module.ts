@@ -72,6 +72,7 @@ import { ShareRightsComponent } from './component/navi/share-rights/share-rights
 import {ChartModule} from "primeng/chart";
 import {QrCodeModule} from "ng-qrcode";
 import { DocMComponent } from './component/doc-m/doc-m.component';
+import { ToolsComponent } from './component/tools/tools.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -111,6 +112,7 @@ Quill.register('modules/imageResize', ImageResize);
     TimeControlComponent,
     ShareRightsComponent,
     DocMComponent,
+    ToolsComponent,
   ],
     imports: [
         BrowserModule,

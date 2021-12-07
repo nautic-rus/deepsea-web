@@ -1,6 +1,6 @@
 :root{
   --navi-height: 76px;
-  --navi-width: 90px;
+  --navi-width: 100px;
 }
 body,p{
   margin: 0;
@@ -404,6 +404,10 @@ cdk-virtual-scroll-viewport{
 .text-bottom{
   display: flex;
   align-items: flex-end;
+}
+.text-start{
+  display: flex;
+  align-items: flex-start;
 }
 .content-end{
   display: flex;

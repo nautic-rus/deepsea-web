@@ -53,7 +53,7 @@
 <div class="left-panel">
   <div *ngIf="auth.getUser().visible_pages.includes('home')" class="cy menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy">
-      <img src="assets/icons/home.svg" height="27">
+      <img src="assets/icons/home1.svg" height="27">
     </div>
     <div class="cxy text-center mt-10">{{t.tr('МОЯ СТРАНИЦА')}}</div>
   </div>
@@ -94,7 +94,12 @@
     <div class="cxy text-center mt-10">{{t.tr('СЕКЦИИ')}}</div>
   </div>
 
-  <div></div>
+  <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="cy menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy">
+      <img src="assets/icons/wrench.png">
+    </div>
+    <div class="cxy text-center mt-10">{{t.tr('ИНСТРУМЕНТЫ')}}</div>
+  </div>
 
 
 </div>
