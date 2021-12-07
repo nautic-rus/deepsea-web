@@ -65,7 +65,7 @@
 <!--  </div>-->
   <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="cy menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
-      <img src="assets/icons/blueprint.svg" height="30">
+      <img src="assets/icons/docs.svg" height="30">
     </div>
     <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>
   </div>
@@ -77,7 +77,7 @@
 <!--  </div>-->
   <div *ngIf="auth.getUser().visibility.includes('z')" class="cy menu" routerLink="employees" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
-      <img src="assets/icons/group.svg" height="36">
+      <img src="assets/icons/users3.png" height="24">
     </div>
     <div class="cxy text-center mt-10">{{t.tr('СОТРУДНИКИ')}}</div>
   </div>
@@ -89,7 +89,7 @@
 <!--  </div>-->
   <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="cy menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
-      <img src="assets/icons/sections1.png">
+      <img src="assets/icons/sections1.svg" height="30">
     </div>
     <div class="cxy text-center mt-10">{{t.tr('СЕКЦИИ')}}</div>
   </div>
