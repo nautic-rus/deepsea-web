@@ -173,7 +173,7 @@ export class LanguageService {
           case 'Сменить': return 'Change';
           case 'Удалить': return 'Remove';
           case 'Отправить': return 'Send';
-          case '': return '';
+          case 'Сгенерировать': return 'Generate';
           case '': return '';
           case '': return '';
           case '': return '';
