@@ -2,9 +2,8 @@
   background: var(--surface-e);
   box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
   border-radius: 4px;
-  width: 1794px;
-  height: 850px;
   position: relative;
+  height: calc(100vh - 116px);
 }
 .project-number{
   position: absolute;

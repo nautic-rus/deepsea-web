@@ -55,11 +55,24 @@
   height: 110px;
 }
 .footer-card{
-  height: 50px;
+  height: 80px;
 }
 .big-text-card{
   color: #5e6c84;
   font-size: 12px;
   font-family: inherit;
   font-weight: 600;
+}
+.button-ok{
+  border: none;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
 }
