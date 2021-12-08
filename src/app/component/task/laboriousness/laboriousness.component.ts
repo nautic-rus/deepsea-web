@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {any} from "underscore";
 import {LanguageService} from "../../../domain/language.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
@@ -24,8 +23,7 @@ export class LaboriousnessComponent implements OnInit {
   }
   commit(){
     this.issues.setIssueLabor(this.auth.getUser().login, (this.conf.data as Issue).id, +this.hoursAmount, this.comment, +this.calendarDay).then(res => {
-      this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue labor.'});
-      //this.ref.close('success');
+      this.ref.close('success');
     });
   }
   close() {

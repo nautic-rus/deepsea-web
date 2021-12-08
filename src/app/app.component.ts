@@ -40,6 +40,16 @@ import {PrimeNGConfig} from "primeng/api";
           ),
         ], { optional: true } ),
       ]),
+      transition('* => ToolsComponent', [
+        query(':enter, :leave', [
+          style({
+            position: 'fixed',
+            width: '100%',
+            height: '100%',
+            opacity: 0
+          })
+        ], { optional: true } ),
+      ]),
       transition('* => DocExplorerComponent', [
         query(':enter, :leave', [
           style({
