@@ -19,6 +19,7 @@ import {IssuePeriod} from "./classes/issue-period";
 import {IssueType} from "./classes/issue-type";
 import {TimeControlInterval} from "./classes/time-control-interval";
 import {SfiCode} from "./classes/sfi-code";
+import {HullPart} from "./classes/hull-part";
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +118,9 @@ export class IssueManagerService {
   }
   async getSfiCodes(){
     return await this.http.get<SfiCode[]>(props.http + '/sfiCodes').toPromise();
+  }
+  async getForanParts(project = 'N004'){
+    return await this.http.get(props.httpSpec + '/foranPartsExcel', { responseType: 'text', params: {project}}).toPromise();
   }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {

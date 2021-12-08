@@ -23,8 +23,7 @@ export class LaboriousnessComponent implements OnInit {
   }
   commit(){
     this.issues.setIssueLabor(this.auth.getUser().login, (this.conf.data as Issue).id, +this.hoursAmount, this.comment, +this.calendarDay).then(res => {
-      this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue labor.'});
-      //this.ref.close('success');
+      this.ref.close('success');
     });
   }
   close() {

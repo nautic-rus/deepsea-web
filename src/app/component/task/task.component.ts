@@ -478,7 +478,6 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue labor.'});
-        this.ref.close();
       }
     });
   }

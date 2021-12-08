@@ -24,6 +24,9 @@ export class ToolsComponent implements OnInit {
   }
 
   getBillOfMaterials() {
-
+    this.issues.getForanParts().then(res => {
+      console.log(res);
+      window.open(res);
+    });
   }
 }
