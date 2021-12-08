@@ -194,6 +194,9 @@ body,p{
 .mt-20{
   margin-top: 20px;
 }
+.mt-25{
+  margin-top: 25px;
+}
 .mt-30{
   margin-top: 30px;
 }
@@ -485,3 +488,4 @@ cdk-virtual-scroll-viewport{
 .display-flex{
   display: flex;
 }
+

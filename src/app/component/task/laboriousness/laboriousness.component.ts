@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {any} from "underscore";
 import {LanguageService} from "../../../domain/language.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";

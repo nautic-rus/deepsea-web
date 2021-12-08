@@ -24,17 +24,20 @@
       </div>
     </div>
     <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
-    <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
-      <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
-      <div class="cy">{{file}}</div>
-      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
-      <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+    <div class="all-file-loading">
+      <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+        <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+        <div class="cy">{{file}}</div>
+        <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+        <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+      </div>
     </div>
+
   </div>
 </div>
 <div class="form-footer-create">
   <div class="mr-1 cx">
-    <div tabindex="10" [class.disabled-button]="isDisabled()" (click)="commit()" pButton label="ОК" class="button"></div>
+    <div tabindex="10" [class.disabled-button]="isDisabled()" (click)="commit()" pButton [label]="t.tr('Отправить')" class="button-ok"></div>
   </div>
   <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
 </div>

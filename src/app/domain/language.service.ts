@@ -169,10 +169,10 @@ export class LanguageService {
           case 'Контроль времени': return 'Time Control';
           case 'Передать права': return 'Share Rights';
           case 'ИНСТРУМЕНТЫ': return 'TOOLS';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Поделиться': return 'Share';
+          case 'Сменить': return 'Change';
+          case 'Удалить': return 'Remove';
+          case 'Отправить': return 'Send';
           case '': return '';
           case '': return '';
           case '': return '';

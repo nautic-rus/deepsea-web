@@ -5,30 +5,31 @@
       <i class="pi pi-times"></i>
     </span>
   </div>
-  <div class="cxy mt-1">
+  <div class="cx mt-1 space-between">
     <span class="p-float-label">
       <input type="text" id="hours" pInputText [(ngModel)]="hoursAmount">
       <label for="hours">{{t.tr('Количество часов')}}</label>
     </span>
-  </div>
-  <div class="cxy mt-30">
     <span class="p-float-label">
       <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
       <label for="calendar">{{t.tr('Дата')}}</label>
     </span>
   </div>
-  <div class="cxy mt-30">
-    <span class="p-float-label">
+  <div class="cxy mt-25">
+
+  </div>
+  <div class="cxy mt-25">
+    <span class="p-float-label w-100">
       <textarea id="textarea" rows="4" style="resize: none;" cols="60" [(ngModel)]="comment" pInputTextarea></textarea>
       <label for="textarea">{{t.tr('Комментарий')}}</label>
     </span>
   </div>
 </div>
 <div class="form-footer-labor">
-  <div class="mr-1 cx">
-    <div (click)="commit()" tabindex="10" pButton label="ОК" class="button"></div>
+  <div class="mr-5 cx">
+    <div (click)="commit()" tabindex="10" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
   </div>
-  <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
+  <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
 </div>
 
 

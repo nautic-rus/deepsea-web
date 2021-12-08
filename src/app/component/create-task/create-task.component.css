@@ -101,16 +101,18 @@ select:focus {
   align-items: center;
   margin-top: 16px;
 }
-.button{
+.button-ok{
   border: none;
-  margin-right: 4px;
   min-width: 24px;
   border-radius: 3px;
   text-shadow: none;
   padding: 8px 10px;
   color: #fff;
-  background: #17a2b8;
+  background: #3B94D6;
   transition: background .1s
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
 }
 .button-cancel{
   margin-right: 4px;
@@ -118,10 +120,13 @@ select:focus {
   border-radius: 3px;
   text-shadow: none;
   padding: 8px 10px;
-  color: #17a2b8;
+  color: #2E3E4E;
   background: #fff;
   transition: background .1s;
-  border: 1px solid #17a2b8;
+  border: none;
+}
+.button-cancel:hover{
+  background-color: #ECEDF0;
 }
 ::ng-deep.p-dialog .p-dialog-content {
   padding: 0 1.5rem 1rem 1.5rem;

@@ -1,4 +1,4 @@
-<div style="height: 250px; width: 400px;">
+<div style="height: 250px; width: 350px;">
   <div class="task-header-assign mt-40">
     <div class=" question cxy">
       <div class="question-icon">?</div>
@@ -8,12 +8,12 @@
     <div class="confirm-text">{{t.tr('Подтверждение')}}</div>
   </div>
   <div class="mt-1 cxy">
-    <div class="delete-text">{{t.tr('Вы подтверждаете удаление задачи?')}}</div>
+    <div class="delete-text">{{t.tr('Вы собираетесь навсегда удалить эту задачу, а также связанные с ней комментарии, данные и вложения.')}}</div>
   </div>
   <div class="footer-delete mt-2">
-    <div class="mr-1 cx">
-      <div tabindex="10" (click)="commit()" pButton [label]="t.tr ('Да')" class="button-delete"></div>
+    <div class="mr-10 cx">
+      <div tabindex="10" (click)="commit()" pButton [label]="t.tr ('Удалить')" class="button-ok"></div>
     </div>
-    <div tabindex="11" (click)="close()" pButton [label]="t.tr ('Отмена')" class="button-cancel ml-1"></div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr ('Отменить')" class="button-cancel ml-1"></div>
   </div>
 </div>
