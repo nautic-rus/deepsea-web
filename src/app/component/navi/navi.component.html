@@ -93,12 +93,17 @@
     </div>
     <div class="cxy text-center mt-10">{{t.tr('СЕКЦИИ')}}</div>
   </div>
-
   <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="cy menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy">
       <img src="assets/icons/wrench.png">
     </div>
     <div class="cxy text-center mt-10">{{t.tr('ИНСТРУМЕНТЫ')}}</div>
+  </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="cy menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy">
+      <img src="assets/icons/labor.svg" height="30">
+    </div>
+    <div class="cxy text-center mt-10">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>
   </div>
 
 

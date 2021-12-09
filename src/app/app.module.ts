@@ -74,6 +74,7 @@ import {QrCodeModule} from "ng-qrcode";
 import { DocMComponent } from './component/doc-m/doc-m.component';
 import { ToolsComponent } from './component/tools/tools.component';
 import {StyleClassModule} from "primeng/styleclass";
+import { LaborCostsComponent } from './component/labor-costs/labor-costs.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -114,6 +115,7 @@ Quill.register('modules/imageResize', ImageResize);
     ShareRightsComponent,
     DocMComponent,
     ToolsComponent,
+    LaborCostsComponent,
   ],
   imports: [
     BrowserModule,

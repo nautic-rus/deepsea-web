@@ -211,6 +211,8 @@ export class IssueManagerService {
           case 'Approved by RS': return styled ? '<div class="buttons-pick-approved-rs"><span class="icon-approved-rs cxy"><img src="assets/icons/rs.png"></span><span class="cxy button-text">Согласовано в РС</span></div>' : 'Согласовано в РС';
           case 'Send to Owner': return styled ? '<div class="buttons-pick-owner"><span class="icon-owner cxy"><img src="assets/icons/owner.png"></span><span class="cxy button-text">Отправлен заказчику</span></div>' : 'Отправлен заказчику';
           case 'Comments fixed': return styled ? '<div class="buttons-pick-fixed"><span class="icon-fixed cxy"><img src="assets/icons/fixed.svg"></span><span class="cxy button-text">Замечания устранены</span></div>' : 'Замечания устранены';
+          case 'New Revision': return styled ? '<div class="buttons-pick-revision"><span class="icon-revision cxy"><img src="assets/icons/revision.svg" height="16"></span><span class="cxy button-text">Новая ревизия</span></div>' : 'Новая ревизия';
+          case 'Cancel': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Аннулировать</span></div>' : 'Аннулировать';
 
           default: return input;
         }
@@ -239,6 +241,7 @@ export class IssueManagerService {
           case 'Approved by RS': return styled ? '<div class="buttons-pick-approved-rs"><span class="icon-approved-rs cxy"><img src="assets/icons/rs.png"></span><span class="cxy button-text">Approved by RS</span></div>' : 'Approved by RS';
           case 'Send to Owner': return styled ? '<div class="buttons-pick-owner"><span class="icon-owner cxy"><img src="assets/icons/owner.png"></span><span class="cxy button-text">Sent to Owner</span></div>' : 'Sent to Owner';
           case 'Comments fixed': return styled ? '<div class="buttons-pick-fixed"><span class="icon-fixed cxy"><img src="assets/icons/fixed.svg"></span><span class="cxy button-text">Comments fixed</span></div>' : 'Comments fixed';
+          case 'New Revision': return styled ? '<div class="buttons-pick-revision"><span class="icon-revision cxy"><img src="assets/icons/revision.svg" height="16"></span><span class="cxy button-text">New revision</span></div>' : 'New revision';
 
           default: return input;
         }

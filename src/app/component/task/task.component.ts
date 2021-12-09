@@ -547,9 +547,12 @@ export class TaskComponent implements OnInit {
         this.statusChanged();
       });
     }
-    else if (value == 'Delivered'){
+    else if (value == 'Delivered' || value == 'New Revision'){
       this.askForSendToCloud();
     }
+    // else if (value == 'New Revision'){
+    //   this.askForSendToCloud();
+    // }
     else if (value == 'Send to Yard Approval'){
       if (this.issue.first_send_date != 0){
         this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {

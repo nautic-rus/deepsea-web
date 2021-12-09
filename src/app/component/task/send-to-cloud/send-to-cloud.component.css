@@ -73,9 +73,8 @@
 .center-cloud{
   height: fit-content;
   max-height: 550px;
-  padding: 3px;
   overflow-y: auto;
-  width: 520px;
+  width: 450px;
   min-height: 250px;
 }
 .header-cloud-card{

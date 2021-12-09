@@ -15,6 +15,7 @@ import {DocExplorerComponent} from "./component/doc-explorer/doc-explorer.compon
 import {TimeControlComponent} from "./component/time-control/time-control.component";
 import {DocMComponent} from "./component/doc-m/doc-m.component";
 import {ToolsComponent} from "./component/tools/tools.component";
+import {LaborCostsComponent} from "./component/labor-costs/labor-costs.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'time-control', component: TimeControlComponent, canActivate: [AuthGuard], data: {animation: 'TimeControlComponent'} },
   { path: 'doc-m', component: DocMComponent, data: {animation: 'DocMComponent'} },
   { path: 'tools', component: ToolsComponent, canActivate: [AuthGuard], data: {animation: 'ToolsComponent'} },
+  { path: 'labor-costs', component: LaborCostsComponent, canActivate: [AuthGuard], data: {animation: 'LaborCostsComponent'} },
 ];
 
 @NgModule({
