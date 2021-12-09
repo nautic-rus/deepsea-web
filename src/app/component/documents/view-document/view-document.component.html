@@ -16,7 +16,7 @@
   <div>
     <div class="df mt-5 row-info">
       <div class="cy normal-text w-35">{{t.tr('Номер документа')}}:</div>
-      <div class="pl-3 cy description-task w-65">{{issue.doc_number}}</div>
+      <div class="pl-3 cy description-task w-65">{{issue.doc_number}}{{' ' + '(' + issueManager.localeTaskType(issue.issue_type) + ')'}}</div>
     </div>
     <div class="df mt-5 row-info">
       <div class="cy normal-text w-35">{{t.tr('Название документа')}}:</div>

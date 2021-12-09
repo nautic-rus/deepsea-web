@@ -21,7 +21,7 @@ export class ViewDocumentComponent implements OnInit {
   issue: Issue = new Issue();
   qrCodeValue: any;
 
-  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
+  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService) {
     this.issue = this.conf.data;
     this.qrCodeValue = (props.baseUrl + 'doc-m/?id=' + this.issue.id).toString();
   }

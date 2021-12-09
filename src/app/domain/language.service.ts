@@ -174,7 +174,7 @@ export class LanguageService {
           case 'Удалить': return 'Remove';
           case 'Отправить': return 'Send';
           case 'Сгенерировать': return 'Generate';
-          case '': return '';
+          case 'Создать подзадачу': return 'Create subtask';
           case '': return '';
           case '': return '';
           case '': return '';
