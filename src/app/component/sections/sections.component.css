@@ -12,8 +12,6 @@
   left: 20px;
 }
 .picture{
-  width: 1794px;
-  height: 828px;
   position: relative;
 }
 .ship{
@@ -23,15 +21,15 @@
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   padding-top: 260px;
   display: grid;
-  grid-template-columns: 5.7% 7.2% 8.6% 11.2% 11.2% 11.2% 11.2% 11.2% 10.2% 8% 4.3%;
-  grid-template-rows: 80px 65px 80px 70px 60px 70px 120px;
+  grid-template-columns: 5.7% 7.3% 8.9% 11.3% 11.3% 11.4% 11.4% 11.7% 10.1% 8.1% 0.1%;
+  grid-template-rows: 70px 50px 80px 55px 60px 70px 120px;
   position: relative;
 }
 .sections-one{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   padding-top: 120px;
   display: grid;
-  grid-template-columns: 15% 14% 15.5% 12.2% 12.2% 9.5% 10% 11.6%;
+  grid-template-columns: 11% 16% 17% 13% 13% 10% 10% 8%;
   grid-template-rows: 150px 110px 60px 75px 75px 110px 70px;
   position: relative;
 }

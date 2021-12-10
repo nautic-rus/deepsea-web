@@ -19,24 +19,32 @@
   width: var(--navi-width);
   z-index: 8;
   box-shadow: 5px 5px 22px 0px rgba(34, 34, 34, 0.2);
+  background-color: #0E364A;
 }
 .menu{
-  height: 90px;
+  padding: 8px;
+  border-radius: 8px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-  color: #616161;
+  color: #c8ccd8;
   font-size: 0.73286em;
   cursor: pointer;
   font-weight: 500;
+  display: flex;
+  flex-direction: row;
 }
 .menu:hover{
-  background-color: #efefef;
+  background-color: rgba(50, 74, 98, 0.84);
   transition: 0.2s;
+}
+.menu-pic{
+  width: 35px;
+  display: flex;
 }
 .mt-76{
   margin-top: 76px;
 }
 .selected-menu{
-  background-color: #efefef;
+  background-color: rgba(50, 74, 98, 0.84);
 }
 .hidden-menu{
   display: none;

@@ -149,6 +149,7 @@ export class IssueManagerService {
           case 'Send to Owner': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Отправлен заказчику</span>' : 'Отправлен заказчику';
           case 'AssignedTo': return styled ? '<span style="color: #606a33; background-color: #dbe9a0; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Назначен</span>' : 'Назначен';
           case 'Comments fixed': return styled ? '<span style="color: #9d7900; background-color: #ffefb2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Замечания устранены</span>' : 'Замечания устранены';
+          case 'Cancel': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Аннулирован</span>' : 'Аннулирован';
 
           default: return input;
         }
@@ -213,6 +214,7 @@ export class IssueManagerService {
           case 'Comments fixed': return styled ? '<div class="buttons-pick-fixed"><span class="icon-fixed cxy"><img src="assets/icons/fixed.svg"></span><span class="cxy button-text">Замечания устранены</span></div>' : 'Замечания устранены';
           case 'New Revision': return styled ? '<div class="buttons-pick-revision"><span class="icon-revision cxy"><img src="assets/icons/revision.svg" height="16"></span><span class="cxy button-text">Новая ревизия</span></div>' : 'Новая ревизия';
           case 'Cancel': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Аннулировать</span></div>' : 'Аннулировать';
+          case 'Recovery': return styled ? '<div class="buttons-pick-recover"><span class="icon-recover cxy"><img src="assets/icons/recover.svg" height="16"></span><span class="cxy button-text">Восстановить</span></div>' : 'Восстановить';
 
           default: return input;
         }
@@ -242,6 +244,8 @@ export class IssueManagerService {
           case 'Send to Owner': return styled ? '<div class="buttons-pick-owner"><span class="icon-owner cxy"><img src="assets/icons/owner.png"></span><span class="cxy button-text">Sent to Owner</span></div>' : 'Sent to Owner';
           case 'Comments fixed': return styled ? '<div class="buttons-pick-fixed"><span class="icon-fixed cxy"><img src="assets/icons/fixed.svg"></span><span class="cxy button-text">Comments fixed</span></div>' : 'Comments fixed';
           case 'New Revision': return styled ? '<div class="buttons-pick-revision"><span class="icon-revision cxy"><img src="assets/icons/revision.svg" height="16"></span><span class="cxy button-text">New revision</span></div>' : 'New revision';
+          case 'Cancel': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Cancel</span></div>' : 'Cancel';
+          case 'Recovery': return styled ? '<div class="buttons-pick-recover"><span class="icon-recover cxy"><img src="assets/icons/recover.svg" height="16"></span><span class="cxy button-text">Recovery</span></div>' : 'Recovery';
 
           default: return input;
         }

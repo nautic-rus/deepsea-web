@@ -1,6 +1,6 @@
 :root{
   --navi-height: 76px;
-  --navi-width: 100px;
+  --navi-width: 220px;
 }
 body,p{
   margin: 0;
@@ -316,6 +316,10 @@ body,p{
 .mx-10{
   margin-left: 10px;
   margin-right: 10px;
+}
+.mx-20{
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .px-10{
   padding-right: 10px;

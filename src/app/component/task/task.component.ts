@@ -550,9 +550,11 @@ export class TaskComponent implements OnInit {
     else if (value == 'Delivered' || value == 'New Revision'){
       this.askForSendToCloud();
     }
-    // else if (value == 'New Revision'){
-    //   this.askForSendToCloud();
-    // }
+    else if (value == 'Recovery'){
+      this.issue.status = 'New';
+      this.issue.action = 'New';
+      this.statusChanged();
+    }
     else if (value == 'Send to Yard Approval'){
       if (this.issue.first_send_date != 0){
         this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
