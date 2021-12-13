@@ -160,21 +160,12 @@
       </div>
       <div *ngIf="issue.child_issues.length > 0" class="big-text mb-1 mt-2">{{t.tr('Подзадачи')}}</div>
 
-      <div [collapse]="contentApproval" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('content')">
-        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('content')">
+      <div [collapse]="contentApproval" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('approval')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('approval')">
           <img src="assets/icons/arrow-right.png">
         </div>
         <div>{{t.tr('Согласование')}}</div>
-
       </div>
-      <div [collapse]="contentOther" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('content')">
-        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('content')">
-          <img src="assets/icons/arrow-right.png">
-        </div>
-        <div>{{t.tr('Прочее')}}</div>
-
-      </div>
-
       <div collapseContent #contentApproval="collapseContent" class="collapse-body">
         <div class="" *ngIf="issue.child_issues.length > 0">
           <div class="subtask cy" *ngFor="let childIssue of issue.child_issues">
@@ -189,6 +180,14 @@
             </div>
           </div>
         </div>
+      </div>
+
+
+      <div [collapse]="contentOther" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('other')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('other')">
+          <img src="assets/icons/arrow-right.png">
+        </div>
+        <div>{{t.tr('Прочее')}}</div>
       </div>
       <div collapseContent #contentOther="collapseContent" class="collapse-body">
         <div class="" *ngIf="issue.child_issues.length > 0">
