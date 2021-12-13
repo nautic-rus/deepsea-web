@@ -23,6 +23,7 @@ import {ConfirmAlreadyExistComponent} from "./confirm-already-exist/confirm-alre
 import {ConfirmAlreadyExistSendToApprovalComponent} from "./confirm-already-exist-send-to-approval/confirm-already-exist-send-to-approval.component";
 import {LaboriousnessComponent} from "./laboriousness/laboriousness.component";
 import {ConfirmAlreadyExistSendToYardComponent} from "./confirm-already-exist-send-to-yard/confirm-already-exist-send-to-yard.component";
+import {CreateTaskComponent} from "../create-task/create-task.component";
 
 @Component({
   selector: 'app-task',
@@ -718,10 +719,23 @@ export class TaskComponent implements OnInit {
   createChildIssue() {
     let issue = new Issue();
     issue.parent_id = this.issue.id;
-    this.ref.close(issue);
+    this.newTask(issue);
   }
 
   getIssuesOfType(child_issues: Issue[], issue_type: string) {
     return child_issues.filter(x => x.issue_type == issue_type);
+  }
+
+  newTask(issue: object | null) {
+    this.dialogService.open(CreateTaskComponent, {
+      showHeader: false,
+      modal: true,
+      data: issue
+    }).onClose.subscribe(() => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
+    });
   }
 }
