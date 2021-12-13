@@ -51,6 +51,7 @@ export class CreateTaskComponent implements OnInit {
   dragOver = false;
   image = '';
   showImages = false;
+  parent_id = 0;
   // @ts-ignore
   editor;
   // @ts-ignore
@@ -209,6 +210,7 @@ export class CreateTaskComponent implements OnInit {
       this.taskPriority = issue.priority;
       this.taskDocNumber = issue.doc_number;
       this.taskPeriod = issue.period;
+      this.parent_id = issue.parent_id;
     }
 
   }
@@ -280,6 +282,11 @@ export class CreateTaskComponent implements OnInit {
     issue.started_by = this.auth.getUser().login;
     issue.status = 'New';
     issue.action = 'New';
+    issue.parent_id = this.parent_id;
+    if (!issue.issue_type.includes('RKD')){
+      issue.doc_number = '';
+    }
+
     // @ts-ignore
     issue.file_attachments = this.loaded;
     this.issues.startIssue(issue).then(res => {

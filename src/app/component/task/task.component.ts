@@ -714,4 +714,10 @@ export class TaskComponent implements OnInit {
     // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
     // return da + '.' + mo + '.' + ye;
   }
+
+  createChildIssue() {
+    let issue = new Issue();
+    issue.parent_id = this.issue.id;
+    this.ref.close(issue);
+  }
 }

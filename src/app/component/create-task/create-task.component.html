@@ -1,6 +1,7 @@
 <div class="center-create">
   <div class="header-create-card">
-    <div class="header-create-text">{{lang.tr('Создать задачу')}}</div>
+    <div class="header-create-text" *ngIf="parent_id == 0">{{lang.tr('Создать задачу')}}</div>
+    <div class="header-create-text" *ngIf="parent_id != 0">{{lang.tr('Создать подзадачу')}}</div>
     <div class="task-button-create cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
