@@ -20,3 +20,14 @@
 .text-14{
   font-size: 13px;
 }
+/deep/.pi{
+  font-size: 14px;
+}
+.filter{
+  margin-left: auto;
+}
+.header{
+  display: flex;
+  text-align: center;
+  align-items: center;
+}

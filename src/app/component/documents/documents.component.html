@@ -34,14 +34,14 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="doc_number" class="w-10">{{l.tr('Номер чертежа')}}
-            <p-sortIcon field="code"></p-sortIcon>
+          <th pSortableColumn="doc_number" class="w-15 ">{{l.tr('Номер чертежа')}}
+            <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" class="w-50">{{l.tr('Название')}}
-            <p-sortIcon field="code"></p-sortIcon>
+          <th pSortableColumn="name" class="w-40">{{l.tr('Название')}}
+            <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="revision" class="w-10">{{l.tr('Ревизия')}}
-            <p-sortIcon field="code"></p-sortIcon>
+          <th pSortableColumn="revision" class="w-15">{{l.tr('Ревизия')}}
+            <p-sortIcon field="revision"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.revision" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
@@ -49,8 +49,8 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="status" class="w-10">{{l.tr('Статус')}}
-            <p-sortIcon field="code"></p-sortIcon>
+          <th pSortableColumn="status" class="w-15">{{l.tr('Статус')}}
+            <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
@@ -58,19 +58,19 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="delivered_date" class="w-10">{{l.tr('Дата поставки')}}
-            <p-sortIcon field="code"></p-sortIcon>
-            <p-columnFilter type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
+          <th pSortableColumn="delivered_date" class="w-15">{{l.tr('Дата поставки')}}
+            <p-sortIcon field="delivered_date"></p-sortIcon>
+            <p-columnFilter class="filter" type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
         <tr class="cursor-pointer" (click)="viewTask(issue.id)">
-          <td class="w-10 text-14">{{issue.doc_number}}</td>
-          <td class="w-50 text-14">{{issue.name}}</td>
-          <td class="w-10 text-14">{{issue.revision}}</td>
-          <td class="w-10 text-14"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
-          <td class="w-10 text-14">{{getDate(+issue.delivered_date)}}</td>
+          <td class="w-15 text-14">{{issue.doc_number}}</td>
+          <td class="w-40 text-14">{{issue.name}}</td>
+          <td class="w-15 text-14">{{issue.revision}}</td>
+          <td class="w-15 text-14"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
+          <td class="w-15 text-14">{{getDate(+issue.delivered_date)}}</td>
         </tr>
       </ng-template>
     </p-table>
