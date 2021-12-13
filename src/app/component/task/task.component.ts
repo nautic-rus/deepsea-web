@@ -720,4 +720,8 @@ export class TaskComponent implements OnInit {
     issue.parent_id = this.issue.id;
     this.ref.close(issue);
   }
+
+  getIssuesOfType(child_issues: Issue[], issue_type: string) {
+    return child_issues.filter(x => x.issue_type == issue_type);
+  }
 }

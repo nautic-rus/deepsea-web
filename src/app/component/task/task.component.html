@@ -160,7 +160,7 @@
       </div>
       <div *ngIf="issue.child_issues.length > 0" class="big-text mb-1 mt-2">{{t.tr('Подзадачи')}}</div>
 
-      <div [collapse]="contentApproval" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('approval')">
+      <div [collapse]="contentApproval" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'APPROVAL').length > 0" (click)="contentClick('approval')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('approval')">
           <img src="assets/icons/arrow-right.png">
         </div>
@@ -168,8 +168,8 @@
       </div>
       <div collapseContent #contentApproval="collapseContent" class="collapse-body">
         <div class="" *ngIf="issue.child_issues.length > 0">
-          <div class="subtask cy" *ngFor="let childIssue of issue.child_issues">
-            <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.issue_type == 'APPROVAL'">
+          <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'APPROVAL')">
+            <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
               <div>{{t.tr('Согласование')}}</div>
               <div>
                 <span>{{childIssue.doc_number}}</span>
@@ -183,24 +183,22 @@
       </div>
 
 
-      <div [collapse]="contentOther" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('other')">
+      <div [collapse]="contentOther" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'OTHER').length > 0" (click)="contentClick('other')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('other')">
           <img src="assets/icons/arrow-right.png">
         </div>
         <div>{{t.tr('Прочее')}}</div>
       </div>
       <div collapseContent #contentOther="collapseContent" class="collapse-body">
-        <div class="" *ngIf="issue.child_issues.length > 0">
-          <div class="subtask cy" *ngFor="let childIssue of issue.child_issues">
-            <div class="subtask-grid" (click)="openIssue(childIssue.id)" *ngIf="childIssue.issue_type == 'OTHER'">
-              <div>{{t.tr('Согласование')}}</div>
-              <div>
-                <span>{{childIssue.doc_number}}</span>
-                <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
-              </div>
-              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-              <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+        <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OTHER')">
+          <div class="subtask-grid" (click)="openIssue(childIssue.id)">
+            <div>{{t.tr('Согласование')}}</div>
+            <div>
+              <span>{{childIssue.doc_number}}</span>
+              <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
             </div>
+            <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+            <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
           </div>
         </div>
       </div>
