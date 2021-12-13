@@ -134,12 +134,12 @@
       <div class="big-text mb-1 mt-2">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
       <div class="attachments-issue">
         <div *ngFor="let file of issue.file_attachments">
-          <div (click)="openFile(file.url)" class="attachment-issues df mb-5 cursor-pointer">
+          <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
             <div class="cxy">
               <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
             </div>
             <div class="attachment-footer-issue">
-              <span class="mr-5" [pTooltip]="file.name" tooltipPosition="top">{{trimFileName(file.name) + ' '}}</span>
+              <span class="mr-5" >{{trimFileName(file.name) + ' '}}</span>
               <div class="p-ml-auto df">
                 <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cloud-download cloud-download" viewBox="0 0 16 16">
@@ -164,6 +164,13 @@
           <img src="assets/icons/arrow-right.png">
         </div>
         <div>{{t.tr('Согласование')}}</div>
+
+      </div>
+      <div [collapse]="content" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.child_issues.length > 0" (click)="contentClick('content')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('content')">
+          <img src="assets/icons/arrow-right.png">
+        </div>
+        <div>{{t.tr('Прочее')}}</div>
 
       </div>
       <div collapseContent #content="collapseContent" class="collapse-body">

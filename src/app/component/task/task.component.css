@@ -980,11 +980,13 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   max-height: 115px;
   overflow-y: auto;
+
 }
 .attachment-issues-files{
   padding: 3px;
   border-radius: 3px;
   width: 280px;
+
 }
 .attachment-issues-files:hover{
   background-color: #dadada;
@@ -992,6 +994,7 @@
 .attachment-issues{
   padding: 3px;
   border-radius: 3px;
+  background-color: #F4F5F7;
 }
 .attachment-issues:hover{
   background-color: #dadada;
