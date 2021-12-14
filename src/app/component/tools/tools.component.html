@@ -44,8 +44,7 @@
             </div>
           </div>
           <div class="body-button-card my-15 cx">
-            <div tabindex="10" (click)="getTraysByZonesAndSystems()" pButton [label]="t.tr ('Сгенерировать')" class="button-ok" *ngIf="traysByZonesAndSystems == ''" [class.button-generate]="wait.includes('trays-by-zones-and-systems')"></div>
-            <div tabindex="10" (click)="openTraysByZonesAndSystems()" pButton [label]="t.tr ('Открыть')" class="button-ok" *ngIf="traysByZonesAndSystems != ''"></div>
+            <div tabindex="10" (click)="getTraysByZonesAndSystems()" pButton [label]="t.tr ('Открыть')" class="button-ok"></div>
           </div>
           <div class="footer-card pt-5">
             <div class="px-10">

@@ -18,7 +18,6 @@ export class ToolsComponent implements OnInit {
   taskProjects: string[] = [];
   wait: string[] = [];
   billOfMaterials: string = '';
-  traysByZonesAndSystems: any = [];
 
   constructor(public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService, private router: Router) { }
 
@@ -39,23 +38,11 @@ export class ToolsComponent implements OnInit {
     });
   }
   getTraysByZonesAndSystems(){
-    this.wait.push('trays-by-zones-and-systems');
-    this.s.getTraysByZonesAndSystems("P701", "5318", "884-6009").then(res => {
-      this.traysByZonesAndSystems = res;
-      this.wait.splice(this.wait.indexOf('trays-by-zones-and-systems'), 1);
-    });
+    this.router.navigate(['trays-by-zones-and-systems'], {queryParams: {project: "P701", zones: "5318", systems: "884-6009"}});
   }
 
   download(url: string) {
     window.open(url, '_blank');
   }
 
-  openTraysByZonesAndSystems() {
-    this.router.navigate(['trays-by-zones-and-systems'], {queryParams: {trays: this.traysByZonesAndSystems}});
-    // this.dialogService.open(TraysByZonesAndSystemsComponent, {
-    //   showHeader: false,
-    //   modal: true,
-    //   data: this.traysByZonesAndSystems
-    // });
-  }
 }
