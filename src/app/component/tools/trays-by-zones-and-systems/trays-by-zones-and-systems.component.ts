@@ -18,6 +18,9 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
       }
       this.router.navigate([], {queryParams: {trays: null}});
     });
+    if (this.trays.length == 0){
+      this.router.navigate(['']);
+    }
   }
 
 }
