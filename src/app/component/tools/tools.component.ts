@@ -6,6 +6,7 @@ import {SpecManagerService} from "../../domain/spec-manager.service";
 import {TaskComponent} from "../task/task.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {TraysByZonesAndSystemsComponent} from "./trays-by-zones-and-systems/trays-by-zones-and-systems.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tools',
@@ -19,7 +20,7 @@ export class ToolsComponent implements OnInit {
   billOfMaterials: string = '';
   traysByZonesAndSystems: any = [];
 
-  constructor(public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService) { }
+  constructor(public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService, private router: Router) { }
 
   ngOnInit(): void {
     this.issues.getIssueProjects().then(projects => {
@@ -39,8 +40,8 @@ export class ToolsComponent implements OnInit {
   }
   getTraysByZonesAndSystems(){
     this.wait.push('trays-by-zones-and-systems');
-    this.s.getTraysByZonesAndSystems("P701", ["5318"], ["884-6009"]).then(res => {
-      this.traysByZonesAndSystems = JSON.parse(res);
+    this.s.getTraysByZonesAndSystems("P701", "5318", "884-6009").then(res => {
+      this.traysByZonesAndSystems = res;
       this.wait.splice(this.wait.indexOf('trays-by-zones-and-systems'), 1);
     });
   }
@@ -50,10 +51,11 @@ export class ToolsComponent implements OnInit {
   }
 
   openTraysByZonesAndSystems() {
-    this.dialogService.open(TraysByZonesAndSystemsComponent, {
-      showHeader: false,
-      modal: true,
-      data: this.traysByZonesAndSystems
-    });
+    this.router.navigate(['trays-by-zones-and-systems'], {queryParams: {trays: this.traysByZonesAndSystems}});
+    // this.dialogService.open(TraysByZonesAndSystemsComponent, {
+    //   showHeader: false,
+    //   modal: true,
+    //   data: this.traysByZonesAndSystems
+    // });
   }
 }

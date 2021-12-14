@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Issue} from "../../../domain/classes/issue";
-import {DynamicDialogConfig} from "primeng/dynamicdialog";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-trays-by-zones-and-systems',
@@ -10,10 +9,15 @@ import {DynamicDialogConfig} from "primeng/dynamicdialog";
 export class TraysByZonesAndSystemsComponent implements OnInit {
 
   trays: any = [];
-  constructor(public conf: DynamicDialogConfig) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.trays = this.conf.data;
+    this.route.queryParams.subscribe(params => {
+      if (params.trays != null){
+        this.trays = JSON.parse(params.trays);
+      }
+      this.router.navigate([], {queryParams: {trays: null}});
+    });
   }
 
 }
