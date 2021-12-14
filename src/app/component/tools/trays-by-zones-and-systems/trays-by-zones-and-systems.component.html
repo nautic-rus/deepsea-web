@@ -1,24 +1,33 @@
-<div *ngIf="trays.length == 0">
-  <p-progressSpinner></p-progressSpinner>
-  PLEASE WAIT LONG
-</div>
-<div *ngIf="trays.length > 0">
-  <div *ngFor="let tray of trays">
-    <br>
-    <div>ТРЕЙ: </div>
-    <div class="df">
-      <div>{{tray.foranTray.IDSQ}} | </div>
-      <div>{{tray.mountData.label}} | </div>
-      <div>{{tray.workShopMaterial.name}}</div>
+<div class="all-page">
+  <div class="card">
+    <div *ngIf="trays.length == 0">
+      <div class="cxy">
+        <div>
+          <img src="assets/whale.gif" height="120">
+          <div class="cx ">PLEASE WAIT...</div>
+        </div>
+      </div>
     </div>
-    <br>
-    <div>ТРЕЙ САППОРТ: </div>
-    <div class="df" *ngFor="let sup of tray.supports">
-      <div>{{sup.workShopMaterial.name}} | </div>
-      <div>{{sup.mountData.label}} | </div>
-      <div>{{sup.kei}} | </div>
-      <div>{{sup.qty}}</div>
+    <div *ngIf="trays.length > 0">
+      <div *ngFor="let tray of trays">
+        <br>
+        <div>ТРЕЙ: </div>
+        <div class="df">
+          <div>{{tray.foranTray.IDSQ}} | </div>
+          <div>{{tray.mountData.label}} | </div>
+          <div>{{tray.workShopMaterial.name}}</div>
+        </div>
+        <br>
+        <div>ТРЕЙ САППОРТ: </div>
+        <div class="df" *ngFor="let sup of tray.supports">
+          <div>{{sup.workShopMaterial.name}} | </div>
+          <div>{{sup.mountData.label}} | </div>
+          <div>{{sup.kei}} | </div>
+          <div>{{sup.qty}}</div>
+        </div>
+        <br><hr>
+      </div>
     </div>
-    <br><hr>
+
   </div>
 </div>
