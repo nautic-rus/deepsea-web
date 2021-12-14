@@ -75,6 +75,7 @@ import { DocMComponent } from './component/doc-m/doc-m.component';
 import { ToolsComponent } from './component/tools/tools.component';
 import {StyleClassModule} from "primeng/styleclass";
 import { LaborCostsComponent } from './component/labor-costs/labor-costs.component';
+import { TraysByZonesAndSystemsComponent } from './component/tools/trays-by-zones-and-systems/trays-by-zones-and-systems.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -116,6 +117,7 @@ Quill.register('modules/imageResize', ImageResize);
     DocMComponent,
     ToolsComponent,
     LaborCostsComponent,
+    TraysByZonesAndSystemsComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,7 @@ import {IssueType} from "./classes/issue-type";
 import {TimeControlInterval} from "./classes/time-control-interval";
 import {SfiCode} from "./classes/sfi-code";
 import {HullPart} from "./classes/hull-part";
+import {Weather} from "./classes/weather";
 
 @Injectable({
   providedIn: 'root'
@@ -112,6 +113,9 @@ export class IssueManagerService {
   }
   async getTimeControl(user: number){
     return await this.http.get<TimeControlInterval[]>(props.http + '/timeControl', {params: {user}}).toPromise();
+  }
+  async getTimeAndWeather(){
+    return await this.http.get<Weather>(props.http + '/timeAndWeather').toPromise();
   }
   async shareRights(user: string, with_user: string){
     return await this.http.get<string>(props.http + '/shareRights', {params: {user, with_user}}).toPromise();

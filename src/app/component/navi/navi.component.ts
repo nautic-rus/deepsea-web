@@ -5,10 +5,9 @@ import {LanguageService} from "../../domain/language.service";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {TimeControlInterval} from "../../domain/classes/time-control-interval";
 import _ from "underscore";
-import {ImportxlsComponent} from "../home/importxls/importxls.component";
-import {CreateTaskComponent} from "../create-task/create-task.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {ShareRightsComponent} from "./share-rights/share-rights.component";
+import {Weather} from "../../domain/classes/weather";
 
 @Component({
   selector: 'app-navi',
@@ -19,11 +18,15 @@ export class NaviComponent implements OnInit {
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private route: ActivatedRoute, private issueManager: IssueManagerService, private dialogService: DialogService) { }
   tc: TimeControlInterval[] = [];
+  weather: Weather = new Weather();
   tcFilled = false;
   ngOnInit(): void {
     this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
       this.tc = res;
       this.tcFilled = true;
+    });
+    this.issueManager.getTimeAndWeather().then(res => {
+      this.weather = res;
     });
   }
   isOnline(){
@@ -49,5 +52,10 @@ export class NaviComponent implements OnInit {
       showHeader: false,
       modal: true,
     });
+  }
+
+  getTime() {
+    let time = new Date(this.weather.time);
+    return (('0' + time.getHours()).slice(-2)) + ':' + ('0' + time.getMinutes()).slice(-2)
   }
 }

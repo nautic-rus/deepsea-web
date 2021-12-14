@@ -2,7 +2,28 @@
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
-  <div></div>
+  <div>
+    <div class="df" *ngIf="weather.description != ''">
+      <div class="mx-1 time cy">
+        {{getTime()}}
+      </div>
+      <div class="mx-1 weather">
+        <div class="df">
+          <div class="mx-1 cy">
+            <div>
+              <img src="{{'https://openweathermap.org/img/wn/' + weather.icon + '.png'}}">
+            </div>
+            <div>{{weather.description}}</div>
+          </div>
+          <div class="mx-1 cy">
+            <div>Temp: {{weather.temp}} °C</div>
+            <div>Feels like: {{weather.feels_like}} °C</div>
+            <div>Wind: {{weather.wind}} m/s</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="cxy">
     <div (click)="t.switchLang()">
       <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/en.png">
