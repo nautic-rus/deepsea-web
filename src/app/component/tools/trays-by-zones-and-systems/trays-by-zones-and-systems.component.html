@@ -20,8 +20,8 @@
       <div class="w-14 table-header-col cy">{{l.tr('Длина')}}</div>
       <div class="w-10 table-header-col cy">{{l.tr('?')}}</div>
     </div>
-    <div class="df table-row cursor-pointer" *ngFor="let tray of trays">
-      <div [collapse]="traySupports" >
+    <div *ngFor="let tray of trays">
+      <div class="df table-row cursor-pointer" [collapse]="traySupports">
         <div class="w-5 table-body cy">{{tray.mountData.label}}</div>
         <div class="w-15 table-body cy">{{tray.mountData.trmCode}}</div>
         <div class="w-35 table-body cy">{{tray.workShopMaterial.name}}<br>{{tray.workShopMaterial.description}}</div>
@@ -39,12 +39,13 @@
           {{tray.foranTray.SURFACE}}<br>{{tray.foranTray.marign}}
         </div>
       </div>
-      <div collapseContent #traySupports="collapseContent" *ngFor="let sup of tray.support">
-        <div class="w-5 table-body cy">{{sup.workShopMaterial.name}}</div>
-        <div class="w-15 table-body cy">{{sup.mountData.trmCode}}</div>
-        <div class="w-35 table-body cy">{{sup.workShopMaterial.name}}</div>
-        <div class="w-7 table-body cy">{{sup.workShopMaterial.singleWeight}}</div>
-
+      <div collapseContent #traySupports="collapseContent">
+        <div *ngFor="let sup of tray.support">
+          <div class="w-5 table-body cy">{{sup.workShopMaterial.name}}</div>
+          <div class="w-15 table-body cy">{{sup.mountData.trmCode}}</div>
+          <div class="w-35 table-body cy">{{sup.workShopMaterial.name}}</div>
+          <div class="w-7 table-body cy">{{sup.workShopMaterial.singleWeight}}</div>
+        </div>
       </div>
     </div>
 

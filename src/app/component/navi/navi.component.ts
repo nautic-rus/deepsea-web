@@ -27,7 +27,14 @@ export class NaviComponent implements OnInit {
     });
     this.issueManager.getTimeAndWeather().then(res => {
       this.weather = res;
+      this.timeTick();
     });
+  }
+  timeTick(){
+    setTimeout(() => {
+      this.weather.time += 1000;
+      this.timeTick();
+    }, 1000);
   }
   isOnline(){
     return !this.tcFilled || this.getDateIntervals().find(x => x.closeDoor == 0) != null;
