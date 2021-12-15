@@ -76,6 +76,7 @@ import { ToolsComponent } from './component/tools/tools.component';
 import {StyleClassModule} from "primeng/styleclass";
 import { LaborCostsComponent } from './component/labor-costs/labor-costs.component';
 import { TraysByZonesAndSystemsComponent } from './component/tools/trays-by-zones-and-systems/trays-by-zones-and-systems.component';
+import { HullEspComponent } from './component/documents/hull-esp/hull-esp.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -118,6 +119,7 @@ Quill.register('modules/imageResize', ImageResize);
     ToolsComponent,
     LaborCostsComponent,
     TraysByZonesAndSystemsComponent,
+    HullEspComponent,
   ],
   imports: [
     BrowserModule,

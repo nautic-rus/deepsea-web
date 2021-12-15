@@ -1,0 +1,58 @@
+.card-page{
+  position: relative;
+  overflow: auto;
+}
+.table-header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  border-top: 1px solid #f3f2f1;
+  border-bottom: 1px solid #f3f2f1;
+  min-height: 60px;
+}
+.table-header-support{
+  display: flex;
+  min-height: 50px;
+  border-bottom: 1px solid #f3f2f1;
+  border-top: 1px solid #f3f2f1;
+}
+.table-header-col{
+  text-align: left;
+  padding: 0.75rem 0.75rem;
+  border-width: 0 0 1px 0;
+  font-weight: 600;
+  color: #323130;
+  background: #ffffff;
+  transition: box-shadow 0.2s;
+  font-size: 13px;
+}
+.table-header-col:hover{
+  background-color: #F3F2F1;
+}
+.table-body{
+  padding: 0.75rem 0.75rem;
+  color: #323130;
+  font-size: 13px;
+}
+.table-body-support{
+  padding: 0.75rem 0.75rem;
+  color: #323130;
+  font-size: 13px;
+}
+.row-support{
+  background-color: #f3f2f194;
+}
+.row-support:hover{
+  background-color: #f3f2f1;
+}
+.table-body-bold-text{
+  font-weight: bolder;
+  font-size: 12px;
+}
+.normal-weight{
+  font-weight: normal;
+}
+.table-row:hover{
+  background-color: #F3F2F1;
+}

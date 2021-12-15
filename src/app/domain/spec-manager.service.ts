@@ -11,4 +11,7 @@ export class SpecManagerService {
   async getTraysByZonesAndSystems(project: string, zones: string, systems: string) {
     return await this.http.get<any>(props.httpSpec + '/traysByZonesAndSystems', {params: {project, zones, systems: systems}}).toPromise();
   }
+  async getHullPartListFromBsTree(project: string, docNumber: string) {
+    return await this.http.get<any>(props.httpSpec + '/getHullPartListFromBsTree', {params: {project, docNumber}}).toPromise();
+  }
 }

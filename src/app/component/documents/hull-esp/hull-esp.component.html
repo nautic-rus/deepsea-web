@@ -1,4 +1,4 @@
-<div class="all-page" xmlns="http://www.w3.org/1999/html">
+<div class="all-page">
   <div class="card card-page">
     <div *ngIf="trays.length == 0">
       <div class="cxy">
@@ -8,9 +8,6 @@
         </div>
       </div>
     </div>
-
-
-
     <div class="table-header cursor-pointer" *ngIf="trays.length > 0">
       <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
       <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
@@ -59,16 +56,5 @@
         </div>
       </div>
     </div>
-
-    <!--        <div>ТРЕЙ САППОРТ: </div>-->
-    <!--        <div class="df" *ngFor="let sup of tray.supports">-->
-    <!--          <div>{{sup.workShopMaterial.name}} | </div>-->
-    <!--          <div>{{sup.mountData.label}} | </div>-->
-    <!--          <div>{{sup.kei}} | </div>-->
-    <!--          <div>{{sup.qty}}</div>-->
-    <!--        </div>-->
-
-
-
   </div>
 </div>
