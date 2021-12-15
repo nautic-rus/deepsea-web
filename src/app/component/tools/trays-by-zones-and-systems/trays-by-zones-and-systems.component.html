@@ -39,15 +39,15 @@
           {{tray.foranTray.SURFACE}}<br>{{tray.foranTray.marign}}
         </div>
       </div>
+      <div collapseContent #traySupports="collapseContent" *ngFor="let sup of tray.support">
+        <div class="w-5 table-body cy">{{sup.workShopMaterial.name}}</div>
+        <div class="w-15 table-body cy">{{sup.mountData.trmCode}}</div>
+        <div class="w-35 table-body cy">{{sup.workShopMaterial.name}}</div>
+        <div class="w-7 table-body cy">{{sup.workShopMaterial.singleWeight}}</div>
 
+      </div>
     </div>
-    <div collapseContent #traySupports="collapseContent">
-      <div class="w-5 table-body cy">{{traySupports.workShopMaterial.name}}</div>
-      <div class="w-15 table-body cy">{{traySupports.mountData.trmCode}}</div>
-      <div class="w-35 table-body cy">{{traySupports.workShopMaterial.name}}</div>
-      <div class="w-7 table-body cy">{{traySupports.workShopMaterial.singleWeight}}</div>
 
-    </div>
 <!--        <div>ТРЕЙ САППОРТ: </div>-->
 <!--        <div class="df" *ngFor="let sup of tray.supports">-->
 <!--          <div>{{sup.workShopMaterial.name}} | </div>-->
