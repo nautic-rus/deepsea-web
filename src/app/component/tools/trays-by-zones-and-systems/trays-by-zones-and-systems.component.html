@@ -11,7 +11,7 @@
 
 
 
-    <div class="table-header" *ngIf="trays.length > 0">
+    <div class="table-header cursor-pointer" *ngIf="trays.length > 0">
       <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
       <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
       <div class="w-35 table-header-col cy">Название, описание</div>
@@ -40,11 +40,22 @@
         </div>
       </div>
       <div collapseContent #traySupports="collapseContent">
-        <div *ngFor="let sup of tray.support">
-          <div class="w-5 table-body cy">{{sup.workShopMaterial.name}}</div>
-          <div class="w-15 table-body cy">{{sup.mountData.trmCode}}</div>
-          <div class="w-35 table-body cy">{{sup.workShopMaterial.name}}</div>
-          <div class="w-7 table-body cy">{{sup.workShopMaterial.singleWeight}}</div>
+        <div class="table-header-support cursor-pointer">
+          <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
+          <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
+          <div class="w-35 table-header-col cy">Название, описание</div>
+          <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>
+          <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>
+          <div class="w-10 table-header-col cy">{{l.tr('Поз. на чертеже')}}</div>
+        </div>
+        <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">
+          <div class="w-5 table-body-support cy">{{sup.mountData.label}}</div>
+          <div class="w-15 table-body-support cy">{{sup.mountData.trmCode}}</div>
+          <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>
+          <div class="w-7 table-body-support cy">{{sup.kei}}</div>
+          <div class="w-15 table-body-support cy">{{sup.qty}}</div>
+          <div *ngIf="sup.isNeedLabel == true" class="w-10 table-body-support cy">да</div>
+          <div *ngIf="sup.isNeedLabel == false" class="w-10 table-body-support cy">нет</div>
         </div>
       </div>
     </div>
