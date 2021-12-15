@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-trays-by-zones-and-systems',
@@ -8,9 +9,10 @@ import {SpecManagerService} from "../../../domain/spec-manager.service";
   styleUrls: ['./trays-by-zones-and-systems.component.css']
 })
 export class TraysByZonesAndSystemsComponent implements OnInit {
-
+  collapsed: string[] = [];
   trays: any = [];
-  constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService) { }
+
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -26,5 +28,9 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
         this.router.navigate(['']);
       }
     });
+  }
+
+  contentClick(content: string): void{
+    this.collapsed.includes(content) ? this.collapsed.splice(this.collapsed.indexOf(content), 1) : this.collapsed.push(content);
   }
 }

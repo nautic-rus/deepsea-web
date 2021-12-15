@@ -1,5 +1,5 @@
-<div class="all-page">
-  <div class="card">
+<div class="all-page" xmlns="http://www.w3.org/1999/html">
+  <div class="card card-page">
     <div *ngIf="trays.length == 0">
       <div class="cxy">
         <div>
@@ -8,26 +8,55 @@
         </div>
       </div>
     </div>
-    <div *ngIf="trays.length > 0">
-      <div *ngFor="let tray of trays">
-        <br>
-        <div>ТРЕЙ: </div>
-        <div class="df">
-          <div>{{tray.foranTray.IDSQ}} | </div>
-          <div>{{tray.mountData.label}} | </div>
-          <div>{{tray.workShopMaterial.name}}</div>
-        </div>
-        <br>
-        <div>ТРЕЙ САППОРТ: </div>
-        <div class="df" *ngFor="let sup of tray.supports">
-          <div>{{sup.workShopMaterial.name}} | </div>
-          <div>{{sup.mountData.label}} | </div>
-          <div>{{sup.kei}} | </div>
-          <div>{{sup.qty}}</div>
-        </div>
-        <br><hr>
-      </div>
+
+
+
+    <div class="table-header" *ngIf="trays.length > 0">
+      <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
+      <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
+      <div class="w-35 table-header-col cy">Название, описание</div>
+      <div class="w-7 table-header-col cy">{{l.tr('Вес')}}</div>
+      <div class="w-14 table-header-col cy">{{l.tr('Координаты')}}</div>
+      <div class="w-14 table-header-col cy">{{l.tr('Длина')}}</div>
+      <div class="w-10 table-header-col cy">{{l.tr('?')}}</div>
     </div>
+    <div class="df table-row cursor-pointer" *ngFor="let tray of trays">
+      <div [collapse]="traySupports" >
+        <div class="w-5 table-body cy">{{tray.mountData.label}}</div>
+        <div class="w-15 table-body cy">{{tray.mountData.trmCode}}</div>
+        <div class="w-35 table-body cy">{{tray.workShopMaterial.name}}<br>{{tray.workShopMaterial.description}}</div>
+        <div class="w-7 table-body cy">{{tray.workShopMaterial.singleWeight}}</div>
+        <div class="w-14 table-body cy">
+          <div class="table-body-bold-text">X1:<span class="normal-weight">{{' ' + tray.foranTray.N1X}}</span></div>
+          <div class="table-body-bold-text">Y1:<span class="normal-weight">{{' ' + tray.foranTray.N1Y}}</span></div>
+          <div class="table-body-bold-text">Z1:<span class="normal-weight">{{' ' + tray.foranTray.N1Z}}</span></div>
+          <div class="table-body-bold-text">X2:<span class="normal-weight">{{' ' + tray.foranTray.N2X}}</span></div>
+          <div class="table-body-bold-text">Y2:<span class="normal-weight">{{' ' + tray.foranTray.N2Y}}</span></div>
+          <div class="table-body-bold-text">Z2:<span class="normal-weight">{{' ' + tray.foranTray.N2Z}}</span></div>
+        </div>
+        <div class="w-14 table-body cy">{{tray.foranTray.LEN}}</div>
+        <div class="w-10 table-body cy">
+          {{tray.foranTray.SURFACE}}<br>{{tray.foranTray.marign}}
+        </div>
+      </div>
+
+    </div>
+    <div collapseContent #traySupports="collapseContent">
+      <div class="w-5 table-body cy">{{traySupports.workShopMaterial.name}}</div>
+      <div class="w-15 table-body cy">{{traySupports.mountData.trmCode}}</div>
+      <div class="w-35 table-body cy">{{traySupports.workShopMaterial.name}}</div>
+      <div class="w-7 table-body cy">{{traySupports.workShopMaterial.singleWeight}}</div>
+
+    </div>
+<!--        <div>ТРЕЙ САППОРТ: </div>-->
+<!--        <div class="df" *ngFor="let sup of tray.supports">-->
+<!--          <div>{{sup.workShopMaterial.name}} | </div>-->
+<!--          <div>{{sup.mountData.label}} | </div>-->
+<!--          <div>{{sup.kei}} | </div>-->
+<!--          <div>{{sup.qty}}</div>-->
+<!--        </div>-->
+
+
 
   </div>
 </div>
