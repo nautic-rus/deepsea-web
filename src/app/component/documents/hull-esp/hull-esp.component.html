@@ -1,6 +1,6 @@
 <div class="all-page">
   <div class="card card-page">
-    <div *ngIf="trays.length == 0">
+    <div *ngIf="parts.length == 0 && !noResult">
       <div class="cxy">
         <div>
           <img src="assets/whale.gif" height="120">
@@ -8,51 +8,30 @@
         </div>
       </div>
     </div>
-    <div class="table-header cursor-pointer" *ngIf="trays.length > 0">
+    <div *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
+    <div class="table-header cursor-pointer" *ngIf="parts.length > 0">
       <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
       <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
       <div class="w-35 table-header-col cy">Название, описание</div>
       <div class="w-7 table-header-col cy">{{l.tr('Вес')}}</div>
-      <div class="w-14 table-header-col cy">{{l.tr('Координаты')}}</div>
+      <div class="w-14 table-header-col cy">{{l.tr('Центр тяжести')}}</div>
       <div class="w-14 table-header-col cy">{{l.tr('Длина')}}</div>
       <div class="w-10 table-header-col cy">{{l.tr('?')}}</div>
     </div>
-    <div *ngFor="let tray of trays">
-      <div class="df table-row cursor-pointer" [collapse]="traySupports">
-        <div class="w-5 table-body cy">{{tray.mountData.label}}</div>
-        <div class="w-15 table-body cy">{{tray.mountData.trmCode}}</div>
-        <div class="w-35 table-body cy">{{tray.workShopMaterial.name}}<br>{{tray.workShopMaterial.description}}</div>
-        <div class="w-7 table-body cy">{{tray.workShopMaterial.singleWeight}}</div>
+    <div *ngFor="let part of parts">
+      <div class="df table-row cursor-pointer">
+        <div class="w-5 table-body cy">{{part.SECTION}}</div>
+        <div class="w-15 table-body cy">{{part.WEIGHT}}</div>
+        <div class="w-35 table-body cy">{{part.PARTNAME}}<br>{{part.DESCRIPTION}}</div>
+        <div class="w-7 table-body cy">{{part.BLOCK_DESCRIPTION}}</div>
         <div class="w-14 table-body cy">
-          <div class="table-body-bold-text">X1:<span class="normal-weight">{{' ' + tray.foranTray.N1X}}</span></div>
-          <div class="table-body-bold-text">Y1:<span class="normal-weight">{{' ' + tray.foranTray.N1Y}}</span></div>
-          <div class="table-body-bold-text">Z1:<span class="normal-weight">{{' ' + tray.foranTray.N1Z}}</span></div>
-          <div class="table-body-bold-text">X2:<span class="normal-weight">{{' ' + tray.foranTray.N2X}}</span></div>
-          <div class="table-body-bold-text">Y2:<span class="normal-weight">{{' ' + tray.foranTray.N2Y}}</span></div>
-          <div class="table-body-bold-text">Z2:<span class="normal-weight">{{' ' + tray.foranTray.N2Z}}</span></div>
+          <div class="table-body-bold-text">X:<span class="normal-weight">{{' ' + part.X_COG}}</span></div>
+          <div class="table-body-bold-text">Y:<span class="normal-weight">{{' ' + part.Y_COG}}</span></div>
+          <div class="table-body-bold-text">Z:<span class="normal-weight">{{' ' + part.Z_COG}}</span></div>
         </div>
-        <div class="w-14 table-body cy">{{tray.foranTray.LEN}}</div>
+        <div class="w-14 table-body cy">{{part.SYMBOL}}</div>
         <div class="w-10 table-body cy">
-          {{tray.foranTray.SURFACE}}<br>{{tray.foranTray.marign}}
-        </div>
-      </div>
-      <div collapseContent #traySupports="collapseContent">
-        <div class="table-header-support cursor-pointer">
-          <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
-          <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
-          <div class="w-35 table-header-col cy">Название, описание</div>
-          <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>
-          <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>
-          <div class="w-10 table-header-col cy">{{l.tr('Поз. на чертеже')}}</div>
-        </div>
-        <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">
-          <div class="w-5 table-body-support cy">{{sup.mountData.label}}</div>
-          <div class="w-15 table-body-support cy">{{sup.mountData.trmCode}}</div>
-          <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>
-          <div class="w-7 table-body-support cy">{{sup.kei}}</div>
-          <div class="w-15 table-body-support cy">{{sup.qty}}</div>
-          <div *ngIf="sup.isNeedLabel == true" class="w-10 table-body-support cy">да</div>
-          <div *ngIf="sup.isNeedLabel == false" class="w-10 table-body-support cy">нет</div>
+          {{part.BS_ADN}}
         </div>
       </div>
     </div>

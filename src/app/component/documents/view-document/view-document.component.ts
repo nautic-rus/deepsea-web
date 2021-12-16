@@ -10,6 +10,7 @@ import {QrCodeComponent} from "ng-qrcode";
 import * as props from '../../../props';
 import {timeout} from "rxjs/operators";
 import { Clipboard } from '@angular/cdk/clipboard';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ViewDocumentComponent implements OnInit {
   issue: Issue = new Issue();
   qrCodeValue: any;
 
-  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService) {
+  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private router: Router, public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService) {
     this.issue = this.conf.data;
     this.qrCodeValue = (props.baseUrl + 'doc-m/?id=' + this.issue.id).toString();
   }
@@ -92,5 +93,14 @@ export class ViewDocumentComponent implements OnInit {
       }
     });
     return res;
+  }
+
+  getESP() {
+    let foranProject = this.issue.project.replace('NR', 'N');
+    let docNumber = this.issue.doc_number;
+    if (this.issue.department == 'Hull'){
+      this.router.navigate(['hull-esp'], {queryParams: {project: foranProject, docNumber: docNumber}})
+    }
+    this.ref.close();
   }
 }

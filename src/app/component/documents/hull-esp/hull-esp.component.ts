@@ -9,16 +9,24 @@ import {LanguageService} from "../../../domain/language.service";
   styleUrls: ['./hull-esp.component.css']
 })
 export class HullEspComponent implements OnInit {
-  trays: any = [];
+  parts: any = [];
+  noResult = false;
+  docNumber = '';
+  project = '';
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      let project = params.project != null ? params.project : '';
-      let docNumber = params.docNumber != null ? params.docNumber : '';
-      if (project != '' && docNumber != ''){
-        this.s.getHullPartListFromBsTree(project, docNumber).then(res => {
-          this.trays = JSON.parse(res);
+      this.project = params.project != null ? params.project : '';
+      this.docNumber = params.docNumber != null ? params.docNumber : '';
+      if (this.project != '' && this.docNumber != ''){
+        this.s.getHullPatList(this.project, this.docNumber).then(res => {
+          if (res != ''){
+            this.parts = res;
+          }
+          else{
+            this.noResult = true;
+          }
         });
       }
       else{

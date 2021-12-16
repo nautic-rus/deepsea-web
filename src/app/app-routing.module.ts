@@ -17,6 +17,7 @@ import {DocMComponent} from "./component/doc-m/doc-m.component";
 import {ToolsComponent} from "./component/tools/tools.component";
 import {LaborCostsComponent} from "./component/labor-costs/labor-costs.component";
 import {TraysByZonesAndSystemsComponent} from "./component/tools/trays-by-zones-and-systems/trays-by-zones-and-systems.component";
+import {HullEspComponent} from "./component/documents/hull-esp/hull-esp.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'tools', component: ToolsComponent, canActivate: [AuthGuard], data: {animation: 'ToolsComponent'} },
   { path: 'labor-costs', component: LaborCostsComponent, canActivate: [AuthGuard], data: {animation: 'LaborCostsComponent'} },
   { path: 'trays-by-zones-and-systems', component: TraysByZonesAndSystemsComponent, canActivate: [AuthGuard], data: {animation: 'TraysByZonesAndSystemsComponent'} },
+  { path: 'hull-esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
 ];
 
 @NgModule({
