@@ -80,6 +80,36 @@ import {PrimeNGConfig} from "primeng/api";
           ),
         ], { optional: true } ),
       ]),
+      transition('* => HullEspComponent', [
+        query(':enter, :leave', [
+          style({
+            position: 'fixed',
+            width: '88.7%',
+            height: '100%',
+            opacity: 0
+          })
+        ], { optional: true } ),
+        query(':enter', [
+          animate('.5s',
+            style({ opacity: 1 })
+          ),
+        ], { optional: true } ),
+      ]),
+      transition('* => TraysByZonesAndSystemsComponent', [
+        query(':enter, :leave', [
+          style({
+            position: 'fixed',
+            width: '88.5%',
+            height: '100%',
+            opacity: 0
+          })
+        ], { optional: true } ),
+        query(':enter', [
+          animate('.5s',
+            style({ opacity: 1 })
+          ),
+        ], { optional: true } ),
+      ]),
       transition('* => EmployeesComponent', [
         query(':enter, :leave', [
           style({

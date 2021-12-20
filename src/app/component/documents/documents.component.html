@@ -65,7 +65,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
-        <tr class="cursor-pointer" (click)="viewTask(issue.id)">
+        <tr class="cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
           <td class="w-15 text-14">{{issue.doc_number}}</td>
           <td class="w-40 text-14">{{issue.name}}</td>
           <td class="w-15 text-14">{{issue.revision}}</td>

@@ -12,6 +12,7 @@ import * as _ from "underscore";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {any, object} from "underscore";
 import {PrimeNGConfig} from "primeng/api";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-documents',
@@ -24,7 +25,7 @@ export class DocumentsComponent implements OnInit {
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[] } = { status: [], revision: [] };
 
-  constructor(private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService) { }
+  constructor(private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router) { }
 
   // @ts-ignore
   @ViewChild('table') table: Table;
@@ -100,17 +101,20 @@ export class DocumentsComponent implements OnInit {
       this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
     });
   }
-  viewTask(id: number) {
-    this.issueManager.getIssueDetails(id).then(res => {
-      console.log(res);
-      if (res.id != null){
-        this.dialogService.open(ViewDocumentComponent, {
-          showHeader: false,
-          modal: true,
-          data: res
-        });
-      }
-    });
+  viewTask(issueId: number, project: string, docNumber: string, department: string) {
+    let foranProject = project.replace('NR', 'N');
+    window.open(`/esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank');
+    // this.router.navigate(['esp'], {queryParams: {issueId, foranProject, docNumber, department}});
+    // this.issueManager.getIssueDetails(id).then(res => {
+    //   console.log(res);
+    //   if (res.id != null){
+    //     this.dialogService.open(ViewDocumentComponent, {
+    //       showHeader: false,
+    //       modal: true,
+    //       data: res
+    //     });
+    //   }
+    // });
   }
   getDeliveredStatus(status: string, styled = true): any {
     let tr = this.localeStatus(status);

@@ -36,7 +36,7 @@ const routes: Routes = [
   { path: 'tools', component: ToolsComponent, canActivate: [AuthGuard], data: {animation: 'ToolsComponent'} },
   { path: 'labor-costs', component: LaborCostsComponent, canActivate: [AuthGuard], data: {animation: 'LaborCostsComponent'} },
   { path: 'trays-by-zones-and-systems', component: TraysByZonesAndSystemsComponent, canActivate: [AuthGuard], data: {animation: 'TraysByZonesAndSystemsComponent'} },
-  { path: 'hull-esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
+  { path: 'esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
 ];
 
 @NgModule({

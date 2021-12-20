@@ -99,7 +99,7 @@ export class ViewDocumentComponent implements OnInit {
     let foranProject = this.issue.project.replace('NR', 'N');
     let docNumber = this.issue.doc_number;
     if (this.issue.department == 'Hull'){
-      this.router.navigate(['hull-esp'], {queryParams: {project: foranProject, docNumber: docNumber}})
+      // this.router.navigate(['hull-esp'], {queryParams: {project: foranProject, docNumber: docNumber}})
     }
     this.ref.close();
   }
