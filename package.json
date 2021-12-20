@@ -28,6 +28,7 @@
     "chart.js": "^2.9.4",
     "font-awesome": "^4.7.0",
     "jspdf-autotable": "^3.5.23",
+    "jszip": "^3.7.1",
     "mouse-wheel-zoom": "^1.1.5",
     "ng-qrcode": "^6.0.0",
     "ngx-collapse": "0.0.4",

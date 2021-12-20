@@ -1,6 +1,7 @@
 import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {FileAttachment} from "../../../../domain/classes/file-attachment";
 import {Issue} from "../../../../domain/classes/issue";
+import {User} from "../../../../domain/classes/user";
 import {LanguageService} from "../../../../domain/language.service";
 import {IssueManagerService} from "../../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../../domain/auth-manager.service";
@@ -9,43 +10,47 @@ import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 
 @Component({
-  selector: 'app-upload-revision-files',
-  templateUrl: './upload-revision-files.component.html',
-  styleUrls: ['./upload-revision-files.component.css']
+  selector: 'app-assign-new-revision',
+  templateUrl: './assign-new-revision.component.html',
+  styleUrls: ['./assign-new-revision.component.css']
 })
-export class UploadRevisionFilesComponent implements OnInit {
+export class AssignNewRevisionComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
+  //selectedUsers: string[] = ['stropilov', 'druzhinina', 'lvov', 'n.novikov'];
+  selectedUsers: string[] = ['isaev'];
   issue: Issue = new Issue();
-  fileGroup = '';
+  users: User[] = [];
+  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'F'];
+  rev = '-';
   constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
-    this.issues.getIssueDetails(conf.data[0]).then(res => {
-      this.issue = res;
-    });
-    this.fileGroup = conf.data[1];
+    this.issue = conf.data;
   }
   ngOnInit(): void {
+    this.users = this.getUsersApproval();
+  }
+  getUsersApproval() {
+    return this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
   }
   handleFileInput(files: FileList | null) {
     if (files != null){
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          let fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
           // @ts-ignore
-          const find = this.loaded.find(x => x.name == fileName);
+          const find = this.loaded.find(x => x.name == file.name);
           if (find != null){
             this.loaded.splice(this.loaded.indexOf(find), 1);
           }
-          this.awaitForLoad.push(fileName);
+          this.awaitForLoad.push(file.name);
         }
       }
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          let fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
-          this.issues.uploadFile(file, this.auth.getUser().login, fileName).then(res => {
+          this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
+            console.log(res);
             this.loaded.push(res);
           });
         }
@@ -60,6 +65,7 @@ export class UploadRevisionFilesComponent implements OnInit {
   isLoaded(file: string) {
     return this.loaded.find(x => x.name == file);
   }
+
   remove(file: string) {
     let find = this.loaded.find(x => x.name == file);
     if (find != null){
@@ -190,6 +196,7 @@ export class UploadRevisionFilesComponent implements OnInit {
           const q = "'";
           this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
             this.taskDetails += '<img src="' + res.url + '"/>';
+            console.log(res);
             this.loaded.push(res);
           });
         }
@@ -239,14 +246,13 @@ export class UploadRevisionFilesComponent implements OnInit {
     this.sendCommit();
   }
   sendCommit(){
-    this.loaded.forEach(file => {
-      file.revision = this.issue.revision;
-      file.group = this.fileGroup;
-      file.name = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
-    });
-    this.issues.setRevisionFiles(this.issue.id, this.issue.revision, JSON.stringify(this.loaded)).then(() => {
+    this.issue.revision = this.rev;
+    this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
       this.ref.close();
     });
+  }
+  getIssuePath(issue: Issue){
+    return 'RKD' + '/' + issue.project + '/' + issue.department + '/' + issue.doc_number + '/' + this.getRevision() + '/';
   }
   localeDepartment(department: string){
     switch (department) {
@@ -258,12 +264,15 @@ export class UploadRevisionFilesComponent implements OnInit {
       default: return department;
     }
   }
+  getRevision(){
+    return (this.rev);
+  }
   close(){
     this.ref.close('exit');
   }
 
   isDisabled() {
-    return this.loaded.length == 0;
+    return this.rev == '-';
   }
 
 }

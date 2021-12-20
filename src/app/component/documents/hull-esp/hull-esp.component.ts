@@ -7,6 +7,11 @@ import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {SendToCloudComponent} from "../../task/send-to-cloud/send-to-cloud.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {UploadRevisionFilesComponent} from "./upload-revision-files/upload-revision-files.component";
+import _ from "underscore";
+import JSZip from "jszip";
+import {FileAttachment} from "../../../domain/classes/file-attachment";
+import {saveAs} from "file-saver";
+import {AssignNewRevisionComponent} from "./assign-new-revision/assign-new-revision.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -20,9 +25,32 @@ export class HullEspComponent implements OnInit {
   project = '';
   department = '';
   issueId = 0;
-  selectedTab = 'files';
   issue: Issue = new Issue();
   selectedPart = Object();
+  fileGroups = [
+    {
+      name: 'Drawings',
+      icon: 'assets/icons/drawings.svg'
+    },
+    {
+      name: 'Part List',
+      icon: 'assets/icons/zip-file.svg'
+    },
+    {
+      name: 'Cutting Map',
+      icon: 'assets/icons/cutting.svg'
+    },
+    {
+      name: 'Nesting Plates',
+      icon: 'assets/icons/cutting.svg'
+    },
+    {
+      name: 'Nesting Profiles',
+      icon: 'assets/icons/cutting.svg'
+    }
+  ];
+  selectedTab = this.fileGroups[0].name;
+  issueRevisions: string[] = [];
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private issueManager: IssueManagerService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
@@ -32,9 +60,7 @@ export class HullEspComponent implements OnInit {
       this.department = params.department != null ? params.department : '';
       this.issueId = params.issueId != null ? params.issueId : 0;
 
-      this.issueManager.getIssueDetails(this.issueId).then(res => {
-        this.issue = res;
-      });
+      this.fillRevisions();
 
       this.s.getHullPatList(this.project, this.docNumber).then(res => {
         console.log(res);
@@ -48,11 +74,21 @@ export class HullEspComponent implements OnInit {
     });
   }
 
+  fillRevisions(){
+    this.issueManager.getIssueDetails(this.issueId).then(res => {
+      this.issue = res;
+      this.issueRevisions.push(this.issue.revision);
+      this.issue.revision_files.map(x => x.revision).forEach(gr => {
+        if (!this.issueRevisions.includes(gr)){
+          this.issueRevisions.push(gr);
+        }
+      });
+      this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
+    });
+  }
+
   round(input: number) {
     return Math.round(input * 100) / 100;
-  }
-  getRevisionFiles(revision: string) {
-    return this.issue.revision_files.filter(x => x.revision == revision);
   }
   openFile(url: string) {
     window.open(url);
@@ -120,7 +156,7 @@ export class HullEspComponent implements OnInit {
       return status;
     }
   }
-  addFilesToGroup(file_group: string) {
+  addFilesToGroup(file_group: string, revision: string) {
     this.dialogService.open(UploadRevisionFilesComponent, {
       showHeader: false,
       modal: true,
@@ -128,7 +164,41 @@ export class HullEspComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
+        this.fillRevisions();
       });
     });
   }
+
+  downloadFiles(group: string, revision: string) {
+    let files = this.getRevisionFilesOfGroup(group, revision);
+    Promise.all(files.map(x => fetch(x.url))).then(blobs => {
+      let zip = new JSZip();
+      files.forEach(file => {
+        zip.file(file.name, blobs[files.indexOf(file)].blob());
+      });
+      zip.generateAsync({type:"blob"}).then(res => {
+        saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
+      });
+    });
+  }
+
+  askForSendToCloud(){
+    this.dialogService.open(AssignNewRevisionComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.fillRevisions();
+      });
+    });
+  }
+
+
+
+  getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
+    return this.issue.revision_files.filter(x => x.group == fileGroup && x.revision == revision);
+  }
+
 }

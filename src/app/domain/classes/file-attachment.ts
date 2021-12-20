@@ -4,4 +4,5 @@ export class FileAttachment {
   upload_date: number = 0;
   author: string = '';
   revision: string = '';
+  group: string = '';
 }

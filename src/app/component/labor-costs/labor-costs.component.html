@@ -1,6 +1,6 @@
 <div class="all-page">
   <div class="card">
-    <p-table #table [value]="issues"
+    <p-table #table [value]="issueSpentTime"
              [scrollable]="true"
              [scrollHeight]="'70vh'"
              [virtualScroll]="true"
@@ -54,8 +54,8 @@
             <p-tableCheckbox [value]="issues"></p-tableCheckbox>
           </td>
           <td class="w-10 text-14">{{issue.doc_number}}</td>
-          <td class="w-10 text-14">{{issue.doc_number}}</td>
-          <td class="w-50 text-14">{{issue.name}}</td>
+          <td class="w-10 text-14">{{getDateOnly(+issue.date)}}</td>
+          <td class="w-50 text-14">{{auth.getUserName(issue.user)}}</td>
           <td class="w-10 text-14">{{issue.revision}}</td>
           <td class="w-10 text-14"></td>
           <td class="w-10 text-14"></td>

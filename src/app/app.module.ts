@@ -79,6 +79,7 @@ import { TraysByZonesAndSystemsComponent } from './component/tools/trays-by-zone
 import { HullEspComponent } from './component/documents/hull-esp/hull-esp.component';
 import {TabViewModule} from "primeng/tabview";
 import {UploadRevisionFilesComponent} from "./component/documents/hull-esp/upload-revision-files/upload-revision-files.component";
+import { AssignNewRevisionComponent } from './component/documents/hull-esp/assign-new-revision/assign-new-revision.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -122,7 +123,8 @@ Quill.register('modules/imageResize', ImageResize);
     LaborCostsComponent,
     TraysByZonesAndSystemsComponent,
     HullEspComponent,
-    UploadRevisionFilesComponent
+    UploadRevisionFilesComponent,
+    AssignNewRevisionComponent
   ],
     imports: [
         BrowserModule,

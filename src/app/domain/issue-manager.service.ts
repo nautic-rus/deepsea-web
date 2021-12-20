@@ -25,9 +25,9 @@ export class IssueManagerService {
   constructor(private lang: LanguageService, private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, public auth: AuthManagerService) {
 
   }
-  async uploadFile(file: File, user: string) {
+  async uploadFile(file: File, user: string, fileName: string = file.name) {
     const formData: FormData = new FormData();
-    formData.append('file', file, file.name);
+    formData.append('file', file, fileName);
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData, {params: {user}}).toPromise();
   }
   async uploadFileToCloud(file: File, filePath: string, login: string, password: string) {
@@ -121,6 +121,9 @@ export class IssueManagerService {
   }
   async getForanParts(project = 'N004'){
     return await this.http.get(props.httpSpec + '/foranPartsExcel', { responseType: 'text', params: {project}}).toPromise();
+  }
+  async getIssueSpentTime(){
+    return await this.http.get<any[]>(props.http + '/issueSpentTime', {responseType: "json"}).toPromise();
   }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
