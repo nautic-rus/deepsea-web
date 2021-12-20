@@ -61,6 +61,7 @@
               <div class="missing-files cxy" *ngIf="getRevisionFiles(issue.revision).length == 0">
                 <img src="assets/icons/folders.svg" height="80">
               </div>
+              <div class="big-text mb-1">{{l.tr('Вложения')}} ({{issue.revision.length}})</div>
               <div *ngFor="let file of getRevisionFiles(issue.revision)">
                 <div (click)="openFile(file.url)" class="attachment-files df mb-10 cursor-pointer">
                   <div class="cxy">

@@ -176,3 +176,13 @@
 .button-details:hover{
   background-color: #ECEDF0;
 }
+.big-text{
+  font-size: 0.9em;
+  font-style: inherit;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  line-height: 24px;
+  color: #6c757d;
+  overflow-wrap: break-word;
+  min-width: 0px;
+}
