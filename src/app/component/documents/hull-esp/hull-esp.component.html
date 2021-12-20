@@ -2,7 +2,8 @@
   <div class="all-card">
     <div class="card-head df">
       <div class="mr-2">{{getBlockName()}}</div>
-      <div>{{issue.doc_number}}</div>
+      <div class="mr-2">{{issue.doc_number}}</div>
+      <div [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>
     </div>
     <div class="w-100 df">
       <div class="card-sp mr-20">
@@ -14,7 +15,7 @@
           <div class="w-10 table-header-col cy">{{l.tr('Weight')}}</div>
           <div class="w-15 table-header-col cy">{{l.tr('Gravity center')}}</div>
           <div class="w-25 table-header-col cy">{{l.tr('Block description')}}</div>
-          <div class="w-15 table-header-col cy">{{l.tr('Section')}}</div>
+          <div class="w-15 table-header-col cy">{{l.tr('Section/Thick')}}</div>
         </div>
         <div class="pb-10" *ngFor="let part of parts">
           <div (click)="selectedPart = part" class="df table-row cursor-pointer">
@@ -41,7 +42,10 @@
             <div class="all-tabs cursor-pointer" (click)="selectedTab = 'cutting map'" [class.selectedTab]="selectedTab == 'cutting map'">Cutting map</div>
           </div>
           <div class="tabs-content mt-20">
-            <div class="tab" *ngIf="selectedTab == 'files'">
+            <div class="tab h100" *ngIf="selectedTab == 'files'">
+              <div class="missing-files cxy" *ngIf="getRevisionFiles(issue.revision).length == 0">
+                <img src="assets/icons/folders.svg" height="80">
+              </div>
               <div *ngFor="let file of getRevisionFiles(issue.revision)">
                 <div (click)="openFile(file.url)" class="attachment-files df mb-10 cursor-pointer">
                   <div class="cxy">
@@ -58,14 +62,20 @@
                 </div>
               </div>
             </div>
-            <div class="tab" *ngIf="selectedTab == 'drawings'">
-              Content 1
+            <div class="tab h100" *ngIf="selectedTab == 'drawings'">
+              <div class="missing-files cxy">
+                <img src="assets/icons/drawings.svg" height="85">
+              </div>
             </div>
-            <div class="tab" *ngIf="selectedTab == 'part lists'">
-              Content 2
+            <div class="tab h100" *ngIf="selectedTab == 'part lists'">
+              <div class="missing-files cxy">
+                <img src="assets/icons/files.svg" height="85">
+              </div>
             </div>
-            <div class="tab" *ngIf="selectedTab == 'cutting map'">
-              Content 3
+            <div class="tab h100" *ngIf="selectedTab == 'cutting map'">
+              <div class="missing-files cxy">
+                <img src="assets/icons/cutting.svg" height="85">
+              </div>
             </div>
           </div>
 
@@ -103,21 +113,66 @@
               <div class="ml-20 part-details">{{selectedPart.DESCRIPTION}}</div>
             </div>
             <div class="df">
-              <div class="w-40">
-                <div *ngIf="selectedPart.KSE == 0" class="">Thick</div>
-                <div *ngIf="selectedPart.KSE != 0" class="">Section</div>
-                <div>Material:</div>
-                <div>BS-Symbol:</div>
-                <div>Line name:</div>
-                <div>BS ADN:</div>
+              <div class="w-30">
+                <div>
+                  <div *ngIf="selectedPart.KSE == 0" class="main-details mt-20">Thick</div>
+                  <div *ngIf="selectedPart.KSE != 0" class="main-details mt-20">Section</div>
+                </div>
               </div>
-              <div class="w-40">
-                <div class="">{{selectedPart.SECTION}}</div>
+              <div class="w-70">
+                <div class="mt-20 value-details">{{selectedPart.SECTION}}</div>
               </div>
             </div>
-
-
-
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Material:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.MATERIAL}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Stock code:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.STOCK_CODE}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">BS-Symbol:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.SYMBOL}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Line name:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.LINE_NAME}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">BS ADN:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.BS_ADN}}</div>
+              </div>
+            </div>
 
           </div>
         </div>

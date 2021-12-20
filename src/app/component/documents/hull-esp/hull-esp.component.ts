@@ -97,4 +97,24 @@ export class HullEspComponent implements OnInit {
       return this.issue.name;
     }
   }
+  getDeliveredStatus(status: string, styled = true): any {
+    let tr = this.localeStatus(status);
+    switch (status){
+      case 'Completed': return styled ? '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
+      case 'In Work': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
+      default: return status;
+    }
+  }
+  localeStatus(status: string){
+    if (this.l.language == 'ru'){
+      switch (status) {
+        case 'Completed' : return 'Завершён';
+        case 'In Work': return 'В работе';
+        default: return status;
+      }
+    }
+    else{
+      return status;
+    }
+  }
 }

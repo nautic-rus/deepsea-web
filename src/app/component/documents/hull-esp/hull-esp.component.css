@@ -106,9 +106,10 @@
   border-width: 0 0 1px 0;
   font-weight: 600;
   color: #323130;
+  font-size: 13px;
   background: #ffffff;
   transition: box-shadow 0.2s;
-  font-size: 13px;
+
 }
 .table-header-col:hover{
   background-color: #F3F2F1;
@@ -143,4 +144,22 @@
   color: #495057;
   font-size: 1.2rem;
   font-weight: 600;
+}
+.missing-files{
+  height: 100%;
+  width: 100%;
+}
+.tabs-content{
+  position: relative;
+  height: calc(100% - 80px);
+}
+.main-details{
+  font-weight: 600;
+  color: #323130;
+  font-size: 13px;
+}
+.value-details{
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 13px;
 }
