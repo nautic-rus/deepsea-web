@@ -4,12 +4,9 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import * as props from "../props";
-import {IdName} from "./classes/id-name";
 import {FileAttachment} from "./classes/file-attachment";
 import {Issue} from "./classes/issue";
-import {IssueDef} from "./classes/issue-def";
 import {IssueMessage} from "./classes/issue-message";
-import {List} from "underscore";
 import {ViewedIssue} from "./classes/viewed-issue";
 import {AuthManagerService} from "./auth-manager.service";
 import {HullPL} from "./classes/hull-pl";
@@ -19,7 +16,6 @@ import {IssuePeriod} from "./classes/issue-period";
 import {IssueType} from "./classes/issue-type";
 import {TimeControlInterval} from "./classes/time-control-interval";
 import {SfiCode} from "./classes/sfi-code";
-import {HullPart} from "./classes/hull-part";
 import {Weather} from "./classes/weather";
 
 @Injectable({
@@ -76,10 +72,10 @@ export class IssueManagerService {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id}}).toPromise();
   }
   async getHullPartList(docNum: string): Promise<HullPL> {
-    return await this.http.get<HullPL>(props.httpMaterials + '/getHullPartList', {params: {docNum}}).toPromise();
+    return await this.http.get<HullPL>(props.httpSpec + '/getHullPartList', {params: {docNum}}).toPromise();
   }
   async initHullPartList(project: string, taskId: number, docNum: string, docName: string, user: string): Promise<string> {
-    return await this.http.get<string>(props.httpMaterials + '/initHullPartList', {params: {project, taskId, docNum, docName, user}}).toPromise();
+    return await this.http.get<string>(props.httpSpec + '/initHullPartList', {params: {project, taskId, docNum, docName, user}}).toPromise();
   }
   async updateIssue(user: string, message: string, issue: Issue): Promise<Issue> {
     return await this.http.post<Issue>(props.http + '/updateIssue', JSON.stringify(issue), {params: {user, message}}).toPromise();
