@@ -4,6 +4,9 @@ import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {LanguageService} from "../../../domain/language.service";
 import {Issue} from "../../../domain/classes/issue";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
+import {SendToCloudComponent} from "../../task/send-to-cloud/send-to-cloud.component";
+import {DialogService} from "primeng/dynamicdialog";
+import {UploadRevisionFilesComponent} from "./upload-revision-files/upload-revision-files.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -20,7 +23,7 @@ export class HullEspComponent implements OnInit {
   selectedTab = 'files';
   issue: Issue = new Issue();
   selectedPart = Object();
-  constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private issueManager: IssueManagerService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private issueManager: IssueManagerService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -96,5 +99,17 @@ export class HullEspComponent implements OnInit {
     else{
       return this.issue.name;
     }
+  }
+
+  addFilesToGroup(file_group: string) {
+    this.dialogService.open(UploadRevisionFilesComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issue.id, file_group]
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+      });
+    });
   }
 }
