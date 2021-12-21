@@ -7,7 +7,7 @@
              [virtualRowHeight]="40"
              styleClass="p-datatable-striped"
              responsiveLayout="scroll"
-             [globalFilterFields]="['id','doc_number','name','status']">
+             [globalFilterFields]="['user','date','id','laboriousness','comment']">
       <ng-template pTemplate="caption">
       </ng-template>
       <ng-template pTemplate="header">
@@ -26,7 +26,6 @@
           </th>
           <th pSortableColumn="comment" class="w-20">{{l.tr('Комментарий')}}
             <p-sortIcon field="comment"></p-sortIcon>
-
           </th>
         </tr>
       </ng-template>
@@ -34,7 +33,7 @@
         <tr class="cursor-pointer">
           <td class="w-15 text-14">{{auth.getUserName(issue.user)}}</td>
           <td class="w-10 text-14">{{getDateOnly(+issue.date)}}</td>
-          <td class="w-45 text-14">{{issue.id}}</td>
+          <td class="w-45 text-14">{{getIssueName(issue.id)}}</td>
           <td class="w-10 text-14">{{issue.value}}</td>
           <td class="w-20 text-14">{{issue.comment}}</td>
         </tr>

@@ -28,4 +28,14 @@ export class LaborCostsComponent implements OnInit {
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
+
+  getIssueName(id: number) {
+    let find = this.issues.find(x => x.id == id);
+    if (find != null){
+      return find.doc_number + ' ' + find.name;
+    }
+    else {
+      return '';
+    }
+  }
 }
