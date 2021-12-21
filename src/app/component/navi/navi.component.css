@@ -8,7 +8,7 @@
   background-color: #0E364A;
   z-index: 9;
   display: grid;
-  grid-template-columns: 1fr 13.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 1fr 11fr 0.5fr 0.7fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
 }
 .left-panel{
   position: absolute;
@@ -114,11 +114,16 @@
 
 }
 .weather-descr{
-  margin-top: -5px;
+  margin-top: -8px;
 }
 .weather{
   flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 13px;
   color: #c8ccd8;
+}
+.time{
+  color: #c8ccd8;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 20px;
 }

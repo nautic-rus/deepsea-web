@@ -2,7 +2,7 @@
   <div class="card">
     <p-table #table [value]="issueSpentTime"
              [scrollable]="true"
-             [scrollHeight]="'70vh'"
+             [scrollHeight]="'77vh'"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
              styleClass="p-datatable-striped"
@@ -12,53 +12,31 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 3rem">
-            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-          </th>
-          <th pSortableColumn="project" class="w-10">{{l.tr('Проект')}}
-            <p-sortIcon field="project"></p-sortIcon>
+          <th pSortableColumn="user" class="w-15">{{l.tr('Пользователь')}}
+            <p-sortIcon field="user"></p-sortIcon>
           </th>
           <th pSortableColumn="date" class="w-10">{{l.tr('Дата')}}
             <p-sortIcon field="date"></p-sortIcon>
           </th>
-          <th pSortableColumn="user" class="w-10">{{l.tr('Пользователь')}}
-            <p-sortIcon field="user"></p-sortIcon>
-          </th>
-          <th pSortableColumn="task_name" class="w-40">{{l.tr('Задача')}}
-            <p-sortIcon field="task_name"></p-sortIcon>
-            <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.revision" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                </p-multiSelect>
-              </ng-template>
-            </p-columnFilter>
-          </th>
-          <th pSortableColumn="comment" class="w-15">{{l.tr('Комментарий')}}
-            <p-sortIcon field="comment"></p-sortIcon>
-            <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                </p-multiSelect>
-              </ng-template>
-            </p-columnFilter>
+          <th pSortableColumn="id" class="w-45">{{l.tr('Задача')}}
+            <p-sortIcon field="id"></p-sortIcon>
           </th>
           <th pSortableColumn="laboriousness" class="w-10">{{l.tr('час(а, ов)')}}
-            <p-sortIcon field="laboriousness"></p-sortIcon>
-            <p-columnFilter type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
+            <p-columnFilter type="laboriousness" [field]="'delivered_date'" display="menu"></p-columnFilter>
+          </th>
+          <th pSortableColumn="comment" class="w-20">{{l.tr('Комментарий')}}
+            <p-sortIcon field="comment"></p-sortIcon>
+
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
         <tr class="cursor-pointer">
-          <td>
-            <p-tableCheckbox [value]="issues"></p-tableCheckbox>
-          </td>
-          <td class="w-10 text-14">{{issue.doc_number}}</td>
+          <td class="w-15 text-14">{{auth.getUserName(issue.user)}}</td>
           <td class="w-10 text-14">{{getDateOnly(+issue.date)}}</td>
-          <td class="w-50 text-14">{{auth.getUserName(issue.user)}}</td>
-          <td class="w-10 text-14">{{issue.revision}}</td>
-          <td class="w-10 text-14"></td>
-          <td class="w-10 text-14"></td>
+          <td class="w-45 text-14">{{issue.id}}</td>
+          <td class="w-10 text-14">{{issue.value}}</td>
+          <td class="w-20 text-14">{{issue.comment}}</td>
         </tr>
       </ng-template>
     </p-table>
