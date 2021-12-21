@@ -34,7 +34,7 @@ export class HullEspComponent implements OnInit {
     },
     {
       name: 'Part List',
-      icon: 'assets/icons/zip-file.svg'
+      icon: 'assets/icons/files.svg'
     },
     {
       name: 'Cutting Map',
