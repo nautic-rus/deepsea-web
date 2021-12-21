@@ -113,3 +113,12 @@
 .p-overlaypanel:before{
 
 }
+.weather-descr{
+  margin-top: -5px;
+}
+.weather{
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 13px;
+  color: #c8ccd8;
+}

@@ -23,6 +23,7 @@
   grid-template-columns: 5.7% 7.3% 8.9% 11.3% 11.3% 11.4% 11.4% 11.7% 10.1% 8.1% 0.1%;
   grid-template-rows: 70px 50px 80px 55px 60px 70px 120px;
   position: relative;
+  width: 1650px;
 }
 .sections-one{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
@@ -31,6 +32,7 @@
   grid-template-columns: 11% 16% 17% 13% 13% 10% 10% 8%;
   grid-template-rows: 150px 110px 60px 75px 75px 110px 70px;
   position: relative;
+  width: 1650px;
 }
 .number {
   position: relative;
