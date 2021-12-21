@@ -21,9 +21,9 @@ import {Router} from "@angular/router";
 })
 export class DocumentsComponent implements OnInit {
   projects: string[] = [];
-  project = this.projects[0];
+  project = '';
   issues: Issue[] = [];
-  filters:  { status: any[],  revision: any[] } = { status: [], revision: [] };
+  filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
 
   constructor(private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router) { }
 
@@ -34,7 +34,7 @@ export class DocumentsComponent implements OnInit {
       this.projects = projects.filter(x => this.auth.getUser().visible_projects.includes(x));
       this.project = this.projects[0];
       if (this.project == '-'){
-        this.project = this.projects[1];
+        this.project = this.projects[this.projects.length - 1];
       }
       this.projectChanged();
     });
@@ -98,7 +98,9 @@ export class DocumentsComponent implements OnInit {
       })
       this.filters.status = this.getFilters(this.issues, 'status');
       this.filters.revision = this.getFilters(this.issues, 'revision');
+      this.filters.department = this.getFilters(this.issues, 'department');
       this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
+      this.issues = _.sortBy(this.issues, x => x.doc_number);
     });
   }
   viewTask(issueId: number, project: string, docNumber: string, department: string) {

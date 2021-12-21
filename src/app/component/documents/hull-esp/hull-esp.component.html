@@ -6,10 +6,12 @@
       <div class="mr-2" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>
       <div class="mr-1">Revision:</div>
       <div class="mr-2">
-        <p-dropdown appendTo="body" [(ngModel)]="issue.revision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
+        <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
         </p-dropdown>
       </div>
-      <div class="mr-1" (click)="askForSendToCloud()">Add New</div>
+      <button class="mr-1" (click)="askForSendToCloud()">Publish Revision</button>
+      <button class="mr-1" (click)="createEsp()">Get Temple Document</button>
+      <button class="mr-1" (click)="createEsp(selectedRevision)">Get Revision Document</button>
     </div>
     <div class="w-100 df">
       <div class="card-sp mr-20">
@@ -48,23 +50,23 @@
             <div *ngFor="let fileGroup of fileGroups">
               <div class="tab h100" *ngIf="selectedTab == fileGroup.name">
                 <div class="df">
-                  <div class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, issue.revision)">
+                  <div class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/plus1.svg" height="16">
                     </div>
                     <div class="cy ml-1">Add files</div>
                   </div>
-                  <div class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, issue.revision)">
+                  <div class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/zip-file.svg" height="16">
                     </div>
                     <div class="cy ml-1">Download all</div>
                   </div>
                 </div>
-                <div class="missing-files cxy" *ngIf="getRevisionFilesOfGroup(fileGroup.name, issue.revision).length == 0">
+                <div class="missing-files cxy" *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0">
                   <img [src]="fileGroup.icon" height="85">
                 </div>
-                <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, issue.revision)">
+                <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
                   <div (click)="openFile(file.url)" class="attachment-files df mb-10 cursor-pointer">
                     <div class="cxy">
                       <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>

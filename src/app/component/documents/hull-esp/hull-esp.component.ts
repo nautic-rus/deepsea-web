@@ -24,6 +24,7 @@ export class HullEspComponent implements OnInit {
   docNumber = '';
   project = '';
   department = '';
+  selectedRevision = '';
   issueId = 0;
   issue: Issue = new Issue();
   selectedPart = Object();
@@ -84,6 +85,7 @@ export class HullEspComponent implements OnInit {
         }
       });
       this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
+      this.selectedRevision = this.issueRevisions[0];
     });
   }
 
@@ -201,4 +203,7 @@ export class HullEspComponent implements OnInit {
     return this.issue.revision_files.filter(x => x.group == fileGroup && x.revision == revision);
   }
 
+  createEsp(revision: string = '') {
+
+  }
 }

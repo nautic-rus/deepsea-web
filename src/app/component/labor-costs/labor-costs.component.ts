@@ -12,13 +12,16 @@ export class LaborCostsComponent implements OnInit {
 
   issueSpentTime: any[] = [];
   filters:  { status: any[],  revision: any[] } = { status: [], revision: [] };
+  issues: any[] = [];
 
-  constructor(public l: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService) { }
+  constructor(public l: LanguageService, public issuesManager: IssueManagerService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
-    this.issues.getIssueSpentTime().then(res => {
-      console.log(res);
+    this.issuesManager.getIssueSpentTime().then(res => {
       this.issueSpentTime = res;
+    });
+    this.issuesManager.getIssues('op').then(issues => {
+      this.issues = issues;
     });
   }
   getDateOnly(dateLong: number): string{
