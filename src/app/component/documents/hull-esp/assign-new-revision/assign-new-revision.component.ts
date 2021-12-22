@@ -247,8 +247,12 @@ export class AssignNewRevisionComponent implements OnInit {
   }
   sendCommit(){
     this.issue.revision = this.rev;
-    this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-      this.ref.close();
+    this.issues.setHullPartList(this.issue.project.replace("NR", "N"), this.issue.doc_number, this.auth.getUser().login, this.issue.revision).then(res => {
+      if (res == "success"){
+        this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+          this.ref.close();
+        });
+      }
     });
   }
   getIssuePath(issue: Issue){
