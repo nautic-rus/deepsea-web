@@ -2,17 +2,19 @@
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
-  <div>
+  <div></div>
+  <div class="cxy time mx-5">{{getTime()}}</div>
+  <div class="cxy">
     <div class="df" *ngIf="weather.description != ''">
       <div class="cxy weather">
-        <div class="cxy">
+        <div class="cxy weather-descr">
           <img src="{{'https://openweathermap.org/img/wn/' + weather.icon + '.png'}}" height="40">
         </div>
-        <div class="weather-descr cxy">
-          <div>{{weather.description}}</div>
-        </div>
+<!--        <div class="weather-descr cxy text-center">-->
+<!--          <div class="">{{weather.description}}</div>-->
+<!--        </div>-->
         <div class="mx-1 cxy">
-          <div>{{weather.temp}} °C</div>
+          <div class="">{{weather.temp}} °C</div>
         </div>
       </div>
     </div>
@@ -59,6 +61,7 @@
       </ng-template>
     </p-overlayPanel>
   </div>
+
   <div class="exit cxy">
     <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">
   </div>
