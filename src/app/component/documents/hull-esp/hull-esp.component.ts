@@ -83,6 +83,7 @@ export class HullEspComponent implements OnInit {
   fillParts(){
     this.s.getHullPatList(this.project, this.docNumber).then(res => {
       if (res != ''){
+        console.log(res);
         this.parts = res;
         this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
         this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
@@ -155,7 +156,7 @@ export class HullEspComponent implements OnInit {
 
   getBlockName() {
     if (this.parts.length > 0){
-      return this.parts[0].BLOCKNAME;
+      return this.issue.name;
     }
     else{
       return this.issue.name;

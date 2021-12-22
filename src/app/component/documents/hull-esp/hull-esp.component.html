@@ -9,15 +9,19 @@
         <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
         </p-dropdown>
       </div>
-      <button class="mr-1" (click)="askForSendToCloud()">Publish Revision</button>
-      <button class="mr-1" (click)="createEsp()">Get Current Spec</button>
-      <button class="mr-1" (click)="createEsp(selectedRevision)">Get Revision Spec</button>
-      <div class="mr-2">
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
-        </span>
+      <div class="mr-1">
+        <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>
       </div>
+      <div class="mr-1">
+        <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-off" (click)="createEsp()"></button>
+      </div>
+      <div class="mr-1">
+        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(selectedRevision)"></button>
+      </div>
+      <span class="p-input-icon-left p-ml-auto">
+        <i class="pi pi-search"></i>
+        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+      </span>
     </div>
     <div class="w-100 df">
       <div class="card-sp mr-20">
@@ -41,10 +45,10 @@
                  [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID', 'STOCKCODE']">
           <ng-template pTemplate="header">
             <tr *ngIf="parts.length != 0">
-              <th pSortableColumn="PART_CODE" class="w-40">{{'PART_CODE'}}
+              <th pSortableColumn="PART_CODE" class="w-40">{{'Part code'}}
                 <p-sortIcon field="PART_CODE"></p-sortIcon>
               </th>
-              <th pSortableColumn="ELEM_TYPE" class="w-40">{{'ELEM_TYPE'}}
+              <th pSortableColumn="ELEM_TYPE" class="w-40">{{'Type'}}
                 <p-sortIcon field="ELEM_TYPE"></p-sortIcon>
                 <p-columnFilter class="filter" [field]="'ELEM_TYPE'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -53,10 +57,10 @@
                   </ng-template>
                 </p-columnFilter>
               </th>
-              <th pSortableColumn="WEIGHT_UNIT" class="w-40">{{'WEIGHT_UNIT'}}
+              <th pSortableColumn="WEIGHT_UNIT" class="w-40">{{'Weight'}}
                 <p-sortIcon field="WEIGHT_UNIT"></p-sortIcon>
               </th>
-              <th pSortableColumn="MATERIAL" class="w-40">{{'MATERIAL'}}
+              <th pSortableColumn="MATERIAL" class="w-40">{{'Material'}}
                 <p-sortIcon field="MATERIAL"></p-sortIcon>
                 <p-columnFilter class="filter" [field]="'MATERIAL'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -65,16 +69,16 @@
                   </ng-template>
                 </p-columnFilter>
               </th>
-              <th pSortableColumn="NEST_ID" class="w-40">{{'NEST_ID'}}
+              <th pSortableColumn="NEST_ID" class="w-40">{{'Nest ID'}}
                 <p-sortIcon field="NEST_ID"></p-sortIcon>
               </th>
-              <th pSortableColumn="STOCKCODE" class="w-40">{{'STOCKCODE'}}
+              <th pSortableColumn="STOCKCODE" class="w-40">{{'Stockcode'}}
                 <p-sortIcon field="STOCKCODE"></p-sortIcon>
               </th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-part>
-            <tr class="cursor-pointer">
+            <tr class="cursor-pointer task-row" (click)="selectedPart = part">
               <td class="w-15 text-14">{{part.PART_CODE}}</td>
               <td class="w-15 text-14">{{part.ELEM_TYPE}}</td>
               <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
@@ -91,8 +95,8 @@
             <div *ngFor="let fileGroup of fileGroups" class="all-tabs cursor-pointer" (click)="selectedTab = fileGroup.name" [class.selectedTab]="selectedTab == fileGroup.name">{{fileGroup.name}}</div>
           </div>
           <div class="tabs-content mt-20">
-            <div class="" *ngFor="let fileGroup of fileGroups">
-              <div class="tab h100" *ngIf="selectedTab == fileGroup.name">
+            <div [class.h100]="selectedTab == fileGroup.name" *ngFor="let fileGroup of fileGroups">
+              <div class="tab tab-right-height" *ngIf="selectedTab == fileGroup.name">
                 <div class="df">
                   <div class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
@@ -108,12 +112,12 @@
                   </div>
                 </div>
                 <div class="missing-files cxy" *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0">
-                  <img [src]="fileGroup.icon" height="85">
+                  <img [src]="fileGroup.icon" height="95">
                 </div>
                 <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
                   <div (click)="openFile(file.url)" class="attachment-files df mb-10 cursor-pointer">
                     <div class="cxy">
-<!--                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>-->
+                      <!--                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>-->
                     </div>
                     <span class="mx-10 cy" tooltipPosition="top" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
                     <span class="mx-10 cy">{{' ' + getDate(issue.started_date)}}</span>
@@ -138,37 +142,27 @@
             <div class="df">
               <div class="w-30">
                 <div>
-                  <div class="main-details mt-20">Part Type:</div>
+                  <div class="main-details mt-20">Thinkness:</div>
                 </div>
               </div>
               <div class="w-70">
-                <div class="mt-20 value-details">{{selectedPart.ELEM_TYPE}}</div>
+                <div class="mt-20 value-details">{{selectedPart.THICKNESS}}</div>
               </div>
             </div>
             <div class="df">
               <div class="w-30">
                 <div>
-                  <div class="main-details mt-10">Material:</div>
+                  <div class="main-details mt-10">KSE KPL:</div>
                 </div>
               </div>
               <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.MATERIAL}}</div>
+                <div class="mt-10 value-details">{{selectedPart.KSE_KPL}}</div>
               </div>
             </div>
             <div class="df">
               <div class="w-30">
                 <div>
-                  <div class="main-details mt-10">Stock code:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.STOCKCODE}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">Block Descr:</div>
+                  <div class="main-details mt-10">Block Description:</div>
                 </div>
               </div>
               <div class="w-70">
@@ -188,7 +182,7 @@
             <div class="df">
               <div class="w-30">
                 <div>
-                  <div class="main-details mt-10">Nest L/W:</div>
+                  <div class="main-details mt-10">Nest Length/Width:</div>
                 </div>
               </div>
               <div class="w-70">

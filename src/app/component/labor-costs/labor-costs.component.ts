@@ -19,6 +19,7 @@ export class LaborCostsComponent implements OnInit {
   ngOnInit(): void {
     this.issuesManager.getIssueSpentTime().then(res => {
       this.issueSpentTime = res;
+      this.issueSpentTime.forEach(x => x.user = this.auth.getUserName(x.user));
     });
     this.issuesManager.getIssues('op').then(issues => {
       this.issues = issues;

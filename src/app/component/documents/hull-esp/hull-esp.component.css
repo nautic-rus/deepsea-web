@@ -7,8 +7,8 @@
   border-radius: 8px;
   height: 65px;
   align-items: center;
-  color: #495057;
-  font-size: 1.2rem;
+  color: #323130;
+  font-size: 14px;
   font-weight: 600;
 }
 .card-sp{
@@ -76,6 +76,27 @@
   background: transparent;
   border: 1px solid #dfe1e6;
   border-width: 0 0 1px 0;
+  font-size: 13px;
+}
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+}
+/deep/.pi{
+  font-size: 14px;
+}
+.task-row:hover{
+  background-color: #F3F2F1!important;
+}
+.normal-button:hover{
+  background-color: rgba(50, 49, 48, 0.07) !important;
+}
+.tab-right-height{
+  height: calc(100% - 80px);
+}
+.text-14{
   font-size: 13px;
 }
 

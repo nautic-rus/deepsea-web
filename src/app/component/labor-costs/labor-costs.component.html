@@ -31,7 +31,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-issue>
         <tr class="cursor-pointer">
-          <td class="w-15 text-14">{{auth.getUserName(issue.user)}}</td>
+          <td class="w-15 text-14">{{issue.user}}</td>
           <td class="w-10 text-14">{{getDateOnly(+issue.date)}}</td>
           <td class="w-45 text-14">{{getIssueName(issue.id)}}</td>
           <td class="w-10 text-14">{{issue.value}}</td>
