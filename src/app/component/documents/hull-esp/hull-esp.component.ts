@@ -28,6 +28,7 @@ export class HullEspComponent implements OnInit {
   issueId = 0;
   issue: Issue = new Issue();
   selectedPart = Object();
+  groupedByPartCode = false;
   fileGroups = [
     {
       name: 'Drawings',
@@ -52,6 +53,8 @@ export class HullEspComponent implements OnInit {
   ];
   selectedTab = this.fileGroups[0].name;
   issueRevisions: string[] = [];
+  filters:  { ELEM_TYPE: any[], MATERIAL: any[]  } = { ELEM_TYPE: [],  MATERIAL: [] };
+
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private issueManager: IssueManagerService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
@@ -62,19 +65,39 @@ export class HullEspComponent implements OnInit {
       this.issueId = params.issueId != null ? params.issueId : 0;
 
       this.fillRevisions();
+      this.fillParts();
 
-      this.s.getHullPatList(this.project, this.docNumber).then(res => {
-        console.log(res);
-        if (res != ''){
-          this.parts = res;
-        }
-        else{
-          this.noResult = true;
-        }
-      });
     });
   }
-
+  getFilters(values: any[], field: string): any[] {
+    let res: any[] = [];
+    let uniq = _.uniq(values, x => x[field]);
+    uniq.forEach(x => {
+      res.push({
+        label: x[field],
+        value: x[field]
+      })
+    });
+    return _.sortBy(res, x => x.label);
+  }
+  fillParts(){
+    this.s.getHullPatList(this.project, this.docNumber).then(res => {
+      if (res != ''){
+        this.parts = res;
+        this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
+        this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
+      }
+      else{
+        this.noResult = true;
+      }
+    });
+  }
+  getParts(){
+    return this.parts.filter((x: any) => this.isPartVisible(x));
+  }
+  isPartVisible(part: any){
+    return true;
+  }
   fillRevisions(){
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
@@ -205,5 +228,14 @@ export class HullEspComponent implements OnInit {
 
   createEsp(revision: string = '') {
 
+  }
+
+  getCount(parts: any[], PART_CODE: any) {
+    if (this.groupedByPartCode){
+      return parts.filter(x => x.PART_CODE == PART_CODE).length;
+    }
+    else{
+      return 1;
+    }
   }
 }

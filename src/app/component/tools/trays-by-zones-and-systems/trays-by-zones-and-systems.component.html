@@ -47,8 +47,8 @@
           <div class="w-10 table-header-col cy">{{l.tr('Поз. на чертеже')}}</div>
         </div>
         <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">
-          <div class="w-5 table-body-support cy">{{sup.mountData.label}}</div>
-          <div class="w-15 table-body-support cy">{{sup.mountData.trmCode}}</div>
+          <div class="w-5 table-body-support cy">{{sup.label}}</div>
+          <div class="w-15 table-body-support cy">{{sup.workShopMaterial.trmCode}}</div>
           <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>
           <div class="w-7 table-body-support cy">{{sup.kei}}</div>
           <div class="w-15 table-body-support cy">{{sup.qty}}</div>
