@@ -99,7 +99,10 @@
 .text-14{
   font-size: 13px;
 }
-
+.attachment-files{
+  display: flex;
+  font-size: 13px;
+}
 
 
 .card-page{

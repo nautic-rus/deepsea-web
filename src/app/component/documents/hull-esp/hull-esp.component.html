@@ -117,9 +117,9 @@
                 <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
                   <div (click)="openFile(file.url)" class="attachment-files df mb-10 cursor-pointer">
                     <div class="cxy">
-                      <!--                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>-->
+                      <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                     </div>
-                    <span class="mx-10 cy" tooltipPosition="top" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
+                    <span class="mx-10 width-110 cy">{{trimFileName(file.name) + ' '}}</span>
                     <span class="mx-10 cy">{{' ' + getDate(issue.started_date)}}</span>
                     <div class="cxy ml-10 load-cloud">
                       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#605e5c" class="bi bi-cloud-download cloud-download" viewBox="0 0 16 16">
