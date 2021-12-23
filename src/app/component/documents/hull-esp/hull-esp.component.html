@@ -6,8 +6,7 @@
       <div class="mr-2" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>
       <div class="mr-1">Revision:</div>
       <div class="mr-2">
-        <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
-        </p-dropdown>
+        {{issue.revision}}
       </div>
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>
@@ -39,7 +38,7 @@
                  [scrollable]="true"
                  [scrollHeight]="'70vh'"
                  [virtualScroll]="true"
-                 [virtualRowHeight]="40"
+                 [virtualRowHeight]="28"
                  styleClass="p-datatable-striped"
                  responsiveLayout="scroll"
                  [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID', 'STOCKCODE']">
@@ -129,6 +128,13 @@
                     </div>
                   </div>
                 </div>
+                <div class="df right-bottom-revision">
+                  <div class="pt-5">View files of revision</div>
+                  <div class="ml-1">
+                    <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
+                    </p-dropdown>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -187,6 +193,36 @@
               </div>
               <div class="w-70">
                 <div class="mt-10 value-details">{{selectedPart.NEST_LENGTH + 'x' + selectedPart.NEST_WIDTH}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Num Eq Nest:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.NUM_EQ_NEST}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Num Eq Part:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.NUM_EQ_PART}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Total Weight:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.TOTAL_WEIGHT}}</div>
               </div>
             </div>
           </div>

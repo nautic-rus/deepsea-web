@@ -80,6 +80,7 @@ import { HullEspComponent } from './component/documents/hull-esp/hull-esp.compon
 import {TabViewModule} from "primeng/tabview";
 import {UploadRevisionFilesComponent} from "./component/documents/hull-esp/upload-revision-files/upload-revision-files.component";
 import { AssignNewRevisionComponent } from './component/documents/hull-esp/assign-new-revision/assign-new-revision.component';
+import { DxfViewComponent } from './component/dxf-view/dxf-view.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -124,7 +125,8 @@ Quill.register('modules/imageResize', ImageResize);
     TraysByZonesAndSystemsComponent,
     HullEspComponent,
     UploadRevisionFilesComponent,
-    AssignNewRevisionComponent
+    AssignNewRevisionComponent,
+    DxfViewComponent
   ],
     imports: [
         BrowserModule,

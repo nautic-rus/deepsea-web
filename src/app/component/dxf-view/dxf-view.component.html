@@ -1,0 +1,10 @@
+<div class="page">
+  <div class="cad-view" id="cad-view">
+
+  </div>
+  <div *ngIf="loadingStatus != 'loaded'" class="loading-status">
+    {{loadingStatus}}
+  </div>
+  <input [(ngModel)]="search">
+  <button (click)="move()">move</button>
+</div>

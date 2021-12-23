@@ -47,7 +47,9 @@
               "node_modules/quill/dist/quill.js",
               "node_modules/quill/dist/quill.min.js",
               "node_modules/quill-image-resize-module/image-resize.min.js",
-              "node_modules/chart.js/dist/Chart.js"
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/three-dxf/dist/three-dxf.js",
+              "node_modules/three/build/three.js"
             ]
           },
           "configurations": {
