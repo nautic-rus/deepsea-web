@@ -1,10 +1,10 @@
-<div class="page">
+<div class="page" [class.window-mode]="windowMode == 1">
   <div class="cad-view" id="cad-view">
 
   </div>
   <div *ngIf="loadingStatus != 'loaded'" class="loading-status">
-    {{loadingStatus}}
+    LOADING ...
   </div>
-  <input [(ngModel)]="search">
-  <button (click)="move()">move</button>
+<!--  <input [(ngModel)]="search">-->
+<!--  <button (click)="move()">move</button>-->
 </div>

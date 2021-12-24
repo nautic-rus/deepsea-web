@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {AuthManagerService} from "./domain/auth-manager.service";
-import {RouterOutlet} from "@angular/router";
+import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
 import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
 import {PrimeNGConfig} from "primeng/api";
 
@@ -168,12 +168,19 @@ import {PrimeNGConfig} from "primeng/api";
   ]
 })
 export class AppComponent {
-  title = 'deepsea';
-  constructor(public auth: AuthManagerService, private primengConfig: PrimeNGConfig) {
-    this.primengConfig.ripple = true;
-  }
 
+  title = 'deepsea';
+  naviDisabled = false;
+
+  constructor(public auth: AuthManagerService, private primengConfig: PrimeNGConfig, private route: ActivatedRoute) {
+    this.primengConfig.ripple = true;
+    this.route.queryParams.subscribe(params => {
+      this.naviDisabled = params.navi == 0;
+      console.log(this.naviDisabled);
+    });
+  }
   prepareRoute(outlet: RouterOutlet): any {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
+
 }

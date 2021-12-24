@@ -4,7 +4,6 @@ import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {LanguageService} from "../../../domain/language.service";
 import {Issue} from "../../../domain/classes/issue";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
-import {SendToCloudComponent} from "../../task/send-to-cloud/send-to-cloud.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {UploadRevisionFilesComponent} from "./upload-revision-files/upload-revision-files.component";
 import _ from "underscore";
@@ -29,6 +28,8 @@ export class HullEspComponent implements OnInit {
   issue: Issue = new Issue();
   selectedPart = Object();
   groupedByPartCode = false;
+  dxfEnabled = false;
+  dxfView: Window | null = null;
   fileGroups = [
     {
       name: 'Drawings',
@@ -53,7 +54,7 @@ export class HullEspComponent implements OnInit {
   ];
   selectedTab = this.fileGroups[0].name;
   issueRevisions: string[] = [];
-  filters:  { ELEM_TYPE: any[], MATERIAL: any[]  } = { ELEM_TYPE: [],  MATERIAL: [] };
+  filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[]  } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
 
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private issueManager: IssueManagerService, private dialogService: DialogService) { }
 
@@ -87,6 +88,7 @@ export class HullEspComponent implements OnInit {
         this.parts = res;
         this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
         this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
+        this.filters.SYMMETRY = this.getFilters(this.parts, 'SYMMETRY');
       }
       else{
         this.noResult = true;
@@ -238,5 +240,43 @@ export class HullEspComponent implements OnInit {
     else{
       return 1;
     }
+  }
+  selectPart(part: any){
+    this.selectedPart = part;
+    if (this.dxfView != null && !this.dxfView.closed){
+      this.dxfView.postMessage(this.selectedPart, '*');
+    }
+    if (this.dxfEnabled){
+      let search = this.trimLeftZeros(part.PART_CODE) + part.SYMMETRY;
+      this.router.navigate([], {queryParams: {search: null}, queryParamsHandling: 'merge'}).then(() => {
+        this.router.navigate([], {queryParams: {search}, queryParamsHandling: 'merge'});
+      });
+    }
+  }
+  trimLeftZeros(input: string){
+    let result = input;
+    while (result[0] == '0' && result.length > 0){
+      result = result.substr(1);
+    }
+    return result;
+  }
+  isDisabledDxf(){
+    return this.issue == null || this.issue.revision_files == null || this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf')) == null;
+  }
+  showDxf(){
+    this.dxfEnabled = !this.dxfEnabled;
+    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
+    // @ts-ignore
+    viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
+
+    this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
+  }
+  openDxf() {
+    this.showDxf();
+    if (this.dxfView != null && !this.dxfView.closed){
+      this.dxfView.close();
+    }
+    let url = '/dxf-view?navi=0&window=1&dxf=' + this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url;
+    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
 }

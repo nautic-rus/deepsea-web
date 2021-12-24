@@ -17,6 +17,9 @@
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(selectedRevision)"></button>
       </div>
+      <div class="mr-1">
+        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="showDxf()" [disabled]="isDisabledDxf()"></button>
+      </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
@@ -56,6 +59,15 @@
                   </ng-template>
                 </p-columnFilter>
               </th>
+              <th pSortableColumn="SYMMETRY" class="w-40">{{'Symmetry'}}
+                <p-sortIcon field="SYMMETRY"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'SYMMETRY'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.SYMMETRY" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
               <th pSortableColumn="WEIGHT_UNIT" class="w-40">{{'Weight'}}
                 <p-sortIcon field="WEIGHT_UNIT"></p-sortIcon>
               </th>
@@ -77,9 +89,10 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-part>
-            <tr class="cursor-pointer task-row" (click)="selectedPart = part">
+            <tr class="cursor-pointer task-row" (click)="selectPart(part)">
               <td class="w-15 text-14">{{part.PART_CODE}}</td>
               <td class="w-15 text-14">{{part.ELEM_TYPE}}</td>
+              <td class="w-15 text-14">{{part.SYMMETRY}}</td>
               <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
               <td class="w-15 text-14">{{part.MATERIAL}}</td>
               <td class="w-15 text-14">{{part.NEST_ID}}</td>
@@ -87,6 +100,10 @@
             </tr>
           </ng-template>
         </p-table>
+        <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
+          <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button" icon="pi pi-circle-on" (click)="openDxf()"></button>
+          <app-dxf-view></app-dxf-view>
+        </div>
       </div>
       <div class="w-32 right-content-card mt-20">
         <div class="card-tabs h50">

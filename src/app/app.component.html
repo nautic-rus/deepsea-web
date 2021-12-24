@@ -1,8 +1,8 @@
 <div class="page">
-  <div class="navi" *ngIf="auth.isAuth()">
+  <div class="navi" *ngIf="auth.isAuth() && !naviDisabled">
     <app-navi></app-navi>
   </div>
-  <div class="content" [@routeAnimations]="prepareRoute(outlet)" [class.content-navi]="auth.isAuth()">
+  <div class="content" [@routeAnimations]="prepareRoute(outlet)" [class.content-navi]="auth.isAuth() && !naviDisabled">
     <router-outlet #outlet="outlet"></router-outlet>
   </div>
 </div>

@@ -1,6 +1,9 @@
 .page{
-  height: 100vh;
+  height: 100%;
   width: 100%;
+}
+.window-mode{
+  height: 100vh;
 }
 .card-view{
   border: 1px solid red;
@@ -11,7 +14,12 @@
 .loading-status{
   color: white;
   position: absolute;
-  left: 700px;
-  top: 350px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   font-size: xxx-large;
+}
+.cad-view{
+  height: 100%;
+  width: 100%;
 }

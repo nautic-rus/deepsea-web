@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import parse, { DxfParser } from 'dxf-parser';
 import {HttpClient} from "@angular/common/http";
-import { parseDxfMTextContent } from '@dxfom/mtext';
 
 // @ts-ignore
 import { OrbitControls } from 'node_modules/dxf-viewer/src/OrbitControls.js';
@@ -17,6 +15,7 @@ import DxfViewerWorker from "node_modules/dxf-viewer/src/DxfViewerWorker"
 import * as ThreeDxf from 'node_modules/three-dxf/dist/three-dxf.js';
 // @ts-ignore
 import {FontLoader} from 'node_modules/three/examples/jsm/loaders/FontLoader.js';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-dxf-view',
@@ -25,55 +24,62 @@ import {FontLoader} from 'node_modules/three/examples/jsm/loaders/FontLoader.js'
 })
 export class DxfViewComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
   loadingStatus = '';
   dxfViewer: DxfViewer;
   dxfContent: any;
   search = '242';
+  dxfUrl = '/assets/123.dxf';
+  fontUrl = 'assets/fonts/gost_type_au.ttf';
+  windowMode = 0;
 
   ngOnInit(): void {
+    window.addEventListener('message', (event) => {
+      this.search = this.trimLeftZeros(event.data.PART_CODE) + event.data.SYMMETRY;
+      this.move();
+    });
+    this.route.queryParams.subscribe(params => {
+      this.dxfUrl = params.dxf != null ? params.dxf : this.dxfUrl;
+      this.windowMode = params.window != null ? params.window : this.windowMode;
+      let search = params.search != null ? params.search : '';
+      if (search != '' && this.loadingStatus == 'loaded'){
+        this.search = search;
+        this.move();
+      }
+      if (this.loadingStatus != 'loaded'){
+        this.fetchDxf();
+      }
+    });
+  }
+
+  trimLeftZeros(input: string){
+    let result = input;
+    while (result[0] == '0' && result.length > 0){
+      result = result.substr(1);
+    }
+    return result;
+  }
+  fetchDxf(){
     try {
-      new DxfFetcher('/assets/1234.dxf').Fetch().then((res: any) => {
+      new DxfFetcher(this.dxfUrl).Fetch().then((res: any) => {
         this.dxfContent = res;
-        console.log(res);
-        this.http.get('/assets/123.dxf', {responseType: "text"}).subscribe(res => {
-
-          this.dxfViewer = new DxfViewer(document.getElementById('cad-view'));
-
-
-          // this.dxfViewer.Subscribe('loaded', (handler: any) => {
-          //   console.log(handler);
-          // });
-          // this.dxfViewer.Subscribe('pointerdown', (handler: any) => {
-          //   console.log(handler);
-          // });
-          // this.dxfViewer.Subscribe('pointerup', (handler: any) => {
-          //   console.log(handler);
-          // });
-          // this.dxfViewer.Subscribe('message', (handler: any) => {
-          //   console.log(handler);
-          // });
-          // this.dxfViewer.Subscribe('viewChanged', (handler: any) => {
-          //   console.log(handler);
-          // });
-
-
-          this.dxfViewer.Load({url: '/assets/1234.dxf', progressCbk: (res: any) => {console.log(res); this.loadingStatus = res.toString()}, fonts: ['assets/fonts/gost_type_au.ttf']}).then(() => {
+        this.http.get(this.dxfUrl, {responseType: "text"}).subscribe(res => {
+          let options = Object.create(DxfViewer.DefaultOptions);
+          options.autoResize = true;
+          this.dxfViewer = new DxfViewer(document.getElementById('cad-view'), options);
+          this.dxfViewer.Load({url: this.dxfUrl, progressCbk: (res: any) => {console.log(res); this.loadingStatus = res.toString()}, fonts: [this.fontUrl]}).then(() => {
             this.loadingStatus = 'loaded';
           });
           this.dxfViewer.SetSize(1080, 720);
-
         });
       });
     }catch(err) {
       return console.error(err.stack);
     }
   }
-
   move() {
-    let find = this.dxfContent?.entities.find((x: any) => x.layer == 'NR-POS' && x.type == 'TEXT' && x.text.includes(this.search));
-
+    let find = this.dxfContent?.entities.find((x: any) => x.layer == 'NR-POS' && x.type == 'TEXT' && x.text == this.search);
     let origin = this.dxfViewer.GetOrigin();
     let x = find.startPoint.x;
     let y = find.startPoint.y;
