@@ -31,3 +31,9 @@
   text-align: center;
   align-items: center;
 }
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 12px;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 12px;
+}

@@ -18,7 +18,7 @@
         <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(selectedRevision)"></button>
       </div>
       <div class="mr-1">
-        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="showDxf()" [disabled]="isDisabledDxf()"></button>
+        <button pButton [pTooltip]="l.tr('Show Drawing')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-window-minimize" (click)="showDxf()" [disabled]="isDisabledDxf()"></button>
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
@@ -31,9 +31,9 @@
         <div *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
         <div *ngIf="parts.length == 0">
           <div class="cxy loading">
-            <div>
+            <div class="cxy card-height">
               <img src="assets/whale.gif" height="120">
-              <div class="cx ">PLEASE WAIT...</div>
+              <div class="cx loading-text">PLEASE WAIT...</div>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
                  responsiveLayout="scroll"
                  [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID', 'STOCKCODE']">
           <ng-template pTemplate="header">
-            <tr *ngIf="parts.length != 0">
+            <tr *ngIf="parts.length != 0" >
               <th pSortableColumn="PART_CODE" class="w-40">{{'Part code'}}
                 <p-sortIcon field="PART_CODE"></p-sortIcon>
               </th>

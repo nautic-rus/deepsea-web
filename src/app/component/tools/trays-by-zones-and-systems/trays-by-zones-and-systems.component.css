@@ -63,3 +63,30 @@
 .table-row:hover{
   background-color: #F3F2F1;
 }
+.card-height{
+  height: calc(100vh - 200px);
+  flex-direction: column;
+}
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+}
+.group{
+  border: 1px solid #e1e1e1;
+}
+.subgroup{
+  padding: 14px!important;
+}
+.arrow-down{
+  transform: rotate(90deg);
+  transition: 0.4s;
+}
+.arrow-up{
+  transition: 0.3s;
+  border-radius: 15px;
+  height: 30px;
+  width: 30px;
+}
+.arrow-up:hover{
+  background-color: #E1E5E9;
+}

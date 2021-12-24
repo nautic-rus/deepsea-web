@@ -29,16 +29,13 @@
   font-size: 0.73286em;
   cursor: pointer;
   font-weight: 500;
-  display: flex;
-  flex-direction: row;
+  width: 40px;
+  margin-left: 15px;
+  margin-bottom: 15px;
 }
 .menu:hover{
   background-color: rgba(50, 74, 98, 0.84);
   transition: 0.2s;
-}
-.menu-pic{
-  width: 35px;
-  display: flex;
 }
 .mt-76{
   margin-top: 76px;

@@ -68,11 +68,11 @@
   <div></div>
 </div>
 <div class="left-panel">
-  <div *ngIf="auth.getUser().visible_pages.includes('home')" class="mx-20 mb-10 menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
-    <div class="menu-pic">
+  <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
       <img src="assets/icons/home1.svg" height="17">
     </div>
-    <div class="cy">{{t.tr('МОЯ СТРАНИЦА')}}</div>
+<!--    <div class="cy">{{t.tr('МОЯ СТРАНИЦА')}}</div>-->
   </div>
 <!--  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
 <!--    <div class="cxy">-->
@@ -80,11 +80,11 @@
 <!--    </div>-->
 <!--    <div class="cxy mt-10">{{t.tr('МАТЕРИАЛЫ')}}</div>-->
 <!--  </div>-->
-  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="mx-20 mb-10 menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="menu-pic">
+  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">
       <img src="assets/icons/docs.svg" height="17">
     </div>
-    <div class="cy">{{t.tr('ДОКУМЕНТЫ')}}</div>
+<!--    <div class="cy">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
   </div>
 <!--  <div class="cy menu" routerLink="gantt" routerLinkActive="selected-menu">-->
 <!--    <div class="cxy">-->
@@ -92,11 +92,11 @@
 <!--    </div>-->
 <!--    <div class="cxy text-center mt-10">ГАНТ</div>-->
 <!--  </div>-->
-  <div *ngIf="auth.getUser().visibility.includes('z')" class="mx-20 mb-10 menu" routerLink="employees" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="menu-pic">
+  <div *ngIf="auth.getUser().visibility.includes('z')" class="menu" routerLink="employees" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('СОТРУДНИКИ')">
       <img src="assets/icons/employees.svg" height="20">
     </div>
-    <div class="cy">{{t.tr('СОТРУДНИКИ')}}</div>
+<!--    <div class="cy">{{t.tr('СОТРУДНИКИ')}}</div>-->
   </div>
 <!--  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="cy menu" routerLink="doc-explorer" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
 <!--    <div class="cxy">-->
@@ -104,23 +104,23 @@
 <!--    </div>-->
 <!--    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
 <!--  </div>-->
-  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="mx-20 mb-10 menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="menu-pic">
+  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">
       <img src="assets/icons/sections1.svg" height="17">
     </div>
-    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>
+<!--    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>-->
   </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="mx-20 mb-10 menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="menu-pic">
+  <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('ИНСТРУМЕНТЫ')">
       <img src="assets/icons/wrench.svg" height="17">
     </div>
-    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>
+<!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
   </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="mx-20 mb-10 menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="menu-pic">
+  <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('ТРУДОЗАТРАТЫ')">
       <img src="assets/icons/labor.svg" height="20">
     </div>
-    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>
+<!--    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>-->
   </div>
 
 

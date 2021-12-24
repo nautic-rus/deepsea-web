@@ -13,7 +13,7 @@
 }
 .card-sp{
   width: 68%;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 197px);
   background: #ffffff;
   margin-top: 20px;
   border-radius: 8px;
@@ -34,7 +34,7 @@
   height: calc(50% - 20px);
 }
 .right-content-card{
-  height: calc(100vh - 200px);
+  height: calc(100vh - 197px);
 }
 .top-line{
   height: 10px;
@@ -102,6 +102,13 @@
 .attachment-files{
   display: flex;
   font-size: 13px;
+}
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+}
+.card-height{
+  flex-direction: column;
 }
 
 
