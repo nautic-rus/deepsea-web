@@ -3,12 +3,25 @@
     <div class="df tabs-header">
       <div class="all-tabs cursor-pointer" (click)="selectedTab = 'Trays'" [class.selectedTab]="selectedTab == 'Trays'">Trays</div>
       <div class="all-tabs cursor-pointer" (click)="selectedTab = 'Equipment'" [class.selectedTab]="selectedTab == 'Equipment'">Equipment</div>
-      <div class="all-tabs cursor-pointer">{{bundle.drawingId}}</div>
-      <div class="all-tabs cursor-pointer">{{bundle.drawingDescr}}</div>
-      <div class="all-tabs cursor-pointer">{{bundle.deck}}</div>
+      <div class="p-ml-auto">
+        <div class="header-table mr-5">{{bundle.drawingId}}</div>
+      </div>
 
-      <button [disabled]="waitingForResponse" (click)="generatePdf()">CREATE TEMPLE FILE</button>
-      <button [disabled]="waitingForResponse" (click)="generatePdf(true)">CREATE NEW REVISION FILE</button>
+      <div class="header-table mr-5">{{bundle.drawingDescr}}</div>
+      <div class="header-table">{{bundle.deck}}</div>
+      <div class="p-ml-auto">
+        <div class="mr-1">
+          <button [disabled]="waitingForResponse" pButton class="border normal-button p-button-outlined" (click)="generatePdf()">Create temple file</button>
+        </div>
+      </div>
+      <div class="">
+        <div class="1">
+          <button [disabled]="waitingForResponse" pButton class="border normal-button p-button-outlined" (click)="generatePdf(true)">Create new rev file</button>
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 
