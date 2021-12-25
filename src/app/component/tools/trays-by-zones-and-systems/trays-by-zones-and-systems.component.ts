@@ -12,7 +12,9 @@ import _ from "underscore";
 export class TraysByZonesAndSystemsComponent implements OnInit {
   collapsed: string[] = [];
   trays: any = [];
+  equipment: any = [];
   grouped: any = [];
+  selectedTab: string = 'Trays';
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService) { }
 
 
@@ -22,8 +24,8 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
       let docNumber = params.docNumber != null ? params.docNumber : '';
       if (project != '' && docNumber != ''){
         this.s.getTraysByZonesAndSystems(project, docNumber).then(res => {
-          console.log(res);
-          this.trays = res;
+          this.trays = res.trays;
+          this.equipment = res.eqs;
           _.forEach(_.groupBy(_.sortBy(this.trays, x => x.mountData.label), x => x.mountData.label + x.mountData.trmCode + x.mountData.name), group => {
             this.grouped.push(group);
           });
