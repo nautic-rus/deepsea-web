@@ -3,6 +3,12 @@
     <div class="df tabs-header">
       <div class="all-tabs cursor-pointer" (click)="selectedTab = 'Trays'" [class.selectedTab]="selectedTab == 'Trays'">Trays</div>
       <div class="all-tabs cursor-pointer" (click)="selectedTab = 'Equipment'" [class.selectedTab]="selectedTab == 'Equipment'">Equipment</div>
+      <div class="all-tabs cursor-pointer">{{bundle.drawingId}}</div>
+      <div class="all-tabs cursor-pointer">{{bundle.drawingDescr}}</div>
+      <div class="all-tabs cursor-pointer">{{bundle.deck}}</div>
+
+      <button [disabled]="waitingForResponse" (click)="generatePdf()">CREATE TEMPLE FILE</button>
+      <button [disabled]="waitingForResponse" (click)="generatePdf(true)">CREATE NEW REVISION FILE</button>
     </div>
   </div>
 

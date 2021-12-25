@@ -81,6 +81,7 @@ import {TabViewModule} from "primeng/tabview";
 import {UploadRevisionFilesComponent} from "./component/documents/hull-esp/upload-revision-files/upload-revision-files.component";
 import { AssignNewRevisionComponent } from './component/documents/hull-esp/assign-new-revision/assign-new-revision.component';
 import { DxfViewComponent } from './component/dxf-view/dxf-view.component';
+import { GenerationWaitComponent } from './component/tools/trays-by-zones-and-systems/generation-wait/generation-wait.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -126,7 +127,8 @@ Quill.register('modules/imageResize', ImageResize);
     HullEspComponent,
     UploadRevisionFilesComponent,
     AssignNewRevisionComponent,
-    DxfViewComponent
+    DxfViewComponent,
+    GenerationWaitComponent
   ],
     imports: [
         BrowserModule,

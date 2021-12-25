@@ -99,7 +99,7 @@ import {PrimeNGConfig} from "primeng/api";
         query(':enter, :leave', [
           style({
             position: 'fixed',
-            width: '88.5%',
+            width: 'calc(100% - var(--navi-width))',
             height: '100%',
             opacity: 0
           })
