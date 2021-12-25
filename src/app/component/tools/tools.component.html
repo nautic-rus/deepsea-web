@@ -12,7 +12,7 @@
             <div class="head-text-card">Bill of Materials</div>
             <div>
               <div class="big-text-card mb-1">{{t.tr('Проект')}}</div>
-              <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="w-100 font-14">
+              <p-dropdown class="select" [(ngModel)]="materialsProject" [options]="projects" styleClass="w-100 font-14">
               </p-dropdown>
             </div>
           </div>
@@ -36,10 +36,15 @@
             </div>
           </div>
           <div class="body-card">
-            <div class="head-text-card">Bill of Materials</div>
+            <div class="head-text-card">Tray Manager</div>
             <div>
               <div class="big-text-card mb-1">{{t.tr('Проект')}}</div>
-              <p-dropdown class="select" styleClass="w-100 font-14">
+              <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="w-100 font-14">
+              </p-dropdown>
+            </div>
+            <div>
+              <div class="big-text-card mb-1">Bundle</div>
+              <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="w-100 font-14">
               </p-dropdown>
             </div>
           </div>
@@ -50,7 +55,7 @@
             <div class="px-10">
               <img src="assets/blue_whale.svg" height="25">
             </div>
-            <div class="mini-text-card cy">{{t.tr('Сгенерируйте материалы из FORAN')}}</div>
+            <div class="mini-text-card cy">Create list of tray bundles</div>
           </div>
         </div>
       </div>

@@ -19,18 +19,18 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       let project = params.project != null ? params.project : '';
-      let zones = params.zones != null ? params.zones : '';
-      let systems = params.systems != null ? params.systems : '';
-      if (project != '' && zones != '' && systems != ''){
-        this.s.getTraysByZonesAndSystems(project, zones, systems).then(res => {
-          this.trays = JSON.parse(res);
+      let docNumber = params.docNumber != null ? params.docNumber : '';
+      if (project != '' && docNumber != ''){
+        this.s.getTraysByZonesAndSystems(project, docNumber).then(res => {
+          console.log(res);
+          this.trays = res;
           _.forEach(_.groupBy(_.sortBy(this.trays, x => x.mountData.label), x => x.mountData.label + x.mountData.trmCode + x.mountData.name), group => {
             this.grouped.push(group);
           });
         });
       }
       else{
-        this.router.navigate(['']);
+        //this.router.navigate(['']);
       }
     });
   }

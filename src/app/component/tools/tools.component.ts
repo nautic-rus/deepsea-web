@@ -7,6 +7,7 @@ import {TaskComponent} from "../task/task.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {TraysByZonesAndSystemsComponent} from "./trays-by-zones-and-systems/trays-by-zones-and-systems.component";
 import {Router} from "@angular/router";
+import _ from "underscore";
 
 @Component({
   selector: 'app-tools',
@@ -14,35 +15,54 @@ import {Router} from "@angular/router";
   styleUrls: ['./tools.component.css']
 })
 export class ToolsComponent implements OnInit {
-  taskProject = '';
-  taskProjects: string[] = [];
+
   wait: string[] = [];
   billOfMaterials: string = '';
+  materialsProject = '';
+
+
+  trayBundlesProject = 'P701';
+  trayBundlesProjects = ['P701', 'P707'];
+  selectedTrayBundle: any;
+  trayBundles: any[] = [];
+
+  projects: string[] = [];
+
+
 
   constructor(public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService, private router: Router) { }
 
   ngOnInit(): void {
     this.issues.getIssueProjects().then(projects => {
-      this.taskProjects = projects.filter(x => this.auth.getUser().visible_projects.includes(x)).filter(x => x != '-');
-      if (this.taskProjects.length > 0) {
-        this.taskProject = this.taskProjects[this.taskProjects.length - 1];
+      this.projects = projects.filter(x => this.auth.getUser().visible_projects.includes(x)).filter(x => x != '-');
+      if (this.projects.length > 0) {
+        this.materialsProject = this.projects[this.projects.length - 1];
       }
     });
+    this.trayBundleProjectChanged();
   }
 
   getBillOfMaterials() {
     this.wait.push('bill-of-materials');
-    this.issues.getForanParts(this.taskProject).then(res => {
+    this.issues.getForanParts(this.materialsProject).then(res => {
       this.billOfMaterials = res;
       this.wait.splice(this.wait.indexOf('bill-of-materials'), 1);
     });
   }
   getTraysByZonesAndSystems(){
-    this.router.navigate(['trays-by-zones-and-systems'], {queryParams: {project: "P701", zones: "5318", systems: "884-6009"}});
+    this.router.navigate(['trays-by-zones-and-systems'], {queryParams: {project: this.trayBundlesProject, docNumber: this.selectedTrayBundle}});
   }
 
   download(url: string) {
     window.open(url, '_blank');
+  }
+  trayBundleProjectChanged(){
+    this.s.getTrayBundles(this.trayBundlesProject).then(res => {
+      this.trayBundles = _.sortBy(res.filter((x: any) => x.drawingId != null && x.drawingId != ''), x => x.drawingId);
+      if (this.trayBundles.length > 0){
+        this.selectedTrayBundle = this.trayBundles[0].drawingId;
+      }
+    });
   }
 
 }

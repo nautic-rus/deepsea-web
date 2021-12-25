@@ -8,8 +8,11 @@ import * as props from "../props";
 })
 export class SpecManagerService {
   constructor(private cookie: CookieService, private http: HttpClient) { }
-  async getTraysByZonesAndSystems(project: string, zones: string, systems: string) {
-    return await this.http.get<any>(props.httpSpec + '/traysByZonesAndSystems', {params: {project, zones, systems: systems}}).toPromise();
+  async getTrayBundles(project: string) {
+    return await this.http.get<any>(props.httpSpec + '/trayBundles', {params: {project}}).toPromise();
+  }
+  async getTraysByZonesAndSystems(project: string, docNumber: string) {
+    return await this.http.get<any>(props.httpSpec + '/traysByZonesAndSystems', {params: {project, docNumber}}).toPromise();
   }
   async  getHullPatList(project: string, docNumber: string) {
     return await this.http.get<any>(props.httpSpec + '/hullPartList', {params: {project, docNumber}}).toPromise();

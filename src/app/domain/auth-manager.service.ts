@@ -84,7 +84,12 @@ export class AuthManagerService {
         else if (user != null){
           this.setUser(user, save);
           if (redirect){
-            this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
+            if (this.user.permissions.includes('view-documents-n004-only')){
+              this.router.navigate(['documents'], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
+            }
+            else{
+              this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
+            }
           }
         }
         console.log(data);
@@ -126,6 +131,11 @@ export class AuthManagerService {
           this.setUser(user);
           if (noGuard){
             this.router.navigate(['']);
+          }
+          if (qParams.redirect == '/'){
+            if (this.user.permissions.includes('view-documents-n004-only')){
+              this.router.navigate(['documents'], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
+            }
           }
           return true;
         }
