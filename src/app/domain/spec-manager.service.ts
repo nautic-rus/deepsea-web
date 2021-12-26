@@ -12,8 +12,8 @@ export class SpecManagerService {
     return await this.http.get<any>(props.httpSpec + '/trayBundles', {params: {project}}).toPromise();
   }
   async getTraysByZonesAndSystems(project: string, docNumber: string) {
-    // return await this.http.get<any>(props.httpSpec + '/traysByZonesAndSystems', {params: {project, docNumber}}).toPromise();
-    return await this.http.get<any>('assets/test.json', {params: {project, docNumber}}).toPromise();
+    return await this.http.get<any>(props.httpSpec + '/traysByZonesAndSystems', {params: {project, docNumber}}).toPromise();
+    //return await this.http.get<any>('assets/test.json', {params: {project, docNumber}}).toPromise();
   }
   async getTraySpec(project: string, docNumber: string, revision: string) {
     return await this.http.get<any>(props.httpSpec + '/traySpec', {params: {project, docNumber, revision}}).toPromise();
