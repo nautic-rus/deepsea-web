@@ -80,14 +80,16 @@ export class DxfViewComponent implements OnInit {
   }
   move() {
     let find = this.dxfContent?.entities.find((x: any) => x.layer == 'NR-POS' && x.type == 'TEXT' && x.text == this.search);
-    let origin = this.dxfViewer.GetOrigin();
-    let x = find.startPoint.x;
-    let y = find.startPoint.y;
-    x -= origin.x;
-    y -= origin.y;
+    if (find != null){
+      let origin = this.dxfViewer.GetOrigin();
+      let x = find.startPoint.x;
+      let y = find.startPoint.y;
+      x -= origin.x;
+      y -= origin.y;
 
-    this.setView({x, y}, 5000);
-    this.dxfViewer.Render();
+      this.setView({x, y}, 5000);
+      this.dxfViewer.Render();
+    }
   }
   setView(center: any, width: any) {
     const aspect = this.dxfViewer.GetCanvas().clientWidth / this.dxfViewer.GetCanvas().clientHeight;

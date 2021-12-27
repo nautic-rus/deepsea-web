@@ -83,8 +83,7 @@ import {PrimeNGConfig} from "primeng/api";
       transition('* => HullEspComponent', [
         query(':enter, :leave', [
           style({
-            position: 'fixed',
-            width: '88.7%',
+            width: '100%',
             height: '100%',
             opacity: 0
           })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {LanguageService} from "../../../domain/language.service";
@@ -11,6 +11,11 @@ import JSZip from "jszip";
 import {FileAttachment} from "../../../domain/classes/file-attachment";
 import {saveAs} from "file-saver";
 import {AssignNewRevisionComponent} from "./assign-new-revision/assign-new-revision.component";
+import Delta from "quill-delta";
+import {IssueMessage} from "../../../domain/classes/issue-message";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {mouseWheelZoom} from "mouse-wheel-zoom";
+import {UserCardComponent} from "../../employees/user-card/user-card.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -24,12 +29,71 @@ export class HullEspComponent implements OnInit {
   project = '';
   department = '';
   selectedRevision = '';
+  messageFilter = 'all';
+  comment = false;
   issueId = 0;
   issue: Issue = new Issue();
   selectedPart = Object();
+  awaitForLoad: string[] = [];
+  loaded: FileAttachment[] = [];
+  message = '';
+  showImages = false;
+  // @ts-ignore
+  @ViewChild('img') img;
+  image = '';
+  // @ts-ignore
+  wz;
+  // @ts-ignore
+  editor;
   groupedByPartCode = false;
   dxfEnabled = false;
   dxfView: Window | null = null;
+  quillModules =
+    {
+      imageResize: {},
+      clipboard: {
+        matchers: [
+          // @ts-ignore
+          ['img', (node, delta) => {
+            let image = delta.ops[0].insert.image;
+            if ((image.indexOf(";base64")) != -1){
+              let ext = image.substring("data:image/".length, image.indexOf(";base64"))
+              let fileName = 'clip' + this.generateId(8)  + '.' + ext;
+              const find = this.loaded.find(x => x.name == fileName);
+              if (find != null){
+                this.loaded.splice(this.loaded.indexOf(find), 1);
+              }
+              this.awaitForLoad.push(fileName);
+              this.appRef.tick();
+              fetch(image).then(res => res.blob()).then(blob => {
+                const file = new File([blob], fileName,{ type: "image/png" });
+                this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+                  this.loaded.push(res);
+                  this.appRef.tick();
+                  this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
+                  this.appRef.tick();
+                });
+              });
+              return new Delta();
+            }
+            else{
+              return delta;
+            }
+            //return delta;
+          }]
+        ]
+      },
+      keyboard: {
+        bindings: {
+          tab: {
+            key: 9,
+            handler: function () {
+              return true;
+            }
+          }
+        }
+      }
+    }
   fileGroups = [
     {
       name: 'Drawings',
@@ -56,7 +120,7 @@ export class HullEspComponent implements OnInit {
   issueRevisions: string[] = [];
   filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[]  } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
 
-  constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private issueManager: IssueManagerService, private dialogService: DialogService) { }
+  constructor(public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -70,6 +134,36 @@ export class HullEspComponent implements OnInit {
 
     });
   }
+  closeShowImage() {
+    this.showImages = false;
+    this.img = '';
+    this.wz.setSrcAndReset('');
+  }
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+  getNoneZeroResult(input: string) {
+    return input.length == 0 ? '<div class="text-none">Нет</div>' : input;
+  }
+  getNoneZeroInput(input: string) {
+    return input == '-' ? '<div class="text-none">Нет</div>' : input;
+  }
+  getDateNoTime(dateLong: number): string{
+    if (dateLong == 0) {
+      return '';
+    }
+    else{
+      let date = new Date(dateLong);
+      return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    }
+  }
   getFilters(values: any[], field: string): any[] {
     let res: any[] = [];
     let uniq = _.uniq(values, x => x[field]);
@@ -80,6 +174,35 @@ export class HullEspComponent implements OnInit {
       })
     });
     return _.sortBy(res, x => x.label);
+  }
+  onEditorDrop(event: any) {
+    event.preventDefault();
+    let files = event.dataTransfer.files;
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          const acceptedImageTypes = ['.jpg', '.jpeg', '.png'];
+          let isImage = false;
+          acceptedImageTypes.forEach(x => {
+            if (file.name.includes(x)){
+              isImage = true;
+            }
+          });
+          if (isImage) {
+            const find = this.loaded.find(x => x.name == file.name);
+            if (find != null) {
+              this.loaded.splice(this.loaded.indexOf(find), 1);
+            }
+            this.awaitForLoad.push(file.name);
+            this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+              this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
+              this.loaded.push(res);
+            });
+          }
+        }
+      }
+    }
   }
   fillParts(){
     this.s.getHullPatList(this.project, this.docNumber).then(res => {
@@ -101,6 +224,102 @@ export class HullEspComponent implements OnInit {
   isPartVisible(part: any){
     return true;
   }
+  handleImageInput(files: FileList | null) {
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          // @ts-ignore
+          const find = this.loaded.find(x => x.name == file.name);
+          if (find != null){
+            this.loaded.splice(this.loaded.indexOf(find), 1);
+          }
+          this.awaitForLoad.push(file.name);
+        }
+      }
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+            this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
+            this.loaded.push(res);
+          });
+        }
+      }
+    }
+  }
+  sendMessage() {
+    let message = new IssueMessage();
+    message.author = this.auth.getUser().login;
+    message.content = this.message;
+    message.file_attachments = this.loaded;
+
+    // @ts-ignore
+    this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+      });
+    });
+    this.comment = false;
+  }
+  openUserInfo(author: string) {
+    this.dialogService.open(UserCardComponent, {
+      showHeader: false,
+      modal: true,
+      data: author
+    });
+  }
+  getAuthor(author: string) {
+    return this.auth.getUserName(author);
+  }
+
+  localeGender(userId: string){
+    let find = this.auth.users.find(x => x.login == userId);
+    return find != null && find.gender == 'female' && this.l.language == 'ru' ? 'а' : '';
+  }
+  getMessages(issue: Issue) {
+    let res: any[] = [];
+    issue.messages.forEach(x => res.push(x));
+    issue.history.forEach(x => res.push(x));
+    // @ts-ignore
+    return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
+  }
+  remove(file: string) {
+    let find = this.loaded.find(x => x.name == file);
+    if (find != null){
+      this.loaded.splice(this.loaded.indexOf(find), 1);
+    }
+    let findAwait = this.awaitForLoad.find(x => x == file);
+    if (findAwait != null){
+      this.awaitForLoad.splice(this.awaitForLoad.indexOf(findAwait), 1);
+    }
+  }
+  handleFileInput(files: FileList | null) {
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          // @ts-ignore
+          const find = this.loaded.find(x => x.name == file.name);
+          if (find != null){
+            this.loaded.splice(this.loaded.indexOf(find), 1);
+          }
+          this.awaitForLoad.push(file.name);
+        }
+      }
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+            this.loaded.push(res);
+          });
+        }
+      }
+    }
+  }
+  isLoaded(file: string) {
+    return this.loaded.find(x => x.name == file);
+  }
   fillRevisions(){
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
@@ -114,7 +333,32 @@ export class HullEspComponent implements OnInit {
       this.selectedRevision = this.issueRevisions[0];
     });
   }
+  editorClicked(event: any) {
+    console.log(event.target.currentSrc);
 
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.target.localName == 'img'){
+      this.showImage(event.target.currentSrc);
+    }
+    else if (event.target.localName == 'a'){
+      window.open(event.target.href, '_blank');
+    }
+  }
+  showImage(url: string){
+    this.image = url;
+    this.showImages = true;
+    setTimeout(() => {
+      if (this.wz == null){
+        this.wz = mouseWheelZoom({
+          // @ts-ignore
+          element: document.querySelector('[data-wheel-zoom]'),
+          zoomStep: .25
+        });
+      }
+      this.wz.setSrcAndReset(url);
+    });
+  }
   round(input: number) {
     return Math.round(input * 100) / 100;
   }
@@ -223,7 +467,23 @@ export class HullEspComponent implements OnInit {
     });
   }
 
-
+  showComment() {
+    this.comment = true;
+    this.message = '';
+    this.awaitForLoad = [];
+    this.loaded = [];
+    setTimeout(() => {
+      this.editor.focus();
+    })
+  }
+  onEditorPressed(event: KeyboardEvent) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      this.sendMessage();
+    }
+  }
+  editorInit(event: any) {
+    this.editor = event;
+  }
 
   getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
     return this.issue.revision_files.filter(x => x.group == fileGroup && x.revision == revision);

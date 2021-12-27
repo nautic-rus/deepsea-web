@@ -177,8 +177,17 @@ body,p{
 .h50{
   height: 50%;
 }
+.h55{
+  height: 55%;
+}
+.h65{
+  height: 65%;
+}
 .h40{
   height: 40%;
+}
+.h35{
+  height: 35%;
 }
 .font-14{
   font-size: 14px;
