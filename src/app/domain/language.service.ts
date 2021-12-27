@@ -179,11 +179,11 @@ export class LanguageService {
           case 'Комплект': return 'Bundle';
           case '': return 'Create list of tray bundles';
           case 'Открыть': return 'Open';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Название, описание': return 'Name/description';
+          case 'Поставщик': return 'Provider';
+          case 'КЕИ': return 'Units';
+          case 'Маркировка': return 'Label';
+          case 'Вес': return 'Weight';
           case '': return '';
           case '': return '';
           case '': return '';

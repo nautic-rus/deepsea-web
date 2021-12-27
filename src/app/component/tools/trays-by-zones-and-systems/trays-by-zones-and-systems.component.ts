@@ -63,4 +63,8 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
       data: [this.project, this.docNumber, revision]
     });
   }
+
+  containsZeroSurface(group: any[]) {
+    return group.find(tray => tray.foranTray.marign == 0) != null;
+  }
 }
