@@ -176,9 +176,9 @@ export class LanguageService {
           case 'Сгенерировать': return 'Generate';
           case 'Создать подзадачу': return 'Create subtask';
           case 'Прочее': return 'Other';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Комплект': return 'Bundle';
+          case '': return 'Create list of tray bundles';
+          case 'Открыть': return 'Open';
           case '': return '';
           case '': return '';
           case '': return '';

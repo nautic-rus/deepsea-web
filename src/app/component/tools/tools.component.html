@@ -37,16 +37,19 @@
           </div>
           <div class="body-card">
             <div class="head-text-card">Tray Manager</div>
-            <div>
-              <div class="big-text-card mb-1">{{t.tr('Проект')}}</div>
-              <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="w-100 font-14">
-              </p-dropdown>
+            <div class="df">
+              <div>
+                <div class="big-text-card mb-1">{{t.tr('Проект')}}</div>
+                <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-150 font-14">
+                </p-dropdown>
+              </div>
+              <div class="p-ml-auto">
+                <div class="big-text-card mb-1">{{t.tr('Комплект')}}</div>
+                <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="w-100 font-14">
+                </p-dropdown>
+              </div>
             </div>
-            <div>
-              <div class="big-text-card mb-1">Bundle</div>
-              <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="w-100 font-14">
-              </p-dropdown>
-            </div>
+
           </div>
           <div class="body-button-card my-15 cx">
             <div tabindex="10" (click)="getTraysByZonesAndSystems()" pButton [label]="t.tr ('Открыть')" class="button-ok"></div>
@@ -55,7 +58,7 @@
             <div class="px-10">
               <img src="assets/blue_whale.svg" height="25">
             </div>
-            <div class="mini-text-card cy">Create list of tray bundles</div>
+            <div class="mini-text-card cy">{{t.tr('Create list of tray bundles')}}</div>
           </div>
         </div>
       </div>
