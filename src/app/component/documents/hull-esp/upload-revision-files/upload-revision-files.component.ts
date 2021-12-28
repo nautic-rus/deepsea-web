@@ -32,7 +32,10 @@ export class UploadRevisionFilesComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          let fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
+          let fileName = file.name;
+          if (!this.fileGroup.toLowerCase().includes('nesting')){
+            fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
+          }
           // @ts-ignore
           const find = this.loaded.find(x => x.name == fileName);
           if (find != null){
@@ -44,7 +47,10 @@ export class UploadRevisionFilesComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          let fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
+          let fileName = file.name;
+          if (!this.fileGroup.toLowerCase().includes('nesting')){
+            fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
+          }
           this.issues.uploadFile(file, this.auth.getUser().login, fileName).then(res => {
             this.loaded.push(res);
           });
@@ -242,7 +248,11 @@ export class UploadRevisionFilesComponent implements OnInit {
     this.loaded.forEach(file => {
       file.revision = this.issue.revision;
       file.group = this.fileGroup;
-      file.name = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
+      let fileName = file.name;
+      if (!this.fileGroup.toLowerCase().includes('nesting')){
+        fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
+      }
+      file.name = fileName;
     });
     this.issues.setRevisionFiles(this.issue.id, this.issue.revision, JSON.stringify(this.loaded)).then(() => {
       this.ref.close();

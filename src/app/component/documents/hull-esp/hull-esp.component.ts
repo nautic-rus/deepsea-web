@@ -47,7 +47,11 @@ export class HullEspComponent implements OnInit {
   editor;
   groupedByPartCode = false;
   dxfEnabled = false;
+  dxfEnabledForNesting = false;
   dxfView: Window | null = null;
+  dxfDoc: string = '';
+  search: string = '';
+  searchNesting: string = '';
   quillModules =
     {
       imageResize: {},
@@ -128,9 +132,14 @@ export class HullEspComponent implements OnInit {
       this.docNumber = params.docNumber != null ? params.docNumber : '';
       this.department = params.department != null ? params.department : '';
       this.issueId = params.issueId != null ? params.issueId : 0;
+      this.dxfDoc = params.dxf != null ? params.dxf : '';
+      this.search = params.search != null ? params.search : '';
+      this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
 
-      this.fillRevisions();
-      this.fillParts();
+      if (this.issue.id == 0){
+        this.fillRevisions();
+        this.fillParts();
+      }
 
     });
   }
@@ -443,10 +452,18 @@ export class HullEspComponent implements OnInit {
 
   downloadFiles(group: string, revision: string) {
     let files = this.getRevisionFilesOfGroup(group, revision);
+    let zipped: string[] = [];
+
     Promise.all(files.map(x => fetch(x.url))).then(blobs => {
       let zip = new JSZip();
-      files.forEach(file => {
-        zip.file(file.name, blobs[files.indexOf(file)].blob());
+      blobs.forEach(blob => {
+        // @ts-ignore
+        let name: string = blob.url.split('/').pop();
+        while (zipped.includes(name)){
+          name = name.split('.').reverse().pop() + '$' + name.split('.').pop();
+        }
+        zipped.push(name);
+        zip.file(name, blob.blob());
       });
       zip.generateAsync({type:"blob"}).then(res => {
         saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
@@ -486,7 +503,7 @@ export class HullEspComponent implements OnInit {
   }
 
   getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
-    return this.issue.revision_files.filter(x => x.group == fileGroup && x.revision == revision);
+    return this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision);
   }
 
   createEsp(revision: string = '') {
@@ -524,19 +541,82 @@ export class HullEspComponent implements OnInit {
     return this.issue == null || this.issue.revision_files == null || this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf')) == null;
   }
   showDxf(){
-    this.dxfEnabled = !this.dxfEnabled;
-    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-    // @ts-ignore
-    viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
-
-    this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
+    if (this.dxfEnabledForNesting){
+      this.dxfEnabledForNesting = false;
+    }
+    else{
+      this.dxfEnabled = !this.dxfEnabled;
+      let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
+      // @ts-ignore
+      viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
+    }
+    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+      this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
+    });
   }
   openDxf() {
-    this.showDxf();
+    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
+    // @ts-ignore
+    viewport.style.height = '70vh';
     if (this.dxfView != null && !this.dxfView.closed){
       this.dxfView.close();
     }
-    let url = '/dxf-view?navi=0&window=1&dxf=' + this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url;
+    let url = '/dxf-view?navi=0&window=1&dxf=' + this.dxfDoc + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
+    this.dxfEnabledForNesting = false;
+    this.dxfEnabled = false;
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
+
+  isDisabledNest(part: any) {
+    let disabled = true;
+    let search = '';
+    if (part.NEST_ID != null){
+      if (part.NEST_ID[0] == 'a'){
+        search = part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5, 4) + '-' + part.SYMMETRY;
+      }
+      else{
+        search = this.project + '_' + part.NEST_ID.substr(1, 4) + '_0_' + part.NEST_ID.substr(5, 4);
+      }
+    }
+    if (search != ''){
+      let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
+      let searchDxf = nesting.find(x => x.name == search + '.dxf');
+      if (searchDxf != null){
+        disabled = false;
+      }
+    }
+
+    return disabled;
+  }
+
+  showNesting(part: any) {
+    this.selectedPart = part;
+    this.dxfEnabledForNesting = true;
+    let search = '';
+    if (part.NEST_ID != null){
+      if (part.NEST_ID[0] == 'a'){
+        search = part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5, 4) + '-' + part.SYMMETRY;
+      }
+      else{
+        search = this.project + '_' + part.NEST_ID.substr(1, 4) + '_0_' + part.NEST_ID.substr(5, 4);
+      }
+    }
+    let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
+    let searchDxf = nesting.find(x => x.name == search + '.dxf');
+    if (searchDxf != null){
+      if (!this.dxfEnabled){
+        this.dxfEnabled = !this.dxfEnabled;
+        let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
+        // @ts-ignore
+        viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
+      }
+      this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+        // @ts-ignore
+        this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE}, queryParamsHandling: 'merge'});
+      });
+
+    }
+
+  }
+
 }

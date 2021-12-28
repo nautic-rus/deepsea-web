@@ -102,7 +102,7 @@ export class IssueManagerService {
     return await this.http.get<string>(props.http + '/setDayCalendar', {params: {user, day, status}}).toPromise();
   }
   async setRevisionFiles(id: number, revision: string, files: string): Promise<string>{
-    return await this.http.get<string>(props.http + '/setRevisionFiles', {params: {id, revision, files}}).toPromise();
+    return await this.http.post<string>(props.http + '/setRevisionFiles', files, {params: {id, revision}}).toPromise();
   }
   async setIssueLabor(user: string, issue_id: number, labor_value: number, labor_comment: string, date: number){
     return await this.http.get<string>(props.http + '/setLabor', {params: {user, issue_id, labor_value, labor_comment, date}}).toPromise();

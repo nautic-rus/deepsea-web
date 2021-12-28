@@ -22,6 +22,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   project: string = '';
   docNumber: string = '';
   waitingForResponse = false;
+  search = '';
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService) { }
 
 
@@ -66,5 +67,9 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
 
   containsZeroSurface(group: any[]) {
     return group.find(tray => tray.foranTray.marign == 0) != null;
+  }
+
+  searchChanged() {
+
   }
 }

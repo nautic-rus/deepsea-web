@@ -77,6 +77,7 @@
   border: 1px solid #dfe1e6;
   border-width: 0 0 1px 0;
   font-size: 13px;
+  position: relative;
 }
 /deep/.p-component{
   font-size: 14px!important;
@@ -110,7 +111,10 @@
 .card-height{
   flex-direction: column;
 }
-
+.small-button{
+  height: 10px;
+  width: 18px;
+}
 
 .card-page{
   position: relative;
@@ -141,6 +145,11 @@
   background: #ffffff;
   transition: box-shadow 0.2s;
 
+}
+.tabs-header-download{
+  position: absolute;
+  right: 20px;
+  top: 8px;
 }
 .table-header-col:hover{
   background-color: #F3F2F1;
@@ -239,10 +248,10 @@
   border: 1px solid #32597852 !important;
   box-shadow: 0px 0px 6px 0px rgba(34, 60, 80, 0.2) !important
 }
-.right-bottom-revision{
+.right-top-revision{
   position: absolute;
   right: 5px;
-  bottom: -15px;
+  top: 0;
   font-size: small;
 }
 /deep/.p-datatable .p-datatable-tbody > tr > td{
@@ -441,6 +450,9 @@
   background: rgb(80, 95, 121);
   color: rgb(244, 245, 247) !important
 }
+.files{
+  height: 135px;
+}
 .button{
   border: none;
   margin-right: 4px;
@@ -455,6 +467,9 @@
 }
 .button:hover{
   background-color: #17a2b8;
+}
+.width-190{
+  width: 190px;
 }
 .button-cancel{
   border: none;
@@ -617,4 +632,6 @@
   width: 30px;
   border-radius: 3px;
 }
-
+/deep/.ql-container{
+  min-height: 0;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
 // @ts-ignore
@@ -16,41 +16,55 @@ import * as ThreeDxf from 'node_modules/three-dxf/dist/three-dxf.js';
 // @ts-ignore
 import {FontLoader} from 'node_modules/three/examples/jsm/loaders/FontLoader.js';
 import {ActivatedRoute, Router} from "@angular/router";
+import {getTsHelperFnFromIdentifier} from "@angular/compiler-cli/ngcc/src/utils";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-dxf-view',
   templateUrl: './dxf-view.component.html',
   styleUrls: ['./dxf-view.component.css']
 })
-export class DxfViewComponent implements OnInit {
+export class DxfViewComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
-  loadingStatus = '';
+  loadingStatus = 'loaded';
   dxfViewer: DxfViewer;
   dxfContent: any;
-  search = '242';
-  dxfUrl = '/assets/123.dxf';
+  search = '';
+  searchNesting = '';
+  dxfUrl = '';
+  loadedUrl = '';
   fontUrl = 'assets/fonts/gost_type_au.ttf';
   windowMode = 0;
+  querySubscription: Subscription | null = null;
 
   ngOnInit(): void {
     window.addEventListener('message', (event) => {
       this.search = this.trimLeftZeros(event.data.PART_CODE) + event.data.SYMMETRY;
       this.move();
     });
-    this.route.queryParams.subscribe(params => {
+    this.querySubscription = this.route.queryParams.subscribe(params => {
       this.dxfUrl = params.dxf != null ? params.dxf : this.dxfUrl;
       this.windowMode = params.window != null ? params.window : this.windowMode;
       let search = params.search != null ? params.search : '';
+      this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
       if (search != '' && this.loadingStatus == 'loaded'){
         this.search = search;
         this.move();
       }
-      if (this.loadingStatus != 'loaded'){
+      if (this.dxfUrl != '' && this.loadedUrl != this.dxfUrl && this.loadingStatus == 'loaded'){
+        console.log('LOADING ********************');
+        this.dxfViewer?.Clear();
+        this.loadingStatus = 'load';
+        this.loadedUrl = this.dxfUrl;
         this.fetchDxf();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.querySubscription?.unsubscribe();
   }
 
   trimLeftZeros(input: string){
@@ -70,6 +84,12 @@ export class DxfViewComponent implements OnInit {
           this.dxfViewer = new DxfViewer(document.getElementById('cad-view'), options);
           this.dxfViewer.Load({url: this.dxfUrl, progressCbk: (res: any) => {console.log(res); this.loadingStatus = res.toString()}, fonts: [this.fontUrl]}).then(() => {
             this.loadingStatus = 'loaded';
+            if (this.search != ''){
+              this.move();
+            }
+            if (this.searchNesting != ''){
+              this.moveNesting();
+            }
           });
           this.dxfViewer.SetSize(1080, 720);
         });
@@ -88,6 +108,19 @@ export class DxfViewComponent implements OnInit {
       y -= origin.y;
 
       this.setView({x, y}, 5000);
+      this.dxfViewer.Render();
+    }
+  }
+  moveNesting() {
+    let find = this.dxfContent?.entities.find((x: any) => x.layer == 'Labels' && x.type == 'MTEXT' && x.text.includes(this.searchNesting));
+    if (find != null){
+      let origin = this.dxfViewer.GetOrigin();
+      let x = find.position.x;
+      let y = find.position.y;
+      x -= origin.x;
+      y -= origin.y;
+
+      this.setView({x, y}, 3000);
       this.dxfViewer.Render();
     }
   }
