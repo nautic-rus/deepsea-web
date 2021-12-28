@@ -533,6 +533,14 @@
 </div>
 
 
+<div class="progress-spinner" *ngIf="waitForZipFiles">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img src="assets/whale.gif" height="120">
+    <div class="cx wait-text">PLEASE WAIT...</div>
+  </div>
+</div>
 
 <div [hidden]="!showImages">
   <div class="image-preview-backdrop" (click)="closeShowImage()">

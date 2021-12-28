@@ -46,6 +46,7 @@ export class HullEspComponent implements OnInit {
   // @ts-ignore
   editor;
   groupedByPartCode = false;
+  waitForZipFiles = false;
   dxfEnabled = false;
   dxfEnabledForNesting = false;
   dxfView: Window | null = null;
@@ -453,7 +454,7 @@ export class HullEspComponent implements OnInit {
   downloadFiles(group: string, revision: string) {
     let files = this.getRevisionFilesOfGroup(group, revision);
     let zipped: string[] = [];
-
+    this.waitForZipFiles = true;
     Promise.all(files.map(x => fetch(x.url))).then(blobs => {
       let zip = new JSZip();
       blobs.forEach(blob => {
@@ -466,6 +467,7 @@ export class HullEspComponent implements OnInit {
         zip.file(name, blob.blob());
       });
       zip.generateAsync({type:"blob"}).then(res => {
+        this.waitForZipFiles = false;
         saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
       });
     });
