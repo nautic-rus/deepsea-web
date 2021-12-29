@@ -54,8 +54,14 @@ body,p{
 .w-40{
   width: 40% !important;
 }
+.w-36{
+  width: 36%;
+}
 .w-35{
   width: 35%;
+}
+.w-34{
+  width: 34%;
 }
 .w-32{
   width: 32%;
@@ -119,6 +125,9 @@ body,p{
 }
 .w-3{
   width: 3%;
+}
+.w-2{
+  width: 2%;
 }
 .width-10{
   width: 10px;

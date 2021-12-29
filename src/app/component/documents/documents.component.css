@@ -37,3 +37,17 @@
 /deep/.p-datatable .p-datatable-thead > tr > th{
   padding: 12px;
 }
+.task-button{
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 5px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
