@@ -23,6 +23,9 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   docNumber: string = '';
   waitingForResponse = false;
   search = '';
+  source: any = Object();
+  sortValue = '';
+  sortReverse = false;
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService) { }
 
 
@@ -32,19 +35,39 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
       this.docNumber = params.docNumber != null ? params.docNumber : '';
       if (this.project != '' && this.docNumber != ''){
         this.s.getTraysByZonesAndSystems(this.project, this.docNumber).then(res => {
-          console.log(res);
-          this.bundle = res.complect;
-          this.trays = res.trays;
-          this.equipment = _.sortBy(res.eqs, x => this.addLeftZeros(x.LABEL, 5));
-          _.forEach(_.groupBy(_.sortBy(this.trays, x => x.mountData.label), x => x.mountData.label + x.mountData.trmCode + x.mountData.name), group => {
-            this.grouped.push(group);
-          });
+          this.source = res;
+          this.fillTraysAndEqs();
         });
       }
       else{
         //this.router.navigate(['']);
       }
     });
+  }
+  fillTraysAndEqs(){
+    this.bundle = this.source.complect;
+    this.trays = this.source.trays;
+    this.grouped.splice(0, this.grouped.length);
+    this.equipment = _.sortBy(this.source.eqs, x => this.addLeftZeros(x.LABEL, 5)).filter(x => this.isEqVisible(x));
+
+    if (this.sortValue != ''){
+      this.equipment = _.sortBy(this.equipment, x => x[this.sortValue]);
+      if (this.sortReverse){
+        this.equipment = this.equipment.reverse();
+      }
+    }
+
+    _.forEach(_.groupBy(_.sortBy(this.trays, x => x.mountData.label), x => x.mountData.label + x.mountData.trmCode + x.mountData.name), group => {
+      if (this.isTrayVisible(group[0])){
+        this.grouped.push(group);
+      }
+    });
+  }
+  isEqVisible(eq: any){
+    return this.search.trim() == '' || (eq.LABEL + eq.USERID + eq.SYSTEM_NAME + eq.ZONE_NAME + eq.STOCK_CODE + eq.workShopMaterial.name + eq.workShopMaterial.description + eq.workShopMaterial.provider).toLowerCase().includes(this.search.toLowerCase().trim());
+  }
+  isTrayVisible(tray: any){
+    return this.search.trim() == '' || (tray.mountData.label + tray.foranTray.ZONE + tray.mountData.trmCode + tray.foranTray.IDSQ + tray.workShopMaterial.name + tray.workShopMaterial.description).toLowerCase().includes(this.search.toLowerCase().trim());
   }
   addLeftZeros(input: string, length: number){
     let res = input;
@@ -68,8 +91,12 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   containsZeroSurface(group: any[]) {
     return group.find(tray => tray.foranTray.marign == 0) != null;
   }
-
+  sort(column: string){
+    this.sortValue = column;
+    this.sortReverse = !this.sortReverse;
+    this.fillTraysAndEqs();
+  }
   searchChanged() {
-
+    this.fillTraysAndEqs();
   }
 }

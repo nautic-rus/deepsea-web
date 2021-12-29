@@ -85,16 +85,26 @@
           <td class="w-12 text-14">{{getDate(+issue.delivered_date)}}</td>
           <td class="w-3 text-14">
             <div  class="">
-              <img pTooltip="Download" tooltipPosition="top" src="assets/icons/download.svg" height="20">
+              <img pTooltip="Download" tooltipPosition="top" src="assets/icons/download.svg" height="20" (click)="downloadDocFiles(issue); $event.stopPropagation()">
             </div>
           </td>
           <td class="w-3 text-14">
-            <div  class="">
+            <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
               <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link2.png" height="18">
             </div>
           </td>
         </tr>
       </ng-template>
     </p-table>
+  </div>
+</div>
+<p-toast key="task" position="bottom-center"></p-toast>
+
+<div class="progress-spinner" *ngIf="waitForZipFiles">
+  <div class="image-preview-backdrop">
+  </div>
+  <div class="image-preview-scale">
+    <img src="assets/whale.gif" height="120">
+    <div class="cx wait-text">PLEASE WAIT...</div>
   </div>
 </div>

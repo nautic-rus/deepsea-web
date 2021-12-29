@@ -230,10 +230,10 @@
     <div class="table-header cursor-pointer">
       <div class="w-3 table-header-col cy"></div>
       <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
-      <div class="w-7 table-header-col dfc">{{l.tr('User id')}}
-        <i class="ml-10 pi pi-sort-alt icon-color"></i>
-        <i class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
-        <i class="ml-10 pi pi-sort-amount-down icon-color"></i>
+      <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{l.tr('User id')}}
+        <i *ngIf="sortValue != 'USERID'" class="ml-10 pi pi-sort-alt icon-color"></i>
+        <i *ngIf="sortValue == 'USERID' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+        <i *ngIf="sortValue == 'USERID' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
       </div>
       <div class="w-5 table-header-col cy">{{l.tr('System')}}</div>
       <div class="w-5 table-header-col cy">{{l.tr('Zone')}}</div>

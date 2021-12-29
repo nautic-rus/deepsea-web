@@ -11,8 +11,10 @@ import {ViewDocumentComponent} from "./view-document/view-document.component";
 import * as _ from "underscore";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {any, object} from "underscore";
-import {PrimeNGConfig} from "primeng/api";
+import {MessageService, PrimeNGConfig} from "primeng/api";
 import {Router} from "@angular/router";
+import JSZip from "jszip";
+import {saveAs} from "file-saver";
 
 @Component({
   selector: 'app-documents',
@@ -24,8 +26,9 @@ export class DocumentsComponent implements OnInit {
   project = '';
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
+  waitForZipFiles = false;
 
-  constructor(private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router) { }
+  constructor(private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService) { }
 
   // @ts-ignore
   @ViewChild('table') table: Table;
@@ -144,5 +147,33 @@ export class DocumentsComponent implements OnInit {
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+  copyUrl(issueId: number, project: string, docNumber: string, department: string){
+    let foranProject = project.replace('NR', 'N');
+    navigator.clipboard.writeText(location.origin + `/esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`);
+    this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied document url.'});
+  }
+  downloadDocFiles(issue: Issue){
+    this.issueManager.getIssueDetails(issue.id).then(details => {
+      let files = details.revision_files.filter(x => x.revision == details.revision);
+      let zipped: string[] = [];
+      this.waitForZipFiles = true;
+      Promise.all(files.map(x => fetch(x.url))).then(blobs => {
+        let zip = new JSZip();
+        blobs.forEach(blob => {
+          // @ts-ignore
+          let name: string = blob.url.split('/').pop();
+          while (zipped.includes(name)){
+            name = name.split('.').reverse().pop() + '$' + name.split('.').pop();
+          }
+          zipped.push(name);
+          zip.file(name, blob.blob());
+        });
+        zip.generateAsync({type:"blob"}).then(res => {
+          this.waitForZipFiles = false;
+          saveAs(res, issue.doc_number + '-' + new Date().getTime() + '.zip');
+        });
+      });
+    });
   }
 }
