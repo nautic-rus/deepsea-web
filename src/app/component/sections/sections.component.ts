@@ -61,7 +61,7 @@ export class SectionsComponent implements OnInit {
     return{};
   }
   getStyleTurk(s: string) {
-    let find = this.issues.find(x => x.name.includes('Unit ' + s));
+    let find = this.issues.find(x => x.name.includes('Block ' + s));
     let status = '';
     if (find != null){
       status = find.status;
@@ -107,7 +107,7 @@ export class SectionsComponent implements OnInit {
   }
 
   viewTaskTurk(s: string) {
-    let find = this.issues.find(x => x.name.includes('Unit ' + s));
+    let find = this.issues.find(x => x.name.includes('Block ' + s));
     if (find != null){
       this.issueManager.getIssueDetails(find.id).then(res => {
         this.dialogService.open(TaskComponent, {
