@@ -34,10 +34,12 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th pSortableColumn="doc_number" class="w-5">
+          </th>
           <th pSortableColumn="doc_number" class="w-15 ">{{l.tr('Номер чертежа')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" class="w-40">{{l.tr('Название')}}
+          <th pSortableColumn="name" class="w-35">{{l.tr('Название')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
           <th pSortableColumn="department" class="w-15">{{l.tr('Отдел')}}

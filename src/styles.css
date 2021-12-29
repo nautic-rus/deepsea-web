@@ -551,3 +551,7 @@ cdk-virtual-scroll-viewport{
 .ui-tabview-title{
   color:green !important;
 }
+.dfc{
+  display: flex;
+  align-items: center;
+}
