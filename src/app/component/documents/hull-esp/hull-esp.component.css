@@ -324,6 +324,7 @@
   z-index: 10;
   padding: 20px;
   height: 42%;
+  overflow: auto;
 }
 .comment-issues{
   background-color: white;
@@ -374,7 +375,7 @@
   white-space: nowrap;
 }
 .messages{
-  height: 65%;
+  height: 58%;
 }
 .text-date-issues{
   color: rgba(66, 82, 110, 0.82);

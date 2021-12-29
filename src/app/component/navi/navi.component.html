@@ -8,7 +8,7 @@
     <div class="df" *ngIf="weather.description != ''">
       <div class="cxy weather">
         <div class="cxy weather-descr">
-          <img src="{{'https://openweathermap.org/img/wn/' + weather.icon + '.png'}}" height="40" pTooltip="{{weather.description}}" tooltipPosition="left">
+          <img src="{{'/assets/weather-conditions/' + weather.icon + '.png'}}" height="24" pTooltip="{{weather.description}}" tooltipPosition="left">
         </div>
 <!--        <div class="weather-descr cxy text-center">-->
 <!--          <div class="">{{weather.description}}</div>-->
