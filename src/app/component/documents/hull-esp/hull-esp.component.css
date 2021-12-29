@@ -25,6 +25,7 @@
   border-radius: 8px;
   padding: 12px;
   overflow: auto;
+  height: calc(95% - 4px);
 }
 .card-tabs-bottom{
   background: rgba(255, 255, 255, 0.9);
@@ -186,7 +187,7 @@
   font-weight: 600;
 }
 .missing-files{
-  height: 100%;
+  height: 85%;
   width: 100%;
 }
 .tabs-content{
@@ -374,7 +375,7 @@
   white-space: nowrap;
 }
 .messages{
-  height: 65%;
+  height: 83%;
 }
 .text-date-issues{
   color: rgba(66, 82, 110, 0.82);
@@ -451,7 +452,6 @@
   color: rgb(244, 245, 247) !important
 }
 .files{
-  height: 135px;
 }
 .button{
   border: none;

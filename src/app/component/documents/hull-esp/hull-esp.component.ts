@@ -53,6 +53,7 @@ export class HullEspComponent implements OnInit {
   dxfDoc: string = '';
   search: string = '';
   searchNesting: string = '';
+  selectedHeadTab: string = 'Files';
   quillModules =
     {
       imageResize: {},

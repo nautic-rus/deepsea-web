@@ -97,7 +97,7 @@
               <td class="w-15 text-14">{{part.MATERIAL}}</td>
               <td class="w-15 text-14">
                 {{part.NEST_ID}}
-                <button pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border normal-button small-button p-button-outlined" icon="pi pi-window-minimize" (click)="showNesting(part); $event.stopPropagation()" [disabled]="isDisabledNest(part)"></button>
+                <button *ngIf="!isDisabledNest(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border normal-button small-button p-button-outlined" icon="pi pi-window-minimize" (click)="showNesting(part); $event.stopPropagation()" [disabled]="isDisabledNest(part)"></button>
               </td>
               <td class="w-15 text-14">{{part.STOCKCODE}}</td>
             </tr>
@@ -109,98 +109,13 @@
         </div>
       </div>
       <div class="w-32 right-content-card mt-20">
-        <div class="card-tabs-bottom">
-          <div class="cxy" *ngIf="selectedPart.PART_CODE == null">
-            SELECT PART FROM LEFT LIST TO VIEW DETAILS
-          </div>
-          <div *ngIf="selectedPart.PART_CODE != null">
-            <div class="df">
-              <div class="part-details">{{selectedPart.PART_CODE}}</div>
-              <div class="ml-20 part-details">{{selectedPart.PART_DESC}}</div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-20">Thinkness:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-20 value-details">{{selectedPart.THICKNESS}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">KSE KPL:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.KSE_KPL}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">Block Description:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.DESCRIPTION}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">Length:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.LENGTH}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">Nest Length/Width:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.NEST_LENGTH + 'x' + selectedPart.NEST_WIDTH}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">Num Eq Nest:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.NUM_EQ_NEST}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">Num Eq Part:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.NUM_EQ_PART}}</div>
-              </div>
-            </div>
-            <div class="df">
-              <div class="w-30">
-                <div>
-                  <div class="main-details mt-10">Total Weight:</div>
-                </div>
-              </div>
-              <div class="w-70">
-                <div class="mt-10 value-details">{{selectedPart.TOTAL_WEIGHT}}</div>
-              </div>
-            </div>
-          </div>
+        <div class="df tabs-header">
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
         </div>
-        <div class="card-tabs h35 mt-20">
+
+        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
           <div class="df tabs-header">
             <div *ngFor="let fileGroup of fileGroups" class="all-tabs cursor-pointer" (click)="selectedTab = fileGroup.name" [class.selectedTab]="selectedTab == fileGroup.name">{{fileGroup.name}}</div>
             <div class="tabs-header-download">
@@ -260,7 +175,7 @@
             </div>
           </div>
         </div>
-        <div class="activity-issues mt-20">
+        <div *ngIf="selectedHeadTab == 'Activity'" class="card-tabs">
           <div class="big-text-issues mb-1">Activity</div>
           <div class="df">
             <div class="description-issues mt-5 mr-1">Show:</div>
@@ -526,6 +441,168 @@
           </div>
 
         </div>
+        <div *ngIf="selectedHeadTab == 'Info'" class="card-tabs">
+          <div class="cxy" *ngIf="selectedPart.PART_CODE == null">
+            SELECT PART FROM LEFT LIST TO VIEW DETAILS
+          </div>
+          <div *ngIf="selectedPart.PART_CODE != null">
+            <div class="df">
+              <div class="part-details">{{selectedPart.PART_CODE}}</div>
+              <div class="ml-20 part-details">{{selectedPart.PART_DESC}}</div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-20">Thinkness:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-20 value-details">{{selectedPart.THICKNESS}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">KSE KPL:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.KSE_KPL}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Block Description:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.DESCRIPTION}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Length:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.LENGTH}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Nest Length/Width:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.NEST_LENGTH + 'x' + selectedPart.NEST_WIDTH}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Num Eq Nest:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.NUM_EQ_NEST}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Num Eq Part:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.NUM_EQ_PART}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Total Weight:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.TOTAL_WEIGHT}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Part Code:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.PART_CODE}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Type:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.PART_TYPE}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Symmetry:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.SYMMETRY}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Weight:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.UNIT_WEIGHT}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Material:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.MATERIAL}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Nesting ID:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.NEST_ID}}</div>
+              </div>
+            </div>
+            <div class="df">
+              <div class="w-30">
+                <div>
+                  <div class="main-details mt-10">Stock Code:</div>
+                </div>
+              </div>
+              <div class="w-70">
+                <div class="mt-10 value-details">{{selectedPart.STOCKCODE}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       </div>
     </div>
