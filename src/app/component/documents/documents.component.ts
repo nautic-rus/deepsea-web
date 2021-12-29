@@ -164,7 +164,7 @@ export class DocumentsComponent implements OnInit {
           // @ts-ignore
           let name: string = blob.url.split('/').pop();
           while (zipped.includes(name)){
-            name = name.split('.').reverse().pop() + '$' + name.split('.').pop();
+            name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
           }
           zipped.push(name);
           zip.file(name, blob.blob());
