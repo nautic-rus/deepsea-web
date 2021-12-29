@@ -90,6 +90,9 @@ body,p{
 .w-14{
   width: 14%;
 }
+.w-13{
+  width: 13%;
+}
 .w-12{
   width: 12%;
 }
@@ -131,6 +134,9 @@ body,p{
 }
 .width-150{
   width: 150px;
+}
+.width-156{
+  width: 156px;
 }
 .width-170{
   width: 170px;

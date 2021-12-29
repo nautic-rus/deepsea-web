@@ -325,6 +325,7 @@
   z-index: 10;
   padding: 20px;
   height: 42%;
+  overflow: auto;
 }
 .comment-issues{
   background-color: white;
@@ -452,6 +453,7 @@
   color: rgb(244, 245, 247) !important
 }
 .files{
+  height: 135px;
 }
 .button{
   border: none;
