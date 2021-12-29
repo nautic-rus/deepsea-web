@@ -156,24 +156,29 @@ export class DocumentsComponent implements OnInit {
   downloadDocFiles(issue: Issue){
     this.issueManager.getIssueDetails(issue.id).then(details => {
       let files = details.revision_files.filter(x => x.revision == details.revision);
-      let zipped: string[] = [];
-      this.waitForZipFiles = true;
-      Promise.all(files.map(x => fetch(x.url))).then(blobs => {
-        let zip = new JSZip();
-        blobs.forEach(blob => {
-          // @ts-ignore
-          let name: string = blob.url.split('/').pop();
-          while (zipped.includes(name)){
-            name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
-          }
-          zipped.push(name);
-          zip.file(name, blob.blob());
+      if (files.length == 0){
+        this.messageService.add({key:'task', severity:'error', summary:'No files', detail:'There are no files for this document.'});
+      }
+      else{
+        let zipped: string[] = [];
+        this.waitForZipFiles = true;
+        Promise.all(files.map(x => fetch(x.url))).then(blobs => {
+          let zip = new JSZip();
+          blobs.forEach(blob => {
+            // @ts-ignore
+            let name: string = blob.url.split('/').pop();
+            while (zipped.includes(name)){
+              name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+            }
+            zipped.push(name);
+            zip.file(name, blob.blob());
+          });
+          zip.generateAsync({type:"blob"}).then(res => {
+            this.waitForZipFiles = false;
+            saveAs(res, issue.doc_number + '-' + new Date().getTime() + '.zip');
+          });
         });
-        zip.generateAsync({type:"blob"}).then(res => {
-          this.waitForZipFiles = false;
-          saveAs(res, issue.doc_number + '-' + new Date().getTime() + '.zip');
-        });
-      });
+      }
     });
   }
 }
