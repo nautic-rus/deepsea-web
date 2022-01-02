@@ -526,8 +526,8 @@ export class HullEspComponent implements OnInit {
     }
     if (this.dxfEnabled){
       let search = this.trimLeftZeros(part.PART_CODE) + (part.SYMMETRY != 'C' ? part.SYMMETRY : '');
-      this.router.navigate([], {queryParams: {search: null}, queryParamsHandling: 'merge'}).then(() => {
-        this.router.navigate([], {queryParams: {search}, queryParamsHandling: 'merge'});
+      this.router.navigate([], {queryParams: {dxf: null, search: null}, queryParamsHandling: 'merge'}).then(() => {
+        this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url, search}, queryParamsHandling: 'merge'});
       });
     }
   }
@@ -569,6 +569,7 @@ export class HullEspComponent implements OnInit {
   }
   exitDxf(){
     this.dxfEnabled = false;
+    this.dxfEnabledForNesting = false;
     let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
     // @ts-ignore
     viewport.style.height = '70vh';
