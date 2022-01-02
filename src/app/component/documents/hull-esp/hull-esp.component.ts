@@ -218,7 +218,6 @@ export class HullEspComponent implements OnInit {
   fillParts(){
     this.s.getHullPatList(this.project, this.docNumber).then(res => {
       if (res != ''){
-        console.log(res);
         this.parts = res;
         this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
         this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
@@ -345,7 +344,6 @@ export class HullEspComponent implements OnInit {
     });
   }
   editorClicked(event: any) {
-    console.log(event.target.currentSrc);
 
     event.preventDefault();
     event.stopPropagation();
@@ -527,7 +525,7 @@ export class HullEspComponent implements OnInit {
       this.dxfView.postMessage(this.selectedPart, '*');
     }
     if (this.dxfEnabled){
-      let search = this.trimLeftZeros(part.PART_CODE) + part.SYMMETRY;
+      let search = this.trimLeftZeros(part.PART_CODE) + (part.SYMMETRY != 'C' ? part.SYMMETRY : '');
       this.router.navigate([], {queryParams: {search: null}, queryParamsHandling: 'merge'}).then(() => {
         this.router.navigate([], {queryParams: {search}, queryParamsHandling: 'merge'});
       });
@@ -568,6 +566,12 @@ export class HullEspComponent implements OnInit {
     this.dxfEnabledForNesting = false;
     this.dxfEnabled = false;
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
+  }
+  exitDxf(){
+    this.dxfEnabled = false;
+    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
+    // @ts-ignore
+    viewport.style.height = '70vh';
   }
 
   isDisabledNest(part: any) {
@@ -615,11 +619,23 @@ export class HullEspComponent implements OnInit {
       }
       this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
         // @ts-ignore
-        this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE}, queryParamsHandling: 'merge'});
+        this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE + part.SYMMETRY}, queryParamsHandling: 'merge'});
       });
 
     }
 
   }
 
+  showDxfInViewer(url: string) {
+    if (!this.dxfEnabled){
+      this.dxfEnabled = !this.dxfEnabled;
+      let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
+      // @ts-ignore
+      viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
+    }
+    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+      // @ts-ignore
+      this.router.navigate([], {queryParams: {dxf: url, search: null, searchNesting: null}, queryParamsHandling: 'merge'});
+    });
+  }
 }

@@ -54,7 +54,6 @@ export class DxfViewComponent implements OnInit, OnDestroy {
         this.move();
       }
       if (this.dxfUrl != '' && this.loadedUrl != this.dxfUrl && this.loadingStatus == 'loaded'){
-        console.log('LOADING ********************');
         this.dxfViewer?.Clear();
         this.loadingStatus = 'load';
         this.loadedUrl = this.dxfUrl;
