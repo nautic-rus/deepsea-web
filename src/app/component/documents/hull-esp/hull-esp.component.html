@@ -8,13 +8,13 @@
       <div class="mr-2">
         {{issue.revision}}
       </div>
-      <div class="mr-1">
+      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
         <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>
       </div>
-      <div class="mr-1">
+      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
         <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-off" (click)="createEsp()"></button>
       </div>
-      <div class="mr-1">
+      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
         <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(selectedRevision)"></button>
       </div>
       <div class="mr-1">
@@ -132,7 +132,7 @@
             <div [class.h100]="selectedTab == fileGroup.name" *ngFor="let fileGroup of fileGroups">
               <div class="tab tab-right-height" *ngIf="selectedTab == fileGroup.name">
                 <div class="df">
-                  <div class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                  <div *ngIf="auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/plus1.svg" height="16">
                     </div>

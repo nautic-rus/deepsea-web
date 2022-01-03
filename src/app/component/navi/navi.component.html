@@ -3,8 +3,8 @@
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
   <div></div>
-  <div class="cxy time mx-5">{{getTime()}}</div>
-  <div class="cxy">
+  <div *ngIf="t.language == 'ru'" class="cxy time mx-5">{{getTime()}}</div>
+  <div *ngIf="t.language == 'ru'" class="cxy">
     <div class="df" *ngIf="weather.description != ''">
       <div class="cxy weather">
         <div class="cxy weather-descr">
