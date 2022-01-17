@@ -48,13 +48,16 @@ export class DxfViewComponent implements OnInit, OnDestroy {
       this.dxfUrl = params.dxf != null ? params.dxf : this.dxfUrl;
       this.windowMode = params.window != null ? params.window : this.windowMode;
       let search = params.search != null ? params.search : '';
-      this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
+      let searchNesting = params.searchNesting != null ? params.searchNesting : '';
       if (search != '' && this.loadingStatus == 'loaded'){
         this.search = search;
         this.move();
       }
+      if (searchNesting != '' && this.loadingStatus == 'loaded'){
+        this.searchNesting = searchNesting;
+        this.moveNesting();
+      }
       if (this.dxfUrl != '' && this.loadedUrl != this.dxfUrl && this.loadingStatus == 'loaded'){
-        console.log('LOADING ********************');
         this.dxfViewer?.Clear();
         this.loadingStatus = 'load';
         this.loadedUrl = this.dxfUrl;
@@ -112,7 +115,10 @@ export class DxfViewComponent implements OnInit, OnDestroy {
     }
   }
   moveNesting() {
-    let find = this.dxfContent?.entities.find((x: any) => x.layer == 'Labels' && x.type == 'MTEXT' && x.text.includes(this.searchNesting));
+    console.log('move nest');
+    let find = this.dxfContent?.entities.find((x: any) => x?.text?.includes(this.searchNesting));
+    // let find = this.dxfContent?.entities.find((x: any) => x.layer == 'Labels' && x.type == 'MTEXT' && x.text.includes(this.searchNesting));
+    console.log(find);
     if (find != null){
       let origin = this.dxfViewer.GetOrigin();
       let x = find.position.x;

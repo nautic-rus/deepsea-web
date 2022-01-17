@@ -5,14 +5,14 @@ import {ActivatedRoute, Router} from "@angular/router";
   providedIn: 'root'
 })
 export class LanguageService {
-  language = 'ru';
+  language = 'en';
   constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(res => {
-      this.language = res.lang != null ? res.lang : 'ru';
+      this.language = res.lang != null ? res.lang : 'en';
     });
   }
   switchLang(){
-    let lang = this.language == 'ru' ? 'en' : 'ru';
+    let lang = this.language == 'ru' ? 'en' : 'en';
     this.router.navigate([], {queryParams: {lang}, queryParamsHandling: 'merge'}).then(() => {
       location.reload();
     });
