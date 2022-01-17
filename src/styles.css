@@ -574,3 +574,6 @@ cdk-virtual-scroll-viewport{
   display: flex;
   align-items: center;
 }
+.font-13{
+  font-size: calc(0.72rem + 0.1vw);
+}

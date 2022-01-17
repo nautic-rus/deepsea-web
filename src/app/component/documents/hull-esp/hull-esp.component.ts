@@ -16,6 +16,7 @@ import {IssueMessage} from "../../../domain/classes/issue-message";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {UserCardComponent} from "../../employees/user-card/user-card.component";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-hull-esp',
@@ -126,7 +127,7 @@ export class HullEspComponent implements OnInit {
   issueRevisions: string[] = [];
   filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[]  } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
 
-  constructor(public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
+  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -555,6 +556,17 @@ export class HullEspComponent implements OnInit {
       this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
     });
   }
+  showDxfTablet(){
+    if (this.dxfEnabledForNesting){
+      this.dxfEnabledForNesting = false;
+    }
+    else{
+      this.dxfEnabled = !this.dxfEnabled;
+    }
+    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+      this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
+    });
+  }
   openDxf() {
     let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
     // @ts-ignore
@@ -573,6 +585,13 @@ export class HullEspComponent implements OnInit {
     let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
     // @ts-ignore
     viewport.style.height = '70vh';
+  }
+  exitDxfTablet(){
+    this.dxfEnabled = false;
+    this.dxfEnabledForNesting = false;
+    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
+    // @ts-ignore
+    viewport.style.height = '360px';
   }
 
   isDisabledNest(part: any) {
@@ -638,5 +657,32 @@ export class HullEspComponent implements OnInit {
       // @ts-ignore
       this.router.navigate([], {queryParams: {dxf: url, search: null, searchNesting: null}, queryParamsHandling: 'merge'});
     });
+  }
+
+  showNestingTablet(part: any) {
+    this.selectedPart = part;
+    this.dxfEnabledForNesting = true;
+    let search = '';
+    if (part.NEST_ID != null){
+      if (part.NEST_ID[0] == 'a'){
+        search = part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5, 4) + '-' + part.SYMMETRY;
+      }
+      else{
+        search = this.project + '_' + part.NEST_ID.substr(1, 4) + '_0_' + part.NEST_ID.substr(5, 4);
+      }
+    }
+    let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
+    let searchDxf = nesting.find(x => x.name == search + '.dxf');
+    if (searchDxf != null){
+      if (!this.dxfEnabled){
+        this.dxfEnabled = !this.dxfEnabled;
+      }
+      this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+        // @ts-ignore
+        this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE + part.SYMMETRY}, queryParamsHandling: 'merge'});
+      });
+
+    }
+
   }
 }
