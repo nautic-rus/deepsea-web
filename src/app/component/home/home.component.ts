@@ -62,6 +62,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   ngOnInit() {
+    if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
+      this.router.navigate([this.auth.getUser().visible_pages[0]]);
+    }
     this.setCols();
     this.fillIssues();
     this.route.queryParams.subscribe(params => {

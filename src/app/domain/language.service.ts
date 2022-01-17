@@ -12,7 +12,7 @@ export class LanguageService {
     });
   }
   switchLang(){
-    let lang = this.language == 'ru' ? 'en' : 'en';
+    let lang = this.language == 'ru' ? 'en' : 'ru';
     this.router.navigate([], {queryParams: {lang}, queryParamsHandling: 'merge'}).then(() => {
       location.reload();
     });
@@ -184,6 +184,7 @@ export class LanguageService {
           case 'КЕИ': return 'Units';
           case 'Маркировка': return 'Label';
           case 'Вес': return 'Weight';
+          case 'Продолжить': return 'Login';
           case '': return '';
           case '': return '';
           case '': return '';

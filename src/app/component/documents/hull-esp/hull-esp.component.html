@@ -29,7 +29,7 @@
       <div class="card-sp mr-20">
         <div class="top-line"></div>
         <div *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
-        <div *ngIf="parts.length == 0">
+        <div *ngIf="parts.length == 0 && !noResult">
           <div class="cxy loading">
             <div class="cxy card-height">
               <img src="assets/whale.gif" height="120">
