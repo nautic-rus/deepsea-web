@@ -8,6 +8,7 @@ import _ from "underscore";
 import {DialogService} from "primeng/dynamicdialog";
 import {ShareRightsComponent} from "./share-rights/share-rights.component";
 import {Weather} from "../../domain/classes/weather";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-navi',
@@ -16,7 +17,7 @@ import {Weather} from "../../domain/classes/weather";
 })
 export class NaviComponent implements OnInit {
 
-  constructor(public t: LanguageService, public auth: AuthManagerService, private route: ActivatedRoute, private issueManager: IssueManagerService, private dialogService: DialogService) { }
+  constructor(public device: DeviceDetectorService, public t: LanguageService, public auth: AuthManagerService, private route: ActivatedRoute, private issueManager: IssueManagerService, private dialogService: DialogService) { }
   tc: TimeControlInterval[] = [];
   weather: Weather = new Weather();
   tcFilled = false;

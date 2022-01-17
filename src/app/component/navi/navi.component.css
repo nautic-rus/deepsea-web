@@ -8,7 +8,19 @@
   background-color: #0E364A;
   z-index: 9;
   display: grid;
-  grid-template-columns: 1fr 11fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 1fr 11fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
+}
+.top-panel-tablet{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--navi-height);
+  background-color: #0E364A;
+  z-index: 9;
+  display: grid;
+  grid-template-columns: 1fr 3fr 0.35fr 0.35fr 0.35fr 0.35fr 0.35fr 0.1fr;
 }
 .left-panel{
   position: absolute;

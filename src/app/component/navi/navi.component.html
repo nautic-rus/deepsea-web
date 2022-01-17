@@ -1,4 +1,57 @@
-<div class="top-panel">
+<div *ngIf="device.isTablet()" class="top-panel-tablet">
+  <div class="cy ml-1">
+    <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
+  </div>
+  <div></div>
+  <div class="cxy">
+    <div (click)="t.switchLang()">
+      <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/en.png">
+      <img *ngIf="t.language == 'en'" class="cursor-pointer" src="assets/icons/russia.png">
+    </div>
+  </div>
+  <div class="cxy">
+    <div pTooltip="Cloud" tooltipPosition="bottom">
+      <a href="https://cloud.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/cloud.png"></a>
+    </div>
+  </div>
+  <div class="cxy">
+    <div pTooltip="NautucWiki" tooltipPosition="bottom">
+      <a href="https://wiki.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/question.png"></a>
+    </div>
+  </div>
+  <div class="cxy">
+    <div>
+      <div *ngIf="isOnline()" class="image-online cursor-pointer">
+        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+      </div>
+      <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
+        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+      </div>
+    </div>
+    <p-overlayPanel #user [style]="{width: '240px', 'border-radius': '4px'}">
+      <ng-template pTemplate>
+        <div class="display-flex border-bottom all-row-user-menu">
+          <div class="cxy mx-1">
+            <div class="pi pi-clock"></div>
+          </div>
+          <div class="row-user-menu" (click)="user.hide()" routerLink="time-control">{{t.tr('Контроль времени')}}</div>
+        </div>
+        <div class="display-flex all-row-user-menu">
+          <div class="cxy mx-1">
+            <div class="pi pi-sort-alt icon-turn"></div>
+          </div>
+          <div class="row-user-menu" (click)="shareRights()">{{t.tr('Передать права')}}</div>
+        </div>
+      </ng-template>
+    </p-overlayPanel>
+  </div>
+
+  <div class="exit cxy">
+    <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">
+  </div>
+  <div></div>
+</div>
+<div *ngIf="device.isDesktop()" class="top-panel">
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
@@ -10,15 +63,17 @@
         <div class="cxy weather-descr">
           <img src="{{'/assets/weather-conditions/' + weather.icon + '.png'}}" height="24" pTooltip="{{weather.description}}" tooltipPosition="left">
         </div>
-<!--        <div class="weather-descr cxy text-center">-->
-<!--          <div class="">{{weather.description}}</div>-->
-<!--        </div>-->
+        <!--        <div class="weather-descr cxy text-center">-->
+        <!--          <div class="">{{weather.description}}</div>-->
+        <!--        </div>-->
         <div class="mx-1 cxy">
           <div class="">{{weather.temp}} °C</div>
         </div>
       </div>
     </div>
   </div>
+  <div *ngIf="t.language == 'en'" class="cxy"></div>
+  <div *ngIf="t.language == 'en'" class="cxy"></div>
   <div class="cxy">
     <div (click)="t.switchLang()">
       <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/en.png">

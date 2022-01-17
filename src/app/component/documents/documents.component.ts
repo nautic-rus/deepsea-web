@@ -15,6 +15,7 @@ import {MessageService, PrimeNGConfig} from "primeng/api";
 import {Router} from "@angular/router";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-documents',
@@ -28,7 +29,7 @@ export class DocumentsComponent implements OnInit {
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   waitForZipFiles = false;
 
-  constructor(private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService) { }
+  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService) { }
 
   // @ts-ignore
   @ViewChild('table') table: Table;
@@ -180,5 +181,12 @@ export class DocumentsComponent implements OnInit {
         });
       }
     });
+  }
+  trim(input: string, length: number = 3): string {
+    if (input.length <= length) {
+      return input;
+    } else {
+      return input.substr(0, length) + '.';
+    }
   }
 }

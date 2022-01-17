@@ -20,6 +20,9 @@
 .text-14{
   font-size: 13px;
 }
+.text-12{
+  font-size: 12px;
+}
 /deep/.pi{
   font-size: 14px;
 }
@@ -36,6 +39,9 @@
 }
 /deep/.p-datatable .p-datatable-thead > tr > th{
   padding: 12px;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
 }
 .image-preview-backdrop{
   top: 0;
@@ -95,4 +101,7 @@
   transform: translate(-50%, -50%);
   z-index: 1002;
   overflow: hidden;
+}
+.font-13{
+  font-size: calc(0.72rem + 0.1vw);
 }
