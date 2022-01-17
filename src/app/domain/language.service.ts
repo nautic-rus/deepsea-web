@@ -186,6 +186,7 @@ export class LanguageService {
           case 'Вес': return 'Weight';
           case 'Продолжить': return 'Login';
           case '': return '';
+          case 'ТРУДОЗАТРАТЫ': return 'LABORIOUSNESS';
           case '': return '';
           case '': return '';
           case '': return '';

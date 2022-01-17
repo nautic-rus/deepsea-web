@@ -6,6 +6,7 @@ import _ from "underscore";
 import {UploadRevisionFilesComponent} from "../../documents/hull-esp/upload-revision-files/upload-revision-files.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {GenerationWaitComponent} from "./generation-wait/generation-wait.component";
+import {group} from "@angular/animations";
 
 @Component({
   selector: 'app-trays-by-zones-and-systems',
@@ -45,6 +46,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
     });
   }
   fillTraysAndEqs(){
+    console.log(this.source);
     this.bundle = this.source.complect;
     this.trays = this.source.trays;
     this.grouped.splice(0, this.grouped.length);
