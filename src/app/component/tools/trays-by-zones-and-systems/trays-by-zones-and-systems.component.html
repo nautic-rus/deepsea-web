@@ -23,11 +23,18 @@
     </div>
   </div>
   <div *ngIf="selectedTab == 'Trays'" class="card-tray card-page">
-    <div *ngIf="trays.length == 0">
+    <div *ngIf="bundle.drawingId == null">
       <div class="cxy">
         <div class="cxy card-height">
           <img src="assets/whale.gif" height="120">
           <div class="cx loading-text">PLEASE WAIT...</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="trays.length == 0">
+      <div class="cxy">
+        <div class="cxy card-height">
+          <div class="cx loading-text">Trays not found</div>
         </div>
       </div>
     </div>
