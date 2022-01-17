@@ -184,7 +184,7 @@ export class LanguageService {
           case 'КЕИ': return 'Units';
           case 'Маркировка': return 'Label';
           case 'Вес': return 'Weight';
-          case '': return '';
+          case 'ТРУДОЗАТРАТЫ': return 'LABORIOUSNESS';
           case '': return '';
           case '': return '';
           case '': return '';
