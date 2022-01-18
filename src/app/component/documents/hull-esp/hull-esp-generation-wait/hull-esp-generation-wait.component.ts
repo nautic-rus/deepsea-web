@@ -32,8 +32,8 @@ export class HullEspGenerationWaitComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.project = this.conf.data[0];
       this.docNumber =  this.conf.data[1];
-      this.selectRevision = this.conf.data[2];
       this.issue = this.conf.data[3];
+      this.selectRevision = this.conf.data[2];
       this.revs = this.revs.filter(x => x > this.issue.revision);
       this.rev = this.revs[0];
       if (!this.selectRevision){
@@ -52,7 +52,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
-      if (this.issue.revision != rev){
+      if (rev != ''){
         let files: FileAttachment[] = [];
         this.resUrls.forEach(fileUrl => {
           let file = new FileAttachment();

@@ -511,11 +511,11 @@ export class HullEspComponent implements OnInit {
     return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.name);
   }
 
-  createEsp(revision: string = this.issue.revision) {
+  createEsp(newRev = false) {
     this.dialogService.open(HullEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
-      data: [this.project, this.docNumber, revision, this.issue]
+      data: [this.project, this.docNumber, newRev, this.issue]
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });

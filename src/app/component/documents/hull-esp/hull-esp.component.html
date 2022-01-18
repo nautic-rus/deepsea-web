@@ -15,7 +15,7 @@
         <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-off" (click)="createEsp()"></button>
       </div>
       <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(selectedRevision)"></button>
+        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(true)"></button>
       </div>
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Show Drawing')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-window-minimize" (click)="showDxfTablet()" [disabled]="isDisabledDxf()"></button>
@@ -629,7 +629,7 @@
         <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-off" (click)="createEsp()"></button>
       </div>
       <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(selectedRevision)"></button>
+        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(true)"></button>
       </div>
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Show Drawing')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-window-minimize" (click)="showDxf()" [disabled]="isDisabledDxf()"></button>
