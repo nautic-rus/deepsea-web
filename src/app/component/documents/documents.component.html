@@ -1,4 +1,83 @@
-<div class="all-page">
+<div *ngIf="device.isTablet()" class="">
+  <div class="card-tablet">
+    <p-table #table [value]="issues"
+             [scrollable]="true"
+             scrollHeight="calc(100vh - 210px)"
+             scrollDirection="both"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['id','doc_number','name','status']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="mr-1">
+            <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
+            </p-dropdown>
+          </div>
+          <div class="p-ml-auto">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+          </span>
+        </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="doc_number" style="width: 136px" class="font-13">{{l.tr('Чертеж')}}
+            <p-sortIcon field="doc_number"></p-sortIcon>
+          </th>
+          <th pSortableColumn="name" style="width: 225px" class="font-13">{{l.tr('Название')}}
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="department" style="width: 136px" class="font-13">{{l.tr('Отдeл')}}
+            <p-sortIcon field="department"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th pSortableColumn="revision" style="width: 118px" class="font-13">{{l.tr('Рев.')}}
+            <p-sortIcon field="revision"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.revision" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th pSortableColumn="status" style="width: 136px" class="font-13">{{l.tr('Статус')}}
+            <p-sortIcon field="status"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th pSortableColumn="delivered_date" style="width: 155px" class="font-13">{{l.tr('Поставлен')}}
+            <p-sortIcon field="delivered_date"></p-sortIcon>
+            <p-columnFilter class="filter" type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-issue>
+        <tr class="cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
+          <td style="width: 136px" class="text-12">{{issue.doc_number}}</td>
+          <td style="width: 225px" class="text-12">{{issue.name}}</td>
+          <td style="width: 136px" class="text-12">{{issue.department}}</td>
+          <td style="width: 118px" class="text-12">{{issue.revision}}</td>
+          <td style="width: 136px" class="text-12"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
+          <td style="width: 155px" class="text-12">{{getDate(+issue.delivered_date)}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<div *ngIf="device.isDesktop()" class="all-page">
   <div class="card">
     <p-table #table [value]="issues"
              [scrollable]="true"
@@ -29,7 +108,7 @@
             <i class="pi pi-search"></i>
             <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
           </span>
-        </div>
+          </div>
         </div>
       </ng-template>
       <ng-template pTemplate="header">

@@ -1,5 +1,6 @@
 .all-card{
   height: calc(100vh - 116px);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .card-head{
   background: rgba(255, 255, 255, 0.9);
@@ -11,9 +12,27 @@
   font-size: 14px;
   font-weight: 600;
 }
+.card-head-tablet{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  border-radius: 8px;
+  height: 65px;
+  align-items: center;
+  color: #323130;
+  font-size: 13px;
+  font-weight: 500;
+  border-bottom: 1px solid #f3f2f1;
+}
 .card-sp{
   width: 68%;
   height: calc(100vh - 197px);
+  background: #ffffff;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 0 12px 12px 12px;
+  overflow: hidden;
+}
+.card-sp-tablet{
   background: #ffffff;
   margin-top: 20px;
   border-radius: 8px;

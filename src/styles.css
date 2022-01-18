@@ -12,6 +12,13 @@ body,p{
   height: calc(100vh - 116px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
+.card-tablet{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0 20px 20px 20px;
+  border-radius: 8px;
+  height: calc(100vh - 76px);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
 .w40{
   width: 40vw;
 }
@@ -566,4 +573,7 @@ cdk-virtual-scroll-viewport{
 .dfc{
   display: flex;
   align-items: center;
+}
+.font-13{
+  font-size: calc(0.72rem + 0.1vw);
 }
