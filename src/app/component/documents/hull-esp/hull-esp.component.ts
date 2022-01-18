@@ -511,7 +511,7 @@ export class HullEspComponent implements OnInit {
     return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.name);
   }
 
-  createEsp(revision: string = '-') {
+  createEsp(revision: string = this.issue.revision) {
     this.dialogService.open(HullEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
