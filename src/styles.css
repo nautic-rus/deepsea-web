@@ -253,6 +253,9 @@ body,p{
 .mt-15{
   margin-top: 15px;
 }
+.mt-16{
+  margin-top: 16px;
+}
 .mt-20{
   margin-top: 20px;
 }
@@ -354,6 +357,9 @@ body,p{
 .mr-10{
   margin-right: 10px;
 }
+.mr-12{
+  margin-right: 12px;
+}
 .mr-20{
   margin-right: 20px;
 }
@@ -374,6 +380,10 @@ body,p{
 .mx-10{
   margin-left: 10px;
   margin-right: 10px;
+}
+.mx-12{
+  margin-left: 12px;
+  margin-right: 12px;
 }
 .mx-20{
   margin-left: 20px;
@@ -414,12 +424,14 @@ cdk-virtual-scroll-viewport{
 .mb-2{
   margin-bottom: 2rem;
 }
-
 .mb-1{
   margin-bottom: 0.2rem;
 }
 .mb-5{
   margin-bottom: 5px;
+}
+.mb-8{
+  margin-bottom: 8px;
 }
 .mb-10{
   margin-bottom: 10px;
@@ -533,6 +545,10 @@ cdk-virtual-scroll-viewport{
 .my-15{
   margin-top: 15px;
   margin-bottom: 15px;
+}
+.my-16{
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 .column-reverse{
   display: flex;

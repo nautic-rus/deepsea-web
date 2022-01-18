@@ -190,7 +190,7 @@ export class LanguageService {
           case 'Чертеж': return 'Drawing';
           case 'Рев.': return 'Rev';
           case 'Отдeл': return 'Dept.';
-          case '': return '';
+          case 'Добавить файлы': return 'Add files';
           case '': return '';
           case '': return '';
           case '': return '';
