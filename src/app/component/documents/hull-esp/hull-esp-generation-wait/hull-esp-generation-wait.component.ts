@@ -50,6 +50,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
     this.generationWait = true;
     this.s.getHullEspFiles(this.project, this.docNumber, rev).then(res => {
       this.generationWait = false;
+      this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
       if (this.issue.revision != rev){
         let files: FileAttachment[] = [];

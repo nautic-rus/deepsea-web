@@ -334,6 +334,7 @@ export class HullEspComponent implements OnInit {
     return this.loaded.find(x => x.name == file);
   }
   fillRevisions(){
+    this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
       this.issueRevisions.push(this.issue.revision);
@@ -510,7 +511,7 @@ export class HullEspComponent implements OnInit {
     return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.name);
   }
 
-  createEsp(revision: string = '') {
+  createEsp(revision: string = '-') {
     this.dialogService.open(HullEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
