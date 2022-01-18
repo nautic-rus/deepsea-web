@@ -82,6 +82,7 @@ import {UploadRevisionFilesComponent} from "./component/documents/hull-esp/uploa
 import { AssignNewRevisionComponent } from './component/documents/hull-esp/assign-new-revision/assign-new-revision.component';
 import { DxfViewComponent } from './component/dxf-view/dxf-view.component';
 import { GenerationWaitComponent } from './component/tools/trays-by-zones-and-systems/generation-wait/generation-wait.component';
+import { HullEspGenerationWaitComponent } from './component/documents/hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -128,7 +129,8 @@ Quill.register('modules/imageResize', ImageResize);
     UploadRevisionFilesComponent,
     AssignNewRevisionComponent,
     DxfViewComponent,
-    GenerationWaitComponent
+    GenerationWaitComponent,
+    HullEspGenerationWaitComponent
   ],
     imports: [
         BrowserModule,

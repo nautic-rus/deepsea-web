@@ -16,6 +16,8 @@ import {IssueMessage} from "../../../domain/classes/issue-message";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {UserCardComponent} from "../../employees/user-card/user-card.component";
+import {GenerationWaitComponent} from "../../tools/trays-by-zones-and-systems/generation-wait/generation-wait.component";
+import {HullEspGenerationWaitComponent} from "./hull-esp-generation-wait/hull-esp-generation-wait.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -508,7 +510,13 @@ export class HullEspComponent implements OnInit {
   }
 
   createEsp(revision: string = '') {
-
+    this.dialogService.open(HullEspGenerationWaitComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.project, this.docNumber, revision, this.issue]
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
   }
 
   getCount(parts: any[], PART_CODE: any) {
