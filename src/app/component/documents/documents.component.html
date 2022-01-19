@@ -78,10 +78,10 @@
   </div>
 </div>
 <div *ngIf="device.isDesktop()" class="all-page">
-  <div class="card">
+  <div class="card-overflow">
     <p-table #table [value]="issues"
              [scrollable]="true"
-             [scrollHeight]="'72vh'"
+             scrollHeight="calc(100vh - 265px)"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
              styleClass="p-datatable-striped"
@@ -102,14 +102,14 @@
         </div>
       </ng-template>
       <ng-template pTemplate="header">
-        <tr>
-          <th pSortableColumn="doc_number" class="w-15 ">{{l.tr('Номер чертежа')}}
+        <tr class="df">
+          <th pSortableColumn="doc_number" class="lxy w-15">{{l.tr('Номер чертежа')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" class="w-36">{{l.tr('Название')}}
+          <th pSortableColumn="name" class="lxy w-27">{{l.tr('Название')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="department" class="w-15">{{l.tr('Отдел')}}
+          <th pSortableColumn="department" class="cxy w-17">{{l.tr('Отдел')}}
             <p-sortIcon field="department"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -118,7 +118,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="revision" class="w-15">{{l.tr('Ревизия')}}
+          <th pSortableColumn="revision" class="cxy w-10 min-width-120">{{l.tr('Ревизия')}}
             <p-sortIcon field="revision"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -127,7 +127,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="status" class="w-15">{{l.tr('Статус')}}
+          <th pSortableColumn="status" class="cxy w-13">{{l.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -136,22 +136,22 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="delivered_date" class="w-12">{{l.tr('Дата поставки')}}
+          <th pSortableColumn="delivered_date" class="cxy w-14">{{l.tr('Дата поставки')}}
             <p-sortIcon field="delivered_date"></p-sortIcon>
             <p-columnFilter class="filter" type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
           </th>
-          <th class="w-3"><th>
-          <th class="w-3"><th>
+          <th class="w-3"></th>
+          <th class="w-3"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
         <tr class="cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
           <td class="w-15 text-14">{{issue.doc_number}}</td>
-          <td class="w-36 text-14">{{issue.name}}</td>
-          <td class="w-15 text-14">{{issue.department}}</td>
-          <td class="w-15 text-14">{{issue.revision}}</td>
-          <td class="w-15 text-14"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
-          <td class="w-12 text-14">{{getDate(+issue.delivered_date)}}</td>
+          <td class="w-27 text-14">{{issue.name}}</td>
+          <td class="w-17 text-14">{{issue.department}}</td>
+          <td class="w-10 text-14">{{issue.revision}}</td>
+          <td class="w-13 text-14"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
+          <td class="w-14 text-14">{{getDate(+issue.delivered_date)}}</td>
           <td class="w-3 text-14">
             <div  class="">
               <img pTooltip="Download" tooltipPosition="top" src="assets/icons/download-arrow.png" (click)="downloadDocFiles(issue); $event.stopPropagation()">
@@ -159,7 +159,7 @@
           </td>
           <td class="w-3 text-14">
             <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
-              <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link2.png" height="18">
+              <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
             </div>
           </td>
         </tr>
