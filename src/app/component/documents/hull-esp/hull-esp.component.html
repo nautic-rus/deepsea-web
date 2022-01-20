@@ -644,7 +644,7 @@
     <div class="w-100 df">
       <div class="card-sp mr-20">
         <div class="top-line"></div>
-        <div *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
+        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
         <div *ngIf="parts.length == 0 && !noResult">
           <div class="cxy loading">
             <div class="cxy card-height">
@@ -760,9 +760,6 @@
                     </div>
                     <div class="cy ml-1">Download all</div>
                   </div>
-                </div>
-                <div class="missing-files cxy" *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0">
-                  <img [src]="fileGroup.icon" height="95">
                 </div>
                 <div class="">
                   <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
@@ -1064,8 +1061,8 @@
 
         </div>
         <div *ngIf="selectedHeadTab == 'Info'" class="card-tabs">
-          <div class="cxy" *ngIf="selectedPart.PART_CODE == null">
-            SELECT PART FROM LEFT LIST TO VIEW DETAILS
+          <div class="cxy loading-text" *ngIf="selectedPart.PART_CODE == null">
+            Select part from left list to view details
           </div>
           <div *ngIf="selectedPart.PART_CODE != null">
             <div class="df">
