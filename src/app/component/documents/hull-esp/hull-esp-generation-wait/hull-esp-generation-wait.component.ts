@@ -14,8 +14,7 @@ import {FileAttachment} from "../../../../domain/classes/file-attachment";
   styleUrls: ['./hull-esp-generation-wait.component.css']
 })
 export class HullEspGenerationWaitComponent implements OnInit {
-  project: string = '';
-  docNumber: string = '';
+
   issue: Issue = new Issue();
   selectRevision = false;
 
@@ -30,10 +29,8 @@ export class HullEspGenerationWaitComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.project = this.conf.data[0];
-      this.docNumber =  this.conf.data[1];
-      this.issue = this.conf.data[3];
-      this.selectRevision = this.conf.data[2];
+      this.issue = this.conf.data[0];
+      this.selectRevision = this.conf.data[1];
       this.revs = this.revs.filter(x => x > this.issue.revision);
       this.rev = this.revs[0];
       if (!this.selectRevision){
@@ -48,7 +45,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
   getEsp(rev: string) {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getHullEspFiles(this.project, this.docNumber, rev).then(res => {
+    this.s.getHullEspFiles(this.issue.project, this.issue.doc_number, this.issue.name, rev).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
@@ -60,7 +57,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
           file.revision = this.rev;
           file.author = this.auth.getUser().login;
           file.group = 'Drawings';
-          file.name = this.docNumber + '.' + fileUrl.split('.').pop();
+          file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
           files.push(file);
         });
 

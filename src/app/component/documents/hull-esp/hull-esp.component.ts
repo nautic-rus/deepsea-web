@@ -517,7 +517,7 @@ export class HullEspComponent implements OnInit {
     this.dialogService.open(HullEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
-      data: [this.project, this.docNumber, newRev, this.issue]
+      data: [this.issue, newRev]
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });
