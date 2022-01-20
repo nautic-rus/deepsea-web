@@ -25,7 +25,7 @@ export class SpecManagerService {
     return await this.http.get<any>(props.httpSpec + '/fixTrayBundle', {params: {project, docNumber}}).toPromise();
   }
 
-  async getHullEspFiles(project: string, docNumber: string, revision: string) {
-    return await this.http.get<any>(props.httpSpec + '/hullEspFiles', {params: {project, docNumber, revision}}).toPromise();
+  async getHullEspFiles(project: string, docNumber: string, docName: string, revision: string) {
+    return await this.http.get<any>(props.httpSpec + '/hullEspFiles', {params: {project, docNumber, docName, revision}}).toPromise();
   }
 }
