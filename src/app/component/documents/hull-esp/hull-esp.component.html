@@ -97,8 +97,8 @@
               <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
               <td class="w-15 text-14">
                 {{part.NEST_ID}}
-                <button *ngIf="!isDisabledNest(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border normal-button small-button p-button-outlined" icon="pi pi-window-minimize" (click)="showNestingTablet(part); $event.stopPropagation()"></button>
-                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border normal-button small-button p-button-outlined" icon="pi pi-window-minimize" (click)="showNestingTabletTemplate(part); $event.stopPropagation()"></button>
+                <button *ngIf="!isDisabledNest(part)" pButton  class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTablet(part); $event.stopPropagation()"></button>
+                <button *ngIf="!isDisabledNestTemplate(part)" pButton class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTabletTemplate(part); $event.stopPropagation()"></button>
               </td>
             </tr>
           </ng-template>
@@ -151,9 +151,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="missing-files cxy" *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0">
-              <img [src]="fileGroup.icon" height="95">
             </div>
             <div class="ovf-auto files-tablet">
               <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
@@ -719,7 +716,7 @@
               <td class="w-15 text-14">
                 {{part.NEST_ID}}
                 <button *ngIf="!isDisabledNest(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNesting(part); $event.stopPropagation()"></button>
-                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border normal-button small-button p-button-outlined" icon="pi pi-window-minimize" (click)="showNestingTabletTemplate(part); $event.stopPropagation()"></button>
+                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Nest Template')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTabletTemplate(part); $event.stopPropagation()"></button>
               </td>
             </tr>
           </ng-template>

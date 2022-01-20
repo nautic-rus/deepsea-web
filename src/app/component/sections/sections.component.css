@@ -34,6 +34,15 @@
   position: relative;
   width: 1650px;
 }
+.sections-one-tablet{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  padding-top: 120px;
+  display: grid;
+  grid-template-columns: 10% 16% 19% 14% 14% 12% 9% 6%;
+  grid-template-rows: 150px 70px 30px 45px 50px 60px 50px;
+  position: relative;
+  width: calc(100vw - 120px);
+}
 .number {
   position: relative;
 }
@@ -48,6 +57,16 @@
   border: 1px solid #333;
   cursor: pointer;
   color: #333;
+}
+.number-card-tablet{
+  width: 40px;
+  height: 20px;
+  border-radius: 12px;
+  background-color: white;
+  border: 1px solid #333;
+  cursor: pointer;
+  color: #333;
+  font-size: 13px;
 }
 .number-right{
   display: flex;
@@ -111,7 +130,7 @@
 }
 .legend{
   height: 183px;
-  width: 300px;
+  padding-right: 10px;
   position: absolute;
   right: 0;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
