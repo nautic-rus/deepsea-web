@@ -709,12 +709,13 @@ export class HullEspComponent implements OnInit {
     let search = '';
     if (part.NEST_ID != null){
       if (part.NEST_ID[0] == 'a'){
-        search = part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5, 4) + '-' + part.SYMMETRY;
+        search = this.project + '_' + part.NEST_ID.substr(1, 4) + '_' + part.NEST_ID.substr(5, 4);
       }
       else{
         search = this.project + '_' + part.NEST_ID.substr(1, 4) + '_0_' + part.NEST_ID.substr(5, 4);
       }
     }
+
     let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
     let searchDxf = nesting.find(x => x.name == search + '.dxf');
     if (searchDxf != null){

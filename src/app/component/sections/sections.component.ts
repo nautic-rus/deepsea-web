@@ -7,6 +7,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {LanguageService} from "../../domain/language.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-sections',
@@ -18,7 +19,7 @@ export class SectionsComponent implements OnInit {
   projects: string[] = ['NR002', 'NR004'];
   project = this.projects[0];
 
-  constructor(public t: LanguageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public device: DeviceDetectorService, public t: LanguageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.issueManager.getIssues('op').then(data => {
