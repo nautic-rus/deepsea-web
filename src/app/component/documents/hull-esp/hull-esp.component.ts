@@ -585,9 +585,14 @@ export class HullEspComponent implements OnInit {
     else{
       this.dxfEnabled = !this.dxfEnabled;
     }
-    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
-      this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
-    });
+
+    if (this.dxfView != null && !this.dxfView.closed){
+      this.dxfView.close();
+    }
+    let url = '/dxf-view?navi=0&window=1&dxf=' + this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
+    this.dxfEnabledForNesting = false;
+    this.dxfEnabled = false;
+    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
   openDxf() {
     let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
@@ -714,6 +719,7 @@ export class HullEspComponent implements OnInit {
     });
   }
 
+
   showNestingTablet(part: any) {
     this.selectedPart = part;
     this.dxfEnabledForNesting = true;
@@ -730,18 +736,24 @@ export class HullEspComponent implements OnInit {
     let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
     let searchDxf = nesting.find(x => x.name == search + '.dxf');
     if (searchDxf != null){
-      if (!this.dxfEnabled){
-        this.dxfEnabled = !this.dxfEnabled;
+      // if (!this.dxfEnabled){
+      //   this.dxfEnabled = !this.dxfEnabled;
+      // }
+      // this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+      //   // @ts-ignore
+      //   this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE + part.SYMMETRY}, queryParamsHandling: 'merge'});
+      // });
+      if (this.dxfView != null && !this.dxfView.closed){
+        this.dxfView.close();
       }
-      this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
-        // @ts-ignore
-        this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE + part.SYMMETRY}, queryParamsHandling: 'merge'});
-      });
-
+      let url = '/dxf-view?navi=0&window=1&dxf=' + searchDxf.url + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
+      this.dxfEnabledForNesting = false;
+      this.dxfEnabled = false;
+      this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
     }
 
   }
-  showNestingTabletTemplate(part: any) {
+  showNestingTemplate(part: any) {
     this.selectedPart = part;
     this.dxfEnabledForNesting = true;
     let search = '';
@@ -776,6 +788,43 @@ export class HullEspComponent implements OnInit {
             // @ts-ignore
             this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE + '-' + part.SYMMETRY}, queryParamsHandling: 'merge'});
           });
+        }
+      }
+    }
+  }
+
+  showNestingTabletTemplate(part: any) {
+    this.selectedPart = part;
+    this.dxfEnabledForNesting = true;
+    let search = '';
+    search = part.PART_CODE + '-' + part.SYMMETRY;
+    if (search != ''){
+      let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
+      if (!this.nestContentRead){
+        this.nestContentRead = true;
+        nesting.filter(x => x.name.includes('profiles')).forEach(file => {
+          fetch(file.url).then(response => response.text()).then(text => {
+            text.split(';').filter(x => x.trim() != '').forEach(row => {
+              let splitRow = row.split(':');
+              this.nestContent.push({
+                file: splitRow[0].trim(),
+                parts: splitRow[1].trim().split(',')
+              });
+            });
+          });
+        });
+      }
+      let find = this.nestContent.find(x => x.parts.includes(search));
+      if (find != null){
+        let searchDxf = nesting.find(x => x.name == find.file);
+        if (searchDxf != null){
+          if (this.dxfView != null && !this.dxfView.closed){
+            this.dxfView.close();
+          }
+          let url = '/dxf-view?navi=0&window=1&dxf=' + searchDxf.url + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
+          this.dxfEnabledForNesting = false;
+          this.dxfEnabled = false;
+          this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
         }
       }
     }

@@ -734,7 +734,7 @@
               <td class="w-15 text-14">
                 {{part.NEST_ID}}
                 <button *ngIf="!isDisabledNest(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNesting(part); $event.stopPropagation()"></button>
-                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Nest Template')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTabletTemplate(part); $event.stopPropagation()"></button>
+                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Nest Template')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(part); $event.stopPropagation()"></button>
               </td>
             </tr>
           </ng-template>
