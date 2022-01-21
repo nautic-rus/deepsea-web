@@ -144,6 +144,19 @@
   color: #323130a8;
   font-weight: 500;
 }
+.row-user-menu{
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 3px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  fill: rgb(255, 255, 255);
+  text-decoration: none;
+  width: auto;
+  padding: 10px 12px 10px;
+}
 .card-height{
   flex-direction: column;
 }

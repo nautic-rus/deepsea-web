@@ -8,19 +8,37 @@
       <div class="mr-10">
         {{issue.revision}}
       </div>
-      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-off" (click)="createEsp()"></button>
-      </div>
-      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(true)"></button>
-      </div>
       <div class="mr-1">
         <button pButton label="Show drawing" class="border normal-button p-button-outlined" icon="pi pi-eye" iconPos="left" (click)="showDxfTablet()" [disabled]="isDisabledDxf()"></button>
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-150" />
       </span>
+      <div class="ml-1">
+        <div (click)="menu.toggle($event)">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+               width="20" height="20"
+               viewBox="0 0 226 226"
+               style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,226v-226h226v226z" fill="none"></path><g fill="#0e364a"><path d="M22.6,36.16c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269zM22.6,103.96c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269zM22.6,171.76c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269z"></path></g></g></svg>
+        </div>
+        <p-overlayPanel #menu [style]="{width: '200px', 'border-radius': '4px', left: '695.266px', overlayArrowLeft: '210px'}">
+          <ng-template pTemplate>
+            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()" class="display-flex border-bottom">
+              <div class="cxy mx-1">
+                <div class="pi pi-bookmark"></div>
+              </div>
+              <div class="row-user-menu">{{l.tr('Get Current Spec')}}</div>
+            </div>
+            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp(true)" class="display-flex">
+              <div class="cxy mx-1">
+                <div class="pi pi-replay icon-turn"></div>
+              </div>
+              <div class="row-user-menu">{{l.tr('Get Revision Spec')}}</div>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+      </div>
     </div>
     <div class="bottom-line"></div>
     <div class="w-100 df">
@@ -36,7 +54,7 @@
         </div>
         <p-table #table [value]="parts"
                  [scrollable]="true"
-                 scrollHeight="290px"
+                 scrollHeight="260px"
                  [virtualScroll]="true"
                  [virtualRowHeight]="28"
                  styleClass="p-datatable-striped"
