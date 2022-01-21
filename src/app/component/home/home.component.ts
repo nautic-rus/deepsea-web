@@ -25,6 +25,7 @@ import {jsPDF} from "jspdf";
 import 'jspdf-autotable';
 import {HttpClient} from "@angular/common/http";
 import {retry} from "rxjs/operators";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-home',
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showResponsible: boolean = false;
   showStartedBy: boolean = false;
 
-  constructor(private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
+  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
   }
 
   // @ts-ignore
