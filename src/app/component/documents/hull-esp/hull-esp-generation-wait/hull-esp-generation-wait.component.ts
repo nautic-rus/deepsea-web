@@ -66,6 +66,25 @@ export class HullEspGenerationWaitComponent implements OnInit {
           this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue);
         });
       }
+      else{
+        let files: FileAttachment[] = [];
+
+        this.resUrls.forEach(fileUrl => {
+          let file = new FileAttachment();
+          file.url = fileUrl;
+          file.revision = this.rev;
+          file.author = this.auth.getUser().login;
+          file.group = 'Part List';
+          file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+          files.push(file);
+        });
+
+        this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', '-').then(() => {
+          this.issues.setRevisionFiles(this.issue.id, '-', JSON.stringify(files)).then(() => {
+
+          });
+        });
+      }
     });
   }
 

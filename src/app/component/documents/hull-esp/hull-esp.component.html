@@ -744,7 +744,7 @@
             </div>
           </div>
           <div class="mb-30" *ngFor="let fileGroup of fileGroups">
-            <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0">
+            <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
                   <div *ngIf="auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
@@ -758,6 +758,12 @@
                       <img src="assets/icons/download-arrow.png">
                     </div>
                     <div class="cy ml-1">Download all</div>
+                  </div>
+                  <div class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                    <div class="cxy">
+<!--                      <img src="assets/icons/download-arrow.png">-->
+                    </div>
+                    <div class="cy ml-1">Clear</div>
                   </div>
                 </div>
                 <div class="">

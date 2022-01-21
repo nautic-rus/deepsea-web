@@ -33,7 +33,7 @@ export class UploadRevisionFilesComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           let fileName = file.name;
-          if (!this.fileGroup.toLowerCase().includes('nesting')){
+          if (!this.fileGroup.toLowerCase().includes('nesting') && !this.fileGroup.toLowerCase().includes('sketches')){
             fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
           }
           // @ts-ignore
@@ -48,7 +48,7 @@ export class UploadRevisionFilesComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           let fileName = file.name;
-          if (!this.fileGroup.toLowerCase().includes('nesting')){
+          if (!this.fileGroup.toLowerCase().includes('nesting') && !this.fileGroup.toLowerCase().includes('sketches')){
             fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
           }
           this.issues.uploadFile(file, this.auth.getUser().login, fileName).then(res => {
@@ -249,7 +249,7 @@ export class UploadRevisionFilesComponent implements OnInit {
       file.revision = this.issue.revision;
       file.group = this.fileGroup;
       let fileName = file.name;
-      if (!this.fileGroup.toLowerCase().includes('nesting')){
+      if (!this.fileGroup.toLowerCase().includes('nesting') && !this.fileGroup.toLowerCase().includes('sketches')){
         fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
       }
       file.name = fileName;
