@@ -67,11 +67,11 @@
         <div class="w-13 table-body cy"></div>
         <div class="w-10 table-body cy"></div>
       </div>
-      <div class="group" collapseContent #groupSupportsMultiple="collapseContent" [hidden]="group[0].supports.length == 0">
+      <div class="group" collapseContent #groupSupportsMultiple="collapseContent">
         <div *ngFor="let tray of group; let t = index">
           <div [class.sub-red-row]="tray.foranTray.marign == 0" class="df sub-row cursor-pointer" [collapse]="traySupports" (click)="contentClick('subgroup' + i + '-' + t)">
             <div class="w-3 table-body cy">
-              <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" >
+              <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" *ngIf="tray.supports.length > 0">
                 <img src="assets/icons/double-arrow-r.svg" height="12">
               </div>
             </div>

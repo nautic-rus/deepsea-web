@@ -58,7 +58,11 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
         this.equipment = this.equipment.reverse();
       }
     }
-
+    // _.forEach(_.groupBy(_.sortBy(this.trays, x => x.mountData.label), x => x.mountData.label + x.mountData.trmCode + x.mountData.name), group => {
+    //   if (this.isTrayVisible(group[0])){
+    //     this.grouped.push(group);
+    //   }
+    // });
     _.forEach(_.groupBy(_.sortBy(this.trays, x => x.mountData.label), x => x.mountData.label + x.mountData.trmCode + x.mountData.name), group => {
       if (this.isTrayVisible(group[0])){
         this.grouped.push(group);
