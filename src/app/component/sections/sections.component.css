@@ -31,12 +31,11 @@
 }
 .sections-tablet{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-  padding-top: 335px;
+  padding-top: 220px;
   display: grid;
   grid-template-columns: 10px 70px 85px 110px 110px 110px 110px 110px 110px 70px 2px;
   grid-template-rows: 45px 38px 34px 40px 34px 46px 60px;
   position: relative;
-  width: calc(100vw - 120px);
 }
 .sections-one{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
@@ -49,7 +48,7 @@
 }
 .sections-one-tablet{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-  padding-top: 120px;
+  padding-top: 46px;
   display: grid;
   grid-template-columns: 75px 160px 170px 130px 130px 100px 100px 53px;
   grid-template-rows: 150px 70px 30px 45px 50px 60px 50px;
