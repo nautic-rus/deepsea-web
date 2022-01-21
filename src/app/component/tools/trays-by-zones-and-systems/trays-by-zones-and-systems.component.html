@@ -51,9 +51,9 @@
       <div class="w-10 table-header-col cy">{{l.tr('Surface/margin')}}</div>
     </div>
     <div *ngFor="let group of grouped; let i = index">
-      <div [class.red-row]="containsZeroSurface(group)" class="df table-row cursor-pointer">
+      <div [class.red-row]="containsZeroSurface(group)" class="df table-row cursor-pointer" *ngIf="group.length > 1" [collapse]="groupSupportsMultiple" (click)="contentClick('group' + i)">
         <div class="w-3 table-body cy">
-          <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('group' + i)" *ngIf="group.length > 1" [collapse]="groupSupportsMultiple" (click)="contentClick('group' + i)">
+          <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('group' + i)">
             <img src="assets/icons/arrow-r.svg" height="14">
           </div>
         </div>
@@ -69,9 +69,9 @@
       </div>
       <div class="group" collapseContent #groupSupportsMultiple="collapseContent">
         <div *ngFor="let tray of group; let t = index">
-          <div [class.sub-red-row]="tray.foranTray.marign == 0" class="df sub-row cursor-pointer">
+          <div [class.sub-red-row]="tray.foranTray.marign == 0" class="df sub-row cursor-pointer" [collapse]="tray.supports.length > 0 ? traySupports : hidden" (click)="contentClick('subgroup' + i + '-' + t)">
             <div class="w-3 table-body cy">
-              <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" *ngIf="tray.supports.length > 0" [collapse]="traySupports" (click)="contentClick('subgroup' + i + '-' + t)">
+              <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" *ngIf="tray.supports.length > 0">
                 <img src="assets/icons/double-arrow-r.svg" height="12">
               </div>
             </div>
@@ -300,3 +300,4 @@
   </div>
 
 </div>
+<div collapseContent="hidden" #hidden="collapseContent"></div>
