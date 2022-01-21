@@ -19,6 +19,7 @@ import {UserCardComponent} from "../../employees/user-card/user-card.component";
 import {GenerationWaitComponent} from "../../tools/trays-by-zones-and-systems/generation-wait/generation-wait.component";
 import {HullEspGenerationWaitComponent} from "./hull-esp-generation-wait/hull-esp-generation-wait.component";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {group} from "@angular/animations";
 
 @Component({
   selector: 'app-hull-esp',
@@ -108,23 +109,33 @@ export class HullEspComponent implements OnInit {
   fileGroups = [
     {
       name: 'Drawings',
-      icon: 'assets/icons/drawings.svg'
+      icon: 'assets/icons/drawings.svg',
+      collapsed: false
     },
     {
       name: 'Part List',
-      icon: 'assets/icons/files.svg'
+      icon: 'assets/icons/files.svg',
+      collapsed: false
     },
     {
       name: 'Cutting Map',
-      icon: 'assets/icons/cutting.svg'
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true
     },
     {
       name: 'Nesting Plates',
-      icon: 'assets/icons/cutting.svg'
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true
     },
     {
       name: 'Nesting Profiles',
-      icon: 'assets/icons/cutting.svg'
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true
+    },
+    {
+      name: 'Profile Sketches',
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true
     }
   ];
   selectedTab = this.fileGroups[0].name;
@@ -632,7 +643,7 @@ export class HullEspComponent implements OnInit {
 
     search = part.PART_CODE + '-' + part.SYMMETRY;
     if (search != '' && part.NEST_ID != null && part.NEST_ID[0] == 'a'){
-      let nesting = this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision);
+      let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
       if (!this.nestContentRead){
         this.nestContentRead = true;
         nesting.filter(x => x.name.includes('profiles')).forEach(file => {
@@ -736,7 +747,7 @@ export class HullEspComponent implements OnInit {
     let search = '';
     search = part.PART_CODE + '-' + part.SYMMETRY;
     if (search != ''){
-      let nesting = this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision);
+      let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
       if (!this.nestContentRead){
         this.nestContentRead = true;
         nesting.filter(x => x.name.includes('profiles')).forEach(file => {
@@ -768,5 +779,11 @@ export class HullEspComponent implements OnInit {
         }
       }
     }
+  }
+
+  clearFiles(fileGroup: string, revision: string) {
+    this.issueManager.clearRevisionFiles(this.issue.id, this.auth.getUser().login, fileGroup, revision).then(() => {
+      this.fillRevisions();
+    });
   }
 }

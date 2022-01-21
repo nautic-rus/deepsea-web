@@ -128,6 +128,9 @@ export class IssueManagerService {
   async getIssueSpentTime(){
     return await this.http.get<any[]>(props.http + '/issueSpentTime', {responseType: "json"}).toPromise();
   }
+  async clearRevisionFiles(issueId: number, user: string, fileGroup: string, revision: string) {
+    return await this.http.get(props.http + '/clearRevisionFiles', { responseType: 'text', params: {issueId, user, fileGroup, revision}}).toPromise();
+  }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{
@@ -429,4 +432,5 @@ export class IssueManagerService {
     // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
     // return da + '.' + mo + '.' + ye;
   }
+
 }
