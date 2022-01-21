@@ -1,4 +1,4 @@
-<div *ngIf="device.isTablet()" class="top-panel-tablet">
+<div *ngIf="!device.isDesktop()" class="top-panel-tablet">
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
@@ -122,7 +122,7 @@
   </div>
   <div></div>
 </div>
-<div *ngIf="device.isTablet()" class="left-panel-tablet">
+<div *ngIf="!device.isDesktop()" class="left-panel-tablet">
   <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
       <img src="assets/icons/home1.svg" height="17">
