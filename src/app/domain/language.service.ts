@@ -191,7 +191,7 @@ export class LanguageService {
           case 'Рев.': return 'Rev';
           case 'Отдeл': return 'Dept.';
           case 'Добавить файлы': return 'Add files';
-          case '': return '';
+          case 'Скачать': return 'Download';
           case '': return '';
           case '': return '';
           case '': return '';

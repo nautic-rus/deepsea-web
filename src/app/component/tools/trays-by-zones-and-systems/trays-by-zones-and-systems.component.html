@@ -1,4 +1,309 @@
-<div class="all-page" xmlns="http://www.w3.org/1999/html">
+<div *ngIf="device.isTablet()" class="">
+  <div class="all-page-tablet" xmlns="http://www.w3.org/1999/html">
+    <div class="card-tabs">
+      <div class="df tabs-header">
+        <div class="all-tabs cursor-pointer" (click)="selectedTab = 'Trays'" [class.selectedTab]="selectedTab == 'Trays'">Trays</div>
+        <div class="all-tabs cursor-pointer" (click)="selectedTab = 'Equipment'" [class.selectedTab]="selectedTab == 'Equipment'">Equipment</div>
+        <div class="ml-30">
+          <div class="mr-1">
+            <button [disabled]="waitingForResponse" pButton class="border normal-button p-button-outlined" (click)="generatePdf()">Create temple file</button>
+          </div>
+        </div>
+        <div class="">
+          <div class="1">
+            <button [disabled]="waitingForResponse" pButton class="border normal-button p-button-outlined" (click)="generatePdf(true)">Create new rev file</button>
+          </div>
+        </div>
+        <div class="ml-30">
+          <div class="header-table mr-5">{{bundle.drawingId}}</div>
+        </div>
+        <span class="p-input-icon-left p-ml-auto">
+        <i class="pi pi-search"></i>
+        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+      </span>
+      </div>
+    </div>
+    <div *ngIf="selectedTab == 'Trays'" class="card-tray-tablet card-page">
+      <div *ngIf="bundle.drawingId == null">
+        <div class="cxy">
+          <div class="cxy card-height">
+            <img src="assets/whale.gif" height="120">
+            <div class="cx loading-text">PLEASE WAIT...</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="trays.length == 0 && bundle.drawingId != null">
+        <div class="cxy">
+          <div class="cxy card-height">
+            <div class="cx loading-text">Trays not found</div>
+          </div>
+        </div>
+      </div>
+      <div class="table-header cursor-pointer" *ngIf="trays.length > 0">
+        <div class="w-3 table-header-col-tablet cy"></div>
+        <div class="w-5 table-header-col-tablet cy">{{l.tr('Label')}}</div>
+        <div class="w-5 table-header-col-tablet cy">{{l.tr('Zone')}}</div>
+        <div class="w-15 table-header-col-tablet cy">{{l.tr('TRM')}}</div>
+        <div class="w-8 table-header-col-tablet cy">{{l.tr('FSQ Index')}}</div>
+        <div class="w-27 table-header-col-tablet cy">{{l.tr('Name/description')}}</div>
+        <div class="w-7 table-header-col-tablet cy">{{l.tr('Weight')}}</div>
+        <div class="w-10 table-header-col-tablet cy">{{l.tr('Coordinates')}}</div>
+        <div class="w-13 table-header-col-tablet cy">{{l.tr('Length')}}</div>
+        <div class="w-7 table-header-col-tablet cy word-wrap">{{l.tr('Surface/margin')}}</div>
+      </div>
+      <div *ngFor="let group of grouped; let i = index">
+        <div [class.red-row]="containsZeroSurface(group)" class="df table-row cursor-pointer" *ngIf="group.length > 1" [collapse]="groupSupportsMultiple" (click)="contentClick('group' + i)">
+          <div class="w-3 table-body-tablet cxy">
+            <div class="cy" [class.arrow-down]="collapsed.includes('group' + i)">
+              <img src="assets/icons/double-arrow-r.svg" height="12">
+            </div>
+          </div>
+          <div class="w-5 table-body-tablet cy">{{group[0].mountData.label}}</div>
+          <div class="w-5 table-body-tablet cy">{{group[0].foranTray.ZONE}}</div>
+          <div class="w-15 table-body-tablet cy">{{group[0].mountData.trmCode}}</div>
+          <div class="w-8 table-body-tablet cy">{{group[0].foranTray.IDSQ}}</div>
+          <div class="w-27 table-body-tablet cy">{{group[0].workShopMaterial.name}}<br>{{group[0].workShopMaterial.description}}</div>
+          <div class="w-7 table-body-tablet cy"></div>
+          <div class="w-10 table-body-tablet cy"></div>
+          <div class="w-13 table-body-tablet cy"></div>
+          <div class="w-7 table-body-tablet cy"></div>
+        </div>
+        <div class="group" collapseContent #groupSupportsMultiple="collapseContent" [hidden]="group[0].supports.length == 0">
+          <div *ngFor="let tray of group; let t = index">
+            <div [class.sub-red-row]="tray.foranTray.marign == 0" class="df sub-row cursor-pointer" [collapse]="traySupports" (click)="contentClick('subgroup' + i + '-' + t)">
+              <div class="w-3 table-body-tablet cxy">
+                <div class="cy" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" >
+                  <img src="assets/icons/arrow-r.svg" height="12">
+                </div>
+              </div>
+              <div class="w-5 table-body-tablet cy">{{tray.mountData.label}}</div>
+              <div class="w-5 table-body-tablet cy">{{tray.foranTray.ZONE}}</div>
+              <div class="w-15 table-body-tablet cy">{{tray.mountData.trmCode}}</div>
+              <div class="w-8 table-body-tablet cy">{{tray.foranTray.IDSQ}}</div>
+              <div class="w-27 table-body-tablet cy">{{tray.workShopMaterial.name}}<br>{{tray.workShopMaterial.description}}</div>
+              <div class="w-7 table-body-tablet cy">{{tray.foranTray.WEIGHT}}</div>
+              <div class="w-10 table-body-tablet cy">
+                <div class="table-body-bold-text">X1:<span class="normal-weight">{{' ' + tray.foranTray.N1X}}</span></div>
+                <div class="table-body-bold-text">Y1:<span class="normal-weight">{{' ' + tray.foranTray.N1Y}}</span></div>
+                <div class="table-body-bold-text">Z1:<span class="normal-weight">{{' ' + tray.foranTray.N1Z}}</span></div>
+                <div class="table-body-bold-text">X2:<span class="normal-weight">{{' ' + tray.foranTray.N2X}}</span></div>
+                <div class="table-body-bold-text">Y2:<span class="normal-weight">{{' ' + tray.foranTray.N2Y}}</span></div>
+                <div class="table-body-bold-text">Z2:<span class="normal-weight">{{' ' + tray.foranTray.N2Z}}</span></div>
+              </div>
+              <div class="w-13 table-body-tablet cy">{{tray.foranTray.LEN}}</div>
+              <div class="w-7 table-body-tablet cy">
+                {{tray.foranTray.SURFACE}}<br>{{tray.foranTray.marign}}
+              </div>
+            </div>
+            <div collapseContent class="subgroup" #traySupports="collapseContent">
+              <div class="table-header-support cursor-pointer">
+                <div class="w-5 table-header-col-tablet cy">{{l.tr('Label')}}</div>
+                <div class="w-15 table-header-col-tablet cy">{{l.tr('TRM')}}</div>
+                <div class="w-35 table-header-col-tablet cy">{{l.tr('Name/description')}}</div>
+                <div class="w-7 table-header-col-tablet cy">{{l.tr('КЕИ')}}</div>
+                <div class="w-15 table-header-col-tablet cy">{{l.tr('QTY')}}</div>
+                <div class="w-10 table-header-col-tablet cy">{{l.tr('Position ')}}</div>
+              </div>
+              <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">
+                <div class="w-5 table-body-support cy">{{sup.label}}</div>
+                <div class="w-15 table-body-support cy">{{sup.workShopMaterial.trmCode}}</div>
+                <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>
+                <div class="w-7 table-body-support cy">{{sup.kei}}</div>
+                <div class="w-15 table-body-support cy">{{sup.qty}}</div>
+                <div *ngIf="sup.isNeedLabel == true" class="w-10 table-body-support cy">да</div>
+                <div *ngIf="sup.isNeedLabel == false" class="w-10 table-body-support cy">нет</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div [class.red-row]="containsZeroSurface(group)" class="df table-row cursor-pointer" *ngIf="group.length == 1" [collapse]="groupSupportsSingle" (click)="contentClick('subgroup' + i)">
+          <div class="w-3 table-body-tablet cxy">
+            <div *ngIf="group[0].supports.length != 0" class="cy" [class.arrow-down]="collapsed.includes('subgroup' + i)" >
+              <img src="assets/icons/arrow-r.svg" height="12">
+            </div>
+          </div>
+          <div class="w-5 table-body-tablet cy">{{group[0].mountData.label}}</div>
+          <div class="w-5 table-body-tablet cy">{{group[0].foranTray.ZONE}}</div>
+          <div class="w-15 table-body-tablet cy">{{group[0].mountData.trmCode}}</div>
+          <div class="w-8 table-body-tablet cy">{{group[0].foranTray.IDSQ}}</div>
+          <div class="w-27 table-body-tablet cy">{{group[0].workShopMaterial.name}}<br>{{group[0].workShopMaterial.description}}</div>
+          <div class="w-7 table-body-tablet cy">{{group[0].workShopMaterial.singleWeight}}</div>
+          <div class="w-10 table-body-tablet cy">
+            <div class="table-body-bold-text">X1:<span class="normal-weight">{{' ' + group[0].foranTray.N1X}}</span></div>
+            <div class="table-body-bold-text">Y1:<span class="normal-weight">{{' ' + group[0].foranTray.N1Y}}</span></div>
+            <div class="table-body-bold-text">Z1:<span class="normal-weight">{{' ' + group[0].foranTray.N1Z}}</span></div>
+            <div class="table-body-bold-text">X2:<span class="normal-weight">{{' ' + group[0].foranTray.N2X}}</span></div>
+            <div class="table-body-bold-text">Y2:<span class="normal-weight">{{' ' + group[0].foranTray.N2Y}}</span></div>
+            <div class="table-body-bold-text">Z2:<span class="normal-weight">{{' ' + group[0].foranTray.N2Z}}</span></div>
+          </div>
+          <div class="w-13 table-body-tablet cy">{{group[0].foranTray.LEN}}</div>
+          <div class="w-7 table-body-tablet cy">
+            {{group[0].foranTray.SURFACE}}<br>{{group[0].foranTray.marign}}
+          </div>
+        </div>
+        <div class="subgroup" collapseContent #groupSupportsSingle="collapseContent" [hidden]="group[0].supports.length == 0">
+          <div class="table-header-support cursor-pointer">
+            <div class="w-5 table-header-col-tablet cy">{{l.tr('Label')}}</div>
+            <div class="w-15 table-header-col-tablet cy">{{l.tr('TRM')}}</div>
+            <div class="w-35 table-header-col-tablet cy">{{l.tr('Name/description')}}</div>
+            <div class="w-7 table-header-col-tablet cy">{{l.tr('КЕИ')}}</div>
+            <div class="w-15 table-header-col-tablet cy">{{l.tr('QTY')}}</div>
+            <div class="w-10 table-header-col-tablet cy">{{l.tr('Position')}}</div>
+          </div>
+          <div *ngFor="let sup of group[0].supports" class="df cursor-pointer row-support">
+            <div class="w-5 table-body-support cy">{{sup.label}}</div>
+            <div class="w-15 table-body-support cy">{{sup.workShopMaterial.trmCode}}</div>
+            <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>
+            <div class="w-7 table-body-support cy">{{sup.kei}}</div>
+            <div class="w-15 table-body-support cy">{{sup.qty}}</div>
+            <div *ngIf="sup.isNeedLabel == true" class="w-10 table-body-support cy">да</div>
+            <div *ngIf="sup.isNeedLabel == false" class="w-10 table-body-support cy">нет</div>
+          </div>
+        </div>
+
+
+
+        <!--      <div collapseContent #traySupports="collapseContent">-->
+        <!--        <div class="table-header-support cursor-pointer">-->
+        <!--          <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>-->
+        <!--          <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>-->
+        <!--          <div class="w-35 table-header-col cy">Название, описание</div>-->
+        <!--          <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>-->
+        <!--          <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>-->
+        <!--          <div class="w-10 table-header-col cy">{{l.tr('Поз. на чертеже')}}</div>-->
+        <!--        </div>-->
+        <!--        <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">-->
+        <!--          <div class="w-5 table-body-support cy">{{sup.label}}</div>-->
+        <!--          <div class="w-15 table-body-support cy">{{sup.workShopMaterial.trmCode}}</div>-->
+        <!--          <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>-->
+        <!--          <div class="w-7 table-body-support cy">{{sup.kei}}</div>-->
+        <!--          <div class="w-15 table-body-support cy">{{sup.qty}}</div>-->
+        <!--          <div *ngIf="sup.isNeedLabel == true" class="w-10 table-body-support cy">да</div>-->
+        <!--          <div *ngIf="sup.isNeedLabel == false" class="w-10 table-body-support cy">нет</div>-->
+        <!--        </div>-->
+        <!--      </div>-->
+      </div>
+      <!--    <div *ngFor="let tray of trays">-->
+      <!--      <div class="df table-row cursor-pointer" [collapse]="traySupports">-->
+      <!--        <div class="w-5 table-body cy">{{tray.mountData.label}}</div>-->
+      <!--        <div class="w-15 table-body cy">{{tray.mountData.trmCode}}</div>-->
+      <!--        <div class="w-35 table-body cy">{{tray.workShopMaterial.name}}<br>{{tray.workShopMaterial.description}}</div>-->
+      <!--        <div class="w-7 table-body cy">{{tray.workShopMaterial.singleWeight}}</div>-->
+      <!--        <div class="w-14 table-body cy">-->
+      <!--          <div class="table-body-bold-text">X1:<span class="normal-weight">{{' ' + tray.foranTray.N1X}}</span></div>-->
+      <!--          <div class="table-body-bold-text">Y1:<span class="normal-weight">{{' ' + tray.foranTray.N1Y}}</span></div>-->
+      <!--          <div class="table-body-bold-text">Z1:<span class="normal-weight">{{' ' + tray.foranTray.N1Z}}</span></div>-->
+      <!--          <div class="table-body-bold-text">X2:<span class="normal-weight">{{' ' + tray.foranTray.N2X}}</span></div>-->
+      <!--          <div class="table-body-bold-text">Y2:<span class="normal-weight">{{' ' + tray.foranTray.N2Y}}</span></div>-->
+      <!--          <div class="table-body-bold-text">Z2:<span class="normal-weight">{{' ' + tray.foranTray.N2Z}}</span></div>-->
+      <!--        </div>-->
+      <!--        <div class="w-14 table-body cy">{{tray.foranTray.LEN}}</div>-->
+      <!--        <div class="w-10 table-body cy">-->
+      <!--          {{tray.foranTray.SURFACE}}<br>{{tray.foranTray.marign}}-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      <div collapseContent #traySupports="collapseContent">-->
+      <!--        <div class="table-header-support cursor-pointer">-->
+      <!--          <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>-->
+      <!--          <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>-->
+      <!--          <div class="w-35 table-header-col cy">Название, описание</div>-->
+      <!--          <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>-->
+      <!--          <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>-->
+      <!--          <div class="w-10 table-header-col cy">{{l.tr('Поз. на чертеже')}}</div>-->
+      <!--        </div>-->
+      <!--        <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">-->
+      <!--          <div class="w-5 table-body-support cy">{{sup.label}}</div>-->
+      <!--          <div class="w-15 table-body-support cy">{{sup.workShopMaterial.trmCode}}</div>-->
+      <!--          <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>-->
+      <!--          <div class="w-7 table-body-support cy">{{sup.kei}}</div>-->
+      <!--          <div class="w-15 table-body-support cy">{{sup.qty}}</div>-->
+      <!--          <div *ngIf="sup.isNeedLabel == true" class="w-10 table-body-support cy">да</div>-->
+      <!--          <div *ngIf="sup.isNeedLabel == false" class="w-10 table-body-support cy">нет</div>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </div>-->
+
+      <!--        <div>ТРЕЙ САППОРТ: </div>-->
+      <!--        <div class="df" *ngFor="let sup of tray.supports">-->
+      <!--          <div>{{sup.workShopMaterial.name}} | </div>-->
+      <!--          <div>{{sup.mountData.label}} | </div>-->
+      <!--          <div>{{sup.kei}} | </div>-->
+      <!--          <div>{{sup.qty}}</div>-->
+      <!--        </div>-->
+
+
+
+    </div>
+    <div *ngIf="selectedTab == 'Equipment'" class="card-tray card-page">
+      <div class="table-header cursor-pointer">
+        <div class="w-3 table-header-col cy"></div>
+        <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
+        <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{l.tr('User id')}}
+          <i *ngIf="sortValue != 'USERID'" class="ml-10 pi pi-sort-alt icon-color"></i>
+          <i *ngIf="sortValue == 'USERID' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+          <i *ngIf="sortValue == 'USERID' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
+        </div>
+        <div class="w-5 table-header-col cy">{{l.tr('System')}}</div>
+        <div class="w-5 table-header-col cy">{{l.tr('Zone')}}</div>
+        <div class="w-10 table-header-col cy">{{l.tr('Stock code')}}</div>
+        <div class="w-27 table-header-col cy">{{l.tr('Name/description')}}</div>
+        <div class="w-7 table-header-col cy">{{l.tr('Weight')}}</div>
+        <div class="w-10 table-header-col cy">{{l.tr('Coordinates')}}</div>
+        <div class="w-12 table-header-col cy">{{l.tr('Provider')}}</div>
+        <div class="w-9 table-header-col cy">{{l.tr('Units')}}</div>
+      </div>
+      <div *ngFor="let eqip of equipment; let i = index">
+        <div class="df table-row cursor-pointer" [collapse]="eqSupports" (click)="contentClick('group-eq' + i)">
+          <div class="w-3 table-body cy">
+            <div *ngIf="eqip.SUPPORTS.length != 0" class="cy arrow-up" [class.arrow-down]="collapsed.includes('group-eq' + i)">
+              <img src="assets/icons/arrow-r.svg" height="14">
+            </div>
+          </div>
+          <div class="w-5 table-body cy">{{eqip.LABEL}}</div>
+          <div class="w-7 table-body cy">{{eqip.USERID}}</div>
+          <div class="w-5 table-body cy">{{eqip.SYSTEM_NAME}}</div>
+          <div class="w-5 table-body cy">{{eqip.ZONE_NAME}}</div>
+          <div class="w-10 table-body cy">{{eqip.STOCK_CODE}}</div>
+          <div class="w-27 table-body cy">{{eqip.workShopMaterial.name}}<br>{{eqip.workShopMaterial.description}}</div>
+          <div class="w-7 table-body cy">{{eqip.workShopMaterial.singleWeight}}</div>
+          <div class="w-10 table-body cy">
+            <div class="table-body-bold-text">X1:<span class="normal-weight">{{' ' + eqip.XCOG}}</span></div>
+            <div class="table-body-bold-text">Y1:<span class="normal-weight">{{' ' + eqip.YCOG}}</span></div>
+            <div class="table-body-bold-text">Z1:<span class="normal-weight">{{' ' + eqip.ZCOG}}</span></div>
+          </div>
+          <div class="w-12 table-body cy">
+            {{eqip.workShopMaterial.provider}}
+          </div>
+          <div class="w-9 table-body cy">
+            {{eqip.workShopMaterial.units}}
+          </div>
+        </div>
+        <div collapseContent class="subgroup" #eqSupports="collapseContent" [hidden]="eqip.SUPPORTS.length == 0">
+          <div class="table-header-support cursor-pointer">
+            <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
+            <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
+            <div class="w-35 table-header-col cy">{{l.tr('Name/description')}}</div>
+            <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>
+            <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>
+            <div class="w-10 table-header-col cy">{{l.tr('Position')}}</div>
+          </div>
+          <div *ngFor="let sup of eqip.SUPPORTS" class="df cursor-pointer row-support">
+            <div class="w-5 table-body-support cy">{{sup.label}}</div>
+            <div class="w-15 table-body-support cy">{{sup.workShopMaterial.trmCode}}</div>
+            <div class="w-35 table-body-support cy">{{sup.workShopMaterial.name}}<br>{{sup.workShopMaterial.description}}</div>
+            <div class="w-7 table-body-support cy">{{sup.kei}}</div>
+            <div class="w-15 table-body-support cy">{{sup.qty}}</div>
+            <div *ngIf="sup.isNeedLabel == true" class="w-10 table-body-support cy">да</div>
+            <div *ngIf="sup.isNeedLabel == false" class="w-10 table-body-support cy">нет</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="device.isDesktop()" class="">
+  <div class="all-page" xmlns="http://www.w3.org/1999/html">
   <div class="card-tabs">
     <div class="df tabs-header">
       <div class="all-tabs cursor-pointer" (click)="selectedTab = 'Trays'" [class.selectedTab]="selectedTab == 'Trays'">Trays</div>
@@ -54,7 +359,7 @@
       <div [class.red-row]="containsZeroSurface(group)" class="df table-row cursor-pointer" *ngIf="group.length > 1" [collapse]="groupSupportsMultiple" (click)="contentClick('group' + i)">
         <div class="w-3 table-body cy">
           <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('group' + i)">
-            <img src="assets/icons/arrow-r.svg" height="14">
+            <img src="assets/icons/double-arrow-r.svg" height="12">
           </div>
         </div>
         <div class="w-5 table-body cy">{{group[0].mountData.label}}</div>
@@ -72,7 +377,7 @@
           <div [class.sub-red-row]="tray.foranTray.marign == 0" class="df sub-row cursor-pointer" [collapse]="tray.supports.length > 0 ? traySupports : hidden" (click)="contentClick('subgroup' + i + '-' + t)">
             <div class="w-3 table-body cy">
               <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" *ngIf="tray.supports.length > 0">
-                <img src="assets/icons/double-arrow-r.svg" height="12">
+                <img src="assets/icons/arrow-r.svg" height="12">
               </div>
             </div>
             <div class="w-5 table-body cy">{{tray.mountData.label}}</div>
@@ -118,7 +423,7 @@
       <div [class.red-row]="containsZeroSurface(group)" class="df table-row cursor-pointer" *ngIf="group.length == 1" [collapse]="groupSupportsSingle" (click)="contentClick('subgroup' + i)">
         <div class="w-3 table-body cy">
           <div *ngIf="group[0].supports.length != 0" class="cy arrow-up" [class.arrow-down]="collapsed.includes('subgroup' + i)" >
-            <img src="assets/icons/double-arrow-r.svg" height="12">
+            <img src="assets/icons/arrow-r.svg" height="12">
           </div>
         </div>
         <div class="w-5 table-body cy">{{group[0].mountData.label}}</div>
@@ -299,5 +604,6 @@
     </div>
   </div>
 
+</div>
 </div>
 <div collapseContent="hidden" #hidden="collapseContent"></div>

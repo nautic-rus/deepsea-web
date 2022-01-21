@@ -4,6 +4,11 @@
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
 }
+.all-body-card-tablet{
+  height: 81vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
 .tools-card{
   border: 1px solid #d6d6d6;
   height: 250px;

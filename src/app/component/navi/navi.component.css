@@ -33,6 +33,16 @@
   box-shadow: 5px 5px 22px 0px rgba(34, 34, 34, 0.2);
   background-color: #0E364A;
 }
+.left-panel-tablet{
+  position: absolute;
+  left: 0;
+  top: var(--navi-height);
+  height: calc(100% - var(--navi-height));
+  min-height: 400px;
+  width: var(--navi-width);
+  z-index: 8;
+  background-color: #0E364A;
+}
 .menu{
   padding: 8px;
   border-radius: 8px;

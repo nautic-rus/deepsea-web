@@ -7,6 +7,7 @@ import {UploadRevisionFilesComponent} from "../../documents/hull-esp/upload-revi
 import {DialogService} from "primeng/dynamicdialog";
 import {GenerationWaitComponent} from "./generation-wait/generation-wait.component";
 import {group} from "@angular/animations";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-trays-by-zones-and-systems',
@@ -27,7 +28,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   source: any = Object();
   sortValue = '';
   sortReverse = false;
-  constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService) { }
+  constructor(public device: DeviceDetectorService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService) { }
 
 
   ngOnInit(): void {
@@ -49,6 +50,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
     console.log(this.source);
     this.bundle = this.source.complect;
     this.trays = this.source.trays;
+    console.log(this.trays)
     this.grouped.splice(0, this.grouped.length);
     this.equipment = _.sortBy(this.source.eqs, x => this.addLeftZeros(x.LABEL, 5)).filter(x => this.isEqVisible(x));
 
