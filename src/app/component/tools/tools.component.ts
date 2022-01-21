@@ -9,6 +9,7 @@ import {TraysByZonesAndSystemsComponent} from "./trays-by-zones-and-systems/tray
 import {Router} from "@angular/router";
 import _ from "underscore";
 import {MessageService} from "primeng/api";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-tools',
@@ -31,7 +32,7 @@ export class ToolsComponent implements OnInit {
 
 
 
-  constructor(public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService, private router: Router, private messageService: MessageService) { }
+  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.issues.getIssueProjects().then(projects => {
