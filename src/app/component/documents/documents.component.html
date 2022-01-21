@@ -24,14 +24,14 @@
         </div>
       </ng-template>
       <ng-template pTemplate="header">
-        <tr>
-          <th pSortableColumn="doc_number" style="width: 136px" class="font-13">{{l.tr('Чертеж')}}
+        <tr class="df">
+          <th pSortableColumn="doc_number" style="width: 136px" class="lxy font-13">{{l.tr('Чертеж')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" style="width: 225px" class="font-13">{{l.tr('Название')}}
+          <th pSortableColumn="name" style="width: 225px" class="lxy font-13">{{l.tr('Название')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="department" style="width: 136px" class="font-13">{{l.tr('Отдeл')}}
+          <th pSortableColumn="department" style="width: 136px" class="cxy font-13">{{l.tr('Отдeл')}}
             <p-sortIcon field="department"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -40,7 +40,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="revision" style="width: 118px" class="font-13">{{l.tr('Рев.')}}
+          <th pSortableColumn="revision" style="width: 118px" class="cxy font-13">{{l.tr('Рев.')}}
             <p-sortIcon field="revision"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -49,7 +49,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="status" style="width: 136px" class="font-13">{{l.tr('Статус')}}
+          <th pSortableColumn="status" style="width: 136px" class="cxy font-13">{{l.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -58,7 +58,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="delivered_date" style="width: 155px" class="font-13">{{l.tr('Поставлен')}}
+          <th pSortableColumn="delivered_date" style="width: 155px" class="cxy font-13">{{l.tr('Поставлен')}}
             <p-sortIcon field="delivered_date"></p-sortIcon>
             <p-columnFilter class="filter" type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
           </th>
