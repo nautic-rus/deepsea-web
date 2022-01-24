@@ -27,6 +27,14 @@ export class SectionsComponent implements OnInit {
     });
     this.route.queryParams.subscribe(params => {
       this.project = params.project != null ? params.project : this.project;
+      this.projects.forEach(project => {
+        if (!this.auth.getUser().visible_projects.includes(project)){
+          this.projects.splice(this.projects.indexOf(project), 1);
+        }
+      });
+      if (!this.auth.getUser().visible_projects.includes(this.project)){
+        this.project = this.projects[0];
+      }
     });
   }
 
@@ -93,18 +101,28 @@ export class SectionsComponent implements OnInit {
     return{};
   }
 
-  viewTask(s: string) {
-    let find = this.issues.find(x => x.name.includes('Секция ' + s) || x.name.includes('Block ' + s));
-    if (find != null){
-      this.issueManager.getIssueDetails(find.id).then(res => {
-        this.dialogService.open(TaskComponent, {
-          showHeader: false,
-          modal: true,
-          data: res
-        })
-      });
-    }
+  // viewTask(s: string) {
+  //   let find = this.issues.find(x => x.name.includes('Секция ' + s) || x.name.includes('Block ' + s));
+  //   if (find != null){
+  //     this.issueManager.getIssueDetails(find.id).then(res => {
+  //       this.dialogService.open(TaskComponent, {
+  //         showHeader: false,
+  //         modal: true,
+  //         data: res
+  //       })
+  //     });
+  //   }
+  // }
 
+
+  viewTask(issueId: number) {
+    let issue = this.issues.find(x => x.id == issueId);
+    if (issue != null){
+      let foranProject = issue.project.replace('NR', 'N');
+      let department = issue.department;
+      let docNumber = issue.doc_number;
+      window.open(`/esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank');
+    }
   }
 
   viewTaskTurk(s: string) {

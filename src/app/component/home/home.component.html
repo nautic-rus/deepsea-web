@@ -1,6 +1,5 @@
 <div *ngIf="!device.isDesktop()" class="">
-  <div class="all-page">
-  <div class="card">
+  <div class="card-tablet">
     <p-table
       #dt
       id="dt"
@@ -12,7 +11,7 @@
       [resizableColumns]="false"
       [columns]="cols"
       [virtualScroll]="true"
-      [scrollHeight]="'70vh'"
+      scrollHeight="calc(100vh - 210px)"
       [virtualRowHeight]="1"
       stateStorage="local"
       stateKey="state"
@@ -25,22 +24,13 @@
       <ng-template pTemplate="caption">
         <div class="p-d-flex">
           <div class="mr-1">
-            <button pButton [label]="l.tr('Новая задача')" class="border new-task-button" (click)="newTask(null)"></button>
+            <button pButton icon="pi pi-plus" class="border new-task-button-tablet" (click)="newTask(null)"></button>
           </div>
           <p-multiSelect class="mr-1" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
-                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
+                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-180 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
           </p-multiSelect>
           <div class="mr-1">
             <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top"  class="border normal-button p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear(); dt.reset(); showAssigned = false; showResponsible = false; showCompleted = false;"></button>
-          </div>
-          <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="importXls()"></button>
-          </div>
-          <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
-          </div>
-          <div class="mr-1">
-            <button pButton [pTooltip]="l.tr('Экспорт PDF')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-pdf" (click)="exportPDF()"></button>
           </div>
           <div class="mr-1">
             <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" onIcon="pi pi-user" offIcon="pi pi-user" [(ngModel)]="showAssigned"></p-toggleButton>
@@ -64,6 +54,60 @@
             <i class="pi pi-search"></i>
             <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
           </span>
+          <p-overlayPanel #op [style]="{top: '55px', left: '70px'}">
+            <ng-template pTemplate>
+              <div (click)="importXls()" class="display-flex border-bottom">-->
+                <div class="cxy mx-1">
+                  <div class="pi pi-download"></div>
+                </div>
+                <div class="row-user-menu-tablet">{{l.tr('Импорт')}}</div>
+              </div>
+              <div (click)="exportXls()" class="display-flex border-bottom">
+                <div class="cxy mx-1">
+                  <div class="pi pi-file-excel"></div>
+                </div>
+                <div class="row-user-menu-tablet">{{l.tr('Экспорт XLS')}}</div>
+              </div>
+              <div (click)="exportPDF()" class="display-flex">
+                <div class="cxy mx-1">
+                  <div class="pi pi-file-pdf"></div>
+                </div>
+                <div class="row-user-menu-tablet">{{l.tr('Экспорт PDF')}}</div>
+              </div>
+            </ng-template>
+          </p-overlayPanel>
+
+          <button type="text" pButton label="Basic" (click)="op.toggle($event)"></button>
+<!--          <div class="ml-1">-->
+<!--            <div (click)="submenu.toggle($event)">-->
+<!--              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"-->
+<!--                   width="20" height="20"-->
+<!--                   viewBox="0 0 226 226"-->
+<!--                   style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,226v-226h226v226z" fill="none"></path><g fill="#0e364a"><path d="M22.6,36.16c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269zM22.6,103.96c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269zM22.6,171.76c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269z"></path></g></g></svg>-->
+<!--            </div>-->
+<!--            <p-overlayPanel #submenu [style]="{width: '200px', top: '35px', left: '720px'}">-->
+<!--              <ng-template pTemplate>-->
+<!--                <div (click)="importXls()" class="display-flex border-bottom">-->
+<!--                  <div class="cxy mx-1">-->
+<!--                    <div class="pi pi-download"></div>-->
+<!--                  </div>-->
+<!--                  <div class="row-user-menu-tablet">{{l.tr('Импорт')}}</div>-->
+<!--                </div>-->
+<!--                <div (click)="exportXls()" class="display-flex border-bottom">-->
+<!--                  <div class="cxy mx-1">-->
+<!--                    <div class="pi pi-file-excel"></div>-->
+<!--                  </div>-->
+<!--                  <div class="row-user-menu-tablet">{{l.tr('Экспорт XLS')}}</div>-->
+<!--                </div>-->
+<!--                <div (click)="exportPDF()" class="display-flex">-->
+<!--                  <div class="cxy mx-1">-->
+<!--                    <div class="pi pi-file-pdf"></div>-->
+<!--                  </div>-->
+<!--                  <div class="row-user-menu-tablet">{{l.tr('Экспорт PDF')}}</div>-->
+<!--                </div>-->
+<!--              </ng-template>-->
+<!--            </p-overlayPanel>-->
+<!--          </div>-->
         </div>
       </ng-template>
       <ng-template pTemplate="colgroup">
@@ -104,7 +148,6 @@
       </ng-template>
     </p-table>
   </div>
-</div>
 </div>
 <div *ngIf="device.isDesktop()" class="">
   <div class="all-page">

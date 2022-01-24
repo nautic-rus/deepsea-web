@@ -129,6 +129,12 @@
     </div>
 <!--    <div class="cy">{{t.tr('МОЯ СТРАНИЦА')}}</div>-->
   </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">
+      <img src="assets/icons/sections1.svg" height="17">
+    </div>
+    <!--    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>-->
+  </div>
 <!--  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
 <!--    <div class="cxy">-->
 <!--      <img src="assets/icons/materials.svg" height="30">-->
@@ -159,12 +165,7 @@
 <!--    </div>-->
 <!--    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
 <!--  </div>-->
-  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">
-      <img src="assets/icons/sections1.svg" height="17">
-    </div>
-<!--    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>-->
-  </div>
+
   <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('ИНСТРУМЕНТЫ')">
       <img src="assets/icons/wrench.svg" height="17">
@@ -184,6 +185,12 @@
       <img src="assets/icons/home1.svg" height="17">
     </div>
     <!--    <div class="cy">{{t.tr('МОЯ СТРАНИЦА')}}</div>-->
+  </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">
+      <img src="assets/icons/sections1.svg" height="17">
+    </div>
+    <!--    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>-->
   </div>
   <!--  <div [class.hidden-menu]="auth.getUser().visibility.includes('t')" class="cy menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
   <!--    <div class="cxy">-->
@@ -215,12 +222,7 @@
   <!--    </div>-->
   <!--    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
   <!--  </div>-->
-  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">
-      <img src="assets/icons/sections1.svg" height="17">
-    </div>
-    <!--    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>-->
-  </div>
+
   <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('ИНСТРУМЕНТЫ')">
       <img src="assets/icons/wrench.svg" height="17">
