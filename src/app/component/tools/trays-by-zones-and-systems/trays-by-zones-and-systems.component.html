@@ -70,7 +70,7 @@
         </div>
         <div class="group" collapseContent #groupSupportsMultiple="collapseContent" [hidden]="group[0].supports.length == 0">
           <div *ngFor="let tray of group; let t = index">
-            <div [class.sub-red-row]="tray.foranTray.marign == 0" class="df sub-row cursor-pointer" [collapse]="traySupports" (click)="contentClick('subgroup' + i + '-' + t)">
+            <div [class.sub-red-row]="tray.foranTray.marign == 0 && tray.foranTray.SURFACE != 'F0'" class="df sub-row cursor-pointer" [collapse]="traySupports" (click)="contentClick('subgroup' + i + '-' + t)">
               <div class="w-3 table-body-tablet cxy">
                 <div class="cy" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" >
                   <img src="assets/icons/arrow-r.svg" height="12">
@@ -374,7 +374,7 @@
       </div>
       <div class="group" collapseContent #groupSupportsMultiple="collapseContent">
         <div *ngFor="let tray of group; let t = index">
-          <div [class.sub-red-row]="tray.foranTray.marign == 0" class="df sub-row cursor-pointer" [collapse]="tray.supports.length > 0 ? traySupports : hidden" (click)="contentClick('subgroup' + i + '-' + t)">
+          <div [class.sub-red-row]="tray.foranTray.marign == 0 && tray.foranTray.SURFACE != 'F0'" class="df sub-row cursor-pointer" [collapse]="tray.supports.length > 0 ? traySupports : hidden" (click)="contentClick('subgroup' + i + '-' + t)">
             <div class="w-3 table-body cy">
               <div class="cy arrow-up" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" *ngIf="tray.supports.length > 0">
                 <img src="assets/icons/arrow-r.svg" height="12">
