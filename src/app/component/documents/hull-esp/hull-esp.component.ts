@@ -868,7 +868,7 @@ export class HullEspComponent implements OnInit {
   exportSketches() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
     let data: any[] = [];
-    this.parts.filter((x: any) => x.SKETCH != '').forEach((part: any) => {
+    this.parts.filter((x: any) => x.SKETCH != null && x.SKETCH != '').forEach((part: any) => {
       data.push({
         PART_CODE: part.PART_CODE,
         PART_TYPE: part.PART_TYPE,
