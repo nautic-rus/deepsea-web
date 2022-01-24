@@ -652,6 +652,9 @@
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Show Drawing')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-eye" (click)="showDxf()" [disabled]="isDisabledDxf()"></button>
       </div>
+      <div class="mr-1">
+        <button pButton [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportSketches()"></button>
+      </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
@@ -719,6 +722,10 @@
               <th pSortableColumn="NEST_ID" class="lxy w-15">{{'Nest ID'}}
                 <p-sortIcon field="NEST_ID"></p-sortIcon>
               </th>
+
+              <th pSortableColumn="SKETCH" class="lxy w-15">{{'Profile Sketch'}}
+                <p-sortIcon field="SKETCH"></p-sortIcon>
+              </th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-part>
@@ -730,11 +737,13 @@
               <td class="w-15 text-14">{{part.MATERIAL}}</td>
               <td class="w-15 text-14">{{part.SYMMETRY}}</td>
               <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
-
               <td class="w-15 text-14">
                 {{part.NEST_ID}}
                 <button *ngIf="!isDisabledNest(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNesting(part); $event.stopPropagation()"></button>
-                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Nest Template')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(part); $event.stopPropagation()"></button>
+              </td>
+              <td class="w-15 text-14">
+                {{part.SKETCH}}
+                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Sketch')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(part); $event.stopPropagation()"></button>
               </td>
             </tr>
           </ng-template>

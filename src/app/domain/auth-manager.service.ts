@@ -84,12 +84,7 @@ export class AuthManagerService {
         else if (user != null){
           this.setUser(user, save);
           if (redirect){
-            if (this.user.permissions.includes('view-documents-n004-only')){
-              this.router.navigate(['documents'], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
-            }
-            else{
-              this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
-            }
+            this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
           }
         }
         console.log(data);

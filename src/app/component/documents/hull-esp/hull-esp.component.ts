@@ -20,6 +20,7 @@ import {GenerationWaitComponent} from "../../tools/trays-by-zones-and-systems/ge
 import {HullEspGenerationWaitComponent} from "./hull-esp-generation-wait/hull-esp-generation-wait.component";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {group} from "@angular/animations";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-hull-esp',
@@ -156,7 +157,6 @@ export class HullEspComponent implements OnInit {
 
       if (this.issue.id == 0){
         this.fillRevisions();
-        this.fillParts();
       }
 
     });
@@ -242,6 +242,7 @@ export class HullEspComponent implements OnInit {
       else{
         this.noResult = true;
       }
+      this.fillSketches();
     });
   }
   getParts(){
@@ -346,6 +347,33 @@ export class HullEspComponent implements OnInit {
   isLoaded(file: string) {
     return this.loaded.find(x => x.name == file);
   }
+  fillSketches(){
+    let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
+    this.nestContent.splice(0, this.nestContent.length);
+    this.nestContentRead = true;
+    nesting.filter(x => x.name.includes('profiles')).forEach(file => {
+      fetch(file.url).then(response => response.text()).then(text => {
+        text.split(';').filter(x => x.trim() != '').forEach(row => {
+          let splitRow = row.split(':');
+          this.nestContent.push({
+            file: splitRow[0].trim(),
+            parts: splitRow[1].trim().split(',')
+          });
+        });
+        this.parts.forEach((part: any) => {
+          if (part.PART_CODE != null && part.SYMMETRY != null && part.NEST_ID != null && part.NEST_ID[0] == 'a'){
+            let search = part.PART_CODE + '-' + part.SYMMETRY;
+            let findNest = this.nestContent.find((x: any) => x.parts.includes(search));
+            part.SKETCH = findNest ? findNest.file.replace('.dxf', '') : '';
+          }
+          else{
+            part.SKETCH = '';
+          }
+        });
+        this.parts = [...this.parts];
+      });
+    });
+  }
   fillRevisions(){
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
@@ -358,6 +386,7 @@ export class HullEspComponent implements OnInit {
       });
       this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
       this.selectedRevision = this.issueRevisions[0];
+      this.fillParts();
     });
   }
   editorClicked(event: any) {
@@ -834,5 +863,25 @@ export class HullEspComponent implements OnInit {
     this.issueManager.clearRevisionFiles(this.issue.id, this.auth.getUser().login, fileGroup, revision).then(() => {
       this.fillRevisions();
     });
+  }
+
+  exportSketches() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = [];
+    this.parts.filter((x: any) => x.SKETCH != '').forEach((part: any) => {
+      data.push({
+        PART_CODE: part.PART_CODE,
+        PART_TYPE: part.PART_TYPE,
+        THICKNESS: part.ELEM_TYPE == 'PL' ? part.THICKNESS : part.WIDTH + 'x' + part.THICKNESS,
+        MATERIAL: part.MATERIAL,
+        SYMMETRY: part.SYMMETRY,
+        WEIGHT: this.round(part.WEIGHT_UNIT),
+        NEST_ID: part.NEST_ID,
+        SKETCH: part.SKETCH
+      });
+    });
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
   }
 }
