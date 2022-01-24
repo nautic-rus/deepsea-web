@@ -1,5 +1,4 @@
 .all-page-tablet{
-  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .card-sections{
@@ -31,9 +30,9 @@
 }
 .sections-tablet{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-  padding-top: 220px;
+  padding-top: 214px;
   display: grid;
-  grid-template-columns: 50px 70px 85px 110px 110px 110px 110px 110px 110px 70px 2px;
+  grid-template-columns: 10px 75px 85px 110px 115px 115px 110px 115px 110px 70px 2px;
   grid-template-rows: 45px 38px 34px 40px 34px 46px 60px;
   position: relative;
 }
@@ -48,9 +47,9 @@
 }
 .sections-one-tablet{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-  padding-top: 15px;
+  padding-top: 6px;
   display: grid;
-  grid-template-columns: 40px 170px 170px 140px 130px 100px 100px 53px;
+  grid-template-columns: 110px 170px 170px 140px 130px 100px 100px 53px;
   grid-template-rows: 150px 70px 30px 45px 50px 60px 50px;
   position: relative;
   width: calc(100vw - 120px);
