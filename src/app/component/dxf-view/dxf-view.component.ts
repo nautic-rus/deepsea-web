@@ -18,7 +18,8 @@ import {FontLoader} from 'node_modules/three/examples/jsm/loaders/FontLoader.js'
 import {ActivatedRoute, Router} from "@angular/router";
 import {getTsHelperFnFromIdentifier} from "@angular/compiler-cli/ngcc/src/utils";
 import {Subscription} from "rxjs";
-
+// @ts-ignore
+import * as Hammer from 'node_modules/hammerjs/hammer.js';
 @Component({
   selector: 'app-dxf-view',
   templateUrl: './dxf-view.component.html',
@@ -63,6 +64,31 @@ export class DxfViewComponent implements OnInit, OnDestroy {
         this.loadedUrl = this.dxfUrl;
         this.fetchDxf();
       }
+    });
+
+    let stage = document.getElementById('cad-view');
+    let mc = new Hammer.Manager(stage);
+    let pan = new Hammer.Pan();
+    let pinch = new Hammer.Pinch();
+    mc.add(pan);
+    mc.add(pinch);
+    mc.get('pinch').set({ enable: true });
+    mc.on('pan', (e: any) => {
+
+      let x = this.dxfViewer.camera.position.x + -1 * e.deltaX * 2;
+      let y = this.dxfViewer.camera.position.y + 1 * e.deltaY * 2;
+
+      this.dxfViewer.camera.position.x = x;
+      this.dxfViewer.camera.position.y = y;
+
+      this.dxfViewer.controls.target = new three.Vector3(x, y, 0);
+      this.dxfViewer.controls.update();
+
+      this.dxfViewer.camera.updateMatrix();
+      this.dxfViewer.camera.updateProjectionMatrix();
+    });
+    mc.on('pinch', (e: any) => {
+      alert('PINCH');
     });
   }
 
@@ -148,22 +174,5 @@ export class DxfViewComponent implements OnInit, OnDestroy {
     this.dxfViewer.camera.updateMatrix();
     this.dxfViewer.camera.updateProjectionMatrix();
   }
-  // setView(center: any, width: any) {
-  //   const aspect = this.dxfViewer.GetCanvas().clientWidth / this.dxfViewer.GetCanvas().clientHeight;
-  //   const height = width / aspect;
-  //   this.dxfViewer.camera = new three.OrthographicCamera(-1, 1, 1, -1, 0.1, 2);
-  //   this.dxfViewer.camera.left = -width / 2;
-  //   this.dxfViewer.camera.right = width / 2;
-  //   this.dxfViewer.camera.top = height / 2;
-  //   this.dxfViewer.camera.bottom = -height / 2;
-  //   this.dxfViewer.camera.zoom = 1;
-  //   this.dxfViewer.camera.position.x = center.x;
-  //   this.dxfViewer.camera.position.y = center.y;
-  //   this.dxfViewer.camera.position.z = 1;
-  //   this.dxfViewer.camera.updateMatrix();
-  //   this.dxfViewer.camera.updateProjectionMatrix();
-  //   this.dxfViewer._CreateControls();
-  //   this.dxfViewer._Emit("viewChanged");
-  // }
 
 }
