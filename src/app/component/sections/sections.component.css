@@ -47,7 +47,7 @@
 }
 .sections-one-tablet{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-  padding-top: 15px;
+  padding-top: 6px;
   display: grid;
   grid-template-columns: 110px 170px 170px 140px 130px 100px 100px 53px;
   grid-template-rows: 150px 70px 30px 45px 50px 60px 50px;
