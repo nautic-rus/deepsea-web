@@ -689,6 +689,9 @@
 .bold{
   font-weight: 500;
 }
+.icon-rotate{
+  transform: rotate(45deg);
+}
 .last-col{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

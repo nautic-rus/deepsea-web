@@ -150,3 +150,6 @@
 /deep/.p-datatable .p-datatable-thead > tr > th{
   padding: 12px;
 }
+.sub-menu{
+  position: inherit;
+}

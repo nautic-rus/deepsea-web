@@ -477,7 +477,7 @@ cdk-virtual-scroll-viewport{
 }
 ::-webkit-scrollbar{
   width: 5px;
-  height: 7px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track-piece{
   background: rgba(0, 0, 0, 0.14);

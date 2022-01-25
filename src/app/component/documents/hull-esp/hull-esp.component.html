@@ -64,6 +64,12 @@
             <tr *ngIf="parts.length != 0" >
               <th pSortableColumn="PART_CODE" class="font-13">{{'Part code'}}
                 <p-sortIcon field="PART_CODE"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'SYMMETRY'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.SYMMETRY" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
               </th>
               <th pSortableColumn="ELEM_TYPE" class="font-13">{{'Type'}}
                 <p-sortIcon field="ELEM_TYPE"></p-sortIcon>
@@ -86,15 +92,7 @@
                   </ng-template>
                 </p-columnFilter>
               </th>
-              <th pSortableColumn="SYMMETRY" class="font-13">{{'Symmetry'}}
-                <p-sortIcon field="SYMMETRY"></p-sortIcon>
-                <p-columnFilter class="filter" [field]="'SYMMETRY'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.SYMMETRY" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                    </p-multiSelect>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
+
               <th pSortableColumn="WEIGHT_UNIT" class="font-13">{{'Weight'}}
                 <p-sortIcon field="WEIGHT_UNIT"></p-sortIcon>
               </th>
@@ -106,12 +104,11 @@
           </ng-template>
           <ng-template pTemplate="body" let-part>
             <tr class="cursor-pointer task-row" (click)="selectPart(part)">
-              <td class="w-15 text-14">{{part.PART_CODE}}</td>
+              <td class="w-15 text-14">{{part.PART_CODE + ' ' + part.SYMMETRY}}</td>
               <td class="w-15 text-14">{{part.ELEM_TYPE}}</td>
               <td *ngIf="part.ELEM_TYPE == 'PL'" class="w-15 text-14">{{part.THICKNESS}}</td>
               <td *ngIf="part.ELEM_TYPE != 'PL'" class="w-15 text-14">{{part.WIDTH + 'x' + part.THICKNESS}}</td>
               <td class="w-15 text-14">{{part.MATERIAL}}</td>
-              <td class="w-15 text-14">{{part.SYMMETRY}}</td>
               <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
               <td class="w-15 text-14">
                 {{part.NEST_ID}}
@@ -644,10 +641,10 @@
 <!--        <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>-->
 <!--      </div>-->
       <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-off" (click)="createEsp()"></button>
+        <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-bookmark" (click)="createEsp()"></button>
       </div>
       <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-circle-on" (click)="createEsp(true)"></button>
+        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-replay" (click)="createEsp(true)"></button>
       </div>
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Show Drawing')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-eye" (click)="showDxf()" [disabled]="isDisabledDxf()"></button>
@@ -787,8 +784,8 @@
                     <div class="cy ml-1">Download all</div>
                   </div>
                   <div class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
-                    <div class="cxy">
-<!--                      <img src="assets/icons/download-arrow.png">-->
+                    <div class="cxy icon-rotate">
+                      <img src="assets/icons/broom.png">
                     </div>
                     <div class="cy ml-1">Clear</div>
                   </div>
