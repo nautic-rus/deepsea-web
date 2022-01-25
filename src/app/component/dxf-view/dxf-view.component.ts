@@ -39,11 +39,23 @@ export class DxfViewComponent implements OnInit, OnDestroy {
   fontUrl = 'assets/fonts/gost_type_au.ttf';
   windowMode = 0;
   querySubscription: Subscription | null = null;
+  log = 1;
+  log1 = '';
+  log2 = 1;
+  scale = 0;
+  camera = {
+    x: 0,
+    y: 0,
+    zoom: 0
+  };
+
 
   ngOnInit(): void {
     window.addEventListener('message', (event) => {
-      this.search = this.trimLeftZeros(event.data.PART_CODE) + event.data.SYMMETRY;
-      this.move();
+      if (event.data.PART_CODE != null){
+        this.search = this.trimLeftZeros(event.data.PART_CODE) + event.data.SYMMETRY;
+        this.move();
+      }
     });
     this.querySubscription = this.route.queryParams.subscribe(params => {
       this.dxfUrl = params.dxf != null ? params.dxf : this.dxfUrl;
@@ -72,23 +84,46 @@ export class DxfViewComponent implements OnInit, OnDestroy {
     let pinch = new Hammer.Pinch();
     mc.add(pan);
     mc.add(pinch);
-    mc.get('pinch').set({ enable: true });
-    mc.on('pan', (e: any) => {
+    mc.on('panstart', (e: any) => {
+      this.camera.x = this.dxfViewer.camera.position.x;
+      this.camera.y = this.dxfViewer.camera.position.y;
+    });
+    mc.on('panmove', (e: any) => {
 
-      let x = this.dxfViewer.camera.position.x + -1 * e.deltaX * 2;
-      let y = this.dxfViewer.camera.position.y + 1 * e.deltaY * 2;
+      let cam = this.dxfViewer.camera;
+      let camWidth = cam.right - cam.left;
+      let canvas = document.getElementById('cad-view');
 
-      this.dxfViewer.camera.position.x = x;
-      this.dxfViewer.camera.position.y = y;
+      // @ts-ignore
+      let step = camWidth / canvas.clientWidth / this.dxfViewer.camera.zoom;
+      // @ts-ignore
 
-      this.dxfViewer.controls.target = new three.Vector3(x, y, 0);
+      this.dxfViewer.camera.position.x = this.camera.x + -1 * e.deltaX * step;
+      this.dxfViewer.camera.position.y = this.camera.y + 1 * e.deltaY * step;
+
+      this.dxfViewer.controls.target = new three.Vector3(this.dxfViewer.camera.position.x, this.dxfViewer.camera.position.y, 0);
       this.dxfViewer.controls.update();
 
       this.dxfViewer.camera.updateMatrix();
       this.dxfViewer.camera.updateProjectionMatrix();
+      this.dxfViewer.Render();
+    });
+    mc.on('panend', (e: any) => {
+      this.camera.x = this.dxfViewer.camera.position.x;
+      this.camera.y = this.dxfViewer.camera.position.y;
+    });
+
+    mc.on('pinchstart', (e: any) => {
+      this.camera.zoom = this.dxfViewer.camera.zoom;
     });
     mc.on('pinch', (e: any) => {
-      alert('PINCH');
+      this.dxfViewer.camera.zoom = this.camera.zoom * e.scale;
+      this.dxfViewer.camera.updateMatrix();
+      this.dxfViewer.camera.updateProjectionMatrix();
+      this.dxfViewer.Render();
+    });
+    mc.on('pinchend', (e: any) => {
+      this.camera.zoom = this.dxfViewer.camera.zoom;
     });
   }
 
@@ -98,7 +133,7 @@ export class DxfViewComponent implements OnInit, OnDestroy {
 
   trimLeftZeros(input: string){
     let result = input;
-    while (result[0] == '0' && result.length > 0){
+    while (result.length > 0 && result[0] == '0'){
       result = result.substr(1);
     }
     return result;
