@@ -46,6 +46,13 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
       }
     });
   }
+  removeLeftZeros(input: string){
+    let res = input;
+    while (res.length > 0 && res[0] == '0'){
+      res = res.substr(1);
+    }
+    return res;
+  }
   fillTraysAndEqs(){
     console.log(this.source);
     this.bundle = this.source.complect;
@@ -60,6 +67,12 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
         this.equipment = this.equipment.reverse();
       }
     }
+
+    this.equipment.forEach((eq: any) => {
+      eq.LABEL = this.addLeftZeros(eq.LABEL, 10);
+      eq.workShopMaterialName = eq.workShopMaterial.name;
+    });
+
     // _.forEach(_.groupBy(_.sortBy(this.trays, x => x.mountData.label), x => x.mountData.label + x.mountData.trmCode + x.mountData.name), group => {
     //   if (this.isTrayVisible(group[0])){
     //     this.grouped.push(group);

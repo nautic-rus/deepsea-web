@@ -541,17 +541,41 @@
   <div *ngIf="selectedTab == 'Equipment'" class="card-tray card-page">
     <div class="table-header cursor-pointer">
       <div class="w-3 table-header-col cy"></div>
-      <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
+      <div (click)="sort('LABEL')" class="w-5 table-header-col dfc">{{l.tr('Label')}}
+        <i *ngIf="sortValue != 'LABEL'" class="ml-10 pi pi-sort-alt icon-color"></i>
+        <i *ngIf="sortValue == 'LABEL' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+        <i *ngIf="sortValue == 'LABEL' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
+      </div>
       <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{l.tr('User id')}}
         <i *ngIf="sortValue != 'USERID'" class="ml-10 pi pi-sort-alt icon-color"></i>
         <i *ngIf="sortValue == 'USERID' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
         <i *ngIf="sortValue == 'USERID' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
       </div>
-      <div class="w-5 table-header-col cy">{{l.tr('System')}}</div>
-      <div class="w-5 table-header-col cy">{{l.tr('Zone')}}</div>
-      <div class="w-10 table-header-col cy">{{l.tr('Stock code')}}</div>
-      <div class="w-27 table-header-col cy">{{l.tr('Name/description')}}</div>
-      <div class="w-7 table-header-col cy">{{l.tr('Weight')}}</div>
+      <div (click)="sort('SYSTEM_NAME')" class="w-5 table-header-col dfc">{{l.tr('System')}}
+        <i *ngIf="sortValue != 'SYSTEM_NAME'" class="ml-10 pi pi-sort-alt icon-color"></i>
+        <i *ngIf="sortValue == 'SYSTEM_NAME' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+        <i *ngIf="sortValue == 'SYSTEM_NAME' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
+      </div>
+      <div (click)="sort('ZONE_NAME')" class="w-5 table-header-col dfc">{{l.tr('Zone')}}
+        <i *ngIf="sortValue != 'ZONE_NAME'" class="ml-10 pi pi-sort-alt icon-color"></i>
+        <i *ngIf="sortValue == 'ZONE_NAME' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+        <i *ngIf="sortValue == 'ZONE_NAME' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
+      </div>
+      <div (click)="sort('STOCK_CODE')" class="w-10 table-header-col dfc">{{l.tr('Stock code')}}
+        <i *ngIf="sortValue != 'STOCK_CODE'" class="ml-10 pi pi-sort-alt icon-color"></i>
+        <i *ngIf="sortValue == 'STOCK_CODE' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+        <i *ngIf="sortValue == 'STOCK_CODE' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
+      </div>
+      <div (click)="sort('workShopMaterialName')" class="w-27 table-header-col dfc">{{l.tr('Name/description')}}
+        <i *ngIf="sortValue != 'workShopMaterialName'" class="ml-10 pi pi-sort-alt icon-color"></i>
+        <i *ngIf="sortValue == 'workShopMaterialName' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+        <i *ngIf="sortValue == 'workShopMaterialName' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
+      </div>
+      <div (click)="sort('WEIGHT')" class="w-7 table-header-col dfc">{{l.tr('Weight')}}
+        <i *ngIf="sortValue != 'WEIGHT'" class="ml-10 pi pi-sort-alt icon-color"></i>
+        <i *ngIf="sortValue == 'WEIGHT' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
+        <i *ngIf="sortValue == 'WEIGHT' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
+      </div>
       <div class="w-10 table-header-col cy">{{l.tr('Coordinates')}}</div>
       <div class="w-12 table-header-col cy">{{l.tr('Provider')}}</div>
       <div class="w-9 table-header-col cy">{{l.tr('Units')}}</div>
@@ -563,7 +587,7 @@
             <img src="assets/icons/arrow-r.svg" height="14">
           </div>
         </div>
-        <div class="w-5 table-body cy">{{eqip.LABEL}}</div>
+        <div class="w-5 table-body cy">{{removeLeftZeros(eqip.LABEL)}}</div>
         <div class="w-7 table-body cy">{{eqip.USERID}}</div>
         <div class="w-5 table-body cy">{{eqip.SYSTEM_NAME}}</div>
         <div class="w-5 table-body cy">{{eqip.ZONE_NAME}}</div>
