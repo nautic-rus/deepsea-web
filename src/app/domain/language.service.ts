@@ -193,8 +193,8 @@ export class LanguageService {
           case 'Добавить файлы': return 'Add files';
           case 'Скачать': return 'Download';
           case 'Задач': return 'Tasks';
-          case '': return '';
-          case '': return '';
+          case 'Подзадачи': return 'Subtasks';
+          case 'Чеклист': return 'Checklist';
           case '': return '';
           case '': return '';
           case '': return '';
