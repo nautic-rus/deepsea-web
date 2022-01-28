@@ -24,6 +24,8 @@ import {ConfirmAlreadyExistSendToApprovalComponent} from "./confirm-already-exis
 import {LaboriousnessComponent} from "./laboriousness/laboriousness.component";
 import {ConfirmAlreadyExistSendToYardComponent} from "./confirm-already-exist-send-to-yard/confirm-already-exist-send-to-yard.component";
 import {CreateTaskComponent} from "../create-task/create-task.component";
+import {CreateCheckListComponent} from "./create-check-list/create-check-list.component";
+import {IssueCheck} from "../../domain/classes/issue-check";
 
 @Component({
   selector: 'app-task',
@@ -125,6 +127,7 @@ export class TaskComponent implements OnInit {
         {label: 'Redo', icon: 'pi pi-repeat'}
       ]
     }];
+  selectedChecks: any = [];
 
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
@@ -157,6 +160,8 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
     this.issue = this.conf.data as Issue;
+    this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
+
     this.availableActions = this.getAvailableActions(this.issue);
     this.issueManager.getIssueDepartments().then(departments => {
       departments.forEach(d => {
@@ -737,5 +742,28 @@ export class TaskComponent implements OnInit {
         this.availableActions = this.getAvailableActions(issue);
       });
     });
+  }
+
+  createCheckList() {
+    this.dialogService.open(CreateCheckListComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(() => {
+      this.issueManager.setIssueChecks(this.issue.id, this.issue.checks).then(() => {
+        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+          this.issue = issue;
+          this.availableActions = this.getAvailableActions(issue);
+        });
+      });
+    });
+  }
+
+  getGroupedChecks(checks: IssueCheck[]) {
+    let res: any[] = [];
+    _.forEach(_.groupBy(_.sortBy(checks, x => x.check_group), x => x.check_group), x => {
+      res.push(x);
+    });
+    return res;
   }
 }

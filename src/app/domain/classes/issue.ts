@@ -2,6 +2,7 @@ import {IssueMessage} from "./issue-message";
 import {FileAttachment} from "./file-attachment";
 import {IssueAction} from "./issue-action";
 import {IssueHistory} from "./issue-history";
+import {IssueCheck} from "./issue-check";
 export class Issue {
   id: number = 0;
   status: string = '';
@@ -36,4 +37,5 @@ export class Issue {
   revision: string = '';
   revision_files: FileAttachment[] = [];
   labor: number = 0;
+  checks: IssueCheck[] = [];
 }

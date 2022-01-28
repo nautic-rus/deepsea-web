@@ -17,6 +17,7 @@ import {IssueType} from "./classes/issue-type";
 import {TimeControlInterval} from "./classes/time-control-interval";
 import {SfiCode} from "./classes/sfi-code";
 import {Weather} from "./classes/weather";
+import {IssueCheck} from "./classes/issue-check";
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,9 @@ export class IssueManagerService {
   }
   async setIssueMessage(id: string, message: IssueMessage): Promise<string> {
     return await this.http.post<string>(props.http + '/setIssueMessage', JSON.stringify(message), {params: {id}}).toPromise();
+  }
+  async setIssueChecks(issue_id: number, checks: IssueCheck[]): Promise<string> {
+    return await this.http.post<string>(props.http + '/setIssueChecks', JSON.stringify(checks), {params: {issue_id}}).toPromise();
   }
   async removeIssue(id: number, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/removeIssue', {params: {id, user}}).toPromise();
