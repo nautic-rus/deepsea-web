@@ -1,0 +1,6 @@
+<div class="page" [class.window-mode]="windowMode == 1">
+  <ngx-extended-pdf-viewer [showFindButton]="true" [textLayer]="true" [src]="pdfUrl" [useBrowserLocale]="true" class="pdf-view"></ngx-extended-pdf-viewer>
+  <div *ngIf="loadingStatus != 'loaded'" class="loading-status">
+    LOADING ...
+  </div>
+</div>

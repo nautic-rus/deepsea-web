@@ -85,6 +85,8 @@ import { GenerationWaitComponent } from './component/tools/trays-by-zones-and-sy
 import {FieldsetModule} from "primeng/fieldset";
 import { HullEspGenerationWaitComponent } from './component/documents/hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component';
 import { ClearFilesComponent } from './component/documents/hull-esp/clear-files/clear-files.component';
+import { PdfViewComponent } from './component/pdf-view/pdf-view.component';
+import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -133,6 +135,8 @@ Quill.register('modules/imageResize', ImageResize);
     DxfViewComponent,
     GenerationWaitComponent,
     HullEspGenerationWaitComponent,
+    PdfViewComponent,
+    HullEspGenerationWaitComponent,
     ClearFilesComponent
   ],
     imports: [
@@ -173,7 +177,8 @@ Quill.register('modules/imageResize', ImageResize);
         QrCodeModule,
         StyleClassModule,
         TabViewModule,
-        FieldsetModule
+        FieldsetModule,
+        NgxExtendedPdfViewerModule
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

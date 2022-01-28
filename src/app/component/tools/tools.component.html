@@ -56,7 +56,7 @@
           </div>
           <div class="body-button-card my-15 cx">
             <div tabindex="10" (click)="getTraysByZonesAndSystems()" pButton [label]="t.tr ('Открыть')" class="button-ok"></div>
-            <div class="pl-20" *ngIf="auth.hasPerms('fix-tray-bundle')">
+            <div class="pl-20">
               <div tabindex="10" (click)="fixTrayBundle()" pButton [label]="t.tr ('Fix Bundle')" class="button-ok"></div>
             </div>
           </div>
@@ -130,7 +130,7 @@
             </div>
             <div class="body-button-card my-15 cx">
               <div tabindex="10" (click)="getTraysByZonesAndSystems()" pButton [label]="t.tr ('Открыть')" class="button-ok"></div>
-              <div class="pl-20" *ngIf="auth.hasPerms('fix-tray-bundle')">
+              <div class="pl-20">
                 <div tabindex="10" (click)="fixTrayBundle()" pButton [label]="t.tr ('Fix Bundle')" class="button-ok"></div>
               </div>
             </div>

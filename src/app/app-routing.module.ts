@@ -19,6 +19,7 @@ import {LaborCostsComponent} from "./component/labor-costs/labor-costs.component
 import {TraysByZonesAndSystemsComponent} from "./component/tools/trays-by-zones-and-systems/trays-by-zones-and-systems.component";
 import {HullEspComponent} from "./component/documents/hull-esp/hull-esp.component";
 import {DxfViewComponent} from "./component/dxf-view/dxf-view.component";
+import {PdfViewComponent} from "./component/pdf-view/pdf-view.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: 'trays-by-zones-and-systems', component: TraysByZonesAndSystemsComponent, canActivate: [AuthGuard], data: {animation: 'TraysByZonesAndSystemsComponent'} },
   { path: 'esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
+  { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
 ];
 
 @NgModule({
