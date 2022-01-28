@@ -788,3 +788,7 @@
   font-size: 0.9em;
   white-space: nowrap;
 }
+.disabled-button{
+  pointer-events: none;
+  opacity: 0.5;
+}

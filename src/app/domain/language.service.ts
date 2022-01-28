@@ -195,7 +195,7 @@ export class LanguageService {
           case 'Задач': return 'Tasks';
           case 'Подзадачи': return 'Subtasks';
           case 'Чеклист': return 'Checklist';
-          case '': return '';
+          case 'Вы уверены, что хотите удалить эти файлы?': return 'Are you sure you want to delete these files?';
           case '': return '';
           case '': return '';
           case '': return '';

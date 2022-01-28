@@ -21,6 +21,8 @@ import {HullEspGenerationWaitComponent} from "./hull-esp-generation-wait/hull-es
 import {DeviceDetectorService} from "ngx-device-detector";
 import {group} from "@angular/animations";
 import * as XLSX from "xlsx";
+import {DeleteComponent} from "../../task/delete/delete.component";
+import {ClearFilesComponent} from "./clear-files/clear-files.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -860,8 +862,16 @@ export class HullEspComponent implements OnInit {
   }
 
   clearFiles(fileGroup: string, revision: string) {
-    this.issueManager.clearRevisionFiles(this.issue.id, this.auth.getUser().login, fileGroup, revision).then(() => {
-      this.fillRevisions();
+    this.dialogService.open(ClearFilesComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.issueManager.clearRevisionFiles(this.issue.id, this.auth.getUser().login, fileGroup, revision).then(() => {
+          this.fillRevisions();
+        });
+      }
     });
   }
 
