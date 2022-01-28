@@ -1,0 +1,19 @@
+.page{
+  height: calc(100vh - var(--navi-height));
+  width: calc(100vw - var(--navi-width));
+}
+.window-mode{
+  height: 100vh;
+}
+.loading-status{
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: xxx-large;
+}
+.pdf-view{
+  height: calc(100vh - var(--navi-height));
+  width: calc(100vw - var(--navi-width));
+}

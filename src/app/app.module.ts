@@ -84,6 +84,8 @@ import { DxfViewComponent } from './component/dxf-view/dxf-view.component';
 import { GenerationWaitComponent } from './component/tools/trays-by-zones-and-systems/generation-wait/generation-wait.component';
 import {FieldsetModule} from "primeng/fieldset";
 import { HullEspGenerationWaitComponent } from './component/documents/hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component';
+import { PdfViewComponent } from './component/pdf-view/pdf-view.component';
+import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -131,7 +133,8 @@ Quill.register('modules/imageResize', ImageResize);
     AssignNewRevisionComponent,
     DxfViewComponent,
     GenerationWaitComponent,
-    HullEspGenerationWaitComponent
+    HullEspGenerationWaitComponent,
+    PdfViewComponent
   ],
     imports: [
         BrowserModule,
@@ -171,7 +174,8 @@ Quill.register('modules/imageResize', ImageResize);
         QrCodeModule,
         StyleClassModule,
         TabViewModule,
-        FieldsetModule
+        FieldsetModule,
+        NgxExtendedPdfViewerModule
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
