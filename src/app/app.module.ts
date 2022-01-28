@@ -84,6 +84,7 @@ import { DxfViewComponent } from './component/dxf-view/dxf-view.component';
 import { GenerationWaitComponent } from './component/tools/trays-by-zones-and-systems/generation-wait/generation-wait.component';
 import {FieldsetModule} from "primeng/fieldset";
 import { HullEspGenerationWaitComponent } from './component/documents/hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component';
+import { ClearFilesComponent } from './component/documents/hull-esp/clear-files/clear-files.component';
 import { PdfViewComponent } from './component/pdf-view/pdf-view.component';
 import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 import { CreateCheckListComponent } from './component/task/create-check-list/create-check-list.component';
@@ -136,7 +137,9 @@ Quill.register('modules/imageResize', ImageResize);
     GenerationWaitComponent,
     HullEspGenerationWaitComponent,
     PdfViewComponent,
-    CreateCheckListComponent
+    CreateCheckListComponent,
+    HullEspGenerationWaitComponent,
+    ClearFilesComponent
   ],
     imports: [
         BrowserModule,

@@ -783,7 +783,7 @@
                     </div>
                     <div class="cy ml-1">Download all</div>
                   </div>
-                  <div class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                  <div [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy icon-rotate">
                       <img src="assets/icons/broom.png">
                     </div>
