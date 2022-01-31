@@ -166,8 +166,9 @@
         <div>{{checkGroup[0].check_group}}</div>
         <div *ngFor="let check of checkGroup">
           <div class="df">
-            <div>{{check.check_description}}</div>
             <input (change)="setChecked(check)" type="checkbox" [checked]="check.check_status == 1">
+            <div>{{check.check_description}}</div>
+
           </div>
         </div>
       </div>
