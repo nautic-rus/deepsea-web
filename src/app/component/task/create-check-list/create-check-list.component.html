@@ -1,16 +1,19 @@
-<div style="max-height: 450px; width: 500px;">
+<div style="max-height: 480px; width: 500px;">
   <div class="task-header-check">
     <div class="task-name">{{t.tr('Чек-лист')}}</div>
     <div class="task-button-close cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="mr-1 mb-10">
-    <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="addRow()">{{t.tr('Добавить строку')}}</button>
+  <div class="df">
+    <div class="mr-1 mb-10">
+      <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="addRow()">{{t.tr('Добавить строку')}}</button>
+    </div>
+    <div class="mr-1 mb-10">
+      <button pButton icon="pi pi-download ml-10" class="border new-row-button" (click)="createFromClipboard()">{{t.tr('Импортировать')}}</button>
+    </div>
   </div>
-  <div class="mr-1 mb-10">
-    <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="createFromClipboard()">{{t.tr('Вставить из буфера обмена')}}</button>
-  </div>
+
   <div class="mr-1 mb-10">
     <input type="text" [(ngModel)]="newGroupName">
   </div>
@@ -54,12 +57,10 @@
           <div class="cursor-pointer delete-button cxy">
             <img src="assets/icons/trash-1.svg" height="18">
           </div>
-
         </td>
       </tr>
     </ng-template>
   </p-table>
-
   <div class="form-footer pt-30">
     <div class="mr-5 cx">
       <div tabindex="10" (click)="commit()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
