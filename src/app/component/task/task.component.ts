@@ -128,6 +128,7 @@ export class TaskComponent implements OnInit {
       ]
     }];
   selectedChecks: any = [];
+  groupedChecks: any[] = [];
 
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
@@ -183,6 +184,7 @@ export class TaskComponent implements OnInit {
     });
     this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
     this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
+    this.fillGroupedChecks();
   }
   close(){
     this.ref.close('exit');
@@ -759,17 +761,16 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  getGroupedChecks(checks: IssueCheck[]) {
-    let res: any[] = [];
-    _.forEach(_.groupBy(_.sortBy(checks, x => x.check_group), x => x.check_group), x => {
-      res.push(x);
+  fillGroupedChecks() {
+    this.groupedChecks.splice(0, this.groupedChecks.length);
+    _.forEach(_.groupBy(this.issue.checks, x => x.check_group), x => {
+      this.groupedChecks.push(x);
     });
-    return res;
   }
 
   setChecked(check: any) {
     let newStatus = check.check_status == 1 ? 0 : 1;
-    console.log(newStatus);
+    check.check_status = newStatus;
     let issueCheck = this.issue.checks.find(x => x.check_description == check.check_description && x.check_group == check.check_group);
     if (issueCheck != null){
       this.issue.checks[this.issue.checks.indexOf(issueCheck)].check_status = newStatus;
