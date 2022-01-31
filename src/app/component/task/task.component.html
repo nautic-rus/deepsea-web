@@ -78,7 +78,7 @@
 <!--        </div>-->
 
         <div class="button-status" *ngFor="let status of availableActions">
-          <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
+          <div [class.disabled-button]="isDisabledStatus(status.value)" (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
         </div>
       </div>
       <div class="df">

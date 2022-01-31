@@ -55,6 +55,10 @@
   height: auto;
   transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
 }
+.disabled-button{
+  pointer-events: none;
+  opacity: 0.5;
+}
 .descr-task{
   font-size: 14px;
   font-weight: normal;
