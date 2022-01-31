@@ -8,7 +8,7 @@
   <div class="mr-1 mb-10">
     <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="addRow()">{{t.tr('Добавить строку')}}</button>
   </div>
-  <p-table [value]="issueChecks">
+  <p-table [value]="issueChecks" scrollHeight="240px" [scrollable]="true">
     <ng-template pTemplate="colgroup">
       <colgroup>
         <col style="width: 240px"/>
@@ -22,7 +22,7 @@
         <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-check class="ovf h-300">
+    <ng-template pTemplate="body" let-check >
       <tr>
         <td pEditableColumn>
           <p-cellEditor>
