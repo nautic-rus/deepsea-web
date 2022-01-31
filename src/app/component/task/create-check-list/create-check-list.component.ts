@@ -20,6 +20,7 @@ export class CreateCheckListComponent implements OnInit {
   selectedUser: string = '';
   users: User[] = [];
   issueChecks: IssueCheck[] = [];
+  newGroupName: string = 'New Group';
 
   constructor(public t: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, ) { }
 
@@ -45,10 +46,10 @@ export class CreateCheckListComponent implements OnInit {
   addRow() {
     let check = new IssueCheck();
     check.check_description = 'New Description';
-    check.check_group = 'New Group';
-    if (this.issueChecks.length > 0){
-      check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
-    }
+    check.check_group = this.newGroupName;
+    // if (this.issueChecks.length > 0){
+    //   check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
+    // }
 
     this.issueChecks.push(check);
     this.issueChecks = [...this.issueChecks];
@@ -63,10 +64,10 @@ export class CreateCheckListComponent implements OnInit {
       res.split('\n').forEach(split => {
         let check = new IssueCheck();
         check.check_description = split;
-        check.check_group = 'New Group';
-        if (this.issueChecks.length > 0){
-          check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
-        }
+        check.check_group = this.newGroupName;
+        // if (this.issueChecks.length > 0){
+        //   check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
+        // }
         this.issueChecks.push(check);
       });
       this.issueChecks = [...this.issueChecks];
