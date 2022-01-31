@@ -1,4 +1,4 @@
-<div style="height: 450px; width: 500px;">
+<div style="max-height: 450px; width: 500px;">
   <div class="task-header-check">
     <div class="task-name">{{t.tr('Чек-лист')}}</div>
     <div class="task-button-close cxy" (click)="close()">
@@ -8,7 +8,7 @@
   <div class="mr-1 mb-10">
     <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="addRow()">{{t.tr('Добавить строку')}}</button>
   </div>
-  <p-table [value]="issueChecks" scrollHeight="240px" [scrollable]="true">
+  <p-table [value]="issueChecks" scrollHeight="228px" [scrollable]="true">
     <ng-template pTemplate="colgroup">
       <colgroup>
         <col style="width: 240px"/>
