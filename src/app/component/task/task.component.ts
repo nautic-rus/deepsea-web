@@ -756,6 +756,7 @@ export class TaskComponent implements OnInit {
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
           this.availableActions = this.getAvailableActions(issue);
+          this.fillGroupedChecks();
         });
       });
     });
@@ -775,7 +776,6 @@ export class TaskComponent implements OnInit {
     if (issueCheck != null){
       this.issue.checks[this.issue.checks.indexOf(issueCheck)].check_status = newStatus;
       this.issueManager.updateIssueCheck(this.issue.id, this.auth.getUser().login, issueCheck.check_description, issueCheck.check_group, newStatus).then(() => {
-        this.fillGroupedChecks();
       });
     }
   }
