@@ -112,7 +112,7 @@ export class TaskComponent implements OnInit {
       }
     }
 
-
+  checked = false;
   viewers: MenuItem[] = [{
     label: 'File',
     items: [
@@ -765,5 +765,17 @@ export class TaskComponent implements OnInit {
       res.push(x);
     });
     return res;
+  }
+
+  setChecked(check: any) {
+    let newStatus = check.check_status == 1 ? 0 : 1;
+    console.log(newStatus);
+    let issueCheck = this.issue.checks.find(x => x.check_description == check.check_description && x.check_group == check.check_group);
+    if (issueCheck != null){
+      this.issue.checks[this.issue.checks.indexOf(issueCheck)].check_status = newStatus;
+      this.issueManager.updateIssueCheck(this.issue.id, this.auth.getUser().login, issueCheck.check_description, issueCheck.check_group, newStatus).then(() => {
+
+      });
+    }
   }
 }

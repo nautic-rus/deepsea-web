@@ -167,7 +167,7 @@
         <div *ngFor="let check of checkGroup">
           <div class="df">
             <div>{{check.check_description}}</div>
-<!--            <div><p-checkbox [value]="check.check_description" [(ngModel)]="selectedChecks"></p-checkbox></div>-->
+            <input (change)="setChecked(check)" type="checkbox" [checked]="check.check_status == 1">
           </div>
         </div>
       </div>

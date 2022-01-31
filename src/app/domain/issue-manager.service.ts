@@ -93,6 +93,9 @@ export class IssueManagerService {
   async setIssueChecks(issue_id: number, checks: IssueCheck[]): Promise<string> {
     return await this.http.post<string>(props.http + '/setIssueChecks', JSON.stringify(checks), {params: {issue_id}}).toPromise();
   }
+  async updateIssueCheck(issue_id: number, user: string, check_description: string, check_group: string, check_status: number): Promise<string> {
+    return await this.http.get<string>(props.http + '/updateIssueCheck', {params: {issue_id, user, check_description, check_group, check_status}}).toPromise();
+  }
   async removeIssue(id: number, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/removeIssue', {params: {id, user}}).toPromise();
   }
