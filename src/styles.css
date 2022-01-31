@@ -200,6 +200,9 @@ body,p{
 .h-32{
   height: 32px;
 }
+.h-300{
+  height: 300px;
+}
 .h100{
   height: 100%;
 }
@@ -307,6 +310,9 @@ body,p{
 }
 .pt-20{
   padding-top: 20px;
+}
+.pt-30{
+  padding-top: 30px;
 }
 .pt-50{
   padding-top: 50px;

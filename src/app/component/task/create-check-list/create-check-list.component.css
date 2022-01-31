@@ -1,8 +1,23 @@
-.task-header-assign{
+.task-header-check{
   display: flex;
   justify-content: space-between;
   padding-top: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+}
+.task-button-close{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
 }
 .task-button{
   padding: 5px;
@@ -64,4 +79,25 @@
 }
 /deep/.p-dialog .p-dialog-content{
   padding-bottom: 1rem;
+}
+.new-row-button{
+  background-color: rgba(50, 49, 48, 0.07);
+  width: max-content;
+  padding: 6px 10px;
+}
+.new-row-button:hover{
+  background-color: rgba(50, 49, 48, 0.18)!important;
+}
+/deep/.p-datatable {
+  overflow: auto;
+  height: 280px;
+}
+.delete-button{
+  height: 32px;
+  width: 32px;
+  border-radius: 16px;
+}
+.delete-button:hover{
+  background-color: rgba(225, 229, 233, 0.7);
+  transition: 0.3s;
 }

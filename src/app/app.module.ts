@@ -180,7 +180,7 @@ Quill.register('modules/imageResize', ImageResize);
         StyleClassModule,
         TabViewModule,
         FieldsetModule,
-        NgxExtendedPdfViewerModule
+        NgxExtendedPdfViewerModule,
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

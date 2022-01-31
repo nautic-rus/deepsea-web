@@ -315,6 +315,10 @@
   border-color: transparent;
   background: #f3f2f1;
 }
+.checklist{
+  max-height: 160px;
+  overflow: auto;
+}
 .task-button:hover{
   color: #605e5c;
   border-color: transparent;

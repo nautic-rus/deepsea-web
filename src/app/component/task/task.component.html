@@ -10,8 +10,8 @@
         </div>
         <p-menu #menu id="config_menu" [popup]="true" [model]="viewers"></p-menu>
       </div>
-      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Назначить чеклист')" (click)="createCheckList()">
-        <img src="assets/icons/subtask.svg" height="20">
+      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
+        <img src="assets/icons/checklist.png" height="20">
       </div>
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
         <img src="assets/icons/subtask.svg" height="20">
@@ -162,7 +162,7 @@
         </div>
       </div>
       <div class="big-text mb-1 mt-2">{{t.tr('Чеклист')}}</div>
-      <div *ngFor="let checkGroup of getGroupedChecks(issue.checks)">
+      <div *ngFor="let checkGroup of getGroupedChecks(issue.checks)" class="checklist">
         <div>{{checkGroup[0].check_group}}</div>
         <div *ngFor="let check of checkGroup">
           <div class="df">

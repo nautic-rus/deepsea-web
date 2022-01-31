@@ -19,8 +19,7 @@ import {Subscription} from "rxjs";
 // @ts-ignore
 import * as Hammer from 'node_modules/hammerjs/hammer.js';
 import {HttpClient} from "@angular/common/http";
-import {PdfViewerComponent} from "ng2-pdf-viewer";
-import {NgxExtendedPdfViewerService, pdfDefaultOptions} from 'ngx-extended-pdf-viewer';
+import {NgxExtendedPdfViewerService} from "ngx-extended-pdf-viewer";
 
 
 @Component({

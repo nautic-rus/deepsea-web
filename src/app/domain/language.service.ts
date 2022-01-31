@@ -196,10 +196,10 @@ export class LanguageService {
           case 'Подзадачи': return 'Subtasks';
           case 'Чеклист': return 'Checklist';
           case 'Вы уверены, что хотите удалить эти файлы?': return 'Are you sure you want to delete these files?';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Чек-лист': return 'Checklist';
+          case 'Добавить строку': return 'Add row';
+          case 'Названиe': return 'Name';
+          case 'Группа': return 'Group';
           case '': return '';
           case '': return '';
           case '': return '';
