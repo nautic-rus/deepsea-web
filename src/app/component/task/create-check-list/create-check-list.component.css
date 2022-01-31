@@ -88,10 +88,6 @@
 .new-row-button:hover{
   background-color: rgba(50, 49, 48, 0.18)!important;
 }
-/deep/.p-datatable {
-  overflow: auto;
-  height: 280px;
-}
 .delete-button{
   height: 32px;
   width: 32px;
