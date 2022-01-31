@@ -26,7 +26,7 @@ export class CreateCheckListComponent implements OnInit {
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
     this.users = this.getUsers();
-    this.issueChecks = this.issue.checks;
+    this.issueChecks = [...this.issue.checks];
   }
 
   close(){
@@ -56,5 +56,20 @@ export class CreateCheckListComponent implements OnInit {
 
   delete(check: any) {
     this.issueChecks.splice(this.issueChecks.indexOf(check), 1);
+  }
+
+  createFromClipboard() {
+    navigator.clipboard.readText().then(res => {
+      res.split('\n').forEach(split => {
+        let check = new IssueCheck();
+        check.check_description = split;
+        check.check_group = 'New Group';
+        if (this.issueChecks.length > 0){
+          check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
+        }
+        this.issueChecks.push(check);
+      });
+      this.issueChecks = [...this.issueChecks];
+    });
   }
 }

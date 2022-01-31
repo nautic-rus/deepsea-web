@@ -8,6 +8,9 @@
   <div class="mr-1 mb-10">
     <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="addRow()">{{t.tr('Добавить строку')}}</button>
   </div>
+  <div class="mr-1 mb-10">
+    <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="createFromClipboard()">{{t.tr('Вставить из буфера обмена')}}</button>
+  </div>
   <p-table [value]="issueChecks" scrollHeight="240px" [scrollable]="true">
     <ng-template pTemplate="colgroup">
       <colgroup>

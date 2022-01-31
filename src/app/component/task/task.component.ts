@@ -751,14 +751,16 @@ export class TaskComponent implements OnInit {
       showHeader: false,
       modal: true,
       data: this.issue
-    }).onClose.subscribe(() => {
-      this.issueManager.setIssueChecks(this.issue.id, this.issue.checks).then(() => {
-        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-          this.issue = issue;
-          this.availableActions = this.getAvailableActions(issue);
-          this.fillGroupedChecks();
+    }).onClose.subscribe((res) => {
+      if (res == 'save'){
+        this.issueManager.setIssueChecks(this.issue.id, this.issue.checks).then(() => {
+          this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+            this.issue = issue;
+            this.availableActions = this.getAvailableActions(issue);
+            this.fillGroupedChecks();
+          });
         });
-      });
+      }
     });
   }
 
