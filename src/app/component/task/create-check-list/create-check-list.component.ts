@@ -30,8 +30,7 @@ export class CreateCheckListComponent implements OnInit {
     this.issue = this.conf.data as Issue;
     this.users = this.getUsers();
     this.issueChecks = [...this.issue.checks];
-    // this.issueManager.getCheckTemplates(this.auth.getUser().login).then(res => {
-    this.issueManager.getCheckTemplates('klestov').then(res => {
+    this.issueManager.getCheckTemplates(this.auth.getUser().login).then(res => {
       _.forEach(_.groupBy(res, x => x.template), template => {
         this.checkTemplates.push({
           name: template[0].template,

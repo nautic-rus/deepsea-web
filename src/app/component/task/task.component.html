@@ -10,8 +10,7 @@
         </div>
         <p-menu #menu id="config_menu" [popup]="true" [model]="viewers"></p-menu>
       </div>
-<!--      <div [class.button-disabled]="issue.responsible != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">-->
-      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
+      <div [class.button-disabled]="issue.responsible != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
         <img src="assets/icons/checklist.png" height="20">
       </div>
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
