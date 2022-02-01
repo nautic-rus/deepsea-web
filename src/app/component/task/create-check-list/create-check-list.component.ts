@@ -22,7 +22,7 @@ export class CreateCheckListComponent implements OnInit {
   issueChecks: IssueCheck[] = [];
   newGroupName: string = 'New Group';
   checkTemplates: any[] = [];
-  selectedTemplate: any[] = [];
+  selectedTemplates: any[] = [];
 
   constructor(public t: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, ) { }
 
@@ -38,7 +38,7 @@ export class CreateCheckListComponent implements OnInit {
         })
       });
       if (this.checkTemplates.length > 0){
-        this.selectedTemplate = this.checkTemplates[0].values;
+        this.selectedTemplates = this.checkTemplates.map(x => x.values);
       }
     });
   }
@@ -88,14 +88,16 @@ export class CreateCheckListComponent implements OnInit {
   }
 
   importTemplate() {
-    this.selectedTemplate.forEach(checkTemplate => {
-      let check = new IssueCheck();
-      check.check_description = checkTemplate.check_description;
-      check.check_group = checkTemplate.check_group;
-      // if (this.issueChecks.length > 0){
-      //   check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
-      // }
-      this.issueChecks.push(check);
+    this.selectedTemplates.forEach(checkTemplates => {
+      checkTemplates.forEach((checkTemplate: any) => {
+        let check = new IssueCheck();
+        check.check_description = checkTemplate.check_description;
+        check.check_group = checkTemplate.check_group;
+        // if (this.issueChecks.length > 0){
+        //   check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
+        // }
+        this.issueChecks.push(check);
+      })
     });
     this.issueChecks = [...this.issueChecks];
   }
