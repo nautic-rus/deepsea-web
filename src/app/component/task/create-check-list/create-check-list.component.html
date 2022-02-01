@@ -12,6 +12,11 @@
     <div class="mr-1 mb-10">
       <button pButton icon="pi pi-download ml-10" class="border new-row-button" (click)="createFromClipboard()">{{t.tr('Импортировать')}}</button>
     </div>
+    <div class="mr-1 mb-10">
+      <p-dropdown class="select" [(ngModel)]="selectedTemplate" [options]="checkTemplates" optionLabel="name" optionValue="values" styleClass="width-130 h-32">
+      </p-dropdown>
+      <button pButton icon="pi pi-download ml-10" class="border new-row-button" (click)="importTemplate()">\/</button>
+    </div>
   </div>
 
   <div class="mr-1 mb-10">

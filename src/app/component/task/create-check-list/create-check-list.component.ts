@@ -21,6 +21,8 @@ export class CreateCheckListComponent implements OnInit {
   users: User[] = [];
   issueChecks: IssueCheck[] = [];
   newGroupName: string = 'New Group';
+  checkTemplates: any[] = [];
+  selectedTemplate: any[] = [];
 
   constructor(public t: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, ) { }
 
@@ -28,6 +30,18 @@ export class CreateCheckListComponent implements OnInit {
     this.issue = this.conf.data as Issue;
     this.users = this.getUsers();
     this.issueChecks = [...this.issue.checks];
+    // this.issueManager.getCheckTemplates(this.auth.getUser().login).then(res => {
+    this.issueManager.getCheckTemplates('klestov').then(res => {
+      _.forEach(_.groupBy(res, x => x.template), template => {
+        this.checkTemplates.push({
+          name: template[0].template,
+          values: template
+        })
+      });
+      if (this.checkTemplates.length > 0){
+        this.selectedTemplate = this.checkTemplates[0].values;
+      }
+    });
   }
 
   close(){
@@ -72,5 +86,18 @@ export class CreateCheckListComponent implements OnInit {
       });
       this.issueChecks = [...this.issueChecks];
     });
+  }
+
+  importTemplate() {
+    this.selectedTemplate.forEach(checkTemplate => {
+      let check = new IssueCheck();
+      check.check_description = checkTemplate.check_description;
+      check.check_group = checkTemplate.check_group;
+      // if (this.issueChecks.length > 0){
+      //   check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
+      // }
+      this.issueChecks.push(check);
+    });
+    this.issueChecks = [...this.issueChecks];
   }
 }

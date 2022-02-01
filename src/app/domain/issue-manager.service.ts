@@ -75,6 +75,9 @@ export class IssueManagerService {
   async getHullPartList(docNum: string): Promise<HullPL> {
     return await this.http.get<HullPL>(props.httpSpec + '/getHullPartList', {params: {docNum}}).toPromise();
   }
+  async getCheckTemplates(user: string): Promise<any[]> {
+    return await this.http.get<any[]>(props.http + '/checkTemplates', {params: {user}}).toPromise();
+  }
   async initHullPartList(project: string, taskId: number, docNum: string, docName: string, user: string): Promise<string> {
     return await this.http.get<string>(props.httpSpec + '/initHullPartList', {params: {project, taskId, docNum, docName, user}}).toPromise();
   }
