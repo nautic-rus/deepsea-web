@@ -200,7 +200,7 @@ export class LanguageService {
           case 'Добавить строку': return 'Add row';
           case 'Названиe': return 'Name';
           case 'Группа': return 'Group';
-          case '': return '';
+          case 'Вставить из буфера': return 'Paste';
           case '': return '';
           case '': return '';
           case '': return '';

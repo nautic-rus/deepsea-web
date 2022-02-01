@@ -1,4 +1,4 @@
-<div style="max-height: 480px; width: 500px;">
+<div style="height: 530px; width: 500px">
   <div class="task-header-check">
     <div class="task-name">{{t.tr('Чек-лист')}}</div>
     <div class="task-button-close cxy" (click)="close()">
@@ -7,22 +7,32 @@
   </div>
   <div class="df">
     <div class="mr-1 mb-10">
-      <button pButton icon="pi pi-plus ml-10" class="border new-row-button" (click)="addRow()">{{t.tr('Добавить строку')}}</button>
+      <button pButton icon="pi pi-plus ml-10 p-ml-auto" class="border new-row-button width-220 " (click)="addRow()">{{t.tr('Добавить строку')}}</button>
     </div>
     <div class="mr-1 mb-10">
-      <button pButton icon="pi pi-download ml-10" class="border new-row-button" (click)="createFromClipboard()">{{t.tr('Импортировать')}}</button>
+      <button pButton icon="pi pi-download ml-10 p-ml-auto" class="border new-row-button width-220" (click)="createFromClipboard()">{{t.tr('Вставить из буфера')}}</button>
     </div>
-    <div class="mr-1 mb-10">
-      <p-dropdown class="select" [(ngModel)]="selectedTemplate" [options]="checkTemplates" optionLabel="name" optionValue="values" styleClass="width-130 h-32">
-      </p-dropdown>
-      <button pButton icon="pi pi-download ml-10" class="border new-row-button" (click)="importTemplate()">\/</button>
+
+  </div>
+  <div class="df">
+    <div class="mr-1 mb-10 df">
+      <div>
+        <div class="big-text-check mb-1 mt-10">{{t.tr('Шаблоны')}}</div>
+        <p-dropdown class="select" [(ngModel)]="selectedTemplate" [options]="checkTemplates" optionLabel="name" optionValue="values" styleClass="width-180 h-32 mr-1px">
+        </p-dropdown>
+        <button pButton icon="pi pi-check" class="border new-row-button h-32" (click)="importTemplate()"></button>
+      </div>
+
+
+    </div>
+    <div style="width: 130px">
+      <div class="big-text-check mb-1 mt-10">{{t.tr('Название группы')}}</div>
+      <input type="text" pInputText [(ngModel)]="newGroupName" style="width: 220px; height: 32px">
     </div>
   </div>
 
-  <div class="mr-1 mb-10">
-    <input type="text" [(ngModel)]="newGroupName">
-  </div>
-  <p-table [value]="issueChecks" scrollHeight="240px" [scrollable]="true">
+
+  <p-table styleClass="h-280" [value]="issueChecks" scrollHeight="240px" [scrollable]="true">
     <ng-template pTemplate="colgroup">
       <colgroup>
         <col style="width: 240px"/>
