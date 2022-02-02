@@ -18,8 +18,7 @@
     <div class="mr-1 mb-10 df">
       <div>
         <div class="big-text-check mb-1 mt-10">{{t.tr('Шаблоны')}}</div>
-        <p-dropdown class="select" [(ngModel)]="selectedTemplate" [options]="checkTemplates" optionLabel="name" optionValue="values" styleClass="width-180 h-32 mr-1px">
-        </p-dropdown>
+        <p-multiSelect [options]="checkTemplates" [(ngModel)]="selectedTemplates" optionLabel="name" optionValue="values" styleClass="width-130 h-32"></p-multiSelect>
         <button pButton icon="pi pi-check" class="border new-row-button h-32" (click)="importTemplate()"></button>
       </div>
 
