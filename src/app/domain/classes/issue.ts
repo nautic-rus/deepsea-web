@@ -32,6 +32,7 @@ export class Issue {
   parent_id: number = 0;
   delivered_date: any = 0;
   issue_comment: string = '';
+  sfi_code: string = '';
   first_send_date: number = 0;
   first_local_approval_date: number = 0;
   revision: string = '';

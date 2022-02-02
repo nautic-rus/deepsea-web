@@ -280,10 +280,11 @@ export class CreateTaskComponent implements OnInit {
     issue.responsible = this.responsibleUser;
     issue.period = this.taskPeriod;
     issue.started_by = this.auth.getUser().login;
+    issue.sfi_code = this.sfiCode;
     issue.status = 'New';
     issue.action = 'New';
     issue.parent_id = this.parent_id;
-    if (!issue.issue_type.includes('RKD')){
+    if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP')){
       issue.doc_number = '';
     }
 
