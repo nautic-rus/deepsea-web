@@ -20,6 +20,7 @@ import {TraysByZonesAndSystemsComponent} from "./component/tools/trays-by-zones-
 import {HullEspComponent} from "./component/documents/hull-esp/hull-esp.component";
 import {DxfViewComponent} from "./component/dxf-view/dxf-view.component";
 import {PdfViewComponent} from "./component/pdf-view/pdf-view.component";
+import {ElecCablesComponent} from "./component/elec-cables/elec-cables.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
+  { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },
 ];
 
 @NgModule({

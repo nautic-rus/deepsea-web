@@ -200,7 +200,7 @@ export class LanguageService {
           case 'Названиe': return 'Name';
           case 'Группа': return 'Group';
           case 'Вставить из буфера': return 'Paste';
-          case '': return '';
+          case 'КАБЕЛИ': return 'ELEC CABELS';
           case '': return '';
           case '': return '';
           case '': return '';
