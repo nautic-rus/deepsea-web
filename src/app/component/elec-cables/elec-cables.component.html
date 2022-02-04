@@ -2,7 +2,7 @@
   <div class="card-overflow">
     <p-table [hidden]="currentView != 'demo'" #table [value]="cables"
              [scrollable]="true"
-             scrollHeight="calc(100vh - 265px)"
+             scrollHeight="calc(100vh - 200px)"
              [virtualScroll]="true"
              [virtualRowHeight]="1"
              styleClass="p-datatable-striped"
@@ -25,43 +25,74 @@
           </div>
         </div>
       </ng-template>
-<!--      <ng-template pTemplate="header">-->
-<!--        <tr class="sticky">-->
-<!--          <th pSortableColumn="CODE" class="w-12">Part <p-sortIcon field="CODE"></p-sortIcon></th>-->
-<!--          <th pSortableColumn="DESCRIPTION" class="w-17">Name <p-sortIcon field="DESCRIPTION"></p-sortIcon></th>-->
-<!--          <th class="w-8">Weight</th>-->
-<!--          <th class="w-19">Stock Code</th>-->
-<!--          <th class="w-28">Node Path</th>-->
-<!--          <th class="w-19">COG</th>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
+
       <ng-template pTemplate="body" let-cable>
-        <div class="df w-100">
-          <div class=" text-table">{{cable.CODE}}</div>
-          <div class="text-table">{{cable.SECTION}}</div>
-          <div class="text-table">{{cable.MARK}}</div>
-          <div class=" text-table">{{cable.FROM_N}}</div>
-          <div class=" text-table">{{cable.FROM_E_USERID}}</div>
-          <div class=" text-table">{{cable.FROM_E_ROOM}}</div>
-          <div class=" text-table">{{cable.TO_E_USERID}}</div>
-          <div class=" text-table">{{cable.TO_N}}</div>
-          <div class=" text-table">{{cable.TO_N_ROOM}}</div>
-          <div class=" text-table">{{cable.TO_E_ROOM}}</div>
-          <div class=" text-table">{{cable.LEN}}</div>
-          <div class=" text-table">{{cable.APPDATA}}</div>
-          <div class=" text-table">{{cable.STOCKCODE}}</div>
+        <div class="df w-100 border-table">
+          <div class="w-10">{{cable.complectName}}</div>
+          <div class="w-90">
+            <div class="w-100">
+
+              <div class="df w-100">
+                <div class="text-header w-7">Код</div>
+                <div class="text-header w-7">Сечение</div>
+                <div class="text-header w-7">Марка</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+                <div class="text-header w-7">From N</div>
+              </div>
+              <div class="df w-100">
+                <div class="text-table w-7">{{cable.CODE}}</div>
+                <div class="text-table w-7">{{cable.SECTION}}</div>
+                <div class="text-table w-7">{{cable.MARK}}</div>
+                <div class="text-table w-7">{{cable.FROM_N}}</div>
+                <div class="text-table w-7">{{cable.FROM_E_USERID}}</div>
+                <div class="text-table w-7">{{cable.FROM_E_ROOM}}</div>
+                <div class="text-table w-7">{{cable.TO_E_USERID}}</div>
+                <div class="text-table w-7">{{cable.TO_N}}</div>
+                <div class="text-table w-7">{{cable.TO_N_ROOM}}</div>
+                <div class="text-table w-7">{{cable.TO_E_ROOM}}</div>
+                <div class="text-table w-7">{{cable.LEN}}</div>
+                <div class="text-table w-7">{{cable.APPDATA}}</div>
+                <div class="text-table w-7">{{cable.STOCKCODE}}</div>
+              </div>
+            </div>
+            <div class="w-100">
+              <div class="w-100 text-header">
+                ПУТЬ
+              </div>
+              <div class="w-100 text-table">
+                {{cable.CABLEPATH}}
+              </div>
+            </div>
+            <div class="w-100">
+              <div class="df w-100">
+                <div class=" text-header">Название</div>
+                <div class=" text-header">Ведомость</div>
+                <div class=" text-header">Код материала</div>
+                <div class=" text-header">КЕИ</div>
+                <div class=" text-header">Вес единичный</div>
+                <div class=" text-header">Поставщик</div>
+              </div>
+              <div class="df w-100">
+                <div class=" text-table">{{cable.ws.NAME}}</div>
+                <div class=" text-table">{{cable.ws.category}}</div>
+                <div class=" text-table">{{cable.ws.trmCode}}</div>
+                <div class=" text-table">{{cable.ws.units}}</div>
+                <div class=" text-table">{{cable.ws.singleWeight}}</div>
+                <div class=" text-table">{{cable.ws.provider}}</div>
+              </div>
+
+            </div>
+          </div>
         </div>
-        <div class="w-100">
-          {{cable.CABLEPATH}}
-        </div>
-        <div class="df w-100">
-          <div class=" text-table">{{cable.ws.NAME}}</div>
-          <div class=" text-table">{{cable.ws.category}}</div>
-          <div class=" text-table">{{cable.ws.trmCode}}</div>
-          <div class=" text-table">{{cable.ws.units}}</div>
-          <div class=" text-table">{{cable.ws.singleWeight}}</div>
-          <div class=" text-table">{{cable.ws.provider}}</div>
-        </div>
+
       </ng-template>
     </p-table>
     <p-table [hidden]="currentView != 'production'" #table [value]="cables"
