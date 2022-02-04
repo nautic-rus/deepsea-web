@@ -1,6 +1,6 @@
 <div class="all-page">
   <div class="card-overflow">
-    <p-table #table [value]="cables"
+    <p-table [hidden]="currentView != 'demo'" #table [value]="cables"
              [scrollable]="true"
              scrollHeight="calc(100vh - 265px)"
              [virtualScroll]="true"
@@ -21,6 +21,7 @@
           <div>
             <button (click)="getCables()">LOAD LOCAL CABLES</button>
             <button (click)="getCables(1)">LOAD MAGISTRALS</button>
+            <p-inputSwitch [(ngModel)]="productionView" (onChange)="changeView()"></p-inputSwitch>
           </div>
         </div>
       </ng-template>
@@ -63,5 +64,70 @@
         </div>
       </ng-template>
     </p-table>
+    <p-table [hidden]="currentView != 'production'" #table [value]="cables"
+             [scrollable]="true"
+             scrollHeight="calc(100vh - 265px)"
+             [virtualScroll]="true"
+             [virtualRowHeight]="1"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['id','doc_number','name','status']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="mr-1">
+            <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-170 border">
+            </p-dropdown>
+          </div>
+          <div>
+            <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="width-176 border">
+            </p-dropdown>
+          </div>
+          <div>
+            <button (click)="getCables()">LOAD LOCAL CABLES</button>
+            <button (click)="getCables(1)">LOAD MAGISTRALS</button>
+            <p-inputSwitch *ngIf="availableViews.includes('demo')" [(ngModel)]="productionView" (onChange)="changeView()"></p-inputSwitch>
+          </div>
+        </div>
+      </ng-template>
+      <!--      <ng-template pTemplate="header">-->
+      <!--        <tr class="sticky">-->
+      <!--          <th pSortableColumn="CODE" class="w-12">Part <p-sortIcon field="CODE"></p-sortIcon></th>-->
+      <!--          <th pSortableColumn="DESCRIPTION" class="w-17">Name <p-sortIcon field="DESCRIPTION"></p-sortIcon></th>-->
+      <!--          <th class="w-8">Weight</th>-->
+      <!--          <th class="w-19">Stock Code</th>-->
+      <!--          <th class="w-28">Node Path</th>-->
+      <!--          <th class="w-19">COG</th>-->
+      <!--        </tr>-->
+      <!--      </ng-template>-->
+      <ng-template pTemplate="body" let-cable>
+        <div class="df w-100">
+          <div class=" text-table">{{cable.CODE}}</div>
+          <div class="text-table">{{cable.SECTION}}</div>
+          <div class="text-table">{{cable.MARK}}</div>
+          <div class=" text-table">{{cable.FROM_N}}</div>
+          <div class=" text-table">{{cable.FROM_E_USERID}}</div>
+          <div class=" text-table">{{cable.FROM_E_ROOM}}</div>
+          <div class=" text-table">{{cable.TO_E_USERID}}</div>
+          <div class=" text-table">{{cable.TO_N}}</div>
+          <div class=" text-table">{{cable.TO_N_ROOM}}</div>
+          <div class=" text-table">{{cable.TO_E_ROOM}}</div>
+          <div class=" text-table">{{cable.LEN}}</div>
+          <div class=" text-table">{{cable.APPDATA}}</div>
+          <div class=" text-table">{{cable.STOCKCODE}}</div>
+        </div>
+        <div class="w-100">
+          {{cable.CABLEPATH}}
+        </div>
+        <div class="df w-100">
+          <div class=" text-table">{{cable.ws.NAME}}</div>
+          <div class=" text-table">{{cable.ws.category}}</div>
+          <div class=" text-table">{{cable.ws.trmCode}}</div>
+          <div class=" text-table">{{cable.ws.units}}</div>
+          <div class=" text-table">{{cable.ws.singleWeight}}</div>
+          <div class=" text-table">{{cable.ws.provider}}</div>
+        </div>
+      </ng-template>
+    </p-table>
+
   </div>
 </div>

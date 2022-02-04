@@ -18,10 +18,17 @@ export class ElecCablesComponent implements OnInit {
   trayBundlesProjects = ['P701', 'P707'];
   selectedTrayBundle: any;
   trayBundles: any[] = [];
+  availableViews = ['demo', 'production'];
+  currentView = 'demo';
+  productionView = false;
 
   constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, private s: SpecManagerService) { }
 
   ngOnInit(): void {
+    if (this.auth.hasPerms('cables-production-view-only')){
+      this.availableViews.splice(0, 1);
+    }
+    this.currentView = this.availableViews[0];
     this.trayBundleProjectChanged();
   }
   trayBundleProjectChanged(){
@@ -38,5 +45,9 @@ export class ElecCablesComponent implements OnInit {
       console.log(res);
       this.cables = res;
     });
+  }
+
+  changeView() {
+    this.currentView = this.currentView == 'demo' ? 'production' : 'demo';
   }
 }
