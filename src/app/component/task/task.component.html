@@ -1,7 +1,12 @@
-
 <div class="w75">
   <div class="task-header">
-    <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.issue_type)}}</div>
+    <div class="df">
+      <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.issue_type)}}</div>
+      <div *ngIf="issue.parent_id != 0" (click)="openIssue(issue.parent_id)" class="df text-head text-bottom">
+        <div class="cursor-pointer">{{'(' + t.tr('Родительская задача')}}</div>
+        <div class="parent-task cursor-pointer ml-5">{{issue.parent_id + ')'}}</div>
+      </div>
+    </div>
     <div class="task-buttons">
       <div>
         <div pButton class="task-button cxy mr-10 button-disabled" tooltipPosition="top" [pTooltip]="t.tr('Параметры отслеживания')" (click)="menu.toggle($event)">
@@ -162,7 +167,7 @@
           </div>
         </div>
       </div>
-      <div class="big-text mb-1 mt-2">{{t.tr('Чеклист')}}</div>
+      <div class="big-text mb-1 mt-2">{{t.tr('Чек-лист')}}</div>
       <div *ngFor="let checkGroup of groupedChecks" class="checklist">
         <div>{{checkGroup[0].check_group}}</div>
         <div *ngFor="let check of checkGroup">
@@ -675,10 +680,7 @@
             <div class="df text-y h-32 normal-text w-40">{{t.tr('ID задачи')}}</div>
             <div class="pl-3 df text-y h-32 cursor-pointer description-task w-45">{{issue.id}}</div>
           </div>
-          <div class="df mt-5" *ngIf="issue.parent_id != 0">
-            <div class="df text-y h-32 normal-text w-40">{{t.tr('Родительская задача')}}</div>
-            <div  (click)="openIssue(issue.parent_id)" class="pl-3 df text-y h-32 cursor-pointer parent-task w-45">{{issue.parent_id}}</div>
-          </div>
+
         </div>
       </div>
       <div class="mt-1 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>

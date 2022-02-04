@@ -88,6 +88,7 @@ import { ClearFilesComponent } from './component/documents/hull-esp/clear-files/
 import { PdfViewComponent } from './component/pdf-view/pdf-view.component';
 import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 import { CreateCheckListComponent } from './component/task/create-check-list/create-check-list.component';
+import { ElecCablesComponent } from './component/elec-cables/elec-cables.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -139,7 +140,8 @@ Quill.register('modules/imageResize', ImageResize);
     PdfViewComponent,
     CreateCheckListComponent,
     HullEspGenerationWaitComponent,
-    ClearFilesComponent
+    ClearFilesComponent,
+    ElecCablesComponent
   ],
     imports: [
         BrowserModule,

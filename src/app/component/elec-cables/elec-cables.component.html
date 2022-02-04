@@ -1,0 +1,25 @@
+<div class="all-page">
+  <div class="card-overflow">
+    <p-table #table [value]="cables"
+             [scrollable]="true"
+             scrollHeight="calc(100vh - 265px)"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['id','doc_number','name','status']">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="mr-1">
+            <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-170 border">
+            </p-dropdown>
+          </div>
+          <div>
+            <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="width-176 border">
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
