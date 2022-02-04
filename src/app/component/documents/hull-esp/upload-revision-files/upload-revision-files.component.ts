@@ -27,15 +27,25 @@ export class UploadRevisionFilesComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+  reformatFileName(name: string, fileGroup: string){
+    let result = name;
+    if (fileGroup == 'Nesting Plates'){
+      result = 'N-' + name.split('_').join('-').replace('_0_', '_');
+    }
+    if (fileGroup == 'Nesting Profiles'){
+      result = 'P-' + name.split('_').join('-');
+    }
+    if (fileGroup == 'Profile Sketches' && !name.includes('.txt')){
+      result = name.split('_').join('-');
+    }
+    return result;
+  }
   handleFileInput(files: FileList | null) {
     if (files != null){
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          let fileName = file.name;
-          if (!this.fileGroup.toLowerCase().includes('nesting') && !this.fileGroup.toLowerCase().includes('sketches')){
-            fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
-          }
+          let fileName = this.reformatFileName(file.name, this.fileGroup);
           // @ts-ignore
           const find = this.loaded.find(x => x.name == fileName);
           if (find != null){
@@ -47,10 +57,7 @@ export class UploadRevisionFilesComponent implements OnInit {
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
         if (file != null){
-          let fileName = file.name;
-          if (!this.fileGroup.toLowerCase().includes('nesting') && !this.fileGroup.toLowerCase().includes('sketches')){
-            fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
-          }
+          let fileName = this.reformatFileName(file.name, this.fileGroup);
           this.issues.uploadFile(file, this.auth.getUser().login, fileName).then(res => {
             this.loaded.push(res);
           });
@@ -248,11 +255,6 @@ export class UploadRevisionFilesComponent implements OnInit {
     this.loaded.forEach(file => {
       file.revision = this.issue.revision;
       file.group = this.fileGroup;
-      let fileName = file.name;
-      if (!this.fileGroup.toLowerCase().includes('nesting') && !this.fileGroup.toLowerCase().includes('sketches')){
-        fileName = this.issue.doc_number + '.' + file.name.toLowerCase().split('.').pop();
-      }
-      file.name = fileName;
     });
     this.issues.setRevisionFiles(this.issue.id, this.issue.revision, JSON.stringify(this.loaded)).then(() => {
       this.ref.close();
