@@ -11,10 +11,8 @@ import {SpecManagerService} from "../../domain/spec-manager.service";
   styleUrls: ['./elec-cables.component.css']
 })
 export class ElecCablesComponent implements OnInit {
-  cables = [];
-  projects: string[] = [];
-  project = '';
-  materialsProject = '';
+
+  cables: any[] = [];
 
   trayBundlesProject = 'P701';
   trayBundlesProjects = ['P701', 'P707'];
@@ -24,12 +22,6 @@ export class ElecCablesComponent implements OnInit {
   constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, private s: SpecManagerService) { }
 
   ngOnInit(): void {
-    this.issues.getIssueProjects().then(projects => {
-      this.projects = projects.filter(x => this.auth.getUser().visible_projects.includes(x)).filter(x => x != '-');
-      if (this.projects.length > 0) {
-        this.materialsProject = this.projects[this.projects.length - 1];
-      }
-    });
     this.trayBundleProjectChanged();
   }
   trayBundleProjectChanged(){
@@ -38,6 +30,13 @@ export class ElecCablesComponent implements OnInit {
       if (this.trayBundles.length > 0){
         this.selectedTrayBundle = this.trayBundles[0].drawingId;
       }
+    });
+  }
+
+  getCables(number: number = 0) {
+    this.s.getCables(this.trayBundlesProject, this.selectedTrayBundle, number).then(res => {
+      console.log(res);
+      this.cables = res;
     });
   }
 }

@@ -28,4 +28,9 @@ export class SpecManagerService {
   async getHullEspFiles(project: string, docNumber: string, docName: string, revision: string) {
     return await this.http.get<any>(props.httpSpec + '/hullEspFiles', {params: {project, docNumber, docName, revision}}).toPromise();
   }
+
+  async getCables(project: string, bundle: string, magistral: number): Promise<any[]> {
+    // return await this.http.get<any[]>(props.httpSpec + '/elecCables', {params: {project, bundle, magistral}}).toPromise();
+    return await this.http.get<any[]>('assets/test/cables.json', {params: {project, bundle, magistral}}).toPromise();
+  }
 }
