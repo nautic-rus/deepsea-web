@@ -1,1 +1,23 @@
-<p>gantt works!</p>
+<div class="p-d-flex">
+  <div class="mr-1">
+    <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
+    </p-dropdown>
+  </div>
+  <div class="mr-1">
+    <p-dropdown placeholder="ИСПОЛНИТЕЛЬ" class="select" [(ngModel)]="assignee" [options]="assignees" optionValue="value" optionLabel="label" styleClass="width-170 border" (ngModelChange)="assigneeChanged()">
+    </p-dropdown>
+  </div>
+</div>
+<ngx-gantt #gantt [items]="issues" [draggable]="true">
+  <ngx-gantt-table>
+    <ngx-gantt-column name="Title" width="300px">
+      <ng-template #cell let-item="item">
+        <div class="issue-details">
+          <div> {{ item.doc_number }} | {{ item.assigned_to }}</div>
+          <div> {{ item.title }}</div>
+        </div>
+
+      </ng-template>
+    </ngx-gantt-column>
+  </ngx-gantt-table>
+</ngx-gantt>

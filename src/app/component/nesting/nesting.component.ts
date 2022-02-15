@@ -1,35 +1,33 @@
 import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {SpecManagerService} from "../../../domain/spec-manager.service";
-import {LanguageService} from "../../../domain/language.service";
-import {Issue} from "../../../domain/classes/issue";
-import {IssueManagerService} from "../../../domain/issue-manager.service";
-import {DialogService} from "primeng/dynamicdialog";
-import {UploadRevisionFilesComponent} from "./upload-revision-files/upload-revision-files.component";
-import _ from "underscore";
-import JSZip from "jszip";
-import {FileAttachment} from "../../../domain/classes/file-attachment";
-import {saveAs} from "file-saver";
-import {AssignNewRevisionComponent} from "./assign-new-revision/assign-new-revision.component";
+import {Issue} from "../../domain/classes/issue";
+import {FileAttachment} from "../../domain/classes/file-attachment";
 import Delta from "quill-delta";
-import {IssueMessage} from "../../../domain/classes/issue-message";
-import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {mouseWheelZoom} from "mouse-wheel-zoom";
-import {UserCardComponent} from "../../employees/user-card/user-card.component";
-import {GenerationWaitComponent} from "../../tools/trays-by-zones-and-systems/generation-wait/generation-wait.component";
-import {HullEspGenerationWaitComponent} from "./hull-esp-generation-wait/hull-esp-generation-wait.component";
 import {DeviceDetectorService} from "ngx-device-detector";
-import {group} from "@angular/animations";
+import {AuthManagerService} from "../../domain/auth-manager.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {SpecManagerService} from "../../domain/spec-manager.service";
+import {LanguageService} from "../../domain/language.service";
+import {IssueManagerService} from "../../domain/issue-manager.service";
+import {DialogService} from "primeng/dynamicdialog";
+import _ from "underscore";
+import {IssueMessage} from "../../domain/classes/issue-message";
+import {UserCardComponent} from "../employees/user-card/user-card.component";
+import {mouseWheelZoom} from "mouse-wheel-zoom";
+import {UploadRevisionFilesComponent} from "../documents/hull-esp/upload-revision-files/upload-revision-files.component";
+import JSZip from "jszip";
+import {saveAs} from "file-saver";
+import {AssignNewRevisionComponent} from "../documents/hull-esp/assign-new-revision/assign-new-revision.component";
+import {HullEspGenerationWaitComponent} from "../documents/hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component";
+import {ClearFilesComponent} from "../documents/hull-esp/clear-files/clear-files.component";
 import * as XLSX from "xlsx";
-import {DeleteComponent} from "../../task/delete/delete.component";
-import {ClearFilesComponent} from "./clear-files/clear-files.component";
 
 @Component({
-  selector: 'app-hull-esp',
-  templateUrl: './hull-esp.component.html',
-  styleUrls: ['./hull-esp.component.css']
+  selector: 'app-nesting',
+  templateUrl: './nesting.component.html',
+  styleUrls: ['./nesting.component.css']
 })
-export class HullEspComponent implements OnInit {
+export class NestingComponent implements OnInit {
+
   parts: any = [];
   noResult = false;
   docNumber = '';

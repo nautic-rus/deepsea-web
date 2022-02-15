@@ -89,6 +89,8 @@ import { PdfViewComponent } from './component/pdf-view/pdf-view.component';
 import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 import { CreateCheckListComponent } from './component/task/create-check-list/create-check-list.component';
 import { ElecCablesComponent } from './component/elec-cables/elec-cables.component';
+import {NgxGanttModule} from "@worktile/gantt";
+import { NestingComponent } from './component/nesting/nesting.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -141,7 +143,8 @@ Quill.register('modules/imageResize', ImageResize);
     CreateCheckListComponent,
     HullEspGenerationWaitComponent,
     ClearFilesComponent,
-    ElecCablesComponent
+    ElecCablesComponent,
+    NestingComponent
   ],
     imports: [
         BrowserModule,
@@ -183,6 +186,7 @@ Quill.register('modules/imageResize', ImageResize);
         TabViewModule,
         FieldsetModule,
         NgxExtendedPdfViewerModule,
+        NgxGanttModule
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

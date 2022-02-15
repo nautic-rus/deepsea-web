@@ -556,7 +556,20 @@ export class TaskComponent implements OnInit {
       });
     }
     else if (value == 'Delivered' || value == 'New Revision'){
-      this.askForSendToCloud();
+      this.issue.delivered_date = new Date().getTime();
+      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+        this.issue.revision = '0';
+        this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+          this.issue.status = 'Delivered';
+          this.issue.action = this.issue.status;
+          this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+            this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+              this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+            });
+          });
+        });
+      });
+      // this.askForSendToCloud();
     }
     else if (value == 'Recovery'){
       this.issue.status = 'New';
@@ -564,25 +577,37 @@ export class TaskComponent implements OnInit {
       this.statusChanged();
     }
     else if (value == 'Send to Yard Approval'){
-      if (this.issue.first_send_date != 0){
-        this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
-          showHeader: false,
-          modal: true,
-          data: this.issue
-        }).onClose.subscribe(res => {
-          if (res == 'yes'){
-            this.issue.status = 'Send to Yard Approval';
-            this.issue.action = 'Send to Yard Approval';
-            this.statusChanged();
-          }
-          else if (res == 'no'){
-            this.askForSendToYardToApproval();
-          }
+      if (this.issue.first_send_date == 0){
+        this.issue.first_send_date = new Date().getTime();
+      }
+      this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+        this.issue.status = 'Send to Yard Approval';
+        this.issue.action = this.issue.status;
+        this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+          this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+            this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+          });
         });
-      }
-      else{
-        this.askForSendToYardToApproval();
-      }
+      });
+      // if (this.issue.first_send_date != 0){
+      //   this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
+      //     showHeader: false,
+      //     modal: true,
+      //     data: this.issue
+      //   }).onClose.subscribe(res => {
+      //     if (res == 'yes'){
+      //       this.issue.status = 'Send to Yard Approval';
+      //       this.issue.action = 'Send to Yard Approval';
+      //       this.statusChanged();
+      //     }
+      //     else if (res == 'no'){
+      //       this.askForSendToYardToApproval();
+      //     }
+      //   });
+      // }
+      // else{
+      //   this.askForSendToYardToApproval();
+      // }
     }
     else{
       this.issue.status = value;
@@ -788,5 +813,23 @@ export class TaskComponent implements OnInit {
       res = true;
     }
     return res;
+  }
+
+  setIssueReady(number: number) {
+    let ready = this.issue.ready;
+    if (number == 0){
+      this.issue.ready = (ready[0] == '0' ? '1' : '0') + '' + ready[1] + '' + ready[2];
+    }
+    else if (number == 1){
+      this.issue.ready = ready[0] + '' + (ready[1] == '0' ? '1' : '0') + ready[2] + '';
+    }
+    else if (number == 2){
+      this.issue.ready = ready[0] + '' + ready[1] + '' + (ready[2] == '0' ? '1' : '0');
+    }
+    this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+      this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+        this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue.'});
+      });
+    });
   }
 }

@@ -285,6 +285,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: true
       },
+      {
+        field: 'issue_comment',
+        header: 'Примечание',
+        headerLocale: 'Примечание',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'issue_comment'),
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');

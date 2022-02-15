@@ -1,0 +1,8 @@
+::ng-deep .gantt-table .gantt-table-body .gantt-table-item{
+  line-height: unset !important;
+}
+.issue-details{
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow-x: auto;
+}
