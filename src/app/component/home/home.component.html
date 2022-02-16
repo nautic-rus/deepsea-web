@@ -216,7 +216,7 @@
               </div>
               <div class="df" *ngIf="col.header == 'Готовность'">
                 <div class="header">
-                  Модель
+                  М
                   <p-columnFilter class="filter" field="readyM" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                       <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
@@ -225,7 +225,7 @@
                   </p-columnFilter>
                 </div>
                 <div class="header">
-                  Чертёж
+                  Ч
                   <p-columnFilter class="filter" field="readyD" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                       <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
@@ -234,7 +234,7 @@
                   </p-columnFilter>
                 </div>
                 <div class="header">
-                  Раскрой
+                  Р
                   <p-columnFilter class="filter" field="readyN" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                       <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
