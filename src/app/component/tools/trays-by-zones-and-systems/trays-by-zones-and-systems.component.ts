@@ -28,6 +28,9 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   source: any = Object();
   sortValue = '';
   sortReverse = false;
+  expanded: string[] = [];
+  tooltips: string[] = [];
+  selectedGroup: any = Object();
   constructor(public device: DeviceDetectorService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService) { }
 
 
@@ -83,6 +86,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
         this.grouped.push(group);
       }
     });
+    this.grouped.forEach((g: any) => this.selectedGroup[this.grouped.indexOf(g)] = 0);
   }
   isEqVisible(eq: any){
     return this.search.trim() == '' || (eq.LABEL + eq.USERID + eq.SYSTEM_NAME + eq.ZONE_NAME + eq.STOCK_CODE + eq.workShopMaterial.name + eq.workShopMaterial.description + eq.workShopMaterial.provider).toLowerCase().includes(this.search.toLowerCase().trim());
@@ -110,7 +114,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   }
 
   containsZeroSurface(group: any[]) {
-    return group.find(tray => tray.foranTray.marign == 0) != null && group.find(tray => tray.foranTray.SURFACE == 'F0') == null;
+    return group.find(tray => tray.foranTray.marign == 0) != null || group.find(tray => tray.foranTray.SURFACE == 'F0') == null;
   }
   sort(column: string){
     this.sortValue = column;
@@ -119,5 +123,28 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   }
   searchChanged() {
     this.fillTraysAndEqs();
+  }
+  round(value: number) {
+    return Math.round(value * 100) / 100;
+  }
+  toggleExpanded(name: string){
+    if (this.expanded.includes(name)){
+      this.expanded.splice(this.expanded.indexOf(name), 1);
+    }
+    else{
+      this.expanded.push(name);
+    }
+  }
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
+  }
+
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
   }
 }
