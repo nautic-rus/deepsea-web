@@ -23,7 +23,7 @@
   font-weight: 500;
 }
 .card-sp{
-  width: 68%;
+  width: 85%;
   height: calc(100vh - 197px);
   background: #ffffff;
   margin-top: 20px;
@@ -274,6 +274,7 @@
   padding: 0px 10px;
   width: fit-content;
   background-color: #F5F6F8;
+  position: absolute;
 }
 .button-details-up:hover{
   background-color: #ECEDF0;

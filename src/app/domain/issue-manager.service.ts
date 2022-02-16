@@ -141,6 +141,10 @@ export class IssueManagerService {
   async clearRevisionFiles(issueId: number, user: string, fileGroup: string, revision: string) {
     return await this.http.get(props.http + '/clearRevisionFiles', { responseType: 'text', params: {issueId, user, fileGroup, revision}}).toPromise();
   }
+  async getNestingFiles() {
+    return await this.http.get<FileAttachment[]>(props.http + '/nestingFiles').toPromise();
+  }
+
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{
