@@ -307,7 +307,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         filters: this.getFilters(this.issues, 'ready'),
         defaultValue: '',
         hidden: false,
-        date: false
+        date: false,
       },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
@@ -352,6 +352,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     states.push(issue.ready[0] == '1' ? 'М' : '-');
     states.push(issue.ready[1] == '1' ? 'Ч' : '-');
     states.push(issue.ready[2] == '1' ? 'Н' : '-');
+    issue.readyM = issue.ready[0] == '1';
+    issue.readyD = issue.ready[1] == '1';
+    issue.readyN = issue.ready[2] == '1';
     return states.join('');
   }
   newTask(issue: object | null) {
