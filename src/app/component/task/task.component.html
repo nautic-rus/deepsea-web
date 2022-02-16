@@ -167,6 +167,23 @@
           </div>
         </div>
       </div>
+      <div *ngIf="issue.issue_type == 'RKD'">
+        <div class="big-text mb-1 mt-2">{{t.tr('Готовность')}}</div>
+        <div class="checklist">
+          <div class="df">
+            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(0)" type="checkbox" [checked]="issue.ready[0] == '1'">
+            <div>Model</div>
+          </div>
+          <div class="df">
+            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(1)" type="checkbox" [checked]="issue.ready[1] == '1'">
+            <div>Drawing</div>
+          </div>
+          <div class="df">
+            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(2)" type="checkbox" [checked]="issue.ready[2] == '1'">
+            <div>Nesting</div>
+          </div>
+        </div>
+      </div>
       <div class="big-text mb-1 mt-2">{{t.tr('Чек-лист')}}</div>
       <div *ngFor="let checkGroup of groupedChecks" class="checklist">
         <div>{{checkGroup[0].check_group}}</div>

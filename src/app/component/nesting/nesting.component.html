@@ -1,0 +1,170 @@
+<div *ngIf="device.isDesktop()" class="all-page h100">
+  <div class="all-card">
+    <div class="card-head df">
+      <div class="mr-1">
+        <button pButton [pTooltip]="l.tr('Export Nesting')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
+      </div>
+      <div class="mr-1">
+        <button pButton [pTooltip]="l.tr('Download Files for Nestings in table')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="downloadFiles()"></button>
+      </div>
+      <span class="p-input-icon-left p-ml-auto">
+        <i class="pi pi-search"></i>
+        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+      </span>
+    </div>
+    <div class="w-100 df">
+      <div class="card-sp mr-20">
+        <div class="top-line"></div>
+        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
+        <div *ngIf="nesting.length == 0 && !noResult">
+          <div class="cxy loading">
+            <div class="cxy card-height">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+          </div>
+        </div>
+        <p-table #table [value]="nesting"
+                 [scrollable]="true"
+                 scrollHeight="calc(100vh - 265px)"
+                 [virtualScroll]="true"
+                 [virtualRowHeight]="28"
+                 styleClass="p-datatable-striped"
+                 responsiveLayout="scroll"
+                 [globalFilterFields]="['ID','BLOCKS','DENSITY','MATERIAL', 'NEST_LENGTH', 'NEST_WIDTH', 'NUM_EQ_NEST', 'PARTS_WEIGHT', 'THICKNESS', 'USAGE', 'FILE']">
+          <ng-template pTemplate="header">
+            <tr *ngIf="nesting.length != 0" class="df">
+              <th pSortableColumn="ID" class="lxy w-15">{{'ID'}}
+                <p-sortIcon field="ID"></p-sortIcon>
+              </th>
+              <th pSortableColumn="BLOCKS" class="lxy w-15">{{'BLOCKS'}}
+                <p-sortIcon field="BLOCKS"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'BLOCKS'" matchMode="contains" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.BLOCKS" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+              <th pSortableColumn="DENSITY" class="lxy w-15">{{'DENSITY'}}
+                <p-sortIcon field="DENSITY"></p-sortIcon>
+              </th>
+              <th pSortableColumn="MATERIAL" class="lxy w-15">{{'MATERIAL'}}
+                <p-sortIcon field="MATERIAL"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'MATERIAL'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.MATERIAL" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+              <th pSortableColumn="NEST_LENGTH" class="lxy w-15">{{'NEST_LENGTH'}}
+                <p-sortIcon field="NEST_LENGTH"></p-sortIcon>
+              </th>
+              <th pSortableColumn="NEST_WIDTH" class="lxy w-15">{{'NEST_WIDTH'}}
+                <p-sortIcon field="NEST_WIDTH"></p-sortIcon>
+              </th>
+              <th pSortableColumn="NUM_EQ_NEST" class="lxy w-15">{{'NUM_EQ_NEST'}}
+                <p-sortIcon field="NUM_EQ_NEST"></p-sortIcon>
+              </th>
+              <th pSortableColumn="PARTS_WEIGHT" class="lxy w-15">{{'PARTS_WEIGHT'}}
+                <p-sortIcon field="PARTS_WEIGHT"></p-sortIcon>
+              </th>
+              <th pSortableColumn="THICKNESS" class="lxy w-15">{{'THICKNESS'}}
+                <p-sortIcon field="THICKNESS"></p-sortIcon>
+              </th>
+              <th pSortableColumn="USAGE" class="lxy w-15">{{'USAGE'}}
+                <p-sortIcon field="USAGE"></p-sortIcon>
+              </th>
+              <th pSortableColumn="FILE" class="lxy w-15">{{'FILE'}}
+                <p-sortIcon field="FILE"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-nest>
+            <tr [class.select-row]="selectedNest == nest" class="cursor-pointer task-row" (click)="selectNest(nest)">
+              <td class="w-15 text-14">{{nest.ID}}</td>
+              <td class="w-15 text-14">{{nest.BLOCKS}}</td>
+              <td class="w-15 text-14">{{nest.DENSITY}}</td>
+              <td class="w-15 text-14">{{nest.MATERIAL}}</td>
+              <td class="w-15 text-14">{{nest.NEST_LENGTH}}</td>
+              <td class="w-15 text-14">{{nest.NEST_WIDTH}}</td>
+              <td class="w-15 text-14">{{nest.NUM_EQ_NEST}}</td>
+              <td class="w-15 text-14">{{nest.PARTS_WEIGHT}}</td>
+              <td class="w-15 text-14">{{nest.THICKNESS}}</td>
+              <td class="w-15 text-14">{{round(nest.USAGE)}}</td>
+              <td class="w-15 text-14">
+                {{nest.FILE}}
+                <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Show File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(nest); $event.stopPropagation()"></button>
+                <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Download File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-download" (click)="downloadNestingFile(nest); $event.stopPropagation()"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
+          <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
+          <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+          <app-dxf-view></app-dxf-view>
+        </div>
+      </div>
+      <div class="w-32 right-content-card mt-20">
+        <div class="df tabs-header">
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
+        </div>
+        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
+          <div class="">
+            <div *ngFor="let file of nestingFiles">
+              <div (click)="openFile(file.url)" class="attachment-files df mb-6 cursor-pointer">
+                <div class="cxy">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                </div>
+                <span class="mx-10 width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+                <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+                <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
+                  <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class="" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                    <img src="assets/icons/eye-black.svg" height="24">
+                  </div>
+                </div>
+                <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >
+                </div>
+                <div class="cxy ml-10">
+                  <img src="assets/icons/download-arrow.png">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="progress-spinner" *ngIf="waitForZipFiles">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img src="assets/whale.gif" height="120">
+    <div class="cx wait-text">PLEASE WAIT...</div>
+  </div>
+</div>
+
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>
+
+
+<!--    <div *ngIf="parts.length == 0 && !noResult">-->
+<!--      <div class="cxy">-->
+<!--        <div>-->
+<!--          <img src="assets/whale.gif" height="120">-->
+<!--          <div class="cx ">PLEASE WAIT...</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+

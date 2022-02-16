@@ -285,6 +285,30 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: true
       },
+      {
+        field: 'issue_comment',
+        header: 'Примечание',
+        headerLocale: 'Примечание',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'issue_comment'),
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
+        field: 'ready',
+        header: 'Готовность',
+        headerLocale: 'Готовность',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'ready'),
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -306,6 +330,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         issue.started_date = new Date(issue.started_date);
         issue.start_date = new Date(issue.start_date);
         issue.due_date = new Date(issue.due_date);
+        issue.ready = this.defineReadyState(issue);
       });
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
@@ -322,6 +347,16 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     // }
   }
 
+  defineReadyState(issue: Issue){
+    let states = [];
+    states.push(issue.ready[0] == '1' ? 'М' : '-');
+    states.push(issue.ready[1] == '1' ? 'Ч' : '-');
+    states.push(issue.ready[2] == '1' ? 'Р' : '-');
+    issue.readyM = issue.ready[0] == '1';
+    issue.readyD = issue.ready[1] == '1';
+    issue.readyN = issue.ready[2] == '1';
+    return states.join('');
+  }
   newTask(issue: object | null) {
     this.dialogService.open(CreateTaskComponent, {
       showHeader: false,

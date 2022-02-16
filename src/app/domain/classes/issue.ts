@@ -39,4 +39,8 @@ export class Issue {
   revision_files: FileAttachment[] = [];
   labor: number = 0;
   checks: IssueCheck[] = [];
+  ready: string = '000';
+  readyM: boolean = false;
+  readyD: boolean = false;
+  readyN: boolean = false;
 }

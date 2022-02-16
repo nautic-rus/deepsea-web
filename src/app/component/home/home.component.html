@@ -6,7 +6,7 @@
       dataKey="id"
       [value]="issues"
       [scrollable]="true"
-      [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
+      [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number', 'issue_comment']"
       [reorderableColumns]="true"
       [resizableColumns]="false"
       [columns]="cols"
@@ -213,6 +213,36 @@
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
+              </div>
+              <div class="df" *ngIf="col.header == 'Готовность'">
+                <div class="header">
+                  М
+                  <p-columnFilter class="filter" field="readyM" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+                <div class="header">
+                  Ч
+                  <p-columnFilter class="filter" field="readyD" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+                <div class="header">
+                  Р
+                  <p-columnFilter class="filter" field="readyN" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
               </div>
             </th>
           </tr>
