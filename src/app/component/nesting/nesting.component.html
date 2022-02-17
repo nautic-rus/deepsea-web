@@ -9,11 +9,11 @@
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+<!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
       </span>
     </div>
     <div class="w-100 df">
-      <div class="">
+      <div class="w-100">
         <div class="top-line"></div>
         <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
         <div *ngIf="nesting.length == 0 && !noResult">
@@ -26,12 +26,15 @@
         </div>
 
 
-        <div class="">
+        <div class="w-100">
           <div class="dash-card" *ngFor="let nest of nesting">
             <div class="top-row">
               <div class="cxy">
-                <div class="cxy lock">
+                <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
                   <img src="assets/icons/lock.svg" height="26">
+                </div>
+                <div class="cxy lock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
+                  <img src="assets/icons/unlock.svg" height="26">
                 </div>
               </div>
               <div class="">
@@ -42,7 +45,14 @@
                 </div>
               </div>
               <div class="text-center-y">
-                <div class="title-name">donut</div>
+                <div class="title-name">
+                  <div *ngIf="nest.USAGE > 100">WARNING</div>
+                  <ngx-charts-pie-chart [view]="[100, 100]" [customColors]="[{name: 'Usage', value: '#5AA454'}, {name: 'Left', value: '#A10A28'}]" [results]="nest.doughnut" [gradient]="true" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>
+                </div>
+                <div class="title-name">
+                  <div style="color: #5AA454" class="my-5">Usage: {{round(nest.USAGE)}}%</div>
+                  <div style="color: #A10A28" class="my-5">Left: {{round(100 - nest.USAGE)}}%</div>
+                </div>
               </div>
               <div class="text-center-y">
                 <div class="gray-text mr-10">File</div>
@@ -82,87 +92,90 @@
         </div>
 
 
-        <p-table #table [value]="nesting"
-                 [scrollable]="true"
-                 scrollHeight="calc(100vh - 265px)"
-                 [virtualScroll]="true"
-                 [virtualRowHeight]="28"
-                 styleClass="p-datatable-striped"
-                 responsiveLayout="scroll"
-                 [globalFilterFields]="['ID','BLOCKS','DENSITY','MATERIAL', 'NEST_LENGTH', 'NEST_WIDTH', 'NUM_EQ_NEST', 'PARTS_WEIGHT', 'THICKNESS', 'USAGE', 'FILE']">
-          <ng-template pTemplate="header">
-            <tr *ngIf="nesting.length != 0" class="df">
-              <th pSortableColumn="ID" class="lxy w-15">{{'ID'}}
-                <p-sortIcon field="ID"></p-sortIcon>
-              </th>
-              <th pSortableColumn="BLOCKS" class="lxy w-15">{{'BLOCKS'}}
-                <p-sortIcon field="BLOCKS"></p-sortIcon>
-                <p-columnFilter class="filter" [field]="'BLOCKS'" matchMode="contains" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.BLOCKS" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                    </p-multiSelect>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
-              <th pSortableColumn="DENSITY" class="lxy w-15">{{'DENSITY'}}
-                <p-sortIcon field="DENSITY"></p-sortIcon>
-              </th>
-              <th pSortableColumn="MATERIAL" class="lxy w-15">{{'MATERIAL'}}
-                <p-sortIcon field="MATERIAL"></p-sortIcon>
-                <p-columnFilter class="filter" [field]="'MATERIAL'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.MATERIAL" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                    </p-multiSelect>
-                  </ng-template>
-                </p-columnFilter>
-              </th>
-              <th pSortableColumn="NEST_LENGTH" class="lxy w-15">{{'NEST_LENGTH'}}
-                <p-sortIcon field="NEST_LENGTH"></p-sortIcon>
-              </th>
-              <th pSortableColumn="NEST_WIDTH" class="lxy w-15">{{'NEST_WIDTH'}}
-                <p-sortIcon field="NEST_WIDTH"></p-sortIcon>
-              </th>
-              <th pSortableColumn="NUM_EQ_NEST" class="lxy w-15">{{'NUM_EQ_NEST'}}
-                <p-sortIcon field="NUM_EQ_NEST"></p-sortIcon>
-              </th>
-              <th pSortableColumn="PARTS_WEIGHT" class="lxy w-15">{{'PARTS_WEIGHT'}}
-                <p-sortIcon field="PARTS_WEIGHT"></p-sortIcon>
-              </th>
-              <th pSortableColumn="THICKNESS" class="lxy w-15">{{'THICKNESS'}}
-                <p-sortIcon field="THICKNESS"></p-sortIcon>
-              </th>
-              <th pSortableColumn="USAGE" class="lxy w-15">{{'USAGE'}}
-                <p-sortIcon field="USAGE"></p-sortIcon>
-              </th>
-              <th pSortableColumn="FILE" class="lxy w-15">{{'FILE'}}
-                <p-sortIcon field="FILE"></p-sortIcon>
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-nest>
-            <tr [class.select-row]="selectedNest == nest" class="cursor-pointer task-row" (click)="selectNest(nest)">
-              <td class="w-15 text-14">{{nest.ID}}</td>
-              <td class="w-15 text-14">{{nest.BLOCKS}}</td>
-              <td class="w-15 text-14">{{nest.DENSITY}}</td>
-              <td class="w-15 text-14">{{nest.MATERIAL}}</td>
-              <td class="w-15 text-14">{{nest.NEST_LENGTH}}</td>
-              <td class="w-15 text-14">{{nest.NEST_WIDTH}}</td>
-              <td class="w-15 text-14">{{nest.NUM_EQ_NEST}}</td>
-              <td class="w-15 text-14">{{nest.PARTS_WEIGHT}}</td>
-              <td class="w-15 text-14">{{nest.THICKNESS}}</td>
-              <td class="w-15 text-14">{{round(nest.USAGE)}}</td>
-              <td class="w-15 text-14">
-                {{nest.FILE}}
-                <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Show File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(nest); $event.stopPropagation()"></button>
-                <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Download File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-download" (click)="downloadNestingFile(nest); $event.stopPropagation()"></button>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
+<!--        <p-table #table [value]="nesting"-->
+<!--                 [scrollable]="true"-->
+<!--                 scrollHeight="calc(100vh - 265px)"-->
+<!--                 [virtualScroll]="true"-->
+<!--                 [virtualRowHeight]="28"-->
+<!--                 styleClass="p-datatable-striped"-->
+<!--                 responsiveLayout="scroll"-->
+<!--                 [globalFilterFields]="['ID','BLOCKS','DENSITY','MATERIAL', 'NEST_LENGTH', 'NEST_WIDTH', 'NUM_EQ_NEST', 'PARTS_WEIGHT', 'THICKNESS', 'USAGE', 'FILE']">-->
+<!--          <ng-template pTemplate="header">-->
+<!--            <tr *ngIf="nesting.length != 0" class="df">-->
+<!--              <th pSortableColumn="ID" class="lxy w-15">{{'ID'}}-->
+<!--                <p-sortIcon field="ID"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="BLOCKS" class="lxy w-15">{{'BLOCKS'}}-->
+<!--                <p-sortIcon field="BLOCKS"></p-sortIcon>-->
+<!--                <p-columnFilter class="filter" [field]="'BLOCKS'" matchMode="contains" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.BLOCKS" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">-->
+<!--                    </p-multiSelect>-->
+<!--                  </ng-template>-->
+<!--                </p-columnFilter>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="DENSITY" class="lxy w-15">{{'DENSITY'}}-->
+<!--                <p-sortIcon field="DENSITY"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="MATERIAL" class="lxy w-15">{{'MATERIAL'}}-->
+<!--                <p-sortIcon field="MATERIAL"></p-sortIcon>-->
+<!--                <p-columnFilter class="filter" [field]="'MATERIAL'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.MATERIAL" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">-->
+<!--                    </p-multiSelect>-->
+<!--                  </ng-template>-->
+<!--                </p-columnFilter>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="NEST_LENGTH" class="lxy w-15">{{'NEST_LENGTH'}}-->
+<!--                <p-sortIcon field="NEST_LENGTH"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="NEST_WIDTH" class="lxy w-15">{{'NEST_WIDTH'}}-->
+<!--                <p-sortIcon field="NEST_WIDTH"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="NUM_EQ_NEST" class="lxy w-15">{{'NUM_EQ_NEST'}}-->
+<!--                <p-sortIcon field="NUM_EQ_NEST"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="PARTS_WEIGHT" class="lxy w-15">{{'PARTS_WEIGHT'}}-->
+<!--                <p-sortIcon field="PARTS_WEIGHT"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="THICKNESS" class="lxy w-15">{{'THICKNESS'}}-->
+<!--                <p-sortIcon field="THICKNESS"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="USAGE" class="lxy w-15">{{'USAGE'}}-->
+<!--                <p-sortIcon field="USAGE"></p-sortIcon>-->
+<!--              </th>-->
+<!--              <th pSortableColumn="FILE" class="lxy w-15">{{'FILE'}}-->
+<!--                <p-sortIcon field="FILE"></p-sortIcon>-->
+<!--              </th>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--          <ng-template pTemplate="body" let-nest>-->
+<!--            <tr [class.select-row]="selectedNest == nest" class="cursor-pointer task-row" (click)="selectNest(nest)">-->
+<!--              <td class="w-15 text-14">{{nest.ID}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.BLOCKS}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.DENSITY}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.MATERIAL}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.NEST_LENGTH}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.NEST_WIDTH}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.NUM_EQ_NEST}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.PARTS_WEIGHT}}</td>-->
+<!--              <td class="w-15 text-14">{{nest.THICKNESS}}</td>-->
+<!--              <td class="w-15 text-14">-->
+<!--                <p-chart type="doughnut" [data]="nest.doughnut"></p-chart>-->
+
+<!--              </td>-->
+<!--              <td class="w-15 text-14">-->
+<!--                {{nest.FILE}}-->
+<!--                <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Show File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(nest); $event.stopPropagation()"></button>-->
+<!--                <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Download File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-download" (click)="downloadNestingFile(nest); $event.stopPropagation()"></button>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--        </p-table>-->
         <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
           <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
           <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
-          <app-dxf-view></app-dxf-view>
+          <app-dxf-view class="dxf-view"></app-dxf-view>
         </div>
       </div>
     </div>

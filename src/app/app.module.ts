@@ -91,6 +91,7 @@ import { CreateCheckListComponent } from './component/task/create-check-list/cre
 import { ElecCablesComponent } from './component/elec-cables/elec-cables.component';
 import {NgxGanttModule} from "@worktile/gantt";
 import { NestingComponent } from './component/nesting/nesting.component';
+import {PieChartModule} from "@swimlane/ngx-charts";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -186,7 +187,8 @@ Quill.register('modules/imageResize', ImageResize);
         TabViewModule,
         FieldsetModule,
         NgxExtendedPdfViewerModule,
-        NgxGanttModule
+        NgxGanttModule,
+        PieChartModule
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

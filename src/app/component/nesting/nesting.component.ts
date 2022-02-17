@@ -87,6 +87,17 @@ export class NestingComponent implements OnInit {
           this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
           this.nesting.forEach((nest: any) => {
             nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
+            nest.doughnut = [
+              {
+                name: "Usage",
+                value: nest.USAGE
+              },
+              {
+                name: "Left",
+                value: (100 - nest.USAGE)
+              }
+            ]
+            nest.LOCKED = false;
           });
         }
       });
@@ -551,9 +562,6 @@ export class NestingComponent implements OnInit {
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
-        let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-        // @ts-ignore
-        viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
       }
       this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
         // @ts-ignore
