@@ -61,6 +61,10 @@ export class NestingComponent implements OnInit {
   issueRevisions: string[] = [];
   tooltips: string[] = [];
   filters:  { BLOCKS: any[], MATERIAL: any[]  } = { BLOCKS: [],  MATERIAL: [] };
+  blocks: any[] = [];
+  materials: any[] = [];
+  loading = false;
+  loadingMaterials = false;
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -71,42 +75,56 @@ export class NestingComponent implements OnInit {
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
       });
-      this.s.getHullNesting(this.project).then(res => {
-        if (this.nesting.length == 0){
-          this.nesting = res;
-          if (res.length == 0){
-            this.noResult = true;
-          }
-          else{
-            this.nesting.flatMap((x: any) => x.BLOCKS.split(';')).forEach((block: string) => {
-              if (!this.filters.BLOCKS.map(x => x.label).includes(block)){
-                this.filters.BLOCKS.push({
-                  label: block,
-                  value: block
-                });
-              }
-            });
-            this.filters.BLOCKS = _.sortBy(this.filters.BLOCKS, x => x);
-            this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
-            this.nesting.forEach((nest: any) => {
-              nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
-              nest.doughnut = [
-                {
-                  name: "Usage",
-                  value: nest.USAGE
-                },
-                {
-                  name: "Left",
-                  value: (100 - nest.USAGE)
-                }
-              ]
-              nest.LOCKED = false;
-            });
-            this.nestingSource = [...this.nesting];
-          }
+      this.s.getHullNestingBlocks(this.project).then(res => {
+        _.sortBy(res, x => x).forEach(block => {
+          this.blocks.push({
+            name: block,
+            selected: false
+          });
+        });
+        if (this.blocks.length > 0){
+          //this.selectBlock(this.blocks[0]);
         }
+        if (this.blocks.length > 1){
+          //this.selectBlock(this.blocks[1]);
+        }
+        //this.fetchMaterials(false);
       });
-
+      // this.s.getHullNesting(this.project).then(res => {
+      //   if (this.nesting.length == 0){
+      //     this.nesting = res;
+      //     if (res.length == 0){
+      //       this.noResult = true;
+      //     }
+      //     else{
+      //       this.nesting.flatMap((x: any) => x.BLOCKS.split(';')).forEach((block: string) => {
+      //         if (!this.filters.BLOCKS.map(x => x.label).includes(block)){
+      //           this.filters.BLOCKS.push({
+      //             label: block,
+      //             value: block
+      //           });
+      //         }
+      //       });
+      //       this.filters.BLOCKS = _.sortBy(this.filters.BLOCKS, x => x);
+      //       this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
+      //       this.nesting.forEach((nest: any) => {
+      //         nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
+      //         nest.doughnut = [
+      //           {
+      //             name: "Usage",
+      //             value: nest.USAGE
+      //           },
+      //           {
+      //             name: "Left",
+      //             value: (100 - nest.USAGE)
+      //           }
+      //         ]
+      //         nest.LOCKED = false;
+      //       });
+      //       this.nestingSource = [...this.nesting];
+      //     }
+      //   }
+      // });
     });
   }
   closeShowImage() {
@@ -357,13 +375,8 @@ export class NestingComponent implements OnInit {
 
 
   downloadFiles() {
-
-    let nesting = this.dt.filteredValue;
-    if (this.dt.filteredValue == null){
-      nesting = this.nesting;
-    }
     let files: any[] = [];
-    nesting.forEach((nest: any) => {
+    this.nesting.forEach((nest: any) => {
       let find = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
       if (find != null){
         files.push(find);
@@ -610,11 +623,7 @@ export class NestingComponent implements OnInit {
   }
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    let nesting = this.dt.filteredValue as Issue[];
-    if (this.dt.filteredValue == null){
-      nesting = this.nesting;
-    }
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(nesting);
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.nesting);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
   }
@@ -648,5 +657,63 @@ export class NestingComponent implements OnInit {
   }
   closeToolTip(index: string){
     this.tooltips.splice(this.tooltips.indexOf(index), 1);
+  }
+
+  selectBlock(block: any) {
+    block.selected = !block.selected;
+  }
+
+  fetchMaterials(selected = false) {
+    this.loadingMaterials = true;
+    this.materials.splice(0, this.materials.length);
+    this.s.getHullNestingMaterials(this.project, JSON.stringify(this.blocks.filter(x => x.selected).map(x => x.name))).then(res => {
+      this.loadingMaterials = false;
+      res.forEach((material: any) => {
+        this.materials.push({
+          name: material.MATERIAL + 'x' + material.THICKNESS + 'x' + material.NEST_LENGTH + 'x' + material.NEST_WIDTH,
+          selected: selected,
+          value: material
+        })
+      });
+    });
+  }
+
+  fetchNesting() {
+    this.nesting.splice(0, this.nesting.length);
+    this.loading = true;
+    this.s.getHullNestingByMaterials(this.project, JSON.stringify(this.materials.filter(x => x.selected).map(x => x.value))).then(res => {
+      this.loading = false;
+      this.nesting = res;
+      if (res.length == 0){
+        this.noResult = true;
+      }
+      else{
+        this.nesting.flatMap((x: any) => x.BLOCKS.split(';')).forEach((block: string) => {
+          if (!this.filters.BLOCKS.map(x => x.label).includes(block)){
+            this.filters.BLOCKS.push({
+              label: block,
+              value: block
+            });
+          }
+        });
+        this.filters.BLOCKS = _.sortBy(this.filters.BLOCKS, x => x);
+        this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
+        this.nesting.forEach((nest: any) => {
+          nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
+          nest.doughnut = [
+            {
+              name: "Usage",
+              value: nest.USAGE
+            },
+            {
+              name: "Left",
+              value: (100 - nest.USAGE)
+            }
+          ]
+          nest.LOCKED = false;
+        });
+        this.nestingSource = [...this.nesting];
+      }
+    });
   }
 }

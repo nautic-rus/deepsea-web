@@ -13,23 +13,44 @@
       </span>
     </div>
     <div class="w-100 df">
-      <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
-      <div *ngIf="nesting.length == 0 && !noResult">
-        <div class="cxy loading">
-          <div class="cxy card-height">
-            <img src="assets/whale.gif" height="120">
-            <div class="cx loading-text">PLEASE WAIT...</div>
-          </div>
-        </div>
-      </div>
       <div class="w-100 df">
         <div class="w-20 mr-20">
           <div class="menu-card ">
-
+            <h1>BLOCKS:</h1>
+            <div *ngFor="let block of blocks">
+              <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">{{block.name}}
+            </div>
+            <button (click)="fetchMaterials()">FETCH MATERIALS</button>
+            <h1>MATERIALS:</h1>
+            <div *ngIf="loadingMaterials">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+            <div *ngIf="materials.length == 0 && !loadingMaterials">
+              There is no plate dimensions there. You need to specify blocks from top column.
+            </div>
+            <div *ngFor="let material of materials">
+              <input (change)="material.selected = !material.selected" type="checkbox" [checked]="material.selected">{{material.name}}
+            </div>
+            <button  *ngIf="materials.length > 0" (click)="fetchNesting()">FETCH NESTING</button>
           </div>
 
         </div>
         <div class="w-80">
+          <div class="loading-text" *ngIf="noResult">No date fetched from server with selected options. Try to select another one</div>
+          <div *ngIf="loading && !noResult">
+            <div class="cxy loading">
+              <div class="cxy card-height">
+                <img src="assets/whale.gif" height="120">
+                <div class="cx loading-text">PLEASE WAIT...</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!noResult && nesting.length == 0">
+            <div class="cxy card-height">
+              <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column</div>
+            </div>
+          </div>
           <div class="dash-card" *ngFor="let nest of nesting; let i = index">
             <div class="top-row">
               <div class="cxy">
