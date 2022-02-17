@@ -23,7 +23,7 @@
   font-weight: 500;
 }
 .card-sp{
-  width: 85%;
+  width: 100%;
   height: calc(100vh - 197px);
   background: #ffffff;
   margin-top: 20px;
