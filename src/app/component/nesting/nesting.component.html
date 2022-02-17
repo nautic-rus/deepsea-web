@@ -1,6 +1,6 @@
 <div *ngIf="device.isDesktop()" class="all-page">
   <div class="">
-    <div class="card-head df">
+    <div class="card-head mb-20 df">
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Export Nesting')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
       </div>
@@ -12,7 +12,7 @@
         <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
       </span>
     </div>
-    <div class="w-100 df">
+    <div class="">
       <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
       <div *ngIf="nesting.length == 0 && !noResult">
         <div class="cxy loading">
@@ -29,7 +29,7 @@
           </div>
 
         </div>
-        <div class="w-80">
+        <div class="w-80 card-nest card-page">
           <div class="dash-card" *ngFor="let nest of nesting; let i = index">
             <div class="top-row">
               <div class="cxy">
