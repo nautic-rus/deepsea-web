@@ -1,6 +1,6 @@
 <div *ngIf="device.isDesktop()" class="all-page">
   <div class="">
-    <div class="card-head df">
+    <div class="card-head mb-20 df">
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Export Nesting')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
       </div>
@@ -34,7 +34,6 @@
             </div>
             <button  *ngIf="materials.length > 0" (click)="fetchNesting()">FETCH NESTING</button>
           </div>
-
         </div>
         <div class="w-80">
           <div class="loading-text" *ngIf="noResult">No date fetched from server with selected options. Try to select another one</div>

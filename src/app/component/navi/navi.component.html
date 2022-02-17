@@ -231,7 +231,13 @@
   </div>
   <div *ngIf="auth.getUser().visible_pages.includes('eleccables')" class="menu" routerLink="elec-cables" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('КАБЕЛИ')">
-      <img src="assets/icons/elec.svg" height="24">
+      <img src="assets/icons/elec.svg" height="20">
+    </div>
+    <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
+  </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('nesting')" class="menu" routerLink="nesting" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('РАСКРОЙ')">
+      <img src="assets/icons/nesting.svg" height="20">
     </div>
     <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
   </div>
