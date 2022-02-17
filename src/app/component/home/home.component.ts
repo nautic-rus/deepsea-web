@@ -355,7 +355,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     issue.readyM = issue.ready[0] == '1';
     issue.readyD = issue.ready[1] == '1';
     issue.readyN = issue.ready[2] == '1';
-    return states.join('');
+    return states.join('/');
   }
   newTask(issue: object | null) {
     this.dialogService.open(CreateTaskComponent, {
