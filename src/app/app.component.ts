@@ -138,6 +138,20 @@ import {PrimeNGConfig} from "primeng/api";
           ),
         ], { optional: true } ),
       ]),
+      transition('* => NestingComponent', [
+        query(':enter, :leave', [
+          style({
+            width: '100%',
+            height: '100%',
+            opacity: 0
+          })
+        ], { optional: true } ),
+        query(':enter', [
+          animate('.5s',
+            style({ opacity: 1 })
+          ),
+        ], { optional: true } ),
+      ]),
       transition('* <=> *', [
         query(':enter, :leave', [
           style({
