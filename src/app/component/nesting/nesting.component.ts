@@ -23,6 +23,7 @@ import * as XLSX from "xlsx";
 export class NestingComponent implements OnInit {
   parts: any = [];
   nesting: any = [];
+  nestingSource: any = [];
   noResult = false;
   docNumber = '';
   project = '';
@@ -70,35 +71,38 @@ export class NestingComponent implements OnInit {
         this.nestingFiles = files;
       });
       this.s.getHullNesting(this.project).then(res => {
-        this.nesting = res;
-        if (res.length == 0){
-          this.noResult = true;
-        }
-        else{
-          this.nesting.flatMap((x: any) => x.BLOCKS.split(';')).forEach((block: string) => {
-            if (!this.filters.BLOCKS.map(x => x.label).includes(block)){
-              this.filters.BLOCKS.push({
-                label: block,
-                value: block
-              });
-            }
-          });
-          this.filters.BLOCKS = _.sortBy(this.filters.BLOCKS, x => x);
-          this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
-          this.nesting.forEach((nest: any) => {
-            nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
-            nest.doughnut = [
-              {
-                name: "Usage",
-                value: nest.USAGE
-              },
-              {
-                name: "Left",
-                value: (100 - nest.USAGE)
+        if (this.nesting.length == 0){
+          this.nesting = res;
+          if (res.length == 0){
+            this.noResult = true;
+          }
+          else{
+            this.nesting.flatMap((x: any) => x.BLOCKS.split(';')).forEach((block: string) => {
+              if (!this.filters.BLOCKS.map(x => x.label).includes(block)){
+                this.filters.BLOCKS.push({
+                  label: block,
+                  value: block
+                });
               }
-            ]
-            nest.LOCKED = false;
-          });
+            });
+            this.filters.BLOCKS = _.sortBy(this.filters.BLOCKS, x => x);
+            this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
+            this.nesting.forEach((nest: any) => {
+              nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
+              nest.doughnut = [
+                {
+                  name: "Usage",
+                  value: nest.USAGE
+                },
+                {
+                  name: "Left",
+                  value: (100 - nest.USAGE)
+                }
+              ]
+              nest.LOCKED = false;
+            });
+            this.nestingSource = [...this.nesting];
+          }
         }
       });
 
@@ -460,9 +464,6 @@ export class NestingComponent implements OnInit {
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
   openDxf() {
-    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-    // @ts-ignore
-    viewport.style.height = '70vh';
     if (this.dxfView != null && !this.dxfView.closed){
       this.dxfView.close();
     }
@@ -621,6 +622,17 @@ export class NestingComponent implements OnInit {
     let searchDxf = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
     if (searchDxf != null){
       window.open(searchDxf.url);
+    }
+  }
+
+  searchChanged() {
+    if (this.search.trim() == ''){
+      this.nesting = this.nestingSource;
+    }
+    else{
+      this.nesting = this.nestingSource.filter((x: any) => {
+        return (x.ID + x.BLOCKS + x.THICKNESS + x.NEST_LENGTH + x.NEST_WIDTH + x.MATERIAL + x.PARTS_WEIGHT + x.NUM_EQ_NEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+      });
     }
   }
 }

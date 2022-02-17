@@ -9,7 +9,7 @@
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-<!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+        <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
       </span>
     </div>
     <div class="w-100 df">
@@ -175,7 +175,7 @@
         <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
           <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
           <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
-          <app-dxf-view class="dxf-view"></app-dxf-view>
+          <app-dxf-view></app-dxf-view>
         </div>
       </div>
     </div>

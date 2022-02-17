@@ -100,6 +100,27 @@
   --height: 156px;
   height: calc(95% - 100px);
 }
+.dxf-view{
+  position: absolute;
+  height: 52vh;
+  width: calc(100% - 85px - 25px);
+  bottom: 0;
+  right: 25px;
+  left: 85px;
+  z-index: 1000;
+}
+.dxf-open-button{
+  position: absolute;
+  top: 10px;
+  z-index: 1001;
+  color: white !important;
+}
+.dxf-open-new-window{
+  right: 56px;
+}
+.dxf-exit{
+  right: 8px;
+}
 .table-header-column{
   padding: 10px;
   font-weight: 600;
