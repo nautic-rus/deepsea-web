@@ -59,6 +59,7 @@ export class NestingComponent implements OnInit {
   nestContentRead = false;
   nestingFiles: any[] = [];
   issueRevisions: string[] = [];
+  tooltips: string[] = [];
   filters:  { BLOCKS: any[], MATERIAL: any[]  } = { BLOCKS: [],  MATERIAL: [] };
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -634,5 +635,18 @@ export class NestingComponent implements OnInit {
         return (x.ID + x.BLOCKS + x.THICKNESS + x.NEST_LENGTH + x.NEST_WIDTH + x.MATERIAL + x.PARTS_WEIGHT + x.NUM_EQ_NEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
       });
     }
+  }
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
+  }
+
+  openTooltip(index: string) {
+    this.tooltips.push(index);
+    // setTimeout(() => {
+    //   this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    // }, 1500);
+  }
+  closeToolTip(index: string){
+    this.tooltips.splice(this.tooltips.indexOf(index), 1);
   }
 }
