@@ -1,5 +1,5 @@
-<div *ngIf="device.isDesktop()" class="all-page h100">
-  <div class="all-card">
+<div *ngIf="device.isDesktop()" class="all-page">
+  <div class="">
     <div class="card-head df">
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Export Nesting')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
@@ -13,7 +13,7 @@
       </span>
     </div>
     <div class="w-100 df">
-      <div class="card-sp">
+      <div class="">
         <div class="top-line"></div>
         <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
         <div *ngIf="nesting.length == 0 && !noResult">
@@ -26,10 +26,59 @@
         </div>
 
 
-        <div class="nesting-table">
-          <div class="nesting-card" *ngFor="let nest of nesting">
+        <div class="">
+          <div class="dash-card" *ngFor="let nest of nesting">
+            <div class="top-row">
+              <div class="cxy">
+                <div class="cxy lock">
+                  <img src="assets/icons/lock.svg" height="26">
+                </div>
+              </div>
+              <div class="">
+                <div class="cy h100">
+                  <div class="cx mb-10 mt-10">
+                    <div class="title-bold px-10">{{nest.ID}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center-y">
+                <div class="title-name">donut</div>
+              </div>
+              <div class="text-center-y">
+                <div class="gray-text mr-10">File</div>
+                <div class="df">
+                  <div class="trm">{{nest.FILE}}</div>
+                  <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Show File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(nest); $event.stopPropagation()"></button>
+                  <button *ngIf="!isDisabledNestTemplate(nest)" pButton [pTooltip]="l.tr('Download File')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-download" (click)="downloadNestingFile(nest); $event.stopPropagation()"></button>
 
+<!--                  <div (click)="copyTrmCode(group[0].mountData.trmCode, 't' + i)" class="trm-copy cursor-pointer cxy">-->
+<!--                    <img src="assets/icons/trm.svg" height="16">-->
+<!--                    <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>-->
+<!--                  </div>-->
+                </div>
+              </div>
+            </div>
+            <div class="bottom-row">
+              <div class="ovf-auto pl-20">
+                <div class="df cursor-pointer sticky">
+                  <div class="w-10 table-header-column cy">{{l.tr('BLOCK')}}</div>
+                  <div class="w-20 table-header-column cy">{{l.tr('LENGTHxWIDTHxTHICKNESS')}}</div>
+                  <div class="w-10 table-header-column cy">{{l.tr('MATERIAL')}}</div>
+                  <div class="w-35 table-header-column cy">{{l.tr('WEIGHT')}}</div>
+                  <div class="w-10 table-header-column cy">{{l.tr('NUM EQ NEST')}}</div>
+                </div>
+                <div class="text-center-y info-row cursor-pointer">
+                  <div class="w-10 table-body cy">{{nest.BLOCKS}}</div>
+                  <div class="w-20 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
+                  <div class="w-35 table-body cy">{{nest.MATERIAL}}</div>
+                  <div class="w-10 table-body cy">{{nest.PARTS_WEIGHT}}</div>
+                  <div class="w-10 table-body cy">{{nest.NUM_EQ_NEST}}</div>
+                </div>
+              </div>
+            </div>
           </div>
+
+
         </div>
 
 
