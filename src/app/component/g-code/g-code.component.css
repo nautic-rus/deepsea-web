@@ -1,0 +1,245 @@
+::ng-deep body, html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+::ng-deep body {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+::ng-deep h1 {
+  margin-top: 0;
+}
+
+::ng-deep.editBlock {
+  position: relative;
+  float: left;
+  width: 39%;
+  height: 400px;
+  padding: 1px;
+  margin: 0;
+}
+
+::ng-deep.editBlock pre {
+  width: 100%;
+  height: 350px;
+  margin: 0;
+}
+
+::ng-deep.viewContainer {
+  float: right;
+  width: 60%;
+}
+
+#loader {
+  display: inline-block;
+  background-size: 100% 100%;
+  width: 20px;
+  height: 20px;
+}
+
+::ng-deep.boundsTable {
+  border-collapse: collapse;
+}
+
+::ng-deep.boundsTable td {
+  border: dashed gray 1px;
+  padding: 3px;
+}
+
+::ng-deep.ThreeDView {
+  border: solid gray 1px;
+  background: #000;
+  height: 400px;
+  position: relative;
+}
+
+::ng-deep.TwoDView {
+  border: solid gray 1px;
+  background: #000;
+  height: 400px;
+}
+
+#app {
+  position: relative;
+}
+::ng-deep.TwoDView * {
+  vector-effect: non-scaling-stroke;
+}
+
+::ng-deep.TwoDView {
+  display: flex;
+  display: -webkit-flex;
+  flex: 1 1 auto;
+  -webkit-flex: 1 1 auto;
+
+  align-items: stretch;
+}
+
+::ng-deep.TwoDView {
+  border: solid gray 1px;
+  background: #000;
+}
+
+::ng-deep.TwoDView > svg {
+  flex: 1 0 auto;
+  -webkit-flex: 1;
+}
+
+::ng-deep.TwoDView ::ng-deep.background {
+  opacity: 0.4;
+}
+
+::ng-deep.TwoDView ::ng-deep.grid * {
+  vector-effect: non-scaling-stroke;
+}
+
+::ng-deep.TwoDView ::ng-deep.mmGrid {
+  stroke: #FF7F2A;
+  stroke-dasharray: 5, 5;
+  stroke-width: 0.5;
+}
+
+::ng-deep.TwoDView ::ng-deep.halfCmGrid {
+  stroke: #FF7F2A;
+  stroke-width: 0.5;
+  stroke-dasharray: none;
+}
+
+::ng-deep.TwoDView ::ng-deep.cmGrid {
+  stroke: #FF7F2A;
+  stroke-dasharray: 5, 2;
+  stroke-width: 2;
+  font-size: 2px;
+}
+
+::ng-deep.TwoDView ::ng-deep.halfDmGrid {
+  stroke: #FF7F2A;
+  stroke-width: 2;
+  font-size: 7px;
+}
+
+::ng-deep.TwoDView ::ng-deep.dmGrid {
+  stroke: #FF7F2A;
+  stroke-width: 4;
+  font-size: 10px;
+}
+
+::ng-deep.TwoDView ::ng-deep.gridText {
+  transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  -moz-transform: scaleY(-1);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-anchor: middle;
+  cursor: default;
+  stroke: none;
+  fill: rgb(128, 128, 128);
+}
+
+#computingFill * {
+  opacity: 0.5;
+}
+
+#computingFill rect {
+  stroke: none;
+  fill: yellow;
+}
+
+#computingFill line {
+  stroke: black;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+::ng-deep.undercutPolygon {
+  fill: red;
+}
+
+::ng-deep.computing {
+  stroke: red;
+}
+
+::ng-deep.lol {
+  stroke: red;
+}
+
+::ng-deep.outline {
+  stroke-width: 2px;
+}
+
+:not(::ng-deep.computing)::ng-deep.outline {
+  fill: none;
+  stroke: yellow;
+  vector-effect: non-scaling-stroke;
+}
+
+::ng-deep.TwoDView ::ng-deep.outline::ng-deep.computing {
+  stroke: gray;
+}
+
+::ng-deep.TwoDView ::ng-deep.pocket {
+  fill: none;
+  stroke: blue;
+}
+
+::ng-deep.TwoDView ::ng-deep.spiralPocketOutline {
+  fill-rule: evenodd;
+  fill: rgba(100, 100, 255, 0.2);
+  stroke: none;
+}
+
+::ng-deep.TwoDView ::ng-deep.outline::ng-deep.seenFromFar {
+  fill-rule: evenodd;
+  fill: blue;
+  stroke: gray;
+}
+
+::ng-deep.TwoDView ::ng-deep.undercut {
+  fill: red;
+  stroke: none;
+}
+
+::ng-deep.toolpath {
+  stroke-width: 1.5;
+  fill: none;
+}
+
+::ng-deep.rapidMove {
+  stroke: #FF0000;
+}
+
+::ng-deep.normalMove {
+  stroke: white;
+}
+::ng-deep.ThreeDView ::ng-deep.viewCube ::ng-deep.cubeFace {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  width: 100px;
+  height: 100px;
+  background: lightgray;
+  font-size: 25px;
+  text-align: center;
+  border: darkgray 10px solid;
+  color: black;
+}
+
+::ng-deep.ThreeDView ::ng-deep.viewCube ::ng-deep.cubeFace:hover {
+  background: white;
+}
+
+::ng-deep.ThreeDView canvas {
+  display: block;
+}

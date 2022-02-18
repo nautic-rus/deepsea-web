@@ -92,6 +92,8 @@ import { ElecCablesComponent } from './component/elec-cables/elec-cables.compone
 import {NgxGanttModule} from "@worktile/gantt";
 import { NestingComponent } from './component/nesting/nesting.component';
 import {PieChartModule} from "@swimlane/ngx-charts";
+import { WebgcodeComponent } from './component/webgcode/webgcode.component';
+import { GCodeComponent } from './component/g-code/g-code.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -145,7 +147,9 @@ Quill.register('modules/imageResize', ImageResize);
     HullEspGenerationWaitComponent,
     ClearFilesComponent,
     ElecCablesComponent,
-    NestingComponent
+    NestingComponent,
+    WebgcodeComponent,
+    GCodeComponent
   ],
     imports: [
         BrowserModule,
