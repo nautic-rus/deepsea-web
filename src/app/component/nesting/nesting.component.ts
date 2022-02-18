@@ -71,7 +71,7 @@ export class NestingComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.project = params.foranProject != null ? params.foranProject : '';
+      this.project = params.foranProject != null ? params.foranProject : 'N004';
       this.dxfDoc = params.dxf != null ? params.dxf : '';
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
