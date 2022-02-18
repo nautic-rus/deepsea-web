@@ -1,4 +1,4 @@
-<div *ngIf="!device.isDesktop()" class="h100">
+<div *ngIf="!device.isDesktop()" class="h-100">
   <div class="all-card">
     <div class="card-head-tablet df">
       <div class="mr-10">{{getBlockName()}}</div>
@@ -24,13 +24,13 @@
         </div>
         <p-overlayPanel #menu [style]="{width: '200px', 'border-radius': '4px', left: '695.266px', overlayArrowLeft: '210px'}">
           <ng-template pTemplate>
-            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()" class="display-flex border-bottom">
+            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()" class="df border-bottom">
               <div class="cxy mx-1">
                 <div class="pi pi-bookmark"></div>
               </div>
               <div class="row-user-menu">{{l.tr('Get Current Spec')}}</div>
             </div>
-            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp(true)" class="display-flex">
+            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp(true)" class="df">
               <div class="cxy mx-1">
                 <div class="pi pi-replay icon-turn"></div>
               </div>
@@ -627,7 +627,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="device.isDesktop()" class="all-page h100">
+<div *ngIf="device.isDesktop()" class="all-page h-100">
   <div class="all-card">
     <div class="card-head df">
       <div class="mr-2">{{getBlockName()}}</div>

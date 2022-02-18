@@ -16,37 +16,44 @@
       <div class="w-100 df">
         <div class="w-20 mr-20">
           <div class="menu-card">
-            <div class="title-bold mb-15">BLOCKS:</div>
-            <div *ngIf="blocks.length == 0 && !loadingBlocks">
-              There is no blocks for selected project there. Try to specify another project.
+            <div class="ovf-auto">
+              <div class="title-bold mb-15 sticky head-checkbox">BLOCKS:</div>
+              <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
+                There is no blocks for selected project there. Try to specify another project.
+              </div>
+              <div *ngFor="let block of blocks">
+                <label class="container">
+                  <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">
+                  <span class="checkmark"></span>
+                  <span class="text-checkbox">{{block.name}}</span>
+                </label>
+              </div>
             </div>
-            <div *ngFor="let block of blocks">
-              <label class="container">
-                <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">
-                <span class="checkmark"></span>
-                {{block.name}}
-              </label>
+            <div class="w-100">
+              <div class="button-fetch cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">FETCH MATERIALS</div>
             </div>
-            <div class="button-fetch cxy cursor-pointer mt-20 mb-50" (click)="fetchMaterials()">FETCH MATERIALS</div>
-            <div class="title-bold mb-15">MATERIALS:</div>
-            <div *ngIf="loadingMaterials">
-              <img src="assets/whale.gif" height="120">
-              <div class="cx loading-text">PLEASE WAIT...</div>
+            <div class="ovf-auto">
+              <div class="title-bold mb-15 sticky head-checkbox">MATERIALS:</div>
+              <div class="cxy" *ngIf="loadingMaterials">
+                <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+              </div>
+              <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
+                There are no plate dimensions. You need to specify blocks from top column.
+              </div>
+              <div *ngFor="let material of materials">
+                <label class="container">
+                  <input (change)="material.selected = !material.selected" type="checkbox" [checked]="material.selected">
+                  <span class="checkmark"></span>
+                  <span class="text-checkbox">{{material.name}}</span>
+                </label>
+              </div>
             </div>
-            <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
-              There are no plate dimensions. You need to specify blocks from top column.
+            <div>
+              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">FETCH NESTING</div>
             </div>
-            <div *ngFor="let material of materials">
-              <label class="container">
-                <input (change)="material.selected = !material.selected" type="checkbox" [checked]="material.selected">
-                <span class="checkmark"></span>
-                {{material.name}}
-              </label>
-            </div>
-            <div class="button-fetch cxy cursor-pointer mt-20 mb-50" *ngIf="materials.length > 0" (click)="fetchNesting()">FETCH NESTING</div>
           </div>
         </div>
-        <div class="w-80">
+        <div class="w-80 cards">
           <div class="cxy card-height" *ngIf="noResult">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
@@ -74,7 +81,7 @@
                 </div>
               </div>
               <div class="">
-                <div class="cy h100">
+                <div class="cy h-100">
                   <div class="cx mb-10 mt-10">
                     <div class="title-bold px-10">{{nest.ID}}</div>
                   </div>
@@ -105,7 +112,7 @@
               </div>
             </div>
             <div class="bottom-row">
-              <div class="ovf-auto pl-20">
+              <div class="ovf-auto pl-10">
                 <div class="df cursor-pointer sticky">
                   <div class="w-25 table-header-column cy">{{l.tr('BLOCK')}}</div>
                   <div class="w-25 table-header-column cy">{{l.tr('LENGTHxWIDTHxTHICKNESS')}}</div>

@@ -306,7 +306,7 @@
   <div class="all-page" xmlns="http://www.w3.org/1999/html">
   <div class="header-row">
     <div class="card-tabs">
-      <div class="text-center-y h100 ">
+      <div class="text-center-y h-100 ">
         <div class="df all-tabs-button">
           <div class="tabs-button-tray cursor-pointer cxy" (click)="selectedTab = 'Trays'" [class.selected-tab]="selectedTab == 'Trays'">Trays</div>
           <div class="tabs-button-equip cursor-pointer cxy" (click)="selectedTab = 'Equipment'" [class.selected-tab]="selectedTab == 'Equipment'">Equipment</div>
@@ -355,7 +355,7 @@
             <div class="outer-badge" *ngIf="containsZeroSurface(group)">
               <div class="margin-zero cxy">Contains margin 0 </div>
             </div>
-            <div class="cy h100">
+            <div class="cy h-100">
               <div class="cx mb-10 mt-10">
                 <div class="title-bold px-10">{{group[0].mountData.label}}</div>
               </div>
@@ -380,7 +380,7 @@
           </div>
         </div>
         <div class="bottom-row">
-          <div class="border-right ovf-auto pl-20">
+          <div class="border-right ovf-auto pl-10">
             <div class="df cursor-pointer sticky">
               <div class="w-5 table-header-invisible column cxy"></div>
               <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>
@@ -521,7 +521,7 @@
     <div [class.dash-card-expanded]="expanded.includes('expanded-eq-' + i)" class="dash-card" *ngFor="let eqip of equipment; let i = index">
       <div class="top-row-equip">
         <div class="label-name">
-          <div class="cy h100">
+          <div class="cy h-100">
             <div class="cx mb-10 mt-10">
               <div class="title-bold px-10">{{removeLeftZeros(eqip.LABEL)}}</div>
             </div>
@@ -536,7 +536,7 @@
         <div class="text-center-y">
           <div class="title-name">{{eqip.workShopMaterial.name}}<br>{{eqip.workShopMaterial.description}}</div>
         </div>
-        <div class="cy h100">
+        <div class="cy h-100">
           <div *ngIf="eqip.STOCK_CODE != ''" class="text-center-y">
             <div class="gray-text mr-10">TRM code</div>
             <div class="df">
@@ -558,7 +558,7 @@
 
       </div>
       <div class="bottom-row">
-        <div class="border-right ovf-auto pl-20">
+        <div class="border-right ovf-auto pl-10">
           <div class="df cursor-pointer sticky">
             <div class="w-10 table-header-column cy">{{l.tr('USER ID')}}</div>
             <div class="w-15 table-header-column cy">{{l.tr('SYSTEM')}}</div>

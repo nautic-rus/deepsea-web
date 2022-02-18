@@ -1,8 +1,3 @@
-.all-card{
-  height: calc(100vh - 116px);
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-  padding: 12px;
-}
 .card-head{
   background: rgba(255, 255, 255, 0.9);
   padding: 12px;
@@ -56,7 +51,7 @@
   font-weight: 500;
 }
 .card-height{
-  height: calc(100vh - 200px);
+  height: calc(100vh - 202px);
   flex-direction: column;
 }
 .dash-card{
@@ -77,6 +72,8 @@
   border-radius: 10px;
   position: relative;
   transition: 0.5s;
+  display: grid;
+  grid-template-rows: 3fr 0.8fr 3fr 0.8fr;
 }
 .top-row{
   height: 120px;
@@ -223,7 +220,7 @@
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 9px;
+  margin-bottom: 8px;
   cursor: pointer;
   font-size: 15px;
   -webkit-user-select: none;
@@ -234,7 +231,6 @@
   height: 16px;
   margin-left: 2px;
 }
-
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
@@ -242,9 +238,7 @@
   cursor: pointer;
   height: 0;
   width: 0;
-
 }
-
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
@@ -256,29 +250,24 @@
   border-radius: 3px;
   border: 1px solid #00000042;
 }
-
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
   background-color: #eee;
 }
-
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: #62b6cb;
 }
-
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
-
 /* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
 }
-
 /* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 5px;
@@ -288,6 +277,11 @@
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
+}
+.text-checkbox{
+  display: flex;
+  align-items: flex-start;
+  font-size: 14px;
 }
 .button-fetch{
   font-weight: 600;
@@ -301,6 +295,50 @@
 .button-fetch:hover{
   background-color: #efc24f;
 }
+.cards{
+  overflow: auto;
+  height: calc(100vh - 202px);
+}
 .min-height{
-  min-height: calc(100vh - 77px);
+  height: calc(100vh - 76px);
+}
+.button-cont{
+  position: absolute;
+  bottom: 0;
+}
+.head-checkbox{
+  background-color: white;
+}
+:host ::ng-deep .custom-spinner .p-progress-spinner-circle {
+  animation: custom-progress-spinner-dash 1.5s ease-in-out infinite, custom-progress-spinner-color 6s ease-in-out infinite;
+}
+@keyframes custom-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #62b6cb;
+  }
+  40% {
+    stroke: #62b6cb;
+  }
+  66% {
+    stroke: #62b6cb;
+  }
+  80%,
+  90% {
+    stroke: #62b6cb;
+  }
+}
+@keyframes custom-progress-spinner-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
 }
