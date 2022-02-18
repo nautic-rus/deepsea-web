@@ -684,6 +684,7 @@ export class NestingComponent implements OnInit {
   fetchNesting() {
     this.nesting.splice(0, this.nesting.length);
     this.loading = true;
+    this.noResult = false;
     this.s.getHullNestingByMaterials(this.project, JSON.stringify(this.materials.filter(x => x.selected).map(x => x.value))).then(res => {
       this.loading = false;
       this.nesting = res;

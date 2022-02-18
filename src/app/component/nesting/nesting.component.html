@@ -1,4 +1,4 @@
-<div *ngIf="device.isDesktop()" class="all-page">
+<div *ngIf="device.isDesktop()" class="all-page min-height">
   <div class="">
     <div class="card-head mb-20 df">
       <div class="mr-1">
@@ -15,35 +15,41 @@
     <div class="w-100 df">
       <div class="w-100 df">
         <div class="w-20 mr-20">
-          <div class="menu-card ">
-            <h1>BLOCKS:</h1>
-            <div *ngIf="loadingBlocks">
-              <img src="assets/whale.gif" height="120">
-              <div class="cx loading-text">PLEASE WAIT...</div>
-            </div>
+          <div class="menu-card">
+            <div class="title-bold mb-15">BLOCKS:</div>
             <div *ngIf="blocks.length == 0 && !loadingBlocks">
               There is no blocks for selected project there. Try to specify another project.
             </div>
             <div *ngFor="let block of blocks">
-              <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">{{block.name}}
+              <label class="container">
+                <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">
+                <span class="checkmark"></span>
+                {{block.name}}
+              </label>
             </div>
-            <button (click)="fetchMaterials()">FETCH MATERIALS</button>
-            <h1>MATERIALS:</h1>
+            <div class="button-fetch cxy cursor-pointer mt-20 mb-50" (click)="fetchMaterials()">FETCH MATERIALS</div>
+            <div class="title-bold mb-15">MATERIALS:</div>
             <div *ngIf="loadingMaterials">
               <img src="assets/whale.gif" height="120">
               <div class="cx loading-text">PLEASE WAIT...</div>
             </div>
-            <div *ngIf="materials.length == 0 && !loadingMaterials">
-              There is no plate dimensions there. You need to specify blocks from top column.
+            <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
+              There are no plate dimensions. You need to specify blocks from top column.
             </div>
             <div *ngFor="let material of materials">
-              <input (change)="material.selected = !material.selected" type="checkbox" [checked]="material.selected">{{material.name}}
+              <label class="container">
+                <input (change)="material.selected = !material.selected" type="checkbox" [checked]="material.selected">
+                <span class="checkmark"></span>
+                {{material.name}}
+              </label>
             </div>
-            <button  *ngIf="materials.length > 0" (click)="fetchNesting()">FETCH NESTING</button>
+            <div class="button-fetch cxy cursor-pointer mt-20 mb-50" *ngIf="materials.length > 0" (click)="fetchNesting()">FETCH NESTING</div>
           </div>
         </div>
         <div class="w-80">
-          <div class="loading-text" *ngIf="noResult">No date fetched from server with selected options. Try to select another one</div>
+          <div class="cxy card-height" *ngIf="noResult">
+            <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
+          </div>
           <div *ngIf="loading && !noResult">
             <div class="cxy loading">
               <div class="cxy card-height">
@@ -54,7 +60,7 @@
           </div>
           <div *ngIf="!noResult && nesting.length == 0">
             <div class="cxy card-height">
-              <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column</div>
+              <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
             </div>
           </div>
           <div class="dash-card" *ngFor="let nest of nesting; let i = index">
