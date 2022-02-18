@@ -17,6 +17,13 @@
         <div class="w-20 mr-20">
           <div class="menu-card ">
             <h1>BLOCKS:</h1>
+            <div *ngIf="loadingBlocks">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+            <div *ngIf="blocks.length == 0 && !loadingBlocks">
+              There is no blocks for selected project there. Try to specify another project.
+            </div>
             <div *ngFor="let block of blocks">
               <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">{{block.name}}
             </div>

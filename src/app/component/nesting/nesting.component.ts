@@ -65,6 +65,7 @@ export class NestingComponent implements OnInit {
   materials: any[] = [];
   loading = false;
   loadingMaterials = false;
+  loadingBlocks = false;
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -75,7 +76,9 @@ export class NestingComponent implements OnInit {
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
       });
+      this.loadingBlocks = true;
       this.s.getHullNestingBlocks(this.project).then(res => {
+        this.loadingBlocks = false;
         _.sortBy(res, x => x).forEach(block => {
           this.blocks.push({
             name: block,
