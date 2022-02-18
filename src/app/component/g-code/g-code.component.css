@@ -58,12 +58,14 @@
   background: #000;
   height: 400px;
   position: relative;
+  display: none;
+
 }
 
 ::ng-deep.TwoDView {
   border: solid gray 1px;
   background: #000;
-  height: 400px;
+  height: 800px;
 }
 
 #app {

@@ -353,7 +353,7 @@ this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
-
+/*
   data.buffer.push("<div>\n    <dl>\n        <dt>Total Duration:</dt>\n        <dd ");
   data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
     'title': ("formattedTotalTime.detailed")
@@ -374,6 +374,8 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   data.buffer.push("</td>\n                    <td>");
   data.buffer.push(escapeExpression((helper = helpers.num || (depth0 && depth0.num),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "bbox.max.z", options) : helperMissing.call(depth0, "num", "bbox.max.z", options))));
   data.buffer.push("</td>\n                </tr>\n                </tbody>\n            </table>\n        </dd>\n    </dl>\n</div>");
+ */
+
   return buffer;
 
 });

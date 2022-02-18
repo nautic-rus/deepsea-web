@@ -6,8 +6,8 @@ define(['Ember', 'libs/svg', 'libs/jquery.mousewheel', 'cnc/svg.marker'], functi
         init: function () {
             var view = this.get('view');
             var background = this.get('view.background');
-            var xSpan = 400;
-            var ySpan = 600;
+            var xSpan = 0;
+            var ySpan = 0;
 
             var grid = background.group().attr({class: 'grid'});
             var dmGrid = grid.group().attr({class: 'dmGrid'});
