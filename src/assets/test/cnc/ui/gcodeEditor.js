@@ -43,5 +43,5 @@ define(['Ember', 'ace'], function (Em, ace) {
             }
         }.property()
     });
-    return {GcodeEditorComponent: GcodeEditorComponent};
+  return {GcodeEditorComponent: GcodeEditorComponent};
 });

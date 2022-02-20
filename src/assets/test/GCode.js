@@ -14,6 +14,8 @@ require(['Ember', 'cnc/ui/graphicView', 'cnc/cam/cam', 'cnc/util', 'cnc/ui/gcode
     Simulator.GcodeEditorComponent = gcodeEditor.GcodeEditorComponent;
     Simulator.GraphicView = GraphicView;
 
+
+
     Simulator.ApplicationController = Ember.ObjectController.extend({
       init: function () {
         this._super();
@@ -41,6 +43,15 @@ require(['Ember', 'cnc/ui/graphicView', 'cnc/cam/cam', 'cnc/util', 'cnc/ui/gcode
         simulate: function () {
           this.launchSimulation();
         },
+        play: function (){
+          let _this = this;
+          let speed = document.getElementById('speed').value;
+          for (let x = 0; x < demoCode.split('\n').length; x++){
+            setTimeout(() => {
+              _this.set('currentRow', x);
+            }, x * speed)
+          }
+        }
       },
       launchSimulation: function () {
         var _this = this;
@@ -58,6 +69,8 @@ require(['Ember', 'cnc/ui/graphicView', 'cnc/cam/cam', 'cnc/util', 'cnc/ui/gcode
           _this.set('lineSegmentMap', result.lineSegmentMap);
           _this.set('computing', false);
           console.timeEnd('simulation');
+
+          document.dispatchEvent(new CustomEvent('simulation'));
         }
 
         console.time('simulation');

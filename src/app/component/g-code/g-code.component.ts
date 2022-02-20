@@ -83,6 +83,7 @@ export class GCodeComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     let textScript = this.renderer2.createElement('script');
     textScript.src = 'assets/test/webapp/libs/require.js';
     this.renderer2.appendChild(this.document.head, textScript);
@@ -103,11 +104,6 @@ export class GCodeComponent implements OnInit {
       textScript = this.renderer2.createElement('script');
       textScript.src = 'assets/test/GCode.js';
       this.renderer2.appendChild(this.document.body, textScript);
-
-
-
-      // console.log(buttons.item(0));
-      // buttons.item(1).style.display = 'none';
 
 
     }, 1000);

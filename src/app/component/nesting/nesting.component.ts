@@ -77,22 +77,17 @@ export class NestingComponent implements OnInit {
         this.nestingFiles = files;
       });
       this.loadingBlocks = true;
-      this.s.getHullNestingBlocks(this.project).then(res => {
-        this.loadingBlocks = false;
-        _.sortBy(res, x => x).forEach(block => {
-          this.blocks.push({
-            name: block,
-            selected: false
+      if (this.blocks.length == 0){
+        this.s.getHullNestingBlocks(this.project).then(res => {
+          this.loadingBlocks = false;
+          _.sortBy(res, x => x).forEach(block => {
+            this.blocks.push({
+              name: block,
+              selected: false
+            });
           });
         });
-        if (this.blocks.length > 0){
-          //this.selectBlock(this.blocks[0]);
-        }
-        if (this.blocks.length > 1){
-          //this.selectBlock(this.blocks[1]);
-        }
-        //this.fetchMaterials(false);
-      });
+      }
       // this.s.getHullNesting(this.project).then(res => {
       //   if (this.nesting.length == 0){
       //     this.nesting = res;
@@ -716,6 +711,7 @@ export class NestingComponent implements OnInit {
           ]
           nest.LOCKED = false;
         });
+        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x));
         this.nestingSource = [...this.nesting];
       }
     });
