@@ -66,6 +66,7 @@ export class NestingComponent implements OnInit {
   loading = false;
   loadingMaterials = false;
   loadingBlocks = false;
+  currentView = 'tile';
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
