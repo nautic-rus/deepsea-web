@@ -17,7 +17,19 @@
         <div class="w-20 mr-20">
           <div class="menu-card">
             <div class="ovf-auto">
-              <div class="title-bold mb-15 sticky head-checkbox">BLOCKS:</div>
+              <div class="df">
+                <div class="title-bold mb-15 sticky head-checkbox">BLOCKS:</div>
+                <div class="p-ml-auto df">
+                  <div (click)="openTile()" class="mr-10 cursor-pointer">
+                    <img src="assets/icons/tile-yellow.svg" height="24">
+                  </div>
+                  <div class="cursor-pointer">
+                    <img src="assets/icons/list-gray.svg" height="24">
+                  </div>
+                </div>
+
+              </div>
+
               <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
                 There is no blocks for selected project there. Try to specify another project.
               </div>
@@ -70,62 +82,131 @@
               <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
             </div>
           </div>
-          <div class="dash-card" *ngFor="let nest of nesting; let i = index">
-            <div class="top-row">
-              <div class="cxy">
-                <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
-                  <img src="assets/icons/lock.svg" height="26">
-                </div>
-                <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
-                  <img src="assets/icons/unlock.svg" height="26">
-                </div>
-              </div>
-              <div class="">
-                <div class="cy h-100">
-                  <div class="cx mb-10 mt-10">
-                    <div class="title-bold px-10">{{nest.ID}}</div>
+<!--          <div>-->
+<!--            <div class="dash-card" *ngFor="let nest of nesting; let i = index">-->
+<!--              <div class="top-row">-->
+<!--                <div class="cxy">-->
+<!--                  <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">-->
+<!--                    <img src="assets/icons/lock.svg" height="26">-->
+<!--                  </div>-->
+<!--                  <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">-->
+<!--                    <img src="assets/icons/unlock.svg" height="26">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="">-->
+<!--                  <div class="cy h-100">-->
+<!--                    <div class="cx mb-10 mt-10">-->
+<!--                      <div class="title-bold px-10">{{nest.ID}}</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="text-center-y">-->
+<!--                  <div class="title-name">-->
+<!--                    <div *ngIf="nest.USAGE > 100">WARNING</div>-->
+<!--                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#BE78A2'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>-->
+<!--                  </div>-->
+<!--                  <div class="title-name">-->
+<!--                    <div class="my-5 usage">Usage: {{round(nest.USAGE)}}%</div>-->
+<!--                    <div class="my-5 left">Left: {{round(100 - nest.USAGE)}}%</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="text-center-y">-->
+<!--                  <div class="gray-text mr-10">File</div>-->
+<!--                  <div class="file">{{nest.FILE}}</div>-->
+<!--                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show file')" tooltipPosition="top">-->
+<!--                    <img src="assets/icons/eye-file.svg" height="22">-->
+<!--                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>-->
+<!--                  </div>-->
+<!--                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">-->
+<!--                    <img src="assets/icons/download-file.svg" height="22">-->
+<!--                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>-->
+<!--                  </div>-->
+
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="bottom-row">-->
+<!--                <div class="ovf-auto pl-10">-->
+<!--                  <div class="df cursor-pointer sticky">-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('BLOCK')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('LENGTHxWIDTHxTHICKNESS')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('MATERIAL')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('WEIGHT')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('NUMBER EQUAL NESTING')}}</div>-->
+<!--                  </div>-->
+<!--                  <div class="text-center-y info-row cursor-pointer">-->
+<!--                    <div class="w-25 table-body cy">{{nest.BLOCKS}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.MATERIAL}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.PARTS_WEIGHT}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.NUM_EQ_NEST}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+          <div class="tile">
+            <div class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
+              <div class="top-row-tile">
+                <div class="cy">
+                  <div class="cxy">
+                    <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
+                      <img src="assets/icons/lock.svg" height="22">
+                    </div>
+                    <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
+                      <img src="assets/icons/unlock.svg" height="22">
+                    </div>
+                  </div>
+                  <div class="">
+                    <div class="cy h-100">
+                      <div class="cx mb-10 mt-10">
+                        <div class="title-bold px-10">{{nest.ID}}</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="text-center-y">
-                <div class="title-name">
-                  <div *ngIf="nest.USAGE > 100">WARNING</div>
-                  <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#BE78A2'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>
-                </div>
-                <div class="title-name">
-                  <div class="my-5 usage">Usage: {{round(nest.USAGE)}}%</div>
-                  <div class="my-5 left">Left: {{round(100 - nest.USAGE)}}%</div>
-                </div>
-              </div>
-              <div class="text-center-y">
-                <div class="gray-text mr-10">File</div>
-                <div class="file">{{nest.FILE}}</div>
-                <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show file')" tooltipPosition="top">
-                  <img src="assets/icons/eye-file.svg" height="22">
-                  <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
-                </div>
-                <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">
-                  <img src="assets/icons/download-file.svg" height="22">
-                  <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
-                </div>
 
-              </div>
-            </div>
-            <div class="bottom-row">
-              <div class="ovf-auto pl-10">
-                <div class="df cursor-pointer sticky">
-                  <div class="w-25 table-header-column cy">{{l.tr('BLOCK')}}</div>
-                  <div class="w-25 table-header-column cy">{{l.tr('LENGTHxWIDTHxTHICKNESS')}}</div>
-                  <div class="w-25 table-header-column cy">{{l.tr('MATERIAL')}}</div>
-                  <div class="w-25 table-header-column cy">{{l.tr('WEIGHT')}}</div>
-                  <div class="w-25 table-header-column cy">{{l.tr('NUMBER EQUAL NESTING')}}</div>
+                <div class="text-center-y">
+                  <div class="title-name">
+                    <div *ngIf="nest.USAGE > 100">WARNING</div>
+                    <ngx-charts-pie-chart [view]="[100, 100]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#BE78A2'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>
+                  </div>
+                  <div class="title-name">
+                    <div class="my-5 usage">Usage: {{round(nest.USAGE)}}%</div>
+                    <div class="my-5 left">Left: {{round(100 - nest.USAGE)}}%</div>
+                  </div>
                 </div>
-                <div class="text-center-y info-row cursor-pointer">
-                  <div class="w-25 table-body cy">{{nest.BLOCKS}}</div>
-                  <div class="w-25 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
-                  <div class="w-25 table-body cy">{{nest.MATERIAL}}</div>
-                  <div class="w-25 table-body cy">{{nest.PARTS_WEIGHT}}</div>
-                  <div class="w-25 table-body cy">{{nest.NUM_EQ_NEST}}</div>
+                <div class="cy">
+                  <div class="gray-text cx mb-15">File</div>
+                  <div class="cxy">
+                    <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show file')" tooltipPosition="top">
+                      <img src="assets/icons/eye-file.svg" height="22">
+                      <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
+                    </div>
+                    <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">
+                      <img src="assets/icons/download-file.svg" height="22">
+                      <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+              <div class="bottom-row">
+                <div class="ovf-auto">
+                  <div class="df cursor-pointer sticky">
+                    <div class="w-30 table-header-column cy">{{l.tr('BLOCK')}}</div>
+                    <div class="w-35 table-header-column cy">{{l.tr('LxWxT')}}</div>
+                    <div class="w-15 table-header-column cy">{{l.tr('MAT.')}}</div>
+                    <div class="w-30 table-header-column cy">{{l.tr('WEIGHT')}}</div>
+                    <div class="w-15 table-header-column cy">{{l.tr('N')}}</div>
+                  </div>
+                  <div class="text-center-y info-row cursor-pointer">
+                    <div class="w-30 table-body cy">{{nest.BLOCKS}}</div>
+                    <div class="w-35 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
+                    <div class="w-15 table-body cy">{{nest.MATERIAL}}</div>
+                    <div class="w-30 table-body cy">{{nest.PARTS_WEIGHT}}</div>
+                    <div class="w-15 table-body cy">{{nest.NUM_EQ_NEST}}</div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -716,4 +716,8 @@ export class NestingComponent implements OnInit {
       }
     });
   }
+
+  openTile() {
+
+  }
 }
