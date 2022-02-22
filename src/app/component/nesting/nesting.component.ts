@@ -613,7 +613,7 @@ export class NestingComponent implements OnInit {
     }
     else{
       this.nesting = this.nestingSource.filter((x: any) => {
-        return (x.ID + x.BLOCKS + x.THICKNESS + x.NEST_LENGTH + x.NEST_WIDTH + x.MATERIAL + x.PARTS_WEIGHT + x.NUM_EQ_NEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+        return x == null || (x.ID + x.BLOCKS + x.THICKNESS + x.NEST_LENGTH + x.NEST_WIDTH + x.MATERIAL + x.PARTS_WEIGHT + x.NUM_EQ_NEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
       });
     }
   }
@@ -688,7 +688,7 @@ export class NestingComponent implements OnInit {
           ]
           nest.LOCKED = false;
         });
-        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
+        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x) && this.isContainsBlocks(x.BLOCKS));
         for (let x = 0; x < 10; x++){
           this.nesting.push(null);
         }
@@ -701,6 +701,15 @@ export class NestingComponent implements OnInit {
 
   }
 
+  isContainsBlocks(blocks: string){
+    let result = false;
+    blocks.split(';').forEach(block => {
+      if (this.blocks.filter(x => x.selected).map(x => x.name).includes(block)){
+        result = true;
+      }
+    });
+    return result;
+  }
   selectMaterial(material: any) {
     material.selected = !material.selected;
     this.nesting.splice(0, this.nesting.length);
