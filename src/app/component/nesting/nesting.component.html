@@ -138,7 +138,6 @@
                     <img src="assets/icons/cutting.svg" height="22">
                     <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
                   </div>
-
                 </div>
               </div>
               <div *ngIf="nest != null" class="bottom-row">
@@ -160,6 +159,9 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div>
+
           </div>
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [class.hidden-card]="nest == null" class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
@@ -183,36 +185,59 @@
                 </div>
 
                 <div class="text-center-y">
-                  <div class="title-name">
+                  <div class="mt-minus15">
                     <div *ngIf="nest.USAGE > 100">WARNING</div>
-                    <ngx-charts-pie-chart [view]="[100, 100]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#BE78A2'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>
+                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#D8DADC'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="true"></ngx-charts-pie-chart>
                   </div>
-                  <div class="title-name">
-                    <div class="my-5 usage">Usage: {{round(nest.USAGE)}}%</div>
-                    <div class="my-5 left">Left: {{round(100 - nest.USAGE)}}%</div>
+                  <div class="donut-text">{{round(nest.USAGE)}}%
+
                   </div>
+                  <div class="usage-left-info">
+                    <div class="text-center-y">
+                      <div class="usage cxy">
+                        <img src="assets/icons/usage.svg" height="16">
+                      </div>
+                      <div class="ml-5">
+                        <div class="usage-left-text">Usage</div>
+                        <div class="usage-left-percent">{{round(nest.USAGE)}}%</div>
+                      </div>
+                    </div>
+                    <div class="text-center-y">
+                      <div class="left cxy">
+                        <img src="assets/icons/scales.svg" height="16">
+                      </div>
+                      <div class="ml-5">
+                        <div class="usage-left-text">Left</div>
+                        <div class="usage-left-percent">{{round(100 - nest.USAGE)}}%</div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
-                <div class="cy">
-                  <div class="gray-text cx mb-15">File</div>
-                  <div class="cxy">
-                    <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
-                      <img src="assets/icons/eye-file.svg" height="22">
-                      <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show nesting file</div>
+                <div class="files-tile">
+                  <div class="">
+                    <div class="gray-text-tile cx mb-1px">Nesting:</div>
+                    <div class="cxy">
+                      <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
+                        <img src="assets/icons/eye-file.svg" height="20">
+                      </div>
+                      <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download nesting file')" tooltipPosition="top">
+                        <img src="assets/icons/download-file.svg" height="20">
+                      </div>
                     </div>
-                    <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">
-                      <img src="assets/icons/download-file.svg" height="22">
-                      <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
+
+                  </div>
+                  <div class="">
+                    <div class="gray-text cx mb-1px">Cutting:</div>
+                    <div class="cxy">
+                      <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-file-tile cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
+                        <img src="assets/icons/eye-file.svg" height="20">
+                      </div>
+                      <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-file-tile cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download cutting file')" tooltipPosition="top">
+                        <img src="assets/icons/download-file.svg" height="20">
+                      </div>
                     </div>
-                  </div>
 
-
-                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                    <img src="assets/icons/cutting.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
-                  </div>
-                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                    <img src="assets/icons/cutting.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
                   </div>
 
                 </div>

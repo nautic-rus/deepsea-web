@@ -101,7 +101,7 @@
   height: 100px;
   border-bottom: 1px solid #f3f2f1;
   display: grid;
-  grid-template-columns: 2fr 4fr 2fr;
+  grid-template-columns: 1.8fr 4.2fr 3fr;
 }
 .min-width-300{
   min-width: 300px;
@@ -125,6 +125,10 @@
 .gray-text{
   color: #a4a4a4;
   font-size: 14px;
+}
+.gray-text-tile{
+  color: #a4a4a4;
+  font-size: 13px;
 }
 .file{
   background-color: #62b6cb;
@@ -202,20 +206,16 @@
   width: 18px;
 }
 .left{
-  padding: 2px 8px;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  background-color: #BE78A2;
-  border-radius: 30px;
+  height: 26px;
+  width: 26px;
+  background-color: #D8DADC;
+  border-radius: 4px;
 }
 .usage{
-  padding: 2px 8px;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
+  height: 26px;
+  width: 26px;
   background-color: #f9c851;
-  border-radius: 30px;
+  border-radius: 4px;
 }
 .eye-file{
   height: 32px;
@@ -225,6 +225,16 @@
   position: relative;
 }
 .eye-file:hover{
+  background-color: #b0dfea;
+}
+.eye-file-tile{
+  height: 26px;
+  width: 26px;
+  border-radius: 4px;
+  background-color: #BBE0E9;
+  position: relative;
+}
+.eye-file-tile:hover{
   background-color: #b0dfea;
 }
 .eye-tooltip{
@@ -367,9 +377,50 @@
     stroke-dashoffset: -124px;
   }
 }
+.files-tile{
+  display: grid;
+  grid-template-rows: 0.8fr 1fr;
+}
+.mt-minus15{
+  margin-top: -15px;
+}
+.donut-text {
+  top: 20px;
+  left: 154px;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  color: #3a3a3a;
+  font-weight: 500;
+  font-size: 14px;
+}
+.usage-left-text{
+  color: #3a3a3a;
+  font-weight: 500;
+  font-size: 12px;
+}
+.usage-left-percent{
+  color: rgba(58, 58, 58, 0.75);
+  font-weight: 500;
+  font-size: 12px;
+}
+.usage-left-info{
+  display: flex;
+  flex-direction: column;
+  margin-top: -15px;
+  margin-left: -10px;
+}
 .hidden-card{
   opacity: 0;
   height: 0 !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: 0 10px 0 10px !important;
+}
+.mb-1px{
+  margin-bottom: 1px;
 }

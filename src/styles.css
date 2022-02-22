@@ -136,6 +136,9 @@ body,p{
 .w-65{
   width: 65%;
 }
+.w-75{
+  width: 75%;
+}
 .w-80{
   width: 80%;
 }
@@ -365,6 +368,9 @@ body,p{
 }
 .ml-10{
   margin-left: 10px;
+}
+.ml-15{
+  margin-left: 15px;
 }
 .ml-20{
   margin-left: 20px;
