@@ -23,7 +23,7 @@
 
 ::ng-deep.editBlock pre {
   width: 100%;
-  height: 42vh;
+  height: 83vh;
   margin: 0;
 }
 
@@ -61,7 +61,7 @@
 ::ng-deep.TwoDView {
   border: solid gray 1px;
   background: #000;
-  height: 45vh;
+  height: 85vh;
 }
 
 #app {

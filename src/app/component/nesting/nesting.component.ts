@@ -713,6 +713,16 @@ export class NestingComponent implements OnInit {
       this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
         // @ts-ignore
         this.router.navigate([], {queryParams: {cmap: searchCMAP.url, cmapuser: this.auth.getUserName(searchCMAP.author), cmapdate: searchCMAP.upload_date}, queryParamsHandling: 'merge'});
+        const style = document.createElement('style');
+        style.innerHTML = `
+          .editBlock pre {
+            height: 42vh !important;
+          }
+          .viewContainer .TwoDView {
+            height: 45vh !important;
+          }
+        `;
+        document.head.appendChild(style);
       });
     }
   }
