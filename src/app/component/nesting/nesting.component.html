@@ -214,33 +214,36 @@
                   </div>
 
                 </div>
-                <div class="files-tile">
-                  <div class="">
-                    <div class="gray-text-tile cx mb-1px">Nesting:</div>
-                    <div class="cxy">
-                      <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
-                        <img src="assets/icons/eye-file.svg" height="20">
+                <div class="">
+                  <div class="files-tile">
+                    <div class="">
+                      <div class="gray-text-tile cx mb-1px">Nesting:</div>
+                      <div class="cxy">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
+                          <img src="assets/icons/eye-file.svg" height="18">
+                        </div>
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download nesting file')" tooltipPosition="top">
+                          <img src="assets/icons/download-file.svg" height="18">
+                        </div>
                       </div>
-                      <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download nesting file')" tooltipPosition="top">
-                        <img src="assets/icons/download-file.svg" height="20">
+
+                    </div>
+                    <div class="">
+                      <div class="gray-text cx mb-1px">Cutting:</div>
+                      <div class="cxy">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
+                          <img src="assets/icons/eye-file.svg" height="18">
+                        </div>
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download cutting file')" tooltipPosition="top">
+                          <img src="assets/icons/download-file.svg" height="18">
+                        </div>
                       </div>
+
                     </div>
 
                   </div>
-                  <div class="">
-                    <div class="gray-text cx mb-1px">Cutting:</div>
-                    <div class="cxy">
-                      <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-file-tile cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                        <img src="assets/icons/eye-file.svg" height="20">
-                      </div>
-                      <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-file-tile cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download cutting file')" tooltipPosition="top">
-                        <img src="assets/icons/download-file.svg" height="20">
-                      </div>
-                    </div>
-
-                  </div>
-
                 </div>
+
               </div>
               <div *ngIf="nest != null" class="bottom-row">
                 <div class="ovf-auto">

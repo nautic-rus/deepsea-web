@@ -231,11 +231,11 @@
   height: 26px;
   width: 26px;
   border-radius: 4px;
-  background-color: #BBE0E9;
+  background-color: #62B6CB;
   position: relative;
 }
 .eye-file-tile:hover{
-  background-color: #b0dfea;
+  background-color: #5dabbe;
 }
 .eye-tooltip{
   position: absolute;
@@ -423,4 +423,14 @@
 }
 .mb-1px{
   margin-bottom: 1px;
+}
+.eye-cut-tile{
+  height: 26px;
+  width: 26px;
+  border-radius: 4px;
+  background-color: #C03995;
+  position: relative;
+}
+.eye-cut-tile:hover{
+  background-color: #a93283;
 }
