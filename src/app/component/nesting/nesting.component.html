@@ -60,7 +60,7 @@
               </div>
               <div *ngFor="let material of materials">
                 <label class="container">
-                  <input (change)="material.selected = !material.selected" type="checkbox" [checked]="material.selected">
+                  <input (change)="selectMaterial(material)" type="checkbox" [checked]="material.selected">
                   <span class="checkmark"></span>
                   <span class="text-checkbox">{{material.name}}</span>
                 </label>
@@ -119,13 +119,24 @@
                 <div class="text-center-y">
                   <div class="gray-text mr-10">File</div>
                   <div class="file">{{nest.FILE}}</div>
-                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show file')" tooltipPosition="top">
+                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
                     <img src="assets/icons/eye-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
+                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show nesting file</div>
                   </div>
                   <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">
                     <img src="assets/icons/download-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
+                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Download files</div>
+                  </div>
+
+
+
+                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
+                    <img src="assets/icons/cutting.svg" height="22">
+                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
+                  </div>
+                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
+                    <img src="assets/icons/cutting.svg" height="22">
+                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
                   </div>
 
                 </div>
@@ -184,9 +195,9 @@
                 <div class="cy">
                   <div class="gray-text cx mb-15">File</div>
                   <div class="cxy">
-                    <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show file')" tooltipPosition="top">
+                    <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
                       <img src="assets/icons/eye-file.svg" height="22">
-                      <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show file</div>
+                      <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show nesting file</div>
                     </div>
                     <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">
                       <img src="assets/icons/download-file.svg" height="22">
@@ -194,6 +205,15 @@
                     </div>
                   </div>
 
+
+                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
+                    <img src="assets/icons/cutting.svg" height="22">
+                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
+                  </div>
+                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
+                    <img src="assets/icons/cutting.svg" height="22">
+                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
+                  </div>
 
                 </div>
               </div>
@@ -220,9 +240,16 @@
         </div>
       </div>
       <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
+        <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedDxf()"></button>
         <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
         <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
         <app-dxf-view></app-dxf-view>
+      </div>
+      <div class="pt-5 dxf-view" *ngIf="cutEnabled">
+        <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
+        <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
+        <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+        <app-g-code></app-g-code>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ import {AuthManagerService} from "../../../../domain/auth-manager.service";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
+import {SpecManagerService} from "../../../../domain/spec-manager.service";
 
 @Component({
   selector: 'app-upload-revision-files',
@@ -19,7 +20,7 @@ export class UploadRevisionFilesComponent implements OnInit {
   awaitForLoad: string[] = [];
   issue: Issue = new Issue();
   fileGroup = '';
-  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
+  constructor(public t: LanguageService, public issues: IssueManagerService, public s: SpecManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
     this.issues.getIssueDetails(conf.data[0]).then(res => {
       this.issue = res;
     });
@@ -30,13 +31,16 @@ export class UploadRevisionFilesComponent implements OnInit {
   reformatFileName(name: string, fileGroup: string){
     let result = name;
     if (fileGroup == 'Nesting Plates'){
-      result = 'N-' + name.split('_').join('-').replace('_0_', '_');
+      result = 'N-' + name.replace('_0_', '_').split('_').join('-');
     }
     if (fileGroup == 'Nesting Profiles'){
       result = 'P-' + name.split('_').join('-');
     }
     if (fileGroup == 'Profile Sketches' && !name.includes('.txt')){
       result = name.split('_').join('-');
+    }
+    if (fileGroup == 'Cutting Map'){
+      result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.replace('_0', '').split('_').join('-');
     }
     return result;
   }

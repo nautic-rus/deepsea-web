@@ -1,12 +1,14 @@
-import {AfterViewInit, Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
+import {SpecManagerService} from "../../domain/spec-manager.service";
 declare var initGCode: any;
 @Component({
   selector: 'app-g-code',
   templateUrl: './g-code.component.html',
   styleUrls: ['./g-code.component.css']
 })
-export class GCodeComponent implements OnInit {
+export class GCodeComponent implements OnInit, OnDestroy {
 
   code = 'G21\n' +
     'G40\n' +
@@ -77,12 +79,38 @@ export class GCodeComponent implements OnInit {
     'G01X5.0Y5.0\n' +
     'M08\n' +
     'M02\n';
+  cmap = '';
+  querySubscription: any;
+  windowMode = 0;
+  loading = true;
 
-  constructor(@Inject(DOCUMENT) private document: Document,
-              private renderer2: Renderer2) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer2: Renderer2, public route: ActivatedRoute, public s: SpecManagerService) { }
 
 
   ngOnInit(): void {
+    document.addEventListener('simulation', () => {
+      this.loading = false;
+    });
+
+    this.querySubscription = this.route.queryParams.subscribe(params => {
+      this.cmap = params.cmap != null ? params.cmap : this.cmap;
+      let cmapuser = params.cmapuser != null ? params.cmapuser : '';
+      let cmapdate = params.cmapdate != null ? params.cmapdate : 0;
+      if (this.cmap != ''){
+        fetch(this.cmap).then(res => {
+          res.text().then(text => {
+            this.s.createCNC(text.split('\n'), cmapuser + ' at ' + new Date(+cmapdate).toDateString()).then(res => {
+              this.code = '';
+              let newCode = '';
+              res.forEach(x => newCode += (newCode != '' ? '\n' : '') + x);
+              this.code = newCode;
+            });
+          });
+        });
+      }
+      this.windowMode = params.window != null ? params.window : this.windowMode;
+    });
+
 
     let textScript = this.renderer2.createElement('script');
     textScript.src = 'assets/test/webapp/libs/require.js';
@@ -107,6 +135,10 @@ export class GCodeComponent implements OnInit {
 
 
     }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    this.querySubscription.unsubscribe();
   }
 
 }

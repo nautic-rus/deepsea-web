@@ -49,8 +49,10 @@ export class NestingComponent implements OnInit {
   groupedByPartCode = false;
   waitForZipFiles = false;
   dxfEnabled = false;
+  cutEnabled = false;
   dxfEnabledForNesting = false;
   dxfView: Window | null = null;
+  cmapView: Window | null = null;
   dxfDoc: string = '';
   search: string = '';
   searchNesting: string = '';
@@ -67,6 +69,9 @@ export class NestingComponent implements OnInit {
   loadingMaterials = false;
   loadingBlocks = false;
   currentView = 'tile';
+  cmap = '';
+  cmapuser = '';
+  cmapdate = 0;
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -74,6 +79,9 @@ export class NestingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.project = params.foranProject != null ? params.foranProject : 'N004';
       this.dxfDoc = params.dxf != null ? params.dxf : '';
+      this.cmap = params.cmap != null ? params.cmap : this.cmap;
+      this.cmapuser = params.cmapuser != null ? params.cmapuser : '';
+      this.cmapdate = params.cmapdate != null ? +params.cmapdate : 0;
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
       });
@@ -89,41 +97,6 @@ export class NestingComponent implements OnInit {
           });
         });
       }
-      // this.s.getHullNesting(this.project).then(res => {
-      //   if (this.nesting.length == 0){
-      //     this.nesting = res;
-      //     if (res.length == 0){
-      //       this.noResult = true;
-      //     }
-      //     else{
-      //       this.nesting.flatMap((x: any) => x.BLOCKS.split(';')).forEach((block: string) => {
-      //         if (!this.filters.BLOCKS.map(x => x.label).includes(block)){
-      //           this.filters.BLOCKS.push({
-      //             label: block,
-      //             value: block
-      //           });
-      //         }
-      //       });
-      //       this.filters.BLOCKS = _.sortBy(this.filters.BLOCKS, x => x);
-      //       this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
-      //       this.nesting.forEach((nest: any) => {
-      //         nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
-      //         nest.doughnut = [
-      //           {
-      //             name: "Usage",
-      //             value: nest.USAGE
-      //           },
-      //           {
-      //             name: "Left",
-      //             value: (100 - nest.USAGE)
-      //           }
-      //         ]
-      //         nest.LOCKED = false;
-      //       });
-      //       this.nestingSource = [...this.nesting];
-      //     }
-      //   }
-      // });
     });
   }
   closeShowImage() {
@@ -487,10 +460,7 @@ export class NestingComponent implements OnInit {
   }
   exitDxf(){
     this.dxfEnabled = false;
-    this.dxfEnabledForNesting = false;
-    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-    // @ts-ignore
-    viewport.style.height = '70vh';
+    this.cutEnabled = false;
   }
   exitDxfTablet(){
     this.dxfEnabled = false;
@@ -509,7 +479,10 @@ export class NestingComponent implements OnInit {
     let searchDxf = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
     return searchDxf == null;
   }
-
+  isDisabledCuttingMap(nest: any) {
+    let searchDxf = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+    return searchDxf == null;
+  }
   showNesting(part: any) {
     this.selectedNest = part;
     this.dxfEnabledForNesting = true;
@@ -577,13 +550,13 @@ export class NestingComponent implements OnInit {
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
       }
+      this.cutEnabled = false;
       this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
         // @ts-ignore
         this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: null}, queryParamsHandling: 'merge'});
       });
     }
   }
-
   showNestingTabletTemplate(part: any) {
     this.selectedNest = part;
     this.dxfEnabledForNesting = true;
@@ -660,6 +633,8 @@ export class NestingComponent implements OnInit {
 
   selectBlock(block: any) {
     block.selected = !block.selected;
+    this.materials.splice(0, this.materials.length);
+    this.nesting.splice(0, this.nesting.length);
   }
 
   fetchMaterials(selected = false) {
@@ -700,6 +675,7 @@ export class NestingComponent implements OnInit {
         this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
         this.nesting.forEach((nest: any) => {
           nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
+          nest.CMAP = 'C-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
           nest.doughnut = [
             {
               name: "Usage",
@@ -712,7 +688,7 @@ export class NestingComponent implements OnInit {
           ]
           nest.LOCKED = false;
         });
-        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x));
+        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
         this.nestingSource = [...this.nesting];
       }
     });
@@ -720,5 +696,88 @@ export class NestingComponent implements OnInit {
 
   openTile() {
 
+  }
+
+  selectMaterial(material: any) {
+    material.selected = !material.selected;
+    this.nesting.splice(0, this.nesting.length);
+  }
+
+  showCuttingFile(nest: any) {
+    let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+    if (searchCMAP != null){
+      if (!this.cutEnabled){
+        this.cutEnabled = !this.cutEnabled;
+      }
+      this.dxfEnabled = false;
+      this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
+        // @ts-ignore
+        this.router.navigate([], {queryParams: {cmap: searchCMAP.url, cmapuser: this.auth.getUserName(searchCMAP.author), cmapdate: searchCMAP.upload_date}, queryParamsHandling: 'merge'});
+      });
+    }
+  }
+
+  downloadOpenedCMAP() {
+    if (this.cmap != ''){
+      fetch(this.cmap).then(res => {
+        res.text().then(text => {
+          this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+            // @ts-ignore
+            element.setAttribute('download', this.cmap.split('/').pop());
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+          });
+        });
+      });
+    }
+  }
+
+  downloadCuttingFile(nest: any) {
+    let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+    if (searchCMAP != null){
+      this.cmap = searchCMAP.url;
+      this.cmapuser = searchCMAP.author;
+      this.cmapdate = searchCMAP.upload_date;
+      fetch(this.cmap).then(res => {
+        res.text().then(text => {
+          this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+            // @ts-ignore
+            element.setAttribute('download', this.cmap.split('/').pop());
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+          });
+        });
+      });
+    }
+  }
+
+  downloadOpenedDxf() {
+    window.open(this.dxfDoc);
+  }
+
+  openCMAP() {
+    if (this.cmapView != null && !this.cmapView.closed){
+      this.cmapView.close();
+    }
+    let url = '/gcode?navi=0&window=1&cmap=' + this.cmap + '&cmapuser=' + this.cmapuser + '&cmapdate=' + this.cmapdate;
+    this.dxfEnabledForNesting = false;
+    this.dxfEnabled = false;
+    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
 }

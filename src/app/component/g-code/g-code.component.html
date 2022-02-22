@@ -1,12 +1,10 @@
-<div class="all-page">
-  <h1>G-Code</h1>
+<div class="page" [class.window-mode]="windowMode == 1">
   <div hidden #demoCode id="demoCode">
     {{code}}
   </div>
-  <p>
-    Paste your g-code in the left-hand window or drop a file on the page and see the preview of your tool path on the right.<br>
-    The right-hand pane are interactive, drag them to change the point of view.
-  </p>
   <div id="app"></div>
+  <div *ngIf="loading" class="loading-status">
+    LOADING ...
+  </div>
 </div>
 

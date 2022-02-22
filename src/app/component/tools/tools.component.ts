@@ -28,7 +28,7 @@ export class ToolsComponent implements OnInit {
   selectedTrayBundle: any;
   trayBundles: any[] = [];
 
-  projects: string[] = [];
+  projects: string[] = ['P701', 'N002', 'N004'];
 
 
 
@@ -36,7 +36,6 @@ export class ToolsComponent implements OnInit {
 
   ngOnInit(): void {
     this.issues.getIssueProjects().then(projects => {
-      this.projects = projects.filter(x => this.auth.getUser().visible_projects.includes(x)).filter(x => x != '-');
       if (this.projects.length > 0) {
         this.materialsProject = this.projects[this.projects.length - 1];
       }
@@ -46,6 +45,7 @@ export class ToolsComponent implements OnInit {
 
   getBillOfMaterials() {
     this.wait.push('bill-of-materials');
+    this.materialsProject = this.materialsProject.replace('NR', 'N');
     this.issues.getForanParts(this.materialsProject).then(res => {
       this.billOfMaterials = res;
       this.wait.splice(this.wait.indexOf('bill-of-materials'), 1);
