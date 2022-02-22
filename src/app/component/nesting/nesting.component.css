@@ -367,3 +367,9 @@
     stroke-dashoffset: -124px;
   }
 }
+.hidden-card{
+  opacity: 0;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}

@@ -89,8 +89,8 @@
             </div>
           </div>
           <div *ngIf="currentView == 'list'">
-            <div class="dash-card mx-20" *ngFor="let nest of nesting; let i = index">
-              <div class="top-row">
+            <div [class.hidden-card]="nest == null" class="dash-card mx-20" *ngFor="let nest of nesting; let i = index">
+              <div *ngIf="nest != null" class="top-row">
                 <div class="cxy">
                   <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
                     <img src="assets/icons/lock.svg" height="26">
@@ -141,7 +141,7 @@
 
                 </div>
               </div>
-              <div class="bottom-row">
+              <div *ngIf="nest != null" class="bottom-row">
                 <div class="ovf-auto">
                   <div class="df cursor-pointer sticky">
                     <div class="w-25 table-header-column cy">{{l.tr('BLOCK')}}</div>
@@ -162,8 +162,8 @@
             </div>
           </div>
           <div *ngIf="currentView == 'tile'" class="tile">
-            <div class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
-              <div class="top-row-tile">
+            <div [class.hidden-card]="nest == null" class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
+              <div *ngIf="nest != null" class="top-row-tile">
                 <div class="cy">
                   <div class="cxy">
                     <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
@@ -217,7 +217,7 @@
 
                 </div>
               </div>
-              <div class="bottom-row">
+              <div *ngIf="nest != null" class="bottom-row">
                 <div class="ovf-auto">
                   <div class="df cursor-pointer sticky">
                     <div class="w-30 table-header-column cy">{{l.tr('BLOCK')}}</div>

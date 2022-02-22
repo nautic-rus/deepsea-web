@@ -689,6 +689,9 @@ export class NestingComponent implements OnInit {
           nest.LOCKED = false;
         });
         this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
+        for (let x = 0; x < 10; x++){
+          this.nesting.push(null);
+        }
         this.nestingSource = [...this.nesting];
       }
     });
