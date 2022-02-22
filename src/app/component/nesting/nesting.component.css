@@ -205,17 +205,33 @@
   height: 10px;
   width: 18px;
 }
-.left{
+.left-tile{
   height: 26px;
   width: 26px;
   background-color: #D8DADC;
   border-radius: 4px;
 }
-.usage{
+.usage-tile{
   height: 26px;
   width: 26px;
   background-color: #f9c851;
   border-radius: 4px;
+}
+.left{
+  padding: 2px 8px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: #BE78A2;
+  border-radius: 30px;
+}
+.usage{
+  padding: 2px 8px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: #f9c851;
+  border-radius: 30px;
 }
 .eye-file{
   height: 32px;

@@ -131,11 +131,11 @@
 
 
                   <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                    <img src="assets/icons/cutting.svg" height="22">
+                    <img src="assets/icons/eye-file.svg" height="22">
                     <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
                   </div>
                   <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                    <img src="assets/icons/cutting.svg" height="22">
+                    <img src="assets/icons/download-file.svg" height="22">
                     <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
                   </div>
                 </div>
@@ -159,9 +159,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-
           </div>
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [class.hidden-card]="nest == null" class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
@@ -194,7 +191,7 @@
                   </div>
                   <div class="usage-left-info">
                     <div class="text-center-y">
-                      <div class="usage cxy">
+                      <div class="usage-tile cxy">
                         <img src="assets/icons/usage.svg" height="16">
                       </div>
                       <div class="ml-5">
@@ -203,7 +200,7 @@
                       </div>
                     </div>
                     <div class="text-center-y">
-                      <div class="left cxy">
+                      <div class="left-tile cxy">
                         <img src="assets/icons/scales.svg" height="16">
                       </div>
                       <div class="ml-5">
