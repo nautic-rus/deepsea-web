@@ -347,29 +347,58 @@ export class NestingComponent implements OnInit {
 
 
   downloadFiles() {
+    this.waitForZipFiles = true;
+
     let files: any[] = [];
-    this.nesting.forEach((nest: any) => {
+    this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
       let find = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
       if (find != null){
         files.push(find);
       }
     });
+
     let zipped: string[] = [];
-    this.waitForZipFiles = true;
-    Promise.all(files.map(x => fetch(x.url))).then(blobs => {
-      let zip = new JSZip();
-      blobs.forEach(blob => {
-        // @ts-ignore
-        let name: string = blob.url.split('/').pop();
-        while (zipped.includes(name)){
-          name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
-        }
-        zipped.push(name);
-        zip.file(name, blob.blob());
-      });
-      zip.generateAsync({type:"blob"}).then(res => {
-        this.waitForZipFiles = false;
-        saveAs(res, 'export' + '-' + new Date().getTime() + '.zip');
+    let zip = new JSZip();
+
+
+    let cmap: any[] = [];
+
+
+
+    this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
+      let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+      if (searchCMAP != null){
+        this.cmap = searchCMAP.url;
+        this.cmapuser = searchCMAP.author;
+        this.cmapdate = searchCMAP.upload_date;
+        cmap.push({url: this.cmap, user: this.cmapuser, date: this.cmapdate, name: nest.CMAP + '.MPG'});
+      }
+    });
+
+    Promise.all(cmap.map(x => fetch(x.url))).then(blobs => {
+      Promise.all(blobs.map(x => x.text())).then(texts => {
+        Promise.all(texts.map(text => this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()))).then(blobTexts => {
+          blobTexts.forEach(blobText => {
+            let index = blobTexts.indexOf(blobText);
+            zip.file(cmap[index].name, new Blob([blobText.join('\n')], {type: 'text/plain'}));
+          });
+          Promise.all(files.map(x => fetch(x.url))).then(blobs => {
+            blobs.forEach(blob => {
+              // @ts-ignore
+              let name: string = blob.url.split('/').pop();
+              while (zipped.includes(name)){
+                name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+              }
+              zipped.push(name);
+              zip.file(name, blob.blob());
+            });
+            zip.generateAsync({type:"blob"}).then(res => {
+              this.waitForZipFiles = false;
+              saveAs(res, 'export' + '-' + new Date().getTime() + '.zip');
+            });
+          });
+
+        });
       });
     });
   }
@@ -748,7 +777,7 @@ export class NestingComponent implements OnInit {
             var element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
             // @ts-ignore
-            element.setAttribute('download', this.cmap.split('/').pop());
+            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
 
             element.style.display = 'none';
             document.body.appendChild(element);
@@ -775,7 +804,7 @@ export class NestingComponent implements OnInit {
             var element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
             // @ts-ignore
-            element.setAttribute('download', this.cmap.split('/').pop());
+            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
 
             element.style.display = 'none';
             document.body.appendChild(element);
