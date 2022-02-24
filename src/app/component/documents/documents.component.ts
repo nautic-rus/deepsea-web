@@ -33,6 +33,7 @@ export class DocumentsComponent implements OnInit {
 
   // @ts-ignore
   @ViewChild('table') table: Table;
+  showWithFilesOnly = true;
   ngOnInit(): void {
     this.issueManager.getIssueProjects().then(projects => {
       this.projects = projects.filter(x => this.auth.getUser().visible_projects.includes(x));
@@ -104,6 +105,11 @@ export class DocumentsComponent implements OnInit {
       this.filters.revision = this.getFilters(this.issues, 'revision');
       this.filters.department = this.getFilters(this.issues, 'department');
       this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
+      this.issueManager.getNestingFiles().then(nestingFiles => {
+        this.issues = this.issues.filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => x.name.includes(issue.doc_number)));
+      });
+
+
       this.issues = _.sortBy(this.issues, x => x.doc_number);
     });
   }
@@ -156,7 +162,7 @@ export class DocumentsComponent implements OnInit {
   }
   downloadDocFiles(issue: Issue){
     this.issueManager.getIssueDetails(issue.id).then(details => {
-      let files = details.revision_files.filter(x => x.revision == details.revision);
+      let files = details.revision_files.filter(x => x.revision == details.revision && x.group == 'Drawings');
       if (files.length == 0){
         this.messageService.add({key:'task', severity:'error', summary:'No files', detail:'There are no files for this document.'});
       }
@@ -188,5 +194,9 @@ export class DocumentsComponent implements OnInit {
     } else {
       return input.substr(0, length) + '.';
     }
+  }
+
+  fillIssues() {
+
   }
 }

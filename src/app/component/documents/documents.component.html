@@ -92,6 +92,11 @@
           <div class="mr-1">
             <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
             </p-dropdown>
+            <div class="mr-1">
+              <label>Show only with files
+                <input type="checkbox" [(ngModel)]="showWithFilesOnly" (ngModelChange)="projectChanged()">
+              </label>
+            </div>
           </div>
           <div class="p-ml-auto">
           <span class="p-input-icon-left">

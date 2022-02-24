@@ -6,3 +6,20 @@
   grid-template-columns: 1fr;
   overflow-x: auto;
 }
+.days-header{
+}
+.day{
+  width: 50px;
+  height: 20px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+}
+.timeline{
+  padding-top: 20px;
+  overflow-x: visible;
+  width: 100vw;
+}
+.issues-header{
+  min-width: 200px;
+}

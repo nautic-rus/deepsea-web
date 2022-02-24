@@ -768,7 +768,7 @@
               <div class="cy ml-1">Download all files</div>
             </div>
           </div>
-          <div class="mb-30" *ngFor="let fileGroup of fileGroups">
+          <div class="mb-30" *ngFor="let fileGroup of fileGroups" [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
