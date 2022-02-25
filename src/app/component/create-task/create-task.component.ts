@@ -407,6 +407,7 @@ export class CreateTaskComponent implements OnInit {
       case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || !((new RegExp('^NR\\d{3}-\\d{3}-\\d{3}$')).test(this.taskDocNumber));
       case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
+      case 'OTHER': this.taskSummary.trim() == '' || this.responsibleUser == '';
       default: return false;
     }
   }
