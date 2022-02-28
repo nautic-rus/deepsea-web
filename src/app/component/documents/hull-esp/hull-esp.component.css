@@ -792,3 +792,6 @@
   pointer-events: none;
   opacity: 0.5;
 }
+.hidden-group{
+  display: none;
+}

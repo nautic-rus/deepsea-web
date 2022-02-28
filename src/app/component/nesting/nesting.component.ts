@@ -347,29 +347,58 @@ export class NestingComponent implements OnInit {
 
 
   downloadFiles() {
+    this.waitForZipFiles = true;
+
     let files: any[] = [];
-    this.nesting.forEach((nest: any) => {
+    this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
       let find = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
       if (find != null){
         files.push(find);
       }
     });
+
     let zipped: string[] = [];
-    this.waitForZipFiles = true;
-    Promise.all(files.map(x => fetch(x.url))).then(blobs => {
-      let zip = new JSZip();
-      blobs.forEach(blob => {
-        // @ts-ignore
-        let name: string = blob.url.split('/').pop();
-        while (zipped.includes(name)){
-          name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
-        }
-        zipped.push(name);
-        zip.file(name, blob.blob());
-      });
-      zip.generateAsync({type:"blob"}).then(res => {
-        this.waitForZipFiles = false;
-        saveAs(res, 'export' + '-' + new Date().getTime() + '.zip');
+    let zip = new JSZip();
+
+
+    let cmap: any[] = [];
+
+
+
+    this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
+      let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+      if (searchCMAP != null){
+        this.cmap = searchCMAP.url;
+        this.cmapuser = searchCMAP.author;
+        this.cmapdate = searchCMAP.upload_date;
+        cmap.push({url: this.cmap, user: this.cmapuser, date: this.cmapdate, name: nest.CMAP + '.MPG'});
+      }
+    });
+
+    Promise.all(cmap.map(x => fetch(x.url))).then(blobs => {
+      Promise.all(blobs.map(x => x.text())).then(texts => {
+        Promise.all(texts.map(text => this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()))).then(blobTexts => {
+          blobTexts.forEach(blobText => {
+            let index = blobTexts.indexOf(blobText);
+            zip.file(cmap[index].name, new Blob([blobText.join('\n')], {type: 'text/plain'}));
+          });
+          Promise.all(files.map(x => fetch(x.url))).then(blobs => {
+            blobs.forEach(blob => {
+              // @ts-ignore
+              let name: string = blob.url.split('/').pop();
+              while (zipped.includes(name)){
+                name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+              }
+              zipped.push(name);
+              zip.file(name, blob.blob());
+            });
+            zip.generateAsync({type:"blob"}).then(res => {
+              this.waitForZipFiles = false;
+              saveAs(res, 'export' + '-' + new Date().getTime() + '.zip');
+            });
+          });
+
+        });
       });
     });
   }
@@ -613,7 +642,7 @@ export class NestingComponent implements OnInit {
     }
     else{
       this.nesting = this.nestingSource.filter((x: any) => {
-        return (x.ID + x.BLOCKS + x.THICKNESS + x.NEST_LENGTH + x.NEST_WIDTH + x.MATERIAL + x.PARTS_WEIGHT + x.NUM_EQ_NEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+        return x == null || (x.ID + x.BLOCKS + x.THICKNESS + x.NEST_LENGTH + x.NEST_WIDTH + x.MATERIAL + x.PARTS_WEIGHT + x.NUM_EQ_NEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
       });
     }
   }
@@ -688,7 +717,7 @@ export class NestingComponent implements OnInit {
           ]
           nest.LOCKED = false;
         });
-        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
+        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x) && this.isContainsBlocks(x.BLOCKS));
         for (let x = 0; x < 10; x++){
           this.nesting.push(null);
         }
@@ -701,6 +730,15 @@ export class NestingComponent implements OnInit {
 
   }
 
+  isContainsBlocks(blocks: string){
+    let result = false;
+    blocks.split(';').forEach(block => {
+      if (this.blocks.filter(x => x.selected).map(x => x.name).includes(block)){
+        result = true;
+      }
+    });
+    return result;
+  }
   selectMaterial(material: any) {
     material.selected = !material.selected;
     this.nesting.splice(0, this.nesting.length);
@@ -739,7 +777,7 @@ export class NestingComponent implements OnInit {
             var element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
             // @ts-ignore
-            element.setAttribute('download', this.cmap.split('/').pop());
+            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
 
             element.style.display = 'none';
             document.body.appendChild(element);
@@ -766,7 +804,7 @@ export class NestingComponent implements OnInit {
             var element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
             // @ts-ignore
-            element.setAttribute('download', this.cmap.split('/').pop());
+            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
 
             element.style.display = 'none';
             document.body.appendChild(element);

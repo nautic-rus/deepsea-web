@@ -149,7 +149,7 @@ Quill.register('modules/imageResize', ImageResize);
     ElecCablesComponent,
     NestingComponent,
     WebgcodeComponent,
-    GCodeComponent
+    GCodeComponent,
   ],
     imports: [
         BrowserModule,

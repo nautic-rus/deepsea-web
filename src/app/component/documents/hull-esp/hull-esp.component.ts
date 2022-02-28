@@ -113,32 +113,38 @@ export class HullEspComponent implements OnInit {
     {
       name: 'Drawings',
       icon: 'assets/icons/drawings.svg',
-      collapsed: false
+      collapsed: false,
+      need_rights: false
     },
     {
       name: 'Part List',
       icon: 'assets/icons/files.svg',
-      collapsed: false
+      collapsed: false,
+      need_rights: true
     },
     {
       name: 'Cutting Map',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true
+      collapsed: true,
+      need_rights: true
     },
     {
       name: 'Nesting Plates',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true
+      collapsed: true,
+      need_rights: true
     },
     {
       name: 'Nesting Profiles',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true
+      collapsed: true,
+      need_rights: true
     },
     {
       name: 'Profile Sketches',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true
+      collapsed: true,
+      need_rights: true
     }
   ];
   selectedTab = this.fileGroups[0].name;
@@ -511,7 +517,7 @@ export class HullEspComponent implements OnInit {
   }
 
   downloadFiles(group: string, revision: string) {
-    let files = this.getRevisionFilesOfGroup(group, revision);
+    let files = this.getRevisionFilesOfGroup(group, revision).filter(x => x.group == 'Drawings');
     let zipped: string[] = [];
     this.waitForZipFiles = true;
     Promise.all(files.map(x => fetch(x.url))).then(blobs => {

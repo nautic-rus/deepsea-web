@@ -30,9 +30,28 @@ export class GanttComponent implements OnInit {
   issueType = 'RKD';
   sourceIssues: any[] = [];
   issues: any[] = [];
+
+  issues1: any[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  currentDate = new Date().getTime();
+  msPerDay = 1000 * 60 * 60 * 24;
+  daysBefore = 14;
+  daysAfter = 36;
+  startDate = new Date(this.currentDate - this.msPerDay * this.daysBefore).getTime();
+  endDate = new Date(this.startDate + this.msPerDay * this.daysAfter).getTime();
+  days: any[] = [];
+
   constructor(private auth: AuthManagerService, private issueManager: IssueManagerService) { }
 
   ngOnInit(): void {
+    for (let day = this.startDate; day < this.endDate; day = day + this.msPerDay){
+      let date = new Date(day);
+      this.days.push({
+        name: ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1),
+
+      });
+    }
+
+
     this.issueManager.getIssues('op').then(res => {
       this.sourceIssues = res;
       this.fillIssues();
