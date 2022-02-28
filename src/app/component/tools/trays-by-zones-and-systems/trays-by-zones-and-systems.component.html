@@ -321,6 +321,9 @@
             <button [disabled]="waitingForResponse" pButton class="border normal-button p-button-outlined" (click)="generatePdf(true)">Create new rev file</button>
           </div>
         </div>
+        <div class="pl-10">
+          <div tabindex="10" (click)="fixTrayBundle()" pButton [label]="l.tr ('Fix Bundle')" class="button-ok"></div>
+        </div>
         <div class="ml-30">
           <div class="header-table mr-5">{{bundle.drawingId}}</div>
         </div>
@@ -360,7 +363,7 @@
                 <div class="title-bold px-10">{{group[0].mountData.label}}</div>
               </div>
               <div class="cx">
-                <button [class.button-disabled]="group.length < 8" (click)="toggleExpanded('expanded-' + i)" *ngIf="!expanded.includes('expanded-' + i)" pButton icon="pi angle-down" class="expand-button cxy cursor-pointer">Expand</button>
+                <button [class.button-disabled]="group.length < 3" (click)="toggleExpanded('expanded-' + i)" *ngIf="!expanded.includes('expanded-' + i)" pButton icon="pi angle-down" class="expand-button cxy cursor-pointer">Expand</button>
                 <button (click)="toggleExpanded('expanded-' + i)" *ngIf="expanded.includes('expanded-' + i)" pButton icon="pi angle-down" class="expand-button cxy cursor-pointer">Collapse</button>
               </div>
             </div>

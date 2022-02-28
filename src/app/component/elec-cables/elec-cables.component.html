@@ -1,164 +1,472 @@
-<div class="all-page">
-  <div class="card-overflow">
-    <p-table [hidden]="currentView != 'demo'" #table [value]="cables"
-             [scrollable]="true"
-             scrollHeight="calc(100vh - 200px)"
-             [virtualScroll]="true"
-             [virtualRowHeight]="1"
-             styleClass="p-datatable-striped"
-             responsiveLayout="scroll"
-             [globalFilterFields]="['id','doc_number','name','status']">
-      <ng-template pTemplate="caption">
-        <div class="p-d-flex">
-          <div class="mr-1">
-            <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-170 border">
-            </p-dropdown>
-          </div>
-          <div>
-            <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="width-176 border">
-            </p-dropdown>
-          </div>
-          <div>
-            <button (click)="getCables()">LOAD LOCAL CABLES</button>
-            <button (click)="getCables(1)">LOAD MAGISTRALS</button>
-            <p-inputSwitch [(ngModel)]="productionView" (onChange)="changeView()"></p-inputSwitch>
-          </div>
+<div *ngIf="!isDesktop()" class="all-page min-height-100">
+  <div class="pb-20">
+    <div class="card-tabs">
+      <div class="df cards-wrap">
+        <div class="mr-1 mt-10">
+          <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-170 border">
+          </p-dropdown>
         </div>
-      </ng-template>
+        <div class="mr-1 mt-10">
+          <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-1 mt-10">
+          <div class="cable-button cxy cursor-pointer width-170" (click)="getCables()">LOAD LOCAL CABLES</div>
+        </div>
+        <div class="mt-10">
+          <div class="cable-button-two cxy cursor-pointer width-170" (click)="getCables(1)">LOAD MAGISTRALS</div>
+        </div>
 
-      <ng-template pTemplate="body" let-cable>
-        <div class="df w-100 border-table">
-          <div class="w-10">{{cable.complectName}}</div>
-          <div class="w-90">
-            <div class="w-100">
 
-              <div class="df w-100">
-                <div class="text-header w-7">Code</div>
-                <div class="text-header w-7">Section</div>
-                <div class="text-header w-7">Mark</div>
-                <div class="text-header w-7">From N</div>
-                <div class="text-header w-7">From E user ID</div>
-                <div class="text-header w-7">From E room</div>
-                <div class="text-header w-7">To E user ID</div>
-                <div class="text-header w-7">To N</div>
-                <div class="text-header w-7">To N room</div>
-                <div class="text-header w-7">To E room</div>
-                <div class="text-header w-7">Length</div>
-                <div class="text-header w-7">App data</div>
-                <div class="text-header w-7">Stockcode</div>
-              </div>
-              <div class="df w-100 border-table-bottom">
-                <div class="text-table w-7">{{cable.CODE}}</div>
-                <div class="text-table w-7">{{cable.SECTION}}</div>
-                <div class="text-table w-7">{{cable.MARK}}</div>
-                <div class="text-table w-7">{{cable.FROM_N}}</div>
-                <div class="text-table w-7">{{cable.FROM_E_USERID}}</div>
-                <div class="text-table w-7">{{cable.FROM_E_ROOM}}</div>
-                <div class="text-table w-7">{{cable.TO_E_USERID}}</div>
-                <div class="text-table w-7">{{cable.TO_N}}</div>
-                <div class="text-table w-7">{{cable.TO_N_ROOM}}</div>
-                <div class="text-table w-7">{{cable.TO_E_ROOM}}</div>
-                <div class="text-table w-7">{{cable.LEN}}</div>
-                <div class="text-table w-7">{{cable.APPDATA}}</div>
-                <div class="text-table w-7">{{cable.STOCKCODE}}</div>
-              </div>
+<!--          <p-inputSwitch [(ngModel)]="productionView" (onChange)="changeView()"></p-inputSwitch>-->
+<!--        <span class="p-input-icon-left p-ml-auto">-->
+<!--        <i class="pi pi-search"></i>-->
+<!--        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+<!--        </span>-->
+      </div>
+    </div>
+  </div>
+
+
+    <div class="dash-card-tablet" *ngFor="let cable of cables; let i = index">
+      <div class="top-row-tablet">
+        <div class="scheme-name">{{cable.SCHEME}}</div>
+        <div class="top-label-tablet">
+          <div class="label-name-tablet df">
+            <div class="text-y df">
+              <span class="gray-text mr-10">Complect</span>
+              <span class="title-bold mr-5">{{cable.complectName}}</span>
+              <span class="gray-text">(</span>
+              <span class="gray-text mr-10">Category</span>
+              <span class="title-mini">{{cable.ws.category}}</span>
+              <span class="gray-text">)</span>
             </div>
-            <div class="w-100">
-              <div class="w-100 text-header">
-                Cable path
+          </div>
+          <div class="flex-end text-y">
+            <div class="gray-text mr-10">TRM code</div>
+            <div class="df">
+              <div class="trm">{{cable.STOCKCODE}}</div>
+              <div (click)="copyTrmCode(cable.STOCKCODE, 't' + i)" class="trm-copy position-relative cursor-pointer cxy">
+                <img src="assets/icons/trm.svg" height="16">
+                <div class="copy-tooltip-tablet" [hidden]="!showTooltip('t' + i)">Copied!</div>
               </div>
-              <div class="w-100 text-table border-table-bottom">
-                {{cable.CABLEPATH}}
-              </div>
-            </div>
-            <div class="w-100">
-              <div class="df w-100">
-                <div class=" text-header">Name</div>
-                <div class=" text-header">Category</div>
-                <div class=" text-header">TRM code</div>
-                <div class=" text-header">Units</div>
-                <div class=" text-header">Single weight</div>
-                <div class=" text-header">Provider</div>
-              </div>
-              <div class="df w-100">
-                <div class=" text-table">{{cable.ws.NAME}}</div>
-                <div class=" text-table">{{cable.ws.category}}</div>
-                <div class=" text-table">{{cable.ws.trmCode}}</div>
-                <div class=" text-table">{{cable.ws.units}}</div>
-                <div class=" text-table">{{cable.ws.singleWeight}}</div>
-                <div class=" text-table">{{cable.ws.provider}}</div>
-              </div>
-
             </div>
           </div>
         </div>
-
-      </ng-template>
-    </p-table>
-    <p-table [hidden]="currentView != 'production'" #table [value]="cables"
-             [scrollable]="true"
-             scrollHeight="calc(100vh - 265px)"
-             [virtualScroll]="true"
-             [virtualRowHeight]="1"
-             styleClass="p-datatable-striped"
-             responsiveLayout="scroll"
-             [globalFilterFields]="['id','doc_number','name','status']">
-      <ng-template pTemplate="caption">
-        <div class="p-d-flex">
-          <div class="mr-1">
-            <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-170 border">
-            </p-dropdown>
+        <div class="blue cable-name-tablet">
+          <div>
+            <div class="text-mini-name-tablet">Name</div>
+            <div class="">{{cable.ws.name}}</div>
           </div>
           <div>
-            <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="width-176 border">
-            </p-dropdown>
+            <img src="assets/icons/usb.svg" height="30">
+          </div>
+        </div>
+        <div class="gray cable-name-tablet mt-20">
+          <div>
+            <div class="text-mini-name-tablet">Cable path</div>
+            <div class="">{{cable.CABLEPATH}}</div>
           </div>
           <div>
-            <button (click)="getCables()">LOAD LOCAL CABLES</button>
-            <button (click)="getCables(1)">LOAD MAGISTRALS</button>
-            <p-inputSwitch *ngIf="availableViews.includes('demo')" [(ngModel)]="productionView" (onChange)="changeView()"></p-inputSwitch>
+            <img src="assets/icons/path.svg" height="30">
           </div>
         </div>
-      </ng-template>
-      <!--      <ng-template pTemplate="header">-->
-      <!--        <tr class="sticky">-->
-      <!--          <th pSortableColumn="CODE" class="w-12">Part <p-sortIcon field="CODE"></p-sortIcon></th>-->
-      <!--          <th pSortableColumn="DESCRIPTION" class="w-17">Name <p-sortIcon field="DESCRIPTION"></p-sortIcon></th>-->
-      <!--          <th class="w-8">Weight</th>-->
-      <!--          <th class="w-19">Stock Code</th>-->
-      <!--          <th class="w-28">Node Path</th>-->
-      <!--          <th class="w-19">COG</th>-->
-      <!--        </tr>-->
-      <!--      </ng-template>-->
-      <ng-template pTemplate="body" let-cable>
-        <div class="df w-100">
-          <div class=" text-table">{{cable.CODE}}</div>
-          <div class="text-table">{{cable.SECTION}}</div>
-          <div class="text-table">{{cable.MARK}}</div>
-          <div class=" text-table">{{cable.FROM_N}}</div>
-          <div class=" text-table">{{cable.FROM_E_USERID}}</div>
-          <div class=" text-table">{{cable.FROM_E_ROOM}}</div>
-          <div class=" text-table">{{cable.TO_E_USERID}}</div>
-          <div class=" text-table">{{cable.TO_N}}</div>
-          <div class=" text-table">{{cable.TO_N_ROOM}}</div>
-          <div class=" text-table">{{cable.TO_E_ROOM}}</div>
-          <div class=" text-table">{{cable.LEN}}</div>
-          <div class=" text-table">{{cable.APPDATA}}</div>
-          <div class=" text-table">{{cable.STOCKCODE}}</div>
+      </div>
+      <div class="two-column-cable">
+        <div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point pink-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">Code</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.CODE}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point pink-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">Length</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.LEN}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point blue-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">From N</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.FROM_N}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point yellow-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">From N room</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.FROM_N_ROOM}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point green-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">From E room</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.FROM_E_ROOM}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point violet-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">From E user ID</div>
+          </div>
+          <div class="df">
+            <div class=""></div>
+            <div class="point-description pl-15">{{cable.FROM_E_USERID}}</div>
+          </div>
         </div>
-        <div class="w-100">
-          {{cable.CABLEPATH}}
+        <div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point pink-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">Mark</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.MARK}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point pink-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">App data</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.ADDDATA}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point blue-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">To N</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.TO_N}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point yellow-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">To N room</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.TO_N_ROOM}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point green-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">To E room</div>
+          </div>
+          <div class="df">
+            <div class="line-point mb-minus15"></div>
+            <div class="point-description pl-15">{{cable.TO_E_ROOM}}</div>
+          </div>
+          <div class="df">
+            <div class="text-center-y">
+              <div class="point violet-point"></div>
+            </div>
+            <div class="point-name pl-10 pt-5">TO E user ID</div>
+          </div>
+          <div class="df">
+            <div class=""></div>
+            <div class="point-description pl-20">{{cable.TO_E_USERID}}</div>
+          </div>
         </div>
-        <div class="df w-100">
-          <div class=" text-table">{{cable.ws.NAME}}</div>
-          <div class=" text-table">{{cable.ws.category}}</div>
-          <div class=" text-table">{{cable.ws.trmCode}}</div>
-          <div class=" text-table">{{cable.ws.units}}</div>
-          <div class=" text-table">{{cable.ws.singleWeight}}</div>
-          <div class=" text-table">{{cable.ws.provider}}</div>
-        </div>
-      </ng-template>
-    </p-table>
+      </div>
+    </div>
+</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div *ngIf="isDesktop()" class="all-page min-height-100">
+  <div class="pb-20">
+    <div class="card-tabs">
+      <div class="text-center-y h-100 df">
+        <div class="mr-1 mt-10">
+          <p-dropdown class="select" [(ngModel)]="trayBundlesProject" [options]="trayBundlesProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-1 mt-10">
+          <p-dropdown class="select" [(ngModel)]="selectedTrayBundle" [options]="trayBundles" optionLabel="drawingId" optionValue="drawingId" styleClass="width-176 border">
+          </p-dropdown>
+        </div>
+        <div class="df text-y mt-10">
+          <div class="cable-button cxy cursor-pointer mr-1" (click)="getCables()">LOAD LOCAL CABLES</div>
+          <div class="cable-button-two cxy cursor-pointer" (click)="getCables(1)">LOAD MAGISTRALS</div>
+          <!--          <p-inputSwitch [(ngModel)]="productionView" (onChange)="changeView()"></p-inputSwitch>-->
+        </div>
+        <!--        <span class="p-input-icon-left p-ml-auto">-->
+        <!--        <i class="pi pi-search"></i>-->
+        <!--        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+        <!--        </span>-->
+      </div>
+    </div>
+  </div>
+
+
+  <div class="dash-card" *ngFor="let cable of cables; let i = index">
+    <div class="top-row mb-20">
+      <div class="label-name pr-20">
+        <div class="dark-gray cable-name width-310 mb-10">
+          <div>
+            <div class="text-mini-name-tablet">Complect</div>
+            <span class="text-description-white">{{cable.complectName}}</span>
+            <span class="white-text mx-10 mb-2px">(Category {{cable.ws.category}})</span>
+          </div>
+          <div>
+            <img src="assets/icons/folder.svg" height="26">
+          </div>
+        </div>
+        <div class="">
+          <div class="blue cable-name width-310">
+            <div>
+              <div class="text-mini-name-tablet">Name</div>
+              <div class="text-description-white">{{cable.ws.name}}</div>
+            </div>
+            <div>
+              <img src="assets/icons/usb.svg" height="30">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cable-name-path pr-20">
+        <div class="yellow cable-name min-width-380 mb-10">
+          <div>
+            <div class="text-mini-name-tablet">Scheme</div>
+            <div class="text-description-white">{{cable.SCHEME}}</div>
+          </div>
+          <div>
+            <img src="assets/icons/label.svg" height="26">
+          </div>
+        </div>
+        <div class="gray cable-name min-width-380 mb-10">
+          <div>
+            <div class="text-mini-name-tablet">Cable path</div>
+            <div class="">{{cable.CABLEPATH}}</div>
+          </div>
+          <div>
+            <img src="assets/icons/path.svg" height="30">
+          </div>
+        </div>
+      </div>
+      <div class="trm-code-cont">
+        <div class="df">
+          <div class="trm">{{cable.STOCKCODE}}</div>
+          <div (click)="copyTrmCode(cable.STOCKCODE, 't' + i)" class="trm-copy cursor-pointer cxy">
+            <img src="assets/icons/trm.svg" height="16">
+            <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-row df">
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point pink-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">Code</div>
+          <div class="point-description">{{cable.CODE}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point pink-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">Mark</div>
+          <div class="point-description">{{cable.MARK}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point pink-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">App data</div>
+          <div class="point-description">{{cable.ADDDATA}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point pink-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">Length</div>
+          <div class="point-description">{{cable.LEN}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point blue-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">From N</div>
+          <div class="point-description">{{cable.FROM_N}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point blue-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">To N</div>
+          <div class="point-description">{{cable.TO_N}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point yellow-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">From N room</div>
+          <div class="point-description">{{cable.FROM_N_ROOM}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point yellow-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">To N room</div>
+          <div class="point-description">{{cable.TO_N_ROOM}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point green-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">From E room</div>
+          <div class="point-description">{{cable.FROM_E_ROOM}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point green-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">To E room</div>
+          <div class="point-description">{{cable.TO_E_ROOM}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point violet-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+            <div class="line-point-horizontal"></div>
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">From E user ID</div>
+          <div class="point-description">{{cable.FROM_E_USERID}}</div>
+        </div>
+      </div>
+      <div class="all-point">
+        <div class="df">
+          <div class="text-center-y">
+            <div class="point violet-point"></div>
+          </div>
+          <div class="mt-3px all-line">
+
+          </div>
+        </div>
+        <div class="cy pr-15">
+          <div class="point-name pt-5">To E user ID</div>
+          <div class="point-description">{{cable.TO_E_USERID}}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
