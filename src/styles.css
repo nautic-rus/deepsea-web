@@ -193,6 +193,12 @@ body,p{
 .width-250{
   width: 250px;
 }
+.width-260{
+  width: 260px;
+}
+.width-265{
+  width: 265px;
+}
 .width-270{
   width: 270px;
 }
@@ -289,6 +295,12 @@ body,p{
   justify-content: flex-end;
   position: absolute;
   right: 0;
+}
+.width-fit{
+  width: fit-content;
+}
+.width-min{
+  width: min-content;
 }
 
 
@@ -504,6 +516,9 @@ body,p{
 }
 .pl-20{
   padding-left: 20px;
+}
+.pr-5{
+  padding-right: 5px;
 }
 .pr-10{
   padding-right: 10px;

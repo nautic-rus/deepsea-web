@@ -30,8 +30,8 @@ export class SpecManagerService {
   }
 
   async getCables(project: string, bundle: string, magistral: number): Promise<any[]> {
-    return await this.http.get<any[]>(props.httpSpec + '/elecCables', {params: {project, bundle, magistral}}).toPromise();
-    // return await this.http.get<any[]>('assets/test/cables.json', {params: {project, bundle, magistral}}).toPromise();
+    // return await this.http.get<any[]>(props.httpSpec + '/elecCables', {params: {project, bundle, magistral}}).toPromise();
+    return await this.http.get<any[]>('assets/test/cables.json', {params: {project, bundle, magistral}}).toPromise();
   }
   async getHullNesting(project: string) {
     return await this.http.get<any>(props.httpSpec + '/hullNesting', {params: {project}}).toPromise();

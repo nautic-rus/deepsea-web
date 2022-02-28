@@ -45,9 +45,11 @@ export class ElecCablesComponent implements OnInit {
   }
 
   getCables(number: number = 0) {
+    this.loading = true;
     this.s.getCables(this.trayBundlesProject, this.selectedTrayBundle, number).then(res => {
       console.log(res);
       this.cables = res;
+      this.loading = false;
     });
   }
 
