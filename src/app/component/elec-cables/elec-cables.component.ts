@@ -45,6 +45,8 @@ export class ElecCablesComponent implements OnInit {
   }
 
   getCables(number: number = 0) {
+    this.cables = [];
+    this.openedPath = [];
     this.loading = true;
     this.s.getCables(this.trayBundlesProject, this.selectedTrayBundle, number).then(res => {
       console.log(res);
@@ -71,5 +73,38 @@ export class ElecCablesComponent implements OnInit {
   }
   isDesktop() {
     return this.device.isDesktop() && window.innerWidth > 1078;
+  }
+
+  pointsHovered: any[] = [];
+  openedPath: any[] = [];
+  openPath(path: string){
+    if (!this.openedPath.includes(path)){
+      this.openedPath.push(path);
+    }
+    else{
+      this.openedPath.splice(this.openedPath.indexOf(path), 1);
+    }
+  }
+  hoverPoint(point: string){
+    if (!this.pointsHovered.includes(point)){
+      this.pointsHovered.push(point);
+    }
+    else{
+      this.pointsHovered.splice(this.pointsHovered.indexOf(point), 1);
+    }
+  }
+  getPointStyle(s: string, col: string) {
+    if (this.pointsHovered.includes(s)){
+      return {
+        'background-color': col
+      };
+    }
+    else{
+      return {};
+    }
+  }
+
+  getPath(cablepath: string) {
+    return cablepath.split(' ').filter(x => x.length < 16 && x != '');
   }
 }
