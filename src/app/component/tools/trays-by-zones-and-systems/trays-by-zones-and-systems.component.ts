@@ -8,6 +8,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {GenerationWaitComponent} from "./generation-wait/generation-wait.component";
 import {group} from "@angular/animations";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-trays-by-zones-and-systems',
@@ -30,8 +31,10 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   sortReverse = false;
   expanded: string[] = [];
   tooltips: string[] = [];
+  trayBundlesProject = 'P701';
+  selectedTrayBundle: any;
   selectedGroup: any = Object();
-  constructor(public device: DeviceDetectorService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService) { }
+  constructor(public device: DeviceDetectorService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService, private messageService: MessageService) { }
 
 
   ngOnInit(): void {
@@ -146,5 +149,9 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
 
   showTooltip(index: string) {
     return this.tooltips.includes(index);
+  }
+  fixTrayBundle(){
+    this.s.fixTrayBundle(this.trayBundlesProject, this.selectedTrayBundle);
+    this.messageService.add({key:'task', severity:'success', summary:'Fix Bundle', detail:'You have successfully fixed bundle ' + this.selectedTrayBundle + '.'});
   }
 }

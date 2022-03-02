@@ -1,4 +1,4 @@
-<div *ngIf="!device.isDesktop()" class="top-panel-tablet">
+<div *ngIf="!isDesktop()" class="top-panel-tablet">
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
@@ -51,7 +51,7 @@
   </div>
   <div></div>
 </div>
-<div *ngIf="device.isDesktop()" class="top-panel">
+<div *ngIf="isDesktop()" class="top-panel">
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>

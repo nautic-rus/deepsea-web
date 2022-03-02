@@ -61,7 +61,9 @@ export class NaviComponent implements OnInit {
       modal: true,
     });
   }
-
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1078;
+  }
   getTime() {
     let time = new Date(this.weather.time);
     return (('0' + time.getHours()).slice(-2)) + ':' + ('0' + time.getMinutes()).slice(-2)

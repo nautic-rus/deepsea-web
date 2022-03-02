@@ -105,7 +105,7 @@
   background-color: #F3F2F1;
 }
 .card-height{
-  height: calc(100vh - 200px);
+  height: calc(100vh - 236px);
   flex-direction: column;
 }
 .loading-text{
@@ -316,6 +316,16 @@
 }
 .coordinates-row{
   min-width: 85px;
+}
+.button-ok{
+  border: none;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s
 }
 .info-row{
   border-bottom: 1px solid #f3f2f1;

@@ -4,6 +4,7 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import _ from "underscore";
 import {SpecManagerService} from "../../domain/spec-manager.service";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-elec-cables',
@@ -21,8 +22,11 @@ export class ElecCablesComponent implements OnInit {
   availableViews = ['demo', 'production'];
   currentView = 'demo';
   productionView = false;
+  loading = false;
+  noResult = false;
+  tooltips: string[] = [];
 
-  constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, private s: SpecManagerService) { }
+  constructor(public device: DeviceDetectorService, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, private s: SpecManagerService) { }
 
   ngOnInit(): void {
     if (this.auth.hasPerms('cables-production-view-only')){
@@ -41,13 +45,31 @@ export class ElecCablesComponent implements OnInit {
   }
 
   getCables(number: number = 0) {
+    this.loading = true;
     this.s.getCables(this.trayBundlesProject, this.selectedTrayBundle, number).then(res => {
       console.log(res);
       this.cables = res;
+      this.loading = false;
     });
   }
 
   changeView() {
     this.currentView = this.currentView == 'demo' ? 'production' : 'demo';
+  }
+
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
+  }
+
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
+  }
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1078;
   }
 }
