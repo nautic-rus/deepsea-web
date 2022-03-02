@@ -9,15 +9,23 @@
   </div>
 </div>
 
-<div class="timeline df">
-  <div class="issues-header"></div>
-  <div class="days-header df">
-    <div *ngFor="let day of days" class="day">{{day.name}}</div>
-  </div>
-</div>
-<div *ngFor="let issue of issues1; let i = index">
-  {{'Issue # ' + (i + 1)}}
-</div>
+
+<!--<div class="df gantt-row">-->
+<!--  <div class="issues-header"></div>-->
+<!--  <div [ngStyle]="getRowStyle()" class="df">-->
+<!--    <div *ngFor="let day of days" class="day">{{day.name}}</div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div class="df gantt-row" *ngFor="let issue of issues1; let i = index">-->
+<!--  <div class="issues-header">{{'Issue # ' + (i + 1)}}</div>-->
+<!--  <div (dragover)="moveOverTimeline($event, issue, i)" [ngStyle]="getRowStyle()" class="df"></div>-->
+<!--  <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period" (dragover)="moveOverTimelineThis($event, issue, i)" (dragstart)="dragStart($event, issue, i)" draggable="true"></div>-->
+<!--  <div class="cxy" (dragover)="moveResize($event, issue)" (dragstart)="dragStart($event, issue, i, 'resize')" draggable="true" [ngStyle]="getRightArrow(issue)">-->
+<!--    <i class="pi pi-chevron-right"></i>-->
+<!--  </div>-->
+
+<!--</div>-->
 
 
 
