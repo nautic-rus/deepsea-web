@@ -192,7 +192,7 @@ Quill.register('modules/imageResize', ImageResize);
         FieldsetModule,
         NgxExtendedPdfViewerModule,
         NgxGanttModule,
-        PieChartModule
+        PieChartModule,
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
