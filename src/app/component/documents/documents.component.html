@@ -92,13 +92,13 @@
           <div class="mr-1">
             <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
             </p-dropdown>
-            <div class="mr-1">
-              <label>Show only with files
-                <input type="checkbox" [(ngModel)]="showWithFilesOnly" (ngModelChange)="projectChanged()">
-              </label>
-            </div>
           </div>
-          <div class="p-ml-auto">
+          <div class="mr-1">
+            <label>Show only with files
+              <input type="checkbox" [(ngModel)]="showWithFilesOnly" (ngModelChange)="projectChanged()">
+            </label>
+          </div>
+          <div class="p-ml-auto mr-10">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />

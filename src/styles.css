@@ -466,6 +466,10 @@ body,p{
   margin-top: 16px;
   margin-bottom: 16px;
 }
+.my-20{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .pt-5{
   padding-top: 5px;
 }
@@ -633,4 +637,7 @@ cdk-virtual-scroll-viewport{
 }
 .no-actions{
   pointer-events: none;
+}
+.highlight {
+  background-color: #6EC5FF;
 }

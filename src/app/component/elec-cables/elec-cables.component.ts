@@ -14,7 +14,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
 export class ElecCablesComponent implements OnInit {
 
   cables: any[] = [];
-
+  cablesSource: any = [];
   trayBundlesProject = 'P701';
   trayBundlesProjects = ['P701', 'P707'];
   selectedTrayBundle: any;
@@ -25,6 +25,7 @@ export class ElecCablesComponent implements OnInit {
   loading = false;
   noResult = false;
   tooltips: string[] = [];
+  search: string = '';
 
   constructor(public device: DeviceDetectorService, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, private s: SpecManagerService) { }
 
@@ -34,6 +35,16 @@ export class ElecCablesComponent implements OnInit {
     }
     this.currentView = this.availableViews[0];
     this.trayBundleProjectChanged();
+  }
+  searchChanged() {
+    if (this.search.trim() == ''){
+      this.cables = this.cablesSource;
+    }
+    else{
+      this.cables = this.cablesSource.filter((x: any) => {
+        return x == null || (x.CODE + x.ws.name + x.SCHEME + x.FROM_N + x.TO_N + x.FROM_N_ROOM + x.TO_N_ROOM + x.FROM_E_ROOM + x.TO_E_ROOM + x.FROM_E_USERID + x.TO_E_USERID + x.STOCKCODE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+      });
+    }
   }
   trayBundleProjectChanged(){
     this.s.getTrayBundles(this.trayBundlesProject).then(res => {
@@ -51,7 +62,13 @@ export class ElecCablesComponent implements OnInit {
     this.s.getCables(this.trayBundlesProject, this.selectedTrayBundle, number).then(res => {
       console.log(res);
       this.cables = res;
+      this.cables.push(null);
+      this.cables.push(null);
+      this.cables.push(null);
+      this.cables.push(null);
+      this.cables.push(null);
       this.loading = false;
+      this.cablesSource = this.cables;
     });
   }
 
@@ -77,6 +94,14 @@ export class ElecCablesComponent implements OnInit {
 
   pointsHovered: any[] = [];
   openedPath: any[] = [];
+  sortValues: any[] = [
+    'Not sorted',
+    'By Index A-Z',
+    'By Index Z-A',
+    'By System A-Z',
+    'By System Z-A',
+  ];
+  sortValue = this.sortValues[0];
   openPath(path: string){
     if (!this.openedPath.includes(path)){
       this.openedPath.push(path);
@@ -106,5 +131,35 @@ export class ElecCablesComponent implements OnInit {
 
   getPath(cablepath: string) {
     return cablepath.split(' ').filter(x => x.length < 16 && x != '');
+  }
+
+  sortChanged() {
+    this.cablesSource = this.cablesSource.filter((x: any) => x != null);
+    switch (this.sortValues.indexOf(this.sortValue)) {
+      case 0:{
+        this.cables = this.cablesSource;
+        break;
+      }
+      case 1:{
+        this.cables = _.sortBy(this.cablesSource, x => x.CODE);
+        break;
+      }
+      case 2:{
+        this.cables = _.sortBy(this.cablesSource, x => x.CODE).reverse();
+        break;
+      }
+      case 3:{
+        this.cables = _.sortBy(this.cablesSource, x => x.SCHEME);
+        break;
+      }
+      case 4:{
+        this.cables = _.sortBy(this.cablesSource, x => x.SCHEME).reverse();
+        break;
+      }
+    }
+    for (let x = 0; x < 10; x ++){
+      this.cables.push(null);
+      this.cablesSource.push(null);
+    }
   }
 }

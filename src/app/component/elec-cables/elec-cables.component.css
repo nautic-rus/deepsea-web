@@ -16,19 +16,22 @@
 /deep/.p-inputtext {
   font-size: 14px!important;
 }
+/deep/.p-component{
+  font-size: 14px!important;
+}
 .empty-card{
   height: 20px;
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 8;
 }
 .empty-card-bottom{
   height: 20px;
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   position: sticky;
   top: 77px;
-  z-index: 10;
+  z-index: 7;
 }
 .text-header{
   text-align: left;
@@ -55,7 +58,7 @@
 .sticky-card{
   position: sticky;
   top: 20px;
-  z-index: 100;
+  z-index: 8;
 }
 .border-table{
   border: 1px solid #f3f2f1;
@@ -136,15 +139,21 @@
   margin-right: 20px;
   margin-bottom: 20px;
   width: 500px;
-  height: 290px;
+  height: 310px;
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
   transition: 0.5s;
   display: grid;
-  grid-template-rows: 50px 140px 100px;
+  grid-template-rows: 70px 140px 100px;
   z-index: 1;
   box-shadow: 3px 0px 7px -4px rgba(34, 60, 80, 0.37);
+}
+.hidden-card{
+  opacity: 0;
+  height: 0 !important;
+  width: 500px;
+  margin: 0 20px 0 20px !important;
 }
 .trm-code-cont{
 }
@@ -524,7 +533,7 @@
 }
 .cable-path-container{
   margin-left: -30px;
-  height: 290px;
+  height: 310px;
   width: 170px;
   background: #ffffff;
   border-top-right-radius: 10px;

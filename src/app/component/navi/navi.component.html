@@ -56,22 +56,8 @@
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
   <div></div>
-  <div *ngIf="t.language == 'ru'" class="cxy time mx-5">{{getTime()}}</div>
-  <div *ngIf="t.language == 'ru'" class="cxy">
-    <div class="df" *ngIf="weather.description != ''">
-      <div class="cxy weather">
-        <div class="cxy weather-descr">
-          <img src="{{'/assets/weather-conditions/' + weather.icon + '.png'}}" height="24" pTooltip="{{weather.description}}" tooltipPosition="left">
-        </div>
-        <!--        <div class="weather-descr cxy text-center">-->
-        <!--          <div class="">{{weather.description}}</div>-->
-        <!--        </div>-->
-        <div class="mx-1 cxy">
-          <div class="">{{weather.temp}} °C</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div *ngIf="t.language == 'ru'" class="cxy"></div>
+  <div *ngIf="t.language == 'ru'" class="cxy"></div>
   <div *ngIf="t.language == 'en'" class="cxy"></div>
   <div *ngIf="t.language == 'en'" class="cxy"></div>
   <div class="cxy">
@@ -99,7 +85,7 @@
         <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
       </div>
     </div>
-    <p-overlayPanel #user [style]="{width: '240px', 'border-radius': '4px'}">
+    <p-overlayPanel #user [style]="{width: '240px', 'border-radius': '4px', 'z-index': 11}">
       <ng-template pTemplate>
         <div class="df border-bottom all-row-user-menu">
           <div class="cxy mx-1">

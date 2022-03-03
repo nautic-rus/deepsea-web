@@ -18,7 +18,7 @@
             </div>
             <div class="cxy load-button-two">Load cables</div>
           </div>
-          <div (click)="getCables(1)" class="df cursor-pointer">
+          <div (click)="getCables(1)" class="df cursor-pointer mr-1">
             <div class="load-button cxy">
               <img src="assets/icons/magistral.svg" height="24">
             </div>
@@ -26,10 +26,17 @@
           </div>
           <!--          <p-inputSwitch [(ngModel)]="productionView" (onChange)="changeView()"></p-inputSwitch>-->
         </div>
-        <!--        <span class="p-input-icon-left p-ml-auto">-->
-        <!--        <i class="pi pi-search"></i>-->
-        <!--        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
-        <!--        </span>-->
+        <div class="p-ml-auto df">
+          <div class="mt-10 mr-1">
+            <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-176 border">
+            </p-dropdown>
+          </div>
+          <span class="p-input-icon-left p-ml-auto mt-10">
+            <i class="pi pi-search"></i>
+            <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+          </span>
+        </div>
+
       </div>
     </div>
   </div>
@@ -48,165 +55,188 @@
     </div>
   </div>
   <div class="all-wrap">
-    <div class="df" *ngFor="let cable of cables; let i = index">
-      <div [class.closed-path-dash]="!openedPath.includes('cab-' + i)" class="dash-card" >
-        <div class="top-row">
-          <div class="left-top-row">
-            <div class="cx mt-10">
-              <div class="title-bold">{{cable.CODE}}</div>
+    <div  *ngFor="let cable of cables; let i = index">
+      <div class="hidden-card" *ngIf="cable == null"></div>
+      <div class="df" *ngIf="cable != null">
+        <div [class.closed-path-dash]="!openedPath.includes('cab-' + i)" class="dash-card" >
+          <div class="top-row">
+            <div class="left-top-row">
+              <div class="cx mt-10">
+                <div class="title-bold">
+                  <span [innerHTML]="cable.CODE | highLight: search"></span>
+                 </div>
+              </div>
             </div>
-          </div>
-          <div class="">
             <div class="">
-              <div class="title-medium-bold">{{cable.ws.name}}</div>
-            </div>
-            <div class="trm-code-cont pt-10">
-              <div class="df">
-                <div class="trm">{{cable.STOCKCODE}}</div>
-                <div (click)="copyTrmCode(cable.STOCKCODE, 't' + i)" class="trm-copy cursor-pointer cxy">
-                  <img src="assets/icons/trm.svg" height="16">
-                  <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
-                </div>
+              <div class="title-medium-bold">
+                <span [innerHTML]="cable.ws.name | highLight: search"></span>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="all-bottom-row mt-20">
-          <div class="left-from">FROM</div>
-          <div class="bottom-row">
-            <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('N-' + i)" (mouseleave)="hoverPoint('N-' + i)">
-              <div class="df flex-end">
-                <div class="count-from-to mr-10">{{cable.FROM_N}}</div>
-              </div>
-              <div class="df">
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('N-' + i, '#E91E63')" class="point gray-point"></div>
-                </div>
-                <div class="all-line mt-minus6">
-                  <div class="cx">
-                    <div class="text-from-to">Node</div>
+              <div class="trm-code-cont pt-10">
+                <div class="df">
+                  <div class="trm">
+                    <span [innerHTML]="cable.STOCKCODE | highLight: search"></span>
                   </div>
-                  <div>
-                    <div class="line-point-horizontal"></div>
+                  <div (click)="copyTrmCode(cable.STOCKCODE, 't' + i)" class="trm-copy cursor-pointer cxy">
+                    <img src="assets/icons/trm.svg" height="16">
+                    <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
                   </div>
                 </div>
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('N-' + i, '#E91E63')" class="point gray-point"></div>
-                </div>
-              </div>
-              <div class="df">
-                <div class="count-from-to ml-10">{{cable.TO_N}}</div>
-              </div>
-            </div>
-            <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('Nroom-' + i)" (mouseleave)="hoverPoint('Nroom-' + i)">
-              <div class="df flex-end">
-                <div class="count-from-to mr-10">{{cable.FROM_N_ROOM}}</div>
-              </div>
-              <div class="df">
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('Nroom-' + i, '#00BCD4')" class="point gray-point"></div>
-                </div>
-                <div class="all-line mt-minus6">
-                  <div class="cx">
-                    <div class="text-from-to">Node rooms</div>
-                  </div>
-                  <div>
-                    <div class="line-point-horizontal"></div>
-                  </div>
-                </div>
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('Nroom-' + i, '#00BCD4')" class="point gray-point"></div>
-                </div>
-              </div>
-              <div class="df">
-                <div class="count-from-to ml-10">{{cable.TO_N_ROOM}}</div>
-              </div>
-            </div>
-            <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('Eroom-' + i)" (mouseleave)="hoverPoint('Eroom-' + i)">
-              <div class="df flex-end">
-                <div class="count-from-to mr-10">{{cable.FROM_E_ROOM}}</div>
-              </div>
-              <div class="df">
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('Eroom-' + i, '#FFB300')" class="point gray-point"></div>
-                </div>
-                <div class="all-line mt-minus6">
-                  <div class="cx">
-                    <div class="text-from-to">EQP rooms</div>
-                  </div>
-                  <div>
-                    <div class="line-point-horizontal"></div>
-                  </div>
-                </div>
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('Eroom-' + i, '#FFB300')" class="point gray-point"></div>
-                </div>
-              </div>
-              <div class="df">
-                <div class="count-from-to ml-10">{{cable.TO_E_ROOM}}</div>
-              </div>
-            </div>
-            <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('EuserID-' + i)" (mouseleave)="hoverPoint('EuserID-' + i)">
-              <div class="df flex-end">
-                <div class="count-from-to mr-10">{{cable.FROM_E_USERID}}</div>
-              </div>
-              <div class="df">
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('EuserID-' + i, '#52A756')" class="point gray-point"></div>
-                </div>
-                <div class="all-line mt-minus6">
-                  <div class="cx">
-                    <div class="text-from-to">EQP index</div>
-                  </div>
-                  <div>
-                    <div class="line-point-horizontal"></div>
-                  </div>
-                </div>
-                <div class="text-center-y">
-                  <div [ngStyle]="getPointStyle('EuserID-' + i, '#52A756')" class="point gray-point"></div>
-                </div>
-              </div>
-              <div class="df">
-                <div class="count-from-to ml-10">{{cable.TO_E_USERID}}</div>
               </div>
             </div>
           </div>
-          <div class="right-to">TO</div>
+          <div class="all-bottom-row mt-20">
+            <div class="left-from">FROM</div>
+            <div class="bottom-row">
+              <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('N-' + i)" (mouseleave)="hoverPoint('N-' + i)">
+                <div class="df flex-end">
+                  <div class="count-from-to mr-10">
+                    <span [innerHTML]="cable.FROM_N | highLight: search"></span>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('N-' + i, '#E91E63')" class="point gray-point"></div>
+                  </div>
+                  <div class="all-line mt-minus6">
+                    <div class="cx">
+                      <div class="text-from-to">Node</div>
+                    </div>
+                    <div>
+                      <div class="line-point-horizontal"></div>
+                    </div>
+                  </div>
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('N-' + i, '#E91E63')" class="point gray-point"></div>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="count-from-to ml-10">
+                    <span [innerHTML]="cable.TO_N | highLight: search"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('Nroom-' + i)" (mouseleave)="hoverPoint('Nroom-' + i)">
+                <div class="df flex-end">
+                  <div class="count-from-to mr-10">
+                    <span [innerHTML]="cable.FROM_N_ROOM | highLight: search"></span>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('Nroom-' + i, '#00BCD4')" class="point gray-point"></div>
+                  </div>
+                  <div class="all-line mt-minus6">
+                    <div class="cx">
+                      <div class="text-from-to">Node rooms</div>
+                    </div>
+                    <div>
+                      <div class="line-point-horizontal"></div>
+                    </div>
+                  </div>
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('Nroom-' + i, '#00BCD4')" class="point gray-point"></div>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="count-from-to ml-10">
+                    <span [innerHTML]="cable.TO_N_ROOM | highLight: search"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('Eroom-' + i)" (mouseleave)="hoverPoint('Eroom-' + i)">
+                <div class="df flex-end">
+                  <div class="count-from-to mr-10">
+                    <span [innerHTML]="cable.FROM_E_ROOM | highLight: search"></span>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('Eroom-' + i, '#FFB300')" class="point gray-point"></div>
+                  </div>
+                  <div class="all-line mt-minus6">
+                    <div class="cx">
+                      <div class="text-from-to">EQP rooms</div>
+                    </div>
+                    <div>
+                      <div class="line-point-horizontal"></div>
+                    </div>
+                  </div>
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('Eroom-' + i, '#FFB300')" class="point gray-point"></div>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="count-from-to ml-10">
+                    <span [innerHTML]="cable.TO_E_ROOM | highLight: search"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('EuserID-' + i)" (mouseleave)="hoverPoint('EuserID-' + i)">
+                <div class="df flex-end">
+                  <div class="count-from-to mr-10">
+                    <span [innerHTML]="cable.FROM_E_USERID | highLight: search"></span>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('EuserID-' + i, '#52A756')" class="point gray-point"></div>
+                  </div>
+                  <div class="all-line mt-minus6">
+                    <div class="cx">
+                      <div class="text-from-to">EQP index</div>
+                    </div>
+                    <div>
+                      <div class="line-point-horizontal"></div>
+                    </div>
+                  </div>
+                  <div class="text-center-y">
+                    <div [ngStyle]="getPointStyle('EuserID-' + i, '#52A756')" class="point gray-point"></div>
+                  </div>
+                </div>
+                <div class="df">
+                  <div class="count-from-to ml-10">
+                    <span [innerHTML]="cable.TO_E_USERID | highLight: search"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="right-to">TO</div>
 
 
+
+          </div>
+          <div>
+            <div class="top-line-card mb-10"></div>
+            <div class="text-medium">
+              <span [innerHTML]="cable.SCHEME | highLight: search"></span>
+            </div>
+          </div>
 
         </div>
-        <div>
-          <div class="top-line-card mb-10"></div>
-          <div class="text-medium">{{cable.SCHEME}}</div>
-        </div>
+        <div class="position-relative mr-20" [class.closed-path-margin]="openedPath.includes('cab-' + i)">
+          <div [class.closed-path]="!openedPath.includes('cab-' + i)" class="cable-path-container">
+            <div class="pl-20" *ngIf="openedPath.includes('cab-' + i)">
+              <div class="head-cable-path py-10">Cable path</div>
+              <div class="df cards-wrap">
+                <div class="df" *ngFor="let path of getPath(cable.CABLEPATH)">
+                  <div class="cxy">
+                    <div class="line-path"></div>
+                    <div class="point-path"></div>
+                    <div class="line-path"></div>
+                  </div>
+                  <div class="cable-path">{{path}}</div>
+                </div>
+              </div>
 
+
+            </div>
+
+          </div>
+          <div (click)="openPath('cab-' + i)" [class.closed-path-button]="!openedPath.includes('cab-' + i)" class="cable-path-button cxy">
+            <img src="assets/icons/path-w.svg" height="24">
+          </div>
+        </div>
       </div>
-      <div class="position-relative mr-20" [class.closed-path-margin]="openedPath.includes('cab-' + i)">
-        <div [class.closed-path]="!openedPath.includes('cab-' + i)" class="cable-path-container">
-          <div class="pl-20" *ngIf="openedPath.includes('cab-' + i)">
-            <div class="head-cable-path py-10">Cable path</div>
-            <div class="df cards-wrap">
-              <div class="df" *ngFor="let path of getPath(cable.CABLEPATH)">
-                <div class="cxy">
-                  <div class="line-path"></div>
-                  <div class="point-path"></div>
-                  <div class="line-path"></div>
-                </div>
-                <div class="cable-path">{{path}}</div>
-              </div>
-            </div>
-
-
-          </div>
-
-        </div>
-        <div (click)="openPath('cab-' + i)" [class.closed-path-button]="!openedPath.includes('cab-' + i)" class="cable-path-button cxy">
-          <img src="assets/icons/path-w.svg" height="24">
-        </div>
-      </div>
-
-
     </div>
   </div>
 

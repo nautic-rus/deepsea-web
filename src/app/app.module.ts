@@ -94,6 +94,7 @@ import { NestingComponent } from './component/nesting/nesting.component';
 import {PieChartModule} from "@swimlane/ngx-charts";
 import { WebgcodeComponent } from './component/webgcode/webgcode.component';
 import { GCodeComponent } from './component/g-code/g-code.component';
+import { HighLightPipe } from './domain/high-light.pipe';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -150,6 +151,7 @@ Quill.register('modules/imageResize', ImageResize);
     NestingComponent,
     WebgcodeComponent,
     GCodeComponent,
+    HighLightPipe,
   ],
     imports: [
         BrowserModule,
