@@ -10,11 +10,12 @@
   width: 100%;
 }
 .day{
-  width: 49px;
+  width: 50px;
   height: 20px;
   display: flex;
   justify-content: center;
-  border-right: 1px solid black;
+  align-items: center;
+  font-size: small;
 }
 .no-border{
   border: none;
@@ -25,9 +26,16 @@
   width: 100vw;
 }
 .issues-header{
-  min-width: 200px;
-  width: 200px;
-  overflow-x: auto;
+  min-width: 300px;
+  position: sticky;
+  left: 0;
+  background: rgb(171, 171, 171);
+  z-index: 3;
+}
+.issue-col{
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: small;
 }
 .gantt-row{
   height: 40px;
@@ -56,36 +64,22 @@
   z-index: 200;
   cursor: col-resize;
 }
-/* This is the CSS used in the demo */
-smart-gantt-chart {
-  height: auto;
+.gantt-headers{
+  position: sticky;
+  left: 0;
+  top: 0;
+  background-color: white;
+  z-index: 4;
 }
-
-.product-team {
-  --smart-gantt-chart-task-color: rgb(94, 99, 181);
-  --smart-gantt-chart-task-label-color: white;
-  --smart-gantt-chart-task-label-color-selected: white;
+.test{
+  background-color: blue;
+  margin: 50px;
+  width: 100px;
+  height: 100px;
 }
-
-.marketing-team {
-  --smart-gantt-chart-task-color: rgb(43, 195, 190);
-}
-
-.dev-team {
-  --smart-gantt-chart-task-color: rgb(242, 115, 112);
-  --smart-gantt-chart-task-label-color: white;
-  --smart-gantt-chart-task-label-color-selected: white;
-}
-
-.design-team {
-  --smart-gantt-chart-task-color: rgb(255, 197, 53);
-}
-
-.qa-team {
-  --smart-gantt-chart-task-color: rgb(99, 181, 144);
-}
-
-.release-team {
-  --smart-gantt-chart-task-color: rgb(188, 150, 223);
-  --smart-gantt-chart-task-label-color: white;
+.anchor{
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+  z-index: 5;
 }

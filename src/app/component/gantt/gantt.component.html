@@ -1,4 +1,4 @@
-<div class="p-d-flex">
+<div class="p-d-flex gantt-headers">
   <div class="mr-1">
     <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
     </p-dropdown>
@@ -7,25 +7,37 @@
     <p-dropdown placeholder="ИСПОЛНИТЕЛЬ" class="select" [(ngModel)]="assignee" [options]="assignees" optionValue="value" optionLabel="label" styleClass="width-170 border" (ngModelChange)="assigneeChanged()">
     </p-dropdown>
   </div>
+  <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="startDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
+  <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="endDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
 </div>
 
+<div class="df gantt-row gantt-headers">
+  <div class="issues-header"></div>
+  <div [ngStyle]="getRowStyle()" class="df">
+    <div *ngFor="let day of days" class="day">{{day.name}}</div>
+  </div>
+</div>
 
-<!--<div class="df gantt-row">-->
-<!--  <div class="issues-header"></div>-->
-<!--  <div [ngStyle]="getRowStyle()" class="df">-->
-<!--    <div *ngFor="let day of days" class="day">{{day.name}}</div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--<div class="df gantt-row" *ngFor="let issue of issues1; let i = index">-->
-<!--  <div class="issues-header">{{'Issue # ' + (i + 1)}}</div>-->
-<!--  <div (dragover)="moveOverTimeline($event, issue, i)" [ngStyle]="getRowStyle()" class="df"></div>-->
-<!--  <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period" (dragover)="moveOverTimelineThis($event, issue, i)" (dragstart)="dragStart($event, issue, i)" draggable="true"></div>-->
-<!--  <div class="cxy" (dragover)="moveResize($event, issue)" (dragstart)="dragStart($event, issue, i, 'resize')" draggable="true" [ngStyle]="getRightArrow(issue)">-->
-<!--    <i class="pi pi-chevron-right"></i>-->
-<!--  </div>-->
-
-<!--</div>-->
+<div class="df gantt-row" *ngFor="let issue of issues1; let i = index">
+  <div class="issues-header">
+    <div class="df">
+      <div class="issue-col">{{'Issue # ' + (i + 1)}}</div>
+      <div class="issue-col">{{getDateWithTime(issue.startDate)}}</div>
+      <div class="issue-col">{{getDateWithTime(issue.endDate)}}</div>
+    </div>
+  </div>
+  <div (dragover)="moveOverTimeline($event, issue, i)" [ngStyle]="getRowStyle()" class="df">
+    <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period" (dragover)="moveOverTimelineThis($event, issue, i)" (dragstart)="dragStart($event, issue, i)" draggable="true"></div>
+    <div class="cxy" (dragover)="moveResize($event, issue, i, 'right')" (dragstart)="dragStart($event, issue, i, 'resize', 'right')" draggable="true" [ngStyle]="getRightArrow(issue)">
+      <i class="pi pi-chevron-right"></i>
+    </div>
+    <div class="cxy" (dragover)="moveResize($event, issue, i, 'left')" (dragstart)="dragStart($event, issue, i, 'resize', 'left')" draggable="true" [ngStyle]="getLeftArrow(issue)">
+      <i class="pi pi-chevron-left"></i>
+    </div>
+    <div #element1 (dragover)="onAnchorDropOver($event, element1)" (drop)="onAnchorDrop($event)" (dragstart)="dragStart($event, element1, i, 'anchor')" class="anchor left-anchor" [ngStyle]="getLeftAnchor(issue)"></div>
+    <div #element2 draggable="true" (dragstart)="dragStart($event, element2, i, 'anchor')" class="anchor right-anchor" [ngStyle]="getRightAnchor(issue)"></div>
+  </div>
+</div>
 
 
 
