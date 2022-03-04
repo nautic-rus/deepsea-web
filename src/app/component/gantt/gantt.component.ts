@@ -49,6 +49,7 @@ export class GanttComponent implements OnInit {
   arrowPadding = 16;
   anchorSize = 12;
   leaders: any = [];
+  minWidth = this.msPerDay;
 
 
   constructor(private auth: AuthManagerService, private issueManager: IssueManagerService) { }
@@ -196,10 +197,14 @@ export class GanttComponent implements OnInit {
     }
     else if (this.dragIndex == i && this.action == 'resize') {
       if (this.moveSide == 'right'){
-        issue.endDate = issue.startDate + event.offsetX * this.msPerPx;
+        if (issue.startDate + this.minWidth < issue.startDate + event.offsetX * this.msPerPx) {
+          issue.endDate = issue.startDate + event.offsetX * this.msPerPx;
+        }
       }
       else{
-        issue.startDate = issue.startDate + event.offsetX * this.msPerPx;
+        if (issue.startDate + event.offsetX * this.msPerPx + this.minWidth < issue.endDate) {
+          issue.startDate = issue.startDate + event.offsetX * this.msPerPx;
+        }
       }
     }
   }
@@ -215,10 +220,14 @@ export class GanttComponent implements OnInit {
     }
     else if (this.dragIndex == i && this.action == 'resize') {
       if (this.moveSide == 'right') {
-        issue.endDate = this.startDate.getTime() + event.offsetX * this.msPerPx;
+        if (issue.startDate + this.minWidth < this.startDate.getTime() + event.offsetX * this.msPerPx) {
+          issue.endDate = this.startDate.getTime() + event.offsetX * this.msPerPx;
+        }
       }
       else{
-        issue.startDate = this.startDate.getTime() + event.offsetX * this.msPerPx;
+        if (this.startDate.getTime() + event.offsetX * this.msPerPx + this.minWidth < issue.endDate) {
+          issue.startDate = this.startDate.getTime() + event.offsetX * this.msPerPx;
+        }
       }
     }
   }
@@ -230,14 +239,17 @@ export class GanttComponent implements OnInit {
   moveResize(event: MouseEvent, issue: any, index: number, side = 'right') {
     event.preventDefault();
     event.stopPropagation();
-    if (this.action == 'resize' && this.dragIndex == index){
-      this.moveSide = side;
+    if (this.moveSide == side && this.action == 'resize' && this.dragIndex == index){
       let diff = event.offsetX - this.arrowPadding / 2;
       if (side == 'right'){
-        issue.endDate = issue.endDate + diff * this.msPerPx;
+        if (issue.startDate + this.minWidth < issue.endDate + diff * this.msPerPx){
+          issue.endDate = issue.endDate + diff * this.msPerPx;
+        }
       }
       else{
-        issue.startDate = issue.startDate + diff * this.msPerPx;
+        if (issue.startDate + diff * this.msPerPx + this.minWidth < issue.endDate){
+          issue.startDate = issue.startDate + diff * this.msPerPx;
+        }
       }
       this.checkBounds(issue);
     }
@@ -356,5 +368,4 @@ export class GanttComponent implements OnInit {
       });
     }
   }
-
 }
