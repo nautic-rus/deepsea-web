@@ -1,0 +1,266 @@
+<div *ngIf="!device.isDesktop()" class="">
+  <div class="card-tablet">
+    <p-table
+      #dt
+      id="dt"
+      dataKey="id"
+      [value]="issues"
+      [scrollable]="true"
+      [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number', 'issue_comment']"
+      [reorderableColumns]="true"
+      [resizableColumns]="false"
+      [columns]="cols"
+      [virtualScroll]="true"
+      scrollHeight="calc(100vh - 210px)"
+      [virtualRowHeight]="1"
+      stateStorage="local"
+      stateKey="state"
+      styleClass="p-datatable-striped"
+      [customSort]="true"
+      (sortFunction)="customSort($event)"
+      scrollDirection="both"
+      *ngIf="filled"
+    >
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <div class="mr-1">
+            <button pButton icon="pi pi-plus" class="border new-task-button-tablet" (click)="newTask(null)"></button>
+          </div>
+          <p-multiSelect class="mr-1" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
+                         [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-180 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
+          </p-multiSelect>
+          <div class="mr-1">
+            <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top"  class="border normal-button p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear(); dt.reset(); showAssigned = false; showResponsible = false; showCompleted = false;"></button>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" onIcon="pi pi-user" offIcon="pi pi-user" [(ngModel)]="showAssigned"></p-toggleButton>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Ответственный')" tooltipPosition="top" onIcon="pi pi-user-plus" offIcon="pi pi-user-plus" [(ngModel)]="showResponsible"></p-toggleButton>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Автор')" tooltipPosition="top" onIcon="pi pi-user-edit" offIcon="pi pi-user-edit" [(ngModel)]="showStartedBy"></p-toggleButton>
+          </div>
+          <div class="mr-1">
+            <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" (ngModelChange)="dt.reset()" [(ngModel)]="showCompleted"></p-toggleButton>
+          </div>
+          <div class="mr-1 cxy">
+            {{l.tr('Задач:')}}
+            <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
+            <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
+            {{l.tr('(Всего:')}} {{dt.value.length}})
+          </div>
+          <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border width-150" />
+          </span>
+          <div class="ml-1">
+            <div (click)="submenu.toggle($event)">
+              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                   width="20" height="20"
+                   viewBox="0 0 226 226"
+                   style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,226v-226h226v226z" fill="none"></path><g fill="#0e364a"><path d="M22.6,36.16c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269zM22.6,103.96c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269zM22.6,171.76c-3.26015,-0.04611 -6.29258,1.66675 -7.93611,4.48269c-1.64353,2.81594 -1.64353,6.29868 0,9.11462c1.64353,2.81594 4.67596,4.5288 7.93611,4.48269h180.8c3.26015,0.04611 6.29258,-1.66675 7.93611,-4.48269c1.64353,-2.81594 1.64353,-6.29868 0,-9.11462c-1.64353,-2.81594 -4.67596,-4.5288 -7.93611,-4.48269z"></path></g></g></svg>
+            </div>
+            <p-overlayPanel #submenu [style]="{width: '240px', 'border-radius': '4px', left: '695.266px', overlayArrowLeft: '200px'}" class="sub-menu">
+              <ng-template pTemplate>
+                <div (click)="importXls()" class="df border-bottom">
+                  <div class="cxy mx-1">
+                    <div class="pi pi-download"></div>
+                  </div>
+                  <div class="row-user-menu-tablet">{{l.tr('Импорт')}}</div>
+                </div>
+                <div (click)="exportXls()" class="df border-bottom">
+                  <div class="cxy mx-1">
+                    <div class="pi pi-file-excel"></div>
+                  </div>
+                  <div class="row-user-menu-tablet">{{l.tr('Экспорт XLS')}}</div>
+                </div>
+                <div (click)="exportPDF()" class="df">
+                  <div class="cxy mx-1">
+                    <div class="pi pi-file-pdf"></div>
+                  </div>
+                  <div class="row-user-menu-tablet">{{l.tr('Экспорт PDF')}}</div>
+                </div>
+              </ng-template>
+            </p-overlayPanel>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup">
+        <colgroup>
+          <col style="width: 26px"/>
+          <col style="width:140px" *ngFor="let col of cols" [hidden]="col.hidden">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th></th>
+          <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
+            <div class="header">
+              {{l.tr(col.header)}}
+              <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+              <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
+              <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-columns="columns" let-issue>
+        <tr *ngIf="showIssue(issue)" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
+          <td class="cursor-pointer">
+            <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
+            <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
+          </td>
+          <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
+            <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
+            <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<div *ngIf="device.isDesktop()" class="">
+  <div class="all-page">
+    <div class="card">
+      <p-table
+        #dt
+        id="dt"
+        dataKey="id"
+        [value]="issues"
+        [scrollable]="true"
+        [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
+        [reorderableColumns]="true"
+        [resizableColumns]="false"
+        [columns]="cols"
+        [virtualScroll]="true"
+        [scrollHeight]="'70vh'"
+        [virtualRowHeight]="1"
+        stateStorage="local"
+        stateKey="state"
+        styleClass="p-datatable-striped"
+        [customSort]="true"
+        (sortFunction)="customSort($event)"
+        scrollDirection="both"
+        *ngIf="filled"
+      >
+        <ng-template pTemplate="caption">
+          <div class="p-d-flex">
+            <div class="mr-1">
+              <button pButton [label]="l.tr('Новая задача')" class="border new-task-button" (click)="newTask(null)"></button>
+            </div>
+            <p-multiSelect class="mr-1" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
+                           [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
+            </p-multiSelect>
+            <div class="mr-1">
+              <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top"  class="border normal-button p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear(); dt.reset(); showAssigned = false; showResponsible = false; showCompleted = false;"></button>
+            </div>
+            <div class="mr-1">
+              <button pButton [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="importXls()"></button>
+            </div>
+            <div class="mr-1">
+              <button pButton [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
+            </div>
+            <div class="mr-1">
+              <button pButton [pTooltip]="l.tr('Экспорт PDF')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-pdf" (click)="exportPDF()"></button>
+            </div>
+            <div class="mr-1">
+              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" onIcon="pi pi-user" offIcon="pi pi-user" [(ngModel)]="showAssigned"></p-toggleButton>
+            </div>
+            <div class="mr-1">
+              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Ответственный')" tooltipPosition="top" onIcon="pi pi-user-plus" offIcon="pi pi-user-plus" [(ngModel)]="showResponsible"></p-toggleButton>
+            </div>
+            <div class="mr-1">
+              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Автор')" tooltipPosition="top" onIcon="pi pi-user-edit" offIcon="pi pi-user-edit" [(ngModel)]="showStartedBy"></p-toggleButton>
+            </div>
+            <div class="mr-1">
+              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" (ngModelChange)="dt.reset()" [(ngModel)]="showCompleted"></p-toggleButton>
+            </div>
+            <div class="mr-1 cxy">
+              {{l.tr('Количество задач:')}}
+              <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
+              <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
+              {{l.tr('(Всего:')}} {{dt.value.length}})
+            </div>
+            <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
+          </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup">
+          <colgroup>
+            <col style="width: 30px"/>
+            <col style="width:190px" *ngFor="let col of cols" [hidden]="col.hidden">
+          </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th></th>
+            <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
+              <div class="header">
+                {{l.tr(col.header)}}
+                <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+                <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
+                <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </div>
+              <div class="df" *ngIf="col.header == 'Готовность'">
+                <div class="header">
+                  М
+                  <p-columnFilter class="filter" field="readyM" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+                <div class="header">
+                  Ч
+                  <p-columnFilter class="filter" field="readyD" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+                <div class="header">
+                  Р
+                  <p-columnFilter class="filter" field="readyN" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="[{label: '+', value: true}, {label: '-', value: false}]" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-columns="columns" let-issue>
+          <tr *ngIf="showIssue(issue)" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
+            <td class="cursor-pointer">
+              <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
+              <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
+            </td>
+            <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
+              <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
+              <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<p-toast position="bottom-center"></p-toast>

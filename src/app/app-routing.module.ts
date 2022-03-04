@@ -23,7 +23,7 @@ import {PdfViewComponent} from "./component/pdf-view/pdf-view.component";
 import {ElecCablesComponent} from "./component/elec-cables/elec-cables.component";
 import {NestingComponent} from "./component/nesting/nesting.component";
 import {GCodeComponent} from "./component/g-code/g-code.component";
-import {HomeComponentMobile} from "./component/home/home.component.mobile";
+import {HomeComponentMobile} from "./component/home_mobile/home_mobile.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
