@@ -47,6 +47,7 @@ const routes: Routes = [
   { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },
   { path: 'nesting', component: NestingComponent, canActivate: [AuthGuard], data: {animation: 'NestingComponent'} },
   { path: 'gcode', component: GCodeComponent, canActivate: [AuthGuard], data: {animation: 'GCodeComponent'} },
+  { path: 'mobile', component: HomeComponenMobile, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
 ];
 
 @NgModule({
