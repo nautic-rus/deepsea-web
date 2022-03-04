@@ -295,7 +295,7 @@ export class GanttComponent implements OnInit {
   getLeftAnchor(issue: any) {
     return{
       position: 'absolute',
-      left: (this.getDayFrom(issue.startDate)) + 'px',
+      left: (this.getDayFrom(issue.startDate) - 20) + 'px',
       width: this.arrowPadding,
       height: this.anchorSize
     }
@@ -304,7 +304,7 @@ export class GanttComponent implements OnInit {
   getRightAnchor(issue: any) {
     return{
       position: 'absolute',
-      left: (this.getDayFrom(issue.endDate) - this.anchorSize) + 'px',
+      left: (this.getDayFrom(issue.endDate) - this.anchorSize + 20) + 'px',
       width: this.arrowPadding,
       height: this.anchorSize
     }
@@ -319,6 +319,9 @@ export class GanttComponent implements OnInit {
       event.preventDefault();
       event.stopPropagation();
       let leader = new LeaderLine(this.dragItem, element, {
+        startSocketGravity: [50, -100],
+        startSocket: 'right',
+        endSocket: 'left',
         path: 'grid',
         startPlug: 'disc',
         color: '#cecece',

@@ -81,19 +81,22 @@
   height: 100px;
 }
 .anchor{
-  top: 4px;
-  width: 12px;
-  height: 20px;
-  background-color: rgba(33, 150, 243, 0.12);
-  z-index: 5;
+  width: 10px;
+  height: 10px;
+  border: 2px solid;
+  border-color: #fff!important;
+  box-sizing: border-box;
+  box-shadow: 0 0 4px rgb(0 0 0 / 12%);
+  border-radius: 50%;
+  top: 10px;
+  margin-top: 0;
+  background-color: #b9bec7;
 }
 .left-anchor{
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
+  left: -20px;
 }
 .right-anchor{
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
+  right: -22px;
 }
 .border-right{
   border-right: 1px solid #e0e0e0;
