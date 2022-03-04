@@ -74,6 +74,12 @@
   background-color: white;
   z-index: 4;
 }
+.gantt-header-days{
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 4;
+}
 .test{
   background-color: blue;
   margin: 50px;
