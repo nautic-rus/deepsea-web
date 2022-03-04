@@ -58,9 +58,10 @@
     <div  *ngFor="let cable of cables; let i = index">
       <div class="hidden-card" *ngIf="cable == null"></div>
       <div class="df" *ngIf="cable != null">
-        <div [class.closed-path-dash]="!openedPath.includes('cab-' + i)" class="dash-card" >
+        <div [class.closed-path-dash]="!openedPath.includes('cab-' + i)" class="dash-card">
           <div class="top-row">
             <div class="left-top-row">
+<!--              <div class="flag yellow-flag"></div>-->
               <div class="cx mt-10">
                 <div class="title-bold">
                   <span [innerHTML]="cable.CODE | highLight: search"></span>

@@ -96,10 +96,10 @@ export class ElecCablesComponent implements OnInit {
   openedPath: any[] = [];
   sortValues: any[] = [
     'Not sorted',
-    'By Index A-Z',
-    'By Index Z-A',
-    'By System A-Z',
-    'By System Z-A',
+    'by Index A-Z',
+    'by Index Z-A',
+    'by System A-Z',
+    'by System Z-A',
   ];
   sortValue = this.sortValues[0];
   openPath(path: string){

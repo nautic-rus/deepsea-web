@@ -29,16 +29,19 @@
   min-width: 300px;
   position: sticky;
   left: 0;
-  background: rgb(171, 171, 171);
+  background: #ffffff;
   z-index: 3;
 }
 .issue-col{
   margin-left: 10px;
   margin-right: 10px;
-  font-size: small;
+  color: #3a3a3a;
+  font-weight: 500;
+  font-size: 12px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .gantt-row{
-  height: 40px;
+  height: 30px;
   position: relative;
 }
 .day-busy{
@@ -78,8 +81,20 @@
   height: 100px;
 }
 .anchor{
-  width: 10px;
-  height: 10px;
-  background-color: blue;
+  top: 4px;
+  width: 12px;
+  height: 20px;
+  background-color: rgba(33, 150, 243, 0.12);
   z-index: 5;
+}
+.left-anchor{
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.right-anchor{
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.border-right{
+  border-right: 1px solid #e0e0e0;
 }

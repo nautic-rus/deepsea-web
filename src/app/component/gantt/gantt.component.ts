@@ -42,11 +42,12 @@ export class GanttComponent implements OnInit {
   days: any[] = [];
   dayWidth = 50;
   dayHeight = 30;
+  issueHeight = 24;
   timeLineLength = this.endDate.getTime() - this.startDate.getTime();
   timeLineLengthPx = this.timeLineLength / this.msPerDay * this.dayWidth;
   msPerPx = this.timeLineLength / this.timeLineLengthPx;
   arrowPadding = 16;
-  anchorSize = 10;
+  anchorSize = 12;
   leaders: any = [];
 
 
@@ -135,17 +136,21 @@ export class GanttComponent implements OnInit {
     return{
       height: this.dayHeight + 'px',
       'min-width': this.timeLineLengthPx + 'px',
-      'background-color': 'rgba(248,246,246,0.7)',
+      'background-color': '#F9F9FB',
+      'border-bottom': '1px solid #e0e0e0',
       position: 'relative'
     }
   }
   getIssueRowStyle(issue: any) {
     return{
       position: 'absolute',
+      top: '2px',
       left: this.getDayFrom(issue.startDate) + 'px',
       width: this.getDayFrom(issue.endDate, issue.startDate) + 'px',
-      height: this.dayHeight + 'px',
-      'background-color': 'rgba(74,120,99,0.81)',
+      height: this.issueHeight + 'px',
+      'background-color': 'rgba(33, 150, 243, 0.12)',
+      'border': '1px solid rgba(33, 150, 243, 0.12)',
+      'border-radius': '12px',
     }
   }
   dragStart(event: DragEvent, element: HTMLElement, i: number, action = 'move', side = 'right') {
@@ -313,7 +318,13 @@ export class GanttComponent implements OnInit {
     if (this.action == 'anchor'){
       event.preventDefault();
       event.stopPropagation();
-      let leader = new LeaderLine(this.dragItem, element);
+      let leader = new LeaderLine(this.dragItem, element, {
+        path: 'grid',
+        startPlug: 'disc',
+        color: '#cecece',
+        gradient: true,
+        size: 1.5
+      });
       this.leaders.push(leader);
     }
   }
