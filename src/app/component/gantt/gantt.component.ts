@@ -247,17 +247,29 @@ export class GanttComponent implements OnInit {
   getRightArrow(issue: any) {
     return{
       position: 'absolute',
-      left: this.getDayFrom(issue.endDate) + 'px',
-      width: this.arrowPadding,
-      height: this.dayHeight + 'px',
+      left: (this.getDayFrom(issue.endDate) - 12) + 'px',
+      top: '2px',
+      width: '12px',
+      height: this.issueHeight + 'px',
+      cursor: 'ew-resize',
+      'background-color': 'rgba(33, 150, 243, 0.12)',
+      'border-top-right-radius': '12px',
+      'border-bottom-right-radius': '12px',
+      'z-index': 10,
     }
   }
   getLeftArrow(issue: any) {
     return{
       position: 'absolute',
-      left: (this.getDayFrom(issue.startDate) - this.arrowPadding) + 'px',
-      width: this.arrowPadding,
-      height: this.dayHeight + 'px',
+      left: (this.getDayFrom(issue.startDate)) + 'px',
+      top: '2px',
+      width: '12px',
+      height: this.issueHeight + 'px',
+      cursor: 'ew-resize',
+      'background-color': 'rgba(33, 150, 243, 0.12)',
+      'border-top-left-radius': '12px',
+      'border-bottom-left-radius': '12px',
+      'z-index': 10,
     }
   }
   getDate(dateLong: number): string{
@@ -297,7 +309,7 @@ export class GanttComponent implements OnInit {
       position: 'absolute',
       left: (this.getDayFrom(issue.startDate) - 20) + 'px',
       width: this.arrowPadding,
-      height: this.anchorSize
+      height: this.anchorSize,
     }
   }
 
@@ -306,29 +318,43 @@ export class GanttComponent implements OnInit {
       position: 'absolute',
       left: (this.getDayFrom(issue.endDate) - this.anchorSize + 20) + 'px',
       width: this.arrowPadding,
-      height: this.anchorSize
+      height: this.anchorSize,
     }
   }
 
-  onAnchorDrop($event: DragEvent) {
-
-  }
-
-  onAnchorDropOver(event: DragEvent, element: HTMLElement) {
+  onAnchorDrop(event: DragEvent, element: HTMLElement) {
     if (this.action == 'anchor'){
       event.preventDefault();
       event.stopPropagation();
       let leader = new LeaderLine(this.dragItem, element, {
-        startSocketGravity: [50, -100],
-        startSocket: 'right',
-        endSocket: 'left',
+
+        startSocketGravity: [0, 0],
+        endSocketGravity: [0, 0],
         path: 'grid',
-        startPlug: 'disc',
+        startPlug: 'behind',
         color: '#cecece',
         gradient: true,
-        size: 1.5
+        size: 1.5,
       });
       this.leaders.push(leader);
+
+      let svgs = document.getElementsByClassName('leader-line');
+      let svg = svgs.item(svgs.length - 1) as HTMLElement;
+      console.log(document.getElementsByClassName('leader-line').length);
+      svg.addEventListener('mouseenter', (event) => {
+        leader.color = '#E91E63';
+        document.body.style.cursor = 'url("assets/icons/remove.png"), auto';
+      });
+      svg.addEventListener('mouseleave', (event) => {
+        leader.color = '#cecece';
+        document.body.style.cursor = 'auto';
+      });
+      svg.addEventListener('click', (event) => {
+        leader.remove();
+        this.leaders.splice(leader._id - 1, 1);
+        document.body.style.cursor = 'auto';
+      });
     }
   }
+
 }

@@ -29,12 +29,10 @@
   <div (dragover)="moveOverTimeline($event, issue, i)" [ngStyle]="getRowStyle()" class="df">
     <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period" (dragover)="moveOverTimelineThis($event, issue, i)" (dragstart)="dragStart($event, issue, i)" draggable="true"></div>
     <div class="cxy" (dragover)="moveResize($event, issue, i, 'right')" (dragstart)="dragStart($event, issue, i, 'resize', 'right')" draggable="true" [ngStyle]="getRightArrow(issue)">
-      <i class="pi pi-chevron-right"></i>
     </div>
     <div class="cxy" (dragover)="moveResize($event, issue, i, 'left')" (dragstart)="dragStart($event, issue, i, 'resize', 'left')" draggable="true" [ngStyle]="getLeftArrow(issue)">
-      <i class="pi pi-chevron-left"></i>
     </div>
-    <div #element1 (dragover)="onAnchorDropOver($event, element1)" (drop)="onAnchorDrop($event)" (dragstart)="dragStart($event, element1, i, 'anchor')" class="anchor left-anchor" [ngStyle]="getLeftAnchor(issue)"></div>
+    <div #element1 (dragover)="$event.preventDefault(); $event.stopPropagation();" (drop)="onAnchorDrop($event, element1)" (dragstart)="dragStart($event, element1, i, 'anchor')" class="anchor left-anchor" [ngStyle]="getLeftAnchor(issue)"></div>
     <div #element2 draggable="true" (dragstart)="dragStart($event, element2, i, 'anchor')" class="anchor right-anchor" [ngStyle]="getRightAnchor(issue)"></div>
   </div>
 </div>
