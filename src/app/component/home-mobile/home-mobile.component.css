@@ -1,1 +1,5 @@
-// component css goes here
+h2 {
+  font: 'Roboto';
+  font-size: 24px;
+  color: black;
+}
