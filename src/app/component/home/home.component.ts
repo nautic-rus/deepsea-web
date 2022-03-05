@@ -9,7 +9,6 @@ import {
   ViewChild
 } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {CreateTaskComponent} from "../create-task/create-task.component";
@@ -26,6 +25,7 @@ import 'jspdf-autotable';
 import {HttpClient} from "@angular/common/http";
 import {retry} from "rxjs/operators";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {IssueManagerService} from "../../domain/issue-manager.service";
 
 @Component({
   selector: 'app-home',
