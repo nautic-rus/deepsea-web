@@ -40,7 +40,7 @@ export class UploadRevisionFilesComponent implements OnInit {
       result = name.split('_').join('-');
     }
     if (fileGroup == 'Cutting Map'){
-      result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.replace('_0', '').split('_').join('-');
+      result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.split('_')[0] + '-' + name.split('_')[1] + '.txt';
     }
     return result;
   }
