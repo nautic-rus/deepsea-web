@@ -5,4 +5,5 @@ export class FileAttachment {
   author: string = '';
   revision: string = '';
   group: string = '';
+  issue_id: number = 0;
 }
