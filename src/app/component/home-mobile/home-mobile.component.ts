@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
     styleUrls: ['home-mobile.component.css']
 })
 export class HomeMobileComponent {
-
+title = 'Hi. Here will be mobile version of Deepsea soon.'
 }
