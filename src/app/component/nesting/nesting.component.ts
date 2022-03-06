@@ -833,6 +833,6 @@ export class NestingComponent implements OnInit {
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
   isDesktop() {
-    return this.device.isDesktop() && window.innerWidth > 1200;
+    return this.device.isDesktop() && window.innerWidth > 1296;
   }
 }
