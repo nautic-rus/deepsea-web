@@ -80,7 +80,7 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
-  width: 380px;
+  width: 360px;
   height: 200px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -384,6 +384,21 @@
 }
 .button-fetch:hover{
   background-color: #efc24f;
+}
+.button-fetch-tablet{
+  font-weight: 600;
+  height: 38px;
+  width: 80%;
+  background-color: #f9c851;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+.button-fetch-tablet:hover{
+  background-color: #efc24f;
+}
+.button-fetch-tablet{
+
 }
 .cards{
   overflow: auto;

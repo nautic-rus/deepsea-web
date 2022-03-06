@@ -26,7 +26,7 @@
   position: absolute;
   left: 0;
   top: var(--navi-height);
-  height: calc(100% - var(--navi-height));
+  height: calc(100vh - var(--navi-height));
   min-height: 400px;
   width: var(--navi-width);
   z-index: 8;
