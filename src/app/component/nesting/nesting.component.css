@@ -118,7 +118,7 @@
   padding: 20px;
   width: 100%;
   min-width: 220px;
-  height: 100%;
+  height: calc(100vh - 160px);
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -425,6 +425,10 @@
 .cards{
   overflow: auto;
   height: calc(100vh - 202px);
+}
+.cards-tablet{
+  overflow: auto;
+  height: calc(100vh - 160px);
 }
 .min-height{
   height: calc(100vh - 76px);
