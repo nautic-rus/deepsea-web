@@ -278,9 +278,9 @@
     </div>
   </div>
 </div>
-<div *ngIf="!isDesktop()" class="all-page min-height">
-  <div class="">
-    <div class="card-head mb-20 df">
+<div *ngIf="!isDesktop()" class="all-page-tablet min-height-tablet">
+
+    <div class="card-head-tablet mb-10 df">
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Export Nesting')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
       </div>
@@ -294,8 +294,8 @@
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
-        <div class="w-20">
-          <div class="menu-card">
+        <div class="w-20 min-width-220">
+          <div class="menu-card-tablet">
             <div class="ovf-auto">
               <div class="df">
                 <div class="title-bold-tablet mb-15 sticky head-checkbox">BLOCKS:</div>
@@ -351,7 +351,7 @@
             </div>
           </div>
         </div>
-        <div class="w-80 cards">
+        <div class="w-80 cards min-width-400">
           <div class="cxy card-height" *ngIf="noResult">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
@@ -556,7 +556,6 @@
         <app-g-code></app-g-code>
       </div>
     </div>
-  </div>
 </div>
 
 <div class="progress-spinner" *ngIf="waitForZipFiles">
@@ -564,7 +563,7 @@
   </div>
   <div class="image-preview-scale">
     <img src="assets/whale.gif" height="120">
-    <div class="cx wait-text">PLEASE WAIT...</div>
+    <div class="cx wait-text-tablet">PLEASE WAIT...</div>
   </div>
 </div>
 

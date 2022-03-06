@@ -1,6 +1,7 @@
 :root{
   --navi-height: 76px;
   --navi-width: 70px;
+  --navi-height-tablet: 60px;
 }
 body,p{
   margin: 0;
@@ -8,6 +9,11 @@ body,p{
 .all-page{
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   padding: 20px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.all-page-tablet{
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  padding: 10px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .card{

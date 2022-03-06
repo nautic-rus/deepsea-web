@@ -8,6 +8,16 @@
   font-size: 14px;
   font-weight: 600;
 }
+.card-head-tablet{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  height: 55px;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
+}
 .card-page{
   position: relative;
   overflow: auto;
@@ -77,9 +87,9 @@
 }
 .dash-card-tile-tablet{
   padding: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
   width: 360px;
   height: 200px;
   background-color: #ffffff;
@@ -97,6 +107,18 @@
   width: 100%;
   min-width: 220px;
   height: calc(100vh - 200px);
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  transition: 0.5s;
+  display: grid;
+  grid-template-rows: 3fr 0.8fr 3fr 0.8fr;
+}
+.menu-card-tablet{
+  padding: 20px;
+  width: 100%;
+  min-width: 220px;
+  height: 100%;
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -407,6 +429,9 @@
 .min-height{
   height: calc(100vh - 76px);
 }
+.min-height-tablet{
+  height: calc(100vh - 60px);
+}
 .button-cont{
   position: absolute;
   bottom: 0;
@@ -554,4 +579,14 @@
 
 .wait-text{
   background-color: white;
+}
+.wait-text-tablet{
+  color: white;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.min-width-400{
+  min-width: 400px;
+}
+.min-width-220{
+  min-width: 220px;
 }

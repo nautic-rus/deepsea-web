@@ -18,6 +18,13 @@
   width: calc(100% - var(--navi-width));
   overflow: auto;
 }
+.content-navi-tablet{
+  margin-top: var(--navi-height-tablet);
+  margin-left: var(--navi-width);
+  height: calc(100vh - var(--navi-height-tablet));
+  width: calc(100% - var(--navi-width));
+  overflow: auto;
+}
 .hidden-navi{
   opacity: 0;
 }
