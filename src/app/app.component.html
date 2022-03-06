@@ -2,7 +2,7 @@
   <div class="navi" *ngIf="auth.isAuth() && !naviDisabled">
     <app-navi></app-navi>
   </div>
-  <div class="content" [@routeAnimations]="prepareRoute(outlet)" [class.content-navi-tablet]="!isDesktop()" [class.content-navi]="auth.isAuth() && !naviDisabled">
+  <div class="content" [@routeAnimations]="prepareRoute(outlet)" [class.content-navi-tablet]="!device.isDesktop()" [class.content-navi]="auth.isAuth() && !naviDisabled">
     <router-outlet #outlet="outlet"></router-outlet>
   </div>
 </div>

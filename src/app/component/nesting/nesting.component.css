@@ -118,7 +118,7 @@
   padding: 20px;
   width: 100%;
   min-width: 220px;
-  height: calc(100vh - 160px);
+  height: calc(100% - var(--navi-height-tablet));
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -430,11 +430,14 @@
   overflow: auto;
   height: calc(100vh - 160px);
 }
+.min-height-150{
+  min-height: 150px;
+}
 .min-height{
   height: calc(100vh - 76px);
 }
 .min-height-tablet{
-  height: calc(100vh - 60px);
+  height: 100%;
 }
 .button-cont{
   position: absolute;
