@@ -40,8 +40,9 @@ export class GanttComponent implements OnInit {
   startDate = new Date(this.currentDate - this.msPerDay * this.daysBeforeInitial);
   endDate = new Date(this.currentDate + this.msPerDay * this.daysAfterInitial);
   days: any[] = [];
-  dayWidth = 50;
+  dayWidth = 80;
   dayHeight = 30;
+  monthDayHeight = 22;
   issueHeight = 24;
   timeLineLength = this.endDate.getTime() - this.startDate.getTime();
   timeLineLengthPx = this.timeLineLength / this.msPerDay * this.dayWidth;
@@ -273,7 +274,7 @@ export class GanttComponent implements OnInit {
       'background-color': 'rgba(33, 150, 243, 0.12)',
       'border-top-right-radius': '12px',
       'border-bottom-right-radius': '12px',
-      'z-index': 10,
+      'z-index': 2,
     }
   }
   getLeftArrow(issue: any) {
@@ -287,7 +288,7 @@ export class GanttComponent implements OnInit {
       'background-color': 'rgba(33, 150, 243, 0.12)',
       'border-top-left-radius': '12px',
       'border-bottom-left-radius': '12px',
-      'z-index': 10,
+      'z-index': 2,
     }
   }
   getDate(dateLong: number): string{
@@ -322,7 +323,7 @@ export class GanttComponent implements OnInit {
   getLeftAnchor(issue: any) {
     return{
       position: 'absolute',
-      left: (this.getDayFrom(issue.startDate) - 20) + 'px',
+      left: (this.getDayFrom(issue.startDate) - 15) + 'px',
       width: this.arrowPadding,
       height: this.anchorSize,
     }
@@ -331,7 +332,7 @@ export class GanttComponent implements OnInit {
   getRightAnchor(issue: any) {
     return{
       position: 'absolute',
-      left: (this.getDayFrom(issue.endDate) - this.anchorSize + 20) + 'px',
+      left: (this.getDayFrom(issue.endDate) - this.anchorSize + 16) + 'px',
       width: this.arrowPadding,
       height: this.anchorSize,
     }

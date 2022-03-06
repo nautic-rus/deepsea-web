@@ -1,4 +1,4 @@
-<div *ngIf="!device.isDesktop()" class="h-100">
+<div *ngIf="!isDesktop()" class="h-100">
   <div class="all-page-tablet">
   <div class="card-sections">
     <div class="mr-1 project-number">
@@ -444,7 +444,7 @@
   </div>
 </div>
 </div>
-<div *ngIf="device.isDesktop()" class="h-100">
+<div *ngIf="isDesktop()" class="h-100">
   <div class="all-page">
     <div class="card-sections">
       <div class="mr-1 project-number">

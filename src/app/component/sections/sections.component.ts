@@ -114,7 +114,9 @@ export class SectionsComponent implements OnInit {
   //   }
   // }
 
-
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1200;
+  }
   viewTask(issueId: number) {
     let issue = this.issues.find(x => x.id == issueId);
     if (issue != null){

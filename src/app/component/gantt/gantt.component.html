@@ -1,22 +1,25 @@
-<div class="p-d-flex gantt-headers">
-  <div class="mr-1">
-    <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
-    </p-dropdown>
-  </div>
-  <div class="mr-1">
-    <p-dropdown placeholder="ИСПОЛНИТЕЛЬ" class="select" [(ngModel)]="assignee" [options]="assignees" optionValue="value" optionLabel="label" styleClass="width-170 border" (ngModelChange)="assigneeChanged()">
-    </p-dropdown>
-  </div>
-  <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="startDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
-  <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="endDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
-</div>
+<div class="">
+  <div class="top-header">
+    <div class="p-d-flex gantt-headers">
+      <div class="mr-1">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
+        </p-dropdown>
+      </div>
+      <div class="mr-1">
+        <p-dropdown placeholder="ИСПОЛНИТЕЛЬ" class="select" [(ngModel)]="assignee" [options]="assignees" optionValue="value" optionLabel="label" styleClass="width-170 border" (ngModelChange)="assigneeChanged()">
+        </p-dropdown>
+      </div>
+      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="startDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
+      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="endDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
+    </div>
 
-<div class="df gantt-row gantt-header-days">
-  <div class="issues-header"></div>
-  <div [ngStyle]="getRowStyle()" class="df">
-    <div *ngFor="let day of days" class="day">{{day.name}}</div>
+    <div class="df gantt-row gantt-header-days">
+      <div class="issues-header"></div>
+      <div [ngStyle]="getRowStyle()" class="df">
+        <div *ngFor="let day of days" class="day">{{day.name}}</div>
+      </div>
+    </div>
   </div>
-</div>
 
 <div class="df gantt-row" *ngFor="let issue of issues1; let i = index">
   <div class="issues-header border-right">
