@@ -209,7 +209,7 @@
   position: absolute;
   height: 52vh;
   width: calc(100% - 85px - 25px);
-  bottom: -60px;
+  bottom: -70px;
   right: 25px;
   left: 85px;
   z-index: 1000;
@@ -271,13 +271,13 @@
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background-color: #c8e6c961;
+  background-color: #EFFBF7;
 }
 .lock{
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background-color: #ffcdd275;
+  background-color: #FFF5F5;
 }
 .small-button{
   height: 10px;
@@ -477,17 +477,17 @@
 @keyframes custom-progress-spinner-color {
   100%,
   0% {
-    stroke: #62b6cb;
+    stroke: #69B7FF;
   }
   40% {
-    stroke: #62b6cb;
+    stroke: #69B7FF;
   }
   66% {
-    stroke: #62b6cb;
+    stroke: #69B7FF;
   }
   80%,
   90% {
-    stroke: #62b6cb;
+    stroke: #69B7FF;
   }
 }
 @keyframes custom-progress-spinner-dash {
