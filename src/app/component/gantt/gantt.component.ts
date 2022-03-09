@@ -40,8 +40,9 @@ export class GanttComponent implements OnInit {
   startDate = new Date(this.currentDate - this.msPerDay * this.daysBeforeInitial);
   endDate = new Date(this.currentDate + this.msPerDay * this.daysAfterInitial);
   days: any[] = [];
-  dayWidth = 50;
+  dayWidth = 80;
   dayHeight = 30;
+  monthDayHeight = 22;
   issueHeight = 24;
   timeLineLength = this.endDate.getTime() - this.startDate.getTime();
   timeLineLengthPx = this.timeLineLength / this.msPerDay * this.dayWidth;
@@ -55,7 +56,9 @@ export class GanttComponent implements OnInit {
   constructor(private auth: AuthManagerService, private issueManager: IssueManagerService) { }
 
   ngOnInit(): void {
-   this.fillDays();
+
+
+    this.fillDays();
 
     this.issueManager.getIssues('op').then(res => {
       this.sourceIssues = res;
@@ -115,6 +118,7 @@ export class GanttComponent implements OnInit {
   dragOver(event: DragEvent) {
     event.stopPropagation();
     event.preventDefault();
+
   }
 
   startOffset = 0;
@@ -123,6 +127,9 @@ export class GanttComponent implements OnInit {
   dragIndex = -1;
   action = 'move';
   moveSide = 'right';
+  dragIssue: any = null;
+  mouseMove: any = {};
+  mouseUp: any = {};
   getHeaderRowStyle(){
     return{
       height: this.dayHeight + 'px',
@@ -154,20 +161,68 @@ export class GanttComponent implements OnInit {
       'border-radius': '12px',
     }
   }
-  dragStart(event: DragEvent, element: HTMLElement, i: number, action = 'move', side = 'right') {
-    this.action = action;
-    this.dragIndex = i;
-    // @ts-ignore
-    var dragImgEl = document.createElement('span');
-    dragImgEl.setAttribute('style', 'display: none' );
-    document.body.appendChild(dragImgEl);
-    // @ts-ignore
-    event.dataTransfer.setDragImage(dragImgEl, 0, 0);
-    // @ts-ignore
-    event.dataTransfer.effectAllowed = 'move';
-    this.moveSide = side;
-    this.dragItem = element;
+
+
+
+  dragStart(event: DragEvent, issue: any) {
+    event.preventDefault();
+    this.mouseMove = (e: any) => {
+      let width = issue.endDate - issue.startDate;
+      issue.startDate = issue.startDate + e.movementX * this.msPerPx;
+      issue.endDate = issue.startDate + width;
+      this.checkBounds(issue);
+    }
+    this.mouseUp = (e: any) => {
+      document.removeEventListener('mousemove', this.mouseMove);
+      document.removeEventListener('mouseup', this.mouseUp);
+    }
+    document.addEventListener('mousemove', this.mouseMove);
+    document.addEventListener('mouseup', this.mouseUp);
   }
+  dragStartMove(event: DragEvent, issue: any, i: number, side = 'right') {
+    event.preventDefault();
+    this.moveSide = side;
+    this.mouseMove = (e: any) => {
+      if (this.moveSide == 'right' && issue.startDate + this.msPerDay < issue.endDate + e.movementX * this.msPerPx){
+        issue.endDate = issue.endDate + e.movementX * this.msPerPx;
+      }
+      if (this.moveSide == 'left' && issue.startDate + e.movementX * this.msPerPx + this.msPerDay < issue.endDate){
+        issue.startDate = issue.startDate + e.movementX * this.msPerPx;
+      }
+      this.checkBounds(issue);
+    }
+    this.mouseUp = (e: any) => {
+      document.removeEventListener('mousemove', this.mouseMove);
+      document.removeEventListener('mouseup', this.mouseUp);
+    }
+    document.addEventListener('mousemove', this.mouseMove);
+    document.addEventListener('mouseup', this.mouseUp);
+  }
+  dragStartAnchor(event: DragEvent, element: HTMLDivElement) {
+    event.preventDefault();
+    this.dragItem = element;
+    let moveElem = document.createElement('div');
+    moveElem.style.left = event.clientX + 'px';
+    moveElem.style.top = event.clientY + 'px';
+    moveElem.style.position = 'fixed';
+    moveElem.style.display = 'block';
+    document.body.appendChild(moveElem);
+    let line = new LeaderLine(element, moveElem);
+    this.mouseMove = (e: any) => {
+      moveElem.style.left = e.clientX + 'px';
+      moveElem.style.top = e.clientY + 'px';
+      line.position();
+    }
+    this.mouseUp = (e: any) => {
+      document.removeEventListener('mousemove', this.mouseMove);
+      document.removeEventListener('mouseup', this.mouseUp);
+      line.remove();
+    }
+    document.addEventListener('mousemove', this.mouseMove);
+    document.addEventListener('mouseup', this.mouseUp);
+  }
+
+
   checkBounds(issue: any){
     let width = issue.endDate - issue.startDate;
     if (issue.startDate < this.startDate.getTime()){
@@ -182,55 +237,7 @@ export class GanttComponent implements OnInit {
       leader.position();
     });
   }
-  moveOverTimelineThis(event: DragEvent, issue: any, i: number) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (this.dragIndex == i && this.action == 'move'){
-      // @ts-ignore
-      let width = issue.endDate - issue.startDate;
-      let diff = width / 2 / this.msPerPx - event.offsetX;
-      if (!(Math.abs(diff) < 1)){
-        issue.startDate = issue.startDate - width / 2 + event.offsetX * this.msPerPx;
-        issue.endDate = issue.startDate + width;
-      }
-      this.checkBounds(issue);
-    }
-    else if (this.dragIndex == i && this.action == 'resize') {
-      if (this.moveSide == 'right'){
-        if (issue.startDate + this.minWidth < issue.startDate + event.offsetX * this.msPerPx) {
-          issue.endDate = issue.startDate + event.offsetX * this.msPerPx;
-        }
-      }
-      else{
-        if (issue.startDate + event.offsetX * this.msPerPx + this.minWidth < issue.endDate) {
-          issue.startDate = issue.startDate + event.offsetX * this.msPerPx;
-        }
-      }
-    }
-  }
-  moveOverTimeline(event: DragEvent, issue: any, i: number) {
-    event.preventDefault();
-    event.stopPropagation();
-    if (this.dragIndex == i && this.action == 'move') {
-      // @ts-ignore
-      let width = issue.endDate - issue.startDate;
-      issue.startDate = this.startDate.getTime() + event.offsetX * this.msPerPx - width / 2;
-      issue.endDate = issue.startDate + width;
-      this.checkBounds(issue);
-    }
-    else if (this.dragIndex == i && this.action == 'resize') {
-      if (this.moveSide == 'right') {
-        if (issue.startDate + this.minWidth < this.startDate.getTime() + event.offsetX * this.msPerPx) {
-          issue.endDate = this.startDate.getTime() + event.offsetX * this.msPerPx;
-        }
-      }
-      else{
-        if (this.startDate.getTime() + event.offsetX * this.msPerPx + this.minWidth < issue.endDate) {
-          issue.startDate = this.startDate.getTime() + event.offsetX * this.msPerPx;
-        }
-      }
-    }
-  }
+
 
   getDayFrom(number: number, date = this.startDate.getTime()) {
     return Math.round((number - date) / this.msPerPx);
@@ -267,7 +274,7 @@ export class GanttComponent implements OnInit {
       'background-color': 'rgba(33, 150, 243, 0.12)',
       'border-top-right-radius': '12px',
       'border-bottom-right-radius': '12px',
-      'z-index': 10,
+      'z-index': 2,
     }
   }
   getLeftArrow(issue: any) {
@@ -281,7 +288,7 @@ export class GanttComponent implements OnInit {
       'background-color': 'rgba(33, 150, 243, 0.12)',
       'border-top-left-radius': '12px',
       'border-bottom-left-radius': '12px',
-      'z-index': 10,
+      'z-index': 2,
     }
   }
   getDate(dateLong: number): string{
@@ -312,14 +319,11 @@ export class GanttComponent implements OnInit {
     }
   }
 
-  drawLine() {
-    new LeaderLine(document.getElementById('1'), document.getElementById('2'));
-  }
 
   getLeftAnchor(issue: any) {
     return{
       position: 'absolute',
-      left: (this.getDayFrom(issue.startDate) - 20) + 'px',
+      left: (this.getDayFrom(issue.startDate) - 15) + 'px',
       width: this.arrowPadding,
       height: this.anchorSize,
     }
@@ -328,44 +332,49 @@ export class GanttComponent implements OnInit {
   getRightAnchor(issue: any) {
     return{
       position: 'absolute',
-      left: (this.getDayFrom(issue.endDate) - this.anchorSize + 20) + 'px',
+      left: (this.getDayFrom(issue.endDate) - this.anchorSize + 16) + 'px',
       width: this.arrowPadding,
       height: this.anchorSize,
     }
   }
 
-  onAnchorDrop(event: DragEvent, element: HTMLElement) {
-    if (this.action == 'anchor'){
-      event.preventDefault();
-      event.stopPropagation();
-      let leader = new LeaderLine(this.dragItem, element, {
-
-        startSocketGravity: [0, 0],
-        endSocketGravity: [0, 0],
-        path: 'grid',
-        startPlug: 'behind',
-        color: '#cecece',
-        gradient: true,
-        size: 1.5,
-      });
-      this.leaders.push(leader);
-
-      let svgs = document.getElementsByClassName('leader-line');
-      let svg = svgs.item(svgs.length - 1) as HTMLElement;
-      console.log(document.getElementsByClassName('leader-line').length);
-      svg.addEventListener('mouseenter', (event) => {
-        leader.color = '#E91E63';
-        document.body.style.cursor = 'url("assets/icons/remove.png"), auto';
-      });
-      svg.addEventListener('mouseleave', (event) => {
-        leader.color = '#cecece';
-        document.body.style.cursor = 'auto';
-      });
-      svg.addEventListener('click', (event) => {
-        leader.remove();
-        this.leaders.splice(leader._id - 1, 1);
-        document.body.style.cursor = 'auto';
-      });
-    }
+  onAnchorDrop(event: MouseEvent, element: HTMLElement) {
+    let leader = new LeaderLine(this.dragItem, element, {
+      startSocketGravity: [0, 0],
+      endSocketGravity: [0, 0],
+      path: 'grid',
+      startPlug: 'behind',
+      color: '#cecece',
+      gradient: true,
+      size: 1.5,
+    });
+    this.leaders.push(leader);
+    let svgs = document.getElementsByClassName('leader-line');
+    let svg = svgs.item(svgs.length - 1) as HTMLElement;
+    svg.addEventListener('mouseenter', (event) => {
+      leader.color = '#E91E63';
+      document.body.style.cursor = 'url("assets/icons/remove.png"), auto';
+    });
+    svg.addEventListener('mouseleave', (event) => {
+      leader.color = '#cecece';
+      document.body.style.cursor = 'auto';
+    });
+    svg.addEventListener('click', (event) => {
+      leader.remove();
+      this.leaders.splice(leader._id - 1, 1);
+      document.body.style.cursor = 'auto';
+    });
   }
+
+  dragEnd(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log('drag end');
+    document.removeEventListener('mousemove', this.mouseMove);
+  }
+
+  dragOverMove(){
+
+  }
+
 }

@@ -49,42 +49,21 @@ export class HullEspGenerationWaitComponent implements OnInit {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
-      if (rev != ''){
-        let files: FileAttachment[] = [];
-        this.resUrls.forEach(fileUrl => {
-          let file = new FileAttachment();
-          file.url = fileUrl;
-          file.revision = this.rev;
-          file.author = this.auth.getUser().login;
-          file.group = 'Drawings';
-          file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
-          files.push(file);
-        });
+      let files: FileAttachment[] = [];
+      this.resUrls.forEach(fileUrl => {
+        let file = new FileAttachment();
+        file.url = fileUrl;
+        file.revision = this.rev;
+        file.author = this.auth.getUser().login;
+        file.group = 'Part List';
+        file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+        files.push(file);
+      });
+      this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', '-').then(() => {
+        this.issues.setRevisionFiles(this.issue.id, '-', JSON.stringify(files)).then(() => {
 
-        this.issues.setRevisionFiles(this.issue.id, rev, JSON.stringify(files)).then(() => {
-          this.issue.revision = rev;
-          this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue);
         });
-      }
-      else{
-        let files: FileAttachment[] = [];
-
-        this.resUrls.forEach(fileUrl => {
-          let file = new FileAttachment();
-          file.url = fileUrl;
-          file.revision = this.rev;
-          file.author = this.auth.getUser().login;
-          file.group = 'Part List';
-          file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
-          files.push(file);
-        });
-
-        this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', '-').then(() => {
-          this.issues.setRevisionFiles(this.issue.id, '-', JSON.stringify(files)).then(() => {
-
-          });
-        });
-      }
+      });
     });
   }
 

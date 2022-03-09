@@ -1,4 +1,4 @@
-<div *ngIf="!device.isDesktop()" class="h-100">
+<div *ngIf="!isDesktop()" class="h-100">
   <div class="all-card">
     <div class="card-head-tablet df">
       <div class="mr-10">{{getBlockName()}}</div>
@@ -627,7 +627,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="device.isDesktop()" class="all-page h-100">
+<div *ngIf="isDesktop()" class="all-page h-100">
   <div class="all-card">
     <div class="card-head df">
       <div class="mr-2">{{getBlockName()}}</div>
@@ -760,14 +760,14 @@
         </div>
 
         <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
-          <div class="flex-end mb-20">
-            <div class="button-details-up df cursor-pointer" (click)="downloadFiles('all', selectedRevision)">
-              <div class="cxy">
-                <img src="assets/icons/download-arrow.png">
-              </div>
-              <div class="cy ml-1">Download all files</div>
-            </div>
-          </div>
+<!--          <div class="flex-end mb-20">-->
+<!--            <div class="button-details-up df cursor-pointer" (click)="downloadFiles('all', selectedRevision)">-->
+<!--              <div class="cxy">-->
+<!--                <img src="assets/icons/download-arrow.png">-->
+<!--              </div>-->
+<!--              <div class="cy ml-1">Download all files</div>-->
+<!--            </div>-->
+<!--          </div>-->
           <div class="mb-30" *ngFor="let fileGroup of fileGroups" [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
@@ -784,7 +784,7 @@
                     </div>
                     <div class="cy ml-1">Download all</div>
                   </div>
-                  <div [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy icon-rotate">
                       <img src="assets/icons/broom.png">
                     </div>

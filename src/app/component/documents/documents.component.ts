@@ -106,9 +106,8 @@ export class DocumentsComponent implements OnInit {
       this.filters.department = this.getFilters(this.issues, 'department');
       this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
       this.issueManager.getNestingFiles().then(nestingFiles => {
-        this.issues = this.issues.filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => x.name.includes(issue.doc_number)));
+        this.issues = this.issues.filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null);
       });
-
 
       this.issues = _.sortBy(this.issues, x => x.doc_number);
     });
@@ -198,5 +197,8 @@ export class DocumentsComponent implements OnInit {
 
   fillIssues() {
 
+  }
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1296;
   }
 }

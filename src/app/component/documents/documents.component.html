@@ -1,4 +1,4 @@
-<div *ngIf="!device.isDesktop()" class="">
+<div *ngIf="!isDesktop()" class="">
   <div class="card-tablet">
     <p-table #table [value]="issues"
              [scrollable]="true"
@@ -77,7 +77,7 @@
     </p-table>
   </div>
 </div>
-<div *ngIf="device.isDesktop()" class="all-page">
+<div *ngIf="isDesktop()" class="all-page">
   <div class="card-overflow">
     <p-table #table [value]="issues"
              [scrollable]="true"

@@ -16,7 +16,7 @@
   left: 0;
   right: 0;
   width: 100%;
-  height: var(--navi-height);
+  height: var(--navi-height-tablet);
   background-color: #0E364A;
   z-index: 9;
   display: grid;
@@ -26,7 +26,7 @@
   position: absolute;
   left: 0;
   top: var(--navi-height);
-  height: calc(100% - var(--navi-height));
+  height: calc(100vh - var(--navi-height));
   min-height: 400px;
   width: var(--navi-width);
   z-index: 8;
@@ -36,8 +36,8 @@
 .left-panel-tablet{
   position: absolute;
   left: 0;
-  top: var(--navi-height);
-  height: calc(100% - var(--navi-height));
+  top: var(--navi-height-tablet);
+  height: calc(100vh - var(--navi-height-tablet));
   min-height: 400px;
   width: var(--navi-width);
   z-index: 8;

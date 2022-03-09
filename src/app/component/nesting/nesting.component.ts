@@ -747,15 +747,15 @@ export class NestingComponent implements OnInit {
   showCuttingFile(nest: any) {
     let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
     if (searchCMAP != null){
-      if (!this.cutEnabled){
-        this.cutEnabled = !this.cutEnabled;
-      }
       this.dxfEnabled = false;
+      this.cutEnabled = false;
       this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
-        // @ts-ignore
-        this.router.navigate([], {queryParams: {cmap: searchCMAP.url, cmapuser: this.auth.getUserName(searchCMAP.author), cmapdate: searchCMAP.upload_date}, queryParamsHandling: 'merge'});
-        const style = document.createElement('style');
-        style.innerHTML = `
+        setTimeout(() => {
+          this.cutEnabled = true;
+          // @ts-ignore
+          this.router.navigate([], {queryParams: {cmap: searchCMAP.url, cmapuser: this.auth.getUserName(searchCMAP.author), cmapdate: searchCMAP.upload_date}, queryParamsHandling: 'merge'});
+          const style = document.createElement('style');
+          style.innerHTML = `
           .editBlock pre {
             height: 42vh !important;
           }
@@ -763,7 +763,8 @@ export class NestingComponent implements OnInit {
             height: 45vh !important;
           }
         `;
-        document.head.appendChild(style);
+          document.head.appendChild(style);
+        });
       });
     }
   }
@@ -830,5 +831,8 @@ export class NestingComponent implements OnInit {
     this.dxfEnabledForNesting = false;
     this.dxfEnabled = false;
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
+  }
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1296;
   }
 }

@@ -120,7 +120,7 @@ export class HullEspComponent implements OnInit {
       name: 'Part List',
       icon: 'assets/icons/files.svg',
       collapsed: false,
-      need_rights: true
+      need_rights: false
     },
     {
       name: 'Cutting Map',
@@ -144,7 +144,7 @@ export class HullEspComponent implements OnInit {
       name: 'Profile Sketches',
       icon: 'assets/icons/cutting.svg',
       collapsed: true,
-      need_rights: true
+      need_rights: false
     }
   ];
   selectedTab = this.fileGroups[0].name;
@@ -356,6 +356,9 @@ export class HullEspComponent implements OnInit {
   isLoaded(file: string) {
     return this.loaded.find(x => x.name == file);
   }
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1296;
+  }
   fillSketches(){
     let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
     this.nestContent.splice(0, this.nestContent.length);
@@ -517,7 +520,7 @@ export class HullEspComponent implements OnInit {
   }
 
   downloadFiles(group: string, revision: string) {
-    let files = this.getRevisionFilesOfGroup(group, revision).filter(x => x.group == 'Drawings');
+    let files = this.getRevisionFilesOfGroup(group, revision);
     let zipped: string[] = [];
     this.waitForZipFiles = true;
     Promise.all(files.map(x => fetch(x.url))).then(blobs => {

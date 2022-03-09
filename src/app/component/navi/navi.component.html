@@ -108,7 +108,7 @@
   </div>
   <div></div>
 </div>
-<div *ngIf="!device.isDesktop()" class="left-panel-tablet">
+<div *ngIf="!isDesktop()" class="left-panel-tablet">
   <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
       <img src="assets/icons/home1.svg" height="17">
@@ -158,14 +158,26 @@
     </div>
 <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
   </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('eleccables')" class="menu" routerLink="elec-cables" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('КАБЕЛИ')">
+      <img src="assets/icons/elec.svg" height="20">
+    </div>
+    <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
+  </div>
   <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('ТРУДОЗАТРАТЫ')">
       <img src="assets/icons/labor.svg" height="20">
     </div>
 <!--    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>-->
   </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('nesting')" class="menu" routerLink="nesting" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('РАСКРОЙ')">
+      <img src="assets/icons/nesting.svg" height="20">
+    </div>
+    <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
+  </div>
 </div>
-<div *ngIf="device.isDesktop()" class="left-panel">
+<div *ngIf="isDesktop()" class="left-panel">
   <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
       <img src="assets/icons/home1.svg" height="17">
