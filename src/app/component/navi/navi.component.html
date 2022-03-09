@@ -158,6 +158,12 @@
     </div>
 <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
   </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('eleccables')" class="menu" routerLink="elec-cables" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('КАБЕЛИ')">
+      <img src="assets/icons/elec.svg" height="20">
+    </div>
+    <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
+  </div>
   <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('ТРУДОЗАТРАТЫ')">
       <img src="assets/icons/labor.svg" height="20">

@@ -300,20 +300,20 @@
               <div class="ovf-auto max-height-185">
                 <div class="df">
                   <div class="title-bold-tablet mb-15 sticky head-checkbox">BLOCKS:</div>
-                  <div class="p-ml-auto df">
-                    <div *ngIf="currentView == 'tile'" class="mr-10 cursor-pointer">
-                      <img src="assets/icons/tile-yellow.svg" height="24">
-                    </div>
-                    <div (click)="currentView = 'tile'" *ngIf="currentView != 'tile'" class="mr-10 cursor-pointer">
-                      <img src="assets/icons/tile-gray.svg" height="24">
-                    </div>
-                    <div *ngIf="currentView == 'list'" class="cursor-pointer">
-                      <img src="assets/icons/list-yellow.svg" height="24">
-                    </div>
-                    <div (click)="currentView = 'list'" *ngIf="currentView != 'list'" class="cursor-pointer">
-                      <img src="assets/icons/list-gray.svg" height="24">
-                    </div>
-                  </div>
+<!--                  <div class="p-ml-auto df">-->
+<!--                    <div *ngIf="currentView == 'tile'" class="mr-10 cursor-pointer">-->
+<!--                      <img src="assets/icons/tile-yellow.svg" height="24">-->
+<!--                    </div>-->
+<!--                    <div (click)="currentView = 'tile'" *ngIf="currentView != 'tile'" class="mr-10 cursor-pointer">-->
+<!--                      <img src="assets/icons/tile-gray.svg" height="24">-->
+<!--                    </div>-->
+<!--                    <div *ngIf="currentView == 'list'" class="cursor-pointer">-->
+<!--                      <img src="assets/icons/list-yellow.svg" height="24">-->
+<!--                    </div>-->
+<!--                    <div (click)="currentView = 'list'" *ngIf="currentView != 'list'" class="cursor-pointer">-->
+<!--                      <img src="assets/icons/list-gray.svg" height="24">-->
+<!--                    </div>-->
+<!--                  </div>-->
 
                 </div>
 
@@ -374,78 +374,78 @@
               <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
             </div>
           </div>
-          <div *ngIf="currentView == 'list'">
-            <div [class.hidden-card]="nest == null" class="dash-card mx-20" *ngFor="let nest of nesting; let i = index">
-              <div *ngIf="nest != null" class="top-row">
-                <div class="cxy">
-                  <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
-                    <img src="assets/icons/lock.svg" height="26">
-                  </div>
-                  <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
-                    <img src="assets/icons/unlock.svg" height="26">
-                  </div>
-                </div>
-                <div class="">
-                  <div class="cy h-100">
-                    <div class="cx mb-10 mt-10">
-                      <div class="title-bold px-10">{{nest.ID}}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center-y">
-                  <div class="title-name">
-                    <div *ngIf="nest.USAGE > 100">WARNING</div>
-                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#BE78A2'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>
-                  </div>
-                  <div class="title-name">
-                    <div class="my-5 usage">Usage: {{round(nest.USAGE)}}%</div>
-                    <div class="my-5 left">Left: {{round(100 - nest.USAGE)}}%</div>
-                  </div>
-                </div>
-                <div class="text-center-y">
-                  <div class="gray-text mr-10">File</div>
-                  <div class="file">{{nest.FILE}}</div>
-                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
-                    <img src="assets/icons/eye-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show nesting file</div>
-                  </div>
-                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">
-                    <img src="assets/icons/download-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Download files</div>
-                  </div>
+<!--          <div *ngIf="currentView == 'list'">-->
+<!--            <div [class.hidden-card]="nest == null" class="dash-card mx-20" *ngFor="let nest of nesting; let i = index">-->
+<!--              <div *ngIf="nest != null" class="top-row">-->
+<!--                <div class="cxy">-->
+<!--                  <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">-->
+<!--                    <img src="assets/icons/lock.svg" height="26">-->
+<!--                  </div>-->
+<!--                  <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">-->
+<!--                    <img src="assets/icons/unlock.svg" height="26">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="">-->
+<!--                  <div class="cy h-100">-->
+<!--                    <div class="cx mb-10 mt-10">-->
+<!--                      <div class="title-bold px-10">{{nest.ID}}</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="text-center-y">-->
+<!--                  <div class="title-name">-->
+<!--                    <div *ngIf="nest.USAGE > 100">WARNING</div>-->
+<!--                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#BE78A2'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>-->
+<!--                  </div>-->
+<!--                  <div class="title-name">-->
+<!--                    <div class="my-5 usage">Usage: {{round(nest.USAGE)}}%</div>-->
+<!--                    <div class="my-5 left">Left: {{round(100 - nest.USAGE)}}%</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="text-center-y">-->
+<!--                  <div class="gray-text mr-10">File</div>-->
+<!--                  <div class="file">{{nest.FILE}}</div>-->
+<!--                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">-->
+<!--                    <img src="assets/icons/eye-file.svg" height="22">-->
+<!--                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show nesting file</div>-->
+<!--                  </div>-->
+<!--                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">-->
+<!--                    <img src="assets/icons/download-file.svg" height="22">-->
+<!--                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Download files</div>-->
+<!--                  </div>-->
 
 
 
-                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                    <img src="assets/icons/eye-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
-                  </div>
-                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                    <img src="assets/icons/download-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="nest != null" class="bottom-row">
-                <div class="ovf-auto">
-                  <div class="df cursor-pointer sticky">
-                    <div class="w-25 table-header-column cy">{{l.tr('BLOCK')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('LENGTHxWIDTHxTHICKNESS')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('MATERIAL')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('WEIGHT')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('NUMBER EQUAL NESTING')}}</div>
-                  </div>
-                  <div class="text-center-y info-row cursor-pointer">
-                    <div class="w-25 table-body cy">{{nest.BLOCKS}}</div>
-                    <div class="w-25 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
-                    <div class="w-25 table-body cy">{{nest.MATERIAL}}</div>
-                    <div class="w-25 table-body cy">{{nest.PARTS_WEIGHT}}</div>
-                    <div class="w-25 table-body cy">{{nest.NUM_EQ_NEST}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+<!--                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">-->
+<!--                    <img src="assets/icons/eye-file.svg" height="22">-->
+<!--                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>-->
+<!--                  </div>-->
+<!--                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">-->
+<!--                    <img src="assets/icons/download-file.svg" height="22">-->
+<!--                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div *ngIf="nest != null" class="bottom-row">-->
+<!--                <div class="ovf-auto">-->
+<!--                  <div class="df cursor-pointer sticky">-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('BLOCK')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('LENGTHxWIDTHxTHICKNESS')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('MATERIAL')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('WEIGHT')}}</div>-->
+<!--                    <div class="w-25 table-header-column cy">{{l.tr('NUMBER EQUAL NESTING')}}</div>-->
+<!--                  </div>-->
+<!--                  <div class="text-center-y info-row cursor-pointer">-->
+<!--                    <div class="w-25 table-body cy">{{nest.BLOCKS}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.MATERIAL}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.PARTS_WEIGHT}}</div>-->
+<!--                    <div class="w-25 table-body cy">{{nest.NUM_EQ_NEST}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [class.hidden-card]="nest == null" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
               <div *ngIf="nest != null" class="top-row-tile-tablet">
@@ -500,7 +500,7 @@
                 <div class="">
                   <div class="files-tile">
                     <div class="">
-                      <div class="gray-text-tile cx mb-1px">Nesting:</div>
+                      <div class="gray-text-tile-tablet cx mb-3px">Nesting:</div>
                       <div class="cxy">
                         <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
                           <img src="assets/icons/eye-file.svg" height="18">
@@ -512,7 +512,7 @@
 
                     </div>
                     <div class="">
-                      <div class="gray-text cx mb-1px">Cutting:</div>
+                      <div class="gray-text-tile-tablet cx mb-3px">Cutting:</div>
                       <div class="cxy">
                         <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
                           <img src="assets/icons/eye-file.svg" height="18">
@@ -549,13 +549,13 @@
           </div>
         </div>
       </div>
-      <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
+      <div class="pt-5 dxf-view-tablet" *ngIf="dxfEnabled">
         <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedDxf()"></button>
         <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
         <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
         <app-dxf-view></app-dxf-view>
       </div>
-      <div class="pt-5 dxf-view" *ngIf="cutEnabled">
+      <div class="pt-5 dxf-view-tablet" *ngIf="cutEnabled">
         <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
         <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
         <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
