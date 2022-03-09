@@ -209,7 +209,7 @@
   position: absolute;
   height: 52vh;
   width: calc(100% - 85px - 25px);
-  bottom: -50px;
+  bottom: -60px;
   right: 25px;
   left: 85px;
   z-index: 1000;
@@ -325,11 +325,25 @@
   height: 26px;
   width: 26px;
   border-radius: 4px;
-  background-color: #69B7FF;
+  background-color: #62B6CB;
   position: relative;
 }
 .eye-file-tile:hover{
   background-color: #5dabbe;
+}
+.eye-file-tile-tablet{
+  height: 26px;
+  width: 26px;
+  border-radius: 4px;
+  background-color: #62B6CB;
+  position: relative;
+}
+.eye-cut-tile-tablet{
+  height: 26px;
+  width: 26px;
+  border-radius: 4px;
+  background-color: #C03995;
+  position: relative;
 }
 .eye-tooltip{
   position: absolute;
@@ -556,7 +570,7 @@
   height: 26px;
   width: 26px;
   border-radius: 4px;
-  background-color: #FF5E69;
+  background-color: #C03995;
   position: relative;
 }
 .eye-cut-tile:hover{
