@@ -2,19 +2,19 @@
 import { NgModule } from '@angular/core';
 
 // This Module's Components
-import { HomeMobileComponent } from './home-mobile.component';
+import { ReportComponent } from './report.component';
 
 @NgModule({
     imports: [
 
     ],
     declarations: [
-        HomeMobileComponent,
+        ReportComponent,
     ],
     exports: [
-        HomeMobileComponent,
+        ReportComponent,
     ]
 })
-export class HomeMobileModule {
+export class ReportModule {
 
 }
