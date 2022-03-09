@@ -296,59 +296,65 @@
       <div class="w-100 df">
         <div class="w-20 min-width-220">
           <div class="menu-card-tablet">
-            <div class="ovf-auto max-height-150">
-              <div class="df">
-                <div class="title-bold-tablet mb-15 sticky head-checkbox">BLOCKS:</div>
-                <div class="p-ml-auto df">
-                  <div *ngIf="currentView == 'tile'" class="mr-10 cursor-pointer">
-                    <img src="assets/icons/tile-yellow.svg" height="24">
+            <div class="left-block-materials">
+              <div class="ovf-auto max-height-185">
+                <div class="df">
+                  <div class="title-bold-tablet mb-15 sticky head-checkbox">BLOCKS:</div>
+                  <div class="p-ml-auto df">
+                    <div *ngIf="currentView == 'tile'" class="mr-10 cursor-pointer">
+                      <img src="assets/icons/tile-yellow.svg" height="24">
+                    </div>
+                    <div (click)="currentView = 'tile'" *ngIf="currentView != 'tile'" class="mr-10 cursor-pointer">
+                      <img src="assets/icons/tile-gray.svg" height="24">
+                    </div>
+                    <div *ngIf="currentView == 'list'" class="cursor-pointer">
+                      <img src="assets/icons/list-yellow.svg" height="24">
+                    </div>
+                    <div (click)="currentView = 'list'" *ngIf="currentView != 'list'" class="cursor-pointer">
+                      <img src="assets/icons/list-gray.svg" height="24">
+                    </div>
                   </div>
-                  <div (click)="currentView = 'tile'" *ngIf="currentView != 'tile'" class="mr-10 cursor-pointer">
-                    <img src="assets/icons/tile-gray.svg" height="24">
-                  </div>
-                  <div *ngIf="currentView == 'list'" class="cursor-pointer">
-                    <img src="assets/icons/list-yellow.svg" height="24">
-                  </div>
-                  <div (click)="currentView = 'list'" *ngIf="currentView != 'list'" class="cursor-pointer">
-                    <img src="assets/icons/list-gray.svg" height="24">
-                  </div>
+
                 </div>
 
+                <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
+                  There is no blocks for selected project there. Try to specify another project.
+                </div>
+                <div *ngFor="let block of blocks">
+                  <label class="container">
+                    <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">
+                    <span class="checkmark"></span>
+                    <span class="text-checkbox">{{block.name}}</span>
+                  </label>
+                </div>
               </div>
+              <div class="w-100">
+                <div class="button-fetch-tablet cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">Fetch materials</div>
+              </div>
+            </div>
+            <div class="left-block-materials">
+              <div class="ovf-auto max-height-185">
+                <div class="title-bold-tablet mb-15 sticky head-checkbox">MATERIALS:</div>
+                <div class="cxy" *ngIf="loadingMaterials">
+                  <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+                </div>
+                <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
+                  There are no plate dimensions. You need to specify blocks from top column.
+                </div>
+                <div *ngFor="let material of materials">
+                  <label class="container">
+                    <input (change)="selectMaterial(material)" type="checkbox" [checked]="material.selected">
+                    <span class="checkmark"></span>
+                    <span class="text-checkbox">{{material.name}}</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <div class="button-fetch-tablet cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
+              </div>
+            </div>
 
-              <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
-                There is no blocks for selected project there. Try to specify another project.
-              </div>
-              <div *ngFor="let block of blocks">
-                <label class="container">
-                  <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">
-                  <span class="checkmark"></span>
-                  <span class="text-checkbox">{{block.name}}</span>
-                </label>
-              </div>
-            </div>
-            <div class="w-100">
-              <div class="button-fetch-tablet cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">Fetch materials</div>
-            </div>
-            <div class="ovf-auto max-height-150">
-              <div class="title-bold-tablet mb-15 sticky head-checkbox">MATERIALS:</div>
-              <div class="cxy" *ngIf="loadingMaterials">
-                <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
-              </div>
-              <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
-                There are no plate dimensions. You need to specify blocks from top column.
-              </div>
-              <div *ngFor="let material of materials">
-                <label class="container">
-                  <input (change)="selectMaterial(material)" type="checkbox" [checked]="material.selected">
-                  <span class="checkmark"></span>
-                  <span class="text-checkbox">{{material.name}}</span>
-                </label>
-              </div>
-            </div>
-            <div>
-              <div class="button-fetch-tablet cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
-            </div>
+
           </div>
         </div>
         <div class="w-80 cards-tablet min-width-400">

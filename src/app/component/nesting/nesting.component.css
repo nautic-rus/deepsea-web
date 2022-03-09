@@ -123,6 +123,12 @@
   position: relative;
   transition: 0.5s;
   height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.left-block-materials{
+  display: grid;
+  grid-template-rows: 2.75fr auto;
 }
 .top-row{
   height: 120px;
@@ -595,6 +601,6 @@
 .min-width-220{
   min-width: 220px;
 }
-.max-height-150{
-  max-height: 150px;
+.max-height-185{
+  max-height: 185px;
 }
