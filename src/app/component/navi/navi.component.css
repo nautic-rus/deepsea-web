@@ -37,7 +37,7 @@
   position: absolute;
   left: 0;
   top: var(--navi-height-tablet);
-  height: calc(100% - var(--navi-height-tablet));
+  height: calc(100vh - var(--navi-height-tablet));
   min-height: 400px;
   width: var(--navi-width);
   z-index: 8;

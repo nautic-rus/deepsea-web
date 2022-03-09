@@ -118,13 +118,11 @@
   padding: 20px;
   width: 100%;
   min-width: 220px;
-  height: calc(100% - var(--navi-height-tablet));
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
   transition: 0.5s;
-  display: grid;
-  grid-template-rows: 3fr 0.8fr 3fr 0.8fr;
+  height: 100%;
 }
 .top-row{
   height: 120px;
@@ -596,4 +594,7 @@
 }
 .min-width-220{
   min-width: 220px;
+}
+.max-height-150{
+  max-height: 150px;
 }

@@ -198,4 +198,7 @@ export class DocumentsComponent implements OnInit {
   fillIssues() {
 
   }
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1296;
+  }
 }

@@ -356,6 +356,9 @@ export class HullEspComponent implements OnInit {
   isLoaded(file: string) {
     return this.loaded.find(x => x.name == file);
   }
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1296;
+  }
   fillSketches(){
     let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
     this.nestContent.splice(0, this.nestContent.length);

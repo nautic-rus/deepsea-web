@@ -1,4 +1,4 @@
-<div *ngIf="!device.isDesktop()" class="h-100">
+<div *ngIf="!isDesktop()" class="h-100">
   <div class="all-card">
     <div class="card-head-tablet df">
       <div class="mr-10">{{getBlockName()}}</div>
@@ -627,7 +627,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="device.isDesktop()" class="all-page h-100">
+<div *ngIf="isDesktop()" class="all-page h-100">
   <div class="all-card">
     <div class="card-head df">
       <div class="mr-2">{{getBlockName()}}</div>
