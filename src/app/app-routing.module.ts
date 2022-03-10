@@ -23,7 +23,7 @@ import {PdfViewComponent} from "./component/pdf-view/pdf-view.component";
 import {ElecCablesComponent} from "./component/elec-cables/elec-cables.component";
 import {NestingComponent} from "./component/nesting/nesting.component";
 import {GCodeComponent} from "./component/g-code/g-code.component";
-import {HomeMobileComponent} from "./component/home-mobile/home-mobile.component";
+import {ReportComponent} from "./component/report/report.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },
   { path: 'nesting', component: NestingComponent, canActivate: [AuthGuard], data: {animation: 'NestingComponent'} },
   { path: 'gcode', component: GCodeComponent, canActivate: [AuthGuard], data: {animation: 'GCodeComponent'} },
-  { path: 'mobile', component: HomeMobileComponent, canActivate: [AuthGuard], data: {animation: 'HomeMobileComponent'} },
+  { path: 'report', component: ReportComponent, canActivate: [AuthGuard], data: {animation: 'ReportComponent'} },
 ];
 
 @NgModule({

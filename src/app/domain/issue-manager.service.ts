@@ -144,6 +144,9 @@ export class IssueManagerService {
   async getNestingFiles() {
     return await this.http.get<FileAttachment[]>(props.http + '/nestingFiles').toPromise();
   }
+  async getAmountTask(project:string, department:string, status: string) {
+    return await this.http.get(props.http + '/getAmountTask',{params: {project, department, status}}).toPromise(); //reques amount of task
+  }
 
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
