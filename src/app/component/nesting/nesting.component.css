@@ -90,8 +90,8 @@
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 10px;
-  width: 360px;
-  height: 200px;
+  width: 380px;
+  height: 185px;
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -295,6 +295,12 @@
   background-color: #f9c851;
   border-radius: 4px;
 }
+.usage-tile-tablet{
+  height: 26px;
+  width: 26px;
+  background-color: #65D6AD;
+  border-radius: 4px;
+}
 .left{
   padding: 2px 8px;
   color: white;
@@ -334,15 +340,19 @@
 .eye-file-tile-tablet{
   height: 26px;
   width: 26px;
-  border-radius: 4px;
-  background-color: #62B6CB;
+  border-radius: 26px;
+  background-color: rgba(94, 208, 250, 0.1);
+  color: rgb(25, 146, 212);
+  border: 1px solid rgb(94, 208, 250);
   position: relative;
 }
 .eye-cut-tile-tablet{
   height: 26px;
   width: 26px;
-  border-radius: 4px;
-  background-color: #C03995;
+  border-radius: 26px;
+  background-color: rgba(250, 219, 95, 0.1);
+  color: rgb(222, 145, 29);
+  border: 1px solid rgb(250, 219, 95);
   position: relative;
 }
 .eye-tooltip{

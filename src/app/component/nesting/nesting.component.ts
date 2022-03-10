@@ -73,6 +73,7 @@ export class NestingComponent implements OnInit {
   cmapuser = '';
   cmapdate = 0;
 
+
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {

@@ -170,18 +170,23 @@
       <div *ngIf="issue.issue_type == 'RKD'">
         <div class="big-text mb-1 mt-2">{{t.tr('Готовность')}}</div>
         <div class="checklist">
-          <div class="df">
+          <label class="container">
             <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(0)" type="checkbox" [checked]="issue.ready[0] == '1'">
-            <div>Model</div>
-          </div>
-          <div class="df">
+            <span class="checkmark"></span>
+            <span class="text-checkbox">Model</span>
+          </label>
+
+          <label class="container">
             <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(1)" type="checkbox" [checked]="issue.ready[1] == '1'">
-            <div>Drawing</div>
-          </div>
-          <div class="df">
+            <span class="checkmark"></span>
+            <span class="text-checkbox">Drawing</span>
+          </label>
+
+          <label class="container">
             <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(2)" type="checkbox" [checked]="issue.ready[2] == '1'">
-            <div>Nesting</div>
-          </div>
+            <span class="checkmark"></span>
+            <span class="text-checkbox">Nesting</span>
+          </label>
         </div>
       </div>
       <div class="big-text mb-1 mt-2">{{t.tr('Чек-лист')}}</div>

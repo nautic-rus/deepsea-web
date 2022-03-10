@@ -83,7 +83,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="!noResult && nesting.length == 0">
+          <div *ngIf="noResult && nesting.length == 0">
             <div class="cxy card-height">
               <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
             </div>
@@ -369,7 +369,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="!noResult && nesting.length == 0">
+          <div *ngIf="noResult && nesting.length == 0">
             <div class="cxy card-height">
               <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
             </div>
@@ -470,14 +470,14 @@
                 <div class="text-center-y">
                   <div class="mt-minus15">
                     <div *ngIf="nest.USAGE > 100">WARNING</div>
-                    <ngx-charts-pie-chart [view]="[100, 100]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#D8DADC'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="true"></ngx-charts-pie-chart>
+                    <ngx-charts-pie-chart [view]="[100, 100]" [customColors]="[{name: 'Usage', value: '#65D6AD'}, {name: 'Left', value: '#D8DADC'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="true"></ngx-charts-pie-chart>
                   </div>
                   <div class="donut-text-tablet">{{round(nest.USAGE)}}%
 
                   </div>
                   <div class="usage-left-info">
                     <div class="text-center-y">
-                      <div class="usage-tile cxy">
+                      <div class="usage-tile-tablet cxy">
                         <img src="assets/icons/usage.svg" height="16">
                       </div>
                       <div class="ml-5">
@@ -502,11 +502,11 @@
                     <div class="">
                       <div class="gray-text-tile-tablet cx mb-3px">Nesting:</div>
                       <div class="cxy">
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile-tablet cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
-                          <img src="assets/icons/eye-white.svg" height="18">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile-tablet cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()">
+                          <img src="assets/icons/eye-blue.svg" height="16">
                         </div>
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile-tablet cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download nesting file')" tooltipPosition="top">
-                          <img src="assets/icons/download-file.svg" height="18">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile-tablet cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()">
+                          <img src="assets/icons/download-file-blue.svg" height="18">
                         </div>
                       </div>
 
@@ -514,11 +514,11 @@
                     <div class="">
                       <div class="gray-text-tile-tablet cx mb-3px">Cutting:</div>
                       <div class="cxy">
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile-tablet cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                          <img src="assets/icons/eye-white.svg" height="18">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile-tablet cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()">
+                          <img src="assets/icons/eye-yellow.svg" height="18">
                         </div>
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile-tablet cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download cutting file')" tooltipPosition="top">
-                          <img src="assets/icons/download-file.svg" height="18">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile-tablet cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()">
+                          <img src="assets/icons/download-file-yellow.svg" height="18">
                         </div>
                       </div>
 

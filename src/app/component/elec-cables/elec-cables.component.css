@@ -138,7 +138,7 @@
   padding: 10px;
   margin-right: 20px;
   margin-bottom: 20px;
-  width: 500px;
+  width: 427px;
   height: 310px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -534,7 +534,7 @@
 .cable-path-container{
   margin-left: -30px;
   height: 310px;
-  width: 170px;
+  width: 120px;
   background: #ffffff;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -573,7 +573,7 @@
   border: 1px solid rgba(114, 114, 114, 0.41);
 }
 .line-path{
-  width: 10px;
+  width: 5px;
   border-bottom: 1px solid rgba(114, 114, 114, 0.41);
 }
 .top-line-card{
