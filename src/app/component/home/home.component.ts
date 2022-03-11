@@ -107,8 +107,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'started_date',
-        header: 'Создана',
-        headerLocale: 'Создана',
+        header: 'Date created',
+        headerLocale: 'Date created',
         sort: true,
         filter: false,
         filters: this.getFilters(this.issues, 'started_date'),
@@ -287,8 +287,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'issue_comment',
-        header: 'Примечание',
-        headerLocale: 'Примечание',
+        header: 'Comment',
+        headerLocale: 'Comment',
         sort: true,
         filter: false,
         skip: false,
