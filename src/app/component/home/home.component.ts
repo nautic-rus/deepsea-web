@@ -275,8 +275,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'last_update',
-        header: 'Дата обновления',
-        headerLocale: 'Дата обновления',
+        header: 'Last update',
+        headerLocale: 'Last update',
         sort: true,
         filter: true,
         skip: false,
@@ -299,8 +299,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'ready',
-        header: 'Готовность',
-        headerLocale: 'Готовность',
+        header: 'Preparedness',
+        headerLocale: 'Preparedness',
         sort: true,
         filter: false,
         skip: false,
