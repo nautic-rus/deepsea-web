@@ -27,7 +27,7 @@ body,p{
   background: rgba(255, 255, 255, 0.9);
   padding: 0 20px 20px 20px;
   border-radius: 8px;
-  height: calc(100vh - 76px);
+  height: calc(100vh - 60px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .wh100{
@@ -171,6 +171,9 @@ body,p{
 }
 .width-130{
   width: 130px;
+}
+.width-140{
+  width: 140px;
 }
 .width-150{
   width: 150px;

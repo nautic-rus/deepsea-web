@@ -173,7 +173,7 @@
                   <div class="">
                     <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                   </div>
-                  <span class="mx-10 width-150 cy">{{trimFileName(file.name, 100) + ' '}}</span>
+                  <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 100) + ' '}}</span>
                   <span class="mx-10 cy">{{' ' + getDate(issue.started_date)}}</span>
                   <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')">
                     <div (click)="showDxfInViewer(file.url); $event.stopPropagation()">
@@ -797,11 +797,11 @@
                       <div class="cxy">
                         <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                       </div>
-                      <span class="mx-10 width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+                      <span class="file-name-esp mx-10 width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
                       <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
                       <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
                         <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class="" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                          <img src="assets/icons/eye-black.svg" height="24">
+                          <img src="assets/icons/eye-black.svg" height="20">
                         </div>
                       </div>
                       <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >

@@ -42,7 +42,9 @@ export class ToolsComponent implements OnInit {
     });
     this.trayBundleProjectChanged();
   }
-
+  isDesktop() {
+    return this.device.isDesktop() && window.innerWidth > 1296;
+  }
   getBillOfMaterials() {
     this.wait.push('bill-of-materials');
     this.materialsProject = this.materialsProject.replace('NR', 'N');

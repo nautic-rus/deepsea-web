@@ -132,7 +132,7 @@
 }
 .attachment-files{
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr;
   font-size: 13px;
 }
 .attachment-files-tablet{
@@ -794,4 +794,7 @@
 }
 .hidden-group{
   display: none;
+}
+.file-name-esp{
+  white-space: nowrap;
 }

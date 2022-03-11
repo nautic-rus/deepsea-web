@@ -89,7 +89,7 @@ export class ElecCablesComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   isDesktop() {
-    return this.device.isDesktop() && window.innerWidth > 1078;
+    return this.device.isDesktop() && window.innerWidth > 1296;
   }
 
   pointsHovered: any[] = [];

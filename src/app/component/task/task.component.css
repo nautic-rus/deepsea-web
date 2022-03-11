@@ -1053,7 +1053,7 @@
 .container {
   display: block;
   position: relative;
-  padding-left: 35px;
+  padding-left: 25px;
   margin-bottom: 8px;
   cursor: pointer;
   font-size: 15px;
@@ -1115,5 +1115,5 @@
 .text-checkbox{
   display: flex;
   align-items: flex-start;
-  font-size: 14px;
+  font-size: 13px;
 }

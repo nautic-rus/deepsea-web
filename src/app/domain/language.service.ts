@@ -102,6 +102,8 @@ export class LanguageService {
           case 'Добавить комментарий...': return 'Post your message here...';
           case 'изменил': return 'changed';
           case 'назначил': return 'assigned';
+          case 'приоритет': return 'priority';
+          case 'исполнителя': return 'executor';
           case 'Исполнителя': return 'Executor';
           case 'информацию': return 'information';
           case 'Да': return 'Yes';
@@ -202,8 +204,8 @@ export class LanguageService {
           case 'Вставить из буфера': return 'Paste';
           case 'КАБЕЛИ': return 'ELEC CABELS';
           case 'РАСКРОЙ': return 'NESTING';
-          case '': return '';
-          case '': return '';
+          case 'Сгенерируйте материалы из FORAN': return 'Generate materials from FORAN';
+          case 'Создать спецификацию': return 'Create a specification';
           case '': return '';
           case '': return '';
           case '': return '';
