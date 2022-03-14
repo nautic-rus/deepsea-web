@@ -72,6 +72,7 @@ export class NestingComponent implements OnInit {
   cmap = '';
   cmapuser = '';
   cmapdate = 0;
+  projects: string[] = ['N002', 'N004'];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -100,6 +101,22 @@ export class NestingComponent implements OnInit {
       }
     });
   }
+  projectChanged() {
+    this.selectBlock('');
+    this.blocks.splice(0, this.blocks.length);
+    this.router.navigate([], {queryParams: {foranProject: this.project}}).then(() => {
+      this.s.getHullNestingBlocks(this.project).then(res => {
+        this.loadingBlocks = false;
+        _.sortBy(res, x => x).forEach(block => {
+          this.blocks.push({
+            name: block,
+            selected: false
+          });
+        });
+      });
+    });
+  }
+
   closeShowImage() {
     this.showImages = false;
     this.img = '';
@@ -706,6 +723,10 @@ export class NestingComponent implements OnInit {
         this.nesting.forEach((nest: any) => {
           nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
           nest.CMAP = 'C-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
+          if (nest.ID.includes('U0')){
+            nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 5) + '-' + nest.ID.substr(6);
+            nest.CMAP = 'C-' + this.project + '-' + nest.ID.substr(1, 5) + '-' + nest.ID.substr(6);
+          }
           nest.doughnut = [
             {
               name: "Usage",

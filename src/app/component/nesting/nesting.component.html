@@ -7,6 +7,10 @@
       <div class="mr-1">
         <button pButton [pTooltip]="l.tr('Download Files for Nestings in table')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="downloadFiles()"></button>
       </div>
+      <div class="mr-1">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
+        </p-dropdown>
+      </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
