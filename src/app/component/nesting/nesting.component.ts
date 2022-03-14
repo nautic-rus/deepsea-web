@@ -625,7 +625,7 @@ export class NestingComponent implements OnInit {
   }
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.nesting);
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.nesting.filter((x: any) => x != null));
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
   }
