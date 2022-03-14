@@ -34,10 +34,20 @@ export class UploadRevisionFilesComponent implements OnInit {
       result = 'N-' + name.replace('_0_', '_').split('_').join('-');
     }
     if (fileGroup == 'Nesting Profiles'){
-      result = 'P-' + name.split('_').join('-');
+      if (name.includes('.pdf')){
+        result = 'Nesting Profiles.pdf'
+      }
+      else{
+        result = 'P-' + name.split('_').join('-');
+      }
     }
     if (fileGroup == 'Profile Sketches' && !name.includes('.txt')){
-      result = name.split('_').join('-');
+      if (name.includes('.pdf')){
+        result = 'Profile Sketches.pdf';
+      }
+      else{
+        result = name.split('_').join('-');
+      }
     }
     if (fileGroup == 'Cutting Map'){
       result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.split('_')[0] + '-' + name.split('_')[1] + '.txt';
