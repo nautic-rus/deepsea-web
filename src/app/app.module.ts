@@ -95,6 +95,7 @@ import {PieChartModule} from "@swimlane/ngx-charts";
 import { WebgcodeComponent } from './component/webgcode/webgcode.component';
 import { GCodeComponent } from './component/g-code/g-code.component';
 import { HighLightPipe } from './domain/high-light.pipe';
+import { ReportComponent } from './component/report/report.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -152,6 +153,7 @@ Quill.register('modules/imageResize', ImageResize);
     WebgcodeComponent,
     GCodeComponent,
     HighLightPipe,
+    ReportComponent,
   ],
     imports: [
         BrowserModule,
