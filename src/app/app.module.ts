@@ -69,7 +69,6 @@ import { StatsComponent } from './component/stats/stats.component';
 import { TimeControlComponent } from './component/time-control/time-control.component';
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import { ShareRightsComponent } from './component/navi/share-rights/share-rights.component';
-import {ChartModule} from "primeng/chart";
 import {QrCodeModule} from "ng-qrcode";
 import { DocMComponent } from './component/doc-m/doc-m.component';
 import { ToolsComponent } from './component/tools/tools.component';
@@ -91,10 +90,12 @@ import { CreateCheckListComponent } from './component/task/create-check-list/cre
 import { ElecCablesComponent } from './component/elec-cables/elec-cables.component';
 import {NgxGanttModule} from "@worktile/gantt";
 import { NestingComponent } from './component/nesting/nesting.component';
-import {PieChartModule} from "@swimlane/ngx-charts";
+import {BarChartModule, PieChartModule} from "@swimlane/ngx-charts";
 import { WebgcodeComponent } from './component/webgcode/webgcode.component';
 import { GCodeComponent } from './component/g-code/g-code.component';
 import { HighLightPipe } from './domain/high-light.pipe';
+import { BillingComponent } from './component/billing/billing.component';
+import {TreeModule} from "primeng/tree";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -152,50 +153,52 @@ Quill.register('modules/imageResize', ImageResize);
     WebgcodeComponent,
     GCodeComponent,
     HighLightPipe,
+    BillingComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        AccordionModule,
-        TableModule,
-        MultiSelectModule,
-        InputTextModule,
-        ProgressBarModule,
-        ButtonModule,
-        SliderModule,
-        DropdownModule,
-        TooltipModule,
-        ToastModule,
-        EditorModule,
-        DialogModule,
-        CascadeSelectModule,
-        CalendarModule,
-        ProgressSpinnerModule,
-        MessagesModule,
-        GalleriaModule,
-        QuillModule.forRoot(),
-        ConfirmDialogModule,
-        RippleModule,
-        InputSwitchModule,
-        InputTextareaModule,
-        InputNumberModule,
-        CheckboxModule,
-        NgxCollapseModule,
-        ToggleButtonModule,
-        MenuModule,
-        OverlayPanelModule,
-        ChartModule,
-        QrCodeModule,
-        StyleClassModule,
-        TabViewModule,
-        FieldsetModule,
-        NgxExtendedPdfViewerModule,
-        NgxGanttModule,
-        PieChartModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AccordionModule,
+    TableModule,
+    MultiSelectModule,
+    InputTextModule,
+    ProgressBarModule,
+    ButtonModule,
+    SliderModule,
+    DropdownModule,
+    TooltipModule,
+    ToastModule,
+    EditorModule,
+    DialogModule,
+    CascadeSelectModule,
+    CalendarModule,
+    ProgressSpinnerModule,
+    MessagesModule,
+    GalleriaModule,
+    QuillModule.forRoot(),
+    ConfirmDialogModule,
+    RippleModule,
+    InputSwitchModule,
+    InputTextareaModule,
+    InputNumberModule,
+    CheckboxModule,
+    NgxCollapseModule,
+    ToggleButtonModule,
+    MenuModule,
+    OverlayPanelModule,
+    QrCodeModule,
+    StyleClassModule,
+    TabViewModule,
+    FieldsetModule,
+    NgxExtendedPdfViewerModule,
+    NgxGanttModule,
+    PieChartModule,
+    BarChartModule,
+    TreeModule,
+  ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })

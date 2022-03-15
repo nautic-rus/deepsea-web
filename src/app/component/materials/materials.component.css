@@ -7,23 +7,27 @@
 /deep/.p-inputtext{
   font-size: 14px!important;
 }
-.icon-categories{
-  border-radius: 3px;
-  padding: 6px;
-  border: 1px solid #605e5c;
-  height: 35px;
-  width: 35px;
+.card-head{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  border-radius: 8px;
+  height: 65px;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
 }
-.icon-categories:hover{
-  background-color: rgba(50, 49, 48, 0.07);
+.cards{
+  overflow: auto;
+  height: calc(100vh - 202px);
 }
-.text-14{
-  font-size: 13px;
-}
-.card{
-  background: var(--surface-e);
+.menu-card{
   padding: 20px;
-  box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
-  border-radius: 4px;
-  height: calc(100vh - 116px);
+  width: 100%;
+  min-width: 220px;
+  height: calc(100vh - 200px);
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  transition: 0.5s;
 }

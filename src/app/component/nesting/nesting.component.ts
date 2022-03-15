@@ -715,7 +715,22 @@ export class NestingComponent implements OnInit {
               name: "Left",
               value: (100 - nest.USAGE)
             }
-          ]
+          ];
+          nest.stacked = [
+            {
+              name: '',
+              series: [
+                {
+                  name: "Usage",
+                  value: nest.USAGE
+                },
+                {
+                  name: "Left",
+                  value: (100 - nest.USAGE)
+                }
+              ]
+            }
+          ];
           nest.LOCKED = false;
         });
         this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x) && this.isContainsBlocks(x.BLOCKS));

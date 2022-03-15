@@ -24,6 +24,7 @@ import {ElecCablesComponent} from "./component/elec-cables/elec-cables.component
 import {NestingComponent} from "./component/nesting/nesting.component";
 import {GCodeComponent} from "./component/g-code/g-code.component";
 import {ReportComponent} from "./component/report/report.component";
+import {BillingComponent} from "./component/billing/billing.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: 'nesting', component: NestingComponent, canActivate: [AuthGuard], data: {animation: 'NestingComponent'} },
   { path: 'gcode', component: GCodeComponent, canActivate: [AuthGuard], data: {animation: 'GCodeComponent'} },
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard], data: {animation: 'ReportComponent'} },
+  { path: 'billing', component: BillingComponent, canActivate: [AuthGuard], data: {animation: 'BillingComponent'} },
 ];
 
 @NgModule({

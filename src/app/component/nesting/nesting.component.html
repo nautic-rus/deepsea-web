@@ -184,7 +184,15 @@
                 <div class="text-center-y">
                   <div class="mt-minus15">
                     <div *ngIf="nest.USAGE > 100">WARNING</div>
-                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#D8DADC'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="true"></ngx-charts-pie-chart>
+                    <ngx-charts-bar-horizontal-stacked
+                      [view]="[120, 80]"
+                      [results]="nest.stacked"
+                      [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#D8DADC'}]">
+
+
+
+                    </ngx-charts-bar-horizontal-stacked>
+<!--                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#D8DADC'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="true"></ngx-charts-pie-chart>-->
                   </div>
                   <div class="donut-text">{{round(nest.USAGE)}}%
 

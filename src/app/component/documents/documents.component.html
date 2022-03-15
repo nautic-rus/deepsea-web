@@ -25,13 +25,13 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr class="df">
-          <th pSortableColumn="doc_number" style="width: 136px" class="lxy font-13">{{l.tr('Чертеж')}}
+          <th pSortableColumn="doc_number" class="lxy font-13 w-20">{{l.tr('Чертеж')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" style="width: 225px" class="lxy font-13">{{l.tr('Название')}}
+          <th pSortableColumn="name" class="lxy font-13 w-20">{{l.tr('Название')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="department" style="width: 136px" class="cxy font-13">{{l.tr('Отдeл')}}
+          <th pSortableColumn="department" class="cxy font-13 w-15">{{l.tr('Отдeл')}}
             <p-sortIcon field="department"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -40,7 +40,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="revision" style="width: 118px" class="cxy font-13">{{l.tr('Рев.')}}
+          <th pSortableColumn="revision" class="cxy font-13 w-12">{{l.tr('Рев.')}}
             <p-sortIcon field="revision"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -49,7 +49,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="status" style="width: 136px" class="cxy font-13">{{l.tr('Статус')}}
+          <th pSortableColumn="status" class="cxy font-13 w-12">{{l.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -58,20 +58,34 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="delivered_date" style="width: 155px" class="cxy font-13">{{l.tr('Поставлен')}}
+          <th pSortableColumn="delivered_date" class="cxy font-13 w-15">{{l.tr('Поставлен')}}
             <p-sortIcon field="delivered_date"></p-sortIcon>
             <p-columnFilter class="filter" type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
+          </th>
+          <th class="w-3">
+          </th>
+          <th class="w-3">
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
         <tr class="cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
-          <td style="width: 136px" class="text-12">{{issue.doc_number}}</td>
-          <td style="width: 225px" class="text-12">{{issue.name}}</td>
-          <td style="width: 136px" class="text-12">{{issue.department}}</td>
-          <td style="width: 118px" class="text-12">{{issue.revision}}</td>
-          <td style="width: 136px" class="text-12"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
-          <td style="width: 155px" class="text-12">{{getDate(+issue.delivered_date)}}</td>
+          <td class="text-12 w-20">{{issue.doc_number}}</td>
+          <td class="text-12 w-20">{{issue.name}}</td>
+          <td class="text-12 w-15">{{issue.department}}</td>
+          <td class="text-12 w-12">{{issue.revision}}</td>
+          <td class="text-12 w-12"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
+          <td class="text-12 w-15">{{getDate(+issue.delivered_date)}}</td>
+          <td class="w-3 text-14">
+            <div  class="">
+              <img pTooltip="Download" tooltipPosition="top" src="assets/icons/download-arrow.png" (click)="downloadDocFiles(issue); $event.stopPropagation()">
+            </div>
+          </td>
+          <td class="w-3 text-14">
+            <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
+              <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
+            </div>
+          </td>
         </tr>
       </ng-template>
     </p-table>
@@ -93,9 +107,11 @@
             <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
             </p-dropdown>
           </div>
-          <div class="mr-1">
-            <label>Show only with files
-              <input type="checkbox" [(ngModel)]="showWithFilesOnly" (ngModelChange)="projectChanged()">
+          <div class="mr-1 cy">
+            <label class="container">
+              <span class="text-checkbox">Show only with files</span>
+              <input (ngModelChange)="projectChanged()" type="checkbox" [(ngModel)]="showWithFilesOnly">
+              <span class="checkmark"></span>
             </label>
           </div>
           <div class="p-ml-auto mr-10">
@@ -108,13 +124,13 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr class="df">
-          <th pSortableColumn="doc_number" class="lxy w-15">{{l.tr('Номер чертежа')}}
+          <th pSortableColumn="doc_number" class="lxy w-20">{{l.tr('Номер чертежа')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" class="lxy w-27">{{l.tr('Название')}}
+          <th pSortableColumn="name" class="lxy w-20">{{l.tr('Название')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="department" class="cxy w-17">{{l.tr('Отдел')}}
+          <th pSortableColumn="department" class="cxy w-15">{{l.tr('Отдел')}}
             <p-sortIcon field="department"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -123,7 +139,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="revision" class="cxy w-10 min-width-120">{{l.tr('Ревизия')}}
+          <th pSortableColumn="revision" class="cxy w-12">{{l.tr('Ревизия')}}
             <p-sortIcon field="revision"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'revision'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -132,7 +148,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="status" class="cxy w-13">{{l.tr('Статус')}}
+          <th pSortableColumn="status" class="cxy w-12">{{l.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -141,7 +157,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="delivered_date" class="cxy w-14">{{l.tr('Дата поставки')}}
+          <th pSortableColumn="delivered_date" class="cxy w-15">{{l.tr('Дата поставки')}}
             <p-sortIcon field="delivered_date"></p-sortIcon>
             <p-columnFilter class="filter" type="date" [field]="'delivered_date'" display="menu"></p-columnFilter>
           </th>
@@ -150,13 +166,13 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-issue>
-        <tr class="cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
-          <td class="w-15 text-14">{{issue.doc_number}}</td>
-          <td class="w-27 text-14">{{issue.name}}</td>
-          <td class="w-17 text-14">{{issue.department}}</td>
-          <td class="w-10 text-14">{{issue.revision}}</td>
-          <td class="w-13 text-14"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
-          <td class="w-14 text-14">{{getDate(+issue.delivered_date)}}</td>
+        <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
+          <td class="w-20 text-14">{{issue.doc_number}}</td>
+          <td class="w-20 text-14">{{issue.name}}</td>
+          <td class="w-15 text-14">{{issue.department}}</td>
+          <td class="w-12 text-14">{{issue.revision}}</td>
+          <td class="w-12 text-14"><span [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></span></td>
+          <td class="w-15 text-14">{{getDate(+issue.delivered_date)}}</td>
           <td class="w-3 text-14">
             <div  class="">
               <img pTooltip="Download" tooltipPosition="top" src="assets/icons/download-arrow.png" (click)="downloadDocFiles(issue); $event.stopPropagation()">
