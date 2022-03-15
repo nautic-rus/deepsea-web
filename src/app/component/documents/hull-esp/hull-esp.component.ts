@@ -632,9 +632,6 @@ export class HullEspComponent implements OnInit {
     }
     else{
       this.dxfEnabled = !this.dxfEnabled;
-      let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-      // @ts-ignore
-      viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
     }
     this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
       this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
@@ -657,9 +654,6 @@ export class HullEspComponent implements OnInit {
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
   openDxf() {
-    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-    // @ts-ignore
-    viewport.style.height = '70vh';
     if (this.dxfView != null && !this.dxfView.closed){
       this.dxfView.close();
     }
@@ -671,16 +665,10 @@ export class HullEspComponent implements OnInit {
   exitDxf(){
     this.dxfEnabled = false;
     this.dxfEnabledForNesting = false;
-    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-    // @ts-ignore
-    viewport.style.height = '70vh';
   }
   exitDxfTablet(){
     this.dxfEnabled = false;
     this.dxfEnabledForNesting = false;
-    let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-    // @ts-ignore
-    viewport.style.height = '360px';
   }
 
   isDisabledNest(part: any) {
@@ -702,9 +690,6 @@ export class HullEspComponent implements OnInit {
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
-        let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-        // @ts-ignore
-        viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
       }
       this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
         // @ts-ignore
@@ -718,9 +703,6 @@ export class HullEspComponent implements OnInit {
   showDxfInViewer(url: string) {
     if (!this.dxfEnabled){
       this.dxfEnabled = !this.dxfEnabled;
-      let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-      // @ts-ignore
-      viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
     }
     this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
       // @ts-ignore
@@ -763,9 +745,6 @@ export class HullEspComponent implements OnInit {
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
-        let viewport = document.getElementsByTagName('cdk-virtual-scroll-viewport').item(0);
-        // @ts-ignore
-        viewport.style.height = this.dxfEnabled ? '20vh' : '70vh';
       }
       this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
         // @ts-ignore

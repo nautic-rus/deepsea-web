@@ -350,8 +350,13 @@
   padding: 5px;
 }
 .dxf-view{
-  position: relative;
   height: 52vh;
+  position: absolute;
+  width: calc(100% - 131px);
+  bottom: 0;
+  right: 25px;
+  left: 100px;
+  z-index: 1000;
 }
 .dxf-open-button{
   position: absolute;
