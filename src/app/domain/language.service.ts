@@ -187,7 +187,7 @@ export class LanguageService {
           case 'Маркировка': return 'Label';
           case 'Вес': return 'Weight';
           case 'Продолжить': return 'Login';
-          case '': return '';
+          case 'РАСЧЁТ': return 'BILLING';
           case 'ТРУДОЗАТРАТЫ': return 'LABORIOUSNESS';
           case 'Чертеж': return 'Drawing';
           case 'Рев.': return 'Rev';

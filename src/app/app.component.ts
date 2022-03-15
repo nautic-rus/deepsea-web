@@ -209,21 +209,21 @@ import {DeviceDetectorService} from "ngx-device-detector";
           ),
         ], { optional: true } ),
       ]),
-      transition('* <=> *', [
-        query(':enter, :leave', [
-          style({
-            position: 'fixed',
-            width: 'calc(100% - var(--nav-width))',
-            height: '100%',
-            opacity: 0
-          })
-        ], { optional: true } ),
-        query(':enter', [
-          animate('.5s',
-            style({ opacity: 1 })
-          ),
-        ], { optional: true } ),
-      ]),
+      // transition('* <=> *', [
+      //   query(':enter, :leave', [
+      //     style({
+      //       position: 'fixed',
+      //       width: 'calc(100% - var(--nav-width))',
+      //       height: '100%',
+      //       opacity: 0
+      //     })
+      //   ], { optional: true } ),
+      //   query(':enter', [
+      //     animate('.5s',
+      //       style({ opacity: 1 })
+      //     ),
+      //   ], { optional: true } ),
+      // ]),
     ]),
     trigger('navi', [
       transition('* <=> *', [

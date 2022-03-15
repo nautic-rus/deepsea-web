@@ -11,6 +11,9 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+/deep/.pi {
+  font-size: 14px;
+}
 .card-head{
   background: rgba(255, 255, 255, 0.9);
   padding: 12px;
@@ -26,12 +29,18 @@
   height: calc(100vh - 202px);
 }
 .menu-card{
-  padding: 20px;
+  padding: 15px 0 15px 0;
   width: 100%;
-  min-width: 220px;
-  height: calc(100vh - 200px);
+  min-width: 250px;
+  height: calc(100vh - 204px);
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
-  transition: 0.5s;
+  transition: 0.1s;
+}
+/deep/.p-tree{
+  height: calc(100vh - 237px);
+  overflow: auto;
+  padding: 10px;
+  border: none;
 }
