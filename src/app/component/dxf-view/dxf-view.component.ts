@@ -164,6 +164,12 @@ export class DxfViewComponent implements OnInit, OnDestroy {
   }
   move() {
     let find = this.dxfContent?.entities.find((x: any) => x.layer == 'NR-POS' && x.type == 'TEXT' && x.text == this.search);
+    if (find == null){
+      find = this.dxfContent?.entities.find((x: any) => x.layer == 'NR-POS' && x.type == 'TEXT' && x.text == this.search.slice(0, -1));
+    }
+    if (find == null){
+      find = this.dxfContent?.entities.find((x: any) => x.text == this.search.slice(0, -1));
+    }
     if (find != null){
       let origin = this.dxfViewer.GetOrigin();
       let x = find.startPoint.x;

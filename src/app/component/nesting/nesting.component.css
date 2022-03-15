@@ -460,10 +460,9 @@
   margin-top: -15px;
 }
 .donut-text {
-  top: 16px;
-  left: 139px;
-  width: 70px;
-  height: 70px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   position: absolute;
   border-radius: 50%;
   display: flex;

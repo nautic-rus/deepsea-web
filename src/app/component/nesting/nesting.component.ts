@@ -106,19 +106,10 @@ export class NestingComponent implements OnInit {
     });
   }
   projectChanged() {
-    this.selectBlock('');
     this.blocks.splice(0, this.blocks.length);
-    this.router.navigate([], {queryParams: {foranProject: this.project}}).then(() => {
-      this.s.getHullNestingBlocks(this.project).then(res => {
-        this.loadingBlocks = false;
-        _.sortBy(res, x => x).forEach(block => {
-          this.blocks.push({
-            name: block,
-            selected: false
-          });
-        });
-      });
-    });
+    this.materials.splice(0, this.materials.length);
+    this.nesting.splice(0, this.nesting.length);
+    this.router.navigate([], {queryParams: {foranProject: this.project}});
   }
 
   closeShowImage() {
