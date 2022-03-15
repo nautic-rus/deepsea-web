@@ -11,11 +11,11 @@ import {LanguageService} from "../../domain/language.service";
 })
 export class MaterialsComponent implements OnInit {
   search: string = '';
-  
+
   nodes =  [
     {
-      "label": "Documents",
-      "data": "Documents Folder",
+      "label": "HULL",
+      "data": "Hull Folder",
       "expandedIcon": "pi pi-folder-open",
       "collapsedIcon": "pi pi-folder",
       "children": [{
@@ -23,7 +23,7 @@ export class MaterialsComponent implements OnInit {
         "data": "Work Folder",
         "expandedIcon": "pi pi-folder-open",
         "collapsedIcon": "pi pi-folder",
-        "children": 
+        "children":
           [{"label": "Expenses.doc", "icon": "pi pi-file", "data": "Expenses Document"}, {"label": "Resume.doc", "icon": "pi pi-file", "data": "Resume Document"}]
       },
         {
@@ -35,14 +35,112 @@ export class MaterialsComponent implements OnInit {
         }]
     },
     {
-      "label": "Pictures",
-      "data": "Pictures Folder",
+      "label": "MATERIAL",
+      "data": "Material Folder",
       "expandedIcon": "pi pi-folder-open",
       "collapsedIcon": "pi pi-folder",
-      "children": [
-        {"label": "barcelona.jpg", "icon": "pi pi-image", "data": "Barcelona Photo"},
-        {"label": "logo.jpg", "icon": "pi pi-image", "data": "PrimeFaces Logo"},
-        {"label": "primeui.png", "icon": "pi pi-image", "data": "PrimeUI Logo"}]
+      "children": [{
+        "label": "Pipes",
+        "data": "Pipes Folder",
+        "expandedIcon": "pi pi-folder-open",
+        "collapsedIcon": "pi pi-folder",
+        "children":
+          [ {"label": "Steel", "icon": "pi pi-file", "data": "Steel Material"},
+            {"label": "Aluminium", "icon": "pi pi-file", "data": "Aluminium Material"},
+            {"label": "Bronze", "icon": "pi pi-file", "data": "Bronze Material"},
+            {"label": "Stainless steel", "icon": "pi pi-file", "data": "Stainless steel Material"},
+            {"label": "Plastic", "icon": "pi pi-file", "data": "Plastic Material"},
+            {"label": "Combined material", "icon": "pi pi-file", "data": "Combined material Material"},
+            {"label": "Cupro-nickel steel", "icon": "pi pi-file", "data": "Cupro-nickel Material"},
+            {"label": "Cuprum", "icon": "pi pi-file", "data": "Cuprum Material"},
+            {"label": "Brass", "icon": "pi pi-file", "data": "Brass Material"},
+            {"label": "Other", "icon": "pi pi-file", "data": "Other Material"}]
+      },
+        {
+          "label": "Fasteners",
+          "data": "Fasteners Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children":
+            [ {"label": "Steel", "icon": "pi pi-file", "data": "Steel Material"},
+              {"label": "Aluminium", "icon": "pi pi-file", "data": "Aluminium Material"},
+              {"label": "Bronze", "icon": "pi pi-file", "data": "Bronze Material"},
+              {"label": "Stainless steel", "icon": "pi pi-file", "data": "Stainless steel Material"},
+              {"label": "Plastic", "icon": "pi pi-file", "data": "Plastic Material"},
+              {"label": "Combined material", "icon": "pi pi-file", "data": "Combined material Material"},
+              {"label": "Cupro-nickel steel", "icon": "pi pi-file", "data": "Cupro-nickel Material"},
+              {"label": "Cuprum", "icon": "pi pi-file", "data": "Cuprum Material"},
+              {"label": "Brass", "icon": "pi pi-file", "data": "Brass Material"},
+              {"label": "Other", "icon": "pi pi-file", "data": "Other Material"}]
+        },
+        {
+          "label": "Welding consumables",
+          "data": "Welding consumables Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children":
+            [ {"label": "Steel", "icon": "pi pi-file", "data": "Steel Material"},
+              {"label": "Aluminium", "icon": "pi pi-file", "data": "Aluminium Material"},
+              {"label": "Bronze", "icon": "pi pi-file", "data": "Bronze Material"},
+              {"label": "Stainless steel", "icon": "pi pi-file", "data": "Stainless steel Material"},
+              {"label": "Plastic", "icon": "pi pi-file", "data": "Plastic Material"},
+              {"label": "Combined material", "icon": "pi pi-file", "data": "Combined material Material"},
+              {"label": "Cupro-nickel steel", "icon": "pi pi-file", "data": "Cupro-nickel Material"},
+              {"label": "Cuprum", "icon": "pi pi-file", "data": "Cuprum Material"},
+              {"label": "Brass", "icon": "pi pi-file", "data": "Brass Material"},
+              {"label": "Other", "icon": "pi pi-file", "data": "Other Material"}]
+        },
+        {
+          "label": "Lumber",
+          "data": "Lumber Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children":
+            [ {"label": "Steel", "icon": "pi pi-file", "data": "Steel Material"},
+              {"label": "Aluminium", "icon": "pi pi-file", "data": "Aluminium Material"},
+              {"label": "Bronze", "icon": "pi pi-file", "data": "Bronze Material"},
+              {"label": "Stainless steel", "icon": "pi pi-file", "data": "Stainless steel Material"},
+              {"label": "Plastic", "icon": "pi pi-file", "data": "Plastic Material"},
+              {"label": "Combined material", "icon": "pi pi-file", "data": "Combined material Material"},
+              {"label": "Cupro-nickel steel", "icon": "pi pi-file", "data": "Cupro-nickel Material"},
+              {"label": "Cuprum", "icon": "pi pi-file", "data": "Cuprum Material"},
+              {"label": "Brass", "icon": "pi pi-file", "data": "Brass Material"},
+              {"label": "Other", "icon": "pi pi-file", "data": "Other Material"}]
+        },
+        {
+          "label": "Technological",
+          "data": "Technological Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children":
+            [ {"label": "Steel", "icon": "pi pi-file", "data": "Steel Material"},
+              {"label": "Aluminium", "icon": "pi pi-file", "data": "Aluminium Material"},
+              {"label": "Bronze", "icon": "pi pi-file", "data": "Bronze Material"},
+              {"label": "Stainless steel", "icon": "pi pi-file", "data": "Stainless steel Material"},
+              {"label": "Plastic", "icon": "pi pi-file", "data": "Plastic Material"},
+              {"label": "Combined material", "icon": "pi pi-file", "data": "Combined material Material"},
+              {"label": "Cupro-nickel steel", "icon": "pi pi-file", "data": "Cupro-nickel Material"},
+              {"label": "Cuprum", "icon": "pi pi-file", "data": "Cuprum Material"},
+              {"label": "Brass", "icon": "pi pi-file", "data": "Brass Material"},
+              {"label": "Other", "icon": "pi pi-file", "data": "Other Material"}]
+        },
+        {
+          "label": "Other",
+          "data": "Other Folder",
+          "expandedIcon": "pi pi-folder-open",
+          "collapsedIcon": "pi pi-folder",
+          "children":
+            [ {"label": "Steel", "icon": "pi pi-file", "data": "Steel Material"},
+              {"label": "Aluminium", "icon": "pi pi-file", "data": "Aluminium Material"},
+              {"label": "Bronze", "icon": "pi pi-file", "data": "Bronze Material"},
+              {"label": "Stainless steel", "icon": "pi pi-file", "data": "Stainless steel Material"},
+              {"label": "Plastic", "icon": "pi pi-file", "data": "Plastic Material"},
+              {"label": "Combined material", "icon": "pi pi-file", "data": "Combined material Material"},
+              {"label": "Cupro-nickel steel", "icon": "pi pi-file", "data": "Cupro-nickel Material"},
+              {"label": "Cuprum", "icon": "pi pi-file", "data": "Cuprum Material"},
+              {"label": "Brass", "icon": "pi pi-file", "data": "Brass Material"},
+              {"label": "Other", "icon": "pi pi-file", "data": "Other Material"}]
+        }]
     },
     {
       "label": "Movies",
