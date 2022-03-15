@@ -317,7 +317,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
-    let selectedCols = selectedColsValue ? JSON.parse(selectedColsValue) as string[] : ['ID', 'Тип задачи', 'Автор', 'Проект', 'Название', 'Статус', 'Срок исполнения', 'Приоритет'];
+    let selectedCols = selectedColsValue ? JSON.parse(selectedColsValue) as string[] : ['ID', 'Author', 'Department', 'Date created', 'Project', 'Assignee', 'Title', 'Drawing number', 'Status', 'Priority', 'Responsible', 'Last update'];
     if (selectedCols.length > 0) {
       this.selectedCols = this.colHeaders.filter(x => selectedCols.includes(x));
     }
