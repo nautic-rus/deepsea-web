@@ -167,6 +167,34 @@ import {DeviceDetectorService} from "ngx-device-detector";
           ),
         ], { optional: true } ),
       ]),
+      transition('* => HomeComponent', [
+        query(':enter, :leave', [
+          style({
+            width: '100%',
+            height: '100%',
+            opacity: 0
+          })
+        ], { optional: true } ),
+        query(':enter', [
+          animate('.5s',
+            style({ opacity: 1 })
+          ),
+        ], { optional: true } ),
+      ]),
+      transition('* => DocumentsComponent', [
+        query(':enter, :leave', [
+          style({
+            width: '100%',
+            height: '100%',
+            opacity: 0
+          })
+        ], { optional: true } ),
+        query(':enter', [
+          animate('.5s',
+            style({ opacity: 1 })
+          ),
+        ], { optional: true } ),
+      ]),
       transition('* => ElecCablesComponent', [
         query(':enter, :leave', [
           style({

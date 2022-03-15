@@ -53,6 +53,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   // @ts-ignore
   @ViewChild('dt') dt: Table;
 
+
+  @Input() get selectedColumns(): any[] {
+    return this.cols.filter(col => this.selectedCols.includes(col.headerLocale));
+  }
+
   resetSearch = false;
 
   ngAfterContentChecked(): void {
@@ -518,8 +523,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   saveSelectedCols() {
-    this.dt.clearState();
-    this.dt.restoreState();
     localStorage.setItem('selectedCols', JSON.stringify(this.selectedCols));
     this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
   }

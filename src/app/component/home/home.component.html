@@ -89,13 +89,13 @@
       <ng-template pTemplate="colgroup">
         <colgroup>
           <col style="width: 26px"/>
-          <col style="width:140px" *ngFor="let col of cols" [hidden]="col.hidden">
+          <col style="width:140px" *ngFor="let col of cols">
         </colgroup>
       </ng-template>
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th></th>
-          <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
+          <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field">
             <div class="header">
               {{l.tr(col.header)}}
               <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -116,7 +116,7 @@
             <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
             <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
           </td>
-          <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
+          <td class="cursor-pointer" *ngFor="let col of columns">
             <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
             <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
           </td>
@@ -136,8 +136,8 @@
         [scrollable]="true"
         [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
         [reorderableColumns]="true"
-        [resizableColumns]="false"
-        [columns]="cols"
+        [resizableColumns]="true"
+        [columns]="selectedColumns"
         [virtualScroll]="true"
         [scrollHeight]="'70vh'"
         [virtualRowHeight]="1"
@@ -193,16 +193,10 @@
           </span>
           </div>
         </ng-template>
-        <ng-template pTemplate="colgroup">
-          <colgroup>
-            <col style="width: 30px"/>
-            <col style="width:190px" *ngFor="let col of cols" [hidden]="col.hidden">
-          </colgroup>
-        </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th></th>
-            <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field" [hidden]="col.hidden">
+            <th *ngFor="let col of columns" pReorderableColumn pResizableColumn [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -253,7 +247,7 @@
               <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
-            <td class="cursor-pointer" *ngFor="let col of columns" [hidden]="col.hidden">
+            <td class="cursor-pointer" *ngFor="let col of columns">
               <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
               <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
             </td>
