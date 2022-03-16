@@ -21,6 +21,12 @@ export class SpecManagerService {
   async getHullPatList(project: string, docNumber: string) {
     return await this.http.get<any>(props.httpSpec + '/hullPartList', {params: {project, docNumber}}).toPromise();
   }
+  async getHullBillPlates(project: string) {
+    return await this.http.get<any>(props.httpSpec + '/hullBillPlates', {params: {project}}).toPromise();
+  }
+  async getHullBillProfiles(project: string) {
+    return await this.http.get<any>(props.httpSpec + '/hullBillProfiles', {params: {project}}).toPromise();
+  }
   async fixTrayBundle(project: string, docNumber: string) {
     return await this.http.get<any>(props.httpSpec + '/fixTrayBundle', {params: {project, docNumber}}).toPromise();
   }

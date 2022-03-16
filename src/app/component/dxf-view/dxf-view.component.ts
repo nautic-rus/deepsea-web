@@ -184,6 +184,9 @@ export class DxfViewComponent implements OnInit, OnDestroy {
   moveNesting() {
     console.log('move nest');
     let find = this.dxfContent?.entities.find((x: any) => x?.text?.includes(this.searchNesting));
+    if (find == null){
+      find = this.dxfContent?.entities.find((x: any) => x?.text?.includes(this.searchNesting.slice(0, -1)));
+    }
     // let find = this.dxfContent?.entities.find((x: any) => x.layer == 'Labels' && x.type == 'MTEXT' && x.text.includes(this.searchNesting));
     console.log(find);
     if (find != null){
