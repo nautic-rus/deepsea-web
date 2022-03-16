@@ -27,7 +27,10 @@ export class BillingComponent implements OnInit {
       if (!this.projects.includes(this.project)) {
         this.project = this.projects[0];
       }
+      this.fill();
     });
+  }
+  fill(){
     this.s.getHullBillProfiles(this.project).then(res => {
       this.profiles = res;
       console.log(res);
@@ -37,5 +40,4 @@ export class BillingComponent implements OnInit {
       console.log(res);
     });
   }
-
 }
