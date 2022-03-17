@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SpecManagerService} from "../../domain/spec-manager.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {collect} from "underscore";
 import {LanguageService} from "../../domain/language.service";
@@ -16,6 +16,8 @@ export class BillingComponent implements OnInit {
 
   plates = [];
   profiles = [];
+  platesSource = [];
+  profilesSource = [];
 
   projects: string[] = ['N002', 'N004', 'P701', 'P707'];
   project = '';
@@ -25,7 +27,7 @@ export class BillingComponent implements OnInit {
   selectedHeadTab: string = 'Plates';
 
 
-  constructor(public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService) { }
+  constructor(public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -40,6 +42,7 @@ export class BillingComponent implements OnInit {
   fill(){
     this.s.getHullBillProfiles(this.project).then(res => {
       this.profiles = res;
+      this.profilesSource = res;
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'mat');
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'count');
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'scantling');
@@ -48,15 +51,37 @@ export class BillingComponent implements OnInit {
     });
     this.s.getHullBillPlates(this.project).then(res => {
       this.plates = res;
+      this.platesSource = res;
       this.filtersPlates.material = this.getPlateFilters(this.plates, 'mat');
       this.filtersPlates.count = this.getPlateFilters(this.plates, 'count');
       this.filtersPlates.scantling = this.getPlateFilters(this.plates, 'scantling');
       console.log(res);
     });
   }
-
+  searchChanged() {
+    if (this.selectedHeadTab == 'Plates') {
+      if (this.search.trim() == '') {
+        this.plates = this.platesSource;
+      } else {
+        this.plates = this.platesSource.filter((x: any) => {
+          return x == null || (x.KPL.toString() + x.count.toString() + x.mat.toString() + x.nestedParts.toString() + x.plateForecast.toString() + x.realPartsCount.toString() + x.realWeight.toString() + x.scantling.toString() + x.scrap.toString()).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())
+        });
+      }
+    }
+    if (this.selectedHeadTab == 'Profiles') {
+      if (this.search.trim() == '') {
+        this.profiles = this.profilesSource;
+      } else {
+        this.profiles = this.profilesSource.filter((x: any) => {
+          return x == null || (x.KSE + x.count + x.grossLenght + x.mat + x.profileForecast + x.realLenght + x.realPartsCount + x.scantling + x.scrap + x.section).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+        });
+      }
+    }
+  }
   projectChanged() {
-    this.fill();
+    this.router.navigate([], {queryParams: {foranProject: this.project}}).then(() => {
+      //this.fill();
+    });
   }
   round(input: number) {
     return Math.round(input * 100) / 100;

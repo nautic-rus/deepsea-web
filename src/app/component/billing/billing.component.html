@@ -12,7 +12,7 @@
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search"  class="border" />
+        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
       </span>
     </div>
     <div class="df tabs-header">
@@ -77,15 +77,33 @@
         </ng-template>
         <ng-template pTemplate="body" let-plate let-i="rowIndex">
           <tr class="cursor-pointer row-table-doc-hover">
-            <td class="w-11 text-14">{{plate.KPL}}</td>
-            <td class="w-12 text-14">{{plate.count}}</td>
-            <td class="w-11 text-14">{{plate.mat}}</td>
-            <td class="w-11 text-14">{{plate.nestedParts}}</td>
-            <td class="w-11 text-14">{{plate.plateForecast}}</td>
-            <td class="w-11 text-14">{{plate.realPartsCount}}</td>
-            <td class="w-11 text-14">{{round(plate.realWeight)}}</td>
-            <td class="w-11 text-14">{{plate.scantling}}</td>
-            <td class="w-11 text-14">{{plate.scrap}}</td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="plate.KPL.toString() | highLight: search"></span>
+            </td>
+            <td class="w-12 text-14">
+              <span [innerHTML]="plate.count.toString() | highLight: search"></span>
+            </td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="plate.mat.toString() | highLight: search"></span>
+            </td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="plate.nestedParts.toString() | highLight: search"></span>
+            </td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="plate.plateForecast.toString() | highLight: search"></span>
+            </td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="plate.realPartsCount.toString() | highLight: search"></span>
+            </td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="round(plate.realWeight).toString() | highLight: search"></span>
+            </td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="plate.scantling.toString() | highLight: search"></span>
+            </td>
+            <td class="w-11 text-14">
+              <span [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>
+            </td>
           </tr>
         </ng-template>
       </p-table>
@@ -100,7 +118,7 @@
                [resizableColumns]="false"
                styleClass="p-datatable-striped"
                scrollDirection="both"
-               [globalFilterFields]="['KPL','count','mat','scantling']">
+               [globalFilterFields]="['KSE','count','mat','scantling']">
         <ng-template pTemplate="header">
           <tr class="df">
             <th pSortableColumn="KSE" class="cxy w-10">{{t.tr('KSE')}}
@@ -148,7 +166,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-profile let-i="rowIndex">
           <tr class="cursor-pointer row-table-doc-hover">
-            <td class="w-10 text-14">{{profile.KSE}}</td>
+            <td class="w-10 text-14">
+              <span [innerHTML]="profile.KSE | highLight: search"></span>
+            </td>
             <td class="w-10 text-14">{{profile.count}}</td>
             <td class="w-10 text-14">{{profile.grossLenght}}</td>
             <td class="w-10 text-14">{{profile.mat}}</td>
