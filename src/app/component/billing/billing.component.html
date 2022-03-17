@@ -1,1 +1,186 @@
-<p>billing works!</p>
+<div class="all-page">
+  <div>
+    <div class="card-head mb-20 df">
+      <div class="mr-10">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <div (click)="exportXls()" class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <span class="p-input-icon-left p-ml-auto">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search"  class="border" />
+      </span>
+    </div>
+    <div class="df tabs-header">
+      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Plates'" [class.selectedTab]="selectedHeadTab ==  'Plates'">{{t.tr('Листы')}}</div>
+      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Profiles'" [class.selectedTab]="selectedHeadTab ==  'Profiles'">{{t.tr('Профили')}}</div>
+      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Pipes'" [class.selectedTab]="selectedHeadTab ==  'Pipes'">{{t.tr('Трубы')}}</div>
+      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Valves'" [class.selectedTab]="selectedHeadTab ==  'Valves'">{{t.tr('Клапаны')}}</div>
+      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>
+    </div>
+    <div *ngIf="selectedHeadTab == 'Plates'" class="cards">
+      <p-table #table [value]="plates"
+               [scrollable]="true"
+               scrollHeight="calc(100vh - 268px)"
+               [virtualScroll]="false"
+               [virtualRowHeight]="40"
+               [reorderableColumns]="false"
+               [resizableColumns]="false"
+               styleClass="p-datatable-striped"
+               scrollDirection="both"
+               [globalFilterFields]="['id','doc_number','name','status']">
+        <ng-template pTemplate="header">
+          <tr class="df">
+            <th pSortableColumn="KPL" class="cxy w-11">{{t.tr('KPL')}}
+              <p-sortIcon field="KPL"></p-sortIcon>
+            </th>
+            <th pSortableColumn="count" class="cxy w-12">{{t.tr('Count')}}
+              <p-sortIcon field="count"></p-sortIcon>
+              <p-columnFilter class="filter" [field]="'count'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.count" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th pSortableColumn="mat" class="cxy w-11">{{t.tr('Material')}}
+              <p-sortIcon field="mat"></p-sortIcon>
+              <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.material" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th pSortableColumn="nestedParts" class="cxy w-11">{{t.tr('Nested Parts')}}
+              <p-sortIcon field="nestedParts"></p-sortIcon>
+            </th>
+            <th pSortableColumn="plateForecast" class="cxy w-11">{{t.tr('Plate Forecast')}}
+              <p-sortIcon field="plateForecast"></p-sortIcon>
+            </th>
+            <th pSortableColumn="realPartsCount" class="cxy w-11">{{t.tr('Real Parts Count')}}
+              <p-sortIcon field="realPartsCount"></p-sortIcon>
+            </th>
+            <th pSortableColumn="realWeight" class="cxy w-11">{{t.tr('Weight')}}
+              <p-sortIcon field="realWeight"></p-sortIcon>
+            </th>
+            <th class="cxy w-11 cursor-pointer head-hover">{{t.tr('Scantling')}}
+            </th>
+            <th pSortableColumn="scrap" class="cxy w-11">{{t.tr('Scrap')}}
+              <p-sortIcon field="scrap"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-plate let-i="rowIndex">
+          <tr class="cursor-pointer row-table-doc-hover">
+            <td class="w-11 text-14">{{plate.KPL}}</td>
+            <td class="w-12 text-14">{{plate.count}}</td>
+            <td class="w-11 text-14">{{plate.mat}}</td>
+            <td class="w-11 text-14">{{plate.nestedParts}}</td>
+            <td class="w-11 text-14">{{plate.plateForecast}}</td>
+            <td class="w-11 text-14">{{plate.realPartsCount}}</td>
+            <td class="w-11 text-14">{{round(plate.realWeight)}}</td>
+            <td class="w-11 text-14">{{plate.scantling}}</td>
+            <td class="w-11 text-14">{{plate.scrap}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div *ngIf="selectedHeadTab == 'Profiles'" class="cards">
+      <p-table #table [value]="profiles"
+               [scrollable]="true"
+               scrollHeight="calc(100vh - 268px)"
+               [virtualScroll]="false"
+               [virtualRowHeight]="40"
+               [reorderableColumns]="false"
+               [resizableColumns]="false"
+               styleClass="p-datatable-striped"
+               scrollDirection="both"
+               [globalFilterFields]="['KPL','count','mat','scantling']">
+        <ng-template pTemplate="header">
+          <tr class="df">
+            <th pSortableColumn="KSE" class="cxy w-10">{{t.tr('KSE')}}
+              <p-sortIcon field="KSE"></p-sortIcon>
+            </th>
+            <th pSortableColumn="count" class="cxy w-10">{{t.tr('Count')}}
+              <p-sortIcon field="count"></p-sortIcon>
+            </th>
+            <th pSortableColumn="grossLenght" class="cxy w-10">{{t.tr('Gross length')}}
+              <p-sortIcon field="grossLenght"></p-sortIcon>
+            </th>
+            <th pSortableColumn="mat" class="cxy w-10">{{t.tr('Material')}}
+              <p-sortIcon field="mat"></p-sortIcon>
+              <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersProfiles.material" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th pSortableColumn="profileForecast" class="cxy w-10">{{t.tr('Profile Forecast')}}
+              <p-sortIcon field="profileForecast"></p-sortIcon>
+            </th>
+            <th pSortableColumn="realLenght" class="cxy w-10">{{t.tr('Real length')}}
+              <p-sortIcon field="realLenght"></p-sortIcon>
+            </th>
+            <th pSortableColumn="realPartsCount" class="cxy w-10">{{t.tr('Real parts count')}}
+              <p-sortIcon field="realPartsCount"></p-sortIcon>
+            </th>
+            <th class="cxy w-10 cursor-pointer head-hover">{{t.tr('Scantling')}}
+            </th>
+            <th pSortableColumn="scrap" class="cxy w-10">{{t.tr('Scrap')}}
+              <p-sortIcon field="scrap"></p-sortIcon>
+            </th>
+            <th pSortableColumn="section" class="cxy w-10">{{t.tr('Section')}}
+              <p-sortIcon field="section"></p-sortIcon>
+              <p-columnFilter class="filter" [field]="'section'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersProfiles.section" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-profile let-i="rowIndex">
+          <tr class="cursor-pointer row-table-doc-hover">
+            <td class="w-10 text-14">{{profile.KSE}}</td>
+            <td class="w-10 text-14">{{profile.count}}</td>
+            <td class="w-10 text-14">{{profile.grossLenght}}</td>
+            <td class="w-10 text-14">{{profile.mat}}</td>
+            <td class="w-10 text-14">{{profile.profileForecast}}</td>
+            <td class="w-10 text-14">{{round(profile.realLenght)}}</td>
+            <td class="w-10 text-14">{{profile.realPartsCount}}</td>
+            <td class="w-10 text-14">{{profile.scantling}}</td>
+            <td class="w-10 text-14">{{round(profile.scrap)}}</td>
+            <td class="w-10 text-14">{{profile.section}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div *ngIf="selectedHeadTab == 'Pipes'" class="cards">
+      <div class="cxy card-height">
+        <div class="loading-text">{{t.tr('Раздел находится в разработке.')}}</div>
+        <div class="loading-text-mini">{{t.tr('Приносим свои извинения.')}}</div>
+      </div>
+    </div>
+    <div *ngIf="selectedHeadTab == 'Valves'" class="cards">
+      <div class="cxy card-height">
+        <div class="loading-text">{{t.tr('Раздел находится в разработке.')}}</div>
+        <div class="loading-text-mini">{{t.tr('Приносим свои извинения.')}}</div>
+      </div>
+    </div>
+    <div *ngIf="selectedHeadTab == 'Cables'" class="cards">
+      <div class="cxy card-height">
+        <div class="loading-text">{{t.tr('Раздел находится в разработке.')}}</div>
+        <div class="loading-text-mini">{{t.tr('Приносим свои извинения.')}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast position="bottom-center"></p-toast>
+

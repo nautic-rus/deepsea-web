@@ -1,11 +1,29 @@
 <div class="all-page">
   <div>
     <div class="card-head mb-20 df">
-      <div class="mr-1">
-        <div class="materials-button border"></div>
+      <div class="mr-10">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+        </p-dropdown>
       </div>
-      <div class="mr-1">
-        <div class="materials-button border"></div>
+      <div class="mr-10">
+        <div class="materials-button add-button cxy">
+          <img src="assets/icons/plus3.svg" height="18">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button copy-button cxy">
+          <img src="assets/icons/copy3.svg" height="18">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button edit-button cxy">
+          <img src="assets/icons/edit.svg" height="18">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
@@ -14,12 +32,88 @@
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
-        <div class="w-20">
+        <div class="w-15">
           <div class="menu-card">
             <p-tree class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode"></p-tree>
           </div>
         </div>
-        <div class="w-80 cards">
+        <div class="w-85">
+          <div class="cards">
+            <p-table #table [value]="materials"
+                     [scrollable]="true"
+                     scrollHeight="calc(100vh - 216px)"
+                     [virtualScroll]="true"
+                     [virtualRowHeight]="40"
+                     [reorderableColumns]="false"
+                     [resizableColumns]="false"
+                     styleClass="p-datatable-striped"
+                     scrollDirection="both"
+                     [globalFilterFields]="['id','doc_number','name','status']">
+              <ng-template pTemplate="header">
+                <tr class="df">
+                  <th pSortableColumn="name" class="cxy w-18">{{t.tr('Наименование')}}
+                    <p-sortIcon field="name"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="description" class="cxy w-10">{{t.tr('Обозначение')}}
+                    <p-sortIcon field="description"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="kvz" class="cxy w-5">{{t.tr('КВЗ')}}
+                    <p-sortIcon field="kvz"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="coefficient" class="cxy w-5">{{t.tr('Коэф.')}}
+                    <p-sortIcon field="coefficient"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="weight" class="cxy w-5">{{t.tr('Вес')}}
+                    <p-sortIcon field="weight"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="code" class="cxy w-5">{{t.tr('КЕИ')}}
+                    <p-sortIcon field="code"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="provider" class="cxy w-13">{{t.tr('Поставщик')}}
+                    <p-sortIcon field="provider"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="notes" class="cxy w-13">{{t.tr('Примечания')}}
+                    <p-sortIcon field="notes"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="trm" class="cxy w-13">{{t.tr('TRM')}}
+                    <p-sortIcon field="trm"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="yard_code" class="cxy w-13">{{t.tr('Заводской код')}}
+                    <p-sortIcon field="yard_code"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="sfi_code" class="cxy w-5">{{t.tr('SFI')}}
+                    <p-sortIcon field="sfi_code"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-material let-i="rowIndex">
+                <tr class="cursor-pointer row-table-doc-hover">
+                  <td class="w-18 text-14">Commander M Кресло судоводителя с электрическим приводом (цвет обивки и лого по согласованию с Судовладельцем в рамках производственных возможностей Поставщика)</td>
+                  <td class="w-10 text-14">GAMM40 40-1"1/4</td>
+                  <td class="w-5 text-14">09003</td>
+                  <td class="w-5 text-14">1</td>
+                  <td class="w-5 text-14">0.05</td>
+                  <td class="w-5 text-14">796</td>
+                  <td class="w-13 text-14">Кондиционер-СПб</td>
+                  <td class="w-13 text-14">не закупать</td>
+                  <td class="w-13 text-14">
+                    <div class="df">
+                      <div class="trm-materials">
+                        <span>NRDDF5466D58014E2</span>
+                      </div>
+                      <div (click)="copyTrmCode('NRDDF5466D58014E2', 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
+                        <img src="assets/icons/trm-sup.svg" height="14">
+                        <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="w-13 text-14">0199W1200001A2K</td>
+                  <td class="w-5 text-14"></td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+          </div>
 
         </div>
       </div>

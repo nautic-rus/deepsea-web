@@ -148,6 +148,9 @@ body,p{
 .w-80{
   width: 80%;
 }
+.w-85{
+  width: 85%;
+}
 .w-90{
   width: 90%;
 }
@@ -314,10 +317,10 @@ body,p{
 .width-min{
   width: min-content;
 }
-
-
-
-
+/deep/.p-tooltip .p-tooltip-text {
+  font-size: 12px!important;
+  padding: 6px 8px!important;
+}
 
 .mt-1{
   margin-top: 1rem;

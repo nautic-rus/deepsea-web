@@ -1,0 +1,114 @@
+/deep/.p-multiselect-header {
+  display: none!important;
+}
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+  padding: 8px 10px 8px 40px!important;
+}
+/deep/.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+/deep/.pi {
+  font-size: 14px;
+}
+/deep/.p-tree{
+  height: calc(100vh - 237px);
+  overflow: auto;
+  padding: 10px;
+  border: none;
+}
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 12px;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 8px;
+  font-weight: 500;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
+.row-table-doc-hover:hover{
+  background-color: #EEF2FF!important;
+}
+.card-head{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  border-radius: 8px;
+  height: 65px;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
+}
+.materials-button{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.row-table-doc-hover:hover{
+  background-color: #EEF2FF!important;
+}
+.xls-button{
+  background-color: #22C55E;
+}
+.xls-button:hover{
+  background-color: #16A34A;
+}
+.cards{
+  padding: 10px;
+  overflow: auto;
+  height: calc(100vh - 248px);
+  background-color: white;
+  border-radius: 8px;
+  margin-left: 2px;
+}
+.tabs-header{
+  background: transparent;
+  border-width: 0 0 1px 0;
+  font-size: 13px;
+  position: relative;
+}
+.all-tabs{
+  border-radius: 4px;
+  border-color: #ffffff;
+  padding: 12px;
+  font-weight: 600;
+  transition: box-shadow 0.15s;
+  margin: 0 2px 4px 2px;
+  color: #6c757d;
+  background-color: #dce6f5;
+  width: 100px;
+}
+.all-tabs:hover{
+  background-color: #cfd9ec;
+}
+.selectedTab{
+  border-color: #dfe1e6 #dfe1e6 #ffffff #dfe1e6;
+  color: #495057;
+  font-weight: 600;
+  background-color: #ffffff!important;
+  margin: 0 2px -5px 2px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.card-height{
+  height: calc(100vh - 270px);
+  flex-direction: column;
+}
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+  font-size: xx-large;
+}
+.loading-text-mini{
+  color: #323130a8;
+  font-weight: 500;
+}
+.head-hover:hover{
+  background-color: #E9ECEF;
+}
