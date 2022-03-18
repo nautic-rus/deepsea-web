@@ -1,3 +1,16 @@
+/deep/.p-inputtext{
+  font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+}
+/deep/.pi{
+  font-size: 14px;
+}
 .card-head{
   background: rgba(255, 255, 255, 0.9);
   padding: 12px;
@@ -30,15 +43,6 @@
 }
 .normal-button:hover{
   background-color: rgba(50, 49, 48, 0.07) !important;
-}
-/deep/.p-component{
-  font-size: 14px!important;
-}
-/deep/.p-inputtext{
-  font-size: 14px!important;
-}
-/deep/.pi{
-  font-size: 14px;
 }
 .card-sp{
   width: 68%;
@@ -156,6 +160,14 @@
   font-size: 24px;
   line-height: 30px;
   color: #3a3a3a;
+}
+.title-bold-left{
+  display: flex;
+  font-weight: 700;
+  color: #172029;
+  padding-bottom: 1rem;
+  font-size: 16px;
+  line-height: 1.25rem;
 }
 .title-bold-tablet{
   font-weight: 500;
@@ -375,21 +387,21 @@
   font-size: 14px;
 }
 .button-fetch{
-  font-weight: 600;
   height: 48px;
-  width: 80%;
-  background-color: #f9c851;
-  color: #fff;
+  width: 100%;
+  background-color: rgba(0,115,230,.08);
+  color: #0073e6;
   border-radius: 10px;
   padding: 10px;
+  font-size: .875rem;
 }
 .button-fetch:hover{
-  background-color: #efc24f;
+  background-color: rgba(0,115,230,.12);
 }
 .button-fetch-tablet{
   font-weight: 600;
   height: 38px;
-  width: 80%;
+  width: 100%;
   background-color: #f9c851;
   color: #fff;
   border-radius: 10px;
@@ -425,17 +437,17 @@
 @keyframes custom-progress-spinner-color {
   100%,
   0% {
-    stroke: #69B7FF;
+    stroke: #2788e9;
   }
   40% {
-    stroke: #69B7FF;
+    stroke: #2788e9;
   }
   66% {
-    stroke: #69B7FF;
+    stroke: #2788e9;
   }
   80%,
   90% {
-    stroke: #69B7FF;
+    stroke: #2788e9;
   }
 }
 @keyframes custom-progress-spinner-dash {
@@ -575,3 +587,53 @@
 .mb-3px{
   margin-bottom: 3px;
 }
+.materials-button{
+  height: 37px;
+  width: 37px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.xls-button{
+  background-color: #22C55E;
+}
+.xls-button:hover{
+  background-color: #16A34A;
+}
+.add-button{
+  background-color: #2788e9;
+}
+.add-button:hover{
+  background-color: #0073e6;
+}
+.check-button{
+  border-radius: 8px;
+  padding: 6px;
+  background-color: hsla(0,0%,100%,0);
+  display: flex;
+  align-items: center;
+  width: auto;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: box-shadow .2s,color .2s,background-color .2s;
+  font-size: 13px;
+  box-shadow: inset 0 0 0 1px #ccdbeb;
+  line-height: 1rem;
+  color: #172029;
+}
+.check-button:hover{
+  box-shadow: inset 0 0 0 1px #2788e9;
+}
+.all-checkbox{
+  margin: 0 0.5rem 0.5rem 0;
+  display: inline-block;
+}
+.checked-button{
+  color: #fff;
+  background-color: #0073e6;
+  box-shadow: inset 0 0 0 1px #0073e6;
+}
+.checked-button:hover{
+  background-color: #2788e9;
+  box-shadow: inset 0 0 0 1px #2788e9;
+}
+

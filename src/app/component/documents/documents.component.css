@@ -10,6 +10,18 @@
 /deep/ .p-datatable-scrollable-header-box{
   padding-right: 0!important;
 }
+/deep/.pi{
+  font-size: 14px;
+}
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 12px;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 8px;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
 .icon-categories{
   border-radius: 3px;
   padding: 6px;
@@ -19,7 +31,7 @@
 }
 .card-overflow{
   background: rgba(255, 255, 255, 0.9);
-  padding: 0 0px 20px 20px;
+  padding: 0 20px 20px 20px;
   border-radius: 8px;
   height: calc(100vh - 116px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
@@ -33,8 +45,8 @@
 .text-12{
   font-size: 12px;
 }
-/deep/.pi{
-  font-size: 14px;
+.margin-bottom-none{
+  margin-bottom: 0;
 }
 .filter{
   margin-left: auto;
@@ -43,15 +55,6 @@
   display: flex;
   text-align: center;
   align-items: center;
-}
-/deep/.p-datatable .p-datatable-tbody > tr > td{
-  padding: 12px;
-}
-/deep/.p-datatable .p-datatable-thead > tr > th{
-  padding: 8px;
-}
-/deep/.p-datatable .p-datatable-header {
-  padding: 0.75rem 0 0.75rem 0;
 }
 .image-preview-backdrop{
   top: 0;

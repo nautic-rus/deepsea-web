@@ -235,6 +235,27 @@ body,p{
 .width-530{
   width: 530px;
 }
+.min-width-50{
+  min-width: 50px;
+}
+.min-width-75{
+  min-width: 75px;
+}
+.min-width-150{
+  min-width: 150px;
+}
+.min-width-190{
+  min-width: 190px;
+}
+.min-width-230{
+  min-width: 230px;
+}
+.min-width-250{
+  min-width: 250px;
+}
+.min-width-270{
+  min-width: 270px;
+}
 .height-32{
   height: 32px;
 }
@@ -656,6 +677,12 @@ cdk-virtual-scroll-viewport{
 .highlight {
   background-color: #6EC5FF;
 }
+.back-white{
+  background-color: white;
+}
+
+
+
 /* Our own checkbox design */
 .container {
   display: block;

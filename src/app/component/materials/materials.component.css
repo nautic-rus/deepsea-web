@@ -6,7 +6,7 @@
 }
 /deep/.p-inputtext{
   font-size: 14px!important;
-  padding: 8px 10px 8px 40px!important;
+  padding: 8px 10px 8px 10px;
 }
 /deep/.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
   width: 1.5rem;
@@ -37,6 +37,7 @@
   background-color: white;
   margin-left: 20px;
   border-radius: 8px;
+  padding: 10px;
 }
 .menu-card{
   padding: 15px 0 15px 0;
@@ -99,9 +100,6 @@
 .add-button{
   background-color: #3B82F6;
 }
-.add-button:focus{
-  border: 1px solid #e42441;
-}
 .add-button:hover{
   background-color: #2563EB;
 }
@@ -122,4 +120,9 @@
 }
 .xls-button:hover{
   background-color: #16A34A;
+}
+.mini-notes{
+  color: #a1b9d3;
+  font-size: 12px;
+  margin-left: 5px;
 }

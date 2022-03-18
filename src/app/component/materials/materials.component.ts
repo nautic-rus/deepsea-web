@@ -143,116 +143,116 @@ export class MaterialsComponent implements OnInit {
     },
     {
       "label": this.t.tr('СУДОВЫЕ УСТРОЙСТВА'),
-      "data": "MRG",
+      "data": "SEQ",
       "expandedIcon": "pi pi-folder-open",
       "collapsedIcon": "pi pi-folder",
       "children": [{
         "label": this.t.tr('Якорное'),
-        "data": "ANR SEQ",
+        "data": "ANR",
         "expandedIcon": "pi pi-folder-open",
         "collapsedIcon": "pi pi-folder",
         "children":
-          [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM ANR SEQ"},
-            {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR ANR SEQ"}]
+          [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+            {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
       },
         {
           "label": this.t.tr('Швартовное'),
-          "data": "MRG SEQ",
+          "data": "MRG",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM MRG SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR MRG SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Буксирное'),
-          "data": "TWG SEQ",
+          "data": "TWG",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM TWG SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR TWG SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Якорно-швартовное'),
-          "data": "AMG SEQ",
+          "data": "AMG",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM AMG SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR AMG SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Грузовое'),
-          "data": "CRG SEQ",
+          "data": "CRG",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM CRG SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR CRG SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Спасательное'),
-          "data": "RSC SEQ",
+          "data": "RSC",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM RSC SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR RSC SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Шлюпочное'),
-          "data": "BOT SEQ",
+          "data": "BOT",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM BOT SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR BOT SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Рулевое'),
-          "data": "STG SEQ",
+          "data": "STG",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM STG SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR STG SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Люковое'),
-          "data": "HAH SEQ",
+          "data": "HAH",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM HAH SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR HAH SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Мачтовое'),
-          "data": "MST SEQ",
+          "data": "MST",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM MST SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR MST SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Промысловое'),
-          "data": "FSG SEQ",
+          "data": "FSG",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM FSG SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR FSG SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Прочее'),
-          "data": "OTR SEQ",
+          "data": "OTR",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM OTR SEQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR OTR SEQ"}]
+            [ {"label": this.t.tr('Оборудование'), "icon": "pi pi-tag", "data": "EQM"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         }]
     },
     {
@@ -262,93 +262,93 @@ export class MaterialsComponent implements OnInit {
       "collapsedIcon": "pi pi-folder",
       "children": [{
         "label": this.t.tr('Изоляция'),
-        "data": "IST REQ",
+        "data": "IST",
         "expandedIcon": "pi pi-folder-open",
         "collapsedIcon": "pi pi-folder",
         "children":
-          [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV IST REQ"},
-            {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD IST REQ"},
-            {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR IST REQ"}]
+          [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+            {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+            {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
       },
         {
           "label": this.t.tr('Зашивка'),
-          "data": "LIN REQ",
+          "data": "LIN",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV LIN REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD LIN REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR LIN REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Пол'),
-          "data": "FLR REQ",
+          "data": "FLR",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV FLR REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD FLR REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR FLR REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Дельные вещи'),
-          "data": "PRT REQ",
+          "data": "PRT",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV PRT REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD PRT REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR PRT REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Мебель'),
-          "data": "FRT REQ",
+          "data": "FRT",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV FRT REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD FRT REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR FRT REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Оборудование, техника'),
-          "data": "THN REQ",
+          "data": "THN",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV THN REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD THN REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR THN REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Инвентарное имущество'),
-          "data": "INV REQ",
+          "data": "INV",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV INV REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD INV REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR INV REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Аварийно спасательное и противопожарное имущество'),
-          "data": "RFE REQ",
+          "data": "RFE",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV RFE REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD RFE REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR RFE REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
         {
           "label": this.t.tr('Прочее'),
-          "data": "OTR REQ",
+          "data": "OTR",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
-            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV OTR REQ"},
-              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD OTR REQ"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR OTR REQ"}]
+            [ {"label": this.t.tr('Съемное'), "icon": "pi pi-tag", "data": "RMV"},
+              {"label": this.t.tr('Приварное'), "icon": "pi pi-tag", "data": "WLD"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}]
         },
       ]
     },
@@ -360,120 +360,120 @@ export class MaterialsComponent implements OnInit {
       "children": [
         {
         "label": this.t.tr('Арматура'),
-        "data": "FIT SYS",
+        "data": "FIT",
         "expandedIcon": "pi pi-folder-open",
         "collapsedIcon": "pi pi-folder",
         "children":
           [{
             "label": this.t.tr('Ручная'),
-            "data": "H FIT SYS",
+            "data": "H",
             "expandedIcon": "pi pi-folder-open",
             "collapsedIcon": "pi pi-folder",
             "children": [
-              {"label": this.t.tr('Сталь'), "icon": "pi pi-tag", "data": "STL H FIT SYS"},
-              {"label": this.t.tr('Бронза'), "icon": "pi pi-tag", "data": "BRZ H FIT SYS"},
-              {"label": this.t.tr('Нержавеющая сталь'), "icon": "pi pi-tag", "data": "SST H FIT SYS"},
-              {"label": this.t.tr('Пластик'), "icon": "pi pi-tag", "data": "PLS H FIT SYS"},
-              {"label": this.t.tr('Комбинированный материал'), "icon": "pi pi-tag", "data": "CMD H FIT SYS"},
-              {"label": this.t.tr('Медно-никелевая (МНЖ)'), "icon": "pi pi-tag", "data": "CNK H FIT SYS"},
-              {"label": this.t.tr('Медь'), "icon": "pi pi-tag", "data": "CPR H FIT SYS"},
-              {"label": this.t.tr('Латунь'), "icon": "pi pi-tag", "data": "BRS H FIT SYS"},
-              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR H FIT SYS"}
+              {"label": this.t.tr('Сталь'), "icon": "pi pi-tag", "data": "STL"},
+              {"label": this.t.tr('Бронза'), "icon": "pi pi-tag", "data": "BRZ"},
+              {"label": this.t.tr('Нержавеющая сталь'), "icon": "pi pi-tag", "data": "SST"},
+              {"label": this.t.tr('Пластик'), "icon": "pi pi-tag", "data": "PLS"},
+              {"label": this.t.tr('Комбинированный материал'), "icon": "pi pi-tag", "data": "CMD"},
+              {"label": this.t.tr('Медно-никелевая (МНЖ)'), "icon": "pi pi-tag", "data": "CNK"},
+              {"label": this.t.tr('Медь'), "icon": "pi pi-tag", "data": "CPR"},
+              {"label": this.t.tr('Латунь'), "icon": "pi pi-tag", "data": "BRS"},
+              {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}
             ]
           },
             {
               "label": this.t.tr('Дистанционная'),
-              "data": "R FIT SYS",
+              "data": "R",
               "expandedIcon": "pi pi-folder-open",
               "collapsedIcon": "pi pi-folder",
               "children": [
-                {"label": this.t.tr('Сталь'), "icon": "pi pi-tag", "data": "STL R FIT SYS"},
-                {"label": this.t.tr('Бронза'), "icon": "pi pi-tag", "data": "BRZ R FIT SYS"},
-                {"label": this.t.tr('Нержавеющая сталь'), "icon": "pi pi-tag", "data": "SST R FIT SYS"},
-                {"label": this.t.tr('Пластик'), "icon": "pi pi-tag", "data": "PLS R FIT SYS"},
-                {"label": this.t.tr('Комбинированный материал'), "icon": "pi pi-tag", "data": "CMD R FIT SYS"},
-                {"label": this.t.tr('Медно-никелевая (МНЖ)'), "icon": "pi pi-tag", "data": "CNK R FIT SYS"},
-                {"label": this.t.tr('Медь'), "icon": "pi pi-tag", "data": "CPR R FIT SYS"},
-                {"label": this.t.tr('Латунь'), "icon": "pi pi-tag", "data": "BRS R FIT SYS"},
-                {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR R FIT SYS"}
+                {"label": this.t.tr('Сталь'), "icon": "pi pi-tag", "data": "STL"},
+                {"label": this.t.tr('Бронза'), "icon": "pi pi-tag", "data": "BRZ"},
+                {"label": this.t.tr('Нержавеющая сталь'), "icon": "pi pi-tag", "data": "SST"},
+                {"label": this.t.tr('Пластик'), "icon": "pi pi-tag", "data": "PLS"},
+                {"label": this.t.tr('Комбинированный материал'), "icon": "pi pi-tag", "data": "CMD"},
+                {"label": this.t.tr('Медно-никелевая (МНЖ)'), "icon": "pi pi-tag", "data": "CNK"},
+                {"label": this.t.tr('Медь'), "icon": "pi pi-tag", "data": "CPR"},
+                {"label": this.t.tr('Латунь'), "icon": "pi pi-tag", "data": "BRS"},
+                {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}
               ]
             },
             {
               "label": this.t.tr('Автоматическая'),
-              "data": "A FIT SYS",
+              "data": "A",
               "expandedIcon": "pi pi-folder-open",
               "collapsedIcon": "pi pi-folder",
               "children": [
-                {"label": this.t.tr('Сталь'), "icon": "pi pi-tag", "data": "STL A FIT SYS"},
-                {"label": this.t.tr('Бронза'), "icon": "pi pi-tag", "data": "BRZ A FIT SYS"},
-                {"label": this.t.tr('Нержавеющая сталь'), "icon": "pi pi-tag", "data": "SST A FIT SYS"},
-                {"label": this.t.tr('Пластик'), "icon": "pi pi-tag", "data": "PLS A FIT SYS"},
-                {"label": this.t.tr('Комбинированный материал'), "icon": "pi pi-tag", "data": "CMD A FIT SYS"},
-                {"label": this.t.tr('Медно-никелевая (МНЖ)'), "icon": "pi pi-tag", "data": "CNK A FIT SYS"},
-                {"label": this.t.tr('Медь'), "icon": "pi pi-tag", "data": "CPR A FIT SYS"},
-                {"label": this.t.tr('Латунь'), "icon": "pi pi-tag", "data": "BRS A FIT SYS"},
-                {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR A FIT SYS"}
+                {"label": this.t.tr('Сталь'), "icon": "pi pi-tag", "data": "STL"},
+                {"label": this.t.tr('Бронза'), "icon": "pi pi-tag", "data": "BRZ"},
+                {"label": this.t.tr('Нержавеющая сталь'), "icon": "pi pi-tag", "data": "SST"},
+                {"label": this.t.tr('Пластик'), "icon": "pi pi-tag", "data": "PLS"},
+                {"label": this.t.tr('Комбинированный материал'), "icon": "pi pi-tag", "data": "CMD"},
+                {"label": this.t.tr('Медно-никелевая (МНЖ)'), "icon": "pi pi-tag", "data": "CNK"},
+                {"label": this.t.tr('Медь'), "icon": "pi pi-tag", "data": "CPR"},
+                {"label": this.t.tr('Латунь'), "icon": "pi pi-tag", "data": "BRS"},
+                {"label": this.t.tr('Прочее'), "icon": "pi pi-tag", "data": "OTR"}
               ]
             },
           ]
       },
         {
           "label": this.t.tr('Фасонные части (часть трубы)'),
-          "data": "PART SYS",
+          "data": "PART",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Изоляция труб'),
-          "data": "PIL SYS",
+          "data": "PIL",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Насос'),
-          "data": "PUMP SYS",
+          "data": "PUMP",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Вентиляция и кондиционирование'),
-          "data": "VENT SYS",
+          "data": "VENT",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Механическое оборудование'),
-          "data": "MEQP SYS",
+          "data": "MEQP",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Контрольно-измерительные приборы'),
-          "data": "CMIT SYS",
+          "data": "CMIT",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children":
             [{
               "label": this.t.tr('Давление'),
-              "data": "PRS CMIT SYS",
+              "data": "PRS",
               "expandedIcon": "pi pi-folder-open",
               "collapsedIcon": "pi pi-folder",
             },
               {
                 "label": this.t.tr('Температура'),
-                "data": "TMP CMIT SYS",
+                "data": "TMP",
                 "expandedIcon": "pi pi-folder-open",
                 "collapsedIcon": "pi pi-folder",
               },
               {
                 "label": this.t.tr('Уровень'),
-                "data": "LYR CMIT SYS",
+                "data": "LYR",
                 "expandedIcon": "pi pi-folder-open",
                 "collapsedIcon": "pi pi-folder",
               },
               {
                 "label": this.t.tr('Прочее'),
-                "data": "OTR CMIT SYS",
+                "data": "OTR",
                 "expandedIcon": "pi pi-folder-open",
                 "collapsedIcon": "pi pi-folder",
               },
@@ -490,7 +490,7 @@ export class MaterialsComponent implements OnInit {
       "children": [
         {
           "label": this.t.tr('Оборудование'),
-          "data": "EQM PWP",
+          "data": "EQM",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
@@ -505,91 +505,91 @@ export class MaterialsComponent implements OnInit {
       "children": [
         {
           "label": this.t.tr('Источники электрической энергии'),
-          "data": "SRC EEQ",
+          "data": "SRC",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children": [
-            {"label": this.t.tr('Генератор'), "icon": "pi pi-tag", "data": "SRC EEQ"},
-            {"label": this.t.tr('Трансформатор'), "icon": "pi pi-tag", "data": "SRC EEQ"},
-            {"label": this.t.tr('Преобразователь напряжения'), "icon": "pi pi-tag", "data": "SRC EEQ"},
-            {"label": this.t.tr('Аккумуляторная батарея'), "icon": "pi pi-tag", "data": "SRC EEQ"},
-            {"label": this.t.tr('Щит питания и управления'), "icon": "pi pi-tag", "data": "SRC EEQ"},
+            {"label": this.t.tr('Генератор'), "icon": "pi pi-tag", "data": "SRC"},
+            {"label": this.t.tr('Трансформатор'), "icon": "pi pi-tag", "data": "SRC"},
+            {"label": this.t.tr('Преобразователь напряжения'), "icon": "pi pi-tag", "data": "SRC"},
+            {"label": this.t.tr('Аккумуляторная батарея'), "icon": "pi pi-tag", "data": "SRC"},
+            {"label": this.t.tr('Щит питания и управления'), "icon": "pi pi-tag", "data": "SRC"},
           ]
         },
         {
           "label": this.t.tr('Коробки соединительные, розетки, выключатели, штепсели'),
-          "data": "MGA EEQ",
+          "data": "MGA",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Навигационное оборудование'),
-          "data": "NAV EEQ",
+          "data": "NAV",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Оборудование радиосвязи'),
-          "data": "RAD EEQ",
+          "data": "RAD",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Освещение'),
-          "data": "LGT EEQ",
+          "data": "LGT",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Автоматизация'),
-          "data": "AUT EEQ",
+          "data": "AUT",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Сигнализация'),
-          "data": "SGN EEQ",
+          "data": "SGN",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Электрообогрев'),
-          "data": "HTN EEQ",
+          "data": "HTN",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Сигнальные средства'),
-          "data": "SLМ EEQ",
+          "data": "SLМ",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Защита от коррозии'),
-          "data": "CRS EEQ",
+          "data": "CRS",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Специальное оборудование (рыбопоисковое и т.п.)'),
-          "data": "SPC EEQ",
+          "data": "SPC",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Прочее'),
-          "data": "OTR EEQ",
+          "data": "OTR",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
         },
         {
           "label": this.t.tr('Кабели'),
-          "data": "CAB EEQ",
+          "data": "CAB",
           "expandedIcon": "pi pi-folder-open",
           "collapsedIcon": "pi pi-folder",
           "children": [
-            {"label": this.t.tr('Кабель в поставке'), "icon": "pi pi-tag", "data": "SUP CAB EEQ"},
-            {"label": this.t.tr('Кабель завод-строитель'), "icon": "pi pi-tag", "data": "YRD CAB EEQ"},
+            {"label": this.t.tr('Кабель в поставке'), "icon": "pi pi-tag", "data": "SUP"},
+            {"label": this.t.tr('Кабель завод-строитель'), "icon": "pi pi-tag", "data": "YRD"},
           ]
         },
       ]

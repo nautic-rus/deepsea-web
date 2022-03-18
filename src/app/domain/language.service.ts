@@ -295,7 +295,7 @@ export class LanguageService {
           case 'Профили': return 'Profiles';
           case 'Раздел находится в разработке.': return 'Page under construction!';
           case 'Приносим свои извинения.': return 'Please come back later...';
-          case '': return '';
+          case 'Швартовное': return 'Mooring';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -1,15 +1,19 @@
 <div *ngIf="isDesktop()" class="all-page min-height">
   <div class="">
     <div class="card-head mb-20 df">
-      <div class="mr-1">
-        <button pButton [pTooltip]="l.tr('Export Nesting')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
-      </div>
-      <div class="mr-1">
-        <button pButton [pTooltip]="l.tr('Download Files for Nestings in table')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="downloadFiles()"></button>
-      </div>
-      <div class="mr-1">
+      <div class="mr-10">
         <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
         </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <div (click)="exportXls()" class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div [pTooltip]="l.tr('Download')" tooltipPosition="top" (click)="downloadFiles()" class="materials-button add-button cxy">
+          <img src="assets/icons/download-file.svg" height="22">
+        </div>
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
@@ -18,64 +22,56 @@
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
-        <div class="w-20">
+        <div class="w-15">
           <div class="menu-card">
-            <div class="ovf-auto">
-              <div class="df">
-                <div class="title-bold mb-15 sticky head-checkbox">BLOCKS:</div>
-                <div class="p-ml-auto df">
-                  <div *ngIf="currentView == 'tile'" class="mr-10 cursor-pointer">
-                    <img src="assets/icons/tile-yellow.svg" height="24">
-                  </div>
-                  <div (click)="currentView = 'tile'" *ngIf="currentView != 'tile'" class="mr-10 cursor-pointer">
-                    <img src="assets/icons/tile-gray.svg" height="24">
-                  </div>
-                  <div *ngIf="currentView == 'list'" class="cursor-pointer">
-                    <img src="assets/icons/list-yellow.svg" height="24">
-                  </div>
-                  <div (click)="currentView = 'list'" *ngIf="currentView != 'list'" class="cursor-pointer">
-                    <img src="assets/icons/list-gray.svg" height="24">
-                  </div>
-                </div>
-
+            <div class="ovf-auto mb-10">
+              <div class="df sticky back-white">
+                <div class="title-bold-left head-checkbox">Blocks:</div>
               </div>
 
               <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
                 There is no blocks for selected project there. Try to specify another project.
               </div>
-              <div *ngFor="let block of blocks">
-                <label class="container">
-                  <input (change)="selectBlock(block)" type="checkbox" [checked]="block.selected">
-                  <span class="checkmark"></span>
-                  <span class="text-checkbox">{{block.name}}</span>
-                </label>
+              <div class="all-checkbox" *ngFor="let block of blocks">
+                <div class="check-button" [class.checked-button]="block.selected" (click)="selectBlock(block)">
+                  {{block.name}}
+                </div>
               </div>
             </div>
             <div class="w-100">
-              <div class="button-fetch cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">FETCH MATERIALS</div>
+              <div class="button-fetch cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">Fetch materials</div>
             </div>
             <div class="ovf-auto">
-              <div class="title-bold mb-15 sticky head-checkbox">MATERIALS:</div>
+              <div class="df sticky back-white">
+                <div class="title-bold-left head-checkbox">Materials:</div>
+              </div>
               <div class="cxy" *ngIf="loadingMaterials">
                 <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
               </div>
               <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
                 There are no plate dimensions. You need to specify blocks from top column.
               </div>
-              <div *ngFor="let material of materials">
-                <label class="container">
-                  <input (change)="selectMaterial(material)" type="checkbox" [checked]="material.selected">
-                  <span class="checkmark"></span>
-                  <span class="text-checkbox">{{material.name}}</span>
-                </label>
+              <div class="all-checkbox" *ngFor="let material of materials">
+                <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                  {{material.name}}
+                </div>
               </div>
+
+
+<!--              <div *ngFor="let material of materials">-->
+<!--                <label class="container">-->
+<!--                  <input (change)="selectMaterial(material)" type="checkbox" [checked]="material.selected">-->
+<!--                  <span class="checkmark"></span>-->
+<!--                  <span class="text-checkbox">{{material.name}}</span>-->
+<!--                </label>-->
+<!--              </div>-->
             </div>
             <div>
-              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">FETCH NESTING</div>
+              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
             </div>
           </div>
         </div>
-        <div class="w-80 cards">
+        <div class="w-85 cards">
           <div class="cxy card-height" *ngIf="noResult">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
@@ -92,78 +88,7 @@
               <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
             </div>
           </div>
-          <div *ngIf="currentView == 'list'">
-            <div [class.hidden-card]="nest == null" class="dash-card mx-20" *ngFor="let nest of nesting; let i = index">
-              <div *ngIf="nest != null" class="top-row">
-                <div class="cxy">
-                  <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
-                    <img src="assets/icons/lock.svg" height="26">
-                  </div>
-                  <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
-                    <img src="assets/icons/unlock.svg" height="26">
-                  </div>
-                </div>
-                <div class="">
-                  <div class="cy h-100">
-                    <div class="cx mb-10 mt-10">
-                      <div class="title-bold px-10">{{nest.ID}}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-center-y">
-                  <div class="title-name">
-                    <div *ngIf="nest.USAGE > 100">WARNING</div>
-                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#BE78A2'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="false"></ngx-charts-pie-chart>
-                  </div>
-                  <div class="title-name">
-                    <div class="my-5 usage">Usage: {{round(nest.USAGE)}}%</div>
-                    <div class="my-5 left">Left: {{round(100 - nest.USAGE)}}%</div>
-                  </div>
-                </div>
-                <div class="text-center-y">
-                  <div class="gray-text mr-10">File</div>
-                  <div class="file">{{nest.FILE}}</div>
-                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
-                    <img src="assets/icons/eye-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show nesting file</div>
-                  </div>
-                  <div *ngIf="!isDisabledNestTemplate(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download file')" tooltipPosition="top">
-                    <img src="assets/icons/download-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Download files</div>
-                  </div>
 
-
-
-                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                    <img src="assets/icons/eye-file.svg" height="22">
-                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>
-                  </div>
-<!--                  <div *ngIf="!isDisabledCuttingMap(nest)" class="ml-10 cxy eye-file cursor-pointer" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">-->
-<!--                    <img src="assets/icons/download-file.svg" height="22">-->
-<!--                    <div class="eye-tooltip" *ngIf="showTooltip('t' + i)">Show cutting file</div>-->
-<!--                  </div>-->
-                </div>
-              </div>
-              <div *ngIf="nest != null" class="bottom-row">
-                <div class="ovf-auto">
-                  <div class="df cursor-pointer sticky">
-                    <div class="w-25 table-header-column cy">{{l.tr('BLOCK')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('LENGTHxWIDTHxTHICKNESS')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('MATERIAL')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('WEIGHT')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('NUMBER EQUAL NESTING')}}</div>
-                  </div>
-                  <div class="text-center-y info-row cursor-pointer">
-                    <div class="w-25 table-body cy">{{nest.BLOCKS}}</div>
-                    <div class="w-25 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
-                    <div class="w-25 table-body cy">{{nest.MATERIAL}}</div>
-                    <div class="w-25 table-body cy">{{nest.PARTS_WEIGHT}}</div>
-                    <div class="w-25 table-body cy">{{nest.NUM_EQ_NEST}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [class.hidden-card]="nest == null" class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
               <div *ngIf="nest != null" class="top-row-tile">
@@ -191,16 +116,11 @@
                     <ngx-charts-bar-horizontal-stacked
                       [view]="[120, 80]"
                       [results]="nest.stacked"
+                      [tooltipDisabled]="true"
                       [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#D8DADC'}]">
-
-
-
                     </ngx-charts-bar-horizontal-stacked>
                     <div class="donut-text">{{round(nest.USAGE)}}%
-<!--                    <ngx-charts-pie-chart [view]="[120, 120]" [customColors]="[{name: 'Usage', value: '#f9c851'}, {name: 'Left', value: '#D8DADC'}]" [results]="nest.doughnut" [gradient]="false" [legend]="false" [labels]="false" [doughnut]="true"></ngx-charts-pie-chart>-->
                   </div>
-
-
                   </div>
                   <div class="usage-left-info">
                     <div class="text-center-y">

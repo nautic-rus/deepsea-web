@@ -35,10 +35,10 @@
                [globalFilterFields]="['id','doc_number','name','status']">
         <ng-template pTemplate="header">
           <tr class="df">
-            <th pSortableColumn="KPL" class="cxy w-11">{{t.tr('KPL')}}
+            <th pSortableColumn="KPL" class="lxy w-13">{{t.tr('KPL')}}
               <p-sortIcon field="KPL"></p-sortIcon>
             </th>
-            <th pSortableColumn="count" class="cxy w-12">{{t.tr('Count')}}
+            <th pSortableColumn="count" class="cxy w-12">{{t.tr('Sheet QTY')}}
               <p-sortIcon field="count"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'count'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -47,7 +47,7 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="mat" class="cxy w-11">{{t.tr('Material')}}
+            <th pSortableColumn="mat" class="cxy w-15">{{t.tr('Material')}}
               <p-sortIcon field="mat"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -56,52 +56,47 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="nestedParts" class="cxy w-11">{{t.tr('Nested Parts')}}
+            <th pSortableColumn="nestedParts" class="lxy w-12">{{t.tr('Nested Parts')}}
               <p-sortIcon field="nestedParts"></p-sortIcon>
             </th>
-            <th pSortableColumn="plateForecast" class="cxy w-11">{{t.tr('Plate Forecast')}}
+            <th pSortableColumn="plateForecast" class="lxy w-12">{{t.tr('Sheet Forecast')}}
               <p-sortIcon field="plateForecast"></p-sortIcon>
             </th>
-            <th pSortableColumn="realPartsCount" class="cxy w-11">{{t.tr('Real Parts Count')}}
+            <th pSortableColumn="realPartsCount" class="lxy w-12">{{t.tr('Real Parts Count')}}
               <p-sortIcon field="realPartsCount"></p-sortIcon>
             </th>
-            <th pSortableColumn="realWeight" class="cxy w-11">{{t.tr('Weight')}}
+            <th pSortableColumn="realWeight" class="lxy w-12">{{t.tr('Weight')}}
               <p-sortIcon field="realWeight"></p-sortIcon>
             </th>
-            <th class="cxy w-11 cursor-pointer head-hover">{{t.tr('Scantling')}}
-            </th>
-            <th pSortableColumn="scrap" class="cxy w-11">{{t.tr('Scrap')}}
+            <th pSortableColumn="scrap" class="lxy w-12">{{t.tr('Scrap')}}
               <p-sortIcon field="scrap"></p-sortIcon>
             </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-plate let-i="rowIndex">
           <tr class="cursor-pointer row-table-doc-hover">
-            <td class="w-11 text-14">
+            <td class="w-13 text-14">
               <span [innerHTML]="plate.KPL.toString() | highLight: search"></span>
             </td>
             <td class="w-12 text-14">
               <span [innerHTML]="plate.count.toString() | highLight: search"></span>
             </td>
-            <td class="w-11 text-14">
-              <span [innerHTML]="plate.mat.toString() | highLight: search"></span>
+            <td class="w-15 text-14">
+              <span [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: search"></span>
             </td>
-            <td class="w-11 text-14">
+            <td class="w-12 text-14">
               <span [innerHTML]="plate.nestedParts.toString() | highLight: search"></span>
             </td>
-            <td class="w-11 text-14">
+            <td class="w-12 text-14">
               <span [innerHTML]="plate.plateForecast.toString() | highLight: search"></span>
             </td>
-            <td class="w-11 text-14">
+            <td class="w-12 text-14">
               <span [innerHTML]="plate.realPartsCount.toString() | highLight: search"></span>
             </td>
-            <td class="w-11 text-14">
+            <td class="w-12 text-14">
               <span [innerHTML]="round(plate.realWeight).toString() | highLight: search"></span>
             </td>
-            <td class="w-11 text-14">
-              <span [innerHTML]="plate.scantling.toString() | highLight: search"></span>
-            </td>
-            <td class="w-11 text-14">
+            <td class="w-12 text-14">
               <span [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>
             </td>
           </tr>
@@ -121,13 +116,13 @@
                [globalFilterFields]="['KSE','count','mat','scantling']">
         <ng-template pTemplate="header">
           <tr class="df">
-            <th pSortableColumn="KSE" class="cxy w-10">{{t.tr('KSE')}}
+            <th pSortableColumn="KSE" class="lxy w-10">{{t.tr('KSE')}}
               <p-sortIcon field="KSE"></p-sortIcon>
             </th>
-            <th pSortableColumn="count" class="cxy w-10">{{t.tr('Count')}}
+            <th pSortableColumn="count" class="lxy w-10">{{t.tr('Count')}}
               <p-sortIcon field="count"></p-sortIcon>
             </th>
-            <th pSortableColumn="grossLenght" class="cxy w-10">{{t.tr('Gross length')}}
+            <th pSortableColumn="grossLenght" class="lxy w-10">{{t.tr('Gross length')}}
               <p-sortIcon field="grossLenght"></p-sortIcon>
             </th>
             <th pSortableColumn="mat" class="cxy w-10">{{t.tr('Material')}}
@@ -139,21 +134,21 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="profileForecast" class="cxy w-10">{{t.tr('Profile Forecast')}}
+            <th pSortableColumn="profileForecast" class="lxy w-10">{{t.tr('Profile Forecast')}}
               <p-sortIcon field="profileForecast"></p-sortIcon>
             </th>
-            <th pSortableColumn="realLenght" class="cxy w-10">{{t.tr('Real length')}}
+            <th pSortableColumn="realLenght" class="lxy w-10">{{t.tr('Real length')}}
               <p-sortIcon field="realLenght"></p-sortIcon>
             </th>
-            <th pSortableColumn="realPartsCount" class="cxy w-10">{{t.tr('Real parts count')}}
+            <th pSortableColumn="realPartsCount" class="lxy w-10">{{t.tr('Real parts count')}}
               <p-sortIcon field="realPartsCount"></p-sortIcon>
             </th>
-            <th class="cxy w-10 cursor-pointer head-hover">{{t.tr('Scantling')}}
+            <th class="lxy w-10 cursor-pointer head-hover">{{t.tr('Scantling')}}
             </th>
-            <th pSortableColumn="scrap" class="cxy w-10">{{t.tr('Scrap')}}
+            <th pSortableColumn="scrap" class="lxy w-10">{{t.tr('Scrap')}}
               <p-sortIcon field="scrap"></p-sortIcon>
             </th>
-            <th pSortableColumn="section" class="cxy w-10">{{t.tr('Section')}}
+            <th pSortableColumn="section" class="lxy w-10">{{t.tr('Section')}}
               <p-sortIcon field="section"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'section'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">

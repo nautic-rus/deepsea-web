@@ -395,7 +395,7 @@
             </div>
             <div *ngFor="let tray of group; let t = index" class="text-center-y info-row cursor-pointer" (click)="selectedGroup[i] = t" [class.selected-row-group]="selectedGroup[i] == t">
               <div class="w-5 cxy">
-                <div *ngIf="tray.foranTray.marign == 0 && tray.foranTray.SURFACE != 'F0'" class="margin-zero">!</div>
+                <div *ngIf="tray.foranTray.marign == 0" class="margin-zero">!</div>
               </div>
               <div class="w-10 table-body cy">{{tray.foranTray.ZONE}}</div>
               <div class="w-20 table-body cy">{{tray.foranTray.IDSQ}}</div>

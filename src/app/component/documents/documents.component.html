@@ -98,6 +98,8 @@
              scrollHeight="calc(100vh - 265px)"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
+             [reorderableColumns]="false"
+             [resizableColumns]="false"
              styleClass="p-datatable-striped"
              responsiveLayout="scroll"
              [globalFilterFields]="['id','doc_number','name','status']">
@@ -108,7 +110,7 @@
             </p-dropdown>
           </div>
           <div class="mr-1 cy">
-            <label class="container">
+            <label class="container margin-bottom-none">
               <span class="text-checkbox">Show only with files</span>
               <input (ngModelChange)="projectChanged()" type="checkbox" [(ngModel)]="showWithFilesOnly">
               <span class="checkmark"></span>

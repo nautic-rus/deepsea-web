@@ -117,7 +117,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   }
 
   containsZeroSurface(group: any[]) {
-    return group.find(tray => tray.foranTray.marign == 0) != null || group.find(tray => tray.foranTray.SURFACE == 'F0') != null;
+    return group.find(tray => tray.foranTray.marign == 0) != null && group.find(tray => tray.foranTray.SURFACE == 'F0') == null;
   }
   sort(column: string){
     this.sortValue = column;
