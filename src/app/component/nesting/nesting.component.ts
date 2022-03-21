@@ -867,4 +867,10 @@ export class NestingComponent implements OnInit {
   isDesktop() {
     return this.device.isDesktop() && window.innerWidth > 1296;
   }
+
+  getWidth(number: number) {
+    return {
+      width: number + '%'
+    };
+  }
 }
