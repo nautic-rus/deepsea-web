@@ -45,7 +45,7 @@
               <div class="df sticky back-white">
                 <div class="title-bold-left head-checkbox">Materials:</div>
               </div>
-              <div class="cxy" *ngIf="loadingMaterials">
+              <div class="cxy height-spinner" *ngIf="loadingMaterials">
                 <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
               </div>
               <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
@@ -67,7 +67,7 @@
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
           <div *ngIf="loading && !noResult">
-            <div class="cxy loading">
+            <div class="cxy loading ">
               <div class="cxy card-height">
                 <img src="assets/whale.gif" height="120">
                 <div class="cx loading-text">PLEASE WAIT...</div>
@@ -91,9 +91,9 @@
                     <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)">
                       <img src="assets/icons/unlock.svg" height="22">
                     </div>
-                    <div *ngIf="nest.isLock">
-                      <div>{{this.auth.getUserName(nest.lockInfo.user)}}</div>
-                      <div>{{getDate(nest.lockInfo.date)}}</div>
+                    <div class="pl-10" *ngIf="nest.isLock">
+                      <div class="lock-name">{{this.auth.getUserName(nest.lockInfo.user)}}</div>
+                      <div class="lock-date">{{getDate(nest.lockInfo.date)}}</div>
                     </div>
                   </div>
                   <div class="">
@@ -248,7 +248,7 @@
             <div class="left-block-materials">
               <div class="ovf-auto max-height-185">
                 <div class="title-bold-tablet sticky head-checkbox">Materials:</div>
-                <div class="cxy" *ngIf="loadingMaterials">
+                <div class="cxy height-spinner" *ngIf="loadingMaterials">
                   <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
                 </div>
                 <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
