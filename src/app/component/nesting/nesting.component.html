@@ -92,7 +92,7 @@
                       <img src="assets/icons/unlock.svg" height="22">
                     </div>
                     <div class="pl-10" *ngIf="nest.isLock">
-                      <div class="lock-name">{{this.auth.getUserName(nest.lockInfo.user)}}</div>
+                      <div class="lock-name">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
                       <div class="lock-date">{{getDate(nest.lockInfo.date)}}</div>
                     </div>
                   </div>
@@ -229,7 +229,7 @@
             <div class="left-block-materials">
               <div class="ovf-auto max-height-185">
                 <div class="df sticky back-white">
-                  <div class="title-bold-tablet sticky head-checkbox">Blocks:</div>
+                  <div class="title-bold-tablet pb-10 sticky head-checkbox">Blocks:</div>
                 </div>
 
                 <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
@@ -247,7 +247,7 @@
             </div>
             <div class="left-block-materials">
               <div class="ovf-auto max-height-185">
-                <div class="title-bold-tablet sticky head-checkbox">Materials:</div>
+                <div class="title-bold-tablet pb-10 sticky head-checkbox">Materials:</div>
                 <div class="cxy height-spinner" *ngIf="loadingMaterials">
                   <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
                 </div>
@@ -289,21 +289,21 @@
             <div [class.hidden-card-tablet]="nest == null" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
               <div *ngIf="nest != null" class="top-row-tile-tablet">
                 <div class="cy">
-                  <div class="cxy">
+                  <div class="cxy flex-col">
                     <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)">
                       <img src="assets/icons/lock.svg" height="22">
                     </div>
                     <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)">
                       <img src="assets/icons/unlock.svg" height="22">
                     </div>
-                    <div *ngIf="nest.isLock">
-                      <div>{{this.auth.getUserName(nest.lockInfo.user)}}</div>
-                      <div>{{getDate(nest.lockInfo.date)}}</div>
+                    <div class="" *ngIf="nest.isLock">
+                      <div class="lock-name-tablet">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
+                      <div class="lock-date-tablet">{{getDate(nest.lockInfo.date)}}</div>
                     </div>
                   </div>
                   <div class="">
                     <div class="cy h-100">
-                      <div class="cx mb-10 mt-10">
+                      <div class="cx mt-5">
                         <div class="title-bold-tablet">{{nest.ID}}</div>
                       </div>
                     </div>

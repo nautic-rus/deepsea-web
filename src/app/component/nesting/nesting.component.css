@@ -83,6 +83,21 @@
   font-size: 0.72em;
   white-space: nowrap;
 }
+.lock-name-tablet{
+  font-size: 10px;
+  font-style: inherit;
+  font-weight: 500;
+  letter-spacing: -0.003em;
+  color: #3a3a3a;
+}
+.lock-date-tablet{
+  color: rgba(66, 82, 110, 0.82);
+  font-size: 9px;
+  white-space: nowrap;
+}
+.flex-col{
+  flex-direction: column;
+}
 .dash-card{
   padding: 10px;
   margin-bottom: 20px;
@@ -184,7 +199,6 @@
 .title-bold-tablet{
   font-weight: 700;
   color: #3a3a3a;
-  padding-bottom: 1rem;
   font-size: 16px;
   line-height: 1.25rem;
 }
