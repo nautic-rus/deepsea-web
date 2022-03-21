@@ -754,6 +754,7 @@ export class NestingComponent implements OnInit {
           this.nesting.push(null);
         }
         this.nestingSource = [...this.nesting];
+        console.log(this.nesting);
       }
     });
   }
@@ -872,5 +873,13 @@ export class NestingComponent implements OnInit {
     return {
       width: number + '%'
     };
+  }
+
+  insertLock(nest: any) {
+    this.s.insertNestLock(this.project, nest.ID, this.auth.getUser().login).then(() => {
+      nest.isLock = !nest.isLock;
+      nest.lockInfo.user = this.auth.getUser().login;
+      nest.lockInfo.date = new Date().getTime();
+    });
   }
 }

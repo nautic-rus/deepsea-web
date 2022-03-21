@@ -85,11 +85,15 @@
               <div *ngIf="nest != null" class="top-row-tile">
                 <div class="cy">
                   <div class="cxy">
-                    <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
+                    <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)">
                       <img src="assets/icons/lock.svg" height="22">
                     </div>
-                    <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
+                    <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)">
                       <img src="assets/icons/unlock.svg" height="22">
+                    </div>
+                    <div *ngIf="nest.isLock">
+                      <div>{{this.auth.getUserName(nest.lockInfo.user)}}</div>
+                      <div>{{getDate(nest.lockInfo.date)}}</div>
                     </div>
                   </div>
                   <div class="">
@@ -286,11 +290,15 @@
               <div *ngIf="nest != null" class="top-row-tile-tablet">
                 <div class="cy">
                   <div class="cxy">
-                    <div class="cxy lock cursor-pointer" *ngIf="nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
+                    <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)">
                       <img src="assets/icons/lock.svg" height="22">
                     </div>
-                    <div class="cxy unlock cursor-pointer" *ngIf="!nest.LOCKED" (click)="nest.LOCKED = !nest.LOCKED">
+                    <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)">
                       <img src="assets/icons/unlock.svg" height="22">
+                    </div>
+                    <div *ngIf="nest.isLock">
+                      <div>{{this.auth.getUserName(nest.lockInfo.user)}}</div>
+                      <div>{{getDate(nest.lockInfo.date)}}</div>
                     </div>
                   </div>
                   <div class="">
