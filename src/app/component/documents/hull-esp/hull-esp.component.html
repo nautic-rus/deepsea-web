@@ -8,12 +8,17 @@
       <div class="mr-10">
         {{issue.revision}}
       </div>
+      <div class="mr-10">
+        <div (click)="exportSketches()" class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
       <div class="mr-1">
         <button pButton label="Show drawing" class="border normal-button p-button-outlined" icon="pi pi-eye" iconPos="left" (click)="showDxfTablet()" [disabled]="isDisabledDxf()"></button>
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-150" />
+        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
       </span>
       <div class="ml-1">
         <div (click)="menu.toggle($event)">
@@ -144,20 +149,27 @@
         <p-fieldset [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0">
           <ng-template pTemplate="header">{{fileGroup.name}}</ng-template>
           <div >
-            <div class="df">
-              <div *ngIf="auth.hasPerms('esp-files')" class="button-details-tablet min-width-130 df cursor-pointer mb-15 mr-10" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+            <div class="df mb-15">
+              <div *ngIf="auth.hasPerms('esp-files')" class="button-details-tablet min-width-130 df cursor-pointer mr-10" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                 <div class="cxy">
                   <img src="assets/icons/plus1.svg" height="16">
                 </div>
                 <div class="cy ml-1">Add files</div>
               </div>
-              <div class="df w-100">
-                <div *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length != 0" class="button-details-tablet df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
-                  <div class="cxy">
-                    <img src="assets/icons/download-arrow.png">
-                  </div>
-                  <div class="cy ml-1">Download all</div>
+              <div *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length != 0" class="button-details-tablet df cursor-pointer min-width-130" (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                <div class="cxy">
+                  <img src="assets/icons/download-arrow.png">
                 </div>
+                <div class="cy ml-1">Download all</div>
+              </div>
+              <div class="df w-100">
+                <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details-tablet df cursor-pointer" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                  <div class="cxy icon-rotate">
+                    <img src="assets/icons/broom.png">
+                  </div>
+                  <div class="cy ml-1">Clear all</div>
+                </div>
+
                 <div class="p-ml-auto df mr-12">
                   <div class="pt-5 text-view-files">View files of revision</div>
                   <div class="ml-1">
@@ -175,15 +187,17 @@
                   </div>
                   <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 100) + ' '}}</span>
                   <span class="mx-10 cy">{{' ' + getDate(issue.started_date)}}</span>
-                  <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')">
-                    <div (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                  <div class="cxy ml-10" *ngIf="file.name.includes('.dxf')">
+                    <div class="cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
                       <img src="assets/icons/eye-black.svg" height="20">
                     </div>
                   </div>
-                  <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')">
-                  </div>
-                  <div class="cxy ml-10 load-cloud">
+                  <div class="cxy ml-10" *ngIf="!file.name.includes('.dxf')"></div>
+                  <div class="cxy ml-10">
                     <img src="assets/icons/download-arrow.png">
+                  </div>
+                  <div class="cxy">
+                    <img src="assets/icons/trash-1.svg" height="16">
                   </div>
                 </div>
               </div>
@@ -808,6 +822,9 @@
                       </div>
                       <div class="cxy ml-10">
                         <img src="assets/icons/download-arrow.png">
+                      </div>
+                      <div class="cxy">
+                        <img src="assets/icons/trash-1.svg" height="16">
                       </div>
                     </div>
                   </div>
