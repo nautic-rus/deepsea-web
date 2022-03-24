@@ -105,6 +105,9 @@ export class IssueManagerService {
   async deleteFile(url: string): Promise<string>{
     return await this.http.get<string>(props.http + '/deleteFile', {params: {url}}).toPromise();
   }
+  async deleteRevisionFile(file_url: string, user: string): Promise<string>{
+    return await this.http.get<string>(props.http + '/deleteRevisionFile', {params: {file_url, user}}).toPromise();
+  }
   async setIssueViewed(id: number, user: string): Promise<string>{
     return await this.http.get<string>(props.http + '/setIssueViewed', {params: {id, user}}).toPromise();
   }

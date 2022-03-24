@@ -2,7 +2,7 @@
   <div class="card-tablet">
     <p-table #table [value]="issues"
              [scrollable]="true"
-             scrollHeight="calc(100vh - 210px)"
+             scrollHeight="calc(100vh - 150px)"
              scrollDirection="both"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
@@ -14,6 +14,13 @@
           <div class="mr-1">
             <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
             </p-dropdown>
+          </div>
+          <div class="mr-1 cy">
+            <label class="container margin-bottom-none">
+              <span class="text-checkbox">Show only with files</span>
+              <input (ngModelChange)="projectChanged(true)" type="checkbox" [(ngModel)]="showWithFilesOnly">
+              <span class="checkmark"></span>
+            </label>
           </div>
           <div class="p-ml-auto">
           <span class="p-input-icon-left">
@@ -95,7 +102,7 @@
   <div class="card-overflow">
     <p-table #table [value]="issues"
              [scrollable]="true"
-             scrollHeight="calc(100vh - 265px)"
+             scrollHeight="calc(100vh - 200px)"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
              [reorderableColumns]="false"
@@ -112,7 +119,7 @@
           <div class="mr-1 cy">
             <label class="container margin-bottom-none">
               <span class="text-checkbox">Show only with files</span>
-              <input (ngModelChange)="projectChanged()" type="checkbox" [(ngModel)]="showWithFilesOnly">
+              <input (ngModelChange)="projectChanged(true)" type="checkbox" [(ngModel)]="showWithFilesOnly">
               <span class="checkmark"></span>
             </label>
           </div>

@@ -6,6 +6,7 @@
 }
 /deep/.p-inputtext{
   font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
 }
 /deep/ .p-datatable-scrollable-header-box{
   padding-right: 0!important;

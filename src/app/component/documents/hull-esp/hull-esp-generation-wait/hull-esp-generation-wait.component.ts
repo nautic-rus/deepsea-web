@@ -16,52 +16,56 @@ import {FileAttachment} from "../../../../domain/classes/file-attachment";
 export class HullEspGenerationWaitComponent implements OnInit {
 
   issue: Issue = new Issue();
-  selectRevision = false;
 
+  selectRevision = true;
   generationWait = false;
 
   resUrls: string[] = [];
-  revs = ['0', '1', '2', '3', '4', '5'];
+  revs = ['-', '0', '1', '2', '3', '4', '5'];
   rev: string = this.revs[0];
+  updateRevision = false;
 
   constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
 
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.issue = this.conf.data[0];
-      this.selectRevision = this.conf.data[1];
-      this.revs = this.revs.filter(x => x > this.issue.revision);
-      this.rev = this.revs[0];
-      if (!this.selectRevision){
-        this.getEsp('');
-      }
-    });
+    this.issue = this.conf.data;
+    this.rev = this.issue.revision;
   }
   close(){
     this.ref.close('exit');
   }
 
-  getEsp(rev: string) {
+  getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getHullEspFiles(this.issue.project.replace('NR', 'N'), this.issue.doc_number, this.issue.name, rev).then(res => {
+    let newRevision = this.rev;
+    this.s.getHullEspFiles(this.issue.project.replace('NR', 'N'), this.issue.doc_number, this.issue.name, this.rev).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
       let files: FileAttachment[] = [];
+
+      if (!this.updateRevision){
+        newRevision = this.issue.revision;
+      }
+
       this.resUrls.forEach(fileUrl => {
         let file = new FileAttachment();
         file.url = fileUrl;
-        file.revision = this.rev;
+        file.revision = newRevision;
         file.author = this.auth.getUser().login;
         file.group = 'Part List';
         file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
         files.push(file);
       });
-      this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', '-').then(() => {
-        this.issues.setRevisionFiles(this.issue.id, '-', JSON.stringify(files)).then(() => {
-
+      this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', this.issue.revision).then(() => {
+        this.issues.setRevisionFiles(this.issue.id, newRevision, JSON.stringify(files)).then(() => {
+          if (this.updateRevision){
+            this.issue.revision = this.rev;
+            this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+            });
+          }
         });
       });
     });

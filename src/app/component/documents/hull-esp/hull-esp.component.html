@@ -33,14 +33,14 @@
               <div class="cxy mx-1">
                 <div class="pi pi-bookmark"></div>
               </div>
-              <div class="row-user-menu">{{l.tr('Get Current Spec')}}</div>
+              <div class="row-user-menu">{{l.tr('Get Spec')}}</div>
             </div>
-            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp(true)" class="df">
-              <div class="cxy mx-1">
-                <div class="pi pi-replay icon-turn"></div>
-              </div>
-              <div class="row-user-menu">{{l.tr('Get Revision Spec')}}</div>
-            </div>
+<!--            <div *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp(true)" class="df">-->
+<!--              <div class="cxy mx-1">-->
+<!--                <div class="pi pi-replay icon-turn"></div>-->
+<!--              </div>-->
+<!--              <div class="row-user-menu">{{l.tr('Get Revision Spec')}}</div>-->
+<!--            </div>-->
           </ng-template>
         </p-overlayPanel>
       </div>
@@ -49,12 +49,10 @@
     <div class="w-100 df">
       <div class="card-sp-tablet">
         <div *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
-        <div *ngIf="parts.length == 0 && !noResult">
-          <div class="cxy loading">
-            <div class="cxy card-height">
-              <img src="assets/whale.gif" height="120">
-              <div class="cx loading-text">PLEASE WAIT...</div>
-            </div>
+        <div class="cxy" *ngIf="parts.length == 0 && !noResult">
+          <div class="cxy card-height">
+            <img src="assets/whale.gif" height="120">
+            <div class="cx loading-text">PLEASE WAIT...</div>
           </div>
         </div>
         <p-table #table [value]="parts"
@@ -135,8 +133,17 @@
       <div class="cxy mr-20">
         <div class="text-chapter">Files</div>
       </div>
-      <div class="p-ml-auto">
-        <div class="button-details-tablet df cursor-pointer" (click)="downloadFiles('all', selectedRevision)">
+      <div class="p-ml-auto df mr-12">
+        <div class="cy">
+          <div class="text-view-files">View files of revision</div>
+        </div>
+        <div class="ml-1">
+          <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
+          </p-dropdown>
+        </div>
+      </div>
+      <div class="">
+        <div class="button-details-tablet df cursor-pointer height-37" (click)="downloadFiles('all', selectedRevision)">
           <div class="cxy">
             <img src="assets/icons/download-arrow.png">
           </div>
@@ -169,34 +176,26 @@
                   </div>
                   <div class="cy ml-1">Clear all</div>
                 </div>
-
-                <div class="p-ml-auto df mr-12">
-                  <div class="pt-5 text-view-files">View files of revision</div>
-                  <div class="ml-1">
-                    <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
-                    </p-dropdown>
-                  </div>
-                </div>
               </div>
             </div>
             <div class="ovf-auto files-tablet">
               <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
-                <div (click)="openFile(file.url)" class="attachment-files-tablet mr-12 df mb-10 cursor-pointer">
+                <div  class="attachment-files-tablet mr-12 df mb-10 cursor-pointer">
                   <div class="">
                     <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                   </div>
                   <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 100) + ' '}}</span>
-                  <span class="mx-10 cy">{{' ' + getDate(issue.started_date)}}</span>
+                  <span class="mx-10 cy">{{' ' + getDate(file.upload_date)}}</span>
                   <div class="cxy ml-10" *ngIf="file.name.includes('.dxf')">
                     <div class="cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
                       <img src="assets/icons/eye-black.svg" height="20">
                     </div>
                   </div>
                   <div class="cxy ml-10" *ngIf="!file.name.includes('.dxf')"></div>
-                  <div class="cxy ml-10">
+                  <div (click)="openFile(file.url)" class="cxy ml-10">
                     <img src="assets/icons/download-arrow.png">
                   </div>
-                  <div class="cxy">
+                  <div (click)="deleteFile(file.url)" class="cxy">
                     <img src="assets/icons/trash-1.svg" height="16">
                   </div>
                 </div>
@@ -654,19 +653,34 @@
 <!--      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">-->
 <!--        <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>-->
 <!--      </div>-->
-      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Current Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-bookmark" (click)="createEsp()"></button>
+      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()">
+        <div class="materials-button pink-button cxy">
+          <img src="assets/icons/rev.svg" height="22">
+        </div>
       </div>
-      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">
-        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-replay" (click)="createEsp(true)"></button>
+<!--      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">-->
+<!--        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-replay" (click)="createEsp()"></button>-->
+<!--      </div>-->
+      <div class="mr-10">
+        <div [pTooltip]="l.tr('Show Drawing')" (click)="showDxf()" [class.disabled-button]="isDisabledDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
+          <img src="assets/icons/eye-white-see.svg" height="18">
+        </div>
       </div>
-      <div class="mr-1">
-        <button pButton [pTooltip]="l.tr('Show Drawing')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-eye" (click)="showDxf()" [disabled]="isDisabledDxf()"></button>
+      <div class="mr-10">
+        <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" (click)="exportSketches()" class="materials-button green-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
       </div>
-      <div class="mr-1">
-        <button pButton [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportSketches()"></button>
+      <div class="p-ml-auto df mr-12">
+        <div class="cy">
+          <div class="text-view-files">View files of revision</div>
+        </div>
+        <div class="ml-1">
+          <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
+          </p-dropdown>
+        </div>
       </div>
-      <span class="p-input-icon-left p-ml-auto">
+      <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
       </span>

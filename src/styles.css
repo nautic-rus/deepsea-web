@@ -751,3 +751,27 @@ cdk-virtual-scroll-viewport{
   align-items: flex-start;
   font-size: 13px;
 }
+.blue-button{
+  background-color: #3B82F6;
+}
+.blue-button:hover{
+  background-color: #2563EB;
+}
+.pink-button{
+  background-color: #E424BD;
+}
+.pink-button:hover{
+  background-color: #c800a3;
+}
+.yellow-button{
+  background-color: #F59E0B;
+}
+.yellow-button:hover{
+  background-color: #D97706;
+}
+.green-button{
+  background-color: #22C55E;
+}
+.green-button:hover{
+  background-color: #16A34A;
+}

@@ -12,7 +12,7 @@ import * as _ from "underscore";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {any, object} from "underscore";
 import {MessageService, PrimeNGConfig} from "primeng/api";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
 import {DeviceDetectorService} from "ngx-device-detector";
@@ -23,25 +23,28 @@ import {DeviceDetectorService} from "ngx-device-detector";
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  projects: string[] = [];
+  projects: string[] = ['NR002', 'NR004'];
   project = '';
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   waitForZipFiles = false;
 
-  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService) { }
+  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
 
   // @ts-ignore
   @ViewChild('table') table: Table;
   showWithFilesOnly = true;
   ngOnInit(): void {
-    this.issueManager.getIssueProjects().then(projects => {
-      this.projects = projects.filter(x => this.auth.getUser().visible_projects.includes(x));
-      this.project = this.projects[0];
-      if (this.project == '-'){
-        this.project = this.projects[this.projects.length - 1];
+    this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    this.route.queryParams.subscribe(params => {
+      if (params.project != null && this.projects.includes(this.project)){
+        this.project = params.project;
       }
-      this.projectChanged();
+      else {
+        this.project = this.projects[0];
+      }
+      this.showWithFilesOnly = params.showWithFilesOnly != null && +params.showWithFilesOnly == 1;
+      this.fillIssues();
     });
     if (this.l.language == 'ru'){
       this.config.setTranslation({
@@ -90,27 +93,8 @@ export class DocumentsComponent implements OnInit {
     return '-';
   }
 
-  projectChanged() {
-    this.issueManager.getIssues('op').then(data => {
-      this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project);
-      this.issues.forEach(issue => {
-        if (issue.status == issue.closing_status){
-          issue.status = 'Completed';
-        }
-        else{
-          issue.status = 'In Work';
-        }
-      })
-      this.filters.status = this.getFilters(this.issues, 'status');
-      this.filters.revision = this.getFilters(this.issues, 'revision');
-      this.filters.department = this.getFilters(this.issues, 'department');
-      this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
-      this.issueManager.getNestingFiles().then(nestingFiles => {
-        this.issues = this.issues.filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null);
-      });
-
-      this.issues = _.sortBy(this.issues, x => x.doc_number);
-    });
+   projectChanged(showWithFilesChange: boolean = false) {
+     this.router.navigate([], {queryParams: {project: this.project, showWithFilesOnly: this.showWithFilesOnly ? (showWithFilesChange ? 0 : 1) : (showWithFilesChange ? 1 : 0) }});
   }
   viewTask(issueId: number, project: string, docNumber: string, department: string) {
     let foranProject = project.replace('NR', 'N');
@@ -196,7 +180,24 @@ export class DocumentsComponent implements OnInit {
   }
 
   fillIssues() {
-
+    this.issueManager.getIssues('op').then(data => {
+      this.issueManager.getNestingFiles().then(nestingFiles => {
+        this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null);
+        this.issues.forEach(issue => {
+          if (issue.status == issue.closing_status){
+            issue.status = 'Completed';
+          }
+          else{
+            issue.status = 'In Work';
+          }
+        });
+        this.filters.status = this.getFilters(this.issues, 'status');
+        this.filters.revision = this.getFilters(this.issues, 'revision');
+        this.filters.department = this.getFilters(this.issues, 'department');
+        this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
+        this.issues = _.sortBy(this.issues, x => x.doc_number);
+      });
+    });
   }
   isDesktop() {
     return this.device.isDesktop() && window.innerWidth > 1296;

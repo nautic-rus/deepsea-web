@@ -27,7 +27,17 @@
           </p-dropdown>
         </div>
       </div>
+
+      <div class="mt-10">
+        <label class="container">
+          <input [(ngModel)]="updateRevision" type="checkbox">
+          <span class="checkmark"></span>
+          <span class="big-text-checkbox">Update revision</span>
+        </label>
+      </div>
+
     </div>
+
     <div>
       <div *ngFor="let file of resUrls; let i = index">
         <div (click)="openFile(file)" class="attachment-files df mb-10 cursor-pointer">
@@ -47,7 +57,7 @@
   </div>
   <div class="form-footer-create" *ngIf="selectRevision">
     <div class="mr-1 cx">
-      <div tabindex="10" (click)="getEsp(rev)" pButton [label]="t.tr('Создать')" class="button-ok"></div>
+      <div tabindex="10" (click)="getEsp()" pButton [label]="t.tr('Создать')" class="button-ok"></div>
     </div>
     <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>
