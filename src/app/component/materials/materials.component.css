@@ -21,6 +21,11 @@
   padding: 10px;
   border: none;
 }
+/deep/.p-dialog .p-dialog-content {
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding: 0 20px 30px 20px;
+}
 .card-head{
   background: rgba(255, 255, 255, 0.9);
   padding: 12px;

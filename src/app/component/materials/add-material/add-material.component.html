@@ -1,4 +1,4 @@
-<div class="dialog">
+<div class="dialog pt-5">
   <div class="double-row">
     <div class="df">
       <div class="cy left-text">Проект:</div>
@@ -63,20 +63,15 @@
     </div>
   </div>
   <div class="single-row mt-2">
-    <div class="cy left-text-one-row">Документ:</div>
-    <div class="ml-1">
-      <input type="text" pInputText class="width-480 border-material">
-    </div>
-  </div>
-  <div class="single-row mt-2">
     <div class="cy left-text-one-row">Примечание:</div>
     <div class="ml-1">
       <input type="text" pInputText class="width-480 border-material">
     </div>
   </div>
   <div class="form-footer cxy">
-    <div class="cy content-end">
-      <div tabindex="10" pButton label="Создать" class="button"></div>
+    <div class="mr-1 cx">
+      <div tabindex="10" pButton [label]="t.tr('Создать')" class="button-ok"></div>
     </div>
+    <div tabindex="11" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>
 </div>

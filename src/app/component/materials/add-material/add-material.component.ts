@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-add-material',
@@ -12,7 +13,7 @@ export class AddMaterialComponent implements OnInit {
   category = this.categories[1];
   newUnits = '';
 
-  constructor() { }
+  constructor(public t: LanguageService) { }
 
   ngOnInit(): void {
   }

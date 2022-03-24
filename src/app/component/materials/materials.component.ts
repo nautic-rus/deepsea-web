@@ -5,6 +5,8 @@ import {DialogService} from "primeng/dynamicdialog";
 import {LanguageService} from "../../domain/language.service";
 import {Issue} from "../../domain/classes/issue";
 import {object} from "underscore";
+import {CreateTaskComponent} from "../create-task/create-task.component";
+import {AddMaterialComponent} from "./add-material/add-material.component";
 
 @Component({
   selector: 'app-materials',
@@ -622,5 +624,17 @@ export class MaterialsComponent implements OnInit {
   }
   showTooltip(index: string) {
     return this.tooltips.includes(index);
+  }
+
+  addMaterial(material: any) {
+    this.dialogService.open(AddMaterialComponent, {
+      showHeader: true,
+      header: 'Добавление материала',
+      modal: true,
+      closable: true,
+      data: material
+    }).onClose.subscribe(res => {
+
+    });
   }
 }
