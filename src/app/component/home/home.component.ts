@@ -57,7 +57,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   @Input() get selectedColumns(): any[] {
     return this.cols.filter(col => this.selectedCols.includes(col.headerLocale));
   }
-
   resetSearch = false;
 
   ngAfterContentChecked(): void {
@@ -321,7 +320,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     if (selectedCols.length > 0) {
       this.selectedCols = this.colHeaders.filter(x => selectedCols.includes(x));
     }
+    if (localStorage.getItem('id') != null){
+      // @ts-ignore
+      this.cols = JSON.parse(localStorage.getItem('id'));
+    }
   }
+
 
   fillIssues() {
     // let scroll = 0;
@@ -733,5 +737,10 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
   showIssuesLength() {
     return this.dt != null && this.dt.value != null;
+  }
+
+  saveReorderedColumns(event: any) {
+    this.cols = event.columns;
+    localStorage.setItem('id', JSON.stringify(event.columns));
   }
 }

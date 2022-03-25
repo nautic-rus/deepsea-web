@@ -1,4 +1,3 @@
-
 <div *ngIf="device.isDesktop()" class="">
   <div class="all-page">
     <div class="card">
@@ -9,9 +8,10 @@
         [value]="issues"
         [scrollable]="true"
         [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
-        [reorderableColumns]="false"
+        [reorderableColumns]="true"
         [resizableColumns]="false"
         [columns]="selectedColumns"
+        (onColReorder)="saveReorderedColumns($event)"
         [virtualScroll]="true"
         [scrollHeight]="'78vh'"
         [virtualRowHeight]="1"
@@ -25,37 +25,66 @@
       >
         <ng-template pTemplate="caption">
           <div class="p-d-flex">
-            <div class="mr-1">
-              <button pButton [label]="l.tr('Новая задача')" class="border new-task-button" (click)="newTask(null)"></button>
+            <div class="mr-10">
+              <div class="materials-button-home blue-button cxy" (click)="newTask(null)">
+                <div class="pr-10 cxy">
+                  <img src="assets/icons/plus3.svg" height="18">
+                </div>
+                <div class="cxy">
+                  New task
+                </div>
+              </div>
             </div>
-            <p-multiSelect class="mr-1" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
+            <p-multiSelect class="mr-10" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
                            [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
             </p-multiSelect>
-            <div class="mr-1">
-              <button pButton [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top"  class="border normal-button p-button-outlined" icon="pi pi-filter-slash" (click)="dt.clear(); dt.reset(); showAssigned = false; showResponsible = false; showCompleted = false;"></button>
+
+            <div class="mr-10">
+              <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset();showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top">
+                <img src="assets/icons/filter-no.svg" height="18">
+              </div>
             </div>
-            <div class="mr-1">
-              <button pButton [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-download" (click)="importXls()"></button>
+            <div class="mr-10">
+              <div (click)="importXls()" [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="materials-button yellow-button cxy">
+                <img src="assets/icons/import1.svg" height="18">
+              </div>
             </div>
-            <div class="mr-1">
-              <button pButton [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-excel" (click)="exportXls()"></button>
+            <div class="mr-10">
+              <div (click)="exportXls()" [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" class="materials-button green-button cxy">
+                <img src="assets/icons/xls2.svg" height="26">
+              </div>
             </div>
-            <div class="mr-1">
-              <button pButton [pTooltip]="l.tr('Экспорт PDF')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-file-pdf" (click)="exportPDF()"></button>
+            <div class="mr-10">
+              <div (click)="exportPDF()" [pTooltip]="l.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+                <img src="assets/icons/pdf2.svg" height="26">
+              </div>
             </div>
-            <div class="mr-1">
-              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top" onIcon="pi pi-user" offIcon="pi pi-user" [(ngModel)]="showAssigned"></p-toggleButton>
+            <div class="mr-10">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showAssigned" (click)="showAssigned = !showAssigned" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top">
+                <img *ngIf="showAssigned" src="assets/icons/user-assigned-white.svg" height="18">
+                <img *ngIf="!showAssigned" src="assets/icons/user-assigned-gray.svg" height="18">
+              </div>
             </div>
-            <div class="mr-1">
-              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Ответственный')" tooltipPosition="top" onIcon="pi pi-user-plus" offIcon="pi pi-user-plus" [(ngModel)]="showResponsible"></p-toggleButton>
+            <div class="mr-10">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showResponsible" (click)="showResponsible = !showResponsible" [pTooltip]="l.tr('Ответственный')" tooltipPosition="top">
+                <img *ngIf="showResponsible" src="assets/icons/user-responsible-white.svg" height="18">
+                <img *ngIf="!showResponsible" src="assets/icons/user-responsible-gray.svg" height="18">
+              </div>
             </div>
-            <div class="mr-1">
-              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr('Автор')" tooltipPosition="top" onIcon="pi pi-user-edit" offIcon="pi pi-user-edit" [(ngModel)]="showStartedBy"></p-toggleButton>
+            <div class="mr-10">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showStartedBy" (click)="showStartedBy = !showStartedBy" [pTooltip]="l.tr('Автор')" tooltipPosition="top">
+                <img *ngIf="showStartedBy" src="assets/icons/user-author-white.svg" height="18">
+                <img *ngIf="!showStartedBy" src="assets/icons/user-author-gray.svg" height="18">
+              </div>
             </div>
-            <div class="mr-1">
-              <p-toggleButton class="toggle-button normal-button p-button-outlined p-button-info" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top" offLabel="Show completed" onIcon="pi pi-ban" offIcon="pi pi-check-circle" (ngModelChange)="dt.reset()" [(ngModel)]="showCompleted"></p-toggleButton>
+            <div class="mr-10">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted; dt.reset()" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
+                <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">
+                <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">
+              </div>
             </div>
-            <div class="mr-1 cxy">
+
+            <div class="mr-10 cxy">
               {{l.tr('Количество задач:')}}
               <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
               <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
@@ -70,7 +99,7 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th style="width:30px"></th>
-            <th style="width:200px" *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th style="width:192px" pReorderableColumn *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -91,7 +120,7 @@
               <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
-            <td style="width:200px" class="cursor-pointer" *ngFor="let col of columns">
+            <td style="width:192px" class="cursor-pointer" *ngFor="let col of columns">
               <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
               <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
             </td>

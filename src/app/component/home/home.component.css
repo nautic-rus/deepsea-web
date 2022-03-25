@@ -49,14 +49,57 @@
 /deep/.p-component{
   font-size: 14px!important;
 }
+
+element.style {
+}
+.p-button-label {
+  transition: all .2s;
+}
+.p-button-label {
+  flex: 1 1 auto;
+}
+.p-component, .p-component * {
+  box-sizing: border-box;
+}
+.p-button-label {
+  font-weight: 700;
+}
+* {
+  box-sizing: border-box;
+}
+.p-component {
+  font-size: 14px!important;
+}
+/deep/.p-button {
+  padding: 8px 10px 8px 10px;
+}
 /deep/.p-inputtext{
   font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
 }
 /deep/.pi{
   font-size: 14px;
 }
 /deep/.p-datatable .p-datatable-header {
   padding: 0.75rem 0 0.75rem 0;
+  border-top: none;
+  background-color: white;
+}
+.materials-button{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.materials-button-home{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
 }
 .row-user-menu-tablet{
   -webkit-box-align: center;
@@ -122,14 +165,13 @@
   font-size: 14px;
   background-color: rgba(134, 151, 203, 0.15) !important;
 }
-.toggle-button{
-  height: 37px!important;
-  border-radius: 3px;
-  display: block;
-}
 ::ng-deep .p-togglebutton{
-  border-radius: 3px!important;
-  height: 37px;
+  border-radius: 6px!important;
+  height: 35px;
+  width: 35px!important;
+}
+/deep/.p-button.p-button-icon-only {
+  padding: 0;
 }
 /deep/.p-button:focus {
   outline: 0 none;
@@ -156,4 +198,7 @@
 /deep/.p-tooltip .p-tooltip-text {
   font-size: 12px!important;
   padding: 6px 8px!important;
+}
+.clicked{
+  background-color: #3B82F6;
 }

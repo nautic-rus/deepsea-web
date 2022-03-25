@@ -778,3 +778,18 @@ cdk-virtual-scroll-viewport{
 .green-button:hover{
   background-color: #16A34A;
 }
+.red-button{
+  background-color: #EF4444;
+}
+.red-button:hover{
+  background-color: #DC2626;
+}
+.gray-button{
+  background-color: #64748B;
+}
+.gray-button:hover{
+  background-color: #475569;
+}
+.transparent-button{
+  border: 1px solid #ced4da;
+}
