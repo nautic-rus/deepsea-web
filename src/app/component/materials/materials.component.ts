@@ -7,6 +7,7 @@ import {Issue} from "../../domain/classes/issue";
 import {object} from "underscore";
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {AddMaterialComponent} from "./add-material/add-material.component";
+import {AuthManagerService} from "../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-materials',
@@ -606,13 +607,18 @@ export class MaterialsComponent implements OnInit {
   materials: any [] = [Object, Object, Object, Object, Object, Object, Object, Object];
   selectedNode: any;
   tooltips: string[] = [];
-  projects: string[] = [];
+  projects: string[] = ['200101', '210101'];
   project = '';
 
-  constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService) { }
+  constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
-
+    this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    this.project = this.projects[0];
+    this.materialManager.getMaterials(this.project).then(res => {
+      this.materials = res;
+      console.log(res);
+    });
   }
   copyTrmCode(code: string, index: string) {
     navigator.clipboard.writeText(code);

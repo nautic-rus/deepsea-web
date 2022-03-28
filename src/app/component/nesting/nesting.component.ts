@@ -689,7 +689,7 @@ export class NestingComponent implements OnInit {
           name: material.MATERIAL + 'x' + material.THICKNESS + 'x' + material.NEST_LENGTH + 'x' + material.NEST_WIDTH,
           selected: selected,
           value: material
-        })
+        });
       });
     });
   }

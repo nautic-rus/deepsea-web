@@ -9,7 +9,7 @@
         [scrollable]="true"
         [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
         [reorderableColumns]="true"
-        [resizableColumns]="false"
+        [resizableColumns]="true"
         [columns]="selectedColumns"
         (onColReorder)="saveReorderedColumns($event)"
         [virtualScroll]="true"
@@ -99,7 +99,7 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th style="width:30px"></th>
-            <th style="width:192px" pReorderableColumn *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th style="width:192px" pResizableColumn pReorderableColumn *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
