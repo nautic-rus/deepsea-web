@@ -99,3 +99,7 @@
   font-size: 12px;
   margin-left: 5px;
 }
+.disabled-button{
+  opacity: 0.5;
+  pointer-events: none;
+}

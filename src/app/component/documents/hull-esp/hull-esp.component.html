@@ -821,7 +821,7 @@
                 </div>
                 <div class="">
                   <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
-                    <div (click)="openFile(file.url)" class="attachment-files df mb-6 cursor-pointer">
+                    <div  class="attachment-files df mb-6 cursor-pointer">
                       <div class="cxy">
                         <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                       </div>
@@ -834,10 +834,10 @@
                       </div>
                       <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >
                       </div>
-                      <div class="cxy ml-10">
+                      <div class="cxy ml-10" (click)="openFile(file.url)">
                         <img src="assets/icons/download-arrow.png">
                       </div>
-                      <div class="cxy">
+                      <div class="cxy" (click)="deleteFile(file.url)">
                         <img src="assets/icons/trash-1.svg" height="16">
                       </div>
                     </div>

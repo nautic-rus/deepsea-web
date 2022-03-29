@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {Material} from "./classes/material";
 import {Project} from "./classes/project";
+import {MaterialNode} from "./classes/material-node";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class MaterialManagerService {
   }
   async getMaterials(project: string) {
     return await this.http.get<Material[]>(props.http + '/materials', {params: {project}}).toPromise();
+  }
+  async getMaterialNodes() {
+    return await this.http.get<MaterialNode[]>(props.http + '/materialNodes').toPromise();
   }
   async updateMaterial(material: Material, user: string, remove = 0) {
     return await this.http.get<string>(props.http + '/updateMaterial', {params: {material: JSON.stringify(material), user, remove}}).toPromise();

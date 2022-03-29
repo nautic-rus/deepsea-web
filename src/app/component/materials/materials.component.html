@@ -6,7 +6,7 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" (click)="addMaterial(materials)">
+        <div [class.disabled-button]="!selectedNode || selectedNode && selectedNode.children.length != 0" class="materials-button blue-button cxy" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
@@ -25,16 +25,20 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
+      <div class="mr-10">
+        {{selectedNodePath}}
+      </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search"  class="border" />
       </span>
+
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
         <div class="w-15">
           <div class="menu-card">
-            <p-tree class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode">
+            <p-tree class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>
@@ -93,19 +97,19 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-material let-i="rowIndex">
-                <tr class="cursor-pointer row-table-doc-hover">
-                  <td class="min-width-220 w-20 text-14">Кресло судоводителя с электрическим приводом</td>
-                  <td class="min-width-150 w-15 text-14">GAMM40 40-1"1/4</td>
-                  <td class="min-width-75 w-5 text-14">09003</td>
-                  <td class="min-width-75 w-5 text-14">1</td>
-                  <td class="min-width-75 w-5 text-14">0.05</td>
-                  <td class="min-width-75 w-5 text-14">796</td>
-                  <td class="min-width-190 w-10 text-14">Кондиционер-СПб</td>
-                  <td class="min-width-190 w-10 text-14">не закупать</td>
+                <tr class="cursor-pointer row-table-doc-hover" (click)="addMaterial(material)">
+                  <td class="min-width-220 w-20 text-14">{{material.name}}</td>
+                  <td class="min-width-150 w-15 text-14">{{material.description}}</td>
+                  <td class="min-width-75 w-5 text-14">{{material.category}}</td>
+                  <td class="min-width-75 w-5 text-14">{{material.coefficient}}</td>
+                  <td class="min-width-75 w-5 text-14">{{material.singleWeight}}</td>
+                  <td class="min-width-75 w-5 text-14">{{material.units}}</td>
+                  <td class="min-width-190 w-10 text-14">{{material.provider}}</td>
+                  <td class="min-width-190 w-10 text-14">{{material.note}}</td>
                   <td class="min-width-190 w-10 text-14">
                     <div class="df">
                       <div class="trm-materials">
-                        <span>NRDDF5466D58014E2</span>
+                        <span>{{material.code}}</span>
                       </div>
                       <div (click)="copyTrmCode('NRDDF5466D58014E2', 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
                         <img src="assets/icons/trm-sup.svg" height="14">
