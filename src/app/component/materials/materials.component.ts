@@ -617,6 +617,7 @@ export class MaterialsComponent implements OnInit {
   tooltips: string[] = [];
   projects: string[] = ['200101', '210101'];
   project = '';
+  selectedMaterial: Material = new Material();
 
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -711,15 +712,17 @@ export class MaterialsComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res != null && res.code != ''){
         let findMaterial = this.materials.find(x => x.id == res.id);
-        console.log(findMaterial);
-        console.log(res);
         if (findMaterial != null){
           this.materials[this.materials.indexOf(findMaterial)] = res;
           this.materials = [...this.materials];
         }
         else{
           this.materials.push(res);
-          this.materials = [...this.materials];
+          this.materialManager.getMaterialNodes().then(res => {
+            this.layers = res;
+            this.nodes = this.getNodes(this.materials);
+            this.setParents(this.nodes, '');
+          });
         }
       }
       // this.materialManager.getMaterials(this.project).then(res => {
@@ -736,5 +739,13 @@ export class MaterialsComponent implements OnInit {
       this.selectedNodeCode = this.getNodeCode(this.selectedNode);
       this.materials = this.materialsSrc.filter(x => x.code.includes(this.selectedNodeCode));
     }
+  }
+
+  test(material: any) {
+    console.log(material);
+  }
+
+  selectMaterial(material: any) {
+    this.selectedMaterial = material;
   }
 }

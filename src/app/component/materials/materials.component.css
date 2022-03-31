@@ -103,3 +103,6 @@
   opacity: 0.5;
   pointer-events: none;
 }
+.selected-material{
+  background-color: #a1b9d3 !important;
+}

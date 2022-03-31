@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button yellow-button cxy">
+        <div class="materials-button yellow-button cxy" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial(selectedMaterial)">
           <img src="assets/icons/edit.svg" height="18">
         </div>
       </div>
@@ -97,7 +97,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-material let-i="rowIndex">
-                <tr class="cursor-pointer row-table-doc-hover" (click)="addMaterial(material)">
+                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
                   <td class="min-width-220 w-20 text-14">{{material.name}}</td>
                   <td class="min-width-150 w-15 text-14">{{material.description}}</td>
                   <td class="min-width-75 w-5 text-14">{{material.category}}</td>

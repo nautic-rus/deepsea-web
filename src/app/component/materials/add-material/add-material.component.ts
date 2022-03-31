@@ -33,7 +33,6 @@ export class AddMaterialComponent implements OnInit {
   noneCode = {
     data: 'NON',
     label: 'No specified type',
-    info: 'NON No specified type'
   };
 
   constructor(public t: LanguageService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef) {
@@ -66,10 +65,10 @@ export class AddMaterialComponent implements OnInit {
         this.selectedCode3 = this.layer3.find(x => x.data == this.material.code.substring(6, 9));
         this.selectedCode4 = this.layer4.find(x => x.data == this.material.code.substring(9, 12));
       }
-      this.layer1.forEach(l => l.info = l.data + l.label);
-      this.layer2.forEach(l => l.info = l.data + l.label);
-      this.layer3.forEach(l => l.info = l.data + l.label);
-      this.layer4.forEach(l => l.info = l.data + l.label);
+      this.layer1.forEach(l => l.info = l.data + ' ' + l.label);
+      this.layer2.forEach(l => l.info = l.data + ' ' + l.label);
+      this.layer3.forEach(l => l.info = l.data + ' ' + l.label);
+      this.layer4.forEach(l => l.info = l.data + ' ' + l.label);
       this.codeSelectors.push({layer: this.layer1, code: this.selectedCode1});
       this.codeSelectors.push({layer: this.layer2, code: this.selectedCode2});
       this.codeSelectors.push({layer: this.layer3, code: this.selectedCode3});
@@ -93,7 +92,12 @@ export class AddMaterialComponent implements OnInit {
   selectorChanged() {
     let prefix = '';
     for (let x = 0; x < 4; x ++){
-      prefix += this.codeSelectors[x].code.data;
+      if (this.codeSelectors[x].code == null){
+        prefix += 'NON';
+      }
+      else{
+        prefix += this.codeSelectors[x].code.data;
+      }
     }
     this.material.code = Material.generateCode(prefix, this.materials);
   }
