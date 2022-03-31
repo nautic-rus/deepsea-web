@@ -6,7 +6,7 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
-        <div [class.disabled-button]="!selectedNode || selectedNode && selectedNode.children.length != 0" class="materials-button blue-button cxy" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
@@ -42,7 +42,7 @@
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>
-                  <div class="mini-notes cxy">31</div>
+                  <div class="mini-notes cxy">{{node.count}}</div>
                 </div>
               </ng-template>
             </p-tree>

@@ -4,6 +4,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Material} from "../../../domain/classes/material";
 import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
+import _ from "underscore";
 
 @Component({
   selector: 'app-add-material',
@@ -17,11 +18,66 @@ export class AddMaterialComponent implements OnInit {
   units = ['796', '006'];
   category = this.categories[0];
   material: Material = new Material();
+  addMaterial = false;
+  materialPrefix = '';
+  materials: Material[] = [];
+  layer1: any[] = [];
+  layer2: any[] = [];
+  layer3: any[] = [];
+  layer4: any[] = [];
+  selectedCode1: any;
+  selectedCode2: any;
+  selectedCode3: any;
+  selectedCode4: any;
+  codeSelectors: any[] = [];
+  noneCode = {
+    data: 'NON',
+    label: 'No specified type',
+    info: 'NON No specified type'
+  };
 
   constructor(public t: LanguageService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef) {
     this.projects = dialog.data[0];
     this.project = this.projects[0];
-    this.material = dialog.data[1];
+    this.material = JSON.parse(JSON.stringify(dialog.data[1]));
+    this.addMaterial = dialog.data[2];
+    this.materials = dialog.data[3];
+    this.materialPrefix = dialog.data[4];
+    this.materialManager.getMaterialNodes().then(res => {
+      this.layer3.push(this.noneCode);
+      this.layer4.push(this.noneCode);
+      _.sortBy(res.filter(x => x.layer == "1"), x => x.data).forEach(x => this.layer1.push(x));
+       _.sortBy(res.filter(x => x.layer == "2"), x => x.data).forEach(x => this.layer2.push(x));
+      _.sortBy(res.filter(x => x.layer == "3"), x => x.data).forEach(x => this.layer3.push(x));
+      _.sortBy(res.filter(x => x.layer == "4"), x => x.data).forEach(x => this.layer4.push(x));
+      this.selectedCode1 = this.layer1[0];
+      this.selectedCode2 = this.layer2[0];
+      this.selectedCode3 = this.noneCode;
+      this.selectedCode4 = this.noneCode;
+      if (this.addMaterial && this.materialPrefix != ''){
+        this.material.code = this.materialPrefix;
+        for (let x = 0; x < 4; x ++){
+          this.material.code += 'NON';
+        }
+      }
+      if (!this.addMaterial){
+        this.selectedCode1 = this.layer1.find(x => x.data == this.material.code.substring(0, 3));
+        this.selectedCode2 = this.layer2.find(x => x.data == this.material.code.substring(3, 6));
+        this.selectedCode3 = this.layer3.find(x => x.data == this.material.code.substring(6, 9));
+        this.selectedCode4 = this.layer4.find(x => x.data == this.material.code.substring(9, 12));
+      }
+      this.layer1.forEach(l => l.info = l.data + l.label);
+      this.layer2.forEach(l => l.info = l.data + l.label);
+      this.layer3.forEach(l => l.info = l.data + l.label);
+      this.layer4.forEach(l => l.info = l.data + l.label);
+      this.codeSelectors.push({layer: this.layer1, code: this.selectedCode1});
+      this.codeSelectors.push({layer: this.layer2, code: this.selectedCode2});
+      this.codeSelectors.push({layer: this.layer3, code: this.selectedCode3});
+      this.codeSelectors.push({layer: this.layer4, code: this.selectedCode4});
+      if (this.addMaterial){
+        this.selectorChanged();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -30,7 +86,15 @@ export class AddMaterialComponent implements OnInit {
 
   createMaterial() {
     this.materialManager.updateMaterial(this.material, this.auth.getUser().login, 0).then(res => {
-      this.ref.close();
+      this.ref.close(this.material);
     });
+  }
+
+  selectorChanged() {
+    let prefix = '';
+    for (let x = 0; x < 4; x ++){
+      prefix += this.codeSelectors[x].code.data;
+    }
+    this.material.code = Material.generateCode(prefix, this.materials);
   }
 }
