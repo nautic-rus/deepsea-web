@@ -177,7 +177,7 @@
     <div *ngIf="selectedHeadTab == 'Profiles'" class="cards">
       <p-table #table [value]="profiles"
                [scrollable]="true"
-               scrollHeight="calc(100vh - 268px)"
+               scrollHeight="calc(100vh - 230px)"
                [virtualScroll]="false"
                [virtualRowHeight]="40"
                [reorderableColumns]="false"
@@ -187,16 +187,19 @@
                [globalFilterFields]="['KSE','count','mat','scantling']">
         <ng-template pTemplate="header">
           <tr class="df">
-            <th pSortableColumn="KSE" class="lxy w-10">{{t.tr('KSE')}}
+            <th pSortableColumn="KSE" class="lxy w-9">{{t.tr('KSE')}}
               <p-sortIcon field="KSE"></p-sortIcon>
             </th>
-            <th pSortableColumn="count" class="lxy w-10">{{t.tr('Count')}}
+            <th pSortableColumn="count" class="lxy w-9">{{t.tr('Count')}}
               <p-sortIcon field="count"></p-sortIcon>
             </th>
-            <th pSortableColumn="grossLenght" class="lxy w-10">{{t.tr('Gross length')}}
+            <th pSortableColumn="grossLenght" class="lxy w-9">{{t.tr('Gross length')}}
               <p-sortIcon field="grossLenght"></p-sortIcon>
             </th>
-            <th pSortableColumn="mat" class="cxy w-10">{{t.tr('Material')}}
+            <th pSortableColumn="partsWeight" class="lxy w-9">{{t.tr('Parts weight')}}
+              <p-sortIcon field="partsWeight"></p-sortIcon>
+            </th>
+            <th pSortableColumn="mat" class="cxy w-9">{{t.tr('Material')}}
               <p-sortIcon field="mat"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -205,21 +208,21 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="profileForecast" class="lxy w-10">{{t.tr('Profile Forecast')}}
+            <th pSortableColumn="profileForecast" class="lxy w-9">{{t.tr('Profile Forecast')}}
               <p-sortIcon field="profileForecast"></p-sortIcon>
             </th>
-            <th pSortableColumn="realLenght" class="lxy w-10">{{t.tr('Real length')}}
+            <th pSortableColumn="realLenght" class="lxy w-9">{{t.tr('Real length')}}
               <p-sortIcon field="realLenght"></p-sortIcon>
             </th>
-            <th pSortableColumn="realPartsCount" class="lxy w-10">{{t.tr('Real parts count')}}
+            <th pSortableColumn="realPartsCount" class="lxy w-9">{{t.tr('Real parts count')}}
               <p-sortIcon field="realPartsCount"></p-sortIcon>
             </th>
-            <th class="lxy w-10 cursor-pointer head-hover">{{t.tr('Scantling')}}
+            <th class="lxy w-9 cursor-pointer head-hover">{{t.tr('Scantling')}}
             </th>
-            <th pSortableColumn="scrap" class="lxy w-10">{{t.tr('Scrap')}}
+            <th pSortableColumn="scrap" class="lxy w-9">{{t.tr('Scrap')}}
               <p-sortIcon field="scrap"></p-sortIcon>
             </th>
-            <th pSortableColumn="section" class="lxy w-10">{{t.tr('Section')}}
+            <th pSortableColumn="section" class="lxy w-9">{{t.tr('Section')}}
               <p-sortIcon field="section"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'section'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -232,18 +235,19 @@
         </ng-template>
         <ng-template pTemplate="body" let-profile let-i="rowIndex">
           <tr class="cursor-pointer row-table-doc-hover">
-            <td class="w-10 text-14">
+            <td class="w-9 text-14">
               <span [innerHTML]="profile.KSE | highLight: search"></span>
             </td>
-            <td class="w-10 text-14">{{profile.count}}</td>
-            <td class="w-10 text-14">{{profile.grossLenght}}</td>
-            <td class="w-10 text-14">{{profile.mat}}</td>
-            <td class="w-10 text-14">{{profile.profileForecast}}</td>
-            <td class="w-10 text-14">{{round(profile.realLenght)}}</td>
-            <td class="w-10 text-14">{{profile.realPartsCount}}</td>
-            <td class="w-10 text-14">{{profile.scantling}}</td>
-            <td class="w-10 text-14">{{round(profile.scrap)}}</td>
-            <td class="w-10 text-14">{{profile.section}}</td>
+            <td class="w-9 text-14">{{profile.count}}</td>
+            <td class="w-9 text-14">{{profile.grossLenght}}</td>
+            <td class="w-9 text-14">{{round(profile.partsweight)}}</td>
+            <td class="w-9 text-14">{{profile.mat}}</td>
+            <td class="w-9 text-14">{{profile.profileForecast}}</td>
+            <td class="w-9 text-14">{{round(profile.realLenght)}}</td>
+            <td class="w-9 text-14">{{profile.realPartsCount}}</td>
+            <td class="w-9 text-14">{{profile.scantling}}</td>
+            <td class="w-9 text-14">{{round(profile.scrap)}}</td>
+            <td class="w-9 text-14">{{profile.section}}</td>
           </tr>
         </ng-template>
       </p-table>
