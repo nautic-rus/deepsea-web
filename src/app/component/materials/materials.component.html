@@ -6,23 +6,28 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button pink-button cxy">
+        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top">
           <img src="assets/icons/copy3.svg" height="18">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button yellow-button cxy" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial(selectedMaterial)">
+        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial(selectedMaterial)">
           <img src="assets/icons/edit.svg" height="18">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button green-button cxy">
+        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top">
           <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top">
+          <img src="assets/icons/trash-white.svg" height="22">
         </div>
       </div>
       <div class="mr-10">
@@ -61,22 +66,22 @@
                      [globalFilterFields]="['id','doc_number','name','status']">
               <ng-template pTemplate="header">
                 <tr class="df">
-                  <th pSortableColumn="name" class="cxy min-width-220 w-20">{{t.tr('Наименование')}}
+                  <th pSortableColumn="name" class="cxy min-width-220 w-27">{{t.tr('Наименование')}}
                     <p-sortIcon field="name"></p-sortIcon>
                   </th>
                   <th pSortableColumn="description" class="cxy min-width-150 w-15">{{t.tr('Обозначение')}}
                     <p-sortIcon field="description"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="kvz" class="cxy min-width-75 w-5">{{t.tr('КВЗ')}}
+                  <th pSortableColumn="kvz" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}
                     <p-sortIcon field="kvz"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="coefficient" class="cxy min-width-75 w-5">{{t.tr('Коэф.')}}
+                  <th pSortableColumn="coefficient" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}
                     <p-sortIcon field="coefficient"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="weight" class="cxy min-width-75 w-5">{{t.tr('Вес')}}
+                  <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес')}}
                     <p-sortIcon field="weight"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="code" class="cxy min-width-75 w-5">{{t.tr('КЕИ')}}
+                  <th pSortableColumn="code" class="cxy min-width-75 w-7">{{t.tr('КЕИ')}}
                     <p-sortIcon field="code"></p-sortIcon>
                   </th>
                   <th pSortableColumn="provider" class="cxy min-width-190 w-10">{{t.tr('Поставщик')}}
@@ -88,22 +93,16 @@
                   <th pSortableColumn="trm" class="cxy min-width-190 w-10">{{t.tr('TRM')}}
                     <p-sortIcon field="trm"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="yard_code" class="cxy min-width-190 w-10">{{t.tr('Заводской код')}}
-                    <p-sortIcon field="yard_code"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="sfi_code" class="cxy min-width-50 w-5">{{t.tr('SFI')}}
-                    <p-sortIcon field="sfi_code"></p-sortIcon>
-                  </th>
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-material let-i="rowIndex">
                 <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-                  <td class="min-width-220 w-20 text-14">{{material.name}}</td>
+                  <td class="min-width-220 w-27 text-14">{{material.name}}</td>
                   <td class="min-width-150 w-15 text-14">{{material.description}}</td>
-                  <td class="min-width-75 w-5 text-14">{{material.category}}</td>
-                  <td class="min-width-75 w-5 text-14">{{material.coefficient}}</td>
-                  <td class="min-width-75 w-5 text-14">{{material.singleWeight}}</td>
-                  <td class="min-width-75 w-5 text-14">{{material.units}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.category}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.coefficient}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.singleWeight}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.units}}</td>
                   <td class="min-width-190 w-10 text-14">{{material.provider}}</td>
                   <td class="min-width-190 w-10 text-14">{{material.note}}</td>
                   <td class="min-width-190 w-10 text-14">
@@ -117,8 +116,6 @@
                       </div>
                     </div>
                   </td>
-                  <td class="min-width-190 w-10 text-14">0199W1200001A2K</td>
-                  <td class="min-width-50 w-5 text-14">015</td>
                 </tr>
               </ng-template>
             </p-table>

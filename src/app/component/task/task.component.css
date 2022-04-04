@@ -246,6 +246,7 @@
   font-weight: normal;
   letter-spacing: -0.005em;
   color: rgb(94, 108, 132);
+  word-wrap: break-word;
 }
 .parent-task{
   border-radius: 3px;
