@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top">
+        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" (click)="deleteMaterial(selectedMaterial)">
           <img src="assets/icons/trash-white.svg" height="22">
         </div>
       </div>

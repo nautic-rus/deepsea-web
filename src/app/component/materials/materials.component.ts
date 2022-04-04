@@ -722,6 +722,7 @@ export class MaterialsComponent implements OnInit {
             this.layers = res;
             this.nodes = this.getNodes(this.materials);
             this.setParents(this.nodes, '');
+            this.materials = [...this.materials];
           });
         }
       }
@@ -747,5 +748,20 @@ export class MaterialsComponent implements OnInit {
 
   selectMaterial(material: any) {
     this.selectedMaterial = material;
+  }
+
+  deleteMaterial(selectedMaterial: Material) {
+    this.materialManager.updateMaterial(selectedMaterial, this.auth.getUser().login, 1).then(res => {
+      let findMaterial = this.materials.find(x => x == selectedMaterial);
+      if (findMaterial != null){
+        this.materials.splice(this.materials.indexOf(findMaterial), 1);
+      }
+      this.materials = [...this.materials];
+      this.materialManager.getMaterialNodes().then(res => {
+        this.layers = res;
+        this.nodes = this.getNodes(this.materials);
+        this.setParents(this.nodes, '');
+      });
+    });
   }
 }
