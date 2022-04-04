@@ -14,10 +14,10 @@ import * as XLSX from "xlsx";
 })
 export class BillingComponent implements OnInit {
 
-  plates = [];
-  profiles = [];
-  platesSource = [];
-  profilesSource = [];
+  plates: any[] = [];
+  profiles: any[] = [];
+  platesSource: any[] = [];
+  profilesSource: any[] = [];
 
   projects: string[] = ['N002', 'N004', 'P701', 'P707'];
   project = '';
@@ -25,6 +25,18 @@ export class BillingComponent implements OnInit {
   filtersPlates:  { material: any[], count: any[], scantling: any[] } = { material: [], count: [], scantling: [] };
   filtersProfiles:  { material: any[], count: any[], scantling: any[], section: any[] } = { material: [], count: [], scantling: [], section: [] };
   selectedHeadTab: string = 'Plates';
+  sortValues: any[] = [
+    'Not sorted',
+    'by KPL',
+    'by QTY',
+    'by Material',
+    'by Nested Parts',
+    'by Sheet Forecast',
+    'by Count',
+    'by Weight',
+    'by Scrap'
+  ];
+  sortValue = this.sortValues[0];
 
 
   constructor(public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router) { }
@@ -47,6 +59,10 @@ export class BillingComponent implements OnInit {
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'count');
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'scantling');
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'section');
+      for (let x = 0; x < 10; x ++){
+        this.profiles.push(null);
+        this.profilesSource.push(null);
+      }
       console.log(res);
     });
     this.s.getHullBillPlates(this.project).then(res => {
@@ -55,6 +71,10 @@ export class BillingComponent implements OnInit {
       this.filtersPlates.material = this.getPlateFilters(this.plates, 'mat');
       this.filtersPlates.count = this.getPlateFilters(this.plates, 'count');
       this.filtersPlates.scantling = this.getPlateFilters(this.plates, 'scantling');
+      for (let x = 0; x < 10; x ++){
+        this.plates.push(null);
+        this.platesSource.push(null);
+      }
       console.log(res);
     });
   }
@@ -130,5 +150,69 @@ export class BillingComponent implements OnInit {
         charactersLength));
     }
     return result;
+  }
+  getWidth(number: number) {
+    return {
+      width: number + '%'
+    };
+  }
+  getWidthRightRadius(number: number) {
+    return {
+      width: number + '%',
+      'border-top-right-radius': number == 100 ? '8px' : '0',
+      'border-bottom-right-radius':  number == 100 ? '8px' : '0',
+    };
+  }
+  getWidthLeftRadius(number: number) {
+    return {
+      width: number + '%',
+      'border-top-left-radius': number == 100 ? '8px' : '0',
+      'border-bottom-left-radius': number == 100 ? '8px' : '0',
+    };
+  }
+  sortChanged() {
+    this.platesSource = this.platesSource.filter((x: any) => x != null);
+    switch (this.sortValues.indexOf(this.sortValue)) {
+      case 0:{
+        this.plates = this.platesSource;
+        break;
+      }
+      case 1:{
+        this.plates = _.sortBy(this.platesSource, x => x.KPL);
+        break;
+      }
+      case 2:{
+        this.plates = _.sortBy(this.platesSource, x => x.count);
+        break;
+      }
+      case 3:{
+        this.plates = _.sortBy(this.platesSource, x => x.mat);
+        break;
+      }
+      case 4:{
+        this.plates = _.sortBy(this.platesSource, x => x.nestedParts);
+        break;
+      }
+      case 5:{
+        this.plates = _.sortBy(this.platesSource, x => x.plateForecast);
+        break;
+      }
+      case 6:{
+        this.plates = _.sortBy(this.platesSource, x => x.realPartsCount);
+        break;
+      }
+      case 7:{
+        this.plates = _.sortBy(this.platesSource, x => x.realWeight);
+        break;
+      }
+      case 8:{
+        this.plates = _.sortBy(this.platesSource, x => x.scrap);
+        break;
+      }
+    }
+    for (let x = 0; x < 10; x ++){
+      this.plates.push(null);
+      this.platesSource.push(null);
+    }
   }
 }

@@ -10,98 +10,169 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <span class="p-input-icon-left p-ml-auto">
-        <i class="pi pi-search"></i>
-        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
-      </span>
+      <div class="df tabs-header">
+        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Plates'" [class.selectedTab]="selectedHeadTab ==  'Plates'">{{t.tr('Листы')}}</div>
+        <div class="line-between"></div>
+        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Profiles'" [class.selectedTab]="selectedHeadTab ==  'Profiles'">{{t.tr('Профили')}}</div>
+        <div class="line-between"></div>
+        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Pipes'" [class.selectedTab]="selectedHeadTab ==  'Pipes'">{{t.tr('Трубы')}}</div>
+        <div class="line-between"></div>
+        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Valves'" [class.selectedTab]="selectedHeadTab ==  'Valves'">{{t.tr('Клапаны')}}</div>
+        <div class="line-between"></div>
+        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>
+      </div>
+      <div class="p-ml-auto df">
+        <div class="mt-10 mr-10">
+          <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <span class="p-input-icon-left p-ml-auto mt-10">
+          <i class="pi pi-search"></i>
+          <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+        </span>
+      </div>
     </div>
-    <div class="df tabs-header">
-      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Plates'" [class.selectedTab]="selectedHeadTab ==  'Plates'">{{t.tr('Листы')}}</div>
-      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Profiles'" [class.selectedTab]="selectedHeadTab ==  'Profiles'">{{t.tr('Профили')}}</div>
-      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Pipes'" [class.selectedTab]="selectedHeadTab ==  'Pipes'">{{t.tr('Трубы')}}</div>
-      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Valves'" [class.selectedTab]="selectedHeadTab ==  'Valves'">{{t.tr('Клапаны')}}</div>
-      <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>
-    </div>
-    <div *ngIf="selectedHeadTab == 'Plates'" class="cards">
-      <p-table #table [value]="plates"
-               [scrollable]="true"
-               scrollHeight="calc(100vh - 268px)"
-               [virtualScroll]="false"
-               [virtualRowHeight]="40"
-               [reorderableColumns]="false"
-               [resizableColumns]="false"
-               styleClass="p-datatable-striped"
-               scrollDirection="both"
-               [globalFilterFields]="['id','doc_number','name','status']">
-        <ng-template pTemplate="header">
-          <tr class="df">
-            <th pSortableColumn="KPL" class="lxy w-13">{{t.tr('KPL')}}
-              <p-sortIcon field="KPL"></p-sortIcon>
-            </th>
-            <th pSortableColumn="count" class="cxy w-12">{{t.tr('Sheet QTY')}}
-              <p-sortIcon field="count"></p-sortIcon>
-              <p-columnFilter class="filter" [field]="'count'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.count" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
-                  </p-multiSelect>
-                </ng-template>
-              </p-columnFilter>
-            </th>
-            <th pSortableColumn="mat" class="cxy w-15">{{t.tr('Material')}}
-              <p-sortIcon field="mat"></p-sortIcon>
-              <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.material" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
-                  </p-multiSelect>
-                </ng-template>
-              </p-columnFilter>
-            </th>
-            <th pSortableColumn="nestedParts" class="lxy w-12">{{t.tr('Nested Parts')}}
-              <p-sortIcon field="nestedParts"></p-sortIcon>
-            </th>
-            <th pSortableColumn="plateForecast" class="lxy w-12">{{t.tr('Sheet Forecast')}}
-              <p-sortIcon field="plateForecast"></p-sortIcon>
-            </th>
-            <th pSortableColumn="realPartsCount" class="lxy w-12">{{t.tr('Real Parts Count')}}
-              <p-sortIcon field="realPartsCount"></p-sortIcon>
-            </th>
-            <th pSortableColumn="realWeight" class="lxy w-12">{{t.tr('Weight')}}
-              <p-sortIcon field="realWeight"></p-sortIcon>
-            </th>
-            <th pSortableColumn="scrap" class="lxy w-12">{{t.tr('Scrap')}}
-              <p-sortIcon field="scrap"></p-sortIcon>
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-plate let-i="rowIndex">
-          <tr class="cursor-pointer row-table-doc-hover">
-            <td class="w-13 text-14">
-              <span [innerHTML]="plate.KPL.toString() | highLight: search"></span>
-            </td>
-            <td class="w-12 text-14">
-              <span [innerHTML]="plate.count.toString() | highLight: search"></span>
-            </td>
-            <td class="w-15 text-14">
-              <span [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: search"></span>
-            </td>
-            <td class="w-12 text-14">
-              <span [innerHTML]="plate.nestedParts.toString() | highLight: search"></span>
-            </td>
-            <td class="w-12 text-14">
-              <span [innerHTML]="plate.plateForecast.toString() | highLight: search"></span>
-            </td>
-            <td class="w-12 text-14">
-              <span [innerHTML]="plate.realPartsCount.toString() | highLight: search"></span>
-            </td>
-            <td class="w-12 text-14">
-              <span [innerHTML]="round(plate.realWeight).toString() | highLight: search"></span>
-            </td>
-            <td class="w-12 text-14">
-              <span [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+
+    <div *ngIf="selectedHeadTab == 'Plates'" class="tile">
+      <div [class.hidden-card]="plate == null" class="dash-card-tile" *ngFor="let plate of plates; let i = index">
+        <div *ngIf="plate != null" >
+          <div class="top-row-tile">
+            <div class="cy">
+              <div class="cxy title-bold">
+                <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: search"></div>
+              </div>
+              <div class="cxy mt-10 mb-10">
+                <div class="mr-10">
+                  <img src="assets/icons/kg.svg" height="24">
+                </div>
+                <div class="title-normal" [innerHTML]="round(plate.realWeight).toString() | highLight: search"></div>
+                <span class="ml-5 text-mini-gray">kg</span>
+              </div>
+            </div>
+            <div class="mt-20">
+              <div class="text-center-x mb-5">
+                <span class="text-mini-gray mr-10">scrap</span>
+                <span class="text-mini mr-2px" [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>
+                <span class="text-mini">%</span>
+              </div>
+              <div class="cxy">
+                <div class="chart-area df">
+                  <div [ngStyle]="getWidthRightRadius(100 - plate.scrap)" class="h-100 chart-usage"></div>
+                  <div [ngStyle]="getWidthLeftRadius(plate.scrap)" class="h-100 chart-left"></div>
+                </div>
+              </div>
+            </div>
+            <div class="cx">
+              <div class="kpl-flag">
+                <div class="text-center-x">
+                  KPL
+                </div>
+                <div class="text-center-x">
+                  <span  [innerHTML]="plate.KPL.toString() | highLight: search"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="ovf-auto table-bottom">
+              <div class="df cursor-pointer sticky">
+                <div class="w-25 table-header-column cy">{{t.tr('Sheet QTY')}}</div>
+                <div class="w-25 table-header-column cy">{{t.tr('Sheet Forecast')}}</div>
+                <div class="w-25 table-header-column cy">{{t.tr('Nested Parts')}}</div>
+                <div class="w-25 table-header-column cy">{{t.tr('Real Parts Count')}}</div>
+              </div>
+              <div class="text-center-y info-row cursor-pointer">
+                <div class="w-25 table-body cy">{{plate.count}}</div>
+                <div class="w-25 table-body cy">{{plate.plateForecast}}</div>
+                <div class="w-25 table-body cy">{{plate.nestedParts}}</div>
+                <div class="w-25 table-body cy">{{plate.realPartsCount}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+<!--      <p-table #table [value]="plates"-->
+<!--               [scrollable]="true"-->
+<!--               scrollHeight="calc(100vh - 268px)"-->
+<!--               [virtualScroll]="false"-->
+<!--               [virtualRowHeight]="40"-->
+<!--               [reorderableColumns]="false"-->
+<!--               [resizableColumns]="false"-->
+<!--               styleClass="p-datatable-striped"-->
+<!--               scrollDirection="both"-->
+<!--               [globalFilterFields]="['id','doc_number','name','status']">-->
+<!--        <ng-template pTemplate="header">-->
+<!--          <tr class="df">-->
+<!--            <th pSortableColumn="KPL" class="lxy w-13">{{t.tr('KPL')}}-->
+<!--              <p-sortIcon field="KPL"></p-sortIcon>-->
+<!--            </th>-->
+<!--            <th pSortableColumn="count" class="cxy w-12">{{t.tr('Sheet QTY')}}-->
+<!--              <p-sortIcon field="count"></p-sortIcon>-->
+<!--              <p-columnFilter class="filter" [field]="'count'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.count" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">-->
+<!--                  </p-multiSelect>-->
+<!--                </ng-template>-->
+<!--              </p-columnFilter>-->
+<!--            </th>-->
+<!--            <th pSortableColumn="mat" class="cxy w-15">{{t.tr('Material')}}-->
+<!--              <p-sortIcon field="mat"></p-sortIcon>-->
+<!--              <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.material" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">-->
+<!--                  </p-multiSelect>-->
+<!--                </ng-template>-->
+<!--              </p-columnFilter>-->
+<!--            </th>-->
+<!--            <th pSortableColumn="nestedParts" class="lxy w-12">{{t.tr('Nested Parts')}}-->
+<!--              <p-sortIcon field="nestedParts"></p-sortIcon>-->
+<!--            </th>-->
+<!--            <th pSortableColumn="plateForecast" class="lxy w-12">{{t.tr('Sheet Forecast')}}-->
+<!--              <p-sortIcon field="plateForecast"></p-sortIcon>-->
+<!--            </th>-->
+<!--            <th pSortableColumn="realPartsCount" class="lxy w-12">{{t.tr('Real Parts Count')}}-->
+<!--              <p-sortIcon field="realPartsCount"></p-sortIcon>-->
+<!--            </th>-->
+<!--            <th pSortableColumn="realWeight" class="lxy w-12">{{t.tr('Weight')}}-->
+<!--              <p-sortIcon field="realWeight"></p-sortIcon>-->
+<!--            </th>-->
+<!--            <th pSortableColumn="scrap" class="lxy w-12">{{t.tr('Scrap')}}-->
+<!--              <p-sortIcon field="scrap"></p-sortIcon>-->
+<!--            </th>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="body" let-plate let-i="rowIndex">-->
+<!--          <tr class="cursor-pointer row-table-doc-hover">-->
+<!--            <td class="w-13 text-14">-->
+<!--              <span [innerHTML]="plate.KPL.toString() | highLight: search"></span>-->
+<!--            </td>-->
+<!--            <td class="w-12 text-14">-->
+<!--              <span [innerHTML]="plate.count.toString() | highLight: search"></span>-->
+<!--            </td>-->
+<!--            <td class="w-15 text-14">-->
+<!--              <span [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: search"></span>-->
+<!--            </td>-->
+<!--            <td class="w-12 text-14">-->
+<!--              <span [innerHTML]="plate.nestedParts.toString() | highLight: search"></span>-->
+<!--            </td>-->
+<!--            <td class="w-12 text-14">-->
+<!--              <span [innerHTML]="plate.plateForecast.toString() | highLight: search"></span>-->
+<!--            </td>-->
+<!--            <td class="w-12 text-14">-->
+<!--              <span [innerHTML]="plate.realPartsCount.toString() | highLight: search"></span>-->
+<!--            </td>-->
+<!--            <td class="w-12 text-14">-->
+<!--              <span [innerHTML]="round(plate.realWeight).toString() | highLight: search"></span>-->
+<!--            </td>-->
+<!--            <td class="w-12 text-14">-->
+<!--              <span [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--      </p-table>-->
     </div>
     <div *ngIf="selectedHeadTab == 'Profiles'" class="cards">
       <p-table #table [value]="profiles"
