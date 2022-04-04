@@ -11,12 +11,12 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top">
+        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="cloneMaterial(selectedMaterial)">
           <img src="assets/icons/copy3.svg" height="18">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial(selectedMaterial)">
+        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial('edit', selectedMaterial)">
           <img src="assets/icons/edit.svg" height="18">
         </div>
       </div>

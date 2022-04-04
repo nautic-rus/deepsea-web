@@ -15,7 +15,7 @@ export class Material {
   removed: number = 0;
   coefficient: number = 1;
   comment: string = '';
-  private static generateId(length: number): string {
+  public static generateId(length: number = 20): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;

@@ -18,7 +18,7 @@ export class AddMaterialComponent implements OnInit {
   units = ['796', '006'];
   category = this.categories[0];
   material: Material = new Material();
-  addMaterial = false;
+  action = '';
   materialPrefix = '';
   materials: Material[] = [];
   layer1: any[] = [];
@@ -39,7 +39,7 @@ export class AddMaterialComponent implements OnInit {
     this.projects = dialog.data[0];
     this.project = this.projects[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
-    this.addMaterial = dialog.data[2];
+    this.action = dialog.data[2];
     this.materials = dialog.data[3];
     this.materialPrefix = dialog.data[4];
     this.materialManager.getMaterialNodes().then(res => {
@@ -53,13 +53,13 @@ export class AddMaterialComponent implements OnInit {
       this.selectedCode2 = this.layer2[0];
       this.selectedCode3 = this.noneCode;
       this.selectedCode4 = this.noneCode;
-      if (this.addMaterial && this.materialPrefix != ''){
+      if ((this.action == 'add' || this.action == 'edit') && this.materialPrefix != ''){
         this.material.code = this.materialPrefix;
         for (let x = 0; x < 4; x ++){
           this.material.code += 'NON';
         }
       }
-      if (!this.addMaterial){
+      if (this.action != 'add'){
         this.selectedCode1 = this.layer1.find(x => x.data == this.material.code.substring(0, 3));
         this.selectedCode2 = this.layer2.find(x => x.data == this.material.code.substring(3, 6));
         this.selectedCode3 = this.layer3.find(x => x.data == this.material.code.substring(6, 9));
@@ -73,7 +73,7 @@ export class AddMaterialComponent implements OnInit {
       this.codeSelectors.push({layer: this.layer2, code: this.selectedCode2});
       this.codeSelectors.push({layer: this.layer3, code: this.selectedCode3});
       this.codeSelectors.push({layer: this.layer4, code: this.selectedCode4});
-      if (this.addMaterial){
+      if (this.action == 'add' || this.action == 'clone'){
         this.selectorChanged();
       }
     });
@@ -100,5 +100,9 @@ export class AddMaterialComponent implements OnInit {
       }
     }
     this.material.code = Material.generateCode(prefix, this.materials);
+  }
+
+  getLabel(action: string) {
+    return action.replace('add', 'Create').replace('edit', 'Update');
   }
 }

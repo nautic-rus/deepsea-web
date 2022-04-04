@@ -698,17 +698,16 @@ export class MaterialsComponent implements OnInit {
     return this.tooltips.includes(index);
   }
 
-  addMaterial(material: Material = new Material()) {
-    let newMaterial = material.code == '';
-    if (newMaterial){
+  addMaterial(action: string = 'add', material: Material = new Material()) {
+    if (action == 'add'){
       material.projects = [this.project];
     }
     this.dialogService.open(AddMaterialComponent, {
       showHeader: true,
-      header: newMaterial ? 'Добавление материала' : 'Редактирование матерала',
+      header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование матерала'),
       modal: true,
       closable: true,
-      data: [this.projects, material, newMaterial, this.materials, this.selectedNodeCode]
+      data: [this.projects, material, action, this.materials, this.selectedNodeCode]
     }).onClose.subscribe(res => {
       if (res != null && res.code != ''){
         let findMaterial = this.materials.find(x => x.id == res.id);
@@ -763,5 +762,11 @@ export class MaterialsComponent implements OnInit {
         this.setParents(this.nodes, '');
       });
     });
+  }
+
+  cloneMaterial(material: Material) {
+    let newMaterial = JSON.parse(JSON.stringify(material));
+    newMaterial.id = Material.generateId();
+    this.addMaterial('clone', newMaterial);
   }
 }
