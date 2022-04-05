@@ -296,7 +296,8 @@ export class HullEspComponent implements OnInit {
     message.author = this.auth.getUser().login;
     message.content = this.message;
     message.file_attachments = this.loaded;
-
+    message.prefix = 'turkey';
+    message.to_be_replied = this.auth.hasPerms('needs-reply') ? 1 : 0;
     // @ts-ignore
     this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
@@ -322,8 +323,8 @@ export class HullEspComponent implements OnInit {
   }
   getMessages(issue: Issue) {
     let res: any[] = [];
-    issue.messages.forEach(x => res.push(x));
-    issue.history.forEach(x => res.push(x));
+    issue.messages.filter(x => x.prefix == 'turkey').forEach(x => res.push(x));
+    //issue.history.forEach(x => res.push(x));
     // @ts-ignore
     return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
   }
@@ -937,5 +938,15 @@ export class HullEspComponent implements OnInit {
         });
       });
     }
+  }
+
+  newImportantMessage() {
+    let res = false;
+    let messages = _.sortBy(this.getMessages(this.issue), x => x.date);
+    if (messages.length > 0){
+      let lastMessage = messages.reverse()[0];
+      res = lastMessage.to_be_replied == 1 && lastMessage.author != this.auth.getUser().login;
+    }
+    return res;
   }
 }

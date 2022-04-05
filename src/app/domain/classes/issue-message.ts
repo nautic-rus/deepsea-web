@@ -6,4 +6,6 @@ export class IssueMessage {
   content: string = '';
   date: number = 0;
   file_attachments: FileAttachment[] = [];
+  prefix: string = '';
+  to_be_replied = 0;
 }

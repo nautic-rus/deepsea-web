@@ -213,18 +213,18 @@
     </div>
     <div class="bottom-line mt-10"></div>
     <div class="text-chapter my-16">Activity</div>
-    <div class="df">
-      <div class="description-issues mt-5 mr-1">Show:</div>
-      <div [class.check-button-issues]="messageFilter == 'all'" class="button-new-issues mr-10 ml-10" (click)="messageFilter = 'all'">
-        <span>All</span>
-      </div>
-      <div [class.check-button-issues]="messageFilter == 'human'" class="button-new-issues mr-10" (click)="messageFilter = 'human'">
-        <span>Messages</span>
-      </div>
-      <div [class.check-button-issues]="messageFilter == 'history'" class="button-new-issues" (click)="messageFilter = 'history'">
-        <span>History</span>
-      </div>
-    </div>
+<!--    <div class="df">-->
+<!--      <div class="description-issues mt-5 mr-1">Show:</div>-->
+<!--      <div [class.check-button-issues]="messageFilter == 'all'" class="button-new-issues mr-10 ml-10" (click)="messageFilter = 'all'">-->
+<!--        <span>All</span>-->
+<!--      </div>-->
+<!--      <div [class.check-button-issues]="messageFilter == 'human'" class="button-new-issues mr-10" (click)="messageFilter = 'human'">-->
+<!--        <span>Messages</span>-->
+<!--      </div>-->
+<!--      <div [class.check-button-issues]="messageFilter == 'history'" class="button-new-issues" (click)="messageFilter = 'history'">-->
+<!--        <span>History</span>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="big-text pb-10 pt-10">
       <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" class="border" pInputText placeholder="Post your message here..."  />
     </div>
@@ -795,7 +795,7 @@
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity <div *ngIf="newImportantMessage()">***</div></div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
@@ -873,18 +873,18 @@
         </div>
         <div *ngIf="selectedHeadTab == 'Activity'" class="card-tabs">
           <div class="big-text-issues mb-1">Activity</div>
-          <div class="df">
-            <div class="description-issues mt-5 mr-1">Show:</div>
-            <div [class.check-button-issues]="messageFilter == 'all'" class="button-new-issues mr-10 ml-10" (click)="messageFilter = 'all'">
-              <span>All</span>
-            </div>
-            <div [class.check-button-issues]="messageFilter == 'human'" class="button-new-issues mr-10" (click)="messageFilter = 'human'">
-              <span>Messages</span>
-            </div>
-            <div [class.check-button-issues]="messageFilter == 'history'" class="button-new-issues" (click)="messageFilter = 'history'">
-              <span>History</span>
-            </div>
-          </div>
+<!--          <div class="df">-->
+<!--            <div class="description-issues mt-5 mr-1">Show:</div>-->
+<!--            <div [class.check-button-issues]="messageFilter == 'all'" class="button-new-issues mr-10 ml-10" (click)="messageFilter = 'all'">-->
+<!--              <span>All</span>-->
+<!--            </div>-->
+<!--            <div [class.check-button-issues]="messageFilter == 'human'" class="button-new-issues mr-10" (click)="messageFilter = 'human'">-->
+<!--              <span>Messages</span>-->
+<!--            </div>-->
+<!--            <div [class.check-button-issues]="messageFilter == 'history'" class="button-new-issues" (click)="messageFilter = 'history'">-->
+<!--              <span>History</span>-->
+<!--            </div>-->
+<!--          </div>-->
           <div class="big-text pb-10 pt-10">
             <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" class="border" pInputText placeholder="Post your message here..."  />
           </div>
