@@ -31,14 +31,15 @@
   padding: 0px 12px 2px;
   font-size: 13px;
   word-spacing: 1px;
-  font-weight: 400;
+  font-weight: 500;
   color: rgb(255, 255, 255);
 }
 .hull{
-  background: #FE6D2C;
+  background: #61D42D;
+
 }
-.pipe{
-  background: #36B37E;
+.electric{
+  background: #6EC5FF;
 }
 .head-text-card{
   font-size: 1.14286em;
