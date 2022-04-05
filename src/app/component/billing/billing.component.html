@@ -37,20 +37,17 @@
       <div [class.hidden-card]="plate == null" class="dash-card-tile" *ngFor="let plate of plates; let i = index">
         <div *ngIf="plate != null" >
           <div class="top-row-tile">
-            <div class="cy">
+            <div class="">
+              <div class="cx">
+                <div class="mm-text">mm x m x m</div>
+              </div>
+
               <div class="cxy title-bold">
                 <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: search"></div>
               </div>
-              <div class="cxy mt-10 mb-10">
-                <div class="mr-10">
-                  <img src="assets/icons/kg.svg" height="24">
-                </div>
-                <div class="title-normal" [innerHTML]="round(plate.realWeight).toString() | highLight: search"></div>
-                <span class="ml-5 text-mini-gray">kg</span>
-              </div>
             </div>
-            <div class="mt-20">
-              <div class="text-center-x mb-5">
+            <div class="mt-minus5">
+              <div class="text-center-x mb-2px">
                 <span class="text-mini-gray mr-10">scrap</span>
                 <span class="text-mini mr-2px" [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>
                 <span class="text-mini">%</span>
@@ -62,7 +59,7 @@
                 </div>
               </div>
             </div>
-            <div class="cxy">
+            <div class="flex-end-top">
               <div class="kpl-flag cxy">
                 <div class="text-center-x pr-5">
                   KPL
@@ -73,19 +70,46 @@
               </div>
             </div>
           </div>
-          <div>
-            <div class="ovf-auto table-bottom">
-              <div class="df sticky">
-                <div class="w-25 table-header-column cy">{{t.tr('Sheet QTY')}}</div>
-                <div class="w-25 table-header-column cy">{{t.tr('Sheet Forecast')}}</div>
-                <div class="w-25 table-header-column cy">{{t.tr('Nested Parts')}}</div>
-                <div class="w-25 table-header-column cy">{{t.tr('Real Parts Count')}}</div>
+          <div class="df mb-10">
+            <div class="left-label-nest cxy">NEST</div>
+            <div class="w-100">
+              <div class="table-bottom">
+                <div class="df">
+                  <div class="w-33 table-header-column cy">{{t.tr('Sheet QTY')}}</div>
+                  <div class="w-33 table-header-column cy">{{t.tr('Sheet Forecast')}}</div>
+                  <div class="w-33 table-header-column cy">{{t.tr('Nested Parts')}}</div>
+                </div>
+                <div class="text-center-y info-row">
+                  <div class="w-33 table-body cy">
+                    <span [innerHTML]="plate.count.toString() | highLight: search"></span>
+                  </div>
+                  <div class="w-33 table-body cy">
+                    <span [innerHTML]="plate.plateForecast.toString() | highLight: search"></span>
+                  </div>
+                  <div class="w-33 table-body cy">
+                    <span [innerHTML]="plate.nestedParts.toString() | highLight: search"></span>
+                  </div>
+                </div>
               </div>
-              <div class="text-center-y info-row">
-                <div class="w-25 table-body cy">{{plate.count}}</div>
-                <div class="w-25 table-body cy">{{plate.plateForecast}}</div>
-                <div class="w-25 table-body cy">{{plate.nestedParts}}</div>
-                <div class="w-25 table-body cy">{{plate.realPartsCount}}</div>
+            </div>
+          </div>
+
+          <div class="df mb-10">
+            <div class="left-label-model cxy">MODEL</div>
+            <div class="w-100">
+              <div class="table-bottom">
+                <div class="df">
+                  <div class="w-50 table-header-column cy">{{t.tr('Parts Weight')}}</div>
+                  <div class="w-50 table-header-column cy">{{t.tr('Parts Count')}}</div>
+                </div>
+                <div class="text-center-y info-row">
+                  <div class="w-50 table-body cy">
+                    <span [innerHTML]="round(plate.realWeight).toString() | highLight: search"></span>
+                  </div>
+                  <div class="w-50 table-body cy">
+                    <span [innerHTML]="plate.realPartsCount.toString() | highLight: search"></span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
