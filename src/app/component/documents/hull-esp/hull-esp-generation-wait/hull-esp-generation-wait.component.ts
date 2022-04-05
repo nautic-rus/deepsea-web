@@ -59,7 +59,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
         file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
         files.push(file);
       });
-      this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', this.issue.revision).then(() => {
+      this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', newRevision).then(() => {
         this.issues.setRevisionFiles(this.issue.id, newRevision, JSON.stringify(files)).then(() => {
           if (this.updateRevision){
             this.issue.revision = this.rev;

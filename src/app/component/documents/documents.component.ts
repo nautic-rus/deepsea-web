@@ -43,7 +43,7 @@ export class DocumentsComponent implements OnInit {
       else {
         this.project = this.projects[0];
       }
-      this.showWithFilesOnly = params.showWithFilesOnly != null && +params.showWithFilesOnly == 1;
+      this.showWithFilesOnly = params.showWithFilesOnly == null || +params.showWithFilesOnly == 1;
       this.fillIssues();
     });
     if (this.l.language == 'ru'){
