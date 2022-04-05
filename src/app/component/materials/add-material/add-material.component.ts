@@ -73,7 +73,7 @@ export class AddMaterialComponent implements OnInit {
       this.codeSelectors.push({layer: this.layer2, code: this.selectedCode2});
       this.codeSelectors.push({layer: this.layer3, code: this.selectedCode3});
       this.codeSelectors.push({layer: this.layer4, code: this.selectedCode4});
-      if (this.action == 'add' || this.action == 'clone'){
+      if (this.action == 'add' || this.action == 'Clone'){
         this.selectorChanged();
       }
     });

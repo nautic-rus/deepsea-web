@@ -10,25 +10,25 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <div class="df tabs-header">
+      <div class="ml-10 df tabs-header">
         <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Plates'" [class.selectedTab]="selectedHeadTab ==  'Plates'">{{t.tr('Листы')}}</div>
         <div class="line-between"></div>
         <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Profiles'" [class.selectedTab]="selectedHeadTab ==  'Profiles'">{{t.tr('Профили')}}</div>
-        <div class="line-between"></div>
-        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Pipes'" [class.selectedTab]="selectedHeadTab ==  'Pipes'">{{t.tr('Трубы')}}</div>
-        <div class="line-between"></div>
-        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Valves'" [class.selectedTab]="selectedHeadTab ==  'Valves'">{{t.tr('Клапаны')}}</div>
-        <div class="line-between"></div>
-        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>
+<!--        <div class="line-between"></div>-->
+<!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Pipes'" [class.selectedTab]="selectedHeadTab ==  'Pipes'">{{t.tr('Трубы')}}</div>-->
+<!--        <div class="line-between"></div>-->
+<!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Valves'" [class.selectedTab]="selectedHeadTab ==  'Valves'">{{t.tr('Клапаны')}}</div>-->
+<!--        <div class="line-between"></div>-->
+<!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>-->
       </div>
       <div class="p-ml-auto df">
-        <div class="mt-10 mr-10">
+        <div class="mr-10 ml-10">
           <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-170 border">
           </p-dropdown>
         </div>
-        <span class="p-input-icon-left p-ml-auto mt-10">
+        <span class="p-input-icon-left p-ml-auto">
           <i class="pi pi-search"></i>
-          <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+          <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
         </span>
       </div>
     </div>
@@ -62,9 +62,9 @@
                 </div>
               </div>
             </div>
-            <div class="cx">
-              <div class="kpl-flag">
-                <div class="text-center-x">
+            <div class="cxy">
+              <div class="kpl-flag cxy">
+                <div class="text-center-x pr-5">
                   KPL
                 </div>
                 <div class="text-center-x">
@@ -75,13 +75,13 @@
           </div>
           <div>
             <div class="ovf-auto table-bottom">
-              <div class="df cursor-pointer sticky">
+              <div class="df sticky">
                 <div class="w-25 table-header-column cy">{{t.tr('Sheet QTY')}}</div>
                 <div class="w-25 table-header-column cy">{{t.tr('Sheet Forecast')}}</div>
                 <div class="w-25 table-header-column cy">{{t.tr('Nested Parts')}}</div>
                 <div class="w-25 table-header-column cy">{{t.tr('Real Parts Count')}}</div>
               </div>
-              <div class="text-center-y info-row cursor-pointer">
+              <div class="text-center-y info-row">
                 <div class="w-25 table-body cy">{{plate.count}}</div>
                 <div class="w-25 table-body cy">{{plate.plateForecast}}</div>
                 <div class="w-25 table-body cy">{{plate.nestedParts}}</div>

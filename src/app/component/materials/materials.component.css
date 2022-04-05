@@ -71,7 +71,7 @@
   padding: 0.75rem 0 0.75rem 0;
 }
 .row-table-doc-hover:hover{
-  background-color: #EEF2FF!important;
+  background-color: #EEF2FF;
 }
 .trm-materials{
   color: #323130;
@@ -104,5 +104,5 @@
   pointer-events: none;
 }
 .selected-material{
-  background-color: #a1b9d3 !important;
+  background-color: #e3e7f7 !important;
 }

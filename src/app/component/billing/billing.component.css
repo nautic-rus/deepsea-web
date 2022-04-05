@@ -41,7 +41,7 @@
   background: rgba(255, 255, 255, 0.9);
   padding: 12px;
   border-radius: 8px;
-  height: 65px;
+  height: fit-content;
   align-items: center;
   color: #323130;
   font-size: 14px;
@@ -89,9 +89,9 @@
   background-color: #E9ECEF;
 }
 .line-between{
-  width: 30px;
-  border-bottom: 1px solid #dee2e6;
-  margin-bottom: 20px;
+  width: 20px;
+
+  margin-bottom: 30px;
 }
 .selectedTab{
   padding: 10px;
@@ -170,7 +170,7 @@
   border-bottom-left-radius: 8px;
 }
 .chart-left{
-  background-color: #2788e9;
+  background-color: #69B7FF;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
@@ -187,7 +187,7 @@
 .table-bottom{
   border: 1px solid #e1eaf4;
   border-radius: 0.75rem;
-  cursor: pointer;
+  cursor: default;
 }
 .table-header-column{
   border-bottom: 1px solid #f3f2f1;
@@ -206,13 +206,11 @@
   text-align: center;
 }
 .kpl-flag{
-  clip-path: polygon(0 0, 100% 0%, 100% 100%, 50% 80%, 0 100%);
-  background-color: #A5D6A7;
-  height: 60px;
-  width: 36px;
-  margin-top: -10px;
+  padding: 2px 4px;
+  border-radius: 4px;
   font-weight: 500;
   font-size: 16px;
   line-height: 20px;
   color: #fff;
+  background-color: #61D42D;
 }
