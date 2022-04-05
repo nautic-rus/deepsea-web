@@ -126,19 +126,19 @@ export class HullEspComponent implements OnInit {
       name: 'Cutting Map',
       icon: 'assets/icons/cutting.svg',
       collapsed: true,
-      need_rights: true
+      need_rights: false
     },
     {
       name: 'Nesting Plates',
       icon: 'assets/icons/cutting.svg',
       collapsed: true,
-      need_rights: true
+      need_rights: false
     },
     {
       name: 'Nesting Profiles',
       icon: 'assets/icons/cutting.svg',
       collapsed: true,
-      need_rights: true
+      need_rights: false
     },
     {
       name: 'Profile Sketches',
@@ -365,10 +365,10 @@ export class HullEspComponent implements OnInit {
       p.SKETCH = '';
       p.NESTING = '';
     });
-    this.nestContent.splice(0, this.nestContent.length);
     this.nestContentRead = true;
-    nesting.filter(x => x.name.includes('profiles')).forEach(file => {
+    _.sortBy(nesting, x => x.upload_date).filter(x => x.name.includes('profiles')).forEach(file => {
       fetch(file.url).then(response => response.text()).then(text => {
+        this.nestContent.splice(0, this.nestContent.length);
         text.split(';').filter(x => x.trim() != '').forEach(row => {
           let splitRow = row.split(':');
           this.nestContent.push({
@@ -379,8 +379,10 @@ export class HullEspComponent implements OnInit {
         this.parts.forEach((part: any) => {
           if (part.PART_CODE != null && part.SYMMETRY != null && part.ELEM_TYPE != 'PL'){
             let search = part.PART_CODE + '-' + part.SYMMETRY;
-            let findNest = this.nestContent.find((x: any) => x.parts.includes(search));
-            part.SKETCH = findNest ? findNest.file.replace('.dxf', '') : '';
+            let findNest = _.sortBy(this.nestContent.filter((x: any) => x.parts.includes(search)), x => x.date).reverse();
+            if (findNest.length > 0){
+              part.SKETCH = findNest ? findNest[0].file.replace('.dxf', '').replace('-rev', '_rev') : '';
+            }
           }
           else{
             part.SKETCH = '';
@@ -694,12 +696,12 @@ export class HullEspComponent implements OnInit {
 
   isDisabledNest(part: any) {
     let nesting = part.NESTING != null && part.NESTING[0] == 'N' ? this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision) : (this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name == part.NESTING + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(part.NESTING) && part.NESTING != '');
     return searchDxf == null;
   }
   isDisabledNestTemplate(part: any) {
     let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
-    let searchDxf = nesting.find(x => x.name == part.SKETCH + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(part.SKETCH) && part.SKETCH != '');
     return searchDxf == null;
   }
 
@@ -707,7 +709,7 @@ export class HullEspComponent implements OnInit {
     this.selectedPart = part;
     this.dxfEnabledForNesting = true;
     let nesting = part.NESTING[0] == 'N' ? this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision) : (this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name == part.NESTING + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(part.NESTING));
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
@@ -746,7 +748,7 @@ export class HullEspComponent implements OnInit {
     }
 
     let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name == search + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(search));
     if (searchDxf != null){
       if (this.dxfView != null && !this.dxfView.closed){
         this.dxfView.close();
@@ -762,7 +764,7 @@ export class HullEspComponent implements OnInit {
     this.selectedPart = part;
     this.dxfEnabledForNesting = true;
     let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
-    let searchDxf = nesting.find(x => x.name == part.SKETCH + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(part.SKETCH));
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
@@ -861,5 +863,9 @@ export class HullEspComponent implements OnInit {
 
   viewRevisionChanged() {
     this.fillSketches();
+  }
+
+  getArchive() {
+    return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
   }
 }

@@ -31,17 +31,14 @@ export class UploadRevisionFilesComponent implements OnInit {
   reformatFileName(name: string, fileGroup: string){
     let result = name;
     if (fileGroup == 'Drawings'){
-      let r = new RegExp('^' + this.issue.doc_number + '(\\.|_rev(\\d|\\w)\\.)');
-      if (!r.test(name)){
-        result = this.issue.doc_number + name.split('.').pop();
-      }
+      //result = this.issue.doc_number + name.split('.').pop();
     }
     if (fileGroup == 'Nesting Plates'){
       result = 'N-' + name.replace('_0_', '_').split('_').join('-');
     }
     if (fileGroup == 'Nesting Profiles'){
       if (name.includes('.pdf')){
-        result = 'Nesting Profiles.pdf'
+        //result = 'Nesting Profiles' + '.pdf';
       }
       else{
         result = 'P-' + name.split('_').join('-');
@@ -49,7 +46,7 @@ export class UploadRevisionFilesComponent implements OnInit {
     }
     if (fileGroup == 'Profile Sketches' && !name.includes('.txt')){
       if (name.includes('.pdf')){
-        result = 'Profile Sketches.pdf';
+        //result = 'Profile Sketches' + '.pdf';
       }
       else{
         result = name.split('_').join('-');
@@ -58,7 +55,7 @@ export class UploadRevisionFilesComponent implements OnInit {
     if (fileGroup == 'Cutting Map'){
       result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.split('_')[0] + '-' + name.split('_')[1] + '.txt';
     }
-    return result;
+    return result.replace('-rev', '_rev');
   }
   handleFileInput(files: FileList | null) {
     if (files != null){
