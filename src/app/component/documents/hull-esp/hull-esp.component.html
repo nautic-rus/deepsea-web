@@ -126,6 +126,12 @@
           <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxfTablet()"></button>
           <app-dxf-view></app-dxf-view>
         </div>
+        <div class="pt-5 dxf-view" *ngIf="cutEnabled">
+          <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
+          <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
+          <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+          <app-g-code></app-g-code>
+        </div>
       </div>
     </div>
     <div class="bottom-line mt-10"></div>
@@ -192,7 +198,7 @@
                     </div>
                   </div>
                   <div class="cxy ml-10" *ngIf="!file.name.includes('.dxf')"></div>
-                  <div (click)="openFile(file.url)" class="cxy ml-10">
+                  <div (click)="openFile(file)" class="cxy ml-10">
                     <img src="assets/icons/download-arrow.png">
                   </div>
                   <div *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)" class="cxy">
@@ -291,7 +297,7 @@
               <span class="text-date"> {{getDate(+msg.date)}} </span>
               <quill-view (click)="editorClicked($event)" class="db" *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
               <div *ngFor="let file of msg.file_attachments">
-                <div (click)="openFile(file.url)" class="attachment-issues-files df mb-5 cursor-pointer">
+                <div (click)="openFile(file)" class="attachment-issues-files df mb-5 cursor-pointer">
                   <div class="cxy">
                     <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                   </div>
@@ -779,13 +785,19 @@
           <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
           <app-dxf-view></app-dxf-view>
         </div>
+        <div class="pt-5 dxf-view" *ngIf="cutEnabled">
+          <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
+          <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
+          <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+          <app-g-code></app-g-code>
+        </div>
       </div>
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
-          <div *ngIf="auth.hasPerms('esp-files')" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
 
         <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
@@ -835,7 +847,10 @@
                       </div>
                       <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >
                       </div>
-                      <div class="cxy ml-10" (click)="openFile(file.url)">
+                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')" (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
+                        <img src="assets/icons/eye-black.svg" height="20">
+                      </div>
+                      <div class="cxy ml-10" (click)="openFile(file)">
                         <img src="assets/icons/download-arrow.png">
                       </div>
                       <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
@@ -942,7 +957,7 @@
                     <span class="text-date"> {{getDate(+msg.date)}} </span>
                     <quill-view (click)="editorClicked($event)" class="db" *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
                     <div *ngFor="let file of msg.file_attachments">
-                      <div (click)="openFile(file.url)" class="attachment-issues-files df mb-5 cursor-pointer">
+                      <div (click)="openFile(file)" class="attachment-issues-files df mb-5 cursor-pointer">
                         <div class="cxy">
                           <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                         </div>
@@ -1298,7 +1313,7 @@
             </div>
             <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >
             </div>
-            <div class="cxy ml-10" (click)="openFile(file.url)">
+            <div class="cxy ml-10" (click)="openFile(file)">
               <img src="assets/icons/download-arrow.png">
             </div>
           </div>
