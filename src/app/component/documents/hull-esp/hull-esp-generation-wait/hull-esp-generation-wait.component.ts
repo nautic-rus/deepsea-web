@@ -64,6 +64,15 @@ export class HullEspGenerationWaitComponent implements OnInit {
           if (this.updateRevision){
             this.issue.revision = this.rev;
             this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+              let newFiles: FileAttachment[] = [];
+              this.issue.revision_files.filter(x => x.group == 'Cutting Map' || x.group == 'Nesting Plates' || x.group == 'Nesting Profiles' || x.group == 'Profile Sketches').forEach(file => {
+                let newFile = JSON.parse(JSON.stringify(file));
+                newFile.revision = newRevision;
+                newFiles.push(newFile);
+              });
+              this.issues.setRevisionFiles(this.issue.id, newRevision, JSON.stringify(newFiles)).then(res => {
+
+              });
             });
           }
         });

@@ -6,4 +6,6 @@ export class FileAttachment {
   revision: string = '';
   group: string = '';
   issue_id: number = 0;
+  removed_by: string = '';
+  removed_date = 0;
 }

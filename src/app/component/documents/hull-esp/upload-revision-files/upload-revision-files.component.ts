@@ -30,6 +30,12 @@ export class UploadRevisionFilesComponent implements OnInit {
   }
   reformatFileName(name: string, fileGroup: string){
     let result = name;
+    if (fileGroup == 'Drawings'){
+      let r = new RegExp('^' + this.issue.doc_number + '(\\.|_rev(\\d|\\w)\\.)');
+      if (!r.test(name)){
+        result = this.issue.doc_number + name.split('.').pop();
+      }
+    }
     if (fileGroup == 'Nesting Plates'){
       result = 'N-' + name.replace('_0_', '_').split('_').join('-');
     }

@@ -361,6 +361,10 @@ export class HullEspComponent implements OnInit {
   }
   fillSketches(){
     let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
+    this.parts.forEach((p: any) => {
+      p.SKETCH = '';
+      p.NESTING = '';
+    });
     this.nestContent.splice(0, this.nestContent.length);
     this.nestContentRead = true;
     nesting.filter(x => x.name.includes('profiles')).forEach(file => {
@@ -853,5 +857,9 @@ export class HullEspComponent implements OnInit {
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
+  }
+
+  viewRevisionChanged() {
+    this.fillSketches();
   }
 }
