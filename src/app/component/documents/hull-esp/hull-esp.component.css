@@ -845,3 +845,18 @@
 .add-button:hover{
   background-color: #2563EB;
 }
+.dxf-open-button{
+  position: absolute;
+  top: 10px;
+  z-index: 1001;
+  color: white !important;
+}
+.dxf-open-new-window{
+  right: 56px;
+}
+.dxf-download-window{
+  right: 106px;
+}
+.dxf-exit{
+  right: 8px;
+}

@@ -23,6 +23,7 @@ import {group} from "@angular/animations";
 import * as XLSX from "xlsx";
 import {DeleteComponent} from "../../task/delete/delete.component";
 import {ClearFilesComponent} from "./clear-files/clear-files.component";
+import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system";
 
 @Component({
   selector: 'app-hull-esp',
@@ -41,6 +42,7 @@ export class HullEspComponent implements OnInit {
   issueId = 0;
   issue: Issue = new Issue();
   selectedPart = Object();
+  cmapView: Window | null = null;
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
   message = '';
@@ -55,6 +57,7 @@ export class HullEspComponent implements OnInit {
   groupedByPartCode = false;
   waitForZipFiles = false;
   dxfEnabled = false;
+  cutEnabled = false;
   dxfEnabledForNesting = false;
   dxfView: Window | null = null;
   dxfDoc: string = '';
@@ -150,6 +153,10 @@ export class HullEspComponent implements OnInit {
   selectedTab = this.fileGroups[0].name;
   issueRevisions: string[] = [];
   filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[]  } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
+  cmap = '';
+  cmapuser = '';
+  cmapdate = 0;
+
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -456,8 +463,14 @@ export class HullEspComponent implements OnInit {
   round(input: number) {
     return Math.round(input * 100) / 100;
   }
-  openFile(url: string) {
-    window.open(url);
+  openFile(file: FileAttachment) {
+    if (file.group == 'Cutting Map'){
+      this.cmap = file.url;
+      this.downloadOpenedCMAP();
+    }
+    else{
+      window.open(file.url, '_blank');
+    }
   }
   getFileExtensionIcon(file: string) {
     switch (file.toLowerCase().split('.').pop()){
@@ -687,6 +700,7 @@ export class HullEspComponent implements OnInit {
   }
   exitDxf(){
     this.dxfEnabled = false;
+    this.cutEnabled = false;
     this.dxfEnabledForNesting = false;
   }
   exitDxfTablet(){
@@ -867,5 +881,61 @@ export class HullEspComponent implements OnInit {
 
   getArchive() {
     return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
+  }
+  showCuttingFile(file: FileAttachment) {
+    this.cmap = file.url;
+    this.dxfEnabled = false;
+    this.cutEnabled = false;
+    this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
+      setTimeout(() => {
+        this.cutEnabled = true;
+        console.log(this.cutEnabled);
+        // @ts-ignore
+        this.router.navigate([], {queryParams: {cmap: file.url, cmapuser: this.auth.getUserName(file.author), cmapdate: file.upload_date}, queryParamsHandling: 'merge'});
+        const style = document.createElement('style');
+        style.innerHTML = `
+          .editBlock pre {
+            height: 42vh !important;
+          }
+          .viewContainer .TwoDView {
+            height: 45vh !important;
+          }
+        `;
+        document.head.appendChild(style);
+      });
+    });
+  }
+
+  openCMAP() {
+    if (this.cmapView != null && !this.cmapView.closed){
+      this.cmapView.close();
+    }
+    let url = '/gcode?navi=0&window=1&cmap=' + this.cmap + '&cmapuser=' + this.cmapuser + '&cmapdate=' + this.cmapdate;
+    this.dxfEnabledForNesting = false;
+    this.dxfEnabled = false;
+    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
+  }
+
+  downloadOpenedCMAP() {
+    if (this.cmap != ''){
+      fetch(this.cmap).then(res => {
+        res.text().then(text => {
+          this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+            // @ts-ignore
+            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+          });
+        });
+      });
+    }
   }
 }
