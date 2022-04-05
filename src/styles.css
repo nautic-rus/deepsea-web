@@ -112,6 +112,9 @@ body,p{
 .w-32{
   width: 32%;
 }
+.w-33{
+  width: 33%;
+}
 .w-34{
   width: 34%;
 }
@@ -311,6 +314,11 @@ body,p{
   display: flex;
   justify-content: flex-end;
 }
+.flex-end-top{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
 .space-between{
   justify-content: space-between;
 }
@@ -351,7 +359,9 @@ body,p{
   font-size: 12px!important;
   padding: 6px 8px!important;
 }
-
+.mt-minus5{
+  margin-top: -5px;
+}
 .mt-1{
   margin-top: 1rem;
 }
@@ -402,6 +412,9 @@ body,p{
 }
 .mb-2{
   margin-bottom: 2rem;
+}
+.mb-2px{
+  margin-bottom: 2px;
 }
 .mb-5{
   margin-bottom: 5px;
