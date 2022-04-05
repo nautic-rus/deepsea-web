@@ -3,11 +3,11 @@
     <div class="card-head-tablet df">
       <div class="mr-10">{{getBlockName()}}</div>
       <div class="mr-10">{{issue.doc_number}}</div>
-      <div class="mr-10" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>
-      <div class="mr-5">Revision:</div>
-      <div class="mr-10">
-        {{issue.revision}}
-      </div>
+<!--      <div class="mr-10" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>-->
+<!--      <div class="mr-5">Revision:</div>-->
+<!--      <div class="mr-10">-->
+<!--        {{issue.revision}}-->
+<!--      </div>-->
       <div class="mr-10">
         <div (click)="exportSketches()" class="materials-button xls-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
@@ -195,7 +195,7 @@
                   <div (click)="openFile(file.url)" class="cxy ml-10">
                     <img src="assets/icons/download-arrow.png">
                   </div>
-                  <div (click)="deleteFile(file.url)" class="cxy">
+                  <div *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)" class="cxy">
                     <img src="assets/icons/trash-1.svg" height="16">
                   </div>
                 </div>
@@ -645,11 +645,11 @@
     <div class="card-head df">
       <div class="mr-2">{{getBlockName()}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-2" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>
-      <div class="mr-1">Revision:</div>
-      <div class="mr-2">
-        {{issue.revision}}
-      </div>
+<!--      <div class="mr-2" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>-->
+<!--      <div class="mr-1">Revision:</div>-->
+<!--      <div class="mr-2">-->
+<!--        {{issue.revision}}-->
+<!--      </div>-->
 <!--      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">-->
 <!--        <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>-->
 <!--      </div>-->
@@ -672,13 +672,13 @@
         </div>
       </div>
       <div class="p-ml-auto df mr-12">
-        <div class="cy">
-          <div class="text-view-files">View files of revision</div>
-        </div>
-        <div class="ml-1">
-          <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" (ngModelChange)="viewRevisionChanged()" styleClass="w-100 h-32 cxy">
-          </p-dropdown>
-        </div>
+<!--        <div class="cy">-->
+<!--          <div class="text-view-files">View files of revision</div>-->
+<!--        </div>-->
+<!--        <div class="ml-1">-->
+<!--          <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" (ngModelChange)="viewRevisionChanged()" styleClass="w-100 h-32 cxy">-->
+<!--          </p-dropdown>-->
+<!--        </div>-->
       </div>
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
@@ -838,7 +838,7 @@
                       <div class="cxy ml-10" (click)="openFile(file.url)">
                         <img src="assets/icons/download-arrow.png">
                       </div>
-                      <div class="cxy" (click)="deleteFile(file.url)">
+                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
                         <img src="assets/icons/trash-1.svg" height="16">
                       </div>
                     </div>
@@ -847,7 +847,7 @@
                 <div class="df right-top-revision">
                   <div class="pt-5">View files of revision</div>
                   <div class="ml-1">
-                    <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" styleClass="w-100 h-32 cxy">
+                    <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" (ngModelChange)="viewRevisionChanged()" styleClass="w-100 h-32 cxy">
                     </p-dropdown>
                   </div>
                 </div>
@@ -1284,7 +1284,7 @@
           </div>
         </div>
         <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
-          <div *ngFor="let file of issue.archive_revision_files">
+          <div *ngFor="let file of getArchive()">
           <div  class="attachment-files df mb-6 cursor-pointer">
             <div class="cxy">
               <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
@@ -1300,9 +1300,6 @@
             </div>
             <div class="cxy ml-10" (click)="openFile(file.url)">
               <img src="assets/icons/download-arrow.png">
-            </div>
-            <div class="cxy" (click)="deleteFile(file.url)">
-              <img src="assets/icons/trash-1.svg" height="16">
             </div>
           </div>
         </div>

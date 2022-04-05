@@ -364,7 +364,7 @@ export class NestingComponent implements OnInit {
 
     let files: any[] = [];
     this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
-      let find = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
+      let find = this.nestingFiles.find(x => x.name.includes(nest.FILE));
       if (find != null){
         files.push(find);
       }
@@ -379,7 +379,7 @@ export class NestingComponent implements OnInit {
 
 
     this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
-      let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+      let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
       if (searchCMAP != null){
         this.cmap = searchCMAP.url;
         this.cmapuser = searchCMAP.author;
@@ -514,22 +514,22 @@ export class NestingComponent implements OnInit {
 
   isDisabledNest(part: any) {
     let nesting = part.NESTING != null && part.NESTING[0] == 'N' ? this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision) : (this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name == part.NESTING + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(part.NESTING));
     return searchDxf == null;
   }
   isDisabledNestTemplate(nest: any) {
-    let searchDxf = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
+    let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
     return searchDxf == null;
   }
   isDisabledCuttingMap(nest: any) {
-    let searchDxf = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+    let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
     return searchDxf == null;
   }
   showNesting(part: any) {
     this.selectedNest = part;
     this.dxfEnabledForNesting = true;
     let nesting = part.NESTING[0] == 'N' ? this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision) : (this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name == part.NESTING + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(part.NESTING));
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
@@ -574,7 +574,7 @@ export class NestingComponent implements OnInit {
     }
 
     let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name == search + '.dxf');
+    let searchDxf = nesting.find(x => x.name.includes(search));
     if (searchDxf != null){
       if (this.dxfView != null && !this.dxfView.closed){
         this.dxfView.close();
@@ -587,7 +587,7 @@ export class NestingComponent implements OnInit {
 
   }
   showNestingTemplate(nest: any) {
-    let searchDxf = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
+    let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
@@ -643,7 +643,7 @@ export class NestingComponent implements OnInit {
   }
 
   downloadNestingFile(nest: any) {
-    let searchDxf = this.nestingFiles.find(x => x.name == nest.FILE + '.dxf');
+    let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
     if (searchDxf != null){
       window.open(searchDxf.url);
     }
@@ -778,7 +778,7 @@ export class NestingComponent implements OnInit {
   }
 
   showCuttingFile(nest: any) {
-    let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+    let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
     if (searchCMAP != null){
       this.dxfEnabled = false;
       this.cutEnabled = false;
@@ -826,7 +826,7 @@ export class NestingComponent implements OnInit {
   }
 
   downloadCuttingFile(nest: any) {
-    let searchCMAP = this.nestingFiles.find(x => x.name == nest.CMAP + '.txt');
+    let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
     if (searchCMAP != null){
       this.cmap = searchCMAP.url;
       this.cmapuser = searchCMAP.author;
