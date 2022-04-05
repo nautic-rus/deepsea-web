@@ -310,6 +310,9 @@ body,p{
 .ovf-auto{
   overflow-y: auto;
 }
+.flex-column{
+  flex-direction: column;
+}
 .flex-end{
   display: flex;
   justify-content: flex-end;
@@ -569,6 +572,9 @@ body,p{
 }
 .pb-30{
   padding-bottom: 30px;
+}
+.pl-2{
+  padding-left: 2px;
 }
 .pl-3{
   padding-left: 3px;
