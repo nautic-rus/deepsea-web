@@ -40,11 +40,12 @@ export class BillingComponent implements OnInit {
   sortPlatesValue = this.sortPlatesValues[0];
   sortProfilesValues: any[] = [
     'by KSE',
-    'by QTY',
+    'by Section',
     'by Material',
-    'by Nested Parts',
-    'by Sheet Forecast',
-    'by Count',
+    'by Profile Forecast',
+    'by Profile Count',
+    'by Real Count',
+    'by Length',
     'by Weight',
     'by Scrap'
   ];
@@ -215,7 +216,7 @@ export class BillingComponent implements OnInit {
         break;
       }
       case 7:{
-        this.plates = _.sortBy(this.platesSource, x => x.scrap);
+        this.plates = _.sortBy(this.platesSource, x => x.scrap).reverse();
         break;
       }
     }
@@ -226,13 +227,41 @@ export class BillingComponent implements OnInit {
   }
   sortProfilesChanged() {
     this.profilesSource = this.profilesSource.filter((x: any) => x != null);
-    switch (this.sortProfilesValues.indexOf(this.sortPlatesValue)) {
+    switch (this.sortProfilesValues.indexOf(this.sortProfilesValue)) {
       case 0:{
         this.profiles = _.sortBy(this.profilesSource, x => x.KSE);
         break;
       }
       case 1:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.section);
+        break;
+      }
+      case 2:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.mat);
+        break;
+      }
+      case 3:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.profileForecast);
+        break;
+      }
+      case 4:{
         this.profiles = _.sortBy(this.profilesSource, x => x.count);
+        break;
+      }
+      case 5:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.realPartsCount);
+        break;
+      }
+      case 6:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.realLenght);
+        break;
+      }
+      case 7:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.partsweight);
+        break;
+      }
+      case 8:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.scrap).reverse();
         break;
       }
     }
@@ -241,5 +270,4 @@ export class BillingComponent implements OnInit {
       this.profilesSource.push(null);
     }
   }
-
 }
