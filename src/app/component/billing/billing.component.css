@@ -31,6 +31,11 @@
 /deep/.p-datatable .p-datatable-header {
   padding: 0.75rem 0 0.75rem 0;
 }
+.all-page-billing{
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  padding: 0 20px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
 .filter{
   margin-left: auto;
 }
@@ -39,6 +44,25 @@
 }
 .min-height-card{
   min-height: calc(100vh - 117px);
+}
+.sticky-card{
+  position: sticky;
+  top: 20px;
+  z-index: 8;
+}
+.empty-card{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+.empty-card-bottom{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 77px;
+  z-index: 7;
 }
 .card-head{
   background: #fff;
