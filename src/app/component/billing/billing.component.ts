@@ -22,11 +22,12 @@ export class BillingComponent implements OnInit {
   projects: string[] = ['N002', 'N004', 'P701', 'P707'];
   project = '';
   search: string = '';
+  searchPlates: string = '';
+  searchProfiles: string = '';
   filtersPlates:  { material: any[], count: any[], scantling: any[] } = { material: [], count: [], scantling: [] };
   filtersProfiles:  { material: any[], count: any[], scantling: any[], section: any[] } = { material: [], count: [], scantling: [], section: [] };
   selectedHeadTab: string = 'Plates';
-  sortValues: any[] = [
-    'Not sorted',
+  sortPlatesValues: any[] = [
     'by KPL',
     'by QTY',
     'by Material',
@@ -36,8 +37,19 @@ export class BillingComponent implements OnInit {
     'by Weight',
     'by Scrap'
   ];
-  sortValue = this.sortValues[0];
-
+  sortPlatesValue = this.sortPlatesValues[0];
+  sortProfilesValues: any[] = [
+    'by KSE',
+    'by Section',
+    'by Material',
+    'by Profile Forecast',
+    'by Profile Count',
+    'by Real Count',
+    'by Length',
+    'by Weight',
+    'by Scrap'
+  ];
+  sortProfilesValue = this.sortProfilesValues[0];
 
   constructor(public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router) { }
 
@@ -63,6 +75,7 @@ export class BillingComponent implements OnInit {
         this.profiles.push(null);
         this.profilesSource.push(null);
       }
+      this.sortProfilesChanged();
       console.log(res);
     });
     this.s.getHullBillPlates(this.project).then(res => {
@@ -75,25 +88,26 @@ export class BillingComponent implements OnInit {
         this.plates.push(null);
         this.platesSource.push(null);
       }
+      this.sortPlatesChanged();
       console.log(res);
     });
   }
   searchChanged() {
     if (this.selectedHeadTab == 'Plates') {
-      if (this.search.trim() == '') {
+      if (this.searchPlates.trim() == '') {
         this.plates = this.platesSource;
       } else {
         this.plates = this.platesSource.filter((x: any) => {
-          return x == null || (x.KPL.toString() + x.count.toString() + x.mat.toString() + x.nestedParts.toString() + x.plateForecast.toString() + x.realPartsCount.toString() + x.realWeight.toString() + x.scantling.toString() + x.scrap.toString()).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())
+          return x == null || (x.KPL.toString() + x.count.toString() + x.mat.toString() + x.nestedParts.toString() + x.plateForecast.toString() + x.realPartsCount.toString() + x.realWeight.toString() + x.scantling.toString() + x.scrap.toString()).trim().toLowerCase().includes(this.searchPlates.toString().trim().toLowerCase())
         });
       }
     }
     if (this.selectedHeadTab == 'Profiles') {
-      if (this.search.trim() == '') {
+      if (this.searchProfiles.trim() == '') {
         this.profiles = this.profilesSource;
       } else {
         this.profiles = this.profilesSource.filter((x: any) => {
-          return x == null || (x.KSE + x.count + x.grossLenght + x.mat + x.profileForecast + x.realLenght + x.realPartsCount + x.scantling + x.scrap + x.section).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+          return x == null || (x.KSE + x.count + x.grossLenght + x.mat + x.profileForecast + x.realLenght + x.realPartsCount + x.scantling + x.scrap + x.section).trim().toLowerCase().includes(this.searchProfiles.trim().toLowerCase())
         });
       }
     }
@@ -170,49 +184,90 @@ export class BillingComponent implements OnInit {
       'border-bottom-left-radius': number == 100 ? '8px' : '0',
     };
   }
-  sortChanged() {
+  sortPlatesChanged() {
     this.platesSource = this.platesSource.filter((x: any) => x != null);
-    switch (this.sortValues.indexOf(this.sortValue)) {
+    switch (this.sortPlatesValues.indexOf(this.sortPlatesValue)) {
       case 0:{
-        this.plates = this.platesSource;
-        break;
-      }
-      case 1:{
         this.plates = _.sortBy(this.platesSource, x => x.KPL);
         break;
       }
-      case 2:{
+      case 1:{
         this.plates = _.sortBy(this.platesSource, x => x.count);
         break;
       }
-      case 3:{
+      case 2:{
         this.plates = _.sortBy(this.platesSource, x => x.mat);
         break;
       }
-      case 4:{
+      case 3:{
         this.plates = _.sortBy(this.platesSource, x => x.nestedParts);
         break;
       }
-      case 5:{
+      case 4:{
         this.plates = _.sortBy(this.platesSource, x => x.plateForecast);
         break;
       }
-      case 6:{
+      case 5:{
         this.plates = _.sortBy(this.platesSource, x => x.realPartsCount);
         break;
       }
-      case 7:{
+      case 6:{
         this.plates = _.sortBy(this.platesSource, x => x.realWeight);
         break;
       }
-      case 8:{
-        this.plates = _.sortBy(this.platesSource, x => x.scrap);
+      case 7:{
+        this.plates = _.sortBy(this.platesSource, x => x.scrap).reverse();
         break;
       }
     }
     for (let x = 0; x < 10; x ++){
       this.plates.push(null);
       this.platesSource.push(null);
+    }
+  }
+  sortProfilesChanged() {
+    this.profilesSource = this.profilesSource.filter((x: any) => x != null);
+    switch (this.sortProfilesValues.indexOf(this.sortProfilesValue)) {
+      case 0:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.KSE);
+        break;
+      }
+      case 1:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.section);
+        break;
+      }
+      case 2:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.mat);
+        break;
+      }
+      case 3:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.profileForecast);
+        break;
+      }
+      case 4:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.count);
+        break;
+      }
+      case 5:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.realPartsCount);
+        break;
+      }
+      case 6:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.realLenght);
+        break;
+      }
+      case 7:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.partsweight);
+        break;
+      }
+      case 8:{
+        this.profiles = _.sortBy(this.profilesSource, x => x.scrap).reverse();
+        break;
+      }
+    }
+    for (let x = 0; x < 10; x ++){
+      this.profiles.push(null);
+      this.profilesSource.push(null);
     }
   }
 }

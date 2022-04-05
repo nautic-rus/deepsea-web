@@ -1,6 +1,6 @@
 <div class="all-page">
-  <div>
-    <div class="card-head mb-20 df">
+  <div class="min-height-card">
+    <div class="card-head mb-20 df sticky">
       <div class="mr-10">
         <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
@@ -21,14 +21,24 @@
 <!--        <div class="line-between"></div>-->
 <!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>-->
       </div>
-      <div class="p-ml-auto df">
+      <div *ngIf="selectedHeadTab == 'Plates'" class="p-ml-auto df">
         <div class="mr-10 ml-10">
-          <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-170 border">
+          <p-dropdown class="select" [(ngModel)]="sortPlatesValue" [options]="sortPlatesValues" (ngModelChange)="sortPlatesChanged()" styleClass="width-170 border">
           </p-dropdown>
         </div>
         <span class="p-input-icon-left p-ml-auto">
           <i class="pi pi-search"></i>
-          <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+          <input [(ngModel)]="searchPlates" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+        </span>
+      </div>
+      <div *ngIf="selectedHeadTab == 'Profiles'" class="p-ml-auto df">
+        <div class="mr-10 ml-10">
+          <p-dropdown class="select" [(ngModel)]="sortProfilesValue" [options]="sortProfilesValues" (ngModelChange)="sortProfilesChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <span class="p-input-icon-left p-ml-auto">
+          <i class="pi pi-search"></i>
+          <input [(ngModel)]="searchProfiles" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
         </span>
       </div>
     </div>
@@ -43,13 +53,13 @@
               </div>
 
               <div class="cxy title-bold">
-                <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: search"></div>
+                <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: searchPlates"></div>
               </div>
             </div>
             <div class="mt-minus5">
               <div class="text-center-x mb-2px">
                 <span class="text-mini-gray mr-10">scrap</span>
-                <span class="text-mini mr-2px" [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>
+                <span class="text-mini mr-2px" [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
                 <span class="text-mini">%</span>
               </div>
               <div class="cxy">
@@ -65,7 +75,7 @@
                   KPL
                 </div>
                 <div class="text-center-x">
-                  <span  [innerHTML]="plate.KPL.toString() | highLight: search"></span>
+                  <span  [innerHTML]="plate.KPL.toString() | highLight: searchPlates"></span>
                 </div>
               </div>
             </div>
@@ -81,13 +91,13 @@
                 </div>
                 <div class="text-center-y info-row">
                   <div class="w-33 table-body cy">
-                    <span [innerHTML]="plate.count.toString() | highLight: search"></span>
+                    <span [innerHTML]="plate.count.toString() | highLight: searchPlates"></span>
                   </div>
                   <div class="w-33 table-body cy">
-                    <span [innerHTML]="plate.plateForecast.toString() | highLight: search"></span>
+                    <span [innerHTML]="plate.plateForecast.toString() | highLight: searchPlates"></span>
                   </div>
                   <div class="w-33 table-body cy">
-                    <span [innerHTML]="plate.nestedParts.toString() | highLight: search"></span>
+                    <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
               </div>
@@ -103,11 +113,11 @@
                 </div>
                 <div class="text-center-y info-row">
                   <div class="w-50 table-body">
-                    <span [innerHTML]="round(plate.realWeight).toString() | highLight: search"></span>
+                    <span [innerHTML]="round(plate.realWeight).toString() | highLight: searchPlates"></span>
                     <span class="pl-2">kg</span>
                   </div>
                   <div class="w-50 table-body cy">
-                    <span [innerHTML]="plate.realPartsCount.toString() | highLight: search"></span>
+                    <span [innerHTML]="plate.realPartsCount.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
               </div>
@@ -229,7 +239,7 @@
                   KSE
                 </div>
                 <div class="text-center-x">
-                  <span [innerHTML]="profile.KSE | highLight: search"></span>
+                  <span [innerHTML]="profile.KSE.toString() | highLight: search"></span>
                 </div>
               </div>
             </div>
