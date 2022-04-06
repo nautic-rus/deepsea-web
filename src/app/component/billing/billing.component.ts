@@ -27,6 +27,7 @@ export class BillingComponent implements OnInit {
   filtersPlates:  { material: any[], count: any[], scantling: any[] } = { material: [], count: [], scantling: [] };
   filtersProfiles:  { material: any[], count: any[], scantling: any[], section: any[] } = { material: [], count: [], scantling: [], section: [] };
   selectedHeadTab: string = 'Plates';
+  selectedView: string = 'tiles';
   sortPlatesValues: any[] = [
     'by KPL',
     'by QTY',
@@ -183,6 +184,53 @@ export class BillingComponent implements OnInit {
       'border-top-left-radius': number == 100 ? '8px' : '0',
       'border-bottom-left-radius': number == 100 ? '8px' : '0',
     };
+  }
+  getStock(number: number) {
+    return {
+      width: number + '%',
+      'border-top-right-radius': number >= 100 ? '8px' : '0',
+      'border-bottom-right-radius':  number >= 100 ? '8px' : '0',
+      'background': this.getColor(number)
+    };
+  }
+  getCount(number: number) {
+    return {
+      width: number + '%',
+      'border-top-left-radius': number == 100 ? '8px' : '0',
+      'border-bottom-left-radius': number == 100 ? '8px' : '0',
+      'background-color': number >= 100 ? '#ff5349' : '#EBF4FD'
+    };
+  }
+  getColor(number: number){
+    let color = '#94d42d'
+    if (number < 100){
+      color = 'linear-gradient(270deg, rgba(165,217,54,1) 0%, rgba(148,212,45,1) 100%)';
+    }
+    if (number < 50){
+      color = 'linear-gradient(270deg, rgba(183,222,63,1) 0%, rgba(165,217,54,1) 100%)';
+    }
+    if (number < 30){
+      color = 'linear-gradient(270deg, rgba(225,226,72,1) 0%, rgba(183,222,63,1) 100%)';
+    }
+    if (number < 20){
+      color = 'linear-gradient(270deg, rgba(225,201,72,1) 0%, rgba(225,226,72,1) 100%)';
+    }
+    if (number < 15){
+      color = 'linear-gradient(270deg, rgba(251,201,72,1) 0%, rgba(225,201,72,1) 100%)';
+    }
+    if (number < 13){
+      color = 'linear-gradient(270deg, rgba(253,164,73,1) 0%, rgba(251,201,72,1) 100%)';
+    }
+    if (number < 10){
+      color = 'linear-gradient(270deg, rgba(255,120,73,1) 0%, rgba(253,164,73,1) 100%)';
+    }
+    if (number < 7){
+      color = 'linear-gradient(270deg, rgba(255,108,73,1) 0%, rgba(255,120,73,1) 100%)';
+    }
+    if (number < 5){
+      color = 'linear-gradient(270deg, rgba(255,83,73,1) 0%, rgba(255,108,73,1) 100%)';
+    }
+    return color;
   }
   sortPlatesChanged() {
     this.platesSource = this.platesSource.filter((x: any) => x != null);
