@@ -216,14 +216,23 @@
       <div [class.hidden-card]="profile == null" class="dash-card-tile" *ngFor="let profile of profiles; let i = index">
         <div *ngIf="profile != null">
           <div class="top-row-tile">
-            <div class="cy">
-              <div class="cxy title-bold">
-                <div class="text-center-x" [innerHTML]="(profile.section.toString() + ' ' + profile.scantling.toString() + ' ' + profile.mat.toString()) | highLight: search"></div>
+            <div class="">
+              <div class="cx">
+                <div class="mm-text">length
+                  <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+                </div>
               </div>
-              <div class="cx text-mini-gray">
-                <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+              <div class="cxy title-bold">
+                <div class="text-center-x" [innerHTML]="(profile.section.toString() + ' ' + profile.scantling.toString()) | highLight: search"></div>
+
+              </div>
+              <div class="text-mini-gray">
+                <div class="text-center-x" [innerHTML]="(profile.mat.toString()) | highLight: search"></div>
               </div>
             </div>
+
+
+
             <div class="mt-minus5">
               <div class="text-center-x mb-2px">
                 <span class="text-mini-gray mr-10">scrap</span>
