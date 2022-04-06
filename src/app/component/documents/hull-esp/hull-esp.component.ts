@@ -941,12 +941,16 @@ export class HullEspComponent implements OnInit {
   }
 
   newImportantMessage() {
-    let res = false;
-    let messages = _.sortBy(this.getMessages(this.issue), x => x.date);
-    if (messages.length > 0){
-      let lastMessage = messages.reverse()[0];
-      res = lastMessage.to_be_replied == 1 && lastMessage.author != this.auth.getUser().login;
-    }
+    let res = 0;
+    let completed = false;
+    _.sortBy(this.getMessages(this.issue), x => x.date).reverse().forEach(msg => {
+      if (msg.to_be_replied == 1 && msg.author != this.auth.getUser().login && !completed){
+        res += 1;
+      }
+      else{
+        completed = true;
+      }
+    });
     return res;
   }
 }

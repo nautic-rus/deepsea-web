@@ -53,13 +53,15 @@
               <div class="cx">
                 <div class="mm-text">mm x m x m</div>
               </div>
-
               <div class="cxy title-bold">
-                <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: searchPlates"></div>
+                <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString()) | highLight: searchPlates"></div>
+              </div>
+              <div class="text-mini-gray">
+                <div class="text-center-x" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></div>
               </div>
             </div>
             <div class="mt-minus5">
-              <div class="text-center-x mb-2px">
+              <div class="text-center-x mb-5">
                 <span class="text-mini-gray mr-10">scrap</span>
                 <span class="text-mini mr-2px" [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
                 <span class="text-mini">%</span>
