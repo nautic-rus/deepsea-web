@@ -121,6 +121,9 @@ export class BillingComponent implements OnInit {
   round(input: number) {
     return Math.round(input * 100) / 100;
   }
+  roundDecimal(input: number){
+    return Math.round(input);
+  }
   getPlateFilters(plates: any[], field: string): any[] {
     let res: any[] = [];
     let uniq = _.uniq(plates, x => x[field]);
@@ -185,22 +188,65 @@ export class BillingComponent implements OnInit {
       'border-bottom-left-radius': number == 100 ? '8px' : '0',
     };
   }
-  getStock(number: number) {
+  getStock(plate: any) {
+    let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
+    let comp = values[0];
+    let width = plate.stock / comp * 100;
     return {
-      width: number + '%',
-      'border-top-right-radius': number >= 100 ? '8px' : '0',
-      'border-bottom-right-radius':  number >= 100 ? '8px' : '0',
-      'background': this.getColor(number)
+      position: 'absolute',
+      right: '0',
+      top: '0',
+      width: width + '%'
     };
   }
-  getCount(number: number) {
+  getStockValue(plate: any) {
+    let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
+    let comp = values[0];
+    return plate.stock / comp * 100;
+  }
+  getForecast(plate: any) {
+    let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
+    let comp = values[0];
+    let width = plate.plateForecast / comp * 100;
     return {
-      width: number + '%',
-      'border-top-left-radius': number == 100 ? '8px' : '0',
-      'border-bottom-left-radius': number == 100 ? '8px' : '0',
-      'background-color': number >= 100 ? '#ff5349' : '#EBF4FD'
+      position: 'absolute',
+      right: '0',
+      top: '0',
+      width: width + '%'
     };
   }
+  getForecastValue(plate: any) {
+    let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
+    let comp = values[0];
+    return plate.plateForecast / comp * 100;
+  }
+  getCount(plate: any) {
+    let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
+    let comp = values[0];
+    let width = plate.count / comp * 100;
+    return {
+      position: 'absolute',
+      right: '0',
+      top: '0',
+      width: width + '%'
+    };
+  }
+  // getStock(number: number) {
+  //   return {
+  //     width: number + '%',
+  //     'border-top-right-radius': number >= 100 ? '8px' : '0',
+  //     'border-bottom-right-radius':  number >= 100 ? '8px' : '0',
+  //     'background': this.getColor(number)
+  //   };
+  // }
+  // getCount(number: number) {
+  //   return {
+  //     width: number + '%',
+  //     'border-top-left-radius': number == 100 ? '8px' : '0',
+  //     'border-bottom-left-radius': number == 100 ? '8px' : '0',
+  //     'background-color': number >= 100 ? '#ff5349' : '#EBF4FD'
+  //   };
+  // }
   getColor(number: number){
     let color = '#94d42d'
     if (number < 100){
@@ -320,5 +366,9 @@ export class BillingComponent implements OnInit {
       this.profiles.push(null);
       this.profilesSource.push(null);
     }
+  }
+
+  abs(n: number) {
+    return Math.abs(n);
   }
 }
