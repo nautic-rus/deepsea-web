@@ -38,7 +38,7 @@ export class BillingComponent implements OnInit {
     'by Weight',
     'by Scrap'
   ];
-  sortPlatesValue = this.sortPlatesValues[0];
+  sortPlatesValue = this.sortPlatesValues[2];
   sortProfilesValues: any[] = [
     'by KSE',
     'by Section',
@@ -122,7 +122,7 @@ export class BillingComponent implements OnInit {
     return Math.round(input * 100) / 100;
   }
   roundDecimal(input: number){
-    return Math.round(input);
+    return Math.ceil(input);
   }
   getPlateFilters(plates: any[], field: string): any[] {
     let res: any[] = [];
@@ -278,6 +278,13 @@ export class BillingComponent implements OnInit {
     }
     return color;
   }
+  addLeftZeros(input: string, length: number){
+    let res = input;
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
+  }
   sortPlatesChanged() {
     this.platesSource = this.platesSource.filter((x: any) => x != null);
     switch (this.sortPlatesValues.indexOf(this.sortPlatesValue)) {
@@ -290,7 +297,7 @@ export class BillingComponent implements OnInit {
         break;
       }
       case 2:{
-        this.plates = _.sortBy(this.platesSource, x => x.mat);
+        this.plates = _.sortBy(this.platesSource, x => x.scantling.split('x').map((x: any) => this.addLeftZeros(x, 5)).join(''));
         break;
       }
       case 3:{

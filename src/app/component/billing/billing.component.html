@@ -62,8 +62,8 @@
           <div *ngIf="plate != null" >
             <div class="top-row-tile">
               <div class="pulse">
-                <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) >= 15" class="dot red"></div>
-                <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) < 15" class="dot orange"></div>
+                <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) >= 10" class="dot red"></div>
+                <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) < 10" class="dot orange"></div>
               </div>
               <div class="">
                 <div class="cx">
@@ -77,7 +77,7 @@
                     <span class="mr-5" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></span>
                     <span *ngIf="plate.oneSheetWeight != 0">
                       <span class="text-gray-mini">(</span>
-                      <span class="text-gray-mini">{{plate.oneSheetWeight}}</span>
+                      <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight + plate.oneSheetWeight * 1.9 / 100)}}</span>
                       <span class="text-gray-mini">kg</span>
                       <span class="text-gray-mini">)</span>
                     </span>
