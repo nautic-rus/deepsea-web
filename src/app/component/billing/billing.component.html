@@ -58,7 +58,7 @@
 
     <div *ngIf="selectedView == 'tiles'">
       <div *ngIf="selectedHeadTab == 'Plates'" class="tile">
-        <div [class.hidden-card]="plate == null" class="dash-card-tile" *ngFor="let plate of plates; let i = index">
+        <div [class.hidden-card]="plate == null" [class.block-card]="plate != null && plate.isDisabled" class="dash-card-tile" *ngFor="let plate of plates; let i = index">
           <div *ngIf="plate != null" >
             <div class="top-row-tile">
               <div class="pulse">
@@ -78,14 +78,13 @@
               </div>
               <div class="mt-minus5">
                 <div class="text-center-x mb-5">
-                  <span class="text-mini-gray mr-10">scrap</span>
-                  <span class="text-mini mr-2px" [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
-                  <span class="text-mini">%</span>
+                  <span class="text-mini-gray mr-10">Sheets</span>
+
                 </div>
                 <div class="cxy">
                   <div class="chart-area df">
-                    <div [ngStyle]="getWidthRightRadius(100 - plate.scrap)" class="h-100 chart-usage"></div>
-                    <div [ngStyle]="getWidthLeftRadius(plate.scrap)" class="h-100 chart-left"></div>
+                    <div [ngStyle]="getStock(plate.stock / plate.count * 100)" class="h-100 chart-stock-usage"></div>
+                    <div [ngStyle]="getCount(100 - plate.stock / plate.count * 100)" class="h-100 chart-count-left"></div>
                   </div>
                 </div>
               </div>
@@ -95,7 +94,7 @@
                     KPL
                   </div>
                   <div class="text-center-x">
-                    <span  [innerHTML]="plate.KPL.toString() | highLight: searchPlates"></span>
+                    <span [innerHTML]="plate.KPL.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
               </div>
@@ -105,26 +104,21 @@
               <div class="w-100">
                 <div class="table-bottom">
                   <div class="df">
-                    <div class="w-40 table-header-column df">
-                      <span class="mr-5">{{t.tr('Sheet QTY')}}</span>
-                      <span class="text-mini-gray" [innerHTML]="plate.stock.toString() | highLight: searchPlates"></span>
-                      <span class="text-mini-gray">/</span>
-                      <span class="text-mini-gray" [innerHTML]="plate.count.toString() | highLight: searchPlates"></span>
-                    </div>
-                    <div class="w-30 table-header-column cy">{{t.tr('Sheet Forecast')}}</div>
-                    <div class="w-30 table-header-column cy">{{t.tr('Nested Parts')}}</div>
+                    <div class="w-33 table-header-column df">{{t.tr('Scrap')}}</div>
+                    <div class="w-33 table-header-column cy">{{t.tr('Sheet Forecast')}}</div>
+                    <div class="w-33 table-header-column cy">{{t.tr('Nested Parts')}}</div>
                   </div>
                   <div class="text-center-y info-row">
-                    <div class="w-40 table-body cy">
-                      <div class="chart-area-count df">
-                        <div [ngStyle]="getStock(plate.stock / plate.count * 100)" class="h-100 chart-stock-usage"></div>
-                        <div [ngStyle]="getCount(100 - plate.stock / plate.count * 100)" class="h-100 chart-count-left"></div>
-                      </div>
+                    <div class="w-33 table-body df">
+                      <span [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
+                      <span class="mr-5">%</span>
+                      <span class="mr-5">/</span>
+                      <span class="mr-5">{{round(1 + (1 / (100 / (100 - plate.scrap))))}}</span>
                     </div>
-                    <div class="w-30 table-body cy">
+                    <div class="w-33 table-body cy">
                       <span [innerHTML]="plate.plateForecast.toString() | highLight: searchPlates"></span>
                     </div>
-                    <div class="w-30 table-body cy">
+                    <div class="w-33 table-body cy">
                       <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
                     </div>
                   </div>

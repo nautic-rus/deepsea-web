@@ -268,6 +268,9 @@ export class BillingComponent implements OnInit {
         break;
       }
     }
+    let newPlates = this.plates.filter(x => !x.isDisabled);
+    this.plates.filter(x => x.isDisabled).forEach(p => newPlates.push(p));
+    this.plates = newPlates;
     for (let x = 0; x < 10; x ++){
       this.plates.push(null);
       this.platesSource.push(null);
