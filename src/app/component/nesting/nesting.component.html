@@ -124,7 +124,7 @@
                     </div>
                     <div class="text-center-y ml-5">
                       <div class="left-tile cxy">
-                        <img src="assets/icons/recycle.svg" height="16">
+                        <img src="assets/icons/recycle-blue.svg" height="16">
                       </div>
                       <div class="ml-5">
                         <div class="usage-left-text">Left</div>
@@ -135,31 +135,29 @@
                 </div>
                 <div class="">
                   <div class="files-tile">
-                    <div class="">
+                    <div class=" ">
                       <div class="gray-text-tile cx mb-1px">Nesting:</div>
-                      <div class="cxy">
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show nesting file')" tooltipPosition="top">
-                          <img src="assets/icons/eyelashes.svg" height="24">
+                      <div class="cxy mt-7">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy " (click)="showNestingTemplate(nest); $event.stopPropagation()">
+                          <i class="pi pi-eye pi-size"></i>
                         </div>
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download nesting file')" tooltipPosition="top">
-                          <img src="assets/icons/download-file.svg" height="18">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadNestingFile(nest); $event.stopPropagation()">
+                          <i class="pi pi-download pi-size"></i>
                         </div>
                       </div>
-
                     </div>
                     <div class="">
-                      <div class="gray-text cx mb-1px">Cutting:</div>
-                      <div class="cxy">
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Show cutting file')" tooltipPosition="top">
-                          <img src="assets/icons/eyelashes2.svg" height="24">
+                      <div class="gray-text-tile cx mb-1px mt-5">Cutting:</div>
+                      <div class="cxy mt-7">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest); $event.stopPropagation()">
+                          <i class="pi pi-eye pi-size"></i>
                         </div>
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()" [pTooltip]="l.tr('Download cutting file')" tooltipPosition="top">
-                          <img src="assets/icons/download-file-blue-see.svg" height="18">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadCuttingFile(nest); $event.stopPropagation()">
+                          <i class="pi pi-download pi-size"></i>
                         </div>
+
                       </div>
-
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -224,7 +222,7 @@
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
-        <div class="w-15 min-width-220">
+        <div class="w-10 min-width-200">
           <div class="menu-card-tablet">
             <div class="left-block-materials">
               <div class="ovf-auto max-height-185">
@@ -268,7 +266,7 @@
 
           </div>
         </div>
-        <div class="w-85 cards-tablet min-width-400">
+        <div class="w-90 cards-tablet min-width-400">
           <div class="cxy card-height" *ngIf="noResult">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
@@ -320,7 +318,7 @@
                   <div class="df mt-5">
                     <div class="text-center-y">
                       <div class="usage-tile-tablet cxy">
-                        <img src="assets/icons/usage.svg" height="16">
+                        <img src="assets/icons/scissors.svg" height="13">
                       </div>
                       <div class="ml-2px">
                         <div class="usage-left-text-tablet">Usage</div>
@@ -329,7 +327,7 @@
                     </div>
                     <div class="text-center-y ml-2px">
                       <div class="left-tile-tablet cxy">
-                        <img src="assets/icons/recycle.svg" height="16">
+                        <img src="assets/icons/recycle-blue.svg" height="16">
                       </div>
                       <div class="ml-2px">
                         <div class="usage-left-text-tablet">Left</div>
@@ -341,30 +339,28 @@
                 <div class="">
                   <div class="files-tile">
                     <div class="">
-                      <div class="gray-text-tile-tablet cx mb-3px">Nesting:</div>
-                      <div class="cxy">
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile-tablet cursor-pointer mr-10" (click)="showNestingTemplate(nest); $event.stopPropagation()">
-                          <img src="assets/icons/eyelashes.svg" height="16">
+                      <div class="gray-text-tile cx mb-3px">Nesting:</div>
+                      <div class="cxy mt-5">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showNestingTemplate(nest); $event.stopPropagation()">
+                          <i class="pi pi-eye pi-size"></i>
                         </div>
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="cxy eye-file-tile-tablet cursor-pointer" (click)="downloadNestingFile(nest); $event.stopPropagation()">
-                          <img src="assets/icons/download-file.svg" height="18">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadNestingFile(nest); $event.stopPropagation()">
+                          <i class="pi pi-download pi-size"></i>
                         </div>
                       </div>
 
                     </div>
                     <div class="">
-                      <div class="gray-text-tile-tablet cx mb-3px">Cutting:</div>
-                      <div class="cxy">
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile-tablet cursor-pointer mr-10" (click)="showCuttingFile(nest); $event.stopPropagation()">
-                          <img src="assets/icons/eyelashes2.svg" height="18">
+                      <div class="gray-text-tile cx mt-5">Cutting:</div>
+                      <div class="cxy mt-5">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest); $event.stopPropagation()">
+                          <i class="pi pi-eye pi-size"></i>
                         </div>
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="cxy eye-cut-tile-tablet cursor-pointer" (click)="downloadCuttingFile(nest); $event.stopPropagation()">
-                          <img src="assets/icons/download-file-blue-see.svg" height="18">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadCuttingFile(nest); $event.stopPropagation()">
+                          <i class="pi pi-download pi-size"></i>
                         </div>
                       </div>
-
                     </div>
-
                   </div>
                 </div>
               </div>

@@ -80,6 +80,7 @@ export class BillingComponent implements OnInit {
       console.log(res);
     });
     this.s.getHullBillPlates(this.project).then(res => {
+      res.forEach((r: any) => r.side = 'front');
       this.plates = res;
       this.platesSource = res;
       this.filtersPlates.material = this.getPlateFilters(this.plates, 'mat');
@@ -160,6 +161,9 @@ export class BillingComponent implements OnInit {
           'Scrap': Math.round(plate.scrap) + '% / ' + this.round(1 + (1 / (100 / (100 - plate.scrap)))),
           'Real QTY': plate.realPartsCount,
           'Parts Weight': plate.realWeight,
+          'Stock Plates': plate.stock,
+          'Forecast Plates': plate.plateForecast,
+          'Usage Plates': plate.count,
         })
       });
     }
@@ -388,5 +392,9 @@ export class BillingComponent implements OnInit {
 
   abs(n: number) {
     return Math.abs(n);
+  }
+
+  flip(plate: any) {
+
   }
 }

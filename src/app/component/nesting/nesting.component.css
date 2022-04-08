@@ -113,7 +113,7 @@
   margin-right: 10px;
   margin-bottom: 20px;
   width: 450px;
-  height: 208px;
+  height: 196px;
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -124,7 +124,7 @@
   margin-left: 5px;
   margin-right: 5px;
   margin-bottom: 10px;
-  width: 310px;
+  width: 300px;
   height: 185px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -178,7 +178,7 @@
 .top-row-tile-tablet{
   height: 100px;
   display: grid;
-  grid-template-columns: 1fr auto 3fr;
+  grid-template-columns: 85px 130px 65px;
 }
 .min-width-300{
   min-width: 300px;
@@ -217,7 +217,8 @@
   font-size: 12px;
 }
 .gray-text-tile{
-  color: #a4a4a4;
+  color: #4c566a;
+  font-weight: 500;
   font-size: 12px;
 }
 .gray-text-tile-tablet{
@@ -293,11 +294,8 @@
 .info-row{
   display: flex;
 }
-.info-row:hover{
-  background-color: #f1f1f1;
-}
 .table-body{
-  padding: 10px;
+  padding: 6px 10px;
   color: #323130;
   font-size: 14px;
   text-align: center;
@@ -327,45 +325,29 @@
 .left-tile{
   height: 26px;
   width: 26px;
-  background-color: #D8DADC;
+  background-color: #EBF4FD;
   border-radius: 4px;
 }
 .usage-tile{
   height: 26px;
   width: 26px;
-  background-color: #FABC22;
+  background-color: #83BDCE;
   border-radius: 4px;
 }
 .usage-tile-tablet{
   height: 22px;
   width: 22px;
-  background-color: #FABC22;
+  background-color: #83BDCE;
   border-radius: 4px;
 }
 .left-tile-tablet{
   height: 22px;
   width: 22px;
-  background-color: #D8DADC;
+  background-color: #EBF4FD;
   border-radius: 4px;
 }
 .ml-2px{
   margin-left: 2px;
-}
-.left{
-  padding: 2px 8px;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  background-color: #BE78A2;
-  border-radius: 30px;
-}
-.usage{
-  padding: 2px 8px;
-  color: white;
-  font-size: 13px;
-  font-weight: 600;
-  background-color: #f9c851;
-  border-radius: 30px;
 }
 .eye-file{
   height: 32px;
@@ -423,20 +405,21 @@
 .button-fetch{
   height: 48px;
   width: 100%;
-  background-color: rgba(0,115,230,.08);
-  color: #0073e6;
+  font-weight: 500;
+  color: #4c566a;
   border-radius: 10px;
   padding: 10px;
   font-size: .875rem;
+  border: 1px solid rgba(108, 117, 125, 0.44);
 }
 .button-fetch:hover{
-  background-color: rgba(0,115,230,.12);
+  background-color: #F9FAFB;
 }
 .button-fetch-tablet{
   height: 38px;
   width: 100%;
-  background-color: rgba(0,115,230,.08);
-  color: #0073e6;
+  border: 1px solid rgba(108, 117, 125, 0.44);
+  color: #4c566a;
   border-radius: 10px;
   padding: 10px;
   font-size: .875rem;
@@ -500,7 +483,7 @@
 }
 .files-tile{
   display: grid;
-  grid-template-rows: 0.8fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 .mt-minus15{
   margin-top: -15px;
@@ -654,6 +637,19 @@
 .add-button:hover{
   background-color: #c800a3;
 }
+.eye-show-button{
+  color: #9199a9;
+}
+.eye-show-button:hover{
+  color: #88c0d0;
+}
+.pi-size{
+  font-size: 16px;
+}
+.eye-download{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
 .check-button{
   border-radius: 8px;
   padding: 6px;
@@ -664,7 +660,7 @@
   box-sizing: border-box;
   cursor: pointer;
   transition: box-shadow .2s,color .2s,background-color .2s;
-  font-size: 13px;
+  font-size: 12px;
   box-shadow: inset 0 0 0 1px #ccdbeb;
   line-height: 1rem;
   color: #172029;
@@ -679,13 +675,13 @@
   box-sizing: border-box;
   cursor: pointer;
   transition: box-shadow .2s,color .2s,background-color .2s;
-  font-size: 13px;
-  box-shadow: inset 0 0 0 1px #ccdbeb;
+  font-size: 12px;
+  box-shadow: inset 0 0 0 1px rgba(108, 117, 125, 0.44);
   line-height: 1rem;
   color: #172029;
 }
 .check-button:hover{
-  box-shadow: inset 0 0 0 1px #2788e9;
+  box-shadow: inset 0 0 0 1px #5E81AC;
 }
 .all-checkbox{
   margin: 0 0.5rem 0.5rem 0;
@@ -693,12 +689,12 @@
 }
 .checked-button{
   color: #fff;
-  background-color: #0073e6;
-  box-shadow: inset 0 0 0 1px #0073e6;
+  background-color: #5E81AC;
+  box-shadow: inset 0 0 0 1px #5E81AC;
 }
 .checked-button:hover{
-  background-color: #2788e9;
-  box-shadow: inset 0 0 0 1px #2788e9;
+  background-color: #48678C;
+  box-shadow: inset 0 0 0 1px #48678C;
 }
 .chart-area{
   width: 80%;
@@ -706,17 +702,17 @@
   border-radius: 8px;
 }
 .chart-area-tablet{
-  width: 80%;
+  width: 99%;
   height: 25px;
   border-radius: 8px;
 }
 .chart-usage{
-  background-color: #FABC22;
+  background-color: #83BDCE;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 }
 .chart-left{
-  background-color: #F2F6FA;
+  background-color: #EBF4FD;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }

@@ -146,27 +146,53 @@
   background-color: #E9ECEF;
 }
 .hidden-card{
-  opacity: 0;
+  opacity: 0 !important;
   height: 0 !important;
   padding: 0 !important;
   margin: 0 10px 0 10px !important;
 }
-.dash-card-tile{
-  padding: 10px;
+.dash-card{
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
-  width: 414px;
+  width: 340px;
   height: 248px;
+  position: relative;
+  perspective: 1000px;
+}
+.dash-card-tile{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.dash-card-tile-side-front{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+}
+.dash-card-tile-side-back{
+  padding: 10px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
   background-color: #ffffff;
   border-radius: 10px;
-  position: relative;
-  transition: 0.5s;
+}
+.flip-card{
+  transform: rotateY(180deg);
 }
 .dash-card-list{
   padding: 10px;
-  margin-bottom: 20px;
-  height: 238px;
+  margin-bottom: 10px;
+  height: 80px;
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -229,12 +255,12 @@
 .chart-stock-usage{
   background-color: #EBF4FD;
   border-radius: 6px;
-  box-shadow: 0px -1px 12px -1px rgba(34, 60, 80, 0.2) inset;
+  box-shadow: inset 0 0px 12px -5px #223c5033;
 }
 .chart-forecast-usage{
   background-color: #69b7ff52;
   border-radius: 6px;
-  box-shadow: 0px -1px 12px -2px rgba(34, 60, 80, 0.2) inset;
+  box-shadow: inset 0 0px 12px -5px #223c5033;
 }
 .chart-count-usage{
   background-color: #4c566a66;
@@ -277,7 +303,6 @@
   border-right: 1px solid #e1eaf4;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
-  cursor: default;
 }
 .table-bottom-list-two{
   border-top: 1px solid #e1eaf4;
@@ -285,7 +310,6 @@
   border-right: 1px solid #e1eaf4;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
-  cursor: default;
 }
 .table-bottom-list{
   border-top: 1px solid #e1eaf4;
@@ -400,4 +424,8 @@
 }
 .block-card{
   opacity: 0.5;
+}
+
+.hidden-card-flip{
+  display: none;
 }
