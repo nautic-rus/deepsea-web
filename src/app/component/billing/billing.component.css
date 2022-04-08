@@ -64,6 +64,10 @@
   top: 77px;
   z-index: 7;
 }
+.empty-card-list{
+  height: 10px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+}
 .card-head{
   background: #fff;
   padding: 12px;
@@ -197,11 +201,18 @@
   border-radius: 10px;
   position: relative;
   transition: 0.5s;
+  display: grid;
+  grid-template-columns: 5px 0.4fr 0.35fr 0.35fr 0.9fr 2fr 55px;
 }
 .tile{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.mini-extra-gray-text{
+  color: #4c566a;
+  font-weight: 500;
+  font-size: 12px;
 }
 .list{
 
@@ -233,6 +244,14 @@
 }
 .chart-area{
   width: 90%;
+  height: 30px;
+  border-radius: 8px !important;
+  position: relative;
+}
+.chart-area-list{
+  width: 50%;
+  max-width: 200px;
+  min-width: 150px;
   height: 30px;
   border-radius: 8px !important;
   position: relative;
@@ -284,6 +303,11 @@
   font-weight: 500;
   font-size: 14px;
 }
+.text-medium-gray{
+  color: rgba(58, 58, 58, 0.75);
+  font-weight: 500;
+  font-size: 20px;
+}
 .text-black-mini{
   font-weight: 700;
   color: #3a3a3a;
@@ -318,6 +342,7 @@
   cursor: default;
 }
 .table-header-column{
+  border-top: 1px solid #f3f2f1;
   border-bottom: 1px solid #f3f2f1;
   display: flex;
   font-weight: 700;
@@ -328,12 +353,26 @@
   line-height: 1.25rem;
   justify-content: center;
 }
+.border-right-list{
+  border-right: 1px solid #f3f2f1;
+}
 .table-body{
   padding: 6px 10px;
   color: #64686A;
   font-size: 14px;
   text-align: center;
   justify-content: center;
+}
+.table-body-list{
+  border-bottom: 1px solid #f3f2f1;
+  padding: 5px 8px;
+  color: #64686A;
+  font-size: 14px;
+  text-align: center;
+  justify-content: center;
+}
+.padding-5{
+  padding: 5px;
 }
 .kpl-flag{
   padding: 1px 3px;
@@ -358,6 +397,18 @@
   font-size: 14px;
   font-weight: 500;
 }
+.left-label-model-list{
+  border-radius: 2px;
+  background-color: #C3EAE9;
+  height: 70px;
+  width: 30px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-align: center;
+  color: #39B8B6;
+  font-size: 14px;
+  font-weight: 500;
+}
 .left-label-nest{
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
@@ -370,6 +421,21 @@
   color: #F6AC43;
   font-size: 14px;
   font-weight: 500;
+}
+.left-label-nest-list{
+  border-radius: 2px;
+  background-color: #FCE6BF;
+  height: 70px;
+  width: 30px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-align: center;
+  color: #F6AC43;
+  font-size: 14px;
+  font-weight: 500;
+}
+.h-62{
+  height: 62px;
 }
 .mm-text{
   color: #7575759e;

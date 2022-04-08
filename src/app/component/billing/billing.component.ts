@@ -30,15 +30,14 @@ export class BillingComponent implements OnInit {
   selectedView: string = 'tiles';
   sortPlatesValues: any[] = [
     'by KPL',
-    'by QTY',
     'by Material',
+    'by Steel Grade',
     'by Nested Parts',
-    'by Sheet Forecast',
-    'by Count',
-    'by Weight',
+    'by Plate Weight',
+    'by Parts Weight',
     'by Scrap'
   ];
-  sortPlatesValue = this.sortPlatesValues[2];
+  sortPlatesValue = this.sortPlatesValues[1];
   sortProfilesValues: any[] = [
     'by KSE',
     'by Section',
@@ -119,8 +118,8 @@ export class BillingComponent implements OnInit {
       //this.fill();
     });
   }
-  round(input: number) {
-    return Math.round(input * 100) / 100;
+  round(input: number, digit = 100) {
+    return Math.round(input * digit) / digit;
   }
   roundDecimal(input: number){
     return Math.ceil(input);
@@ -147,11 +146,12 @@ export class BillingComponent implements OnInit {
     });
     return _.sortBy(res, x => x.label);
   }
+
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
     let data: any[] = [];
     if (this.selectedHeadTab == 'Plates'){
-      this.plates.forEach(plate => {
+      this.plates.filter((x: any) => x != null).forEach(plate => {
         data.push({
           'Thickness (mm)': plate.scantling.split('x')[0],
           'Thickness Name': 'PL' + plate.scantling.split('x')[0],
@@ -172,6 +172,8 @@ export class BillingComponent implements OnInit {
     }
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    worksheet['!cols'] = [{wch:13},{wch:13},{wch:10},{wch:10},{wch:10},{wch:10},{wch:8},{wch:14},{wch:10},{wch:10},{wch:10}];
+
     XLSX.writeFile(workbook, fileName);
   }
   generateId(length: number): string {
@@ -308,11 +310,11 @@ export class BillingComponent implements OnInit {
         break;
       }
       case 1:{
-        this.plates = _.sortBy(this.platesSource, x => x.count);
+        this.plates = _.sortBy(this.platesSource, x => x.scantling.split('x').map((x: any) => this.addLeftZeros(x, 5)).join(''));
         break;
       }
       case 2:{
-        this.plates = _.sortBy(this.platesSource, x => x.scantling.split('x').map((x: any) => this.addLeftZeros(x, 5)).join(''));
+        this.plates = _.sortBy(this.platesSource, x => x.mat + x.scantling.split('x').map((x: any) => this.addLeftZeros(x, 5)).join(''));
         break;
       }
       case 3:{
@@ -320,18 +322,14 @@ export class BillingComponent implements OnInit {
         break;
       }
       case 4:{
-        this.plates = _.sortBy(this.platesSource, x => x.plateForecast);
+        this.plates = _.sortBy(this.platesSource, x => x.oneSheetWeight);
         break;
       }
       case 5:{
-        this.plates = _.sortBy(this.platesSource, x => x.realPartsCount);
-        break;
-      }
-      case 6:{
         this.plates = _.sortBy(this.platesSource, x => x.realWeight);
         break;
       }
-      case 7:{
+      case 6:{
         this.plates = _.sortBy(this.platesSource, x => x.scrap).reverse();
         break;
       }

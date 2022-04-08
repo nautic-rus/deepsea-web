@@ -60,7 +60,8 @@
       <div *ngIf="selectedHeadTab == 'Plates'" class="tile">
         <div *ngFor="let plate of plates; let i = index" class="dash-card" [class.hidden-card]="plate == null">
           <div *ngIf="plate != null" class="dash-card-tile" [class.flip-card]="plate.side == 'back'">
-            <div class="dash-card-tile-side-front" (click)="plate.side = 'back'" [class.block-card]="plate != null && plate.isDisabled">
+            <div class="dash-card-tile-side-front" [class.block-card]="plate != null && plate.isDisabled">
+<!--              <div class="dash-card-tile-side-front" (click)="plate.side = 'back'" [class.block-card]="plate != null && plate.isDisabled">-->
               <div *ngIf="plate != null">
                 <div class="top-row-tile">
                   <div class="pulse">
@@ -72,17 +73,17 @@
                       <div class="mm-text">mm x m x m</div>
                     </div>
                     <div class="cxy title-bold">
-                      <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString()) | highLight: searchPlates"></div>
+                      <div class="text-center-x" [innerHTML]="('PL' + plate.scantling.toString()) | highLight: searchPlates"></div>
                     </div>
                     <div class="text-mini-gray">
                       <div class="text-center-x">
                         <span class="mr-5" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></span>
                         <span *ngIf="plate.oneSheetWeight != 0">
-                      <span class="text-gray-mini">(</span>
-                      <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight + plate.oneSheetWeight * 1.9 / 100)}}</span>
-                      <span class="text-gray-mini">kg</span>
-                      <span class="text-gray-mini">)</span>
-                    </span>
+                          <span class="text-gray-mini">(</span>
+                          <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight + plate.oneSheetWeight * 1.9 / 100)}}</span>
+                          <span class="text-gray-mini">kg</span>
+                          <span class="text-gray-mini">)</span>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -118,7 +119,7 @@
                     </div>
                   </div>
                   <div class="flex-end-top">
-                    <div class="kpl-flag cxy" (click)="flip(plate)">
+                    <div class="kpl-flag cxy">
                       <div class="text-center-x pr-5">
                         KPL
                       </div>
@@ -286,179 +287,112 @@
     </div>
     <div *ngIf="selectedView == 'list'">
       <div *ngIf="selectedHeadTab == 'Plates'" class="list">
-        <div [class.hidden-card]="plate == null" class="dash-card-list" *ngFor="let plate of plates; let i = index">
-          <div *ngIf="plate != null" >
-            <div class="row-list">
-              <div>
-                <div class="">
-                  <div class="cx">
-                    <div class="mm-text">mm x m x m</div>
-                  </div>
-                  <div class="cxy title-bold">
-                    <div class="text-center-x" [innerHTML]="('S' + plate.scantling.toString()) | highLight: searchPlates"></div>
-                  </div>
-                  <div class="text-mini-gray">
-                    <div class="text-center-x" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></div>
-                  </div>
+        <div [class.hidden-card]="plate == null"  *ngFor="let plate of plates; let i = index">
+          <div *ngIf="plate != null" class="dash-card-list" [class.block-card]="plate != null && plate.isDisabled">
+            <div class="pulse-list">
+              <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) >= 3" class="dot red"></div>
+              <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) < 3" class="dot orange"></div>
+            </div>
+            <div class="df flex-column min-width-105">
+              <div class="mini-extra-gray-text text-center-x">Material</div>
+              <div class="cxy title-bold">
+                <span class="text-center-x" [innerHTML]="('PL' + plate.scantling.toString()) | highLight: searchPlates"></span>
+              </div>
+              <div class="cxy">
+                <div class="mm-text">mm x m x m</div>
+              </div>
+            </div>
+            <div class="df flex-column min-width-90">
+              <div class="mini-extra-gray-text text-center-x">Stell Grade</div>
+              <div class="cxy title-bold">
+                <span class="text-center-x" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></span>
+              </div>
+            </div>
+            <div class="df flex-column min-width-90">
+              <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
+              <div class="cxy title-bold">
+                <span *ngIf="plate.oneSheetWeight != 0">
+                  <span class="text-gray-mini">(</span>
+                  <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight + plate.oneSheetWeight * 1.9 / 100)}}</span>
+                  <span class="text-gray-mini">kg</span>
+                  <span class="text-gray-mini">)</span>
+                </span>
+              </div>
+            </div>
+            <div class="df flex-column">
+              <div class="mini-extra-gray-text text-center-x">
+                <span class="mr-5">stock</span>
+                <span class="">/</span>
+                <span class="mx-5">forecast</span>
+                <span class="">/</span>
+                <span class="ml-5">usage</span>
+              </div>
+              <div class="cx">
+                <span class="text-black-mini mr-5 width-30 text-center-x">{{plate.stock}}</span>
+                <span class="text-black-mini text-center-x">/</span>
+                <span class="text-black-mini mx-5 width-30 text-center-x">{{plate.plateForecast}}</span>
+                <span class="text-black-mini text-center-x">/</span>
+                <span class="text-black-mini ml-5 width-30 text-center-x">{{plate.count}}</span>
+              </div>
+              <div class="cx">
+                <div class="chart-area-list df">
+                  <div [ngStyle]="getStock(plate)" [class.null-stock]="plate.stock == 0" class="h-100 chart-stock-usage"></div>
+                  <div [ngStyle]="getForecast(plate)" [class.null-stock]="plate.plateForecast == 0" class="h-100 chart-forecast-usage"></div>
+                  <div [ngStyle]="getCount(plate)" [class.null-stock]="plate.count == 0" class="h-100 chart-count-usage"></div>
                 </div>
               </div>
-              <div>
-                <div class="mt-minus5">
-                  <div class="text-center-x mb-5">
-                    <span class="text-mini-gray mr-10">scrap</span>
-                    <span class="text-mini mr-2px" [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
-                    <span class="text-mini">%</span>
-                  </div>
-                  <div class="cxy">
-                    <div class="chart-area df">
-                      <div [ngStyle]="getWidthRightRadius(100 - plate.scrap)" class="h-100 chart-usage"></div>
-                      <div [ngStyle]="getWidthLeftRadius(plate.scrap)" class="h-100 chart-left"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="df w-100">
+            </div>
+            <div class="df w-99">
+              <div class="left-label-nest-list h-62 cxy">NEST</div>
+              <div class="df flex-column w-100">
                 <div class="df">
-                  <div class="left-label-nest cxy">NEST</div>
-                  <div class="">
-                    <div class="table-bottom-list">
-                      <div class="df">
-                        <div class="w-33 table-header-column cy">{{t.tr('Sheet QTY')}}</div>
-                        <div class="w-33 table-header-column cy">{{t.tr('Sheet Forecast')}}</div>
-                        <div class="w-33 table-header-column cy">{{t.tr('Nested Parts')}}</div>
-                      </div>
-                      <div class="text-center-y info-row">
-                        <div class="w-33 table-body cy">
-                          <span [innerHTML]="plate.count.toString() | highLight: searchPlates"></span>
-                        </div>
-                        <div class="w-33 table-body cy">
-                          <span [innerHTML]="plate.plateForecast.toString() | highLight: searchPlates"></span>
-                        </div>
-                        <div class="w-33 table-body cy">
-                          <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="w-50 table-header-column padding-5">{{t.tr('Scrap')}}</div>
+                  <div class="w-50 table-header-column padding-5">{{t.tr('Nested Parts')}}</div>
                 </div>
                 <div class="df">
-                  <div class="left-label-model cxy">MODEL</div>
-                  <div class="">
-                    <div class="table-bottom-list-two">
-                      <div class="df">
-                        <div class="w-50 table-header-column cy">{{t.tr('Parts Weight')}}</div>
-                        <div class="w-50 table-header-column cy">{{t.tr('Parts QTY')}}</div>
-                      </div>
-                      <div class="text-center-y info-row">
-                        <div class="w-50 table-body">
-                          <span [innerHTML]="round(plate.realWeight).toString() | highLight: searchPlates"></span>
-                          <span class="pl-2">kg</span>
-                        </div>
-                        <div class="w-50 table-body cy">
-                          <span [innerHTML]="plate.realPartsCount.toString() | highLight: searchPlates"></span>
-                        </div>
-                      </div>
-                    </div>
+                  <div class="w-50 table-body-list df">
+                    <span [innerHTML]="round(plate.scrap, 10).toString() | highLight: searchPlates"></span>
+                    <span class="mr-5">%</span>
+                    <span class="mr-5">/</span>
+                    <span class="mr-5">{{round(1 + (1 / (100 / (100 - plate.scrap))))}}</span>
+                  </div>
+                  <div class="w-50 table-body-list">
+                    <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
               </div>
-              <div>
-                <div class="flex-end-top">
-                  <div class="kpl-flag cxy">
-                    <div class="text-center-x pr-5">
-                      KPL
-                    </div>
-                    <div class="text-center-x">
-                      <span  [innerHTML]="plate.KPL.toString() | highLight: searchPlates"></span>
-                    </div>
+
+              <div class="left-label-model-list h-62 cxy">MODEL</div>
+              <div class="df flex-column w-100">
+                <div class="df">
+                  <div class="w-50 table-header-column padding-5">{{t.tr('Parts Weight')}}</div>
+                  <div class="w-50 table-header-column padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
+                </div>
+                <div class="df">
+                  <div class="w-50 table-body-list df">
+                    <span [innerHTML]="round(plate.realWeight, 10).toString() | highLight: searchPlates"></span>
+                    <span class="pl-2">kg</span>
+                  </div>
+                  <div class="w-50 table-body-list border-right-list">
+                    <span [innerHTML]="plate.realPartsCount.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="flex-end-top">
+              <div class="kpl-flag cxy">
+                <div class="text-center-x pr-5">
+                  KPL
+                </div>
+                <div class="text-center-x">
+                  <span [innerHTML]="plate.KPL.toString() | highLight: searchPlates"></span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-
-
-
-        <!--      <p-table #table [value]="plates"-->
-        <!--               [scrollable]="true"-->
-        <!--               scrollHeight="calc(100vh - 268px)"-->
-        <!--               [virtualScroll]="false"-->
-        <!--               [virtualRowHeight]="40"-->
-        <!--               [reorderableColumns]="false"-->
-        <!--               [resizableColumns]="false"-->
-        <!--               styleClass="p-datatable-striped"-->
-        <!--               scrollDirection="both"-->
-        <!--               [globalFilterFields]="['id','doc_number','name','status']">-->
-        <!--        <ng-template pTemplate="header">-->
-        <!--          <tr class="df">-->
-        <!--            <th pSortableColumn="KPL" class="lxy w-13">{{t.tr('KPL')}}-->
-        <!--              <p-sortIcon field="KPL"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="count" class="cxy w-12">{{t.tr('Sheet QTY')}}-->
-        <!--              <p-sortIcon field="count"></p-sortIcon>-->
-        <!--              <p-columnFilter class="filter" [field]="'count'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
-        <!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-        <!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.count" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">-->
-        <!--                  </p-multiSelect>-->
-        <!--                </ng-template>-->
-        <!--              </p-columnFilter>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="mat" class="cxy w-15">{{t.tr('Material')}}-->
-        <!--              <p-sortIcon field="mat"></p-sortIcon>-->
-        <!--              <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
-        <!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-        <!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersPlates.material" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">-->
-        <!--                  </p-multiSelect>-->
-        <!--                </ng-template>-->
-        <!--              </p-columnFilter>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="nestedParts" class="lxy w-12">{{t.tr('Nested Parts')}}-->
-        <!--              <p-sortIcon field="nestedParts"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="plateForecast" class="lxy w-12">{{t.tr('Sheet Forecast')}}-->
-        <!--              <p-sortIcon field="plateForecast"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="realPartsCount" class="lxy w-12">{{t.tr('Real Parts Count')}}-->
-        <!--              <p-sortIcon field="realPartsCount"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="realWeight" class="lxy w-12">{{t.tr('Weight')}}-->
-        <!--              <p-sortIcon field="realWeight"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="scrap" class="lxy w-12">{{t.tr('Scrap')}}-->
-        <!--              <p-sortIcon field="scrap"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--          </tr>-->
-        <!--        </ng-template>-->
-        <!--        <ng-template pTemplate="body" let-plate let-i="rowIndex">-->
-        <!--          <tr class="cursor-pointer row-table-doc-hover">-->
-        <!--            <td class="w-13 text-14">-->
-        <!--              <span [innerHTML]="plate.KPL.toString() | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-12 text-14">-->
-        <!--              <span [innerHTML]="plate.count.toString() | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-15 text-14">-->
-        <!--              <span [innerHTML]="('S' + plate.scantling.toString() + ' ' + plate.mat.toString()) | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-12 text-14">-->
-        <!--              <span [innerHTML]="plate.nestedParts.toString() | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-12 text-14">-->
-        <!--              <span [innerHTML]="plate.plateForecast.toString() | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-12 text-14">-->
-        <!--              <span [innerHTML]="plate.realPartsCount.toString() | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-12 text-14">-->
-        <!--              <span [innerHTML]="round(plate.realWeight).toString() | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-12 text-14">-->
-        <!--              <span [innerHTML]="round(plate.scrap).toString() | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--          </tr>-->
-        <!--        </ng-template>-->
-        <!--      </p-table>-->
+        <div class="empty-card-list"></div>
       </div>
       <div *ngIf="selectedHeadTab == 'Profiles'" class="tile">
         <div [class.hidden-card]="profile == null" class="dash-card-tile" *ngFor="let profile of profiles; let i = index">

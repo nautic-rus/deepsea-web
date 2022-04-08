@@ -157,6 +157,24 @@ body,p{
 .w-90{
   width: 90%;
 }
+.w-91{
+  width: 91%;
+}
+.w-93{
+  width: 93%;
+}
+.w-96{
+  width: 96%;
+}
+.w-97{
+  width: 97%;
+}
+.w-98{
+  width: 98%;
+}
+.w-99{
+  width: 99%;
+}
 .w-100{
   width: 100%;
 }
@@ -246,6 +264,12 @@ body,p{
 }
 .min-width-75{
   min-width: 75px;
+}
+.min-width-90{
+  min-width: 90px;
+}
+.min-width-105{
+  min-width: 105px;
 }
 .min-width-150{
   min-width: 150px;
@@ -539,6 +563,9 @@ body,p{
 .my-20{
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.padding-5{
+  padding: 5px 0;
 }
 .pt-5{
   padding-top: 5px;
