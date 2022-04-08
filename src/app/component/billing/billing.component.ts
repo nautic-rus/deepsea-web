@@ -148,16 +148,27 @@ export class BillingComponent implements OnInit {
   }
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = [];
     if (this.selectedHeadTab == 'Plates'){
-      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.plates.filter((x: any) => x != null));
-      const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-      XLSX.writeFile(workbook, fileName);
+      this.plates.forEach(plate => {
+        data.push({
+          'Thickness (mm)': plate.scantling.split('x')[0],
+          'Thickness Name': 'PL' + plate.scantling.split('x')[0],
+          'Steel Grade': plate.mat,
+          'Plate (kg)': (+plate.oneSheetWeight * 1.019),
+          'Nested Parts': plate.nestedParts,
+          'Scrap': Math.round(plate.scrap) + '% / ' + this.round(1 + (1 / (100 / (100 - plate.scrap)))),
+          'Real QTY': plate.realPartsCount,
+          'Parts Weight': plate.realWeight,
+        })
+      });
     }
     if (this.selectedHeadTab == 'Profiles'){
-      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.profiles.filter((x: any) => x != null));
-      const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-      XLSX.writeFile(workbook, fileName);
+      data = this.profiles.filter((x: any) => x != null);
     }
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
   }
   generateId(length: number): string {
     let result = '';
