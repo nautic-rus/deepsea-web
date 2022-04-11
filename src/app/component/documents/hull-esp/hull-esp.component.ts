@@ -112,6 +112,11 @@ export class HullEspComponent implements OnInit {
         }
       }
     }
+  sortValues: any[] = [
+    'by Date',
+    'by Name',
+  ];
+  sortValue = this.sortValues[1];
   fileGroups = [
     {
       name: 'Drawings',
@@ -620,7 +625,7 @@ export class HullEspComponent implements OnInit {
   }
 
   getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
-    return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.name);
+    return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.upload_date + x.name).reverse();
   }
 
   createEsp() {

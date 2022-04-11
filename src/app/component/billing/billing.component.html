@@ -60,8 +60,7 @@
       <div *ngIf="selectedHeadTab == 'Plates'" class="tile">
         <div *ngFor="let plate of plates; let i = index" class="dash-card" [class.hidden-card]="plate == null">
           <div *ngIf="plate != null" class="dash-card-tile" [class.flip-card]="plate.side == 'back'">
-            <div class="dash-card-tile-side-front" [class.block-card]="plate != null && plate.isDisabled">
-<!--              <div class="dash-card-tile-side-front" (click)="plate.side = 'back'" [class.block-card]="plate != null && plate.isDisabled">-->
+            <div class="dash-card-tile-side-front" (click)="handleClick($event, plate)" [class.block-card]="plate != null && plate.isDisabled">
               <div *ngIf="plate != null">
                 <div class="top-row-tile">
                   <div class="pulse">
@@ -346,8 +345,8 @@
               <div class="left-label-nest-list h-62 cxy">NEST</div>
               <div class="df flex-column w-100">
                 <div class="df">
-                  <div class="w-50 table-header-column padding-5">{{t.tr('Scrap')}}</div>
-                  <div class="w-50 table-header-column padding-5">{{t.tr('Nested Parts')}}</div>
+                  <div class="w-50 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
+                  <div class="w-50 table-header-column border-top-list padding-5">{{t.tr('Nested Parts')}}</div>
                 </div>
                 <div class="df">
                   <div class="w-50 table-body-list df">
@@ -365,8 +364,8 @@
               <div class="left-label-model-list h-62 cxy">MODEL</div>
               <div class="df flex-column w-100">
                 <div class="df">
-                  <div class="w-50 table-header-column padding-5">{{t.tr('Parts Weight')}}</div>
-                  <div class="w-50 table-header-column padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
+                  <div class="w-50 table-header-column border-top-list padding-5">{{t.tr('Parts Weight')}}</div>
+                  <div class="w-50 table-header-column border-top-list padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
                 </div>
                 <div class="df">
                   <div class="w-50 table-body-list df">

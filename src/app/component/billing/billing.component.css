@@ -342,7 +342,6 @@
   cursor: default;
 }
 .table-header-column{
-  border-top: 1px solid #f3f2f1;
   border-bottom: 1px solid #f3f2f1;
   display: flex;
   font-weight: 700;
@@ -352,6 +351,9 @@
   font-size: 12px;
   line-height: 1.25rem;
   justify-content: center;
+}
+.border-top-list{
+  border-top: 1px solid #f3f2f1;
 }
 .border-right-list{
   border-right: 1px solid #f3f2f1;

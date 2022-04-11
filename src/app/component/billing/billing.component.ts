@@ -395,4 +395,10 @@ export class BillingComponent implements OnInit {
   flip(plate: any) {
 
   }
+
+  public handleClick(event: any, plate: any) {
+    if (event.view.getSelection().toString().length === 0) {
+      plate.side = 'back'
+    }
+  }
 }
