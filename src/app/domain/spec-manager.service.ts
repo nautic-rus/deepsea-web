@@ -35,6 +35,9 @@ export class SpecManagerService {
     return await this.http.get<any>(props.httpSpec + '/hullEspFiles', {params: {project, docNumber, docName, revision}}).toPromise();
   }
 
+  async hullPlates(project: string, material: string, thickness: number) {
+    return await this.http.get<any>(props.httpSpec + '/hullPlates', {params: {project, material, thickness}}).toPromise();
+  }
   async getCables(project: string, bundle: string, magistral: number): Promise<any[]> {
     return await this.http.get<any[]>(props.httpSpec + '/elecCables', {params: {project, bundle, magistral}}).toPromise();
     // return await this.http.get<any[]>('assets/test/cables.json', {params: {project, bundle, magistral}}).toPromise();

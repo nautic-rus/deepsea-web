@@ -410,11 +410,11 @@ export class BillingComponent implements OnInit {
       plate.side = 'front';
     }
   }
-  showPartsQty() {
+  showPartsQty(plate: any) {
     this.dialogService.open(PartsQtyComponent, {
       showHeader: false,
       modal: true,
-      data: '',
+      data: [this.project, plate],
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.ref.close();

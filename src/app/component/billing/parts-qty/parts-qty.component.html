@@ -47,13 +47,13 @@
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-issue>
+      <ng-template pTemplate="body" let-part>
         <tr class="cursor-pointer row-table-doc-hover">
-          <td class="w-20 text-14">{{issue.doc_number}}</td>
-          <td class="w-20 text-14">{{issue.name}}</td>
-          <td class="w-20 text-14">{{issue.department}}</td>
-          <td class="w-20 text-14">{{issue.revision}}</td>
-          <td class="w-20 text-14">{{issue.revision}}</td>
+          <td class="w-20 text-14">{{part.code}}</td>
+          <td class="w-20 text-14">{{part.block}}</td>
+          <td class="w-20 text-14">{{part.name}}</td>
+          <td class="w-20 text-14">{{part.description}}</td>
+          <td class="w-20 text-14">{{part.weight}}</td>
         </tr>
       </ng-template>
     </p-table>
