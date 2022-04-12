@@ -9,11 +9,7 @@
   padding: 3px;
   width: 70vw;
 }
-.card-overflow{
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  height: calc(100vh - 116px);
-}
+
 .header-parts{
   border-bottom: 0 none;
   background: #ffffff;

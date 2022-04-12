@@ -1,14 +1,14 @@
 <div class="all-parts-container" >
   <div class="header-parts">
-    <div class="header-parts-text">Название и марка материала</div>
+    <div class="header-parts-text">{{'PL' + plate.scantling + ' ' + plate.mat}}</div>
     <div class="parts-button-close cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="card-overflow">
+  <div class="">
     <p-table #table [value]="parts"
              [scrollable]="true"
-             scrollHeight="calc(100vh - 200px)"
+             scrollHeight="calc(100vh - 270px)"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
              [reorderableColumns]="false"
