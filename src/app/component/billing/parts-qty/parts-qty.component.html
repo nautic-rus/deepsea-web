@@ -15,11 +15,11 @@
              [resizableColumns]="false"
              styleClass="p-datatable-striped"
              responsiveLayout="scroll"
-             [globalFilterFields]="['part_number','block','material_name','material_description', 'part_weight']">
+             [globalFilterFields]="['code','block','name','description', 'weight']">
       <ng-template pTemplate="header">
         <tr class="df">
-          <th pSortableColumn="part_number" class="lxy w-20">{{'Number'}}
-            <p-sortIcon field="part_number"></p-sortIcon>
+          <th pSortableColumn="code" class="lxy w-20">{{'Number'}}
+            <p-sortIcon field="code"></p-sortIcon>
           </th>
           <th pSortableColumn="block" class="lxy w-20">{{t.tr('Block')}}
             <p-sortIcon field="block"></p-sortIcon>
@@ -30,20 +30,20 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="material_name" class="lxy w-20">{{t.tr('Name')}}
-            <p-sortIcon field="material_name"></p-sortIcon>
+          <th pSortableColumn="name" class="lxy w-20">{{t.tr('Name')}}
+            <p-sortIcon field="name"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'material_name'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.material_name" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.name" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="material_description" class="lxy w-20">{{t.tr('Description')}}
-            <p-sortIcon field="material_description"></p-sortIcon>
+          <th pSortableColumn="description" class="lxy w-20">{{t.tr('Description')}}
+            <p-sortIcon field="description"></p-sortIcon>
           </th>
-          <th pSortableColumn="part_weight" class="lxy w-20">{{t.tr('Weight')}}
-            <p-sortIcon field="part_weight"></p-sortIcon>
+          <th pSortableColumn="weight" class="lxy w-20">{{t.tr('Weight')}}
+            <p-sortIcon field="weight"></p-sortIcon>
           </th>
         </tr>
       </ng-template>

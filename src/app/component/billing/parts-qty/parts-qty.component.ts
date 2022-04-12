@@ -13,7 +13,7 @@ import _ from "underscore";
 export class PartsQtyComponent implements OnInit {
   plates: any[] = [];
   parts: any[] = [];
-  filters:  { part_number: any[],  block: any[], material_name: any[] } = { part_number: [], block: [], material_name: [] };
+  filters:  { block: any[], name: any[] } = { block: [], name: [] };
   plate: any;
   project = '';
 
@@ -26,9 +26,25 @@ export class PartsQtyComponent implements OnInit {
     this.plate = this.conf.data[1];
     this.s.hullPlates(this.project, this.plate.mat, this.plate.scantling.split('x')[0]).then(res => {
       this.parts = _.sortBy(res, x => x.code);
+      this.fillParts();
     });
   }
   close() {
     this.ref.close();
   }
+  getFilters(issues: any[], field: string): any[] {
+    let res: any[] = [];
+    let uniq = _.uniq(issues, x => x[field]);
+    uniq.forEach(x => {
+      res.push({
+        label: x[field],
+        value: x[field]
+      })
+    });
+    return _.sortBy(res, x => x.label);
+  }
+  fillParts() {
+    this.filters.block = this.getFilters(this.parts, 'block');
+    this.filters.name = this.getFilters(this.parts, 'name');
+  };
 }

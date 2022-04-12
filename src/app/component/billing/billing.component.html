@@ -133,17 +133,21 @@
                   <div class="w-100">
                     <div class="table-bottom">
                       <div class="df">
-                        <div class="w-50 table-header-column df">{{t.tr('Scrap')}}</div>
-                        <div class="w-50 table-header-column cy">{{t.tr('Nested Parts')}}</div>
+                        <div class="w-33 table-header-column cy">{{t.tr('Rest')}}</div>
+                        <div class="w-33 table-header-column df">{{t.tr('Scrap')}}</div>
+                        <div class="w-33 table-header-column cy">{{t.tr('Nested Parts')}}</div>
                       </div>
                       <div class="text-center-y info-row">
-                        <div class="w-50 table-body df">
+                        <div class="w-33 table-body cy">
+                          <span [innerHTML]="round(plate.wastages, 10).toString() | highLight: searchPlates"></span>
+                        </div>
+                        <div class="w-33 table-body df">
                           <span [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
                           <span class="mr-5">%</span>
                           <span class="mr-5">/</span>
                           <span class="mr-5">{{round(1 + (1 / (100 / (100 - plate.scrap))))}}</span>
                         </div>
-                        <div class="w-50 table-body cy">
+                        <div class="w-33 table-body cy">
                           <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
                         </div>
                       </div>
@@ -182,7 +186,8 @@
                     <div class="icon-back-blue cxy ml-10">
                       <img src="assets/icons/parts.svg" height="18">
                     </div>
-                    <div class="title-medium-bold ml-10">Parts QTY</div>
+                    <div class="title-medium-bold ml-10 mr-7">Parts QTY</div>
+                    <span class="text-gray-mini">{{'(' + plate.realPartsCount + ')'}}</span>
                   </div>
                   <div class="cxy">
                     <div class="button-show cursor-pointer" (click)="showPartsQty(plate); $event.stopPropagation();">Show</div>
