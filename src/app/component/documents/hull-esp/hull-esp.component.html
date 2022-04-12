@@ -846,12 +846,12 @@
 
 
                       <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
-                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class="eye-button cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                          <img src="assets/icons/eye-black.svg" height="20">
+                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                          <img src="assets/icons/eye-black.svg" height="18">
                         </div>
                       </div>
-                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')" (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
-                        <img src="assets/icons/eye-black.svg" height="20">
+                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')" (click)="showCuttingFile(file)" tooltipPosition="top" class=" cxy">
+                        <img src="assets/icons/eye-black.svg" height="18">
                       </div>
 
                       <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf') && file.group != 'Cutting Map'">

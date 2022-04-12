@@ -97,6 +97,7 @@ import { HighLightPipe } from './domain/high-light.pipe';
 import { BillingComponent } from './component/billing/billing.component';
 import {TreeModule} from "primeng/tree";
 import { ReportComponent } from './component/report/report.component';
+import { PartsQtyComponent } from './component/billing/parts-qty/parts-qty.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -156,6 +157,7 @@ Quill.register('modules/imageResize', ImageResize);
     HighLightPipe,
     ReportComponent,
     BillingComponent,
+    PartsQtyComponent,
   ],
     imports: [
       BrowserModule,

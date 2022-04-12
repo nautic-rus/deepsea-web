@@ -299,7 +299,7 @@ export class LanguageService {
           case 'Добавить': return 'Add material';
           case 'Копировать': return 'Copy material';
           case 'Редактировать': return 'Edit material';
-          case '': return '';
+          case 'Номер': return 'Number';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -835,10 +835,10 @@
 }
 .eye-button{
   padding: 6px;
-  background-color: rgba(57, 184, 182, 0.3);
-  border-radius: 4px;
-  height: 28px;
-  width: 28px;
+  background-color: #D08770;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
 }
 .xls-button{
   background-color: #22C55E;

@@ -58,9 +58,9 @@
 
     <div *ngIf="selectedView == 'tiles'">
       <div *ngIf="selectedHeadTab == 'Plates'" class="tile">
-        <div *ngFor="let plate of plates; let i = index" class="dash-card" [class.hidden-card]="plate == null">
+        <div *ngFor="let plate of plates; let i = index" class="dash-card cursor-pointer" [class.hidden-card]="plate == null">
           <div *ngIf="plate != null" class="dash-card-tile" [class.flip-card]="plate.side == 'back'">
-            <div class="dash-card-tile-side-front" (click)="handleClick($event, plate)" [class.block-card]="plate != null && plate.isDisabled">
+            <div class="dash-card-tile-side-front" (click)="handleBackClick($event, plate)" [class.block-card]="plate != null && plate.isDisabled">
               <div *ngIf="plate != null">
                 <div class="top-row-tile">
                   <div class="pulse">
@@ -79,7 +79,7 @@
                         <span class="mr-5" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></span>
                         <span *ngIf="plate.oneSheetWeight != 0">
                           <span class="text-gray-mini">(</span>
-                          <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight + plate.oneSheetWeight * 1.9 / 100)}}</span>
+                          <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight)}}</span>
                           <span class="text-gray-mini">kg</span>
                           <span class="text-gray-mini">)</span>
                         </span>
@@ -172,8 +172,45 @@
                 </div>
               </div>
             </div>
-            <div class="dash-card-tile-side-back" (click)="plate.side = 'front'" >
-              BACK SIDE {{i}}
+            <div class="dash-card-tile-side-back" (click)="handleFrontClick($event, plate)" >
+              <div class="cxy title-bold mb-30 h-20" >
+                <div class="text-center-x">{{'PL' + plate.scantling + ' ' + plate.mat}}</div>
+              </div>
+              <div class="all-back-tile">
+                <div class="row-one-back background-gray">
+                  <div class="df lxy">
+                    <div class="icon-back-blue cxy ml-10">
+                      <img src="assets/icons/parts.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Parts QTY</div>
+                  </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-pointer" (click)="showPartsQty(); $event.stopPropagation();">Show</div>
+                  </div>
+                </div>
+                <div class="row-one-back">
+                  <div class="df lxy">
+                    <div class="icon-back-orange cxy ml-10">
+                      <img src="assets/icons/sections.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Blocks</div>
+                  </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-pointer">Show</div>
+                  </div>
+                </div>
+                <div class="row-one-back background-gray">
+                  <div class="df lxy">
+                    <div class="icon-back-violet cxy ml-10">
+                      <img src="assets/icons/rest.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Rest</div>
+                  </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-pointer">Show</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

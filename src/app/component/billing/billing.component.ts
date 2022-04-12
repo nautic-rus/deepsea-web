@@ -6,6 +6,10 @@ import {collect} from "underscore";
 import {LanguageService} from "../../domain/language.service";
 import * as _ from "underscore";
 import * as XLSX from "xlsx";
+import {CreateTaskComponent} from "../create-task/create-task.component";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DeleteComponent} from "../task/delete/delete.component";
+import {PartsQtyComponent} from "./parts-qty/parts-qty.component";
 
 @Component({
   selector: 'app-billing',
@@ -51,7 +55,7 @@ export class BillingComponent implements OnInit {
   ];
   sortProfilesValue = this.sortProfilesValues[0];
 
-  constructor(public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router) { }
+  constructor(public ref: DynamicDialogRef, public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -396,9 +400,25 @@ export class BillingComponent implements OnInit {
 
   }
 
-  public handleClick(event: any, plate: any) {
+  public handleBackClick(event: any, plate: any) {
     if (event.view.getSelection().toString().length === 0) {
-      plate.side = 'back'
+      plate.side = 'back';
     }
+  }
+  public handleFrontClick(event: any, plate: any) {
+    if (event.view.getSelection().toString().length === 0) {
+      plate.side = 'front';
+    }
+  }
+  showPartsQty() {
+    this.dialogService.open(PartsQtyComponent, {
+      showHeader: false,
+      modal: true,
+      data: '',
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
   }
 }

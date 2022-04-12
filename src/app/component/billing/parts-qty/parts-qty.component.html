@@ -1,0 +1,62 @@
+<div class="all-parts-container" >
+  <div class="header-parts">
+    <div class="header-parts-text">Название и марка материала</div>
+    <div class="parts-button-close cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="card-overflow">
+    <p-table #table [value]="parts"
+             [scrollable]="true"
+             scrollHeight="calc(100vh - 200px)"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             [reorderableColumns]="false"
+             [resizableColumns]="false"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['part_number','block','material_name','material_description', 'part_weight']">
+      <ng-template pTemplate="header">
+        <tr class="df">
+          <th pSortableColumn="part_number" class="lxy w-20">{{'Number'}}
+            <p-sortIcon field="part_number"></p-sortIcon>
+          </th>
+          <th pSortableColumn="block" class="lxy w-20">{{t.tr('Block')}}
+            <p-sortIcon field="block"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'block'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.block" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th pSortableColumn="material_name" class="lxy w-20">{{t.tr('Name')}}
+            <p-sortIcon field="material_name"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'material_name'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.material_name" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th pSortableColumn="material_description" class="lxy w-20">{{t.tr('Description')}}
+            <p-sortIcon field="material_description"></p-sortIcon>
+          </th>
+          <th pSortableColumn="part_weight" class="lxy w-20">{{t.tr('Weight')}}
+            <p-sortIcon field="part_weight"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-issue>
+        <tr class="cursor-pointer row-table-doc-hover">
+          <td class="w-20 text-14">{{issue.doc_number}}</td>
+          <td class="w-20 text-14">{{issue.name}}</td>
+          <td class="w-20 text-14">{{issue.department}}</td>
+          <td class="w-20 text-14">{{issue.revision}}</td>
+          <td class="w-20 text-14">{{issue.revision}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>

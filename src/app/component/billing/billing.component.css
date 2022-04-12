@@ -235,6 +235,12 @@
   line-height: 30px;
   color: #3a3a3a;
 }
+.title-medium-bold{
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 30px;
+  color: #757575;
+}
 .title-normal{
   font-size: 14px;
   font-style: inherit;
@@ -496,4 +502,58 @@
 
 .hidden-card-flip{
   display: none;
+}
+.all-back-tile{
+  display: grid;
+  grid-template-rows: 50px 50px 50px;
+}
+.row-one-back{
+  margin-left: -10px;
+  margin-right: -10px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.icon-back-violet{
+  font-size: 16px;
+  background-color: rgba(126, 141, 205, 0.3);
+  color: #7e8dcd;
+  border-radius: 4px;
+  height: 32px;
+  width: 32px;
+}
+.icon-back-blue{
+  font-size: 16px;
+  background-color: rgba(57, 184, 182, 0.3);
+  color: #39b8b6;
+  border-radius: 4px;
+  height: 32px;
+  width: 32px;
+}
+.icon-back-orange{
+  font-size: 16px;
+  background-color: rgba(246, 172, 43, 0.3);
+  color: #f6ac2b;
+  border-radius: 4px;
+  height: 32px;
+  width: 32px;
+}
+.mb-minus4{
+  margin-bottom: -4px;
+}
+.background-gray{
+  background-color: #F9FAFB;
+}
+.button-show{
+  border-radius: 2px;
+  background-color: #88C0D0;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 3px 10px;
+  text-align: center;
+  min-width: 60px;
+  margin-right: 4px;
+  height: 25px;
+}
+.button-show:hover{
+  background-color: #78a9b7;
 }
