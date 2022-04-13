@@ -24,7 +24,7 @@
       <div class="w-100 df">
         <div class="w-15">
           <div class="menu-card">
-            <div class="ovf-auto mb-10">
+            <div class="ovf-auto">
               <div class="sticky back-white">
                 <div class="row-one-back mb-15">
                   <div class="df lxy">
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="w-100 cxy">
-              <div class="button-fetch cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">Fetch materials</div>
+              <div class="button-fetch cxy cursor-pointer" (click)="fetchMaterials()">Fetch materials</div>
             </div>
             <div class="ovf-auto mr-minus20 mb-20">
               <div class="sticky back-white pb-15">
@@ -76,7 +76,7 @@
               <div class="cxy height-spinner" *ngIf="loadingMaterials">
                 <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
               </div>
-              <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
+              <div class="gray-text" *ngIf="materialsRoot.length == 0 && !loadingMaterials">
                 There are no plate dimensions. You need to specify blocks from top column.
               </div>
               <div class="all-checkbox" *ngFor="let material of materialsRoot">
@@ -113,15 +113,10 @@
                 <div class="check-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   <div>{{material.name}}</div>
                   <div [class.checked-mini-text-gray]="material.selected" class="mini-text-gray">{{'KPL' + ' ' + material.parent}}</div>
-
                 </div>
               </div>
             </div>
-
-
-
-
-            <div>
+            <div class="w-100 cxy">
               <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
             </div>
           </div>

@@ -680,6 +680,8 @@ export class NestingComponent implements OnInit {
   selectBlock(block: any) {
     block.selected = !block.selected;
     this.materials.splice(0, this.materials.length);
+    this.materialsRest.splice(0, this.materialsRest.length);
+    this.materialsRoot.splice(0, this.materialsRoot.length);
     this.nesting.splice(0, this.nesting.length);
   }
 

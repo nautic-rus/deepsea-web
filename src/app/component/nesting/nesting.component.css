@@ -146,7 +146,7 @@
   position: relative;
   transition: 0.5s;
   display: grid;
-  grid-template-rows: 1.5fr 0.5fr 2.5fr 2.5fr 0.5fr;
+  grid-template-rows: 1.5fr 75px 2.5fr 2.5fr 75px;
 }
 .menu-card-tablet{
   padding: 15px;
