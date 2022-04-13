@@ -25,8 +25,22 @@
         <div class="w-15">
           <div class="menu-card">
             <div class="ovf-auto mb-10">
-              <div class="df sticky back-white">
-                <div class="title-bold-left head-checkbox">Blocks:</div>
+              <div class="sticky back-white">
+                <div class="row-one-back mb-15">
+                  <div class="df lxy">
+                    <div class="icon-back-orange cxy">
+                      <img src="assets/icons/sections.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Blocks</div>
+                  </div>
+                  <div class="flex-end text-y">
+                    <label pTooltip="Select all" tooltipPosition="top" *ngIf="blocks.length > 0" class="container margin-bottom-none">
+                      <span class="text-checkbox"></span>
+                      <input (ngModelChange)="selectAllBlocks()" type="checkbox" [(ngModel)]="selectedAllBlocks">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
@@ -38,25 +52,75 @@
                 </div>
               </div>
             </div>
-            <div class="w-100">
+            <div class="w-100 cxy">
               <div class="button-fetch cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">Fetch materials</div>
             </div>
-            <div class="ovf-auto">
-              <div class="df sticky back-white">
-                <div class="title-bold-left head-checkbox">Materials:</div>
+            <div class="ovf-auto mr-minus20 mb-20">
+              <div class="sticky back-white pb-15">
+                <div class="row-one-back">
+                  <div class="df lxy">
+                    <div class="icon-back-blue cxy">
+                      <img src="assets/icons/mat-root.svg" height="24">
+                    </div>
+                    <div class="title-medium-bold ml-10">Materials</div>
+                  </div>
+                  <div class="flex-end text-y">
+                    <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRoot.length > 0" class="container margin-bottom-none">
+                      <span class="text-checkbox"></span>
+                      <input (ngModelChange)="selectAllMaterialsRoot()" type="checkbox" [(ngModel)]="selectedAllMaterialsRoot">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
               </div>
               <div class="cxy height-spinner" *ngIf="loadingMaterials">
-                <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+                <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
               </div>
               <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
                 There are no plate dimensions. You need to specify blocks from top column.
               </div>
-              <div class="all-checkbox" *ngFor="let material of materials">
+              <div class="all-checkbox" *ngFor="let material of materialsRoot">
                 <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   {{material.name}}
                 </div>
               </div>
             </div>
+            <div class="ovf-auto mr-minus20">
+              <div class="sticky back-white pb-15">
+                <div class="row-one-back">
+                  <div class="df lxy">
+                    <div class="icon-back-violet cxy">
+                      <img src="assets/icons/rest.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Wastages</div>
+                  </div>
+                  <div class="flex-end text-y">
+                    <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRest.length > 0" class="container margin-bottom-none">
+                      <span class="text-checkbox"></span>
+                      <input (ngModelChange)="selectAllMaterialsRest()" type="checkbox" [(ngModel)]="selectedAllMaterialsRest">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="cxy height-spinner" *ngIf="loadingMaterials">
+                <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+              </div>
+              <div class="gray-text" *ngIf="materialsRest.length == 0 && !loadingMaterials">
+                There are no plate dimensions. You need to specify blocks from top column.
+              </div>
+              <div class="all-checkbox" *ngFor="let material of materialsRest">
+                <div class="check-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                  <div>{{material.name}}</div>
+                  <div [class.checked-mini-text-gray]="material.selected" class="mini-text-gray">{{'KPL' + ' ' + material.parent}}</div>
+
+                </div>
+              </div>
+            </div>
+
+
+
+
             <div>
               <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
             </div>
@@ -83,6 +147,7 @@
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [class.hidden-card]="nest == null" class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
               <div *ngIf="nest != null" class="top-row-tile">
+                <div class="parent-plate" *ngIf="nest.PARENTID != ''"></div>
                 <div class="cy">
                   <div class="cxy">
                     <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
@@ -98,8 +163,9 @@
                   </div>
                   <div class="">
                     <div class="cy h-100">
-                      <div class="cx mb-10 mt-10">
+                      <div class="cx mb-10 mt-10 flex-column">
                         <div class="title-bold px-10">{{nest.ID}}</div>
+                        <div class="text-parent-plate" *ngIf="nest.PARENTID != ''">{{nest.PARENTID}}</div>
                       </div>
                     </div>
                   </div>
@@ -164,18 +230,18 @@
               <div *ngIf="nest != null" class="mt-5 ">
                 <div class="ovf-auto table-bottom">
                   <div class="df cursor-pointer sticky">
-                    <div class="w-30 table-header-column cy">{{l.tr('Block')}}</div>
-                    <div class="w-35 table-header-column cy">{{l.tr('LxWxT')}}</div>
-                    <div class="w-15 table-header-column cy">{{l.tr('Mat.')}}</div>
-                    <div class="w-30 table-header-column cy">{{l.tr('Weight')}}</div>
-                    <div class="w-15 table-header-column cy">{{l.tr('Num')}}</div>
+                    <div class="w-22 table-header-column cy">{{l.tr('Block')}}</div>
+                    <div class="w-28 table-header-column cy">{{l.tr('LxWxT')}}</div>
+                    <div class="w-25 table-header-column cy">{{l.tr('Mat.')}}</div>
+                    <div class="w-15 table-header-column cy">{{l.tr('Weight')}}</div>
+                    <div class="w-10 table-header-column cy">{{l.tr('Num')}}</div>
                   </div>
                   <div class="text-center-y info-row cursor-pointer">
-                    <div class="w-30 table-body cy">{{nest.BLOCKS}}</div>
-                    <div class="w-35 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
-                    <div class="w-15 table-body cy">{{nest.MATERIAL}}</div>
-                    <div class="w-30 table-body cy">{{nest.PARTS_WEIGHT}}</div>
-                    <div class="w-15 table-body cy">{{nest.NUM_EQ_NEST}}</div>
+                    <div class="w-22 table-body cy">{{nest.BLOCKS}}</div>
+                    <div class="w-28 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
+                    <div class="w-25 table-body cy">{{nest.MATERIAL}}</div>
+                    <div class="w-15 table-body cy">{{round(nest.PARTS_WEIGHT)}}</div>
+                    <div class="w-10 table-body cy">{{nest.NUM_EQ_NEST}}</div>
                   </div>
                 </div>
               </div>
@@ -224,10 +290,24 @@
       <div class="w-100 df">
         <div class="w-10 min-width-200">
           <div class="menu-card-tablet">
-            <div class="left-block-materials">
+
               <div class="ovf-auto max-height-185">
-                <div class="df sticky back-white">
-                  <div class="title-bold-tablet pb-10 sticky head-checkbox">Blocks:</div>
+                <div class="sticky back-white">
+                  <div class="row-one-back mb-15">
+                    <div class="df lxy">
+                      <div class="icon-back-orange cxy">
+                        <img src="assets/icons/sections.svg" height="18">
+                      </div>
+                      <div class="title-medium-bold ml-10">Blocks</div>
+                    </div>
+                    <div class="flex-end text-y">
+                      <label pTooltip="Select all" tooltipPosition="top" *ngIf="blocks.length > 0" class="container margin-bottom-none">
+                        <span class="text-checkbox"></span>
+                        <input (ngModelChange)="selectAllBlocks()" type="checkbox" [(ngModel)]="selectedAllBlocks">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="gray-text" *ngIf="blocks.length == 0 && !loadingBlocks">
@@ -242,26 +322,75 @@
               <div class="w-100">
                 <div class="button-fetch-tablet cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">Fetch materials</div>
               </div>
-            </div>
-            <div class="left-block-materials">
+
+
               <div class="ovf-auto max-height-185">
-                <div class="title-bold-tablet pb-10 sticky head-checkbox">Materials:</div>
+                <div class="sticky back-white pb-15">
+                  <div class="row-one-back">
+                    <div class="df lxy">
+                      <div class="icon-back-blue cxy">
+                        <img src="assets/icons/mat-root.svg" height="24">
+                      </div>
+                      <div class="title-medium-bold ml-10">Materials</div>
+                    </div>
+                    <div class="flex-end text-y">
+                      <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRoot.length > 0" class="container margin-bottom-none">
+                        <span class="text-checkbox"></span>
+                        <input (ngModelChange)="selectAllMaterialsRoot()" type="checkbox" [(ngModel)]="selectedAllMaterialsRoot">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
                 <div class="cxy height-spinner" *ngIf="loadingMaterials">
-                  <p-progressSpinner [style]="{width: '70px', height: '70px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+                  <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
                 </div>
                 <div class="gray-text" *ngIf="materials.length == 0 && !loadingMaterials">
                   There are no plate dimensions. You need to specify blocks from top column.
                 </div>
-                <div class="all-checkbox" *ngFor="let material of materials">
-                  <div class="check-button-tablet" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                <div class="all-checkbox" *ngFor="let material of materialsRoot">
+                  <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                     {{material.name}}
                   </div>
                 </div>
               </div>
-              <div>
-                <div class="button-fetch-tablet cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
+              <div class="ovf-auto max-height-185">
+                <div class="sticky back-white pb-15">
+                  <div class="row-one-back">
+                    <div class="df lxy">
+                      <div class="icon-back-violet cxy">
+                        <img src="assets/icons/rest.svg" height="18">
+                      </div>
+                      <div class="title-medium-bold ml-10">Wastages</div>
+                    </div>
+                    <div class="flex-end text-y">
+                      <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRest.length > 0" class="container margin-bottom-none">
+                        <span class="text-checkbox"></span>
+                        <input (ngModelChange)="selectAllMaterialsRest()" type="checkbox" [(ngModel)]="selectedAllMaterialsRest">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="cxy height-spinner" *ngIf="loadingMaterials">
+                  <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+                </div>
+                <div class="gray-text" *ngIf="materialsRest.length == 0 && !loadingMaterials">
+                  There are no plate dimensions. You need to specify blocks from top column.
+                </div>
+                <div class="all-checkbox" *ngFor="let material of materialsRest">
+                  <div class="check-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                    <div>{{material.name}}</div>
+                    <div [class.checked-mini-text-gray]="material.selected" class="mini-text-gray">{{'KPL' + ' ' + material.parent}}</div>
+
+                  </div>
+                </div>
               </div>
+            <div>
+              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
             </div>
+
+
 
 
           </div>
@@ -286,13 +415,14 @@
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [class.hidden-card-tablet]="nest == null" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
               <div *ngIf="nest != null" class="top-row-tile-tablet">
+                <div class="parent-plate" *ngIf="nest.PARENTID != ''"></div>
                 <div class="cy">
                   <div class="cxy flex-col">
                     <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
-                      <img src="assets/icons/lock.svg" height="22">
+                      <img src="assets/icons/lock.svg" height="20">
                     </div>
                     <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
-                      <img src="assets/icons/unlock.svg" height="22">
+                      <img src="assets/icons/unlock.svg" height="20">
                     </div>
                     <div class="" *ngIf="nest.isLock">
                       <div class="lock-name-tablet">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
@@ -301,8 +431,9 @@
                   </div>
                   <div class="">
                     <div class="cy h-100">
-                      <div class="cx mt-5">
+                      <div class="cx mt-5 flex-column">
                         <div class="title-bold-tablet">{{nest.ID}}</div>
+                        <div class="text-parent-plate-tablet" *ngIf="nest.PARENTID != ''">{{nest.PARENTID}}</div>
                       </div>
                     </div>
                   </div>
@@ -367,18 +498,18 @@
               <div *ngIf="nest != null" class="bottom-row">
                 <div class="ovf-auto table-bottom">
                   <div class="df cursor-pointer sticky">
-                    <div class="w-30 table-header-column-tablet cy">{{l.tr('Block')}}</div>
-                    <div class="w-35 table-header-column-tablet cy">{{l.tr('LxWxT')}}</div>
-                    <div class="w-15 table-header-column-tablet cy">{{l.tr('Mat.')}}</div>
-                    <div class="w-30 table-header-column-tablet cy">{{l.tr('Weight')}}</div>
-                    <div class="w-15 table-header-column-tablet cy">{{l.tr('Num')}}</div>
+                    <div class="w-22 table-header-column-tablet cy">{{l.tr('Block')}}</div>
+                    <div class="w-29 table-header-column-tablet cxy">{{l.tr('LxWxT')}}</div>
+                    <div class="w-22 table-header-column-tablet cy">{{l.tr('Mat.')}}</div>
+                    <div class="w-15 table-header-column-tablet cy">{{l.tr('Weight')}}</div>
+                    <div class="w-12 table-header-column-tablet cy">{{l.tr('Num')}}</div>
                   </div>
                   <div class="text-center-y info-row cursor-pointer">
-                    <div class="w-30 table-body-tablet cy">{{nest.BLOCKS}}</div>
-                    <div class="w-35 table-body-tablet cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
-                    <div class="w-15 table-body-tablet cy">{{nest.MATERIAL}}</div>
-                    <div class="w-30 table-body-tablet cy">{{nest.PARTS_WEIGHT}}</div>
-                    <div class="w-15 table-body-tablet cy">{{nest.NUM_EQ_NEST}}</div>
+                    <div class="w-22 table-body-tablet cy">{{nest.BLOCKS}}</div>
+                    <div class="w-29 table-body-tablet cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
+                    <div class="w-22 table-body-tablet cy">{{nest.MATERIAL}}</div>
+                    <div class="w-15 table-body-tablet cy">{{round(nest.PARTS_WEIGHT)}}</div>
+                    <div class="w-12 table-body-tablet cy">{{nest.NUM_EQ_NEST}}</div>
                   </div>
                 </div>
               </div>

@@ -144,8 +144,6 @@
                         <div class="w-33 table-body df">
                           <span [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
                           <span class="mr-5">%</span>
-                          <span class="mr-5">/</span>
-                          <span class="mr-5">{{round(1 + (1 / (100 / (100 - plate.scrap))))}}</span>
                         </div>
                         <div class="w-33 table-body cy">
                           <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
@@ -221,85 +219,155 @@
         </div>
       </div>
       <div *ngIf="selectedHeadTab == 'Profiles'" class="tile">
-        <div [class.hidden-card]="profile == null" class="dash-card-tile" *ngFor="let profile of profiles; let i = index">
-          <div *ngIf="profile != null">
-            <div class="top-row-tile">
-              <div></div>
-              <div class="">
-                <div class="cx">
-                  <div class="mm-text">length
-                    <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+        <div *ngFor="let profile of profiles; let i = index" class="dash-card cursor-pointer" [class.hidden-card]="profile == null">
+          <div *ngIf="profile != null" class="dash-card-tile" [class.flip-card]="profile.side == 'back'">
+            <div class="dash-card-tile-side-front" (click)="handleBackClick($event, profile)" [class.block-card]="profile != null && profile.isDisabled">
+              <div *ngIf="profile != null">
+                <div class="top-row-tile">
+                  <div class="pulse">
+                    <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValue(profile) - getStockValue(profile)) >= 3" class="dot red"></div>
+                    <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValue(profile) - getStockValue(profile)) < 3" class="dot orange"></div>
+                  </div>
+                  <div class="">
+                    <div class="cx">
+                      <div class="mm-text">length
+                        <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+                      </div>
+                    </div>
+                    <div class="cxy title-bold">
+                      <div class="text-center-x" [innerHTML]="(profile.section.toString() + ' ' + profile.scantling.toString()) | highLight: searchPlates"></div>
+                    </div>
+                    <div class="text-mini-gray">
+                      <div class="text-center-x">
+                        <span class="mr-5" [innerHTML]="(profile.mat.toString()) | highLight: searchPlates"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-minus5">
+                    <div class="text-center-x mb-5">
+                      <div class="all-numbers">
+                        <span class="text-black-mini mr-5">stock??</span>
+                        <span>/</span>
+                        <span class="text-black-mini mx-5">{{profile.profileForecast}}</span>
+                        <span>/</span>
+                        <span class="text-black-mini ml-5">{{profile.count}}</span>
+                      </div>
+                      <div>
+                        <span class="text-gray-mini mr-5">stock</span>
+                        <span class="text-gray-mini">/</span>
+                        <span class="text-gray-mini mx-5">forecast</span>
+                        <span class="text-gray-mini">/</span>
+                        <span class="text-gray-mini ml-5">usage</span>
+                      </div>
+                    </div>
+
+
+
+                    <div class="cxy">
+                      <div class="chart-area df">
+                        <div [ngStyle]="getStock(profile)" [class.null-stock]="profile.stock == 0" class="h-100 chart-stock-usage"></div>
+                        <div [ngStyle]="getForecast(profile)" [class.null-stock]="profile.plateForecast == 0" class="h-100 chart-forecast-usage"></div>
+                        <div [ngStyle]="getCount(profile)" [class.null-stock]="profile.count == 0" class="h-100 chart-count-usage"></div>
+
+                        <!--                    <div [ngStyle]="getStock(plate.stock / plate.count * 100)" class="h-100 chart-stock-usage"></div>-->
+                        <!--                    <div [ngStyle]="getCount(100 - plate.stock / plate.count * 100)" class="h-100 chart-count-left"></div>-->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex-end-top">
+                    <div class="kpl-flag cxy">
+                      <div class="text-center-x pr-5">
+                        KPL
+                      </div>
+                      <div class="text-center-x">
+                        <span [innerHTML]="profile.KPL.toString() | highLight: searchPlates"></span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="cxy title-bold">
-                  <div class="text-center-x" [innerHTML]="(profile.section.toString() + ' ' + profile.scantling.toString()) | highLight: search"></div>
-                </div>
-                <div class="text-mini-gray">
-                  <div class="text-center-x" [innerHTML]="(profile.mat.toString()) | highLight: search"></div>
-                </div>
-              </div>
-              <div class="mt-minus5">
-                <div class="text-center-x mb-2px">
-                  <span class="text-mini-gray mr-10">scrap</span>
-                  <span class="text-mini mr-2px" [innerHTML]="round(profile.scrap).toString() | highLight: search"></span>
-                  <span class="text-mini">%</span>
-                </div>
-                <div class="cxy">
-                  <div class="chart-area df">
-                    <div [ngStyle]="getWidthRightRadius(100 - profile.scrap)" class="h-100 chart-usage"></div>
-                    <div [ngStyle]="getWidthLeftRadius(profile.scrap)" class="h-100 chart-left"></div>
+                <div class="df mb-10">
+                  <div class="left-label-nest cxy">NEST</div>
+                  <div class="w-100">
+                    <div class="table-bottom">
+                      <div class="df">
+                        <div class="w-33 table-header-column cy">{{t.tr('Rest')}}</div>
+                        <div class="w-33 table-header-column df">{{t.tr('Scrap')}}</div>
+                        <div class="w-33 table-header-column cy">{{t.tr('Nested Parts')}}</div>
+                      </div>
+                      <div class="text-center-y info-row">
+                        <div class="w-33 table-body cy">
+                          <span [innerHTML]="round(profile.wastages, 10).toString() | highLight: searchPlates"></span>
+                        </div>
+                        <div class="w-33 table-body df">
+                          <span [innerHTML]="round(profile.scrap).toString() | highLight: searchPlates"></span>
+                          <span class="mr-5">%</span>
+                        </div>
+                        <div class="w-33 table-body cy">
+                          <span [innerHTML]="profile.nestedParts.toString() | highLight: searchPlates"></span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="flex-end-top">
-                <div class="kpl-flag cxy">
-                  <div class="text-center-x pr-5">
-                    KSE
-                  </div>
-                  <div class="text-center-x">
-                    <span [innerHTML]="profile.KSE.toString() | highLight: search"></span>
+                <div class="df mb-10">
+                  <div class="left-label-model cxy">MODEL</div>
+                  <div class="w-100">
+                    <div class="table-bottom">
+                      <div class="df">
+                        <div class="w-50 table-header-column cy">{{t.tr('Parts Weight')}}</div>
+                        <div class="w-50 table-header-column cy">{{t.tr('Parts QTY')}}</div>
+                      </div>
+                      <div class="text-center-y info-row">
+                        <div class="w-50 table-body">
+                          <span [innerHTML]="round(profile.realWeight).toString() | highLight: searchPlates"></span>
+                          <span class="pl-2">kg</span>
+                        </div>
+                        <div class="w-50 table-body cy">
+                          <span [innerHTML]="profile.realPartsCount.toString() | highLight: searchPlates"></span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="df mb-10">
-              <div class="left-label-nest cxy">NEST</div>
-              <div class="w-100">
-                <div class="table-bottom">
-                  <div class="df">
-                    <div class="w-50 table-header-column cy">{{t.tr('Profile QTY')}}</div>
-                    <div class="w-50 table-header-column cy">{{t.tr('Profiles Forecast')}}</div>
+            <div class="dash-card-tile-side-back" (click)="handleFrontClick($event, profile)" >
+              <div class="cxy title-bold mb-30 h-20" >
+                <div class="text-center-x">{{'PL' + profile.scantling + ' ' + profile.mat}}</div>
+              </div>
+              <div class="all-back-tile">
+                <div class="row-one-back background-gray">
+                  <div class="df lxy">
+                    <div class="icon-back-blue cxy ml-10">
+                      <img src="assets/icons/parts.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10 mr-7">Parts QTY</div>
+                    <span class="text-gray-mini">{{'(' + profile.realPartsCount + ')'}}</span>
                   </div>
-                  <div class="text-center-y info-row">
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="profile.count.toString() | highLight: search"></span>
-                    </div>
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="profile.profileForecast.toString() | highLight: search"></span>
-                    </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-pointer" (click)="showPartsQty(profile); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="df mb-10">
-              <div class="left-label-model cxy">MODEL</div>
-              <div class="w-100">
-                <div class="table-bottom">
-                  <div class="df">
-                    <div class="w-33 table-header-column cy">{{t.tr('Parts Weight')}}</div>
-                    <div class="w-33 table-header-column cy">{{t.tr('Sum Length')}}</div>
-                    <div class="w-33 table-header-column cy">{{t.tr('Parts QTY')}}</div>
+                <div class="row-one-back opacity">
+                  <div class="df lxy">
+                    <div class="icon-back-orange cxy ml-10">
+                      <img src="assets/icons/sections.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Blocks</div>
                   </div>
-                  <div class="text-center-y info-row">
-                    <div class="w-50 table-body">
-                      <span [innerHTML]="round(profile.partsweight).toString() | highLight: search"></span>
+                  <div class="cxy">
+                    <div class="button-show cursor-default ">Show</div>
+                  </div>
+                </div>
+                <div class="row-one-back background-gray opacity">
+                  <div class="df lxy">
+                    <div class="icon-back-violet cxy ml-10">
+                      <img src="assets/icons/rest.svg" height="18">
                     </div>
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="round(profile.realLenght).toString() | highLight: search"></span>
-                    </div>
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="profile.realPartsCount.toString() | highLight: search"></span>
-                    </div>
+                    <div class="title-medium-bold ml-10">Rest</div>
+                  </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-default">Show</div>
                   </div>
                 </div>
               </div>
@@ -354,7 +422,7 @@
               <div class="cxy title-bold">
                 <span *ngIf="plate.oneSheetWeight != 0">
                   <span class="text-gray-mini">(</span>
-                  <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight + plate.oneSheetWeight * 1.9 / 100)}}</span>
+                  <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight)}}</span>
                   <span class="text-gray-mini">kg</span>
                   <span class="text-gray-mini">)</span>
                 </span>
@@ -387,17 +455,19 @@
               <div class="left-label-nest-list h-62 cxy">NEST</div>
               <div class="df flex-column w-100">
                 <div class="df">
-                  <div class="w-50 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
-                  <div class="w-50 table-header-column border-top-list padding-5">{{t.tr('Nested Parts')}}</div>
+                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Rest')}}</div>
+                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
+                  <div class="w-34 table-header-column border-top-list padding-5">{{t.tr('Nested Parts')}}</div>
                 </div>
                 <div class="df">
-                  <div class="w-50 table-body-list df">
+                  <div class="w-33 table-body-list df">
+                    <span [innerHTML]="round(plate.wastages, 10).toString() | highLight: searchPlates"></span>
+                  </div>
+                  <div class="w-33 table-body-list df">
                     <span [innerHTML]="round(plate.scrap, 10).toString() | highLight: searchPlates"></span>
                     <span class="mr-5">%</span>
-                    <span class="mr-5">/</span>
-                    <span class="mr-5">{{round(1 + (1 / (100 / (100 - plate.scrap))))}}</span>
                   </div>
-                  <div class="w-50 table-body-list">
+                  <div class="w-34 table-body-list">
                     <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
