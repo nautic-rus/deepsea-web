@@ -1,14 +1,22 @@
 <div class="all-parts-container" >
   <div class="header-parts">
     <div class="header-parts-text">{{'PL' + plate.scantling + ' ' + plate.mat}}</div>
-    <div class="parts-button-close cxy" (click)="close()">
-      <i class="pi pi-times"></i>
+    <div class="df">
+      <div class="mr-30">
+        <div (click)="exportXls()" class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="parts-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
     </div>
+
   </div>
   <div class="">
     <p-table #table [value]="parts"
              [scrollable]="true"
-             scrollHeight="calc(100vh - 270px)"
+             scrollHeight="calc(100vh - 360px)"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
              [reorderableColumns]="false"
@@ -42,7 +50,7 @@
           <th pSortableColumn="description" class="lxy w-20">{{t.tr('Description')}}
             <p-sortIcon field="description"></p-sortIcon>
           </th>
-          <th pSortableColumn="weight" class="lxy w-20">{{t.tr('Weight')}}
+          <th pSortableColumn="weight" class="lxy w-20">{{t.tr('Weight kg')}}
             <p-sortIcon field="weight"></p-sortIcon>
           </th>
         </tr>
@@ -53,7 +61,7 @@
           <td class="w-20 text-14">{{part.block}}</td>
           <td class="w-20 text-14">{{part.name}}</td>
           <td class="w-20 text-14">{{part.description}}</td>
-          <td class="w-20 text-14">{{part.weight}}</td>
+          <td class="w-20 text-14">{{round(part.weight,1)}}</td>
         </tr>
       </ng-template>
     </p-table>

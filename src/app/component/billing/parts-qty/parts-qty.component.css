@@ -5,11 +5,22 @@
   border-width: 1px 0 1px 0;
 }
 .all-parts-container{
-  height: 80vh;
+  height: 70vh;
   padding: 3px;
-  width: 70vw;
+  width: 60vw;
 }
-
+.materials-button{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.xls-button{
+  background-color: #22C55E;
+}
+.xls-button:hover{
+  background-color: #16A34A;
+}
 .header-parts{
   border-bottom: 0 none;
   background: #ffffff;

@@ -692,6 +692,10 @@ cdk-virtual-scroll-viewport{
   background: rgba(0, 0, 0, 0.32);
   border-radius: 4px;
 }
+.opacity{
+  opacity: 0.5;
+  pointer-events: none;
+}
 .border-none{
   border: none;
 }

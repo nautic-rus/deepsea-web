@@ -160,7 +160,7 @@ export class BillingComponent implements OnInit {
           'Thickness (mm)': plate.scantling.split('x')[0],
           'Thickness Name': 'PL' + plate.scantling.split('x')[0],
           'Steel Grade': plate.mat,
-          'Plate (kg)': (+plate.oneSheetWeight * 1.019),
+          'Plate (kg)': plate.oneSheetWeight,
           'Nested Parts': plate.nestedParts,
           'Scrap': Math.round(plate.scrap) + '% / ' + this.round(1 + (1 / (100 / (100 - plate.scrap)))),
           'Real QTY': plate.realPartsCount,
