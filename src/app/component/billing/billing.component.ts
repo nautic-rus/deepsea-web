@@ -53,7 +53,7 @@ export class BillingComponent implements OnInit {
     'by Weight',
     'by Scrap'
   ];
-  sortProfilesValue = this.sortProfilesValues[0];
+  sortProfilesValue = this.sortProfilesValues[2];
 
   constructor(public ref: DynamicDialogRef, public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router, private dialogService: DialogService) { }
 
@@ -220,10 +220,26 @@ export class BillingComponent implements OnInit {
       width: width + '%'
     };
   }
+  getStockProfile(profile: any) {
+    let values = _.sortBy([profile.count, profile.stock, profile.profileForecast]).reverse();
+    let comp = values[0];
+    let width = profile.stock / comp * 100;
+    return {
+      position: 'absolute',
+      right: '0',
+      top: '0',
+      width: width + '%'
+    };
+  }
   getStockValue(plate: any) {
     let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
     let comp = values[0];
     return plate.stock / comp * 100;
+  }
+  getStockValueProfile(profile: any) {
+    let values = _.sortBy([profile.count, profile.stock, profile.profileForecast]).reverse();
+    let comp = values[0];
+    return profile.stock / comp * 100;
   }
   getForecast(plate: any) {
     let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
@@ -236,15 +252,42 @@ export class BillingComponent implements OnInit {
       width: width + '%'
     };
   }
+  getForecastProfile(profile: any) {
+    let values = _.sortBy([profile.count, profile.stock, profile.profileForecast]).reverse();
+    let comp = values[0];
+    let width = profile.profileForecast / comp * 100;
+    return {
+      position: 'absolute',
+      right: '0',
+      top: '0',
+      width: width + '%'
+    };
+  }
   getForecastValue(plate: any) {
     let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
     let comp = values[0];
     return plate.plateForecast / comp * 100;
   }
+  getForecastValueProfile(profile: any) {
+    let values = _.sortBy([profile.count, profile.stock, profile.profileForecast]).reverse();
+    let comp = values[0];
+    return profile.profileForecast / comp * 100;
+  }
   getCount(plate: any) {
     let values = _.sortBy([plate.count, plate.stock, plate.plateForecast]).reverse();
     let comp = values[0];
     let width = plate.count / comp * 100;
+    return {
+      position: 'absolute',
+      right: '0',
+      top: '0',
+      width: width + '%'
+    };
+  }
+  getCountProfile(profile: any) {
+    let values = _.sortBy([profile.count, profile.stock, profile.profileForecast]).reverse();
+    let comp = values[0];
+    let width = profile.count / comp * 100;
     return {
       position: 'absolute',
       right: '0',
@@ -386,6 +429,9 @@ export class BillingComponent implements OnInit {
         break;
       }
     }
+    let newProfiles = this.profiles.filter(x => !x.isDisabled);
+    this.profiles.filter(x => x.isDisabled).forEach(p => newProfiles.push(p));
+    this.profiles = newProfiles;
     for (let x = 0; x < 10; x ++){
       this.profiles.push(null);
       this.profilesSource.push(null);
