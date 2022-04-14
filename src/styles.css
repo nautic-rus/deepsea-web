@@ -97,11 +97,17 @@ body,p{
 .w-20{
   width: 20%;
 }
+.w-21{
+  width: 21%;
+}
 .w-22{
   width: 22%;
 }
 .w-23{
   width: 23%;
+}
+.w-24{
+  width: 24%;
 }
 .w-25{
   width: 25%;
@@ -397,6 +403,9 @@ body,p{
 /deep/.p-tooltip .p-tooltip-text {
   font-size: 12px!important;
   padding: 6px 8px!important;
+}
+.mr-minus15{
+  margin-right: -15px;
 }
 .mr-minus20{
   margin-right: -20px;

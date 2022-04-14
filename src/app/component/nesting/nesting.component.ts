@@ -300,8 +300,8 @@ export class NestingComponent implements OnInit {
       this.wz.setSrcAndReset(url);
     });
   }
-  round(input: number) {
-    return Math.round(+input * 100) / 100;
+  round(input: number, digit = 100) {
+    return Math.round(input * digit) / digit;
   }
   openFile(url: string) {
     window.open(url);

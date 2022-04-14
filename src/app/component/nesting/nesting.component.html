@@ -286,7 +286,7 @@
         <div class="w-10 min-width-200">
           <div class="menu-card-tablet">
 
-              <div class="ovf-auto max-height-185">
+              <div class="ovf-auto max-height-112 mr-minus15">
                 <div class="sticky back-white">
                   <div class="row-one-back mb-15">
                     <div class="df lxy">
@@ -314,12 +314,12 @@
                   </div>
                 </div>
               </div>
-              <div class="w-100">
-                <div class="button-fetch-tablet cxy cursor-pointer mt-10 mb-20" (click)="fetchMaterials()">Fetch materials</div>
+              <div class="w-100 cxy">
+                <div class="button-fetch-tablet cxy cursor-pointer" (click)="fetchMaterials()">Fetch materials</div>
               </div>
 
 
-              <div class="ovf-auto max-height-185">
+              <div class="ovf-auto max-height-170 mr-minus15">
                 <div class="sticky back-white pb-15">
                   <div class="row-one-back">
                     <div class="df lxy">
@@ -349,7 +349,7 @@
                   </div>
                 </div>
               </div>
-              <div class="ovf-auto max-height-185">
+              <div class="ovf-auto max-height-170 mr-minus15">
                 <div class="sticky back-white pb-15">
                   <div class="row-one-back">
                     <div class="df lxy">
@@ -381,8 +381,8 @@
                   </div>
                 </div>
               </div>
-            <div>
-              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
+            <div class="w-100 cxy">
+              <div class="button-fetch-tablet cxy cursor-pointer" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
             </div>
 
 
@@ -462,8 +462,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="">
-                  <div class="files-tile">
+                <div class="right-column-tablet">
+                  <div class="qty-text">
+                    <div class="kpl-flag cxy">
+                      <span class="pr-5">QTY</span>
+                      <span>{{nest.NUM_EQ_NEST}}</span>
+                    </div>
+                  </div>
+                  <div class="files-tile mt-minus5">
                     <div class="">
                       <div class="gray-text-tile cx mb-3px">Nesting:</div>
                       <div class="cxy mt-5">
@@ -493,18 +499,16 @@
               <div *ngIf="nest != null" class="bottom-row">
                 <div class="ovf-auto table-bottom">
                   <div class="df cursor-pointer sticky">
-                    <div class="w-22 table-header-column-tablet cy">{{l.tr('Block')}}</div>
-                    <div class="w-29 table-header-column-tablet cxy">{{l.tr('LxWxT')}}</div>
-                    <div class="w-22 table-header-column-tablet cy">{{l.tr('Mat.')}}</div>
-                    <div class="w-15 table-header-column-tablet cy">{{l.tr('Parts wgt')}}</div>
-                    <div class="w-12 table-header-column-tablet cy">{{l.tr('QTY')}}</div>
+                    <div class="w-24 table-header-column-tablet cy">{{l.tr('Block')}}</div>
+                    <div class="w-30 table-header-column-tablet cy">{{l.tr('mm x m x m')}}</div>
+                    <div class="w-23 table-header-column-tablet cy">{{l.tr('Mat.')}}</div>
+                    <div class="w-23 table-header-column-tablet cy">{{l.tr('Parts wgt')}}</div>
                   </div>
                   <div class="text-center-y info-row cursor-pointer">
-                    <div class="w-22 table-body-tablet cy">{{nest.BLOCKS}}</div>
-                    <div class="w-29 table-body-tablet cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
-                    <div class="w-22 table-body-tablet cy">{{nest.MATERIAL}}</div>
-                    <div class="w-15 table-body-tablet cy">{{round(nest.PARTS_WEIGHT)}}</div>
-                    <div class="w-12 table-body-tablet cy">{{nest.NUM_EQ_NEST}}</div>
+                    <div class="w-24 table-body-tablet cy">{{nest.BLOCKS}}</div>
+                    <div class="w-30 table-body-tablet cy">{{nest.THICKNESS + 'x'}}{{(nest.NEST_LENGTH) / 1000 + 'x'}}{{(nest.NEST_WIDTH) / 1000}}</div>
+                    <div class="w-23 table-body-tablet cy">{{nest.MATERIAL}}</div>
+                    <div class="w-23 table-body-tablet cy">{{round(nest.PARTS_WEIGHT)}}</div>
                   </div>
                 </div>
               </div>
