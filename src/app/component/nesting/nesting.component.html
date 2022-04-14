@@ -122,7 +122,7 @@
           </div>
         </div>
         <div class="w-85 cards">
-          <div class="cxy card-height" *ngIf="noResult">
+          <div class="cxy card-height" *ngIf="noResult && nesting.length != 0">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
           <div *ngIf="loading && !noResult">
@@ -391,7 +391,7 @@
           </div>
         </div>
         <div class="w-90 cards-tablet min-width-400">
-          <div class="cxy card-height" *ngIf="noResult">
+          <div class="cxy card-height" *ngIf="noResult && nesting.length != 0">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
           <div *ngIf="loading && !noResult">
