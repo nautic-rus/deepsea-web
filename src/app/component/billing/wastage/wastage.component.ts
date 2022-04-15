@@ -12,7 +12,7 @@ import * as XLSX from "xlsx";
 })
 export class WastageComponent implements OnInit {
 
-  wastage: any[] = [];
+  wastages: any[] = [];
   plate: any;
   project = '';
 
@@ -24,8 +24,8 @@ export class WastageComponent implements OnInit {
     this.project = this.conf.data[0];
     this.plate = this.conf.data[1];
     this.s.hullPlatesWastage(this.project, this.plate.KPL).then(res => {
-      this.wastage = _.sortBy(res, x => x.KPL);
-      console.log(this.wastage);
+      this.wastages = _.sortBy(res, x => x.KPL);
+      console.log(this.wastages);
     });
   }
   close() {
@@ -43,5 +43,22 @@ export class WastageComponent implements OnInit {
         charactersLength));
     }
     return result;
+  }
+  exportXls() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = [];
+    this.wastages.filter((x: any) => x != null).forEach(wastage => {
+      data.push({
+        'KPL': wastage.KPL.split('x')[0],
+        'T x W x L': wastage.THICKNESS.split('x')[0] + 'x' + wastage.SWIDTH.split('x')[0] + 'x' +wastage.SLENGTH.split('x')[0],
+        'From': wastage.PARENTNESTID,
+        'Weight': Math.round(wastage.WEIGHT),
+      })
+    });
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    worksheet['!cols'] = [{wch:13},{wch:13},{wch:13},{wch:13},{wch:13}];
+
+    XLSX.writeFile(workbook, fileName);
   }
 }
