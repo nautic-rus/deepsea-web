@@ -1,1 +1,54 @@
-<p>wastage works!</p>
+<div class="all-wastage-container" >
+  <div class="header-parts">
+    <div class="header-parts-text">{{'PL' + plate.scantling + ' ' + plate.mat}}</div>
+    <div class="df">
+      <div class="mr-30">
+        <div (click)="exportXls()" class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="parts-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+
+  </div>
+  <div class="">
+    <p-table #table [value]="wastages"
+             [scrollable]="true"
+             scrollHeight="calc(100vh - 500px)"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             [reorderableColumns]="false"
+             [resizableColumns]="false"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['KPL','THICKNESS','PARENTNESTID','WEIGHT']">
+      <ng-template pTemplate="header">
+        <tr class="df">
+          <th pSortableColumn="KPL" class="lxy w-25">{{'KPL'}}
+            <p-sortIcon field="KPL"></p-sortIcon>
+          </th>
+          <th pSortableColumn="THICKNESS" class="lxy w-25">{{t.tr('T x W x L')}}
+            <p-sortIcon field="THICKNESS"></p-sortIcon>
+          </th>
+          <th pSortableColumn="PARENTNESTID" class="lxy w-25">{{t.tr('From')}}
+            <p-sortIcon field="PARENTNESTID"></p-sortIcon>
+          </th>
+          <th pSortableColumn="WEIGHT" class="lxy w-25">{{t.tr('Weight kg')}}
+            <p-sortIcon field="WEIGHT"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-wastage>
+        <tr class="cursor-pointer row-table-doc-hover">
+          <td class="w-25 text-14">{{wastage.KPL}}</td>
+          <td class="w-25 text-14">{{wastage.THICKNESS + 'x' + wastage.SWIDTH + 'x' +wastage.SLENGTH}}</td>
+          <td class="w-25 text-14">{{wastage.PARENTNESTID}}</td>
+          <td class="w-25 text-14">{{round(wastage.WEIGHT,1)}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>
