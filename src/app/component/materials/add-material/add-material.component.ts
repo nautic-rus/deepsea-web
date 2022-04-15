@@ -5,6 +5,7 @@ import {Material} from "../../../domain/classes/material";
 import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import _ from "underscore";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-add-material',
@@ -35,7 +36,7 @@ export class AddMaterialComponent implements OnInit {
     label: 'No specified type',
   };
 
-  constructor(public t: LanguageService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef) {
+  constructor(public t: LanguageService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
     this.projects = dialog.data[0];
     this.project = this.projects[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
@@ -54,6 +55,31 @@ export class AddMaterialComponent implements OnInit {
   }
 
   createMaterial() {
+    if (this.material.code.substring(0, 12) != Material.generateCode(this.materialPrefix, this.materials).substring(0, 12)){
+      this.messageService.add({severity:'error', summary:'Code Error', detail:'You cannot modify base first 12 length symbols of code. Please create another block with code you wish.', life: 8000});
+      return;
+    }
+    if (this.material.code.length != 16){
+      this.messageService.add({severity:'error', summary:'Code Error', detail:'You cannot set length of code different from 16.', life: 8000});
+      return;
+    }
+    let r = new RegExp('^[A-Z]{12}\\d{4}');
+    if (!r.test(this.material.code)){
+      this.messageService.add({severity:'error', summary:'Code Error', detail:'You can only use latin uppercase symbols and numbers in code. Code pattern: 12 uppercase latin symbols and 4 digits.', life: 8000});
+      return;
+    }
+    if (this.materials.find(x => x.code == this.material.code)){
+      this.messageService.add({severity:'error', summary:'Code Error', detail:'Material with the same code already exists.', life: 8000});
+      return;
+    }
+    if (this.material.name == 'New Material' || this.material.name.trim() == ''){
+      this.messageService.add({severity:'error', summary:'Code Error', detail:'You need to specify material name.', life: 8000});
+      return;
+    }
+    if (this.material.singleWeight == 0 || this.material.singleWeight == null){
+      this.messageService.add({severity:'error', summary:'Code Error', detail:'You need to specify material weight.', life: 8000});
+      return;
+    }
     this.materialManager.updateMaterial(this.material, this.auth.getUser().login, 0).then(res => {
       this.ref.close(this.material);
     });
