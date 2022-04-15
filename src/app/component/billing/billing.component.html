@@ -236,7 +236,7 @@
                       </div>
                     </div>
                     <div class="cxy title-bold">
-                      <div class="text-center-x" [innerHTML]="(profile.section.toString() + ' ' + profile.scantling.toString()) | highLight: searchPlates"></div>
+                      <div class="text-center-x" [innerHTML]="(profDecode(profile.section.toString()) + ' ' + profile.scantling.toString()) | highLight: searchPlates"></div>
                     </div>
                     <div class="text-mini-gray">
                       <div class="text-center-x">

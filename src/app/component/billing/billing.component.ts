@@ -491,4 +491,17 @@ export class BillingComponent implements OnInit {
       }
     });
   }
+  profDecode(code: string): string{
+    switch (code) {
+      case 'AS': return 'LP';
+      case 'FS': return 'FB';
+      case 'PS': return 'PIPE';
+      case 'RS': return 'RB';
+      case 'MC': return 'HRB';
+      case 'SR': return 'SQB';
+      case 'HR': return 'SQP';
+      case 'BS': return 'HP';
+      default: return code;
+    }
+  }
 }
