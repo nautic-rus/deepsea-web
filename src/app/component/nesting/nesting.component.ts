@@ -65,6 +65,8 @@ export class NestingComponent implements OnInit {
   filters:  { BLOCKS: any[], MATERIAL: any[]  } = { BLOCKS: [],  MATERIAL: [] };
   blocks: any[] = [];
   materials: any[] = [];
+  materialsRoot: any[] = [];
+  materialsRest: any[] = [];
   loading = false;
   loadingMaterials = false;
   loadingBlocks = false;
@@ -73,7 +75,9 @@ export class NestingComponent implements OnInit {
   cmapuser = '';
   cmapdate = 0;
   projects: string[] = ['N002', 'N004'];
-
+  selectedAllBlocks = false;
+  selectedAllMaterialsRoot = false;
+  selectedAllMaterialsRest = false;
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -296,8 +300,8 @@ export class NestingComponent implements OnInit {
       this.wz.setSrcAndReset(url);
     });
   }
-  round(input: number) {
-    return Math.round(+input * 100) / 100;
+  round(input: number, digit = 100) {
+    return Math.round(input * digit) / digit;
   }
   openFile(url: string) {
     window.open(url);
@@ -676,6 +680,8 @@ export class NestingComponent implements OnInit {
   selectBlock(block: any) {
     block.selected = !block.selected;
     this.materials.splice(0, this.materials.length);
+    this.materialsRest.splice(0, this.materialsRest.length);
+    this.materialsRoot.splice(0, this.materialsRoot.length);
     this.nesting.splice(0, this.nesting.length);
   }
 
@@ -688,9 +694,12 @@ export class NestingComponent implements OnInit {
         this.materials.push({
           name: material.MATERIAL + 'x' + material.THICKNESS + 'x' + material.NEST_LENGTH + 'x' + material.NEST_WIDTH,
           selected: selected,
-          value: material
+          value: material,
+          parent: material.PARENTID
         });
       });
+      this.materialsRoot = this.materials.filter(x => x.parent == '');
+      this.materialsRest = this.materials.filter(x => x.parent != '');
     });
   }
 
@@ -880,6 +889,24 @@ export class NestingComponent implements OnInit {
       nest.isLock = !nest.isLock;
       nest.lockInfo.user = this.auth.getUser().login;
       nest.lockInfo.date = new Date().getTime();
+    });
+  }
+
+  selectAllBlocks() {
+    this.blocks.forEach(block => {
+      block.selected = !this.selectedAllBlocks;
+    });
+  }
+
+  selectAllMaterialsRest() {
+    this.materialsRest.forEach(material => {
+      material.selected = !this.selectedAllMaterialsRest;
+    });
+  }
+
+  selectAllMaterialsRoot() {
+    this.materialsRoot.forEach(material => {
+      material.selected = !this.selectedAllMaterialsRoot;
     });
   }
 }
