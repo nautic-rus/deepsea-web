@@ -1,7 +1,7 @@
 export class MaterialNode {
   label: string = '';
   data: string = '';
-  layer: string = '';
+  //layer: string = '';
   //expandedIcon: string = '';
   //collapsedIcon: string = '';
   //icon: string = '';

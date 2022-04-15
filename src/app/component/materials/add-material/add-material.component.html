@@ -3,20 +3,20 @@
     <div class="single-row w-100 cx">
       <div>Код материала:</div>
     </div>
-    <div class="cx df pt-5">
-      <p-dropdown class="mx-5" *ngFor="let select of codeSelectors" [options]="select.layer" [(ngModel)]="select.code" (ngModelChange)="selectorChanged()"  [filter]="true" filterBy="info" [showClear]="true">
-        <ng-template pTemplate="selectedItem">
-          <div class="country-item country-item-value" *ngIf="select.code">
-            <div>{{select.code.data}}</div>
-          </div>
-        </ng-template>
-        <ng-template let-code pTemplate="item">
-          <div class="country-item">
-            <div>{{code.data + ' ' + code.label}}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
-    </div>
+<!--    <div class="cx df pt-5">-->
+<!--      <p-dropdown class="mx-5" *ngFor="let select of codeSelectors" [options]="select.layer" [(ngModel)]="select.code" (ngModelChange)="selectorChanged()"  [filter]="true" filterBy="info" [showClear]="true">-->
+<!--        <ng-template pTemplate="selectedItem">-->
+<!--          <div class="country-item country-item-value" *ngIf="select.code">-->
+<!--            <div>{{select.code.data}}</div>-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--        <ng-template let-code pTemplate="item">-->
+<!--          <div class="country-item">-->
+<!--            <div>{{code.data + ' ' + code.label}}</div>-->
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </p-dropdown>-->
+<!--    </div>-->
     <div class="cx pt-5">
       <input [(ngModel)]="material.code" type="text" pInputText class="width-480 border-material">
     </div>

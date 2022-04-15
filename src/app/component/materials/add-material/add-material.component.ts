@@ -42,41 +42,11 @@ export class AddMaterialComponent implements OnInit {
     this.action = dialog.data[2];
     this.materials = dialog.data[3];
     this.materialPrefix = dialog.data[4];
-    this.materialManager.getMaterialNodes().then(res => {
-      this.layer3.push(this.noneCode);
-      this.layer4.push(this.noneCode);
-      _.sortBy(res.filter(x => x.layer == "1"), x => x.data).forEach(x => this.layer1.push(x));
-       _.sortBy(res.filter(x => x.layer == "2"), x => x.data).forEach(x => this.layer2.push(x));
-      _.sortBy(res.filter(x => x.layer == "3"), x => x.data).forEach(x => this.layer3.push(x));
-      _.sortBy(res.filter(x => x.layer == "4"), x => x.data).forEach(x => this.layer4.push(x));
-      this.selectedCode1 = this.layer1[0];
-      this.selectedCode2 = this.layer2[0];
-      this.selectedCode3 = this.noneCode;
-      this.selectedCode4 = this.noneCode;
-      if ((this.action == 'add' || this.action == 'edit') && this.materialPrefix != ''){
-        this.material.code = this.materialPrefix;
-        for (let x = 0; x < 4; x ++){
-          this.material.code += 'NON';
-        }
-      }
-      if (this.action != 'add'){
-        this.selectedCode1 = this.layer1.find(x => x.data == this.material.code.substring(0, 3));
-        this.selectedCode2 = this.layer2.find(x => x.data == this.material.code.substring(3, 6));
-        this.selectedCode3 = this.layer3.find(x => x.data == this.material.code.substring(6, 9));
-        this.selectedCode4 = this.layer4.find(x => x.data == this.material.code.substring(9, 12));
-      }
-      this.layer1.forEach(l => l.info = l.data + ' ' + l.label);
-      this.layer2.forEach(l => l.info = l.data + ' ' + l.label);
-      this.layer3.forEach(l => l.info = l.data + ' ' + l.label);
-      this.layer4.forEach(l => l.info = l.data + ' ' + l.label);
-      this.codeSelectors.push({layer: this.layer1, code: this.selectedCode1});
-      this.codeSelectors.push({layer: this.layer2, code: this.selectedCode2});
-      this.codeSelectors.push({layer: this.layer3, code: this.selectedCode3});
-      this.codeSelectors.push({layer: this.layer4, code: this.selectedCode4});
-      if (this.action == 'add' || this.action == 'Clone'){
-        this.selectorChanged();
-      }
-    });
+
+
+    if ((this.action == 'add' || this.action == 'clone') && this.materialPrefix != ''){
+      this.material.code = Material.generateCode(this.materialPrefix, this.materials);
+    }
   }
 
   ngOnInit(): void {
@@ -103,6 +73,6 @@ export class AddMaterialComponent implements OnInit {
   }
 
   getLabel(action: string) {
-    return action.replace('add', 'Create').replace('edit', 'Update');
+    return action.replace('add', 'Create').replace('edit', 'Update').replace('clone', 'Clone');
   }
 }
