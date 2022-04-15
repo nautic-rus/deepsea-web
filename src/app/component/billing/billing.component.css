@@ -220,7 +220,7 @@
 .top-row-tile{
   height: 78px;
   display: grid;
-  grid-template-columns: 10px 3fr 3.5fr 1.5fr;
+  grid-template-columns: auto 3fr 3.5fr 1.5fr;
 }
 .pulse{
 
@@ -231,7 +231,7 @@
 }
 .title-bold{
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   color: #3a3a3a;
 }
