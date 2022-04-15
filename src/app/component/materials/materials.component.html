@@ -6,7 +6,7 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="selectedNode == null" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
@@ -21,12 +21,12 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top">
+        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top"  [class.disabled-button]="materials.length == 0">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" (click)="deleteMaterial(selectedMaterial)">
+        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="deleteMaterial(selectedMaterial)">
           <img src="assets/icons/trash-white.svg" height="22">
         </div>
       </div>
@@ -43,7 +43,7 @@
       <div class="w-100 df">
         <div class="w-15">
           <div class="menu-card">
-            <p-tree class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
+            <p-tree class="tree" [contextMenu]="nodeMenu" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>
@@ -126,3 +126,4 @@
   </div>
 </div>
 <p-toast position="bottom-center"></p-toast>
+<p-contextMenu #nodeMenu [model]="items"></p-contextMenu>

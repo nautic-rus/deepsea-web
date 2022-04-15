@@ -25,9 +25,13 @@ export class Material {
     }
     return result;
   }
-  public static generateCode(prefix: string, materials: Material[]): string {
+  public static generateCode(prefixSrc: string, materials: Material[]): string {
     let code = '0001';
-    let filter = _.sortBy(materials.filter(x => x.code.includes(prefix)), x => x.code);
+    let prefix = prefixSrc;
+    while (prefix.length < 12){
+      prefix += 'NON';
+    }
+    let filter = _.sortBy(materials.filter(x => x.code.startsWith(prefix)), x => x.code);
     if (filter.length > 0){
       let filterCode = filter.reverse()[0].code;
       code = this.addLeftZeros((+filterCode.substring(13) + 1).toString());
