@@ -1,0 +1,6 @@
+/deep/.p-dialog .p-dialog-content{
+  border-radius: 5px!important;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th {
+  border-width: 1px 0 1px 0;
+}

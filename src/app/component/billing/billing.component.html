@@ -191,7 +191,7 @@
                     <div class="button-show cursor-pointer" (click)="showPartsQty(plate); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
-                <div class="row-one-back opacity">
+                <div class="row-one-back">
                   <div class="df lxy">
                     <div class="icon-back-orange cxy ml-10">
                       <img src="assets/icons/sections.svg" height="18">
@@ -199,18 +199,18 @@
                     <div class="title-medium-bold ml-10">Blocks</div>
                   </div>
                   <div class="cxy">
-                    <div class="button-show cursor-default ">Show</div>
+                    <div class="button-show cursor-pointer" (click)="showBlocks(plate); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
-                <div class="row-one-back background-gray opacity">
+                <div class="row-one-back background-gray">
                   <div class="df lxy">
                     <div class="icon-back-violet cxy ml-10">
                       <img src="assets/icons/rest.svg" height="18">
                     </div>
-                    <div class="title-medium-bold ml-10">Rest</div>
+                    <div class="title-medium-bold ml-10">Wastage</div>
                   </div>
                   <div class="cxy">
-                    <div class="button-show cursor-default">Show</div>
+                    <div class="button-show cursor-pointer" (click)="showWastage(plate); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
               </div>

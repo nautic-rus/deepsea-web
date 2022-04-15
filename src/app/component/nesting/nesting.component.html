@@ -135,111 +135,163 @@
           </div>
           <div *ngIf="noResult && nesting.length == 0">
             <div class="cxy card-height">
-              <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
+              <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column. Probably nesting files of selected sections were not been uploaded.</div>
             </div>
           </div>
 
           <div *ngIf="currentView == 'tile'" class="tile">
-            <div [class.hidden-card]="nest == null" class="dash-card-tile" *ngFor="let nest of nesting; let i = index">
-              <div *ngIf="nest != null" class="top-row-tile">
+            <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nesting; let i = index">
+              <div *ngIf="nest != null">
                 <div class="parent-plate" *ngIf="nest.PARENTID != ''"></div>
-                <div class="cy">
-                  <div class="cxy">
-                    <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
-                      <img src="assets/icons/lock.svg" height="22">
-                    </div>
-                    <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
-                      <img src="assets/icons/unlock.svg" height="22">
-                    </div>
-                    <div class="pl-10" *ngIf="nest.isLock">
-                      <div class="lock-name">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
-                      <div class="lock-date">{{getDate(nest.lockInfo.date)}}</div>
+                <div class="one-row">
+                  <div class="mt-minus5">
+                    <div class="title-bold">{{nest.ID}}</div>
+                  </div>
+                  <div class="ml-5">
+                    <div>
+                      <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.NEST_LENGTH) / 1000 + 'x' + (nest.NEST_WIDTH) / 1000}}</span>
+                      <span class="text-mini-gray pr-5">{{nest.MATERIAL}}</span>
+                      <span class="text-gray-mini">{{'(' + nest.GROSSWEIGHT + 'kg)'}}</span>
                     </div>
                   </div>
-                  <div class="">
-                    <div class="cy h-100">
-                      <div class="cx mb-10 mt-10 flex-column">
-                        <div class="title-bold px-10">{{nest.ID}}</div>
-                        <div class="text-parent-plate" *ngIf="nest.PARENTID != ''">{{nest.PARENTID}}</div>
+                  <div>
+                    <div class="qty-text">
+                      <div class="kpl-flag cxy">
+                        <span class="pr-5">QTY</span>
+                        <span>{{nest.NUM_EQ_NEST}}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="column-chart">
-                  <div class="position-relative mt-minus15">
-                    <div class="chart-area df">
-                      <div [ngStyle]="getWidth(nest.USAGE)" class="h-100 chart-usage"></div>
-                      <div [ngStyle]="getWidth(100 - nest.USAGE)" class="h-100 chart-left"></div>
-                    </div>
-                    <div class="donut-text">{{round(nest.USAGE)}}%</div>
-                  </div>
-                  <div class="df mt-10">
-                    <div class="text-center-y">
-                      <div class="usage-tile cxy">
-                        <img src="assets/icons/usage.svg" height="16">
-                      </div>
-                      <div class="ml-5">
-                        <div class="usage-left-text">Usage</div>
-                        <div class="usage-left-percent">{{round(nest.USAGE)}}%</div>
-                      </div>
-                    </div>
-                    <div class="text-center-y ml-5">
-                      <div class="left-tile cxy">
-                        <img src="assets/icons/recycle-blue.svg" height="16">
-                      </div>
-                      <div class="ml-5">
-                        <div class="usage-left-text">Left</div>
-                        <div class="usage-left-percent">{{round(100 - nest.USAGE)}}%</div>
-                      </div>
-                    </div>
+                <div class="two-row">
+                  <div class="text-parent-plate pl-15">{{nest.PARENTID}}</div>
+                  <div>
+                    <span class="usage-left-text pr-5">Block:</span>
+                    <span class="text-mini-gray pr-20">{{nest.BLOCKS}}</span>
+                    <span class="usage-left-text pr-5">Parts weight:</span>
+                    <span class="text-mini-gray pr-20">{{round(nest.PARTS_WEIGHT, 1) + 'kg'}}</span>
                   </div>
                 </div>
-                <div class="">
-                  <div class="files-tile">
-                    <div class=" ">
-                      <div class="gray-text-tile cx mb-1px">Nesting:</div>
-                      <div class="cxy mt-7">
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy " (click)="showNestingTemplate(nest); $event.stopPropagation()">
-                          <i class="pi pi-eye pi-size"></i>
-                        </div>
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadNestingFile(nest); $event.stopPropagation()">
-                          <i class="pi pi-download pi-size"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="">
-                      <div class="gray-text-tile cx mb-1px mt-5">Cutting:</div>
-                      <div class="cxy mt-7">
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest); $event.stopPropagation()">
-                          <i class="pi pi-eye pi-size"></i>
-                        </div>
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadCuttingFile(nest); $event.stopPropagation()">
-                          <i class="pi pi-download pi-size"></i>
-                        </div>
 
+
+
+                <div class="three-row">
+                  <div class="">
+                    <div class="cxy flex-column ml-minus10">
+                      <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
+                        <img src="assets/icons/lock.svg" height="22">
+                      </div>
+                      <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
+                        <img src="assets/icons/unlock.svg" height="22">
+                      </div>
+                      <div class="" *ngIf="nest.isLock">
+                        <div class="lock-name pb-5">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
+                        <div class="lock-date">{{getDate(nest.lockInfo.date)}}</div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div *ngIf="nest != null" class="mt-5 ">
-                <div class="ovf-auto table-bottom">
-                  <div class="df cursor-pointer sticky">
-                    <div class="w-22 table-header-column cy">{{l.tr('Block')}}</div>
-                    <div class="w-28 table-header-column cy">{{l.tr('LxWxT')}}</div>
-                    <div class="w-25 table-header-column cy">{{l.tr('Mat.')}}</div>
-                    <div class="w-15 table-header-column cy">{{l.tr('Parts wgt')}}</div>
-                    <div class="w-10 table-header-column cy">{{l.tr('QTY')}}</div>
+                  <div class="column-chart">
+                    <div class="position-relative mt-minus15">
+                      <div class="chart-area df">
+                        <div [ngStyle]="getWidth(nest.USAGE)" class="h-100 chart-usage"></div>
+                        <div [ngStyle]="getWidth(100 - nest.USAGE)" class="h-100 chart-left"></div>
+                      </div>
+                      <div class="donut-text">{{round(nest.USAGE)}}%</div>
+                    </div>
+                    <div class="df mt-10">
+                      <div class="text-center-y">
+                        <div class="usage-tile cxy">
+                          <img src="assets/icons/usage.svg" height="16">
+                        </div>
+                        <div class="ml-5">
+                          <div class="usage-left-text">Usage</div>
+                          <div class="usage-left-percent">{{round(nest.USAGE)}}%</div>
+                        </div>
+                      </div>
+                      <div class="text-center-y ml-5">
+                        <div class="left-tile cxy">
+                          <img src="assets/icons/recycle-blue.svg" height="16">
+                        </div>
+                        <div class="ml-5">
+                          <div class="usage-left-text">Left</div>
+                          <div class="usage-left-percent">{{round(100 - nest.USAGE)}}%</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="text-center-y info-row cursor-pointer">
-                    <div class="w-22 table-body cy">{{nest.BLOCKS}}</div>
-                    <div class="w-28 table-body cy">{{nest.THICKNESS + 'x'}}{{nest.NEST_LENGTH + 'x'}}{{nest.NEST_WIDTH}}</div>
-                    <div class="w-25 table-body cy">{{nest.MATERIAL}}</div>
-                    <div class="w-15 table-body cy">{{round(nest.PARTS_WEIGHT)}}</div>
-                    <div class="w-10 table-body cy">{{nest.NUM_EQ_NEST}}</div>
+                  <div class="cursor-default mt-8">
+                    <div class="nesting-cutting w-95 ml-10 df space-between mb-10">
+                      <div class="mini-gray-text">nesting</div>
+                      <div class="df">
+                        <div class="eye-nesting cxy mr-5 cursor-pointer">
+                          <i class="pi pi-eye icon-cutting"></i>
+                        </div>
+                        <div class="download-nesting cxy cursor-pointer">
+                          <i class="pi pi-download icon-cutting"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="nesting-cutting w-95 ml-10 df space-between">
+                      <div class="mini-gray-text">cutting</div>
+                      <div class="df">
+                        <div class="eye-nesting cxy mr-5 cursor-pointer">
+                          <i class="pi pi-eye icon-cutting"></i>
+                        </div>
+                        <div class="download-nesting cxy cursor-pointer">
+                          <i class="pi pi-download icon-cutting"></i>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+
+
+
+
+
+
+<!--                  <div class="">-->
+<!--                    <div class="files-tile">-->
+<!--                      <div class=" ">-->
+<!--                        <div class="gray-text-tile cx mb-1px">Nesting:</div>-->
+<!--                        <div class="cxy mt-7">-->
+<!--                          <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy " (click)="showNestingTemplate(nest); $event.stopPropagation()">-->
+<!--                            <i class="pi pi-eye pi-size"></i>-->
+<!--                          </div>-->
+<!--                          <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadNestingFile(nest); $event.stopPropagation()">-->
+<!--                            <i class="pi pi-download pi-size"></i>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="">-->
+<!--                        <div class="gray-text-tile cx mb-1px mt-5">Cutting:</div>-->
+<!--                        <div class="cxy mt-7">-->
+<!--                          <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest); $event.stopPropagation()">-->
+<!--                            <i class="pi pi-eye pi-size"></i>-->
+<!--                          </div>-->
+<!--                          <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadCuttingFile(nest); $event.stopPropagation()">-->
+<!--                            <i class="pi pi-download pi-size"></i>-->
+<!--                          </div>-->
+
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
                 </div>
+<!--                <div class="mt-5 ">-->
+<!--                  <div class="ovf-auto table-bottom">-->
+<!--                    <div class="df cursor-pointer sticky">-->
+<!--                      <div class="w-50 table-header-column cy">{{l.tr('Block')}}</div>-->
+<!--                      <div class="w-50 table-header-column cy">{{l.tr('Parts weight')}}</div>-->
+<!--                    </div>-->
+<!--                    <div class="text-center-y info-row cursor-pointer">-->
+<!--                      <div class="w-50 table-body cy">{{nest.BLOCKS}}</div>-->
+<!--                      <div class="w-50 table-body cy">{{round(nest.PARTS_WEIGHT)}}</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
               </div>
+
             </div>
           </div>
         </div>
@@ -408,110 +460,117 @@
             </div>
           </div>
           <div *ngIf="currentView == 'tile'" class="tile">
-            <div [class.hidden-card-tablet]="nest == null" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
-              <div *ngIf="nest != null" class="top-row-tile-tablet">
-                <div class="parent-plate" *ngIf="nest.PARENTID != ''"></div>
-                <div class="cy">
-                  <div class="cxy flex-col">
-                    <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
-                      <img src="assets/icons/lock.svg" height="20">
-                    </div>
-                    <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
-                      <img src="assets/icons/unlock.svg" height="20">
-                    </div>
-                    <div class="" *ngIf="nest.isLock">
-                      <div class="lock-name-tablet">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
-                      <div class="lock-date-tablet">{{getDate(nest.lockInfo.date)}}</div>
-                    </div>
+            <div [ngClass]="{'hidden-card': nest == null, 'parent-plate': nest != null && nest.PARENTID != ''}" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
+              <div *ngIf="nest != null">
+                <div class="over-top-row mt-minus5 df">
+                  <div>
+                    <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.NEST_LENGTH) / 1000 + 'x' + (nest.NEST_WIDTH) / 1000}}</span>
+                    <span class="text-mini-gray pr-5">{{nest.MATERIAL}}</span>
+                    <span class="text-gray-mini">{{'(' + nest.GROSSWEIGHT + 'kg)'}}</span>
                   </div>
-                  <div class="">
-                    <div class="cy h-100">
-                      <div class="cx mt-5 flex-column">
-                        <div class="title-bold-tablet">{{nest.ID}}</div>
-                        <div class="text-parent-plate-tablet" *ngIf="nest.PARENTID != ''">{{nest.PARENTID}}</div>
+                  <div class="p-ml-auto">
+                    <div class="qty-text">
+                      <div class="kpl-flag cxy">
+                        <span class="pr-5">QTY</span>
+                        <span>{{nest.NUM_EQ_NEST}}</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="column-chart-tablet ml-5">
-                  <div class="position-relative mt-minus15">
-                    <div class="chart-area-tablet df">
-                      <div [ngStyle]="getWidth(nest.USAGE)" class="h-100 chart-usage"></div>
-                      <div [ngStyle]="getWidth(100 - nest.USAGE)" class="h-100 chart-left"></div>
-                    </div>
-                    <div class="donut-text">{{round(nest.USAGE)}}%</div>
-                  </div>
-                  <div class="df mt-5">
-                    <div class="text-center-y">
-                      <div class="usage-tile-tablet cxy">
-                        <img src="assets/icons/scissors.svg" height="13">
+                <div class="top-row-tile-tablet">
+                  <div class="cy">
+                    <div class="cxy flex-col">
+                      <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
+                        <img src="assets/icons/lock.svg" height="20">
                       </div>
-                      <div class="ml-2px">
-                        <div class="usage-left-text-tablet">Usage</div>
-                        <div class="usage-left-percent-tablet">{{round(nest.USAGE)}}%</div>
+                      <div class="cxy unlock cursor-pointer" *ngIf="!nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
+                        <img src="assets/icons/unlock.svg" height="20">
+                      </div>
+                      <div class="" *ngIf="nest.isLock">
+                        <div class="lock-name-tablet">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
+                        <div class="lock-date-tablet">{{getDate(nest.lockInfo.date)}}</div>
                       </div>
                     </div>
-                    <div class="text-center-y ml-2px">
-                      <div class="left-tile-tablet cxy">
-                        <img src="assets/icons/recycle-blue.svg" height="16">
-                      </div>
-                      <div class="ml-2px">
-                        <div class="usage-left-text-tablet">Left</div>
-                        <div class="usage-left-percent-tablet">{{round(100 - nest.USAGE)}}%</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="right-column-tablet">
-                  <div class="qty-text">
-                    <div class="kpl-flag cxy">
-                      <span class="pr-5">QTY</span>
-                      <span>{{nest.NUM_EQ_NEST}}</span>
-                    </div>
-                  </div>
-                  <div class="files-tile mt-minus5">
                     <div class="">
-                      <div class="gray-text-tile cx mb-3px">Nesting:</div>
-                      <div class="cxy mt-5">
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showNestingTemplate(nest); $event.stopPropagation()">
-                          <i class="pi pi-eye pi-size"></i>
-                        </div>
-                        <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadNestingFile(nest); $event.stopPropagation()">
-                          <i class="pi pi-download pi-size"></i>
+                      <div class="cy h-100">
+                        <div class="cx mt-5 flex-column">
+                          <div class="title-bold-tablet">{{nest.ID}}</div>
+                          <div class="text-parent-plate-tablet" *ngIf="nest.PARENTID != ''">{{nest.PARENTID}}</div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="column-chart-tablet ml-5">
+                    <div class="position-relative mt-minus15">
+                      <div class="chart-area-tablet df">
+                        <div [ngStyle]="getWidth(nest.USAGE)" class="h-100 chart-usage"></div>
+                        <div [ngStyle]="getWidth(100 - nest.USAGE)" class="h-100 chart-left"></div>
+                      </div>
+                      <div class="donut-text">{{round(nest.USAGE)}}%</div>
+                    </div>
+                    <div class="df mt-5">
+                      <div class="text-center-y">
+                        <div class="usage-tile-tablet cxy">
+                          <img src="assets/icons/scissors.svg" height="13">
+                        </div>
+                        <div class="ml-2px">
+                          <div class="usage-left-text-tablet">Usage</div>
+                          <div class="usage-left-percent-tablet">{{round(nest.USAGE)}}%</div>
+                        </div>
+                      </div>
+                      <div class="text-center-y ml-2px">
+                        <div class="left-tile-tablet cxy">
+                          <img src="assets/icons/recycle-blue.svg" height="16">
+                        </div>
+                        <div class="ml-2px">
+                          <div class="usage-left-text-tablet">Left</div>
+                          <div class="usage-left-percent-tablet">{{round(100 - nest.USAGE)}}%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="right-column-tablet">
+                    <div class="files-tile mt-minus5">
+                      <div class="">
+                        <div class="gray-text-tile cx mb-3px">Nesting:</div>
+                        <div class="cxy mt-5">
+                          <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showNestingTemplate(nest); $event.stopPropagation()">
+                            <i class="pi pi-eye pi-size"></i>
+                          </div>
+                          <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadNestingFile(nest); $event.stopPropagation()">
+                            <i class="pi pi-download pi-size"></i>
+                          </div>
+                        </div>
 
-                    </div>
-                    <div class="">
-                      <div class="gray-text-tile cx mt-5">Cutting:</div>
-                      <div class="cxy mt-5">
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest); $event.stopPropagation()">
-                          <i class="pi pi-eye pi-size"></i>
-                        </div>
-                        <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadCuttingFile(nest); $event.stopPropagation()">
-                          <i class="pi pi-download pi-size"></i>
+                      </div>
+                      <div class="">
+                        <div class="gray-text-tile cx mt-5">Cutting:</div>
+                        <div class="cxy mt-5">
+                          <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest); $event.stopPropagation()">
+                            <i class="pi pi-eye pi-size"></i>
+                          </div>
+                          <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadCuttingFile(nest); $event.stopPropagation()">
+                            <i class="pi pi-download pi-size"></i>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div *ngIf="nest != null" class="bottom-row">
-                <div class="ovf-auto table-bottom">
-                  <div class="df cursor-pointer sticky">
-                    <div class="w-24 table-header-column-tablet cy">{{l.tr('Block')}}</div>
-                    <div class="w-30 table-header-column-tablet cy">{{l.tr('mm x m x m')}}</div>
-                    <div class="w-23 table-header-column-tablet cy">{{l.tr('Mat.')}}</div>
-                    <div class="w-23 table-header-column-tablet cy">{{l.tr('Parts wgt')}}</div>
-                  </div>
-                  <div class="text-center-y info-row cursor-pointer">
-                    <div class="w-24 table-body-tablet cy">{{nest.BLOCKS}}</div>
-                    <div class="w-30 table-body-tablet cy">{{nest.THICKNESS + 'x'}}{{(nest.NEST_LENGTH) / 1000 + 'x'}}{{(nest.NEST_WIDTH) / 1000}}</div>
-                    <div class="w-23 table-body-tablet cy">{{nest.MATERIAL}}</div>
-                    <div class="w-23 table-body-tablet cy">{{round(nest.PARTS_WEIGHT)}}</div>
+                <div class="bottom-row">
+                  <div class="ovf-auto table-bottom">
+                    <div class="df cursor-pointer sticky">
+                      <div class="w-50 table-header-column-tablet cxy">{{l.tr('Block')}}</div>
+                      <div class="w-50 table-header-column-tablet cxy">{{l.tr('Parts weight')}}</div>
+                    </div>
+                    <div class="text-center-y info-row cursor-pointer">
+                      <div class="w-50 table-body-tablet cxy">{{nest.BLOCKS}}</div>
+                      <div class="w-50 table-body-tablet cxy">{{round(nest.PARTS_WEIGHT)}}</div>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

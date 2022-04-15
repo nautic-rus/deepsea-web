@@ -178,6 +178,9 @@ body,p{
 .w-93{
   width: 93%;
 }
+.w-95{
+  width: 95%;
+}
 .w-96{
   width: 96%;
 }
@@ -310,6 +313,9 @@ body,p{
 .height-32{
   height: 32px;
 }
+.height-50{
+  height: 50px;
+}
 .h-100{
   height: 100%;
 }
@@ -345,6 +351,9 @@ body,p{
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.cursor-default{
+  cursor: default;
 }
 .ovf{
   overflow-y: scroll;
@@ -409,6 +418,15 @@ body,p{
 }
 .mr-minus20{
   margin-right: -20px;
+}
+.ml-minus5{
+  margin-left: -5px;
+}
+.ml-minus10{
+  margin-left: -10px;
+}
+.ml-minus20{
+  margin-left: -20px;
 }
 .mt-minus5{
   margin-top: -5px;

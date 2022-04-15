@@ -10,6 +10,8 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {DeleteComponent} from "../task/delete/delete.component";
 import {PartsQtyComponent} from "./parts-qty/parts-qty.component";
+import {WastageComponent} from "./wastage/wastage.component";
+import {BlocksComponent} from "./blocks/blocks.component";
 
 @Component({
   selector: 'app-billing',
@@ -458,6 +460,28 @@ export class BillingComponent implements OnInit {
   }
   showPartsQty(plate: any) {
     this.dialogService.open(PartsQtyComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.project, plate],
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+  }
+  showWastage(plate: any) {
+    this.dialogService.open(WastageComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.project, plate],
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+  }
+  showBlocks(plate: any) {
+    this.dialogService.open(BlocksComponent, {
       showHeader: false,
       modal: true,
       data: [this.project, plate],

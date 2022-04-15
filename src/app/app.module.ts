@@ -98,6 +98,8 @@ import { BillingComponent } from './component/billing/billing.component';
 import {TreeModule} from "primeng/tree";
 import { ReportComponent } from './component/report/report.component';
 import { PartsQtyComponent } from './component/billing/parts-qty/parts-qty.component';
+import { WastageComponent } from './component/billing/wastage/wastage.component';
+import { BlocksComponent } from './component/billing/blocks/blocks.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -158,6 +160,8 @@ Quill.register('modules/imageResize', ImageResize);
     ReportComponent,
     BillingComponent,
     PartsQtyComponent,
+    WastageComponent,
+    BlocksComponent,
   ],
     imports: [
       BrowserModule,
