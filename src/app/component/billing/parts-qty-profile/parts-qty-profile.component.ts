@@ -23,7 +23,9 @@ export class PartsQtyProfileComponent implements OnInit {
   ngOnInit(): void {
     this.project = this.conf.data[0];
     this.profile = this.conf.data[1];
-    this.s.hullPlates(this.project, this.profile.mat, this.profile.scantling.split('x')[0]).then(res => {
+    console.log(this.profile);
+    this.s.hullProfiles(this.project, this.profile.mat, this.profile.KSE).then(res => {
+      console.log(res);
       this.parts = _.sortBy(res, x => x.code);
       this.fillParts();
     });

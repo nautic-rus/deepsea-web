@@ -38,6 +38,9 @@ export class SpecManagerService {
   async hullPlates(project: string, material: string, thickness: number) {
     return await this.http.get<any>(props.httpSpec + '/hullPlates', {params: {project, material, thickness}}).toPromise();
   }
+  async hullProfiles(project: string, material: string, kse: number) {
+    return await this.http.get<any>(props.httpSpec + '/hullProfiles', {params: {project, material, kse}}).toPromise();
+  }
   async hullPlatesWastage(project: string, kpl: number) {
     return await this.http.get<any>(props.httpSpec + '/hullPlatesWastage', {params: {project, kpl}}).toPromise();
   }
