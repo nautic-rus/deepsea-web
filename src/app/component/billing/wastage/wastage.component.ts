@@ -23,10 +23,11 @@ export class WastageComponent implements OnInit {
   ngOnInit(): void {
     this.project = this.conf.data[0];
     this.plate = this.conf.data[1];
-    this.s.hullPlatesWastage(this.project, this.plate.KPL).then(res => {
-      this.wastages = _.sortBy(res, x => x.KPL);
-      console.log(this.wastages);
-    });
+    this.wastages = this.plate.wastagesTotal;
+    // this.s.hullPlatesWastage(this.project, this.plate.KPL).then(res => {
+    //   this.wastages = _.sortBy(res, x => x.KPL);
+    //   console.log(this.wastages);
+    // });
   }
   close() {
     this.ref.close();
