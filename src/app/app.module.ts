@@ -101,6 +101,8 @@ import { PartsQtyComponent } from './component/billing/parts-qty/parts-qty.compo
 import {ContextMenuModule} from "primeng/contextmenu";
 import { WastageComponent } from './component/billing/wastage/wastage.component';
 import { BlocksComponent } from './component/billing/blocks/blocks.component';
+import { WeightComponent } from './component/weight/weight.component';
+import { PartsQtyProfileComponent } from './component/billing/parts-qty-profile/parts-qty-profile.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -163,6 +165,8 @@ Quill.register('modules/imageResize', ImageResize);
     PartsQtyComponent,
     WastageComponent,
     BlocksComponent,
+    WeightComponent,
+    PartsQtyProfileComponent,
   ],
     imports: [
         BrowserModule,

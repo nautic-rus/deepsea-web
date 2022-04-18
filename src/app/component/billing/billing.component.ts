@@ -12,6 +12,7 @@ import {DeleteComponent} from "../task/delete/delete.component";
 import {PartsQtyComponent} from "./parts-qty/parts-qty.component";
 import {WastageComponent} from "./wastage/wastage.component";
 import {BlocksComponent} from "./blocks/blocks.component";
+import {PartsQtyProfileComponent} from "./parts-qty-profile/parts-qty-profile.component";
 
 @Component({
   selector: 'app-billing',
@@ -72,6 +73,7 @@ export class BillingComponent implements OnInit {
   fill(){
     this.s.getHullBillProfiles(this.project).then(res => {
       this.profiles = res;
+      console.log(this.profiles)
       this.profilesSource = res;
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'mat');
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'count');
@@ -458,11 +460,32 @@ export class BillingComponent implements OnInit {
       plate.side = 'front';
     }
   }
+  public handleBackClickProfile(event: any, profile: any) {
+    if (event.view.getSelection().toString().length === 0) {
+      profile.side = 'back';
+    }
+  }
+  public handleFrontClickProfile(event: any, profile: any) {
+    if (event.view.getSelection().toString().length === 0) {
+      profile.side = 'front';
+    }
+  }
   showPartsQty(plate: any) {
     this.dialogService.open(PartsQtyComponent, {
       showHeader: false,
       modal: true,
       data: [this.project, plate],
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+  }
+  showPartsQtyProfile(profile: any) {
+    this.dialogService.open(PartsQtyProfileComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.project, profile],
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.ref.close();

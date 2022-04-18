@@ -300,7 +300,7 @@ export class LanguageService {
           case 'Копировать': return 'Copy material';
           case 'Редактировать': return 'Edit material';
           case 'Номер': return 'Number';
-          case '': return '';
+          case 'ВЕС': return 'WEIGHT';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -49,15 +49,15 @@ export class WastageComponent implements OnInit {
     let data: any[] = [];
     this.wastages.filter((x: any) => x != null).forEach(wastage => {
       data.push({
-        'KPL': wastage.KPL.split('x')[0],
-        'T x W x L': wastage.THICKNESS.split('x')[0] + 'x' + wastage.SWIDTH.split('x')[0] + 'x' +wastage.SLENGTH.split('x')[0],
+        'KPL': wastage.KPL,
+        'T x W x L': wastage.THICKNESS + 'x' + wastage.SLENGTH + 'x' + wastage.SWIDTH,
         'From': wastage.PARENTNESTID,
         'Weight': Math.round(wastage.WEIGHT),
       })
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    worksheet['!cols'] = [{wch:13},{wch:13},{wch:13},{wch:13},{wch:13}];
+    worksheet['!cols'] = [{wch:15},{wch:15},{wch:15},{wch:15}];
 
     XLSX.writeFile(workbook, fileName);
   }

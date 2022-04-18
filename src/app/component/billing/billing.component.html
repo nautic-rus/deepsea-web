@@ -133,20 +133,25 @@
                   <div class="w-100">
                     <div class="table-bottom">
                       <div class="df">
-                        <div class="w-33 table-header-column cy">{{t.tr('Rest')}}</div>
-                        <div class="w-33 table-header-column df">{{t.tr('Scrap')}}</div>
-                        <div class="w-33 table-header-column cy">{{t.tr('Nested Parts')}}</div>
+                        <div class="w-25 table-header-column cy">{{t.tr('Wastage')}}</div>
+                        <div class="w-20 table-header-column df">{{t.tr('Scrap')}}</div>
+                        <div class="w-20 table-header-column cy">{{t.tr('Parts')}}</div>
+                        <div class="w-35 table-header-column cy">{{t.tr('Weight')}}</div>
                       </div>
                       <div class="text-center-y info-row">
-                        <div class="w-33 table-body cy">
+                        <div class="w-25 table-body cy">
                           <span [innerHTML]="round(plate.wastages, 10).toString() | highLight: searchPlates"></span>
                         </div>
-                        <div class="w-33 table-body df">
-                          <span [innerHTML]="round(plate.scrap).toString() | highLight: searchPlates"></span>
+                        <div class="w-20 table-body df">
+                          <span [innerHTML]="round(plate.scrap, 10).toString() | highLight: searchPlates"></span>
                           <span class="mr-5">%</span>
                         </div>
-                        <div class="w-33 table-body cy">
+                        <div class="w-20 table-body cy">
                           <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
+                        </div>
+                        <div class="w-35 table-body">
+                          <span [innerHTML]="round(plate.nestedPartsWeight, 1).toString() | highLight: searchPlates"></span>
+                          <span class="pl-2">kg</span>
                         </div>
                       </div>
                     </div>
@@ -162,7 +167,7 @@
                       </div>
                       <div class="text-center-y info-row">
                         <div class="w-50 table-body">
-                          <span [innerHTML]="round(plate.realWeight).toString() | highLight: searchPlates"></span>
+                          <span [innerHTML]="round(plate.realWeight, 1).toString() | highLight: searchPlates"></span>
                           <span class="pl-2">kg</span>
                         </div>
                         <div class="w-50 table-body cy">
@@ -208,6 +213,7 @@
                       <img src="assets/icons/rest.svg" height="18">
                     </div>
                     <div class="title-medium-bold ml-10">Wastage</div>
+                    <span class="text-gray-mini"></span>
                   </div>
                   <div class="cxy">
                     <div class="button-show cursor-pointer" (click)="showWastage(plate); $event.stopPropagation();">Show</div>
@@ -221,8 +227,7 @@
       <div *ngIf="selectedHeadTab == 'Profiles'" class="tile">
         <div *ngFor="let profile of profiles; let i = index" class="dash-card cursor-pointer" [class.hidden-card]="profile == null">
           <div *ngIf="profile != null" class="dash-card-tile" [class.flip-card]="profile.side == 'back'">
-            <div class="dash-card-tile-side-front" [class.block-card]="profile != null && profile.isDisabled">
-<!--              <div class="dash-card-tile-side-front" (click)="handleBackClick($event, profile)" [class.block-card]="profile != null && profile.isDisabled">-->
+            <div class="dash-card-tile-side-front" (click)="handleBackClickProfile($event, profile)" [class.block-card]="profile != null && profile.isDisabled">
               <div *ngIf="profile != null">
                 <div class="top-row-tile">
                   <div class="pulse">
@@ -330,47 +335,47 @@
                 </div>
               </div>
             </div>
-<!--            <div class="dash-card-tile-side-back" (click)="handleFrontClick($event, profile)" >-->
-<!--              <div class="cxy title-bold mb-30 h-20" >-->
-<!--                <div class="text-center-x">{{'PL' + profile.scantling + ' ' + profile.mat}}</div>-->
-<!--              </div>-->
-<!--              <div class="all-back-tile">-->
-<!--                <div class="row-one-back background-gray">-->
-<!--                  <div class="df lxy">-->
-<!--                    <div class="icon-back-blue cxy ml-10">-->
-<!--                      <img src="assets/icons/parts.svg" height="18">-->
-<!--                    </div>-->
-<!--                    <div class="title-medium-bold ml-10 mr-7">Parts QTY</div>-->
-<!--                    <span class="text-gray-mini">{{'(' + profile.realPartsCount + ')'}}</span>-->
-<!--                  </div>-->
-<!--                  <div class="cxy">-->
-<!--                    <div class="button-show cursor-pointer" (click)="showPartsQty(profile); $event.stopPropagation();">Show</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="row-one-back opacity">-->
-<!--                  <div class="df lxy">-->
-<!--                    <div class="icon-back-orange cxy ml-10">-->
-<!--                      <img src="assets/icons/sections.svg" height="18">-->
-<!--                    </div>-->
-<!--                    <div class="title-medium-bold ml-10">Blocks</div>-->
-<!--                  </div>-->
-<!--                  <div class="cxy">-->
-<!--                    <div class="button-show cursor-default ">Show</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="row-one-back background-gray opacity">-->
-<!--                  <div class="df lxy">-->
-<!--                    <div class="icon-back-violet cxy ml-10">-->
-<!--                      <img src="assets/icons/rest.svg" height="18">-->
-<!--                    </div>-->
-<!--                    <div class="title-medium-bold ml-10">Rest</div>-->
-<!--                  </div>-->
-<!--                  <div class="cxy">-->
-<!--                    <div class="button-show cursor-default">Show</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
+            <div class="dash-card-tile-side-back" (click)="handleFrontClickProfile($event, profile)" >
+              <div class="cxy title-bold mb-30 h-20" >
+                <div class="text-center-x">{{profDecode(profile.section) + ' ' + profile.scantling + ' ' + profile.mat}}</div>
+              </div>
+              <div class="all-back-tile">
+                <div class="row-one-back background-gray">
+                  <div class="df lxy">
+                    <div class="icon-back-blue cxy ml-10">
+                      <img src="assets/icons/parts.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10 mr-7">Parts QTY</div>
+                    <span class="text-gray-mini">{{'(' + profile.realPartsCount + ')'}}</span>
+                  </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-pointer" (click)="showPartsQtyProfile(profile); $event.stopPropagation();">Show</div>
+                  </div>
+                </div>
+                <div class="row-one-back opacity">
+                  <div class="df lxy">
+                    <div class="icon-back-orange cxy ml-10">
+                      <img src="assets/icons/sections.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Blocks</div>
+                  </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-default ">Show</div>
+                  </div>
+                </div>
+                <div class="row-one-back background-gray opacity">
+                  <div class="df lxy">
+                    <div class="icon-back-violet cxy ml-10">
+                      <img src="assets/icons/rest.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Rest</div>
+                  </div>
+                  <div class="cxy">
+                    <div class="button-show cursor-default">Show</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

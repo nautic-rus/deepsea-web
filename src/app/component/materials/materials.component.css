@@ -1,6 +1,9 @@
 /deep/.p-multiselect-header {
   display: none!important;
 }
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  min-height: 55px;
+}
 /deep/.p-component{
   font-size: 14px!important;
 }

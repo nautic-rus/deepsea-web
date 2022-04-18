@@ -1,45 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import * as XLSX from "xlsx";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
-import {SpecManagerService} from "../../../domain/spec-manager.service";
 import _ from "underscore";
-import * as XLSX from "xlsx";
+import {SpecManagerService} from "../../../domain/spec-manager.service";
 
 @Component({
-  selector: 'app-blocks',
-  templateUrl: './blocks.component.html',
-  styleUrls: ['./blocks.component.css']
+  selector: 'app-parts-qty-profile',
+  templateUrl: './parts-qty-profile.component.html',
+  styleUrls: ['./parts-qty-profile.component.css']
 })
-export class BlocksComponent implements OnInit {
+export class PartsQtyProfileComponent implements OnInit {
 
-  plates: any[] = [];
+  profile: any;
   parts: any[] = [];
-  partsByBlocks: any[] = [];
+  profiles: any[] = [];
   filters:  { block: any[], name: any[] } = { block: [], name: [] };
-  plate: any;
   project = '';
 
-  constructor(public ref: DynamicDialogRef, public t: LanguageService, private conf: DynamicDialogConfig, public s: SpecManagerService) {
-
-  }
+  constructor(public ref: DynamicDialogRef, public t: LanguageService, private conf: DynamicDialogConfig, public s: SpecManagerService) { }
 
   ngOnInit(): void {
     this.project = this.conf.data[0];
-    this.plate = this.conf.data[1];
-    this.s.hullPlates(this.project, this.plate.mat, this.plate.scantling.split('x')[0]).then(res => {
+    this.profile = this.conf.data[1];
+    this.s.hullPlates(this.project, this.profile.mat, this.profile.scantling.split('x')[0]).then(res => {
       this.parts = _.sortBy(res, x => x.code);
-      _.forEach(_.groupBy(this.parts, x => x.block), block => {
-        this.partsByBlocks.push({
-          block: block[0].block,
-          count: block.map(x => x.weight).reduce((x, y) => x + y)
-        })
-      });
-      this.partsByBlocks = _.sortBy(this.partsByBlocks, x => x.block);
       this.fillParts();
     });
-  }
-  close() {
-    this.ref.close();
   }
   getFilters(issues: any[], field: string): any[] {
     let res: any[] = [];
@@ -56,21 +43,25 @@ export class BlocksComponent implements OnInit {
     this.filters.block = this.getFilters(this.parts, 'block');
     this.filters.name = this.getFilters(this.parts, 'name');
   };
-  round(input: number, digit = 100) {
-    return Math.round(input * digit) / digit;
+
+  close() {
+    this.ref.close();
   }
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
     let data: any[] = [];
-    this.partsByBlocks.filter((x: any) => x != null).forEach(block => {
+    this.parts.filter((x: any) => x != null).forEach(part => {
       data.push({
-        'Block': block.block,
-        'Weight': Math.round(block.count),
+        'Number': part.code.split('x')[0],
+        'Block': part.block.split('x')[0],
+        'Name': part.name,
+        'Description': part.description,
+        'Weight': Math.round(part.weight),
       })
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    worksheet['!cols'] = [{wch:15},{wch:15}];
+    worksheet['!cols'] = [{wch:13},{wch:13},{wch:13},{wch:13},{wch:13}];
 
     XLSX.writeFile(workbook, fileName);
   }
@@ -84,4 +75,21 @@ export class BlocksComponent implements OnInit {
     }
     return result;
   }
+  round(input: number, digit = 100) {
+    return Math.round(input * digit) / digit;
+  }
+  profDecode(code: string): string{
+    switch (code) {
+      case 'AS': return 'LP';
+      case 'FS': return 'FB';
+      case 'PS': return 'PIPE';
+      case 'RS': return 'RB';
+      case 'MC': return 'HRB';
+      case 'SR': return 'SQB';
+      case 'HR': return 'SQP';
+      case 'BS': return 'HP';
+      default: return code;
+    }
+  }
+
 }

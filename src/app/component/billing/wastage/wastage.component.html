@@ -29,7 +29,7 @@
           <th pSortableColumn="KPL" class="lxy w-25">{{'KPL'}}
             <p-sortIcon field="KPL"></p-sortIcon>
           </th>
-          <th pSortableColumn="THICKNESS" class="lxy w-25">{{t.tr('T x W x L')}}
+          <th pSortableColumn="THICKNESS" class="lxy w-25">{{t.tr('T x L x W')}}
             <p-sortIcon field="THICKNESS"></p-sortIcon>
           </th>
           <th pSortableColumn="PARENTNESTID" class="lxy w-25">{{t.tr('From')}}
@@ -43,7 +43,7 @@
       <ng-template pTemplate="body" let-wastage>
         <tr class="cursor-pointer row-table-doc-hover">
           <td class="w-25 text-14">{{wastage.KPL}}</td>
-          <td class="w-25 text-14">{{wastage.THICKNESS + 'x' + wastage.SWIDTH + 'x' +wastage.SLENGTH}}</td>
+          <td class="w-25 text-14">{{wastage.THICKNESS + 'x' + wastage.SLENGTH + 'x' + wastage.SWIDTH}}</td>
           <td class="w-25 text-14">{{wastage.PARENTNESTID}}</td>
           <td class="w-25 text-14">{{round(wastage.WEIGHT,1)}}</td>
         </tr>
