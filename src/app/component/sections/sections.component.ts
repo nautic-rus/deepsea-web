@@ -79,7 +79,7 @@ export class SectionsComponent implements OnInit {
       case 'In Work': return {'background-color': '#c8e6c9', border: 'none', color: '#256029', 'font-weight': 600};
       case 'Resolved': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       case 'New': return {'background-color': '#b3e5fc', border: 'none', color: '#23547b', 'font-weight': 600};
-      case 'AssignedTo': return {'background-color': '#ffcfb3', border: 'none', color: '#875638', 'font-weight': 600};
+      case 'AssignedTo': return {'background-color': '#dbe9a0', border: 'none', color: '#606a33', 'font-weight': 600};
       case 'Rejected': return {'background-color': '#feeccd', border: '1px solid #d78a16', color: '#d78a16'};
       case 'Check': return {'background-color': '#eccfff', border: 'none', color: '#694382', 'font-weight': 600};
       case 'In Rework': return {'background-color': '#cbebf1', border: 'none', color: '#3f6b73', 'font-weight': 600};
