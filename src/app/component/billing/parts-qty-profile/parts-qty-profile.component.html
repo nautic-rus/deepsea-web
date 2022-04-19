@@ -26,25 +26,24 @@
              [globalFilterFields]="['code','block','name','description', 'weight']">
       <ng-template pTemplate="header">
         <tr class="df">
-          <th pSortableColumn="code" class="lxy w-20">{{'Number'}}
-            <p-sortIcon field="code"></p-sortIcon>
+          <th pSortableColumn="name" class="lxy w-20">{{'Number'}}
+            <p-sortIcon field="name"></p-sortIcon>
           </th>
           <th pSortableColumn="block" class="lxy w-20">{{t.tr('Block')}}
             <p-sortIcon field="block"></p-sortIcon>
           </th>
-          <th pSortableColumn="block" class="lxy w-20">{{t.tr('Block')}}
-            <p-sortIcon field="block"></p-sortIcon>
+          <th pSortableColumn="struct" class="lxy w-20">{{t.tr('Section')}}
+            <p-sortIcon field="struct"></p-sortIcon>
           </th>
           <th pSortableColumn="description" class="lxy w-20">{{t.tr('Description')}}
             <p-sortIcon field="description"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" class="lxy w-20">{{t.tr('Name')}}
-            <p-sortIcon field="name"></p-sortIcon>
+          <th pSortableColumn="section" class="lxy w-20">{{t.tr('Name')}}
+            <p-sortIcon field="section"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" class="lxy w-20">{{t.tr('Length m')}}
-            <p-sortIcon field="name"></p-sortIcon>
+          <th pSortableColumn="length" class="lxy w-20">{{t.tr('Length m')}}
+            <p-sortIcon field="length"></p-sortIcon>
           </th>
-
           <th pSortableColumn="weight" class="lxy w-20">{{t.tr('Weight kg')}}
             <p-sortIcon field="weight"></p-sortIcon>
           </th>
@@ -52,8 +51,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-part>
         <tr class="cursor-pointer row-table-doc-hover">
-          <td class="w-20 text-14">{{part.code}}</td>
+          <td class="w-20 text-14">{{part.name}}</td>
           <td class="w-20 text-14">{{part.block}}</td>
+          <td class="w-20 text-14">{{part.struct}}</td>
           <td class="w-20 text-14">{{part.description}}</td>
           <td class="w-20 text-14">{{profDecode(part.section) + ' ' + part.w_h + 'x' + part.w_t}}</td>
           <td class="w-20 text-14">{{part.length}}</td>

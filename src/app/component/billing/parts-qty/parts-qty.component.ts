@@ -27,6 +27,7 @@ export class PartsQtyComponent implements OnInit {
     this.plate = this.conf.data[1];
     this.s.hullPlates(this.project, this.plate.mat, this.plate.scantling.split('x')[0]).then(res => {
       this.parts = _.sortBy(res, x => x.code);
+      console.log(this.parts);
       this.fillParts();
     });
   }

@@ -207,13 +207,13 @@
                     <div class="button-show cursor-pointer" (click)="showBlocks(plate); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
-                <div class="row-one-back background-gray">
+                <div [class.opacity]="plate.wastagesTotal.length == 0" class="row-one-back background-gray">
                   <div class="df lxy">
                     <div class="icon-back-violet cxy ml-10">
                       <img src="assets/icons/rest.svg" height="18">
                     </div>
-                    <div class="title-medium-bold ml-10">Wastage {{plate.wastagesTotal.length}}</div>
-                    <span class="text-gray-mini"></span>
+                    <div class="title-medium-bold ml-10 mr-7">Wastage</div>
+                    <span class="text-gray-mini">{{'(' + plate.wastagesTotal.length + ')'}}</span>
                   </div>
                   <div class="cxy">
                     <div class="button-show cursor-pointer" (click)="showWastage(plate); $event.stopPropagation();">Show</div>
@@ -321,10 +321,10 @@
                       </div>
                       <div class="text-center-y info-row">
                         <div class="w-50 table-body">
-                          <span [innerHTML]="round(profile.partsweight).toString() | highLight: search"></span>
+                          <span [innerHTML]="round(profile.partsweight, 1).toString() | highLight: search"></span>
                         </div>
                         <div class="w-50 table-body cy">
-                          <span [innerHTML]="round(profile.realLenght).toString() | highLight: search"></span>
+                          <span [innerHTML]="round(profile.realLenght, 1).toString() | highLight: search"></span>
                         </div>
                         <div class="w-50 table-body cy">
                           <span [innerHTML]="profile.realPartsCount.toString() | highLight: search"></span>

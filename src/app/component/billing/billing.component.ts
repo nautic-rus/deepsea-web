@@ -50,13 +50,12 @@ export class BillingComponent implements OnInit {
     'by Section',
     'by Material',
     'by Profile Forecast',
-    'by Profile Count',
-    'by Real Count',
-    'by Length',
-    'by Weight',
+    'by Profile Usage',
+    'by Parts QTY',
+    'by Parts Weight',
     'by Scrap'
   ];
-  sortProfilesValue = this.sortProfilesValues[2];
+  sortProfilesValue = this.sortProfilesValues[1];
 
   constructor(public ref: DynamicDialogRef, public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router, private dialogService: DialogService) { }
 
@@ -400,19 +399,19 @@ export class BillingComponent implements OnInit {
         break;
       }
       case 1:{
-        this.profiles = _.sortBy(this.profilesSource, x => x.section);
+        this.profiles = _.sortBy(this.profilesSource, x => x.section + x.scantling.split('x').map((x: any) => this.addLeftZeros(x, 5)).join(''));
         break;
       }
       case 2:{
-        this.profiles = _.sortBy(this.profilesSource, x => x.mat);
+        this.profiles = _.sortBy(this.profilesSource, x => x.mat + x.section.split('x').map((x: any) => this.addLeftZeros(x, 5)).join('') + x.scantling.split('x').map((x: any) => this.addLeftZeros(x, 5)).join(''));
         break;
       }
       case 3:{
-        this.profiles = _.sortBy(this.profilesSource, x => x.profileForecast);
+        this.profiles = _.sortBy(this.profilesSource, x => x.profileForecast).reverse();
         break;
       }
       case 4:{
-        this.profiles = _.sortBy(this.profilesSource, x => x.count);
+        this.profiles = _.sortBy(this.profilesSource, x => x.count).reverse();
         break;
       }
       case 5:{
@@ -420,14 +419,10 @@ export class BillingComponent implements OnInit {
         break;
       }
       case 6:{
-        this.profiles = _.sortBy(this.profilesSource, x => x.realLenght);
-        break;
-      }
-      case 7:{
         this.profiles = _.sortBy(this.profilesSource, x => x.partsweight);
         break;
       }
-      case 8:{
+      case 7:{
         this.profiles = _.sortBy(this.profilesSource, x => x.scrap).reverse();
         break;
       }
