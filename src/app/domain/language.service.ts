@@ -30,7 +30,7 @@ export class LanguageService {
           case 'В работе': return 'In Work';
           case 'На согласовании': return 'On Approval';
           case 'Отправлен заказчику': return 'Send To ShipYard';
-          case 'Поставлен': return 'Approved';
+          case 'Поставлен': return 'Delivered';
           case 'СЕКЦИИ': return 'SECTIONS';
           case 'Описание задачи': return 'Task Description';
           case 'Вложения': return 'File Attachments';

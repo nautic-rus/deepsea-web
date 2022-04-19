@@ -120,6 +120,9 @@
 .select-row{
   background-color: #efefef !important;
 }
+.task-row{
+  min-height: 35px;
+}
 .task-row:hover{
   background-color: #efefef !important;
 }
