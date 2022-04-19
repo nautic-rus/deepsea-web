@@ -250,7 +250,7 @@ export class SendToCloudComponent implements OnInit {
   sendCommit(){
     this.issue.delivered_date = new Date().getTime();
     this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-      //this.issue.revision = this.rev;
+      this.issue.revision = this.rev;
       this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
         this.issue.status = 'Delivered';
         this.issue.action = this.issue.status;

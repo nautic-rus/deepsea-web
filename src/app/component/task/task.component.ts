@@ -558,7 +558,7 @@ export class TaskComponent implements OnInit {
     else if (value == 'Delivered' || value == 'New Revision'){
       this.issue.delivered_date = new Date().getTime();
       this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-        //this.issue.revision = '0';
+        this.issue.revision = '0';
         this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
           this.issue.status = 'Delivered';
           this.issue.action = this.issue.status;
