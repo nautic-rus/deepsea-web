@@ -55,6 +55,7 @@ const routes: Routes = [
   { path: 'billing', component: BillingComponent, canActivate: [AuthGuard], data: {animation: 'BillingComponent'} },
   { path: 'weight', component: WeightComponent, canActivate: [AuthGuard], data: {animation: 'WeightComponent'} },
   { path: 'files', component: FileExplorerComponent, canActivate: [AuthGuard], data: {animation: 'FileExplorerComponent'} },
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({
