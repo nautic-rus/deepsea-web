@@ -37,7 +37,7 @@ export class DocumentsComponent implements OnInit {
   ngOnInit(): void {
     this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
     this.route.queryParams.subscribe(params => {
-      if (params.project != null && this.projects.includes(this.project)){
+      if (params.project != null && this.projects.find(x => x == params.project) != null){
         this.project = params.project;
       }
       else {

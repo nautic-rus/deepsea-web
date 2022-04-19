@@ -26,6 +26,7 @@ import {GCodeComponent} from "./component/g-code/g-code.component";
 import {ReportComponent} from "./component/report/report.component";
 import {BillingComponent} from "./component/billing/billing.component";
 import {WeightComponent} from "./component/weight/weight.component";
+import {FileExplorerComponent} from "./component/file-explorer/file-explorer.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -53,6 +54,7 @@ const routes: Routes = [
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard], data: {animation: 'ReportComponent'} },
   { path: 'billing', component: BillingComponent, canActivate: [AuthGuard], data: {animation: 'BillingComponent'} },
   { path: 'weight', component: WeightComponent, canActivate: [AuthGuard], data: {animation: 'WeightComponent'} },
+  { path: 'files', component: FileExplorerComponent, canActivate: [AuthGuard], data: {animation: 'FileExplorerComponent'} },
 ];
 
 @NgModule({

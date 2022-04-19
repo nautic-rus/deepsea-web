@@ -73,7 +73,6 @@ export class BillingComponent implements OnInit {
   fill(){
     this.s.getHullBillProfiles(this.project).then(res => {
       this.profiles = res;
-      console.log(this.profiles)
       this.profilesSource = res;
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'mat');
       this.filtersProfiles.material = this.getProfileFilters(this.profiles, 'count');
