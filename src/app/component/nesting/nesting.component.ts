@@ -28,7 +28,7 @@ export class NestingComponent implements OnInit {
   docNumber = '';
   project = '';
   department = '';
-  selectedRevision = '';
+  selectedRevision = 'PROD';
   messageFilter = 'all';
   comment = false;
   issueId = 0;

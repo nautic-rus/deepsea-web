@@ -273,7 +273,7 @@ export class UploadRevisionFilesComponent implements OnInit {
       file.revision = this.issue.revision;
       file.group = this.fileGroup;
     });
-    this.issues.setRevisionFiles(this.issue.id, this.issue.revision, JSON.stringify(this.loaded)).then(() => {
+    this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
       this.ref.close();
     });
   }
