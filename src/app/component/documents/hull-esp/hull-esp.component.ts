@@ -255,6 +255,7 @@ export class HullEspComponent implements OnInit {
     this.s.getHullPatList(this.project, this.docNumber).then(res => {
       if (res != ''){
         this.parts = res;
+        this.parts.forEach((x: any) => x.NEST_ID = x.NEST_ID.replace('MU', 'U'));
         this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
         this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
         this.filters.SYMMETRY = this.getFilters(this.parts, 'SYMMETRY');

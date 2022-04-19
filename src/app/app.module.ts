@@ -103,6 +103,7 @@ import { WastageComponent } from './component/billing/wastage/wastage.component'
 import { BlocksComponent } from './component/billing/blocks/blocks.component';
 import { WeightComponent } from './component/weight/weight.component';
 import { PartsQtyProfileComponent } from './component/billing/parts-qty-profile/parts-qty-profile.component';
+import { FileExplorerComponent } from './component/file-explorer/file-explorer.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -167,6 +168,7 @@ Quill.register('modules/imageResize', ImageResize);
     BlocksComponent,
     WeightComponent,
     PartsQtyProfileComponent,
+    FileExplorerComponent,
   ],
     imports: [
         BrowserModule,
