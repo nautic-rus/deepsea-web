@@ -14,6 +14,7 @@ import {mouseWheelZoom} from "mouse-wheel-zoom";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
 import * as XLSX from "xlsx";
+import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
 
 @Component({
   selector: 'app-nesting',
@@ -78,6 +79,7 @@ export class NestingComponent implements OnInit {
   selectedAllBlocks = false;
   selectedAllMaterialsRoot = false;
   selectedAllMaterialsRest = false;
+  previewClick: string = '';
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -590,7 +592,14 @@ export class NestingComponent implements OnInit {
     }
 
   }
-  showNestingTemplate(nest: any) {
+  showNestingTemplate(nest: any, index: string) {
+    if (this.previewClick == index){
+      this.dxfEnabled = false;
+      this.cutEnabled = false;
+      this.previewClick = '';
+      return;
+    }
+    this.previewClick = index;
     let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
     if (searchDxf != null){
       if (!this.dxfEnabled){
@@ -689,6 +698,7 @@ export class NestingComponent implements OnInit {
     this.loadingMaterials = true;
     this.materials.splice(0, this.materials.length);
     this.s.getHullNestingMaterials(this.project, JSON.stringify(this.blocks.filter(x => x.selected).map(x => x.name))).then(res => {
+      console.log(res);
       this.loadingMaterials = false;
       res.forEach((material: any) => {
         this.materials.push({
@@ -698,6 +708,8 @@ export class NestingComponent implements OnInit {
           parent: material.PARENTID
         });
       });
+      this.selectedAllMaterialsRest = false;
+      this.selectedAllMaterialsRoot = false;
       this.materialsRoot = this.materials.filter(x => x.parent == '');
       this.materialsRest = this.materials.filter(x => x.parent != '');
     });
@@ -786,7 +798,14 @@ export class NestingComponent implements OnInit {
     this.nesting.splice(0, this.nesting.length);
   }
 
-  showCuttingFile(nest: any) {
+  showCuttingFile(nest: any, index: string) {
+    if (this.previewClick == index){
+      this.dxfEnabled = false;
+      this.cutEnabled = false;
+      this.previewClick = '';
+      return;
+    }
+    this.previewClick = index;
     let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
     if (searchCMAP != null){
       this.dxfEnabled = false;
@@ -896,6 +915,12 @@ export class NestingComponent implements OnInit {
     this.blocks.forEach(block => {
       block.selected = !this.selectedAllBlocks;
     });
+    this.selectedAllMaterialsRest = false;
+    this.selectedAllMaterialsRoot = false;
+    this.materials.splice(0, this.materials.length);
+    this.materialsRest.splice(0, this.materialsRest.length);
+    this.materialsRoot.splice(0, this.materialsRoot.length);
+    this.nesting.splice(0, this.nesting.length);
   }
 
   selectAllMaterialsRest() {
@@ -908,5 +933,15 @@ export class NestingComponent implements OnInit {
     this.materialsRoot.forEach(material => {
       material.selected = !this.selectedAllMaterialsRoot;
     });
+  }
+
+  getMaterialsCount(material: any) {
+    let count = this.nesting.filter((x: any) => x != null && (x.MATERIAL + 'x' + x.THICKNESS + 'x' + x.NEST_LENGTH + 'x' + x.NEST_WIDTH ) == material.name).length;
+    if (count == 0){
+      return '';
+    }
+    else{
+      return '(' + count.toString() + ')';
+    }
   }
 }

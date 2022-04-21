@@ -1,3 +1,6 @@
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem!important;
+}
 .top-menu{
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;

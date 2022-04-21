@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="mr-10">
-        <div [pTooltip]="l.tr('Download')" tooltipPosition="top" (click)="downloadFiles()" class="materials-button add-button cxy">
+        <div [pTooltip]="l.tr('Download selected')" tooltipPosition="top" (click)="downloadFiles()" class="materials-button add-button cxy">
           <img src="assets/icons/download-file.svg" height="22">
         </div>
       </div>
@@ -24,7 +24,7 @@
       <div class="w-100 df">
         <div class="w-15">
           <div class="menu-card">
-            <div class="ovf-auto">
+            <div class="ovf-auto mr-minus20">
               <div class="sticky back-white">
                 <div class="row-one-back mb-15">
                   <div class="df lxy">
@@ -82,7 +82,9 @@
               <div class="all-checkbox" *ngFor="let material of materialsRoot">
                 <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   {{material.name}}
+                  <span class="ml-5 white-text-count">{{getMaterialsCount(material)}}</span>
                 </div>
+
               </div>
             </div>
             <div class="ovf-auto mr-minus20">
@@ -121,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="w-85 cards">
+        <div class="w-85 cards" [class.shorten-nesting]="dxfEnabled || cutEnabled">
           <div class="cxy card-height" *ngIf="noResult && nesting.length != 0">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
@@ -142,7 +144,7 @@
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nesting; let i = index">
               <div *ngIf="nest != null">
-                <div class="parent-plate" *ngIf="nest.PARENTID != ''"></div>
+                <div class="parent-plate" *ngIf="nest.PARENTID != ''">WASTAGE</div>
                 <div class="one-row">
                   <div class="mt-minus5">
                     <div class="title-bold">{{nest.ID}}</div>
@@ -223,7 +225,7 @@
                     <div class="nesting-cutting w-95 ml-10 df space-between mb-10">
                       <div class="mini-gray-text">nesting</div>
                       <div class="df">
-                        <div *ngIf="!isDisabledNestTemplate(nest)" (click)="showNestingTemplate(nest); $event.stopPropagation()" class="eye-nesting cxy mr-5 cursor-pointer">
+                        <div *ngIf="!isDisabledNestTemplate(nest)" (click)="showNestingTemplate(nest, 'nest' + i); $event.stopPropagation()" class="eye-nesting cxy mr-5 cursor-pointer">
                           <i class="pi pi-eye icon-cutting"></i>
                         </div>
                         <div *ngIf="!isDisabledNestTemplate(nest)" (click)="downloadNestingFile(nest); $event.stopPropagation()" class="download-nesting cxy cursor-pointer">
@@ -234,7 +236,7 @@
                     <div class="nesting-cutting w-95 ml-10 df space-between">
                       <div class="mini-gray-text">cutting</div>
                       <div class="df">
-                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="showCuttingFile(nest); $event.stopPropagation()" class="eye-nesting cxy mr-5 cursor-pointer">
+                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="showCuttingFile(nest, 'cut' + i); $event.stopPropagation()" class="eye-nesting cxy mr-5 cursor-pointer">
                           <i class="pi pi-eye icon-cutting"></i>
                         </div>
                         <div *ngIf="!isDisabledCuttingMap(nest)" (click)="downloadCuttingFile(nest); $event.stopPropagation()" class="download-nesting cxy cursor-pointer">
@@ -335,8 +337,6 @@
               <div class="w-100 cxy">
                 <div class="button-fetch-tablet cxy cursor-pointer" (click)="fetchMaterials()">Fetch materials</div>
               </div>
-
-
               <div class="ovf-auto max-height-170 mr-minus15">
                 <div class="sticky back-white pb-15">
                   <div class="row-one-back">
@@ -363,7 +363,7 @@
                 </div>
                 <div class="all-checkbox" *ngFor="let material of materialsRoot">
                   <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
-                    {{material.name}}
+                    {{material.name + ' ' + getMaterialsCount(material)}}
                   </div>
                 </div>
               </div>
@@ -426,8 +426,9 @@
             </div>
           </div>
           <div *ngIf="currentView == 'tile'" class="tile">
-            <div [ngClass]="{'hidden-card': nest == null, 'parent-plate': nest != null && nest.PARENTID != ''}" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
+            <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
               <div *ngIf="nest != null">
+                <div class="parent-plate" *ngIf="nest.PARENTID != ''"></div>
                 <div class="over-top-row mt-minus5 df">
                   <div>
                     <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.NEST_LENGTH) / 1000 + 'x' + (nest.NEST_WIDTH) / 1000}}</span>
@@ -500,7 +501,7 @@
                       <div class="">
                         <div class="gray-text-tile cx mb-3px">Nesting:</div>
                         <div class="cxy mt-5">
-                          <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showNestingTemplate(nest); $event.stopPropagation()">
+                          <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showNestingTemplate(nest, 'nest' + i); $event.stopPropagation()">
                             <i class="pi pi-eye pi-size"></i>
                           </div>
                           <div *ngIf="!isDisabledNestTemplate(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadNestingFile(nest); $event.stopPropagation()">
@@ -512,7 +513,7 @@
                       <div class="">
                         <div class="gray-text-tile cx mt-5">Cutting:</div>
                         <div class="cxy mt-5">
-                          <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest); $event.stopPropagation()">
+                          <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer mr-15 cxy" (click)="showCuttingFile(nest, 'cut' + i); $event.stopPropagation()">
                             <i class="pi pi-eye pi-size"></i>
                           </div>
                           <div *ngIf="!isDisabledCuttingMap(nest)" class="eye-show-button cursor-pointer cxy" (click)="downloadCuttingFile(nest); $event.stopPropagation()">

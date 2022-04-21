@@ -463,8 +463,8 @@
 
           </div>
           <div class="position-relative mr-20" [class.closed-path-margin]="openedPath.includes('cab-' + i)">
-            <div [class.closed-path]="!openedPath.includes('cab-' + i)" class="cable-path-container">
-              <div class="pl-20" *ngIf="openedPath.includes('cab-' + i)">
+            <div [class.opened-path]="openedPath.includes('cab-' + i)" class="cable-path-container">
+              <div class="pl-20">
                 <div class="head-cable-path py-10">Cable path</div>
                 <div class="df cards-wrap">
                   <div class="df" *ngFor="let path of getPath(cable.CABLEPATH)">

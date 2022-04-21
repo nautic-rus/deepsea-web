@@ -1,3 +1,6 @@
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem!important;
+}
 .all-page-elec{
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   padding: 0 20px;
@@ -177,7 +180,7 @@
 .hidden-card{
   opacity: 0;
   height: 0 !important;
-  width: 500px;
+  width: 427px;
   margin: 0 20px 0 20px !important;
 }
 .trm-code-cont{
@@ -499,14 +502,39 @@
 .cable-path-container{
   margin-left: -30px;
   height: 310px;
-  width: 120px;
+  width: 0px;
   background: #ffffff;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  transition: 0.3s;
+  opacity: 0;
+  animation: collapse 1s;
+  animation-fill-mode: forwards;
+}
+.opened-path{
+  animation: expand 1s;
+  animation-fill-mode: forwards;
 }
 .closed-path{
-  width: 0;
+  animation: collapse 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes expand {
+  50%{
+    width: 120px;
+  }
+  100%{
+    width: 120px;
+    opacity: 1;
+  }
+}
+@keyframes collapse {
+  50%{
+    opacity: 0;
+  }
+  100%{
+    width: 0;
+    opacity: 0;
+  }
 }
 .closed-path-dash{
   box-shadow: none;

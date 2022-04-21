@@ -146,6 +146,11 @@
   grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0.5fr;
   font-size: 13px;
 }
+.attachment-files-archive{
+  display: grid;
+  grid-template-columns: 0.4fr 2fr 1.5fr 0.4fr 0.4fr 0.4fr;
+  font-size: 13px;
+}
 .file-name{
   color: #333;
   text-overflow: ellipsis;

@@ -207,7 +207,7 @@
                     <div class="button-show cursor-pointer" (click)="showBlocks(plate); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
-                <div [class.opacity]="plate.wastagesTotal.length == 0" class="row-one-back background-gray">
+                <div class="row-one-back background-gray">
                   <div class="df lxy">
                     <div class="icon-back-violet cxy ml-10">
                       <img src="assets/icons/rest.svg" height="18">
@@ -215,7 +215,7 @@
                     <div class="title-medium-bold ml-10 mr-7">Wastage</div>
                     <span class="text-gray-mini">{{'(' + plate.wastagesTotal.length + ')'}}</span>
                   </div>
-                  <div class="cxy">
+                  <div [class.opacity]="plate.wastagesTotal.length == 0" class="cxy">
                     <div class="button-show cursor-pointer" (click)="showWastage(plate); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
@@ -246,6 +246,12 @@
                     <div class="text-mini-gray">
                       <div class="text-center-x">
                         <span class="mr-5" [innerHTML]="(profile.mat.toString()) | highLight: searchPlates"></span>
+                        <span *ngIf="profile.grossWeight != 0">
+                          <span class="text-gray-mini">(</span>
+                          <span class="text-gray-mini">{{roundDecimal(profile.grossWeight)}}</span>
+                          <span class="text-gray-mini">kg</span>
+                          <span class="text-gray-mini">)</span>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -296,14 +302,19 @@
                   <div class="w-100">
                     <div class="table-bottom">
                       <div class="df">
-                        <div class="w-50 table-header-column cy">{{t.tr('Profile QTY')}}</div>
-                        <div class="w-50 table-header-column cy">{{t.tr('Profiles Forecast')}}</div>
+                        <div class="w-33 table-header-column cy">{{t.tr('Profile QTY')}}</div>
+                        <div class="w-33 table-header-column cy">{{t.tr('Scrap')}}</div>
+                        <div class="w-34 table-header-column cy">{{t.tr('Profiles Forecast')}}</div>
                       </div>
                       <div class="text-center-y info-row">
-                        <div class="w-50 table-body cy">
+                        <div class="w-33 table-body cy">
                           <span [innerHTML]="profile.count.toString() | highLight: search"></span>
                         </div>
-                        <div class="w-50 table-body cy">
+                        <div class="w-33 table-body df">
+                          <span [innerHTML]="round(profile.scrap, 10).toString() | highLight: searchPlates"></span>
+                          <span class="mr-5">%</span>
+                        </div>
+                        <div class="w-34 table-body cy">
                           <span [innerHTML]="profile.profileForecast.toString() | highLight: search"></span>
                         </div>
                       </div>

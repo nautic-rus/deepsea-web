@@ -11,6 +11,9 @@
 /deep/.pi{
   font-size: 14px;
 }
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem!important;
+}
 .card-head{
   background: rgba(255, 255, 255, 0.9);
   padding: 12px;
@@ -109,10 +112,10 @@
 }
 .dash-card-tile{
   padding: 10px;
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-bottom: 16px;
-  width: 365px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  width: 375px;
   height: 150px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -195,7 +198,7 @@
 .one-row{
   height: 25px;
   display: grid;
-  grid-template-columns: 90px 210px auto;
+  grid-template-columns: 90px 220px auto;
 }
 .two-row{
   height: 20px;
@@ -212,26 +215,21 @@
   border-radius: 4px;
 }
 .icon-cutting{
-  color: white;
+  color: #757575;
   font-size: 12px;
+}
+.icon-cutting:hover{
+  color: #88C0D0;
 }
 .eye-nesting{
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: #5E81AC;
-}
-.eye-nesting:hover{
-  background-color: #456184;
 }
 .download-nesting{
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: #BF616A;
-}
-.download-nesting:hover{
-  background-color: #9C4A52;
 }
 .mini-gray-text{
   font-size: 12px;
@@ -294,6 +292,10 @@
 }
 .gray-text{
   color: #a4a4a4;
+  font-size: 12px;
+}
+.white-text-count{
+  color: #fff;
   font-size: 12px;
 }
 .gray-text-tile{
@@ -870,14 +872,20 @@
   color: #757575;
 }
 .parent-plate{
-  width: 6px;
+  width: 22px;
   height: 100%;
-  background-color: #FBA9AE;
+  background-color: #FFE5DC;
   position: absolute;
   top: 0;
   left: -3px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-align: center;
+  letter-spacing: 2px;
+  color: #FF8E66;
+  font-weight: 600;
 }
 .text-parent-plate{
   font-size: 12px;
@@ -887,4 +895,10 @@
   text-align: center;
   font-size: 12px;
   color: #757575;
+}
+.over-top-row{
+  height: 25px;
+}
+.shorten-nesting{
+  height: calc(52vh - 202px);
 }

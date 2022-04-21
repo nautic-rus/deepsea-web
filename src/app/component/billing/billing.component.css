@@ -31,6 +31,9 @@
 /deep/.p-datatable .p-datatable-header {
   padding: 0.75rem 0 0.75rem 0;
 }
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem!important;
+}
 .all-page-billing{
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   padding: 0 20px;

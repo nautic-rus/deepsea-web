@@ -29,6 +29,9 @@
   border-bottom-left-radius: 6px;
   padding: 0 20px 30px 20px;
 }
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem!important;
+}
 .card-head{
   background: rgba(255, 255, 255, 0.9);
   padding: 12px;

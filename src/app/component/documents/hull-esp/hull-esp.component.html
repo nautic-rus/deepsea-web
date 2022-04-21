@@ -1307,15 +1307,15 @@
         </div>
         <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
           <div *ngFor="let file of getArchive()">
-          <div  class="attachment-files df mb-6 cursor-pointer">
+          <div  class="attachment-files-archive df mb-6 cursor-pointer">
             <div class="cxy">
               <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
             </div>
-            <span class="file-name-esp mx-10 width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
-            <span class="cy">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
+            <span class="file-name-esp mx-10 min-width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+            <span class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
             <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
               <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class="" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                <img src="assets/icons/eye-black.svg" height="20">
+                <img src="assets/icons/eye-black.svg" height="18">
               </div>
             </div>
             <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >
