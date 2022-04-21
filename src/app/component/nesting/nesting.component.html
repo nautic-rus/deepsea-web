@@ -143,9 +143,9 @@
 
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nesting; let i = index">
-              <div *ngIf="nest != null">
+              <div class="ml-10" *ngIf="nest != null">
                 <div class="parent-plate" *ngIf="nest.PARENTID != ''">WASTAGE</div>
-                <div class="one-row">
+                <div class="ml-5 one-row">
                   <div class="mt-minus5">
                     <div class="title-bold">{{nest.ID}}</div>
                   </div>

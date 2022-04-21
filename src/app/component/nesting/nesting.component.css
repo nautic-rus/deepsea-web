@@ -115,7 +115,7 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
-  width: 375px;
+  width: 385px;
   height: 150px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -874,7 +874,7 @@
 .parent-plate{
   width: 22px;
   height: 100%;
-  background-color: #FFE5DC;
+  background-color: #D8DDF0;
   position: absolute;
   top: 0;
   left: -3px;
@@ -884,7 +884,7 @@
   writing-mode: vertical-rl;
   text-align: center;
   letter-spacing: 2px;
-  color: #FF8E66;
+  color: #7e8dcd;
   font-weight: 600;
 }
 .text-parent-plate{
