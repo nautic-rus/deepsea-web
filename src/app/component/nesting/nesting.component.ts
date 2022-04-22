@@ -94,22 +94,77 @@ export class NestingComponent implements OnInit {
       this.cmap = params.cmap != null ? params.cmap : this.cmap;
       this.cmapuser = params.cmapuser != null ? params.cmapuser : '';
       this.cmapdate = params.cmapdate != null ? +params.cmapdate : 0;
+
+      this.loadingBlocks = true;
+      this.loadingMaterials = true;
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
-      });
-      this.loadingBlocks = true;
-      if (this.blocks.length == 0){
-        this.s.getHullNestingBlocks(this.project).then(res => {
-          this.loadingBlocks = false;
-          _.sortBy(res, x => x).forEach(block => {
+        this.s.getHullNestingByProject(this.project).then(res => {
+          this.nestingSource = res;
+          let blocks: string[] = [];
+          this.nestingSource.forEach((n: any) => {
+            n.BLOCKS.split(';').forEach((block: string) => {
+              if (!blocks.includes(block)){
+                blocks.push(block);
+              }
+            });
+          });
+          _.sortBy(blocks, x => x).forEach(block => {
             this.blocks.push({
               name: block,
               selected: false
             });
           });
+          this.loadingBlocks = false;
+
+          this.materials.splice(0, this.materials.length);
+          this.loadingMaterials = false;
+          this.nestingSource.forEach((nest: any) => {
+            nest.MATERIAL = this.getNestingMaterial(nest);
+            nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
+            nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
+            if (nest.NESTID.includes('U0')){
+              nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
+              nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
+            }
+            nest.doughnut = [
+              {
+                name: "Usage",
+                value: nest.USAGE
+              },
+              {
+                name: "Left",
+                value: (100 - nest.USAGE)
+              }
+            ];
+            nest.stacked = [
+              {
+                name: '',
+                series: [
+                  {
+                    name: "Usage",
+                    value: nest.USAGE
+                  },
+                  {
+                    name: "Left",
+                    value: (100 - nest.USAGE)
+                  }
+                ]
+              }
+            ];
+            nest.LOCKED = false;
+          });
+
+          console.log(this.nestingSource);
         });
-      }
+      });
     });
+  }
+  getNestingMaterial(n: any){
+    return [n.MAT, n.THICKNESS, n.LENGTH, n.WIDTH].join('x');
+  }
+  materialsEquals(n1: any, n2: any){
+    return this.getNestingMaterial(n1) == this.getNestingMaterial(n2) && n1.PARENTNESTID == n2.PARENTNESTID;
   }
   projectChanged() {
     this.blocks.splice(0, this.blocks.length);
@@ -668,7 +723,7 @@ export class NestingComponent implements OnInit {
     }
     else{
       this.nesting = this.nestingSource.filter((x: any) => {
-        return x == null || (x.ID + x.BLOCKS + x.THICKNESS + x.NEST_LENGTH + x.NEST_WIDTH + x.MATERIAL + x.PARTS_WEIGHT + x.NUM_EQ_NEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
+        return x == null || (x.NESTID + x.BLOCKS + x.THICKNESS + x.LENGTH + x.WIDTH + x.MATERIAL + x.PARTSWEIGHT + x.NUMEQNEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
       });
     }
   }
@@ -686,11 +741,36 @@ export class NestingComponent implements OnInit {
     this.tooltips.splice(this.tooltips.indexOf(index), 1);
   }
 
-  selectBlock(block: any) {
-    block.selected = !block.selected;
+  selectBlock(block: any = null) {
+    if (block != null){
+      block.selected = !block.selected;
+    }
+    let selectedNesting = this.nestingSource.filter((x: any) => {
+      let includes = false;
+      let nBlocks = x.BLOCKS.split(';');
+      this.blocks.filter(x => x.selected).forEach(selectedBlock => {
+        if (nBlocks.find((x: any) => x == selectedBlock.name) != null){
+          includes = true;
+        }
+      });
+      return includes;
+    });
+
     this.materials.splice(0, this.materials.length);
-    this.materialsRest.splice(0, this.materialsRest.length);
-    this.materialsRoot.splice(0, this.materialsRoot.length);
+    selectedNesting.forEach((n: any) => {
+      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) == null){
+        this.materials.push({
+          name: this.getNestingMaterial(n),
+          selected: false,
+          parent: n.PARENTNESTID,
+          count: selectedNesting.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID).length
+        });
+      }
+    });
+
+    this.materialsRoot = this.materials.filter(x => x.parent == '');
+    this.materialsRest = this.materials.filter(x => x.parent != '');
+
     this.nesting.splice(0, this.nesting.length);
   }
 
@@ -716,68 +796,18 @@ export class NestingComponent implements OnInit {
   }
 
   fetchNesting() {
-    this.nesting.splice(0, this.nesting.length);
-    this.loading = true;
-    this.noResult = false;
-    this.s.getHullNestingByMaterials(this.project, JSON.stringify(this.materials.filter(x => x.selected).map(x => x.value))).then(res => {
-      this.loading = false;
-      this.nesting = res;
-      if (res.length == 0){
-        this.noResult = true;
-      }
-      else{
-        this.nesting.flatMap((x: any) => x.BLOCKS.split(';')).forEach((block: string) => {
-          if (!this.filters.BLOCKS.map(x => x.label).includes(block)){
-            this.filters.BLOCKS.push({
-              label: block,
-              value: block
-            });
-          }
-        });
-        this.filters.BLOCKS = _.sortBy(this.filters.BLOCKS, x => x);
-        this.filters.MATERIAL = this.getFilters(this.nesting, 'MATERIAL');
-        this.nesting.forEach((nest: any) => {
-          nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
-          nest.CMAP = 'C-' + this.project + '-' + nest.ID.substr(1, 4) + '-' + nest.ID.substr(5);
-          if (nest.ID.includes('U0')){
-            nest.FILE = 'N-' + this.project + '-' + nest.ID.substr(1, 5) + '-' + nest.ID.substr(6);
-            nest.CMAP = 'C-' + this.project + '-' + nest.ID.substr(1, 5) + '-' + nest.ID.substr(6);
-          }
-          nest.doughnut = [
-            {
-              name: "Usage",
-              value: nest.USAGE
-            },
-            {
-              name: "Left",
-              value: (100 - nest.USAGE)
-            }
-          ];
-          nest.stacked = [
-            {
-              name: '',
-              series: [
-                {
-                  name: "Usage",
-                  value: nest.USAGE
-                },
-                {
-                  name: "Left",
-                  value: (100 - nest.USAGE)
-                }
-              ]
-            }
-          ];
-          nest.LOCKED = false;
-        });
-        this.nesting = this.nesting.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x) && this.isContainsBlocks(x.BLOCKS));
-        for (let x = 0; x < 10; x++){
-          this.nesting.push(null);
-        }
-        this.nestingSource = [...this.nesting];
-        console.log(this.nesting);
-      }
-    });
+    this.nesting = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x) && this.isContainsBlocks(x.BLOCKS) && this.isSelectedMaterial(x));
+    for (let x = 0; x < 10; x++){
+      this.nesting.push(null);
+    }
+    this.nesting = [...this.nesting];
+    console.log(this.nesting);
+  }
+  isSelectedMaterial(n: any){
+    let materials: any[] = [];
+    this.materialsRoot.filter(x => x.selected).forEach(x => materials.push(x));
+    this.materialsRest.filter(x => x.selected).forEach(x => materials.push(x));
+    return materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) != null;
   }
 
   openTile() {
@@ -795,7 +825,7 @@ export class NestingComponent implements OnInit {
   }
   selectMaterial(material: any) {
     material.selected = !material.selected;
-    this.nesting.splice(0, this.nesting.length);
+    this.fetchNesting();
   }
 
   showCuttingFile(nest: any, index: string) {
@@ -917,26 +947,24 @@ export class NestingComponent implements OnInit {
     });
     this.selectedAllMaterialsRest = false;
     this.selectedAllMaterialsRoot = false;
-    this.materials.splice(0, this.materials.length);
-    this.materialsRest.splice(0, this.materialsRest.length);
-    this.materialsRoot.splice(0, this.materialsRoot.length);
-    this.nesting.splice(0, this.nesting.length);
+    this.selectBlock();
   }
 
   selectAllMaterialsRest() {
     this.materialsRest.forEach(material => {
       material.selected = !this.selectedAllMaterialsRest;
     });
+    this.fetchNesting();
   }
 
   selectAllMaterialsRoot() {
     this.materialsRoot.forEach(material => {
       material.selected = !this.selectedAllMaterialsRoot;
     });
+    this.fetchNesting();
   }
 
-  getMaterialsCount(material: any) {
-    let count = this.nesting.filter((x: any) => x != null && (x.MATERIAL + 'x' + x.THICKNESS + 'x' + x.NEST_LENGTH + 'x' + x.NEST_WIDTH ) == material.name).length;
+  getMaterialsCount(count: any) {
     if (count == 0){
       return '';
     }

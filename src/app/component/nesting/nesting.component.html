@@ -53,7 +53,6 @@
               </div>
             </div>
             <div class="w-100 cxy">
-              <div class="button-fetch cxy cursor-pointer" (click)="fetchMaterials()">Fetch materials</div>
             </div>
             <div class="ovf-auto mr-minus20 mb-20">
               <div class="sticky back-white pb-15">
@@ -82,7 +81,7 @@
               <div class="all-checkbox" *ngFor="let material of materialsRoot">
                 <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   {{material.name}}
-                  <span class="ml-5 white-text-count">{{getMaterialsCount(material)}}</span>
+                  <span class="ml-5">{{getMaterialsCount(material.count)}}</span>
                 </div>
 
               </div>
@@ -114,12 +113,14 @@
               <div class="all-checkbox" *ngFor="let material of materialsRest">
                 <div class="check-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   <div>{{material.name}}</div>
+                  <span class="ml-5">{{getMaterialsCount(material.count)}}</span>
+
                   <div [class.checked-mini-text-gray]="material.selected" class="mini-text-gray">{{'KPL' + ' ' + material.parent}}</div>
                 </div>
               </div>
             </div>
             <div class="w-100 cxy">
-              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
+<!--              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>-->
             </div>
           </div>
         </div>
@@ -144,15 +145,15 @@
           <div *ngIf="currentView == 'tile'" class="tile">
             <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nesting; let i = index">
               <div class="ml-10" *ngIf="nest != null">
-                <div class="parent-plate" *ngIf="nest.PARENTID != ''">WASTAGE</div>
+                <div class="parent-plate" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>
                 <div class="ml-5 one-row">
                   <div class="mt-minus5">
                     <div class="title-bold">{{nest.ID}}</div>
                   </div>
                   <div class="ml-5">
                     <div>
-                      <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.NEST_LENGTH) / 1000 + 'x' + (nest.NEST_WIDTH) / 1000}}</span>
-                      <span class="text-mini-gray pr-5">{{nest.MATERIAL}}</span>
+                      <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.LENGTH) / 1000 + 'x' + (nest.WIDTH) / 1000}}</span>
+                      <span class="text-mini-gray pr-5">{{nest.MAT}}</span>
                       <span class="text-gray-mini">{{'(' + nest.GROSSWEIGHT + 'kg)'}}</span>
                     </div>
                   </div>
@@ -160,7 +161,7 @@
                     <div class="qty-text">
                       <div class="kpl-flag cxy">
                         <span class="pr-5">QTY</span>
-                        <span>{{nest.NUM_EQ_NEST}}</span>
+                        <span>{{nest.NUMEQNEST}}</span>
                       </div>
                     </div>
                   </div>
@@ -171,7 +172,7 @@
                     <span class="usage-left-text pr-5">Block:</span>
                     <span class="text-mini-gray pr-20">{{nest.BLOCKS}}</span>
                     <span class="usage-left-text pr-5">Parts weight:</span>
-                    <span class="text-mini-gray pr-20">{{round(nest.PARTS_WEIGHT, 1) + 'kg'}}</span>
+                    <span class="text-mini-gray pr-20">{{round(nest.PARTSWEIGHT, 1) + 'kg'}}</span>
                   </div>
                 </div>
 
@@ -363,7 +364,7 @@
                 </div>
                 <div class="all-checkbox" *ngFor="let material of materialsRoot">
                   <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
-                    {{material.name + ' ' + getMaterialsCount(material)}}
+                    {{material.name + ' ' + getMaterialsCount(material.count)}}
                   </div>
                 </div>
               </div>
@@ -400,7 +401,7 @@
                 </div>
               </div>
             <div class="w-100 cxy">
-              <div class="button-fetch-tablet cxy cursor-pointer" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>
+<!--              <div class="button-fetch-tablet cxy cursor-pointer" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>-->
             </div>
 
 
