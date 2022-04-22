@@ -102,6 +102,7 @@ export class NestingComponent implements OnInit {
         this.s.getHullNestingByProject(this.project).then(res => {
           this.nestingSource = res;
           let blocks: string[] = [];
+          this.blocks.splice(0, this.blocks.length);
           this.nestingSource.forEach((n: any) => {
             n.BLOCKS.split(';').forEach((block: string) => {
               if (!blocks.includes(block)){
