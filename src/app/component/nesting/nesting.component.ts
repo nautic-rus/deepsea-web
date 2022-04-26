@@ -844,6 +844,10 @@ export class NestingComponent implements OnInit {
   }
   selectMaterial(material: any) {
     material.selected = !material.selected;
+
+    this.selectedAllMaterialsRoot = this.materialsRoot.find(x => !x.selected) == null;
+    this.selectedAllMaterialsRest = this.materialsRest.find(x => !x.selected) == null;
+
     this.fetchNesting();
   }
 
