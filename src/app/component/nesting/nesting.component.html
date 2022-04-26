@@ -80,7 +80,7 @@
               <div class="all-checkbox" *ngFor="let material of materialsRoot">
                 <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   {{material.name}}
-                  <span class="ml-5 text-mini">{{getMaterialsCount(material.count)}}</span>
+                  <span [class.checked-mini-text-gray]="material.selected" class="ml-5 text-mini">{{getMaterialsCount(material.count)}}</span>
                 </div>
 
               </div>
