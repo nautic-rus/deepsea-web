@@ -757,6 +757,9 @@ export class NestingComponent implements OnInit {
       return includes;
     });
 
+    let selectedMaterialsRoot = [...this.materialsRoot];
+    let selectedMaterialsRest = [...this.materialsRest];
+
     this.materials.splice(0, this.materials.length);
     selectedNesting.forEach((n: any) => {
       if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) == null){
@@ -772,7 +775,22 @@ export class NestingComponent implements OnInit {
     this.materialsRoot = this.materials.filter(x => x.parent == '');
     this.materialsRest = this.materials.filter(x => x.parent != '');
 
-    this.nesting.splice(0, this.nesting.length);
+
+    this.materialsRoot.forEach(x => {
+      let root = selectedMaterialsRoot.find(y => y.name == x.name);
+      if (root != null){
+        x.selected = root.selected;
+      }
+    });
+
+    this.materialsRest.forEach(x => {
+      let rest = selectedMaterialsRest.find(y => y.name == x.name);
+      if (rest != null){
+        x.selected = rest.selected;
+      }
+    });
+
+    //this.nesting.splice(0, this.nesting.length);
   }
 
   fetchMaterials(selected = false) {
