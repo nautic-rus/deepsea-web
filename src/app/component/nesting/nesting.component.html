@@ -15,6 +15,7 @@
           <img src="assets/icons/download-file.svg" height="22">
         </div>
       </div>
+      <div class="">Wastage:{{' ' + getWastageCount()}}</div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
@@ -52,8 +53,6 @@
                 </div>
               </div>
             </div>
-            <div class="w-100 cxy">
-            </div>
             <div class="ovf-auto mr-minus20 mb-20">
               <div class="sticky back-white pb-15">
                 <div class="row-one-back">
@@ -81,7 +80,7 @@
               <div class="all-checkbox" *ngFor="let material of materialsRoot">
                 <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   {{material.name}}
-                  <span class="ml-5">{{getMaterialsCount(material.count)}}</span>
+                  <span class="ml-5 text-mini">{{getMaterialsCount(material.count)}}</span>
                 </div>
 
               </div>
@@ -93,7 +92,7 @@
                     <div class="icon-back-violet cxy">
                       <img src="assets/icons/rest.svg" height="18">
                     </div>
-                    <div class="title-medium-bold ml-10">Wastages</div>
+                    <div class="title-medium-bold ml-10">Wastage</div>
                   </div>
                   <div class="flex-end text-y">
                     <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRest.length > 0" class="container margin-bottom-none">
@@ -113,14 +112,11 @@
               <div class="all-checkbox" *ngFor="let material of materialsRest">
                 <div class="check-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   <div>{{material.name}}</div>
-                  <span class="ml-5">{{getMaterialsCount(material.count)}}</span>
+<!--                  <span class="ml-5">{{getMaterialsCount(material.count)}}</span>-->
 
                   <div [class.checked-mini-text-gray]="material.selected" class="mini-text-gray">{{'KPL' + ' ' + material.parent}}</div>
                 </div>
               </div>
-            </div>
-            <div class="w-100 cxy">
-<!--              <div class="button-fetch cxy cursor-pointer mt-1" *ngIf="materials.length > 0" (click)="fetchNesting()">Fetch nesting</div>-->
             </div>
           </div>
         </div>
@@ -146,15 +142,15 @@
             <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nesting; let i = index">
               <div class="ml-10" *ngIf="nest != null">
                 <div class="parent-plate" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>
-                <div class="ml-5 one-row">
+                <div class="one-row">
                   <div class="mt-minus5">
                     <div class="title-bold">{{nest.ID}}</div>
                   </div>
-                  <div class="ml-5">
+                  <div class="">
                     <div>
-                      <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.LENGTH) / 1000 + 'x' + (nest.WIDTH) / 1000}}</span>
+                      <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + round((nest.LENGTH) / 1000) + 'x' + round((nest.WIDTH) / 1000)}}</span>
                       <span class="text-mini-gray pr-5">{{nest.MAT}}</span>
-                      <span class="text-gray-mini">{{'(' + nest.GROSSWEIGHT + 'kg)'}}</span>
+                      <span class="text-gray-mini">{{'(' + round(nest.GROSSWEIGHT) + 'kg)'}}</span>
                     </div>
                   </div>
                   <div>
@@ -215,9 +211,17 @@
                         <div class="left-tile cxy">
                           <img src="assets/icons/recycle-blue.svg" height="16">
                         </div>
-                        <div class="ml-5">
+                        <div *ngIf="nest.CHILDKPL == 0" class="ml-5">
                           <div class="usage-left-text">Left</div>
                           <div class="usage-left-percent">{{round(100 - nest.USAGE)}}%</div>
+                        </div>
+                        <div *ngIf="nest.CHILDKPL != 0 && nest.CHILDNESTID == 0" class="ml-5">
+                          <div class="usage-left-text">KPL</div>
+                          <div class="usage-left-percent">{{nest.CHILDKPL}}</div>
+                        </div>
+                        <div *ngIf="nest.CHILDKPL != 0 && nest.CHILDNESTID != 0" class="ml-5">
+                          <div class="usage-left-text">Nest ID</div>
+                          <div class="usage-left-percent">{{nest.CHILDNESTID}}</div>
                         </div>
                       </div>
                     </div>

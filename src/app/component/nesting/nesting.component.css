@@ -141,6 +141,10 @@
   color: #A8A7A6;
   font-size: 12px;
 }
+.text-mini{
+  color: rgba(58, 58, 58, 0.75);
+  font-size: 11px;
+}
 .text-mini-gray{
   color: rgba(58, 58, 58, 0.75);
   font-weight: 500;
@@ -155,14 +159,14 @@
 .menu-card{
   padding: 20px;
   width: 100%;
-  min-width: 220px;
+  min-width: 250px;
   height: calc(100vh - 200px);
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
   transition: 0.5s;
   display: grid;
-  grid-template-rows: 1.5fr 75px 2.5fr 2.5fr 75px;
+  grid-template-rows: 1.5fr 2.5fr 2.5fr;
 }
 .menu-card-tablet{
   padding: 15px;
@@ -189,7 +193,7 @@
 .three-row{
   height: 100px;
   display: grid;
-  grid-template-columns: 90px 140px 110px;
+  grid-template-columns: 90px 150px 110px;
 }
 .top-row-tile-tablet{
   height: 110px;
@@ -204,7 +208,7 @@
 .two-row{
   height: 20px;
   display: grid;
-  grid-template-columns: 95px 270px;
+  grid-template-columns: 90px 270px;
 }
 .right-column-tablet{
   display: grid;

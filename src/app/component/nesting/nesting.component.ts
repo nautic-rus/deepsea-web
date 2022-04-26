@@ -973,4 +973,18 @@ export class NestingComponent implements OnInit {
       return '(' + count.toString() + ')';
     }
   }
+
+  getWastageCount() {
+    return this.materialsRest.length;
+  }
+  //   return this.nestingSource.filter((x: any) => x != null && x.PARENTNESTID != '').filter((x: any) => {
+  //     let isBlock = false;
+  //     this.blocks.filter(x => x.selected).forEach(block => {
+  //       if (x.BLOCKS.includes(block.name)){
+  //         isBlock = true;
+  //       }
+  //     });
+  //     return isBlock;
+  //   }).length;
+  // }
 }
