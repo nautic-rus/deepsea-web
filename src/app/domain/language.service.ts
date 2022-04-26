@@ -301,7 +301,7 @@ export class LanguageService {
           case 'Редактировать': return 'Edit material';
           case 'Номер': return 'Number';
           case 'ВЕС': return 'WEIGHT';
-          case '': return '';
+          case 'Вес кг': return 'weight kg';
           case '': return '';
           case '': return '';
           case '': return '';
