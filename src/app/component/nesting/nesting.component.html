@@ -143,8 +143,8 @@
               <div class="ml-10" *ngIf="nest != null">
                 <div class="parent-plate" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>
                 <div class="one-row">
-                  <div class="mt-minus5">
-                    <div class="title-bold">{{nest.ID}}</div>
+                  <div [class.margin-minus-5]="nest.PARENTNESTID == ''" class="mt-minus5 ml-3">
+                    <div class="title-bold">{{nest.NESTID}}</div>
                   </div>
                   <div class="">
                     <div>
@@ -171,9 +171,6 @@
                     <span class="text-mini-gray pr-20">{{round(nest.PARTSWEIGHT, 1) + 'kg'}}</span>
                   </div>
                 </div>
-
-
-
                 <div class="three-row">
                   <div class="">
                     <div class="cxy flex-column ml-minus10">
