@@ -15,7 +15,7 @@
           <img src="assets/icons/download-file.svg" height="22">
         </div>
       </div>
-      <div class="">Wastage:{{' ' + getWastageCount()}}</div>
+      <div class="">Vacant wastage:{{' ' + getWastageCount()}}</div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
@@ -301,6 +301,7 @@
           <img src="assets/icons/download-file.svg" height="22">
         </div>
       </div>
+      <div class="">Vacant wastage:{{' ' + getWastageCount()}}</div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
@@ -379,7 +380,7 @@
                       <div class="icon-back-violet cxy">
                         <img src="assets/icons/rest.svg" height="18">
                       </div>
-                      <div class="title-medium-bold ml-10">Wastages</div>
+                      <div class="title-medium-bold ml-10">Wastage</div>
                     </div>
                     <div class="flex-end text-y">
                       <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRest.length > 0" class="container margin-bottom-none">
