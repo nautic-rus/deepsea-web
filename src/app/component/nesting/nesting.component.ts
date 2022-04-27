@@ -747,13 +747,13 @@ export class NestingComponent implements OnInit {
 
   initMaterials(){
     this.nestingSource.forEach((n: any) => {
-      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID && x.nestid == n.NESTID) == null){
+      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) == null){
         this.materials.push({
           name: this.getNestingMaterial(n),
           selected: false,
           parent: n.PARENTNESTID,
           nestid: n.NESTID,
-          count: this.nestingSource.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID && x.nestid == n.NESTID).length
+          count: this.nestingSource.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID).length
         });
       }
     });
@@ -764,6 +764,7 @@ export class NestingComponent implements OnInit {
     if (block != null){
       block.selected = !block.selected;
     }
+    this.selectedAllBlocks = this.blocks.find(x => !x.selected) == null;
 
     let allSelected = this.blocks.find(x => x.selected) == null;
     let selectedNesting = this.nestingSource.filter((x: any) => allSelected || this.blocks.filter(x => x.selected).map(x => x.name).includes(x.BLOCKS));
@@ -775,13 +776,14 @@ export class NestingComponent implements OnInit {
 
     this.materials.splice(0, this.materials.length);
     selectedNesting.forEach((n: any) => {
-      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID && x.nestid == n.NESTID) == null){
+      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) == null){
         this.materials.push({
           name: this.getNestingMaterial(n),
           selected: false,
           parent: n.PARENTNESTID,
           block: n.BLOCKS,
-          count: selectedNesting.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID && x.nestid == n.NESTID).length
+          nestid: n.NESTID,
+          count: selectedNesting.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID).length
         });
       }
     });
