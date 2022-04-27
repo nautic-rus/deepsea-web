@@ -101,25 +101,6 @@ export class NestingComponent implements OnInit {
         this.nestingFiles = files;
         this.s.getHullNestingByProject(this.project).then(res => {
           this.nestingSource = res;
-          let blocks: string[] = [];
-          this.blocks.splice(0, this.blocks.length);
-          this.nestingSource.forEach((n: any) => {
-            n.BLOCKS.split(';').forEach((block: string) => {
-              if (!blocks.includes(block)){
-                blocks.push(block);
-              }
-            });
-          });
-          _.sortBy(blocks, x => x).forEach(block => {
-            this.blocks.push({
-              name: block,
-              selected: false
-            });
-          });
-          this.loadingBlocks = false;
-
-          this.materials.splice(0, this.materials.length);
-          this.loadingMaterials = false;
           this.nestingSource.forEach((nest: any) => {
             nest.MATERIAL = this.getNestingMaterial(nest);
             nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
@@ -155,8 +136,30 @@ export class NestingComponent implements OnInit {
             ];
             nest.LOCKED = false;
           });
+          this.nestingSource = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
 
           console.log(this.nestingSource);
+
+          let blocks: string[] = [];
+          this.blocks.splice(0, this.blocks.length);
+          this.nestingSource.forEach((n: any) => {
+            if (!blocks.includes(n.BLOCKS)){
+              blocks.push(n.BLOCKS);
+            }
+          });
+          _.sortBy(blocks, x => x).forEach(block => {
+            this.blocks.push({
+              name: block,
+              selected: false
+            });
+          });
+
+          this.loadingBlocks = false;
+          this.loadingMaterials = false;
+
+          this.fetchNesting();
+          this.initMaterials();
+
         });
       });
     });
@@ -742,23 +745,32 @@ export class NestingComponent implements OnInit {
     this.tooltips.splice(this.tooltips.indexOf(index), 1);
   }
 
+  initMaterials(){
+    this.nestingSource.forEach((n: any) => {
+      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) == null){
+        this.materials.push({
+          name: this.getNestingMaterial(n),
+          selected: false,
+          parent: n.PARENTNESTID,
+          count: this.nestingSource.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID).length
+        });
+      }
+    });
+    this.materialsRoot = this.materials.filter(x => x.parent == '');
+    this.materialsRest = this.materials.filter(x => x.parent != '');
+  }
   selectBlock(block: any = null) {
     if (block != null){
       block.selected = !block.selected;
     }
-    let selectedNesting = this.nestingSource.filter((x: any) => {
-      let includes = false;
-      let nBlocks = x.BLOCKS.split(';');
-      this.blocks.filter(x => x.selected).forEach(selectedBlock => {
-        if (nBlocks.find((x: any) => x == selectedBlock.name) != null){
-          includes = true;
-        }
-      });
-      return includes;
-    });
+
+    let allSelected = this.blocks.find(x => x.selected) == null;
+    let selectedNesting = this.nestingSource.filter((x: any) => allSelected || this.blocks.filter(x => x.selected).map(x => x.name).includes(x.BLOCKS));
 
     let selectedMaterialsRoot = [...this.materialsRoot];
     let selectedMaterialsRest = [...this.materialsRest];
+
+
 
     this.materials.splice(0, this.materials.length);
     selectedNesting.forEach((n: any) => {
@@ -767,10 +779,12 @@ export class NestingComponent implements OnInit {
           name: this.getNestingMaterial(n),
           selected: false,
           parent: n.PARENTNESTID,
+          block: n.BLOCKS,
           count: selectedNesting.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID).length
         });
       }
     });
+
 
     this.materialsRoot = this.materials.filter(x => x.parent == '');
     this.materialsRest = this.materials.filter(x => x.parent != '');
@@ -790,6 +804,11 @@ export class NestingComponent implements OnInit {
       }
     });
 
+    // if (allSelected){
+    //   this.materials.forEach((x: any) => x.selected = false);
+    // }
+
+    this.fetchNesting();
     //this.nesting.splice(0, this.nesting.length);
   }
 
@@ -807,8 +826,8 @@ export class NestingComponent implements OnInit {
           parent: material.PARENTID
         });
       });
-      this.selectedAllMaterialsRest = false;
-      this.selectedAllMaterialsRoot = false;
+      //this.selectedAllMaterialsRest = false;
+      //this.selectedAllMaterialsRoot = false;
       this.materialsRoot = this.materials.filter(x => x.parent == '');
       this.materialsRest = this.materials.filter(x => x.parent != '');
     });
@@ -820,13 +839,17 @@ export class NestingComponent implements OnInit {
       this.nesting.push(null);
     }
     this.nesting = [...this.nesting];
-    console.log(this.nesting);
   }
   isSelectedMaterial(n: any){
-    let materials: any[] = [];
-    this.materialsRoot.filter(x => x.selected).forEach(x => materials.push(x));
-    this.materialsRest.filter(x => x.selected).forEach(x => materials.push(x));
-    return materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) != null;
+    if (this.materialsRoot.find(x => x.selected) == null && this.materialsRest.find(x => x.selected) == null){
+      return true;
+    }
+    else{
+      let materials: any[] = [];
+      this.materialsRoot.filter(x => x.selected).forEach(x => materials.push(x));
+      this.materialsRest.filter(x => x.selected).forEach(x => materials.push(x));
+      return materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) != null;
+    }
   }
 
   openTile() {
@@ -835,11 +858,14 @@ export class NestingComponent implements OnInit {
 
   isContainsBlocks(blocks: string){
     let result = false;
-    blocks.split(';').forEach(block => {
-      if (this.blocks.filter(x => x.selected).map(x => x.name).includes(block)){
+    if (this.blocks.find(x => x.selected) == null){
+      result = true;
+    }
+    else{
+      if (this.blocks.filter(x => x.selected).map(x => x.name).includes(blocks)){
         result = true;
       }
-    });
+    }
     return result;
   }
   selectMaterial(material: any) {
@@ -997,16 +1023,13 @@ export class NestingComponent implements OnInit {
   }
 
   getWastageCount() {
-    return this.materialsRest.length;
+    return this.nestingSource.filter((x: any) => x.PARENTNESTID != '' && x.NESTID == '').length;
   }
-  //   return this.nestingSource.filter((x: any) => x != null && x.PARENTNESTID != '').filter((x: any) => {
-  //     let isBlock = false;
-  //     this.blocks.filter(x => x.selected).forEach(block => {
-  //       if (x.BLOCKS.includes(block.name)){
-  //         isBlock = true;
-  //       }
-  //     });
-  //     return isBlock;
-  //   }).length;
-  // }
+
+  selectWastage(nestid: string) {
+    let find = this.materialsRest.find(x => x.parent == nestid);
+    if (find != null){
+      this.selectMaterial(find);
+    }
+  }
 }

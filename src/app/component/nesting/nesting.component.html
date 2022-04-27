@@ -218,7 +218,7 @@
                         </div>
                         <div *ngIf="nest.CHILDKPL != 0 && nest.CHILDNESTID != 0" class="ml-5">
                           <div class="usage-left-text">Nest ID</div>
-                          <div class="usage-left-percent">{{nest.CHILDNESTID}}</div>
+                          <div class="usage-left-percent cursor-pointer" (click)="selectWastage(nest.CHILDNESTID)">{{nest.CHILDNESTID}}</div>
                         </div>
                       </div>
                     </div>
