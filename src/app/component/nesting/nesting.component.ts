@@ -747,12 +747,13 @@ export class NestingComponent implements OnInit {
 
   initMaterials(){
     this.nestingSource.forEach((n: any) => {
-      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) == null){
+      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID && x.nestid == n.NESTID) == null){
         this.materials.push({
           name: this.getNestingMaterial(n),
           selected: false,
           parent: n.PARENTNESTID,
-          count: this.nestingSource.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID).length
+          nestid: n.NESTID,
+          count: this.nestingSource.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID && x.nestid == n.NESTID).length
         });
       }
     });
@@ -774,13 +775,13 @@ export class NestingComponent implements OnInit {
 
     this.materials.splice(0, this.materials.length);
     selectedNesting.forEach((n: any) => {
-      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID) == null){
+      if (this.materials.find(x => x.name == n.MATERIAL && x.parent == n.PARENTNESTID && x.nestid == n.NESTID) == null){
         this.materials.push({
           name: this.getNestingMaterial(n),
           selected: false,
           parent: n.PARENTNESTID,
           block: n.BLOCKS,
-          count: selectedNesting.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID).length
+          count: selectedNesting.filter((x: any) => x.MATERIAL == n.MATERIAL && x.PARENTNESTID == n.PARENTNESTID && x.nestid == n.NESTID).length
         });
       }
     });
