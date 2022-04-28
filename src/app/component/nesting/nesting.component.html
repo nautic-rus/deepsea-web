@@ -15,7 +15,7 @@
           <img src="assets/icons/download-file.svg" height="22">
         </div>
       </div>
-      <div class="">Vacant wastage:{{' ' + getWastageCount()}}</div>
+      <div class="" (click)="showVacantWastages()">Vacant wastage:{{' ' + getWastageCount()}}</div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
@@ -298,7 +298,7 @@
           <img src="assets/icons/download-file.svg" height="22">
         </div>
       </div>
-      <div class="">Vacant wastage:{{' ' + getWastageCount()}}</div>
+      <div class="" (click)="showVacantWastages()">Vacant wastage:{{' ' + getWastageCount()}}</div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
@@ -434,15 +434,15 @@
                 <div class="parent-plate" *ngIf="nest.PARENTID != ''"></div>
                 <div class="over-top-row mt-minus5 df">
                   <div>
-                    <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.NEST_LENGTH) / 1000 + 'x' + (nest.NEST_WIDTH) / 1000}}</span>
-                    <span class="text-mini-gray pr-5">{{nest.MATERIAL}}</span>
+                    <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + (nest.LENGTH) + 'x' + (nest.WIDTH)}}</span>
+                    <span class="text-mini-gray pr-5">{{nest.MAT}}</span>
                     <span class="text-gray-mini">{{'(' + nest.GROSSWEIGHT + 'kg)'}}</span>
                   </div>
                   <div class="p-ml-auto">
                     <div class="qty-text">
                       <div class="kpl-flag cxy">
                         <span class="pr-5">QTY</span>
-                        <span>{{nest.NUM_EQ_NEST}}</span>
+                        <span>{{nest.NUMEQNEST}}</span>
                       </div>
                     </div>
                   </div>
@@ -535,7 +535,7 @@
                     </div>
                     <div class="text-center-y info-row cursor-pointer">
                       <div class="w-50 table-body-tablet cxy">{{nest.BLOCKS}}</div>
-                      <div class="w-50 table-body-tablet cxy">{{round(nest.PARTS_WEIGHT)}}</div>
+                      <div class="w-50 table-body-tablet cxy">{{round(nest.PARTSWEIGHT)}}</div>
                     </div>
                   </div>
                 </div>

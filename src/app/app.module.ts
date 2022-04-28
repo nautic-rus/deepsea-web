@@ -105,6 +105,7 @@ import { WeightComponent } from './component/weight/weight.component';
 import { PartsQtyProfileComponent } from './component/billing/parts-qty-profile/parts-qty-profile.component';
 import { FileExplorerComponent } from './component/file-explorer/file-explorer.component';
 import {TreeTableModule} from "primeng/treetable";
+import { VacantWastageComponent } from './component/nesting/vacant-wastage/vacant-wastage.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -170,6 +171,7 @@ Quill.register('modules/imageResize', ImageResize);
     WeightComponent,
     PartsQtyProfileComponent,
     FileExplorerComponent,
+    VacantWastageComponent,
   ],
     imports: [
         BrowserModule,

@@ -1,0 +1,54 @@
+<div class="all-parts-container" >
+  <div class="header-parts">
+    <div class="header-parts-text">{{'Wastages count: ' + wastage.length}}</div>
+    <div class="df">
+      <div class="mr-30">
+        <div (click)="exportXls()" class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="parts-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+
+  </div>
+  <div class="">
+    <p-table #table [value]="wastage"
+             [scrollable]="true"
+             scrollHeight="calc(100vh - 360px)"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             [reorderableColumns]="false"
+             [resizableColumns]="false"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['code','block','name','description', 'weight']">
+      <ng-template pTemplate="header">
+        <tr class="df">
+          <th pSortableColumn="CHILDKPL" class="lxy w-20">{{'CHILDKPL'}}
+            <p-sortIcon field="CHILDKPL"></p-sortIcon>
+          </th>
+          <th pSortableColumn="MAT" class="lxy w-20">{{t.tr('MAT')}}
+            <p-sortIcon field="MAT"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CHILDLENGTH" class="lxy w-20">{{t.tr('CHILDLENGTH')}}
+            <p-sortIcon field="CHILDLENGTH"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CHILDWIDTH" class="lxy w-20">{{t.tr('CHILDWIDTH')}}
+            <p-sortIcon field="CHILDWIDTH"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-nest>
+        <tr class="cursor-pointer row-table-doc-hover">
+          <td class="w-20 text-14">{{nest.CHILDKPL}}</td>
+          <td class="w-20 text-14">{{nest.MAT}}</td>
+          <td class="w-20 text-14">{{nest.CHILDLENGTH}}</td>
+          <td class="w-20 text-14">{{nest.CHILDWIDTH}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>

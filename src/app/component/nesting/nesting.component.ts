@@ -15,6 +15,8 @@ import JSZip from "jszip";
 import {saveAs} from "file-saver";
 import * as XLSX from "xlsx";
 import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
+import {WastageComponent} from "../billing/wastage/wastage.component";
+import {VacantWastageComponent} from "./vacant-wastage/vacant-wastage.component";
 
 @Component({
   selector: 'app-nesting',
@@ -1026,7 +1028,7 @@ export class NestingComponent implements OnInit {
   }
 
   getWastageCount() {
-    return this.nestingSource.filter((x: any) => x.PARENTNESTID != '' && x.NESTID == '').length;
+    return this.nestingSource.filter((x: any) => x.CHILDKPL != 0 && x.CHILDNESTID == '').length;
   }
 
   selectWastage(nestid: string) {
@@ -1034,5 +1036,15 @@ export class NestingComponent implements OnInit {
     if (find != null){
       this.selectMaterial(find);
     }
+  }
+
+  showVacantWastages() {
+    this.dialogService.open(VacantWastageComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.nestingSource.filter((x: any) => x.CHILDKPL != 0 && x.CHILDNESTID == ''),
+    }).onClose.subscribe(res => {
+
+    });
   }
 }
