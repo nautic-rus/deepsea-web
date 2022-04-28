@@ -56,5 +56,7 @@ export class VacantWastageComponent implements OnInit {
     }
     return result;
   }
-
+  getNestingMaterial(n: any){
+    return [n.MAT, n.THICKNESS, n.CHILDLENGTH, n.CHILDWIDTH].join('x');
+  }
 }
