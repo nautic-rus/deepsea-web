@@ -26,11 +26,14 @@
              [globalFilterFields]="['code','block','name','description', 'weight']">
       <ng-template pTemplate="header">
         <tr class="df">
-          <th pSortableColumn="CHILDKPL" class="lxy w-20">{{'CHILDKPL'}}
+          <th pSortableColumn="CHILDKPL" class="lxy w-20">{{'KPL'}}
             <p-sortIcon field="CHILDKPL"></p-sortIcon>
           </th>
-          <th pSortableColumn="MAT" class="lxy w-20">{{t.tr('MAT')}}
+          <th pSortableColumn="MAT" class="lxy w-20">{{'MATERIAL'}}
             <p-sortIcon field="MAT"></p-sortIcon>
+          </th>
+          <th pSortableColumn="CHILDWEIGHT" class="lxy w-20">{{'WEIGHT'}}
+            <p-sortIcon field="CHILDWEIGHT"></p-sortIcon>
           </th>
         </tr>
       </ng-template>
@@ -38,6 +41,7 @@
         <tr class="cursor-pointer row-table-doc-hover">
           <td class="w-20 text-14">{{nest.CHILDKPL}}</td>
           <td class="w-20 text-14">{{getNestingMaterial(nest)}}</td>
+          <td class="w-20 text-14">{{round(nest.CHILDWEIGHT, 100)}}</td>
         </tr>
       </ng-template>
     </p-table>
