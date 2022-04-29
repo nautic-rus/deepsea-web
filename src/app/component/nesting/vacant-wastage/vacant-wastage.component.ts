@@ -28,21 +28,20 @@ export class VacantWastageComponent implements OnInit {
   round(input: number, digit = 100) {
     return Math.round(input * digit) / digit;
   }
+
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    let data: any[] = this.wastage;
-    // this.wastage.filter((x: any) => x != null).forEach(part => {
-    //   data.push({
-    //     'Number': part.code.split('x')[0],
-    //     'Block': part.block.split('x')[0],
-    //     'Name': part.name,
-    //     'Description': part.description,
-    //     'Weight': Math.round(part.weight),
-    //   })
-    // });
+    let data: any[] = [];
+    this.wastage.filter((x: any) => x != null).forEach(nest => {
+      data.push({
+        'KPL': nest.CHILDKPL,
+        'Material': nest.MAT,
+        'Weight': nest.CHILDWEIGHT,
+      })
+    });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    //worksheet['!cols'] = [{wch:13},{wch:13},{wch:13},{wch:13},{wch:13}];
+    worksheet['!cols'] = [{wch:13},{wch:13},{wch:13}];
 
     XLSX.writeFile(workbook, fileName);
   }
