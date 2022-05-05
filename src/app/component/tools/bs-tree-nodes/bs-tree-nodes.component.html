@@ -15,8 +15,8 @@
                  [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 226px)" [virtualScroll]="true" [virtualRowHeight]="15">
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 60%">NAME</th>
-          <th>WEIGHT</th>
+          <th [ttSortableColumn]="'NAME'" style="width: 60%">NAME <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
+          <th [ttSortableColumn]="'WEIGHT'">WEIGHT <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
           <th>COG</th>
           <th>Moment</th>
         </tr>
