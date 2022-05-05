@@ -112,6 +112,9 @@ body,p{
 .w-25{
   width: 25%;
 }
+.w-26{
+  width: 26%;
+}
 .w-27{
   width: 27%;
 }
@@ -207,6 +210,9 @@ body,p{
 }
 .width-50{
   width: 50px;
+}
+.width-65{
+  width: 65px;
 }
 .width-100{
   width: 100px;
@@ -720,7 +726,7 @@ cdk-virtual-scroll-viewport{
   overflow: hidden;
 }
 ::-webkit-scrollbar{
-  width: 5px;
+  width: 7px;
   height: 5px;
 }
 ::-webkit-scrollbar-track-piece{

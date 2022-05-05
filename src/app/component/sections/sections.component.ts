@@ -8,6 +8,7 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {LanguageService} from "../../domain/language.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DeviceDetectorService} from "ngx-device-detector";
+import * as _ from "underscore";
 
 @Component({
   selector: 'app-sections',
@@ -18,13 +19,12 @@ export class SectionsComponent implements OnInit {
   issues: Issue[] = [];
   projects: string[] = ['NR002', 'NR004'];
   project = this.projects[0];
+  nestingFiles: any[] = [];
 
   constructor(public device: DeviceDetectorService, public t: LanguageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.issueManager.getIssues('op').then(data => {
-      this.issues = data;
-    });
+    this.fillIssues();
     this.route.queryParams.subscribe(params => {
       this.project = params.project != null ? params.project : this.project;
       this.projects.forEach(project => {
@@ -37,7 +37,14 @@ export class SectionsComponent implements OnInit {
       }
     });
   }
-
+  fillIssues() {
+    this.issueManager.getIssues('op').then(data => {
+      this.issueManager.getNestingFiles().then(nestingFiles => {
+        this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project);
+        this.nestingFiles = nestingFiles;
+      });
+    });
+  }
   getStyle(s: string) {
     let find = this.issues.find(x => x.name.includes('Секция ' + s));
     let status = '';
@@ -101,6 +108,15 @@ export class SectionsComponent implements OnInit {
     return{};
   }
 
+  getIssueStyle(id: number){
+    let filesFound = this.nestingFiles.find(x => id == x.issue_id) != null;
+    if (filesFound){
+      return {'background-color': '#c8e6c9', border: 'none', color: '#256029', 'font-weight': 600};
+    }
+    else{
+      return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+    }
+  }
   // viewTask(s: string) {
   //   let find = this.issues.find(x => x.name.includes('Секция ' + s) || x.name.includes('Block ' + s));
   //   if (find != null){

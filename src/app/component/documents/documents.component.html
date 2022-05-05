@@ -1,78 +1,3 @@
-<div *ngIf="!isDesktop()" class="">
-  <div class="card-tablet">
-    <p-table #table [value]="issues"
-             [scrollable]="true"
-             scrollHeight="calc(100vh - 150px)"
-             scrollDirection="both"
-             [virtualScroll]="true"
-             [virtualRowHeight]="40"
-             styleClass="p-datatable-striped"
-             responsiveLayout="scroll"
-             [globalFilterFields]="['id','doc_number','name','status']">
-      <ng-template pTemplate="caption">
-        <div class="p-d-flex">
-          <div class="mr-1">
-            <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
-            </p-dropdown>
-          </div>
-          <div class="mr-1 cy">
-            <label class="container margin-bottom-none">
-              <span class="text-checkbox">Show only with files</span>
-              <input (ngModelChange)="projectChanged(true)" type="checkbox" [(ngModel)]="showWithFilesOnly">
-              <span class="checkmark"></span>
-            </label>
-          </div>
-          <div class="p-ml-auto">
-          <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
-          </span>
-        </div>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr class="df">
-          <th pSortableColumn="doc_number" class="lxy font-13 w-20">{{l.tr('Чертеж')}}
-            <p-sortIcon field="doc_number"></p-sortIcon>
-          </th>
-          <th pSortableColumn="name" class="lxy font-13 w-20">{{l.tr('Название')}}
-            <p-sortIcon field="name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="department" class="cxy font-13 w-15">{{l.tr('Отдeл')}}
-            <p-sortIcon field="department"></p-sortIcon>
-            <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                </p-multiSelect>
-              </ng-template>
-            </p-columnFilter>
-          </th>
-          <th class="w-3">
-          </th>
-          <th class="w-3">
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-issue>
-        <tr class="cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
-          <td class="text-12 w-20">{{issue.doc_number}}</td>
-          <td class="text-12 w-20">{{issue.name}}</td>
-          <td class="text-12 w-15">{{issue.department}}</td>
-          <td class="w-3 text-14">
-            <div  class="">
-              <img pTooltip="Download" tooltipPosition="top" src="assets/icons/download-arrow.png" (click)="downloadDocFiles(issue); $event.stopPropagation()">
-            </div>
-          </td>
-          <td class="w-3 text-14">
-            <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
-              <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-</div>
 <div *ngIf="isDesktop()" class="all-page">
   <div class="card-overflow">
     <p-table #table [value]="issues"
@@ -147,6 +72,83 @@
     </p-table>
   </div>
 </div>
+
+<!--<div *ngIf="!isDesktop()" class="">-->
+<!--  <div class="card-tablet">-->
+<!--    <p-table #table [value]="issues"-->
+<!--             [scrollable]="true"-->
+<!--             scrollHeight="calc(100vh - 150px)"-->
+<!--             scrollDirection="both"-->
+<!--             [virtualScroll]="true"-->
+<!--             [virtualRowHeight]="40"-->
+<!--             styleClass="p-datatable-striped"-->
+<!--             responsiveLayout="scroll"-->
+<!--             [globalFilterFields]="['id','doc_number','name','status']">-->
+<!--      <ng-template pTemplate="caption">-->
+<!--        <div class="p-d-flex">-->
+<!--          <div class="mr-1">-->
+<!--            <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">-->
+<!--            </p-dropdown>-->
+<!--          </div>-->
+<!--          <div class="mr-1 cy">-->
+<!--            <label class="container margin-bottom-none">-->
+<!--              <span class="text-checkbox">Show only with files</span>-->
+<!--              <input (ngModelChange)="projectChanged(true)" type="checkbox" [(ngModel)]="showWithFilesOnly">-->
+<!--              <span class="checkmark"></span>-->
+<!--            </label>-->
+<!--          </div>-->
+<!--          <div class="p-ml-auto">-->
+<!--          <span class="p-input-icon-left">-->
+<!--            <i class="pi pi-search"></i>-->
+<!--            <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+<!--          </span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="header">-->
+<!--        <tr class="df">-->
+<!--          <th pSortableColumn="doc_number" class="lxy font-13 w-20">{{l.tr('Чертеж')}}-->
+<!--            <p-sortIcon field="doc_number"></p-sortIcon>-->
+<!--          </th>-->
+<!--          <th pSortableColumn="name" class="lxy font-13 w-20">{{l.tr('Название')}}-->
+<!--            <p-sortIcon field="name"></p-sortIcon>-->
+<!--          </th>-->
+<!--          <th pSortableColumn="department" class="cxy font-13 w-15">{{l.tr('Отдeл')}}-->
+<!--            <p-sortIcon field="department"></p-sortIcon>-->
+<!--            <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--              <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">-->
+<!--                </p-multiSelect>-->
+<!--              </ng-template>-->
+<!--            </p-columnFilter>-->
+<!--          </th>-->
+<!--          <th class="w-3">-->
+<!--          </th>-->
+<!--          <th class="w-3">-->
+<!--          </th>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="body" let-issue>-->
+<!--        <tr class="cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">-->
+<!--          <td class="text-12 w-20">{{issue.doc_number}}</td>-->
+<!--          <td class="text-12 w-20">{{issue.name}}</td>-->
+<!--          <td class="text-12 w-15">{{issue.department}}</td>-->
+<!--          <td class="w-3 text-14">-->
+<!--            <div  class="">-->
+<!--              <img pTooltip="Download" tooltipPosition="top" src="assets/icons/download-arrow.png" (click)="downloadDocFiles(issue); $event.stopPropagation()">-->
+<!--            </div>-->
+<!--          </td>-->
+<!--          <td class="w-3 text-14">-->
+<!--            <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">-->
+<!--              <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--    </p-table>-->
+<!--  </div>-->
+<!--</div>-->
+
 <p-toast key="task" position="bottom-center"></p-toast>
 
 <div class="progress-spinner" *ngIf="waitForZipFiles">

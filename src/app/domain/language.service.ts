@@ -27,7 +27,7 @@ export class LanguageService {
           case 'Этап': return 'Stage';
           case 'Перетащите файлы или нажмите для загрузки': return 'Drop files here or click this to upload';
           case 'Новый': return 'New';
-          case 'В работе': return 'In Work';
+          case 'В работе': return 'In work';
           case 'На согласовании': return 'On Approval';
           case 'Отправлен заказчику': return 'Send To ShipYard';
           case 'Поставлен': return 'Delivered';

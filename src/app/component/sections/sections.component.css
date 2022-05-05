@@ -61,13 +61,29 @@
 .number {
   position: relative;
 }
+.number-card-send{
+  width: 50px;
+  height: 24px;
+  border: 1px solid #CAD2D3;
+  color: #777777;
+  border-radius: 6px;
+  background: repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px);
+}
+.number-card-work{
+  width: 50px;
+  height: 24px;
+  border: 1px solid #CAD2D3;
+  color: #777777;
+  border-radius: 6px;
+  background-color: #c8e6c9;
+}
 .circle{
   position: absolute;
 }
 .number-card{
   width: 50px;
   height: 24px;
-  border-radius: 12px;
+  border-radius: 6px;
   background-color: white;
   border: 1px solid #333;
   cursor: pointer;
@@ -226,4 +242,7 @@
   letter-spacing: .3px;
   width: fit-content;
 }
-
+.status-text{
+  color: #3a3a3a;
+  font-weight: 600;
+}

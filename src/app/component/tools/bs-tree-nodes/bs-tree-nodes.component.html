@@ -23,40 +23,57 @@
     <div class="card-weight">
 
       <div *ngIf="loading" class="cxy h-100">
-        <p-progressSpinner></p-progressSpinner>
+        <div class="cxy">
+          <div class="cy">
+            <img src="assets/whale.gif" height="120">
+            <div class="cx loading-text">PLEASE WAIT...</div>
+          </div>
+        </div>
       </div>
       <p-treeTable *ngIf="!loading" [value]="nodes" (onNodeExpand)="onNodeExpand($event)"
                    [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 260px)" [virtualScroll]="true" [virtualRowHeight]="15">
         <ng-template pTemplate="header">
           <tr>
-            <th [ttSortableColumn]="'NAME'" style="width: 60%">NAME <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
-            <th [ttSortableColumn]="'WEIGHT'">WEIGHT <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
-            <th>COG</th>
-            <th>Moment</th>
+            <th [ttSortableColumn]="'NAME'" style="width: 60%">Name <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
+            <th [ttSortableColumn]="'WEIGHT'">Weight <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
+            <th>COG (xyz)</th>
+            <th>Moment (xyz)</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-          <tr style="height: 15px">
+          <tr class="cursor-default row-table-doc-hover">
             <td style="width: 60%">
               <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
               {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}} {{rowData.DNA != null && rowData.DNA != '' ? ('[' + rowData.DNA + ']') : ''}}
               <img class="margin-attention" *ngIf="rowData.WARN" src="assets/icons/attention.svg" height="20">
             </td>
-            <td>
+            <td style="width: 10%">
               <div *ngIf="rowData.WEIGHT != 0">{{round(rowData.WEIGHT)}}</div>
             </td>
             <td>
-              <div *ngIf="rowData.X_COG != 0">
-                <span>x: {{round(rowData.X_COG)}}</span>
-                <span>; y: {{round(rowData.Y_COG)}}</span>
-                <span>; z: {{round(rowData.Z_COG)}}</span>
+              <div class="w-100 cxy" *ngIf="rowData.X_COG != 0">
+                <div class="w-26">
+                  <div class="mr-5 x-label">{{round(rowData.X_COG)}}</div>
+                </div>
+                <div  class="w-26">
+                  <div class="mr-5 y-label">{{round(rowData.Y_COG)}}</div>
+                </div>
+                <div  class="w-26">
+                  <div class="z-label">{{round(rowData.Z_COG)}}</div>
+                </div>
               </div>
             </td>
             <td>
-              <div *ngIf="rowData.X_COG != 0 && rowData.WEIGHT != 0">
-                <span>x: {{round(rowData.X_COG * rowData.WEIGHT)}}</span>
-                <span>; y: {{round(rowData.Y_COG * rowData.WEIGHT)}}</span>
-                <span>; z: {{round(rowData.Z_COG * rowData.WEIGHT)}}</span>
+              <div class="w-100 cxy" *ngIf="rowData.X_COG != 0 && rowData.WEIGHT != 0">
+                <div class="w-26">
+                  <div class="mr-5 x-label">{{round(rowData.X_COG * rowData.WEIGHT)}}</div>
+                </div>
+                <div  class="w-26">
+                  <div class="mr-5 y-label">{{round(rowData.Y_COG * rowData.WEIGHT)}}</div>
+                </div>
+                <div  class="w-26">
+                  <div class="z-label">{{round(rowData.Z_COG * rowData.WEIGHT)}}</div>
+                </div>
               </div>
             </td>
           </tr>
