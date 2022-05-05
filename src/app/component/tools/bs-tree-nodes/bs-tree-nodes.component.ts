@@ -38,30 +38,34 @@ export class BsTreeNodesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.project = params.project ? params.project : 'P701';
+      this.project = params.project ? params.project : 'N004';
       this.s.getBsDesignNodes(this.project).then(res => {
-        console.log(res);
         this.summ = 0;
         let nodes: TreeNode[] = [];
+        let errors: TreeNode[] = [];
+        let errorsWeight = 0;
         this.bsDesignNodesSource = res.map(x => Object({data: x, children: []}));
         this.bsDesignNodesSource.forEach(x => {
           if ([45, 37, 39, 32, 41, 44, 20, 48, 49, 35, 22, 21, 33, 34, 36, 38, 31].includes(x.data.ATOM_TYPE)){
             x.data.ATOM_TYPE = 100;
             x.data.ATOM_NAME = 'Hull';
           }
+          if (x.data.WEIGHT <= 0.1) {
+            x.data.WARN = true;
+            let error = JSON.parse(JSON.stringify(x));
+            error.data.ATOM_TYPE = 101;
+            error.data.ATOM_NAME = 'WARNINGS & ERRORS';
+            errorsWeight += isNaN(error.data.WEIGHT) ? 0 : error.data.WEIGHT;
+            errors.push(error);
+          }
+          this.summ += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
         });
 
         _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource, x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
-          let warn = false;
           let weight = 0;
           group.forEach(x => {
-            if (x.data.WEIGHT <= 0.1){
-              warn = true;
-              x.data.WARN = true;
-            }
             weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
           });
-          this.summ += weight;
           nodes.push({
             data: {
               NAME: group[0].data.ATOM_NAME,
@@ -71,13 +75,24 @@ export class BsTreeNodesComponent implements OnInit {
               X_COG: 0,
               Y_COG: 0,
               Z_COG: 0,
-              WARN: warn
+              WARN: group.find(x => x.data.WARN) != null
             },
             children: group
           })
         });
+        nodes.push({
+          data: {
+            NAME: 'WARNINGS & ERRORS',
+            DESCRIPTION: '',
+            WEIGHT: errorsWeight,
+            X_COG: 0,
+            Y_COG: 0,
+            Z_COG: 0,
+            WARN: true
+          },
+          children: errors
+        });
         this.nodes = nodes;
-        console.log(nodes);
         this.loading = false;
       });
     });
