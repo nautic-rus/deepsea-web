@@ -78,7 +78,7 @@
   <div class="all-page">
     <div class="card">
       <div class="all-body-card">
-        <div class="cy text-bottom">
+        <div class="cxy">
           <div class="tools-card cursor-pointer">
             <div class="header-card">
               <div class="content-end">
@@ -96,6 +96,32 @@
             <div class="body-button-card my-15 cx">
               <div tabindex="10" (click)="getBillOfMaterials()" pButton [label]="t.tr ('Сгенерировать')" class="button-ok" *ngIf="billOfMaterials == ''" [class.button-generate]="wait.includes('bill-of-materials')"></div>
               <div tabindex="10" (click)="download(billOfMaterials)" pButton [label]="t.tr ('Скачать')" class="button-ok" *ngIf="billOfMaterials != ''"></div>
+            </div>
+            <div class="footer-card pt-5">
+              <div class="px-10">
+                <img src="assets/blue_whale.svg" height="25">
+              </div>
+              <div class="mini-text-card cy">{{t.tr('Сгенерируйте материалы из FORAN')}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="cxy">
+          <div class="tools-card cursor-pointer">
+            <div class="header-card">
+              <div class="content-end">
+                <div class="name-card hull cxy">HULL</div>
+              </div>
+            </div>
+            <div class="body-card">
+              <div class="head-text-card">Bs Design Nodes</div>
+              <div>
+                <div class="big-text-card mb-1">{{t.tr('Проект')}}</div>
+                <p-dropdown class="select" [(ngModel)]="projectBsDesign" [options]="projectsBsDesign" styleClass="w-100 font-14">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="body-button-card my-15 cx">
+              <div tabindex="10" (click)="openBsDesignNodes()" pButton [label]="'Open'" class="button-ok"></div>
             </div>
             <div class="footer-card pt-5">
               <div class="px-10">
@@ -142,9 +168,7 @@
             </div>
           </div>
         </div>
-        <div class="cy">
-          <div class=""></div>
-        </div>
+
         <div class="cy text-bottom">
           <div class=""></div>
         </div>

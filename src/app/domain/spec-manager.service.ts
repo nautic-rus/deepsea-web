@@ -69,4 +69,7 @@ export class SpecManagerService {
   async insertNestLock(project: string, nestId: string, user: string) {
     return await this.http.get<string>(props.httpSpec + '/insertNestLock', {params: {project, nestId, user}}).toPromise();
   }
+  async getBsDesignNodes(project: string) {
+    return await this.http.get<any[]>(props.httpSpec + '/bsDesignNodes', {params: {project}}).toPromise();
+  }
 }

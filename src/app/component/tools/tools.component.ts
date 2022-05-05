@@ -23,12 +23,17 @@ export class ToolsComponent implements OnInit {
   materialsProject = '';
 
 
+
   trayBundlesProject = 'P701';
   trayBundlesProjects = ['P701', 'P707'];
   selectedTrayBundle: any;
   trayBundles: any[] = [];
 
   projects: string[] = ['P701', 'N002', 'N004'];
+
+
+  projectsBsDesign: string[] = ['P701'];
+  projectBsDesign = this.projectsBsDesign[0];
 
 
 
@@ -71,5 +76,9 @@ export class ToolsComponent implements OnInit {
   fixTrayBundle(){
     this.s.fixTrayBundle(this.trayBundlesProject, this.selectedTrayBundle);
     this.messageService.add({key:'task', severity:'success', summary:'Fix Bundle', detail:'You have successfully fixed bundle ' + this.selectedTrayBundle + '.'});
+  }
+
+  openBsDesignNodes() {
+    this.router.navigate(['bsDesignNodes'], {queryParams: {project: this.projectBsDesign}});
   }
 }

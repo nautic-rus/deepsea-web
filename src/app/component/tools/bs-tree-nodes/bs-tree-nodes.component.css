@@ -1,0 +1,3 @@
+:host::ng-deep.p-treetable .p-treetable-tbody > tr > td{
+  padding: 0;
+}

@@ -1,0 +1,53 @@
+<div class="all-page">
+  <div class="card">
+    <div class="card-head df sticky-card">
+      <div class="mr-10">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      WEIGHT SUM: {{round(summ)}}
+    </div>
+
+    <div *ngIf="loading" class="cxy h-100">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+    <p-treeTable *ngIf="!loading" [value]="nodes" (onNodeExpand)="onNodeExpand($event)"
+                 [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 176px)" [virtualScroll]="true" [virtualRowHeight]="15">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 60%">NAME</th>
+          <th>WEIGHT</th>
+          <th>COG</th>
+          <th>Moment</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr style="height: 15px">
+          <td style="width: 60%">
+            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}}
+            <i class="pi pi-exclamation-triangle" *ngIf="rowData.WARN"></i>
+          </td>
+          <td>
+            <div *ngIf="rowData.WEIGHT != 0">{{round(rowData.WEIGHT)}}</div>
+          </td>
+          <td>
+            <div *ngIf="rowData.X_COG != 0">
+              <span>x: {{round(rowData.X_COG)}}</span>
+              <span>; y: {{round(rowData.Y_COG)}}</span>
+              <span>; z: {{round(rowData.Z_COG)}}</span>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="rowData.X_COG != 0 && rowData.WEIGHT != 0">
+              <span>x: {{round(rowData.X_COG * rowData.WEIGHT)}}</span>
+              <span>; y: {{round(rowData.Y_COG * rowData.WEIGHT)}}</span>
+              <span>; z: {{round(rowData.Z_COG * rowData.WEIGHT)}}</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+  </div>
+</div>
+

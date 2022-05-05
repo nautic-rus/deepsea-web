@@ -106,6 +106,9 @@ import { PartsQtyProfileComponent } from './component/billing/parts-qty-profile/
 import { FileExplorerComponent } from './component/file-explorer/file-explorer.component';
 import {TreeTableModule} from "primeng/treetable";
 import { VacantWastageComponent } from './component/nesting/vacant-wastage/vacant-wastage.component';
+import { BsTreeNodesComponent } from './component/tools/bs-tree-nodes/bs-tree-nodes.component';
+import {VirtualScrollerModule} from "primeng/virtualscroller";
+import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -172,6 +175,7 @@ Quill.register('modules/imageResize', ImageResize);
     PartsQtyProfileComponent,
     FileExplorerComponent,
     VacantWastageComponent,
+    BsTreeNodesComponent,
   ],
     imports: [
         BrowserModule,
@@ -218,6 +222,7 @@ Quill.register('modules/imageResize', ImageResize);
         TreeModule,
         ContextMenuModule,
         TreeTableModule,
+
     ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
