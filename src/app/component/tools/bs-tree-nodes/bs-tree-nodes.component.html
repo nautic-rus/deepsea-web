@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-head df sticky-card">
       <div class="mr-10">
-        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        <p-dropdown [disabled]="loading" placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
       WEIGHT SUM: {{round(summ)}}
@@ -12,7 +12,7 @@
       <p-progressSpinner></p-progressSpinner>
     </div>
     <p-treeTable *ngIf="!loading" [value]="nodes" (onNodeExpand)="onNodeExpand($event)"
-                 [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 176px)" [virtualScroll]="true" [virtualRowHeight]="15">
+                 [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 226px)" [virtualScroll]="true" [virtualRowHeight]="15">
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 60%">NAME</th>
@@ -25,7 +25,7 @@
         <tr style="height: 15px">
           <td style="width: 60%">
             <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-            {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}}
+            {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}} {{rowData.DNA != null && rowData.DNA != '' ? ('[' + rowData.DNA + ']') : ''}}
             <i class="pi pi-exclamation-triangle" *ngIf="rowData.WARN"></i>
           </td>
           <td>
