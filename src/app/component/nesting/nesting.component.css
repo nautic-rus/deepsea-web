@@ -926,7 +926,7 @@
   color: #757575;
 }
 .parent-plate{
-  width: 22px;
+  width: 18px;
   height: 100%;
   background-color: #D8DDF0;
   position: absolute;
@@ -938,6 +938,7 @@
   writing-mode: vertical-rl;
   text-align: center;
   letter-spacing: 2px;
+  font-size: 14px;
   color: #7e8dcd;
   font-weight: 600;
 }
