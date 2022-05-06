@@ -405,7 +405,7 @@ export class CreateTaskComponent implements OnInit {
   isCreateTaskDisabled() {
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
-      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || !((new RegExp('^NR\\d{3}-\\d{3}-\\d{3}$')).test(this.taskDocNumber));
+      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || !((new RegExp('^\\d{6}-\\d{3}-\\d{4}$')).test(this.taskDocNumber));
       case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
       case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '';
       default: return false;
@@ -441,6 +441,6 @@ export class CreateTaskComponent implements OnInit {
     this.sfiCodeChanged();
   }
   sfiCodeChanged(){
-    this.taskDocNumber = this.taskProject + '-' + this.sfiCode + '-';
+    //this.taskDocNumber = this.taskProject + '-' + this.sfiCode + '-';
   }
 }
