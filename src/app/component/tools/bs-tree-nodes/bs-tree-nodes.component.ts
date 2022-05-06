@@ -44,8 +44,31 @@ export class BsTreeNodesComponent implements OnInit {
         let nodes: TreeNode[] = [];
         let errors: TreeNode[] = [];
         let errorsWeight = 0;
+        let blocks: string[] = [];
         this.bsDesignNodesSource = res.map(x => Object({data: x, children: []}));
         this.bsDesignNodesSource.forEach(x => {
+          let dna: string = x.data.DNA.toString();
+          let r = new RegExp('(U\\d{1,4}|BS\\d{1,3}|F\\d{4}|VNT\\d{1,2}|(?<=OUTFITTING\\/)[^\\/]+)');
+          if (r.test(dna)){
+            // @ts-ignore
+            blocks.push(r.exec(dna)[0]);
+            // @ts-ignore
+            x.data.PATH = r.exec(dna)[0];
+          }
+          else{
+            let r = new RegExp('(?<=BULK\\sHEADS\\/)[^\\/]+');
+            if (r.test(dna)){
+              // @ts-ignore
+              let split = r.exec(dna)[0].split('-');
+              if (split.length > 0){
+                x.data.PATH = split[1];
+              }
+            }
+
+            if (x.data.PATH == null || x.data.PATH == ''){
+              x.data.PATH = 'UNDEFINED';
+            }
+          }
           if ([45, 37, 39, 32, 41, 44, 20, 48, 49, 35, 22, 21, 33, 34, 36, 38, 31].includes(x.data.ATOM_TYPE)){
             x.data.ATOM_TYPE = 100;
             x.data.ATOM_NAME = 'Hull';
@@ -61,11 +84,34 @@ export class BsTreeNodesComponent implements OnInit {
           this.summ += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
         });
 
+
         _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource, x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
           let weight = 0;
           group.forEach(x => {
             weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
           });
+
+          let child: TreeNode[] = [];
+
+          _.forEach(_.groupBy(_.sortBy(group, x => x.data.PATH.replace('UNDEFINED', 'z')), x => x.data.PATH), path => {
+            let weight = 0;
+            path.forEach(x => {
+              weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
+            });
+            child.push({
+              data: {
+                NAME: path[0].data.PATH,
+                DESCRIPTION: '',
+                WEIGHT: weight,
+                X_COG: 0,
+                Y_COG: 0,
+                Z_COG: 0,
+                WARN: path.find(x => x.data.WARN) != null
+              },
+              children: path
+            })
+          });
+
           nodes.push({
             data: {
               NAME: group[0].data.ATOM_NAME,
@@ -77,7 +123,7 @@ export class BsTreeNodesComponent implements OnInit {
               Z_COG: 0,
               WARN: group.find(x => x.data.WARN) != null
             },
-            children: group
+            children: child
           })
         });
         nodes.push({
