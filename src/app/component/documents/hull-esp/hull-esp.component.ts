@@ -426,6 +426,32 @@ export class HullEspComponent implements OnInit {
         this.parts = [...this.parts];
       });
     });
+    if (nesting.find(x => x.name.includes('profiles')) == null){
+      this.parts.forEach((part: any) => {
+        if (part.PART_CODE != null && part.SYMMETRY != null && part.NEST_ID != null && part.NEST_ID != ''){
+          if (part.NEST_ID.includes('U0')){
+            if (part.NEST_ID[0] == 'a'){
+              part.NESTING = 'P-' + this.project + '-' + part.NEST_ID.substr(1, 5) + '-' + part.NEST_ID.substr(6);
+            }
+            else{
+              part.NESTING = 'N-' + this.project + '-' + part.NEST_ID.substr(1, 5) + '-' + part.NEST_ID.substr(6);
+            }
+          }
+          else{
+            if (part.NEST_ID[0] == 'a'){
+              part.NESTING = 'P-' + this.project + '-' + part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5);
+            }
+            else{
+              part.NESTING = 'N-' + this.project + '-' + part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5);
+            }
+          }
+        }
+        else{
+          part.NESTING = '';
+        }
+      });
+      this.parts = [...this.parts];
+    }
   }
   fillRevisions(){
     this.issueRevisions.splice(0, this.issueRevisions.length);
