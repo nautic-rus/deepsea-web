@@ -40,7 +40,7 @@ export class SectionsComponent implements OnInit {
   fillIssues() {
     this.issueManager.getIssues('op').then(data => {
       this.issueManager.getNestingFiles().then(nestingFiles => {
-        this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project);
+        this.issues = data;
         this.nestingFiles = nestingFiles;
       });
     });

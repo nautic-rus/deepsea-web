@@ -5,7 +5,7 @@
         <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="changeProject()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <div class="legend">
+      <div *ngIf="project == 'NR004'" class="legend">
         <div class="df mt-20">
           <div class="number-card-send cxy"></div>
           <div class="mx-5 status-text">-</div>
@@ -16,36 +16,41 @@
           <div class="mx-5 status-text">-</div>
           <div class="status-text cx">{{t.tr('Отправлен на верфь')}}</div>
         </div>
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy assigned-status">{{t.tr('В работе')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy in-work-status">{{t.tr('В работе')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy paused-status">{{t.tr('Приостановлено')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy checkup-status">{{t.tr('На проверке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy rework-status">{{t.tr('На доработке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy check-status">{{t.tr('На согласовании')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy ready-to-send-status">{{t.tr('Готов к отправке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy sent-to-yard-status">{{t.tr('Отправлен на верфь')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy ready-to-delivery-status">{{t.tr('Готов к поставке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status mt-5 cy close-status">{{t.tr('Поставлен')}}</div>-->
-<!--        </div>-->
+      </div>
+      <div *ngIf="project == 'NR002'" class="legend">
+        <div class="cy">
+          <div class="status mt-5 cy assigned-status">{{t.tr('Назначен')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy in-work-status">{{t.tr('В работе')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy paused-status">{{t.tr('Приостановлено')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy checkup-status">{{t.tr('На проверке')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy rework-status">{{t.tr('На доработке')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy check-status">{{t.tr('На согласовании')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy not-approved-status">{{t.tr('Не согласован')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy ready-to-send-status">{{t.tr('Готов к отправке')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy sent-to-yard-status">{{t.tr('Отправлен на верфь')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy ready-to-delivery-status">{{t.tr('Готов к поставке')}}</div>
+        </div>
+        <div class="cy">
+          <div class="status mt-5 cy close-status">{{t.tr('Поставлен')}}</div>
+        </div>
       </div>
       <div *ngIf="project == 'NR002'">
         <div class="picture">
@@ -65,7 +70,7 @@
             <div class="cxy number"></div>
             <div class="cxy number"></div>
             <div class="seven number">
-              <div (click)="viewTask(581)" [ngStyle]="getStyle('512')" class="number-card cxy">512</div>
+              <div (click)="viewTask(91)" [ngStyle]="getStyle('512')" class="number-card cxy">512</div>
             </div>
             <div class="cxy"></div>
             <div class="cxy"></div>
@@ -79,7 +84,7 @@
               <div (click)="viewTask(95)" [ngStyle]="getStyle('614')" class="number-card cxy">614</div>
             </div>
             <div class="cxy number">
-              <div (click)="viewTask(646)" [ngStyle]="getStyle('612')" class="number-card cxy">612</div>
+              <div (click)="viewTask(93)" [ngStyle]="getStyle('612')" class="number-card cxy">612</div>
             </div>
             <div class="cxy number">
               <div (click)="viewTask(92)" [ngStyle]="getStyle('611')" class="number-card cxy">611</div>
@@ -161,7 +166,7 @@
                 <div (click)="viewTask(87)" [ngStyle]="getStyle('434')" class="number-card cxy">434</div>
               </div>
               <div class="double-x">
-                <div (click)="viewTask(641)" [ngStyle]="getStyle('414')" class="number-card cxy">414P</div>
+                <div (click)="viewTask(85)" [ngStyle]="getStyle('414')" class="number-card cxy">414P</div>
                 <div (click)="viewTask(86)" [ngStyle]="getStyle('424')" class="number-card cxy ml-5">424S</div>
               </div>
             </div>
@@ -181,7 +186,7 @@
               <div (click)="viewTask(75)" [ngStyle]="getStyle('431')" class="number-card cxy mt-10">431</div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(575)" [ngStyle]="getStyle('335')" class="number-card cxy mt-10">335</div>
+              <div (click)="viewTask(71)" [ngStyle]="getStyle('335')" class="number-card cxy mt-10">335</div>
             </div>
             <div class="cx">
               <div (click)="viewTask(67)" [ngStyle]="getStyle('334')" class="number-card cxy mt-10">334</div>
@@ -198,7 +203,7 @@
             <div class="cxy"></div>
             <div class="cxy"></div>
             <div class="cx">
-              <div (click)="viewTask(648)" [ngStyle]="getStyle('244')" class="number-card cxy mt-10">244</div>
+              <div (click)="viewTask(56)" [ngStyle]="getStyle('244')" class="number-card cxy mt-10">244</div>
             </div>
             <div class="cx">
               <div (click)="viewTask(55)" [ngStyle]="getStyle('243')" class="number-card cxy mt-10">243</div>
@@ -213,7 +218,7 @@
               <div (click)="viewTask(42)" [ngStyle]="getStyle('145')" class="number-card cxy">145</div>
             </div>
             <div class="cxy">
-              <div (click)="viewTask(675)" [ngStyle]="getStyle('144')" class="number-card cxy">144</div>
+              <div (click)="viewTask(38)" [ngStyle]="getStyle('144')" class="number-card cxy">144</div>
             </div>
             <div class="cxy">
               <div (click)="viewTask(34)" [ngStyle]="getStyle('143')" class="number-card cxy">143</div>
@@ -246,7 +251,7 @@
             <div class="double-y">
               <div class="double-x">
                 <div class="text-end">
-                  <div (click)="viewTask(638)" [ngStyle]="getStyle('211')" class="number-card cxy mr-5">211P</div>
+                  <div (click)="viewTask(47)" [ngStyle]="getStyle('211')" class="number-card cxy mr-5">211P</div>
                 </div>
                 <div class="mb-10">
                   <div (click)="viewTask(48)" [ngStyle]="getStyle('221')" class="number-card cxy ml-5">221S</div>
@@ -319,16 +324,16 @@
               <div (click)="viewTask(44)" [ngStyle]="getStyle('202')" class="number-card cxy">202</div>
             </div>
             <div class="cxy mt-10">
-              <div (click)="viewTask(594)" [ngStyle]="getStyle('201')" class="number-card cxy">201</div>
+              <div (click)="viewTask(43)" [ngStyle]="getStyle('201')" class="number-card cxy">201</div>
             </div>
             <div class="cxy mt-10">
               <div (click)="viewTask(27)" [ngStyle]="getStyle('105')" class="number-card cxy">105</div>
             </div>
             <div class="cxy mt-10">
-              <div (click)="viewTask(587)" [ngStyle]="getStyle('104')" class="number-card cxy">104</div>
+              <div (click)="viewTask(24)" [ngStyle]="getStyle('104')" class="number-card cxy">104</div>
             </div>
             <div class="cxy mt-10">
-              <div (click)="viewTask(653)" [ngStyle]="getStyle('103')" class="number-card cxy">103</div>
+              <div (click)="viewTask(23)" [ngStyle]="getStyle('103')" class="number-card cxy">103</div>
             </div>
             <div class="cxy mt-10">
               <div (click)="viewTask(22)" [ngStyle]="getStyle('102')" class="number-card cxy">102</div>

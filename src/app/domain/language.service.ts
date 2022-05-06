@@ -302,7 +302,7 @@ export class LanguageService {
           case 'Номер': return 'Number';
           case 'ВЕС': return 'WEIGHT';
           case 'Вес кг': return 'weight kg';
-          case '': return '';
+          case 'Не согласован': return 'Not approved';
           case '': return '';
           case '': return '';
           case '': return '';
