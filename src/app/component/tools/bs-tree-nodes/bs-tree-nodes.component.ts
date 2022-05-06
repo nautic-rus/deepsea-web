@@ -92,24 +92,56 @@ export class BsTreeNodesComponent implements OnInit {
           });
 
           let child: TreeNode[] = [];
-
           _.forEach(_.groupBy(_.sortBy(group, x => x.data.PATH.replace('UNDEFINED', 'z')), x => x.data.PATH), path => {
             let weight = 0;
+            let childActual = 0;
+            let childXcog = 0;
+            let childYcog = 0;
+            let childZcog = 0;
             path.forEach(x => {
               weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
+              let w = x.data.WEIGHT;
+              let xCOG = x.data.X_COG;
+              let yCOG = x.data.Y_COG;
+              let zCOG = x.data.Z_COG;
+              if (w + childActual > 0){
+                childXcog = (childXcog * childActual + xCOG * w) / (w + childActual);
+                childYcog = (childYcog * childActual + yCOG * w) / (w + childActual);
+                childZcog = (childZcog * childActual + zCOG * w) / (w + childActual);
+                childActual += w;
+              }
             });
+
+
             child.push({
               data: {
                 NAME: path[0].data.PATH,
                 DESCRIPTION: '',
                 WEIGHT: weight,
-                X_COG: 0,
-                Y_COG: 0,
-                Z_COG: 0,
+                X_COG: childXcog,
+                Y_COG: childYcog,
+                Z_COG: childZcog,
                 WARN: path.find(x => x.data.WARN) != null
               },
               children: path
             })
+          });
+
+          let nodeActual = 0;
+          let nodeXcog = 0;
+          let nodeYcog = 0;
+          let nodeZcog = 0;
+          child.forEach(x => {
+            let w = x.data.WEIGHT;
+            let xCOG = x.data.X_COG;
+            let yCOG = x.data.Y_COG;
+            let zCOG = x.data.Z_COG;
+            if (w + nodeActual > 0){
+              nodeXcog = (nodeXcog * nodeActual + xCOG * w) / (w + nodeActual);
+              nodeYcog = (nodeYcog * nodeActual + yCOG * w) / (w + nodeActual);
+              nodeZcog = (nodeZcog * nodeActual + zCOG * w) / (w + nodeActual);
+              nodeActual += w;
+            }
           });
 
           nodes.push({
@@ -118,9 +150,9 @@ export class BsTreeNodesComponent implements OnInit {
               //NAME: group[0].data.ATOM_NAME + ' - ' + group[0].data.ATOM_TYPE,
               DESCRIPTION: '',
               WEIGHT: weight,
-              X_COG: 0,
-              Y_COG: 0,
-              Z_COG: 0,
+              X_COG: nodeXcog,
+              Y_COG: nodeYcog,
+              Z_COG: nodeZcog,
               WARN: group.find(x => x.data.WARN) != null
             },
             children: child
