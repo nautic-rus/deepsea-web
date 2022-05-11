@@ -15,13 +15,13 @@
       <div class="mr-10">
         <div class="w-100 cxy" *ngIf="globalActual != 0">
           <div class="width-100">
-            <div class="mr-5 x-label">{{round(globalXcog)}}</div>
+            <div class="mr-5 x-label">{{roundWithMeasure(globalXcog)}}</div>
           </div>
           <div  class="width-100">
-            <div class="mr-5 y-label">{{round(globalYcog)}}</div>
+            <div class="mr-5 y-label">{{roundWithMeasure(globalYcog)}}</div>
           </div>
           <div  class="width-100">
-            <div class="z-label">{{round(globalZcog)}}</div>
+            <div class="z-label">{{roundWithMeasure(globalZcog)}}</div>
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@
               <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT != 0" src="assets/icons/attention.svg" height="20">
             </td>
             <td style="width: 10%">
-              <div *ngIf="rowData.WEIGHT != 0">{{round(rowData.WEIGHT)}}</div>
+              <div *ngIf="rowData.WEIGHT != 0">{{roundWithMeasure(rowData.WEIGHT)}}</div>
             </td>
             <td>
               <div class="w-100 cxy" *ngIf="rowData.X_COG != 0">
@@ -84,13 +84,13 @@
             <td>
               <div class="w-100 cxy" *ngIf="rowData.X_COG != 0 && rowData.WEIGHT != 0">
                 <div class="w-26">
-                  <div class="mr-5 x-label">{{round(rowData.X_COG * rowData.WEIGHT)}}</div>
+                  <div class="mr-5 x-label">{{roundWithMeasure(rowData.X_COG * rowData.WEIGHT)}}</div>
                 </div>
                 <div  class="w-26">
-                  <div class="mr-5 y-label">{{round(rowData.Y_COG * rowData.WEIGHT)}}</div>
+                  <div class="mr-5 y-label">{{roundWithMeasure(rowData.Y_COG * rowData.WEIGHT)}}</div>
                 </div>
                 <div  class="w-26">
-                  <div class="z-label">{{round(rowData.Z_COG * rowData.WEIGHT)}}</div>
+                  <div class="z-label">{{roundWithMeasure(rowData.Z_COG * rowData.WEIGHT)}}</div>
                 </div>
               </div>
             </td>
