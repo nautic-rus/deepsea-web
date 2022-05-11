@@ -6,6 +6,11 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
+        <div (click)="exportExcel()" [pTooltip]="'Export XLS'" tooltipPosition="top" class="materials-button green-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
         <div class="width-176"> Total weight: {{roundWithMeasure(summ)}}</div>
       </div>
       <div class="mr-10">
@@ -25,9 +30,7 @@
           </div>
         </div>
       </div>
-      <div class="mr-10 cursor-pointer">
-        <img (click)="exportExcel()" src="assets/icons/xls-file.svg" height="26">
-      </div>
+
       <div class="p-ml-auto df">
 <!--        <span class="p-input-icon-left p-ml-auto">-->
 <!--            <i class="pi pi-search"></i>-->
@@ -50,51 +53,51 @@
                    [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 260px)" [virtualScroll]="true" [virtualRowHeight]="15">
         <ng-template pTemplate="header">
           <tr>
-            <th [ttSortableColumn]="'NAME'" style="width: 60%">Name <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
-            <th [ttSortableColumn]="'WEIGHT'">Weight <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
-            <th>COG (xyz)</th>
-            <th>Moment (xyz)</th>
-            <th>Modify date</th>
+            <th [ttSortableColumn]="'NAME'" style="width: 50%">Name <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
+            <th [ttSortableColumn]="'WEIGHT'" style="width: 8%">Weight <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
+            <th class="header-hover cursor-pointer">COG (xyz)</th>
+            <th class="header-hover cursor-pointer">Moment (xyz)</th>
+            <th [ttSortableColumn]="'DATE'" class="header-hover cursor-pointer" style="width: 8%">Modify date<p-treeTableSortIcon [field]="'DATE'"></p-treeTableSortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
           <tr class="cursor-default row-table-doc-hover">
-            <td style="width: 60%">
+            <td style="width: 50%">
               <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
               {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}} {{rowData.DNA != null && rowData.DNA != '' ? ('[' + rowData.DNA + ']') : ''}}
-              <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT == 0" src="assets/icons/error.svg" height="20">
+              <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT == 0" src="assets/icons/attentionred.svg" height="20">
               <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT != 0" src="assets/icons/attention.svg" height="20">
             </td>
-            <td style="width: 10%">
+            <td style="width: 8%">
               <div *ngIf="rowData.WEIGHT != 0">{{roundWithMeasure(rowData.WEIGHT)}}</div>
             </td>
             <td>
               <div class="w-100 cxy" *ngIf="rowData.X_COG != 0">
-                <div class="w-26">
-                  <div class="mr-5 x-label">{{round(rowData.X_COG)}}</div>
+                <div class="w-30">
+                  <div class="mr-5 x-label">{{roundWithMeasure(rowData.X_COG)}}</div>
                 </div>
-                <div  class="w-26">
-                  <div class="mr-5 y-label">{{round(rowData.Y_COG)}}</div>
+                <div  class="w-30">
+                  <div class="mr-5 y-label">{{roundWithMeasure(rowData.Y_COG)}}</div>
                 </div>
-                <div  class="w-26">
-                  <div class="z-label">{{round(rowData.Z_COG)}}</div>
+                <div  class="w-30">
+                  <div class="z-label">{{roundWithMeasure(rowData.Z_COG)}}</div>
                 </div>
               </div>
             </td>
             <td>
               <div class="w-100 cxy" *ngIf="rowData.X_COG != 0 && rowData.WEIGHT != 0">
-                <div class="w-26">
+                <div class="w-30">
                   <div class="mr-5 x-label">{{roundWithMeasure(rowData.X_COG * rowData.WEIGHT)}}</div>
                 </div>
-                <div  class="w-26">
+                <div  class="w-30">
                   <div class="mr-5 y-label">{{roundWithMeasure(rowData.Y_COG * rowData.WEIGHT)}}</div>
                 </div>
-                <div  class="w-26">
+                <div  class="w-30">
                   <div class="z-label">{{roundWithMeasure(rowData.Z_COG * rowData.WEIGHT)}}</div>
                 </div>
               </div>
             </td>
-            <td>
+            <td style="width: 8%">
               <div *ngIf="rowData.DATE != null && rowData.DATE != 0">{{getDate(rowData.DATE)}}</div>
             </td>
           </tr>

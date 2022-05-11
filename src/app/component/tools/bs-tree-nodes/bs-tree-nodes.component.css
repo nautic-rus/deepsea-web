@@ -34,6 +34,9 @@
 .row-table-doc-hover:hover{
   background-color: #EEF5FA!important;
 }
+.header-hover:hover{
+  background-color: #E9ECEF;
+}
 .margin-attention{
   margin-top: 3px;
   margin-bottom: -3px;
@@ -95,6 +98,7 @@
   color: #ffffff;
   font-size: 12px;
   min-width: 20px;
+  text-align: end;
 }
 .y-label{
   border-radius: 3px;
@@ -104,6 +108,7 @@
   color: #ffffff;
   font-size: 12px;
   min-width: 20px;
+  text-align: end;
 }
 .z-label{
   border-radius: 3px;
@@ -113,4 +118,5 @@
   color: #ffffff;
   font-size: 12px;
   min-width: 20px;
+  text-align: end;
 }
