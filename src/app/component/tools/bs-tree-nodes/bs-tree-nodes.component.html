@@ -6,12 +6,28 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
-        Total weight: {{round(summ)}}
-<!--        <div (click)="exportXls()" class="materials-button xls-button cxy">-->
-<!--          <img src="assets/icons/xls2.svg" height="26">-->
-<!--        </div>-->
+        <div class="width-176"> Total weight: {{roundWithMeasure(summ)}}</div>
       </div>
-
+      <div class="mr-10">
+        <p-dropdown [disabled]="loading" [(ngModel)]="measure" [options]="measures" [optionLabel]="'label'" [optionValue]="'value'" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <div class="w-100 cxy" *ngIf="globalActual != 0">
+          <div class="width-100">
+            <div class="mr-5 x-label">{{round(globalXcog)}}</div>
+          </div>
+          <div  class="width-100">
+            <div class="mr-5 y-label">{{round(globalYcog)}}</div>
+          </div>
+          <div  class="width-100">
+            <div class="z-label">{{round(globalZcog)}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="mr-10 cursor-pointer">
+        <img (click)="exportExcel()" src="assets/icons/xls-file.svg" height="26">
+      </div>
       <div class="p-ml-auto df">
 <!--        <span class="p-input-icon-left p-ml-auto">-->
 <!--            <i class="pi pi-search"></i>-->
@@ -38,6 +54,7 @@
             <th [ttSortableColumn]="'WEIGHT'">Weight <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
             <th>COG (xyz)</th>
             <th>Moment (xyz)</th>
+            <th>Modify date</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
@@ -45,7 +62,8 @@
             <td style="width: 60%">
               <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
               {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}} {{rowData.DNA != null && rowData.DNA != '' ? ('[' + rowData.DNA + ']') : ''}}
-              <img class="margin-attention" *ngIf="rowData.WARN" src="assets/icons/attention.svg" height="20">
+              <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT == 0" src="assets/icons/error.svg" height="20">
+              <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT != 0" src="assets/icons/attention.svg" height="20">
             </td>
             <td style="width: 10%">
               <div *ngIf="rowData.WEIGHT != 0">{{round(rowData.WEIGHT)}}</div>
@@ -75,6 +93,9 @@
                   <div class="z-label">{{round(rowData.Z_COG * rowData.WEIGHT)}}</div>
                 </div>
               </div>
+            </td>
+            <td>
+              <div *ngIf="rowData.DATE != null && rowData.DATE != 0">{{getDate(rowData.DATE)}}</div>
             </td>
           </tr>
         </ng-template>

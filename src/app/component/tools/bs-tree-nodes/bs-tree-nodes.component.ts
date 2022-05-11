@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {MenuItem, MessageService, TreeNode} from "primeng/api";
 import * as _ from "underscore";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-bs-tree-nodes',
@@ -23,8 +24,29 @@ export class BsTreeNodesComponent implements OnInit {
   loading = true;
   projects: string[] = ['P701', 'P707', 'N002', 'N004'];
   project = 'N004';
+  systems: any[] = [];
   summ = 0;
+  measures: any[] = [
+    {
+      label: 'Grammes',
+      value: 'g'
+    },
+    {
+      label: 'Kilogram',
+      value: 'kg'
+    },
+    {
+      label: 'Tones',
+      value: 't'
+    }
+  ];
+  measure = 'kg';
+  globalActual = 0;
+  globalXcog = 0;
+  globalYcog = 0;
+  globalZcog = 0;
 
+  exportableData: any[] = [];
   bsDesignNodesSource: any[] = [];
   constructor(public router: Router, public route: ActivatedRoute, public s: SpecManagerService, public messageService: MessageService) { }
 
@@ -39,10 +61,15 @@ export class BsTreeNodesComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.project = params.project ? params.project : 'N004';
+      this.s.getHullSystems(this.project).then(res => {
+        this.systems = res;
+      });
       this.s.getBsDesignNodes(this.project).then(res => {
+        this.exportableData = res;
         this.summ = 0;
         let nodes: TreeNode[] = [];
-        let errors: TreeNode[] = [];
+        let errors1: TreeNode[] = [];
+        let errors2: TreeNode[] = [];
         let errorsWeight = 0;
         let blocks: string[] = [];
         this.bsDesignNodesSource = res.map(x => Object({data: x, children: []}));
@@ -73,17 +100,110 @@ export class BsTreeNodesComponent implements OnInit {
             x.data.ATOM_TYPE = 100;
             x.data.ATOM_NAME = 'Hull';
           }
-          if (x.data.WEIGHT <= 0.1) {
+          if (x.data.WEIGHT == 0){
             x.data.WARN = true;
             let error = JSON.parse(JSON.stringify(x));
             error.data.ATOM_TYPE = 101;
-            error.data.ATOM_NAME = 'WARNINGS & ERRORS';
+            error.data.ATOM_NAME = 'WEIGHT IS NULL';
+            errors1.push(error);
+          }
+          else if (x.data.WEIGHT <= 0.1) {
+            x.data.WARN = true;
+            let error = JSON.parse(JSON.stringify(x));
+            error.data.ATOM_TYPE = 102;
+            error.data.ATOM_NAME = 'WEIGHT <= 0.1';
             errorsWeight += isNaN(error.data.WEIGHT) ? 0 : error.data.WEIGHT;
-            errors.push(error);
+            errors2.push(error);
           }
           this.summ += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
         });
 
+
+        // _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource, x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
+        //   let weight = 0;
+        //   group.forEach(x => {
+        //     weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
+        //   });
+        //
+        //   let child: TreeNode[] = [];
+        //   _.forEach(_.groupBy(_.sortBy(group, x => x.data.PATH.replace('UNDEFINED', 'z')), x => x.data.PATH), path => {
+        //     let weight = 0;
+        //     let childActual = 0;
+        //     let childXcog = 0;
+        //     let childYcog = 0;
+        //     let childZcog = 0;
+        //     path.forEach(x => {
+        //       weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
+        //       let w = x.data.WEIGHT;
+        //       let xCOG = x.data.X_COG;
+        //       let yCOG = x.data.Y_COG;
+        //       let zCOG = x.data.Z_COG;
+        //       if (w + childActual > 0){
+        //         childXcog = (childXcog * childActual + xCOG * w) / (w + childActual);
+        //         childYcog = (childYcog * childActual + yCOG * w) / (w + childActual);
+        //         childZcog = (childZcog * childActual + zCOG * w) / (w + childActual);
+        //         childActual += w;
+        //       }
+        //     });
+        //
+        //
+        //     child.push({
+        //       data: {
+        //         NAME: path[0].data.PATH,
+        //         DESCRIPTION: '',
+        //         WEIGHT: weight,
+        //         X_COG: childXcog,
+        //         Y_COG: childYcog,
+        //         Z_COG: childZcog,
+        //         WARN: path.find(x => x.data.WARN) != null
+        //       },
+        //       children: path
+        //     })
+        //   });
+        //
+        //   let nodeActual = 0;
+        //   let nodeXcog = 0;
+        //   let nodeYcog = 0;
+        //   let nodeZcog = 0;
+        //   child.forEach(x => {
+        //     let w = x.data.WEIGHT;
+        //     let xCOG = x.data.X_COG;
+        //     let yCOG = x.data.Y_COG;
+        //     let zCOG = x.data.Z_COG;
+        //     if (w + nodeActual > 0){
+        //       nodeXcog = (nodeXcog * nodeActual + xCOG * w) / (w + nodeActual);
+        //       nodeYcog = (nodeYcog * nodeActual + yCOG * w) / (w + nodeActual);
+        //       nodeZcog = (nodeZcog * nodeActual + zCOG * w) / (w + nodeActual);
+        //       nodeActual += w;
+        //     }
+        //   });
+        //
+        //   nodes.push({
+        //     data: {
+        //       NAME: group[0].data.ATOM_NAME,
+        //       //NAME: group[0].data.ATOM_NAME + ' - ' + group[0].data.ATOM_TYPE,
+        //       DESCRIPTION: '',
+        //       WEIGHT: weight,
+        //       X_COG: nodeXcog,
+        //       Y_COG: nodeYcog,
+        //       Z_COG: nodeZcog,
+        //       WARN: group.find(x => x.data.WARN) != null
+        //     },
+        //     children: child
+        //   })
+        // });
+        // nodes.push({
+        //   data: {
+        //     NAME: 'WARNINGS & ERRORS',
+        //     DESCRIPTION: '',
+        //     WEIGHT: errorsWeight,
+        //     X_COG: 0,
+        //     Y_COG: 0,
+        //     Z_COG: 0,
+        //     WARN: true
+        //   },
+        //   children: errors
+        // });
 
         _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource, x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
           let weight = 0;
@@ -104,24 +224,41 @@ export class BsTreeNodesComponent implements OnInit {
               let xCOG = x.data.X_COG;
               let yCOG = x.data.Y_COG;
               let zCOG = x.data.Z_COG;
-              if (w + childActual > 0){
-                childXcog = (childXcog * childActual + xCOG * w) / (w + childActual);
-                childYcog = (childYcog * childActual + yCOG * w) / (w + childActual);
-                childZcog = (childZcog * childActual + zCOG * w) / (w + childActual);
-                childActual += w;
-              }
+
+              childActual += w;
+              childXcog += xCOG * w;
+              childYcog += yCOG * w;
+              childZcog += zCOG * w;
+
             });
 
+            if (childActual != 0){
+              childXcog /= childActual;
+              childYcog /= childActual;
+              childZcog /= childActual;
+            }
+            else{
+              childXcog = 0;
+              childYcog = 0;
+              childZcog = 0;
+            }
+
+
+            let systemName = '';
+            let findSystem = this.systems.find((x: any) => x.code == path[0].data.PATH);
+            if (findSystem != null){
+              systemName = ' - ' + findSystem.name;
+            }
 
             child.push({
               data: {
-                NAME: path[0].data.PATH,
+                NAME: path[0].data.PATH + systemName,
                 DESCRIPTION: '',
                 WEIGHT: weight,
                 X_COG: childXcog,
                 Y_COG: childYcog,
                 Z_COG: childZcog,
-                WARN: path.find(x => x.data.WARN) != null
+                WARN: path.find(x => x.data.WARN) != null,
               },
               children: path
             })
@@ -136,18 +273,28 @@ export class BsTreeNodesComponent implements OnInit {
             let xCOG = x.data.X_COG;
             let yCOG = x.data.Y_COG;
             let zCOG = x.data.Z_COG;
-            if (w + nodeActual > 0){
-              nodeXcog = (nodeXcog * nodeActual + xCOG * w) / (w + nodeActual);
-              nodeYcog = (nodeYcog * nodeActual + yCOG * w) / (w + nodeActual);
-              nodeZcog = (nodeZcog * nodeActual + zCOG * w) / (w + nodeActual);
-              nodeActual += w;
-            }
+
+            nodeActual += w;
+            nodeXcog += xCOG * w;
+            nodeYcog += yCOG * w;
+            nodeZcog += zCOG * w;
+
           });
+
+          if (nodeActual != 0){
+            nodeXcog /= nodeActual;
+            nodeYcog /= nodeActual;
+            nodeZcog /= nodeActual;
+          }
+          else{
+            nodeXcog = 0;
+            nodeYcog = 0;
+            nodeZcog = 0;
+          }
 
           nodes.push({
             data: {
               NAME: group[0].data.ATOM_NAME,
-              //NAME: group[0].data.ATOM_NAME + ' - ' + group[0].data.ATOM_TYPE,
               DESCRIPTION: '',
               WEIGHT: weight,
               X_COG: nodeXcog,
@@ -158,9 +305,51 @@ export class BsTreeNodesComponent implements OnInit {
             children: child
           })
         });
+
+
+        let globalActual = 0;
+        let globalXcog = 0;
+        let globalYcog = 0;
+        let globalZcog = 0;
+        nodes.forEach(x => {
+          let w = x.data.WEIGHT;
+          let xCOG = x.data.X_COG;
+          let yCOG = x.data.Y_COG;
+          let zCOG = x.data.Z_COG;
+
+          globalActual += w;
+          globalXcog += xCOG * w;
+          globalYcog += yCOG * w;
+          globalZcog += zCOG * w;
+
+        });
+
+        globalXcog /= globalActual;
+        globalYcog /= globalActual;
+        globalZcog /= globalActual;
+
+        this.globalActual = globalActual;
+        this.globalXcog = globalXcog;
+        this.globalYcog = globalYcog;
+        this.globalZcog = globalZcog;
+
         nodes.push({
           data: {
-            NAME: 'WARNINGS & ERRORS',
+            NAME: 'ERRORS: WEIGHT IS NULL',
+            DESCRIPTION: '',
+            WEIGHT: 0,
+            X_COG: 0,
+            Y_COG: 0,
+            Z_COG: 0,
+            WARN: true
+          },
+          children: errors1
+        });
+
+
+        nodes.push({
+          data: {
+            NAME: 'ERRORS: WEIGHT <= 0.1',
             DESCRIPTION: '',
             WEIGHT: errorsWeight,
             X_COG: 0,
@@ -168,8 +357,9 @@ export class BsTreeNodesComponent implements OnInit {
             Z_COG: 0,
             WARN: true
           },
-          children: errors
+          children: errors2
         });
+
         this.nodes = nodes;
         this.loading = false;
       });
@@ -198,5 +388,36 @@ export class BsTreeNodesComponent implements OnInit {
 
   round(value: number) {
     return Math.round(value * 100) / 100;
+  }
+  roundWithMeasure(value: number) {
+    let multiplier;
+    switch (this.measure){
+      case 'kg': multiplier = 1; break;
+      case 'g': multiplier = 1000; break;
+      case 't': multiplier = 1 / 1000; break;
+      default: multiplier = 1;
+    }
+    return Math.round(value * multiplier * 100) / 100;
+  }
+
+  exportExcel() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.exportableData);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
+  }
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+  getDate(dateLong: number) {
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 }

@@ -72,4 +72,7 @@ export class SpecManagerService {
   async getBsDesignNodes(project: string) {
     return await this.http.get<any[]>(props.httpSpec + '/bsDesignNodes', {params: {project}}).toPromise();
   }
+  async getHullSystems(project: string) {
+    return await this.http.get<any[]>(props.httpSpec + '/hullSystems', {params: {project}}).toPromise();
+  }
 }
