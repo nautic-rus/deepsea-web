@@ -818,7 +818,7 @@ cdk-virtual-scroll-viewport{
   -ms-user-select: none;
   user-select: none;
   color: #3a3a3a;
-  height: 16px;
+  min-height: 16px;
   margin-left: 2px;
 }
 /* Hide the browser's default checkbox */
