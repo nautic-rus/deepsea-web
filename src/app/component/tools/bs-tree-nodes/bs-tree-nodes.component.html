@@ -20,13 +20,13 @@
       <div class="mr-10">
         <div class="w-100 cxy" *ngIf="globalActual != 0">
           <div class="width-100">
-            <div class="mr-5 x-label">{{roundWithMeasure(globalXcog)}}</div>
+            <div class="mr-5 x-label">{{round(globalXcog)}}</div>
           </div>
           <div  class="width-100">
-            <div class="mr-5 y-label">{{roundWithMeasure(globalYcog)}}</div>
+            <div class="mr-5 y-label">{{round(globalYcog)}}</div>
           </div>
           <div  class="width-100">
-            <div class="z-label">{{roundWithMeasure(globalZcog)}}</div>
+            <div class="z-label">{{round(globalZcog)}}</div>
           </div>
         </div>
       </div>
@@ -74,13 +74,13 @@
             <td>
               <div class="w-100 cxy" *ngIf="rowData.X_COG != 0">
                 <div class="w-30">
-                  <div class="mr-5 x-label">{{roundWithMeasure(rowData.X_COG)}}</div>
+                  <div class="mr-5 x-label">{{round(rowData.X_COG)}}</div>
                 </div>
                 <div  class="w-30">
-                  <div class="mr-5 y-label">{{roundWithMeasure(rowData.Y_COG)}}</div>
+                  <div class="mr-5 y-label">{{round(rowData.Y_COG)}}</div>
                 </div>
                 <div  class="w-30">
-                  <div class="z-label">{{roundWithMeasure(rowData.Z_COG)}}</div>
+                  <div class="z-label">{{round(rowData.Z_COG)}}</div>
                 </div>
               </div>
             </td>
