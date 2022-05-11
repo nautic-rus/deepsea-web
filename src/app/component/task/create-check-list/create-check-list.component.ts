@@ -48,7 +48,8 @@ export class CreateCheckListComponent implements OnInit {
   }
 
   commit() {
-    this.issue.checks = _.sortBy(this.issueChecks, x => x.check_group);
+    //this.issue.checks = _.sortBy(this.issueChecks, x => x.check_group);
+    this.issue.checks = [...this.issueChecks];
     this.ref.close('save');
   }
 
