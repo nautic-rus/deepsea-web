@@ -5,4 +5,6 @@ export class IssueCheck {
   user: string = '';
   check_date: number = 0;
   check_status: number = 0;
+  id: number = 0;
+  sort: number = 0;
 }

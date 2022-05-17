@@ -39,6 +39,8 @@ export class CreateCheckListComponent implements OnInit {
       });
       if (this.checkTemplates.length > 0){
         this.selectedTemplates = this.checkTemplates.map(x => x.values);
+        this.selectedTemplates.forEach(t => t.values = _.sortBy(t.values, x => x.sort));
+        this.selectedTemplates = _.sortBy(this.selectedTemplates, x => x.id);
       }
     });
   }
@@ -48,7 +50,7 @@ export class CreateCheckListComponent implements OnInit {
   }
 
   commit() {
-    //this.issue.checks = _.sortBy(this.issueChecks, x => x.check_group);
+    //this.issue.checks = _.sortBy(this.issueChecks, x => x.id.toString() + '-' + x.sort.toString());
     this.issue.checks = [...this.issueChecks];
     this.ref.close('save');
   }
@@ -89,11 +91,13 @@ export class CreateCheckListComponent implements OnInit {
   }
 
   importTemplate() {
-    this.selectedTemplates.forEach(checkTemplates => {
+    _.sortBy(this.selectedTemplates, x => x.id + '-' + x.sort).forEach(checkTemplates => {
       checkTemplates.forEach((checkTemplate: any) => {
         let check = new IssueCheck();
         check.check_description = checkTemplate.check_description;
         check.check_group = checkTemplate.check_group;
+        check.id = checkTemplate.id;
+        check.sort = checkTemplate.sort;
         // if (this.issueChecks.length > 0){
         //   check.check_group = this.issueChecks[this.issueChecks.length - 1].check_group;
         // }

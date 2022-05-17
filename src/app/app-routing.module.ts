@@ -28,6 +28,7 @@ import {BillingComponent} from "./component/billing/billing.component";
 import {WeightComponent} from "./component/weight/weight.component";
 import {FileExplorerComponent} from "./component/file-explorer/file-explorer.component";
 import {BsTreeNodesComponent} from "./component/tools/bs-tree-nodes/bs-tree-nodes.component";
+import {WeightControlComponent} from "./component/weight-control/weight-control.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -57,6 +58,7 @@ const routes: Routes = [
   // { path: 'weight', component: WeightComponent, canActivate: [AuthGuard], data: {animation: 'WeightComponent'} },
   { path: 'weight', component: BsTreeNodesComponent, canActivate: [AuthGuard], data: {animation: 'BsTreeNodesComponent'} },
   { path: 'files', component: FileExplorerComponent, canActivate: [AuthGuard], data: {animation: 'FileExplorerComponent'} },
+  { path: 'weight-control', component: WeightControlComponent, canActivate: [AuthGuard], data: {animation: 'WeightControlComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 

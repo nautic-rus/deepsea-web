@@ -1,0 +1,153 @@
+<div class="all-page-weight">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="empty-card-bottom"></div>
+    <div class="tile">
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <button pButton pRipple label="ДОБАВИТЬ СТРОКУ" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+        </ng-template>
+        <div>
+          ОБЩАЯ МАСА: {{totalWeight}}
+        </div>
+        <div>
+          ОБЩИЙ ЦЕНТР ТЯЖЕСТИ:
+          X: {{totalX}}
+          Y: {{totalY}}
+          Z: {{totalZ}}
+        </div>
+      </p-toolbar>
+      <p-table #dt [value]="controls"  responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3em; text-align: center" rowspan="2">№ п/п</th>
+            <th style="text-align: center" rowspan="2">Чертёж</th>
+            <th style="text-align: center" rowspan="2">Помещение</th>
+            <th style="text-align: center" rowspan="2">Установка/демонтаж</th>
+            <th style="text-align: center" rowspan="2">Масса, КГ</th>
+            <th style="text-align: center" rowspan="1" colspan="3">Координаты М:</th>
+            <th style="text-align: center" rowspan="1" colspan="3">Момент, КГ*М:</th>
+            <th style="text-align: center" rowspan="2">ФИО</th>
+            <th style="text-align: center" rowspan="2">Дата</th>
+          </tr>
+          <tr>
+            <th style="text-align: center">X</th>
+            <th style="text-align: center">Y</th>
+            <th style="text-align: center">Z</th>
+            <th style="text-align: center">Mx</th>
+            <th style="text-align: center">My</th>
+            <th style="text-align: center">Mz</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-control let-i="rowIndex">
+          <tr style="font-size: small">
+            <td>{{i + 1}}</td>
+            <td>{{control.docNumber + ' - ' + control.docName}}</td>
+            <td>{{control.zoneNumber + ' - ' + control.zoneName}}</td>
+            <td>{{control.mount == 0 ? 'Установка' : 'Демонтаж'}}</td>
+            <td>{{control.weight}}</td>
+            <td>{{control.x}}</td>
+            <td>{{control.y}}</td>
+            <td>{{control.z}}</td>
+            <td>{{control.x * control.weight}}</td>
+            <td>{{control.y * control.weight}}</td>
+            <td>{{control.z * control.weight}}</td>
+            <td>{{auth.getUserName(control.user)}}</td>
+            <td>{{getDate(control.date)}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="addNew" header="Добавить новую строку" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="mt-1">
+      <div>Чертёж</div>
+      <p-dropdown appendTo="body" [options]="drawings" [(ngModel)]="selectedDrawing" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите чертёж">
+        <ng-template pTemplate="selectedItem">
+          <div class="country-item country-item-value" *ngIf="selectedDrawing">
+            <div>{{selectedDrawing.number + ' - ' + selectedDrawing.name}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-drawing pTemplate="item">
+          <div class="drawing-item">
+            <div>{{drawing.number + ' - ' + drawing.name}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="mt-1">
+      <div>Помещение</div>
+      <p-dropdown appendTo="body" [options]="zones" [(ngModel)]="selectedZone" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите чертёж">
+        <ng-template pTemplate="selectedItem">
+          <div class="country-item country-item-value" *ngIf="selectedZone">
+            <div>{{selectedZone.number + ' - ' + selectedZone.name}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-drawing pTemplate="item">
+          <div class="drawing-item">
+            <div>{{drawing.number + ' - ' + drawing.name}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+
+    <div class="mt-1">
+      <label>Установка/демонтаж</label>
+      <div>
+        <label>
+          <p-radioButton id="mount" value="0" [(ngModel)]="newControl.mount"></p-radioButton> Установка
+        </label>
+      </div>
+      <div>
+        <label>
+          <p-radioButton value="1" [(ngModel)]="newControl.mount"></p-radioButton> Демонтаж
+        </label>
+
+
+      </div>
+    </div>
+    <div class="mt-1">
+      <label for="weight">Вес, <span class="red-text">КИЛОГРАММЫ</span></label>
+      <p-inputNumber [useGrouping]="false" mode="decimal" id="weight" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.weight"></p-inputNumber>
+      <small class="p-error" *ngIf="!newControl.weight"></small>
+    </div>
+    <div class="mt-1">
+      <label class="mb-3">Координаты, <span class="red-text">МЕТРЫ</span></label>
+      <div>
+        <label>
+          <p-radioButton id="right" value="0" [(ngModel)]="newControl.side" (ngModelChange)="checkSideChange()"></p-radioButton> Правый борт
+        </label>
+      </div>
+      <div>
+        <label>
+          <p-radioButton id="left" value="1" [(ngModel)]="newControl.side" (ngModelChange)="checkSideChange()"></p-radioButton> Левый борт
+        </label>
+      </div>
+      <div class="df">
+        <div class="mx-5">
+          <label for="x">X</label>
+          <p-inputNumber [useGrouping]="false" mode="decimal" id="x" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.x"></p-inputNumber>
+          <small class="p-error" *ngIf="!newControl.x"></small>
+        </div>
+        <div class="mx-5">
+          <label for="y">Y</label>
+          <p-inputNumber [useGrouping]="false" mode="decimal" id="y" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.y"></p-inputNumber>
+          <small class="p-error" *ngIf="!newControl.y"></small>
+        </div>
+        <div class="mx-5">
+          <label for="z">Z</label>
+          <p-inputNumber [useGrouping]="false" mode="decimal" id="z" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.z"></p-inputNumber>
+          <small class="p-error" *ngIf="!newControl.z"></small>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="ОТМЕНА" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>
+    <button [disabled]="isSaveDisabled()" pButton pRipple label="СОХРАНИТЬ" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+  </ng-template>
+</p-dialog>

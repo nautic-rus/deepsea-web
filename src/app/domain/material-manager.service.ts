@@ -26,4 +26,16 @@ export class MaterialManagerService {
   async updateMaterial(material: Material, user: string, remove = 0) {
     return await this.http.get<string>(props.http + '/updateMaterial', {params: {material: JSON.stringify(material), user, remove}}).toPromise();
   }
+  async getWeightControl() {
+    return await this.http.get<any[]>(props.http + '/weightControl').toPromise();
+  }
+  async setWeightControl(control: any) {
+    return await this.http.post<string>(props.http + '/setWeightControl', JSON.stringify(control)).toPromise();
+  }
+  async getWCDrawings() {
+    return await this.http.get<any[]>(props.http + '/wcDrawings').toPromise();
+  }
+  async getWCZones() {
+    return await this.http.get<any[]>(props.http + '/wcZones').toPromise();
+  }
 }
