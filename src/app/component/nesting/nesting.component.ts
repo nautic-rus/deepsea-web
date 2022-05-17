@@ -988,7 +988,7 @@ export class NestingComponent implements OnInit {
   }
 
   insertLock(nest: any) {
-    this.s.insertNestLock(this.project, nest.ID, this.auth.getUser().login).then(() => {
+    this.s.insertNestLock(this.project, nest.NESTID, this.auth.getUser().login).then(() => {
       nest.isLock = !nest.isLock;
       nest.lockInfo.user = this.auth.getUser().login;
       nest.lockInfo.date = new Date().getTime();
