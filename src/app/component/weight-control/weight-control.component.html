@@ -5,7 +5,12 @@
     <div class="tile">
       <p-toolbar styleClass="mb-4">
         <ng-template pTemplate="left">
-          <button pButton pRipple label="ДОБАВИТЬ СТРОКУ" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+          <div class="mr-2">
+            <button pButton pRipple label="ВЫГРУЗИТЬ В EXCEL" class="p-button-help mr-2" (click)="exportExcel()"></button>
+          </div>
+          <div>
+            <button pButton pRipple label="ДОБАВИТЬ СТРОКУ" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+          </div>
         </ng-template>
         <div>
           ОБЩАЯ МАСА: {{totalWeight}}
@@ -98,12 +103,12 @@
       <label>Установка/демонтаж</label>
       <div>
         <label>
-          <p-radioButton id="mount" value="0" [(ngModel)]="newControl.mount"></p-radioButton> Установка
+          <p-radioButton id="mount" value="0" [(ngModel)]="newControl.mount" (ngModelChange)="checkMountChange()"></p-radioButton> Установка
         </label>
       </div>
       <div>
         <label>
-          <p-radioButton value="1" [(ngModel)]="newControl.mount"></p-radioButton> Демонтаж
+          <p-radioButton value="1" [(ngModel)]="newControl.mount" (ngModelChange)="checkMountChange()"></p-radioButton> Демонтаж
         </label>
 
 

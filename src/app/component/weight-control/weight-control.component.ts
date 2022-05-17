@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MaterialManagerService} from "../../domain/material-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-weight-control',
@@ -82,6 +83,9 @@ export class WeightControlComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   save() {
+    this.checkMountChange();
+    this.checkSideChange();
+
     this.newControl.docNumber = this.selectedDrawing.number;
     this.newControl.docName = this.selectedDrawing.name;
 
@@ -107,14 +111,37 @@ export class WeightControlComponent implements OnInit {
 
   checkSideChange() {
     let left = this.newControl.side == 1;
-    if (left && this.newControl.x > 0 || !left && this.newControl.x < 0){
-      this.newControl.x *= -1;
-    }
+    // if (left && this.newControl.x > 0 || !left && this.newControl.x < 0){
+    //   this.newControl.x *= -1;
+    // }
     if (left && this.newControl.y > 0 || !left && this.newControl.y < 0){
       this.newControl.y *= -1;
     }
-    if (left && this.newControl.z > 0 || !left && this.newControl.z < 0){
-      this.newControl.z *= -1;
+    // if (left && this.newControl.z > 0 || !left && this.newControl.z < 0){
+    //   this.newControl.z *= -1;
+    // }
+  }
+
+  checkMountChange() {
+    if (this.newControl.weight < 0 && this.newControl.mount == 0 || this.newControl.weight > 0 && this.newControl.mount == 1){
+      this.newControl.weight *= -1;
     }
+  }
+
+  exportExcel() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.controls);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
+  }
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
   }
 }
