@@ -13,6 +13,9 @@ import {MaterialNode} from "../../domain/classes/material-node";
 import {NodeLib} from "three/examples/jsm/nodes/core/NodeLib";
 import nodes = NodeLib.nodes;
 import {$e} from "@angular/compiler/src/chars";
+import {ClearFilesComponent} from "../documents/hull-esp/clear-files/clear-files.component";
+import {RemoveConfirmationComponent} from "./remove-confirmation/remove-confirmation.component";
+import {ContextMenu} from "primeng/contextmenu";
 
 @Component({
   selector: 'app-materials',
@@ -626,6 +629,9 @@ export class MaterialsComponent implements OnInit {
       command: (event: any) => this.createNode(event.item)
     },
   ];
+  addNew = false;
+  newNode: any = {};
+
 
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -641,8 +647,15 @@ export class MaterialsComponent implements OnInit {
       });
     });
   }
-  createNode(root: string){
-    console.log(this.selectedNode);
+  createNode(node: any){
+    this.addNew = true;
+    this.newNode = {};
+    this.newNode.data = node.data + '###';
+    this.newNode.label = node.label;
+    this.newNode.check = node.data;
+    this.newNode.checkChildren = node.children.map((x: any) => x.data);
+
+    console.log(this.newNode);
   }
   getNodes(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
     let res: any[] = [];
@@ -747,16 +760,23 @@ export class MaterialsComponent implements OnInit {
   }
 
   deleteMaterial(selectedMaterial: Material) {
-    this.materialManager.updateMaterial(selectedMaterial, this.auth.getUser().login, 1).then(res => {
-      let findMaterial = this.materialsSrc.find(x => x == selectedMaterial);
-      if (findMaterial != null){
-        this.materialsSrc.splice(this.materialsSrc.indexOf(findMaterial), 1);
+    this.dialogService.open(RemoveConfirmationComponent, {
+      showHeader: false,
+      modal: true,
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.materialManager.updateMaterial(selectedMaterial, this.auth.getUser().login, 1).then(res => {
+          let findMaterial = this.materialsSrc.find(x => x == selectedMaterial);
+          if (findMaterial != null){
+            this.materialsSrc.splice(this.materialsSrc.indexOf(findMaterial), 1);
+          }
+          this.materials = [...this.materialsSrc];
+          this.materialManager.getMaterialNodes().then(res => {
+            this.nodes = this.getNodes(res, this.materialsSrc);
+            this.setParents(this.nodes, '');
+          });
+        });
       }
-      this.materials = [...this.materialsSrc];
-      this.materialManager.getMaterialNodes().then(res => {
-        this.nodes = this.getNodes(res, this.materialsSrc);
-        this.setParents(this.nodes, '');
-      });
     });
   }
 
@@ -764,5 +784,69 @@ export class MaterialsComponent implements OnInit {
     let newMaterial = JSON.parse(JSON.stringify(material));
     newMaterial.id = Material.generateId();
     this.addMaterial('clone', newMaterial);
+  }
+
+  contextMenu(event: any, contextMenu: ContextMenu) {
+    if (event.node.data.length >= 12){
+      this.items = [
+        this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
+          label: 'Remove',
+          icon: 'pi pi-fw pi-trash',
+          command: () => this.alertNodeContains()
+        } : {
+          label: 'Remove',
+          icon: 'pi pi-fw pi-trash',
+          command: () => this.removeNode(event.node)
+        }
+      ];
+    }
+    this.items = [
+      {
+        label: 'New Folder',
+        icon: 'pi pi-fw pi-plus',
+        command: () => this.createNode(event.node)
+      },
+      this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
+        label: 'Remove',
+        icon: 'pi pi-fw pi-trash',
+        command: (event: any) => this.alertNodeContains()
+      } : {
+        label: 'Remove',
+        icon: 'pi pi-fw pi-trash',
+        command: () => this.removeNode(event.node)
+      }
+    ];
+  }
+
+  hide() {
+    this.newNode = {};
+    this.addNew = false;
+  }
+
+  isSaveDisabled() {
+    return (this.newNode.data.length != (this.newNode.check.length + 3)) || this.newNode.checkChildren.includes(this.newNode.data) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNode.data)) || this.newNode.data.includes('#');
+  }
+
+  save() {
+    this.materialManager.updateMaterialNode(this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
+      this.materialManager.getMaterialNodes().then(res => {
+        this.nodes = this.getNodes(res, this.materialsSrc, '');
+        this.setParents(this.nodes, '');
+        this.hide();
+      });
+    });
+  }
+
+  removeNode(node: any) {
+    this.materialManager.updateMaterialNode(node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
+      this.materialManager.getMaterialNodes().then(res => {
+        this.nodes = this.getNodes(res, this.materialsSrc, '');
+        this.setParents(this.nodes, '');
+      });
+    });
+  }
+
+  alertNodeContains(){
+    this.messageService.add({key:'task', severity:'error', summary:'Folder is not empty', detail:'Cant delete non empty folder'});
   }
 }

@@ -28,6 +28,7 @@
             <th style="width: 3em; text-align: center" rowspan="2">№ п/п</th>
             <th style="text-align: center" rowspan="2">Чертёж</th>
             <th style="text-align: center" rowspan="2">Помещение</th>
+            <th style="text-align: center" rowspan="2">Перемещаемый элемент</th>
             <th style="text-align: center" rowspan="2">Установка/демонтаж</th>
             <th style="text-align: center" rowspan="2">Масса, КГ</th>
             <th style="text-align: center" rowspan="1" colspan="3">Координаты М:</th>
@@ -49,6 +50,7 @@
             <td>{{i + 1}}</td>
             <td>{{control.docNumber + ' - ' + control.docName}}</td>
             <td>{{control.zoneNumber + ' - ' + control.zoneName}}</td>
+            <td>{{control.moveElement}}</td>
             <td>{{control.mount == 0 ? 'Установка' : 'Демонтаж'}}</td>
             <td>{{control.weight}}</td>
             <td>{{control.x}}</td>
@@ -85,7 +87,7 @@
     </div>
     <div class="mt-1">
       <div>Помещение</div>
-      <p-dropdown appendTo="body" [options]="zones" [(ngModel)]="selectedZone" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите чертёж">
+      <p-dropdown appendTo="body" [options]="zones" [(ngModel)]="selectedZone" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите помещение">
         <ng-template pTemplate="selectedItem">
           <div class="country-item country-item-value" *ngIf="selectedZone">
             <div>{{selectedZone.number + ' - ' + selectedZone.name}}</div>
@@ -97,6 +99,14 @@
           </div>
         </ng-template>
       </p-dropdown>
+    </div>
+
+    <div class="mx-5">
+      <label>
+        Перемещаемый элемент
+        <input type="text" pInputText [(ngModel)]="newControl.moveElement"/>
+      </label>
+      <small class="p-error" *ngIf="!newControl.moveElement"></small>
     </div>
 
     <div class="mt-1">

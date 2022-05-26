@@ -112,6 +112,7 @@ import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
 import { WeightControlComponent } from './component/weight-control/weight-control.component';
 import {ToolbarModule} from "primeng/toolbar";
 import {RadioButtonModule} from "primeng/radiobutton";
+import { RemoveConfirmationComponent } from './component/materials/remove-confirmation/remove-confirmation.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -180,6 +181,7 @@ Quill.register('modules/imageResize', ImageResize);
     VacantWastageComponent,
     BsTreeNodesComponent,
     WeightControlComponent,
+    RemoveConfirmationComponent,
   ],
   imports: [
     BrowserModule,

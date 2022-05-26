@@ -23,6 +23,9 @@ export class MaterialManagerService {
   async getMaterialNodes() {
     return await this.http.get<MaterialNode[]>(props.http + '/materialNodes').toPromise();
   }
+  async updateMaterialNode(data: string, label: string, user: string, remove: number) {
+    return await this.http.get<MaterialNode[]>(props.http + '/updateMaterialNode', {params: {data, label, user, remove}}).toPromise();
+  }
   async updateMaterial(material: Material, user: string, remove = 0) {
     return await this.http.get<string>(props.http + '/updateMaterial', {params: {material: JSON.stringify(material), user, remove}}).toPromise();
   }

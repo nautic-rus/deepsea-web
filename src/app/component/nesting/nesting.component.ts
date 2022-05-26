@@ -140,21 +140,23 @@ export class NestingComponent implements OnInit {
           });
           this.nestingSource = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
 
-          console.log(this.nestingSource);
-
-          let blocks: string[] = [];
-          this.blocks.splice(0, this.blocks.length);
-          this.nestingSource.forEach((n: any) => {
-            if (!blocks.includes(n.BLOCKS)){
-              blocks.push(n.BLOCKS);
-            }
-          });
-          _.sortBy(blocks, x => x).forEach(block => {
-            this.blocks.push({
-              name: block,
-              selected: false
+          if (this.blocks.length == 0){
+            let blocks: string[] = [];
+            this.blocks.splice(0, this.blocks.length);
+            this.nestingSource.forEach((n: any) => {
+              if (!blocks.includes(n.BLOCKS)){
+                blocks.push(n.BLOCKS);
+              }
             });
-          });
+            _.sortBy(blocks, x => x).forEach(block => {
+              this.blocks.push({
+                name: block,
+                selected: false
+              });
+            });
+          }
+
+
 
           this.loadingBlocks = false;
           this.loadingMaterials = false;

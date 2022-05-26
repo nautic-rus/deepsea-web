@@ -43,7 +43,7 @@
       <div class="w-100 df">
         <div class="w-15">
           <div class="menu-card">
-            <p-tree class="tree" [contextMenu]="nodeMenu" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
+            <p-tree class="tree" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu)" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>
@@ -110,7 +110,7 @@
                       <div class="trm-materials">
                         <span>{{material.code}}</span>
                       </div>
-                      <div (click)="copyTrmCode('NRDDF5466D58014E2', 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
+                      <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
                         <img src="assets/icons/trm-sup.svg" height="14">
                         <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>
                       </div>
@@ -127,3 +127,25 @@
 </div>
 <p-toast position="bottom-center"></p-toast>
 <p-contextMenu #nodeMenu [model]="items"></p-contextMenu>
+<p-dialog [(visible)]="addNew" header="Добавить новую папку" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="mx-5">
+      <label>
+        Код
+        <input type="text" pInputText [(ngModel)]="newNode.data"/>
+      </label>
+      <small class="p-error" *ngIf="!newNode.data"></small>
+    </div>
+    <div class="mx-5">
+      <label>
+        Название
+        <input type="text" pInputText [(ngModel)]="newNode.label"/>
+      </label>
+      <small class="p-error" *ngIf="!newNode.label"></small>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="ОТМЕНА" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>
+    <button [disabled]="isSaveDisabled()" pButton pRipple label="СОХРАНИТЬ" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+  </ng-template>
+</p-dialog>
