@@ -35,7 +35,7 @@
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search"  class="border" />
+        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (input)="table.filterGlobal(search, 'contains')"  class="border" />
       </span>
 
     </div>
@@ -63,7 +63,7 @@
                      [reorderableColumns]="false"
                      [resizableColumns]="false"
                      styleClass="p-datatable-striped"
-                     [globalFilterFields]="['id','doc_number','name','status']">
+                     [globalFilterFields]="['name','description','singleWeight','provider','note','code']">
               <ng-template pTemplate="header">
                 <tr class="df">
                   <th pSortableColumn="name" class="cxy min-width-220 w-27">{{t.tr('Наименование')}}

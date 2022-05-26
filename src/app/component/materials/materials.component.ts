@@ -760,6 +760,7 @@ export class MaterialsComponent implements OnInit {
   }
 
   deleteMaterial(selectedMaterial: Material) {
+    let selected = this.selectedNode.data;
     this.dialogService.open(RemoveConfirmationComponent, {
       showHeader: false,
       modal: true,
@@ -771,15 +772,23 @@ export class MaterialsComponent implements OnInit {
             this.materialsSrc.splice(this.materialsSrc.indexOf(findMaterial), 1);
           }
           this.materials = [...this.materialsSrc];
-          this.materialManager.getMaterialNodes().then(res => {
-            this.nodes = this.getNodes(res, this.materialsSrc);
-            this.setParents(this.nodes, '');
-          });
+          this.refreshNodes(this.nodes, this.materials, '');
+          this.selectNode();
+          // this.materialManager.getMaterialNodes().then(res => {
+          //   this.nodes = this.getNodes(res, this.materialsSrc);
+          //   this.setParents(this.nodes, '');
+          //   this.selectPathNode(selected, this.nodes);
+          // });
         });
       }
     });
   }
-
+  refreshNodes(rootNodes: any[], materials: Material[], parent: string = ''){
+    rootNodes.filter(x => x.data.length == parent.length + 3 && x.data.startsWith(parent)).forEach(n => {
+      n.count = materials.filter(x => x.code.startsWith(n.data)).length;
+      this.refreshNodes(n.children, materials, n.data);
+    });
+  }
   cloneMaterial(material: Material) {
     let newMaterial = JSON.parse(JSON.stringify(material));
     newMaterial.id = Material.generateId();
