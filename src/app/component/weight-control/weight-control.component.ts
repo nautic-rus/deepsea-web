@@ -62,6 +62,7 @@ export class WeightControlComponent implements OnInit {
     this.newControl = {};
     this.selectedZone = {};
     this.selectedDrawing = {};
+    this.newControl.moveElement = '';
     this.newControl.mount = 0;
     this.newControl.side = 0;
     this.newControl.weight = 1;
