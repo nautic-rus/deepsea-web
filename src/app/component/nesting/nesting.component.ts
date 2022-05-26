@@ -140,21 +140,23 @@ export class NestingComponent implements OnInit {
           });
           this.nestingSource = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
 
-          console.log(this.nestingSource);
-
-          let blocks: string[] = [];
-          this.blocks.splice(0, this.blocks.length);
-          this.nestingSource.forEach((n: any) => {
-            if (!blocks.includes(n.BLOCKS)){
-              blocks.push(n.BLOCKS);
-            }
-          });
-          _.sortBy(blocks, x => x).forEach(block => {
-            this.blocks.push({
-              name: block,
-              selected: false
+          if (this.blocks.length == 0){
+            let blocks: string[] = [];
+            this.blocks.splice(0, this.blocks.length);
+            this.nestingSource.forEach((n: any) => {
+              if (!blocks.includes(n.BLOCKS)){
+                blocks.push(n.BLOCKS);
+              }
             });
-          });
+            _.sortBy(blocks, x => x).forEach(block => {
+              this.blocks.push({
+                name: block,
+                selected: false
+              });
+            });
+          }
+
+
 
           this.loadingBlocks = false;
           this.loadingMaterials = false;
@@ -988,7 +990,7 @@ export class NestingComponent implements OnInit {
   }
 
   insertLock(nest: any) {
-    this.s.insertNestLock(this.project, nest.ID, this.auth.getUser().login).then(() => {
+    this.s.insertNestLock(this.project, nest.NESTID, this.auth.getUser().login).then(() => {
       nest.isLock = !nest.isLock;
       nest.lockInfo.user = this.auth.getUser().login;
       nest.lockInfo.date = new Date().getTime();

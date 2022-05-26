@@ -791,7 +791,7 @@ export class TaskComponent implements OnInit {
 
   fillGroupedChecks() {
     this.groupedChecks.splice(0, this.groupedChecks.length);
-    _.forEach(_.groupBy(this.issue.checks, x => x.check_group), x => {
+    _.forEach(_.groupBy(_.sortBy(this.issue.checks, c => c.id + '-' + c.sort), x => x.check_group), x => {
       this.groupedChecks.push(x);
     });
   }

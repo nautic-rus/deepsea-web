@@ -65,6 +65,7 @@ export class BsTreeNodesComponent implements OnInit {
         this.systems = res;
       });
       this.s.getBsDesignNodes(this.project).then(res => {
+        console.log(res);
         this.exportableData = res;
         this.summ = 0;
         let nodes: TreeNode[] = [];
@@ -74,6 +75,7 @@ export class BsTreeNodesComponent implements OnInit {
         let blocks: string[] = [];
         this.bsDesignNodesSource = res.map(x => Object({data: x, children: []}));
         this.bsDesignNodesSource.forEach(x => {
+          x.data.Y_COG *= -1;
           let dna: string = x.data.DNA.toString();
           let r = new RegExp('(U\\d{1,4}|BS\\d{1,3}|F\\d{4}|VNT\\d{1,2}|(?<=OUTFITTING\\/)[^\\/]+)');
           if (r.test(dna)){
@@ -401,6 +403,32 @@ export class BsTreeNodesComponent implements OnInit {
   }
 
   exportExcel() {
+    this.exportableData.forEach(x => {
+      let dna: string = x.DNA.toString();
+      let r = new RegExp('(U\\d{1,4}|BS\\d{1,3}|F\\d{4}|VNT\\d{1,2}|(?<=OUTFITTING\\/)[^\\/]+)');
+      if (r.test(dna)){
+        // @ts-ignore
+        x.PATH = r.exec(dna)[0];
+      }
+      else{
+        let r = new RegExp('(?<=BULK\\sHEADS\\/)[^\\/]+');
+        if (r.test(dna)){
+          // @ts-ignore
+          let split = r.exec(dna)[0].split('-');
+          if (split.length > 0){
+            x.PATH = split[1];
+          }
+        }
+
+        if (x.PATH == null || x.PATH == ''){
+          x.PATH = 'UNDEFINED';
+        }
+      }
+      if ([45, 37, 39, 32, 41, 44, 20, 48, 49, 35, 22, 21, 33, 34, 36, 38, 31].includes(x.ATOM_TYPE)){
+        x.ATOM_TYPE = 100;
+        x.ATOM_NAME = 'Hull';
+      }
+    });
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.exportableData);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
