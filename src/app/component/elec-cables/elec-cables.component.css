@@ -177,6 +177,40 @@
   z-index: 1;
   box-shadow: 3px 0px 7px -4px rgba(34, 60, 80, 0.37);
 }
+.dash-card-cable{
+  padding: 10px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  width: 427px;
+  height: 310px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  transition: 0.5s;
+  display: grid;
+  grid-template-rows: 30px 290px;
+  z-index: 1;
+}
+.task-button-close{
+  width: 25px;
+  height: 25px;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.cables{
+  overflow: auto;
+  height: 260px;
+  padding-right: 10px;
+}
 .hidden-card{
   opacity: 0;
   height: 0 !important;

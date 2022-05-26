@@ -26,6 +26,9 @@ export class ElecCablesComponent implements OnInit {
   noResult = false;
   tooltips: string[] = [];
   search: string = '';
+  cableEqips: string[] = [];
+  cableEqip: string = '';
+  cableEqipsRoutes: any[] = [];
 
   constructor(public device: DeviceDetectorService, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, private s: SpecManagerService) { }
 
@@ -70,6 +73,7 @@ export class ElecCablesComponent implements OnInit {
       this.loading = false;
       this.cablesSource = this.cables;
     });
+    this.cableEqipsRoutes.splice(0, this.cableEqipsRoutes.length);
   }
 
   changeView() {
@@ -161,5 +165,35 @@ export class ElecCablesComponent implements OnInit {
       this.cables.push(null);
       this.cablesSource.push(null);
     }
+  }
+  isCableEqip(index: number){
+    return this.cableEqips.includes(index.toString());
+  }
+  toggleCableEqip(index: number, cable: string = ''){
+    this.cableEqip = cable;
+    if (this.cableEqipsRoutes.find(x => x.index == index) == null){
+      this.cables.filter(x => x).forEach(c => {
+        if (c.FROM_E_USERID == cable || c.TO_E_USERID == cable){
+          this.cableEqipsRoutes.push({
+            index: index,
+            cable: cable,
+            from: c.CODE,
+            to: c.TO_E_USERID == cable ? c.FROM_E_USERID : c.TO_E_USERID,
+            fromRoom: c.FROM_E_ROOM,
+            toRoom: c.TO_E_ROOM,
+          });
+        }
+      });
+    }
+    if (this.cableEqips.includes(index.toString())){
+      this.cableEqips.splice(this.cableEqips.indexOf(index.toString()), 1);
+    }
+    else{
+      this.cableEqips.push(index.toString());
+    }
+  }
+
+  getCableEqipRoutes(i: number) {
+    return this.cableEqipsRoutes.filter(x => x.index == i);
   }
 }
