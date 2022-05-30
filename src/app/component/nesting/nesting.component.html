@@ -158,11 +158,11 @@
                       <span class="text-gray-mini">{{'(' + round(nest.GROSSWEIGHT) + 'kg)'}}</span>
                     </div>
                   </div>
-                  <div>
+                  <div class="p-ml-auto">
                     <div class="qty-text">
                       <div class="kpl-flag cxy">
-                        <span class="pr-5">QTY</span>
-                        <span>{{nest.NUMEQNEST}}</span>
+                        <span class="pr-5">KPL</span>
+                        <span>{{nest.KPL}}</span>
                       </div>
                     </div>
                   </div>
@@ -171,9 +171,17 @@
                   <div class="text-parent-plate pl-15">{{nest.PARENTID}}</div>
                   <div>
                     <span class="usage-left-text pr-5">Block:</span>
-                    <span class="text-mini-gray pr-20">{{nest.BLOCKS}}</span>
+                    <span class="text-mini-gray pr-5">{{nest.BLOCKS}}</span>
                     <span class="usage-left-text pr-5">Parts weight:</span>
-                    <span class="text-mini-gray pr-20">{{round(nest.PARTSWEIGHT, 1) + 'kg'}}</span>
+                    <span class="text-mini-gray">{{round(nest.PARTSWEIGHT, 1) + 'kg'}}</span>
+                  </div>
+                  <div>
+                    <div class="qty-text">
+                      <div class="qty-flag cxy">
+                        <span class="pr-2">QTY</span>
+                        <span>{{nest.NUMEQNEST}}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="three-row">
