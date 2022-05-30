@@ -1,6 +1,9 @@
 .p-input-icon-left > .p-inputtext {
   padding-left: 2.5rem!important;
 }
+/deep/.p-datatable-resizable .p-datatable-tbody>tr>td{
+  white-space: break-spaces!important;
+}
 .top-menu{
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;

@@ -303,7 +303,7 @@ export class LanguageService {
           case 'ВЕС': return 'WEIGHT';
           case 'Вес кг': return 'weight kg';
           case 'Не согласован': return 'Not approved';
-          case '': return '';
+          case 'Вы собираетесь навсегда удалить эту задачу, а также связанные с ней комментарии, данные и вложения.': return 'You are going to permanently delete this task, as well as related comments, data, and attachments.';
           case '': return '';
           case '': return '';
           case '': return '';
