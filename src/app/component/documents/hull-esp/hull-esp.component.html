@@ -770,6 +770,7 @@
               <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
               <td class="w-15 text-14">
                 {{part.NESTING}}
+                {{part.QTY != 0 ? ('(' + part.QTY + ')') : ''}}
 <!--                {{part.NEST_ID}}-->
                 <button *ngIf="!isDisabledNest(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNesting(part); $event.stopPropagation()"></button>
               </td>
