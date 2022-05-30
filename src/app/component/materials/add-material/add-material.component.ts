@@ -68,7 +68,7 @@ export class AddMaterialComponent implements OnInit {
       this.messageService.add({severity:'error', summary:'Code Error', detail:'You can only use latin uppercase symbols and numbers in code. Code pattern: 12 uppercase latin symbols and 4 digits.', life: 8000});
       return;
     }
-    if (this.action != 'update' && this.materials.find(x => x.code == this.material.code)){
+    if (this.action != 'edit' && this.materials.find(x => x.code == this.material.code)){
       this.messageService.add({severity:'error', summary:'Code Error', detail:'Material with the same code already exists.', life: 8000});
       return;
     }
