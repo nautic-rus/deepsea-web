@@ -111,7 +111,7 @@ export class TaskComponent implements OnInit {
         }
       }
     }
-
+  dragOver = false;
   checked = false;
   viewers: MenuItem[] = [{
     label: 'File',
@@ -424,6 +424,9 @@ export class TaskComponent implements OnInit {
               this.loaded.push(res);
             });
           }
+          else{
+            this.handleFileInput(event.dataTransfer.files);
+          }
         }
       }
     }
@@ -486,6 +489,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue labor.'});
+        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+          this.issue = issue;
+          this.availableActions = this.getAvailableActions(issue);
+        });
       }
     });
   }
@@ -523,97 +530,105 @@ export class TaskComponent implements OnInit {
   }
 
   changeStatus(value: string) {
-    if (value == 'AssignedTo'){
-      this.assignTask();
-    }
-    else if (value == 'Send to Approval'){
-      if (this.issue.first_local_approval_date != 0){
-        this.dialogService.open(ConfirmAlreadyExistSendToApprovalComponent, {
-          showHeader: false,
-          modal: true,
-          data: this.issue
-        }).onClose.subscribe(res => {
-          if (res == 'yes'){
-            this.issue.status = 'Send to Approval';
-            this.issue.action = 'Send to Approval';
-            this.statusChanged();
-          }
-          else if (res == 'no'){
-            this.askForSendToApproval();
-          }
-        });
+    this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+      if (this.issue.status != issue.status){
+        this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'This task has been already changed before you have made some changes. Please refresh this page and try again.', life: 8000});
+        return;
       }
       else{
-        this.askForSendToApproval();
-      }
-    }
-    else if (value == 'Paused'){
-      this.issue.assigned_to = '';
-      this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
-        this.issue.status = value;
-        this.issue.action = value;
-        this.statusChanged();
-      });
-    }
-    else if (value == 'Delivered' || value == 'New Revision'){
-      this.issue.delivered_date = new Date().getTime();
-      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-        this.issue.revision = '0';
-        this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-          this.issue.status = 'Delivered';
-          this.issue.action = this.issue.status;
-          this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-            this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
-              this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+        if (value == 'AssignedTo'){
+          this.assignTask();
+        }
+        else if (value == 'Send to Approval'){
+          if (this.issue.first_local_approval_date != 0){
+            this.dialogService.open(ConfirmAlreadyExistSendToApprovalComponent, {
+              showHeader: false,
+              modal: true,
+              data: this.issue
+            }).onClose.subscribe(res => {
+              if (res == 'yes'){
+                this.issue.status = 'Send to Approval';
+                this.issue.action = 'Send to Approval';
+                this.statusChanged();
+              }
+              else if (res == 'no'){
+                this.askForSendToApproval();
+              }
+            });
+          }
+          else{
+            this.askForSendToApproval();
+          }
+        }
+        else if (value == 'Paused'){
+          this.issue.assigned_to = '';
+          this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+            this.issue.status = value;
+            this.issue.action = value;
+            this.statusChanged();
+          });
+        }
+        else if (value == 'Delivered' || value == 'New Revision'){
+          this.issue.delivered_date = new Date().getTime();
+          this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+            this.issue.revision = '0';
+            this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+              this.issue.status = 'Delivered';
+              this.issue.action = this.issue.status;
+              this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+                this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+                  this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+                });
+              });
             });
           });
-        });
-      });
-      // this.askForSendToCloud();
-    }
-    else if (value == 'Recovery'){
-      this.issue.status = 'New';
-      this.issue.action = 'New';
-      this.statusChanged();
-    }
-    else if (value == 'Send to Yard Approval'){
-      if (this.issue.first_send_date == 0){
-        this.issue.first_send_date = new Date().getTime();
-      }
-      this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
-        this.issue.status = 'Send to Yard Approval';
-        this.issue.action = this.issue.status;
-        this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-          this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
-            this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+          // this.askForSendToCloud();
+        }
+        else if (value == 'Recovery'){
+          this.issue.status = 'New';
+          this.issue.action = 'New';
+          this.statusChanged();
+        }
+        else if (value == 'Send to Yard Approval'){
+          if (this.issue.first_send_date == 0){
+            this.issue.first_send_date = new Date().getTime();
+          }
+          this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+            this.issue.status = 'Send to Yard Approval';
+            this.issue.action = this.issue.status;
+            this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+              this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+                this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
+              });
+            });
           });
-        });
-      });
-      // if (this.issue.first_send_date != 0){
-      //   this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
-      //     showHeader: false,
-      //     modal: true,
-      //     data: this.issue
-      //   }).onClose.subscribe(res => {
-      //     if (res == 'yes'){
-      //       this.issue.status = 'Send to Yard Approval';
-      //       this.issue.action = 'Send to Yard Approval';
-      //       this.statusChanged();
-      //     }
-      //     else if (res == 'no'){
-      //       this.askForSendToYardToApproval();
-      //     }
-      //   });
-      // }
-      // else{
-      //   this.askForSendToYardToApproval();
-      // }
-    }
-    else{
-      this.issue.status = value;
-      this.issue.action = value;
-      this.statusChanged();
-    }
+          // if (this.issue.first_send_date != 0){
+          //   this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
+          //     showHeader: false,
+          //     modal: true,
+          //     data: this.issue
+          //   }).onClose.subscribe(res => {
+          //     if (res == 'yes'){
+          //       this.issue.status = 'Send to Yard Approval';
+          //       this.issue.action = 'Send to Yard Approval';
+          //       this.statusChanged();
+          //     }
+          //     else if (res == 'no'){
+          //       this.askForSendToYardToApproval();
+          //     }
+          //   });
+          // }
+          // else{
+          //   this.askForSendToYardToApproval();
+          // }
+        }
+        else{
+          this.issue.status = value;
+          this.issue.action = value;
+          this.statusChanged();
+        }
+      }
+    });
   }
   askForSendToCloud(){
     this.dialogService.open(SendToCloudComponent, {
@@ -751,6 +766,7 @@ export class TaskComponent implements OnInit {
   createChildIssue() {
     let issue = new Issue();
     issue.parent_id = this.issue.id;
+    issue.project = this.issue.project;
     this.newTask(issue);
   }
 
