@@ -339,7 +339,7 @@
                 <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('N-' + i)" (mouseleave)="hoverPoint('N-' + i)">
                   <div class="df flex-end">
                     <div class="count-from-to mr-10">
-                      <span [innerHTML]="cable.FROM_N | highLight: search"></span>
+                      <span class="pr-3" [innerHTML]="cable.FROM_N | highLight: search"></span>
                     </div>
                   </div>
                   <div class="df">
@@ -360,14 +360,14 @@
                   </div>
                   <div class="df">
                     <div class="count-from-to ml-10">
-                      <span [innerHTML]="cable.TO_N | highLight: search"></span>
+                      <span class="pl-3" [innerHTML]="cable.TO_N | highLight: search"></span>
                     </div>
                   </div>
                 </div>
                 <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('Nroom-' + i)" (mouseleave)="hoverPoint('Nroom-' + i)">
                   <div class="df flex-end">
                     <div class="count-from-to mr-10">
-                      <span [innerHTML]="cable.FROM_N_ROOM | highLight: search"></span>
+                      <span class="pr-3" [innerHTML]="cable.FROM_N_ROOM | highLight: search"></span>
                     </div>
                   </div>
                   <div class="df">
@@ -388,14 +388,14 @@
                   </div>
                   <div class="df">
                     <div class="count-from-to ml-10">
-                      <span [innerHTML]="cable.TO_N_ROOM | highLight: search"></span>
+                      <span class="pl-3" [innerHTML]="cable.TO_N_ROOM | highLight: search"></span>
                     </div>
                   </div>
                 </div>
                 <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('Eroom-' + i)" (mouseleave)="hoverPoint('Eroom-' + i)">
                   <div class="df flex-end">
                     <div class="count-from-to mr-10">
-                      <span [innerHTML]="cable.FROM_E_ROOM | highLight: search"></span>
+                      <span class="pr-3" [innerHTML]="cable.FROM_E_ROOM | highLight: search"></span>
                     </div>
                   </div>
                   <div class="df">
@@ -416,14 +416,14 @@
                   </div>
                   <div class="df">
                     <div class="count-from-to ml-10">
-                      <span [innerHTML]="cable.TO_E_ROOM | highLight: search"></span>
+                      <span class="pl-3" [innerHTML]="cable.TO_E_ROOM | highLight: search"></span>
                     </div>
                   </div>
                 </div>
                 <div class="df hover-row mb-10 pl-8" (mouseenter)="hoverPoint('EuserID-' + i)" (mouseleave)="hoverPoint('EuserID-' + i)">
                   <div class="df flex-end">
                     <div class="count-from-to mr-10" (click)="toggleCableEqip(i, cable.FROM_E_USERID)">
-                      <span [innerHTML]="cable.FROM_E_USERID | highLight: search"></span>
+                      <span class="hover-from-id" [innerHTML]="cable.FROM_E_USERID | highLight: search"></span>
                     </div>
                   </div>
                   <div class="df">
@@ -444,7 +444,7 @@
                   </div>
                   <div class="df" (click)="toggleCableEqip(i, cable.TO_E_USERID)">
                     <div class="count-from-to ml-10">
-                      <span [innerHTML]="cable.TO_E_USERID | highLight: search"></span>
+                      <span class="hover-from-id" [innerHTML]="cable.TO_E_USERID | highLight: search"></span>
                     </div>
                   </div>
                 </div>
