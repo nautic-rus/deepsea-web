@@ -846,6 +846,7 @@ export class NestingComponent implements OnInit {
       this.nesting.push(null);
     }
     this.nesting = [...this.nesting];
+    console.log(this.nesting)
   }
   isSelectedMaterial(n: any){
     if (this.materialsRoot.find(x => x.selected) == null && this.materialsRest.find(x => x.selected) == null){

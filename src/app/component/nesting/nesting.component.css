@@ -115,7 +115,7 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
-  width: 395px;
+  width: 400px;
   height: 150px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -218,7 +218,7 @@
 .one-row{
   height: 25px;
   display: grid;
-  grid-template-columns: 95px 225px auto;
+  grid-template-columns: 95px 214px auto;
 }
 .one-row-tablet{
   height: 25px;
@@ -228,7 +228,7 @@
 .two-row{
   height: 20px;
   display: grid;
-  grid-template-columns: 95px 275px;
+  grid-template-columns: 95px 240px auto;
 }
 .two-row-tablet{
   height: 20px;
@@ -274,13 +274,21 @@
   padding: 1px 3px;
   border-radius: 4px;
   font-weight: 500;
-  font-size: 13px;
-  line-height: 20px;
+  font-size: 10px;
+  color: #fff;
+  background-color: #39B8B6;
+  width: fit-content;
+  min-width: 20px;
+}
+.qty-flag{
+  padding: 1px 3px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 10px;
   color: #fff;
   background-color: #EDC87F;
   width: fit-content;
   min-width: 20px;
-  height: 20px;
 }
 .kpl-flag-tablet{
   padding: 1px 3px;

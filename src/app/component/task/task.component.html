@@ -264,43 +264,42 @@
         <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText [placeholder]="t.tr('Добавить комментарий...')" />
       </div>
       <div [hidden]="!comment">
-        <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
+        <quill-editor [class.file-drag]="dragOver" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event); dragOver = false" id="editor" [(ngModel)]="message">
           <div quill-editor-toolbar>
             <p-header>
-          <span class="ql-formats">
-            <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
-            <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
-            <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
-          </span>
               <span class="ql-formats">
-            <select class="ql-color" tabindex="-1"></select>
-            <select class="ql-background" tabindex="-1"></select>
-          </span>
+                <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+                <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+                <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+              </span>
               <span class="ql-formats">
-            <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
-            <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
-            <select class="ql-align" tabindex="-1">
-              <option selected tabindex="-1"></option>
-              <option value="center" tabindex="-1"></option>
-              <option value="right" tabindex="-1"></option>
-              <option value="justify" tabindex="-1"></option>
-            </select>
-          </span>
+                <select class="ql-color" tabindex="-1"></select>
+                <select class="ql-background" tabindex="-1"></select>
+              </span>
               <span class="ql-formats">
-            <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
-            <button (click)="selectImage.click()">
-              <i class="pi pi-image"></i>
-            </button>
-            <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
-            <button (click)="selectFiles.click()">
-              <i class="pi pi-file"></i>
-            </button>
-            <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
-            <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
-          </span>
+                <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+                <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+                <select class="ql-align" tabindex="-1">
+                  <option selected tabindex="-1"></option>
+                  <option value="center" tabindex="-1"></option>
+                  <option value="right" tabindex="-1"></option>
+                  <option value="justify" tabindex="-1"></option>
+                </select>
+              </span>
               <span class="ql-formats">
-            <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
-          </span>
+                <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+                <button (click)="selectImage.click()">
+                  <i class="pi pi-image"></i>
+                </button>
+                <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+                <button (click)="selectFiles.click()">
+                  <i class="pi pi-file"></i>
+                </button>
+                <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+                <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button></span>
+              <span class="ql-formats">
+                <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+              </span>
             </p-header>
           </div>
         </quill-editor>

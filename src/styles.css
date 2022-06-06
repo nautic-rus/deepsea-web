@@ -684,6 +684,12 @@ body,p{
 .pl-20{
   padding-left: 20px;
 }
+.pr-2{
+  padding-right: 2px;
+}
+.pr-3{
+  padding-right: 3px;
+}
 .pr-5{
   padding-right: 5px;
 }

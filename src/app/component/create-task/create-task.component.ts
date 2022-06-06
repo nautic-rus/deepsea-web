@@ -160,7 +160,7 @@ export class CreateTaskComponent implements OnInit {
     });
     this.issues.getIssueProjects().then(projects => {
       this.taskProjects = projects.filter(x => this.auth.getUser().visible_projects.includes(x));
-      if (this.taskProjects.length > 0) {
+      if (this.taskProjects.length > 0 && this.taskProject == '-') {
         this.taskProject = this.taskProjects[0];
       }
     });
@@ -211,7 +211,9 @@ export class CreateTaskComponent implements OnInit {
       this.taskDocNumber = issue.doc_number;
       this.taskPeriod = issue.period;
       this.parent_id = issue.parent_id;
+      console.log(issue);
     }
+
 
   }
 
@@ -286,6 +288,9 @@ export class CreateTaskComponent implements OnInit {
     issue.parent_id = this.parent_id;
     if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP')){
       issue.doc_number = '';
+    }
+    if (issue.issue_type == 'IT'){
+      issue.department = 'IT';
     }
 
     // @ts-ignore
