@@ -97,8 +97,8 @@
 
 <p-dialog [(visible)]="addNew" header="Добавить новую строку" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
-    <div class="mt-1">
-      <div>Чертёж</div>
+    <div class="">
+      <div class="big-text-create mb-1">Чертёж</div>
       <p-dropdown appendTo="body" [options]="drawings" [(ngModel)]="selectedDrawing" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите чертёж">
         <ng-template pTemplate="selectedItem">
           <div class="country-item country-item-value" *ngIf="selectedDrawing">
@@ -113,7 +113,7 @@
       </p-dropdown>
     </div>
     <div class="mt-1">
-      <div>Помещение</div>
+      <div class="big-text-create mb-1">Помещение</div>
       <p-dropdown appendTo="body" [options]="zones" [(ngModel)]="selectedZone" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите помещение">
         <ng-template pTemplate="selectedItem">
           <div class="country-item country-item-value" *ngIf="selectedZone">
@@ -128,59 +128,64 @@
       </p-dropdown>
     </div>
 
-    <div class="mx-5">
-      <label>
-        Перемещаемый элемент
-        <input type="text" pInputText [(ngModel)]="newControl.moveElement"/>
-      </label>
+    <div class="mt-1">
+      <div class="big-text-create mb-1">Перемещаемый элемент</div>
+      <input type="text" pInputText [(ngModel)]="newControl.moveElement"/>
       <small class="p-error" *ngIf="!newControl.moveElement"></small>
     </div>
 
     <div class="mt-1">
-      <label>Установка/демонтаж</label>
-      <div>
-        <label>
+      <div class="big-text-create mb-10">Установка/демонтаж</div>
+      <div class="df">
+        <div class="w-50">
           <p-radioButton id="mount" value="0" [(ngModel)]="newControl.mount" (ngModelChange)="checkMountChange()"></p-radioButton> Установка
-        </label>
-      </div>
-      <div>
-        <label>
+        </div>
+        <div class="w-50">
           <p-radioButton value="1" [(ngModel)]="newControl.mount" (ngModelChange)="checkMountChange()"></p-radioButton> Демонтаж
-        </label>
-
-
+        </div>
       </div>
+
     </div>
     <div class="mt-1">
-      <label for="weight">Вес, <span class="red-text">КИЛОГРАММЫ</span></label>
+      <div class="mb-1">
+        <label for="weight"><span class="big-text-create pr-5">Вес </span> <span class="red-text">КИЛОГРАММЫ</span></label>
+      </div>
+
       <p-inputNumber [useGrouping]="false" mode="decimal" id="weight" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.weight"></p-inputNumber>
       <small class="p-error" *ngIf="!newControl.weight"></small>
     </div>
     <div class="mt-1">
-      <label class="mb-3">Координаты, <span class="red-text">МЕТРЫ</span></label>
-      <div>
-        <label>
+      <div class="mb-10">
+        <label for="weight"><span class="big-text-create pr-5">Координаты </span> <span class="red-text">МЕТРЫ</span></label>
+      </div>
+      <div class="df mb-10">
+        <div class="w-50">
           <p-radioButton id="right" value="0" [(ngModel)]="newControl.side" (ngModelChange)="checkSideChange()"></p-radioButton> Правый борт
-        </label>
-      </div>
-      <div>
-        <label>
+        </div>
+        <div class="w-50">
           <p-radioButton id="left" value="1" [(ngModel)]="newControl.side" (ngModelChange)="checkSideChange()"></p-radioButton> Левый борт
-        </label>
+        </div>
       </div>
+
       <div class="df">
-        <div class="mx-5">
-          <label for="x">X</label>
+        <div class="mr-5">
+          <label for="x">
+            <div class="text-center-x">X</div>
+          </label>
           <p-inputNumber [useGrouping]="false" mode="decimal" id="x" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.x"></p-inputNumber>
           <small class="p-error" *ngIf="!newControl.x"></small>
         </div>
         <div class="mx-5">
-          <label for="y">Y</label>
+          <label for="y">
+            <div class="text-center-x">Y</div>
+          </label>
           <p-inputNumber [useGrouping]="false" mode="decimal" id="y" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.y"></p-inputNumber>
           <small class="p-error" *ngIf="!newControl.y"></small>
         </div>
-        <div class="mx-5">
-          <label for="z">Z</label>
+        <div class="ml-5">
+          <label for="z">
+            <div class="text-center-x">Z</div>
+          </label>
           <p-inputNumber [useGrouping]="false" mode="decimal" id="z" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.z"></p-inputNumber>
           <small class="p-error" *ngIf="!newControl.z"></small>
         </div>
@@ -189,7 +194,12 @@
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="ОТМЕНА" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>
-    <button [disabled]="isSaveDisabled()" pButton pRipple label="СОХРАНИТЬ" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+    <div class="df justify-content-end">
+      <div class="mr-5 cx">
+        <div tabindex="11" (click)="hide()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
+      </div>
+      <div tabindex="10" [class.disabled-button]="isSaveDisabled()" (click)="save()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
+    </div>
+
   </ng-template>
 </p-dialog>
