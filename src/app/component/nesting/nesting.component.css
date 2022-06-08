@@ -216,7 +216,7 @@
   grid-template-columns: 85px 130px 85px;
 }
 .one-row{
-  height: 25px;
+  height: 20px;
   display: grid;
   grid-template-columns: 95px 214px auto;
 }
@@ -229,6 +229,11 @@
   height: 20px;
   display: grid;
   grid-template-columns: 95px 240px auto;
+}
+.weight-row{
+  height: 20px;
+  display: grid;
+  grid-template-columns: 95px auto;
 }
 .two-row-tablet{
   height: 20px;
