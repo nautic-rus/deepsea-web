@@ -65,7 +65,8 @@
                     <div class="icon-back-blue cxy">
                       <img src="assets/icons/mat-root.svg" height="24">
                     </div>
-                    <div class="title-medium-bold ml-10">Materials</div>
+                    <div class="title-medium-bold ml-10" [class.selected-title]="selectedTitle == 'Plates'" (click)="selectTitle('Plates')">Plates</div>
+                    <div class="title-medium-bold ml-10" [class.selected-title]="selectedTitle == 'Profiles'" (click)="selectTitle('Profiles')">Profiles</div>
                   </div>
                   <div class="flex-end text-y">
                     <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRoot.length > 0" class="container margin-bottom-none">
@@ -76,21 +77,36 @@
                   </div>
                 </div>
               </div>
-              <div class="cxy height-spinner" *ngIf="loadingMaterials">
-                <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
-              </div>
-              <div class="gray-text" *ngIf="materialsRoot.length == 0 && !loadingMaterials">
-                There are no plate dimensions. You need to specify blocks from top column.
-              </div>
-              <div class="all-checkbox" *ngFor="let material of materialsRoot">
-                <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
-                  {{material.name}}
-                  <span [class.checked-mini-text-gray]="material.selected" class="ml-5 text-mini">{{getMaterialsCount(material.count)}}</span>
+              <div *ngIf="selectedTitle == 'Plates'">
+                <div class="cxy height-spinner" *ngIf="loadingMaterials">
+                  <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
                 </div>
-
+                <div class="gray-text" *ngIf="materialsRoot.length == 0 && !loadingMaterials">
+                  There are no plate dimensions. You need to specify blocks from top column.
+                </div>
+                <div class="all-checkbox" *ngFor="let material of materialsRoot">
+                  <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                    {{material.name}}
+                    <span [class.checked-mini-text-gray]="material.selected" class="ml-5 text-mini">{{getMaterialsCount(material.count)}}</span>
+                  </div>
+                </div>
               </div>
+              <div *ngIf="selectedTitle == 'Profiles'">
+                <div class="cxy height-spinner" *ngIf="loadingNestProfiles">
+                  <p-progressSpinner [style]="{width: '70px', height: '60px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+                </div>
+                <div class="gray-text" *ngIf="nestingProfiles.length == 0 && !loadingNestProfiles">
+                  There are no nesting profiles.
+                </div>
+                <div class="all-checkbox" *ngFor="let nest of nestingProfiles">
+                  <div class="check-button">
+                    {{nest}}
+                  </div>
+                </div>
+              </div>
+
             </div>
-            <div class="ovf-auto mr-minus20">
+            <div class="ovf-auto mr-minus20" [class.disabled-area]="selectedTitle == 'Profiles'">
               <div class="sticky back-white pb-15">
                 <div class="row-one-back">
                   <div class="df lxy">
@@ -143,7 +159,7 @@
             </div>
           </div>
 
-          <div *ngIf="currentView == 'tile'" class="tile">
+          <div *ngIf="currentView == 'tile'" class="tile" [class.disabled-area]="selectedTitle == 'Profiles'">
             <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nestingPlates; let i = index">
               <div class="ml-10" *ngIf="nest != null">
                 <div class="parent-plate" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>

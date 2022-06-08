@@ -68,8 +68,11 @@ export class NestingComponent implements OnInit {
   materials: any[] = [];
   materialsRoot: any[] = [];
   materialsRest: any[] = [];
+  nestingProfiles: any[] = [];
+  nestingProfilesSrc: any[] = [];
   loading = false;
   loadingMaterials = false;
+  loadingNestProfiles = false;
   loadingBlocks = false;
   currentView = 'tile';
   cmap = '';
@@ -80,6 +83,7 @@ export class NestingComponent implements OnInit {
   selectedAllMaterialsRoot = false;
   selectedAllMaterialsRest = false;
   previewClick: string = '';
+  selectedTitle = 'Plates';
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -101,6 +105,10 @@ export class NestingComponent implements OnInit {
         this.nestingFiles = files;
         this.s.getHullNestingByProjectPlates(this.project).then(res => {
           this.nestingSource = res;
+          this.s.getHullNestingByProjectProfiles(this.project).then(resProfiles => {
+            console.log(resProfiles);
+            this.nestingProfilesSrc = resProfiles;
+          });
           this.nestingSource.forEach((nest: any) => {
             nest.MATERIAL = this.getNestingMaterial(nest);
             nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
@@ -814,6 +822,7 @@ export class NestingComponent implements OnInit {
     // }
 
     this.fetchNesting();
+    this.fillNestingProfiles();
     //this.nesting.splice(0, this.nesting.length);
   }
 
@@ -1047,5 +1056,34 @@ export class NestingComponent implements OnInit {
     }).onClose.subscribe(res => {
 
     });
+  }
+
+  selectTitle(title: string) {
+    this.selectedTitle = title;
+    if (this.selectedTitle == 'Profiles'){
+      this.fillNestingProfiles();
+    }
+  }
+  fillNestingProfiles(){
+    let blocks: string[] = [];
+    let profiles: any[] = [];
+    this.nestingProfiles.splice(0, this.nestingProfiles.length);
+    this.blocks.filter(x => x.selected).forEach(block => {
+      block.name.split(';').forEach((x: any) => blocks.push(x));
+    });
+    this.nestingProfilesSrc.forEach(profile => {
+      if (blocks.includes(profile.BLOCK)){
+        profiles.push(profile);
+      }
+    });
+    profiles.forEach(profile => profile.name = this.profileName(profile));
+    _.forEach(_.groupBy(profiles, x => x.name), profile => {
+      let summ = 0;
+      profile.forEach((x: any) => summ += x.NGB);
+      this.nestingProfiles.push(profile[0].name + ' (' + summ + ')');
+    });
+  }
+  profileName(profile: any){
+    return profile.TP + ' ' + [profile.WH, profile.WT, profile.FH, profile.FT].filter(x => x != 0).join('x') + ' ' + (+profile.TOGROLEN / 1000) + ' ' + profile.KQ;
   }
 }

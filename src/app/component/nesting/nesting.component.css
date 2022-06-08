@@ -1000,3 +1000,10 @@
   align-items: center;
   justify-content: center;
 }
+.selected-title{
+  background-color: red;
+}
+.disabled-area{
+  opacity: 0.5;
+  pointer-events: none;
+}
