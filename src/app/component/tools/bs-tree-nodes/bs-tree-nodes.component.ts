@@ -21,6 +21,12 @@ export class BsTreeNodesComponent implements OnInit {
     { field: 'Y_COG', header: 'Y' },
     { field: 'Z_COG', header: 'Z' },
   ];
+  predefinedData = [
+    { project: 'P701', x: 33.391, y: 0.002, z: 7.687, weight: 3641200 },
+    { project: 'P707', x: 0, y: 0, z: 0, weight: 0 },
+    { project: 'N002', x: 25.122, y: -0.067, z: 7.233, weight: 1933580 },
+    { project: 'N004', x: 0, y: 0, z: 0, weight: 0 },
+  ];
   loading = true;
   projects: string[] = ['P701', 'P707', 'N002', 'N004'];
   project = 'N004';
@@ -28,15 +34,15 @@ export class BsTreeNodesComponent implements OnInit {
   summ = 0;
   measures: any[] = [
     {
-      label: 'Grammes',
+      label: 'Grams',
       value: 'g'
     },
     {
-      label: 'Kilogram',
+      label: 'Kilograms',
       value: 'kg'
     },
     {
-      label: 'Tones',
+      label: 'Tons',
       value: 't'
     }
   ];
@@ -58,6 +64,16 @@ export class BsTreeNodesComponent implements OnInit {
     });
   }
 
+  preData(value: string){
+    let find = this.predefinedData.find(x => x.project == this.project);
+    if (find == null){
+      return 0;
+    }
+    else{
+      // @ts-ignore
+      return find[value];
+    }
+  }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.project = params.project ? params.project : 'N004';

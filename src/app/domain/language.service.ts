@@ -304,7 +304,7 @@ export class LanguageService {
           case 'Вес кг': return 'weight kg';
           case 'Не согласован': return 'Not approved';
           case 'Вы собираетесь навсегда удалить эту задачу, а также связанные с ней комментарии, данные и вложения.': return 'You are going to permanently delete this task, as well as related comments, data, and attachments.';
-          case '': return '';
+          case 'КОНТРОЛЬ ВЕСА': return 'WEIGHT CONTROL';
           case '': return '';
           case '': return '';
           case '': return '';
