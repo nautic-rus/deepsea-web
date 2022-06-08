@@ -437,8 +437,14 @@ body,p{
 .ml-minus20{
   margin-left: -20px;
 }
+.mt-minus2{
+  margin-top: -2px;
+}
 .mt-minus5{
   margin-top: -5px;
+}
+.mt-minus10{
+  margin-top: -10px;
 }
 .mt-1{
   margin-top: 1rem;
@@ -523,6 +529,9 @@ body,p{
 }
 .mb-30{
   margin-bottom: 30px;
+}
+.mb-40{
+  margin-bottom: 40px;
 }
 .mb-50{
   margin-bottom: 50px;
@@ -747,7 +756,7 @@ cdk-virtual-scroll-viewport{
   overflow: hidden;
 }
 ::-webkit-scrollbar{
-  width: 7px;
+  width: 6px;
   height: 5px;
 }
 ::-webkit-scrollbar-track-piece{

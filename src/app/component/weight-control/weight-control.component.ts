@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MaterialManagerService} from "../../domain/material-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import * as XLSX from "xlsx";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-weight-control',
@@ -22,7 +23,7 @@ export class WeightControlComponent implements OnInit {
   totalY = 0;
   totalZ = 0;
 
-  constructor(public m: MaterialManagerService, public auth: AuthManagerService) { }
+  constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.m.getWeightControl().then(res => {
@@ -144,5 +145,8 @@ export class WeightControlComponent implements OnInit {
         charactersLength));
     }
     return result;
+  }
+  round(input: number, digit = 100) {
+    return Math.round(input * digit) / digit;
   }
 }
