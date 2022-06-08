@@ -116,7 +116,22 @@ export class BsTreeNodesComponent implements OnInit {
           }
           if ([45, 37, 39, 32, 41, 44, 20, 48, 49, 35, 22, 21, 33, 34, 36, 38, 31].includes(x.data.ATOM_TYPE)){
             x.data.ATOM_TYPE = 100;
-            x.data.ATOM_NAME = 'Hull';
+            x.data.ATOM_NAME = '1. Hull';
+            if (x.data.BLOCK != ""){
+              x.data.PATH = x.data.BLOCK;
+            }
+            if (x.data.PATH.startsWith('U') || x.data.PATH.startsWith('BS')){
+              x.data.GLOBAL_PATH = '1.1 Units';
+            }
+            else if (x.data.PATH.startsWith('F')){
+              x.data.GLOBAL_PATH = '1.2 Foundations';
+            }
+            else if (x.data.PATH.startsWith('VNT')){
+              x.data.GLOBAL_PATH = '1.3 Vent channel';
+            }
+            else{
+              x.data.GLOBAL_PATH = '1.4 Unknown';
+            }
           }
           if (x.data.WEIGHT == 0){
             x.data.WARN = true;
@@ -137,93 +152,141 @@ export class BsTreeNodesComponent implements OnInit {
         });
 
 
-        // _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource, x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
-        //   let weight = 0;
-        //   group.forEach(x => {
-        //     weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
-        //   });
-        //
-        //   let child: TreeNode[] = [];
-        //   _.forEach(_.groupBy(_.sortBy(group, x => x.data.PATH.replace('UNDEFINED', 'z')), x => x.data.PATH), path => {
-        //     let weight = 0;
-        //     let childActual = 0;
-        //     let childXcog = 0;
-        //     let childYcog = 0;
-        //     let childZcog = 0;
-        //     path.forEach(x => {
-        //       weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
-        //       let w = x.data.WEIGHT;
-        //       let xCOG = x.data.X_COG;
-        //       let yCOG = x.data.Y_COG;
-        //       let zCOG = x.data.Z_COG;
-        //       if (w + childActual > 0){
-        //         childXcog = (childXcog * childActual + xCOG * w) / (w + childActual);
-        //         childYcog = (childYcog * childActual + yCOG * w) / (w + childActual);
-        //         childZcog = (childZcog * childActual + zCOG * w) / (w + childActual);
-        //         childActual += w;
-        //       }
-        //     });
-        //
-        //
-        //     child.push({
-        //       data: {
-        //         NAME: path[0].data.PATH,
-        //         DESCRIPTION: '',
-        //         WEIGHT: weight,
-        //         X_COG: childXcog,
-        //         Y_COG: childYcog,
-        //         Z_COG: childZcog,
-        //         WARN: path.find(x => x.data.WARN) != null
-        //       },
-        //       children: path
-        //     })
-        //   });
-        //
-        //   let nodeActual = 0;
-        //   let nodeXcog = 0;
-        //   let nodeYcog = 0;
-        //   let nodeZcog = 0;
-        //   child.forEach(x => {
-        //     let w = x.data.WEIGHT;
-        //     let xCOG = x.data.X_COG;
-        //     let yCOG = x.data.Y_COG;
-        //     let zCOG = x.data.Z_COG;
-        //     if (w + nodeActual > 0){
-        //       nodeXcog = (nodeXcog * nodeActual + xCOG * w) / (w + nodeActual);
-        //       nodeYcog = (nodeYcog * nodeActual + yCOG * w) / (w + nodeActual);
-        //       nodeZcog = (nodeZcog * nodeActual + zCOG * w) / (w + nodeActual);
-        //       nodeActual += w;
-        //     }
-        //   });
-        //
-        //   nodes.push({
-        //     data: {
-        //       NAME: group[0].data.ATOM_NAME,
-        //       //NAME: group[0].data.ATOM_NAME + ' - ' + group[0].data.ATOM_TYPE,
-        //       DESCRIPTION: '',
-        //       WEIGHT: weight,
-        //       X_COG: nodeXcog,
-        //       Y_COG: nodeYcog,
-        //       Z_COG: nodeZcog,
-        //       WARN: group.find(x => x.data.WARN) != null
-        //     },
-        //     children: child
-        //   })
-        // });
-        // nodes.push({
-        //   data: {
-        //     NAME: 'WARNINGS & ERRORS',
-        //     DESCRIPTION: '',
-        //     WEIGHT: errorsWeight,
-        //     X_COG: 0,
-        //     Y_COG: 0,
-        //     Z_COG: 0,
-        //     WARN: true
-        //   },
-        //   children: errors
-        // });
+        _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource.filter(x => x.data.ATOM_NAME == '1. Hull'), x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
 
-        _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource, x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
+          let childGlobal: TreeNode[] = [];
+          _.forEach(_.groupBy(_.sortBy(group, x => x.data.GLOBAL_PATH + x.data.PATH), x => x.data.GLOBAL_PATH), globalPath => {
+
+            let childPath: TreeNode[] = [];
+            _.forEach(_.groupBy(globalPath, x => x.data.PATH), path => {
+              let pathActual = 0;
+              let pathXcog = 0;
+              let pathYcog = 0;
+              let pathZcog = 0;
+              path.forEach(x => {
+                let w = x.data.WEIGHT;
+                let xCOG = x.data.X_COG;
+                let yCOG = x.data.Y_COG;
+                let zCOG = x.data.Z_COG;
+                pathActual += w;
+                pathXcog += xCOG * w;
+                pathYcog += yCOG * w;
+                pathZcog += zCOG * w;
+              });
+              if (pathActual != 0){
+                pathXcog /= pathActual;
+                pathYcog /= pathActual;
+                pathZcog /= pathActual;
+              }
+              else{
+                pathXcog = 0;
+                pathYcog = 0;
+                pathZcog = 0;
+              }
+
+              childPath.push({
+                data: {
+                  NAME: path[0].data.PATH,
+                  DESCRIPTION: '',
+                  WEIGHT: pathActual,
+                  X_COG: pathXcog,
+                  Y_COG: pathYcog,
+                  Z_COG: pathZcog,
+                  WARN: path.find(x => x.data.WARN) != null,
+                },
+                children: path
+              })
+            });
+
+
+            let globalPathActual = 0;
+            let globalPathXcog = 0;
+            let globalPathYcog = 0;
+            let globalPathZcog = 0;
+            childPath.forEach(x => {
+              let w = x.data.WEIGHT;
+              let xCOG = x.data.X_COG;
+              let yCOG = x.data.Y_COG;
+              let zCOG = x.data.Z_COG;
+
+              globalPathActual += w;
+              globalPathXcog += xCOG * w;
+              globalPathYcog += yCOG * w;
+              globalPathZcog += zCOG * w;
+
+            });
+
+            if (globalPathActual != 0){
+              globalPathXcog /= globalPathActual;
+              globalPathYcog /= globalPathActual;
+              globalPathZcog /= globalPathActual;
+            }
+            else{
+              globalPathXcog = 0;
+              globalPathYcog = 0;
+              globalPathZcog = 0;
+            }
+
+
+            childGlobal.push({
+              data: {
+                NAME: globalPath[0].data.GLOBAL_PATH,
+                DESCRIPTION: '',
+                WEIGHT: globalPathActual,
+                X_COG: globalPathXcog,
+                Y_COG: globalPathYcog,
+                Z_COG: globalPathZcog,
+                WARN: childPath.find(x => x.data.WARN) != null,
+              },
+              children: childPath
+            })
+          });
+
+          let nodeActual = 0;
+          let nodeXcog = 0;
+          let nodeYcog = 0;
+          let nodeZcog = 0;
+          childGlobal.forEach(x => {
+            let w = x.data.WEIGHT;
+            let xCOG = x.data.X_COG;
+            let yCOG = x.data.Y_COG;
+            let zCOG = x.data.Z_COG;
+
+            nodeActual += w;
+            nodeXcog += xCOG * w;
+            nodeYcog += yCOG * w;
+            nodeZcog += zCOG * w;
+
+          });
+
+          if (nodeActual != 0){
+            nodeXcog /= nodeActual;
+            nodeYcog /= nodeActual;
+            nodeZcog /= nodeActual;
+          }
+          else{
+            nodeXcog = 0;
+            nodeYcog = 0;
+            nodeZcog = 0;
+          }
+
+          nodes.push({
+            data: {
+              NAME: group[0].data.ATOM_NAME,
+              DESCRIPTION: '',
+              WEIGHT: nodeActual,
+              X_COG: nodeXcog,
+              Y_COG: nodeYcog,
+              Z_COG: nodeZcog,
+              WARN: group.find(x => x.data.WARN) != null
+            },
+            children: childGlobal
+          })
+        });
+
+
+
+        _.forEach(_.groupBy(_.sortBy(this.bsDesignNodesSource.filter(x => x.data.ATOM_NAME != '1. Hull'), x => x.data.ATOM_NAME + x.data.NAME), x => x.data.ATOM_NAME), group => {
           let weight = 0;
           group.forEach(x => {
             weight += isNaN(x.data.WEIGHT) ? 0 : x.data.WEIGHT;
@@ -363,8 +426,6 @@ export class BsTreeNodesComponent implements OnInit {
           },
           children: errors1
         });
-
-
         nodes.push({
           data: {
             NAME: 'ERRORS: WEIGHT <= 0.1',

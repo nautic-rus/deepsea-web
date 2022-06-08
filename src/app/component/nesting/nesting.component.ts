@@ -14,8 +14,6 @@ import {mouseWheelZoom} from "mouse-wheel-zoom";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
 import * as XLSX from "xlsx";
-import {i18nMetaToJSDoc} from "@angular/compiler/src/render3/view/i18n/meta";
-import {WastageComponent} from "../billing/wastage/wastage.component";
 import {VacantWastageComponent} from "./vacant-wastage/vacant-wastage.component";
 
 @Component({
@@ -25,7 +23,7 @@ import {VacantWastageComponent} from "./vacant-wastage/vacant-wastage.component"
 })
 export class NestingComponent implements OnInit {
   parts: any = [];
-  nesting: any = [];
+  nestingPlates: any = [];
   nestingSource: any = [];
   noResult = false;
   docNumber = '';
@@ -177,7 +175,7 @@ export class NestingComponent implements OnInit {
   projectChanged() {
     this.blocks.splice(0, this.blocks.length);
     this.materials.splice(0, this.materials.length);
-    this.nesting.splice(0, this.nesting.length);
+    this.nestingPlates.splice(0, this.nestingPlates.length);
     this.router.navigate([], {queryParams: {foranProject: this.project}});
   }
 
@@ -432,7 +430,7 @@ export class NestingComponent implements OnInit {
     this.waitForZipFiles = true;
 
     let files: any[] = [];
-    this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
+    this.nestingPlates.filter((x: any) => x != null).forEach((nest: any) => {
       let find = this.nestingFiles.find(x => x.name.includes(nest.FILE));
       if (find != null){
         files.push(find);
@@ -447,7 +445,7 @@ export class NestingComponent implements OnInit {
 
 
 
-    this.nesting.filter((x: any) => x != null).forEach((nest: any) => {
+    this.nestingPlates.filter((x: any) => x != null).forEach((nest: any) => {
       let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
       if (searchCMAP != null){
         this.cmap = searchCMAP.url;
@@ -713,7 +711,7 @@ export class NestingComponent implements OnInit {
   }
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.nesting.filter((x: any) => x != null));
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.nestingPlates.filter((x: any) => x != null));
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
   }
@@ -727,10 +725,10 @@ export class NestingComponent implements OnInit {
 
   searchChanged() {
     if (this.search.trim() == ''){
-      this.nesting = this.nestingSource;
+      this.nestingPlates = this.nestingSource;
     }
     else{
-      this.nesting = this.nestingSource.filter((x: any) => {
+      this.nestingPlates = this.nestingSource.filter((x: any) => {
         return x == null || (x.NESTID + x.BLOCKS + x.THICKNESS + x.LENGTH + x.WIDTH + x.MATERIAL + x.PARTSWEIGHT + x.NUMEQNEST + x.FILE + x.USAGE).trim().toLowerCase().includes(this.search.trim().toLowerCase())
       });
     }
@@ -841,12 +839,12 @@ export class NestingComponent implements OnInit {
   }
 
   fetchNesting() {
-    this.nesting = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x) && this.isContainsBlocks(x.BLOCKS) && this.isSelectedMaterial(x));
+    this.nestingPlates = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x) && this.isContainsBlocks(x.BLOCKS) && this.isSelectedMaterial(x));
     for (let x = 0; x < 10; x++){
-      this.nesting.push(null);
+      this.nestingPlates.push(null);
     }
-    this.nesting = [...this.nesting];
-    console.log(this.nesting)
+    this.nestingPlates = [...this.nestingPlates];
+    console.log(this.nestingPlates)
   }
   isSelectedMaterial(n: any){
     if (this.materialsRoot.find(x => x.selected) == null && this.materialsRest.find(x => x.selected) == null){
