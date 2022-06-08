@@ -41,7 +41,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
     this.generationWait = true;
     let newRevision = this.rev;
     let newDocNumber = this.issue.doc_number + (newRevision == '-' ? '' : ('_rev' + newRevision));
-    this.s.getHullEspFiles(this.issue.project.replace('NR', 'N'), newDocNumber, this.issue.name, this.rev).then(res => {
+    this.s.getHullEspFiles(this.issue.project.replace('NR', 'N'), this.issue.doc_number, this.issue.name, this.rev).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
