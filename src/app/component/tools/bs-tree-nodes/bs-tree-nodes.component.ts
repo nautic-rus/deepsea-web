@@ -65,14 +65,15 @@ export class BsTreeNodesComponent implements OnInit {
         this.systems = res;
       });
       this.s.getBsDesignNodes(this.project).then(res => {
-        this.exportableData = res.filter(x => !(x.ATOM_NAME.includes('Electrical') && x.USERID == ""));
+        console.log(res);
+        this.exportableData = res.filter(x => !(x.ATOM_NAME.includes('Electrical') && x.USERID == "")).filter(x => !(x.ATOM_NAME == 'Equipment' && x.POS == 0));
         this.summ = 0;
         let nodes: TreeNode[] = [];
         let errors1: TreeNode[] = [];
         let errors2: TreeNode[] = [];
         let errorsWeight = 0;
         let blocks: string[] = [];
-        this.bsDesignNodesSource = res.filter(x => !(x.ATOM_NAME.includes('Electrical') && x.USERID == "")).map(x => Object({data: x, children: []}));
+        this.bsDesignNodesSource = res.filter(x => !(x.ATOM_NAME.includes('Electrical') && x.USERID == "")).filter(x => !(x.ATOM_NAME == 'Equipment' && x.POS == 0)).map(x => Object({data: x, children: []}));
         this.bsDesignNodesSource.forEach(x => {
           x.data.Y_COG *= -1;
           let dna: string = x.data.DNA.toString();
