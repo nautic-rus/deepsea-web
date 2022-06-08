@@ -1,46 +1,58 @@
 <div class="all-page">
   <div class="min-height-card">
     <div class="card-head df sticky-card">
-      <div class="mr-10">
-        <p-dropdown [disabled]="loading" placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
-        <div (click)="exportExcel()" [pTooltip]="'Export XLS'" tooltipPosition="top" class="materials-button green-button cxy">
-          <img src="assets/icons/xls2.svg" height="26">
+      <div class="df">
+        <div class="mr-10">
+          <p-dropdown [disabled]="loading" placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-10">
+          <div (click)="exportExcel()" [pTooltip]="'Export XLS'" tooltipPosition="top" class="materials-button green-button cxy">
+            <img src="assets/icons/xls2.svg" height="26">
+          </div>
+        </div>
+        <div class="mr-10">
+          <p-dropdown [disabled]="loading" [(ngModel)]="measure" [options]="measures" [optionLabel]="'label'" [optionValue]="'value'" styleClass="width-170 border">
+          </p-dropdown>
         </div>
       </div>
-      <div class="mr-10">
-        <div class="width-176"> Total weight: {{roundWithMeasure(summ)}}</div>
-      </div>
-      <div class="mr-10">
-        <p-dropdown [disabled]="loading" [(ngModel)]="measure" [options]="measures" [optionLabel]="'label'" [optionValue]="'value'" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
-        <div class="w-100 cxy" *ngIf="globalActual != 0">
-          <div class="width-100">
-            <div class="mr-5 x-label">{{round(globalXcog)}}</div>
-          </div>
-          <div  class="width-100">
-            <div class="mr-5 y-label">{{round(globalYcog)}}</div>
-          </div>
-          <div  class="width-100">
-            <div class="z-label">{{round(globalZcog)}}</div>
+      <div class="df">
+        <div class="mr-10">
+          <div>
+            <div class="width-190 pre-weight"> Pre weight: {{roundWithMeasure(preData('weight'))}}</div>
+            <div class="width-190 pl-4"> Total weight: {{roundWithMeasure(summ)}}</div>
           </div>
         </div>
       </div>
-
-      <div class="p-ml-auto df">
-<!--        <span class="p-input-icon-left p-ml-auto">-->
-<!--            <i class="pi pi-search"></i>-->
-<!--            <input [(ngModel)]="searchProfiles" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />-->
-<!--          </span>-->
+      <div class="cx">
+        <div class="mr-10">
+          <div class="w-100 cxy mb-2px">
+            <div class="width-100">
+              <div class="mr-5 label-pre">{{preData('x')}}</div>
+            </div>
+            <div  class="width-100">
+              <div class="mr-5 label-pre">{{preData('y')}}</div>
+            </div>
+            <div  class="width-100">
+              <div class="label-pre">{{preData('z')}}</div>
+            </div>
+          </div>
+          <div class="w-100 cxy" *ngIf="globalActual != 0">
+            <div class="width-100">
+              <div class="mr-5 x-label">{{round(globalXcog)}}</div>
+            </div>
+            <div  class="width-100">
+              <div class="mr-5 y-label">{{round(globalYcog)}}</div>
+            </div>
+            <div  class="width-100">
+              <div class="z-label">{{round(globalZcog)}}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="empty-card-bottom"></div>
     <div class="card-weight">
-
       <div *ngIf="loading" class="cxy h-100">
         <div class="cxy">
           <div class="cy">
@@ -53,22 +65,36 @@
                    [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 260px)" [virtualScroll]="true" [virtualRowHeight]="15">
         <ng-template pTemplate="header">
           <tr>
-            <th [ttSortableColumn]="'NAME'" style="width: 50%">Name <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
-            <th [ttSortableColumn]="'WEIGHT'" style="width: 8%">Weight <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
-            <th class="header-hover cursor-pointer">COG (xyz)</th>
-            <th class="header-hover cursor-pointer">Moment (xyz)</th>
-            <th [ttSortableColumn]="'DATE'" class="header-hover cursor-pointer" style="width: 8%">Modify date<p-treeTableSortIcon [field]="'DATE'"></p-treeTableSortIcon></th>
+            <th [ttSortableColumn]="'NAME'" style="width: 45%">Name <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
+            <th [ttSortableColumn]="'WEIGHT'" style="width: 184px">Weight <p-treeTableSortIcon [field]="'WEIGHT'"></p-treeTableSortIcon></th>
+            <th class="header-hover cursor-pointer pt-none pb-none">
+              <div class="cx">COG</div>
+              <div class="df space-around">
+                <div>x</div>
+                <div>y</div>
+                <div>z</div>
+              </div>
+            </th>
+            <th class="header-hover cursor-pointer pt-none pb-none">
+              <div class="cx">Moment</div>
+              <div class="df space-around">
+                <div>x</div>
+                <div>y</div>
+                <div>z</div>
+              </div>
+            </th>
+            <th [ttSortableColumn]="'DATE'" class="header-hover cursor-pointer" style="width: 10%">Modify date<p-treeTableSortIcon [field]="'DATE'"></p-treeTableSortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
           <tr class="cursor-default row-table-doc-hover">
-            <td style="width: 50%">
+            <td style="width: 45%">
               <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
               {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}} {{rowData.DNA != null && rowData.DNA != '' ? ('[' + rowData.DNA + ']') : ''}}
               <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT == 0" src="assets/icons/attentionred.svg" height="20">
               <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT != 0" src="assets/icons/attention.svg" height="20">
             </td>
-            <td style="width: 8%">
+            <td style="width: 184px">
               <div *ngIf="rowData.WEIGHT != 0">{{roundWithMeasure(rowData.WEIGHT)}}</div>
             </td>
             <td>
@@ -97,7 +123,7 @@
                 </div>
               </div>
             </td>
-            <td style="width: 8%">
+            <td style="width: 10%">
               <div *ngIf="rowData.DATE != null && rowData.DATE != 0">{{getDate(rowData.DATE)}}</div>
             </td>
           </tr>

@@ -231,6 +231,11 @@
       <img src="assets/icons/weight.svg" height="22">
     </div>
   </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('weight-control')" class="menu" routerLink="weight-control" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('КОНТРОЛЬ ВЕСА')">
+      <img src="assets/icons/preferences.svg" height="22">
+    </div>
+  </div>
   <!--  <div class="cy menu" routerLink="gantt" routerLinkActive="selected-menu">-->
   <!--    <div class="cxy">-->
   <!--      <img src="assets/icons/chart-gantt.svg" height="27">-->
