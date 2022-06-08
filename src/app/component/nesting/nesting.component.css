@@ -218,7 +218,7 @@
 .one-row{
   height: 20px;
   display: grid;
-  grid-template-columns: 95px 214px auto;
+  grid-template-columns: 95px 220px auto;
 }
 .one-row-tablet{
   height: 25px;
