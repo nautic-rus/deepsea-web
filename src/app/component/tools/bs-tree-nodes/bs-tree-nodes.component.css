@@ -139,10 +139,16 @@
   text-align: end;
 }
 .pre-weight{
-  font-weight: normal;
   border: 1px solid #ced4da;
   border-radius: 6px;
-  padding: 2px 4px;
+  padding: 1px 4px;
   color: #323130;
+  font-size: 13px;
+  font-weight: lighter;
+}
+.total-weight{
+  border-radius: 6px;
+  padding: 1px 4px;
+  background-color: #EFCC00;
   font-size: 13px;
 }
