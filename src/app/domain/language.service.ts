@@ -305,8 +305,8 @@ export class LanguageService {
           case 'Не согласован': return 'Not approved';
           case 'Вы собираетесь навсегда удалить эту задачу, а также связанные с ней комментарии, данные и вложения.': return 'You are going to permanently delete this task, as well as related comments, data, and attachments.';
           case 'КОНТРОЛЬ ВЕСА': return 'WEIGHT CONTROL';
-          case '': return '';
-          case '': return '';
+          case 'Выгрузить в Excel': return 'Export XLS';
+          case 'Общая масса:': return 'Total weight';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -46,7 +46,7 @@ export class BsTreeNodesComponent implements OnInit {
       value: 't'
     }
   ];
-  measure = 'kg';
+  measure = 't';
   globalActual = 0;
   globalXcog = 0;
   globalYcog = 0;
