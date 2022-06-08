@@ -101,7 +101,7 @@ export class NestingComponent implements OnInit {
       this.loadingMaterials = true;
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
-        this.s.getHullNestingByProject(this.project).then(res => {
+        this.s.getHullNestingByProjectPlates(this.project).then(res => {
           this.nestingSource = res;
           this.nestingSource.forEach((nest: any) => {
             nest.MATERIAL = this.getNestingMaterial(nest);

@@ -60,8 +60,11 @@ export class SpecManagerService {
   async getHullNestingByMaterials(project: string, materials: string) {
     return await this.http.post<any>(props.httpSpec + '/hullNestingByMaterials', materials,{params: {project}}).toPromise();
   }
-  async getHullNestingByProject(project: string) {
-    return await this.http.get<any>(props.httpSpec + '/hullNestingByProject', {params: {project}}).toPromise();
+  async getHullNestingByProjectPlates(project: string) {
+    return await this.http.get<any>(props.httpSpec + '/hullNestingByProjectPlates', {params: {project}}).toPromise();
+  }
+  async getHullNestingByProjectProfiles(project: string) {
+    return await this.http.get<any>(props.httpSpec + '/hullNestingByProjectProfiles', {params: {project}}).toPromise();
   }
   async createCNC(lines: string[], user: string) {
     return await this.http.post<string[]>(props.httpSpec + '/createCNC', JSON.stringify(lines), {params: {user}}).toPromise();
