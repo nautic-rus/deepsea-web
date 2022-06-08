@@ -126,7 +126,7 @@
           </div>
         </div>
         <div class="w-85 cards" [class.shorten-nesting]="dxfEnabled || cutEnabled">
-          <div class="cxy card-height" *ngIf="noResult && nesting.length != 0">
+          <div class="cxy card-height" *ngIf="noResult && nestingPlates.length != 0">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
           <div *ngIf="loading && !noResult">
@@ -137,14 +137,14 @@
               </div>
             </div>
           </div>
-          <div *ngIf="noResult && nesting.length == 0">
+          <div *ngIf="noResult && nestingPlates.length == 0">
             <div class="cxy card-height">
               <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column. Probably nesting files of selected sections were not been uploaded.</div>
             </div>
           </div>
 
           <div *ngIf="currentView == 'tile'" class="tile">
-            <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nesting; let i = index">
+            <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nestingPlates; let i = index">
               <div class="ml-10" *ngIf="nest != null">
                 <div class="parent-plate" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>
                 <div class="one-row">
@@ -418,7 +418,7 @@
           </div>
         </div>
         <div class="w-90 cards-tablet min-width-400">
-          <div class="cxy card-height" *ngIf="noResult && nesting.length != 0">
+          <div class="cxy card-height" *ngIf="noResult && nestingPlates.length != 0">
             <div class="cx loading-text">No data fetched from server with selected options. Try to select another one.</div>
           </div>
           <div *ngIf="loading && !noResult">
@@ -429,13 +429,13 @@
               </div>
             </div>
           </div>
-          <div *ngIf="noResult && nesting.length == 0">
+          <div *ngIf="noResult && nestingPlates.length == 0">
             <div class="cxy card-height">
               <div class="cx loading-text">There is no data there. You need to specify blocks and dimensions from left column.</div>
             </div>
           </div>
           <div *ngIf="currentView == 'tile'" class="tile">
-            <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile-tablet" *ngFor="let nest of nesting; let i = index">
+            <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile-tablet" *ngFor="let nest of nestingPlates; let i = index">
               <div *ngIf="nest != null">
                 <div class="parent-plate-tablet" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>
                 <div class="one-row-tablet mt-minus5">
