@@ -28,7 +28,7 @@ export class BsTreeNodesComponent implements OnInit {
     { project: 'N004', x: 0, y: 0, z: 0, weight: 0 },
   ];
   loading = true;
-  projects: string[] = ['P701', 'P707', 'N002', 'N004'];
+  projects: string[] = ['P701'];
   project = 'N004';
   systems: any[] = [];
   summ = 0;
