@@ -24,6 +24,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
 })
 export class DocumentsComponent implements OnInit {
   projects: string[] = ['NR002', 'NR004'];
+  department = 'Hull';
   project = '';
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
@@ -43,6 +44,7 @@ export class DocumentsComponent implements OnInit {
       else {
         this.project = this.projects[0];
       }
+      this.department = params.department != null ? params.department : 'Hull';
       this.showWithFilesOnly = params.showWithFilesOnly == null || +params.showWithFilesOnly == 1;
       this.fillIssues();
     });
@@ -94,22 +96,15 @@ export class DocumentsComponent implements OnInit {
   }
 
    projectChanged(showWithFilesChange: boolean = false) {
-     this.router.navigate([], {queryParams: {project: this.project, showWithFilesOnly: this.showWithFilesOnly ? (showWithFilesChange ? 0 : 1) : (showWithFilesChange ? 1 : 0) }});
+     this.router.navigate([], {queryParams: {project: this.project, department: this.department, showWithFilesOnly: this.showWithFilesOnly ? (showWithFilesChange ? 0 : 1) : (showWithFilesChange ? 1 : 0) }});
   }
   viewTask(issueId: number, project: string, docNumber: string, department: string) {
     let foranProject = project.replace('NR', 'N');
-    window.open(`/esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank');
-    // this.router.navigate(['esp'], {queryParams: {issueId, foranProject, docNumber, department}});
-    // this.issueManager.getIssueDetails(id).then(res => {
-    //   console.log(res);
-    //   if (res.id != null){
-    //     this.dialogService.open(ViewDocumentComponent, {
-    //       showHeader: false,
-    //       modal: true,
-    //       data: res
-    //     });
-    //   }
-    // });
+    switch (department) {
+      case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+      case 'Pipe': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+      default: break;
+    }
   }
   getDeliveredStatus(status: string, styled = true): any {
     let tr = this.localeStatus(status);
@@ -195,6 +190,7 @@ export class DocumentsComponent implements OnInit {
         this.filters.revision = this.getFilters(this.issues, 'revision');
         this.filters.department = this.getFilters(this.issues, 'department');
         this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
+        this.issues = this.issues.filter(x => x.department == this.department);
         this.issues = _.sortBy(this.issues, x => x.doc_number);
       });
     });

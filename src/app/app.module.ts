@@ -113,6 +113,7 @@ import { WeightControlComponent } from './component/weight-control/weight-contro
 import {ToolbarModule} from "primeng/toolbar";
 import {RadioButtonModule} from "primeng/radiobutton";
 import { RemoveConfirmationComponent } from './component/materials/remove-confirmation/remove-confirmation.component';
+import { PipeEspComponent } from './component/documents/pipe-esp/pipe-esp.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -182,6 +183,7 @@ Quill.register('modules/imageResize', ImageResize);
     BsTreeNodesComponent,
     WeightControlComponent,
     RemoveConfirmationComponent,
+    PipeEspComponent,
   ],
   imports: [
     BrowserModule,
