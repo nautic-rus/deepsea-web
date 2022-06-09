@@ -61,14 +61,14 @@
             <div class="ovf-auto mr-minus20 mb-20 mt-20">
               <div class="sticky back-white pb-15">
                 <div class="row-one-back">
-                  <div class="df lxy">
+                  <div class="df lxy pt-10">
                     <div class="icon-back-blue cxy">
                       <img src="assets/icons/mat-root.svg" height="24">
                     </div>
-                    <div class="title-medium-bold ml-10" [class.selected-title]="selectedTitle == 'Plates'" (click)="selectTitle('Plates')">Plates</div>
-                    <div class="title-medium-bold ml-10" [class.selected-title]="selectedTitle == 'Profiles'" (click)="selectTitle('Profiles')">Profiles</div>
+                    <div class="title-medium-bold tab-title ml-10 cursor-pointer" [class.selected-title]="selectedTitle == 'Plates'" (click)="selectTitle('Plates')">Plates</div>
+                    <div class="title-medium-bold tab-title ml-10 cursor-pointer" [class.selected-title]="selectedTitle == 'Profiles'" (click)="selectTitle('Profiles')">Profiles</div>
                   </div>
-                  <div class="flex-end text-y">
+                  <div [class.disabled-area]="selectedTitle == 'Profiles'" class="flex-end text-y">
                     <label pTooltip="Select all" tooltipPosition="top" *ngIf="materialsRoot.length > 0" class="container margin-bottom-none">
                       <span class="text-checkbox"></span>
                       <input (ngModelChange)="selectAllMaterialsRoot()" type="checkbox" [(ngModel)]="selectedAllMaterialsRoot">
