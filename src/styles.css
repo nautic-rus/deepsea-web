@@ -660,6 +660,9 @@ body,p{
 .pt-20{
   padding-top: 20px;
 }
+.pt-25{
+  padding-top: 25px;
+}
 .pt-30{
   padding-top: 30px;
 }
@@ -707,6 +710,9 @@ body,p{
 }
 .pl-20{
   padding-left: 20px;
+}
+.pl-25{
+  padding-left: 25px;
 }
 .pr-2{
   padding-right: 2px;
