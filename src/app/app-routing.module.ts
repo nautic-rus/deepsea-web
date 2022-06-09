@@ -55,7 +55,7 @@ const routes: Routes = [
   { path: 'gcode', component: GCodeComponent, canActivate: [AuthGuard], data: {animation: 'GCodeComponent'} },
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard], data: {animation: 'ReportComponent'} },
   { path: 'billing', component: BillingComponent, canActivate: [AuthGuard], data: {animation: 'BillingComponent'} },
-  // { path: 'weight', component: WeightComponent, canActivate: [AuthGuard], data: {animation: 'WeightComponent'} },
+  { path: 'test', component: WeightComponent, canActivate: [AuthGuard], data: {animation: 'WeightComponent'} },
   { path: 'weight', component: BsTreeNodesComponent, canActivate: [AuthGuard], data: {animation: 'BsTreeNodesComponent'} },
   { path: 'files', component: FileExplorerComponent, canActivate: [AuthGuard], data: {animation: 'FileExplorerComponent'} },
   { path: 'weight-control', component: WeightControlComponent, canActivate: [AuthGuard], data: {animation: 'WeightControlComponent'} },

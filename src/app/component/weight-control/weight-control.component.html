@@ -7,22 +7,20 @@
             <div class="pr-10 cxy">
               <img src="assets/icons/plus3.svg" height="18">
             </div>
-            <div class="cxy">
-              {{t.tr('Добавить строку')}}
-            </div>
+            <div class="cxy">Добавить строку</div>
           </div>
         </div>
         <div class="mr-10">
-          <div (click)="exportExcel()" [pTooltip]="t.tr('Выгрузить в Excel')" tooltipPosition="top" class="materials-button green-button cxy">
+          <div (click)="exportExcel()" pTooltip="Выгрузить в Excel" tooltipPosition="top" class="materials-button green-button cxy">
             <img src="assets/icons/xls2.svg" height="26">
           </div>
         </div>
       </div>
       <div>
-        {{t.tr('Общая масса:' + ' ')}} {{totalWeight}}
+        {{'Общая масса:' + ' '}} {{totalWeight}}
       </div>
       <div>
-        <div class="cx letter-spacing-5 mt-minus10 mb-5">COG</div>
+        <div class="cx mt-minus10 mb-5">Общий центр тяжести</div>
         <div class="cxy">
           <div class="width-100">
             <div class="mr-5 x-label df space-between">

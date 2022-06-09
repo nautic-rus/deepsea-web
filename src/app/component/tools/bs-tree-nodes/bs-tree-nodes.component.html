@@ -17,35 +17,46 @@
         </div>
       </div>
       <div class="df">
-        <div class="mr-10">
-          <div>
-            <div class="width-190 pre-weight mb-2px"> Pre weight: {{roundWithMeasure(preData('weight'))}}</div>
-            <div class="width-190 pl-4 total-weight"> Total weight: {{roundWithMeasure(summ)}}</div>
+        <div class="df">
+          <div class="flex-column cy mr-5">
+            <div class="height-35 cy mb-2px mt-20">Pre</div>
+            <div class="height-35 cy">Total</div>
+          </div>
+
+
+          <div class="mr-5">
+
+            <div>
+              <div class="cx">W</div>
+              <div class="width-100 pre-weight mb-2px">{{roundWithMeasure(preData('weight'))}}</div>
+              <div class="width-100 pl-4 total-weight">{{roundWithMeasure(summ)}}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="cx">
         <div class="mr-10">
           <div class="w-100 cxy mb-2px">
             <div class="width-100">
+              <div class="cx">X</div>
               <div class="mr-5 label-pre">{{preData('x')}}</div>
             </div>
             <div  class="width-100">
+              <div class="cx">Y</div>
               <div class="mr-5 label-pre">{{preData('y')}}</div>
             </div>
             <div  class="width-100">
+              <div class="cx">Z</div>
               <div class="label-pre">{{preData('z')}}</div>
             </div>
           </div>
           <div class="w-100 cxy" *ngIf="globalActual != 0">
             <div class="width-100">
-              <div class="mr-5 x-label">{{round(globalXcog)}}</div>
+              <div class="mr-5 x-label-total">{{round(globalXcog)}}</div>
             </div>
             <div  class="width-100">
-              <div class="mr-5 y-label">{{round(globalYcog)}}</div>
+              <div class="mr-5 y-label-total">{{round(globalYcog)}}</div>
             </div>
             <div  class="width-100">
-              <div class="z-label">{{round(globalZcog)}}</div>
+              <div class="z-label-total">{{round(globalZcog)}}</div>
             </div>
           </div>
         </div>
@@ -62,7 +73,7 @@
         </div>
       </div>
       <p-treeTable *ngIf="!loading" [value]="nodes" (onNodeExpand)="onNodeExpand($event)"
-                   [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 260px)" [virtualScroll]="true" [virtualRowHeight]="15">
+                   [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 320px)" [virtualScroll]="true" [virtualRowHeight]="15">
         <ng-template pTemplate="header">
           <tr>
             <th [ttSortableColumn]="'NAME'" style="width: 45%">Name <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>

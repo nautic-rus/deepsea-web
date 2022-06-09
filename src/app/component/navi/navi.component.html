@@ -1,57 +1,4 @@
-<div *ngIf="!isDesktop()" class="top-panel-tablet">
-  <div class="cy ml-1">
-    <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
-  </div>
-  <div></div>
-  <div class="cxy">
-    <div (click)="t.switchLang()">
-      <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/en.png">
-      <img *ngIf="t.language == 'en'" class="cursor-pointer" src="assets/icons/russia.png">
-    </div>
-  </div>
-  <div class="cxy">
-    <div pTooltip="Cloud" tooltipPosition="bottom">
-      <a href="https://cloud.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/cloud.png"></a>
-    </div>
-  </div>
-  <div class="cxy">
-    <div pTooltip="NautucWiki" tooltipPosition="bottom">
-      <a href="https://wiki.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/question.png"></a>
-    </div>
-  </div>
-  <div class="cxy">
-    <div>
-      <div *ngIf="isOnline()" class="image-online cursor-pointer">
-        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
-      </div>
-      <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
-        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
-      </div>
-    </div>
-    <p-overlayPanel #user [style]="{width: '240px', 'border-radius': '4px', left: '695.266px', overlayArrowLeft: '200px'}">
-      <ng-template pTemplate>
-        <div class="df border-bottom all-row-user-menu">
-          <div class="cxy mx-1">
-            <div class="pi pi-clock"></div>
-          </div>
-          <div class="row-user-menu" (click)="user.hide()" routerLink="time-control">{{t.tr('Контроль времени')}}</div>
-        </div>
-        <div class="df all-row-user-menu">
-          <div class="cxy mx-1">
-            <div class="pi pi-sort-alt icon-turn"></div>
-          </div>
-          <div class="row-user-menu" (click)="shareRights()">{{t.tr('Передать права')}}</div>
-        </div>
-      </ng-template>
-    </p-overlayPanel>
-  </div>
-
-  <div class="exit cxy">
-    <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">
-  </div>
-  <div></div>
-</div>
-<div *ngIf="isDesktop()" class="top-panel">
+<div class="top-panel">
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
@@ -110,82 +57,7 @@
   </div>
   <div></div>
 </div>
-<div *ngIf="!isDesktop()" class="left-panel-tablet">
-  <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
-      <img src="assets/icons/home1.svg" height="17">
-    </div>
-<!--    <div class="cy">{{t.tr('МОЯ СТРАНИЦА')}}</div>-->
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">
-      <img src="assets/icons/sections1.svg" height="17">
-    </div>
-    <!--    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>-->
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('materials')" class="menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('МАТЕРИАЛЫ')">
-      <img src="assets/icons/cube.svg" height="22">
-    </div>
-    <!--    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>-->
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">
-      <img src="assets/icons/docs.svg" height="17">
-    </div>
-<!--    <div class="cy">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
-  </div>
-<!--  <div class="cy menu" routerLink="gantt" routerLinkActive="selected-menu">-->
-<!--    <div class="cxy">-->
-<!--      <img src="assets/icons/chart-gantt.svg" height="27">-->
-<!--    </div>-->
-<!--    <div class="cxy text-center mt-10">ГАНТ</div>-->
-<!--  </div>-->
-<!--  <div *ngIf="auth.getUser().visibility.includes('z')" class="menu" routerLink="employees" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
-<!--    <div class="cxy" [pTooltip]="t.tr('СОТРУДНИКИ')">-->
-<!--      <img src="assets/icons/employees.svg" height="20">-->
-<!--    </div>-->
-<!--&lt;!&ndash;    <div class="cy">{{t.tr('СОТРУДНИКИ')}}</div>&ndash;&gt;-->
-<!--  </div>-->
-<!--  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="cy menu" routerLink="doc-explorer" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
-<!--    <div class="cxy">-->
-<!--      <img src="assets/icons/doc-explorer.png">-->
-<!--    </div>-->
-<!--    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
-<!--  </div>-->
-
-  <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('ИНСТРУМЕНТЫ')">
-      <img src="assets/icons/wrench.svg" height="17">
-    </div>
-<!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('eleccables')" class="menu" routerLink="elec-cables" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('КАБЕЛИ')">
-      <img src="assets/icons/elec.svg" height="20">
-    </div>
-    <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
-  </div>
-<!--  <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
-<!--    <div class="cxy" [pTooltip]="t.tr('ТРУДОЗАТРАТЫ')">-->
-<!--      <img src="assets/icons/labor.svg" height="20">-->
-<!--    </div>-->
-<!--&lt;!&ndash;    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>&ndash;&gt;-->
-<!--  </div>-->
-  <div *ngIf="auth.getUser().visible_pages.includes('nesting')" class="menu" routerLink="nesting" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('РАСКРОЙ')">
-      <img src="assets/icons/nesting.svg" height="20">
-    </div>
-    <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('billing')" class="menu" routerLink="billing" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('РАСЧЁТ')">
-      <img src="assets/icons/bill.svg" height="22">
-    </div>
-    <!--    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>-->
-  </div>
-</div>
-<div *ngIf="isDesktop()" class="left-panel">
+<div class="left-panel">
   <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
       <img src="assets/icons/home1.svg" height="17">
@@ -255,9 +127,157 @@
   <!--    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>-->
   <!--  </div>-->
   <!--  <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
-<!--    <div class="cxy" [pTooltip]="t.tr('ТРУДОЗАТРАТЫ')">-->
-<!--      <img src="assets/icons/labor.svg" height="20">-->
-<!--    </div>-->
-<!--    &lt;!&ndash;    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>&ndash;&gt;-->
-<!--  </div>-->
+  <!--    <div class="cxy" [pTooltip]="t.tr('ТРУДОЗАТРАТЫ')">-->
+  <!--      <img src="assets/icons/labor.svg" height="20">-->
+  <!--    </div>-->
+  <!--    &lt;!&ndash;    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>&ndash;&gt;-->
+  <!--  </div>-->
 </div>
+
+
+
+
+
+
+
+
+
+<!--<div *ngIf="!isDesktop()" class="top-panel-tablet">-->
+<!--  <div class="cy ml-1">-->
+<!--    <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>-->
+<!--  </div>-->
+<!--  <div></div>-->
+<!--  <div class="cxy">-->
+<!--    <div (click)="t.switchLang()">-->
+<!--      <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/en.png">-->
+<!--      <img *ngIf="t.language == 'en'" class="cursor-pointer" src="assets/icons/russia.png">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="cxy">-->
+<!--    <div pTooltip="Cloud" tooltipPosition="bottom">-->
+<!--      <a href="https://cloud.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/cloud.png"></a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="cxy">-->
+<!--    <div pTooltip="NautucWiki" tooltipPosition="bottom">-->
+<!--      <a href="https://wiki.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/question.png"></a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="cxy">-->
+<!--    <div>-->
+<!--      <div *ngIf="isOnline()" class="image-online cursor-pointer">-->
+<!--        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">-->
+<!--      </div>-->
+<!--      <div *ngIf="!isOnline()" class="image-offline cursor-pointer">-->
+<!--        <img class="image__src" (click)="user.toggle($event)" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <p-overlayPanel #user [style]="{width: '240px', 'border-radius': '4px', left: '695.266px', overlayArrowLeft: '200px'}">-->
+<!--      <ng-template pTemplate>-->
+<!--        <div class="df border-bottom all-row-user-menu">-->
+<!--          <div class="cxy mx-1">-->
+<!--            <div class="pi pi-clock"></div>-->
+<!--          </div>-->
+<!--          <div class="row-user-menu" (click)="user.hide()" routerLink="time-control">{{t.tr('Контроль времени')}}</div>-->
+<!--        </div>-->
+<!--        <div class="df all-row-user-menu">-->
+<!--          <div class="cxy mx-1">-->
+<!--            <div class="pi pi-sort-alt icon-turn"></div>-->
+<!--          </div>-->
+<!--          <div class="row-user-menu" (click)="shareRights()">{{t.tr('Передать права')}}</div>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--    </p-overlayPanel>-->
+<!--  </div>-->
+
+<!--  <div class="exit cxy">-->
+<!--    <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">-->
+<!--  </div>-->
+<!--  <div></div>-->
+<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+<!--<div *ngIf="!isDesktop()" class="left-panel-tablet">-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">-->
+<!--      <img src="assets/icons/home1.svg" height="17">-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <div class="cy">{{t.tr('МОЯ СТРАНИЦА')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">-->
+<!--      <img src="assets/icons/sections1.svg" height="17">-->
+<!--    </div>-->
+<!--    &lt;!&ndash;    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('materials')" class="menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('МАТЕРИАЛЫ')">-->
+<!--      <img src="assets/icons/cube.svg" height="22">-->
+<!--    </div>-->
+<!--    &lt;!&ndash;    <div class="cy">{{t.tr('СЕКЦИИ')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">-->
+<!--      <img src="assets/icons/docs.svg" height="17">-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <div class="cy">{{t.tr('ДОКУМЕНТЫ')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--&lt;!&ndash;  <div class="cy menu" routerLink="gantt" routerLinkActive="selected-menu">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="cxy">&ndash;&gt;-->
+<!--&lt;!&ndash;      <img src="assets/icons/chart-gantt.svg" height="27">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="cxy text-center mt-10">ГАНТ</div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div *ngIf="auth.getUser().visibility.includes('z')" class="menu" routerLink="employees" routerLinkActive="selected-menu" queryParamsHandling="merge">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="cxy" [pTooltip]="t.tr('СОТРУДНИКИ')">&ndash;&gt;-->
+<!--&lt;!&ndash;      <img src="assets/icons/employees.svg" height="20">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <div class="cy">{{t.tr('СОТРУДНИКИ')}}</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="cy menu" routerLink="doc-explorer" routerLinkActive="selected-menu" queryParamsHandling="merge">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="cxy">&ndash;&gt;-->
+<!--&lt;!&ndash;      <img src="assets/icons/doc-explorer.png">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="cxy text-center mt-10">{{t.tr('ДОКУМЕНТЫ')}}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('ИНСТРУМЕНТЫ')">-->
+<!--      <img src="assets/icons/wrench.svg" height="17">-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('eleccables')" class="menu" routerLink="elec-cables" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('КАБЕЛИ')">-->
+<!--      <img src="assets/icons/elec.svg" height="20">-->
+<!--    </div>-->
+<!--    &lt;!&ndash;    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--&lt;!&ndash;  <div *ngIf="auth.getUser().visible_pages.includes('labor-costs')" class="menu" routerLink="labor-costs" routerLinkActive="selected-menu" queryParamsHandling="merge">&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="cxy" [pTooltip]="t.tr('ТРУДОЗАТРАТЫ')">&ndash;&gt;-->
+<!--&lt;!&ndash;      <img src="assets/icons/labor.svg" height="20">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('nesting')" class="menu" routerLink="nesting" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('РАСКРОЙ')">-->
+<!--      <img src="assets/icons/nesting.svg" height="20">-->
+<!--    </div>-->
+<!--    &lt;!&ndash;    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('billing')" class="menu" routerLink="billing" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('РАСЧЁТ')">-->
+<!--      <img src="assets/icons/bill.svg" height="22">-->
+<!--    </div>-->
+<!--    &lt;!&ndash;    <div class="">{{t.tr('ИНСТРУМЕНТЫ')}}</div>&ndash;&gt;-->
+<!--  </div>-->
+<!--</div>-->
+
