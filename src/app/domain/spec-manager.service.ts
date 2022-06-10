@@ -78,4 +78,7 @@ export class SpecManagerService {
   async getHullSystems(project: string) {
     return await this.http.get<any[]>(props.httpSpec + '/hullSystems', {params: {project}}).toPromise();
   }
+  async getPipeSegs(docNumber: string) {
+    return await this.http.get<any[]>(props.httpSpec + '/pipeSegs', {params: {docNumber}}).toPromise();
+  }
 }

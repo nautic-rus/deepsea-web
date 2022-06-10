@@ -24,6 +24,7 @@ import { UploadRevisionFilesComponent } from '../hull-esp/upload-revision-files/
 import {HullEspGenerationWaitComponent} from "../hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component";
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AssignNewRevisionComponent} from "../hull-esp/assign-new-revision/assign-new-revision.component";
+import {Material} from "../../../domain/classes/material";
 
 @Component({
   selector: 'app-pipe-esp',
@@ -32,7 +33,7 @@ import {AssignNewRevisionComponent} from "../hull-esp/assign-new-revision/assign
 })
 export class PipeEspComponent implements OnInit {
 
-  parts: any = [];
+  pipes: any = [];
   noResult = false;
   docNumber = '';
   project = '';
@@ -42,7 +43,7 @@ export class PipeEspComponent implements OnInit {
   comment = false;
   issueId = 0;
   issue: Issue = new Issue();
-  selectedPart = Object();
+  selectedPipe = Object();
   cmapView: Window | null = null;
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
@@ -132,29 +133,11 @@ export class PipeEspComponent implements OnInit {
       need_rights: false
     },
     {
-      name: 'Cutting Map',
+      name: 'Pipe Spools',
       icon: 'assets/icons/cutting.svg',
       collapsed: true,
       need_rights: false
     },
-    {
-      name: 'Nesting Plates',
-      icon: 'assets/icons/cutting.svg',
-      collapsed: true,
-      need_rights: false
-    },
-    {
-      name: 'Nesting Profiles',
-      icon: 'assets/icons/cutting.svg',
-      collapsed: true,
-      need_rights: false
-    },
-    {
-      name: 'Profile Sketches',
-      icon: 'assets/icons/cutting.svg',
-      collapsed: true,
-      need_rights: false
-    }
   ];
   selectedTab = this.fileGroups[0].name;
   issueRevisions: string[] = [];
@@ -172,14 +155,9 @@ export class PipeEspComponent implements OnInit {
       this.docNumber = params.docNumber != null ? params.docNumber : '';
       this.department = params.department != null ? params.department : '';
       this.issueId = params.issueId != null ? params.issueId : 0;
-      this.dxfDoc = params.dxf != null ? params.dxf : '';
-      this.search = params.search != null ? params.search : '';
-      this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
-
       if (this.issue.id == 0){
         this.fillRevisions();
       }
-
     });
   }
   closeShowImage() {
@@ -252,27 +230,26 @@ export class PipeEspComponent implements OnInit {
       }
     }
   }
-  fillParts(){
-    this.s.getHullPatList(this.project, this.docNumber).then(res => {
-      if (res != ''){
-        this.parts = res;
-        //this.parts.forEach((x: any) => x.NEST_ID = x.NEST_ID.replace('MU', 'U'));
-        this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
-        this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
-        this.filters.SYMMETRY = this.getFilters(this.parts, 'SYMMETRY');
+  fillPipes(){
+    this.s.getPipeSegs(this.docNumber).then(res => {
+      if (res.length > 0){
+        this.pipes = _.sortBy(res, x => this.addLeftZeros(x.spool, 4) + this.addLeftZeros(x.spPieceId, 4));
+        // this.filters.ELEM_TYPE = this.getFilters(this.pipes, 'ELEM_TYPE');
+        // this.filters.MATERIAL = this.getFilters(this.pipes, 'MATERIAL');
+        // this.filters.SYMMETRY = this.getFilters(this.pipes, 'SYMMETRY');
       }
       else{
         this.noResult = true;
       }
       console.log(res);
-      this.fillSketches();
     });
   }
-  getParts(){
-    return this.parts.filter((x: any) => this.isPartVisible(x));
-  }
-  isPartVisible(part: any){
-    return true;
+  addLeftZeros(value: any, length: number = 4): string {
+    let result = value.toString();
+    while (result.length < length){
+      result = '0' + result;
+    }
+    return result;
   }
   handleImageInput(files: FileList | null) {
     if (files != null){
@@ -374,86 +351,6 @@ export class PipeEspComponent implements OnInit {
   isDesktop() {
     return this.device.isDesktop() && window.innerWidth > 1296;
   }
-  fillSketches(){
-    let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
-    this.parts.forEach((p: any) => {
-      p.SKETCH = '';
-      p.NESTING = '';
-    });
-    this.nestContentRead = true;
-    _.sortBy(nesting, x => x.upload_date).filter(x => x.name.includes('profiles')).forEach(file => {
-      fetch(file.url).then(response => response.text()).then(text => {
-        this.nestContent.splice(0, this.nestContent.length);
-        text.split(';').filter(x => x.trim() != '').forEach(row => {
-          let splitRow = row.split(':');
-          this.nestContent.push({
-            file: splitRow[0].trim(),
-            parts: splitRow[1].trim().split(',')
-          });
-        });
-        this.parts.forEach((part: any) => {
-          if (part.PART_CODE != null && part.SYMMETRY != null && part.ELEM_TYPE != 'PL'){
-            let search = part.PART_CODE + '-' + part.SYMMETRY;
-            let findNest = _.sortBy(this.nestContent.filter((x: any) => x.parts.includes(search)), x => x.date).reverse();
-            if (findNest.length > 0){
-              part.SKETCH = findNest ? findNest[0].file.replace('.dxf', '').replace('-rev', '_rev') : '';
-            }
-          }
-          else{
-            part.SKETCH = '';
-          }
-          if (part.PART_CODE != null && part.SYMMETRY != null && part.NEST_ID != null && part.NEST_ID != ''){
-            if (part.NEST_ID.includes('U0')){
-              if (part.NEST_ID[0] == 'a'){
-                part.NESTING = 'P-' + this.project + '-' + part.NEST_ID.substr(1, 5) + '-' + part.NEST_ID.substr(6);
-              }
-              else{
-                part.NESTING = 'N-' + this.project + '-' + part.NEST_ID.substr(1, 5) + '-' + part.NEST_ID.substr(6);
-              }
-            }
-            else{
-              if (part.NEST_ID[0] == 'a'){
-                part.NESTING = 'P-' + this.project + '-' + part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5);
-              }
-              else{
-                part.NESTING = 'N-' + this.project + '-' + part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5);
-              }
-            }
-          }
-          else{
-            part.NESTING = '';
-          }
-        });
-        this.parts = [...this.parts];
-      });
-    });
-    if (nesting.find(x => x.name.includes('profiles')) == null){
-      this.parts.forEach((part: any) => {
-        if (part.PART_CODE != null && part.SYMMETRY != null && part.NEST_ID != null && part.NEST_ID != ''){
-          if (part.NEST_ID.includes('U0')){
-            if (part.NEST_ID[0] == 'a'){
-              part.NESTING = 'P-' + this.project + '-' + part.NEST_ID.substr(1, 5) + '-' + part.NEST_ID.substr(6);
-            }
-            else{
-              part.NESTING = 'N-' + this.project + '-' + part.NEST_ID.substr(1, 5) + '-' + part.NEST_ID.substr(6);
-            }
-          }
-          else{
-            if (part.NEST_ID[0] == 'a'){
-              part.NESTING = 'P-' + this.project + '-' + part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5);
-            }
-            else{
-              part.NESTING = 'N-' + this.project + '-' + part.NEST_ID.substr(1, 4) + '-' + part.NEST_ID.substr(5);
-            }
-          }
-        }
-        else{
-          part.NESTING = '';
-        }
-      });
-      this.parts = [...this.parts];
-    }
-  }
   fillRevisions(){
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
@@ -465,8 +362,7 @@ export class PipeEspComponent implements OnInit {
         }
       });
       this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
-      //this.selectedRevision = this.issueRevisions[0];
-      this.fillParts();
+      this.fillPipes();
     });
   }
   editorClicked(event: any) {
@@ -497,14 +393,8 @@ export class PipeEspComponent implements OnInit {
   round(input: number) {
     return Math.round(input * 100) / 100;
   }
-  openFile(file: FileAttachment) {
-    if (file.group == 'Cutting Map'){
-      this.cmap = file.url;
-      this.downloadOpenedCMAP();
-    }
-    else{
-      window.open(file.url, '_blank');
-    }
+  roundAngle(input: number) {
+    return Math.round( 180 / Math.PI * input * 100) / 100;
   }
   getFileExtensionIcon(file: string) {
     switch (file.toLowerCase().split('.').pop()){
@@ -539,40 +429,6 @@ export class PipeEspComponent implements OnInit {
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
-  }
-
-  getBlockName() {
-    if (this.parts.length > 0){
-      return this.issue.name;
-    }
-    else{
-      return this.issue.name;
-    }
-  }
-  getDeliveredStatus(status: string, styled = true): any {
-    let tr = this.localeStatus(status);
-    switch (status){
-      case 'Completed': return styled ? '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'In Work': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'New': return styled ? '<span style="color: #23547b; background-color: #b3e5fc; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'AssignedTo': return styled ? '<span style="color: #606a33; background-color: #dbe9a0; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Rejected': return styled ? '<span style="color: #d78a16; background-color: #feeccd; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Check': return styled ? '<span style="color: #694382; background-color: #eccfff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'In Rework': return styled ? '<span style="color: #3f6b73; background-color: #cbebf1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Archive': return styled ? '<span style="color: #606a26; background-color: #C4E1A8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Not resolved': return styled ? '<span style="color: #d78a16; background-color: #feeccd; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Closed': return styled ? '<span style="color: #606a26; background-color: #C4E1A8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Approved': return styled ? '<span style="color: #2e604b; background-color: #ceede1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Not approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Ready to send': return styled ? '<span style="color: #4A7863; background-color: #DCEFED; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'On reApproval': return styled ? '<span style="color: #d78a16; background-color: #feeccd; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Ready to Delivery': return styled ? '<span style="color: #393346; background-color: #cbc4d7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Send to Yard Approval': return styled ? '<span style="color: #895169; background-color: #f8c1d5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      case 'Delivered': return styled ? '<span style="color: #454955; background-color: #dae4ff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">' + tr + '</span>' : tr;
-      default: return status;
-    }
   }
   localeStatus(status: string){
     if (this.l.language == 'ru'){
@@ -621,18 +477,6 @@ export class PipeEspComponent implements OnInit {
     });
   }
 
-  askForSendToCloud(){
-    this.dialogService.open(AssignNewRevisionComponent, {
-      showHeader: false,
-      modal: true,
-      data: this.issue
-    }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
-      });
-    });
-  }
 
   showComment() {
     this.comment = true;
@@ -666,200 +510,6 @@ export class PipeEspComponent implements OnInit {
     });
   }
 
-  getCount(parts: any[], PART_CODE: any) {
-    if (this.groupedByPartCode){
-      return parts.filter(x => x.PART_CODE == PART_CODE).length;
-    }
-    else{
-      return 1;
-    }
-  }
-  selectPart(part: any){
-    this.selectedPart = part;
-    if (this.dxfView != null && !this.dxfView.closed){
-      this.dxfView.postMessage(this.selectedPart, '*');
-    }
-    if (this.dxfEnabled){
-      let search = this.trimLeftZeros(part.PART_CODE) + (part.SYMMETRY != 'C' ? part.SYMMETRY : '');
-      this.router.navigate([], {queryParams: {dxf: null, search: null}, queryParamsHandling: 'merge'}).then(() => {
-        this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url, search}, queryParamsHandling: 'merge'});
-      });
-    }
-  }
-  trimLeftZeros(input: string){
-    let result = input;
-    while (result[0] == '0' && result.length > 0){
-      result = result.substr(1);
-    }
-    return result;
-  }
-  isDisabledDxf(){
-    return this.issue == null || this.issue.revision_files == null || this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf')) == null;
-  }
-  showDxf(){
-    if (this.dxfEnabledForNesting){
-      this.dxfEnabledForNesting = false;
-    }
-    else{
-      this.dxfEnabled = !this.dxfEnabled;
-    }
-    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
-      this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
-    });
-  }
-  showDxfTablet(){
-    if (this.dxfEnabledForNesting){
-      this.dxfEnabledForNesting = false;
-    }
-    else{
-      this.dxfEnabled = !this.dxfEnabled;
-    }
-
-    if (this.dxfView != null && !this.dxfView.closed){
-      this.dxfView.close();
-    }
-    let url = '/dxf-view?navi=0&window=1&dxf=' + this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
-    this.dxfEnabledForNesting = false;
-    this.dxfEnabled = false;
-    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
-  }
-  openDxf() {
-    if (this.dxfView != null && !this.dxfView.closed){
-      this.dxfView.close();
-    }
-    let url = '/dxf-view?navi=0&window=1&dxf=' + this.dxfDoc + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
-    this.dxfEnabledForNesting = false;
-    this.dxfEnabled = false;
-    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
-  }
-  exitDxf(){
-    this.dxfEnabled = false;
-    this.cutEnabled = false;
-    this.dxfEnabledForNesting = false;
-  }
-  exitDxfTablet(){
-    this.dxfEnabled = false;
-    this.dxfEnabledForNesting = false;
-  }
-
-  isDisabledNest(part: any) {
-    let nesting = part.NESTING != null && part.NESTING[0] == 'N' ? this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision) : (this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name.includes(part.NESTING) && part.NESTING != '');
-    return searchDxf == null;
-  }
-  isDisabledNestTemplate(part: any) {
-    let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
-    let searchDxf = nesting.find(x => x.name.includes(part.SKETCH) && part.SKETCH != '');
-    return searchDxf == null;
-  }
-
-  showNesting(part: any) {
-    this.selectedPart = part;
-    this.dxfEnabledForNesting = true;
-    let nesting = part.NESTING[0] == 'N' ? this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision) : (this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name.includes(part.NESTING));
-    if (searchDxf != null){
-      if (!this.dxfEnabled){
-        this.dxfEnabled = !this.dxfEnabled;
-      }
-      this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
-        // @ts-ignore
-        this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE + part.SYMMETRY}, queryParamsHandling: 'merge'});
-      });
-
-    }
-
-  }
-
-  showDxfInViewer(url: string) {
-    if (!this.dxfEnabled){
-      this.dxfEnabled = !this.dxfEnabled;
-    }
-    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
-      // @ts-ignore
-      this.router.navigate([], {queryParams: {dxf: url, search: null, searchNesting: null}, queryParamsHandling: 'merge'});
-    });
-  }
-
-
-  showNestingTablet(part: any) {
-    this.selectedPart = part;
-    this.dxfEnabledForNesting = true;
-    let search = '';
-    if (part.NEST_ID != null){
-      if (part.NEST_ID[0] == 'a'){
-        search = this.project + '_' + part.NEST_ID.substr(1, 4) + '_' + part.NEST_ID.substr(5, 4);
-      }
-      else{
-        search = this.project + '_' + part.NEST_ID.substr(1, 4) + '_0_' + part.NEST_ID.substr(5, 4);
-      }
-    }
-
-    let nesting = this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision).concat(this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
-    let searchDxf = nesting.find(x => x.name.includes(search));
-    if (searchDxf != null){
-      if (this.dxfView != null && !this.dxfView.closed){
-        this.dxfView.close();
-      }
-      let url = '/dxf-view?navi=0&window=1&dxf=' + searchDxf.url + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
-      this.dxfEnabledForNesting = false;
-      this.dxfEnabled = false;
-      this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
-    }
-
-  }
-  showNestingTemplate(part: any) {
-    this.selectedPart = part;
-    this.dxfEnabledForNesting = true;
-    let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
-    let searchDxf = nesting.find(x => x.name.includes(part.SKETCH));
-    if (searchDxf != null){
-      if (!this.dxfEnabled){
-        this.dxfEnabled = !this.dxfEnabled;
-      }
-      this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
-        // @ts-ignore
-        this.router.navigate([], {queryParams: {dxf: searchDxf.url, search: null, searchNesting: part.PART_CODE + '-' + part.SYMMETRY}, queryParamsHandling: 'merge'});
-      });
-    }
-  }
-
-  showNestingTabletTemplate(part: any) {
-    this.selectedPart = part;
-    this.dxfEnabledForNesting = true;
-    let search = '';
-    search = part.PART_CODE + '-' + part.SYMMETRY;
-    if (search != ''){
-      let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
-      if (!this.nestContentRead){
-        this.nestContentRead = true;
-        nesting.filter(x => x.name.includes('profiles')).forEach(file => {
-          fetch(file.url).then(response => response.text()).then(text => {
-            text.split(';').filter(x => x.trim() != '').forEach(row => {
-              let splitRow = row.split(':');
-              this.nestContent.push({
-                file: splitRow[0].trim(),
-                parts: splitRow[1].trim().split(',')
-              });
-            });
-          });
-        });
-      }
-      let find = this.nestContent.find(x => x.parts.includes(search));
-      if (find != null){
-        let searchDxf = nesting.find(x => x.name == find.file);
-        if (searchDxf != null){
-          if (this.dxfView != null && !this.dxfView.closed){
-            this.dxfView.close();
-          }
-          let url = '/dxf-view?navi=0&window=1&dxf=' + searchDxf.url + (this.search != '' ? '&search=' + this.search : '') + (this.dxfEnabledForNesting ? '&searchNesting=' + this.selectedPart.PART_CODE : '');
-          this.dxfEnabledForNesting = false;
-          this.dxfEnabled = false;
-          this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
-        }
-      }
-    }
-  }
 
   clearFiles(fileGroup: string, revision: string) {
     this.dialogService.open(ClearFilesComponent, {
@@ -890,89 +540,37 @@ export class PipeEspComponent implements OnInit {
   }
 
   exportSketches() {
-    let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    let data: any[] = [];
-    this.parts.filter((x: any) => x.SKETCH != null && x.SKETCH != '').forEach((part: any) => {
-      data.push({
-        PART_CODE: part.PART_CODE,
-        PART_TYPE: part.PART_TYPE,
-        THICKNESS: part.ELEM_TYPE == 'PL' ? part.THICKNESS : part.WIDTH + 'x' + part.THICKNESS,
-        MATERIAL: part.MATERIAL,
-        SYMMETRY: part.SYMMETRY,
-        WEIGHT: this.round(part.WEIGHT_UNIT),
-        NEST_ID: part.NEST_ID,
-        SKETCH: part.SKETCH
-      });
-    });
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    XLSX.writeFile(workbook, fileName);
-  }
-
-  viewRevisionChanged() {
-    this.fillSketches();
+    // let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    // let data: any[] = [];
+    // this.parts.filter((x: any) => x.SKETCH != null && x.SKETCH != '').forEach((part: any) => {
+    //   data.push({
+    //     PART_CODE: part.PART_CODE,
+    //     PART_TYPE: part.PART_TYPE,
+    //     THICKNESS: part.ELEM_TYPE == 'PL' ? part.THICKNESS : part.WIDTH + 'x' + part.THICKNESS,
+    //     MATERIAL: part.MATERIAL,
+    //     SYMMETRY: part.SYMMETRY,
+    //     WEIGHT: this.round(part.WEIGHT_UNIT),
+    //     NEST_ID: part.NEST_ID,
+    //     SKETCH: part.SKETCH
+    //   });
+    // });
+    // const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    // const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    // XLSX.writeFile(workbook, fileName);
   }
 
   getArchive() {
     return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
   }
-  showCuttingFile(file: FileAttachment) {
-    this.cmap = file.url;
-    this.dxfEnabled = false;
-    this.cutEnabled = false;
-    this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
-      setTimeout(() => {
-        this.cutEnabled = true;
-        console.log(this.cutEnabled);
-        // @ts-ignore
-        this.router.navigate([], {queryParams: {cmap: file.url, cmapuser: this.auth.getUserName(file.author), cmapdate: file.upload_date}, queryParamsHandling: 'merge'});
-        const style = document.createElement('style');
-        style.innerHTML = `
-          .editBlock pre {
-            height: 42vh !important;
-          }
-          .viewContainer .TwoDView {
-            height: 45vh !important;
-          }
-        `;
-        document.head.appendChild(style);
-      });
-    });
+
+
+  selectPipe(pipe: any) {
+    this.selectedPipe = pipe;
   }
 
-  openCMAP() {
-    if (this.cmapView != null && !this.cmapView.closed){
-      this.cmapView.close();
-    }
-    let url = '/gcode?navi=0&window=1&cmap=' + this.cmap + '&cmapuser=' + this.cmapuser + '&cmapdate=' + this.cmapdate;
-    this.dxfEnabledForNesting = false;
-    this.dxfEnabled = false;
-    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
+  openFile(file: FileAttachment) {
+    window.open(file.url, '_blank');
   }
-
-  downloadOpenedCMAP() {
-    if (this.cmap != ''){
-      fetch(this.cmap).then(res => {
-        res.text().then(text => {
-          this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
-
-            var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
-            // @ts-ignore
-            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
-
-            element.style.display = 'none';
-            document.body.appendChild(element);
-
-            element.click();
-
-            document.body.removeChild(element);
-          });
-        });
-      });
-    }
-  }
-
   newImportantMessage() {
     let res = 0;
     let completed = false;
@@ -986,5 +584,29 @@ export class PipeEspComponent implements OnInit {
     });
     return res;
   }
+  mw(value: number){
+    return {
+      'min-width': value + '%'
+    }
+  }
 
+  getPipeDefs(selectedPipe: any) {
+    let res = [];
+    res.push({name: 'Code', value: selectedPipe.material.code});
+    res.push({name: 'Units', value: selectedPipe.material.units});
+    res.push({name: 'Single Weight', value: selectedPipe.material.singleWeight});
+    res.push({name: 'Document', value: selectedPipe.material.document});
+    res.push({name: 'Provider', value: selectedPipe.material.provider});
+    res.push({name: 'Spool', value: selectedPipe.spool});
+    res.push({name: 'Spool Piece', value: selectedPipe.spPieceId});
+    res.push({name: 'Type Code', value: selectedPipe.typeCode});
+    res.push({name: 'Zone', value: selectedPipe.zone});
+    res.push({name: 'SMAT', value: selectedPipe.smat});
+    res.push({name: 'Length', value: selectedPipe.length});
+    res.push({name: 'Radius', value: selectedPipe.radius});
+    res.push({name: 'Angle', value: selectedPipe.angle});
+    res.push({name: 'Weight', value: selectedPipe.weight});
+    res.push({name: 'Insul', value: selectedPipe.insul});
+    return res;
+  }
 }
