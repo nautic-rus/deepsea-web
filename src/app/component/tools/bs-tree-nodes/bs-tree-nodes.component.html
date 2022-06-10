@@ -1,4 +1,5 @@
-<div class="all-page">
+<div class="all-page-weight">
+  <div class="empty-card"></div>
   <div class="min-height-card">
     <div class="card-head df sticky-card">
       <div class="df">
@@ -16,47 +17,92 @@
           </p-dropdown>
         </div>
       </div>
-      <div class="df">
-        <div class="df">
-          <div class="flex-column cy mr-5">
-            <div class="height-35 cy mb-2px mt-20">Pre</div>
-            <div class="height-35 cy">Total</div>
+    </div>
+    <div class="empty-card-bottom"></div>
+    <div class="dashboard-weight w-100 df">
+      <div class="dash mr-10">
+        <div class="effect">
+          <img src="assets/icons/effect-yellow.svg">
+        </div>
+        <div class="dash-head-text">preliminary weight</div>
+        <div class="dash-big-text">{{roundWithMeasure(preData('weight'))}}</div>
+        <div class="mini-dash-text">preliminary calculations performed at the design stage</div>
+      </div>
+      <div class="dash ml-10 mr-10">
+        <div class="effect">
+          <img src="assets/icons/effect-green.svg">
+        </div>
+        <div class="dash-head-text">total weight</div>
+        <div class="dash-big-text">{{roundWithMeasure(summ)}}</div>
+        <div class="mini-dash-text">actual weight from the model</div>
+      </div>
+      <div class="dash ml-10 mr-10">
+        <div class="effect">
+          <img src="assets/icons/effect-blue.svg">
+        </div>
+        <div class="dash-head-text">preliminary coordinates</div>
+        <div class="df mt-10">
+          <div class="df mr-25">
+            <div class="cy mr-10">
+              <div class="blue-dash-point"></div>
+            </div>
+            <div class="df dash-coordinates-x">
+              <div class="dash-medium-opacity-text mr-15">X</div>
+              <div class="dash-medium-text ">{{preData('x')}}</div>
+            </div>
           </div>
-
-
-          <div class="mr-5">
-
-            <div>
-              <div class="cx">W</div>
-              <div class="width-100 pre-weight mb-2px">{{roundWithMeasure(preData('weight'))}}</div>
-              <div class="width-100 pl-4 total-weight">{{roundWithMeasure(summ)}}</div>
+          <div class="df mr-25">
+            <div class="cy mr-10">
+              <div class="green-dash-point"></div>
+            </div>
+            <div class="df dash-coordinates-y">
+              <div class="dash-medium-opacity-text mr-15">Y</div>
+              <div class="dash-medium-text ">{{preData('y')}}</div>
+            </div>
+          </div>
+          <div class="df mr-25">
+            <div class="cy mr-10">
+              <div class="red-dash-point"></div>
+            </div>
+            <div class="df dash-coordinates-z">
+              <div class="dash-medium-opacity-text mr-15">Z</div>
+              <div class="dash-medium-text ">{{preData('z')}}</div>
             </div>
           </div>
         </div>
-        <div class="mr-10">
-          <div class="w-100 cxy mb-2px">
-            <div class="width-100">
-              <div class="cx">X</div>
-              <div class="mr-5 label-pre">{{preData('x')}}</div>
+
+      </div>
+      <div class="dash ml-10">
+        <div class="effect">
+          <img src="assets/icons/effect-violet.svg">
+        </div>
+        <div class="dash-head-text">actual coordinates</div>
+        <div class="df mt-10">
+          <div class="df mr-25">
+            <div class="cy mr-10">
+              <div class="blue-dash-point"></div>
             </div>
-            <div  class="width-100">
-              <div class="cx">Y</div>
-              <div class="mr-5 label-pre">{{preData('y')}}</div>
-            </div>
-            <div  class="width-100">
-              <div class="cx">Z</div>
-              <div class="label-pre">{{preData('z')}}</div>
+            <div class="df dash-actual-coordinates-x">
+              <div class="dash-medium-opacity-text mr-15">X</div>
+              <div class="dash-medium-text-actual ">{{round(globalXcog)}}</div>
             </div>
           </div>
-          <div class="w-100 cxy" *ngIf="globalActual != 0">
-            <div class="width-100">
-              <div class="mr-5 x-label-total">{{round(globalXcog)}}</div>
+          <div class="df mr-25">
+            <div class="cy mr-10">
+              <div class="green-dash-point"></div>
             </div>
-            <div  class="width-100">
-              <div class="mr-5 y-label-total">{{round(globalYcog)}}</div>
+            <div class="df dash-actual-coordinates-y">
+              <div class="dash-medium-opacity-text mr-15">Y</div>
+              <div class="dash-medium-text-actual ">{{round(globalYcog)}}</div>
             </div>
-            <div  class="width-100">
-              <div class="z-label-total">{{round(globalZcog)}}</div>
+          </div>
+          <div class="df mr-25">
+            <div class="cy mr-10">
+              <div class="red-dash-point"></div>
+            </div>
+            <div class="df dash-actual-coordinates-z">
+              <div class="dash-medium-opacity-text mr-15">Z</div>
+              <div class="dash-medium-text-actual ">{{round(globalZcog)}}</div>
             </div>
           </div>
         </div>
@@ -73,7 +119,7 @@
         </div>
       </div>
       <p-treeTable *ngIf="!loading" [value]="nodes" (onNodeExpand)="onNodeExpand($event)"
-                   [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 320px)" [virtualScroll]="true" [virtualRowHeight]="15">
+                   [scrollable]="true" [rows]="100" scrollHeight="calc(100vh - 300px)" [virtualScroll]="true" [virtualRowHeight]="15">
         <ng-template pTemplate="header">
           <tr>
             <th [ttSortableColumn]="'NAME'" style="width: 45%">Name <p-treeTableSortIcon [field]="'NAME'"></p-treeTableSortIcon></th>
@@ -141,5 +187,6 @@
         </ng-template>
       </p-treeTable>
     </div>
+  </div>
 </div>
 

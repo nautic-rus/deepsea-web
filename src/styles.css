@@ -380,6 +380,9 @@ body,p{
   display: flex;
   justify-content: flex-end;
 }
+.align-end{
+  align-items: flex-end;
+}
 .flex-end-top{
   display: flex;
   align-items: flex-start;
@@ -469,6 +472,9 @@ body,p{
 }
 .mt-5{
   margin-top: 5px;
+}
+.mt-6{
+  margin-top: 6px;
 }
 .mt-7{
   margin-top: 7px;
@@ -595,6 +601,9 @@ body,p{
 }
 .mr-20{
   margin-right: 20px;
+}
+.mr-25{
+  margin-right: 25px;
 }
 .mr-30{
   margin-right: 30px;

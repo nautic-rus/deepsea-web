@@ -23,14 +23,14 @@
 <!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>-->
       </div>
       <div class="p-ml-auto df">
-        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
-          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
-          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
-        </div>
-        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">
-          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
-          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
-        </div>
+<!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
+<!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
+<!--          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">-->
+<!--        </div>-->
+<!--        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">-->
+<!--          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">-->
+<!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
+<!--        </div>-->
         <div *ngIf="selectedHeadTab == 'Plates'" class="df">
           <div class="mr-10 ml-10">
             <p-dropdown class="select" [(ngModel)]="sortPlatesValue" [options]="sortPlatesValues" (ngModelChange)="sortPlatesChanged()" styleClass="width-170 border">

@@ -1084,6 +1084,19 @@ export class NestingComponent implements OnInit {
     });
   }
   profileName(profile: any){
-    return profile.TP + ' ' + [profile.WH, profile.WT, profile.FH, profile.FT].filter(x => x != 0).join('x') + ' ' + (+profile.TOGROLEN / 1000) + ' ' + profile.KQ;
+    return this.profDecode(profile.TP) + ' ' + profile.KQ + ' ' + [profile.WH, profile.WT, profile.FH, profile.FT].filter(x => x != 0).join('x') + ' ' + 'L' + (+profile.TOGROLEN / 1000) + 'm';
+  }
+  profDecode(code: string): string{
+    switch (code) {
+      case 'AS': return 'LP';
+      case 'FS': return 'FB';
+      case 'PS': return 'PIPE';
+      case 'RS': return 'RB';
+      case 'MC': return 'HRB';
+      case 'SR': return 'SQB';
+      case 'HR': return 'SQP';
+      case 'BS': return 'HP';
+      default: return code;
+    }
   }
 }
