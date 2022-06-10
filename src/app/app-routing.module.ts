@@ -29,6 +29,7 @@ import {WeightComponent} from "./component/weight/weight.component";
 import {FileExplorerComponent} from "./component/file-explorer/file-explorer.component";
 import {BsTreeNodesComponent} from "./component/tools/bs-tree-nodes/bs-tree-nodes.component";
 import {WeightControlComponent} from "./component/weight-control/weight-control.component";
+import {PipeEspComponent} from "./component/documents/pipe-esp/pipe-esp.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -47,7 +48,8 @@ const routes: Routes = [
   { path: 'tools', component: ToolsComponent, canActivate: [AuthGuard], data: {animation: 'ToolsComponent'} },
   { path: 'labor-costs', component: LaborCostsComponent, canActivate: [AuthGuard], data: {animation: 'LaborCostsComponent'} },
   { path: 'trays-by-zones-and-systems', component: TraysByZonesAndSystemsComponent, canActivate: [AuthGuard], data: {animation: 'TraysByZonesAndSystemsComponent'} },
-  { path: 'esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
+  { path: 'hull-esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
+  { path: 'pipe-esp', component: PipeEspComponent, canActivate: [AuthGuard], data: {animation: 'PipeEspComponent'} },
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
   { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },

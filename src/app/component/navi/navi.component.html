@@ -73,7 +73,12 @@
       <img src="assets/icons/cube.svg" height="22">
     </div>
   </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="menu" routerLink="documents" routerLinkActive="selected-menu" queryParamsHandling="merge">
+  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="menu" routerLink="documents" [queryParams]="{'department': 'Hull'}" routerLinkActive="selected-menu" queryParamsHandling="merge">
+    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">
+      <img src="assets/icons/docs.svg" height="17">
+    </div>
+  </div>
+  <div *ngIf="auth.getUser().visible_pages.includes('pipe-documents')" class="menu" routerLink="documents" [queryParams]="{'department': 'Pipe'}" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">
       <img src="assets/icons/docs.svg" height="17">
     </div>
