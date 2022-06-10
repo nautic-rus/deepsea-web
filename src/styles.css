@@ -431,6 +431,9 @@ body,p{
   font-size: 12px!important;
   padding: 6px 8px!important;
 }
+.mr-minus5{
+  margin-right: -5px;
+}
 .mr-minus15{
   margin-right: -15px;
 }

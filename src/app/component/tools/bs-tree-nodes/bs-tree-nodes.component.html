@@ -19,94 +19,105 @@
       </div>
     </div>
     <div class="empty-card-bottom"></div>
-    <div class="dashboard-weight w-100 df">
-      <div class="dash mr-10">
-        <div class="effect">
-          <img src="assets/icons/effect-yellow.svg">
+    <div class="dashboard-weight df">
+      <div class="over-dash p-10">
+        <div class="dash">
+          <div class="effect">
+            <img src="assets/icons/effect-yellow.svg">
+          </div>
+          <div class="dash-head-text">preliminary weight</div>
+          <div class="dash-big-text">{{roundWithMeasure(preData('weight'))}}</div>
+          <div class="mini-dash-text">preliminary calculations performed at the design stage</div>
         </div>
-        <div class="dash-head-text">preliminary weight</div>
-        <div class="dash-big-text">{{roundWithMeasure(preData('weight'))}}</div>
-        <div class="mini-dash-text">preliminary calculations performed at the design stage</div>
       </div>
-      <div class="dash ml-10 mr-10">
-        <div class="effect">
-          <img src="assets/icons/effect-green.svg">
+      <div  class="over-dash p-10">
+        <div class="dash">
+          <div class="effect">
+            <img src="assets/icons/effect-green.svg">
+          </div>
+          <div class="dash-head-text">total weight</div>
+          <div class="dash-big-text">{{roundWithMeasure(summ)}}</div>
+          <div class="mini-dash-text">actual weight from the model</div>
         </div>
-        <div class="dash-head-text">total weight</div>
-        <div class="dash-big-text">{{roundWithMeasure(summ)}}</div>
-        <div class="mini-dash-text">actual weight from the model</div>
       </div>
-      <div class="dash ml-10 mr-10">
-        <div class="effect">
-          <img src="assets/icons/effect-blue.svg">
-        </div>
-        <div class="dash-head-text">preliminary coordinates</div>
-        <div class="df mt-10">
-          <div class="df mr-25">
-            <div class="cy mr-10">
-              <div class="blue-dash-point"></div>
+      <div  class="over-dash p-10">
+        <div class="dash">
+          <div class="effect">
+            <img src="assets/icons/effect-blue.svg">
+          </div>
+          <div class="dash-head-text">preliminary coordinates</div>
+          <div class="df mt-10">
+            <div class="df mr-25">
+              <div class="cy mr-10">
+                <div class="blue-dash-point"></div>
+              </div>
+              <div class="df dash-coordinates-x">
+                <div class="dash-medium-opacity-text mr-15">X</div>
+                <div class="dash-medium-text ">{{preData('x')}}</div>
+              </div>
             </div>
-            <div class="df dash-coordinates-x">
-              <div class="dash-medium-opacity-text mr-15">X</div>
-              <div class="dash-medium-text ">{{preData('x')}}</div>
+            <div class="df mr-25">
+              <div class="cy mr-10">
+                <div class="green-dash-point"></div>
+              </div>
+              <div class="df dash-coordinates-y">
+                <div class="dash-medium-opacity-text mr-15">Y</div>
+                <div class="dash-medium-text ">{{preData('y')}}</div>
+              </div>
+            </div>
+            <div class="df mr-25">
+              <div class="cy mr-10">
+                <div class="red-dash-point"></div>
+              </div>
+              <div class="df dash-coordinates-z">
+                <div class="dash-medium-opacity-text mr-15">Z</div>
+                <div class="dash-medium-text ">{{preData('z')}}</div>
+              </div>
             </div>
           </div>
-          <div class="df mr-25">
-            <div class="cy mr-10">
-              <div class="green-dash-point"></div>
-            </div>
-            <div class="df dash-coordinates-y">
-              <div class="dash-medium-opacity-text mr-15">Y</div>
-              <div class="dash-medium-text ">{{preData('y')}}</div>
-            </div>
-          </div>
-          <div class="df mr-25">
-            <div class="cy mr-10">
-              <div class="red-dash-point"></div>
-            </div>
-            <div class="df dash-coordinates-z">
-              <div class="dash-medium-opacity-text mr-15">Z</div>
-              <div class="dash-medium-text ">{{preData('z')}}</div>
-            </div>
-          </div>
-        </div>
 
-      </div>
-      <div class="dash ml-10">
-        <div class="effect">
-          <img src="assets/icons/effect-violet.svg">
-        </div>
-        <div class="dash-head-text">actual coordinates</div>
-        <div class="df mt-10">
-          <div class="df mr-25">
-            <div class="cy mr-10">
-              <div class="blue-dash-point"></div>
-            </div>
-            <div class="df dash-actual-coordinates-x">
-              <div class="dash-medium-opacity-text mr-15">X</div>
-              <div class="dash-medium-text-actual ">{{round(globalXcog)}}</div>
-            </div>
-          </div>
-          <div class="df mr-25">
-            <div class="cy mr-10">
-              <div class="green-dash-point"></div>
-            </div>
-            <div class="df dash-actual-coordinates-y">
-              <div class="dash-medium-opacity-text mr-15">Y</div>
-              <div class="dash-medium-text-actual ">{{round(globalYcog)}}</div>
-            </div>
-          </div>
-          <div class="df mr-25">
-            <div class="cy mr-10">
-              <div class="red-dash-point"></div>
-            </div>
-            <div class="df dash-actual-coordinates-z">
-              <div class="dash-medium-opacity-text mr-15">Z</div>
-              <div class="dash-medium-text-actual ">{{round(globalZcog)}}</div>
-            </div>
-          </div>
         </div>
       </div>
+      <div class="over-dash p-10">
+        <div class="dash">
+          <div class="effect">
+            <img src="assets/icons/effect-violet.svg">
+          </div>
+          <div class="dash-head-text">actual coordinates</div>
+          <div class="df mt-10">
+            <div class="df mr-25">
+              <div class="cy mr-10">
+                <div class="blue-dash-point"></div>
+              </div>
+              <div class="df dash-actual-coordinates-x">
+                <div class="dash-medium-opacity-text mr-15">X</div>
+                <div class="dash-medium-text-actual ">{{round(globalXcog)}}</div>
+              </div>
+            </div>
+            <div class="df mr-25">
+              <div class="cy mr-10">
+                <div class="green-dash-point"></div>
+              </div>
+              <div class="df dash-actual-coordinates-y">
+                <div class="dash-medium-opacity-text mr-15">Y</div>
+                <div class="dash-medium-text-actual ">{{round(globalYcog)}}</div>
+              </div>
+            </div>
+            <div class="df mr-25">
+              <div class="cy mr-10">
+                <div class="red-dash-point"></div>
+              </div>
+              <div class="df dash-actual-coordinates-z">
+                <div class="dash-medium-opacity-text mr-15">Z</div>
+                <div class="dash-medium-text-actual ">{{round(globalZcog)}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
     </div>
     <div class="empty-card-bottom"></div>
     <div class="card-weight">

@@ -189,8 +189,11 @@
   font-size: 13px;
 }
 .dashboard-weight{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+}
+.over-dash{
+  width: 25%;
 }
 .dash{
   background-color: white;
@@ -198,6 +201,16 @@
   height: 80px;
   padding: 8px;
   position: relative;
+}
+@media (max-width: 1600px) {
+  .over-dash{
+    width: 50%;
+  }
+}
+@media (max-width: 900px) {
+  .over-dash{
+    width: 100%;
+  }
 }
 .coordinates{
   display: grid;
@@ -238,31 +251,37 @@
   border: 1px solid #6ec5ffcc;
   padding: 0 4px;
   border-radius: 6px;
+  min-width: 83px;
 }
 .dash-coordinates-y{
   border: 1px solid #61d42dba;
   padding: 0 4px;
   border-radius: 6px;
+  min-width: 83px;
 }
 .dash-coordinates-z{
   border: 1px solid #f3745ad1;
   padding: 0 4px;
   border-radius: 6px;
+  min-width: 83px;
 }
 .dash-actual-coordinates-x{
   background-color: #6ec5ffcc;
   padding: 0 4px;
   border-radius: 6px;
+  min-width: 83px;
 }
 .dash-actual-coordinates-y{
   background-color: #61d42dba;
   padding: 0 4px;
   border-radius: 6px;
+  min-width: 83px;
 }
 .dash-actual-coordinates-z{
   background-color: #f3745ad1;
   padding: 0 4px;
   border-radius: 6px;
+  min-width: 83px;
 }
 .mini-dash-text{
   font-weight: 500;

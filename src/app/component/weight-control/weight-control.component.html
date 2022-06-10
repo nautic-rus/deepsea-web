@@ -3,6 +3,10 @@
     <div class="card-head df sticky-card space-between mb-40">
       <div class="df">
         <div class="mr-10">
+          <p-dropdown [disabled]="loading" placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-10">
           <div class="new-button-weight blue-button cxy" (click)="openNew()">
             <div class="pr-10 cxy">
               <img src="assets/icons/plus3.svg" height="18">

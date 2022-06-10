@@ -22,6 +22,9 @@ export class WeightControlComponent implements OnInit {
   totalX = 0;
   totalY = 0;
   totalZ = 0;
+  loading = true;
+  project = '1701';
+  projects: string[] = ['1701'];
 
   constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService) { }
 
