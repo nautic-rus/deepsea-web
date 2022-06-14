@@ -67,6 +67,7 @@ export class HullEspComponent implements OnInit {
   nestContent: any[] = [];
   nestContentRead = false;
   collapsed: string[] = [];
+  miscIssues: Issue[] = [];
   quillModules =
     {
       imageResize: {},
@@ -458,6 +459,15 @@ export class HullEspComponent implements OnInit {
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
+      this.miscIssues.splice(0, this.miscIssues.length);
+      this.issueManager.getIssues('op').then(issues => {
+        issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+        this.miscIssues.forEach(x => {
+          issues.filter(y => y.parent_id == x.id).forEach(ch => {
+            this.miscIssues.push(ch);
+          })
+        });
+      });
       this.issueRevisions.push(this.issue.revision);
       this.issue.revision_files.map(x => x.revision).forEach(gr => {
         if (!this.issueRevisions.includes(gr)){

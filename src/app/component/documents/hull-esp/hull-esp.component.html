@@ -800,7 +800,7 @@
             <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
           </div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
-          <div *ngIf="issue.child_issues.length != 0" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">Misc</div>
+          <div *ngIf="miscIssues.length > 0" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">Misc</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
 
@@ -1329,42 +1329,12 @@
         </div>
         </div>
         <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
-          <div class="big-text-issues mb-1">Miscellaneous</div>
-          <div [collapse]="contentApproval" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'APPROVAL').length > 0" (click)="contentClick('approval')">
-            <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('approval')">
-              <img src="assets/icons/arrow-right.png">
-            </div>
-            <div>APPROVEMENT</div>
-          </div>
-          <div collapseContent #contentApproval="collapseContent" class="collapse-body">
-            <div class="" *ngIf="issue.child_issues.length > 0">
-              <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'APPROVAL')">
-                <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
-                  <div>APPROVEMENT</div>
-                  <div>
-                    <span>{{childIssue.doc_number}}</span>
-                    <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
-                  </div>
-                  <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-                  <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div [collapse]="contentOther" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'OTHER').length > 0" (click)="contentClick('other')">
-            <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('other')">
-              <img src="assets/icons/arrow-right.png">
-            </div>
-            <div>OTHER</div>
-          </div>
-          <div collapseContent #contentOther="collapseContent" class="collapse-body">
-            <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OTHER')">
-              <div class="subtask-grid" (click)="openIssue(childIssue.id)">
-                <div>OTHER</div>
+          <div class="big-text-issues mb-1">Miscelaneous</div>
+          <div class="" *ngIf="miscIssues.length > 0">
+            <div class="subtask cy" *ngFor="let childIssue of miscIssues">
+              <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
                 <div>
-                  <span>{{childIssue.doc_number}}</span>
+                  <span>{{childIssue.doc_number + ' '}}</span>
                   <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
                 </div>
                 <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
@@ -1372,10 +1342,7 @@
               </div>
             </div>
           </div>
-
         </div>
-
-
       </div>
     </div>
   </div>
