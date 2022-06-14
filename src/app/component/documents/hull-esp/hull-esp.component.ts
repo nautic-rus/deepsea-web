@@ -66,6 +66,7 @@ export class HullEspComponent implements OnInit {
   selectedHeadTab: string = 'Files';
   nestContent: any[] = [];
   nestContentRead = false;
+  collapsed: string[] = [];
   quillModules =
     {
       imageResize: {},
@@ -985,4 +986,15 @@ export class HullEspComponent implements OnInit {
     });
     return res;
   }
+
+  openIssue(id: number) {
+    window.open('/?taskId=' + id, '_blank');
+  }
+  getIssuesOfType(child_issues: Issue[], issue_type: string) {
+    return child_issues.filter(x => x.issue_type == issue_type);
+  }
+  contentClick(content: string): void{
+    this.collapsed.includes(content) ? this.collapsed.splice(this.collapsed.indexOf(content), 1) : this.collapsed.push(content);
+  }
+
 }
