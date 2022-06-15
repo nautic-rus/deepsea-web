@@ -767,6 +767,10 @@ export class TaskComponent implements OnInit {
     let issue = new Issue();
     issue.parent_id = this.issue.id;
     issue.project = this.issue.project;
+    issue.doc_number = this.issue.doc_number;
+    issue.name = this.issue.name;
+    issue.department = this.issue.department;
+    issue.for_revision = this.issue.revision;
     this.newTask(issue);
   }
 

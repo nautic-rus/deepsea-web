@@ -44,4 +44,5 @@ export class Issue {
   readyM: boolean = false;
   readyD: boolean = false;
   readyN: boolean = false;
+  for_revision = '-';
 }
