@@ -242,6 +242,14 @@
   border-radius: 6px;
   background-color: #c8e6c9;
 }
+.number-card-shipyard{
+  width: 50px;
+  height: 24px;
+  border: 1px solid #CAD2D3;
+  color: #777777;
+  border-radius: 6px;
+  background-color: #feeccd;
+}
 .circle{
   position: absolute;
 }

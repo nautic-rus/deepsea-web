@@ -80,7 +80,7 @@
   </div>
   <div *ngIf="auth.getUser().visible_pages.includes('pipe-documents')" class="menu" routerLink="documents" [queryParams]="{'department': 'Pipe'}" routerLinkActive="selected-menu" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">
-      <img src="assets/icons/docs.svg" height="17">
+      <img src="assets/icons/pipe.svg" height="20">
     </div>
   </div>
   <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
