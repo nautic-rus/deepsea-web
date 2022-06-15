@@ -879,14 +879,22 @@
   cursor: pointer;
   display: flex;
   position: relative;
-  height: 40px;
-  padding: 0px 6px;
 }
 .subtask-grid{
   display: grid;
-  grid-template-columns: 3fr 3fr 3fr 2fr;
+  grid-template-columns: 3fr 2fr 2fr 2fr;
   font-size: 14px;
 }
 .subtask:hover{
   background-color: rgba(235, 236, 240, 0.36);
+}
+.head-subtask{
+  color: #343a40;
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-width: 1px 0 1px 0;
+  font-weight: 700;
+  background: #f8f9fa;
+  transition: box-shadow 0.2s;
+  cursor: default;
 }

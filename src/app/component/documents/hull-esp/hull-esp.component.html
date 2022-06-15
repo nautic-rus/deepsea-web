@@ -1329,17 +1329,22 @@
         </div>
         </div>
         <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
-          <div class="big-text-issues mb-1">Tasks</div>
+          <div class="subtask-grid py-10">
+            <div class="head-subtask">Task name</div>
+            <div class="head-subtask">Responsible</div>
+            <div class="head-subtask">Assigned to</div>
+            <div class="head-subtask">Status</div>
+          </div>
           <div class="" *ngIf="miscIssues.length > 0">
-            <div class="subtask cy" *ngFor="let childIssue of miscIssues">
+            <div class="subtask" *ngFor="let childIssue of miscIssues">
               <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
-                <div>
+                <div class="py-10 px-10">
                   <span>{{childIssue.doc_number + ' '}}</span>
                   <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
                 </div>
-                <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-                <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
-                <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+                <div class="cy px-10 py-10" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+                <div class="cy px-10 py-10 " [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                <div class="dfc px-10 py-10" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
               </div>
             </div>
           </div>
