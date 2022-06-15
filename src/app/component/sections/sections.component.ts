@@ -76,6 +76,37 @@ export class SectionsComponent implements OnInit {
     }
     return{};
   }
+  getNewIssueStyle(issueId: number) {
+    let find = this.issues.find(x => x.id == issueId);
+    let status = '';
+    if (find != null){
+      status = find.status;
+    }
+    switch (status){
+      case 'In Work': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Resolved': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'New': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'AssignedTo': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Rejected': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Check': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'In Rework': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Paused': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Archive': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Not resolved': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Closed': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Send to Approval': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Approved': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Not approved': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Ready to send': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'On reApproval': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Ready to Delivery': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Send to Yard Approval': return {'background-color': '#feeccd', border: 'none', color: '#d78a16', 'font-weight': 600};
+      case 'Delivered': return {'background-color': '#c8e6c9', border: 'none', color: '#256029', 'font-weight': 600};
+      default: {
+      }
+    }
+    return{};
+  }
   getStyleTurk(s: string) {
     let find = this.issues.find(x => x.name.includes('Block ' + s));
     let status = '';
