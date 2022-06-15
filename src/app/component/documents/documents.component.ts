@@ -44,8 +44,12 @@ export class DocumentsComponent implements OnInit {
       else {
         this.project = this.projects[0];
       }
-      this.department = params.department != null ? params.department : 'Hull';
       this.showWithFilesOnly = params.showWithFilesOnly == null || +params.showWithFilesOnly == 1;
+      this.department = params.department != null ? params.department : 'Hull';
+      if (this.department == 'Pipe'){
+        this.project = 'NR004';
+        this.showWithFilesOnly = false;
+      }
       this.fillIssues();
     });
     if (this.l.language == 'ru'){
