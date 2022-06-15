@@ -66,6 +66,8 @@ export class HullEspComponent implements OnInit {
   selectedHeadTab: string = 'Files';
   nestContent: any[] = [];
   nestContentRead = false;
+  collapsed: string[] = [];
+  miscIssues: Issue[] = [];
   quillModules =
     {
       imageResize: {},
@@ -457,6 +459,15 @@ export class HullEspComponent implements OnInit {
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
+      this.miscIssues.splice(0, this.miscIssues.length);
+      this.issueManager.getIssues(this.auth.getUser().login).then(issues => {
+        issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+        this.miscIssues.forEach(x => {
+          issues.filter(y => y.parent_id == x.id).forEach(ch => {
+            this.miscIssues.push(ch);
+          })
+        });
+      });
       this.issueRevisions.push(this.issue.revision);
       this.issue.revision_files.map(x => x.revision).forEach(gr => {
         if (!this.issueRevisions.includes(gr)){
@@ -985,4 +996,15 @@ export class HullEspComponent implements OnInit {
     });
     return res;
   }
+
+  openIssue(id: number) {
+    window.open('/?taskId=' + id, '_blank');
+  }
+  getIssuesOfType(child_issues: Issue[], issue_type: string) {
+    return child_issues.filter(x => x.issue_type == issue_type);
+  }
+  contentClick(content: string): void{
+    this.collapsed.includes(content) ? this.collapsed.splice(this.collapsed.indexOf(content), 1) : this.collapsed.push(content);
+  }
+
 }

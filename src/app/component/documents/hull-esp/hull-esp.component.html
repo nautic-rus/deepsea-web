@@ -796,10 +796,11 @@
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity
-            <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
-          </div>
+<!--          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity-->
+<!--            <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>-->
+<!--          </div>-->
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
+          <div *ngIf="miscIssues.length > 0" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">Tasks</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
 
@@ -1327,8 +1328,21 @@
           </div>
         </div>
         </div>
-
-
+        <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
+          <div class="big-text-issues mb-1">Tasks</div>
+          <div class="" *ngIf="miscIssues.length > 0">
+            <div class="subtask cy" *ngFor="let childIssue of miscIssues">
+              <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
+                <div>
+                  <span>{{childIssue.doc_number + ' '}}</span>
+                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                </div>
+                <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
