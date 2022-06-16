@@ -1339,14 +1339,14 @@
           <div class="" *ngIf="miscIssues.length > 0">
             <div class="subtask" *ngFor="let childIssue of miscIssues">
               <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
-                <div class="cy px-10 py-10" [innerHTML]="childIssue.issue_type"></div>
-                <div class="py-10 px-10">
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
+                <div class="py-10 px-10 subtask-text">
                   <span>{{childIssue.doc_number + ' '}}</span>
                   <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
                 </div>
-                <div class="cy px-10 py-10" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
-                <div class="cy px-10 py-10 " [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-                <div class="dfc px-10 py-10" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                <div class="dfc px-10 py-10 subtask-text" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
               </div>
             </div>
           </div>
