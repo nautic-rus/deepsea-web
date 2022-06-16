@@ -150,7 +150,9 @@ export class IssueManagerService {
   async getAmountTask(project:string, department:string, status: string) {
     return await this.http.get(props.http + '/getAmountTask',{params: {project, department, status}}).toPromise(); //reques amount of task
   }
-
+  async dingUser(user: string, msg: string) {
+    return await this.http.get(props.http + '/sendNotificationToUser',{params: {user, msg}}).toPromise();
+  }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{

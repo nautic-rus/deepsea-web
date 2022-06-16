@@ -26,6 +26,7 @@ import {ConfirmAlreadyExistSendToYardComponent} from "./confirm-already-exist-se
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {CreateCheckListComponent} from "./create-check-list/create-check-list.component";
 import {IssueCheck} from "../../domain/classes/issue-check";
+import * as props from "../../props";
 
 @Component({
   selector: 'app-task',
@@ -768,7 +769,7 @@ export class TaskComponent implements OnInit {
     issue.parent_id = this.issue.id;
     issue.project = this.issue.project;
     issue.doc_number = this.issue.doc_number;
-    issue.name = this.issue.name;
+    //issue.name = this.issue.name;
     issue.department = this.issue.department;
     issue.for_revision = this.issue.revision;
     this.newTask(issue);
@@ -859,5 +860,12 @@ export class TaskComponent implements OnInit {
       case 'Pipe': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       default: break;
     }
+  }
+
+  dingUser(msg: any) {
+    let message = 'Пользователь ' + this.auth.getUserName(this.auth.getUser().login) + ' просит обратить внимание на сообщение к задаче ' + `<${props.baseUrl}/?taskId=${this.issue.id}| ${this.issue.name}>`;
+    this.issueManager.dingUser(msg.author, message).then(res => {
+      this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to user.'});
+    });
   }
 }

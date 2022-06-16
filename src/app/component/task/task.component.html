@@ -354,6 +354,7 @@
                 </div>
               </div>
             </div>
+            <div class="ding pl-2" (click)="dingUser(msg)">DING</div>
           </div>
         </div>
         <div class="issue-message" *ngIf="msg.content == null && (messageFilter == 'all' || messageFilter == 'history') && msg.update_message != 'hidden'">

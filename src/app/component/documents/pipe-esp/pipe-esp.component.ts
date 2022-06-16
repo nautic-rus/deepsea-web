@@ -540,23 +540,35 @@ export class PipeEspComponent implements OnInit {
   }
 
   exportSketches() {
-    // let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    // let data: any[] = [];
-    // this.parts.filter((x: any) => x.SKETCH != null && x.SKETCH != '').forEach((part: any) => {
-    //   data.push({
-    //     PART_CODE: part.PART_CODE,
-    //     PART_TYPE: part.PART_TYPE,
-    //     THICKNESS: part.ELEM_TYPE == 'PL' ? part.THICKNESS : part.WIDTH + 'x' + part.THICKNESS,
-    //     MATERIAL: part.MATERIAL,
-    //     SYMMETRY: part.SYMMETRY,
-    //     WEIGHT: this.round(part.WEIGHT_UNIT),
-    //     NEST_ID: part.NEST_ID,
-    //     SKETCH: part.SKETCH
-    //   });
-    // });
-    // const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    // const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    // XLSX.writeFile(workbook, fileName);
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = [];
+    _.forEach(_.groupBy(_.sortBy(this.pipes, x => x.spool + '#' + x.stock + '#' + x.typeCode + '#' + x.material.name), x => {return x.spool + '#' + x.stock + '#' + x.typeCode}), group => {
+      let summ = 0;
+      let weight = 0;
+      group.forEach((pipe: any) => {
+        weight += pipe.weight;
+        summ += pipe.length;
+      });
+      if (group[0].material.units == '796'){
+        summ = group.length;
+      }
+      else{
+        summ = Math.round(summ / 10) / 100;
+      }
+      data.push({
+        SPOOL: group[0].spool,
+        MATERIAL: group[0].material.name,
+        UNITS: group[0].material.units,
+        COUNT: summ,
+        WEIGHT_TOTAL: Math.round(weight * 100) / 100,
+      });
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    worksheet['!cols'] = [{wch:10},{wch:85},{wch:10},{wch:10},{wch:15}];
+
+    XLSX.writeFile(workbook, fileName);
   }
 
   getArchive() {

@@ -1330,6 +1330,7 @@
         </div>
         <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
           <div class="subtask-grid py-10">
+            <div class="head-subtask">Type</div>
             <div class="head-subtask">Task name</div>
             <div class="head-subtask">Responsible</div>
             <div class="head-subtask">Assigned to</div>
@@ -1338,6 +1339,7 @@
           <div class="" *ngIf="miscIssues.length > 0">
             <div class="subtask" *ngFor="let childIssue of miscIssues">
               <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
+                <div class="cy px-10 py-10" [innerHTML]="childIssue.issue_type"></div>
                 <div class="py-10 px-10">
                   <span>{{childIssue.doc_number + ' '}}</span>
                   <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
