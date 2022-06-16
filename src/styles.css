@@ -844,6 +844,9 @@ cdk-virtual-scroll-viewport{
 .p-ml-auto{
   margin-left: auto!important;
 }
+.p-mr-auto{
+  margin-right: auto!important;
+}
 .p-d-flex {
   display: flex!important;
 }

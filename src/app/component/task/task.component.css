@@ -261,7 +261,7 @@
 }
 .task-header{
   display: grid;
-  grid-template-columns: 7fr 1fr;
+  grid-template-columns: 66% auto;
   padding-top: 1rem;
   margin-bottom: 1rem;
 }

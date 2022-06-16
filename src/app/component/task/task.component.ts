@@ -852,4 +852,12 @@ export class TaskComponent implements OnInit {
       });
     });
   }
+  viewTask(issueId: number, project: string, docNumber: string, department: string) {
+    let foranProject = project.replace('NR', 'N');
+    switch (department) {
+      case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+      case 'Pipe': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+      default: break;
+    }
+  }
 }

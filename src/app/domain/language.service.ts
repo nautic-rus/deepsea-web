@@ -307,7 +307,7 @@ export class LanguageService {
           case 'КОНТРОЛЬ ВЕСА': return 'WEIGHT CONTROL';
           case 'Выгрузить в Excel': return 'Export XLS';
           case 'Общая масса:': return 'Total weight';
-          case '': return '';
+          case 'Документация': return 'Documentation';
           case '': return '';
           case '': return '';
           case '': return '';

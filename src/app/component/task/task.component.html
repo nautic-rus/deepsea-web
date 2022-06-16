@@ -8,13 +8,16 @@
       </div>
     </div>
     <div class="task-buttons">
-      <div>
-        <div pButton class="task-button cxy mr-10 button-disabled" tooltipPosition="top" [pTooltip]="t.tr('Параметры отслеживания')" (click)="menu.toggle($event)">
-          <img src="assets/icons/eye.svg" height="24">
-          <span class="ml-5">1</span>
-        </div>
-        <p-menu #menu id="config_menu" [popup]="true" [model]="viewers"></p-menu>
+      <div *ngIf="issue.issue_type == 'RKD'" class="task-button cxy mr-10 p-mr-auto" tooltipPosition="top" [pTooltip]="t.tr('Документация')" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
+        <img src="assets/icons/tasks-doc.svg" height="20">
       </div>
+<!--      <div>-->
+<!--        <div pButton class="task-button cxy mr-10 button-disabled" tooltipPosition="top" [pTooltip]="t.tr('Параметры отслеживания')" (click)="menu.toggle($event)">-->
+<!--          <img src="assets/icons/eye.svg" height="24">-->
+<!--          <span class="ml-5">1</span>-->
+<!--        </div>-->
+<!--        <p-menu #menu id="config_menu" [popup]="true" [model]="viewers"></p-menu>-->
+<!--      </div>-->
       <div [class.button-disabled]="issue.responsible != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
 <!--      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">-->
         <img src="assets/icons/checklist.png" height="20">
