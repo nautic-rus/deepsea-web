@@ -865,7 +865,8 @@ export class TaskComponent implements OnInit {
   dingUser(msg: any) {
     let message = 'Пользователь ' + this.auth.getUserName(this.auth.getUser().login) + ' просит обратить внимание на сообщение к задаче ' + `<${props.baseUrl}/?taskId=${this.issue.id}| ${this.issue.name}>`;
     this.issueManager.dingUser(msg.author, message).then(res => {
-      this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to user.'});
+      console.log(res);
+      this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to user via RocketChat.'});
     });
   }
 }
