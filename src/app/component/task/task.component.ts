@@ -27,6 +27,7 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {CreateCheckListComponent} from "./create-check-list/create-check-list.component";
 import {IssueCheck} from "../../domain/classes/issue-check";
 import * as props from "../../props";
+import {IssueType} from "../../domain/classes/issue-type";
 
 @Component({
   selector: 'app-task',
@@ -53,7 +54,7 @@ export class TaskComponent implements OnInit {
   editor;
   showHistory = ['_taskStatus'];
   availableActions: any[] = [];
-  taskDepartments: LV[] = [];
+  taskDepartments: string[] = [];
   taskPriorities: LV[] = [];
   taskPeriods: LV[] = [];
   taskProjects: string[] = [];
@@ -62,6 +63,7 @@ export class TaskComponent implements OnInit {
   dueDate: Date = new Date();
   today: Date = new Date();
   collapsed: string[] = [];
+  issueTypes: IssueType[] = [];
   quillModules =
     {
       imageResize: {},
@@ -166,9 +168,7 @@ export class TaskComponent implements OnInit {
 
     this.availableActions = this.getAvailableActions(this.issue);
     this.issueManager.getIssueDepartments().then(departments => {
-      departments.forEach(d => {
-        this.taskDepartments.push(new LV(this.issueManager.localeTaskDepartment(d), d));
-      })
+      this.taskDepartments = departments;
     });
     this.issueManager.getIssueProjects().then(projects => {
       this.taskProjects = projects;
@@ -182,6 +182,9 @@ export class TaskComponent implements OnInit {
       priorities.forEach(priority => {
         this.taskPriorities.push(new LV(this.issueManager.localeTaskPriority(priority), priority));
       });
+    });
+    this.issueManager.getIssueTypes().then(res => {
+      this.issueTypes = res;
     });
     this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
     this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
@@ -862,14 +865,13 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  dingUser(msg: any) {
-    let users = [this.issue.started_by, this.issue.responsible, this.issue.assigned_to].filter(x => x != msg.author && x != this.auth.getUser().login && x != '');
+  dingUser(user: string) {
     let message = 'Пользователь ' + this.auth.getUserName(this.auth.getUser().login) + ' просит обратить внимание на задачу ' + `<${props.baseUrl}/?taskId=${this.issue.id}| ${this.issue.name}>`;
-    users.forEach(user => {
-      this.issueManager.dingUser(user, message).then(res => {
-        console.log(res);
-        this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to user via RocketChat.'});
-      });
-    });
+    this.issueManager.dingUser(user, message).then(res => {});
+    this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to ' + this.auth.getUserName(user) + ' via RocketChat.'});
+  }
+
+  isVisible(value: string) {
+    return this.issueTypes.find(x => x.type_name == this.issue.issue_type && x.visible_row.includes(value));
   }
 }
