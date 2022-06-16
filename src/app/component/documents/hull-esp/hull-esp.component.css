@@ -898,3 +898,7 @@
   transition: box-shadow 0.2s;
   cursor: default;
 }
+.subtask-text{
+  color: #343a40;
+  font-size: 13px;
+}
