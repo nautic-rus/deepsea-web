@@ -23,14 +23,14 @@
 <!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>-->
       </div>
       <div class="p-ml-auto df">
-<!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
-<!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
-<!--          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">-->
-<!--        </div>-->
-<!--        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">-->
-<!--          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">-->
-<!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
-<!--        </div>-->
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
+          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        </div>
+        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">
+          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
+          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
+        </div>
         <div *ngIf="selectedHeadTab == 'Plates'" class="df">
           <div class="mr-10 ml-10">
             <p-dropdown class="select" [(ngModel)]="sortPlatesValue" [options]="sortPlatesValues" (ngModelChange)="sortPlatesChanged()" styleClass="width-170 border">
@@ -240,7 +240,7 @@
                         <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
                       </div>
                     </div>
-                    <div class="cxy title-bold ml-minus5">
+                    <div class="cxy title-bold ml-minus15">
                       <div class="text-center-x" [innerHTML]="(profDecode(profile.section.toString()) + ' ' + profile.scantling.toString()) | highLight: searchPlates"></div>
                     </div>
                     <div class="text-mini-gray">
@@ -470,20 +470,25 @@
               <div class="left-label-nest-list h-62 cxy">NEST</div>
               <div class="df flex-column w-100">
                 <div class="df">
-                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Rest')}}</div>
-                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
-                  <div class="w-34 table-header-column border-top-list padding-5">{{t.tr('Nested Parts')}}</div>
+                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Wastage')}}</div>
+                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
+                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Parts')}}</div>
+                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Weight')}}</div>
                 </div>
                 <div class="df">
-                  <div class="w-33 table-body-list df">
+                  <div class="w-25 table-body-list df">
                     <span [innerHTML]="round(plate.wastages, 10).toString() | highLight: searchPlates"></span>
                   </div>
-                  <div class="w-33 table-body-list df">
+                  <div class="w-25 table-body-list df">
                     <span [innerHTML]="round(plate.scrap, 10).toString() | highLight: searchPlates"></span>
                     <span class="mr-5">%</span>
                   </div>
-                  <div class="w-34 table-body-list">
+                  <div class="w-25 table-body-list">
                     <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
+                  </div>
+                  <div class="w-25 table-body-list df">
+                    <span [innerHTML]="round(plate.nestedPartsWeight, 1).toString() | highLight: searchPlates"></span>
+                    <span class="pl-2">kg</span>
                   </div>
                 </div>
               </div>
@@ -520,176 +525,121 @@
         </div>
         <div class="empty-card-list"></div>
       </div>
-      <div *ngIf="selectedHeadTab == 'Profiles'" class="tile">
-        <div [class.hidden-card]="profile == null" class="dash-card-tile" *ngFor="let profile of profiles; let i = index">
-          <div *ngIf="profile != null">
-            <div class="top-row-tile">
-              <div class="">
-                <div class="cx">
-                  <div class="mm-text">length
-                    <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+      <div *ngIf="selectedHeadTab == 'Profiles'" class="list">
+        <div [class.hidden-card]="profile == null"  *ngFor="let profile of profiles; let i = index">
+          <div *ngIf="profile != null" class="dash-card-list" [class.block-card]="profile != null && profile.isDisabled">
+            <div class="pulse-list">
+              <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) >= 3" class="dot red"></div>
+              <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) < 3" class="dot orange"></div>
+            </div>
+            <div class="df flex-column min-width-90">
+              <div class="mini-extra-gray-text text-center-x">Profile</div>
+              <div class="cxy title-bold">
+                <div class="text-center-x" [innerHTML]="(profDecode(profile.section.toString()) + ' ' + profile.scantling.toString()) | highLight: searchPlates"></div>
+              </div>
+            </div>
+            <div class="df flex-column min-width-105">
+              <div class="mini-extra-gray-text text-center-x">length</div>
+              <div class="cxy title-bold">
+                <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+              </div>
+            </div>
+            <div class="df flex-column min-width-90">
+              <div class="mini-extra-gray-text text-center-x">Material</div>
+              <div class="cxy title-bold">
+                <span class="mr-5" [innerHTML]="(profile.mat.toString()) | highLight: searchPlates"></span>
+              </div>
+            </div>
+            <div class="df flex-column min-width-90">
+              <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
+              <div class="cxy title-bold">
+                <span *ngIf="profile.grossWeight != 0">
+                  <span class="text-gray-mini">(</span>
+                  <span class="text-gray-mini">{{roundDecimal(profile.grossWeight)}}</span>
+                  <span class="text-gray-mini">kg</span>
+                  <span class="text-gray-mini">)</span>
+                </span>
+              </div>
+            </div>
+            <div class="df flex-column">
+              <div class="mini-extra-gray-text text-center-x">
+                <span class="mr-5">stock</span>
+                <span class="">/</span>
+                <span class="mx-5">forecast</span>
+                <span class="">/</span>
+                <span class="ml-5">usage</span>
+              </div>
+              <div class="cx">
+                <span class="text-black-mini mr-5 width-30 text-center-x">{{profile.stock}}</span>
+                <span class="text-black-mini text-center-x">/</span>
+                <span class="text-black-mini mx-5 width-30 text-center-x">{{profile.profileForecast}}</span>
+                <span class="text-black-mini text-center-x">/</span>
+                <span class="text-black-mini ml-5 width-30 text-center-x">{{profile.count}}</span>
+              </div>
+              <div class="cx">
+                <div class="chart-area-list df">
+                  <div [ngStyle]="getStockProfile(profile)" [class.null-stock]="profile.stock == 0" class="h-100 chart-stock-usage"></div>
+                  <div [ngStyle]="getForecastProfile(profile)" [class.null-stock]="profile.profileForecast == 0" class="h-100 chart-forecast-usage"></div>
+                  <div [ngStyle]="getCountProfile(profile)" [class.null-stock]="profile.count == 0" class="h-100 chart-count-usage"></div>
+                </div>
+              </div>
+            </div>
+            <div class="df w-99">
+              <div class="left-label-nest-list h-62 cxy">NEST</div>
+              <div class="df flex-column w-100">
+                <div class="df">
+                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Profile QTY')}}</div>
+                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
+                  <div class="w-34 table-header-column border-top-list padding-5">{{t.tr('Profiles Forecast')}}</div>
+                </div>
+                <div class="df">
+                  <div class="w-33 table-body-list df">
+                    <span [innerHTML]="profile.count.toString() | highLight: search"></span>
                   </div>
-                </div>
-                <div class="cxy title-bold">
-                  <div class="text-center-x" [innerHTML]="(profile.section.toString() + ' ' + profile.scantling.toString()) | highLight: search"></div>
-
-                </div>
-                <div class="text-mini-gray">
-                  <div class="text-center-x" [innerHTML]="(profile.mat.toString()) | highLight: search"></div>
+                  <div class="w-33 table-body-list df">
+                    <span [innerHTML]="round(profile.scrap, 10).toString() | highLight: searchPlates"></span>
+                    <span class="mr-5">%</span>
+                  </div>
+                  <div class="w-34 table-body-list">
+                    <span [innerHTML]="profile.profileForecast.toString() | highLight: search"></span>
+                  </div>
                 </div>
               </div>
 
-
-
-              <div class="mt-minus5">
-                <div class="text-center-x mb-2px">
-                  <span class="text-mini-gray mr-10">scrap</span>
-                  <span class="text-mini mr-2px" [innerHTML]="round(profile.scrap).toString() | highLight: search"></span>
-                  <span class="text-mini">%</span>
+              <div class="left-label-model-list h-62 cxy">MODEL</div>
+              <div class="df flex-column w-100">
+                <div class="df">
+                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Parts Weight')}}</div>
+                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Sum Length')}}</div>
+                  <div class="w-34 table-header-column border-top-list padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
                 </div>
-                <div class="cxy">
-                  <div class="chart-area df">
-                    <div [ngStyle]="getWidthRightRadius(100 - profile.scrap)" class="h-100 chart-usage"></div>
-                    <div [ngStyle]="getWidthLeftRadius(profile.scrap)" class="h-100 chart-left"></div>
+                <div class="df">
+                  <div class="w-33 table-body-list">
+                    <span [innerHTML]="round(profile.partsweight, 1).toString() | highLight: search"></span>
                   </div>
-                </div>
-              </div>
-              <div class="flex-end-top">
-                <div class="kpl-flag cxy">
-                  <div class="text-center-x pr-5">
-                    KSE
+                  <div class="w-33 table-body-list">
+                    <span [innerHTML]="round(profile.realLenght, 10).toString() | highLight: search"></span>
                   </div>
-                  <div class="text-center-x">
-                    <span [innerHTML]="profile.KSE.toString() | highLight: search"></span>
+                  <div class="w-34 table-body-list border-right-list">
+                    <span [innerHTML]="profile.realPartsCount.toString() | highLight: search"></span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="df mb-10">
-              <div class="left-label-nest cxy">NEST</div>
-              <div class="w-100">
-                <div class="table-bottom">
-                  <div class="df">
-                    <div class="w-50 table-header-column cy">{{t.tr('Profile QTY')}}</div>
-                    <div class="w-50 table-header-column cy">{{t.tr('Profiles Forecast')}}</div>
-                  </div>
-                  <div class="text-center-y info-row">
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="profile.count.toString() | highLight: search"></span>
-                    </div>
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="profile.profileForecast.toString() | highLight: search"></span>
-                    </div>
-                  </div>
+            <div class="flex-end-top">
+              <div class="kpl-flag cxy">
+                <div class="text-center-x pr-5">
+                  KSE
+                </div>
+                <div class="text-center-x">
+                  <span [innerHTML]="profile.KSE.toString() | highLight: searchPlates"></span>
                 </div>
               </div>
             </div>
-            <div class="df mb-10">
-              <div class="left-label-model cxy">MODEL</div>
-              <div class="w-100">
-                <div class="table-bottom">
-                  <div class="df">
-                    <div class="w-33 table-header-column cy">{{t.tr('Parts Weight')}}</div>
-                    <div class="w-33 table-header-column cy">{{t.tr('Sum Length')}}</div>
-                    <div class="w-33 table-header-column cy">{{t.tr('Parts QTY')}}</div>
-                  </div>
-                  <div class="text-center-y info-row">
-                    <div class="w-50 table-body">
-                      <span [innerHTML]="round(profile.partsweight).toString() | highLight: search"></span>
-                    </div>
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="round(profile.realLenght).toString() | highLight: search"></span>
-                    </div>
-                    <div class="w-50 table-body cy">
-                      <span [innerHTML]="profile.realPartsCount.toString() | highLight: search"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
-
-
-
-
-
-        <!--      <p-table #table [value]="profiles"-->
-        <!--               [scrollable]="true"-->
-        <!--               scrollHeight="calc(100vh - 230px)"-->
-        <!--               [virtualScroll]="false"-->
-        <!--               [virtualRowHeight]="40"-->
-        <!--               [reorderableColumns]="false"-->
-        <!--               [resizableColumns]="false"-->
-        <!--               styleClass="p-datatable-striped"-->
-        <!--               scrollDirection="both"-->
-        <!--               [globalFilterFields]="['KSE','count','mat','scantling']">-->
-        <!--        <ng-template pTemplate="header">-->
-        <!--          <tr class="df">-->
-        <!--            <th pSortableColumn="KSE" class="lxy w-9">{{t.tr('KSE')}}-->
-        <!--              <p-sortIcon field="KSE"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="count" class="lxy w-9">{{t.tr('Count')}}-->
-        <!--              <p-sortIcon field="count"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="grossLenght" class="lxy w-9">{{t.tr('Gross length')}}-->
-        <!--              <p-sortIcon field="grossLenght"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="partsWeight" class="lxy w-9">{{t.tr('Parts weight')}}-->
-        <!--              <p-sortIcon field="partsWeight"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="mat" class="cxy w-9">{{t.tr('Material')}}-->
-        <!--              <p-sortIcon field="mat"></p-sortIcon>-->
-        <!--              <p-columnFilter class="filter" [field]="'mat'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
-        <!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-        <!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersProfiles.material" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">-->
-        <!--                  </p-multiSelect>-->
-        <!--                </ng-template>-->
-        <!--              </p-columnFilter>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="profileForecast" class="lxy w-9">{{t.tr('Profile Forecast')}}-->
-        <!--              <p-sortIcon field="profileForecast"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="realLenght" class="lxy w-9">{{t.tr('Real length')}}-->
-        <!--              <p-sortIcon field="realLenght"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="realPartsCount" class="lxy w-9">{{t.tr('Real parts count')}}-->
-        <!--              <p-sortIcon field="realPartsCount"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th class="lxy w-9 cursor-pointer head-hover">{{t.tr('Scantling')}}-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="scrap" class="lxy w-9">{{t.tr('Scrap')}}-->
-        <!--              <p-sortIcon field="scrap"></p-sortIcon>-->
-        <!--            </th>-->
-        <!--            <th pSortableColumn="section" class="lxy w-9">{{t.tr('Section')}}-->
-        <!--              <p-sortIcon field="section"></p-sortIcon>-->
-        <!--              <p-columnFilter class="filter" [field]="'section'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
-        <!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-        <!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filtersProfiles.section" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">-->
-        <!--                  </p-multiSelect>-->
-        <!--                </ng-template>-->
-        <!--              </p-columnFilter>-->
-        <!--            </th>-->
-        <!--          </tr>-->
-        <!--        </ng-template>-->
-        <!--        <ng-template pTemplate="body" let-profile let-i="rowIndex">-->
-        <!--          <tr class="cursor-pointer row-table-doc-hover">-->
-        <!--            <td class="w-9 text-14">-->
-        <!--              <span [innerHTML]="profile.KSE | highLight: search"></span>-->
-        <!--            </td>-->
-        <!--            <td class="w-9 text-14">{{profile.count}}</td>-->
-        <!--            <td class="w-9 text-14">{{profile.grossLenght}}</td>-->
-        <!--            <td class="w-9 text-14">{{round(profile.partsweight)}}</td>-->
-        <!--            <td class="w-9 text-14">{{profile.mat}}</td>-->
-        <!--            <td class="w-9 text-14">{{profile.profileForecast}}</td>-->
-        <!--            <td class="w-9 text-14">{{round(profile.realLenght)}}</td>-->
-        <!--            <td class="w-9 text-14">{{profile.realPartsCount}}</td>-->
-        <!--            <td class="w-9 text-14">{{profile.scantling}}</td>-->
-        <!--            <td class="w-9 text-14">{{round(profile.scrap)}}</td>-->
-        <!--            <td class="w-9 text-14">{{profile.section}}</td>-->
-        <!--          </tr>-->
-        <!--        </ng-template>-->
-        <!--      </p-table>-->
+        <div class="empty-card-list"></div>
       </div>
       <div *ngIf="selectedHeadTab == 'Pipes'" class="cards">
         <div class="cxy card-height">

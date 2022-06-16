@@ -205,7 +205,7 @@
   position: relative;
   transition: 0.5s;
   display: grid;
-  grid-template-columns: 5px 0.4fr 0.35fr 0.35fr 0.9fr 2fr 55px;
+  grid-template-columns: 15px 0.4fr 0.4fr 0.35fr 0.35fr 0.9fr 2fr 55px;
 }
 .tile{
   display: flex;
@@ -223,7 +223,7 @@
 .top-row-tile{
   height: 78px;
   display: grid;
-  grid-template-columns: auto 3fr 3.5fr 1.5fr;
+  grid-template-columns: auto 120px 3.5fr 1.5fr;
 }
 .pulse{
 

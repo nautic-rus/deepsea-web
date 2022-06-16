@@ -108,7 +108,7 @@
   border-bottom-left-radius: 4px;
 }
 .table-overflow{
-  max-height: 600px;
+  height: 600px;
   overflow: auto;
 }
 .normal-text{

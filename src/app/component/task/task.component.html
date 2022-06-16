@@ -331,9 +331,9 @@
             </div>
             <div>
               <div class="df">
-                <span class="bold-text cursor-pointer" (click)="openUserInfo(msg.author)">{{auth.getUserName(msg.author)}}</span>
-                <span class="text-descr"> {{t.tr('создал')}}{{localeGender(msg.author)}} {{t.tr('сообщение')}} </span>
-                <span class="text-date"> {{getDate(+msg.date)}} </span>
+                <span class="bold-text pr-5 cursor-pointer" (click)="openUserInfo(msg.author)">{{auth.getUserName(msg.author)}}</span>
+                <span class="text-descr pr-5">{{t.tr('создал')}}{{localeGender(msg.author)}} {{t.tr('сообщение')}}</span>
+                <span class="text-date">{{getDate(+msg.date)}}</span>
                 <span>
                 <div class="ding cxy ml-8 mt-minus3 cursor-pointer" (click)="dingUser(msg)">
                   <img src="assets/icons/bell.svg" height="15">
