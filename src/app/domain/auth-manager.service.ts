@@ -27,7 +27,11 @@ export class AuthManagerService {
     this.fillUsers();
   }
   hasPerms(permissions: string): boolean{
-    return this.user.permissions.includes(permissions);
+    let find = null;
+    if (this.user.shared_access != '' && this.user.shared_access != this.user.login){
+      find = this.users.find(x => x.login == this.user.shared_access);
+    }
+    return this.user.permissions.includes(permissions) || find != null && find.permissions.includes(permissions);
   }
   exit(){
     this.setUser(new User(), true);
@@ -150,6 +154,9 @@ export class AuthManagerService {
         return false;
       });
     }
+  }
+  async shareRights(user: string, with_user: string) {
+    return await this.http.get<string[]>(props.http + '/shareRights', {params: {user, with_user}}).toPromise();
   }
   isAuth(){
     return this.authenticated;

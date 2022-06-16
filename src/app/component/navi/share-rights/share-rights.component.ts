@@ -25,7 +25,9 @@ export class ShareRightsComponent implements OnInit {
     this.ref.close('exit');
   }
   commit() {
-
+    this.auth.shareRights(this.auth.getUser().login, this.selectedUser).then(res => {
+      this.ref.close('exit');
+    });
   }
   getUsers() {
     return this.auth.users.filter(x => x.visibility.includes('c'));
