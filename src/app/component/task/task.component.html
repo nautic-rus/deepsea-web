@@ -354,7 +354,9 @@
                 </div>
               </div>
             </div>
-            <div class="ding pl-2" (click)="dingUser(msg)">DING</div>
+            <div class="ding cxy ml-8 mt-minus2 cursor-pointer" (click)="dingUser(msg)">
+              <img src="assets/icons/bell.svg" height="15">
+            </div>
           </div>
         </div>
         <div class="issue-message" *ngIf="msg.content == null && (messageFilter == 'all' || messageFilter == 'history') && msg.update_message != 'hidden'">

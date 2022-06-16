@@ -296,6 +296,16 @@
   display: flex;
   justify-content: flex-end;
 }
+.ding{
+  height: 26px;
+  width: 26px;
+}
+.ding:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+  border-radius: 50%;
+}
 .task-button{
   color: #605e5c;
   border: 0 none;
