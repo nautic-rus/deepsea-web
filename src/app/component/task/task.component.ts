@@ -866,10 +866,8 @@ export class TaskComponent implements OnInit {
     let users = [this.issue.started_by, this.issue.responsible, this.issue.assigned_to].filter(x => x != msg.author && x != this.auth.getUser().login && x != '');
     let message = 'Пользователь ' + this.auth.getUserName(this.auth.getUser().login) + ' просит обратить внимание на задачу ' + `<${props.baseUrl}/?taskId=${this.issue.id}| ${this.issue.name}>`;
     users.forEach(user => {
-      this.issueManager.dingUser(user, message).then(res => {
-        console.log(res);
-        this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to user via RocketChat.'});
-      });
+      this.issueManager.dingUser(user, message).then(res => {});
     });
+    this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to users via RocketChat.'});
   }
 }
