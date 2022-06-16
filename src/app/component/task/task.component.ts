@@ -53,7 +53,7 @@ export class TaskComponent implements OnInit {
   editor;
   showHistory = ['_taskStatus'];
   availableActions: any[] = [];
-  taskDepartments: LV[] = [];
+  taskDepartments: string[] = [];
   taskPriorities: LV[] = [];
   taskPeriods: LV[] = [];
   taskProjects: string[] = [];
@@ -166,9 +166,7 @@ export class TaskComponent implements OnInit {
 
     this.availableActions = this.getAvailableActions(this.issue);
     this.issueManager.getIssueDepartments().then(departments => {
-      departments.forEach(d => {
-        this.taskDepartments.push(new LV(this.issueManager.localeTaskDepartment(d), d));
-      })
+      this.taskDepartments = departments;
     });
     this.issueManager.getIssueProjects().then(projects => {
       this.taskProjects = projects;
@@ -862,12 +860,9 @@ export class TaskComponent implements OnInit {
     }
   }
 
-  dingUser(msg: any) {
-    let users = [this.issue.started_by, this.issue.responsible, this.issue.assigned_to].filter(x => x != msg.author && x != this.auth.getUser().login && x != '');
+  dingUser(user: string) {
     let message = 'Пользователь ' + this.auth.getUserName(this.auth.getUser().login) + ' просит обратить внимание на задачу ' + `<${props.baseUrl}/?taskId=${this.issue.id}| ${this.issue.name}>`;
-    users.forEach(user => {
-      this.issueManager.dingUser(user, message).then(res => {});
-    });
-    this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to users via RocketChat.'});
+    this.issueManager.dingUser(user, message).then(res => {});
+    this.messageService.add({key:'task', severity:'success', summary:'Send notification', detail:'You have send notification to ' + this.auth.getUserName(user) + ' via RocketChat.'});
   }
 }
