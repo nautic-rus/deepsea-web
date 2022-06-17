@@ -28,6 +28,7 @@ export class CreateTaskComponent implements OnInit {
   taskDetails = '';
   taskDocNumber = '';
   taskDepartment = '';
+  for_revision = '';
   users: User[] = [];
   startDate: Date = new Date();
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
@@ -211,6 +212,7 @@ export class CreateTaskComponent implements OnInit {
       this.taskDocNumber = issue.doc_number;
       this.taskPeriod = issue.period;
       this.parent_id = issue.parent_id;
+      this.for_revision = issue.for_revision;
       console.log(issue);
     }
 
@@ -285,6 +287,7 @@ export class CreateTaskComponent implements OnInit {
     issue.sfi_code = this.sfiCode;
     issue.status = 'New';
     issue.action = 'New';
+    issue.for_revision = this.for_revision;
     issue.parent_id = this.parent_id;
     if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP')){
       issue.doc_number = '';

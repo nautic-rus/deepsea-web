@@ -22,5 +22,5 @@ export class User {
   rocket_login: string = '';
   visible_projects: string[] = [];
   visible_pages: string[] = [];
-  shared_access: string[] = [];
+  shared_access: string = '';
 }

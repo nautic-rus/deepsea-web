@@ -322,7 +322,14 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
     if (localStorage.getItem('id') != null){
       // @ts-ignore
-      this.cols = JSON.parse(localStorage.getItem('id'));
+      let newCols = JSON.parse(localStorage.getItem('id'));
+      selectedCols.filter(x => newCols.find((y: any) => y.header == x) == null).forEach(col => {
+        let findCol = this.cols.find(x => x.header == col);
+        if (findCol != null){
+          newCols.push(findCol);
+        }
+      });
+      this.cols = newCols;
     }
   }
 
@@ -528,7 +535,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   saveSelectedCols() {
     localStorage.setItem('selectedCols', JSON.stringify(this.selectedCols));
-    this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
+    //this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
+    this.setCols();
   }
 
   importXls() {
