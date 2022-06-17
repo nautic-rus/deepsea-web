@@ -412,7 +412,7 @@
     <div *ngIf="selectedView == 'list'">
       <div *ngIf="selectedHeadTab == 'Plates'" class="list">
         <div [class.hidden-card]="plate == null"  *ngFor="let plate of plates; let i = index">
-          <div *ngIf="plate != null" class="dash-card-list" [class.block-card]="plate != null && plate.isDisabled">
+          <div *ngIf="plate != null" class="dash-card-plate-list" [class.block-card]="plate != null && plate.isDisabled">
             <div class="pulse-list">
               <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) >= 3" class="dot red"></div>
               <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) < 3" class="dot orange"></div>
@@ -527,7 +527,7 @@
       </div>
       <div *ngIf="selectedHeadTab == 'Profiles'" class="list">
         <div [class.hidden-card]="profile == null"  *ngFor="let profile of profiles; let i = index">
-          <div *ngIf="profile != null" class="dash-card-list" [class.block-card]="profile != null && profile.isDisabled">
+          <div *ngIf="profile != null" class="dash-card-profile-list" [class.block-card]="profile != null && profile.isDisabled">
             <div class="pulse-list">
               <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) >= 3" class="dot red"></div>
               <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) < 3" class="dot orange"></div>
