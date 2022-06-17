@@ -196,7 +196,7 @@
 .flip-card{
   transform: rotateY(180deg);
 }
-.dash-card-list{
+.dash-card-profile-list{
   padding: 10px;
   margin-bottom: 10px;
   height: 80px;
@@ -206,6 +206,17 @@
   transition: 0.5s;
   display: grid;
   grid-template-columns: 15px 0.4fr 0.4fr 0.35fr 0.35fr 0.9fr 2fr 55px;
+}
+.dash-card-plate-list{
+  padding: 10px;
+  margin-bottom: 10px;
+  height: 80px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+  transition: 0.5s;
+  display: grid;
+  grid-template-columns: 15px 0.4fr 0.35fr 0.35fr 0.9fr 2fr 55px;
 }
 .tile{
   display: flex;
