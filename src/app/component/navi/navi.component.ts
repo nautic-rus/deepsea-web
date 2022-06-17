@@ -55,11 +55,26 @@ export class NaviComponent implements OnInit {
   isShared(){
     return this.auth.getUser().shared_access != '';
   }
+  sharedWith(): any{
+    let findUser = this.auth.users.find(x => x.login == this.auth.getUser().shared_access);
+    if (findUser != null){
+      return findUser;
+    }
+    else{
+      return {};
+    }
+  }
   isDesktop() {
     return this.device.isDesktop() && window.innerWidth > 1296;
   }
   getTime() {
     let time = new Date(this.weather.time);
     return (('0' + time.getHours()).slice(-2)) + ':' + ('0' + time.getMinutes()).slice(-2)
+  }
+
+  unShare() {
+    this.auth.shareRights(this.auth.getUser().login, '').then(res => {
+      location.reload();
+    });
   }
 }

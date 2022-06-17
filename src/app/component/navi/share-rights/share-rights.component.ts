@@ -27,6 +27,7 @@ export class ShareRightsComponent implements OnInit {
   commit() {
     this.auth.shareRights(this.auth.getUser().login, this.selectedUser).then(res => {
       this.ref.close('exit');
+      location.reload();
     });
   }
   getUsers() {

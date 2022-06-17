@@ -48,11 +48,11 @@
           </div>
           <div class="row-user-menu" (click)="shareRights()">{{t.tr('Передать права')}}</div>
         </div>
-        <div class="df all-row-user-menu" *ngIf="">
+        <div class="df all-row-user-menu" *ngIf="isShared()" (click)="unShare()">
           <div class="cxy mx-1">
             <div class="pi pi-sort-alt icon-turn"></div>
           </div>
-
+          <div class="row-user-menu">Shared: {{auth.getUserName(sharedWith().login)}}</div>
         </div>
       </ng-template>
     </p-overlayPanel>
