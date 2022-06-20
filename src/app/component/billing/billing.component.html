@@ -411,232 +411,316 @@
     </div>
     <div *ngIf="selectedView == 'list'">
       <div *ngIf="selectedHeadTab == 'Plates'" class="list">
-        <div [class.hidden-card]="plate == null"  *ngFor="let plate of plates; let i = index">
-          <div *ngIf="plate != null" class="dash-card-plate-list" [class.block-card]="plate != null && plate.isDisabled">
-            <div class="pulse-list">
-              <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) >= 3" class="dot red"></div>
-              <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) < 3" class="dot orange"></div>
-            </div>
-            <div class="df flex-column min-width-105">
-              <div class="mini-extra-gray-text text-center-x">Material</div>
-              <div class="cxy title-bold">
-                <span class="text-center-x" [innerHTML]="('PL' + plate.scantling.toString()) | highLight: searchPlates"></span>
+        <div [class.hidden-card]="plate == null" class="perspective-1000 mb-10 cursor-pointer dash-card-list"  *ngFor="let plate of plates; let i = index">
+          <div *ngIf="plate != null" class="dash-card-tile" [class.block-card]="plate != null && plate.isDisabled" [class.flip-card-list]="plate.side == 'back'">
+            <div class="dash-card-list-side-front dash-card-plate-list" (click)="handleBackClick($event, plate)" [class.block-card]="plate != null && plate.isDisabled">
+              <div class="pulse-list">
+                <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) >= 3" class="dot red"></div>
+                <div *ngIf="plate.plateForecast > plate.stock && abs(getForecastValue(plate) - getStockValue(plate)) < 3" class="dot orange"></div>
               </div>
-              <div class="cxy">
-                <div class="mm-text">mm x m x m</div>
+              <div class="df flex-column min-width-105">
+                <div class="mini-extra-gray-text text-center-x">Material</div>
+                <div class="cxy title-bold">
+                  <span class="text-center-x" [innerHTML]="('PL' + plate.scantling.toString()) | highLight: searchPlates"></span>
+                </div>
+                <div class="cxy">
+                  <div class="mm-text">mm x m x m</div>
+                </div>
               </div>
-            </div>
-            <div class="df flex-column min-width-90">
-              <div class="mini-extra-gray-text text-center-x">Stell Grade</div>
-              <div class="cxy title-bold">
-                <span class="text-center-x" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></span>
+              <div class="df flex-column min-width-90">
+                <div class="mini-extra-gray-text text-center-x">Stell Grade</div>
+                <div class="cxy title-bold">
+                  <span class="text-center-x" [innerHTML]="(plate.mat.toString()) | highLight: searchPlates"></span>
+                </div>
               </div>
-            </div>
-            <div class="df flex-column min-width-90">
-              <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
-              <div class="cxy title-bold">
+              <div class="df flex-column min-width-90">
+                <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
+                <div class="cxy title-bold">
                 <span *ngIf="plate.oneSheetWeight != 0">
                   <span class="text-gray-mini">(</span>
                   <span class="text-gray-mini">{{roundDecimal(plate.oneSheetWeight)}}</span>
                   <span class="text-gray-mini">kg</span>
                   <span class="text-gray-mini">)</span>
                 </span>
-              </div>
-            </div>
-            <div class="df flex-column">
-              <div class="mini-extra-gray-text text-center-x">
-                <span class="mr-5">stock</span>
-                <span class="">/</span>
-                <span class="mx-5">forecast</span>
-                <span class="">/</span>
-                <span class="ml-5">usage</span>
-              </div>
-              <div class="cx">
-                <span class="text-black-mini mr-5 width-30 text-center-x">{{plate.stock}}</span>
-                <span class="text-black-mini text-center-x">/</span>
-                <span class="text-black-mini mx-5 width-30 text-center-x">{{plate.plateForecast}}</span>
-                <span class="text-black-mini text-center-x">/</span>
-                <span class="text-black-mini ml-5 width-30 text-center-x">{{plate.count}}</span>
-              </div>
-              <div class="cx">
-                <div class="chart-area-list df">
-                  <div [ngStyle]="getStock(plate)" [class.null-stock]="plate.stock == 0" class="h-100 chart-stock-usage"></div>
-                  <div [ngStyle]="getForecast(plate)" [class.null-stock]="plate.plateForecast == 0" class="h-100 chart-forecast-usage"></div>
-                  <div [ngStyle]="getCount(plate)" [class.null-stock]="plate.count == 0" class="h-100 chart-count-usage"></div>
                 </div>
               </div>
-            </div>
-            <div class="df w-99">
-              <div class="left-label-nest-list h-62 cxy">NEST</div>
-              <div class="df flex-column w-100">
-                <div class="df">
-                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Wastage')}}</div>
-                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
-                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Parts')}}</div>
-                  <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Weight')}}</div>
+              <div class="df flex-column">
+                <div class="mini-extra-gray-text text-center-x">
+                  <span class="mr-5">stock</span>
+                  <span class="">/</span>
+                  <span class="mx-5">forecast</span>
+                  <span class="">/</span>
+                  <span class="ml-5">usage</span>
                 </div>
-                <div class="df">
-                  <div class="w-25 table-body-list df">
-                    <span [innerHTML]="round(plate.wastages, 10).toString() | highLight: searchPlates"></span>
-                  </div>
-                  <div class="w-25 table-body-list df">
-                    <span [innerHTML]="round(plate.scrap, 10).toString() | highLight: searchPlates"></span>
-                    <span class="mr-5">%</span>
-                  </div>
-                  <div class="w-25 table-body-list">
-                    <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
-                  </div>
-                  <div class="w-25 table-body-list df">
-                    <span [innerHTML]="round(plate.nestedPartsWeight, 1).toString() | highLight: searchPlates"></span>
-                    <span class="pl-2">kg</span>
+                <div class="cx">
+                  <span class="text-black-mini mr-5 width-30 text-center-x">{{plate.stock}}</span>
+                  <span class="text-black-mini text-center-x">/</span>
+                  <span class="text-black-mini mx-5 width-30 text-center-x">{{plate.plateForecast}}</span>
+                  <span class="text-black-mini text-center-x">/</span>
+                  <span class="text-black-mini ml-5 width-30 text-center-x">{{plate.count}}</span>
+                </div>
+                <div class="cx">
+                  <div class="chart-area-list df">
+                    <div [ngStyle]="getStock(plate)" [class.null-stock]="plate.stock == 0" class="h-100 chart-stock-usage"></div>
+                    <div [ngStyle]="getForecast(plate)" [class.null-stock]="plate.plateForecast == 0" class="h-100 chart-forecast-usage"></div>
+                    <div [ngStyle]="getCount(plate)" [class.null-stock]="plate.count == 0" class="h-100 chart-count-usage"></div>
                   </div>
                 </div>
               </div>
+              <div class="df w-99">
+                <div class="left-label-nest-list h-62 cxy">NEST</div>
+                <div class="df flex-column w-100">
+                  <div class="df">
+                    <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Wastage')}}</div>
+                    <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
+                    <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Parts')}}</div>
+                    <div class="w-25 table-header-column border-top-list padding-5">{{t.tr('Weight')}}</div>
+                  </div>
+                  <div class="df">
+                    <div class="w-25 table-body-list df">
+                      <span [innerHTML]="round(plate.wastages, 10).toString() | highLight: searchPlates"></span>
+                    </div>
+                    <div class="w-25 table-body-list df">
+                      <span [innerHTML]="round(plate.scrap, 10).toString() | highLight: searchPlates"></span>
+                      <span class="mr-5">%</span>
+                    </div>
+                    <div class="w-25 table-body-list">
+                      <span [innerHTML]="plate.nestedParts.toString() | highLight: searchPlates"></span>
+                    </div>
+                    <div class="w-25 table-body-list df">
+                      <span [innerHTML]="round(plate.nestedPartsWeight, 1).toString() | highLight: searchPlates"></span>
+                      <span class="pl-2">kg</span>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="left-label-model-list h-62 cxy">MODEL</div>
-              <div class="df flex-column w-100">
-                <div class="df">
-                  <div class="w-50 table-header-column border-top-list padding-5">{{t.tr('Parts Weight')}}</div>
-                  <div class="w-50 table-header-column border-top-list padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
-                </div>
-                <div class="df">
-                  <div class="w-50 table-body-list df">
-                    <span [innerHTML]="round(plate.realWeight, 10).toString() | highLight: searchPlates"></span>
-                    <span class="pl-2">kg</span>
+                <div class="left-label-model-list h-62 cxy">MODEL</div>
+                <div class="df flex-column w-100">
+                  <div class="df">
+                    <div class="w-50 table-header-column border-top-list padding-5">{{t.tr('Parts Weight')}}</div>
+                    <div class="w-50 table-header-column border-top-list padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
                   </div>
-                  <div class="w-50 table-body-list border-right-list">
-                    <span [innerHTML]="plate.realPartsCount.toString() | highLight: searchPlates"></span>
+                  <div class="df">
+                    <div class="w-50 table-body-list df">
+                      <span [innerHTML]="round(plate.realWeight, 10).toString() | highLight: searchPlates"></span>
+                      <span class="pl-2">kg</span>
+                    </div>
+                    <div class="w-50 table-body-list border-right-list">
+                      <span [innerHTML]="plate.realPartsCount.toString() | highLight: searchPlates"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-end-top">
+                <div class="kpl-flag cxy">
+                  <div class="text-center-x pr-5">
+                    KPL
+                  </div>
+                  <div class="text-center-x">
+                    <span [innerHTML]="plate.KPL.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="flex-end-top">
-              <div class="kpl-flag cxy">
-                <div class="text-center-x pr-5">
-                  KPL
+            <div class="dash-card-list-side-back" (click)="handleFrontClick($event, plate)">
+              <div></div>
+              <div class="title-bold cy">
+                <div class="">{{'PL' + plate.scantling + ' ' + plate.mat}}</div>
+              </div>
+              <div class="row-list-one background-gray">
+                <div class="df lxy">
+                  <div class="icon-back-blue cxy ml-10">
+                    <img src="assets/icons/parts.svg" height="18">
+                  </div>
+                  <div class="title-medium-bold ml-10 mr-7">Parts QTY</div>
+                  <span class="text-gray-mini">{{'(' + plate.realPartsCount + ')'}}</span>
                 </div>
-                <div class="text-center-x">
-                  <span [innerHTML]="plate.KPL.toString() | highLight: searchPlates"></span>
+                <div class="cxy">
+                  <div class="button-show cursor-pointer" (click)="showPartsQty(plate); $event.stopPropagation();">Show</div>
+                </div>
+              </div>
+              <div class="row-list-one">
+                <div class="df lxy">
+                  <div class="icon-back-orange cxy ml-10">
+                    <img src="assets/icons/sections.svg" height="18">
+                  </div>
+                  <div class="title-medium-bold ml-10">Blocks</div>
+                </div>
+                <div class="cxy">
+                  <div class="button-show cursor-pointer" (click)="showBlocks(plate); $event.stopPropagation();">Show</div>
+                </div>
+              </div>
+              <div class="row-list-one background-gray">
+                <div class="df lxy">
+                  <div class="icon-back-violet cxy ml-10">
+                    <img src="assets/icons/rest.svg" height="18">
+                  </div>
+                  <div class="title-medium-bold ml-10 mr-7">Wastage</div>
+                  <span class="text-gray-mini">{{'(' + plate.wastagesTotal.length + ')'}}</span>
+                </div>
+                <div [class.opacity]="plate.wastagesTotal.length == 0" class="cxy">
+                  <div class="button-show cursor-pointer" (click)="showWastage(plate); $event.stopPropagation();">Show</div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
         <div class="empty-card-list"></div>
       </div>
       <div *ngIf="selectedHeadTab == 'Profiles'" class="list">
-        <div [class.hidden-card]="profile == null"  *ngFor="let profile of profiles; let i = index">
-          <div *ngIf="profile != null" class="dash-card-profile-list" [class.block-card]="profile != null && profile.isDisabled">
-            <div class="pulse-list">
-              <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) >= 3" class="dot red"></div>
-              <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) < 3" class="dot orange"></div>
-            </div>
-            <div class="df flex-column min-width-90">
-              <div class="mini-extra-gray-text text-center-x">Profile</div>
-              <div class="cxy title-bold">
-                <div class="text-center-x" [innerHTML]="(profDecode(profile.section.toString()) + ' ' + profile.scantling.toString()) | highLight: searchPlates"></div>
+        <div [class.hidden-card]="profile == null" class="perspective-1000 mb-10 cursor-pointer dash-card-list" *ngFor="let profile of profiles; let i = index">
+          <div *ngIf="profile != null" class="dash-card-tile" [class.block-card]="profile != null && profile.isDisabled" [class.flip-card-list]="profile.side == 'back'">
+            <div class="dash-card-list-side-front dash-card-profile-list" (click)="handleBackClick($event, profile)" [class.block-card]="profile != null && profile.isDisabled">
+              <div class="pulse-list">
+                <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) >= 3" class="dot red"></div>
+                <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) < 3" class="dot orange"></div>
               </div>
-            </div>
-            <div class="df flex-column min-width-105">
-              <div class="mini-extra-gray-text text-center-x">length</div>
-              <div class="cxy title-bold">
-                <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+              <div class="df flex-column min-width-90">
+                <div class="mini-extra-gray-text text-center-x">Profile</div>
+                <div class="cxy title-bold">
+                  <div class="text-center-x" [innerHTML]="(profDecode(profile.section.toString()) + ' ' + profile.scantling.toString()) | highLight: searchPlates"></div>
+                </div>
               </div>
-            </div>
-            <div class="df flex-column min-width-90">
-              <div class="mini-extra-gray-text text-center-x">Material</div>
-              <div class="cxy title-bold">
-                <span class="mr-5" [innerHTML]="(profile.mat.toString()) | highLight: searchPlates"></span>
+              <div class="df flex-column min-width-105">
+                <div class="mini-extra-gray-text text-center-x">length</div>
+                <div class="cxy title-bold">
+                  <span [innerHTML]="profile.grossLenght.toString() | highLight: search"></span>
+                </div>
               </div>
-            </div>
-            <div class="df flex-column min-width-90">
-              <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
-              <div class="cxy title-bold">
+              <div class="df flex-column min-width-90">
+                <div class="mini-extra-gray-text text-center-x">Material</div>
+                <div class="cxy title-bold">
+                  <span class="mr-5" [innerHTML]="(profile.mat.toString()) | highLight: searchPlates"></span>
+                </div>
+              </div>
+              <div class="df flex-column min-width-90">
+                <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
+                <div class="cxy title-bold">
                 <span *ngIf="profile.grossWeight != 0">
                   <span class="text-gray-mini">(</span>
                   <span class="text-gray-mini">{{roundDecimal(profile.grossWeight)}}</span>
                   <span class="text-gray-mini">kg</span>
                   <span class="text-gray-mini">)</span>
                 </span>
-              </div>
-            </div>
-            <div class="df flex-column">
-              <div class="mini-extra-gray-text text-center-x">
-                <span class="mr-5">stock</span>
-                <span class="">/</span>
-                <span class="mx-5">forecast</span>
-                <span class="">/</span>
-                <span class="ml-5">usage</span>
-              </div>
-              <div class="cx">
-                <span class="text-black-mini mr-5 width-30 text-center-x">{{profile.stock}}</span>
-                <span class="text-black-mini text-center-x">/</span>
-                <span class="text-black-mini mx-5 width-30 text-center-x">{{profile.profileForecast}}</span>
-                <span class="text-black-mini text-center-x">/</span>
-                <span class="text-black-mini ml-5 width-30 text-center-x">{{profile.count}}</span>
-              </div>
-              <div class="cx">
-                <div class="chart-area-list df">
-                  <div [ngStyle]="getStockProfile(profile)" [class.null-stock]="profile.stock == 0" class="h-100 chart-stock-usage"></div>
-                  <div [ngStyle]="getForecastProfile(profile)" [class.null-stock]="profile.profileForecast == 0" class="h-100 chart-forecast-usage"></div>
-                  <div [ngStyle]="getCountProfile(profile)" [class.null-stock]="profile.count == 0" class="h-100 chart-count-usage"></div>
                 </div>
               </div>
-            </div>
-            <div class="df w-99">
-              <div class="left-label-nest-list h-62 cxy">NEST</div>
-              <div class="df flex-column w-100">
-                <div class="df">
-                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Profile QTY')}}</div>
-                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
-                  <div class="w-34 table-header-column border-top-list padding-5">{{t.tr('Profiles Forecast')}}</div>
+              <div class="df flex-column">
+                <div class="mini-extra-gray-text text-center-x">
+                  <span class="mr-5">stock</span>
+                  <span class="">/</span>
+                  <span class="mx-5">forecast</span>
+                  <span class="">/</span>
+                  <span class="ml-5">usage</span>
                 </div>
-                <div class="df">
-                  <div class="w-33 table-body-list df">
-                    <span [innerHTML]="profile.count.toString() | highLight: search"></span>
-                  </div>
-                  <div class="w-33 table-body-list df">
-                    <span [innerHTML]="round(profile.scrap, 10).toString() | highLight: searchPlates"></span>
-                    <span class="mr-5">%</span>
-                  </div>
-                  <div class="w-34 table-body-list">
-                    <span [innerHTML]="profile.profileForecast.toString() | highLight: search"></span>
+                <div class="cx">
+                  <span class="text-black-mini mr-5 width-30 text-center-x">{{profile.stock}}</span>
+                  <span class="text-black-mini text-center-x">/</span>
+                  <span class="text-black-mini mx-5 width-30 text-center-x">{{profile.profileForecast}}</span>
+                  <span class="text-black-mini text-center-x">/</span>
+                  <span class="text-black-mini ml-5 width-30 text-center-x">{{profile.count}}</span>
+                </div>
+                <div class="cx">
+                  <div class="chart-area-list df">
+                    <div [ngStyle]="getStockProfile(profile)" [class.null-stock]="profile.stock == 0" class="h-100 chart-stock-usage"></div>
+                    <div [ngStyle]="getForecastProfile(profile)" [class.null-stock]="profile.profileForecast == 0" class="h-100 chart-forecast-usage"></div>
+                    <div [ngStyle]="getCountProfile(profile)" [class.null-stock]="profile.count == 0" class="h-100 chart-count-usage"></div>
                   </div>
                 </div>
               </div>
+              <div class="df w-99">
+                <div class="left-label-nest-list h-62 cxy">NEST</div>
+                <div class="df flex-column w-100">
+                  <div class="df">
+                    <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Profile QTY')}}</div>
+                    <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Scrap')}}</div>
+                    <div class="w-34 table-header-column border-top-list padding-5">{{t.tr('Profiles Forecast')}}</div>
+                  </div>
+                  <div class="df">
+                    <div class="w-33 table-body-list df">
+                      <span [innerHTML]="profile.count.toString() | highLight: search"></span>
+                    </div>
+                    <div class="w-33 table-body-list df">
+                      <span [innerHTML]="round(profile.scrap, 10).toString() | highLight: searchPlates"></span>
+                      <span class="mr-5">%</span>
+                    </div>
+                    <div class="w-34 table-body-list">
+                      <span [innerHTML]="profile.profileForecast.toString() | highLight: search"></span>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="left-label-model-list h-62 cxy">MODEL</div>
-              <div class="df flex-column w-100">
-                <div class="df">
-                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Parts Weight')}}</div>
-                  <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Sum Length')}}</div>
-                  <div class="w-34 table-header-column border-top-list padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
+                <div class="left-label-model-list h-62 cxy">MODEL</div>
+                <div class="df flex-column w-100">
+                  <div class="df">
+                    <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Parts Weight')}}</div>
+                    <div class="w-33 table-header-column border-top-list padding-5">{{t.tr('Sum Length')}}</div>
+                    <div class="w-34 table-header-column border-top-list padding-5 border-right-list">{{t.tr('Parts QTY')}}</div>
+                  </div>
+                  <div class="df">
+                    <div class="w-33 table-body-list">
+                      <span [innerHTML]="round(profile.partsweight, 1).toString() | highLight: search"></span>
+                    </div>
+                    <div class="w-33 table-body-list">
+                      <span [innerHTML]="round(profile.realLenght, 10).toString() | highLight: search"></span>
+                    </div>
+                    <div class="w-34 table-body-list border-right-list">
+                      <span [innerHTML]="profile.realPartsCount.toString() | highLight: search"></span>
+                    </div>
+                  </div>
                 </div>
-                <div class="df">
-                  <div class="w-33 table-body-list">
-                    <span [innerHTML]="round(profile.partsweight, 1).toString() | highLight: search"></span>
+              </div>
+              <div class="flex-end-top">
+                <div class="kpl-flag cxy">
+                  <div class="text-center-x pr-5">
+                    KSE
                   </div>
-                  <div class="w-33 table-body-list">
-                    <span [innerHTML]="round(profile.realLenght, 10).toString() | highLight: search"></span>
-                  </div>
-                  <div class="w-34 table-body-list border-right-list">
-                    <span [innerHTML]="profile.realPartsCount.toString() | highLight: search"></span>
+                  <div class="text-center-x">
+                    <span [innerHTML]="profile.KSE.toString() | highLight: searchPlates"></span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="flex-end-top">
-              <div class="kpl-flag cxy">
-                <div class="text-center-x pr-5">
-                  KSE
+            <div class="dash-card-list-side-back" (click)="handleFrontClick($event, profile)">
+              <div></div>
+              <div class="title-bold cy">
+                <div class="">{{profDecode(profile.section) + ' ' + profile.scantling + ' ' + profile.mat}}</div>
+              </div>
+              <div class="row-list-one background-gray">
+                <div class="df lxy">
+                  <div class="icon-back-blue cxy ml-10">
+                    <img src="assets/icons/parts.svg" height="18">
+                  </div>
+                  <div class="title-medium-bold ml-10 mr-7">Parts QTY</div>
+                  <span class="text-gray-mini">{{'(' + profile.realPartsCount + ')'}}</span>
                 </div>
-                <div class="text-center-x">
-                  <span [innerHTML]="profile.KSE.toString() | highLight: searchPlates"></span>
+                <div class="cxy">
+                  <div class="button-show cursor-pointer" (click)="showPartsQtyProfile(profile); $event.stopPropagation();">Show</div>
+                </div>
+              </div>
+              <div class="row-list-one opacity">
+                <div class="df lxy">
+                  <div class="icon-back-orange cxy ml-10">
+                    <img src="assets/icons/sections.svg" height="18">
+                  </div>
+                  <div class="title-medium-bold ml-10">Blocks</div>
+                </div>
+                <div class="cxy">
+                  <div class="button-show cursor-default">Show</div>
+                </div>
+              </div>
+              <div class="row-list-one background-gray opacity">
+                <div class="df lxy">
+                  <div class="icon-back-violet cxy ml-10">
+                    <img src="assets/icons/rest.svg" height="18">
+                  </div>
+                  <div class="title-medium-bold ml-10 mr-7">Rest</div>
+                  <span></span>
+                </div>
+                <div class="cxy">
+                  <div class="button-show cursor-default">Show</div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
         <div class="empty-card-list"></div>
