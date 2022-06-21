@@ -21,6 +21,7 @@ export class NaviComponent implements OnInit {
   tc: TimeControlInterval[] = [];
   weather: Weather = new Weather();
   tcFilled = false;
+  display = false;
   ngOnInit(): void {
     this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
       this.tc = res;
@@ -76,5 +77,11 @@ export class NaviComponent implements OnInit {
     this.auth.shareRights(this.auth.getUser().login, '').then(res => {
       location.reload();
     });
+  }
+
+  hideLeftNavi() {
+    setTimeout(() => {
+      this.display = false
+    }, 2500);
   }
 }
