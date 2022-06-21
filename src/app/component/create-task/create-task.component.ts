@@ -35,7 +35,7 @@ export class CreateTaskComponent implements OnInit {
   today: Date = new Date();
   taskProjects: string[] = [];
   sfiCodes: LV[] = [];
-  taskDepartments: LV[] = [];
+  taskDepartments: string[] = [];
   taskPeriods: LV[] = [];
   taskPeriod: string = '';
   taskTypes: any[] = [];
@@ -187,13 +187,8 @@ export class CreateTaskComponent implements OnInit {
     });
 
     this.issues.getIssueDepartments().then(departments => {
-      departments.forEach(d => {
-        this.taskDepartments.push(new LV(this.issues.localeTaskDepartment(d), d));
-      })
-      this.taskDepartments = this.taskDepartments.reverse();
-      if (this.taskDepartments.length > 0) {
-        this.taskDepartment = this.taskDepartments[0].value;
-      }
+      this.taskDepartments = departments;
+      this.taskDepartment = '-';
     });
 
     let issue = this.conf.data as Issue;
