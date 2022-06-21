@@ -81,4 +81,7 @@ export class SpecManagerService {
   async getPipeSegs(docNumber: string) {
     return await this.http.get<any[]>(props.httpSpec + '/pipeSegs', {params: {docNumber}}).toPromise();
   }
+  async getPipeSegsBilling(project: string) {
+    return await this.http.get<any[]>(props.httpSpec + '/pipeSegs', {params: {project}}).toPromise();
+  }
 }

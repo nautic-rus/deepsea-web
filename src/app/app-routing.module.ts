@@ -30,6 +30,7 @@ import {FileExplorerComponent} from "./component/file-explorer/file-explorer.com
 import {BsTreeNodesComponent} from "./component/tools/bs-tree-nodes/bs-tree-nodes.component";
 import {WeightControlComponent} from "./component/weight-control/weight-control.component";
 import {PipeEspComponent} from "./component/documents/pipe-esp/pipe-esp.component";
+import {BillingPipeComponent} from "./component/billing-pipe/billing-pipe.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -57,6 +58,7 @@ const routes: Routes = [
   { path: 'gcode', component: GCodeComponent, canActivate: [AuthGuard], data: {animation: 'GCodeComponent'} },
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard], data: {animation: 'ReportComponent'} },
   { path: 'billing', component: BillingComponent, canActivate: [AuthGuard], data: {animation: 'BillingComponent'} },
+  { path: 'billing-pipe', component: BillingPipeComponent, canActivate: [AuthGuard], data: {animation: 'BillingPipeComponent'} },
   { path: 'test', component: WeightComponent, canActivate: [AuthGuard], data: {animation: 'WeightComponent'} },
   { path: 'weight', component: BsTreeNodesComponent, canActivate: [AuthGuard], data: {animation: 'BsTreeNodesComponent'} },
   { path: 'files', component: FileExplorerComponent, canActivate: [AuthGuard], data: {animation: 'FileExplorerComponent'} },

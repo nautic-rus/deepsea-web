@@ -63,7 +63,7 @@
   </div>
   <div></div>
 </div>
-<div class="left-panel">
+<div class="left-panel" (mouseenter)="display = true">
   <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
     <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
       <img src="assets/icons/home1.svg" height="17">
@@ -145,6 +145,7 @@
   <!--  </div>-->
 </div>
 
+<!--<p-sidebar (mouseleave)="hideLeftNavi()" transitionOptions="200ms" [(visible)]="display" [showCloseIcon]="false" position="left" [blockScroll]="true" [modal]="false" [style]="{'margin-top': 'var(&#45;&#45;navi-height)', width:'240px'}"></p-sidebar>-->
 
 
 

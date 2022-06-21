@@ -1,0 +1,159 @@
+<div class="all-page-billing">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head df sticky-card">
+      <div class="mr-10">
+        <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <div (click)="exportXls()" class="materials-button xls-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="ml-10 df tabs-header">
+        <div *ngFor="let type of pipeTypeDescrs" (click)="selectTypeDesc(type)" class="all-tabs cursor-pointer" [class.selectedTab]="selectedTypeDesc == type">{{type}}
+        </div>
+      </div>
+      <div class="p-ml-auto df">
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
+          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        </div>
+        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">
+          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
+          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
+        </div>
+      </div>
+    </div>
+    <div class="empty-card-bottom"></div>
+
+    <div *ngIf="selectedView == 'tiles'">
+      <div class="tile">
+        <div *ngFor="let pipe of pipes; let i = index" class="dash-card cursor-pointer" [class.hidden-card]="pipe == null">
+          <div *ngIf="pipe != null" class="dash-card-tile" [class.flip-card]="pipe.side == 'back'">
+            <div class="dash-card-tile-side-front" (click)="handleBackClick($event, pipe)" [class.block-card]="pipe != null && pipe.isDisabled">
+              <div *ngIf="pipe != null">
+                <div class="top-row-tile">
+                  <div class="">
+                    <div class="cxy title-bold">
+                      <div class="text-center-x" [innerHTML]="pipe.material.name | highLight: search"></div>
+                    </div>
+                    <div class="cxy">
+                      <div class="text-center-x" [innerHTML]="pipe.compUserId | highLight: search"></div>
+                    </div>
+                    <div class="text-mini-gray">
+                      <div class="text-center-x">
+                        <span class="mr-5" [innerHTML]="(pipe.smat) | highLight: search"></span>
+                        <span>
+                          <span class="text-gray-mini">(</span>
+                          <span class="text-gray-mini">{{roundDecimal(pipe.weight)}}</span>
+                          <span class="text-gray-mini">kg</span>
+                          <span class="text-gray-mini">)</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-minus5">
+                    <div class="text-center-x mb-5">
+                      <div class="all-numbers">
+                        <span class="text-black-mini mr-5">{{pipe.stock}}</span>
+                        <span>/</span>
+                        <span class="text-black-mini mx-5">{{pipe.typeCode}}</span>
+                        <span>/</span>
+                        <span class="text-black-mini ml-5">{{pipe.insul}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-card-tile-side-back" (click)="handleFrontClick($event, pipe)" >
+              <div class="cxy title-bold mb-30 h-20" >
+                <div class="text-center-x"></div>
+              </div>
+              <div class="all-back-tile">
+                <div class="row-one-back background-gray">
+                  <div class="df lxy">
+                    <div class="icon-back-blue cxy ml-10">
+                      <img src="assets/icons/parts.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10 mr-7">Parts QTY</div>
+                    <span class="text-gray-mini"></span>
+                  </div>
+                </div>
+                <div class="row-one-back">
+                  <div class="df lxy">
+                    <div class="icon-back-orange cxy ml-10">
+                      <img src="assets/icons/sections.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Blocks</div>
+                  </div>
+                </div>
+                <div class="row-one-back background-gray">
+                  <div class="df lxy">
+                    <div class="icon-back-violet cxy ml-10">
+                      <img src="assets/icons/rest.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10 mr-7">Wastage</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="selectedView == 'list'">
+      <div class="list">
+        <div [class.hidden-card]="pipe == null"  *ngFor="let pipe of pipes; let i = index">
+          <div *ngIf="pipe != null" class="dash-card-plate-list" [class.block-card]="pipe != null && pipe.isDisabled">
+            <div class="df flex-column min-width-105">
+              <div class="mini-extra-gray-text text-center-x">Material</div>
+              <div class="cxy title-bold">
+                <span class="text-center-x" [innerHTML]="pipe.material.name | highLight: search"></span>
+                <span class="text-center-x" [innerHTML]="pipe.compUserId | highLight: search"></span>
+              </div>
+            </div>
+            <div class="df flex-column min-width-90">
+              <div class="mini-extra-gray-text text-center-x">Stell Grade</div>
+              <div class="cxy title-bold">
+                <span class="text-center-x" [innerHTML]="pipe.smat | highLight: search"></span>
+              </div>
+            </div>
+            <div class="df flex-column min-width-90">
+              <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
+              <div class="cxy title-bold">
+                <span>
+                  <span class="text-gray-mini">(</span>
+                  <span class="text-gray-mini">{{roundDecimal(pipe.weight)}}</span>
+                  <span class="text-gray-mini">kg</span>
+                  <span class="text-gray-mini">)</span>
+                </span>
+              </div>
+            </div>
+            <div class="df flex-column">
+              <div class="mini-extra-gray-text text-center-x">
+                <span class="mr-5">stock</span>
+                <span class="">/</span>
+                <span class="mx-5">forecast</span>
+                <span class="">/</span>
+                <span class="ml-5">usage</span>
+              </div>
+              <div class="cx">
+                <span class="text-black-mini mr-5 width-30 text-center-x">{{pipe.stock}}</span>
+                <span class="text-black-mini text-center-x">/</span>
+                <span class="text-black-mini mx-5 width-30 text-center-x">{{pipe.typeCode}}</span>
+                <span class="text-black-mini text-center-x">/</span>
+                <span class="text-black-mini ml-5 width-30 text-center-x">{{pipe.insul}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="empty-card-list"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<p-toast position="bottom-center"></p-toast>
