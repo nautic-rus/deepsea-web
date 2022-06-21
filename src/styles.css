@@ -421,6 +421,9 @@ body,p{
   position: absolute;
   right: 0;
 }
+.align-center{
+  align-items: center;
+}
 .justify-content-end{
   justify-content: flex-end;
 }

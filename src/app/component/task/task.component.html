@@ -222,6 +222,7 @@
                 <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
               </div>
               <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
               <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
             </div>
           </div>
@@ -238,16 +239,76 @@
       <div collapseContent #contentOther="collapseContent" class="collapse-body">
         <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OTHER')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
-            <div>{{t.tr('Согласование')}}</div>
+            <div>{{t.tr('Прочее')}}</div>
             <div>
               <span>{{childIssue.doc_number}}</span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
             </div>
-            <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-            <div [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+            <div class="df">
+              <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>
+              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+            </div>
+            <div class="df">
+              <div class="min-text mt-2px">{{t.tr('Ответственный - ')}}</div>
+              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+            </div>
+            <div class="">
+              <div class="cx" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+            </div>
           </div>
         </div>
       </div>
+
+      <div [collapse]="contentOr" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'OR').length > 0" (click)="contentClick('or')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('or')">
+          <img src="assets/icons/arrow-right.png">
+        </div>
+        <div>{{t.tr('ORIZ')}}</div>
+      </div>
+      <div collapseContent #contentOr="collapseContent" class="collapse-body">
+        <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OR')">
+          <div class="subtask-grid" (click)="openIssue(childIssue.id)">
+            <div>{{t.tr('ОР')}}</div>
+            <div>
+              <span>{{childIssue.doc_number}}</span>
+              <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+            </div>
+            <div class="df">
+              <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>
+              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+            </div>
+            <div class="df">
+              <div class="min-text mt-2px">{{t.tr('Ответственный - ')}}</div>
+              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+            </div>
+            <div class="">
+              <div class="cx" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+            </div>
+          </div>
+        </div>
+        <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'IZ')">
+          <div class="subtask-grid" (click)="openIssue(childIssue.id)">
+            <div>{{t.tr('ИЗ')}}</div>
+            <div>
+              <span>{{childIssue.doc_number}}</span>
+              <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+            </div>
+            <div class="df">
+              <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>
+              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+            </div>
+            <div class="df">
+              <div class="min-text mt-2px">{{t.tr('Ответственный - ')}}</div>
+              <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+            </div>
+            <div class="">
+              <div class="cx" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
 
 
       <div class="big-text mb-1 mt-30">{{t.tr('Активность')}}</div>
