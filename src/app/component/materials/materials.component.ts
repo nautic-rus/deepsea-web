@@ -619,7 +619,7 @@ export class MaterialsComponent implements OnInit {
   selectedNodePath = '';
   selectedNodeCode = '';
   tooltips: string[] = [];
-  projects: string[] = ['200101', '210101'];
+  projects: string[] = ['210101'];
   project = '';
   selectedMaterial: Material = new Material();
   items = [
