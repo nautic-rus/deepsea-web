@@ -308,10 +308,10 @@ export class LanguageService {
           case 'Выгрузить в Excel': return 'Export XLS';
           case 'Общая масса:': return 'Total weight';
           case 'Документация': return 'Documentation';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Исполнитель - ': return 'Assignee - ';
+          case 'Ответственный - ': return 'Responsible - ';
+          case 'ОР': return 'OR';
+          case 'ИЗ': return 'IZ';
           case '': return '';
           case '': return '';
           case '': return '';
