@@ -63,62 +63,108 @@
   </div>
   <div></div>
 </div>
-<div class="left-panel" (mouseenter)="display = true">
-  <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">
-      <img src="assets/icons/home1.svg" height="17">
+
+<div class="left-panel left-panel-collapse" [ngStyle]="collapseStyle()" (mouseleave)="collapseLeftNavi()" (mouseenter)="collapseLeftNaviOpen()">
+  <div *ngFor="let menu of menus; let i = index">
+    <div *ngIf="menu.child.length == 0" [class.w-40px]="collapsed" class="menu menu-row cy" [queryParams]="menu.params" [routerLink]="menu.url" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
+      <div class="df menu-grid">
+        <div class="cxy">
+          <img [src]="menu.icon" [height]="menu.height">
+        </div>
+        <div *ngIf="!collapsed">{{menu.label}}</div>
+      </div>
+    </div>
+    <div *ngIf="menu.child.length != 0" [class.w-40px]="collapsed" class="menu menu-row cy" [collapse]="content" (click)="addCollapse(menu.label + '-' + i)">
+      <div class="df menu-grid" >
+        <div class="cxy">
+          <img [src]="menu.icon" [height]="menu.height">
+        </div>
+        <div class="cy" *ngIf="!collapsed">{{menu.label}}</div>
+        <div *ngIf="!collapsed" class="cy arrow-up" [class.arrow-down]="collapsedMenu.includes(menu.label + '-' + i)">
+          <img src="assets/icons/arrow-d.svg" height="12">
+        </div>
+      </div>
+    </div>
+    <div collapseContent #content="collapseContent" [class.child-menu-collapsed]="collapsed" [class.child-menu]="!collapsed">
+      <div *ngFor="let childMenu of menu.child" class="menu menu-row cy" [class.child-menu-collapsed-margin-left]="collapsed" [queryParams]="childMenu.params" [routerLink]="childMenu.url" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
+        <div class="df menu-grid">
+          <div class="cxy">
+            <img [src]="childMenu.icon" [height]="childMenu.height">
+          </div>
+          <div *ngIf="!collapsed">{{childMenu.label}}</div>
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">
-      <img src="assets/icons/sections1.svg" height="17">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('materials')" class="menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('МАТЕРИАЛЫ')">
-      <img src="assets/icons/cube.svg" height="22">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="menu" routerLink="documents" [queryParams]="{'department': 'Hull'}" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">
-      <img src="assets/icons/docs.svg" height="17">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('pipe-documents')" class="menu" routerLink="documents" [queryParams]="{'department': 'Pipe'}" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">
-      <img src="assets/icons/pipe.svg" height="20">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('ИНСТРУМЕНТЫ')">
-      <img src="assets/icons/wrench.svg" height="17">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('eleccables')" class="menu" routerLink="elec-cables" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('КАБЕЛИ')">
-      <img src="assets/icons/elec.svg" height="20">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('nesting')" class="menu" routerLink="nesting" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('РАСКРОЙ')">
-      <img src="assets/icons/nesting.svg" height="20">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('billing')" class="menu" routerLink="billing" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('РАСЧЁТ')">
-      <img src="assets/icons/bill.svg" height="22">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('weight')" class="menu" routerLink="weight" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('ВЕС')">
-      <img src="assets/icons/weight.svg" height="22">
-    </div>
-  </div>
-  <div *ngIf="auth.getUser().visible_pages.includes('weight-control')" class="menu" routerLink="weight-control" routerLinkActive="selected-menu" queryParamsHandling="merge">
-    <div class="cxy" [pTooltip]="t.tr('КОНТРОЛЬ ВЕСА')">
-      <img src="assets/icons/preferences.svg" height="22">
-    </div>
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('home')" class="menu" routerLink="" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('МОЯ СТРАНИЦА')">-->
+<!--      <img src="assets/icons/home1.svg" height="17">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('sections')" class="menu" routerLink="sections" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('СЕКЦИИ')">-->
+<!--      <img src="assets/icons/sections1.svg" height="17">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('materials')" class="menu" routerLink="materials" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('МАТЕРИАЛЫ')">-->
+<!--      <img src="assets/icons/cube.svg" height="22">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('documents')" class="menu" routerLink="documents" [queryParams]="{'department': 'Hull'}" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">-->
+<!--      <img src="assets/icons/docs.svg" height="17">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('pipe-documents')" class="menu" routerLink="documents" [queryParams]="{'department': 'Pipe'}" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('ДОКУМЕНТЫ')">-->
+<!--      <img src="assets/icons/pipe.svg" height="20">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('tools')" class="menu" routerLink="tools" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('ИНСТРУМЕНТЫ')">-->
+<!--      <img src="assets/icons/wrench.svg" height="17">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('eleccables')" class="menu" routerLink="elec-cables" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('КАБЕЛИ')">-->
+<!--      <img src="assets/icons/elec.svg" height="20">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('nesting')" class="menu" routerLink="nesting" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('РАСКРОЙ')">-->
+<!--      <img src="assets/icons/nesting.svg" height="20">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('billing')" class="menu" routerLink="billing" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('РАСЧЁТ')">-->
+<!--      <img src="assets/icons/bill.svg" height="22">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('weight')" class="menu" routerLink="weight" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('ВЕС')">-->
+<!--      <img src="assets/icons/weight.svg" height="22">-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div *ngIf="auth.getUser().visible_pages.includes('weight-control')" class="menu" routerLink="weight-control" routerLinkActive="selected-menu" queryParamsHandling="merge">-->
+<!--    <div class="cxy" [pTooltip]="t.tr('КОНТРОЛЬ ВЕСА')">-->
+<!--      <img src="assets/icons/preferences.svg" height="22">-->
+<!--    </div>-->
+<!--  </div>-->
+
+
   <!--  <div class="cy menu" routerLink="gantt" routerLinkActive="selected-menu">-->
   <!--    <div class="cxy">-->
   <!--      <img src="assets/icons/chart-gantt.svg" height="27">-->
@@ -144,9 +190,6 @@
   <!--    &lt;!&ndash;    <div class="cy">{{t.tr('ТРУДОЗАТРАТЫ')}}</div>&ndash;&gt;-->
   <!--  </div>-->
 </div>
-
-<!--<p-sidebar (mouseleave)="hideLeftNavi()" transitionOptions="200ms" [(visible)]="display" [showCloseIcon]="false" position="left" [blockScroll]="true" [modal]="false" [style]="{'margin-top': 'var(&#45;&#45;navi-height)', width:'240px'}"></p-sidebar>-->
-
 
 
 

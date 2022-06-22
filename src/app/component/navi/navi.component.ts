@@ -21,7 +21,28 @@ export class NaviComponent implements OnInit {
   tc: TimeControlInterval[] = [];
   weather: Weather = new Weather();
   tcFilled = false;
-  display = false;
+  collapsed = true;
+  collapsedMenu: string[] = [];
+  menus = [
+    {id: 'home', label: 'Home', url: '', icon: 'assets/icons/home1.svg', height: 17, child: [], params: {}},
+    {id: 'sections', label: 'Sections', url: 'sections', icon: 'assets/icons/sections1.svg', height: 17, child: [], params: {}},
+    {id: 'materials', label: 'Materials', url: 'materials', icon: 'assets/icons/cube.svg', height: 22, child: [], params: {}},
+    {id: 'documents', label: 'Documents', url: '', icon: 'assets/icons/docs.svg', height: 17, params: {}, child: [
+      {id: 'hull-documents', label: 'Hull', url: 'documents', icon: 'assets/icons/docs.svg', height: 12, params: {'department': 'Hull'}},
+      { id: 'pipe-documents', label: 'Pipe', url: 'documents', icon: 'assets/icons/pipe.svg', height: 12, params: {'department': 'Pipe'}}
+    ].filter(x => this.auth.getUser().visible_pages.includes(x.id))},
+    {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
+    {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},
+    {id: 'nesting', label: 'Nesting', url: 'nesting', icon: 'assets/icons/nesting.svg', height: 20, child: [], params: {}},
+    {id: 'billing', label: 'Billing', url: '', icon: 'assets/icons/bill.svg', height: 22, child: [
+      {id: 'billing', label: 'Hull', url: 'billing', icon: 'assets/icons/bill.svg', height: 12, params: {}},
+      {id: 'pipe-billing', label: 'Pipe', url: 'pipe-billing', icon: 'assets/icons/bill.svg', height: 12, params: {}}
+    ].filter(x => this.auth.getUser().visible_pages.includes(x.id)), params: {}},
+    {id: 'weight', label: 'Weight', url: 'weight', icon: 'assets/icons/weight.svg', height: 22, child: [], params: {}},
+    {id: 'weight-control', label: 'Weight control', url: 'weight-control', icon: 'assets/icons/preferences.svg', height: 22, child: [], params: {}},
+
+  ].filter(x => this.auth.getUser().visible_pages.includes(x.id));
+
   ngOnInit(): void {
     this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
       this.tc = res;
@@ -79,9 +100,33 @@ export class NaviComponent implements OnInit {
     });
   }
 
-  hideLeftNavi() {
+
+  collapseStyle() {
+    if (this.collapsed){
+      return {
+
+      };
+    }
+    else{
+      return {
+        width: '220px'
+      };
+    }
+  }
+
+  collapseLeftNavi() {
     setTimeout(() => {
-      this.display = false
-    }, 2500);
+      this.collapsed = true;
+    }, 200)
+  }
+
+  collapseLeftNaviOpen() {
+    setTimeout(() => {
+      this.collapsed = false
+    }, 100);
+  }
+
+  addCollapse(collapse: string) {
+    this.collapsedMenu.includes(collapse) ? this.collapsedMenu.splice(this.collapsedMenu.indexOf(collapse)) : this.collapsedMenu.push(collapse);
   }
 }
