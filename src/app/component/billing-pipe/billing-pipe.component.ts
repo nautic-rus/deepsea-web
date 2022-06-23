@@ -28,32 +28,15 @@ export class BillingPipeComponent implements OnInit {
   projects: string[] = ['N002', 'N004', 'P701', 'P707'];
   project = '';
   search: string = '';
-  filtersPlates:  { material: any[], count: any[], scantling: any[] } = { material: [], count: [], scantling: [] };
-  filtersProfiles:  { material: any[], count: any[], scantling: any[], section: any[] } = { material: [], count: [], scantling: [], section: [] };
   selectedView: string = 'tiles';
   selectedTypeDesc: string = 'Pipe';
-  sortPlatesValues: any[] = [
-    'by KPL',
-    'by Material',
-    'by Steel Grade',
-    'by Nested Parts',
-    'by Plate Weight',
-    'by Parts Weight',
-    'by Scrap'
+  sortValues: any[] = [
+    'by Name',
+    'by Length',
+    'by Weight',
   ];
-  sortPlatesValue = this.sortPlatesValues[1];
-  sortProfilesValues: any[] = [
-    'by KSE',
-    'by Section',
-    'by Material',
-    'by Profile Forecast',
-    'by Profile Usage',
-    'by Parts QTY',
-    'by Parts Weight',
-    'by Scrap'
-  ];
+  sortValue = this.sortValues[0];
   tooltips: string[] = [];
-  sortProfilesValue = this.sortProfilesValues[1];
 
   constructor(public ref: DynamicDialogRef, public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router, private dialogService: DialogService) { }
 
@@ -77,7 +60,13 @@ export class BillingPipeComponent implements OnInit {
     });
   }
   searchChanged() {
-    //todo search
+    if (this.search.trim() == '') {
+      this.pipes = this.pipesSrc;
+    } else {
+      this.pipes = this.pipesSrc.filter((x: any) => {
+        return x == null || (x.material.name + x.compUserId).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())
+      });
+    }
   }
   projectChanged() {
     this.router.navigate([], {queryParams: {foranProject: this.project}}).then(() => {
@@ -155,7 +144,10 @@ export class BillingPipeComponent implements OnInit {
   }
 
   refresh() {
-    this.pipes = this.pipesSrc.filter(x => x.typeDesc == this.selectedTypeDesc);
+    this.pipes = _.sortBy(this.pipesSrc.filter(x => x.typeDesc == this.selectedTypeDesc), x => x.material.name + '-' + x.compUserId);
+    for (let x = 0; x < 10; x ++){
+      this.pipes.push(null);
+    }
   }
 
   selectTypeDesc(type: any) {
@@ -173,5 +165,27 @@ export class BillingPipeComponent implements OnInit {
 
   showTooltip(index: string) {
     return this.tooltips.includes(index);
+  }
+
+  sortChanged() {
+    this.refresh();
+    this.pipes = this.pipes.filter((x: any) => x != null);
+    switch (this.sortValues.indexOf(this.sortValue)) {
+      case 0:{
+        this.pipes = _.sortBy(this.pipes, x => x.material.name);
+        break;
+      }
+      case 1:{
+        this.pipes = _.sortBy(this.pipes, x => x.length);
+        break;
+      }
+      case 2:{
+        this.pipes = _.sortBy(this.pipes, x => x.weight);
+        break;
+      }
+    }
+    for (let x = 0; x < 10; x ++){
+      this.pipes.push(null);
+    }
   }
 }

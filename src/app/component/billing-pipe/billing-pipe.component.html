@@ -25,6 +25,16 @@
           <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
         </div>
       </div>
+      <div class="df">
+        <div class="mr-10 ml-10">
+          <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <span class="p-input-icon-left p-ml-auto">
+          <i class="pi pi-search"></i>
+          <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+        </span>
+      </div>
     </div>
     <div class="empty-card-bottom"></div>
 
@@ -92,7 +102,7 @@
                   </div>
 
                   <div class="p-ml-auto">
-                    <div *ngIf="pipe.stock != ''" class="df">
+                    <div *ngIf="pipe.stock.trim() != ''" class="df">
                       <div class="trm">
                         <span [innerHTML]="pipe.stock | highLight: search"></span>
                       </div>
@@ -100,6 +110,9 @@
                         <img src="assets/icons/trm.svg" height="14">
                         <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
                       </div>
+                    </div>
+                    <div class="pulse">
+                      <div *ngIf="pipe.stock.trim() == ''" class="dot red"></div>
                     </div>
                     <div></div>
                   </div>
