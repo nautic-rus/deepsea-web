@@ -30,6 +30,7 @@ export class CreateTaskComponent implements OnInit {
   taskDepartment = '';
   for_revision = '';
   users: User[] = [];
+  itUsers: User[] = [];
   startDate: Date = new Date();
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
   today: Date = new Date();
@@ -130,6 +131,7 @@ export class CreateTaskComponent implements OnInit {
     });
     //this.users = this.auth.users;
     this.users = this.getUsers();
+    this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueTypes().then(types => {
       types.forEach(type => {
         let allow = true;

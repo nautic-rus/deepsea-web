@@ -283,6 +283,19 @@
   <div *ngIf="taskType == 'IT'">
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Название задачи')}}</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
+    <div>
+      <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить исполнителя')}}</div>
+      <p-dropdown [options]="itUsers" [(ngModel)]="assignedToUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
+                  [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-220 max-height-150">
+        <ng-template let-user pTemplate="item">
+          <div class="df">
+            <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+            <div *ngIf="l.language == 'ru'" class="cx cy pl-10">{{user.userName}}</div>
+            <div *ngIf="l.language == 'en'" class="cx cy pl-10">{{user.userNameEn}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
