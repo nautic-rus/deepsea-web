@@ -328,7 +328,7 @@
         <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText [placeholder]="t.tr('Добавить комментарий...')" />
       </div>
       <div [hidden]="!comment">
-        <quill-editor [class.file-drag]="dragOver" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event); dragOver = false" id="editor" [(ngModel)]="message">
+        <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event); dragOver = false" id="editor" [(ngModel)]="message">
           <div quill-editor-toolbar>
             <p-header>
               <span class="ql-formats">
@@ -379,6 +379,12 @@
           </div>
           <div>
             <div (click)="comment = false" pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
+          </div>
+        </div>
+        <div [class.file-drag]="dragOver" class="upload cx cy">
+          <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+            <span class="normal-text no-actions">DROP FILES HERE TO UPLOAD</span>
           </div>
         </div>
       </div>
