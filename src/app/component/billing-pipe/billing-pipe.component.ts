@@ -52,6 +52,7 @@ export class BillingPipeComponent implements OnInit {
     'by Parts Weight',
     'by Scrap'
   ];
+  tooltips: string[] = [];
   sortProfilesValue = this.sortProfilesValues[1];
 
   constructor(public ref: DynamicDialogRef, public t: LanguageService, public s: SpecManagerService, public route: ActivatedRoute, public auth: AuthManagerService, public router: Router, private dialogService: DialogService) { }
@@ -160,5 +161,17 @@ export class BillingPipeComponent implements OnInit {
   selectTypeDesc(type: any) {
     this.selectedTypeDesc = type;
     this.refresh();
+  }
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
+  }
+
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
   }
 }

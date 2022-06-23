@@ -34,36 +34,74 @@
           <div *ngIf="pipe != null" class="dash-card-tile" [class.flip-card]="pipe.side == 'back'">
             <div class="dash-card-tile-side-front" (click)="handleBackClick($event, pipe)" [class.block-card]="pipe != null && pipe.isDisabled">
               <div *ngIf="pipe != null">
-                <div class="top-row-tile">
-                  <div class="">
-                    <div class="cxy title-bold">
-                      <div class="text-center-x" [innerHTML]="pipe.material.name | highLight: search"></div>
-                    </div>
-                    <div class="cxy">
-                      <div class="text-center-x" [innerHTML]="pipe.compUserId | highLight: search"></div>
-                    </div>
-                    <div class="text-mini-gray">
+                <div class="top-row-pipe-tile">
+                  <div class="title-bold-pipe">
+                    <div class="" [innerHTML]="pipe.material.name | highLight: search"></div>
+                  </div>
+                  <div class="flex-end-top">
+                    <div class="kpl-flag cxy">
                       <div class="text-center-x">
-                        <span class="mr-5" [innerHTML]="(pipe.smat) | highLight: search"></span>
-                        <span>
-                          <span class="text-gray-mini">(</span>
-                          <span class="text-gray-mini">{{roundDecimal(pipe.weight)}}</span>
-                          <span class="text-gray-mini">kg</span>
-                          <span class="text-gray-mini">)</span>
-                        </span>
+                        <span [innerHTML]="(pipe.smat) | highLight: search"></span>
                       </div>
                     </div>
                   </div>
-                  <div class="mt-minus5">
-                    <div class="text-center-x mb-5">
-                      <div class="all-numbers">
-                        <span class="text-black-mini mr-5">{{pipe.stock}}</span>
-                        <span>/</span>
-                        <span class="text-black-mini mx-5">{{pipe.typeCode}}</span>
-                        <span>/</span>
-                        <span class="text-black-mini ml-5">{{pipe.insul}}</span>
+                </div>
+                <div class="two-row-pipe">
+                  <div class="mm-text">Foran name
+                    <span [innerHTML]="pipe.compUserId | highLight: search"></span>
+                  </div>
+                </div>
+                <div class="three-row-pipe">
+                  <div class=" df">
+                    <div class="text-mini-gray pr-5">length</div>
+                    <div class="text-mini-gray">{{round(pipe.length / 1000, 10) + ' ' + 'm'}}</div>
+                  </div>
+                  <div class=" df">
+                    <div class="text-mini-gray pr-5">weight</div>
+                    <div class="text-mini-gray">{{roundDecimal(pipe.weight) + ' ' + 'kg'}}</div>
+                  </div>
+                </div>
+                <div class="four-row-pipe df">
+                  <div class="text-black-mini cy">{{pipe.typeCode}}</div>
+                  <div *ngIf="pipe.typeCode == 'PIPE'">
+                    <img src="assets/icons/pipes-pipe.svg" height="50">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'VALV'">
+                    <img src="assets/icons/valve.svg" height="40">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'FWRE'">
+                    <img src="assets/icons/pipes-fwre.svg" height="50">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'FWNR'">
+                    <img src="assets/icons/pipes-elbow.svg" height="50">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'BRAW'">
+                    <img src="assets/icons/pipes-braw.svg" height="50">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'FLAN'">
+                    <img src="assets/icons/flange.svg" height="36">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'GASK'">
+                    <img src="assets/icons/gasket.svg" height="36">
+                  </div>
+                </div>
+                <div class="fife-row-pipe df align-end">
+                  <div class="df">
+                    <div class="mm-text pr-5">Insulation</div>
+                    <span class="text-black-mini">{{pipe.insul}}</span>
+                  </div>
+
+                  <div class="p-ml-auto">
+                    <div *ngIf="pipe.stock != ''" class="df">
+                      <div class="trm">
+                        <span [innerHTML]="pipe.stock | highLight: search"></span>
+                      </div>
+                      <div (click)="copyTrmCode(pipe.stock, 't' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                        <img src="assets/icons/trm.svg" height="14">
+                        <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
                       </div>
                     </div>
+                    <div></div>
                   </div>
                 </div>
               </div>
@@ -107,46 +145,70 @@
     <div *ngIf="selectedView == 'list'">
       <div class="list">
         <div [class.hidden-card]="pipe == null"  *ngFor="let pipe of pipes; let i = index">
-          <div *ngIf="pipe != null" class="dash-card-plate-list" [class.block-card]="pipe != null && pipe.isDisabled">
-            <div class="df flex-column min-width-105">
-              <div class="mini-extra-gray-text text-center-x">Material</div>
-              <div class="cxy title-bold">
-                <span class="text-center-x" [innerHTML]="pipe.material.name | highLight: search"></span>
-                <span class="text-center-x" [innerHTML]="pipe.compUserId | highLight: search"></span>
+          <div *ngIf="pipe != null" class="dash-card-pipe-list" [class.block-card]="pipe != null && pipe.isDisabled">
+            <div></div>
+            <div class="df flex-column cy">
+              <div class="title-bold-pipe">
+                <div class="" [innerHTML]="pipe.material.name | highLight: search"></div>
+              </div>
+              <div class="mm-text">Foran name
+                <span [innerHTML]="pipe.compUserId | highLight: search"></span>
               </div>
             </div>
-            <div class="df flex-column min-width-90">
-              <div class="mini-extra-gray-text text-center-x">Stell Grade</div>
-              <div class="cxy title-bold">
-                <span class="text-center-x" [innerHTML]="pipe.smat | highLight: search"></span>
+            <div class="cy df px-10">
+              <div class="text-mini-gray pr-5">length</div>
+              <div class="text-mini-gray">{{round(pipe.length / 1000, 10) + ' ' + 'm'}}</div>
+            </div>
+            <div class="cy df">
+              <div class="text-mini-gray pr-5">weight</div>
+              <div class="text-mini-gray">{{roundDecimal(pipe.weight) + ' ' + 'kg'}}</div>
+            </div>
+            <div class="title-bold-pipe cy">{{pipe.typeCode}}</div>
+            <div class="df cy">
+              <div *ngIf="pipe.typeCode == 'PIPE'">
+                <img src="assets/icons/pipes-pipe.svg" height="50">
+              </div>
+              <div *ngIf="pipe.typeCode == 'VALV'">
+                <img src="assets/icons/valve.svg" height="40">
+              </div>
+              <div *ngIf="pipe.typeCode == 'FWRE'">
+                <img src="assets/icons/pipes-fwre.svg" height="50">
+              </div>
+              <div *ngIf="pipe.typeCode == 'FWNR'">
+                <img src="assets/icons/pipes-elbow.svg" height="50">
+              </div>
+              <div *ngIf="pipe.typeCode == 'BRAW'">
+                <img src="assets/icons/pipes-braw.svg" height="50">
+              </div>
+              <div *ngIf="pipe.typeCode == 'FLAN'">
+                <img src="assets/icons/flange.svg" height="36">
+              </div>
+              <div *ngIf="pipe.typeCode == 'GASK'">
+                <img src="assets/icons/gasket.svg" height="36">
               </div>
             </div>
-            <div class="df flex-column min-width-90">
-              <div class="mini-extra-gray-text text-center-x">Plate Weight</div>
-              <div class="cxy title-bold">
-                <span>
-                  <span class="text-gray-mini">(</span>
-                  <span class="text-gray-mini">{{roundDecimal(pipe.weight)}}</span>
-                  <span class="text-gray-mini">kg</span>
-                  <span class="text-gray-mini">)</span>
-                </span>
+            <div class="df align-center">
+              <div class="mm-text pr-5">Insulation</div>
+              <span class="text-black-mini">{{pipe.insul}}</span>
+            </div>
+            <div class="cy">
+              <div class="kpl-flag cxy">
+                <div class="text-center-x">
+                  <span [innerHTML]="(pipe.smat) | highLight: search"></span>
+                </div>
               </div>
             </div>
-            <div class="df flex-column">
-              <div class="mini-extra-gray-text text-center-x">
-                <span class="mr-5">stock</span>
-                <span class="">/</span>
-                <span class="mx-5">forecast</span>
-                <span class="">/</span>
-                <span class="ml-5">usage</span>
+            <div class="p-ml-auto df align-center">
+              <div *ngIf="pipe.stock != ''" class="df">
+                <div class="trm">
+                  <span [innerHTML]="pipe.stock | highLight: search"></span>
+                </div>
+                <div (click)="copyTrmCode(pipe.stock, 't' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                  <img src="assets/icons/trm.svg" height="14">
+                  <div class="copy-tooltip-list" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                </div>
               </div>
-              <div class="cx">
-                <span class="text-black-mini mr-5 width-30 text-center-x">{{pipe.stock}}</span>
-                <span class="text-black-mini text-center-x">/</span>
-                <span class="text-black-mini mx-5 width-30 text-center-x">{{pipe.typeCode}}</span>
-                <span class="text-black-mini text-center-x">/</span>
-                <span class="text-black-mini ml-5 width-30 text-center-x">{{pipe.insul}}</span>
-              </div>
+              <div></div>
             </div>
           </div>
         </div>
