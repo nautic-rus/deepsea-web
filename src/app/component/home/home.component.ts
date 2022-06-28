@@ -728,7 +728,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     if (this.showStartedBy && issue.started_by != this.auth.getUser().login){
       show = false;
     }
-    if (!this.showCompleted && issue.closing_status == issue.status){
+    if (!this.showCompleted && issue.closing_status.includes(issue.status)){
       show = false;
     }
     return show;
@@ -741,7 +741,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     return this.issues.filter(x => this.showIssue(x)).length;
   }
   getCompletedLength(issues: Issue[]) {
-    return issues.filter(x => x.closing_status == x.status).length;
+    return issues.filter(x => x.closing_status.includes(x.status)).length;
   }
   showIssuesLength() {
     return this.dt != null && this.dt.value != null;

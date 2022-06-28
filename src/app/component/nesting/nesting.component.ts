@@ -104,6 +104,7 @@ export class NestingComponent implements OnInit {
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
         this.s.getHullNestingByProjectPlates(this.project).then(res => {
+          console.log(res);
           this.nestingSource = res;
           this.s.getHullNestingByProjectProfiles(this.project).then(resProfiles => {
             console.log(resProfiles);
