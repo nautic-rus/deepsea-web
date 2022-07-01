@@ -73,7 +73,7 @@
 }
 .card-head{
   background: #fff;
-  padding: 12px;
+  padding: 12px 12px 0 12px;
   border-radius: 8px;
   height: fit-content;
   align-items: center;

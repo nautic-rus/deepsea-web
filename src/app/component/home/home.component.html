@@ -38,7 +38,6 @@
             <p-multiSelect class="mr-10" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
                            [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
             </p-multiSelect>
-
             <div class="mr-10">
               <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset();showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top">
                 <img src="assets/icons/filter-no.svg" height="18">
@@ -98,7 +97,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th style="width:30px"></th>
+            <th style="width:30px" pResizableColumn></th>
             <th style="width:192px" pResizableColumn pReorderableColumn *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}

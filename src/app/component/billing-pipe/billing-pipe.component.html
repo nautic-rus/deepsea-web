@@ -2,17 +2,17 @@
   <div class="min-height-card">
     <div class="empty-card"></div>
     <div class="card-head df sticky-card">
-      <div class="mr-10">
+      <div class="mr-10 mb-10">
         <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <div class="mr-10">
+      <div class="mr-10 mb-10">
         <div (click)="exportXls()" class="materials-button xls-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <div class="ml-10 df tabs-header">
-        <div *ngFor="let type of pipeTypeDescrs" (click)="selectTypeDesc(type)" class="all-tabs cursor-pointer" [class.selectedTab]="selectedTypeDesc == type">{{type}}
+      <div class="ml-10 df tabs-header df fw min-width-480">
+        <div *ngFor="let type of pipeTypeDescrs" (click)="selectTypeDesc(type)" class="mr-10 mb-10 all-tabs cursor-pointer" [class.selectedTab]="selectedTypeDesc == type">{{type}}
         </div>
       </div>
       <div class="p-ml-auto df">
@@ -25,8 +25,8 @@
           <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
         </div>
       </div>
-      <div class="df">
-        <div class="mr-10 ml-10">
+      <div class="df min-width-360">
+        <div class="mr-10 mb-10 ml-10">
           <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-170 border">
           </p-dropdown>
         </div>
