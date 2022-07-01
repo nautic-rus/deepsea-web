@@ -342,6 +342,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     // }
     this.issueManager.getIssues(this.auth.getUser().login).then(data => {
       this.issues = data;
+      if (this.auth.getUser().shared_access != ''){
+        this.issueManager.getIssues(this.auth.getUser().shared_access).then(resShared => {
+          resShared.forEach(x => this.issues.push(x));
+        });
+      }
       this.issues.forEach(issue => {
         issue.started_date = new Date(issue.started_date);
         issue.start_date = new Date(issue.start_date);

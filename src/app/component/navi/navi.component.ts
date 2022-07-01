@@ -75,10 +75,10 @@ export class NaviComponent implements OnInit {
     });
   }
   isShared(){
-    return this.auth.getUser().shared_access != '';
+    return this.auth.users.find(x => x.shared_access.includes(this.auth.getUser().login)) != null;
   }
   sharedWith(): any{
-    let findUser = this.auth.users.find(x => x.login == this.auth.getUser().shared_access);
+    let findUser = this.auth.users.find(x => x.shared_access.includes(this.auth.getUser().login));
     if (findUser != null){
       return findUser;
     }
@@ -95,7 +95,7 @@ export class NaviComponent implements OnInit {
   }
 
   unShare() {
-    this.auth.shareRights(this.auth.getUser().login, '').then(res => {
+    this.auth.shareRights('', this.sharedWith().login).then(res => {
       location.reload();
     });
   }
