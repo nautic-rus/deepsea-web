@@ -322,6 +322,12 @@ body,p{
 .min-width-270{
   min-width: 270px;
 }
+.min-width-360{
+  min-width: 360px;
+}
+.min-width-480{
+  min-width: 480px;
+}
 .height-32{
   height: 32px;
 }

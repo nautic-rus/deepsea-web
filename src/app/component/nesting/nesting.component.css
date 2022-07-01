@@ -819,7 +819,7 @@
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
-.check-button{
+.checks-button{
   border-radius: 8px;
   padding: 6px;
   background-color: hsla(0,0%,100%,0);
@@ -849,7 +849,7 @@
   line-height: 1rem;
   color: #172029;
 }
-.check-button:hover{
+.checks-button:hover{
   box-shadow: inset 0 0 0 1px #88C0D0;
 }
 .all-checkbox{

@@ -53,7 +53,7 @@
                 There is no blocks for selected project there. Try to specify another project.
               </div>
               <div class="all-checkbox" *ngFor="let block of blocks">
-                <div class="check-button" [class.checked-button]="block.selected" (click)="selectBlock(block)">
+                <div class="checks-button" [class.checked-button]="block.selected" (click)="selectBlock(block)">
                   {{block.name}}
                 </div>
               </div>
@@ -85,7 +85,7 @@
                   There are no plate dimensions. You need to specify blocks from top column.
                 </div>
                 <div class="all-checkbox" *ngFor="let material of materialsRoot">
-                  <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                  <div class="checks-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                     {{material.name}}
                     <span [class.checked-mini-text-gray]="material.selected" class="ml-5 text-mini">{{getMaterialsCount(material.count)}}</span>
                   </div>
@@ -99,7 +99,7 @@
                   There are no nesting profiles.
                 </div>
                 <div class="all-checkbox" *ngFor="let nest of nestingProfiles">
-                  <div class="check-button">
+                  <div class="checks-button">
                     {{nest}}
                   </div>
                 </div>
@@ -131,7 +131,7 @@
                 There are no plate dimensions. You need to specify blocks from top column.
               </div>
               <div class="all-checkbox" *ngFor="let material of materialsRest">
-                <div class="check-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                <div class="checks-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                   <div>{{material.name}}</div>
 <!--                  <span class="ml-5">{{getMaterialsCount(material.count)}}</span>-->
 
@@ -387,7 +387,7 @@
                   There are no plate dimensions. You need to specify blocks from top column.
                 </div>
                 <div class="all-checkbox" *ngFor="let material of materialsRoot">
-                  <div class="check-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                  <div class="checks-button" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                     {{material.name + ' ' + getMaterialsCount(material.count)}}
                   </div>
                 </div>
@@ -417,7 +417,7 @@
                   There are no plate dimensions. You need to specify blocks from top column.
                 </div>
                 <div class="all-checkbox" *ngFor="let material of materialsRest">
-                  <div class="check-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
+                  <div class="checks-button flex-column" [class.checked-button]="material.selected" (click)="selectMaterial(material)">
                     <div>{{material.name}}</div>
                     <div [class.checked-mini-text-gray]="material.selected" class="mini-text-gray">{{'KPL' + ' ' + material.parent}}</div>
 
