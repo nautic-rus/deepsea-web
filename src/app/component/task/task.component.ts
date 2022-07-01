@@ -626,6 +626,14 @@ export class TaskComponent implements OnInit {
           //   this.askForSendToYardToApproval();
           // }
         }
+        else if (value == 'Reject' && this.issue.issue_type == 'Development'){
+          this.issue.responsible = '';
+          this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+            this.issue.status = 'Rejected';
+            this.issue.action = 'Rejected';
+            this.statusChanged();
+          });
+        }
         else{
           this.issue.status = value;
           this.issue.action = value;

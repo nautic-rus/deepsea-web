@@ -23,9 +23,10 @@ import {LanguageService} from "../../domain/language.service";
 import {jsPDF} from "jspdf";
 import 'jspdf-autotable';
 import {HttpClient} from "@angular/common/http";
-import {retry} from "rxjs/operators";
+import {concatAll, concatMap, map, retry, toArray} from "rxjs/operators";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {IssueManagerService} from "../../domain/issue-manager.service";
+import {forkJoin, merge, zip} from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -340,7 +341,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     //   scroll = this.dt.el.nativeElement.querySelector('.p-datatable-virtual-scrollable-body').scrollTop;
     //   this.dt.style = {opacity: 0};
     // }
-    this.issueManager.getIssues(this.auth.getUser().login).then(data => {
+
+    zip(this.issueManager.getIssues(this.auth.getUser().login), this.issueManager.getIssues(this.auth.getUser().shared_access)).pipe(map((value) => value[0].concat(value[1]))).subscribe(data => {
       this.issues = data;
       if (this.auth.getUser().shared_access != ''){
         this.issueManager.getIssues(this.auth.getUser().shared_access).then(resShared => {
@@ -360,6 +362,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         this.viewedIssues = res;
       });
     });
+
     // if (this.dt != null){
     //   setTimeout(() => {
     //     this.dt.scrollTo({top: scroll});
