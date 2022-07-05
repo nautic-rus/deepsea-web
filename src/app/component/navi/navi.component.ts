@@ -129,4 +129,10 @@ export class NaviComponent implements OnInit {
   addCollapse(collapse: string) {
     this.collapsedMenu.includes(collapse) ? this.collapsedMenu.splice(this.collapsedMenu.indexOf(collapse)) : this.collapsedMenu.push(collapse);
   }
+
+  onMiddleClick(event: MouseEvent, url: string) {
+    if (event.button == 1){
+      window.open(url, '_blank');
+    }
+  }
 }
