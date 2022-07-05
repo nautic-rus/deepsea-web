@@ -196,6 +196,10 @@ export class DocumentsComponent implements OnInit {
         this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
         this.issues = this.issues.filter(x => x.department == this.department);
         this.issues = _.sortBy(this.issues, x => x.doc_number);
+        for (let x = 0; x < 10; x ++){
+          // @ts-ignore
+          this.issues.push(null);
+        }
       });
     });
   }
