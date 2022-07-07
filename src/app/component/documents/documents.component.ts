@@ -29,6 +29,7 @@ export class DocumentsComponent implements OnInit {
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   waitForZipFiles = false;
+  selectedView: string = 'list';
 
   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
 

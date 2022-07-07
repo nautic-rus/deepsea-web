@@ -312,7 +312,7 @@ export class LanguageService {
           case 'Ответственный - ': return 'Responsible - ';
           case 'ОР': return 'OR';
           case 'ИЗ': return 'IZ';
-          case '': return '';
+          case 'Ссылка': return 'Link';
           case '': return '';
           case '': return '';
           case '': return '';

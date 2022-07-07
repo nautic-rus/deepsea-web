@@ -13,7 +13,15 @@
           <span class="checkmark"></span>
         </label>
       </div>
-      <div class="p-ml-auto mr-10">
+      <div class="p-ml-auto mr-10 df">
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
+          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        </div>
+        <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">
+          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
+          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
+        </div>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
@@ -21,7 +29,7 @@
       </div>
     </div>
     <div class="empty-card-bottom"></div>
-    <div class="tile">
+    <div *ngIf="selectedView == 'tiles'" class="tile">
       <div *ngFor="let issue of issues; let i = index" class="dash-card cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)" [class.hidden-card]="issue == null">
         <div *ngIf="issue != null" class="dash-card-tile">
           <div class="top-row-doc">
@@ -41,7 +49,53 @@
         </div>
       </div>
     </div>
+    <div *ngIf="selectedView == 'list'" class="card-overflow">
+      <p-table #table [value]="issues"
+               [scrollable]="true"
+               scrollHeight="calc(100vh - 220px)"
+               [virtualScroll]="true"
+               [virtualRowHeight]="40"
+               [reorderableColumns]="false"
+               [resizableColumns]="false"
+               styleClass="p-datatable-striped"
+               responsiveLayout="scroll"
+               [globalFilterFields]="['id','doc_number','name','status']">
+        <ng-template pTemplate="header">
+          <tr class="df">
+            <th pSortableColumn="doc_number" class="lxy w-20">{{l.tr('Номер чертежа')}}
+              <p-sortIcon field="doc_number"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name" class="lxy w-20">{{l.tr('Название')}}
+              <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="department" class="cxy w-15">{{l.tr('Отдел')}}
+              <p-sortIcon field="department"></p-sortIcon>
+              <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th class="w-3">{{l.tr('Ссылка')}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-issue>
+          <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
+            <td class="text-14">{{issue.doc_number}}</td>
+            <td class="text-14">{{issue.name}}</td>
+            <td class="text-14">{{issue.department}}</td>
+            <td class="text-14">
+              <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
+                <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
+
 </div>
 
 
