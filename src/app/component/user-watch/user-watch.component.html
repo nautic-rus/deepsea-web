@@ -1,10 +1,13 @@
 <div class="all-page-spy">
   <div class="cx user-watches">
-    <div class="user-watch cursor-pointer" *ngFor="let user of users">
+    <div class="user-watch cursor-pointer" *ngFor="let user of users" (click)="selectUser(user.user)">
       <div class="cx user-title">{{user.user}}</div>
       <div><img class="view-image" src="{{'data:image/jpg;base64,' + user.image}}" /></div>
-<!--      <div class="out-work cxy">00:15:10</div>-->
+      <div *ngIf="user.time != ''" class="out-work cxy">{{user.time}}</div>
     </div>
   </div>
 </div>
 
+<p-dialog [(visible)]="lightBox" [modal]="true">
+  <div><img src="{{selectedUserImage}}" /></div>
+</p-dialog>
