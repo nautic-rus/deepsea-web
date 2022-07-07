@@ -61,7 +61,6 @@ export class UserWatchComponent implements OnInit {
     });
     this.lightBox = true;
   }
-
   isLightbox() {
     return this.selectedUser != '';
   }
