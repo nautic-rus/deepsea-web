@@ -199,7 +199,6 @@
   right: 0;
 }
 .name-card{
-  width: 100px;
   font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   box-sizing: border-box;
   position: absolute;
@@ -229,4 +228,16 @@
   height: 0 !important;
   padding: 0 !important;
   margin: 0 10px 0 10px !important;
+}
+.copy-link{
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background-color: #EBF4FD;
+  border-radius: 50%;
+}
+.copy-link:hover{
+  background-color: #e0effd;
 }

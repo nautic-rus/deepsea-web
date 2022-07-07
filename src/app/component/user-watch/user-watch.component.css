@@ -1,13 +1,16 @@
 .view-image{
   height: auto;
-  width: 25vw;
+  width: 22.5vw;
+  padding: 5px;
 }
 .user-title{
-  font-weight: 700;
+  font-weight: 500;
 }
 .user-watches{
   flex-wrap: wrap;
 }
 .user-watch{
-  padding: 20px;
+  margin: 10px;
+  background-color: white;
+  border-radius: 10px;
 }

@@ -21,26 +21,26 @@
       </div>
     </div>
     <div class="empty-card-bottom"></div>
-      <div class="tile">
-        <div *ngFor="let issue of issues; let i = index" class="dash-card cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)" [class.hidden-card]="issue == null">
-          <div *ngIf="issue != null" class="dash-card-tile">
-            <div class="top-row-doc">
-              <div class="title-bold">{{issue.doc_number}}</div>
+    <div class="tile">
+      <div *ngFor="let issue of issues; let i = index" class="dash-card cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)" [class.hidden-card]="issue == null">
+        <div *ngIf="issue != null" class="dash-card-tile">
+          <div class="top-row-doc">
+            <div class="title-bold">{{issue.doc_number}}</div>
+          </div>
+          <div class="header-card">
+            <div class="content-end">
+              <div [class.pipe]="issue.department == 'Pipe'" [class.hull]="issue.department == 'Hull'" class="name-card cxy">{{issue.department}}</div>
             </div>
-            <div class="header-card">
-              <div class="content-end">
-                <div [class.pipe]="issue.department == 'Pipe'" [class.hull]="issue.department == 'Hull'" class="name-card cxy">{{issue.department}}</div>
-              </div>
-            </div>
-            <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
-              <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
-            </div>
-            <div class="two-row-doc pt-10">
-              <div class="text-medium">{{issue.name}}</div>
-            </div>
+          </div>
+          <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="copy-link cxy cursor-pointer">
+            <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
+          </div>
+          <div class="two-row-doc pt-10">
+            <div class="text-medium">{{issue.name}}</div>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </div>
 

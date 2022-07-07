@@ -40,6 +40,7 @@ export class NaviComponent implements OnInit {
     ].filter(x => this.auth.getUser().visible_pages.includes(x.id)), params: {}},
     {id: 'weight', label: 'Weight', url: 'weight', icon: 'assets/icons/weight.svg', height: 22, child: [], params: {}},
     {id: 'weight-control', label: 'Weight control', url: 'weight-control', icon: 'assets/icons/preferences.svg', height: 22, child: [], params: {}},
+    {id: 'user-watch', label: 'Spy', url: 'user-watch', icon: 'assets/icons/camera.svg', height: 22, child: [], params: {}},
 
   ].filter(x => this.auth.getUser().visible_pages.includes(x.id));
 
