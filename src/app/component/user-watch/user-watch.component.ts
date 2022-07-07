@@ -45,7 +45,7 @@ export class UserWatchComponent implements OnInit {
     let minutes = Math.floor(dif / 60) % 60;
     let hours = Math.floor(dif / 60 / 60);
 
-    if (dif > 5){
+    if (dif > 5 * 60){
       return ('0' + hours).slice(-2) + ":" + ('0' + minutes).slice(-2) + ":" + ('0' + seconds).slice(-2);
     }
     else{
