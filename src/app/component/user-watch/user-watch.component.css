@@ -13,4 +13,16 @@
   margin: 10px;
   background-color: white;
   border-radius: 10px;
+  position: relative;
+}
+.out-work{
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0.5;
+  border-radius: 10px;
+  color: white;
+  font-size: xxx-large;
 }
