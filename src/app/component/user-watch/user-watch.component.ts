@@ -20,7 +20,7 @@ export class UserWatchComponent implements OnInit {
     this.auth.getUserWatches().then(res => {
       this.users = _.sortBy(res, (x: any) => x.user);
       this.users.forEach(x => {
-        x.time = this.getTime(x.activity, x.user);
+        x.time = this.getTime(x.activity);
         if (this.selectedUser == x.user){
           this.selectedUserImage = 'data:image/jpg;base64,' + x.image;
         }
@@ -39,12 +39,13 @@ export class UserWatchComponent implements OnInit {
 
     return Math.floor((date - cStart) / 10000) + dStart;
   }
-  getTime(timeLong: number, user: string){
+  getTime(timeLong: number){
     let dif = Math.floor((new Date().getTime() - this.fromCDate(timeLong)) / 1000);
     let seconds = dif % 60;
     let minutes = Math.floor(dif / 60) % 60;
     let hours = Math.floor(dif / 60 / 60);
-    if (dif > 5 * 60){
+
+    if (dif > 5){
       return ('0' + hours).slice(-2) + ":" + ('0' + minutes).slice(-2) + ":" + ('0' + seconds).slice(-2);
     }
     else{
@@ -62,7 +63,4 @@ export class UserWatchComponent implements OnInit {
     this.lightBox = true;
   }
 
-  isLightbox() {
-    return this.selectedUser != '';
-  }
 }
