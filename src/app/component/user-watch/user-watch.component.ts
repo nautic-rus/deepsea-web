@@ -54,6 +54,11 @@ export class UserWatchComponent implements OnInit {
 
   selectUser(user: string) {
     this.selectedUser = user;
+    this.users.forEach(x => {
+      if (this.selectedUser == x.user){
+        this.selectedUserImage = 'data:image/jpg;base64,' + x.image;
+      }
+    });
     this.lightBox = true;
   }
 
