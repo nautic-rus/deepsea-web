@@ -158,6 +158,9 @@ export class AuthManagerService {
   async shareRights(user: string, with_user: string) {
     return await this.http.get<string[]>(props.http + '/shareRights', {params: {user, with_user}}).toPromise();
   }
+  async getUserWatches(): Promise<[]> {
+    return await this.http.get<[]>(props.http + '/userWatches').toPromise();
+  }
   isAuth(){
     return this.authenticated;
   }
