@@ -19,10 +19,10 @@ export class UserWatchComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.refreshUsers();
-    // interval(1000).subscribe(() => {
-    //   this.refreshUsers();
-    // });
+    // this.refreshUsers();
+    interval(1000).subscribe(() => {
+      this.refreshUsers();
+    });
   }
 
 }
