@@ -77,7 +77,7 @@
               </div>
             </div>
             <div class="mr-10">
-              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted; dt.reset()" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
                 <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">
                 <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">
               </div>
