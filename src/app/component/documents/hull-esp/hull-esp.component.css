@@ -143,7 +143,7 @@
 }
 .attachment-files{
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0fr 0.5fr;
   font-size: 13px;
 }
 .attachment-files-archive{
@@ -901,4 +901,18 @@
 .subtask-text{
   color: #343a40;
   font-size: 13px;
+}
+.buttons-files{
+  padding: 4px 2px;
+  border-radius: 6px;
+  width: 30px;
+}
+.buttons-files:hover{
+  background-color: #F5F6F8;
+}
+.row-download{
+  padding: 4px 6px;
+}
+.all-row-user-menu:hover{
+  background-color: #EBECF0;
 }
