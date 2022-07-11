@@ -858,19 +858,28 @@
                       <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf') && file.group != 'Cutting Map'"></div>
 
 
+                      <div class="cxy ml-10 buttons-files" (click)="openFile(file)">
+                        <img src="assets/icons/download-arrow.png">
+                      </div>
+
+
                       <div class="cxy ml-10 buttons-files" (click)="download.toggle($event)">
                         <img src="assets/icons/download-arrow.png">
                       </div>
                       <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
                         <ng-template pTemplate>
-                          <div class="df border-bottom all-row-user-menu cursor-pointer">
-                            <div class="row-download">RS</div>
+                          <div class="df border-bottom all-row-user-menu">
+                            <div class="row-user-menu">.LPG</div>
                           </div>
-                          <div class="df all-row-user-menu cursor-pointer">
-                            <div class="row-download">RMS</div>
+                          <div class="df all-row-user-menu">
+
+                            <div class="row-user-menu">.ESI</div>
                           </div>
                         </ng-template>
                       </p-overlayPanel>
+
+
+
 
 
 
