@@ -24,6 +24,8 @@ import * as XLSX from "xlsx";
 import {DeleteComponent} from "../../task/delete/delete.component";
 import {ClearFilesComponent} from "./clear-files/clear-files.component";
 import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system";
+import {forkJoin, from, merge, of, zip} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-hull-esp',
@@ -161,6 +163,7 @@ export class HullEspComponent implements OnInit {
   issueRevisions: string[] = [];
   filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[]  } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
   cmap = '';
+  cmapFormat = '';
   cmapuser = '';
   cmapdate = 0;
 
@@ -507,9 +510,11 @@ export class HullEspComponent implements OnInit {
   round(input: number) {
     return Math.round(input * 100) / 100;
   }
-  openFile(file: FileAttachment) {
+  openFile(file: FileAttachment, cmapFormat = 'cvc') {
     if (file.group == 'Cutting Map'){
       this.cmap = file.url;
+      this.cmapFormat = cmapFormat;
+      this.cmapuser = this.auth.getUserName(file.author);
       this.downloadOpenedCMAP();
     }
     else{
@@ -610,6 +615,10 @@ export class HullEspComponent implements OnInit {
   }
 
   downloadFiles(group: string, revision: string) {
+    if (group == 'Cutting Map'){
+      this.downloadFilesCVC(group, revision);
+      return;
+    }
     let files = this.getRevisionFilesOfGroup(group, revision);
     let zipped: string[] = [];
     this.waitForZipFiles = true;
@@ -630,7 +639,57 @@ export class HullEspComponent implements OnInit {
       });
     });
   }
+  downloadFilesCVC(group: string, revision: string, format = 'cnc') {
+    let files = this.getRevisionFilesOfGroup(group, revision);
+    let zipped: string[] = [];
+    this.waitForZipFiles = true;
+    forkJoin(files.map(x => fetch(x.url))).subscribe(blobs => {
+      forkJoin(blobs.map(file => file.text())).subscribe(texts => {
+        forkJoin(texts.map(text => {
+          this.cmapuser = this.auth.getUserName(files[texts.indexOf(text)].author);
+          this.cmapdate = files[texts.indexOf(text)].upload_date;
+          return format == 'cnc' ? this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()) :
+            this.s.createESSI(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+        })).subscribe(cncs => {
+          let zip = new JSZip();
+          cncs.forEach(cnc => {
+            // @ts-ignore
+            let name: string = blobs[cncs.indexOf(cnc)].url.split('/').pop();
+            while (zipped.includes(name)){
+              name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+            }
+            name = format == 'cnc' ? name.replace('.txt', '.MPG') : name.replace('.txt', '.ESI');
+            name = name.replace('C-' + this.project + '-', '');
+            zipped.push(name);
+            // @ts-ignore
+            zip.file(name, cnc.join('\n'));
+          });
+          zip.generateAsync({type: "blob"}).then(res => {
+            this.waitForZipFiles = false;
+            saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
+          });
+        });
+      });
+    });
 
+    //
+    // Promise.all(files.map(x => fetch(x.url))).then(blobs => {
+    //   let zip = new JSZip();
+    //   blobs.forEach(blob => {
+    //     // @ts-ignore
+    //     let name: string = blob.url.split('/').pop();
+    //     while (zipped.includes(name)){
+    //       name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+    //     }
+    //     zipped.push(name);
+    //     zip.file(name, blob.blob());
+    //   });
+    //   zip.generateAsync({type:"blob"}).then(res => {
+    //     this.waitForZipFiles = false;
+    //     saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
+    //   });
+    // });
+  }
   askForSendToCloud(){
     this.dialogService.open(AssignNewRevisionComponent, {
       showHeader: false,
@@ -964,20 +1023,38 @@ export class HullEspComponent implements OnInit {
     if (this.cmap != ''){
       fetch(this.cmap).then(res => {
         res.text().then(text => {
-          this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+          if (this.cmapFormat == 'cnc'){
+            this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
 
-            var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
-            // @ts-ignore
-            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
+              var element = document.createElement('a');
+              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+              // @ts-ignore
+              element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
 
-            element.style.display = 'none';
-            document.body.appendChild(element);
+              element.style.display = 'none';
+              document.body.appendChild(element);
 
-            element.click();
+              element.click();
 
-            document.body.removeChild(element);
-          });
+              document.body.removeChild(element);
+            });
+          }
+          else{
+            this.s.createESSI(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+              var element = document.createElement('a');
+              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+              // @ts-ignore
+              element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
+
+              element.style.display = 'none';
+              document.body.appendChild(element);
+
+              element.click();
+
+              document.body.removeChild(element);
+            });
+          }
         });
       });
     }

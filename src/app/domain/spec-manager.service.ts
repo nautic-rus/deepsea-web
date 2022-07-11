@@ -69,6 +69,9 @@ export class SpecManagerService {
   async createCNC(lines: string[], user: string) {
     return await this.http.post<string[]>(props.httpSpec + '/createCNC', JSON.stringify(lines), {params: {user}}).toPromise();
   }
+  async createESSI(lines: string[], user: string) {
+    return await this.http.post<string[]>(props.httpSpec + '/createESSI', JSON.stringify(lines), {params: {user}}).toPromise();
+  }
   async insertNestLock(project: string, nestId: string, user: string) {
     return await this.http.get<string>(props.httpSpec + '/insertNestLock', {params: {project, nestId, user}}).toPromise();
   }
