@@ -270,9 +270,23 @@
                         <div *ngIf="!isDisabledCuttingMap(nest)" (click)="showCuttingFile(nest, 'cut' + i); $event.stopPropagation()" class="eye-nesting cxy mr-5 cursor-pointer">
                           <i class="pi pi-eye icon-cutting"></i>
                         </div>
-                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="downloadCuttingFile(nest); $event.stopPropagation()" class="download-nesting cxy cursor-pointer">
+
+                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="download.toggle($event)" class="download-nesting cxy cursor-pointer">
                           <i class="pi pi-download icon-cutting"></i>
                         </div>
+                        <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
+                          <ng-template pTemplate>
+                            <div class="df border-bottom all-row-user-menu cursor-pointer">
+                              <div class="row-download">.MPG</div>
+                            </div>
+                            <div class="df all-row-user-menu cursor-pointer">
+                              <div class="row-download">.ESI</div>
+                            </div>
+                          </ng-template>
+                        </p-overlayPanel>
+
+
+
                       </div>
                     </div>
                   </div>

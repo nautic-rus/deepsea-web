@@ -1018,3 +1018,9 @@
 .tab-title:hover{
   background-color: #cfd9ec;
 }
+.row-download{
+  padding: 4px 6px;
+}
+.all-row-user-menu:hover{
+  background-color: #EBECF0;
+}
