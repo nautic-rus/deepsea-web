@@ -823,12 +823,34 @@
                     </div>
                     <div class="cy ml-1">Add files</div>
                   </div>
-                  <div class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/download-arrow.png">
                     </div>
                     <div class="cy ml-1">Download all</div>
                   </div>
+
+
+                  <div *ngIf="fileGroup.name == 'Cutting Map'">
+                    <div class="ml-1 button-details df cursor-pointer mb-15" (click)="download.toggle($event)">
+                      <div class="cxy">
+                        <img src="assets/icons/download-arrow.png">
+                      </div>
+                      <div class="cy ml-1">Download all</div>
+                    </div>
+                    <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
+                      <ng-template pTemplate>
+                        <div class="df border-bottom all-row-user-menu cursor-pointer">
+                          <div class="row-download">.MPG</div>
+                        </div>
+                        <div class="df all-row-user-menu cursor-pointer">
+                          <div class="row-download">.ESI</div>
+                        </div>
+                      </ng-template>
+                    </p-overlayPanel>
+                  </div>
+
+
                   <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy icon-rotate">
                       <img src="assets/icons/broom.png">
