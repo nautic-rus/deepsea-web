@@ -614,9 +614,9 @@ export class HullEspComponent implements OnInit {
     });
   }
 
-  downloadFiles(group: string, revision: string) {
+  downloadFiles(group: string, revision: string, format = 'cnc') {
     if (group == 'Cutting Map'){
-      this.downloadFilesCVC(group, revision);
+      this.downloadFilesCVC(group, revision, format);
       return;
     }
     let files = this.getRevisionFilesOfGroup(group, revision);

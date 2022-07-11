@@ -948,7 +948,7 @@ export class NestingComponent implements OnInit {
     }
   }
 
-  downloadCuttingFile(nest: any) {
+  downloadCuttingFile(nest: any, cmapFormat = 'cnc') {
     let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
     if (searchCMAP != null){
       this.cmap = searchCMAP.url;
@@ -956,20 +956,57 @@ export class NestingComponent implements OnInit {
       this.cmapdate = searchCMAP.upload_date;
       fetch(this.cmap).then(res => {
         res.text().then(text => {
-          this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+          if (this.cmap != ''){
+            fetch(this.cmap).then(res => {
+              res.text().then(text => {
+                if (cmapFormat == 'cnc'){
+                  this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
 
-            var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
-            // @ts-ignore
-            element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+                    // @ts-ignore
+                    element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.MPG'));
 
-            element.style.display = 'none';
-            document.body.appendChild(element);
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
 
-            element.click();
+                    element.click();
 
-            document.body.removeChild(element);
-          });
+                    document.body.removeChild(element);
+                  });
+                }
+                else{
+                  this.s.createESSI(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+                    var element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+                    // @ts-ignore
+                    element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.ESI'));
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                  });
+                }
+              });
+            });
+          }
+          // this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+          //
+          //   var element = document.createElement('a');
+          //   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+          //   // @ts-ignore
+          //   element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
+          //
+          //   element.style.display = 'none';
+          //   document.body.appendChild(element);
+          //
+          //   element.click();
+          //
+          //   document.body.removeChild(element);
+          // });
         });
       });
     }
