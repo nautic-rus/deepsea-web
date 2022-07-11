@@ -286,7 +286,7 @@ export class CreateTaskComponent implements OnInit {
     issue.action = 'New';
     issue.for_revision = this.for_revision;
     issue.parent_id = this.parent_id;
-    if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP')){
+    if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
       issue.doc_number = '';
     }
     if (issue.issue_type == 'IT'){

@@ -18,7 +18,7 @@
 <!--        </div>-->
 <!--        <p-menu #menu id="config_menu" [popup]="true" [model]="viewers"></p-menu>-->
 <!--      </div>-->
-      <div [class.button-disabled]="issue.responsible != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
+      <div [class.button-disabled]="issue.responsible != auth.getUser().login && issue.started_by != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
 <!--      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">-->
         <img src="assets/icons/checklist.png" height="20">
       </div>
@@ -259,13 +259,13 @@
         </div>
       </div>
 
-      <div [collapse]="contentOr" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'OR').length > 0" (click)="contentClick('or')">
-        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('or')">
+      <div [collapse]="contentOrIz" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'OR').length > 0 || getIssuesOfType(issue.child_issues, 'IZ').length > 0" (click)="contentClick('oriz')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('oriz')">
           <img src="assets/icons/arrow-right.png">
         </div>
-        <div>{{t.tr('ORIZ')}}</div>
+        <div>{{t.tr('Changes')}}</div>
       </div>
-      <div collapseContent #contentOr="collapseContent" class="collapse-body">
+      <div collapseContent #contentOrIz="collapseContent" class="collapse-body">
         <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OR')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
             <div>{{t.tr('ОР')}}</div>
@@ -307,9 +307,6 @@
           </div>
         </div>
       </div>
-
-
-
 
       <div class="big-text mb-1 mt-30">{{t.tr('Активность')}}</div>
       <div class="df">
