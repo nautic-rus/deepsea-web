@@ -22,7 +22,7 @@ export class BsTreeNodesComponent implements OnInit {
     { field: 'Z_COG', header: 'Z' },
   ];
   predefinedData = [
-    { project: 'P701', x: 33.39, y: 0.00, z: 7.69, weight: 3641200 },
+    { project: 'P701', x: 34.83, y: 0.00, z: 8.02, weight: 3488060 },
     { project: 'P707', x: 0, y: 0, z: 0, weight: 0 },
     { project: 'N002', x: 25.122, y: -0.067, z: 7.233, weight: 1933580 },
     { project: 'N004', x: 0, y: 0, z: 0, weight: 0 },
