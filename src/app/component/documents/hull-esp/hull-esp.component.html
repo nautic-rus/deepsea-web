@@ -869,10 +869,10 @@
                         </div>
                         <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
                           <ng-template pTemplate>
-                            <div class="df border-bottom all-row-user-menu cursor-pointer">
+                            <div class="df border-bottom all-row-user-menu cursor-pointer" (click)="openFile(file)">
                               <div class="row-download">.MPG</div>
                             </div>
-                            <div class="df all-row-user-menu cursor-pointer">
+                            <div class="df all-row-user-menu cursor-pointer" (click)="openFile(file, 'essi')">
                               <div class="row-download">.ESI</div>
                             </div>
                           </ng-template>

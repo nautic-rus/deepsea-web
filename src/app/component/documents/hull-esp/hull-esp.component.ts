@@ -510,7 +510,7 @@ export class HullEspComponent implements OnInit {
   round(input: number) {
     return Math.round(input * 100) / 100;
   }
-  openFile(file: FileAttachment, cmapFormat = 'cvc') {
+  openFile(file: FileAttachment, cmapFormat = 'cnc') {
     if (file.group == 'Cutting Map'){
       this.cmap = file.url;
       this.cmapFormat = cmapFormat;
@@ -1029,7 +1029,7 @@ export class HullEspComponent implements OnInit {
               var element = document.createElement('a');
               element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
               // @ts-ignore
-              element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
+              element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.MPG'));
 
               element.style.display = 'none';
               document.body.appendChild(element);
@@ -1045,8 +1045,7 @@ export class HullEspComponent implements OnInit {
               var element = document.createElement('a');
               element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
               // @ts-ignore
-              element.setAttribute('download', this.cmap.split('/').pop().replace('.txt', '.MPG'));
-
+              element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.ESI'));
               element.style.display = 'none';
               document.body.appendChild(element);
 
