@@ -118,6 +118,7 @@ import { BillingPipeComponent } from './component/billing-pipe/billing-pipe.comp
 import {SidebarModule} from "primeng/sidebar";
 import {PanelMenuModule} from "primeng/panelmenu";
 import { UserWatchComponent } from './component/user-watch/user-watch.component';
+import { NestingPipeComponent } from './component/nesting-pipe/nesting-pipe.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -190,6 +191,7 @@ Quill.register('modules/imageResize', ImageResize);
     PipeEspComponent,
     BillingPipeComponent,
     UserWatchComponent,
+    NestingPipeComponent,
   ],
   imports: [
     BrowserModule,

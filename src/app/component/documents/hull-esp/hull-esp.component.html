@@ -661,7 +661,9 @@
 <!--      </div>-->
       <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
-          <img src="assets/icons/rev.svg" height="22">
+          <svg class="icon-top-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+          </svg>
         </div>
       </div>
 <!--      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">-->
@@ -669,7 +671,10 @@
 <!--      </div>-->
       <div class="mr-10">
         <div [pTooltip]="l.tr('Show Drawing')" (click)="showDxf()" [class.disabled-button]="isDisabledDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
-          <img src="assets/icons/eye-white-see.svg" height="18">
+          <svg class="icon-top-button" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+          </svg>
         </div>
       </div>
       <div class="mr-10">
@@ -750,7 +755,7 @@
                 <p-sortIcon field="WEIGHT_UNIT"></p-sortIcon>
               </th>
 
-              <th pSortableColumn="NEST_ID" class="lxy w-15">{{'Nest ID'}}
+              <th [ngStyle]="mw(14)" pSortableColumn="NEST_ID" class="lxy w-15">{{'Nest ID'}}
                 <p-sortIcon field="NEST_ID"></p-sortIcon>
               </th>
 
@@ -768,15 +773,32 @@
               <td class="w-15 text-14">{{part.MATERIAL}}</td>
               <td class="w-15 text-14">{{part.SYMMETRY}}</td>
               <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
-              <td class="w-15 text-14">
-                {{part.NESTING}}
-                {{part.QTY != 0 ? ('(' + part.QTY + ')') : ''}}
-<!--                {{part.NEST_ID}}-->
-                <button *ngIf="!isDisabledNest(part)" pButton [pTooltip]="l.tr('Show Nest')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNesting(part); $event.stopPropagation()"></button>
+              <td [ngStyle]="mw(14)" class="w-15 text-14 space-between">
+                <span>
+                  {{part.NESTING}}
+                  {{part.QTY != 0 ? ('(' + part.QTY + ')') : ''}}
+                  <!--                {{part.NEST_ID}}-->
+                </span>
+                <span>
+                  <svg *ngIf="!isDisabledNest(part)" (click)="showNesting(part); $event.stopPropagation()" class="icon-dfx ml-5" width="20px" height="20px" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                  <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                </svg>
+                </span>
+
+
               </td>
-              <td class="w-15 text-14">
-                {{part.SKETCH}}
-                <button *ngIf="!isDisabledNestTemplate(part)" pButton [pTooltip]="l.tr('Show Sketch')" tooltipPosition="top" class="border-none normal-button small-button p-button-outlined" icon="pi pi-eye" (click)="showNestingTemplate(part); $event.stopPropagation()"></button>
+              <td class="w-15 text-14 space-between">
+                <span>
+                  {{part.SKETCH}}
+                </span>
+                <span>
+                  <svg *ngIf="!isDisabledNestTemplate(part)" (click)="showNestingTemplate(part); $event.stopPropagation()" class="icon-dfx ml-5" width="20px" height="20px" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                  <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                </svg>
+                </span>
+
               </td>
             </tr>
           </ng-template>
@@ -869,25 +891,33 @@
 
 
 
-                      <div class="cxy ml-10 load-cloud buttons-files" *ngIf="file.name.includes('.dxf')" >
+                      <div class="cxy" *ngIf="file.name.includes('.dxf')" >
                         <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                          <img src="assets/icons/eye-black.svg" height="18">
+                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                          </svg>
                         </div>
                       </div>
-                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')" (click)="showCuttingFile(file)" tooltipPosition="top" class=" cxy buttons-files">
-                        <img src="assets/icons/eye-black.svg" height="18">
+                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')" (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
+                        <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                          <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                        </svg>
                       </div>
-                      <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf') && file.group != 'Cutting Map'"></div>
+                      <div class="cxy" *ngIf="!file.name.includes('.dxf') && file.group != 'Cutting Map'"></div>
 
-
-                      <div *ngIf="file.group != 'Cutting Map'" class="cxy ml-10 buttons-files" (click)="openFile(file)">
-                        <img src="assets/icons/download-arrow.png">
+                      <div *ngIf="file.group != 'Cutting Map'" class="cxy" (click)="openFile(file)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
                       </div>
 
-
-                      <div *ngIf="file.group == 'Cutting Map'">
-                        <div class="cxy ml-10 buttons-files" (click)="download.toggle($event)">
-                          <img src="assets/icons/download-arrow.png">
+                      <div class="cxy" *ngIf="file.group == 'Cutting Map'">
+                        <div class="cxy" (click)="download.toggle($event)">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                          </svg>
                         </div>
                         <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
                           <ng-template pTemplate>
@@ -900,15 +930,10 @@
                           </ng-template>
                         </p-overlayPanel>
                       </div>
-
-
-
-
-
-
-
-                      <div class="cxy buttons-files" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
-                        <img src="assets/icons/trash-1.svg" height="16">
+                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
                       </div>
                     </div>
                   </div>

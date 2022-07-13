@@ -161,48 +161,11 @@
 
           <div *ngIf="currentView == 'tile'" class="tile" [class.disabled-area]="selectedTitle == 'Profiles'">
             <div [ngClass]="{'hidden-card': nest == null}" class="dash-card-tile cursor-default" *ngFor="let nest of nestingPlates; let i = index">
-              <div class="ml-10" *ngIf="nest != null">
+              <div class="" *ngIf="nest != null">
                 <div class="parent-plate" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>
-                <div class="one-row">
-                  <div [class.margin-minus-5]="nest.PARENTNESTID == ''" class="mt-minus5 ml-3">
-                    <div class="title-bold">{{nest.NESTID}}</div>
-                  </div>
+                <div class="one-row pb-8">
                   <div class="">
-                    <div>
-                      <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + round((nest.LENGTH) / 1000) + 'x' + round((nest.WIDTH) / 1000)}}</span>
-                      <span class="text-mini-gray pr-5">{{nest.MAT}}</span>
-                      <span class="text-gray-mini">{{'(' + round(nest.GROSSWEIGHT, 1) + 'kg)'}}</span>
-                    </div>
-                  </div>
-                  <div class="p-ml-auto">
-                    <div class="qty-text">
-                      <div class="kpl-flag cxy">
-                        <span class="pr-5">KPL</span>
-                        <span>{{nest.KPL}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="two-row">
-                  <div class="text-parent-plate pl-15">{{nest.PARENTNESTID}}</div>
-                  <div>
-                    <span class="usage-left-text pr-5">Block:</span>
-                    <span class="text-mini-gray pr-5">{{nest.BLOCKS}}</span>
-                    <span class="usage-left-text pr-5">Parts:</span>
-                    <span class="text-mini-gray">{{round(nest.PARTSWEIGHT, 1) + 'kg'}}</span>
-                  </div>
-                  <div>
-                    <div class="qty-text">
-                      <div class="qty-flag cxy">
-                        <span class="pr-2">QTY</span>
-                        <span>{{nest.NUMEQNEST}}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="three-row">
-                  <div class="">
-                    <div class="cxy flex-column ml-minus10">
+                    <div class="cy flex-column pl-10">
                       <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
                         <img src="assets/icons/lock.svg" height="22">
                       </div>
@@ -210,69 +173,114 @@
                         <img src="assets/icons/unlock.svg" height="22">
                       </div>
                       <div class="" *ngIf="nest.isLock">
-                        <div class="lock-name pb-5">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
+                        <div class="lock-name">{{this.auth.getUserTrimName(nest.lockInfo.user)}}</div>
                         <div class="lock-date">{{getDate(nest.lockInfo.date)}}</div>
                       </div>
                     </div>
                   </div>
-                  <div class="column-chart">
-                    <div class="position-relative mt-minus15">
-                      <div class="chart-area df">
-                        <div [ngStyle]="getWidth(nest.USAGE)" class="h-100 chart-usage"></div>
-                        <div [ngStyle]="getWidth(100 - nest.USAGE)" class="h-100 chart-left"></div>
-                      </div>
-                      <div class="donut-text">{{round(nest.USAGE)}}%</div>
+                  <div>
+                    <div class="">
+                      <div class="title-bold">{{nest.NESTID}}</div>
                     </div>
-                    <div class="df mt-10">
-                      <div class="text-center-y">
-                        <div class="usage-tile cxy">
-                          <img src="assets/icons/usage.svg" height="16">
-                        </div>
-                        <div class="ml-5">
-                          <div class="usage-left-text">Usage</div>
-                          <div class="usage-left-percent">{{round(nest.USAGE)}}%</div>
+                    <div class="text-parent-plate ">{{nest.PARENTNESTID}}</div>
+                    <div class="df">
+                      <div class="qty-text mr-10">
+                        <div class="kpl-flag cxy">
+                          <span class="pr-5">KPL</span>
+                          <span>{{nest.KPL}}</span>
                         </div>
                       </div>
-                      <div class="text-center-y ml-5">
-                        <div class="left-tile cxy">
-                          <img src="assets/icons/recycle-blue.svg" height="16">
-                        </div>
-                        <div *ngIf="nest.CHILDKPL == 0" class="ml-5">
-                          <div class="usage-left-text">Left</div>
-                          <div class="usage-left-percent">{{round(100 - nest.USAGE)}}%</div>
-                        </div>
-                        <div *ngIf="nest.CHILDKPL != 0 && nest.CHILDNESTID == 0" class="ml-5">
-                          <div class="usage-left-text">KPL</div>
-                          <div class="usage-left-percent">{{nest.CHILDKPL}}</div>
-                        </div>
-                        <div *ngIf="nest.CHILDKPL != 0 && nest.CHILDNESTID != 0" class="ml-5">
-                          <div class="usage-left-text">Nest ID</div>
-                          <div class="usage-left-percent cursor-pointer" (click)="selectWastage(nest.NESTID)">{{nest.CHILDNESTID}}</div>
+                      <div class="qty-text">
+                        <div class="qty-flag cxy">
+                          <span class="pr-2">QTY</span>
+                          <span>{{nest.NUMEQNEST}}</span>
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
+                <div class="line"></div>
+                <div class="pt-8 pb-8">
+                  <div class="">
+                    <div>
+                      <span class="text-mini-gray pr-5">{{'PL' + nest.THICKNESS + 'x' + round((nest.LENGTH) / 1000) + 'x' + round((nest.WIDTH) / 1000)}}</span>
+                      <span class="text-mini-gray pr-5">{{nest.MAT}}</span>
+                      <span class="text-gray-mini">{{'(' + round(nest.GROSSWEIGHT, 1) + 'kg)'}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="line"></div>
+                <div class="pt-8 pb-8">
+                  <div>
+                    <span class="text-mini-gray pr-5">{{nest.BLOCKS}}</span>
+                    <span class="usage-left-text pr-5">Parts:</span>
+                    <span class="text-mini-gray">{{round(nest.PARTSWEIGHT, 1) + 'kg'}}</span>
+                  </div>
+                </div>
+                <div class="line"></div>
+                <div class="pb-8 pt-8">
+                  <div class="df">
+                    <div class="usage-left-text pr-20">Usage:</div>
+                    <div class="column-chart w-100">
+                      <div class="chart-area df">
+                        <div [ngStyle]="getWidth(nest.USAGE)" class="h-100 chart-usage"></div>
+                        <div [ngStyle]="getWidth(100 - nest.USAGE)" class="h-100 chart-left"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="df pb-8">
+                  <div class="text-center-y w-50 df">
+                    <div class="usage-left-text mr-10">Usage</div>
+                    <div class="usage-left-percent">{{round(nest.USAGE)}}%</div>
+                  </div>
+                  <div class="text-center-y w-50">
+                    <div *ngIf="nest.CHILDKPL == 0" class="df">
+                      <div class="usage-left-text mr-10">Left</div>
+                      <div class="usage-left-percent">{{round(100 - nest.USAGE)}}%</div>
+                    </div>
+                    <div *ngIf="nest.CHILDKPL != 0 && nest.CHILDNESTID == 0" class="df">
+                      <div class="usage-left-text mr-10">KPL</div>
+                      <div class="usage-left-percent">{{nest.CHILDKPL}}</div>
+                    </div>
+                    <div *ngIf="nest.CHILDKPL != 0 && nest.CHILDNESTID != 0" class="df">
+                      <div class="usage-left-text mr-10">Nest ID</div>
+                      <div class="usage-left-percent cursor-pointer" (click)="selectWastage(nest.NESTID)">{{nest.CHILDNESTID}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="line"></div>
+                <div>
                   <div class="cursor-default mt-8">
-                    <div class="nesting-cutting w-95 ml-10 df space-between mb-10">
-                      <div class="mini-gray-text">nesting</div>
+                    <div class="df space-between pb-5">
+                      <span class="text-parent-plate pr-5">Nesting files:</span>
                       <div class="df">
-                        <div *ngIf="!isDisabledNestTemplate(nest)" (click)="showNestingTemplate(nest, 'nest' + i); $event.stopPropagation()" class="eye-nesting cxy mr-5 cursor-pointer">
-                          <i class="pi pi-eye icon-cutting"></i>
+                        <div *ngIf="!isDisabledNestTemplate(nest)" (click)="showNestingTemplate(nest, 'nest' + i); $event.stopPropagation()" class="cxy mr-15 cursor-pointer">
+                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                          </svg>
                         </div>
-                        <div *ngIf="!isDisabledNestTemplate(nest)" (click)="downloadNestingFile(nest); $event.stopPropagation()" class="download-nesting cxy cursor-pointer">
-                          <i class="pi pi-download icon-cutting"></i>
+                        <div *ngIf="!isDisabledNestTemplate(nest)" (click)="downloadNestingFile(nest); $event.stopPropagation()" class="cxy cursor-pointer">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                          </svg>
                         </div>
                       </div>
                     </div>
-                    <div class="nesting-cutting w-95 ml-10 df space-between">
-                      <div class="mini-gray-text">cutting</div>
+                    <div class="df space-between">
+                      <span class="text-parent-plate pr-5">Cutting files:</span>
                       <div class="df">
-                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="showCuttingFile(nest, 'cut' + i); $event.stopPropagation()" class="eye-nesting cxy mr-5 cursor-pointer">
-                          <i class="pi pi-eye icon-cutting"></i>
+                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="showCuttingFile(nest, 'cut' + i); $event.stopPropagation()" class="cxy mr-15 cursor-pointer">
+                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                          </svg>
                         </div>
-
-                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="download.toggle($event)" class="download-nesting cxy cursor-pointer">
-                          <i class="pi pi-download icon-cutting"></i>
+                        <div *ngIf="!isDisabledCuttingMap(nest)" (click)="download.toggle($event)" class="cxy cursor-pointer">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                          </svg>
                         </div>
                         <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
                           <ng-template pTemplate>

@@ -32,6 +32,7 @@ import {WeightControlComponent} from "./component/weight-control/weight-control.
 import {PipeEspComponent} from "./component/documents/pipe-esp/pipe-esp.component";
 import {BillingPipeComponent} from "./component/billing-pipe/billing-pipe.component";
 import {UserWatchComponent} from "./component/user-watch/user-watch.component";
+import {NestingPipeComponent} from "./component/nesting-pipe/nesting-pipe.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -56,6 +57,7 @@ const routes: Routes = [
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
   { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },
   { path: 'nesting', component: NestingComponent, canActivate: [AuthGuard], data: {animation: 'NestingComponent'} },
+  { path: 'nesting-pipe', component: NestingPipeComponent, canActivate: [AuthGuard], data: {animation: 'NestingPipeComponent'} },
   { path: 'gcode', component: GCodeComponent, canActivate: [AuthGuard], data: {animation: 'GCodeComponent'} },
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard], data: {animation: 'ReportComponent'} },
   { path: 'billing', component: BillingComponent, canActivate: [AuthGuard], data: {animation: 'BillingComponent'} },
