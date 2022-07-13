@@ -1082,5 +1082,10 @@ export class HullEspComponent implements OnInit {
   contentClick(content: string): void{
     this.collapsed.includes(content) ? this.collapsed.splice(this.collapsed.indexOf(content), 1) : this.collapsed.push(content);
   }
+  mw(value: number){
+    return {
+      'min-width': value + '%'
+    }
+  }
 
 }

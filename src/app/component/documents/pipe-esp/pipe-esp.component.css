@@ -5,6 +5,9 @@
 /deep/.p-dialog .p-dialog-content {
   padding: 0 20px 20px 20px!important;
 }
+/deep/.p-component{
+  font-size: 14px!important;
+}
 .all-card{
   height: calc(100vh - 116px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
@@ -108,10 +111,7 @@
   font-size: 13px;
   position: relative;
 }
-/deep/.p-component{
-  font-size: 14px!important;
-}
-/deep/.p-inputtext{
+.p-component{
   font-size: 14px!important;
 }
 /deep/.pi{
@@ -124,7 +124,7 @@
   min-height: 35px;
 }
 .task-row:hover{
-  background-color: #efefef !important;
+  background-color: #EEF5FA !important;
 }
 .normal-button:hover{
   background-color: rgba(50, 49, 48, 0.07) !important;
@@ -369,7 +369,7 @@
   padding: 5px;
 }
 /deep/.p-datatable .p-datatable-thead > tr > th{
-  padding: 5px;
+  padding: 12px 5px;
 }
 .dxf-view{
   height: 52vh;

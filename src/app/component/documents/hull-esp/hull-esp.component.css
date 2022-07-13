@@ -124,7 +124,7 @@
   min-height: 35px;
 }
 .task-row:hover{
-  background-color: #efefef !important;
+  background-color: #EEF5FA !important;
 }
 .normal-button:hover{
   background-color: rgba(50, 49, 48, 0.07) !important;
@@ -143,7 +143,7 @@
 }
 .attachment-files{
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0fr 0.5fr;
+  grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0.5fr;
   font-size: 13px;
 }
 .attachment-files-archive{
@@ -916,3 +916,19 @@
 .all-row-user-menu:hover{
   background-color: #EBECF0;
 }
+.icon-top-button{
+  fill: #ffffff;
+}
+.icon-nest{
+  fill: #E1E1E1;
+}
+.icon-nest:hover{
+  fill: #5e6c84;
+}
+.icon-dfx{
+  fill: #3B82F6;
+}
+.icon-dfx:hover{
+  fill: #2563EA;
+}
+

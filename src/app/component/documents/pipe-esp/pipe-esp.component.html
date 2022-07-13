@@ -43,54 +43,54 @@
                  [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID']">
           <ng-template pTemplate="header">
             <tr *ngIf="pipes.length != 0" class="df">
-              <th [ngStyle]="mw(5)" pSortableColumn="spool" class="lxy w-5">{{'spool'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="spool" class="lxy w-5">{{'Spool'}}
                 <p-sortIcon field="spool"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'spPieceId'}}
+              <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'Id'}}
                 <p-sortIcon field="spPieceId"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(25)" pSortableColumn="material.name" class="lxy w-40">{{'material'}}
+              <th [ngStyle]="mw(21)" pSortableColumn="material.name" class="lxy w-35">{{'Material'}}
                 <p-sortIcon field="material.name"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(15)" pSortableColumn="stock" class="lxy w-25">{{'stock'}}
+              <th [ngStyle]="mw(18)" pSortableColumn="stock" class="lxy w-30">{{'Stock'}}
                 <p-sortIcon field="stock"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="material.units" class="lxy w-15">{{'units'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="material.units" class="lxy w-15">{{'Units'}}
                 <p-sortIcon field="material.units"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="radius" class="lxy w-15">{{'radius'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="radius" class="lxy w-15">{{'Radius'}}
                 <p-sortIcon field="radius"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="angle" class="lxy w-15">{{'angle'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="angle" class="lxy w-15">{{'Angle'}}
                 <p-sortIcon field="angle"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="length" class="lxy w-5">{{'length'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="length" class="lxy w-5">{{'Length'}}
                 <p-sortIcon field="length"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="weight" class="lxy w-5">{{'weight'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="weight" class="lxy w-5">{{'Weight'}}
                 <p-sortIcon field="weight"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="typeCode" class="cxy w-5">{{'typeCode'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="typeCode" class="cxy w-5">{{'Code'}}
                 <p-sortIcon field="typeCode"></p-sortIcon>
               </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="smat" class="cxy w-5">{{'smat'}}
+              <th [ngStyle]="mw(7)" pSortableColumn="smat" class="cxy w-5">{{'Smat'}}
                 <p-sortIcon field="smat"></p-sortIcon>
               </th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-pipe>
             <tr [class.select-row]="selectedPipe == pipe" class="cursor-pointer task-row" (click)="selectPipe(pipe)">
-              <td [ngStyle]="mw(5)" class="w-5 text-14">{{pipe.spool}}</td>
+              <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.spool}}</td>
               <td [ngStyle]="mw(5)" class="w-5 text-14">{{pipe.spPieceId}}</td>
-              <td [ngStyle]="mw(25)" class="w-40 text-14">{{pipe.material.name}}</td>
-              <td [ngStyle]="mw(15)" class="w-25 text-14">{{pipe.stock}}</td>
-              <td [ngStyle]="mw(5)" class="w-15 text-14">{{pipe.material.units}}</td>
-              <td [ngStyle]="mw(5)" class="w-15 text-14">{{round(pipe.radius)}}</td>
-              <td [ngStyle]="mw(5)" class="w-15 text-14">{{roundAngle(pipe.angle)}}°</td>
-              <td [ngStyle]="mw(5)" class="w-5 text-14">{{round(pipe.length)}}</td>
-              <td [ngStyle]="mw(5)" class="w-5 text-14">{{round(pipe.weight)}}</td>
-              <td [ngStyle]="mw(5)" class="w-5 text-14">{{pipe.typeCode}}</td>
-              <td [ngStyle]="mw(5)" class="w-5 text-14">{{pipe.smat}}</td>
+              <td [ngStyle]="mw(21)" class="w-35 text-14">{{pipe.material.name}}</td>
+              <td [ngStyle]="mw(18)" class="w-30 text-14">{{pipe.stock}}</td>
+              <td [ngStyle]="mw(7)" class="w-15 text-14">{{pipe.material.units}}</td>
+              <td [ngStyle]="mw(7)" class="w-15 text-14">{{round(pipe.radius)}}</td>
+              <td [ngStyle]="mw(7)" class="w-15 text-14">{{roundAngle(pipe.angle)}}°</td>
+              <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.length)}}</td>
+              <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.weight)}}</td>
+              <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.typeCode}}</td>
+              <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.smat}}</td>
             </tr>
           </ng-template>
         </p-table>
