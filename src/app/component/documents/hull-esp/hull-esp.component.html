@@ -854,7 +854,7 @@
 
 
                   <div *ngIf="fileGroup.name == 'Cutting Map'">
-                    <div class="ml-1 button-details df cursor-pointer mb-15" (click)="download.toggle($event)">
+                    <div class="ml-1 button-details df cursor-pointer mb-15" (click)="$event.ctrlKey ? downloadFilesCVC(fileGroup.name, selectedRevision, 'txt') : download.toggle($event)">
                       <div class="cxy">
                         <img src="assets/icons/download-arrow.png">
                       </div>
@@ -862,7 +862,7 @@
                     </div>
                     <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
                       <ng-template pTemplate>
-                        <div class="df border-bottom all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                        <div class="df border-bottom all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision, 'cnc')">
                           <div class="row-download">.MPG</div>
                         </div>
                         <div class="df all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision, 'essi')">
