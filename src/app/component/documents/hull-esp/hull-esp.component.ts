@@ -645,6 +645,26 @@ export class HullEspComponent implements OnInit {
     this.waitForZipFiles = true;
     forkJoin(files.map(x => fetch(x.url))).subscribe(blobs => {
       forkJoin(blobs.map(file => file.text())).subscribe(texts => {
+
+        if (format == 'txt'){
+          let zip = new JSZip();
+          texts.forEach(txt => {
+            // @ts-ignore
+            let name: string = blobs[texts.indexOf(txt)].url.split('/').pop();
+            while (zipped.includes(name)) {
+              name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+            }
+            name = name.replace('C-' + this.project + '-', '');
+            // @ts-ignore
+            zip.file(name, txt);
+          });
+          zip.generateAsync({type: "blob"}).then(res => {
+            this.waitForZipFiles = false;
+            saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
+          });
+          return;
+        }
+
         forkJoin(texts.map(text => {
           this.cmapuser = this.auth.getUserName(files[texts.indexOf(text)].author);
           this.cmapdate = files[texts.indexOf(text)].upload_date;
