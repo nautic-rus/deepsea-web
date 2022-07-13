@@ -1,0 +1,154 @@
+<div class="all-page min-height">
+  <div class="">
+    <div class="card-head mb-20 df">
+      <div class="mr-10">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+
+      <span class="p-input-icon-left p-ml-auto">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" class="border" />
+      </span>
+    </div>
+    <div class="w-100 df">
+      <div class="w-100 df">
+        <div class="w-15">
+          <div class="menu-card">
+            <div class="ovf-auto mr-minus20">
+              <div class="sticky back-white">
+                <div class="row-one-back mb-15">
+                  <div class="df lxy">
+                    <div class="icon-back-orange cxy">
+                      <img src="assets/icons/sections.svg" height="18">
+                    </div>
+                    <div class="title-medium-bold ml-10">Systems</div>
+                  </div>
+                  <div class="flex-end text-y">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ovf-auto mr-minus20 mb-20 mt-20">
+              <div class="sticky back-white pb-15">
+                <div class="row-one-back">
+                  <div class="df lxy pt-10">
+                    <div class="icon-back-blue cxy">
+                      <img src="assets/icons/mat-root.svg" height="24">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="w-85 cards">
+
+
+
+          <div class="dash-card-tile cursor-default">
+            <div class="" >
+              <div class="one-row pb-8">
+                <div class="">
+                  <div class="cy flex-column pl-10">
+                    <div class="cxy lock cursor-pointer">
+                      <img src="assets/icons/lock.svg" height="22">
+                    </div>
+                    <div class="cxy unlock cursor-pointer">
+                      <img src="assets/icons/unlock.svg" height="22">
+                    </div>
+                    <div class="">
+                      <div class="lock-name">1</div>
+                      <div class="lock-date">2</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="">
+                    <div class="title-bold">3</div>
+                  </div>
+                  <div class="text-parent-plate ">4</div>
+                  <div class="df">
+                    <div class="qty-text mr-10">
+                      <div class="kpl-flag cxy">
+                        <span class="pr-5">KPL</span>
+                        <span>5</span>
+                      </div>
+                    </div>
+                    <div class="qty-text">
+                      <div class="qty-flag cxy">
+                        <span class="pr-2">QTY</span>
+                        <span>6</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="line"></div>
+              <div class="pt-8 pb-8">
+                <div class="">
+                  <div>
+                    <span class="text-mini-gray pr-5">7</span>
+                    <span class="text-mini-gray pr-5">8</span>
+                    <span class="text-gray-mini">9</span>
+                  </div>
+                </div>
+              </div>
+              <div class="line"></div>
+              <div class="pt-8 pb-8">
+                <div>
+                  <span class="text-mini-gray pr-5">10</span>
+                  <span class="usage-left-text pr-5">Parts:</span>
+                  <span class="text-mini-gray">11</span>
+                </div>
+              </div>
+              <div class="line"></div>
+
+              <div class="line"></div>
+              <div>
+                <div class="cursor-default mt-8">
+                  <div class="df space-between pb-5">
+                    <span class="text-parent-plate pr-5">Nesting files:</span>
+                    <div class="df">
+                      <div class="cxy mr-15 cursor-pointer">
+                        <img src="assets/icons/eye-show.svg" height="20">
+                      </div>
+                      <div class="cxy cursor-pointer">
+                        <img src="assets/icons/file-download.svg" height="20">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="df space-between">
+                    <span class="text-parent-plate pr-5">Cutting files:</span>
+                    <div class="df">
+                      <div class="cxy mr-15 cursor-pointer">
+                        <img src="assets/icons/eye-show.svg" height="20">
+                      </div>
+                      <div class="cxy cursor-pointer">
+                        <img src="assets/icons/file-download.svg" height="20">
+                      </div>
+                      <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
+                        <ng-template pTemplate>
+                          <div class="df border-bottom all-row-user-menu cursor-pointer">
+                            <div class="row-download">.MPG</div>
+                          </div>
+                          <div class="df all-row-user-menu cursor-pointer">
+                            <div class="row-download">.ESI</div>
+                          </div>
+                        </ng-template>
+                      </p-overlayPanel>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
