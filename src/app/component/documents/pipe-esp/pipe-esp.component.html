@@ -42,6 +42,9 @@
                 <div class="card-spool df">
                   <div class="spool-col">
                     <div class="title-bold">{{pipeSpool.spool}}</div>
+                    <div class="pulse">
+                      <div *ngIf="pipeSpool.spool == ''" class="dot red"></div>
+                    </div>
                     <div *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
                     <div class="mb-26">
                       <div class="cy flex-column pl-10">
@@ -105,6 +108,7 @@
                         </div>
                       </div>
                       <div class="width-250 title-bold-pipe cy">{{pipe.material.name}}</div>
+                      <div class="width-50 text-black-mini cy">{{pipe.material.units}}</div>
                       <div class="width-100 cy">
                         <div *ngIf="pipe.stock.trim() != ''" class="df position-relative">
                           <div class="trm">
