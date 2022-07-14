@@ -40,6 +40,13 @@
   padding: 0 12px 12px 12px;
   overflow: hidden;
 }
+.card-sp-tile{
+  width: 68%;
+  height: calc(100vh - 197px);
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: auto;
+}
 .card-sp-tablet{
   width: 100%;
 
@@ -877,4 +884,97 @@
 }
 .icon-top-button{
   fill: #ffffff;
+}
+.tile{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card-tile{
+  margin-bottom: 20px;
+  width: 100%;
+  height: fit-content;
+  background-color: white;
+  position: relative;
+  perspective: 1000px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.hidden-card{
+  opacity: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 10px 0 10px !important;
+}
+.card-spool{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.title-bold{
+  font-weight: 500;
+  font-size: 20px;
+  color: #3a3a3a;
+}
+.spool-col{
+  width: 70px;
+}
+.title-bold-pipe{
+  font-weight: 500;
+  font-size: 14px;
+  color: #3a3a3a;
+}
+.text-black-mini{
+  font-weight: 700;
+  color: #3a3a3a;
+  font-size: 12px;
+}
+.mm-text{
+  color: #7575759e;
+  font-size: 12px;
+}
+.one-col{
+  width: 30px;
+}
+.two-col{
+  width: 50px;
+}
+.three-col{
+  width: 70px;
+}
+.four-col{
+  width: 400px;
+}
+.height-40{
+  height: 40px;
+}
+.angle-pipe{
+  transform: rotate(230deg);
+}
+.angle-sleeve{
+  transform: rotate(90deg);
+}
+.unlock{
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  background-color: #E9FAEC;
+}
+.lock{
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  background-color: #FFF5F5;
+}
+.lock-name{
+  font-size: 11px;
+  font-style: inherit;
+  font-weight: 500;
+  letter-spacing: -0.003em;
+  color: #3a3a3a;
+}
+.lock-date{
+  color: rgba(66, 82, 110, 0.82);
+  font-size: 11px;
+  white-space: nowrap;
 }

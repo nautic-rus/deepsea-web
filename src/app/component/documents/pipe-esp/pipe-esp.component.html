@@ -18,14 +18,13 @@
       <div class="p-ml-auto df mr-12">
 
       </div>
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
-      </span>
+<!--      <span class="p-input-icon-left">-->
+<!--        <i class="pi pi-search"></i>-->
+<!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+<!--      </span>-->
     </div>
     <div class="w-100 df">
-      <div class="card-sp mr-20">
-        <div class="top-line"></div>
+      <div class="card-sp-tile mr-20">
         <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the system description using FORAN app in {{project}} project</div>
         <div *ngIf="pipes.length == 0 && !noResult">
           <div class="cxy loading">
@@ -35,68 +34,156 @@
             </div>
           </div>
         </div>
-        <p-table #table [value]="pipes"
-                 [scrollable]="true"
-                 scrollHeight="calc(100vh - 225px)"
-                 [virtualScroll]="true"
-                 [virtualRowHeight]="28"
-                 styleClass="p-datatable-striped"
-                 responsiveLayout="scroll"
-                 [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID']">
-          <ng-template pTemplate="header">
-            <tr *ngIf="pipes.length != 0" class="df">
-              <th [ngStyle]="mw(7)" pSortableColumn="spool" class="lxy w-5">{{'Spool'}}
-                <p-sortIcon field="spool"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'Id'}}
-                <p-sortIcon field="spPieceId"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(21)" pSortableColumn="material.name" class="lxy w-35">{{'Material'}}
-                <p-sortIcon field="material.name"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(18)" pSortableColumn="stock" class="lxy w-30">{{'Stock'}}
-                <p-sortIcon field="stock"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(7)" pSortableColumn="material.units" class="lxy w-15">{{'Units'}}
-                <p-sortIcon field="material.units"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(7)" pSortableColumn="radius" class="lxy w-15">{{'Radius'}}
-                <p-sortIcon field="radius"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(7)" pSortableColumn="angle" class="lxy w-15">{{'Angle'}}
-                <p-sortIcon field="angle"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(7)" pSortableColumn="length" class="lxy w-5">{{'Length'}}
-                <p-sortIcon field="length"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(7)" pSortableColumn="weight" class="lxy w-5">{{'Weight'}}
-                <p-sortIcon field="weight"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(7)" pSortableColumn="typeCode" class="cxy w-5">{{'Code'}}
-                <p-sortIcon field="typeCode"></p-sortIcon>
-              </th>
-              <th [ngStyle]="mw(7)" pSortableColumn="smat" class="cxy w-5">{{'Smat'}}
-                <p-sortIcon field="smat"></p-sortIcon>
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-pipe>
-            <tr [class.select-row]="selectedPipe == pipe" class="cursor-pointer task-row" (click)="selectPipe(pipe)">
-              <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.spool}}</td>
-              <td [ngStyle]="mw(5)" class="w-5 text-14">{{pipe.spPieceId}}</td>
-              <td [ngStyle]="mw(21)" class="w-35 text-14">{{pipe.material.name}}</td>
-              <td [ngStyle]="mw(18)" class="w-30 text-14">{{pipe.stock}}</td>
-              <td [ngStyle]="mw(7)" class="w-15 text-14">{{pipe.material.units}}</td>
-              <td [ngStyle]="mw(7)" class="w-15 text-14">{{round(pipe.radius)}}</td>
-              <td [ngStyle]="mw(7)" class="w-15 text-14">{{roundAngle(pipe.angle)}}°</td>
-              <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.length)}}</td>
-              <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.weight)}}</td>
-              <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.typeCode}}</td>
-              <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.smat}}</td>
-            </tr>
-          </ng-template>
-        </p-table>
+        <div>
+
+
+            <div class="tile">
+              <div *ngFor="let pipeSpool of pipesBySpool; let i = index" class="card-tile" [class.hidden-card]="pipeSpool == null">
+                <div class="card-spool df">
+                  <div class="title-bold spool-col">
+                    {{pipeSpool.spool}}
+                    <div *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
+                    <div class="">
+                      <div class="cy flex-column pl-10">
+                        <div class="cxy lock cursor-pointer">
+                          <img src="assets/icons/lock.svg" height="22">
+                        </div>
+                        <div class="cxy unlock cursor-pointer">
+                          <img src="assets/icons/unlock.svg" height="22">
+                        </div>
+                        <div class="">
+                          <div class="lock-name">Исаевич Б.</div>
+                          <div class="lock-date">24.05.1993</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="spool-table">
+                    <div class="df height-40" *ngFor="let pipe of pipeSpool.values">
+                      <div class="one-col">{{pipe.spPieceId}}</div>
+                      <div class="two-col mm-text cy px-10">{{pipe.typeCode}}</div>
+                      <div class="three-col cxy">
+                        <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'P'">
+                          <img src="assets/icons/pipes-pipe.svg" height="40">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'B'">
+                          <img class="angle-pipe" src="assets/icons/pipe-angle2.svg" height="34">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'VALV'">
+                          <img src="assets/icons/valve.svg" height="30">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'FWRE'">
+                          <img src="assets/icons/pipes-fwre.svg" height="40">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'A'">
+                          <img class="angle-sleeve" src="assets/icons/pipe-sleeve.svg" height="26">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'E'">
+                          <img src="assets/icons/pipe-elbow.svg" height="30">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'BRAW'">
+                          <img src="assets/icons/pipes-braw.svg" height="40">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'FLAN'">
+                          <img src="assets/icons/flange.svg" height="26">
+                        </div>
+                        <div *ngIf="pipe.typeCode == 'GASK'">
+                          <img src="assets/icons/gasket.svg" height="26">
+                        </div>
+                      </div>
+                      <div class="four-col title-bold-pipe cy">{{pipe.material.name}}</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+
+        </div>
+        <div>
+          <p-table #table [value]="pipes"
+                   [scrollable]="true"
+                   scrollHeight="calc(100vh - 225px)"
+                   [virtualScroll]="true"
+                   [virtualRowHeight]="28"
+                   styleClass="p-datatable-striped"
+                   responsiveLayout="scroll"
+                   [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID']">
+            <ng-template pTemplate="header">
+              <tr *ngIf="pipes.length != 0" class="df">
+                <th [ngStyle]="mw(7)" pSortableColumn="spool" class="lxy w-5">{{'Spool'}}
+                  <p-sortIcon field="spool"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'Id'}}
+                  <p-sortIcon field="spPieceId"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(21)" pSortableColumn="material.name" class="lxy w-35">{{'Material'}}
+                  <p-sortIcon field="material.name"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(18)" pSortableColumn="stock" class="lxy w-30">{{'Stock'}}
+                  <p-sortIcon field="stock"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="material.units" class="lxy w-15">{{'Units'}}
+                  <p-sortIcon field="material.units"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="radius" class="lxy w-15">{{'Radius'}}
+                  <p-sortIcon field="radius"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="angle" class="lxy w-15">{{'Angle'}}
+                  <p-sortIcon field="angle"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="length" class="lxy w-5">{{'Length'}}
+                  <p-sortIcon field="length"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="weight" class="lxy w-5">{{'Weight'}}
+                  <p-sortIcon field="weight"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="typeCode" class="cxy w-5">{{'Code'}}
+                  <p-sortIcon field="typeCode"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="smat" class="cxy w-5">{{'Smat'}}
+                  <p-sortIcon field="smat"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-pipe>
+              <tr [class.select-row]="selectedPipe == pipe" class="cursor-pointer task-row" (click)="selectPipe(pipe)">
+                <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.spool}}</td>
+                <td [ngStyle]="mw(5)" class="w-5 text-14">{{pipe.spPieceId}}</td>
+                <td [ngStyle]="mw(21)" class="w-35 text-14">{{pipe.material.name}}</td>
+                <td [ngStyle]="mw(18)" class="w-30 text-14">{{pipe.stock}}</td>
+                <td [ngStyle]="mw(7)" class="w-15 text-14">{{pipe.material.units}}</td>
+                <td [ngStyle]="mw(7)" class="w-15 text-14">{{round(pipe.radius)}}</td>
+                <td [ngStyle]="mw(7)" class="w-15 text-14">{{roundAngle(pipe.angle)}}°</td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.length)}}</td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.weight)}}</td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.typeCode}}</td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.smat}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>

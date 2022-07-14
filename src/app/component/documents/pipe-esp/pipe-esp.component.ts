@@ -34,6 +34,7 @@ import {Material} from "../../../domain/classes/material";
 export class PipeEspComponent implements OnInit {
 
   pipes: any = [];
+  pipesBySpool: any = [];
   noResult = false;
   docNumber = '';
   project = '';
@@ -145,6 +146,7 @@ export class PipeEspComponent implements OnInit {
   cmap = '';
   cmapuser = '';
   cmapdate = 0;
+  tooltips: string[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -234,6 +236,9 @@ export class PipeEspComponent implements OnInit {
     this.s.getPipeSegs(this.docNumber).then(res => {
       if (res.length > 0){
         this.pipes = _.sortBy(res, x => this.addLeftZeros(x.spool, 4) + this.addLeftZeros(x.spPieceId, 4));
+        this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x}));
+
+        console.log(this.pipesBySpool);
         // this.filters.ELEM_TYPE = this.getFilters(this.pipes, 'ELEM_TYPE');
         // this.filters.MATERIAL = this.getFilters(this.pipes, 'MATERIAL');
         // this.filters.SYMMETRY = this.getFilters(this.pipes, 'SYMMETRY');
@@ -393,6 +398,9 @@ export class PipeEspComponent implements OnInit {
   round(input: number) {
     return Math.round(input * 100) / 100;
   }
+  roundDecimal(input: number){
+    return Math.ceil(input);
+  }
   roundAngle(input: number) {
     return Math.round( 180 / Math.PI * input * 100) / 100;
   }
@@ -422,6 +430,17 @@ export class PipeEspComponent implements OnInit {
     else{
       return input;
     }
+  }
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
+  }
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
   }
   getDate(dateLong: number): string{
     if (dateLong == 0){
@@ -620,5 +639,9 @@ export class PipeEspComponent implements OnInit {
     res.push({name: 'Weight', value: selectedPipe.weight});
     res.push({name: 'Insul', value: selectedPipe.insul});
     return res;
+  }
+
+  isGS(values: any[]) {
+    return values.find((x: any) => x.smat.toLowerCase().includes('gs')) != null;
   }
 }
