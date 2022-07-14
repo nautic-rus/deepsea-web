@@ -157,6 +157,8 @@ export class PipeEspComponent implements OnInit {
       this.docNumber = params.docNumber != null ? params.docNumber : '';
       this.department = params.department != null ? params.department : '';
       this.issueId = params.issueId != null ? params.issueId : 0;
+      this.dxfDoc = params.dxf != null ? params.dxf : '';
+
       if (this.issue.id == 0){
         this.fillRevisions();
       }
@@ -236,7 +238,7 @@ export class PipeEspComponent implements OnInit {
     this.s.getPipeSegs(this.docNumber).then(res => {
       if (res.length > 0){
         this.pipes = _.sortBy(res, x => this.addLeftZeros(x.spool, 4) + this.addLeftZeros(x.spPieceId, 4));
-        this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null}));
+        this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null, dxf: ''}));
 
         this.s.getSpoolLocks(this.docNumber).then(spoolLocks => {
           console.log(spoolLocks);
@@ -245,6 +247,15 @@ export class PipeEspComponent implements OnInit {
           });
         });
         console.log(this.pipesBySpool);
+
+        this.issue.revision_files.filter(x => x.group == 'Pipe Spools').forEach(file => {
+          // @ts-ignore
+          let spool = file.name.split('-').pop().replace('.dxf', '');
+          let findSpool = this.pipesBySpool.find((x: any) => x.spool == spool);
+          if (findSpool != null){
+            findSpool.dxf = file.url;
+          }
+        });
         // this.filters.ELEM_TYPE = this.getFilters(this.pipes, 'ELEM_TYPE');
         // this.filters.MATERIAL = this.getFilters(this.pipes, 'MATERIAL');
         // this.filters.SYMMETRY = this.getFilters(this.pipes, 'SYMMETRY');
@@ -656,5 +667,31 @@ export class PipeEspComponent implements OnInit {
     this.s.setSpoolLock(Object({issueId: this.issue.id, docNumber: this.docNumber, spool: pipeSpool.spool, lock: curLock, user: this.auth.getUser().login, date: new Date().getTime()})).then(res => {
       this.fillPipes();
     });
+  }
+  showDxfInViewer(url: string) {
+    if (!this.dxfEnabled){
+      this.dxfEnabled = !this.dxfEnabled;
+    }
+    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+      // @ts-ignore
+      this.router.navigate([], {queryParams: {dxf: url, search: null, searchNesting: null}, queryParamsHandling: 'merge'});
+    });
+  }
+  openDxf() {
+    if (this.dxfView != null && !this.dxfView.closed){
+      this.dxfView.close();
+    }
+    let url = '/dxf-view?navi=0&window=1&dxf=' + this.dxfDoc + (this.search != '' ? '&search=' + this.search : '');
+    this.dxfEnabledForNesting = false;
+    this.dxfEnabled = false;
+    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
+  }
+  exitDxf(){
+    this.dxfEnabled = false;
+    this.cutEnabled = false;
+    this.dxfEnabledForNesting = false;
+  }
+  downloadDxf(url: string){
+    window.open(url, '_blank');
   }
 }
