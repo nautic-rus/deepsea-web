@@ -72,7 +72,7 @@
                     </div>
                   </div>
                   <div class="spool-table">
-                    <div class="df height-40" *ngFor="let pipe of pipeSpool.values">
+                    <div class="df height-40" *ngFor="let pipe of pipeSpool.values; let p = index">
                       <div class="width-30">{{pipe.spPieceId}}</div>
                       <div class="width-50 mm-text cy px-10">{{pipe.typeCode}}</div>
                       <div class="width-70 cxy">
@@ -110,9 +110,9 @@
                           <div class="trm">
                             <span [innerHTML]="pipe.stock | highLight: search"></span>
                           </div>
-                          <div (click)="copyTrmCode(pipe.stock, 't' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                          <div (click)="copyTrmCode(pipe.stock, 's' + p + 'sp' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
                             <img src="assets/icons/trm.svg" height="14">
-                            <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                            <div class="copy-tooltip" [hidden]="!showTooltip('s' + p + 'sp' + i)">Copied!</div>
                           </div>
                         </div>
                       </div>
