@@ -40,10 +40,10 @@
             <div class="tile">
               <div *ngFor="let pipeSpool of pipesBySpool; let i = index" class="card-tile" [class.hidden-card]="pipeSpool == null">
                 <div class="card-spool df">
-                  <div class="title-bold spool-col">
-                    {{pipeSpool.spool}}
+                  <div class="spool-col">
+                    <div class="title-bold">{{pipeSpool.spool}}</div>
                     <div *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
-                    <div class="">
+                    <div class="mb-26">
                       <div class="cy flex-column pl-10">
                         <div class="cxy lock cursor-pointer">
                           <img src="assets/icons/lock.svg" height="22">
@@ -57,12 +57,25 @@
                         </div>
                       </div>
                     </div>
+                    <div class="df icons-download">
+                      <div class="cxy mr-15 cursor-pointer">
+                        <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                          <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                        </svg>
+                      </div>
+                      <div class="cxy cursor-pointer">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                   <div class="spool-table">
                     <div class="df height-40" *ngFor="let pipe of pipeSpool.values">
-                      <div class="one-col">{{pipe.spPieceId}}</div>
-                      <div class="two-col mm-text cy px-10">{{pipe.typeCode}}</div>
-                      <div class="three-col cxy">
+                      <div class="width-30">{{pipe.spPieceId}}</div>
+                      <div class="width-50 mm-text cy px-10">{{pipe.typeCode}}</div>
+                      <div class="width-70 cxy">
                         <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'P'">
                           <img src="assets/icons/pipes-pipe.svg" height="40">
                         </div>
@@ -76,7 +89,7 @@
                           <img src="assets/icons/pipes-fwre.svg" height="40">
                         </div>
                         <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'A'">
-                          <img class="angle-sleeve" src="assets/icons/pipe-sleeve.svg" height="26">
+                          <img class="angle-sleeve" src="assets/icons/pipe-sleeve.svg" height="24">
                         </div>
                         <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'E'">
                           <img src="assets/icons/pipe-elbow.svg" height="30">
@@ -91,7 +104,18 @@
                           <img src="assets/icons/gasket.svg" height="26">
                         </div>
                       </div>
-                      <div class="four-col title-bold-pipe cy">{{pipe.material.name}}</div>
+                      <div class="width-250 title-bold-pipe cy">{{pipe.material.name}}</div>
+                      <div class="width-100 cy">
+                        <div *ngIf="pipe.stock.trim() != ''" class="df position-relative">
+                          <div class="trm">
+                            <span [innerHTML]="pipe.stock | highLight: search"></span>
+                          </div>
+                          <div (click)="copyTrmCode(pipe.stock, 't' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                            <img src="assets/icons/trm.svg" height="14">
+                            <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

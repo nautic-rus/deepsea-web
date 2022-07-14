@@ -214,6 +214,9 @@ body,p{
 .width-65{
   width: 65px;
 }
+.width-70{
+  width: 70px;
+}
 .width-100{
   width: 100px;
 }
@@ -565,6 +568,9 @@ body,p{
 }
 .mb-20{
   margin-bottom: 20px;
+}
+.mb-26{
+  margin-bottom: 26px;
 }
 .mb-30{
   margin-bottom: 30px;
