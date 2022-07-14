@@ -45,15 +45,15 @@
                     <div *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
                     <div class="">
                       <div class="cy flex-column pl-10">
-                        <div class="cxy lock cursor-pointer">
-                          <img src="assets/icons/lock.svg" height="22">
-                        </div>
-                        <div class="cxy unlock cursor-pointer">
+                        <div (click)="lockSpool(pipeSpool)" *ngIf="pipeSpool.locked == null || pipeSpool.locked.lock == 0" class="cxy lock cursor-pointer">
                           <img src="assets/icons/unlock.svg" height="22">
                         </div>
-                        <div class="">
-                          <div class="lock-name">Исаевич Б.</div>
-                          <div class="lock-date">24.05.1993</div>
+                        <div (click)="lockSpool(pipeSpool)" *ngIf="pipeSpool.locked != null && pipeSpool.locked.lock == 1" class="cxy unlock cursor-pointer">
+                          <img src="assets/icons/lock.svg" height="22">
+                        </div>
+                        <div *ngIf="pipeSpool.locked != null && pipeSpool.locked.lock == 1" class="">
+                          <div class="lock-name">{{auth.getUserName(pipeSpool.locked.user)}}</div>
+                          <div class="lock-date">{{getDateNoTime(pipeSpool.locked.date)}}</div>
                         </div>
                       </div>
                     </div>
