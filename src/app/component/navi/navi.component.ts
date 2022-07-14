@@ -34,15 +34,10 @@ export class NaviComponent implements OnInit {
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},
     {id: 'nesting', label: 'Nesting', url: 'nesting', icon: 'assets/icons/nesting.svg', height: 20, child: [], params: {}},
-
-
-    // {id: 'nesting', label: 'Nesting', url: '', icon: 'assets/icons/nesting.svg', height: 20, child: [
-    //     {id: 'nesting', label: 'Hull', url: 'nesting', icon: 'assets/icons/hull.svg', height: 20, params: {}},
-        // {id: 'nesting-pipe', label: 'Pipe', url: 'nesting-pipe', icon: 'assets/icons/pipe.svg', height: 16, params: {}}
-    // ].filter(x => this.auth.getUser().visible_pages.includes(x.id)), params: {}},
-
-
-
+    {id: 'nesting', label: 'Nesting', url: '', icon: 'assets/icons/nesting.svg', height: 20, child: [
+        {id: 'nesting', label: 'Hull', url: 'nesting', icon: 'assets/icons/hull.svg', height: 20, params: {}},
+        {id: 'nesting-pipe', label: 'Pipe', url: 'nesting-pipe', icon: 'assets/icons/pipe.svg', height: 16, params: {}}
+    ].filter(x => this.auth.getUser().visible_pages.includes(x.id)), params: {}},
     {id: 'billing', label: 'Billing', url: '', icon: 'assets/icons/bill.svg', height: 22, child: [
       {id: 'billing', label: 'Hull', url: 'billing', icon: 'assets/icons/hull.svg', height: 20, params: {}},
       {id: 'pipe-billing', label: 'Pipe', url: 'pipe-billing', icon: 'assets/icons/pipe.svg', height: 16, params: {}}
