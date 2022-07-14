@@ -84,6 +84,12 @@ export class SpecManagerService {
   async getPipeSegs(docNumber: string) {
     return await this.http.get<any[]>(props.httpSpec + '/pipeSegs', {params: {docNumber}}).toPromise();
   }
+  async getSpoolLocks(docNumber: string) {
+    return await this.http.get<any[]>(props.httpSpec + '/spoolLocks', {params: {docNumber}}).toPromise();
+  }
+  async setSpoolLock(spoolLock: any) {
+    return await this.http.post<any[]>(props.httpSpec + '/setSpoolLock', JSON.stringify(spoolLock)).toPromise();
+  }
   async getPipeSegsByProject(project: string) {
     return await this.http.get<any[]>(props.httpSpec + '/pipeSegsByProject', {params: {project}}).toPromise();
   }

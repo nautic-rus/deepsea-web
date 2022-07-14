@@ -236,8 +236,14 @@ export class PipeEspComponent implements OnInit {
     this.s.getPipeSegs(this.docNumber).then(res => {
       if (res.length > 0){
         this.pipes = _.sortBy(res, x => this.addLeftZeros(x.spool, 4) + this.addLeftZeros(x.spPieceId, 4));
-        this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x}));
+        this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null}));
 
+        this.s.getSpoolLocks(this.docNumber).then(spoolLocks => {
+          console.log(spoolLocks);
+          this.pipesBySpool.forEach((x: any) => {
+            x.locked = spoolLocks.find(y => y.spool == x.spool);
+          });
+        });
         console.log(this.pipesBySpool);
         // this.filters.ELEM_TYPE = this.getFilters(this.pipes, 'ELEM_TYPE');
         // this.filters.MATERIAL = this.getFilters(this.pipes, 'MATERIAL');
@@ -643,5 +649,12 @@ export class PipeEspComponent implements OnInit {
 
   isGS(values: any[]) {
     return values.find((x: any) => x.smat.toLowerCase().includes('gs')) != null;
+  }
+
+  lockSpool(pipeSpool: any) {
+    let curLock = pipeSpool.locked == null ? 0 : pipeSpool.locked.lock;
+    this.s.setSpoolLock(Object({issueId: this.issue.id, docNumber: this.docNumber, spool: pipeSpool.spool, lock: curLock, user: this.auth.getUser().login, date: new Date().getTime()})).then(res => {
+      this.fillPipes();
+    });
   }
 }
