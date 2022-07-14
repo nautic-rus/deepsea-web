@@ -24,7 +24,10 @@
                     </div>
                     <div class="title-medium-bold ml-10">Systems</div>
                   </div>
-                  <div class="flex-end text-y">
+                  <div class="flex-end text-y" *ngFor="let system of systems">
+                    <div [class.checked-button]="system.selected" (click)="selectSystem(system)">
+                      {{system.name}}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -35,6 +38,12 @@
                   <div class="df lxy pt-10">
                     <div class="icon-back-blue cxy">
                       <img src="assets/icons/mat-root.svg" height="24">
+                    </div>
+                    <div class="title-medium-bold ml-10">Zones</div>
+                    <div class="flex-end text-y" *ngFor="let zone of zones">
+                      <div [class.checked-button]="zone.selected" (click)="selectZone(zone)">
+                        {{zone.name}}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -47,7 +56,7 @@
 
 
 
-          <div class="dash-card-tile cursor-default">
+          <div class="dash-card-tile cursor-default" *ngFor="let pipeSeg of pipeSegs">
             <div class="" >
               <div class="one-row pb-8">
                 <div class="">
@@ -66,9 +75,9 @@
                 </div>
                 <div>
                   <div class="">
-                    <div class="title-bold">3</div>
+                    <div class="title-bold">{{pipeSeg.spool}}</div>
                   </div>
-                  <div class="text-parent-plate ">4</div>
+                  <div class="text-parent-plate ">{{pipeSeg.system}}</div>
                   <div class="df">
                     <div class="qty-text mr-10">
                       <div class="kpl-flag cxy">

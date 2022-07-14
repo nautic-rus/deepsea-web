@@ -314,6 +314,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: false,
       },
+      {
+        field: 'revision',
+        header: 'Revision',
+        headerLocale: 'Revision',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'revision'),
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      }
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
