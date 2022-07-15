@@ -240,8 +240,9 @@ export class PipeEspComponent implements OnInit {
   fillPipes(){
     this.s.getPipeSegs(this.docNumber).then(res => {
       if (res.length > 0){
-        this.pipes = _.sortBy(res, x => this.addLeftZeros(x.spool, 4) + this.addLeftZeros(x.spPieceId, 4));
+        this.pipes = _.sortBy(res, x => this.addLeftZeros(x.spool, 5) + this.addLeftZeros(x.spPieceId, 4));
         this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null, dxf: ''}));
+        this.pipesBySpool = _.sortBy(this.pipesBySpool, x => this.addLeftZeros(x.spool, 5));
 
         this.s.getSpoolLocks(this.docNumber).then(spoolLocks => {
           console.log(spoolLocks);
