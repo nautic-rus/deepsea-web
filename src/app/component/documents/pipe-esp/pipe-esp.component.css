@@ -1059,3 +1059,6 @@
 .dxf-enabled{
   cursor: pointer;
 }
+.card-height-with-dxf{
+  height: 28vh;
+}
