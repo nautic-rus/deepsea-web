@@ -45,12 +45,12 @@
           <div class="tile">
             <div *ngFor="let pipeSpool of pipesBySpool; let i = index" class="card-tile" [class.hidden-card]="pipeSpool == null">
               <div class="card-spool df">
-                <div class="w-7">
+                <div class="w-7 position-relative">
                   <div class="title-bold" [class.dxf-enabled]="dxfEnabled" [class.selected-spool]="pipeSpool == pipeSpool.spool" (click)="searchSpool(pipeSpool.spool)">{{pipeSpool.spool}}</div>
                   <div class="pulse">
                     <div *ngIf="pipeSpool.spool == ''" class="dot red"></div>
                   </div>
-                  <div *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
+                  <div class="galvanic mb-5" *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
                   <div class="mb-26 mt-10">
                     <div class="flex-column">
                       <div (click)="lockSpool(pipeSpool)" *ngIf="pipeSpool.locked == null || pipeSpool.locked.lock == 0" class="cxy unlock cursor-pointer">
