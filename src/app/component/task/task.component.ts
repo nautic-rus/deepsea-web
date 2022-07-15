@@ -834,7 +834,7 @@ export class TaskComponent implements OnInit {
 
   isDisabledStatus(value: string) {
     let res = false;
-    if (value == 'Check' && (this.auth.getUser().login != this.issue.assigned_to || this.issue.checks.find(x => x.check_status == 0) != null)){
+    if (value == 'Check' && (this.issue.checks.find(x => x.check_status == 0) != null)){
       res = true;
     }
     return res;
