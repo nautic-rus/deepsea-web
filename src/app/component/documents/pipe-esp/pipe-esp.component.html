@@ -46,7 +46,7 @@
             <div *ngFor="let pipeSpool of pipesBySpool; let i = index" class="card-tile" [class.hidden-card]="pipeSpool == null">
               <div class="card-spool df">
                 <div class="w-7">
-                  <div class="title-bold" (click)="searchSpool(pipeSpool.spool)">{{pipeSpool.spool}}</div>
+                  <div class="title-bold" [class.dxf-enabled]="dxfEnabled" [class.selected-spool]="pipeSpool == pipeSpool.spool" (click)="searchSpool(pipeSpool.spool)">{{pipeSpool.spool}}</div>
                   <div class="pulse">
                     <div *ngIf="pipeSpool.spool == ''" class="dot red"></div>
                   </div>
@@ -299,11 +299,15 @@
                           </svg>
                         </div>
                       </div>
-                      <div class="cxy ml-10" (click)="openFile(file)">
-                        <img src="assets/icons/download-arrow.png">
+                      <div class="cxy" (click)="openFile(file)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
                       </div>
                       <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
-                        <img src="assets/icons/trash-1.svg" height="16">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
                       </div>
                     </div>
                   </div>

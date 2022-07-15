@@ -1056,3 +1056,6 @@
   width: fit-content;
   letter-spacing: 1px;
 }
+.dxf-enabled{
+  cursor: pointer;
+}
