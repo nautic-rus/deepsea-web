@@ -638,3 +638,6 @@
 .angle-screw{
   transform: rotate(90deg);
 }
+.angle-cut{
+  transform: rotate(45deg);
+}
