@@ -580,11 +580,7 @@ export class TaskComponent implements OnInit {
             this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
               this.issue.status = 'Delivered';
               this.issue.action = this.issue.status;
-              this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-                this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
-                  this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
-                });
-              });
+              this.statusChanged();
             });
           });
           // this.askForSendToCloud();
@@ -601,11 +597,7 @@ export class TaskComponent implements OnInit {
           this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
             this.issue.status = 'Send to Yard Approval';
             this.issue.action = this.issue.status;
-            this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-              this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
-                this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
-              });
-            });
+            this.statusChanged();
           });
           // if (this.issue.first_send_date != 0){
           //   this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
@@ -842,7 +834,7 @@ export class TaskComponent implements OnInit {
 
   isDisabledStatus(value: string) {
     let res = false;
-    if (value == 'Check' && this.auth.getUser().login == this.issue.assigned_to && this.issue.checks.find(x => x.check_status == 0) != null){
+    if (value == 'Check' && (this.auth.getUser().login != this.issue.assigned_to || this.issue.checks.find(x => x.check_status == 0) != null)){
       res = true;
     }
     return res;
