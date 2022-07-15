@@ -147,6 +147,7 @@ export class PipeEspComponent implements OnInit {
   cmapuser = '';
   cmapdate = 0;
   tooltips: string[] = [];
+  selectedView: string = 'tiles';
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }

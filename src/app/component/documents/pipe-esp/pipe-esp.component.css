@@ -899,6 +899,7 @@
   perspective: 1000px;
   padding: 10px;
   border-radius: 10px;
+  min-width: 1000px;
 }
 .hidden-card{
   opacity: 0 !important;
@@ -915,9 +916,6 @@
   font-weight: 500;
   font-size: 20px;
   color: #3a3a3a;
-}
-.spool-col{
-  width: 70px;
 }
 .title-bold-pipe{
   font-weight: 500;
@@ -992,11 +990,11 @@
   background-color: #FBC948;
   color: #ffffff;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 13px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 1px 4px;
-  min-width: 150px;
+  min-width: 140px;
 }
 .trm-copy{
   border-top-right-radius: 4px;
@@ -1040,4 +1038,22 @@
     transform: scale(0.95);
     box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
   }
+}
+.attribute{
+  color: #e1e1e1;
+  font-weight: 600;
+}
+.text-table-col{
+  font-size: 14px;
+  color: #495057;
+}
+.kpl-flag{
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  background-color: #61D42D;
+  width: fit-content;
+  letter-spacing: 1px;
 }
