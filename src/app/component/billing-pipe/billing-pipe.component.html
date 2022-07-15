@@ -73,26 +73,41 @@
                 </div>
                 <div class="four-row-pipe df">
                   <div class="text-black-mini cy">{{pipe.typeCode}}</div>
-                  <div *ngIf="pipe.typeCode == 'PIPE'">
-                    <img src="assets/icons/pipes-pipe.svg" height="50">
+                  <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'P'">
+                    <img src="assets/icons/pipes-pipe.svg" height="40">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'B'">
+                    <img class="angle-pipe" src="assets/icons/pipe-angle2.svg" height="34">
                   </div>
                   <div *ngIf="pipe.typeCode == 'VALV'">
-                    <img src="assets/icons/valve.svg" height="40">
+                    <img src="assets/icons/valve.svg" height="30">
                   </div>
                   <div *ngIf="pipe.typeCode == 'FWRE'">
-                    <img src="assets/icons/pipes-fwre.svg" height="50">
+                    <img src="assets/icons/pipes-fwre.svg" height="40">
                   </div>
-                  <div *ngIf="pipe.typeCode == 'FWNR'">
-                    <img src="assets/icons/pipes-elbow.svg" height="50">
+                  <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'A'">
+                    <img class="angle-sleeve" src="assets/icons/pipe-sleeve.svg" height="24">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'E'">
+                    <img src="assets/icons/pipe-elbow.svg" height="30">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'BOLT'">
+                    <img class="angle-screw" src="assets/icons/screw.svg" height="30">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'GASKET'">
+                    <img src="assets/icons/gasket.svg" height="26">
+                  </div>
+                  <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'NUT'">
+                    <img class="angle-screw" src="assets/icons/nut.svg" height="20">
                   </div>
                   <div *ngIf="pipe.typeCode == 'BRAW'">
-                    <img src="assets/icons/pipes-braw.svg" height="50">
+                    <img src="assets/icons/pipes-braw.svg" height="40">
                   </div>
                   <div *ngIf="pipe.typeCode == 'FLAN'">
-                    <img src="assets/icons/flange.svg" height="36">
+                    <img src="assets/icons/flange.svg" height="26">
                   </div>
                   <div *ngIf="pipe.typeCode == 'GASK'">
-                    <img src="assets/icons/gasket.svg" height="36">
+                    <img src="assets/icons/gasket.svg" height="26">
                   </div>
                 </div>
                 <div class="fife-row-pipe df align-end">

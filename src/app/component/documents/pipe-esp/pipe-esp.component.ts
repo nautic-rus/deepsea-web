@@ -35,6 +35,7 @@ export class PipeEspComponent implements OnInit {
 
   pipes: any = [];
   pipesBySpool: any = [];
+  pipesBySpoolSrc: any = [];
   noResult = false;
   docNumber = '';
   project = '';
@@ -148,6 +149,7 @@ export class PipeEspComponent implements OnInit {
   cmapdate = 0;
   tooltips: string[] = [];
   selectedView: string = 'tiles';
+  pipesSrc: any[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -257,6 +259,9 @@ export class PipeEspComponent implements OnInit {
             findSpool.dxf = file.url;
           }
         });
+
+        this.pipesBySpoolSrc = [...this.pipesBySpool];
+
         // this.filters.ELEM_TYPE = this.getFilters(this.pipes, 'ELEM_TYPE');
         // this.filters.MATERIAL = this.getFilters(this.pipes, 'MATERIAL');
         // this.filters.SYMMETRY = this.getFilters(this.pipes, 'SYMMETRY');
@@ -703,6 +708,21 @@ export class PipeEspComponent implements OnInit {
     if (this.dxfEnabled){
       this.router.navigate([], {queryParams: {dxf: null, searchSpool: null}, queryParamsHandling: 'merge'}).then(() => {
         this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url, searchSpool: spool}, queryParamsHandling: 'merge'});
+      });
+    }
+  }
+  searchSpools() {
+    if (this.search.trim() == '') {
+      this.pipesBySpool = this.pipesBySpoolSrc;
+    } else {
+      this.pipesBySpool = this.pipesBySpoolSrc.filter((x: any) => {
+        let visible = false;
+        x.values.forEach((v: any) => {
+          if (x == null || (v.spool + v.material.name + v.stock).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())){
+            visible = true;
+          }
+        });
+        return visible;
       });
     }
   }

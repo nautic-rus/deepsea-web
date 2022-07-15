@@ -15,7 +15,7 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <div class="p-ml-auto df">
+      <div class="p-ml-auto df mr-10">
         <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
           <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
           <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
@@ -25,10 +25,12 @@
           <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
         </div>
       </div>
-<!--      <span class="p-input-icon-left">-->
-<!--        <i class="pi pi-search"></i>-->
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+         <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+
 <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
-<!--      </span>-->
+      </span>
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20" [class.card-height-with-dxf]="dxfEnabled">
@@ -46,7 +48,7 @@
             <div *ngFor="let pipeSpool of pipesBySpool; let i = index" class="card-tile" [class.hidden-card]="pipeSpool == null">
               <div class="card-spool df">
                 <div class="w-7 position-relative">
-                  <div class="title-bold" [class.dxf-enabled]="dxfEnabled" [class.selected-spool]="pipeSpool == pipeSpool.spool" (click)="searchSpool(pipeSpool.spool)">{{pipeSpool.spool}}</div>
+                  <span class="title-bold" [class.dxf-enabled]="dxfEnabled" [class.selected-spool]="pipeSpool == pipeSpool.spool" (click)="searchSpool(pipeSpool.spool)" [innerHTML]="pipeSpool.spool | highLight: search"></span>
                   <div class="pulse">
                     <div *ngIf="pipeSpool.spool == ''" class="dot red"></div>
                   </div>
@@ -103,6 +105,15 @@
                       </div>
                       <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'E'">
                         <img src="assets/icons/pipe-elbow.svg" height="30">
+                      </div>
+                      <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'BOLT'">
+                        <img class="angle-screw" src="assets/icons/screw.svg" height="30">
+                      </div>
+                      <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'GASKET'">
+                        <img src="assets/icons/gasket.svg" height="26">
+                      </div>
+                      <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'NUT'">
+                        <img class="angle-screw" src="assets/icons/nut.svg" height="20">
                       </div>
                       <div *ngIf="pipe.typeCode == 'BRAW'">
                         <img src="assets/icons/pipes-braw.svg" height="40">

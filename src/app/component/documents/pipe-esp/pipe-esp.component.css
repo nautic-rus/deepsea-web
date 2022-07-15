@@ -1076,3 +1076,6 @@
   position: absolute;
   bottom: 0;
 }
+.angle-screw{
+  transform: rotate(90deg);
+}
