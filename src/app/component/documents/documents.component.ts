@@ -47,9 +47,10 @@ export class DocumentsComponent implements OnInit {
       }
       this.showWithFilesOnly = params.showWithFilesOnly == null || +params.showWithFilesOnly == 1;
       this.department = params.department != null ? params.department : 'Hull';
-      if (this.department == 'Pipe'){
-        this.project = 'NR004';
-        this.showWithFilesOnly = false;
+      if (this.department == 'Pipe' || this.department == 'System'){
+        this.department = 'System';
+        //this.project = 'NR004';
+        //this.showWithFilesOnly = false;
       }
       this.fillIssues();
     });
@@ -107,7 +108,7 @@ export class DocumentsComponent implements OnInit {
     let foranProject = project.replace('NR', 'N');
     switch (department) {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
-      case 'Pipe': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+      case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       default: break;
     }
   }
@@ -182,7 +183,17 @@ export class DocumentsComponent implements OnInit {
   fillIssues() {
     this.issueManager.getIssues('op').then(data => {
       this.issueManager.getNestingFiles().then(nestingFiles => {
-        this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null);
+        if (this.department == 'Hull'){
+          this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(x => x.department == this.department).filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null);
+        }
+        else if (this.department == 'System'){
+          this.issueManager.getRevisionFiles().then(revFiles => {
+            data.filter(x => x != null).forEach(issue => {
+              let find = revFiles.find((x: any) => x.issue_id == issue.id);
+            });
+            this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(x => x.department == this.department).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
+          });
+        }
         this.issues.forEach(issue => {
           if (issue.status == issue.closing_status){
             issue.status = 'Completed';

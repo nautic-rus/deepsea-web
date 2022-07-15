@@ -29,7 +29,7 @@ export class NaviComponent implements OnInit {
     {id: 'materials', label: 'Materials', url: 'materials', icon: 'assets/icons/cube.svg', height: 22, child: [], params: {}},
     {id: 'documents', label: 'Documents', url: '', icon: 'assets/icons/docs.svg', height: 17, params: {}, child: [
       {id: 'hull-documents', label: 'Hull', url: 'documents', icon: 'assets/icons/hull.svg', height: 20, params: {'department': 'Hull'}},
-      { id: 'pipe-documents', label: 'Pipe', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'Pipe'}}
+      { id: 'pipe-documents', label: 'Pipe', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'System'}}
     ].filter(x => this.auth.getUser().visible_pages.includes(x.id))},
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},

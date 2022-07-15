@@ -117,6 +117,9 @@ export class IssueManagerService {
   async setRevisionFiles(id: number, revision: string, files: string): Promise<string>{
     return await this.http.post<string>(props.http + '/setRevisionFiles', files, {params: {id, revision}}).toPromise();
   }
+  async getRevisionFiles(): Promise<any>{
+    return await this.http.get<any>(props.http + '/revisionFiles').toPromise();
+  }
   async setIssueLabor(user: string, issue_id: number, labor_value: number, labor_comment: string, date: number){
     return await this.http.get<string>(props.http + '/setLabor', {params: {user, issue_id, labor_value, labor_comment, date}}).toPromise();
   }
