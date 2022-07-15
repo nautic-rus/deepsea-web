@@ -184,28 +184,29 @@ export class DocumentsComponent implements OnInit {
     this.issueManager.getIssues('op').then(data => {
       this.issueManager.getNestingFiles().then(nestingFiles => {
         if (this.department == 'Hull'){
-          this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(x => x.department == this.department).filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null);
+          this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null);
+          this.issues = this.issues.filter(x => x.department == this.department);
+          this.issues = _.sortBy(this.issues, x => x.doc_number);
         }
         else if (this.department == 'System'){
           this.issueManager.getRevisionFiles().then(revFiles => {
-            data.filter(x => x != null).forEach(issue => {
-              let find = revFiles.find((x: any) => x.issue_id == issue.id);
-            });
-            this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(x => x.department == this.department).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
+            this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
+            this.issues = this.issues.filter(x => x.department == this.department);
+            this.issues = _.sortBy(this.issues, x => x.doc_number);
           });
         }
-        this.issues.forEach(issue => {
-          if (issue.status == issue.closing_status){
-            issue.status = 'Completed';
-          }
-          else{
-            issue.status = 'In Work';
-          }
-        });
-        this.filters.status = this.getFilters(this.issues, 'status');
-        this.filters.revision = this.getFilters(this.issues, 'revision');
-        this.filters.department = this.getFilters(this.issues, 'department');
-        this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
+        // this.issues.forEach(issue => {
+        //   if (issue.status == issue.closing_status){
+        //     issue.status = 'Completed';
+        //   }
+        //   else{
+        //     issue.status = 'In Work';
+        //   }
+        // });
+        // this.filters.status = this.getFilters(this.issues, 'status');
+        // this.filters.revision = this.getFilters(this.issues, 'revision');
+        // this.filters.department = this.getFilters(this.issues, 'department');
+        //this.issues.forEach(issue => issue.delivered_date = new Date(issue.delivered_date));
         this.issues = this.issues.filter(x => x.department == this.department);
         this.issues = _.sortBy(this.issues, x => x.doc_number);
         for (let x = 0; x < 10; x ++){
