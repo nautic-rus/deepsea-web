@@ -672,9 +672,9 @@ export class PipeEspComponent implements OnInit {
     if (!this.dxfEnabled){
       this.dxfEnabled = !this.dxfEnabled;
     }
-    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+    this.router.navigate([], {queryParams: {dxf: null, searchSpool: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
       // @ts-ignore
-      this.router.navigate([], {queryParams: {dxf: url, search: null, searchNesting: null}, queryParamsHandling: 'merge'});
+      this.router.navigate([], {queryParams: {dxf: url, searchSpool: null, searchNesting: null}, queryParamsHandling: 'merge'});
     });
   }
   openDxf() {
@@ -693,5 +693,16 @@ export class PipeEspComponent implements OnInit {
   }
   downloadDxf(url: string){
     window.open(url, '_blank');
+  }
+
+  searchSpool(spool: string) {
+    if (this.dxfView != null && !this.dxfView.closed){
+      this.dxfView.postMessage({searchSpool: spool}, '*');
+    }
+    if (this.dxfEnabled){
+      this.router.navigate([], {queryParams: {dxf: null, searchSpool: null}, queryParamsHandling: 'merge'}).then(() => {
+        this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url, searchSpool: spool}, queryParamsHandling: 'merge'});
+      });
+    }
   }
 }

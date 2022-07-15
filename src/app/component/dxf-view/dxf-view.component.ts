@@ -33,6 +33,7 @@ export class DxfViewComponent implements OnInit, OnDestroy {
   dxfViewer: DxfViewer;
   dxfContent: any;
   search = '';
+  searchSpool = '';
   searchNesting = '';
   dxfUrl = '';
   loadedUrl = '';
@@ -52,8 +53,13 @@ export class DxfViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.addEventListener('message', (event) => {
+      console.log(event);
       if (event.data.PART_CODE != null){
         this.search = this.trimLeftZeros(event.data.PART_CODE) + event.data.SYMMETRY;
+        this.move();
+      }
+      if (event.data.searchSpool != null){
+        this.searchSpool = event.data.searchSpool;
         this.move();
       }
     });
@@ -61,9 +67,15 @@ export class DxfViewComponent implements OnInit, OnDestroy {
       this.dxfUrl = params.dxf != null ? params.dxf : this.dxfUrl;
       this.windowMode = params.window != null ? params.window : this.windowMode;
       let search = params.search != null ? params.search : '';
+      let searchSpool = params.searchSpool != null ? params.searchSpool : '';
       let searchNesting = params.searchNesting != null ? params.searchNesting : '';
+
       if (search != '' && this.loadingStatus == 'loaded'){
         this.search = search;
+        this.move();
+      }
+      if (searchSpool != '' && this.loadingStatus == 'loaded'){
+        this.searchSpool = searchSpool;
         this.move();
       }
       if (searchNesting != '' && this.loadingStatus == 'loaded'){
@@ -148,7 +160,15 @@ export class DxfViewComponent implements OnInit, OnDestroy {
           this.dxfViewer = new DxfViewer(document.getElementById('cad-view'), options);
           this.dxfViewer.Load({url: this.dxfUrl, progressCbk: (res: any) => {console.log(res); this.loadingStatus = res.toString()}, fonts: [this.fontUrl]}).then(() => {
             this.loadingStatus = 'loaded';
+
+
+            console.log(this.dxfContent);
+
+
             if (this.search != ''){
+              this.move();
+            }
+            if (this.searchSpool != ''){
               this.move();
             }
             if (this.searchNesting != ''){
@@ -170,6 +190,14 @@ export class DxfViewComponent implements OnInit, OnDestroy {
     if (find == null){
       find = this.dxfContent?.entities.find((x: any) => x.text == this.search.slice(0, -1));
     }
+    if (this.searchSpool != ''){
+      this.dxfContent?.entities.filter((x: any) => x.type == 'INSERT' && x.layer == 'NR-TX2').forEach((ent: any) => {
+        if (this.dxfContent?.blocks[ent.name].entities[0].text == this.searchSpool){
+          find = this.dxfContent?.blocks[ent.name].entities[0];
+        }
+      });
+    }
+
     if (find != null){
       let origin = this.dxfViewer.GetOrigin();
       let x = find.startPoint.x;
