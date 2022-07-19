@@ -16,6 +16,7 @@ import {$e} from "@angular/compiler/src/chars";
 import {ClearFilesComponent} from "../documents/hull-esp/clear-files/clear-files.component";
 import {RemoveConfirmationComponent} from "./remove-confirmation/remove-confirmation.component";
 import {ContextMenu} from "primeng/contextmenu";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-materials',
@@ -857,5 +858,23 @@ export class MaterialsComponent implements OnInit {
 
   alertNodeContains(){
     this.messageService.add({key:'task', severity:'error', summary:'Folder is not empty', detail:'Cant delete non empty folder'});
+  }
+
+  exportXLS() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = this.materials;
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
+  }
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
   }
 }

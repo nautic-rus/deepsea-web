@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top"  [class.disabled-button]="materials.length == 0">
+        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top"  [class.disabled-button]="materials.length == 0" (click)="exportXLS()">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>

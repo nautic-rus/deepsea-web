@@ -44,6 +44,9 @@ export class AddMaterialComponent implements OnInit {
     this.materials = dialog.data[3];
     this.materialPrefix = dialog.data[4];
 
+    if (this.action == 'clone'){
+      this.materialPrefix = this.material.code.substring(0, 12);
+    }
 
     if ((this.action == 'add' || this.action == 'clone') && this.materialPrefix != ''){
       this.material.code = Material.generateCode(this.materialPrefix, this.materials);
