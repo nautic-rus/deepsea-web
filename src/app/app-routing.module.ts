@@ -33,6 +33,7 @@ import {PipeEspComponent} from "./component/documents/pipe-esp/pipe-esp.componen
 import {BillingPipeComponent} from "./component/billing-pipe/billing-pipe.component";
 import {UserWatchComponent} from "./component/user-watch/user-watch.component";
 import {NestingPipeComponent} from "./component/nesting-pipe/nesting-pipe.component";
+import {ObjViewComponent} from "./component/obj-view/obj-view.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -67,6 +68,7 @@ const routes: Routes = [
   { path: 'files', component: FileExplorerComponent, canActivate: [AuthGuard], data: {animation: 'FileExplorerComponent'} },
   { path: 'weight-control', component: WeightControlComponent, canActivate: [AuthGuard], data: {animation: 'WeightControlComponent'} },
   { path: 'user-watch', component: UserWatchComponent, canActivate: [AuthGuard], data: {animation: 'UserWatchComponent'} },
+  { path: 'obj-view', component: ObjViewComponent, data: {animation: 'ObjViewComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 
