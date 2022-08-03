@@ -120,6 +120,8 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import { UserWatchComponent } from './component/user-watch/user-watch.component';
 import { NestingPipeComponent } from './component/nesting-pipe/nesting-pipe.component';
 import { ObjViewComponent } from './component/obj-view/obj-view.component';
+import { DeviceEspComponent } from './component/documents/device-esp/device-esp.component';
+import { AccommodationEspComponent } from './component/documents/accommodation-esp/accommodation-esp.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -194,6 +196,8 @@ Quill.register('modules/imageResize', ImageResize);
     UserWatchComponent,
     NestingPipeComponent,
     ObjViewComponent,
+    DeviceEspComponent,
+    AccommodationEspComponent,
   ],
   imports: [
     BrowserModule,

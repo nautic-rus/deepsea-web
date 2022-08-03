@@ -796,6 +796,10 @@ body,p{
   padding-right: 10px;
   padding-left: 10px;
 }
+.px-15{
+  padding-right: 15px;
+  padding-left: 15px;
+}
 .px-20{
   padding-right: 20px;
   padding-left: 20px;

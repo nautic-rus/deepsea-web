@@ -29,7 +29,11 @@ export class NaviComponent implements OnInit {
     {id: 'materials', label: 'Materials', url: 'materials', icon: 'assets/icons/cube.svg', height: 22, child: [], params: {}},
     {id: 'documents', label: 'Documents', url: '', icon: 'assets/icons/docs.svg', height: 17, params: {}, child: [
       {id: 'hull-documents', label: 'Hull', url: 'documents', icon: 'assets/icons/hull.svg', height: 20, params: {'department': 'Hull'}},
-      { id: 'pipe-documents', label: 'Pipe', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'System'}}
+      {id: 'pipe-documents', label: 'Systems', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'System'}},
+      {id: 'device-documents', label: 'Devices', url: 'documents', icon: 'assets/icons/crane.svg', height: 20, params: {'department': 'Devices'}},
+      {id: 'accommodation-documents', label: 'Accommodation', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'Accommodation'}}
+
+
     ].filter(x => this.auth.getUser().visible_pages.includes(x.id))},
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},
@@ -42,7 +46,7 @@ export class NaviComponent implements OnInit {
     // ].filter(x => this.auth.getUser().visible_pages.includes(x.id)), params: {}},
     {id: 'billing', label: 'Billing', url: '', icon: 'assets/icons/bill.svg', height: 22, child: [
       {id: 'billing', label: 'Hull', url: 'billing', icon: 'assets/icons/hull.svg', height: 20, params: {}},
-      {id: 'pipe-billing', label: 'Pipe', url: 'pipe-billing', icon: 'assets/icons/pipe.svg', height: 16, params: {}}
+      {id: 'pipe-billing', label: 'Systems', url: 'pipe-billing', icon: 'assets/icons/pipe.svg', height: 16, params: {}}
     ].filter(x => this.auth.getUser().visible_pages.includes(x.id)), params: {}},
     {id: 'weight', label: 'Weight', url: 'weight', icon: 'assets/icons/weight.svg', height: 22, child: [], params: {}},
     {id: 'weight-control', label: 'Weight control', url: 'weight-control', icon: 'assets/icons/preferences.svg', height: 22, child: [], params: {}},

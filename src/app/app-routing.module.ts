@@ -34,6 +34,8 @@ import {BillingPipeComponent} from "./component/billing-pipe/billing-pipe.compon
 import {UserWatchComponent} from "./component/user-watch/user-watch.component";
 import {NestingPipeComponent} from "./component/nesting-pipe/nesting-pipe.component";
 import {ObjViewComponent} from "./component/obj-view/obj-view.component";
+import {DeviceEspComponent} from "./component/documents/device-esp/device-esp.component";
+import {AccommodationEspComponent} from "./component/documents/accommodation-esp/accommodation-esp.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -54,6 +56,8 @@ const routes: Routes = [
   { path: 'trays-by-zones-and-systems', component: TraysByZonesAndSystemsComponent, canActivate: [AuthGuard], data: {animation: 'TraysByZonesAndSystemsComponent'} },
   { path: 'hull-esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
   { path: 'pipe-esp', component: PipeEspComponent, canActivate: [AuthGuard], data: {animation: 'PipeEspComponent'} },
+  { path: 'device-esp', component: DeviceEspComponent, canActivate: [AuthGuard], data: {animation: 'DeviceEspComponent'} },
+  { path: 'accommodation-esp', component: AccommodationEspComponent, canActivate: [AuthGuard], data: {animation: 'AccommodationEspComponent'} },
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
   { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },

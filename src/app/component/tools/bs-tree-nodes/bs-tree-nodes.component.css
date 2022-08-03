@@ -345,3 +345,8 @@
   border-radius: 50%;
   background-color: #f3745ad1;
 }
+.check-weight{
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}

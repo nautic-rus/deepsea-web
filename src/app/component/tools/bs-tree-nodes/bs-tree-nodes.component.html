@@ -152,18 +152,22 @@
               </div>
             </th>
             <th [ttSortableColumn]="'DATE'" class="header-hover cursor-pointer" style="width: 10%">Modify date<p-treeTableSortIcon [field]="'DATE'"></p-treeTableSortIcon></th>
+            <th class="header-hover cursor-pointer" style="width: 2%"></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
           <tr class="cursor-default row-table-doc-hover">
             <td style="width: 45%">
-              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-              {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}} {{rowData.DNA != null && rowData.DNA != '' ? ('[' + rowData.DNA + ']') : ''}}
+              <p-treeTableToggler *ngIf="rowNode != ''" [rowNode]="rowNode"></p-treeTableToggler>
               <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT == 0" src="assets/icons/attentionred.svg" height="20">
               <img class="margin-attention" *ngIf="rowData.WARN && rowData.WEIGHT != 0" src="assets/icons/attention.svg" height="20">
+              <span>
+                {{rowData.NAME}} {{rowData.DESCRIPTION != '' ? (' - ' + rowData.DESCRIPTION) : ''}} {{rowData.DNA != null && rowData.DNA != '' ? ('[' + rowData.DNA + ']') : ''}}
+              </span>
+
             </td>
             <td style="width: 184px">
-              <div *ngIf="rowData.WEIGHT != 0">{{roundWithMeasure(rowData.WEIGHT)}}</div>
+              <div class="px-10" *ngIf="rowData.WEIGHT != 0">{{roundWithMeasure(rowData.WEIGHT)}}</div>
             </td>
             <td>
               <div class="w-100 cxy" *ngIf="rowData.X_COG != 0">
@@ -193,6 +197,12 @@
             </td>
             <td style="width: 10%">
               <div *ngIf="rowData.DATE != null && rowData.DATE != 0">{{getDate(rowData.DATE)}}</div>
+            </td>
+            <td style="width: 2%">
+              <div class="check-weight cursor-pointer">
+                <img src="assets/icons/check-green.svg" height="16">
+              </div>
+
             </td>
           </tr>
         </ng-template>
