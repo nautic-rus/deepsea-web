@@ -313,7 +313,7 @@ export class LanguageService {
           case 'ОР': return 'OR';
           case 'ИЗ': return 'IZ';
           case 'Ссылка': return 'Link';
-          case '': return '';
+          case 'Автор - ': return 'Author - ';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -980,7 +980,7 @@
 }
 .subtask-grid{
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr 2fr 1.5fr;
+  grid-template-columns: 1fr 3fr 2fr 2fr 2fr 1fr;
   font-size: 14px;
 }
 .subtask:hover{
