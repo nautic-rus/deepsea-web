@@ -269,7 +269,7 @@ export class HullEspComponent implements OnInit {
       if (res != ''){
         this.parts = res;
         _.forEach(
-          _.groupBy(this.parts, x => x.ELEM_TYPE.replace('FS', 'PL') + '-' + x.THICKNESS + '-' + x.MATERIAL),
+          _.groupBy(this.parts, x => x.ELEM_TYPE.replace('FS', 'PL') + '-' + x.THICKNESS + '-' + (x.ELEM_TYPE.replace('FS', 'PL') == 'PL' ? '' : x.WIDTH) + '-' + x.MATERIAL),
           group => {
             let sum = 0;
             group.forEach(x => sum += x.WEIGHT_UNIT);
@@ -278,6 +278,7 @@ export class HullEspComponent implements OnInit {
                 material: group[0].MATERIAL,
                 sumWeight: this.round(sum),
                 thickness: group[0].THICKNESS,
+                width: group[0].WIDTH,
                 type: group[0].ELEM_TYPE.replace('FS', 'PL'),
               }
             )
