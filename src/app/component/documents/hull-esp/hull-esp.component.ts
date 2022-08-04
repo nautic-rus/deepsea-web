@@ -26,6 +26,7 @@ import {ClearFilesComponent} from "./clear-files/clear-files.component";
 import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system";
 import {forkJoin, from, merge, of, zip} from "rxjs";
 import {map} from "rxjs/operators";
+import {GroupedParts} from "./interfaces/grouped-parts";
 
 @Component({
   selector: 'app-hull-esp',
@@ -34,6 +35,7 @@ import {map} from "rxjs/operators";
 })
 export class HullEspComponent implements OnInit {
   parts: any = [];
+  groupedParts: GroupedParts[] = [];
   noResult = false;
   docNumber = '';
   project = '';
@@ -266,6 +268,23 @@ export class HullEspComponent implements OnInit {
     this.s.getHullPatList(this.project, this.docNumber).then(res => {
       if (res != ''){
         this.parts = res;
+        _.forEach(
+          _.groupBy(this.parts, x => x.ELEM_TYPE.replace('FS', 'PL') + '-' + x.THICKNESS + '-' + x.MATERIAL),
+          group => {
+            let sum = 0;
+            group.forEach(x => sum += x.WEIGHT_UNIT);
+            this.groupedParts.push(
+              {
+                material: group[0].MATERIAL,
+                sumWeight: this.round(sum),
+                thickness: group[0].THICKNESS,
+                type: group[0].ELEM_TYPE.replace('FS', 'PL'),
+              }
+            )
+          }
+        );
+        this.groupedParts = _.sortBy(this.groupedParts, x => x.type + '-' + this.addLeftZeros(x.thickness.toString()));
+
         //this.parts.forEach((x: any) => x.NEST_ID = x.NEST_ID.replace('MU', 'U'));
         this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
         this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
@@ -277,6 +296,13 @@ export class HullEspComponent implements OnInit {
       console.log(res);
       this.fillSketches();
     });
+  }
+  addLeftZeros(input: string, length = 10){
+    let res = input;
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
   }
   getParts(){
     return this.parts.filter((x: any) => this.isPartVisible(x));

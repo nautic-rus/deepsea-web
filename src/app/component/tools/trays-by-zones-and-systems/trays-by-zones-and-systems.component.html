@@ -311,25 +311,30 @@
           <div class="tabs-button-tray cursor-pointer cxy" (click)="selectedTab = 'Trays'" [class.selected-tab]="selectedTab == 'Trays'">Trays</div>
           <div class="tabs-button-equip cursor-pointer cxy" (click)="selectedTab = 'Equipment'" [class.selected-tab]="selectedTab == 'Equipment'">Equipment</div>
         </div>
-        <div class="ml-30">
-          <div class="mr-1">
-            <button [disabled]="waitingForResponse" pButton class="border normal-button p-button-outlined" (click)="generatePdf()">Create temple file</button>
+
+        <div class="ml-10">
+          <div [class.disabled]="waitingForResponse" class="buttons-head blue-button cxy" (click)="generatePdf()">
+            <div class="cxy">Create temple file</div>
           </div>
         </div>
-        <div class="">
-          <div class="1">
-            <button [disabled]="waitingForResponse" pButton class="border normal-button p-button-outlined" (click)="generatePdf(true)">Create new rev file</button>
+        <div class="ml-10">
+          <div [class.disabled]="waitingForResponse" class="buttons-head green-button cxy" (click)="generatePdf(true)">
+            <div class="cxy">Create new rev file</div>
           </div>
         </div>
-        <div class="pl-10">
-          <div tabindex="10" (click)="fixTrayBundle()" pButton [label]="l.tr ('Fix Bundle')" class="button-ok"></div>
+        <div class="ml-10">
+          <div [class.disabled]="waitingForResponse" class="buttons-head yellow-button cxy" (click)="fixTrayBundle()">
+            <div class="cxy">Fix Bundle</div>
+          </div>
         </div>
+
+
         <div class="ml-30">
           <div class="header-table mr-5">{{bundle.drawingId}}</div>
         </div>
         <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
       </span>
       </div>
     </div>
@@ -395,7 +400,7 @@
             </div>
             <div *ngFor="let tray of group; let t = index" class="text-center-y info-row cursor-pointer" (click)="selectedGroup[i] = t" [class.selected-row-group]="selectedGroup[i] == t">
               <div class="w-5 cxy">
-                <div *ngIf="tray.foranTray.marign == 0" class="margin-zero">!</div>
+                <div *ngIf="tray.foranTray.marign == 0" class="dot red"></div>
               </div>
               <div class="w-10 table-body cy">{{tray.foranTray.ZONE}}</div>
               <div class="w-20 table-body cy">{{tray.foranTray.IDSQ}}</div>

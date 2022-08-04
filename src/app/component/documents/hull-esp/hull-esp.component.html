@@ -823,6 +823,7 @@
 <!--          </div>-->
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
           <div *ngIf="miscIssues.length > 0" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">Tasks</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Summary'" [class.selectedTab]="selectedHeadTab ==  'Summary'">Summary</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
 
@@ -1376,6 +1377,36 @@
               </div>
             </div>
           </div>
+        </div>
+        <div *ngIf="selectedHeadTab == 'Summary'" class="card-tabs">
+          <div class="sum-head pb-10">Summary list</div>
+          <div *ngFor="let groupedPart of groupedParts">
+
+            <div class="sum-weight mb-10 px-10 py-10 cursor-pointer row-hover">
+              <div class="px-5">
+                <div class="mm-text">type</div>
+                <div class="text-mini-gray">{{groupedPart.type}}</div>
+              </div>
+              <div class="px-5">
+                <div class="mm-text">thk</div>
+                <div class="text-mini-gray">{{groupedPart.thickness}}</div>
+              </div>
+              <div class="px-5">
+                <div class="mm-text">mat.</div>
+                <div class="text-mini-gray">{{groupedPart.material}}</div>
+              </div>
+              <div>
+                <div class="mm-text">sum weight</div>
+                <div class="px-5 df">
+                  <img class="pr-5" src="assets/icons/weight3.svg" height="20">
+                  <div  class="text-mini-gray">{{groupedPart.sumWeight + ' ' + 'kg'}}</div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
         <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
           <div *ngFor="let file of getArchive()">
