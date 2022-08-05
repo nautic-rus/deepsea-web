@@ -5,6 +5,9 @@
 /deep/.p-dialog .p-dialog-content {
   padding: 0 20px 20px 20px!important;
 }
+/deep/.p-datatable .p-datatable-tbody > tr > td {
+  padding: 5px!important;
+}
 .all-card{
   height: calc(100vh - 116px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
@@ -931,4 +934,26 @@
 .icon-dfx:hover{
   fill: #2563EA;
 }
-
+.sum-weight{
+  box-shadow: 0px 0px 6px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 60px 60px 60px auto;
+}
+.row-hover:hover{
+  background-color: #EEF5FA !important;
+}
+.sum-head{
+  color: #657380;
+  font-weight: 600;
+  font-size: 14px;
+}
+.mm-text{
+  color: #7575759e;
+  font-size: 12px;
+}
+.text-mini-gray{
+  color: rgba(58, 58, 58, 0.75);
+  font-weight: 500;
+  font-size: 14px;
+}

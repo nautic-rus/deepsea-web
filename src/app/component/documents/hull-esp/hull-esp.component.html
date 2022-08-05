@@ -785,8 +785,6 @@
                   <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
                 </svg>
                 </span>
-
-
               </td>
               <td class="w-15 text-14 space-between">
                 <span>
@@ -823,6 +821,7 @@
 <!--          </div>-->
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
           <div *ngIf="miscIssues.length > 0" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">Tasks</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Summary'" [class.selectedTab]="selectedHeadTab ==  'Summary'">Summary</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
 
@@ -1377,6 +1376,41 @@
             </div>
           </div>
         </div>
+        <div *ngIf="selectedHeadTab == 'Summary'" class="card-tabs">
+          <div class="sum-head pb-10">Summary list</div>
+          <div *ngFor="let groupedPart of groupedParts">
+
+            <div class="sum-weight mb-10 px-10 py-10 cursor-pointer row-hover">
+              <div class="px-5">
+                <div class="mm-text">type</div>
+                <div class="text-mini-gray">{{groupedPart.type}}</div>
+              </div>
+              <div class="px-5">
+                <div *ngIf="groupedPart.type == 'PL'" class="mm-text">thk</div>
+                <div *ngIf="groupedPart.type != 'PL'" class="mm-text">scantling</div>
+                <div class="df">
+                  <div *ngIf="groupedPart.type != 'PL'" class="text-mini-gray">{{groupedPart.width + 'x'}}</div>
+                  <div class="text-mini-gray">{{groupedPart.thickness}}</div>
+                </div>
+
+              </div>
+              <div class="px-5">
+                <div class="mm-text">mat.</div>
+                <div class="text-mini-gray">{{groupedPart.material}}</div>
+              </div>
+              <div>
+                <div class="mm-text">sum weight</div>
+                <div class="px-5 df">
+                  <img class="pr-5" src="assets/icons/weight3.svg" height="20">
+                  <div  class="text-mini-gray">{{groupedPart.sumWeight + ' ' + 'kg'}}</div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
         <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
           <div *ngFor="let file of getArchive()">
           <div  class="attachment-files-archive df mb-6 cursor-pointer">
@@ -1387,13 +1421,18 @@
             <span class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
             <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
               <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class="" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                <img src="assets/icons/eye-black.svg" height="18">
+                <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                  <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                </svg>
               </div>
             </div>
             <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >
             </div>
             <div class="cxy ml-10" (click)="openFile(file)">
-              <img src="assets/icons/download-arrow.png">
+              <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+              </svg>
             </div>
           </div>
         </div>

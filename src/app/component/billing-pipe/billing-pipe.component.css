@@ -236,9 +236,6 @@
   display: grid;
   grid-template-columns: auto 120px 3.5fr 1.5fr;
 }
-.pulse{
-
-}
 .row-list{
   display: grid;
   grid-template-columns: 1fr 1fr 3fr 1fr;
