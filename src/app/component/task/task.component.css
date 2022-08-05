@@ -973,14 +973,13 @@
 }
 .subtask{
   cursor: pointer;
-  display: flex;
   position: relative;
-  height: 40px;
-  padding: 0px 6px;
+  min-height: 40px;
+  padding: 0px 6px 6px 6px;
 }
 .subtask-grid{
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr 2fr 2fr 1fr;
+  grid-template-columns: 0.5fr 220px 2fr 2fr 2fr 1fr;
   font-size: 14px;
 }
 .subtask:hover{

@@ -266,10 +266,10 @@
         <div>{{t.tr('Changes')}}</div>
       </div>
       <div collapseContent #contentOrIz="collapseContent" class="collapse-body">
-        <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OR')">
+        <div class="subtask" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OR')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
             <div>{{t.tr('ОР')}}</div>
-            <div>
+            <div class="word-wrap px-10">
               <span [innerHTML]="issueManager.trim(childIssue.doc_number)"></span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
             </div>
@@ -290,10 +290,10 @@
             </div>
           </div>
         </div>
-        <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'IZ')">
+        <div class="subtask" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'IZ')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
             <div>{{t.tr('ИЗ')}}</div>
-            <div>
+            <div class="word-wrap px-10">
               <span [innerHTML]="issueManager.trim(childIssue.doc_number)"></span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
             </div>

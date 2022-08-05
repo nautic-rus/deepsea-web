@@ -872,6 +872,9 @@ cdk-virtual-scroll-viewport{
   display: flex;
   flex-direction: unset;
 }
+.word-wrap{
+  word-wrap: break-word;
+}
 .dfc{
   display: flex;
   align-items: center;
