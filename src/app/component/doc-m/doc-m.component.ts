@@ -14,6 +14,7 @@ import {ActivatedRoute} from "@angular/router";
 export class DocMComponent implements OnInit {
 
   issue: Issue = new Issue();
+  docNumber = '';
 
   constructor(public route: ActivatedRoute, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService) {
   }
@@ -21,6 +22,7 @@ export class DocMComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       let id = params.id ? params.id : 0;
+      this.docNumber = params.docNumber ? params.docNumber : '';
       this.issues.getIssueDetails(id).then(res => {
         this.issue = res;
       });

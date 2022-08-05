@@ -67,6 +67,9 @@
                       </div>
                     </div>
                   </div>
+                  <div>
+                    <button (click)="showSpoolModel(pipeSpool.spool)">SHOW MODEL</button>
+                  </div>
                   <div *ngIf="pipeSpool.dxf != ''" class="df icons-download">
                     <div class="cxy mr-15 cursor-pointer" (click)="showDxfInViewer(pipeSpool.dxf)">
                       <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -634,6 +637,11 @@
   <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
   <app-dxf-view></app-dxf-view>
 </div>
+<!--<div class="pt-5 dxf-view" *ngIf="spoolViewEnabled">-->
+<!--  <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>-->
+<!--  <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>-->
+<!--  <app-obj-view></app-obj-view>-->
+<!--</div>-->
 
 <div class="progress-spinner" *ngIf="waitForZipFiles">
   <div class="image-preview-backdrop" (click)="closeShowImage()">
