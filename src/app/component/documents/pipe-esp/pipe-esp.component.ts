@@ -61,9 +61,11 @@ export class PipeEspComponent implements OnInit {
   groupedByPartCode = false;
   waitForZipFiles = false;
   dxfEnabled = false;
+  spoolViewEnabled = false;
   cutEnabled = false;
   dxfEnabledForNesting = false;
   dxfView: Window | null = null;
+  spoolView: Window | null = null;
   dxfDoc: string = '';
   search: string = '';
   searchNesting: string = '';
@@ -140,6 +142,12 @@ export class PipeEspComponent implements OnInit {
       collapsed: true,
       need_rights: false
     },
+    {
+      name: 'Spool Models',
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true,
+      need_rights: false
+    }
   ];
   selectedTab = this.fileGroups[0].name;
   issueRevisions: string[] = [];
@@ -262,6 +270,11 @@ export class PipeEspComponent implements OnInit {
         });
 
         this.pipesBySpoolSrc = [...this.pipesBySpool];
+
+        // let findModel = this.issue.revision_files.find(x => x.group == 'Spool Models');
+        // if (findModel != null){
+        //
+        // }
 
         // this.filters.ELEM_TYPE = this.getFilters(this.pipes, 'ELEM_TYPE');
         // this.filters.MATERIAL = this.getFilters(this.pipes, 'MATERIAL');
@@ -726,5 +739,22 @@ export class PipeEspComponent implements OnInit {
         return visible;
       });
     }
+  }
+  showSpoolInViewer(spool: string) {
+    if (!this.spoolViewEnabled){
+      this.spoolViewEnabled = !this.spoolViewEnabled;
+    }
+    this.router.navigate([], {queryParams: {docNumber: this.docNumber, spool: null}, queryParamsHandling: 'merge'}).then(() => {
+      // @ts-ignore
+      this.router.navigate([], {queryParams: {docNumber: this.docNumber, spool: spool}, queryParamsHandling: 'merge'});
+    });
+  }
+  showSpoolModel(spool: any) {
+    if (this.spoolView != null && !this.spoolView.closed){
+      this.spoolView.close();
+    }
+    let url = '/spool-view?navi=0&window=1&docNumber=' + this.docNumber + '&spool=' + spool;
+    this.spoolViewEnabled = false;
+    this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
 }

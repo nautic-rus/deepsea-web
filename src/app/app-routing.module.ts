@@ -72,7 +72,7 @@ const routes: Routes = [
   { path: 'files', component: FileExplorerComponent, canActivate: [AuthGuard], data: {animation: 'FileExplorerComponent'} },
   { path: 'weight-control', component: WeightControlComponent, canActivate: [AuthGuard], data: {animation: 'WeightControlComponent'} },
   { path: 'user-watch', component: UserWatchComponent, canActivate: [AuthGuard], data: {animation: 'UserWatchComponent'} },
-  { path: 'obj-view', component: ObjViewComponent, data: {animation: 'ObjViewComponent'} },
+  { path: 'spool-view', component: ObjViewComponent, data: {animation: 'ObjViewComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 

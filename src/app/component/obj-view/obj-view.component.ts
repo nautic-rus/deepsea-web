@@ -4,6 +4,13 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import JSZip from "jszip";
+import {forkJoin} from "rxjs";
+import {saveAs} from "file-saver";
+import {ActivatedRoute} from "@angular/router";
+import {IssueManagerService} from "../../domain/issue-manager.service";
+import {SpecManagerService} from "../../domain/spec-manager.service";
+import {Object3D} from "three";
 
 @Component({
   selector: 'app-obj-view',
@@ -23,11 +30,62 @@ export class ObjViewComponent implements OnInit {
 
   private model: any;
 
+  errorMessage = '';
+  objZip = '';
+  spool = '';
+  docNumber = '';
+  spoolIndexes: number[] = [];
+  windowMode = 0;
 
-  public constructor() {
+  loading = true;
+
+  public constructor(public route: ActivatedRoute, public issues: IssueManagerService, public s: SpecManagerService) {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.spool = params.spool ? params.spool : '';
+      this.docNumber = params.docNumber ? params.docNumber : '';
+      this.windowMode = params.window != null ? params.window : this.windowMode;
+      if (this.spool == '' || this.docNumber == ''){
+        this.errorMessage = 'There is no document number or spool specified';
+      }
+
+      if (this.errorMessage == ''){
+        this.findModelAndLoad();
+      }
+
+    });
+
+  }
+
+  findModelAndLoad(){
+    this.issues.getIssues('op').then(res => {
+      let findDoc = res.find(x => x.doc_number == this.docNumber);
+      if (findDoc == null){
+        this.errorMessage = 'There is no document found via specified document number. Please contact the issuer.';
+        return;
+      }
+      this.issues.getIssueDetails(findDoc.id).then(docDetails => {
+        let findZip = docDetails.revision_files.find(x => x.group == 'Spool Models' && x.name.includes('.zip'));
+        if (findZip == null){
+          this.errorMessage = 'There is no model for specified document. Please contact to document responsible user';
+          return;
+        }
+        this.objZip = findZip.url;
+        this.s.getPipeSegs(this.docNumber).then(res => {
+          this.spoolIndexes = res.filter(x => x.spool == this.spool).map(x => x.sqInSystem);
+          if (this.spoolIndexes.length == 0){
+            this.errorMessage = 'There is an error in FORAN model when trying to find segments of spool. Looks like specified spool doesnt exist in FORAN model';
+            return;
+          }
+          this.loadModel();
+        });
+        //this.loadModel();
+      });
+    });
+  }
+  loadModel(){
     const objLoader = new OBJLoader();
     this.canvas = this.rendererCanvas.nativeElement;
     this.renderer = new THREE.WebGLRenderer({
@@ -60,16 +118,41 @@ export class ObjViewComponent implements OnInit {
     this.controls.minDistance = 10;
     this.controls.maxDistance = 30000;
 
-    objLoader.load('assets/spool-test.obj', (object) => {
-    //objLoader.load('assets/test2.obj', (object) => {
-      this.model = object;
-      this.scene.add(this.model);
-      this.setView(this.model);
-      this.render();
-    }, (xhr ) => {
-      console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-    }, (error) => {
-      console.log(error);
+    // objLoader.load('assets/spool-test.obj', (object) => {
+    // //objLoader.load('assets/test2.obj', (object) => {
+    //   this.model = object;
+    //   this.scene.add(this.model);
+    //   this.setView(this.model);
+    //   this.render();
+    // }, (xhr ) => {
+    //   console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+    // }, (error) => {
+    //   console.log(error);
+    // });
+
+    let count = 0;
+    let group = new THREE.Group();
+    fetch(this.objZip).then(response => response.blob()).then(blob => {
+      JSZip.loadAsync(blob).then(res => {
+        forkJoin(Object.keys(res.files)
+          .filter(fileName => {
+            let found = false;
+            this.spoolIndexes.forEach(index => {
+              if (fileName.includes('-' + index.toString() + '.obj')){
+                found = true;
+              }
+            });
+            return found;
+          }).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
+            texts.forEach(text => {
+              group.add(objLoader.parse(text))
+            });
+            this.scene.add(group);
+            this.setView(group);
+            this.render();
+            this.loading = false;
+          });
+      });
     });
 
     this.render();

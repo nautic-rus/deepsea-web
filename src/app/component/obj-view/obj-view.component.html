@@ -1,3 +1,9 @@
-<div class="engine-wrapper">
-  <canvas #model id="model"></canvas>
+<div class="page" [class.window-mode]="windowMode == 1">
+  <div [hidden]="errorMessage != ''">
+    <div class="loading" *ngIf="loading">LOADING... PLEASE WAIT...</div>
+    <canvas #model id="model"></canvas>
+  </div>
+  <div *ngIf="errorMessage != ''" class="cxy h-100">
+    {{errorMessage}}
+  </div>
 </div>

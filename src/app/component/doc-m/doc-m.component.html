@@ -1,5 +1,6 @@
 <div *ngIf="issue.id == 0">
-  чертёж не найден
+  <div>{{docNumber}}</div>
+  <div>Сведений по чертежу не найдено</div>
 </div>
 <div *ngIf="issue.id != 0">
   <div class="center-viewer">
