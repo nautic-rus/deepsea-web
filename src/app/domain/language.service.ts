@@ -314,7 +314,7 @@ export class LanguageService {
           case 'ИЗ': return 'IZ';
           case 'Ссылка': return 'Link';
           case 'Автор - ': return 'Author - ';
-          case '': return '';
+          case 'Назначить исполнителя': return 'Assign assignee';
           case '': return '';
           case '': return '';
           case '': return '';
