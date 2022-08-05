@@ -364,7 +364,7 @@
               <div class="margin-zero cxy">Contains margin 0 </div>
             </div>
             <div class="cy h-100">
-              <div class="cx mb-10 mt-10">
+              <div class="cx">
                 <div class="title-bold px-10">{{group[0].mountData.label}}</div>
               </div>
               <div class="cx">
@@ -388,9 +388,21 @@
           </div>
         </div>
         <div class="bottom-row">
-          <div class="border-right ovf-auto pl-10">
+          <div class="bottom-card mr-10 ovf-auto pl-10 pr-10">
             <div class="df cursor-pointer sticky">
-              <div class="w-5 table-header-invisible column cxy"></div>
+              <div class="w-5 table-header-invisible column cxy">
+                <div class="expand cxy">
+                  <div class="" [class.disabled]="group.length < 3" (click)="toggleExpanded('expanded-' + i)" *ngIf="!expanded.includes('expanded-' + i)">
+                    <img class="around" src="assets/icons/expand3.svg" height="30">
+                  </div>
+                  <div (click)="toggleExpanded('expanded-' + i)" *ngIf="expanded.includes('expanded-' + i)" >
+                    <img class="around" src="assets/icons/expand3.svg" height="30">
+                  </div>
+
+
+
+                </div>
+              </div>
               <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>
               <div class="w-20 table-header-column cy">{{l.tr('FSQ')}}</div>
               <div class="w-10 table-header-column cy">{{l.tr('WEIGHT')}}</div>
@@ -441,7 +453,7 @@
               </div>
             </div>
           </div>
-          <div class="ovf-auto">
+          <div class="bottom-card ovf-auto pl-10 pr-10">
             <div class="df sticky cursor-pointer">
               <div class="w-9 table-header-column cy">{{l.tr('Label')}}</div>
               <div class="w-39 table-header-column cy">{{l.tr('Name/description')}}</div>

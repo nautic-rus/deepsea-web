@@ -1028,3 +1028,36 @@
 .icon-nest:hover{
   fill: #5e6c84;
 }
+.all-tabs-button{
+  border-radius: 20px;
+  height: 35px;
+  background-color: rgba(57, 184, 182, 0.3);
+}
+.tabs-button-tray{
+  padding: 0 10px;
+  height: 35px;
+  min-width: 84px;
+  border-radius: 20px;
+  font-weight: 500;
+  color: #39b8b6;
+  font-size: 14px;
+}
+.tabs-button-tray:hover{
+  background-color: rgba(57, 184, 182, 0.3);
+}
+.tabs-button-equip{
+  padding: 0 10px;
+  height: 35px;
+  min-width: 84px;
+  border-radius: 20px;
+  font-weight: 500;
+  color: #39b8b6;
+  font-size: 14px;
+}
+.tabs-button-equip:hover{
+  background-color: rgba(57, 184, 182, 0.3);
+}
+.selected-tab{
+  background-color: #39b8b6 !important;
+  color: #ffffff!important;
+}

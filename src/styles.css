@@ -699,6 +699,9 @@ body,p{
 .padding-5{
   padding: 5px 0;
 }
+.padding-10{
+  padding: 10px;
+}
 .pt-5{
   padding-top: 5px;
 }
