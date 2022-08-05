@@ -48,12 +48,12 @@
             <div *ngFor="let pipeSpool of pipesBySpool; let i = index" class="card-tile" [class.hidden-card]="pipeSpool == null">
               <div class="card-spool df">
                 <div class="w-7 position-relative">
-                  <span class="title-bold" [class.dxf-enabled]="dxfEnabled" [class.selected-spool]="pipeSpool == pipeSpool.spool" (click)="searchSpool(pipeSpool.spool)" [innerHTML]="pipeSpool.spool | highLight: search"></span>
+                  <div class="title-bold mb-30" [class.dxf-enabled]="dxfEnabled" [class.selected-spool]="pipeSpool == pipeSpool.spool" (click)="searchSpool(pipeSpool.spool)" [innerHTML]="pipeSpool.spool | highLight: search"></div>
                   <div class="pulse">
                     <div *ngIf="pipeSpool.spool == ''" class="dot red"></div>
                   </div>
-                  <div class="galvanic mb-5" *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
-                  <div class="mb-26 mt-10">
+                  <div class="galvanic mb-20" *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
+                  <div class="mb-20">
                     <div class="flex-column">
                       <div (click)="lockSpool(pipeSpool)" *ngIf="pipeSpool.locked == null || pipeSpool.locked.lock == 0" class="cxy unlock cursor-pointer">
                         <img src="assets/icons/unlock.svg" height="22">
@@ -68,7 +68,7 @@
                     </div>
                   </div>
 
-                  <div class="cursor-pointer cxy show-model" (click)="showSpoolModel(pipeSpool.spool)">
+                  <div class="cursor-pointer cxy show-model mb-20" (click)="showSpoolModel(pipeSpool.spool)">
                     <img src="assets/icons/badge.svg" height="30">
                   </div>
 
