@@ -353,9 +353,16 @@
   background-color: #61D42D;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
+  transition: 0.3s;
 }
-.around{
-  transform: rotate(90deg);
+.around-up{
+  transition: 0.3s;
+  z-index: 10;
+  pointer-events: none;
+}
+.around-down{
+  transform: rotate(180deg);
+  transition: 0.3s;
 }
 .expand-button{
   font-size: 13px;

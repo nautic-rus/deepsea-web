@@ -213,8 +213,9 @@
   grid-template-columns: 85px 130px 85px;
 }
 .one-row{
+  height: 72px;
   display: grid;
-  grid-template-columns: 80px 150px;
+  grid-template-columns: 90px 140px;
 }
 .one-row-tablet{
   height: 25px;

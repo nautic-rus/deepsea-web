@@ -167,7 +167,7 @@
                 <div class="parent-plate" *ngIf="nest.PARENTNESTID != ''">WASTAGE</div>
                 <div class="one-row pb-8">
                   <div class="">
-                    <div class="cy flex-column pl-10">
+                    <div class="flex-column">
                       <div class="cxy lock cursor-pointer" *ngIf="nest.isLock" (click)="insertLock(nest)" [class.disabled-button]="!auth.hasPerms('lock-nesting')">
                         <img src="assets/icons/lock.svg" height="22">
                       </div>
@@ -180,8 +180,8 @@
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <div class="">
+                  <div class="pl-10">
+                    <div>
                       <div class="title-bold">{{nest.NESTID}}</div>
                     </div>
                     <div class="text-parent-plate ">{{nest.PARENTNESTID}}</div>

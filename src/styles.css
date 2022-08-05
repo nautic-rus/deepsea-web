@@ -393,6 +393,10 @@ body,p{
 .ovf-auto{
   overflow-y: auto;
 }
+.disabled-button{
+  pointer-events: none;
+  opacity: 0.5;
+}
 .flex-column{
   flex-direction: column;
 }
