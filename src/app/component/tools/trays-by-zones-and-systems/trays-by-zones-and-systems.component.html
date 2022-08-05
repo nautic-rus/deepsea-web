@@ -359,7 +359,7 @@
     <div class="" *ngIf="trays.length > 0">
       <div [class.dash-card-expanded]="expanded.includes('expanded-' + i)" class="dash-card" *ngFor="let group of grouped; let i = index">
         <div class="top-row">
-          <div class="label-name">
+          <div class="">
             <div class="outer-badge" *ngIf="containsZeroSurface(group)">
               <div class="margin-zero cxy">Contains margin 0 </div>
             </div>
@@ -393,7 +393,7 @@
                   <div class="expand cxy" (click)="toggleExpanded('expanded-' + i)" *ngIf="expanded.includes('expanded-' + i)" >
                   </div>
 
-                  <img class="around-up" [class.around-down]="expanded.includes('expanded-' + i)" src="assets/icons/arrow-w.svg" height="20">
+                  <img class="around-up" [class.around-down]="expanded.includes('expanded-' + i)" src="assets/icons/arrow-w.svg" height="14">
 
 
 

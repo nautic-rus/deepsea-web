@@ -224,7 +224,7 @@
 .top-row{
   height: 60px;
   display: grid;
-  grid-template-columns: 1fr 4fr 1.5fr;
+  grid-template-columns: 100px 4fr 1.5fr;
   margin-bottom: 10px;
   background-color: white;
   border-radius: 10px;
@@ -259,9 +259,6 @@
   font-weight: 500;
   font-size: 14px;
   color: #3a3a3a;
-}
-.label-name{
-  min-width: 200px;
 }
 .margin-zero{
   border-radius: 11px;
