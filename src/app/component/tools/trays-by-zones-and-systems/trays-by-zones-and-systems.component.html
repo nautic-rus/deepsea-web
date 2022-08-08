@@ -359,17 +359,13 @@
     <div class="" *ngIf="trays.length > 0">
       <div [class.dash-card-expanded]="expanded.includes('expanded-' + i)" class="dash-card" *ngFor="let group of grouped; let i = index">
         <div class="top-row">
-          <div class="label-name">
+          <div class="">
             <div class="outer-badge" *ngIf="containsZeroSurface(group)">
               <div class="margin-zero cxy">Contains margin 0 </div>
             </div>
             <div class="cy h-100">
               <div class="cx">
                 <div class="title-bold px-10">{{group[0].mountData.label}}</div>
-              </div>
-              <div class="cx">
-                <button [class.button-disabled]="group.length < 3" (click)="toggleExpanded('expanded-' + i)" *ngIf="!expanded.includes('expanded-' + i)" pButton icon="pi angle-down" class="expand-button cxy cursor-pointer">Expand</button>
-                <button (click)="toggleExpanded('expanded-' + i)" *ngIf="expanded.includes('expanded-' + i)" pButton icon="pi angle-down" class="expand-button cxy cursor-pointer">Collapse</button>
               </div>
             </div>
           </div>
@@ -391,13 +387,13 @@
           <div class="bottom-card mr-10 ovf-auto pl-10 pr-10">
             <div class="df cursor-pointer sticky">
               <div class="w-5 table-header-invisible column cxy">
-                <div class="expand cxy">
-                  <div class="" [class.disabled]="group.length < 3" (click)="toggleExpanded('expanded-' + i)" *ngIf="!expanded.includes('expanded-' + i)">
-                    <img class="around" src="assets/icons/expand3.svg" height="30">
+                <div class="cxy">
+                  <div class="expand cxy" [class.disabled-button]="group.length < 3" (click)="toggleExpanded('expanded-' + i)" *ngIf="!expanded.includes('expanded-' + i)">
                   </div>
-                  <div (click)="toggleExpanded('expanded-' + i)" *ngIf="expanded.includes('expanded-' + i)" >
-                    <img class="around" src="assets/icons/expand3.svg" height="30">
+                  <div class="expand cxy" (click)="toggleExpanded('expanded-' + i)" *ngIf="expanded.includes('expanded-' + i)" >
                   </div>
+
+                  <img class="around-up" [class.around-down]="expanded.includes('expanded-' + i)" src="assets/icons/arrow-w.svg" height="14">
 
 
 
