@@ -130,6 +130,9 @@ export class ObjViewComponent implements OnInit {
     //   console.log(error);
     // });
 
+    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+
+
     let count = 0;
     let group = new THREE.Group();
     fetch(this.objZip).then(response => response.blob()).then(blob => {
@@ -145,7 +148,11 @@ export class ObjViewComponent implements OnInit {
             return found;
           }).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
             texts.forEach(text => {
-              group.add(objLoader.parse(text))
+              group.add(objLoader.parse(text));
+            });
+            group.children.forEach(x => {
+              // @ts-ignore
+              x.children[0].material = material;
             });
             this.scene.add(group);
             this.setView(group);
