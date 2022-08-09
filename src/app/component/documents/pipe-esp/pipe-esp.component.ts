@@ -528,7 +528,6 @@ export class PipeEspComponent implements OnInit {
       });
     });
   }
-
   downloadFiles(group: string, revision: string) {
     let files = this.getRevisionFilesOfGroup(group, revision);
     let zipped: string[] = [];
@@ -584,7 +583,12 @@ export class PipeEspComponent implements OnInit {
     });
   }
 
-
+  show2dEnabled(){
+    return this.issue.revision_files.find(x => x.group == 'Pipe Spools' && x.name.includes('.zip'));
+  }
+  show3dEnabled(){
+    return this.issue.revision_files.find(x => x.group == 'Spool Models' && x.name.includes('.zip'));
+  }
   clearFiles(fileGroup: string, revision: string) {
     this.dialogService.open(ClearFilesComponent, {
       showHeader: false,
@@ -815,6 +819,6 @@ export class PipeEspComponent implements OnInit {
   }
 
   showSpoolDXF(spool: any) {
-    
+
   }
 }
