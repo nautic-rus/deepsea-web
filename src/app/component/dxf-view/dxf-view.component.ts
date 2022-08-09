@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 
 // @ts-ignore
@@ -150,6 +150,39 @@ export class DxfViewComponent implements OnInit, OnDestroy {
     }
     return result;
   }
+  fetchDxfFr(){
+    try {
+      new DxfFetcher(this.dxfUrl).Fetch().then((res: any) => {
+        this.dxfContent = res;
+        this.http.get(this.dxfUrl, {responseType: "text"}).subscribe(res => {
+          let options = Object.create(DxfViewer.DefaultOptions);
+          options.autoResize = true;
+          this.dxfViewer = new DxfViewer(document.getElementById('cad-view'), options);
+          this.dxfViewer.Load({url: this.dxfUrl, progressCbk: (res: any) => {console.log(res); this.loadingStatus = res.toString()}, fonts: [this.fontUrl]}).then(() => {
+            this.loadingStatus = 'loaded';
+
+
+            console.log(this.dxfContent);
+
+
+            if (this.search != ''){
+              this.move();
+            }
+            if (this.searchSpool != ''){
+              this.move();
+            }
+            if (this.searchNesting != ''){
+              this.moveNesting();
+            }
+          });
+          this.dxfViewer.SetSize(1080, 720);
+        });
+      });
+    }catch(err) {
+      return console.error(err.stack);
+    }
+  }
+
   fetchDxf(){
     try {
       new DxfFetcher(this.dxfUrl).Fetch().then((res: any) => {
