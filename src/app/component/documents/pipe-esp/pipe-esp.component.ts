@@ -813,4 +813,8 @@ export class PipeEspComponent implements OnInit {
     this.spoolViewEnabled = false;
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
+
+  showSpoolDXF(spool: any) {
+    
+  }
 }
