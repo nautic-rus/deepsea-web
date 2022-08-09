@@ -584,10 +584,10 @@ export class PipeEspComponent implements OnInit {
   }
 
   show2dEnabled(){
-    return this.issue.revision_files.find(x => x.group == 'Pipe Spools' && x.name.includes('.zip'));
+    return this.issue.revision_files.find(x => x.group == 'Pipe Spools' && x.name.includes('.zip')) != null;
   }
   show3dEnabled(){
-    return this.issue.revision_files.find(x => x.group == 'Spool Models' && x.name.includes('.zip'));
+    return this.issue.revision_files.find(x => x.group == 'Spool Models' && x.name.includes('.zip')) != null;
   }
   clearFiles(fileGroup: string, revision: string) {
     this.dialogService.open(ClearFilesComponent, {
