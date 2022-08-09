@@ -1053,6 +1053,13 @@
 .show-model:hover{
   background-color: rgba(145, 127, 187, 0.22);
 }
+.show-model-one{
+  width: 30px;
+  height: 22px;
+}
+.show-model-one:hover{
+  background-color: rgba(59, 130, 246, 0.22);
+}
 .kpl-flag{
   padding: 1px 4px;
   border-radius: 4px;
@@ -1095,6 +1102,15 @@
   border: 2px solid #917FBB;
   border-radius: 4px;
   color: #917FBB;
+  font-weight: 600;
+  padding: 0 2px 2px 2px;
+}
+.two-d-model{
+  height: 22px;
+  width: 30px;
+  border: 2px solid #3B82F6;
+  border-radius: 4px;
+  color: #3B82F6;
   font-weight: 600;
   padding: 0 2px 2px 2px;
 }
