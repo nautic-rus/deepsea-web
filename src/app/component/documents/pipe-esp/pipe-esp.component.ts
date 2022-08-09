@@ -688,6 +688,22 @@ export class PipeEspComponent implements OnInit {
       this.fillPipes();
     });
   }
+
+  showDxf(){
+    if (this.dxfEnabledForNesting){
+      this.dxfEnabledForNesting = false;
+    }
+    else{
+      this.dxfEnabled = !this.dxfEnabled;
+    }
+    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+      this.router.navigate([], {queryParams: {dxf: this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf'))?.url}, queryParamsHandling: 'merge'});
+    });
+  }
+  isDisabledDxf(){
+    return this.issue == null || this.issue.revision_files == null || this.getRevisionFilesOfGroup('Drawings', this.selectedRevision).find(x => x.name.includes('.dxf')) == null;
+  }
+
   showDxfInViewer(url: string) {
     if (!this.dxfEnabled){
       this.dxfEnabled = !this.dxfEnabled;

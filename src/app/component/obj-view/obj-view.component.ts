@@ -130,7 +130,7 @@ export class ObjViewComponent implements OnInit {
     //   console.log(error);
     // });
 
-    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    // const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
 
 
     let count = 0;
@@ -152,7 +152,7 @@ export class ObjViewComponent implements OnInit {
             });
             group.children.forEach(x => {
               // @ts-ignore
-              x.children[0].material = material;
+              // x.children[0].material = material;
             });
             this.scene.add(group);
             this.setView(group);

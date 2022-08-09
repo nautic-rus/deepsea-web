@@ -1048,12 +1048,10 @@
 }
 .show-model{
   width: 30px;
-  height: 24px;
-  border-radius: 4px;
-  background-color: white;
+  height: 22px;
 }
 .show-model:hover{
-  background-color: rgba(243, 116, 90, 0.21);
+  background-color: rgba(145, 127, 187, 0.22);
 }
 .kpl-flag{
   padding: 1px 4px;
@@ -1090,4 +1088,13 @@
 }
 .angle-cut{
   transform: rotate(45deg);
+}
+.three-d-model{
+  height: 22px;
+  width: 30px;
+  border: 2px solid #917FBB;
+  border-radius: 4px;
+  color: #917FBB;
+  font-weight: 600;
+  padding: 0 2px 2px 2px;
 }

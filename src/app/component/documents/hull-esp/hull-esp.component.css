@@ -938,7 +938,7 @@
   box-shadow: 0px 0px 6px 0px rgba(34, 60, 80, 0.2);
   border-radius: 6px;
   display: grid;
-  grid-template-columns: 60px 60px 60px auto;
+  grid-template-columns: 70px 70px 70px auto;
 }
 .row-hover:hover{
   background-color: #EEF5FA !important;
