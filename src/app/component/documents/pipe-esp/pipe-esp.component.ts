@@ -25,6 +25,7 @@ import {HullEspGenerationWaitComponent} from "../hull-esp/hull-esp-generation-wa
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AssignNewRevisionComponent} from "../hull-esp/assign-new-revision/assign-new-revision.component";
 import {Material} from "../../../domain/classes/material";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-pipe-esp',
@@ -158,6 +159,8 @@ export class PipeEspComponent implements OnInit {
   tooltips: string[] = [];
   selectedView: string = 'tiles';
   pipesSrc: any[] = [];
+  spoolsArchive: any;
+  spoolsArchiveContent: any[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -253,12 +256,10 @@ export class PipeEspComponent implements OnInit {
         this.pipesBySpool = _.sortBy(this.pipesBySpool, x => this.addLeftZeros(x.spool, 5));
 
         this.s.getSpoolLocks(this.docNumber).then(spoolLocks => {
-          console.log(spoolLocks);
           this.pipesBySpool.forEach((x: any) => {
             x.locked = spoolLocks.find(y => y.spool == x.spool);
           });
         });
-        console.log(this.pipesBySpool);
 
         this.issue.revision_files.filter(x => x.group == 'Pipe Spools').forEach(file => {
           // @ts-ignore
@@ -283,7 +284,6 @@ export class PipeEspComponent implements OnInit {
       else{
         this.noResult = true;
       }
-      console.log(res);
     });
   }
   addLeftZeros(value: any, length: number = 4): string {
@@ -404,6 +404,24 @@ export class PipeEspComponent implements OnInit {
         }
       });
       this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
+
+      let findSpools = this.issue.revision_files.find(x => x.group == 'Pipe Spools' && x.name.includes('.zip'));
+      if (findSpools != null){
+        this.spoolsArchive = findSpools;
+        this.spoolsArchiveContent.splice(0, this.spoolsArchiveContent.length);
+        fetch(findSpools.url).then(response => response.blob()).then(blob => {
+          JSZip.loadAsync(blob).then(res => {
+            Object.keys(res.files).forEach(file => {
+              let name = file.split('/');
+              if (name.length > 1 && name[1] != ''){
+                this.spoolsArchiveContent.push(name[1]);
+              }
+            });
+          });
+        });
+
+      }
+
       this.fillPipes();
     });
   }
@@ -711,6 +729,28 @@ export class PipeEspComponent implements OnInit {
     this.router.navigate([], {queryParams: {dxf: null, searchSpool: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
       // @ts-ignore
       this.router.navigate([], {queryParams: {dxf: url, searchSpool: null, searchNesting: null}, queryParamsHandling: 'merge'});
+    });
+  }
+  showDxfInViewerZip(zip: FileAttachment, file: string) {
+    fetch(zip.url).then(response => response.blob()).then(blob => {
+      JSZip.loadAsync(blob).then(res => {
+        let findSpool = Object.keys(res.files).find(x => x.includes(file));
+        if (findSpool != null){
+          res.files[findSpool].async('string').then(fileBlob => {
+            let blob = new Blob([fileBlob], {type: 'text/plain'});
+            let fileUpload = new File([blob], file);
+            this.issueManager.uploadFile(fileUpload, zip.author, zip.name).then(fileAttachment => {
+              if (!this.dxfEnabled){
+                this.dxfEnabled = !this.dxfEnabled;
+              }
+              this.router.navigate([], {queryParams: {dxf: null, searchSpool: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+                // @ts-ignore
+                this.router.navigate([], {queryParams: {dxf: fileAttachment.url, searchSpool: null, searchNesting: null}, queryParamsHandling: 'merge'});
+              });
+            });
+          });
+        }
+      });
     });
   }
   openDxf() {
