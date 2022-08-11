@@ -3,12 +3,12 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-10" [pTooltip]="l.tr('Spool List')" tooltipPosition="top" (click)="createEsp()">
+      <div class="mr-10" [pTooltip]="l.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">
         <div class="materials-button pink-button cxy">
           <img src="assets/icons/list.svg" height="22">
         </div>
       </div>
-      <div class="mr-10" [pTooltip]="l.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('1')">
+      <div class="mr-10" [pTooltip]="l.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">
         <div class="materials-button violet-button cxy">
           <img src="assets/icons/lists.svg" height="24">
         </div>

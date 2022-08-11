@@ -39,43 +39,22 @@ export class HullEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    let newRevision = this.rev;
-    let newDocNumber = this.issue.doc_number + (newRevision == '-' ? '' : ('_rev' + newRevision));
     this.s.getHullEspFiles(this.issue.project.replace('NR', 'N'), this.issue.doc_number, this.issue.name, this.rev).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
       let files: FileAttachment[] = [];
-      let oldRevision = this.issue.revision;
-
-
-      if (!this.updateRevision){
-        newRevision = this.issue.revision;
-      }
 
       this.resUrls.forEach(fileUrl => {
         let file = new FileAttachment();
         file.url = fileUrl;
-        file.revision = newRevision;
+        file.revision = this.rev;
         file.author = this.auth.getUser().login;
         file.group = 'Part List';
-        file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
-        if (newRevision != '-'){
-          file.name = this.issue.doc_number + '_rev' + newRevision + '.' + fileUrl.split('.').pop();
-        }
+        //file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+        file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
         files.push(file);
       });
-      if (this.updateRevision){
-        this.issue.revision_files.filter(x => x.group != 'Part List').forEach(file => {
-          let newFile = JSON.parse(JSON.stringify(file));
-          newFile.revision = newRevision;
-          newFile.name = newFile.name.replace('rev' + oldRevision, 'rev' + newRevision);
-          if (oldRevision == '-'){
-            newFile.name = newFile.name.split('.')[0] + '_rev' + newRevision + '.' + newFile.name.split('.').pop();
-          }
-          files.push(newFile);
-        });
-      }
       //this.issue.revision = this.rev;
       this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
         this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', 'PROD').then(() => {
