@@ -1019,6 +1019,12 @@ cdk-virtual-scroll-viewport{
 .green-button:hover{
   background-color: #16A34A;
 }
+.violet-button{
+  background-color: #A855F7;
+}
+.violet-button:hover{
+  background-color: #9333EA;
+}
 .red-button{
   background-color: #EF4444;
 }

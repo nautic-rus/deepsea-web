@@ -372,8 +372,7 @@
           <div class="text-center-y">
             <div class="title-name">{{group[0].workShopMaterial.name + ' '}}{{group[0].workShopMaterial.description}}</div>
           </div>
-          <div class="text-center-y">
-            <div class="gray-text mr-10">TRM code</div>
+          <div class="p-ml-auto text-center-y">
             <div class="df">
               <div class="trm">{{group[0].mountData.trmCode}}</div>
               <div (click)="copyTrmCode(group[0].mountData.trmCode, 't' + i)" class="trm-copy cursor-pointer cxy">
