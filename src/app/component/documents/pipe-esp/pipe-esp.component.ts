@@ -26,6 +26,7 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import {AssignNewRevisionComponent} from "../hull-esp/assign-new-revision/assign-new-revision.component";
 import {Material} from "../../../domain/classes/material";
 import {forkJoin} from "rxjs";
+import {PipeEspGenerationWaitComponent} from "./pipe-esp-generation-wait/pipe-esp-generation-wait.component";
 
 @Component({
   selector: 'app-pipe-esp',
@@ -573,11 +574,11 @@ export class PipeEspComponent implements OnInit {
     return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.upload_date + x.name).reverse();
   }
 
-  createEsp() {
-    this.dialogService.open(HullEspGenerationWaitComponent, {
+  createEsp(value: string = '1') {
+    this.dialogService.open(PipeEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
-      data: this.issue
+      data: {issue: this.issue, spools: value}
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });
@@ -602,7 +603,6 @@ export class PipeEspComponent implements OnInit {
       }
     });
   }
-
   deleteFile(fileUrl: string){
     this.dialogService.open(ClearFilesComponent, {
       showHeader: false,
