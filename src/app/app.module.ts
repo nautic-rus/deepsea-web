@@ -122,6 +122,7 @@ import { NestingPipeComponent } from './component/nesting-pipe/nesting-pipe.comp
 import { ObjViewComponent } from './component/obj-view/obj-view.component';
 import { DeviceEspComponent } from './component/documents/device-esp/device-esp.component';
 import { AccommodationEspComponent } from './component/documents/accommodation-esp/accommodation-esp.component';
+import { PipeEspGenerationWaitComponent } from './component/documents/pipe-esp/pipe-esp-generation-wait/pipe-esp-generation-wait.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -198,6 +199,7 @@ Quill.register('modules/imageResize', ImageResize);
     ObjViewComponent,
     DeviceEspComponent,
     AccommodationEspComponent,
+    PipeEspGenerationWaitComponent,
   ],
   imports: [
     BrowserModule,

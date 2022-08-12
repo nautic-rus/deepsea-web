@@ -113,6 +113,7 @@ export class AuthManagerService {
     if (save){
       this.cookie.set('token', this.token, expireDate, '', '', false, 'Lax');
     }
+    sessionStorage.setItem('token', this.token);
     this.user = user;
     this.authenticated = true;
   }
@@ -125,15 +126,23 @@ export class AuthManagerService {
   async checkAuth(qParams: any = null, noGuard = false) {
     // this.authenticated = true;
     // return true;
+    let saveToken = true;
     if (this.authenticated){
       return true;
     }
     else{
       this.token = this.cookie.check('token') ? this.cookie.get('token') : '';
+      if (this.token == ''){
+        // @ts-ignore
+        this.token = sessionStorage.getItem('token') != null ? sessionStorage.getItem('token') : '';
+        if (this.token != ''){
+          saveToken = false;
+        }
+      }
       return await this.http.get(props.http + '/login', {params: {token: this.token}}).toPromise().then(response => {
         const user = response as User;
         if (user != null && (response as string) != 'wrong-token'){
-          this.setUser(user);
+          this.setUser(user, saveToken);
           if (noGuard){
             this.router.navigate(['']);
           }

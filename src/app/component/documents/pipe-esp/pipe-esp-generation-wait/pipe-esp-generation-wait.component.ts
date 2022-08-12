@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import {Issue} from "../../../../domain/classes/issue";
+import {AuthManagerService} from "../../../../domain/auth-manager.service";
+import {IssueManagerService} from "../../../../domain/issue-manager.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SpecManagerService} from "../../../../domain/spec-manager.service";
 import {LanguageService} from "../../../../domain/language.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {Issue} from "../../../../domain/classes/issue";
-import {IssueManagerService} from "../../../../domain/issue-manager.service";
-import {AuthManagerService} from "../../../../domain/auth-manager.service";
 import {FileAttachment} from "../../../../domain/classes/file-attachment";
 
 @Component({
-  selector: 'app-hull-esp-generation-wait',
-  templateUrl: './hull-esp-generation-wait.component.html',
-  styleUrls: ['./hull-esp-generation-wait.component.css']
+  selector: 'app-pipe-esp-generation-wait',
+  templateUrl: './pipe-esp-generation-wait.component.html',
+  styleUrls: ['./pipe-esp-generation-wait.component.css']
 })
-export class HullEspGenerationWaitComponent implements OnInit {
+export class PipeEspGenerationWaitComponent implements OnInit {
+
 
   issue: Issue = new Issue();
 
@@ -21,7 +22,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
   generationWait = false;
 
   resUrls: string[] = [];
-  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E'];
+  revs = ['0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E'];
   rev: string = this.revs[0];
   updateRevision = false;
 
@@ -29,8 +30,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.issue = this.conf.data;
-    this.rev = this.issue.revision;
+    this.issue = this.conf.data.issue;
   }
   close(){
     this.ref.close('exit');
@@ -39,7 +39,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getHullEspFiles(this.issue.project.replace('NR', 'N'), this.issue.doc_number, this.issue.name, this.rev).then(res => {
+    this.s.getPipeEspFiles(this.issue.doc_number, this.rev, this.conf.data.spools).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
@@ -51,11 +51,11 @@ export class HullEspGenerationWaitComponent implements OnInit {
         file.revision = this.rev;
         file.author = this.auth.getUser().login;
         file.group = 'Part List';
-        //file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+        file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
         file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
         files.push(file);
       });
-      //this.issue.revision = this.rev;
+
       // this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
       //   this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', 'PROD').then(() => {
       //     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(files)).then(res => {
