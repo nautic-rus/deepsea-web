@@ -174,7 +174,8 @@ export class HullEspComponent implements OnInit {
   cmapFormat = '';
   cmapuser = '';
   cmapdate = 0;
-
+  fileSort = 'name';
+  sortReverse = false;
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -775,7 +776,13 @@ export class HullEspComponent implements OnInit {
   }
 
   getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
-    return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.upload_date + x.name).reverse();
+    let files = this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision);
+    if (this.fileSort == 'name'){
+      return this.sortReverse ? _.sortBy(files, x => x.name).reverse() : _.sortBy(files, x => x.name);
+    }
+    else {
+      return this.sortReverse ? _.sortBy(files, x => x.upload_date).reverse() : _.sortBy(files, x => x.upload_date);
+    }
   }
 
   createEsp() {
@@ -1141,4 +1148,8 @@ export class HullEspComponent implements OnInit {
     }
   }
 
+  setFileSort(value: string) {
+    this.fileSort = value;
+    this.sortReverse = !this.sortReverse;
+  }
 }
