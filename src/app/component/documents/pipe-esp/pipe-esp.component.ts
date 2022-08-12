@@ -818,7 +818,23 @@ export class PipeEspComponent implements OnInit {
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
 
-  showSpoolDXF(spool: any) {
-
+  downloadFileFromZip(zip: FileAttachment, file: string) {
+    fetch(zip.url).then(response => response.blob()).then(blob => {
+      JSZip.loadAsync(blob).then(res => {
+        let findSpool = Object.keys(res.files).find(x => x.includes(file));
+        if (findSpool != null){
+          res.files[findSpool].async('string').then(fileBlob => {
+            let blob = new Blob([fileBlob], {type: 'text/plain'});
+            const element = document.createElement('a');
+            element.setAttribute('href', URL.createObjectURL(blob));
+            element.setAttribute('download', file);
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+          });
+        }
+      });
+    });
   }
 }
