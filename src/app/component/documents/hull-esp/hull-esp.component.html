@@ -881,11 +881,12 @@
                 </div>
                 <div class="">
                   <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
+
                     <div  class="attachment-files df mb-6 cursor-pointer">
                       <div class="cxy">
                         <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                       </div>
-                      <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+                      <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
                       <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
 
 

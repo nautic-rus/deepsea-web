@@ -770,6 +770,8 @@ export class NestingComponent implements OnInit {
     });
     this.materialsRoot = this.materials.filter(x => x.parent == '');
     this.materialsRest = this.materials.filter(x => x.parent != '');
+    this.materialsRoot = [];
+    this.materialsRest = [];
   }
   selectBlock(block: any = null) {
     if (block != null){
@@ -778,6 +780,7 @@ export class NestingComponent implements OnInit {
     this.selectedAllBlocks = this.blocks.find(x => !x.selected) == null;
 
     let allSelected = this.blocks.find(x => x.selected) == null;
+    allSelected = false;
     let selectedNesting = this.nestingSource.filter((x: any) => allSelected || this.blocks.filter(x => x.selected).map(x => x.name).includes(x.BLOCKS));
 
     let selectedMaterialsRoot = [...this.materialsRoot];
@@ -873,6 +876,13 @@ export class NestingComponent implements OnInit {
   }
 
   isContainsBlocks(blocks: string){
+    let result = false;
+    if (this.blocks.filter(x => x.selected).map(x => x.name).includes(blocks)){
+      result = true;
+    }
+    return result;
+  }
+  isContainsBlocksAux(blocks: string){
     let result = false;
     if (this.blocks.find(x => x.selected) == null){
       result = true;

@@ -15,7 +15,7 @@
   font-size: 14px;
 }
 /deep/.p-datatable .p-datatable-tbody > tr > td{
-  padding: 12px;
+  padding: 12px!important;
 }
 /deep/.p-datatable .p-datatable-thead > tr > th{
   padding: 8px;
