@@ -1,1 +1,599 @@
-<p>device-esp works!</p>
+<div class="all-page h-100">
+  <div class="all-card">
+    <div class="card-head df">
+      <div class="mr-2">{{issue.name}}</div>
+      <div class="mr-2">{{issue.doc_number}}</div>
+      <div class="mr-10" [pTooltip]="l.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">
+        <div class="materials-button pink-button cxy">
+          <img src="assets/icons/list.svg" height="22">
+        </div>
+      </div>
+      <div class="mr-10" [pTooltip]="l.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">
+        <div class="materials-button violet-button cxy">
+          <img src="assets/icons/lists.svg" height="24">
+        </div>
+      </div>
+      <div class="mr-10">
+
+
+        <div [pTooltip]="l.tr('Show In Viewer')" [class.disabled-button]="isDisabledDxf()" (click)="showDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
+          <svg class="icon-top-button" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="mr-10">
+        <div (click)="exportSketches()" class="materials-button green-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="p-ml-auto df mr-10">
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
+          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        </div>
+        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">
+          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
+          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
+        </div>
+      </div>
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+         <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+
+        <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+      </span>
+    </div>
+    <div class="w-100 df">
+      <div class="card-sp-tile mr-20" [class.card-height-with-dxf]="dxfEnabled">
+        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the system description using FORAN app in {{project}} project</div>
+        <div *ngIf="devices.length == 0 && !noResult">
+          <div class="cxy loading">
+            <div class="cxy card-height">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedView == 'tiles'">
+          <div class="tile">
+            <div *ngFor="let deviceGroup of devicesGrouped; let i = index" class="card-tile" [class.hidden-card]="device == null">
+              <div class="card-spool df">
+                <div class="w-7 position-relative">
+                  <div class="title-bold mb-20" [class.dxf-enabled]="dxfEnabled" [innerHTML]="deviceGroup.label | highLight: search"></div>
+                </div>
+                <div class="w-93">
+                  <div class="df height-40" *ngFor="let device of devicesGrouped.devices; let p = index">
+                    <div class="w-6 pr-10 df">
+                      <div class="text-table-col cy">{{device.userId}}</div>
+                    </div>
+                    <div class="w-5 mm-text cy pr-10">{{device.elemType}}</div>
+                    <div class="w-7 pr-10 cxy">
+                    </div>
+                    <div class="w-27 pr-10 title-bold-pipe cy">{{device.material.name}}</div>
+                    <div class="w-4 pr-10 text-black-mini cy">{{device.material.units}}</div>
+                    <div class="w-7 pr-10 df">
+
+                    </div>
+                    <div class="w-8 pr-10 align-center df">
+
+                    </div>
+                    <div class="w-7 pr-10 df">
+
+                    </div>
+                    <div class="w-8 pr-10 align-center df">
+                      <div class="text-table-col cy">{{round(device.weight)}}</div>
+                    </div>
+
+                    <div class="w-20 pr-10 cy p-ml-auto">
+                      <div class="cy pr-10">
+                        <div class="kpl-flag cxy">
+                          <div class="text-center-x">
+                            <span [innerHTML]="(device.elemType) | highLight: search"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="device.stock.trim() != ''" class="df position-relative">
+                        <div class="trm">
+                          <span [innerHTML]="device.stock | highLight: search"></span>
+                        </div>
+                        <div (click)="copyTrmCode(device.stock, 's' + p + 'sp' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                          <img src="assets/icons/trm.svg" height="14">
+                          <div class="copy-tooltip" [hidden]="!showTooltip('s' + p + 'sp' + i)">Copied!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedView == 'list'">
+          <p-table #table [value]="devices"
+                   [scrollable]="true"
+                   scrollHeight="calc(100vh - 225px)"
+                   [virtualScroll]="true"
+                   [virtualRowHeight]="28"
+                   styleClass="p-datatable-striped"
+                   responsiveLayout="scroll"
+                   [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID']">
+            <ng-template pTemplate="header">
+              <tr *ngIf="devices.length != 0" class="df">
+                <th [ngStyle]="mw(7)" pSortableColumn="spool" class="lxy w-5">{{'Spool'}}
+                  <p-sortIcon field="spool"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'Id'}}
+                  <p-sortIcon field="spPieceId"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(21)" pSortableColumn="material.name" class="lxy w-35">{{'Material'}}
+                  <p-sortIcon field="material.name"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(18)" pSortableColumn="stock" class="lxy w-30">{{'Stock'}}
+                  <p-sortIcon field="stock"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="material.units" class="lxy w-15">{{'Units'}}
+                  <p-sortIcon field="material.units"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="radius" class="lxy w-15">{{'Radius'}}
+                  <p-sortIcon field="radius"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="angle" class="lxy w-15">{{'Angle'}}
+                  <p-sortIcon field="angle"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="length" class="lxy w-5">{{'Length'}}
+                  <p-sortIcon field="length"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="weight" class="lxy w-5">{{'Weight'}}
+                  <p-sortIcon field="weight"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="typeCode" class="cxy w-5">{{'Code'}}
+                  <p-sortIcon field="typeCode"></p-sortIcon>
+                </th>
+                <th [ngStyle]="mw(7)" pSortableColumn="smat" class="cxy w-5">{{'Smat'}}
+                  <p-sortIcon field="smat"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-device>
+              <tr [class.select-row]="selectedDevice == device" class="cursor-pointer task-row" (click)="selectDevice(device)">
+                <td [ngStyle]="mw(7)" class="w-5 text-14">{{device.userId}}</td>
+                <td [ngStyle]="mw(5)" class="w-5 text-14">{{device.userId}}</td>
+                <td [ngStyle]="mw(21)" class="w-35 text-14">{{device.material.name}}</td>
+                <td [ngStyle]="mw(18)" class="w-30 text-14">{{device.stock}}</td>
+                <td [ngStyle]="mw(7)" class="w-15 text-14">{{device.material.units}}</td>
+                <td [ngStyle]="mw(7)" class="w-15 text-14"></td>
+                <td [ngStyle]="mw(7)" class="w-15 text-14">°</td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
+                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+
+
+
+      <div class="w-32 right-content-card mt-20">
+        <div class="df tabs-header">
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity
+            <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
+          </div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
+        </div>
+
+        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
+          <div class="mb-30" *ngFor="let fileGroup of fileGroups" [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
+            <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
+              <div>
+                <div class="df">
+                  <div *ngIf="auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                    <div class="cxy">
+                      <img src="assets/icons/plus1.svg" height="16">
+                    </div>
+                    <div class="cy ml-1">Add files</div>
+                  </div>
+                  <div class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                    <div class="cxy">
+                      <img src="assets/icons/download-arrow.png">
+                    </div>
+                    <div class="cy ml-1">Download all</div>
+                  </div>
+                  <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                    <div class="cxy icon-rotate">
+                      <img src="assets/icons/broom.png">
+                    </div>
+                    <div class="cy ml-1">Clear</div>
+                  </div>
+                </div>
+                <div class="">
+                  <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
+                    <div  class="attachment-files df mb-6 cursor-pointer">
+                      <div class="cxy">
+                        <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                      </div>
+                      <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+                      <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+
+                      <div class="cxy" *ngIf="file.name.includes('.dxf')" >
+                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="cxy" *ngIf="!file.name.includes('.dxf')" ></div>
+                      <div class="cxy" (click)="openFile(file)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                      </div>
+                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="fileGroup.name == 'Pipe Spools' && spoolsArchive != null">
+                    <div *ngFor="let file of spoolsArchiveContent">
+                      <div  class="attachment-files df mb-6 cursor-pointer">
+                        <div class="cxy">
+                          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="25"/>
+                        </div>
+                        <span class="file-name-esp mx-10 cy">{{trimFileName(file, 30) + ' '}}</span>
+                        <span class="cy">{{' ' + getDate(spoolsArchive.upload_date)}}</span>
+
+                        <div class="cxy" *ngIf="file.includes('.dxf')" >
+                          <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewerZip(spoolsArchive, file); $event.stopPropagation()">
+                            <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                              <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                            </svg>
+                          </div>
+                        </div>
+                        <div class="cxy" (click)="downloadFileFromZip(spoolsArchive, file)">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                          </svg>
+                        </div>
+                        <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file)">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-fieldset>
+          </div>
+        </div>
+        <div *ngIf="selectedHeadTab == 'Activity'" class="card-tabs">
+          <div class="big-text-issues mb-1">Activity</div>
+          <div class="big-text pb-10 pt-10">
+            <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" class="border" pInputText placeholder="Post your message here..."  />
+          </div>
+          <div [hidden]="!comment" class="pb-10 comment-issues">
+            <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" id="editor" [(ngModel)]="message">
+              <div quill-editor-toolbar>
+                <p-header>
+                      <span class="ql-formats">
+                        <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+                        <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+                        <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+                      </span>
+                  <span class="ql-formats">
+                        <select class="ql-color" tabindex="-1"></select>
+                        <select class="ql-background" tabindex="-1"></select>
+                      </span>
+                  <span class="ql-formats">
+                        <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+                        <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+                        <select class="ql-align" tabindex="-1">
+                          <option selected tabindex="-1"></option>
+                          <option value="center" tabindex="-1"></option>
+                          <option value="right" tabindex="-1"></option>
+                          <option value="justify" tabindex="-1"></option>
+                        </select>
+                      </span>
+                  <span class="ql-formats">
+                        <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+                        <button (click)="selectImage.click()">
+                          <i class="pi pi-image"></i>
+                        </button>
+                        <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+                        <button (click)="selectFiles.click()">
+                          <i class="pi pi-file"></i>
+                        </button>
+                        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+                        <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+                      </span>
+                  <span class="ql-formats">
+                        <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+                      </span>
+                </p-header>
+              </div>
+            </quill-editor>
+            <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+              <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+              <div class="cy">{{file}}</div>
+              <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+              <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+            </div>
+            <div class="df mt-5">
+              <div class="mr-5">
+                <div (click)="sendMessage()" pButton label="Save" class="button"></div>
+              </div>
+              <div>
+                <div (click)="comment = false" pButton label="Cancel" class="button-cancel"></div>
+              </div>
+            </div>
+          </div>
+          <div class="messages ovf-auto">
+            <div *ngFor="let msg of getMessages(issue)">
+              <div class="issue-message" *ngIf="msg.content != null && (messageFilter == 'all' || messageFilter == 'human')">
+                <div class="df pb-20">
+                  <div class="pt-5 mr-10" (click)="openUserInfo(msg.author)">
+                    <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+                  </div>
+                  <div>
+                    <span class="bold-text cursor-pointer" (click)="openUserInfo(msg.author)">{{auth.getUserName(msg.author)}}</span>
+                    <span class="text-descr"> {{l.tr('создал')}}{{localeGender(msg.author)}} {{l.tr('сообщение')}} </span>
+                    <span class="text-date"> {{getDate(+msg.date)}} </span>
+                    <quill-view (click)="editorClicked($event)" class="db" *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
+                    <div *ngFor="let file of msg.file_attachments">
+                      <div (click)="openFile(file)" class="attachment-issues-files df mb-5 cursor-pointer">
+                        <div class="cxy">
+                          <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                        </div>
+                        <div class="attachment-footer-issue">
+                          <span class="mr-5" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
+                          <div>{{getDate(+file.upload_date)}}</div>
+                          <div class="p-ml-auto">
+                            <div class="upload-file cxy">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-cloud-download cloud-download" viewBox="0 0 16 16">
+                                <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                                <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="issue-message" *ngIf="msg.content == null && (messageFilter == 'all' || messageFilter == 'history') && msg.update_message != 'hidden'">
+                <div class="df pb-30">
+                  <div class="pt-5 mr-10" (click)="openUserInfo(msg.author)">
+                    <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+                  </div>
+                  <div *ngIf="msg.name_value == 'status'">
+                    <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                    <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                    <span class="bold-text">{{issueManager.localeHistory(msg.name_value)}} </span>
+                    <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                    <div class="df pt-5">
+                      <div class="" [innerHTML]="issueManager.localeStatus(msg.prev_value) | safeHtml"></div>
+                      <span class="px-10">
+                        <img src="assets/icons/right-arrow.svg" height="13">
+                      </span>
+                      <div [innerHTML]="issueManager.localeStatus(msg.new_value) | safeHtml"></div>
+                    </div>
+                  </div>
+                  <div *ngIf="msg.name_value == 'assign'">
+                    <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                    <span class="text-descr px-5">{{l.tr('назначил')}}{{localeGender(msg.author)}} </span>
+                    <span class="bold-text">{{l.tr('исполнителя')}} </span>
+                    <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                    <div class="df pt-5">
+                      <div [innerHTML]="getNoneZeroResult(auth.getUserName(msg.prev_value)) | safeHtml"></div>
+                      <span class="px-10">
+                        <img src="assets/icons/right-arrow.svg" height="13">
+                      </span>
+                      <div [innerHTML]="getNoneZeroResult(auth.getUserName(msg.new_value)) | safeHtml"></div>
+                    </div>
+                  </div>
+                  <div *ngIf="msg.update_message.includes('edit')">
+                    <div *ngIf="msg.name_value == 'priority'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('приоритет')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPriority(msg.prev_value)) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPriority(msg.new_value)) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="msg.name_value == 'issue_comment'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('примечание')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroInput(msg.prev_value) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroInput(msg.new_value) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="msg.name_value == 'department'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('отдел')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskDepartment(msg.prev_value)) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskDepartment(msg.new_value)) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="msg.name_value == 'project'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('проект')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="msg.name_value == 'start_date'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('дату начала')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="msg.name_value == 'due_date'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('срок исполнения')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="msg.name_value == 'responsible'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('ответственного')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="msg.name_value == 'period'">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('этап')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5">
+                        <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPeriod(msg.prev_value)) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPeriod(msg.new_value)) | safeHtml"></div>
+                      </div>
+                    </div>
+                    <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor'].includes(msg.name_value)">
+                      <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
+                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{l.tr('информацию')}} </span>
+                      <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                      <div class="df pt-5" *ngIf="!msg.name_value.includes('details')">
+                        <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
+                        <span class="px-10">
+                          <img src="assets/icons/right-arrow.svg" height="13">
+                        </span>
+                        <div [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
+                      </div>
+                      <div class="df pt-5" *ngIf="msg.name_value.includes('details')">
+                        {{l.tr('Изменилось описание к задаче')}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div *ngIf="selectedHeadTab == 'Info'" class="card-tabs">
+<!--          <div class="cxy loading-text" *ngIf="selectedPipe.spool == null">-->
+<!--            Select pipe from left list to view details-->
+<!--          </div>-->
+<!--          <div *ngIf="selectedPipe.spool != null">-->
+<!--            <div class="df">-->
+<!--              <div class="part-details">{{selectedPipe.material.name}}</div>-->
+<!--            </div>-->
+<!--            <div class="df" *ngFor="let pipeDef of getPipeDefs(selectedPipe)">-->
+<!--              <div class="w-30">-->
+<!--                <div>-->
+<!--                  <div class="main-details mt-20">{{pipeDef.name}}:</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="w-70">-->
+<!--                <div class="mt-20 value-details">{{pipeDef.value}}</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
+        <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
+          <div *ngFor="let file of getArchive()">
+            <div  class="attachment-files-archive df mb-6 cursor-pointer">
+              <div class="cxy">
+                <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+              </div>
+              <span class="file-name-esp mx-10 min-width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+              <span class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
+              <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
+                <div class="cxy ml-10" (click)="openFile(file)">
+                  <img src="assets/icons/download-arrow.png">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pt-5 dxf-view" *ngIf="dxfEnabled">
+  <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
+  <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+  <app-dxf-view></app-dxf-view>
+</div>
+
+<div class="progress-spinner" *ngIf="waitForZipFiles">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img src="assets/whale.gif" height="120">
+    <div class="cx wait-text">PLEASE WAIT...</div>
+  </div>
+</div>
+
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>
