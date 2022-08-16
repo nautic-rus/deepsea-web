@@ -3,16 +3,16 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-10" [pTooltip]="l.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">
-        <div class="materials-button pink-button cxy">
-          <img src="assets/icons/list.svg" height="22">
-        </div>
-      </div>
-      <div class="mr-10" [pTooltip]="l.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">
-        <div class="materials-button violet-button cxy">
-          <img src="assets/icons/lists.svg" height="24">
-        </div>
-      </div>
+<!--      <div class="mr-10" [pTooltip]="l.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">-->
+<!--        <div class="materials-button pink-button cxy">-->
+<!--          <img src="assets/icons/list.svg" height="22">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="mr-10" [pTooltip]="l.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">-->
+<!--        <div class="materials-button violet-button cxy">-->
+<!--          <img src="assets/icons/lists.svg" height="24">-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="mr-10">
 
 
@@ -58,13 +58,13 @@
         </div>
         <div *ngIf="selectedView == 'tiles'">
           <div class="tile">
-            <div *ngFor="let deviceGroup of devicesGrouped; let i = index" class="card-tile" [class.hidden-card]="device == null">
+            <div *ngFor="let deviceGroup of devicesGrouped; let i = index" class="card-tile" [class.hidden-card]="deviceGroup == null">
               <div class="card-spool df">
                 <div class="w-7 position-relative">
                   <div class="title-bold mb-20" [class.dxf-enabled]="dxfEnabled" [innerHTML]="deviceGroup.label | highLight: search"></div>
                 </div>
                 <div class="w-93">
-                  <div class="df height-40" *ngFor="let device of devicesGrouped.devices; let p = index">
+                  <div class="df height-40" *ngFor="let device of deviceGroup.devices; let p = index">
                     <div class="w-6 pr-10 df">
                       <div class="text-table-col cy">{{device.userId}}</div>
                     </div>
@@ -72,15 +72,15 @@
                     <div class="w-7 pr-10 cxy">
                     </div>
                     <div class="w-27 pr-10 title-bold-pipe cy">{{device.material.name}}</div>
-                    <div class="w-4 pr-10 text-black-mini cy">{{device.material.units}}</div>
+                    <div class="w-4 pr-10 text-black-mini cy">{{device.material.provider}}</div>
                     <div class="w-7 pr-10 df">
-
+                      <div class="text-table-col cy">{{device.units}}</div>
                     </div>
                     <div class="w-8 pr-10 align-center df">
-
+                      <div class="text-table-col cy">{{device.count}}</div>
                     </div>
                     <div class="w-7 pr-10 df">
-
+                      <div class="text-table-col cy">{{round(device.weight)}}</div>
                     </div>
                     <div class="w-8 pr-10 align-center df">
                       <div class="text-table-col cy">{{round(device.weight)}}</div>
