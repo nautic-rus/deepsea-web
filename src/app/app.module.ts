@@ -123,6 +123,7 @@ import { ObjViewComponent } from './component/obj-view/obj-view.component';
 import { DeviceEspComponent } from './component/documents/device-esp/device-esp.component';
 import { AccommodationEspComponent } from './component/documents/accommodation-esp/accommodation-esp.component';
 import { PipeEspGenerationWaitComponent } from './component/documents/pipe-esp/pipe-esp-generation-wait/pipe-esp-generation-wait.component';
+import { DeviceEspGenerationWaitComponent } from './component/documents/device-esp/device-esp-generation-wait/device-esp-generation-wait.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -200,6 +201,7 @@ Quill.register('modules/imageResize', ImageResize);
     DeviceEspComponent,
     AccommodationEspComponent,
     PipeEspGenerationWaitComponent,
+    DeviceEspGenerationWaitComponent,
   ],
   imports: [
     BrowserModule,

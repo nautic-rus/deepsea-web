@@ -20,6 +20,7 @@ import {saveAs} from "file-saver";
 import {PipeEspGenerationWaitComponent} from "../pipe-esp/pipe-esp-generation-wait/pipe-esp-generation-wait.component";
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import * as XLSX from "xlsx";
+import {DeviceEspGenerationWaitComponent} from "./device-esp-generation-wait/device-esp-generation-wait.component";
 
 @Component({
   selector: 'app-device-esp',
@@ -529,7 +530,7 @@ export class DeviceEspComponent implements OnInit {
   }
 
   createEsp(value: string = '1') {
-    this.dialogService.open(PipeEspGenerationWaitComponent, {
+    this.dialogService.open(DeviceEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
       data: {issue: this.issue, spools: value}
