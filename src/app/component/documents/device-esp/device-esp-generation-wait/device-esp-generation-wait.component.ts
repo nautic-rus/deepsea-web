@@ -24,6 +24,8 @@ export class DeviceEspGenerationWaitComponent implements OnInit {
   resUrls: string[] = [];
   revs = ['0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E'];
   rev: string = this.revs[0];
+  langs = ['en', 'ru'];
+  lang = this.langs[0];
   updateRevision = false;
 
   constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
@@ -39,7 +41,7 @@ export class DeviceEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getDevicesEspFiles(this.issue.doc_number, this.rev).then(res => {
+    this.s.getDevicesEspFiles(this.issue.doc_number, this.rev, this.lang).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
