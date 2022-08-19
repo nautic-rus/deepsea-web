@@ -24,21 +24,13 @@
 
 
   <div class="double-row mt-2">
-    <div class="df">
-      <div class="cy left-text">Проект:</div>
-      <div class="ml-1">
-        <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-200 border-material">
-        </p-dropdown>
-      </div>
-    </div>
-    <div class="df">
-      <div class="cy right-text">Коэф. доп.:</div>
-      <div class="ml-1">
-        <input [(ngModel)]="material.coefficient" type="text" pInputText class="width-200 border-material">
-      </div>
-    </div>
-  </div>
-  <div class="double-row mt-2">
+<!--    <div class="df">-->
+<!--      <div class="cy left-text">Проект:</div>-->
+<!--      <div class="ml-1">-->
+<!--        <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-200 border-material">-->
+<!--        </p-dropdown>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="df">
       <div class="cy left-text">КВЗ:</div>
       <div class="ml-1">
@@ -47,9 +39,9 @@
       </div>
     </div>
     <div class="df">
-      <div class="cy right-text">Поставщик:</div>
+      <div class="cy right-text">Коэф. доп.:</div>
       <div class="ml-1">
-        <input [(ngModel)]="material.provider" type="text" pInputText class="width-200 border-material">
+        <p-inputNumber [(ngModel)]="material.coefficient" mode="decimal" [minFractionDigits]="2" class="width-200 " locale="en-US"></p-inputNumber>
       </div>
     </div>
   </div>
@@ -69,15 +61,11 @@
     </div>
   </div>
   <div class="single-row mt-2">
-    <div class="cy left-text-one-row">Наименование:</div>
-    <div class="ml-1">
-      <input [(ngModel)]="material.name" type="text" pInputText class="width-480 border-material">
-    </div>
-  </div>
-  <div class="single-row mt-2">
-    <div class="cy left-text-one-row">Обозначение:</div>
-    <div class="ml-1">
-      <input [(ngModel)]="material.description" type="text" pInputText class="width-480 border-material">
+    <div class="df">
+      <div class="cy left-text-one-row">Поставщик:</div>
+      <div class="ml-1">
+        <input [(ngModel)]="material.provider" type="text" pInputText class="width-480 border-material">
+      </div>
     </div>
   </div>
   <div class="single-row mt-2">
@@ -86,6 +74,36 @@
       <input [(ngModel)]="material.note" type="text" pInputText class="width-480 border-material">
     </div>
   </div>
+  <p-tabView>
+    <p-tabPanel header="EN" [selected]="true">
+      <div class="single-row mt-2">
+        <div class="cy left-text-one-row">Наименование:</div>
+        <div class="ml-1">
+          <input [(ngModel)]="material.name" type="text" pInputText class="width-450 border-material">
+        </div>
+      </div>
+      <div class="single-row mt-2">
+        <div class="cy left-text-one-row">Обозначение:</div>
+        <div class="ml-1">
+          <input [(ngModel)]="material.description" type="text" pInputText class="width-450 border-material">
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="RU">
+      <div class="single-row mt-2">
+        <div class="cy left-text-one-row">Наименование:</div>
+        <div class="ml-1">
+          <input [(ngModel)]="materialTranslationRu.name" type="text" pInputText class="width-450 border-material">
+        </div>
+      </div>
+      <div class="single-row mt-2">
+        <div class="cy left-text-one-row">Обозначение:</div>
+        <div class="ml-1">
+          <input [(ngModel)]="materialTranslationRu.description" type="text" pInputText class="width-450 border-material">
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
   <div class="form-footer cxy">
     <div class="mr-1 cx">
       <div tabindex="10" pButton [label]="getLabel(action)" class="button-ok" (click)="createMaterial()"></div>

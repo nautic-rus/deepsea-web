@@ -620,7 +620,7 @@ export class MaterialsComponent implements OnInit {
   selectedNodePath = '';
   selectedNodeCode = '';
   tooltips: string[] = [];
-  projects: string[] = ['210101'];
+  projects: string[] = ['200101', '210101'];
   project = '';
   selectedMaterial: Material = new Material();
   items = [
@@ -718,7 +718,7 @@ export class MaterialsComponent implements OnInit {
   }
   addMaterial(action: string = 'add', material: Material = new Material()) {
     if (action == 'add'){
-      material.projects = [this.project];
+      //material.projects = [this.project];
     }
     this.dialogService.open(AddMaterialComponent, {
       showHeader: true,

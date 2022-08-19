@@ -6,6 +6,7 @@ import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import _ from "underscore";
 import {MessageService} from "primeng/api";
+import {MaterialTranslation} from "../../../domain/interfaces/material-translation";
 
 @Component({
   selector: 'app-add-material',
@@ -35,6 +36,7 @@ export class AddMaterialComponent implements OnInit {
     data: 'NON',
     label: 'No specified type',
   };
+  materialTranslationRu: MaterialTranslation = {lang: 'ru', name: '', description: ''};
 
   constructor(public t: LanguageService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
     this.projects = dialog.data[0];
@@ -51,6 +53,12 @@ export class AddMaterialComponent implements OnInit {
     if ((this.action == 'add' || this.action == 'clone') && this.materialPrefix != ''){
       this.material.code = Material.generateCode(this.materialPrefix, this.materials);
     }
+
+    let ru = this.material.translations.find(x => x.lang == 'ru');
+    if (ru != null){
+      this.materialTranslationRu = ru;
+    }
+    this.material.translations.push(this.materialTranslationRu);
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 import _ from "underscore";
+import {MaterialTranslation} from "../interfaces/material-translation";
 
 export class Material {
   id: string = Material.generateId(20);
@@ -15,6 +16,9 @@ export class Material {
   removed: number = 0;
   coefficient: number = 1;
   comment: string = '';
+  itt: number = 0;
+  approved: number = 0;
+  translations: MaterialTranslation[] = [];
   public static generateId(length: number = 20): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
