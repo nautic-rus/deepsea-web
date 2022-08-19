@@ -719,6 +719,7 @@ export class MaterialsComponent implements OnInit {
   addMaterial(action: string = 'add', material: Material = new Material()) {
     if (action == 'add'){
       //material.projects = [this.project];
+      material.projects = this.projects;
     }
     this.dialogService.open(AddMaterialComponent, {
       showHeader: true,

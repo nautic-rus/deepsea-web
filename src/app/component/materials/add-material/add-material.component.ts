@@ -58,7 +58,9 @@ export class AddMaterialComponent implements OnInit {
     if (ru != null){
       this.materialTranslationRu = ru;
     }
-    this.material.translations.push(this.materialTranslationRu);
+    else{
+      this.material.translations.push(this.materialTranslationRu);
+    }
   }
 
   ngOnInit(): void {
