@@ -46,7 +46,7 @@ export class AddMaterialComponent implements OnInit {
     this.materials = dialog.data[3];
     this.materialPrefix = dialog.data[4];
 
-    if (this.action == 'clone'){
+    if (this.action == 'clone' || this.action == 'edit'){
       this.materialPrefix = this.material.code.substring(0, 12);
     }
 
@@ -68,6 +68,7 @@ export class AddMaterialComponent implements OnInit {
   }
 
   createMaterial() {
+    console.log(Material.generateCode(this.materialPrefix, this.materials).substring(0, 12));
     if (this.material.code.substring(0, 12) != Material.generateCode(this.materialPrefix, this.materials).substring(0, 12)){
       this.messageService.add({severity:'error', summary:'Code Error', detail:'You cannot modify base first 12 length symbols of code. Please create another block with code you wish.', life: 8000});
       return;
