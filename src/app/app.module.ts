@@ -124,6 +124,7 @@ import { DeviceEspComponent } from './component/documents/device-esp/device-esp.
 import { AccommodationEspComponent } from './component/documents/accommodation-esp/accommodation-esp.component';
 import { PipeEspGenerationWaitComponent } from './component/documents/pipe-esp/pipe-esp-generation-wait/pipe-esp-generation-wait.component';
 import { DeviceEspGenerationWaitComponent } from './component/documents/device-esp/device-esp-generation-wait/device-esp-generation-wait.component';
+import { AddMaterialToEspComponent } from './component/documents/device-esp/add-material-to-esp/add-material-to-esp.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -202,6 +203,7 @@ Quill.register('modules/imageResize', ImageResize);
     AccommodationEspComponent,
     PipeEspGenerationWaitComponent,
     DeviceEspGenerationWaitComponent,
+    AddMaterialToEspComponent
   ],
   imports: [
     BrowserModule,
@@ -252,7 +254,6 @@ Quill.register('modules/imageResize', ImageResize);
     RadioButtonModule,
     SidebarModule,
     PanelMenuModule,
-
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
