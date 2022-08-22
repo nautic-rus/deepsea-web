@@ -20,6 +20,8 @@ export class AddMaterialComponent implements OnInit {
   units = ['796', '006'];
   category = this.categories[0];
   material: Material = new Material();
+  approved = false;
+  itt = false;
   action = '';
   materialPrefix = '';
   materials: Material[] = [];
@@ -42,6 +44,8 @@ export class AddMaterialComponent implements OnInit {
     this.projects = dialog.data[0];
     this.project = this.projects[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
+    this.approved = this.material.approved == 1;
+    this.itt = this.material.itt == 1;
     this.action = dialog.data[2];
     this.materials = dialog.data[3];
     this.materialPrefix = dialog.data[4];
@@ -68,7 +72,8 @@ export class AddMaterialComponent implements OnInit {
   }
 
   createMaterial() {
-    console.log(Material.generateCode(this.materialPrefix, this.materials).substring(0, 12));
+    this.material.approved = this.approved ? 1 : 0;
+    this.material.itt = this.itt ? 1 : 0;
     if (this.material.code.substring(0, 12) != Material.generateCode(this.materialPrefix, this.materials).substring(0, 12)){
       this.messageService.add({severity:'error', summary:'Code Error', detail:'You cannot modify base first 12 length symbols of code. Please create another block with code you wish.', life: 8000});
       return;

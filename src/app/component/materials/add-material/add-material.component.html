@@ -47,6 +47,20 @@
   </div>
   <div class="double-row mt-2">
     <div class="df">
+      <div class="cy left-text">ИТТ:</div>
+      <div class="ml-1">
+        <p-checkbox name="itt" [binary]="true" [(ngModel)]="itt"></p-checkbox>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy right-text">Согласовано:</div>
+      <div class="ml-1">
+        <p-checkbox name="approved" [binary]="true" [(ngModel)]="approved"></p-checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="double-row mt-2">
+    <div class="df">
       <div class="cy left-text">КЕИ:</div>
       <div class="ml-1">
         <p-dropdown [(ngModel)]="material.units" [options]="units" placeholder="" class="select" styleClass="width-200 border-material">
