@@ -53,11 +53,8 @@ export class AddMaterialToEspComponent implements OnInit {
     this.selectedMaterial.name = '';
     this.docNumber = this.dialog.data[0];
     this.project = this.docNumber.split('-')[0];
-    this.label = this.dialog.data[1];
     this.forLabel = this.dialog.data[1];
-    if (this.label != ''){
-      this.label += '.#';
-    }
+    this.label = '#';
     this.materialManager.getMaterials(this.project).then(res => {
       this.materials = res;
       this.materialsSrc = res;
@@ -111,8 +108,9 @@ export class AddMaterialToEspComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
-    this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel);
-    this.ref.close();
+    this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel).then(res => {
+      this.ref.close();
+    });
   }
 
   selectNode() {
