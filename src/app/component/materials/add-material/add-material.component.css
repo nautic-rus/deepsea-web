@@ -1,3 +1,6 @@
+/deep/.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 8px 12px;
+}
 .dialog{
   width: 595px;
   height: fit-content;
@@ -7,9 +10,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.single-row{
-  display: flex;
-}
 .left-text{
   width: 50px;
 }
@@ -17,7 +17,7 @@
   width: 80px;
 }
 .left-text-one-row{
-  width: 100px;
+  width: 120px;
 }
 :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
   padding: 0.5rem 0.5rem;
@@ -27,7 +27,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 30px;
   position: relative;
 }
 .button{

@@ -286,6 +286,12 @@ body,p{
 .width-310{
   width: 310px;
 }
+.width-430{
+  width: 430px;
+}
+.width-440{
+  width: 440px;
+}
 .width-450{
   width: 450px;
 }
@@ -890,7 +896,7 @@ cdk-virtual-scroll-viewport{
 }
 .border-material{
   border: 1px solid #ced4da!important;
-  border-radius: 3px!important;
+  border-radius: 6px!important;
   color: #495057!important;
 }
 .flex-unset{

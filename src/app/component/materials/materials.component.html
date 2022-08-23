@@ -112,29 +112,33 @@
 
                 </div>
                 <div class="four-row">
-                  <div *ngIf="material.provider == ''"></div>
+                  <div *ngIf="material.provider == ''" class="df">
+                    <img class="pr-5" src="assets/icons/delivery.svg" height="30">
+                    <div class="thick-text mt-4px">unknown</div>
+                  </div>
                   <div *ngIf="material.provider != ''" class="df">
                     <img class="pr-5" src="assets/icons/delivery.svg" height="30">
                     <div class="thick-text mt-4px">{{material.provider}}</div>
                   </div>
                   <div class="df">
-                    <div class="mr-10">
-                      <div class="materials-button-mini pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="cloneMaterial(selectedMaterial)">
-                        <img src="assets/icons/copy3.svg" height="13">
-                      </div>
-                    </div>
-                    <div class="mr-10">
-                      <div class="materials-button-mini yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial('edit', selectedMaterial)">
-                        <img src="assets/icons/edit.svg" height="13">
+                    <div class="mr-8">
+                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Копировать')" (click)="cloneMaterial(material)">
+                        <img src="assets/icons/copy-2.svg" height="16">
                       </div>
                     </div>
                     <div class="mr-8">
-                      <div class="materials-button-mini red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="deleteMaterial(selectedMaterial)">
-                        <img src="assets/icons/trash-white.svg" height="15">
+                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Редактировать')" (click)="addMaterial('edit', material)">
+                        <img src="assets/icons/edit1.svg" height="15">
                       </div>
                     </div>
-                    <div class="mr-10">
-                      <div class="materials-button-mini blue-button cxy" tooltipPosition="top">
+
+                    <div class="mr-8">
+                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteMaterial(material)">
+                        <img src="assets/icons/trash-3.svg" height="17">
+                      </div>
+                    </div>
+                    <div class="mr-8">
+                      <div class="materials-button-mini blue-button cxy disabled-button" tooltipPosition="top">
                         <img src="assets/icons/cloud2.svg" height="18">
                       </div>
                     </div>
