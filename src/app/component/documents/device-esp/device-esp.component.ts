@@ -249,7 +249,9 @@ export class DeviceEspComponent implements OnInit {
           _.forEach(_.groupBy(this.devices, x => x.userIdGrouped), g => {
             let newDevice = JSON.parse(JSON.stringify(g[0]));
             newDevice.userId = newDevice.userIdGrouped;
-            newDevice.count = g.length;
+            let count = 0;
+            g.forEach(x => count += x.count);
+            newDevice.count = count;
             this.devicesGrouped.push(newDevice);
           });
           this.devices = this.devicesGrouped;
@@ -267,6 +269,8 @@ export class DeviceEspComponent implements OnInit {
           this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x}));
         }
 
+        this.devices.forEach((d: any) => d.userId = this.removeLeftZeros(d.userId));
+
 
         this.devicesSrc = [...this.devices];
         this.devicesSrcGrouped = [...this.devices];
@@ -275,6 +279,13 @@ export class DeviceEspComponent implements OnInit {
         this.noResult = true;
       }
     });
+  }
+  removeLeftZeros(input: string){
+    let res = input;
+    while (res.length > 0 && res[0] == '0'){
+      res = res.substr(1);
+    }
+    return res;
   }
   hideGroup(userId: string, group: string){
     return userId.replace(group + '.', '');
