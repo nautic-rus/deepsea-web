@@ -236,12 +236,13 @@ export class DeviceEspComponent implements OnInit {
   fillDevices(){
     this.s.getDevices(this.docNumber).then(res => {
       if (res.length > 0){
+        console.log(res);
         this.devices = _.sortBy(res, x => this.addLeftZeros(x.userId, 5));
         if (this.devices.find((x: any) => x.userId.includes('#')) != null){
           this.devices.forEach((d: any) => {
             if (d.userId.includes('#')){
               let r = new RegExp('\\d+(?=#)');
-              d.userIdGrouped = r.exec(d.userId)?.[0];
+              d.userIdGrouped = (d.parentUserId != '' ? d.origUserId : r.exec(d.userId)?.[0]);
             }
           });
           this.devicesGrouped.splice(0, this.devicesGrouped.length);
