@@ -134,7 +134,7 @@
   margin-right: 10px;
   margin-bottom: 20px;
   width: 350px;
-  height: 170px;
+  height: 190px;
   position: relative;
 }
 .dash-card-tile{
@@ -153,16 +153,16 @@
 .two-row{
   display: grid;
   grid-template-columns: 270px 60px;
-  height: 30px;
 }
 .three-row{
-
-  height: 20px;
+  display: grid;
+  grid-template-columns: 183px 147px;
+  height: 30px;
 }
 .four-row{
   display: grid;
-  grid-template-columns: 183px 147px;
-  height: 40px;
+  grid-template-columns: 1fr 1fr;
+  height: 20px;
 }
 .title-bold{
    font-weight: 500;
@@ -245,4 +245,13 @@
   color: #605e5c;
   border-color: transparent;
   background: #E9EADF;
+}
+.line{
+  border-top: 1px solid rgb(235, 236, 240);
+  margin-right: -10px;
+  margin-left: -10px;
+}
+.mm-text{
+  color: #7575759e;
+  font-size: 12px;
 }

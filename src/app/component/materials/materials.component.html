@@ -76,7 +76,7 @@
                         <span [innerHTML]="(material.category) | highLight: search"></span>
                       </div>
                     </div>
-                    <div class="coef p-ml-auto mt-12">
+                    <div class="coef p-ml-auto mt-5">
                       <span class="pr-2">coef.</span>
                       <span>{{material.coefficient}}</span>
                     </div>
@@ -84,7 +84,7 @@
                 </div>
 
 
-                <div class="df position-relative content-end pr-10">
+                <div class="df position-relative content-end pr-10 mt-minus14">
                   <div class="trm">
                     <span [innerHTML]="material.code | highLight: search"></span>
                   </div>
@@ -97,7 +97,7 @@
 
 
 
-                <div class="two-row">
+                <div class="two-row mt-5 mb-5">
                   <div class="text-medium">{{material.description}}</div>
                 </div>
                 <div class="three-row df">
@@ -108,19 +108,7 @@
                       <div class="text-table-col">{{material.singleWeight}}</div>
                     </div>
                   </div>
-
-
-                </div>
-                <div class="four-row">
-                  <div *ngIf="material.provider == ''" class="df">
-                    <img class="pr-5" src="assets/icons/delivery.svg" height="30">
-                    <div class="thick-text mt-4px">unknown</div>
-                  </div>
-                  <div *ngIf="material.provider != ''" class="df">
-                    <img class="pr-5" src="assets/icons/delivery.svg" height="30">
-                    <div class="thick-text mt-4px">{{material.provider}}</div>
-                  </div>
-                  <div class="df">
+                  <div class="df ">
                     <div class="mr-8">
                       <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Копировать')" (click)="cloneMaterial(material)">
                         <img src="assets/icons/copy-2.svg" height="16">
@@ -143,9 +131,34 @@
                       </div>
                     </div>
                   </div>
+
+
                 </div>
+                <div class="four-row mb-10 mt-10">
+                  <div>
+                    <div *ngIf="material.provider == ''" class="df">
+                      <img class="pr-5" src="assets/icons/delivery.svg" height="30">
+                      <div class="thick-text mt-4px">unknown</div>
+                    </div>
+                    <div *ngIf="material.provider != ''" class="df">
+                      <img class="pr-5" src="assets/icons/delivery.svg" height="30">
+                      <div class="thick-text mt-4px">{{material.provider}}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div *ngIf="material.note == ''" class="df">
+                      <img class="pr-5 mt-2px" src="assets/icons/note.svg" height="16">
+                      <div class="thick-text mt-4px">unknown</div>
+                    </div>
+                    <div *ngIf="material.note != ''" class="df">
+                      <img class="pr-5 mt-2px" src="assets/icons/note.svg" height="16">
+                      <div class="thick-text mt-4px">{{material.note}}</div>
+                    </div>
+                  </div>
 
-
+                </div>
+                <div class="line"></div>
+                <div class="mm-text mt-5">Room equipment\Insulatoin\Removable</div>
               </div>
             </div>
           </div>
