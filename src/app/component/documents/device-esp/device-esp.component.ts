@@ -21,6 +21,7 @@ import {PipeEspGenerationWaitComponent} from "../pipe-esp/pipe-esp-generation-wa
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import * as XLSX from "xlsx";
 import {DeviceEspGenerationWaitComponent} from "./device-esp-generation-wait/device-esp-generation-wait.component";
+import {AddMaterialToEspComponent} from "./add-material-to-esp/add-material-to-esp.component";
 
 @Component({
   selector: 'app-device-esp',
@@ -273,6 +274,9 @@ export class DeviceEspComponent implements OnInit {
         this.noResult = true;
       }
     });
+  }
+  hideGroup(userId: string, group: string){
+    return userId.replace(group + '.', '');
   }
   addLeftZeros(value: any, length: number = 4): string {
     let result = value.toString();
@@ -781,4 +785,16 @@ export class DeviceEspComponent implements OnInit {
     });
   }
 
+  addMaterial(label: string) {
+    this.dialogService.open(AddMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, label]
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.fillRevisions();
+      });
+    });
+  }
 }
