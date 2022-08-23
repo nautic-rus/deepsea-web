@@ -66,6 +66,12 @@
   cursor: pointer;
   border-radius: 6px;
 }
+.materials-button-mini{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  border-radius: 20px;
+}
 /deep/.p-datatable .p-datatable-tbody > tr > td{
   padding: 12px;
 }
@@ -111,4 +117,132 @@
 }
 .selected-material{
   background-color: #e3e7f7 !important;
+}
+.hide-list{
+  display: none;
+}
+.height-tiles{
+  height: calc(100vh - 205px);
+}
+.tile{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.dash-card{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  width: 350px;
+  height: 170px;
+  position: relative;
+}
+.dash-card-tile{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+.top-row-doc{
+  display: grid;
+  grid-template-columns: 270px 60px;
+  height: 60px;
+}
+.two-row{
+  display: grid;
+  grid-template-columns: 270px 60px;
+  height: 30px;
+}
+.three-row{
+
+  height: 20px;
+}
+.four-row{
+  display: grid;
+  grid-template-columns: 183px 147px;
+  height: 40px;
+}
+.title-bold{
+   font-weight: 500;
+   font-size: 15px;
+   color: #3a3a3a;
+}
+.text-medium{
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(52, 58, 64, 0.65);
+}
+.kpl-flag{
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  background-color: #61D42D;
+  width: fit-content;
+  letter-spacing: 1px;
+}
+.coef{
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  background-color: #6EC5FF;
+  width: fit-content;
+  letter-spacing: 1px;
+}
+.text-table-col{
+  font-weight: 500;
+  font-size: 13px;
+  color: #495057;
+}
+.thick-text{
+  font-size: 13px;
+  color: #495057;
+}
+.trm{
+  background-color: #FBC948;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 12px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding: 1px 4px;
+  min-width: 120px;
+}
+.trm-copy{
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: 1px 4px;
+  border: 1px solid #FBC948;
+  width: 24px;
+}
+.copy-tooltip{
+  position: absolute;
+  top: -26px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  box-shadow: 1px 1px 13px 0px rgba(34, 60, 80, 0.16);
+  font-size: 12px;
+  padding: 4px 6px;
+  color: #3a3a3ade;
+}
+.task-button{
+  width: 30px;
+  height: 30px;
+  color: #605e5c;
+  border: 0 none;
+  background: #f8f9fa;
+  border-radius: 20px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 5px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #E9EADF;
 }

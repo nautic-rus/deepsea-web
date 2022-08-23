@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MaterialManagerService} from "../../domain/material-manager.service";
 import {MessageService, TreeNode} from "primeng/api";
 import {DialogService} from "primeng/dynamicdialog";
@@ -17,6 +17,7 @@ import {ClearFilesComponent} from "../documents/hull-esp/clear-files/clear-files
 import {RemoveConfirmationComponent} from "./remove-confirmation/remove-confirmation.component";
 import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-materials',
@@ -632,7 +633,9 @@ export class MaterialsComponent implements OnInit {
   ];
   addNew = false;
   newNode: any = {};
-
+  selectedView: string = 'tiles';
+  // @ts-ignore
+  @ViewChild('table') table: Table;
 
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -877,5 +880,16 @@ export class MaterialsComponent implements OnInit {
         charactersLength));
     }
     return result;
+  }
+  trimFileName(input: string, length: number = 10): string{
+    let split = input.split('.');
+    let name = split[0];
+    let extension = split[1];
+    if (name.length > length){
+      return name.substr(0, length - 2) + '..';
+    }
+    else{
+      return input;
+    }
   }
 }
