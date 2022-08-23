@@ -516,6 +516,9 @@ body,p{
 .mt-3{
   margin-top: 2rem;
 }
+.mt-3px{
+  margin-top: 3px;
+}
 .mt-4{
   margin-top: 4rem;
 }
@@ -539,6 +542,9 @@ body,p{
 }
 .mt-10{
   margin-top: 10px;
+}
+.mt-12{
+  margin-top: 12px;
 }
 .mt-15{
   margin-top: 15px;
@@ -647,6 +653,9 @@ body,p{
 }
 .mr-7{
   margin-right: 7px;
+}
+.mr-8{
+  margin-right: 8px;
 }
 .mr-10{
   margin-right: 10px;

@@ -33,10 +33,21 @@
       <div class="mr-10">
         {{selectedNodePath}}
       </div>
-      <span class="p-input-icon-left p-ml-auto">
-        <i class="pi pi-search"></i>
-        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (input)="table.filterGlobal(search, 'contains')"  class="border" />
-      </span>
+
+      <div class="p-ml-auto mr-10 df">
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
+          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        </div>
+        <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">
+          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
+          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
+        </div>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (input)="table.filterGlobal(search, 'contains')"  class="border" />
+        </span>
+      </div>
 
     </div>
     <div class="w-100 df">
@@ -54,7 +65,89 @@
           </div>
         </div>
         <div class="w-85">
-          <div class="cards">
+          <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
+            <div *ngFor="let material of materials; let i = index" class="dash-card">
+              <div *ngIf="material != null" class="dash-card-tile">
+                <div class="top-row-doc">
+                  <div class="title-bold">{{material.name}}</div>
+                  <div class="p-ml-auto">
+                    <div class="kpl-flag cxy">
+                      <div class="text-center-x">
+                        <span [innerHTML]="(material.category) | highLight: search"></span>
+                      </div>
+                    </div>
+                    <div class="coef p-ml-auto mt-12">
+                      <span class="pr-2">coef.</span>
+                      <span>{{material.coefficient}}</span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="df position-relative content-end pr-10">
+                  <div class="trm">
+                    <span [innerHTML]="material.code | highLight: search"></span>
+                  </div>
+                  <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy cursor-pointer cxy">
+                    <img src="assets/icons/trm.svg" height="12">
+                    <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                  </div>
+                </div>
+
+
+
+
+                <div class="two-row">
+                  <div class="text-medium">{{material.description}}</div>
+                </div>
+                <div class="three-row df">
+                  <div class="df">
+                    <div class="text-table-col pr-10">{{material.units}}</div>
+                    <div class="df">
+                      <img class="pr-5" src="assets/icons/weight3.svg" height="16">
+                      <div class="text-table-col">{{material.singleWeight}}</div>
+                    </div>
+                  </div>
+
+
+                </div>
+                <div class="four-row">
+                  <div *ngIf="material.provider == ''"></div>
+                  <div *ngIf="material.provider != ''" class="df">
+                    <img class="pr-5" src="assets/icons/delivery.svg" height="30">
+                    <div class="thick-text mt-4px">{{material.provider}}</div>
+                  </div>
+                  <div class="df">
+                    <div class="mr-10">
+                      <div class="materials-button-mini pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="cloneMaterial(selectedMaterial)">
+                        <img src="assets/icons/copy3.svg" height="13">
+                      </div>
+                    </div>
+                    <div class="mr-10">
+                      <div class="materials-button-mini yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial('edit', selectedMaterial)">
+                        <img src="assets/icons/edit.svg" height="13">
+                      </div>
+                    </div>
+                    <div class="mr-8">
+                      <div class="materials-button-mini red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="deleteMaterial(selectedMaterial)">
+                        <img src="assets/icons/trash-white.svg" height="15">
+                      </div>
+                    </div>
+                    <div class="mr-10">
+                      <div class="materials-button-mini blue-button cxy" tooltipPosition="top">
+                        <img src="assets/icons/cloud2.svg" height="18">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="selectedView == 'list'" class="cards">
             <p-table #table [value]="materials"
                      [scrollable]="true"
                      scrollHeight="calc(100vh - 226px)"
