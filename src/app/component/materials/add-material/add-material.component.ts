@@ -7,6 +7,7 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import _ from "underscore";
 import {MessageService} from "primeng/api";
 import {MaterialTranslation} from "../../../domain/interfaces/material-translation";
+import {LV} from "../../../domain/classes/lv";
 
 @Component({
   selector: 'app-add-material',
@@ -17,7 +18,14 @@ export class AddMaterialComponent implements OnInit {
   projects: string[] = [];
   project = '';
   categories = ['00002', '13112', '14109', '14122', '13124', '19127', '09003', '09004', '30000', '30005', '15107', '17108', '16101', '18123', '12116' ];
-  units = ['796', '006'];
+  units = [
+    new LV('796 - штуки', '796'),
+    new LV('006 - метры', '006'),
+    new LV('055 - кв.м.', '055'),
+    new LV('166 - кг', '166'),
+    new LV('112 - литр', '122'),
+    new LV('113 - куб.м.', '113'),
+  ];
   category = this.categories[0];
   material: Material = new Material();
   approved = false;
