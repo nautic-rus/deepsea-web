@@ -1,6 +1,9 @@
 /deep/.p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 8px 12px;
 }
+/deep/.p-tabview .p-tabview-panels {
+  padding: 10px 0;
+}
 .dialog{
   width: 595px;
   height: fit-content;
@@ -17,7 +20,7 @@
   width: 80px;
 }
 .left-text-one-row{
-  width: 120px;
+  width: 125px;
 }
 :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
   padding: 0.5rem 0.5rem;

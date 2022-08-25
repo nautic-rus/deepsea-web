@@ -65,12 +65,14 @@
           <div class="tile">
             <div *ngFor="let deviceGroup of devicesGrouped; let i = index" class="card-tile" [class.hidden-card]="deviceGroup == null">
               <div class="card-spool df">
-                <div class="w-9 position-relative cy">
+                <div class="w-9 position-relative ">
 <!--                  <div class="title-bold mb-20" [class.dxf-enabled]="dxfEnabled" [innerHTML]="deviceGroup.label | highLight: search"></div>-->
-                  <button hidden (click)="addMaterial(deviceGroup.label)">ADD</button>
+                  <div class="materials-button-mini blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label)">
+                    <img src="assets/icons/plus3.svg" height="15">
+                  </div>
                 </div>
-                <div class="w-91 pt-5">
-                  <div class="df height-40" *ngFor="let device of deviceGroup.devices; let p = index">
+                <div class="w-91">
+                  <div class="df height-32" *ngFor="let device of deviceGroup.devices; let p = index">
                     <div class="w-9 pr-10 df">
                       <div class="text-table-col cy">{{hideGroup(device.userId, deviceGroup.label)}}</div>
                     </div>
