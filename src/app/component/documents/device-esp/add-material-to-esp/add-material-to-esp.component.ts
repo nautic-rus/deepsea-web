@@ -11,6 +11,7 @@ import {RemoveConfirmationComponent} from "../../../materials/remove-confirmatio
 import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import {SpecManagerService} from "../../../../domain/spec-manager.service";
+import {LV} from "../../../../domain/classes/lv";
 
 @Component({
   selector: 'app-add-material-to-esp',
@@ -34,7 +35,14 @@ export class AddMaterialToEspComponent implements OnInit {
   units: string = "796";
   count: number = 1;
   label: string = '';
-  unitsAvailable = ['796', '006'];
+  unitsAvailable = [
+    new LV('796 - штуки', '796'),
+    new LV('006 - метры', '006'),
+    new LV('055 - кв.м.', '055'),
+    new LV('166 - кг', '166'),
+    new LV('112 - литр', '122'),
+    new LV('113 - куб.м.', '113'),
+  ];
   items = [
     {
       label: 'New Folder',
