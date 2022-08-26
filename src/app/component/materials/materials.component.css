@@ -29,6 +29,16 @@
   border-bottom-left-radius: 6px;
   padding: 0 20px 30px 20px;
 }
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 12px;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 14px 6px;
+  font-weight: 500;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
 .p-input-icon-left > .p-inputtext {
   padding-left: 2.5rem!important;
 }
@@ -72,16 +82,7 @@
   cursor: pointer;
   border-radius: 20px;
 }
-/deep/.p-datatable .p-datatable-tbody > tr > td{
-  padding: 12px;
-}
-/deep/.p-datatable .p-datatable-thead > tr > th{
-  padding: 14px 6px;
-  font-weight: 500;
-}
-/deep/.p-datatable .p-datatable-header {
-  padding: 0.75rem 0 0.75rem 0;
-}
+
 .row-table-doc-hover:hover{
   background-color: #EEF2FF;
 }

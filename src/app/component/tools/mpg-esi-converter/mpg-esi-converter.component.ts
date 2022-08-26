@@ -4,6 +4,8 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
+import {LanguageService} from "../../../domain/language.service";
+import {DynamicDialogRef} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-mpg-esi-converter',
@@ -12,7 +14,7 @@ import {saveAs} from "file-saver";
 })
 export class MpgEsiConverterComponent implements OnInit {
 
-  constructor(public s: SpecManagerService, public auth: AuthManagerService) { }
+  constructor(public s: SpecManagerService, public auth: AuthManagerService, public t: LanguageService, public ref: DynamicDialogRef) { }
   loaded: any[] = [];
   loadCount = 0;
   extensions = ['.mpg', '.esi'];
@@ -59,5 +61,8 @@ export class MpgEsiConverterComponent implements OnInit {
       let zipName = this.extension + new Date().getTime() + '.zip';
       saveAs(res, zipName);
     });
+  }
+  close() {
+    this.ref.close();
   }
 }

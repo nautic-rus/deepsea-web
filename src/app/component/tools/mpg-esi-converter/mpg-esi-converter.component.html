@@ -1,5 +1,30 @@
-<button class="button" (click)="inputFiles.click()">OPEN FILES <i class="fa fa-folder-open"></i></button>
-<input #inputFiles hidden type="file" name="name" accept=".txt" (change)="handleFileInput(inputFiles.files)" multiple/>
-<p-dropdown class="select" [(ngModel)]="extension" [options]="extensions" styleClass="w-100 font-14"></p-dropdown>
-<div *ngIf="loadCount > 0">CONVERTED: {{loaded.length}} / {{loadCount}}</div>
-<button (click)="download()">DOWNLOAD</button>
+<div style="height: 260px; width: 300px;">
+  <div class="task-header-assign mt-20">
+    <div class="close-button">
+      <div class="task-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+  </div>
+  <div class="mb-15">
+    <div tabindex="10" (click)="inputFiles.click()" pButton [label]="t.tr ('Открыть файлы')" class="button-ok"></div>
+    <input #inputFiles hidden type="file" name="name" accept=".txt" (change)="handleFileInput(inputFiles.files)" multiple/>
+  </div>
+  <div class="mb-15">
+    <div class="big-text mb-1">{{t.tr('Формат')}}</div>
+    <p-dropdown class="select" [(ngModel)]="extension" [options]="extensions" styleClass="width-220 font-14">
+    </p-dropdown>
+  </div>
+  <div class="height-50" *ngIf="loadCount > 0">
+    <div class="big-text mb-1">{{t.tr('Прошло конвертацию')}}</div>
+    <div class="title-bold" >{{loaded.length}} / {{loadCount}}</div>
+  </div>
+  <div class="height-50" *ngIf="loadCount == 0">
+  </div>
+  <div class="footer-delete df content-end mt-2">
+    <div class="mr-20 cx">
+      <div tabindex="10" (click)="download()" pButton [label]="t.tr ('Загрузить')" class="button-ok"></div>
+    </div>
+  </div>
+</div>
+

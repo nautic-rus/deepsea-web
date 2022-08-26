@@ -1,0 +1,48 @@
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 5px!important;
+}
+.button-ok{
+  border: none;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
+}
+.big-text{
+  color: #5e6c84;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.title-bold{
+  font-weight: 500;
+  font-size: 14px;
+  color: #3a3a3a;
+}
+.close-button{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -10px;
+  margin-right: -10px;
+}
+.task-button-close{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
