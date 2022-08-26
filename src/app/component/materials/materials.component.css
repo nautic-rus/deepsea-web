@@ -116,6 +116,9 @@
   opacity: 0.5;
   pointer-events: none;
 }
+.disabled-button-cloud{
+  opacity: 0.5;
+}
 .selected-material{
   background-color: #e3e7f7 !important;
 }
