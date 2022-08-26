@@ -27,6 +27,7 @@ import {Table} from "primeng/table";
 export class MaterialsComponent implements OnInit {
   search: string = '';
   nodes: any = [];
+  nodesSrc: any = [];
   layers: any = [];
   materials: any [] = [];
   materialsSrc: any [] = [];
@@ -46,39 +47,43 @@ export class MaterialsComponent implements OnInit {
   ];
   addNew = false;
   newNode: any = {};
-  selectedView: string = 'tiles';
+  selectedView: string = '';
   // @ts-ignore
   @ViewChild('table') table: Table;
 
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.selectedView = 'tiles';
+    }, 1000);
     //this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
     this.project = this.projects[0];
     this.materialManager.getMaterials(this.project).then(res => {
       this.materials = res;
       this.materialsSrc = res;
       this.materialManager.getMaterialNodes().then(res => {
+        this.nodesSrc = res;
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
-        console.log(this.nodes);
-      });
-      this.materials.forEach((x: any) => {
-        x.path = this.setPath(x.code);
+        this.materials.forEach((x: any) => {
+          x.path = this.setPath(x.code);
+        });
       });
       this.materialsSrc = [...this.materials];
     });
   }
   setPath(code: string){
-    let count = 0;
+    let count = 1;
     let path = '';
-    let root = code.substr(0, 3 * ++count);
-    let findNode = this.nodes.find((x: any) => x.data == root);
+    let root = code.substr(0, 3 * count);
+    let findNode = this.nodesSrc.find((x: any) => x.data == root);
     while (findNode != null){
       path = path + '/' + findNode.label;
-      findNode = findNode.check.find((x: any) => x.data == code.substr(0, 3 * ++count));
+      count += 1;
+      findNode = this.nodesSrc.find((x: any) => x.data == code.substr(0, 3 * count));
     }
-    return path;
+    return path.split('/').filter(x => x != '');
   }
   createNode(node: any){
     this.addNew = true;
@@ -320,5 +325,22 @@ export class MaterialsComponent implements OnInit {
     else{
       return input;
     }
+  }
+
+  selectPath(p: string, path: string[]) {
+    let searchIn = this.nodes;
+    path.forEach(x => {
+      let node = searchIn.find((n: any) => n.label == x);
+      if (node != null && p.includes(node.label)){
+        this.selectedNode = node;
+        node.partialSelected = true;
+        node.expanded = true;
+        this.selectNode();
+        return;
+      }
+      if (node != null){
+        searchIn = node.children;
+      }
+    });
   }
 }

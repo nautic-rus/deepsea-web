@@ -255,3 +255,7 @@
   color: #7575759e;
   font-size: 12px;
 }
+.select-path:hover{
+  color: #00BCD4;
+  font-weight: bold;
+}
