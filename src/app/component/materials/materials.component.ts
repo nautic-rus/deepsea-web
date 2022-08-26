@@ -60,6 +60,7 @@ export class MaterialsComponent implements OnInit {
     //this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
     this.project = this.projects[0];
     this.materialManager.getMaterials(this.project).then(res => {
+      res.forEach(m => m.materialCloudDirectory = '');
       this.materials = res;
       this.materialsSrc = res;
       this.materialManager.getMaterialNodes().then(res => {
@@ -342,5 +343,15 @@ export class MaterialsComponent implements OnInit {
         searchIn = node.children;
       }
     });
+  }
+  createMaterialCloudDirectory(material: any){
+    material.materialCloudDirectory = 'LOADING';
+    this.materialManager.createMaterialCloudDirectory(this.project, material.code).then(res => {
+      material.materialCloudDirectory = res;
+    });
+  }
+
+  openMaterialCloudDirectory(material: any) {
+    window.open(material.materialCloudDirectory);
   }
 }

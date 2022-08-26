@@ -126,8 +126,14 @@
                       </div>
                     </div>
                     <div class="mr-8">
-                      <div class="materials-button-mini blue-button cxy disabled-button" tooltipPosition="top">
-                        <img src="assets/icons/cloud2.svg" height="18">
+                      <div class="materials-button-mini blue-button disabled-button-cloud cxy cursor-pointer" *ngIf="material.materialCloudDirectory == ''">
+                        <img src="assets/icons/cloud2.svg" height="18" (click)="createMaterialCloudDirectory(material)">
+                      </div>
+                      <div class="materials-button-mini blue-button cxy" *ngIf="material.materialCloudDirectory == 'LOADING'">
+                        <p-progressSpinner [style]="{width: '35px', height: '35px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+                      </div>
+                      <div class="materials-button-mini blue-button cxy" *ngIf="material.materialCloudDirectory != '' && material.materialCloudDirectory != 'LOADING'">
+                        <img src="assets/icons/cloud2.svg" height="18" (click)="openMaterialCloudDirectory(material)">
                       </div>
                     </div>
                   </div>

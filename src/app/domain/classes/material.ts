@@ -19,6 +19,7 @@ export class Material {
   itt: number = 0;
   approved: number = 0;
   translations: MaterialTranslation[] = [];
+  materialCloudDirectory = '';
   public static generateId(length: number = 20): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

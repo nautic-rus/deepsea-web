@@ -42,4 +42,7 @@ export class MaterialManagerService {
   async getWCZones() {
     return await this.http.get<any[]>(props.http + '/wcZones').toPromise();
   }
+  async createMaterialCloudDirectory(project: string, code: string) {
+    return await this.http.get<string>(props.http + '/createMaterialCloudDirectory', {params: {project, code}}).toPromise();
+  }
 }
