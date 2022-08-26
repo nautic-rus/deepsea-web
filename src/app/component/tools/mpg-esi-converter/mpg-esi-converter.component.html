@@ -1,0 +1,5 @@
+<button class="button" (click)="inputFiles.click()">OPEN FILES <i class="fa fa-folder-open"></i></button>
+<input #inputFiles hidden type="file" name="name" accept=".txt" (change)="handleFileInput(inputFiles.files)" multiple/>
+<p-dropdown class="select" [(ngModel)]="extension" [options]="extensions" styleClass="w-100 font-14"></p-dropdown>
+<div *ngIf="loadCount > 0">CONVERTED: {{loaded.length}} / {{loadCount}}</div>
+<button (click)="download()">DOWNLOAD</button>

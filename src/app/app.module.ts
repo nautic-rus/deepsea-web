@@ -125,6 +125,7 @@ import { AccommodationEspComponent } from './component/documents/accommodation-e
 import { PipeEspGenerationWaitComponent } from './component/documents/pipe-esp/pipe-esp-generation-wait/pipe-esp-generation-wait.component';
 import { DeviceEspGenerationWaitComponent } from './component/documents/device-esp/device-esp-generation-wait/device-esp-generation-wait.component';
 import { AddMaterialToEspComponent } from './component/documents/device-esp/add-material-to-esp/add-material-to-esp.component';
+import { MpgEsiConverterComponent } from './component/tools/mpg-esi-converter/mpg-esi-converter.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -203,7 +204,8 @@ Quill.register('modules/imageResize', ImageResize);
     AccommodationEspComponent,
     PipeEspGenerationWaitComponent,
     DeviceEspGenerationWaitComponent,
-    AddMaterialToEspComponent
+    AddMaterialToEspComponent,
+    MpgEsiConverterComponent
   ],
   imports: [
     BrowserModule,
