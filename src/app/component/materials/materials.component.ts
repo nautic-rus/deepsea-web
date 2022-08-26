@@ -61,8 +61,24 @@ export class MaterialsComponent implements OnInit {
       this.materialManager.getMaterialNodes().then(res => {
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
+        console.log(this.nodes);
       });
+      this.materials.forEach((x: any) => {
+        x.path = this.setPath(x.code);
+      });
+      this.materialsSrc = [...this.materials];
     });
+  }
+  setPath(code: string){
+    let count = 0;
+    let path = '';
+    let root = code.substr(0, 3 * ++count);
+    let findNode = this.nodes.find((x: any) => x.data == root);
+    while (findNode != null){
+      path = path + '/' + findNode.label;
+      findNode = findNode.check.find((x: any) => x.data == code.substr(0, 3 * ++count));
+    }
+    return path;
   }
   createNode(node: any){
     this.addNew = true;

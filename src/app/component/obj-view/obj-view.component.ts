@@ -73,14 +73,19 @@ export class ObjViewComponent implements OnInit {
           return;
         }
         this.objZip = findZip.url;
-        this.s.getPipeSegs(this.docNumber).then(res => {
-          this.spoolIndexes = res.filter(x => x.spool == this.spool).map(x => x.sqInSystem);
-          if (this.spoolIndexes.length == 0){
-            this.errorMessage = 'There is an error in FORAN model when trying to find segments of spool. Looks like specified spool doesnt exist in FORAN model';
-            return;
-          }
+        if (this.spool == 'full'){
           this.loadModel();
-        });
+        }
+        else{
+          this.s.getPipeSegs(this.docNumber).then(res => {
+            this.spoolIndexes = res.filter(x => x.spool == this.spool).map(x => x.sqInSystem);
+            if (this.spoolIndexes.length == 0){
+              this.errorMessage = 'There is an error in FORAN model when trying to find segments of spool. Looks like specified spool doesnt exist in FORAN model';
+              return;
+            }
+            this.loadModel();
+          });
+        }
         //this.loadModel();
       });
     });
@@ -130,23 +135,45 @@ export class ObjViewComponent implements OnInit {
     //   console.log(error);
     // });
 
-    // const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-
+    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
 
     let count = 0;
     let group = new THREE.Group();
-    fetch(this.objZip).then(response => response.blob()).then(blob => {
-      JSZip.loadAsync(blob).then(res => {
-        forkJoin(Object.keys(res.files)
-          .filter(fileName => {
-            let found = false;
-            this.spoolIndexes.forEach(index => {
-              if (fileName.includes('-' + index.toString() + '.obj')){
-                found = true;
-              }
+    if (this.spool == 'full'){
+      fetch(this.objZip).then(response => response.blob()).then(blob => {
+        JSZip.loadAsync(blob).then(res => {
+          forkJoin(Object.keys(res.files).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
+            let length = texts.length;
+            texts.forEach(text => {
+              group.add(objLoader.parse(text));
             });
-            return found;
-          }).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
+            group.children.forEach(x => {
+              // @ts-ignore
+              //x.children[0].material = material;
+              // @ts-ignore
+              //x.children[0].map = 'bricks';
+            });
+            this.scene.add(group);
+            this.setView(group);
+            this.render();
+            this.loading = false;
+          });
+        });
+      });
+    }
+    else{
+      fetch(this.objZip).then(response => response.blob()).then(blob => {
+        JSZip.loadAsync(blob).then(res => {
+          forkJoin(Object.keys(res.files)
+            .filter(fileName => {
+              let found = false;
+              this.spoolIndexes.forEach(index => {
+                if (fileName.includes('-' + index.toString() + '.obj')){
+                  found = true;
+                }
+              });
+              return found;
+            }).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
             texts.forEach(text => {
               group.add(objLoader.parse(text));
             });
@@ -159,8 +186,9 @@ export class ObjViewComponent implements OnInit {
             this.render();
             this.loading = false;
           });
+        });
       });
-    });
+    }
 
     this.render();
   }
