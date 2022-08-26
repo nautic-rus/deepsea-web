@@ -22,39 +22,6 @@
         </div>
       </div>
       <div *ngIf="project == 'NR002'" class="legend-002">
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy assigned-status">{{t.tr('Назначен')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy in-work-status">{{t.tr('В работе')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy paused-status">{{t.tr('Приостановлено')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy checkup-status">{{t.tr('На проверке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy rework-status">{{t.tr('На доработке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy check-status">{{t.tr('На согласовании')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy not-approved-status">{{t.tr('Не согласован')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy ready-to-send-status">{{t.tr('Готов к отправке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy sent-to-yard-status">{{t.tr('Отправлен на верфь')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy ready-to-delivery-status">{{t.tr('Готов к поставке')}}</div>-->
-<!--        </div>-->
-<!--        <div class="cy">-->
-<!--          <div class="status-002 mt-5 cy close-status">{{t.tr('Поставлен')}}</div>-->
-<!--        </div>-->
         <div class="df mt-20">
           <div class="number-card-send cxy"></div>
           <div class="mx-5 status-text">-</div>
@@ -71,11 +38,301 @@
           <div class="status-text cx">{{t.tr('Поставлен')}}</div>
         </div>
       </div>
+<!--      <div class="h-100" *ngIf="project == 'NR002'">-->
+<!--        <div class="picture h-100">-->
+<!--          <div class="ship-002"></div>-->
+<!--          <div class="sections-002 h-100">-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy number"></div>-->
+<!--            <div class="cxy number"></div>-->
+<!--            <div class="cxy number">-->
+<!--              <div (click)="viewTask(96)" [ngStyle]="getNewIssueStyle(96)" class="number-card cxy">615</div>-->
+<!--            </div>-->
+<!--            <div class="number text-end-center">-->
+<!--              <div (click)="viewTask(94)" [ngStyle]="getNewIssueStyle(94)" class="number-card cxy">613</div>-->
+<!--            </div>-->
+<!--            <div class="cxy number"></div>-->
+<!--            <div class="cxy number"></div>-->
+<!--            <div class="seven number">-->
+<!--              <div (click)="viewTask(91)" [ngStyle]="getNewIssueStyle(91)" class="number-card cxy">512</div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy number">-->
+<!--              <div (click)="viewTask(97)" [ngStyle]="getNewIssueStyle(97)" class="number-card cxy">616</div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="number cy">-->
+<!--              <div (click)="viewTask(95)" [ngStyle]="getNewIssueStyle(95)" class="number-card cxy">614</div>-->
+<!--            </div>-->
+<!--            <div class="cxy number">-->
+<!--              <div (click)="viewTask(93)" [ngStyle]="getNewIssueStyle(93)" class="number-card cxy">612</div>-->
+<!--            </div>-->
+<!--            <div class="cxy number">-->
+<!--              <div (click)="viewTask(92)" [ngStyle]="getNewIssueStyle(92)" class="number-card cxy">611</div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy number">-->
+<!--              <div (click)="viewTask(90)" [ngStyle]="getNewIssueStyle(90)" class="number-card cxy">511</div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy fifth-y">-->
+<!--              <div></div>-->
+<!--              <div (click)="viewTask(84)" [ngStyle]="getNewIssueStyle(84)" class="number-card cxy">443</div>-->
+<!--              <div (click)="viewTask(570)" [ngStyle]="getNewIssueStyle(570)" class="number-card cxy">415P</div>-->
+<!--              <div (click)="viewTask(572)" [ngStyle]="getNewIssueStyle(572)" class="number-card cxy">425S</div>-->
+<!--              <div></div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy double-y">-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(80)" [ngStyle]="getNewIssueStyle(80)" class="number-card cxy">442</div>-->
+<!--              </div>-->
+<!--              <div class="double-x">-->
+<!--                <div (click)="viewTask(77)" [ngStyle]="getNewIssueStyle(77)" class="number-card cxy mr-5">412P</div>-->
+<!--                <div (click)="viewTask(78)" [ngStyle]="getNewIssueStyle(78)" class="number-card cxy ml-5">422S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cxy double-y">-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(76)" [ngStyle]="getNewIssueStyle(76)" class="number-card cxy">441</div>-->
+<!--              </div>-->
+<!--              <div class="double-x">-->
+<!--                <div (click)="viewTask(73)" [ngStyle]="getNewIssueStyle(73)" class="number-card cxy mr-5">411P</div>-->
+<!--                <div (click)="viewTask(74)" [ngStyle]="getNewIssueStyle(74)" class="number-card cxy ml-5">421S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cxy double-y">-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(72)" [ngStyle]="getNewIssueStyle(72)" class="number-card cxy">345</div>-->
+<!--              </div>-->
+<!--              <div class="double-x">-->
+<!--                <div (click)="viewTask(69)" [ngStyle]="getNewIssueStyle(69)" class="number-card cxy mr-5">315P</div>-->
+<!--                <div (click)="viewTask(70)" [ngStyle]="getNewIssueStyle(70)" class="number-card cxy ml-5">325S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cxy double-y">-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(68)" [ngStyle]="getNewIssueStyle(68)" class="number-card cxy">344</div>-->
+<!--              </div>-->
+<!--              <div class="double-x">-->
+<!--                <div (click)="viewTask(65)" [ngStyle]="getNewIssueStyle(65)" class="number-card cxy mr-5">314P</div>-->
+<!--                <div (click)="viewTask(66)" [ngStyle]="getNewIssueStyle(66)" class="number-card cxy ml-5">324S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cxy double-y">-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(64)" [ngStyle]="getNewIssueStyle(64)" class="number-card cxy">343</div>-->
+<!--              </div>-->
+<!--              <div class="double-x">-->
+<!--                <div (click)="viewTask(61)" [ngStyle]="getNewIssueStyle(61)" class="number-card cxy mr-5">313P</div>-->
+<!--                <div (click)="viewTask(62)" [ngStyle]="getNewIssueStyle(62)" class="number-card cxy ml-5">323S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="double-x">-->
+<!--              <div class="text-xy mb-10">-->
+<!--                <div (click)="viewTask(58)" [ngStyle]="getNewIssueStyle(58)" class="number-card cxy mr-5">312P</div>-->
+<!--              </div>-->
+<!--              <div class="text-bottom mb-10">-->
+<!--                <div (click)="viewTask(59)" [ngStyle]="getNewIssueStyle(59)" class="number-card cxy ml-5">322S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy double-y">-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(87)" [ngStyle]="getNewIssueStyle(87)" class="number-card cxy">434</div>-->
+<!--              </div>-->
+<!--              <div class="double-x">-->
+<!--                <div (click)="viewTask(85)" [ngStyle]="getNewIssueStyle(85)" class="number-card cxy">414P</div>-->
+<!--                <div (click)="viewTask(86)" [ngStyle]="getNewIssueStyle(86)" class="number-card cxy ml-5">424S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cxy double-y">-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(83)" [ngStyle]="getNewIssueStyle(83)" class="number-card cxy">433</div>-->
+<!--              </div>-->
+<!--              <div class="double-x">-->
+<!--                <div (click)="viewTask(81)" [ngStyle]="getNewIssueStyle(81)" class="number-card cxy">413P</div>-->
+<!--                <div (click)="viewTask(82)" [ngStyle]="getNewIssueStyle(82)" class="number-card cxy ml-5">423S</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(79)" [ngStyle]="getNewIssueStyle(79)" class="number-card cxy mt-10">432</div>-->
+<!--            </div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(75)" [ngStyle]="getNewIssueStyle(75)" class="number-card cxy mt-10">431</div>-->
+<!--            </div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(71)" [ngStyle]="getNewIssueStyle(71)" class="number-card cxy mt-10">335</div>-->
+<!--            </div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(67)" [ngStyle]="getNewIssueStyle(67)" class="number-card cxy mt-10">334</div>-->
+<!--            </div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(63)" [ngStyle]="getNewIssueStyle(63)" class="number-card cxy mt-10">333</div>-->
+<!--            </div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(60)" [ngStyle]="getNewIssueStyle(60)" class="number-card cxy mt-10">332</div>-->
+<!--            </div>-->
+<!--            <div class="ml-10">-->
+<!--              <div (click)="viewTask(57)" [ngStyle]="getNewIssueStyle(57)" class="number-card cxy mt-10">301</div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(56)" [ngStyle]="getNewIssueStyle(56)" class="number-card cxy mt-10">244</div>-->
+<!--            </div>-->
+<!--            <div class="cx">-->
+<!--              <div (click)="viewTask(55)" [ngStyle]="getNewIssueStyle(55)" class="number-card cxy mt-10">243</div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(54)" [ngStyle]="getNewIssueStyle(54)" class="number-card cxy">242</div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(50)" [ngStyle]="getNewIssueStyle(50)" class="number-card cxy">241</div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(42)" [ngStyle]="getNewIssueStyle(42)" class="number-card cxy">145</div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(38)" [ngStyle]="getNewIssueStyle(38)" class="number-card cxy">144</div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(34)" [ngStyle]="getNewIssueStyle(34)" class="number-card cxy">143</div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(30)" [ngStyle]="getNewIssueStyle(30)" class="number-card cxy">142</div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(46)" [ngStyle]="getNewIssueStyle(46)" class="number-card cxy">204</div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(45)" [ngStyle]="getNewIssueStyle(45)" class="number-card cxy">203</div>-->
+<!--            </div>-->
+<!--            <div class="double-y">-->
+<!--              <div class="double-x">-->
+<!--                <div class="text-end">-->
+<!--                  <div (click)="viewTask(51)" [ngStyle]="getNewIssueStyle(51)" class="number-card cxy mr-5">212P</div>-->
+<!--                </div>-->
+<!--                <div class="mb-10">-->
+<!--                  <div (click)="viewTask(52)" [ngStyle]="getNewIssueStyle(52)" class="number-card cxy ml-5">222S</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(53)" [ngStyle]="getNewIssueStyle(53)" class="number-card cxy">232</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="double-y">-->
+<!--              <div class="double-x">-->
+<!--                <div class="text-end">-->
+<!--                  <div (click)="viewTask(47)" [ngStyle]="getNewIssueStyle(47)" class="number-card cxy mr-5">211P</div>-->
+<!--                </div>-->
+<!--                <div class="mb-10">-->
+<!--                  <div (click)="viewTask(48)" [ngStyle]="getNewIssueStyle(48)" class="number-card cxy ml-5">221S</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(49)" [ngStyle]="getNewIssueStyle(49)" class="number-card cxy">231</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="double-y">-->
+<!--              <div class="double-x">-->
+<!--                <div class="text-end">-->
+<!--                  <div (click)="viewTask(39)" [ngStyle]="getNewIssueStyle(39)" class="number-card cxy mr-5">115P</div>-->
+<!--                </div>-->
+<!--                <div class="mb-10">-->
+<!--                  <div (click)="viewTask(40)" [ngStyle]="getNewIssueStyle(40)" class="number-card cxy ml-5">125S</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(41)" [ngStyle]="getNewIssueStyle(41)" class="number-card cxy">135</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="double-y">-->
+<!--              <div class="double-x">-->
+<!--                <div class="text-end">-->
+<!--                  <div (click)="viewTask(35)" [ngStyle]="getNewIssueStyle(35)" class="number-card cxy mr-5">114P</div>-->
+<!--                </div>-->
+<!--                <div class="mb-10">-->
+<!--                  <div (click)="viewTask(36)" [ngStyle]="getNewIssueStyle(36)" class="number-card cxy ml-5">124S</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(37)" [ngStyle]="getNewIssueStyle(37)" class="number-card cxy">134</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="double-y">-->
+<!--              <div class="double-x">-->
+<!--                <div class="text-end">-->
+<!--                  <div (click)="viewTask(31)" [ngStyle]="getNewIssueStyle(31)" class="number-card cxy mr-5">113P</div>-->
+<!--                </div>-->
+<!--                <div class="mb-10">-->
+<!--                  <div (click)="viewTask(32)" [ngStyle]="getNewIssueStyle(32)" class="number-card cxy ml-5">123S</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(33)" [ngStyle]="getNewIssueStyle(33)" class="number-card cxy">133</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="double-y">-->
+<!--              <div class="double-x">-->
+<!--                <div class="text-end">-->
+<!--                  <div (click)="viewTask(26)" [ngStyle]="getNewIssueStyle(26)" class="number-card cxy mr-5">112P</div>-->
+<!--                </div>-->
+<!--                <div class="mb-10">-->
+<!--                  <div (click)="viewTask(28)" [ngStyle]="getNewIssueStyle(28)" class="number-card cxy ml-5">122S</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="cxy">-->
+<!--                <div (click)="viewTask(29)" [ngStyle]="getNewIssueStyle(29)" class="number-card cxy">132</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="cxy">-->
+<!--              <div (click)="viewTask(25)" [ngStyle]="getNewIssueStyle(25)" class="number-card cxy">101</div>-->
+<!--            </div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy"></div>-->
+<!--            <div class="cxy mt-10">-->
+<!--              <div (click)="viewTask(44)" [ngStyle]="getNewIssueStyle(44)" class="number-card cxy">202</div>-->
+<!--            </div>-->
+<!--            <div class="cxy mt-10">-->
+<!--              <div (click)="viewTask(43)" [ngStyle]="getNewIssueStyle(43)" class="number-card cxy">201</div>-->
+<!--            </div>-->
+<!--            <div class="cxy mt-10">-->
+<!--              <div (click)="viewTask(27)" [ngStyle]="getNewIssueStyle(27)" class="number-card cxy">105</div>-->
+<!--            </div>-->
+<!--            <div class="cxy mt-10">-->
+<!--              <div (click)="viewTask(24)" [ngStyle]="getNewIssueStyle(24)" class="number-card cxy">104</div>-->
+<!--            </div>-->
+<!--            <div class="cxy mt-10">-->
+<!--              <div (click)="viewTask(23)" [ngStyle]="getNewIssueStyle(23)" class="number-card cxy">103</div>-->
+<!--            </div>-->
+<!--            <div class="cxy mt-10">-->
+<!--              <div (click)="viewTask(22)" [ngStyle]="getNewIssueStyle(22)" class="number-card cxy">102</div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+
+
+
       <div class="h-100" *ngIf="project == 'NR002'">
         <div class="picture h-100">
-          <div class="ship-002">
-
-          </div>
+          <div class="ship-002"></div>
           <div class="sections-002 h-100">
             <div class="cxy"></div>
             <div class="cxy number"></div>
@@ -118,132 +375,121 @@
             <div class="cxy"></div>
             <div class="cxy fifth-y">
               <div></div>
-              <div (click)="viewTask(84)" [ngStyle]="getNewIssueStyle(84)" class="number-card cxy">443</div>
-              <div (click)="viewTask(570)" [ngStyle]="getNewIssueStyle(570)" class="number-card cxy">415P</div>
-              <div (click)="viewTask(572)" [ngStyle]="getNewIssueStyle(572)" class="number-card cxy">425S</div>
+              <div></div>
+              <div (click)="viewTask(2076)" [ngStyle]="getNewIssueStyle(2076)" class="number-card cxy">BS15</div>
+              <div></div>
               <div></div>
             </div>
             <div class="cxy"></div>
             <div class="cxy double-y">
               <div class="cxy">
-                <div (click)="viewTask(80)" [ngStyle]="getNewIssueStyle(80)" class="number-card cxy">442</div>
+                <div></div>
               </div>
-              <div class="double-x">
-                <div (click)="viewTask(77)" [ngStyle]="getNewIssueStyle(77)" class="number-card cxy mr-5">412P</div>
-                <div (click)="viewTask(78)" [ngStyle]="getNewIssueStyle(78)" class="number-card cxy ml-5">422S</div>
+              <div class="cxy">
+                <div (click)="viewTask(2075)" [ngStyle]="getNewIssueStyle(2075)" class="number-card cxy ml-5">BS12</div>
               </div>
             </div>
             <div class="cxy double-y">
               <div class="cxy">
-                <div (click)="viewTask(76)" [ngStyle]="getNewIssueStyle(76)" class="number-card cxy">441</div>
+                <div></div>
               </div>
-              <div class="double-x">
-                <div (click)="viewTask(73)" [ngStyle]="getNewIssueStyle(73)" class="number-card cxy mr-5">411P</div>
-                <div (click)="viewTask(74)" [ngStyle]="getNewIssueStyle(74)" class="number-card cxy ml-5">421S</div>
+              <div class="cxy">
+                <div (click)="viewTask(2070)" [ngStyle]="getNewIssueStyle(2070)" class="number-card cxy ml-5">BS11</div>
               </div>
             </div>
             <div class="cxy double-y">
               <div class="cxy">
-                <div (click)="viewTask(72)" [ngStyle]="getNewIssueStyle(72)" class="number-card cxy">345</div>
+                <div></div>
               </div>
-              <div class="double-x">
-                <div (click)="viewTask(69)" [ngStyle]="getNewIssueStyle(69)" class="number-card cxy mr-5">315P</div>
-                <div (click)="viewTask(70)" [ngStyle]="getNewIssueStyle(70)" class="number-card cxy ml-5">325S</div>
+              <div class="cxy">
+                <div (click)="viewTask(2071)" [ngStyle]="getNewIssueStyle(2071)" class="number-card cxy ml-5">BS10</div>
               </div>
             </div>
             <div class="cxy double-y">
               <div class="cxy">
-                <div (click)="viewTask(68)" [ngStyle]="getNewIssueStyle(68)" class="number-card cxy">344</div>
+                <div></div>
               </div>
-              <div class="double-x">
-                <div (click)="viewTask(65)" [ngStyle]="getNewIssueStyle(65)" class="number-card cxy mr-5">314P</div>
-                <div (click)="viewTask(66)" [ngStyle]="getNewIssueStyle(66)" class="number-card cxy ml-5">324S</div>
+              <div class="cxy">
+                <div (click)="viewTask(2072)" [ngStyle]="getNewIssueStyle(2072)" class="number-card cxy ml-5">BS09</div>
               </div>
             </div>
             <div class="cxy double-y">
               <div class="cxy">
-                <div (click)="viewTask(64)" [ngStyle]="getNewIssueStyle(64)" class="number-card cxy">343</div>
+                <div></div>
               </div>
-              <div class="double-x">
-                <div (click)="viewTask(61)" [ngStyle]="getNewIssueStyle(61)" class="number-card cxy mr-5">313P</div>
-                <div (click)="viewTask(62)" [ngStyle]="getNewIssueStyle(62)" class="number-card cxy ml-5">323S</div>
+              <div class="cxy">
+                <div (click)="viewTask(2073)" [ngStyle]="getNewIssueStyle(2073)" class="number-card cxy ml-5">BS08</div>
               </div>
             </div>
-            <div class="double-x">
-              <div class="text-xy mb-10">
-                <div (click)="viewTask(58)" [ngStyle]="getNewIssueStyle(58)" class="number-card cxy mr-5">312P</div>
-              </div>
-              <div class="text-bottom mb-10">
-                <div (click)="viewTask(59)" [ngStyle]="getNewIssueStyle(59)" class="number-card cxy ml-5">322S</div>
-              </div>
+            <div class="cxy">
+              <div></div>
+              <div (click)="viewTask(2074)" [ngStyle]="getNewIssueStyle(2074)" class="number-card cxy ml-5 mt-35">BS07</div>
             </div>
             <div class="cxy"></div>
             <div class="cxy"></div>
             <div class="cxy"></div>
             <div class="cxy double-y">
               <div class="cxy">
-                <div (click)="viewTask(87)" [ngStyle]="getNewIssueStyle(87)" class="number-card cxy">434</div>
+                <div></div>
               </div>
-              <div class="double-x">
-                <div (click)="viewTask(85)" [ngStyle]="getNewIssueStyle(85)" class="number-card cxy">414P</div>
-                <div (click)="viewTask(86)" [ngStyle]="getNewIssueStyle(86)" class="number-card cxy ml-5">424S</div>
+              <div class="cxy">
+                <div (click)="viewTask(2061)" [ngStyle]="getNewIssueStyle(2061)" class="number-card cxy ml-5">BS14</div>
               </div>
             </div>
             <div class="cxy double-y">
               <div class="cxy">
-                <div (click)="viewTask(83)" [ngStyle]="getNewIssueStyle(83)" class="number-card cxy">433</div>
+                <div></div>
               </div>
-              <div class="double-x">
-                <div (click)="viewTask(81)" [ngStyle]="getNewIssueStyle(81)" class="number-card cxy">413P</div>
-                <div (click)="viewTask(82)" [ngStyle]="getNewIssueStyle(82)" class="number-card cxy ml-5">423S</div>
+              <div class="cxy">
+                <div (click)="viewTask(2097)" [ngStyle]="getNewIssueStyle(2097)" class="number-card cxy ml-5">BS13</div>
               </div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(79)" [ngStyle]="getNewIssueStyle(79)" class="number-card cxy mt-10">432</div>
+              <div></div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(75)" [ngStyle]="getNewIssueStyle(75)" class="number-card cxy mt-10">431</div>
+              <div></div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(71)" [ngStyle]="getNewIssueStyle(71)" class="number-card cxy mt-10">335</div>
+              <div></div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(67)" [ngStyle]="getNewIssueStyle(67)" class="number-card cxy mt-10">334</div>
+              <div></div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(63)" [ngStyle]="getNewIssueStyle(63)" class="number-card cxy mt-10">333</div>
+              <div></div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(60)" [ngStyle]="getNewIssueStyle(60)" class="number-card cxy mt-10">332</div>
+              <div></div>
             </div>
-            <div class="ml-10">
-              <div (click)="viewTask(57)" [ngStyle]="getNewIssueStyle(57)" class="number-card cxy mt-10">301</div>
+            <div class="ml-20">
+              <div (click)="viewTask(57)" [ngStyle]="getNewIssueStyle(57)" class="number-card cxy mt-10 ">301</div>
             </div>
             <div class="cxy"></div>
             <div class="cxy"></div>
             <div class="cx">
-              <div (click)="viewTask(56)" [ngStyle]="getNewIssueStyle(56)" class="number-card cxy mt-10">244</div>
+              <div></div>
             </div>
             <div class="cx">
-              <div (click)="viewTask(55)" [ngStyle]="getNewIssueStyle(55)" class="number-card cxy mt-10">243</div>
+              <div></div>
             </div>
             <div class="cxy">
-              <div (click)="viewTask(54)" [ngStyle]="getNewIssueStyle(54)" class="number-card cxy">242</div>
+              <div></div>
             </div>
             <div class="cxy">
-              <div (click)="viewTask(50)" [ngStyle]="getNewIssueStyle(50)" class="number-card cxy">241</div>
+              <div></div>
             </div>
             <div class="cxy">
-              <div (click)="viewTask(42)" [ngStyle]="getNewIssueStyle(42)" class="number-card cxy">145</div>
+              <div></div>
             </div>
             <div class="cxy">
-              <div (click)="viewTask(38)" [ngStyle]="getNewIssueStyle(38)" class="number-card cxy">144</div>
+              <div></div>
             </div>
             <div class="cxy">
-              <div (click)="viewTask(34)" [ngStyle]="getNewIssueStyle(34)" class="number-card cxy">143</div>
+              <div></div>
             </div>
             <div class="cxy">
-              <div (click)="viewTask(30)" [ngStyle]="getNewIssueStyle(30)" class="number-card cxy">142</div>
+              <div></div>
             </div>
             <div class="cxy"></div>
             <div class="cxy"></div>
@@ -255,81 +501,63 @@
               <div (click)="viewTask(45)" [ngStyle]="getNewIssueStyle(45)" class="number-card cxy">203</div>
             </div>
             <div class="double-y">
-              <div class="double-x">
-                <div class="text-end">
-                  <div (click)="viewTask(51)" [ngStyle]="getNewIssueStyle(51)" class="number-card cxy mr-5">212P</div>
-                </div>
+              <div class="cxy">
                 <div class="mb-10">
-                  <div (click)="viewTask(52)" [ngStyle]="getNewIssueStyle(52)" class="number-card cxy ml-5">222S</div>
+                  <div (click)="viewTask(2077)" [ngStyle]="getNewIssueStyle(2077)" class="number-card cxy ml-5">BS06</div>
                 </div>
               </div>
               <div class="cxy">
-                <div (click)="viewTask(53)" [ngStyle]="getNewIssueStyle(53)" class="number-card cxy">232</div>
+                <div></div>
               </div>
             </div>
             <div class="double-y">
-              <div class="double-x">
-                <div class="text-end">
-                  <div (click)="viewTask(47)" [ngStyle]="getNewIssueStyle(47)" class="number-card cxy mr-5">211P</div>
-                </div>
+              <div class="cxy">
                 <div class="mb-10">
-                  <div (click)="viewTask(48)" [ngStyle]="getNewIssueStyle(48)" class="number-card cxy ml-5">221S</div>
+                  <div (click)="viewTask(2059)" [ngStyle]="getNewIssueStyle(2059)" class="number-card cxy ml-5">BS05</div>
                 </div>
               </div>
               <div class="cxy">
-                <div (click)="viewTask(49)" [ngStyle]="getNewIssueStyle(49)" class="number-card cxy">231</div>
+                <div></div>
               </div>
             </div>
             <div class="double-y">
-              <div class="double-x">
-                <div class="text-end">
-                  <div (click)="viewTask(39)" [ngStyle]="getNewIssueStyle(39)" class="number-card cxy mr-5">115P</div>
-                </div>
+              <div class="cxy">
                 <div class="mb-10">
-                  <div (click)="viewTask(40)" [ngStyle]="getNewIssueStyle(40)" class="number-card cxy ml-5">125S</div>
+                  <div (click)="viewTask(2063)" [ngStyle]="getNewIssueStyle(2063)" class="number-card cxy ml-5">BS04</div>
                 </div>
               </div>
               <div class="cxy">
-                <div (click)="viewTask(41)" [ngStyle]="getNewIssueStyle(41)" class="number-card cxy">135</div>
+                <div></div>
               </div>
             </div>
             <div class="double-y">
-              <div class="double-x">
-                <div class="text-end">
-                  <div (click)="viewTask(35)" [ngStyle]="getNewIssueStyle(35)" class="number-card cxy mr-5">114P</div>
-                </div>
+              <div class="cxy">
                 <div class="mb-10">
-                  <div (click)="viewTask(36)" [ngStyle]="getNewIssueStyle(36)" class="number-card cxy ml-5">124S</div>
+                  <div (click)="viewTask(2052)" [ngStyle]="getNewIssueStyle(2052)" class="number-card cxy ml-5">BS03</div>
                 </div>
               </div>
               <div class="cxy">
-                <div (click)="viewTask(37)" [ngStyle]="getNewIssueStyle(37)" class="number-card cxy">134</div>
+                <div></div>
               </div>
             </div>
             <div class="double-y">
-              <div class="double-x">
-                <div class="text-end">
-                  <div (click)="viewTask(31)" [ngStyle]="getNewIssueStyle(31)" class="number-card cxy mr-5">113P</div>
-                </div>
+              <div class="cxy">
                 <div class="mb-10">
-                  <div (click)="viewTask(32)" [ngStyle]="getNewIssueStyle(32)" class="number-card cxy ml-5">123S</div>
+                  <div (click)="viewTask(2044)" [ngStyle]="getNewIssueStyle(2044)" class="number-card cxy ml-5">BS02</div>
                 </div>
               </div>
               <div class="cxy">
-                <div (click)="viewTask(33)" [ngStyle]="getNewIssueStyle(33)" class="number-card cxy">133</div>
+                <div></div>
               </div>
             </div>
             <div class="double-y">
-              <div class="double-x">
-                <div class="text-end">
-                  <div (click)="viewTask(26)" [ngStyle]="getNewIssueStyle(26)" class="number-card cxy mr-5">112P</div>
-                </div>
+              <div class="cxy">
                 <div class="mb-10">
-                  <div (click)="viewTask(28)" [ngStyle]="getNewIssueStyle(28)" class="number-card cxy ml-5">122S</div>
+                  <div (click)="viewTask(2064)" [ngStyle]="getNewIssueStyle(2064)" class="number-card cxy ml-5">BS01</div>
                 </div>
               </div>
               <div class="cxy">
-                <div (click)="viewTask(29)" [ngStyle]="getNewIssueStyle(29)" class="number-card cxy">132</div>
+                <div></div>
               </div>
             </div>
             <div class="cxy">
@@ -360,6 +588,13 @@
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
       <div *ngIf="project == 'NR004'">
         <div class="picture">
           <div class="ship">
