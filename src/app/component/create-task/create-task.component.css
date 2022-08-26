@@ -210,3 +210,10 @@ select:focus {
 .p-dropdown-150{
   max-height: 150px!important;
 }
+.multi-select{
+  max-height: 300px !important;
+  height: 300px !important;
+}
+/deep/.p-multiselect-items-wrapper{
+  max-height: 300px !important;
+}
