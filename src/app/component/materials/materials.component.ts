@@ -347,6 +347,7 @@ export class MaterialsComponent implements OnInit {
   createMaterialCloudDirectory(material: any){
     material.materialCloudDirectory = 'LOADING';
     this.materialManager.createMaterialCloudDirectory(this.project, material.code).then(res => {
+      console.log(res);
       material.materialCloudDirectory = res;
     });
   }
