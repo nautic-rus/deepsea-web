@@ -253,7 +253,9 @@
 .circle{
   position: absolute;
 }
-
+.mt-35{
+  margin-top: 35px;
+}
 .number-card-tablet{
   width: 36px;
   height: 16px;
