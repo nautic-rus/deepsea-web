@@ -797,7 +797,7 @@ export class DeviceEspComponent implements OnInit {
     });
   }
 
-  addMaterial(label: string) {
+  addMaterial(label: string = '') {
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
