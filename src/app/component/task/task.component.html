@@ -97,7 +97,7 @@
         <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
       </div>
       <div class="" [hidden]="edit != 'description'">
-        <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.details">
+        <quill-editor (onEditorCreated)="quillCreatedDescription($event)" [modules]="quillModulesDescription" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.details">
           <div quill-editor-toolbar>
             <p-header>
             <span class="ql-formats">

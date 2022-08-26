@@ -10,6 +10,8 @@ import {Router} from "@angular/router";
 import _ from "underscore";
 import {MessageService} from "primeng/api";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {AssignComponent} from "../task/assign/assign.component";
+import {MpgEsiConverterComponent} from "./mpg-esi-converter/mpg-esi-converter.component";
 
 @Component({
   selector: 'app-tools',
@@ -80,5 +82,12 @@ export class ToolsComponent implements OnInit {
 
   openBsDesignNodes() {
     this.router.navigate(['bsDesignNodes'], {queryParams: {project: this.projectBsDesign}});
+  }
+
+  mpgEsiConverter() {
+    this.dialogService.open(MpgEsiConverterComponent, {
+      showHeader: false,
+      modal: true,
+    });
   }
 }

@@ -53,6 +53,8 @@ export class TaskComponent implements OnInit {
   wz;
   // @ts-ignore
   editor;
+  // @ts-ignore
+  editorDescription;
   showHistory = ['_taskStatus'];
   availableActions: any[] = [];
   taskDepartments: string[] = [];
@@ -65,6 +67,56 @@ export class TaskComponent implements OnInit {
   today: Date = new Date();
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];
+  quillModulesDescription =
+    {
+      imageResize: {},
+      clipboard: {
+        matchers: [
+          // @ts-ignore
+          ['img', (node, delta) => {
+            let image = delta.ops[0].insert.image;
+            if ((image.indexOf(";base64")) != -1){
+              let ext = image.substring("data:image/".length, image.indexOf(";base64"))
+              let fileName = 'clip' + this.generateId(8)  + '.' + ext;
+              const find = this.loaded.find(x => x.name == fileName);
+              if (find != null){
+                this.loaded.splice(this.loaded.indexOf(find), 1);
+              }
+              this.awaitForLoad.push(fileName);
+              this.appRef.tick();
+              fetch(image).then(res => res.blob()).then(blob => {
+                const file = new File([blob], fileName,{ type: "image/png" });
+                this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+                  this.loaded.push(res);
+                  this.appRef.tick();
+                  let newDelta = new Delta();
+                  newDelta.retain(this.editorDescription.getSelection().index);
+                  newDelta.insert({image: res.url});
+                  this.editorDescription.updateContents(newDelta, 'user');
+                  this.editorDescription.setSelection(this.editorDescription.getLength());
+                  this.appRef.tick();
+                });
+              });
+              return new Delta();
+            }
+            else{
+              return delta;
+            }
+            //return delta;
+          }]
+        ]
+      },
+      keyboard: {
+        bindings: {
+          tab: {
+            key: 9,
+            handler: function () {
+              return true;
+            }
+          }
+        }
+      }
+    }
   quillModules =
     {
       imageResize: {},
@@ -197,6 +249,9 @@ export class TaskComponent implements OnInit {
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear() + ' ' + date.getHours() + ':' + ('0' + (date.getMinutes())).slice(-2);
+  }
+  quillCreatedDescription(event: any) {
+    this.editorDescription = event;
   }
   quillCreated(event: any) {
     this.editor = event;
