@@ -158,7 +158,9 @@
 
                 </div>
                 <div class="line"></div>
-                <div class="mm-text mt-5">{{material.path}}</div>
+                <div class="mm-text mt-5">
+                  <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+                </div>
               </div>
             </div>
           </div>

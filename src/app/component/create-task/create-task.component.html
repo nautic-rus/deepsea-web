@@ -207,7 +207,7 @@
     <div class="df space-between">
       <div>
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного')}}</div>
-        <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-220 border multi-select" [maxSelectedLabels]="5" [selectedItemsLabel]="l.tr('{0} выбрано')" [(ngModel)]="responsibleUser"></p-multiSelect>
+        <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-220 border max-height-150" [maxSelectedLabels]="5" [selectedItemsLabel]="l.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
 
 
 <!--        <p-dropdown [options]="users" [(ngModel)]="responsibleUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"-->

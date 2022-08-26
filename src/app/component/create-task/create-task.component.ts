@@ -43,6 +43,7 @@ export class CreateTaskComponent implements OnInit {
   taskPriorities: any[] = [];
   assignedToUser = '';
   responsibleUser = '';
+  selectedUsers: string[] = [];
   awaitForLoad: string[] = [];
   taskProject = '';
   sfiCode = '';
@@ -292,14 +293,27 @@ export class CreateTaskComponent implements OnInit {
     if (issue.issue_type == 'IT'){
       issue.department = 'IT';
     }
-
-    // @ts-ignore
-    issue.file_attachments = this.loaded;
-    this.issues.startIssue(issue).then(res => {
-      this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
-        this.ref.close(res);
+    if (issue.issue_type == 'APPROVAL'){
+      // @ts-ignore
+      this.selectedUsers.forEach(user => {
+        issue.file_attachments = this.loaded;
+        issue.assigned_to = user;
+        this.issues.startIssue(issue).then(res => {
+          this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
+            this.ref.close(res);
+          });
+        });
       });
-    });
+    }
+    else {
+      // @ts-ignore
+      issue.file_attachments = this.loaded;
+      this.issues.startIssue(issue).then(res => {
+        this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
+          this.ref.close(res);
+        });
+      });
+    }
   }
 
   isLoaded(file: string) {
