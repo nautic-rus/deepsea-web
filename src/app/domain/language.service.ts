@@ -315,11 +315,11 @@ export class LanguageService {
           case 'Ссылка': return 'Link';
           case 'Автор - ': return 'Author - ';
           case 'Назначить исполнителя': return 'Assign assignee';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Конвертировать': return 'Convert';
+          case 'Открыть файлы': return 'Open files';
+          case 'Загрузить': return 'Download';
+          case 'Формат': return 'Format';
+          case 'Прошло конвертацию': return 'Passed the conversion';
           case '': return '';
           case '': return '';
           case '': return '';
