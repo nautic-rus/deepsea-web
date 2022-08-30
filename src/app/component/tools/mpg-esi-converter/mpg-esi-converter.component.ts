@@ -35,13 +35,13 @@ export class MpgEsiConverterComponent implements OnInit {
           if (this.extension == '.mpg'){
             // @ts-ignore
             this.s.createCNC(l.split('\n'), this.auth.getUser().login).then(res => {
-              this.loaded.push({fileName: name, data: res});
+              this.loaded.push({fileName: name, data: res.join('\n')});
             });
           }
           else{
             // @ts-ignore
             this.s.createESSI(l.split('\n'), this.auth.getUser().login).then(res => {
-              this.loaded.push({fileName: name, data: res});
+              this.loaded.push({fileName: name, data: res.join('\n')});
             });
           }
         };
