@@ -156,5 +156,13 @@ export class DailyTasksComponent implements OnInit {
   close() {
     this.ref.close();
   }
-
+  getTime(time: number){
+    return this.getHours(time) + ':' + this.getMinutes(time);
+  }
+  getHours(time: number) {
+    return ('0' + Math.floor(time).toString()).slice(-2);
+  }
+  getMinutes(time: number){
+    return ('0' + ((time - Math.floor(time)) * 60).toString()).slice(-2);
+  }
 }

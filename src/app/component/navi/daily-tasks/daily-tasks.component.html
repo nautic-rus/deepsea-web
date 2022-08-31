@@ -89,7 +89,7 @@
     <div class="df">
       <div class="df cy">
         <div class="big-text-create mr-5">{{t.tr('Вы использовали:')}}</div>
-        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="initialHours != amountOfHours">{{initialHours}}</div>
+        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="initialHours != amountOfHours">{{getTime(initialHours)}}</div>
         <div class="big-text-create mr-5" [class.error-text-highlight]="initialHours != amountOfHours">{{t.tr('из')}}</div>
         <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="initialHours != amountOfHours">{{amountOfHours}}</div>
         <div class="big-text-create mr-5">{{t.tr('часов')}}</div>
