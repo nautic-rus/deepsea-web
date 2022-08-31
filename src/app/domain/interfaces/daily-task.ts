@@ -1,8 +1,8 @@
 export interface DailyTask {
-  date: Date;
+  date: any;
   userLogin: string;
   userName: string;
-  dateCreated: Date;
+  dateCreated: any;
   project: string;
   projectValue: string;
   docNumber: string;

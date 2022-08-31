@@ -17,6 +17,7 @@ export class DailyTasksComponent implements OnInit {
   amountOfHours = 8;
   amountOfHoursToAdd = 1;
   tasks: DailyTask[] = [];
+  tasksSrc: DailyTask[] = [];
 
   projects: string[] = ['NR002', 'NR004', 'OTHER'];
 
@@ -34,10 +35,33 @@ export class DailyTasksComponent implements OnInit {
       this.issues = res;
       this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
       this.docNumbers.push('OTHER');
-      this.addHoursToList();
+      //this.addHoursToList();
+    });
+    this.issue.getDailyTasks().then(res => {
+      this.tasksSrc = res;
+      this.changeDay();
     });
   }
-
+  changeDay(){
+    this.tasks = this.tasksSrc.filter(x => this.sameDay(x.date, this.calendarDay.getTime()));
+    this.tasks.forEach(x => {
+      if (!this.projects.includes(x.project)){
+        x.projectValue = x.project;
+        x.project = 'OTHER';
+        x.docNumberValue = x.docNumber;
+        x.docNumber = 'OTHER';
+        x.actionValue = x.action;
+        x.action = 'OTHER';
+      }
+    });
+  }
+  sameDay(dLong1: number, dLong2: number) {
+    let d1 = new Date(dLong1);
+    let d2 = new Date(dLong2);
+    return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
+  }
   addHoursToList() {
     this.tasks.push({
       date: this.calendarDay,
@@ -106,10 +130,30 @@ export class DailyTasksComponent implements OnInit {
         this.error = 'You didnt specify details for task #' + (this.tasks.indexOf(t) + 1).toString();
         return;
       }
-      if (this.error != ''){
-
-      }
     });
+    if (this.error == ''){
+      this.tasks.forEach(t => {
+        if (typeof (t.date) != "number"){
+          t.date = t.date.getTime();
+        }
+        if (typeof (t.dateCreated) != "number"){
+          t.dateCreated = t.dateCreated.getTime();
+        }
+        if (t.action == 'OTHER'){
+          t.action = t.actionValue;
+        }
+        if (t.project == 'OTHER'){
+          t.project = t.projectValue;
+        }
+        if (t.docNumber == 'OTHER'){
+          t.docNumber = t.docNumberValue;
+        }
+        if (this.tasksSrc.find(x => x.id == t.id) == null){
+          this.issueManager.addDailyTask(JSON.stringify(t));
+        }
+      });
+      this.cancel();
+    }
   }
 
   sumOfHours() {

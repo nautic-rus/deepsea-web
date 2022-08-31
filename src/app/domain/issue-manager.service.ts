@@ -18,6 +18,7 @@ import {TimeControlInterval} from "./classes/time-control-interval";
 import {SfiCode} from "./classes/sfi-code";
 import {Weather} from "./classes/weather";
 import {IssueCheck} from "./classes/issue-check";
+import {DailyTask} from "./interfaces/daily-task";
 
 @Injectable({
   providedIn: 'root'
@@ -158,6 +159,12 @@ export class IssueManagerService {
   }
   async deleteDailyTask(id: string) {
     return await this.http.get(props.http + '/deleteDailyTask',{params: {id}}).toPromise();
+  }
+  async addDailyTask(task: string) {
+    return await this.http.post(props.http + '/addDailyTask', task).toPromise();
+  }
+  async getDailyTasks() {
+    return await this.http.get<DailyTask[]>(props.http + '/dailyTasks').toPromise();
   }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {

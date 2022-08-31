@@ -1,7 +1,7 @@
 <div class="daily-task">
   <div>Please fill information about your tasks for selected day</div>
   <div>
-    Select date: <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
+    Select date: <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay" (ngModelChange)="changeDay()"></p-calendar>
   </div>
   <div>
     Specify amount of hours you worked: <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>
