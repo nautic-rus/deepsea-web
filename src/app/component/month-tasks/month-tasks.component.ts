@@ -112,10 +112,21 @@ export class MonthTasksComponent implements OnInit {
     });
   }
 
+  getTime(time: number){
+    return this.getHours(time) + ':' + this.getMinutes(time);
+  }
   getHours(time: number) {
-    return ('0' + Math.floor(time).toString()).slice(-2);
+    let hours = Math.round(time).toString();
+    if (hours.length == 1){
+      hours = '0' + hours;
+    }
+    return hours;
   }
   getMinutes(time: number){
-    return ('0' + ((time - Math.floor(time)) * 60).toString()).slice(-2);
+    let minutes = Math.round((time - Math.floor(time)) * 60).toString();
+    if (minutes.length == 1){
+      minutes = '0' + minutes;
+    }
+    return minutes;
   }
 }

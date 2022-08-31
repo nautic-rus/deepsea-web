@@ -63,9 +63,10 @@ export class DailyTasksComponent implements OnInit {
       projectValue: '',
       docNumberValue: '',
       actionValue: '',
-      id: this.generateId(20)
+      id: this.generateId(20),
+      hours: 1,
+      minutes: 0
     });
-    this.initialHours += this.amountOfHoursToAdd;
   }
 
   onProjectChanged(task: DailyTask) {
@@ -98,6 +99,7 @@ export class DailyTasksComponent implements OnInit {
   sendHours() {
     this.error = '';
     this.tasks.forEach(t => {
+      t.time = t.hours + t.minutes / 60;
       if (t.project == 'OTHER' && t.projectValue.trim() == ''){
         this.error = 'You didnt specify project for task #' + (this.tasks.indexOf(t) + 1).toString();
         return;
@@ -112,6 +114,10 @@ export class DailyTasksComponent implements OnInit {
       }
       if (t.details.trim() == ''){
         this.error = 'You didnt specify details for task #' + (this.tasks.indexOf(t) + 1).toString();
+        return;
+      }
+      if (t.time == 0){
+        this.error = 'You didnt specified time for task #' + (this.tasks.indexOf(t) + 1).toString();
         return;
       }
     });
@@ -140,14 +146,7 @@ export class DailyTasksComponent implements OnInit {
     }
   }
 
-  sumOfHours() {
-    let sum = 0;
-    this.tasks.forEach(t => sum += t.time);
-    return sum;
-  }
-
   deleteTask(task: DailyTask) {
-    this.initialHours -= task.time;
     this.issueManager.deleteDailyTask(task.id).then(() => {
 
     });
@@ -160,9 +159,25 @@ export class DailyTasksComponent implements OnInit {
     return this.getHours(time) + ':' + this.getMinutes(time);
   }
   getHours(time: number) {
-    return ('0' + Math.floor(time).toString()).slice(-2);
+    let hours = Math.round(time).toString();
+    if (hours.length == 1){
+      hours = '0' + hours;
+    }
+    return hours;
   }
   getMinutes(time: number){
-    return ('0' + ((time - Math.floor(time)) * 60).toString()).slice(-2);
+    let minutes = Math.round((time - Math.floor(time)) * 60).toString();
+    if (minutes.length == 1){
+      minutes = '0' + minutes;
+    }
+    return minutes;
+  }
+  getSum(){
+    let sum = this.initialHours;
+    this.tasks.forEach(t => {
+      t.time = t.hours + t.minutes / 60;
+      sum += t.time;
+    });
+    return sum;
   }
 }

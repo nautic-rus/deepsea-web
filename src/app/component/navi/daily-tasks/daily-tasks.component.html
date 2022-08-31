@@ -17,14 +17,6 @@
       <div class="big-text-create mb-1 mt-1">{{t.tr('Отработанные часы')}}</div>
       <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>
     </div>
-    <div>
-      <div class="big-text-create mb-1 mt-1">Hours</div>
-      <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="amountOfHoursToAdd"></p-inputNumber>
-    </div>
-    <div>
-      <div class="big-text-create mb-1 mt-1">Minutes</div>
-      <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="amountOfMinutesToAdd"></p-inputNumber>
-    </div>
   </div>
   <div class="cxy mt-20">
     <div class="new-task-list blue-button cxy" [pTooltip]="t.tr('Нажмите здесь, чтобы заполнить свои ежедневные задачи')" tooltipPosition="top" (click)="addHoursToList()">
@@ -39,13 +31,6 @@
       <div *ngFor="let task of tasks">
         <div class="task-row mt-5">
           <div class="df">
-            <div class="mb-10 task-time">{{t.tr('Количество часов для задачи')}}</div>
-            <div class="count-hours mt-minus4 ml-5">{{task.time}}</div>
-            <div class="p-ml-auto">
-              <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteTask(task)">
-                <img src="assets/icons/trash-3.svg" height="17">
-              </div>
-            </div>
           </div>
           <div class="df space-between">
             <div>
@@ -70,10 +55,20 @@
               </div>
             </div>
           </div>
+          <div class="df">
             <div>
               <div class="big-text-create mb-1 mt-1">{{t.tr('Подробности')}}</div>
-              <div><input type="text" pInputText [(ngModel)]="task.details" class="w-100" /></div>
+              <div><input type="text" pInputText [(ngModel)]="task.details" class="width-440" /></div>
             </div>
+            <div class="ml-1">
+              <div class="big-text-create mb-1 mt-1">Hours</div>
+              <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.hours"></p-inputNumber>
+            </div>
+            <div class="ml-1">
+              <div class="big-text-create mb-1 mt-1">Minutes</div>
+              <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.minutes"></p-inputNumber>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -89,9 +84,9 @@
     <div class="df">
       <div class="df cy">
         <div class="big-text-create mr-5">{{t.tr('Вы использовали:')}}</div>
-        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="initialHours != amountOfHours">{{getTime(initialHours)}}</div>
-        <div class="big-text-create mr-5" [class.error-text-highlight]="initialHours != amountOfHours">{{t.tr('из')}}</div>
-        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="initialHours != amountOfHours">{{amountOfHours}}</div>
+        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="getSum() != amountOfHours">{{getTime(getSum())}}</div>
+        <div class="big-text-create mr-5" [class.error-text-highlight]="getSum() != amountOfHours">{{t.tr('из')}}</div>
+        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="getSum() != amountOfHours">{{amountOfHours}}</div>
         <div class="big-text-create mr-5">{{t.tr('часов')}}</div>
       </div>
       <div class="p-ml-auto df ">

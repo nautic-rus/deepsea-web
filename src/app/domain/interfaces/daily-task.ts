@@ -12,4 +12,6 @@ export interface DailyTask {
   action: string;
   actionValue: string;
   id: string;
+  hours: number;
+  minutes: number;
 }
