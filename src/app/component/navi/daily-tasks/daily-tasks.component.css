@@ -36,8 +36,9 @@
   height: 404px;
 }
 .error-text{
-  color: red;
+  color: #EF4444;
   font-weight: bold;
+  font-size: 12px;
   height: 24px;
 }
 .close-button{
