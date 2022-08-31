@@ -4,7 +4,7 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {Issue} from "../../../domain/classes/issue";
 import _ from "underscore";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 
 @Component({
@@ -16,7 +16,9 @@ export class DailyTasksComponent implements OnInit {
 
   calendarDay = new Date();
   amountOfHours = 8;
+  initialHours = 0;
   amountOfHoursToAdd = 1;
+  amountOfMinutesToAdd = 0;
   tasks: DailyTask[] = [];
   tasksSrc: DailyTask[] = [];
 
@@ -29,31 +31,15 @@ export class DailyTasksComponent implements OnInit {
   issues: Issue[] = [];
   error = '';
 
-  constructor(public auth: AuthManagerService, public issue: IssueManagerService, public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService) { }
+  constructor(public auth: AuthManagerService, public issue: IssueManagerService, public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, public conf: DynamicDialogConfig) { }
 
   ngOnInit(): void {
+    this.calendarDay = this.conf.data[0];
+    this.initialHours = this.conf.data[1];
     this.issue.getIssues('op').then(res => {
       this.issues = res;
       this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
       this.docNumbers.push('OTHER');
-      //this.addHoursToList();
-    });
-    this.issue.getDailyTasks().then(res => {
-      this.tasksSrc = res;
-      this.changeDay();
-    });
-  }
-  changeDay(){
-    this.tasks = this.tasksSrc.filter(x => this.sameDay(x.date, this.calendarDay.getTime()));
-    this.tasks.forEach(x => {
-      if (!this.projects.includes(x.project)){
-        x.projectValue = x.project;
-        x.project = 'OTHER';
-        x.docNumberValue = x.docNumber;
-        x.docNumber = 'OTHER';
-        x.actionValue = x.action;
-        x.action = 'OTHER';
-      }
     });
   }
   sameDay(dLong1: number, dLong2: number) {
@@ -72,13 +58,14 @@ export class DailyTasksComponent implements OnInit {
       project: 'NR002',
       docNumber: '200101-222-101',
       details: '',
-      time: this.amountOfHoursToAdd,
+      time: this.amountOfHoursToAdd + this.amountOfMinutesToAdd / 60,
       action: 'Drawing',
       projectValue: '',
       docNumberValue: '',
       actionValue: '',
       id: this.generateId(20)
     });
+    this.initialHours += this.amountOfHoursToAdd;
   }
 
   onProjectChanged(task: DailyTask) {
@@ -110,10 +97,6 @@ export class DailyTasksComponent implements OnInit {
   }
   sendHours() {
     this.error = '';
-    if (this.sumOfHours() != this.amountOfHours){
-      this.error = 'The amount of hours you worked doesnt equal sum of tasks you entered';
-      return;
-    }
     this.tasks.forEach(t => {
       if (t.project == 'OTHER' && t.projectValue.trim() == ''){
         this.error = 'You didnt specify project for task #' + (this.tasks.indexOf(t) + 1).toString();
@@ -164,6 +147,7 @@ export class DailyTasksComponent implements OnInit {
   }
 
   deleteTask(task: DailyTask) {
+    this.initialHours -= task.time;
     this.issueManager.deleteDailyTask(task.id).then(() => {
 
     });
@@ -172,4 +156,5 @@ export class DailyTasksComponent implements OnInit {
   close() {
     this.ref.close();
   }
+
 }

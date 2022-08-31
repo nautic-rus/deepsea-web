@@ -3,7 +3,7 @@
 }
 .daily-task{
   width: 650px;
-  height: 670px;
+  height: 692px;
 }
 .header-row{
   display: grid;
@@ -34,12 +34,16 @@
 }
 .tasks{
   height: 404px;
+  margin-bottom: 10px;
 }
 .error-text{
   color: #EF4444;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   height: 24px;
+}
+.error-text-highlight{
+  color: #EF4444 !important;
 }
 .close-button{
   display: flex;

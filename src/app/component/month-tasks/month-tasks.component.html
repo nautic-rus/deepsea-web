@@ -1,0 +1,46 @@
+<div class="all-page h-100 position-relative">
+  <div class="add-task cursor-pointer" (click)="addDayTask({number: -1, sum: 0})">
+    <div class="blue-button cxy">
+      <div class="pr-10 cxy">
+        <img src="assets/icons/plus3.svg" height="18">
+      </div>
+      <div class="cxy">ADD</div>
+    </div>
+  </div>
+  <div class="cx">
+    <div class="cxy cursor-pointer" (click)="changeMonth(-1)">prev</div>
+    <div class="cxy month-name mx-10 width-150">{{monthName}}</div>
+    <div class="cxy cursor-pointer" (click)="changeMonth(1)">next</div>
+  </div>
+  <div class="days">
+    <div *ngFor="let day of daysInMonth">
+      <div class="day">
+        <div class="day-number">{{day.number}}</div>
+        <div class="add-day-task" (click)="addDayTask(day)">+</div>
+        <div class="worked-per-day error-text" [class.error-highlight]="showError && day.sum != 0 && day.sum != 8">You worked {{day.sum}} hours this day</div>
+        <div class="tasks">
+          <div class="df mb-1" *ngIf="day.tasks.length > 0">
+            <div class="width-50 cx task-header">Hours</div>
+            <div class="width-70 cx task-header">Project</div>
+            <div class="width-150 cx task-header">DocNumber</div>
+            <div class="width-70 cx task-header">Action</div>
+            <div class="width-150 cx task-header">Details</div>
+          </div>
+          <div class="tasks-table">
+            <div *ngFor="let task of day.tasks">
+              <div class="df">
+                <div class="width-50 cx task-text">{{getHours(task.time)}} : {{getMinutes(task.time)}}</div>
+                <div class="width-70 cx task-text" tooltipPosition="top" [pTooltip]="task.project">{{trimText(task.project, 6)}}</div>
+                <div class="width-150 cx task-text" tooltipPosition="top" [pTooltip]="task.docNumber">{{trimText(task.docNumber, 16)}}</div>
+                <div class="width-70 cx task-text" tooltipPosition="top" [pTooltip]="task.action">{{trimText(task.action, 8)}}</div>
+                <div class="width-150 cx task-text" tooltipPosition="top" [pTooltip]="task.details">{{trimText(task.details, 16)}}</div>
+                <div (click)="deleteDailyTask(task)" class="width-10 cxy cursor-pointer"><img src="assets/icons/trash-1.svg" height="14"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

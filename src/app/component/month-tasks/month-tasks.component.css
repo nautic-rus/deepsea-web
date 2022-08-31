@@ -1,0 +1,66 @@
+.day{
+  width: 560px;
+  height: 160px;
+  background-color: rgba(45, 108, 162, 0.26);
+  margin: 5px;
+  position: relative;
+}
+.days{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.day-number{
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.worked-per-day{
+  position: absolute;
+  left: 10px;
+  bottom: 5px;
+  font-size: 16px;
+}
+.add-day-task{
+  position: absolute;
+  left: 10px;
+  top: 25px;
+  cursor: pointer;
+}
+.month-name{
+  font-size: 28px;
+  font-weight: bold;
+}
+.task{
+  display: flex;
+}
+.tasks{
+  padding-top: 30px;
+  padding-left: 50px;
+}
+.task-header{
+  font-weight: bold;
+}
+.task-text{
+  font-size: 14px;
+}
+.error-highlight{
+  color: #EF4444 !important;
+}
+.error-text{
+  font-size: 12px;
+  font-weight: bold;
+}
+.tasks-table{
+  overflow: auto;
+  height: 80px;
+}
+.add-task{
+  width: 80px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  padding: 10px;
+}

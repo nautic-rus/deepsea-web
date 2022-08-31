@@ -322,7 +322,7 @@ export class LanguageService {
           case 'Прошло конвертацию': return 'Passed the conversion';
           case 'Выбор даты': return 'Selected date';
           case 'Отработанные часы': return 'Hours worked';
-          case 'Добавление часов': return 'Add hours to list';
+          case 'Добавление часов': return 'Task hours to add';
           case 'Нажмите здесь, чтобы заполнить свои ежедневные задачи': return 'Click here to fill in your daily tasks';
           case 'Ежедневные отчеты': return 'Daily reports';
           case 'Заполните информацию о ваших задачах на выбранный день': return 'Please fill information about your tasks for selected day';
@@ -332,7 +332,7 @@ export class LanguageService {
           case 'Вы использовали:': return 'You used:';
           case 'из': return 'from';
           case 'часов': return 'hours';
-          case '': return '';
+          case 'Количество часов для задачи': return 'Hours you worked with this task';
           case '': return '';
           case '': return '';
           case '': return '';

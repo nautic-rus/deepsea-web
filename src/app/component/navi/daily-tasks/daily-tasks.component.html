@@ -18,8 +18,12 @@
       <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>
     </div>
     <div>
-      <div class="big-text-create mb-1 mt-1">{{t.tr('Добавление часов')}}</div>
-      <p-inputNumber [(ngModel)]="amountOfHoursToAdd"></p-inputNumber>
+      <div class="big-text-create mb-1 mt-1">Hours</div>
+      <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="amountOfHoursToAdd"></p-inputNumber>
+    </div>
+    <div>
+      <div class="big-text-create mb-1 mt-1">Minutes</div>
+      <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="amountOfMinutesToAdd"></p-inputNumber>
     </div>
   </div>
   <div class="cxy mt-20">
@@ -47,17 +51,23 @@
             <div>
               <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
               <div><p-dropdown appendTo="body" placeholder="project" class="select" [(ngModel)]="task.project" [options]="projects" styleClass="width-200 border" (ngModelChange)="onProjectChanged(task)"></p-dropdown></div>
-              <div class="ml-1" *ngIf="task.project == 'OTHER'"><input type="text" pInputText [(ngModel)]="task.projectValue" class="width-200" /></div>
+              <div class="mt-10" *ngIf="task.project == 'OTHER'">
+                <input type="text" [placeholder]="t.tr('Проект')" pInputText [(ngModel)]="task.projectValue" class="width-200" />
+              </div>
             </div>
             <div>
               <div class="big-text-create mb-1 ">{{t.tr('Номер документа')}}</div>
-              <div><p-dropdown [disabled]="task.project == 'OTHER'" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-200 border"></p-dropdown></div>
-              <div class="ml-1" *ngIf="task.docNumber == 'OTHER'"><input type="text" pInputText [(ngModel)]="task.docNumberValue" class="width-200" /></div>
+              <div><p-dropdown [filter]="true" filterBy="value" [disabled]="task.project == 'OTHER'" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-200 border"></p-dropdown></div>
+              <div class="mt-10" *ngIf="task.docNumber == 'OTHER'">
+                <input type="text" [placeholder]="t.tr('Номер документа')" pInputText [(ngModel)]="task.docNumberValue" class="width-200" />
+              </div>
             </div>
             <div>
               <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
               <div><p-dropdown [disabled]="task.docNumber == 'OTHER'" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.action" [options]="actions" styleClass="width-200 border"></p-dropdown></div>
-              <div class="ml-1" *ngIf="task.action == 'OTHER'"><input type="text" pInputText [(ngModel)]="task.actionValue" class="width-200" /></div>
+              <div class="mt-10" *ngIf="task.action == 'OTHER'">
+                <input type="text" [placeholder]="t.tr('Действие')" pInputText [(ngModel)]="task.actionValue" class="width-200" />
+              </div>
             </div>
           </div>
             <div>
@@ -69,9 +79,9 @@
     </div>
   </div>
   <div>
-    <div class="error-text">
+    <div class="error-text cx">
       <div *ngIf="error != ''">
-        {{error}}
+        {{error}}!
       </div>
     </div>
   </div>
@@ -79,9 +89,9 @@
     <div class="df">
       <div class="df cy">
         <div class="big-text-create mr-5">{{t.tr('Вы использовали:')}}</div>
-        <div class="big-text mr-5 mt-minus2">{{sumOfHours()}}</div>
-        <div class="big-text-create mr-5">{{t.tr('из')}}</div>
-        <div class="big-text mr-5 mt-minus2">{{amountOfHours}}</div>
+        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="initialHours != amountOfHours">{{initialHours}}</div>
+        <div class="big-text-create mr-5" [class.error-text-highlight]="initialHours != amountOfHours">{{t.tr('из')}}</div>
+        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="initialHours != amountOfHours">{{amountOfHours}}</div>
         <div class="big-text-create mr-5">{{t.tr('часов')}}</div>
       </div>
       <div class="p-ml-auto df ">
