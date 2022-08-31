@@ -1,0 +1,29 @@
+.daily-task{
+  width: 650px;
+  height: 60vh;
+}
+.task-row{
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+}
+.task-time{
+  font-size: 24px;
+  font-weight: bold;
+  color: red;
+  width: 50px;
+}
+.task-row-select{
+  display: grid;
+  grid-template-columns: 125px 180px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.tasks{
+  height: 400px;
+}
+.error-text{
+  color: red;
+  font-weight: bold;
+  height: 24px;
+}

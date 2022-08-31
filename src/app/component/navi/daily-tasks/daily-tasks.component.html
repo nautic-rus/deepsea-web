@@ -1,0 +1,68 @@
+<div class="daily-task">
+  <div>Please fill information about your tasks for selected day</div>
+  <div>
+    Select date: <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
+  </div>
+  <div>
+    Specify amount of hours you worked: <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>
+  </div>
+  <div>
+    <div>
+      Add hours to list:
+      <p-inputNumber [(ngModel)]="amountOfHoursToAdd"></p-inputNumber>
+      <button (click)="addHoursToList()">+</button>
+      <- Click here to fill in your daily tasks
+    </div>
+    <div class="ovf-auto tasks mt-1">
+      <div *ngFor="let task of tasks">
+        <div class="task-row">
+          <div class="cxy task-time">
+            {{task.time}}
+            <button (click)="deleteTask(task)">DEL</button>
+          </div>
+          <div>
+            <div class="task-row-select">
+              <div class="cxy">Project</div>
+              <div class="df">
+                <div><p-dropdown appendTo="body" placeholder="project" class="select" [(ngModel)]="task.project" [options]="projects" styleClass="width-200 border" (ngModelChange)="onProjectChanged(task)"></p-dropdown></div>
+                <div class="ml-1" *ngIf="task.project == 'OTHER'"><input type="text" pInputText [(ngModel)]="task.projectValue" class="width-200" /></div>
+              </div>
+            </div>
+            <div class="task-row-select">
+              <div class="cxy">DocNumber</div>
+              <div class="df">
+                <div><p-dropdown [disabled]="task.project == 'OTHER'" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-200 border"></p-dropdown></div>
+                <div class="ml-1" *ngIf="task.docNumber == 'OTHER'"><input type="text" pInputText [(ngModel)]="task.docNumberValue" class="width-200" /></div>
+              </div>
+            </div>
+            <div class="task-row-select">
+              <div class="cxy">Action</div>
+              <div class="df">
+                <div><p-dropdown [disabled]="task.docNumber == 'OTHER'" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.action" [options]="actions" styleClass="width-200 border"></p-dropdown></div>
+                <div class="ml-1" *ngIf="task.action == 'OTHER'"><input type="text" pInputText [(ngModel)]="task.actionValue" class="width-200" /></div>
+              </div>
+            </div>
+            <div class="task-row-select">
+              <div class="cxy">Details</div>
+              <div><input type="text" pInputText [(ngModel)]="task.details" class="width-200" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="error-text">
+      <div *ngIf="error != ''">
+        {{error}}
+      </div>
+    </div>
+  </div>
+  <div class="df">
+    <div>
+      You used: {{sumOfHours()}} from {{amountOfHours}}
+    </div>
+    <button (click)="cancel()">CANCEL</button>
+    <button (click)="sendHours()">SEND</button>
+  </div>
+</div>

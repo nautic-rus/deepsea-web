@@ -8,11 +8,13 @@
       <a href="https://cloud.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/cloud.png"></a>
     </div>
   </div>
-  <div></div>
-  <div *ngIf="t.language == 'ru'" class="cxy"></div>
-  <div *ngIf="t.language == 'ru'" class="cxy"></div>
-  <div *ngIf="t.language == 'en'" class="cxy"></div>
-  <div *ngIf="t.language == 'en'" class="cxy"></div>
+  <div class="cxy"></div>
+  <div class="cxy"></div>
+  <div class="cy ml-1">
+    <div pTooltip="Daily Tasks" tooltipPosition="bottom" (click)="fillDailyTasks()">
+      <img class="cursor-pointer" src="assets/icons/tasks-doc.svg" height="30">
+    </div>
+  </div>
   <div class="cxy">
     <div (click)="t.switchLang()">
       <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/en.png">

@@ -156,6 +156,9 @@ export class IssueManagerService {
   async dingUser(user: string, message: string) {
     return await this.http.get(props.http + '/sendNotificationToUser',{params: {user, message}}).toPromise();
   }
+  async deleteDailyTask(id: string) {
+    return await this.http.get(props.http + '/deleteDailyTask',{params: {id}}).toPromise();
+  }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{

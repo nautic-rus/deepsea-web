@@ -9,6 +9,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {ShareRightsComponent} from "./share-rights/share-rights.component";
 import {Weather} from "../../domain/classes/weather";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {DailyTasksComponent} from "./daily-tasks/daily-tasks.component";
 
 @Component({
   selector: 'app-navi',
@@ -143,5 +144,12 @@ export class NaviComponent implements OnInit {
     if (event.button == 1){
       window.open(url, '_blank');
     }
+  }
+
+  fillDailyTasks() {
+    this.dialogService.open(DailyTasksComponent, {
+      showHeader: false,
+      modal: true,
+    });
   }
 }

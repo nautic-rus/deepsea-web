@@ -126,6 +126,7 @@ import { PipeEspGenerationWaitComponent } from './component/documents/pipe-esp/p
 import { DeviceEspGenerationWaitComponent } from './component/documents/device-esp/device-esp-generation-wait/device-esp-generation-wait.component';
 import { AddMaterialToEspComponent } from './component/documents/device-esp/add-material-to-esp/add-material-to-esp.component';
 import { MpgEsiConverterComponent } from './component/tools/mpg-esi-converter/mpg-esi-converter.component';
+import { DailyTasksComponent } from './component/navi/daily-tasks/daily-tasks.component';
 Quill.register('modules/imageResize', ImageResize);
 
 
@@ -205,7 +206,8 @@ Quill.register('modules/imageResize', ImageResize);
     PipeEspGenerationWaitComponent,
     DeviceEspGenerationWaitComponent,
     AddMaterialToEspComponent,
-    MpgEsiConverterComponent
+    MpgEsiConverterComponent,
+    DailyTasksComponent
   ],
   imports: [
     BrowserModule,
