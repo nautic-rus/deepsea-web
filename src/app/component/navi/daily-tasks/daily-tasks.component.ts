@@ -5,6 +5,7 @@ import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {Issue} from "../../../domain/classes/issue";
 import _ from "underscore";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-daily-tasks',
@@ -27,7 +28,7 @@ export class DailyTasksComponent implements OnInit {
   issues: Issue[] = [];
   error = '';
 
-  constructor(public auth: AuthManagerService, public issue: IssueManagerService, public ref: DynamicDialogRef, public issueManager: IssueManagerService) { }
+  constructor(public auth: AuthManagerService, public issue: IssueManagerService, public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.issue.getIssues('op').then(res => {
@@ -123,5 +124,8 @@ export class DailyTasksComponent implements OnInit {
 
     });
     this.tasks = this.tasks.filter(x => x.id != task.id);
+  }
+  close() {
+    this.ref.close();
   }
 }

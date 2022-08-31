@@ -1,17 +1,30 @@
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 5px!important;
+}
 .daily-task{
   width: 650px;
-  height: 60vh;
+  height: 670px;
+}
+.header-row{
+  display: grid;
+  grid-template-columns: auto 50px;
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 .task-row{
-  border: 1px solid black;
-  display: grid;
-  grid-template-columns: 50px 1fr;
+  padding: 10px 20px 20px 20px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
 }
 .task-time{
-  font-size: 24px;
+  font-size: 12px;
   font-weight: bold;
-  color: red;
-  width: 50px;
+  color: #EF4444;
+}
+.count-hours{
+  font-size: 16px;
+  font-weight: bold;
+  color: #EF4444;
 }
 .task-row-select{
   display: grid;
@@ -20,10 +33,99 @@
   padding-bottom: 2px;
 }
 .tasks{
-  height: 400px;
+  height: 404px;
 }
 .error-text{
   color: red;
   font-weight: bold;
   height: 24px;
+}
+.close-button{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -10px;
+  margin-right: -10px;
+}
+.task-button-close{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.big-text-create{
+  color: #5e6c84;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.big-text{
+  color: #5e6c84;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.new-task-list{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+  width: 50%;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.task-button{
+  width: 30px;
+  height: 30px;
+  color: #605e5c;
+  border: 0 none;
+  background: #f8f9fa;
+  border-radius: 20px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 5px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #E9EADF;
+}
+.button-ok{
+  border: none;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
+}
+.button-cancel{
+  margin-right: 4px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #2E3E4E;
+  background: #fff;
+  transition: background .1s;
+  border: none;
+}
+.button-cancel:hover{
+  background-color: #ECEDF0;
 }
