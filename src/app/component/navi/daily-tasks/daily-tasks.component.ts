@@ -100,6 +100,7 @@ export class DailyTasksComponent implements OnInit {
     this.error = '';
     this.tasks.forEach(t => {
       t.time = t.hours + t.minutes / 60;
+      console.log(t.time);
       if (t.project == 'OTHER' && t.projectValue.trim() == ''){
         this.error = 'You didnt specify project for task #' + (this.tasks.indexOf(t) + 1).toString();
         return;
@@ -159,7 +160,7 @@ export class DailyTasksComponent implements OnInit {
     return this.getHours(time) + ':' + this.getMinutes(time);
   }
   getHours(time: number) {
-    let hours = Math.round(time).toString();
+    let hours = Math.floor(time).toString();
     if (hours.length == 1){
       hours = '0' + hours;
     }

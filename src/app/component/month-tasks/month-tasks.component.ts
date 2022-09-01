@@ -120,7 +120,7 @@ export class MonthTasksComponent implements OnInit {
     return this.getHours(time) + ':' + this.getMinutes(time);
   }
   getHours(time: number) {
-    let hours = Math.round(time).toString();
+    let hours = Math.floor(time).toString();
     if (hours.length == 1){
       hours = '0' + hours;
     }
