@@ -89,8 +89,8 @@ export class MonthTasksComponent implements OnInit {
       data: [day.number == -1 ? new Date() : new Date(this.date.getFullYear(), this.date.getMonth(), day.number), day.sum]
     }).onClose.subscribe(res => {
       this.issueManager.getDailyTasks().then(res => {
-        this.tasksSrc = res;
-        this.tasks = res;
+        this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
+        this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
         this.fillDays();
       });
     });
@@ -107,8 +107,8 @@ export class MonthTasksComponent implements OnInit {
     this.showError = false;
     this.date = new Date(this.date.getFullYear(), this.date.getMonth() + value, 1);
     this.issueManager.getDailyTasks().then(res => {
-      this.tasksSrc = res;
-      this.tasks = res;
+      this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
+      this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
       this.fillDays();
     });
   }
