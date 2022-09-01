@@ -5,6 +5,7 @@ import {Issue} from "../../domain/classes/issue";
 import {DailyTask} from "../../domain/interfaces/daily-task";
 import {DailyTasksComponent} from "../navi/daily-tasks/daily-tasks.component";
 import {DialogService} from "primeng/dynamicdialog";
+import {AuthManagerService} from "../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-month-tasks',
@@ -26,12 +27,12 @@ export class MonthTasksComponent implements OnInit {
   projects: string[] = ['NR002', 'NR004', 'OTHER'];
   showError = false;
 
-  constructor(public issueManager: IssueManagerService, public dialogService: DialogService) { }
+  constructor(public issueManager: IssueManagerService, public dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.issueManager.getDailyTasks().then(res => {
-      this.tasksSrc = res;
-      this.tasks = res;
+      this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
+      this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
       this.fillDays();
     });
   }
