@@ -36,6 +36,7 @@ export class ObjViewComponent implements OnInit {
   docNumber = '';
   spoolIndexes: number[] = [];
   windowMode = 0;
+  isom = 0;
 
   loading = true;
 
@@ -47,6 +48,7 @@ export class ObjViewComponent implements OnInit {
       this.spool = params.spool ? params.spool : '';
       this.docNumber = params.docNumber ? params.docNumber : '';
       this.windowMode = params.window != null ? params.window : this.windowMode;
+      this.isom = params.isom != null ? params.isom : this.isom;
       if (this.spool == '' || this.docNumber == ''){
         this.errorMessage = 'There is no document number or spool specified';
       }
@@ -78,7 +80,7 @@ export class ObjViewComponent implements OnInit {
         }
         else{
           this.s.getPipeSegs(this.docNumber).then(res => {
-            this.spoolIndexes = res.filter(x => x.spool == this.spool).map(x => x.sqInSystem);
+            this.spoolIndexes = res.filter(x => (this.isom == 0 ? x.spool == this.spool : x.isom == this.spool)).map(x => x.sqInSystem);
             if (this.spoolIndexes.length == 0){
               this.errorMessage = 'There is an error in FORAN model when trying to find segments of spool. Looks like specified spool doesnt exist in FORAN model';
               return;
