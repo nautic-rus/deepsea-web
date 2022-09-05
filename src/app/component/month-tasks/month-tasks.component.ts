@@ -167,38 +167,8 @@ export class MonthTasksComponent implements OnInit {
     this.issueManager.getDailyTasks().then(res => {
       this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
       this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
-      //this.fillDays();
       this.calendar = this.getCalendar();
     });
-  }
-  fillDays(){
-    this.showError = false;
-    this.tasks.forEach(t => {
-      if (t.action == 'OTHER'){
-        t.action = t.actionValue;
-      }
-      if (t.project == 'OTHER'){
-        t.project = t.projectValue;
-      }
-      if (t.docNumber == 'OTHER'){
-        t.docNumber = t.docNumberValue;
-      }
-    });
-    let days = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate();
-    this.monthName = this.monthNames[this.date.getMonth()];
-    this.daysInMonth.splice(0, this.daysInMonth.length);
-    for (let x = 0; x < days; x++){
-      let d = Object({number: x + 1, tasks: [], sum: 0});
-      d.tasks = this.getTasksOfDay(d.number);
-      d.tasks.forEach((t: any) => {
-        d.sum += t.time;
-      });
-      this.daysInMonth.push(d);
-      // if (d.tasks.length > 0){
-      //   this.daysInMonth.push(d);
-      // }
-    }
-    this.showError = true;
   }
   getTasksOfDay(day: number){
     console.log(day + '-' + this.tasks.filter(x => this.sameDay(x.date, new Date(this.date.getFullYear(), this.date.getMonth(), day).getTime())).length);

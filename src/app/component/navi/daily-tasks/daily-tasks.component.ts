@@ -60,20 +60,20 @@ export class DailyTasksComponent implements OnInit {
       details: '',
       time: 0,
       action: 'Drawing',
-      projectValue: '',
-      docNumberValue: '',
-      actionValue: '',
       id: this.generateId(20),
       hours: 1,
-      minutes: 0
+      minutes: 0,
+      projectValue: '',
+      docNumberValue: '',
+      actionValue: ''
     });
   }
 
   onProjectChanged(task: DailyTask) {
-    if (task.project == 'OTHER'){
-      this.docNumbers = ['OTHER'];
-      task.docNumber = 'OTHER';
-      task.action = 'OTHER';
+    if (task.project == 'English'){
+      this.docNumbers = ['-'];
+      task.docNumber = '-';
+      task.action = '-';
     }
     else{
       this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
@@ -100,16 +100,15 @@ export class DailyTasksComponent implements OnInit {
     this.error = '';
     this.tasks.forEach(t => {
       t.time = t.hours + t.minutes / 60;
-      console.log(t.time);
-      if (t.project == 'OTHER' && t.projectValue.trim() == ''){
+      if (t.project.trim() == ''){
         this.error = 'You didnt specify project for task #' + (this.tasks.indexOf(t) + 1).toString();
         return;
       }
-      if (t.docNumber == 'OTHER' && t.docNumberValue.trim() == ''){
+      if (t.docNumber.trim() == ''){
         this.error = 'You didnt specify docNumber for task #' + (this.tasks.indexOf(t) + 1).toString();
         return;
       }
-      if (t.action == 'OTHER' && t.actionValue.trim() == ''){
+      if (t.action.trim() == ''){
         this.error = 'You didnt specify action for task #' + (this.tasks.indexOf(t) + 1).toString();
         return;
       }
@@ -129,15 +128,6 @@ export class DailyTasksComponent implements OnInit {
         }
         if (typeof (t.dateCreated) != "number"){
           t.dateCreated = t.dateCreated.getTime();
-        }
-        if (t.action == 'OTHER'){
-          t.action = t.actionValue;
-        }
-        if (t.project == 'OTHER'){
-          t.project = t.projectValue;
-        }
-        if (t.docNumber == 'OTHER'){
-          t.docNumber = t.docNumberValue;
         }
         if (this.tasksSrc.find(x => x.id == t.id) == null){
           this.issueManager.addDailyTask(JSON.stringify(t));

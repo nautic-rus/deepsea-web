@@ -21,7 +21,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
   generationWait = false;
 
   resUrls: string[] = [];
-  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E'];
+  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'Без ревизии'];
   rev: string = this.revs[0];
   updateRevision = false;
 

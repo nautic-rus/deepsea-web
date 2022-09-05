@@ -68,7 +68,7 @@
             </div>
             <div class="ml-1">
               <div class="big-text-create mb-1 mt-1">Minutes</div>
-              <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.minutes"></p-inputNumber>
+              <p-inputNumber [min]="0" [max]="59" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.minutes"></p-inputNumber>
             </div>
           </div>
         </div>
