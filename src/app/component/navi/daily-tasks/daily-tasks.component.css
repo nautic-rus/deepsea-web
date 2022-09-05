@@ -1,5 +1,15 @@
 /deep/.p-dialog .p-dialog-content {
   border-radius: 5px!important;
+  background: #ffffff;
+  color: #495057;
+  padding: 0 20px 20px 20px;
+}
+/deep/.p-component {
+  font-size: 14px!important;
+}
+/deep/.p-inputtext {
+  font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
 }
 .daily-task{
   width: 650px;

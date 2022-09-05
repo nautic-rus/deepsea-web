@@ -301,6 +301,9 @@ body,p{
 .width-465{
   width: 465px;
 }
+.width-474{
+  width: 474px;
+}
 .width-480{
   width: 480px;
 }
@@ -494,6 +497,12 @@ body,p{
 }
 .mr-minus20{
   margin-right: -20px;
+}
+.ml-minus1{
+  margin-left: -1px;
+}
+.ml-minus2{
+  margin-left: -2px;
 }
 .ml-minus5{
   margin-left: -5px;

@@ -128,9 +128,10 @@ import { AddMaterialToEspComponent } from './component/documents/device-esp/add-
 import { MpgEsiConverterComponent } from './component/tools/mpg-esi-converter/mpg-esi-converter.component';
 import { DailyTasksComponent } from './component/navi/daily-tasks/daily-tasks.component';
 import { MonthTasksComponent } from './component/month-tasks/month-tasks.component';
+import {FullCalendarModule} from "primeng/fullcalendar";
+import { ShowTaskComponent } from './component/navi/daily-tasks/show-task/show-task.component';
+
 Quill.register('modules/imageResize', ImageResize);
-
-
 
 @NgModule({
   declarations: [
@@ -209,7 +210,8 @@ Quill.register('modules/imageResize', ImageResize);
     AddMaterialToEspComponent,
     MpgEsiConverterComponent,
     DailyTasksComponent,
-    MonthTasksComponent
+    MonthTasksComponent,
+    ShowTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -260,8 +262,10 @@ Quill.register('modules/imageResize', ImageResize);
     RadioButtonModule,
     SidebarModule,
     PanelMenuModule,
+    FullCalendarModule,
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export class FullCalendarDemoModule {}

@@ -22,10 +22,10 @@ export class DailyTasksComponent implements OnInit {
   tasks: DailyTask[] = [];
   tasksSrc: DailyTask[] = [];
 
-  projects: string[] = ['NR002', 'NR004', 'OTHER'];
+  projects: string[] = ['NR002', 'NR004', 'English'];
 
   docNumbers: string[] = ['200101-222-101'];
-  actions: string[] = ['Drawing', 'Model', 'OTHER']
+  actions: string[] = ['Drawing', 'Model']
 
 
   issues: Issue[] = [];

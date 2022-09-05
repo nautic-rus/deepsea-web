@@ -1,0 +1,30 @@
+/deep/.p-dialog .p-dialog-content {
+  background: #ffffff;
+  color: #495057;
+  padding: 0 1.5rem 2rem 1.5rem;
+  border-radius: 6px;
+}
+.close-button{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -10px;
+  margin-right: -10px;
+}
+.task-button-close{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.one-row-task{
+  height: 35px;
+}
