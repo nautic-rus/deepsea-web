@@ -1,8 +1,8 @@
 <div class="all-page">
   <div class="card-report">
     <div class="card-head df mb-10">
-      <div class="mr-10">
-        <div class="button-add blue-button cxy" (click)="addDayTask({number: -1, sum: 0})">
+      <div class="df">
+        <div class="button-add blue-button cxy mr-15" (click)="addDayTask({number: -1, sum: 0})">
           <div class="pr-10 cxy">
             <img src="assets/icons/plus3.svg" height="18">
           </div>
@@ -10,18 +10,19 @@
             Add task
           </div>
         </div>
+        <div class="df">
+          <div class="cxy cursor-pointer prev-month blue-button" (click)="changeMonth(-1)">
+            <img src="assets/icons/arrow-l.svg" height="16">
+          </div>
+          <div class="cxy cursor-pointer next-month blue-button" (click)="changeMonth(1)">
+            <img src="assets/icons/arrow-r2.svg" height="16">
+          </div>
+        </div>
       </div>
       <div class="cx">
         <div class="cxy month-name mx-10 width-200">{{monthName + ' '}}{{' ' + date.getFullYear()}}</div>
       </div>
-      <div class="p-ml-auto df">
-        <div class="cxy cursor-pointer prev-month blue-button" (click)="changeMonth(-1)">
-          <img src="assets/icons/arrow-l.svg">
-        </div>
-        <div class="cxy cursor-pointer next-month blue-button" (click)="changeMonth(1)">
-          <img src="assets/icons/arrow-r2.svg">
-        </div>
-      </div>
+
     </div>
 
 
