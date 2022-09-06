@@ -165,7 +165,5 @@
 }
 
 .invalid-dropdown {
-  border: 5px solid #D40000;
-  box-shadow: 0 0 20px 10px #f40000;
-  border-radius: 2px;
+  border-color: #e24c4c;
 }

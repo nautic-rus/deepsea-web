@@ -137,10 +137,11 @@ export class DailyTasksComponent implements OnInit {
         this.error = 'You didnt specify action for task #' + (this.tasks.indexOf(t) + 1).toString();
         //return;
       }
-      // if (t.details.trim() == ''){
-      //   this.error = 'You didnt specify details for task #' + (this.tasks.indexOf(t) + 1).toString();
-      //   return;
-      // }
+      if (t.details.trim() == ''){
+        this.invalid.push(t.id + '-d');
+        this.error = 'You didnt specify details for task #' + (this.tasks.indexOf(t) + 1).toString();
+        //return;
+      }
       if (t.time == 0){
         this.invalid.push(t.id + '-t');
         this.error = 'You didnt specified time for task #' + (this.tasks.indexOf(t) + 1).toString();

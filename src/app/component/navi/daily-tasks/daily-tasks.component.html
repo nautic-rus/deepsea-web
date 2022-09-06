@@ -35,7 +35,7 @@
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
                 <div>
-                  <p-dropdown [disabled]="task.hidden" [class.invalid-dropdown]="isInvalid(task.id + '-p')" appendTo="body" placeholder="project" class="select" [editable]="true" [(ngModel)]="task.project" [options]="projects"  styleClass="width-190 border" (ngModelChange)="onProjectChanged(task)"></p-dropdown>
+                  <p-dropdown appendTo="body" placeholder="project" class="select" [editable]="true" [(ngModel)]="task.project" [options]="projects"  styleClass="width-190 border" (ngModelChange)="onProjectChanged(task)"></p-dropdown>
                 </div>
                 <!--              <div class="mt-10" *ngIf="task.project == 'OTHER'">-->
                 <!--                <input type="text" [placeholder]="t.tr('Проект')" pInputText [(ngModel)]="task.projectValue" class="width-200" />-->
@@ -43,14 +43,14 @@
               </div>
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Номер документа')}}</div>
-                <div><p-dropdown [disabled]="task.hidden" [class.invalid-dropdown]="isInvalid(task.id + '-dN')" [editable]="true" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-190 border"></p-dropdown></div>
+                <div><p-dropdown [editable]="true" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-190 border"></p-dropdown></div>
                 <!--              <div class="mt-10" *ngIf="task.docNumber == 'OTHER'">-->
                 <!--                <input type="text" [placeholder]="t.tr('Номер документа')" pInputText [(ngModel)]="task.docNumberValue" class="width-200" />-->
                 <!--              </div>-->
               </div>
               <div>
                 <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
-                <div><p-dropdown [disabled]="task.hidden" [class.invalid-dropdown]="isInvalid(task.id + '-p')" appendTo="body" placeholder="document" class="select" [editable]="true" [(ngModel)]="task.action" [options]="actions" styleClass="width-190 border"></p-dropdown></div>
+                <div><p-dropdown [disabled]="task.hidden" appendTo="body" placeholder="document" class="select" [editable]="true" [(ngModel)]="task.action" [options]="actions" styleClass="width-190 border"></p-dropdown></div>
                 <!--              <div class="mt-10" *ngIf="task.action == 'OTHER'">-->
                 <!--                <input type="text" [placeholder]="t.tr('Действие')" pInputText [(ngModel)]="task.actionValue" class="width-200" />-->
                 <!--              </div>-->
@@ -59,7 +59,7 @@
             <div class="df">
               <div>
                 <div class="big-text-create mb-1 mt-1">{{t.tr('Подробности')}}</div>
-                <div><input [disabled]="task.hidden" type="text" pInputText [(ngModel)]="task.details" class="width-458" /></div>
+                <div><input [class.invalid-dropdown]="isInvalid(task.id + '-d')" [disabled]="task.hidden" type="text" pInputText [(ngModel)]="task.details" class="width-458" /></div>
               </div>
               <div class="ml-1">
                 <div class="big-text-create mb-1 mt-1">Hours</div>
