@@ -98,7 +98,7 @@ export class DailyTasksComponent implements OnInit {
     }
     else{
       this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
-      this.docNumbers.push('OTHER');
+      this.docNumbers.push('Other');
       task.docNumber = this.docNumbers[0];
       task.action = 'Drawing';
     }
@@ -118,6 +118,23 @@ export class DailyTasksComponent implements OnInit {
     return result;
   }
   sendHours() {
+   this.check();
+    if (this.error == ''){
+      this.tasks.filter(t => !t.hidden).forEach(t => {
+        if (typeof (t.date) != "number"){
+          t.date = t.date.getTime();
+        }
+        if (typeof (t.dateCreated) != "number"){
+          t.dateCreated = t.dateCreated.getTime();
+        }
+        if (this.tasksSrc.find(x => x.id == t.id) == null){
+          this.issueManager.addDailyTask(JSON.stringify(t));
+        }
+      });
+      this.cancel();
+    }
+  }
+  check(){
     this.invalid.splice(0, this.invalid.length);
     this.error = '';
     this.tasks.filter(t => !t.hidden).forEach(t => {
@@ -148,24 +165,7 @@ export class DailyTasksComponent implements OnInit {
         //return;
       }
     });
-    console.log(this.invalid);
-    console.log(this.tasks);
-    if (this.error == ''){
-      this.tasks.filter(t => !t.hidden).forEach(t => {
-        if (typeof (t.date) != "number"){
-          t.date = t.date.getTime();
-        }
-        if (typeof (t.dateCreated) != "number"){
-          t.dateCreated = t.dateCreated.getTime();
-        }
-        if (this.tasksSrc.find(x => x.id == t.id) == null){
-          this.issueManager.addDailyTask(JSON.stringify(t));
-        }
-      });
-      this.cancel();
-    }
   }
-
   deleteTask(task: DailyTask) {
     this.issueManager.deleteDailyTask(task.id).then(() => {
 

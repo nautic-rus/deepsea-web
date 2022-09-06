@@ -59,15 +59,15 @@
             <div class="df">
               <div>
                 <div class="big-text-create mb-1 mt-1">{{t.tr('Подробности')}}</div>
-                <div><input [class.invalid-dropdown]="isInvalid(task.id + '-d')" [disabled]="task.hidden" type="text" pInputText [(ngModel)]="task.details" class="width-458" /></div>
+                <div><input (ngModelChange)="check()" [class.invalid-dropdown]="isInvalid(task.id + '-d')" [disabled]="task.hidden" type="text" pInputText [(ngModel)]="task.details" class="width-458" /></div>
               </div>
               <div class="ml-1">
                 <div class="big-text-create mb-1 mt-1">Hours</div>
-                <p-inputNumber [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [max]="dayHoursToWork" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.hours"></p-inputNumber>
+                <p-inputNumber (ngModelChange)="check()" [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [max]="dayHoursToWork" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.hours"></p-inputNumber>
               </div>
               <div class="ml-1">
                 <div class="big-text-create mb-1 mt-1">Minutes</div>
-                <p-inputNumber [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [min]="0" [max]="59" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.minutes"></p-inputNumber>
+                <p-inputNumber (ngModelChange)="check()" [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [min]="0" [max]="59" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.minutes"></p-inputNumber>
               </div>
             </div>
           </div>
