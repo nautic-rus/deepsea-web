@@ -198,6 +198,11 @@ export class TaskComponent implements OnInit {
     }
     return result;
   }
+  onFilesDrop(event: DragEvent) {
+    event.preventDefault();
+    // @ts-ignore
+    this.handleFileInput(event.dataTransfer.files);
+  }
   assignTask(){
     this.dialogService.open(AssignComponent, {
       showHeader: false,

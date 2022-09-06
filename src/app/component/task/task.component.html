@@ -378,26 +378,46 @@
             </p-header>
           </div>
         </quill-editor>
+        <div class="mt-10"></div>
+        <div [class.file-drag]="dragOver" class="upload cx cy">
+          <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+            <span class="normal-text no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+          </div>
+        </div>
+        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
         <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
           <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
           <div class="cy">{{file}}</div>
           <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
           <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
         </div>
-        <div class="df mt-5">
-          <div class="mr-5 pb-20">
-            <div (click)="sendMessage()" pButton [label]="t.tr('Сохранить')" class="button"></div>
+
+
+
+
+<!--        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>-->
+<!--        <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">-->
+<!--          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>-->
+<!--          <div class="cy">{{file}}</div>-->
+<!--          <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>-->
+<!--          <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>-->
+<!--        </div>-->
+<!--        <div class="mt-10"></div>-->
+<!--        <div [class.file-drag]="dragOver" class="upload cx cy mb-20">-->
+<!--          <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">-->
+<!--            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">-->
+<!--            <span class="normal-text-files no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>-->
+<!--          </div>-->
+<!--        </div>-->
+
+        <div class="flex-end">
+          <div class="mr-5 cx">
+            <div tabindex="11" (click)="comment = false" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
           </div>
-          <div>
-            <div (click)="comment = false" pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
-          </div>
+          <div tabindex="10" (click)="sendMessage()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
         </div>
-        <div [class.file-drag]="dragOver" class="upload cx cy">
-          <div class="cxy" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
-            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
-            <span class="normal-text no-actions">DROP FILES HERE TO UPLOAD</span>
-          </div>
-        </div>
+
       </div>
 
 

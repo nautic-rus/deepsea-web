@@ -1,3 +1,6 @@
+/deep/.ql-container.ql-editor{
+  min-height: 100px!important;
+}
 .center{
   height: 680px;
   display: flex;
@@ -180,20 +183,32 @@
 .button:hover{
   background-color: #17a2b8;
 }
-.button-cancel{
+.button-ok{
   border: none;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
+}
+.button-cancel{
   margin-right: 4px;
   min-width: 24px;
   border-radius: 3px;
   text-shadow: none;
-  padding: 3px 6px;
-  color: #17a2b8;
+  padding: 8px 10px;
+  color: #2E3E4E;
   background: #fff;
   transition: background .1s;
-  font-size: 0.9rem;
+  border: none;
 }
 .button-cancel:hover{
-  background-color: rgb(235, 236, 240);
+  background-color: #ECEDF0;
 }
 .attachment{
   border-radius: 3px;
@@ -1069,10 +1084,17 @@
 }
 .file-drag{
   opacity: 0.4;
-  border: 2px dashed #68c5e8;
+  border: 2px dashed #ff6600!important;
 }
 .upload{
   width: 100%;
   height: 50px;
+  border: 1px dashed #ccc;
   cursor: pointer;
+}
+.normal-text-files{
+  color: #5e6c84;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 400;
 }
