@@ -333,7 +333,7 @@ export class LanguageService {
           case 'из': return 'from';
           case 'часов': return 'hours';
           case 'Количество часов для задачи': return 'Hours you worked with this task';
-          case '': return '';
+          case 'Вы действительно хотите удалить эту задачу?': return 'Do you really want to delete this task?';
           case '': return '';
           case '': return '';
           case '': return '';

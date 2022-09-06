@@ -295,8 +295,14 @@ body,p{
 .width-450{
   width: 450px;
 }
+.width-458{
+  width: 458px;
+}
 .width-460{
   width: 460px;
+}
+.width-464{
+  width: 464px;
 }
 .width-465{
   width: 465px;
@@ -375,6 +381,9 @@ body,p{
 }
 .height-160{
   height: 160px;
+}
+.height-270{
+  height: 270px;
 }
 .h-100{
   height: 100%;
@@ -503,6 +512,9 @@ body,p{
 }
 .ml-minus2{
   margin-left: -2px;
+}
+.ml-minus4{
+  margin-left: -4px;
 }
 .ml-minus5{
   margin-left: -5px;

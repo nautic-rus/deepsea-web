@@ -1,22 +1,20 @@
 /deep/.p-dialog .p-dialog-content {
   background: #ffffff;
   color: #495057;
-  padding: 0 1.5rem 2rem 1.5rem;
+  padding: 0 20px 20px 20px;
   border-radius: 6px;
 }
-.close-button{
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -10px;
-  margin-right: -10px;
+.header-row{
+  font-weight: 600;
+  font-size: 1.5rem;
 }
 .task-button-close{
-  width: 2rem;
-  height: 2rem;
+  width: 30px;
+  height: 30px;
   color: #605e5c;
   border: 0 none;
   background: transparent;
-  border-radius: 2px;
+  border-radius: 20px;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
@@ -26,5 +24,19 @@
   background: #f3f2f1;
 }
 .one-row-task{
-  height: 35px;
+}
+.title-bold{
+  font-weight: 500;
+  font-size: 17px;
+  color: #3a3a3a;
+}
+.title-bold-mini{
+  font-weight: 500;
+  font-size: 15px;
+  color: #3a3a3a;
+}
+.text-black-mini{
+  font-weight: 700;
+  color: #3a3a3a;
+  font-size: 12px;
 }

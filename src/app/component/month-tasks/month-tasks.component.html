@@ -53,16 +53,15 @@
           <div class="day-of-month" [ngStyle]="dayOfWeek">
             {{cDay.number.toString().replace('h', '').replace('s', '').replace('b', '').replace('a', '')}}
           </div>
-          <div class="mt-25"></div>
+          <div *ngIf="!cDay.number.toString().includes('s') && cDay.sum != 0" class="pb-5 text-black-mini">worked {{getHours(cDay.sum)}}:{{getMinutes(cDay.sum)}}</div>
           <div *ngIf="cDay.tasks.length > 0" class="">
             <div class="task-one cursor-pointer" (click)="openTask(task)" *ngFor="let task of cDay.tasks">
               <div class="df">
                 <div class="cx task-text-mini pr-5">{{getHours(task.time)}}:{{getMinutes(task.time)}}</div>
-<!--                <div class="cx task-text" tooltipPosition="top" [pTooltip]="task.project">{{trimText(task.project, 6)}}</div>-->
-                <div class="cx task-text pr-5">{{trimText(task.docNumber, 12)}}</div>
-<!--                <div class="cx task-text" tooltipPosition="top" [pTooltip]="task.action">{{trimText(task.action, 8)}}</div>-->
-                <div class="cx task-text">{{trimText(task.details, 5)}}</div>
-                <div (click)="deleteDailyTask(task)" class="p-ml-auto width-10 mt-minus4 cxy cursor-pointer" >x</div>
+                <div class="cx task-text pr-5">{{trimText(task.project, 7)}}</div>
+                <div *ngIf="task.docNumber != '-'" class="cx task-text pr-5">{{trimText(task.docNumber, 14)}}</div>
+                <div *ngIf="task.docNumber != '-'" class="cx task-text pr-5">{{trimText(task.action, 7)}}</div>
+<!--                <div class="cx task-text">{{trimText(task.details, 5)}}</div>-->
               </div>
             </div>
           </div>

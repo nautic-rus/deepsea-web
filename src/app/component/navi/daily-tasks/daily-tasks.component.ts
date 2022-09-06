@@ -6,6 +6,7 @@ import {Issue} from "../../../domain/classes/issue";
 import _ from "underscore";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
+import {DeleteDailyTaskComponent} from "./show-task/delete-daily-task/delete-daily-task.component";
 
 @Component({
   selector: 'app-daily-tasks',
@@ -21,6 +22,9 @@ export class DailyTasksComponent implements OnInit {
   amountOfMinutesToAdd = 0;
   tasks: DailyTask[] = [];
   tasksSrc: DailyTask[] = [];
+  invalid: string[] = [];
+  dayHoursToWork = 23;
+
 
   projects: string[] = ['NR002', 'NR004', 'English'];
 
@@ -39,7 +43,19 @@ export class DailyTasksComponent implements OnInit {
     this.issue.getIssues('op').then(res => {
       this.issues = res;
       this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
-      this.docNumbers.push('OTHER');
+      this.setInitial();
+    });
+  }
+  setInitial(){
+    this.initialHours = 0;
+    this.issueManager.getDailyTasks().then(res => {
+      res.forEach(t => {
+        t.hidden = true;
+        t.hours = Math.floor(t.time);
+        t.minutes = Math.round((t.time - Math.floor(t.time)) * 60);
+      });
+      this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login && this.sameDay(x.date, this.calendarDay.getTime()));
+      this.dayHoursToWork = 23 - Math.ceil(this.getSum());
     });
   }
   sameDay(dLong1: number, dLong2: number) {
@@ -50,6 +66,10 @@ export class DailyTasksComponent implements OnInit {
       d1.getDate() === d2.getDate();
   }
   addHoursToList() {
+    let timeUsed = 0;
+    this.tasks.forEach(t => timeUsed += t.time);
+    timeUsed = timeUsed < 8 ? 8 - timeUsed : 0;
+
     this.tasks.push({
       date: this.calendarDay,
       userLogin: this.auth.getUser().login,
@@ -58,14 +78,15 @@ export class DailyTasksComponent implements OnInit {
       project: 'NR002',
       docNumber: '200101-222-101',
       details: '',
-      time: 0,
+      time: timeUsed,
       action: 'Drawing',
       id: this.generateId(20),
-      hours: 1,
-      minutes: 0,
+      hours: Math.floor(timeUsed),
+      minutes: Math.round((timeUsed - Math.floor(timeUsed)) * 60),
       projectValue: '',
       docNumberValue: '',
-      actionValue: ''
+      actionValue: '',
+      hidden: false
     });
   }
 
@@ -97,32 +118,39 @@ export class DailyTasksComponent implements OnInit {
     return result;
   }
   sendHours() {
+    this.invalid.splice(0, this.invalid.length);
     this.error = '';
-    this.tasks.forEach(t => {
+    this.tasks.filter(t => !t.hidden).forEach(t => {
       t.time = t.hours + t.minutes / 60;
       if (t.project.trim() == ''){
+        this.invalid.push(t.id + '-p');
         this.error = 'You didnt specify project for task #' + (this.tasks.indexOf(t) + 1).toString();
-        return;
+        //return;
       }
       if (t.docNumber.trim() == ''){
+        this.invalid.push(t.id + '-dN');
         this.error = 'You didnt specify docNumber for task #' + (this.tasks.indexOf(t) + 1).toString();
-        return;
+        //return;
       }
       if (t.action.trim() == ''){
+        this.invalid.push(t.id + '-a');
         this.error = 'You didnt specify action for task #' + (this.tasks.indexOf(t) + 1).toString();
-        return;
+        //return;
       }
       // if (t.details.trim() == ''){
       //   this.error = 'You didnt specify details for task #' + (this.tasks.indexOf(t) + 1).toString();
       //   return;
       // }
       if (t.time == 0){
+        this.invalid.push(t.id + '-t');
         this.error = 'You didnt specified time for task #' + (this.tasks.indexOf(t) + 1).toString();
-        return;
+        //return;
       }
     });
+    console.log(this.invalid);
+    console.log(this.tasks);
     if (this.error == ''){
-      this.tasks.forEach(t => {
+      this.tasks.filter(t => !t.hidden).forEach(t => {
         if (typeof (t.date) != "number"){
           t.date = t.date.getTime();
         }
@@ -170,5 +198,19 @@ export class DailyTasksComponent implements OnInit {
       sum += t.time;
     });
     return sum;
+  }
+
+  dayChanged() {
+    this.setInitial();
+  }
+
+  isInvalid(value: string) {
+    return this.invalid.includes(value);
+  }
+
+  deleteDailyTask(task: any) {
+    this.issueManager.deleteDailyTask(task.id).then(() => {
+    });
+    this.tasks = this.tasks.filter(x => x.id != task.id);
   }
 }

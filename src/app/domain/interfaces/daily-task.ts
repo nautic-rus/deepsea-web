@@ -14,4 +14,5 @@ export interface DailyTask {
   actionValue: string;
   projectValue: string;
   docNumberValue: string;
+  hidden: boolean;
 }

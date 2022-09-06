@@ -11,12 +11,12 @@
   <div class="df space-between">
     <div>
       <div class="big-text-create mb-1 mt-1">{{t.tr('Выбор даты')}}</div>
-      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" styleClass="width-220" [(ngModel)]="calendarDay"></p-calendar>
+      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" styleClass="width-220" [(ngModel)]="calendarDay" (ngModelChange)="dayChanged()"></p-calendar>
     </div>
-    <div>
-      <div class="big-text-create mb-1 mt-1">{{t.tr('Отработанные часы')}}</div>
-      <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>
-    </div>
+<!--    <div>-->
+<!--      <div class="big-text-create mb-1 mt-1">{{t.tr('Отработанные часы')}}</div>-->
+<!--      <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>-->
+<!--    </div>-->
   </div>
   <div class="cxy mt-20">
     <div class="new-task-list blue-button cxy" [pTooltip]="t.tr('Нажмите здесь, чтобы заполнить свои ежедневные задачи')" tooltipPosition="top" (click)="addHoursToList()">
@@ -30,45 +30,50 @@
     <div class="ovf-auto tasks mt-1">
       <div *ngFor="let task of tasks">
         <div class="task-row mt-5">
-          <div class="df">
-          </div>
-          <div class="df space-between">
-            <div>
-              <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
+          <div class="mr-5">
+            <div class="df space-between">
               <div>
-                <p-dropdown appendTo="body" placeholder="project" class="select" [editable]="true" [(ngModel)]="task.project" [options]="projects"  styleClass="width-200 border" (ngModelChange)="onProjectChanged(task)"></p-dropdown>
+                <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
+                <div>
+                  <p-dropdown [disabled]="task.hidden" [class.invalid-dropdown]="isInvalid(task.id + '-p')" appendTo="body" placeholder="project" class="select" [editable]="true" [(ngModel)]="task.project" [options]="projects"  styleClass="width-190 border" (ngModelChange)="onProjectChanged(task)"></p-dropdown>
+                </div>
+                <!--              <div class="mt-10" *ngIf="task.project == 'OTHER'">-->
+                <!--                <input type="text" [placeholder]="t.tr('Проект')" pInputText [(ngModel)]="task.projectValue" class="width-200" />-->
+                <!--              </div>-->
               </div>
-<!--              <div class="mt-10" *ngIf="task.project == 'OTHER'">-->
-<!--                <input type="text" [placeholder]="t.tr('Проект')" pInputText [(ngModel)]="task.projectValue" class="width-200" />-->
-<!--              </div>-->
+              <div>
+                <div class="big-text-create mb-1 ">{{t.tr('Номер документа')}}</div>
+                <div><p-dropdown [disabled]="task.hidden" [class.invalid-dropdown]="isInvalid(task.id + '-dN')" [editable]="true" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-190 border"></p-dropdown></div>
+                <!--              <div class="mt-10" *ngIf="task.docNumber == 'OTHER'">-->
+                <!--                <input type="text" [placeholder]="t.tr('Номер документа')" pInputText [(ngModel)]="task.docNumberValue" class="width-200" />-->
+                <!--              </div>-->
+              </div>
+              <div>
+                <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
+                <div><p-dropdown [disabled]="task.hidden" [class.invalid-dropdown]="isInvalid(task.id + '-p')" appendTo="body" placeholder="document" class="select" [editable]="true" [(ngModel)]="task.action" [options]="actions" styleClass="width-190 border"></p-dropdown></div>
+                <!--              <div class="mt-10" *ngIf="task.action == 'OTHER'">-->
+                <!--                <input type="text" [placeholder]="t.tr('Действие')" pInputText [(ngModel)]="task.actionValue" class="width-200" />-->
+                <!--              </div>-->
+              </div>
             </div>
-            <div>
-              <div class="big-text-create mb-1 ">{{t.tr('Номер документа')}}</div>
-              <div><p-dropdown [editable]="true" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-200 border"></p-dropdown></div>
-<!--              <div class="mt-10" *ngIf="task.docNumber == 'OTHER'">-->
-<!--                <input type="text" [placeholder]="t.tr('Номер документа')" pInputText [(ngModel)]="task.docNumberValue" class="width-200" />-->
-<!--              </div>-->
-            </div>
-            <div>
-              <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
-              <div><p-dropdown appendTo="body" placeholder="document" class="select" [editable]="true" [(ngModel)]="task.action" [options]="actions" styleClass="width-200 border"></p-dropdown></div>
-<!--              <div class="mt-10" *ngIf="task.action == 'OTHER'">-->
-<!--                <input type="text" [placeholder]="t.tr('Действие')" pInputText [(ngModel)]="task.actionValue" class="width-200" />-->
-<!--              </div>-->
+            <div class="df">
+              <div>
+                <div class="big-text-create mb-1 mt-1">{{t.tr('Подробности')}}</div>
+                <div><input [disabled]="task.hidden" type="text" pInputText [(ngModel)]="task.details" class="width-458" /></div>
+              </div>
+              <div class="ml-1">
+                <div class="big-text-create mb-1 mt-1">Hours</div>
+                <p-inputNumber [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [max]="dayHoursToWork" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.hours"></p-inputNumber>
+              </div>
+              <div class="ml-1">
+                <div class="big-text-create mb-1 mt-1">Minutes</div>
+                <p-inputNumber [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [min]="0" [max]="59" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.minutes"></p-inputNumber>
+              </div>
             </div>
           </div>
-          <div class="df">
-            <div>
-              <div class="big-text-create mb-1 mt-1">{{t.tr('Подробности')}}</div>
-              <div><input type="text" pInputText [(ngModel)]="task.details" class="width-474" /></div>
-            </div>
-            <div class="ml-1">
-              <div class="big-text-create mb-1 mt-1">Hours</div>
-              <p-inputNumber mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.hours"></p-inputNumber>
-            </div>
-            <div class="ml-1">
-              <div class="big-text-create mb-1 mt-1">Minutes</div>
-              <p-inputNumber [min]="0" [max]="59" mode="decimal" inputStyleClass="width-50" [(ngModel)]="task.minutes"></p-inputNumber>
+          <div class="mr-10 ml-minus5">
+            <div class="task-button-close cxy" (click)="deleteDailyTask(task)">
+              <i class="pi pi-times times-font-size"></i>
             </div>
           </div>
         </div>

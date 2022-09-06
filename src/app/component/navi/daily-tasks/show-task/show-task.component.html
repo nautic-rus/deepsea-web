@@ -1,14 +1,27 @@
-<div style="height: 264px; width: 260px;">
-  <div class="header-row pt-20">
-    <div class="close-button">
-      <div class="task-button-close cxy" (click)="close()">
-        <i class="pi pi-times"></i>
+<div style="height: 340px; width: 260px;">
+  <div class="header-row df pt-20">
+    <div></div>
+    <div class="p-ml-auto df">
+      <div class="mr-10">
+        <div class="task-button-close cxy" (click)="deleteDailyTask()">
+          <img src="assets/icons/trash.svg" height="16">
+        </div>
+      </div>
+      <div class="">
+        <div class="task-button-close cxy" (click)="close()">
+          <i class="pi pi-times"></i>
+        </div>
       </div>
     </div>
+
   </div>
-  <div>
-    <div class="one-row-task">{{(task.project)}}</div>
+  <div class="height-270">
+    <div class="title-bold pb-10">{{(task.project)}}</div>
+    <div *ngIf="task.docNumber != '-'" class="title-bold pb-10">{{(task.docNumber)}}</div>
+    <div *ngIf="task.docNumber != '-'" class="pb-10">{{(task.action)}}</div>
+    <div class="pb-10">{{(task.details)}}</div>
   </div>
+  <div class="text-black-mini">{{getHours(task.time) + ' ' + 'hours' + ' '}}{{' ' + getMinutes(task.time) + ' ' + 'minutes'}}</div>
 
 </div>
 

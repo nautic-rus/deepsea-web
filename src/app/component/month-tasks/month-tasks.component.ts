@@ -171,7 +171,6 @@ export class MonthTasksComponent implements OnInit {
     });
   }
   getTasksOfDay(day: number){
-    console.log(day + '-' + this.tasks.filter(x => this.sameDay(x.date, new Date(this.date.getFullYear(), this.date.getMonth(), day).getTime())).length);
     return this.tasks.filter(x => this.sameDay(x.date, new Date(this.date.getFullYear(), this.date.getMonth(), day).getTime()));
   }
   sameDay(dLong1: number, dLong2: number) {
@@ -200,7 +199,7 @@ export class MonthTasksComponent implements OnInit {
           this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
           this.calendar = this.getCalendar();
         });
-      }, 500);
+      }, 100);
     });
   }
   openTask(task: any){
@@ -209,8 +208,14 @@ export class MonthTasksComponent implements OnInit {
       modal: true,
       data: task,
     }).onClose.subscribe(res => {
-      if (res == 'success'){
-        this.ref.close();
+      if (res == 'delete'){
+        setTimeout(() => {
+          this.issueManager.getDailyTasks().then(res => {
+            this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
+            this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
+            this.calendar = this.getCalendar();
+          });
+        }, 100);
       }
     });
   }

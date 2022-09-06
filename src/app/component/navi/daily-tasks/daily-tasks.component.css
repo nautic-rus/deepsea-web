@@ -22,9 +22,11 @@
   font-size: 1.5rem;
 }
 .task-row{
-  padding: 10px 20px 20px 20px;
+  padding: 10px 5px 20px 20px;
   border: 1px solid #ced4da;
   border-radius: 4px;
+  display: grid;
+  grid-template-columns: 600px 22px;
 }
 .task-time{
   font-size: 12px;
@@ -143,4 +145,27 @@
 }
 .button-cancel:hover{
   background-color: #ECEDF0;
+}
+.task-button-close{
+  width: 26px;
+  height: 26px;
+  color: #605e5c;
+  background: transparent;
+  border-radius: 20px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.times-font-size{
+  font-size: 12px;
+}
+
+.invalid-dropdown {
+  border: 5px solid #D40000;
+  box-shadow: 0 0 20px 10px #f40000;
+  border-radius: 2px;
 }

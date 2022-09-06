@@ -130,6 +130,7 @@ import { DailyTasksComponent } from './component/navi/daily-tasks/daily-tasks.co
 import { MonthTasksComponent } from './component/month-tasks/month-tasks.component';
 import {FullCalendarModule} from "primeng/fullcalendar";
 import { ShowTaskComponent } from './component/navi/daily-tasks/show-task/show-task.component';
+import { DeleteDailyTaskComponent } from './component/navi/daily-tasks/show-task/delete-daily-task/delete-daily-task.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -211,7 +212,8 @@ Quill.register('modules/imageResize', ImageResize);
     MpgEsiConverterComponent,
     DailyTasksComponent,
     MonthTasksComponent,
-    ShowTaskComponent
+    ShowTaskComponent,
+    DeleteDailyTaskComponent
   ],
   imports: [
     BrowserModule,
