@@ -98,11 +98,6 @@
   color: white;
   width: 50%;
 }
-.task-button-close:hover{
-  color: #605e5c;
-  border-color: transparent;
-  background: #f3f2f1;
-}
 .task-button{
   width: 30px;
   height: 30px;
@@ -146,7 +141,7 @@
 .button-cancel:hover{
   background-color: #ECEDF0;
 }
-.task-button-close{
+.task-button-del{
   width: 26px;
   height: 26px;
   color: #605e5c;
@@ -155,7 +150,7 @@
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-.task-button-close:hover{
+.task-button-del:hover{
   color: #605e5c;
   border-color: transparent;
   background: #f3f2f1;
