@@ -7,6 +7,7 @@ import _ from "underscore";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 import {DeleteDailyTaskComponent} from "./show-task/delete-daily-task/delete-daily-task.component";
+import {AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-daily-tasks',
@@ -34,6 +35,8 @@ export class DailyTasksComponent implements OnInit {
 
   issues: Issue[] = [];
   error = '';
+
+  form = new FormArray([]);
 
   constructor(public auth: AuthManagerService, public issue: IssueManagerService, public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, public conf: DynamicDialogConfig) { }
 
@@ -70,7 +73,7 @@ export class DailyTasksComponent implements OnInit {
     this.tasks.forEach(t => timeUsed += t.time);
     timeUsed = timeUsed < 8 ? 8 - timeUsed : 0;
 
-    this.tasks.push({
+    let newTask = {
       date: this.calendarDay,
       userLogin: this.auth.getUser().login,
       userName: this.auth.getUserName(this.auth.getUser().login),
@@ -87,9 +90,15 @@ export class DailyTasksComponent implements OnInit {
       docNumberValue: '',
       actionValue: '',
       hidden: false
-    });
-  }
+    };
+    this.tasks.push(newTask);
 
+    this.form.push(new FormGroup({
+      project: new FormControl(newTask.project, [Validators.required]),
+      docNumber: new FormControl(newTask.project, [Validators.required]),
+    }));
+
+  }
   onProjectChanged(task: DailyTask) {
     if (task.project == 'English'){
       this.docNumbers = ['-'];
