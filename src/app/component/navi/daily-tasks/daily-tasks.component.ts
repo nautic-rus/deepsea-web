@@ -28,15 +28,15 @@ export class DailyTasksComponent implements OnInit {
   dayHoursToWork = 23;
 
 
-  projects: LV[] = [new LV('NR002') , new LV('NR004'), new LV('P701') ,new LV('P707') , new LV('English')];
-  filteredProjects: LV[] = [...this.projects];
+  projects: string[] = ['NR002', 'NR004', 'P701', 'P707', 'English'];
+  filteredProjects: string[] = [...this.projects];
 
-  docNumbers: LV[] = [];
-  filteredDocNumbers: LV[] = [...this.docNumbers];
+  docNumbers: string[] = [];
+  filteredDocNumbers: string[] = [...this.docNumbers];
 
 
-  actions: LV[] = [new LV('Drawing'), new LV('Model')];
-  filteredActions: LV[] = [...this.actions];
+  actions: string[] = ['Drawing', 'Model'];
+  filteredActions: string[] = [...this.actions];
 
 
   issues: Issue[] = [];
@@ -51,7 +51,7 @@ export class DailyTasksComponent implements OnInit {
     this.initialHours = this.conf.data[1];
     this.issue.getIssues('op').then(res => {
       this.issues = res;
-      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => new LV(x.doc_number)), x => x);
+      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
       this.setInitial();
     });
   }
@@ -107,14 +107,14 @@ export class DailyTasksComponent implements OnInit {
   }
   onProjectChanged(task: DailyTask) {
     if (task.project == 'English'){
-      this.docNumbers = [new LV('-')];
+      this.docNumbers = ['-'];
       task.docNumber = '-';
       task.action = '-';
     }
     else{
-      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => new LV(x.doc_number)), x => x);
-      this.docNumbers.push(new LV('Other'));
-      task.docNumber = this.docNumbers[0].value;
+      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
+      this.docNumbers.push('Other');
+      task.docNumber = this.docNumbers[0];
       task.action = 'Drawing';
     }
   }
@@ -153,6 +153,8 @@ export class DailyTasksComponent implements OnInit {
     this.invalid.splice(0, this.invalid.length);
     this.error = '';
     this.tasks.filter(t => !t.hidden).forEach(t => {
+
+
       t.time = t.hours + t.minutes / 60;
       if (t.project.trim() == ''){
         this.invalid.push(t.id + '-p');
@@ -231,27 +233,28 @@ export class DailyTasksComponent implements OnInit {
   }
 
   filterProjects(event: any) {
-    let filtered: LV[] = [];
+    let filtered: string[] = [];
     this.projects.forEach(p => {
-      if (p.value.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
+      if (p.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
         filtered.push(p);
       }
     });
     this.filteredProjects = filtered;
+    console.log(this.filteredProjects);
   }
   filterDocNumbers(event: any) {
-    let filtered: LV[] = [];
+    let filtered: string[] = [];
     this.docNumbers.forEach(p => {
-      if (p.value.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
+      if (p.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
         filtered.push(p);
       }
     });
     this.filteredDocNumbers = filtered;
   }
   filterActions(event: any) {
-    let filtered: LV[] = [];
+    let filtered: string[] = [];
     this.actions.forEach(p => {
-      if (p.value.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
+      if (p.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
         filtered.push(p);
       }
     });
