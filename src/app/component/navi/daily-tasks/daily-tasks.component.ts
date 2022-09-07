@@ -117,6 +117,7 @@ export class DailyTasksComponent implements OnInit {
       task.docNumber = this.docNumbers[0];
       task.action = 'Drawing';
     }
+    this.filteredDocNumbers = [...this.docNumbers];
   }
 
   cancel() {
@@ -240,7 +241,6 @@ export class DailyTasksComponent implements OnInit {
       }
     });
     this.filteredProjects = filtered;
-    console.log(this.filteredProjects);
   }
   filterDocNumbers(event: any) {
     let filtered: string[] = [];

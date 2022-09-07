@@ -35,7 +35,7 @@
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
                 <div>
-                  <p-autoComplete styleClass="width-195" [(ngModel)]="task.project" [suggestions]="filteredProjects" (completeMethod)="filterProjects($event)" [dropdown]="true">
+                  <p-autoComplete styleClass="width-195" [(ngModel)]="task.project" [suggestions]="filteredProjects" (ngModelChange)="onProjectChanged(task)" (completeMethod)="filterProjects($event)" [dropdown]="true">
                   </p-autoComplete>
                 </div>
               </div>
