@@ -28,7 +28,7 @@ export class DailyTasksComponent implements OnInit {
   dayHoursToWork = 23;
 
 
-  projects: LV[] = [new LV('NR002') , new LV('NR004'), new LV('English')];
+  projects: LV[] = [new LV('NR002') , new LV('NR004'), new LV('P701') ,new LV('P707') , new LV('English')];
   filteredProjects: LV[] = [...this.projects];
 
   docNumbers: LV[] = [];
