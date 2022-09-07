@@ -6,7 +6,7 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="selectedNode == null" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="selectedNode == null || !auth.getUser().groups.includes('Nautic_Rus')" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
@@ -110,20 +110,23 @@
                   </div>
                   <div class="df ">
                     <div class="mr-8">
-                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Копировать')" (click)="cloneMaterial(material)">
+                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Копировать')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="cloneMaterial(material)">
                         <img src="assets/icons/copy-2.svg" height="16">
                       </div>
+                      <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>
                     </div>
                     <div class="mr-8">
-                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Редактировать')" (click)="addMaterial('edit', material)">
+                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Редактировать')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="addMaterial('edit', material)">
                         <img src="assets/icons/edit1.svg" height="15">
                       </div>
+                      <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>
                     </div>
 
                     <div class="mr-8">
-                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteMaterial(material)">
+                      <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="deleteMaterial(material)">
                         <img src="assets/icons/trash-3.svg" height="17">
                       </div>
+                      <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>
                     </div>
                     <div class="mr-8">
                       <div class="materials-button-mini blue-button disabled-button-cloud cxy cursor-pointer" *ngIf="material.materialCloudDirectory == ''">

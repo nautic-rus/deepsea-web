@@ -8,6 +8,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 import {DeleteDailyTaskComponent} from "./show-task/delete-daily-task/delete-daily-task.component";
 import {AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {LV} from "../../../domain/classes/lv";
 
 @Component({
   selector: 'app-daily-tasks',
@@ -27,7 +28,8 @@ export class DailyTasksComponent implements OnInit {
   dayHoursToWork = 23;
 
 
-  projects: string[] = ['NR002', 'NR004', 'English'];
+  projects: LV[] = [new LV('NR002') , new LV('NR004'), new LV('English')];
+  filteredProjects: LV[] = [...this.projects];
 
   docNumbers: string[] = ['200101-222-101'];
   actions: string[] = ['Drawing', 'Model']
@@ -222,5 +224,15 @@ export class DailyTasksComponent implements OnInit {
     this.issueManager.deleteDailyTask(task.id).then(() => {
     });
     this.tasks = this.tasks.filter(x => x.id != task.id);
+  }
+
+  filterProjects(event: any) {
+    let filtered: LV[] = [];
+    this.projects.forEach(p => {
+      if (p.value.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
+        filtered.push(p);
+      }
+    });
+    this.filteredProjects = filtered;
   }
 }
