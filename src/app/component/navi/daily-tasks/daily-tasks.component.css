@@ -11,6 +11,12 @@
   font-size: 14px!important;
   padding: 8px 10px 8px 10px;
 }
+/deep/.p-button.p-button-icon-only {
+  width: 40px;
+  padding: 0;
+  background-color: #3B82F6;
+  border-color: #3B82F6;
+}
 .daily-task{
   width: 650px;
   height: 692px;

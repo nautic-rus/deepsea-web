@@ -35,7 +35,7 @@
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
                 <div>
-                  <p-autoComplete [(ngModel)]="task.project" [suggestions]="filteredProjects" (completeMethod)="filterProjects($event)" field="value" [dropdown]="true">
+                  <p-autoComplete styleClass="width-195" [(ngModel)]="task.project" [suggestions]="filteredProjects" (completeMethod)="filterProjects($event)" field="value" [dropdown]="true">
                     <ng-template let-project pTemplate="item">
                       <div>
                         <div>{{project.value}}</div>
@@ -50,17 +50,26 @@
               </div>
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Номер документа')}}</div>
-                <div><p-dropdown [editable]="true" appendTo="body" placeholder="document" class="select" [(ngModel)]="task.docNumber" [options]="docNumbers" styleClass="width-190 border"></p-dropdown></div>
-                <!--              <div class="mt-10" *ngIf="task.docNumber == 'OTHER'">-->
-                <!--                <input type="text" [placeholder]="t.tr('Номер документа')" pInputText [(ngModel)]="task.docNumberValue" class="width-200" />-->
-                <!--              </div>-->
+
+                <p-autoComplete styleClass="width-195" [(ngModel)]="task.docNumber" [suggestions]="filteredDocNumbers" (completeMethod)="filterDocNumbers($event)" field="value" [dropdown]="true">
+                  <ng-template let-docNumber pTemplate="item">
+                    <div>
+                      <div>{{docNumber.value}}</div>
+                    </div>
+                  </ng-template>
+                </p-autoComplete>
+
+
               </div>
               <div>
                 <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
-                <div><p-dropdown [disabled]="task.hidden" appendTo="body" placeholder="document" class="select" [editable]="true" [(ngModel)]="task.action" [options]="actions" styleClass="width-190 border"></p-dropdown></div>
-                <!--              <div class="mt-10" *ngIf="task.action == 'OTHER'">-->
-                <!--                <input type="text" [placeholder]="t.tr('Действие')" pInputText [(ngModel)]="task.actionValue" class="width-200" />-->
-                <!--              </div>-->
+                <p-autoComplete styleClass="width-195" [(ngModel)]="task.action" [suggestions]="filteredActions" (completeMethod)="filterActions($event)" field="value" [dropdown]="true">
+                  <ng-template let-action pTemplate="item">
+                    <div>
+                      <div>{{action.value}}</div>
+                    </div>
+                  </ng-template>
+                </p-autoComplete>
               </div>
             </div>
             <div class="df">

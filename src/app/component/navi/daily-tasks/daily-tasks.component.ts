@@ -31,8 +31,12 @@ export class DailyTasksComponent implements OnInit {
   projects: LV[] = [new LV('NR002') , new LV('NR004'), new LV('English')];
   filteredProjects: LV[] = [...this.projects];
 
-  docNumbers: string[] = ['200101-222-101'];
-  actions: string[] = ['Drawing', 'Model']
+  docNumbers: LV[] = [];
+  filteredDocNumbers: LV[] = [...this.docNumbers];
+
+
+  actions: LV[] = [new LV('Drawing'), new LV('Model')];
+  filteredActions: LV[] = [...this.actions];
 
 
   issues: Issue[] = [];
@@ -47,7 +51,7 @@ export class DailyTasksComponent implements OnInit {
     this.initialHours = this.conf.data[1];
     this.issue.getIssues('op').then(res => {
       this.issues = res;
-      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
+      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => new LV(x.doc_number)), x => x);
       this.setInitial();
     });
   }
@@ -103,14 +107,14 @@ export class DailyTasksComponent implements OnInit {
   }
   onProjectChanged(task: DailyTask) {
     if (task.project == 'English'){
-      this.docNumbers = ['-'];
+      this.docNumbers = [new LV('-')];
       task.docNumber = '-';
       task.action = '-';
     }
     else{
-      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
-      this.docNumbers.push('Other');
-      task.docNumber = this.docNumbers[0];
+      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => new LV(x.doc_number)), x => x);
+      this.docNumbers.push(new LV('Other'));
+      task.docNumber = this.docNumbers[0].value;
       task.action = 'Drawing';
     }
   }
@@ -234,5 +238,23 @@ export class DailyTasksComponent implements OnInit {
       }
     });
     this.filteredProjects = filtered;
+  }
+  filterDocNumbers(event: any) {
+    let filtered: LV[] = [];
+    this.docNumbers.forEach(p => {
+      if (p.value.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
+        filtered.push(p);
+      }
+    });
+    this.filteredDocNumbers = filtered;
+  }
+  filterActions(event: any) {
+    let filtered: LV[] = [];
+    this.actions.forEach(p => {
+      if (p.value.trim().toLowerCase().includes(event.query.trim().toLowerCase())) {
+        filtered.push(p);
+      }
+    });
+    this.filteredActions = filtered;
   }
 }
