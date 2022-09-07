@@ -60,8 +60,8 @@
               <div class="df">
 <!--                <div class="cx task-text-mini pr-5">{{getHours(task.time)}}:{{getMinutes(task.time)}}</div>-->
 <!--                <div class="cx task-text pr-5">{{trimText(task.project, 7)}}</div>-->
-<!--                <div *ngIf="task.docNumber != '-'" class="cx task-text pr-5">{{trimText(task.docNumber, 14)}}</div>-->
-<!--                <div *ngIf="task.docNumber != '-'" class="cx task-text pr-5">{{trimText(task.action, 7)}}</div>-->
+                <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text">{{trimText(task.docNumber, 20)}}</div>
+<!--                <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text">{{trimText(task.action, 7)}}</div>-->
                 <div class="cx task-text line-text">{{task.details}}</div>
               </div>
             </div>
