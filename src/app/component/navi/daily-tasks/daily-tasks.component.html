@@ -13,10 +13,10 @@
       <div class="big-text-create mb-1 mt-1">{{t.tr('Выбор даты')}}</div>
       <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" styleClass="width-220" [(ngModel)]="calendarDay" (ngModelChange)="dayChanged()"></p-calendar>
     </div>
-<!--    <div>-->
-<!--      <div class="big-text-create mb-1 mt-1">{{t.tr('Отработанные часы')}}</div>-->
-<!--      <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>-->
-<!--    </div>-->
+    <!--    <div>-->
+    <!--      <div class="big-text-create mb-1 mt-1">{{t.tr('Отработанные часы')}}</div>-->
+    <!--      <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>-->
+    <!--    </div>-->
   </div>
   <div class="cxy mt-20">
     <div class="new-task-list blue-button cxy" [pTooltip]="t.tr('Нажмите здесь, чтобы заполнить свои ежедневные задачи')" tooltipPosition="top" (click)="addHoursToList()">
@@ -35,20 +35,20 @@
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
                 <div>
-                  <p-autoComplete styleClass="width-195" [(ngModel)]="task.project" [suggestions]="filteredProjects" (ngModelChange)="onProjectChanged(task)" (completeMethod)="filterProjects($event)" [dropdown]="true">
+                  <p-autoComplete [completeOnFocus]="true" styleClass="width-195" [(ngModel)]="task.project" [suggestions]="filteredProjects" (ngModelChange)="onProjectChanged(task)" (completeMethod)="filterProjects($event)">
                   </p-autoComplete>
                 </div>
               </div>
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Номер документа')}}</div>
 
-                <p-autoComplete styleClass="width-195" [(ngModel)]="task.docNumber" [suggestions]="filteredDocNumbers" (completeMethod)="filterDocNumbers($event)" [dropdown]="true">
+                <p-autoComplete [completeOnFocus]="true" styleClass="width-195" [(ngModel)]="task.docNumber" [suggestions]="filteredDocNumbers" (completeMethod)="filterDocNumbers($event)">
                 </p-autoComplete>
 
               </div>
               <div>
                 <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
-                <p-autoComplete styleClass="width-195" [(ngModel)]="task.action" [suggestions]="filteredActions" (completeMethod)="filterActions($event)" [dropdown]="true">
+                <p-autoComplete [completeOnFocus]="true" styleClass="width-195" [(ngModel)]="task.action" [suggestions]="filteredActions" (completeMethod)="filterActions($event)">
                 </p-autoComplete>
               </div>
             </div>
@@ -85,19 +85,19 @@
   </div>
   <div class="df flex-end space-between">
 
-      <div class="df cy">
-        <div class="big-text-create mr-5">{{t.tr('Вы использовали:')}}</div>
-        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="getSum() != amountOfHours">{{getTime(getSum())}}</div>
-        <div class="big-text-create mr-5" [class.error-text-highlight]="getSum() != amountOfHours">{{t.tr('из')}}</div>
-        <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="getSum() != amountOfHours">{{amountOfHours}}</div>
-        <div class="big-text-create mr-5">{{t.tr('часов')}}</div>
+    <div class="df cy">
+      <div class="big-text-create mr-5">{{t.tr('Вы использовали:')}}</div>
+      <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="getSum() != amountOfHours">{{getTime(getSum())}}</div>
+      <div class="big-text-create mr-5" [class.error-text-highlight]="getSum() != amountOfHours">{{t.tr('из')}}</div>
+      <div class="big-text mr-5 mt-minus2" [class.error-text-highlight]="getSum() != amountOfHours">{{amountOfHours}}</div>
+      <div class="big-text-create mr-5">{{t.tr('часов')}}</div>
+    </div>
+    <div class="df ">
+      <div class="mr-10 cx">
+        <div tabindex="10" (click)="sendHours()" pButton [label]="t.tr ('Отправить')" class="button-ok"></div>
       </div>
-      <div class="df ">
-        <div class="mr-10 cx">
-          <div tabindex="10" (click)="sendHours()" pButton [label]="t.tr ('Отправить')" class="button-ok"></div>
-        </div>
-        <div tabindex="11" (click)="cancel()" pButton [label]="t.tr ('Отмена')" class="button-cancel ml-1"></div>
-      </div>
+      <div tabindex="11" (click)="cancel()" pButton [label]="t.tr ('Отмена')" class="button-cancel ml-1"></div>
+    </div>
 
 
   </div>

@@ -84,11 +84,11 @@ export class DailyTasksComponent implements OnInit {
       userLogin: this.auth.getUser().login,
       userName: this.auth.getUserName(this.auth.getUser().login),
       dateCreated: new Date(),
-      project: 'NR002',
-      docNumber: '200101-222-101',
+      project: '',
+      docNumber: '',
       details: '',
       time: timeUsed,
-      action: 'Drawing',
+      action: '',
       id: this.generateId(20),
       hours: Math.floor(timeUsed),
       minutes: Math.round((timeUsed - Math.floor(timeUsed)) * 60),
@@ -106,18 +106,21 @@ export class DailyTasksComponent implements OnInit {
 
   }
   onProjectChanged(task: DailyTask) {
+    this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
+    this.filteredDocNumbers = [...this.docNumbers];
+
     if (task.project == 'English'){
       this.docNumbers = ['-'];
       task.docNumber = '-';
       task.action = '-';
     }
-    else{
-      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
-      this.docNumbers.push('Other');
-      task.docNumber = this.docNumbers[0];
-      task.action = 'Drawing';
-    }
-    this.filteredDocNumbers = [...this.docNumbers];
+    // else{
+    //   this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
+    //   this.docNumbers.push('Other');
+    //   task.docNumber = this.docNumbers[0];
+    //   task.action = 'Drawing';
+    // }
+    // this.filteredDocNumbers = [...this.docNumbers];
   }
 
   cancel() {
@@ -134,7 +137,7 @@ export class DailyTasksComponent implements OnInit {
     return result;
   }
   sendHours() {
-   this.check();
+    this.check();
     if (this.error == ''){
       this.tasks.filter(t => !t.hidden).forEach(t => {
         if (typeof (t.date) != "number"){
