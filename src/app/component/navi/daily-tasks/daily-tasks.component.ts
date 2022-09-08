@@ -175,7 +175,7 @@ export class DailyTasksComponent implements OnInit {
         this.error = 'You didnt specify action for task #' + (this.tasks.indexOf(t) + 1).toString();
         //return;
       }
-      if (t.details.trim() == ''){
+      if (t.details.trim() == '' && t.project == 'Other'){
         this.invalid.push(t.id + '-d');
         this.error = 'You didnt specify details for task #' + (this.tasks.indexOf(t) + 1).toString();
         //return;
