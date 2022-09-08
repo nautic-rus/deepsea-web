@@ -28,7 +28,7 @@ export class DailyTasksComponent implements OnInit {
   dayHoursToWork = 23;
 
 
-  projects: string[] = ['NR002', 'NR004', 'P701', 'P707', 'English'];
+  projects: string[] = ['NR002', 'NR004', 'P701', 'P707', 'English', 'Other'];
   filteredProjects: string[] = [...this.projects];
 
   docNumbers: string[] = [];
@@ -109,7 +109,7 @@ export class DailyTasksComponent implements OnInit {
     this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
     this.filteredDocNumbers = [...this.docNumbers];
 
-    if (task.project == 'English'){
+    if (task.project == 'English' || task.project == 'Other'){
       this.docNumbers = ['-'];
       task.docNumber = '-';
       task.action = '-';
