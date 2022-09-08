@@ -113,6 +113,9 @@ export class DailyTasksComponent implements OnInit {
       this.docNumbers = ['-'];
       task.docNumber = '-';
       task.action = '-';
+      if (task.project == 'English'){
+        task.details = 'English Lesson';
+      }
     }
     // else{
     //   this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
