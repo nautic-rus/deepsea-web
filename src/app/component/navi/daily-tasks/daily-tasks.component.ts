@@ -51,7 +51,7 @@ export class DailyTasksComponent implements OnInit {
     this.initialHours = this.conf.data[1];
     this.issue.getIssues('op').then(res => {
       this.issues = res;
-      this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
+      //this.docNumbers = _.sortBy(this.issues.filter(x => x.project == 'NR002' && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
       this.setInitial();
     });
   }
