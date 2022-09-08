@@ -10,6 +10,7 @@
 /deep/.p-inputtext {
   font-size: 14px!important;
   padding: 8px 10px 8px 10px;
+  width: 96%;
 }
 /deep/.p-button.p-button-icon-only {
   width: 40px;
@@ -18,8 +19,12 @@
   border-color: #3B82F6;
 }
 .daily-task{
-  width: 650px;
-  height: 692px;
+  width: 50vw;
+  max-width: 650px;
+  min-width: 460px;
+  height: 80vh;
+  max-height: 672px;
+  min-height: 400px;
 }
 .header-row{
   display: grid;
@@ -32,7 +37,11 @@
   border: 1px solid #ced4da;
   border-radius: 4px;
   display: grid;
-  grid-template-columns: 600px 22px;
+  grid-template-columns: auto 22px;
+}
+.two-row-input{
+  display: grid;
+  grid-template-columns: 70% 30%;
 }
 .task-time{
   font-size: 12px;
@@ -51,7 +60,7 @@
   padding-bottom: 2px;
 }
 .tasks{
-  height: 404px;
+  height: 40vh;
   margin-bottom: 10px;
 }
 .error-text{
