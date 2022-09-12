@@ -128,6 +128,18 @@
                     </div>
                   </div>
                 </div>
+                <div *ngIf="plate.stockCode.trim() != ''" class="position-relative cx mb-5">
+                  <div class="trm">
+                    <span [innerHTML]="plate.stockCode | highLight: search"></span>
+                  </div>
+                  <div (click)="copyTrmCode(plate.stockCode, 't' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                    <img src="assets/icons/trm.svg" height="14">
+                    <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                  </div>
+                </div>
+                <div *ngIf="plate.stockCode.trim() == ''" class="invisible-trm mb-5">
+
+                </div>
                 <div class="df mb-10">
                   <div class="left-label-nest cxy">NEST</div>
                   <div class="w-100">
@@ -157,6 +169,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="df mb-10">
                   <div class="left-label-model cxy">MODEL</div>
                   <div class="w-100">
