@@ -110,6 +110,7 @@ export class DocumentsComponent implements OnInit {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+      case 'Accommodation': window.open(`/accommodation-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       default: break;
     }
   }
@@ -197,6 +198,13 @@ export class DocumentsComponent implements OnInit {
           });
         }
         else if (this.department == 'Devices'){
+          this.issueManager.getRevisionFiles().then(revFiles => {
+            this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
+            this.issues = this.issues.filter(x => x.department == this.department);
+            this.issues = _.sortBy(this.issues, x => x.doc_number);
+          });
+        }
+        else if (this.department == 'Accommodation'){
           this.issueManager.getRevisionFiles().then(revFiles => {
             this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
             this.issues = this.issues.filter(x => x.department == this.department);
