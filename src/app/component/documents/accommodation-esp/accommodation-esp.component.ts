@@ -232,7 +232,6 @@ export class AccommodationEspComponent implements OnInit {
     }
   }
   fillAccommodations(){
-    console.log('start');
     this.s.getAccommodations(this.docNumber).then(res => {
       console.log(res);
       if (res.length > 0){
