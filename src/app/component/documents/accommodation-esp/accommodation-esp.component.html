@@ -68,42 +68,31 @@
           <div class="tile">
             <div *ngFor="let acc of accommodations; let i = index" class="card-tile" [class.hidden-card]="acc == null">
               <div class="card-spool df">
-                <div class="w-9 position-relative ">
-
+                <div class="w-20 mm-text">{{acc.materialCode}}</div>
+                <div class="w-30 title-bold-pipe">{{acc.material.name}}</div>
+                <div class="w-10 pr-10 align-center df">
+                  <div class="df">
+                    <div class="attribute mr-5 cy">zone</div>
+                    <div class="text-table-col cy">{{acc.zone}}</div>
+                  </div>
                 </div>
-                <div class="w-91">
-                  <div class="df height-32">
-                    <div class="w-9 pr-10 df">
-                      <div class="text-table-col cy">{{acc.materialCode}}</div>
+                <div class="w-10 pr-10 align-center df">
+                  <div class="df">
+                    <img class="pr-5" src="assets/icons/weight3.svg" height="20">
+                    <div class="text-table-col cy">{{acc.bsWeight}}</div>
+                  </div>
+                </div>
+                <div class="w-30 ">
+                  <div *ngIf="acc.material.code.trim() != ''" class="df justify-content-end position-relative">
+                    <div class="trm">
+                      <span [innerHTML]="acc.material.code | highLight: search"></span>
                     </div>
-                    <div class="w-5 mm-text pr-10 cy">{{acc.materialCode}}</div>
-
-                    <div class="w-10 pr-10 df">
-                      <div class="df">
-                        <div class="attribute mr-5 cy">zone</div>
-                        <div class="text-table-col cy">{{acc.materialCode}}</div>
-                      </div>
-                    </div>
-
-                    <div class="w-27 pr-10 title-bold-pipe cy">{{acc.materialCode}}</div>
-                    <div class="w-4 pr-10 text-black-mini cy">{{acc.materialCode}}</div>
-
-                    <div class="w-4 pr-10 text-black-mini cy">{{acc.materialCode}}</div>
-
-
-                    <div class="w-7 pr-10 df">
-
-                    </div>
-
-                    <div class="w-8 pr-10 align-center df">
-                      <div class="df">
-                        <img class="pr-5" src="assets/icons/weight3.svg" height="20">
-                        <div class="text-table-col cy">{{acc.materialCode}}</div>
-                      </div>
+                    <div (click)="copyTrmCode(acc.material.code, 'a' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                      <img src="assets/icons/trm.svg" height="14">
+                      <div class="copy-tooltip" [hidden]="!showTooltip('a' + i)">Copied!</div>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
