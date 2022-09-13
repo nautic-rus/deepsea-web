@@ -21,6 +21,7 @@ import {DeviceEspGenerationWaitComponent} from "../device-esp/device-esp-generat
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import * as XLSX from "xlsx";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
+import {AccommodationsEspGenerationWaitComponent} from "./accommodations-esp-generation-wait/accommodations-esp-generation-wait.component";
 
 @Component({
   selector: 'app-accommodation-esp',
@@ -524,7 +525,7 @@ export class AccommodationEspComponent implements OnInit {
   }
 
   createEsp(value: string = '1') {
-    this.dialogService.open(DeviceEspGenerationWaitComponent, {
+    this.dialogService.open(AccommodationsEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
       data: {issue: this.issue, spools: value}
