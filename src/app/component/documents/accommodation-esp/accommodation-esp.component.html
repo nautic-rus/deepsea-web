@@ -80,7 +80,7 @@
                 <div class="w-10 pr-10 align-center df">
                   <div class="df">
                     <img class="pr-5" src="assets/icons/weight3.svg" height="20">
-                    <div class="text-table-col cy">{{acc.bsWeight}}</div>
+                    <div class="text-table-col cy">{{round(acc.bsWeight, 10)}}</div>
                   </div>
                 </div>
                 <div class="w-30 ">
@@ -109,54 +109,34 @@
                    [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID']">
             <ng-template pTemplate="header">
               <tr *ngIf="accommodations.length != 0" class="df">
-                <th [ngStyle]="mw(7)" pSortableColumn="spool" class="lxy w-5">{{'Spool'}}
+                <th [ngStyle]="mw(10)" pSortableColumn="spool" class="lxy w-5">Mat code
                   <p-sortIcon field="spool"></p-sortIcon>
                 </th>
-                <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'Id'}}
+                <th [ngStyle]="mw(10)" pSortableColumn="spPieceId" class="cxy w-5">User ID
                   <p-sortIcon field="spPieceId"></p-sortIcon>
                 </th>
-                <th [ngStyle]="mw(21)" pSortableColumn="material.name" class="lxy w-35">{{'Material'}}
+                <th [ngStyle]="mw(30)" pSortableColumn="material.name" class="lxy w-35">Material
                   <p-sortIcon field="material.name"></p-sortIcon>
                 </th>
-                <th [ngStyle]="mw(18)" pSortableColumn="stock" class="lxy w-30">{{'Stock'}}
+                <th [ngStyle]="mw(10)" pSortableColumn="stock" class="lxy w-30">Zone
                   <p-sortIcon field="stock"></p-sortIcon>
                 </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="material.units" class="lxy w-15">{{'Units'}}
+                <th [ngStyle]="mw(10)" pSortableColumn="material.units" class="lxy w-15">Weight
                   <p-sortIcon field="material.units"></p-sortIcon>
                 </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="radius" class="lxy w-15">{{'Radius'}}
+                <th [ngStyle]="mw(30)" pSortableColumn="radius" class="lxy w-15">TRM
                   <p-sortIcon field="radius"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="angle" class="lxy w-15">{{'Angle'}}
-                  <p-sortIcon field="angle"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="length" class="lxy w-5">{{'Length'}}
-                  <p-sortIcon field="length"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="weight" class="lxy w-5">{{'Weight'}}
-                  <p-sortIcon field="weight"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="typeCode" class="cxy w-5">{{'Code'}}
-                  <p-sortIcon field="typeCode"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="smat" class="cxy w-5">{{'Smat'}}
-                  <p-sortIcon field="smat"></p-sortIcon>
                 </th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-device>
-              <tr [class.select-row]="selectedDevice == device" class="cursor-pointer task-row" (click)="selectDevice(device)">
-                <td [ngStyle]="mw(7)" class="w-5 text-14">{{device.userId}}</td>
-                <td [ngStyle]="mw(5)" class="w-5 text-14">{{device.userId}}</td>
-                <td [ngStyle]="mw(21)" class="w-35 text-14">{{device.material.name}}</td>
-                <td [ngStyle]="mw(18)" class="w-30 text-14">{{device.stock}}</td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14">{{device.material.units}}</td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14">°</td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
+            <ng-template pTemplate="body" let-acc>
+              <tr [class.select-row]="selectedDevice == acc" class="cursor-pointer task-row" (click)="selectDevice(acc)">
+                <td [ngStyle]="mw(10)" class="w-5 text-14">{{acc.materialCode}}</td>
+                <td [ngStyle]="mw(10)" class="w-5 text-14">{{removeLeftZeros(acc.userId)}}</td>
+                <td [ngStyle]="mw(30)" class="w-35 text-14">{{acc.material.name}}</td>
+                <td [ngStyle]="mw(10)" class="w-30 text-14">{{acc.zone}}</td>
+                <td [ngStyle]="mw(10)" class="w-15 text-14">{{round(acc.bsWeight, 10)}}</td>
+                <td [ngStyle]="mw(30)" class="w-15 text-14">{{acc.material.code}}</td>
               </tr>
             </ng-template>
           </p-table>
