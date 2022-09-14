@@ -762,4 +762,8 @@ export class AccommodationEspComponent implements OnInit {
       });
     });
   }
+
+  getZones(zone: string) {
+    return zone.split(',');
+  }
 }
