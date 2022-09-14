@@ -401,8 +401,8 @@ export class AccommodationEspComponent implements OnInit {
       this.wz.setSrcAndReset(url);
     });
   }
-  round(input: number) {
-    return Math.round(input * 100) / 100;
+  round(input: number, digit = 100) {
+    return Math.round(input * digit) / digit;
   }
   roundDecimal(input: number){
     return Math.ceil(input);

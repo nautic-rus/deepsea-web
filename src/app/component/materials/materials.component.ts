@@ -90,7 +90,8 @@ export class MaterialsComponent implements OnInit {
     this.addNew = true;
     this.newNode = {};
     this.newNode.data = node.data + '###';
-    this.newNode.label = node.label;
+    this.newNode.label = '';
+    // this.newNode.label = node.label;
     this.newNode.check = node.data;
     this.newNode.checkChildren = node.children.map((x: any) => x.data);
 
