@@ -237,7 +237,7 @@ export class DeviceEspComponent implements OnInit {
     this.s.getDevices(this.docNumber).then(res => {
       if (res.length > 0){
         console.log(res);
-        this.devices = _.sortBy(res, x => this.addLeftZeros(x.userId, 5));
+        this.devices = _.sortBy(res.filter(x => x.elemType != 'accommodation'), x => this.addLeftZeros(x.userId, 5));
         if (this.devices.find((x: any) => x.userId.includes('#')) != null){
           this.devices.forEach((d: any) => {
             if (d.userId.includes('#')){
@@ -257,21 +257,27 @@ export class DeviceEspComponent implements OnInit {
           this.devices = this.devicesGrouped;
         }
 
+        _.forEach(_.groupBy(res.filter(x => x.elemType == 'accommodation'), x => x.material.code), g => {
+          let newDevice = JSON.parse(JSON.stringify(g[0]));
+          let sum = 0;
+          g.forEach(x => sum += x.weight);
+          newDevice.weight = sum;
+          this.devices.push(newDevice);
+        });
+
 
         let findSplit = this.devices.filter((x: any) => x.userId.includes('.') && x.userId.split('.').length > 1);
         if (findSplit.length > 0){
           let min = _.sortBy(findSplit,x => x.userId.split('.').length)[0].userId.split('.').length;
           this.devices.forEach((x: any) => x.label = x.userId.includes('.') ? x.userId.split('.').slice(0, min).join('.') : x.userId);
-          this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x}));
+          this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
         }
         else{
           this.devices.forEach((x: any) => x.label = x.userId);
-          this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x}));
+          this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
         }
 
         this.devices.forEach((d: any) => d.userId = this.removeLeftZeros(d.userId));
-
-
         this.devicesSrc = [...this.devices];
         this.devicesSrcGrouped = [...this.devices];
       }
