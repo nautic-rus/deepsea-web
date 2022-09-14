@@ -248,25 +248,30 @@
 </div>
 <p-toast position="bottom-center"></p-toast>
 <p-contextMenu #nodeMenu [model]="items"></p-contextMenu>
-<p-dialog [(visible)]="addNew" header="Добавить новую папку" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="addNew" [header]="t.tr('Добавить новую папку')" [modal]="true" styleClass="p-fluid width-300">
   <ng-template pTemplate="content">
-    <div class="mx-5">
-      <label>
-        Код
+    <div class="mb-10">
+      <div class="big-text-create mb-1">{{t.tr('Код (вставьте код вместо ###)')}}</div>
         <input type="text" pInputText [(ngModel)]="newNode.data"/>
-      </label>
       <small class="p-error" *ngIf="!newNode.data"></small>
     </div>
-    <div class="mx-5">
-      <label>
-        Название
-        <input type="text" pInputText [(ngModel)]="newNode.label"/>
-      </label>
+    <div class="">
+      <div class="big-text-create mb-1">{{t.tr('Название папки')}}</div>
+        <input [placeholder]="t.tr('Введите название новой папки')" type="text" pInputText [(ngModel)]="newNode.label"/>
       <small class="p-error" *ngIf="!newNode.label"></small>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="ОТМЕНА" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>
-    <button [disabled]="isSaveDisabled()" pButton pRipple label="СОХРАНИТЬ" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+    <div class="cx">
+      <div tabindex="11" (click)="hide()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
+      <div tabindex="10" [class.disabled-button]="isSaveDisabled()" (click)="save()" pButton [label]="t.tr('Создать')" class="button-ok"></div>
+    </div>
+
+
+
+
+
+<!--    <button pButton pRipple label="ОТМЕНА" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>-->
+<!--    <button [disabled]="isSaveDisabled()" pButton pRipple label="СОХРАНИТЬ" icon="pi pi-check" class="p-button-text" (click)="save()"></button>-->
   </ng-template>
 </p-dialog>

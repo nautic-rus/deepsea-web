@@ -338,11 +338,11 @@ export class LanguageService {
           case 'Введите документ...': return 'Enter document...';
           case 'Введите действие...': return 'Enter action...';
           case 'Введите описание...': return 'Enter details...';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Введите название новой папки': return 'Enter the name of the new folder';
+          case 'Код': return 'Code';
+          case 'Название папки': return 'Folder name';
+          case 'Код (вставьте код вместо ###)': return 'Code (insert code instead of ###)';
+          case 'Добавить новую папку': return 'Add a new folder';
           case '': return '';
           case '': return '';
           case '': return '';
