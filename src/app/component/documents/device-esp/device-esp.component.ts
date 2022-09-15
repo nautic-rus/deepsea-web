@@ -815,4 +815,7 @@ export class DeviceEspComponent implements OnInit {
       });
     });
   }
+  getZones(zone: string) {
+    return zone.split(',');
+  }
 }
