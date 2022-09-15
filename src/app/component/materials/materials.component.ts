@@ -54,6 +54,26 @@ export class MaterialsComponent implements OnInit {
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
+    // fetch('assets/test/materials.json').then(json => {
+    //   json.text().then(text => {
+    //     let materials = JSON.parse(text);
+    //     materials.forEach((m: any) => {
+    //       let material = new Material();
+    //       material.code = m.trmCode;
+    //       material.category = m.category;
+    //       material.name = m.name;
+    //       material.document = '';
+    //       material.projects = ['N002', 'N004'];
+    //       material.provider = '';
+    //       material.singleWeight = m.singleWeight;
+    //       material.units = m.units;
+    //       console.log(material);
+    //       //this.materialManager.updateMaterial(material, 'sidorov').then(() => {});
+    //     });
+    //   });
+    // });
+
+
     setTimeout(() => {
       this.selectedView = 'tiles';
     }, 1000);

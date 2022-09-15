@@ -1,0 +1,742 @@
+[
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905",
+  "name": "Перемычка заземления ПГМ 2.5-4.3-150",
+  "project": "P701",
+  "singleWeight": 0.01,
+  "trmCode": "MTLESNSTLNON0011",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-01",
+  "name": "Перемычка заземления ПГМ 2.5-6.4-150",
+  "project": "P701",
+  "singleWeight": 0.01,
+  "trmCode": "MTLESNSTLNON0012",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-02",
+  "name": "Перемычка заземления ПГМ 2.5-4.3-200",
+  "project": "P701",
+  "singleWeight": 0.011,
+  "trmCode": "MTLESNSTLNON0013",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-03",
+  "name": "Перемычка заземления ПГМ 2.5-6.4-200",
+  "project": "P701",
+  "singleWeight": 0.011,
+  "trmCode": "MTLESNSTLNON0014",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-04",
+  "name": "Перемычка заземления ПГМ 2.5-4.3-300",
+  "project": "P701",
+  "singleWeight": 0.013,
+  "trmCode": "MTLESNSTLNON0015",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-05",
+  "name": "Перемычка заземления ПГМ 2.5-6.4-300",
+  "project": "P701",
+  "singleWeight": 0.013,
+  "trmCode": "MTLESNSTLNON0016",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-06",
+  "name": "Перемычка заземления ПГМ 2.5-4.3-500",
+  "project": "P701",
+  "singleWeight": 0.017,
+  "trmCode": "MTLESNSTLNON0017",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-07",
+  "name": "Перемычка заземления ПГМ 2.5-6.4-500",
+  "project": "P701",
+  "singleWeight": 0.017,
+  "trmCode": "MTLESNSTLNON0018",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-08",
+  "name": "Перемычка заземления ПГМ 2.5-4.3-800",
+  "project": "P701",
+  "singleWeight": 0.025,
+  "trmCode": "MTLESNSTLNON0019",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-09",
+  "name": "Перемычка заземления ПГМ 2.5-6.4-800",
+  "project": "P701",
+  "singleWeight": 0.025,
+  "trmCode": "MTLESNSTLNON0020",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-10",
+  "name": "Перемычка заземления ПГМ 4-4.3-150",
+  "project": "P701",
+  "singleWeight": 0.011,
+  "trmCode": "MTLESNSTLNON0021",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-11",
+  "name": "Перемычка заземления ПГМ 4-6.4-150",
+  "project": "P701",
+  "singleWeight": 0.011,
+  "trmCode": "MTLESNSTLNON0022",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-12",
+  "name": "Перемычка заземления ПГМ 4-4.3-200",
+  "project": "P701",
+  "singleWeight": 0.013,
+  "trmCode": "MTLESNSTLNON0023",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-13",
+  "name": "Перемычка заземления ПГМ 4-4.3-300",
+  "project": "P701",
+  "singleWeight": 0.017,
+  "trmCode": "MTLESNSTLNON0024",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-14",
+  "name": "Перемычка заземления ПГМ 4-6.4-300",
+  "project": "P701",
+  "singleWeight": 0.017,
+  "trmCode": "MTLESNSTLNON0025",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-15",
+  "name": "Перемычка заземления ПГМ 4-6.4-500",
+  "project": "P701",
+  "singleWeight": 0.024,
+  "trmCode": "MTLESNSTLNON0026",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-16",
+  "name": "Перемычка заземления ПГМ 4-6.4-800",
+  "project": "P701",
+  "singleWeight": 0.035,
+  "trmCode": "MTLESNSTLNON0027",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-17",
+  "name": "Перемычка заземления ПГМ 6-6.4-150",
+  "project": "P701",
+  "singleWeight": 0.014,
+  "trmCode": "MTLESNSTLNON0028",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-18",
+  "name": "Перемычка заземления ПГМ 6-6.4-200",
+  "project": "P701",
+  "singleWeight": 0.017,
+  "trmCode": "MTLESNSTLNON0029",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-19",
+  "name": "Перемычка заземления ПГМ 6-6.4-300",
+  "project": "P701",
+  "singleWeight": 0.022,
+  "trmCode": "MTLESNSTLNON0030",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-20",
+  "name": "Перемычка заземления ПГМ 6-6.4-500",
+  "project": "P701",
+  "singleWeight": 0.032,
+  "trmCode": "MTLESNSTLNON0031",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-21",
+  "name": "Перемычка заземления ПГМ 6-6.4-800",
+  "project": "P701",
+  "singleWeight": 0.05,
+  "trmCode": "MTLESNSTLNON0032",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-22",
+  "name": "Перемычка заземления ПГМ 10-6.4-150",
+  "project": "P701",
+  "singleWeight": 0.028,
+  "trmCode": "MTLESNSTLNON0033",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-23",
+  "name": "Перемычка заземления ПГМ 10-8.4-150",
+  "project": "P701",
+  "singleWeight": 0.028,
+  "trmCode": "MTLESNSTLNON0034",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-24",
+  "name": "Перемычка заземления ПГМ 10-6.4-200",
+  "project": "P701",
+  "singleWeight": 0.033,
+  "trmCode": "MTLESNSTLNON0035",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-25",
+  "name": "Перемычка заземления ПГМ 10-8.4-200",
+  "project": "P701",
+  "singleWeight": 0.033,
+  "trmCode": "MTLESNSTLNON0036",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-26",
+  "name": "Перемычка заземления ПГМ 10-6.4-300",
+  "project": "P701",
+  "singleWeight": 0.042,
+  "trmCode": "MTLESNSTLNON0037",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-27",
+  "name": "Перемычка заземления ПГМ 10-8.4-300",
+  "project": "P701",
+  "singleWeight": 0.042,
+  "trmCode": "MTLESNSTLNON0038",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-28",
+  "name": "Перемычка заземления ПГМ 10-6.4-500",
+  "project": "P701",
+  "singleWeight": 0.057,
+  "trmCode": "MTLESNSTLNON0039",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-29",
+  "name": "Перемычка заземления ПГМ 10-6.4-800",
+  "project": "P701",
+  "singleWeight": 0.07,
+  "trmCode": "MTLESNSTLNON0040",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-30",
+  "name": "Перемычка заземления ПГМ 16-6.4-150",
+  "project": "P701",
+  "singleWeight": 0.025,
+  "trmCode": "MTLESNSTLNON0041",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-31",
+  "name": "Перемычка заземления ПГМ 16-8.4-150",
+  "project": "P701",
+  "singleWeight": 0.025,
+  "trmCode": "MTLESNSTLNON0042",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-32",
+  "name": "Перемычка заземления ПГМ 16-6.4-200",
+  "project": "P701",
+  "singleWeight": 0.045,
+  "trmCode": "MTLESNSTLNON0043",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-33",
+  "name": "Перемычка заземления ПГМ 16-8.4-200",
+  "project": "P701",
+  "singleWeight": 0.045,
+  "trmCode": "MTLESNSTLNON0044",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-34",
+  "name": "Перемычка заземления ПГМ 16-6.4-300",
+  "project": "P701",
+  "singleWeight": 0.059,
+  "trmCode": "MTLESNSTLNON0045",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-35",
+  "name": "Перемычка заземления ПГМ 16-8.4-300",
+  "project": "P701",
+  "singleWeight": 0.059,
+  "trmCode": "MTLESNSTLNON0046",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-36",
+  "name": "Перемычка заземления ПГМ 16-6.4-500",
+  "project": "P701",
+  "singleWeight": 0.088,
+  "trmCode": "MTLESNSTLNON0047",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-37",
+  "name": "Перемычка заземления ПГМ 16-6.4-800",
+  "project": "P701",
+  "singleWeight": 0.13,
+  "trmCode": "MTLESNSTLNON0048",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-38",
+  "name": "Перемычка заземления ПГМ 25-8.4-150",
+  "project": "P701",
+  "singleWeight": 0.076,
+  "trmCode": "MTLESNSTLNON0049",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-39",
+  "name": "Перемычка заземления ПГМ 25-6.4-200",
+  "project": "P701",
+  "singleWeight": 0.078,
+  "trmCode": "MTLESNSTLNON0050",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-40",
+  "name": "Перемычка заземления ПГМ 25-6.4-300",
+  "project": "P701",
+  "singleWeight": 0.1,
+  "trmCode": "MTLESNSTLNON0051",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-41",
+  "name": "Перемычка заземления ПГМ 25-8.4-300",
+  "project": "P701",
+  "singleWeight": 0.1,
+  "trmCode": "MTLESNSTLNON0052",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-42",
+  "name": "Перемычка заземления ПГМ 35-10.5-150",
+  "project": "P701",
+  "singleWeight": 0.084,
+  "trmCode": "MTLESNSTLNON0053",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-43",
+  "name": "Перемычка заземления ПГМ 35-10.5-200",
+  "project": "P701",
+  "singleWeight": 0.1,
+  "trmCode": "MTLESNSTLNON0054",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-44",
+  "name": "Перемычка заземления ПГМ 35-10.5-300",
+  "project": "P701",
+  "singleWeight": 0.133,
+  "trmCode": "MTLESNSTLNON0055",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-45",
+  "name": "Перемычка заземления ПГМ 35-10.5-500",
+  "project": "P701",
+  "singleWeight": 0.197,
+  "trmCode": "MTLESNSTLNON0056",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-46",
+  "name": "Перемычка заземления ПГМ 50-10.5-150",
+  "project": "P701",
+  "singleWeight": 0.104,
+  "trmCode": "MTLESNSTLNON0057",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-47",
+  "name": "Перемычка заземления ПГМ 50-10.5-200",
+  "project": "P701",
+  "singleWeight": 0.124,
+  "trmCode": "MTLESNSTLNON0058",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-48",
+  "name": "Перемычка заземления ПГМ 50-10.5-300",
+  "project": "P701",
+  "singleWeight": 0.17,
+  "trmCode": "MTLESNSTLNON0059",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-49",
+  "name": "Перемычка заземления ПГМ 50-10.5-500",
+  "project": "P701",
+  "singleWeight": 0.26,
+  "trmCode": "MTLESNSTLNON0060",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-50",
+  "name": "Перемычка заземления ПГМ 50-13-150",
+  "project": "P701",
+  "singleWeight": 0.101,
+  "trmCode": "MTLESNSTLNON0061",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-51",
+  "name": "Перемычка заземления ПГМ 50-13-200",
+  "project": "P701",
+  "singleWeight": 0.123,
+  "trmCode": "MTLESNSTLNON0062",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-52",
+  "name": "Перемычка заземления ПГМ 50-13-300",
+  "project": "P701",
+  "singleWeight": 0.167,
+  "trmCode": "MTLESNSTLNON0063",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-53",
+  "name": "Перемычка заземления ПГМ 50-13-500",
+  "project": "P701",
+  "singleWeight": 0.257,
+  "trmCode": "MTLESNSTLNON0064",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-54",
+  "name": "Перемычка заземления ПГМ 70-10.5-150",
+  "project": "P701",
+  "singleWeight": 0.101,
+  "trmCode": "MTLESNSTLNON0065",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-55",
+  "name": "Перемычка заземления ПГМ 70-10.5-200",
+  "project": "P701",
+  "singleWeight": 0.123,
+  "trmCode": "MTLESNSTLNON0066",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-56",
+  "name": "Перемычка заземления ПГМ 70-10.5-300",
+  "project": "P701",
+  "singleWeight": 0.167,
+  "trmCode": "MTLESNSTLNON0067",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-57",
+  "name": "Перемычка заземления ПГМ 70-10.5-500",
+  "project": "P701",
+  "singleWeight": 0.257,
+  "trmCode": "MTLESNSTLNON0068",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-58",
+  "name": "Перемычка заземления ПГМ 70-13-150",
+  "project": "P701",
+  "singleWeight": 0.138,
+  "trmCode": "MTLESNSTLNON0069",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-59",
+  "name": "Перемычка заземления ПГМ 70-13-200",
+  "project": "P701",
+  "singleWeight": 0.17,
+  "trmCode": "MTLESNSTLNON0070",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-60",
+  "name": "Перемычка заземления ПГМ 70-13-300",
+  "project": "P701",
+  "singleWeight": 0.212,
+  "trmCode": "MTLESNSTLNON0071",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-61",
+  "name": "Перемычка заземления ПГМ 70-13-500",
+  "project": "P701",
+  "singleWeight": 0.358,
+  "trmCode": "MTLESNSTLNON0072",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-62",
+  "name": "Перемычка заземления ПГМ 2.5-4.3-250",
+  "project": "P701",
+  "singleWeight": 0.012,
+  "trmCode": "MTLESNSTLNON0073",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-63",
+  "name": "Перемычка заземления ПГМ 2.5-6.4-250",
+  "project": "P701",
+  "singleWeight": 0.012,
+  "trmCode": "MTLESNSTLNON0074",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-64",
+  "name": "Перемычка заземления ПГМ 4-4.3-250",
+  "project": "P701",
+  "singleWeight": 0.014,
+  "trmCode": "MTLESNSTLNON0075",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-65",
+  "name": "Перемычка заземления ПГМ 4-6.4-250",
+  "project": "P701",
+  "singleWeight": 0.014,
+  "trmCode": "MTLESNSTLNON0076",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-66",
+  "name": "Перемычка заземления ПГМ 6-6.4-250",
+  "project": "P701",
+  "singleWeight": 0.024,
+  "trmCode": "MTLESNSTLNON0077",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-67",
+  "name": "Перемычка заземления ПГМ 10-6.4-250",
+  "project": "P701",
+  "singleWeight": 0.037,
+  "trmCode": "MTLESNSTLNON0078",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-68",
+  "name": "Перемычка заземления ПГМ 10-8.4-250",
+  "project": "P701",
+  "singleWeight": 0.037,
+  "trmCode": "MTLESNSTLNON0079",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-69",
+  "name": "Перемычка заземления ПГМ 16-6.4-250",
+  "project": "P701",
+  "singleWeight": 0.054,
+  "trmCode": "MTLESNSTLNON0080",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-70",
+  "name": "Перемычка заземления ПГМ 16-8.4-250",
+  "project": "P701",
+  "singleWeight": 0.054,
+  "trmCode": "MTLESNSTLNON0081",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-71",
+  "name": "Перемычка заземления ПГМ 25-6.4-250",
+  "project": "P701",
+  "singleWeight": 0.09,
+  "trmCode": "MTLESNSTLNON0082",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-72",
+  "name": "Перемычка заземления ПГМ 25-8.4-250",
+  "project": "P701",
+  "singleWeight": 0.088,
+  "trmCode": "MTLESNSTLNON0083",
+  "units": "796"
+ },
+ {
+  "category": "16101",
+  "coefficient": 1,
+  "description": "ИДУШ.363323.905-73",
+  "name": "Перемычка заземления ПГМ 2.5-4.3-100",
+  "project": "P701",
+  "singleWeight": 0.009,
+  "trmCode": "MTLESNSTLNON0084",
+  "units": "796"
+ }
+]
