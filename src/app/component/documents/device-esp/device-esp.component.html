@@ -68,7 +68,7 @@
           <div class="tile">
             <div *ngFor="let deviceGroup of devicesGrouped; let i = index" class="card-tile" [class.hidden-card]="deviceGroup == null">
               <div class="card-spool df">
-                <div class="w-7 position-relative ">
+                <div class="w-5 position-relative ">
 <!--                  <div class="title-bold mb-20" [class.dxf-enabled]="dxfEnabled" [innerHTML]="deviceGroup.label | highLight: search"></div>-->
                   <div *ngIf="!deviceGroup.accommodation" class="materials-button-mini blue-button cxy" [pTooltip]="l.tr('Добавить')" [class.disabled-button]="!auth.hasPerms('add-material-device')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label)">
                     <img src="assets/icons/plus3.svg" height="15">
@@ -79,15 +79,15 @@
                     </div>
                   </div>
                 </div>
-                <div class="w-93">
+                <div class="w-95">
                   <div class="df" *ngFor="let device of deviceGroup.devices; let p = index">
-                    <div class="w-6 pr-10 df">
+                    <div class="w-8 pr-10 df">
                       <div class="text-table-col cy">{{hideGroup(device.userId, deviceGroup.label)}}</div>
                     </div>
-                    <div *ngIf="!deviceGroup.accommodation" class="w-6 mm-text pr-10 cy">{{device.count}}</div>
-                    <div *ngIf="deviceGroup.accommodation" class="w-6 mm-text pr-10 cy"></div>
-                    <div class="w-30 pr-10 title-bold-pipe cy">{{device.material.name}}</div>
-                    <div class="w-20 pr-10 df">
+                    <div *ngIf="!deviceGroup.accommodation" class="w-2 mm-text pr-10 cy">{{device.count}}</div>
+                    <div *ngIf="deviceGroup.accommodation" class="w-2 mm-text pr-10 cy"></div>
+                    <div class="w-22 pr-10 title-bold-pipe cy">{{device.material.name}}</div>
+                    <div class="w-27 min-width-170 pr-10 df">
                       <div class="attribute mr-10 cy">zone</div>
                       <div class="text-table-col grid-zone cy">
                         <div *ngFor="let zone of getZones(device.zone)">
@@ -97,13 +97,13 @@
                     </div>
 
 
-                    <div class="w-4 pr-10 text-black-mini cy">{{device.material.provider}}</div>
+<!--                    <div class="w-4 pr-10 text-black-mini cy">{{device.material.provider}}</div>-->
 
                     <div class="w-4 pr-10 text-black-mini cy">{{device.units}}</div>
 
 
 
-                    <div class="w-8 pr-10 align-center df">
+                    <div class="w-12 pr-10 align-center df">
                       <div class="df">
                         <img class="pr-5" src="assets/icons/weight3.svg" height="20">
                         <div *ngIf="!deviceGroup.accommodation" class="text-table-col cy">{{round(device.material.singleWeight)}}</div>
@@ -113,7 +113,7 @@
 
 
 
-                    <div class="w-22 cy justify-content-end">
+                    <div class="w-25 cy justify-content-end">
                       <div class="cy pr-10">
                         <div *ngIf="!deviceGroup.accommodation" class="kpl-flag cxy">
                           <div class="text-center-x">
