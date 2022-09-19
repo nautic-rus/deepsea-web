@@ -24,7 +24,7 @@ export class DeviceEspGenerationWaitComponent implements OnInit {
   resUrls: string[] = [];
   revs = ['0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
   rev: string = this.revs[0];
-  langs = ['en', 'ru'];
+  langs = ['Primary', 'Secondary'];
   lang = this.langs[0];
   updateRevision = false;
 

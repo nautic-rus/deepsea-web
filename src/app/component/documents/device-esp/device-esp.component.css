@@ -904,7 +904,6 @@
   perspective: 1000px;
   padding: 10px;
   border-radius: 10px;
-  min-width: 750px;
 }
 .hidden-card{
   opacity: 0 !important;
@@ -1057,8 +1056,7 @@
   height: 22px;
 }
 .grid-zone{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+
 }
 .zone{
   border: 1px solid #d3d3d3;

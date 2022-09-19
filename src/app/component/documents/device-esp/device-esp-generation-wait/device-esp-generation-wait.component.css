@@ -74,8 +74,7 @@
   height: fit-content;
   max-height: 550px;
   overflow-y: auto;
-  width: 450px;
-  min-height: 180px;
+  width: 300px;
 }
 .header-cloud-card{
   border-bottom: 0 none;

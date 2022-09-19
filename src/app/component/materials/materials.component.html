@@ -69,7 +69,7 @@
             <div *ngFor="let material of materials; let i = index" class="dash-card">
               <div *ngIf="material != null" class="dash-card-tile">
                 <div class="top-row-doc">
-                  <div class="title-bold">{{material.name}}</div>
+                  <div class="title-bold">{{trimText(material.name, 50)}}</div>
                   <div class="p-ml-auto">
                     <div class="kpl-flag cxy">
                       <div class="text-center-x">
@@ -84,21 +84,23 @@
                 </div>
 
 
-                <div class="df position-relative content-end pr-10 mt-minus14">
-                  <div class="trm">
-                    <span [innerHTML]="material.code | highLight: search"></span>
-                  </div>
-                  <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy cursor-pointer cxy">
-                    <img src="assets/icons/trm.svg" height="12">
-                    <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
-                  </div>
-                </div>
+
 
 
 
 
                 <div class="two-row mt-5 mb-5">
-                  <div class="text-medium">{{material.description}}</div>
+                  <div *ngIf="material.description != ''" class="text-medium">{{trimText(material.description, 20)}}</div>
+                  <div *ngIf="material.description == ''" class="text-medium">/description/</div>
+                  <div class="df position-relative content-end pr-10">
+                    <div class="trm">
+                      <span [innerHTML]="material.code | highLight: search"></span>
+                    </div>
+                    <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy cursor-pointer cxy">
+                      <img src="assets/icons/trm.svg" height="12">
+                      <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                    </div>
+                  </div>
                 </div>
                 <div class="three-row df">
                   <div class="df">
