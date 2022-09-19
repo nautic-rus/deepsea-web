@@ -344,7 +344,7 @@ export class LanguageService {
           case 'Код (вставьте код вместо ###)': return 'Code (insert code instead of ###)';
           case 'Добавить новую папку': return 'Add a new folder';
           case 'Выгрузить ексель': return 'Export excel';
-          case '': return '';
+          case 'Ед. изм.': return 'Units';
           case '': return '';
           case '': return '';
           case '': return '';
