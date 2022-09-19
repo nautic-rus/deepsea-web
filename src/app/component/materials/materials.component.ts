@@ -67,8 +67,9 @@ export class MaterialsComponent implements OnInit {
     //       material.provider = '';
     //       material.singleWeight = m.singleWeight;
     //       material.units = m.units;
+    //       material.description = m.description;
     //       console.log(material);
-    //       //this.materialManager.updateMaterial(material, 'sidorov').then(() => {});
+    //       this.materialManager.updateMaterial(material, 'sidorov').then(() => {});
     //     });
     //   });
     // });
