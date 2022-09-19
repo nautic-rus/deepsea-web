@@ -376,4 +376,11 @@ export class MaterialsComponent implements OnInit {
   openMaterialCloudDirectory(material: any) {
     window.open(material.materialCloudDirectory);
   }
+  trimText(input: string, length = 50){
+    let res = input;
+    if (res.length > length){
+      res = res.substr(0, length) + '..';
+    }
+    return res;
+  }
 }

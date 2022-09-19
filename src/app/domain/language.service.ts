@@ -343,7 +343,7 @@ export class LanguageService {
           case 'Название папки': return 'Folder name';
           case 'Код (вставьте код вместо ###)': return 'Code (insert code instead of ###)';
           case 'Добавить новую папку': return 'Add a new folder';
-          case '': return '';
+          case 'Выгрузить ексель': return 'Export excel';
           case '': return '';
           case '': return '';
           case '': return '';
