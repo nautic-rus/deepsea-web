@@ -202,7 +202,7 @@ export class LanguageService {
           case 'Добавить строку': return 'Add row';
           case 'Названиe': return 'Name';
           case 'Группа': return 'Group';
-          case 'Вставить из буфера': return 'Paste';
+          case 'Вставить из буфера': return 'Paste from clipboard';
           case 'КАБЕЛИ': return 'ELEC CABELS';
           case 'РАСКРОЙ': return 'NESTING';
           case 'Сгенерируйте материалы из FORAN': return 'Generate materials from FORAN';

@@ -1,4 +1,4 @@
-<div style="height: 530px; width: 500px">
+<div style="height: 650px; width: 500px">
   <div class="task-header-check">
     <div class="task-name">{{t.tr('Чек-лист')}}</div>
     <div class="task-button-close cxy" (click)="close()">
@@ -29,12 +29,12 @@
   </div>
 
 
-  <p-table styleClass="h-280" [value]="issueChecks" scrollHeight="300px" [scrollable]="true">
+  <p-table styleClass="h-280" [value]="issueChecks" scrollHeight="420px" [scrollable]="true">
     <ng-template pTemplate="header">
       <tr>
         <th>{{t.tr('Название')}}</th>
         <th>{{t.tr('Группа')}}</th>
-        <th style="width: 8%"></th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-check >
@@ -59,7 +59,7 @@
             </ng-template>
           </p-cellEditor>
         </td>
-        <td style="width: 8%" (click)="delete(check)" >
+        <td (click)="delete(check)" >
           <div class="cursor-pointer delete-button cxy">
             <img src="assets/icons/trash-1.svg" height="18">
           </div>
