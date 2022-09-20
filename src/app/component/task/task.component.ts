@@ -64,6 +64,7 @@ export class TaskComponent implements OnInit {
   issueNameEdit = false;
   startDate: Date = new Date();
   dueDate: Date = new Date();
+  contractDueDate: Date = new Date();
   today: Date = new Date();
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];

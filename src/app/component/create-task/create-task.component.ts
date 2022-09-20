@@ -33,6 +33,7 @@ export class CreateTaskComponent implements OnInit {
   itUsers: User[] = [];
   startDate: Date = new Date();
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
+  contractDueDate: Date = new Date(this.startDate.getTime() + 259200000);
   today: Date = new Date();
   taskProjects: string[] = [];
   sfiCodes: LV[] = [];
