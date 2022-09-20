@@ -720,9 +720,27 @@ export class NestingComponent implements OnInit {
   }
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.nestingPlates.filter((x: any) => x != null));
-    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    XLSX.writeFile(workbook, fileName);
+    if (this.selectedTitle == 'Plates'){
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.nestingPlates.filter((x: any) => x != null));
+      const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+      XLSX.writeFile(workbook, fileName);
+    }
+    else{
+      let blocks: string[] = [];
+      this.blocks.filter(x => x.selected).forEach(block => {
+        block.name.split(';').forEach((x: any) => blocks.push(x));
+      });
+      let profiles: any[] = [];
+      this.nestingProfilesSrc.forEach(profile => {
+        if (blocks.includes(profile.BLOCK)){
+          profiles.push(profile);
+        }
+      });
+      profiles.forEach(profile => profile.name = this.profileName(profile));
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(profiles);
+      const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+      XLSX.writeFile(workbook, fileName);
+    }
   }
 
   downloadNestingFile(nest: any) {
@@ -1110,6 +1128,7 @@ export class NestingComponent implements OnInit {
     this.selectedTitle = title;
     if (this.selectedTitle == 'Profiles'){
       this.fillNestingProfiles();
+      console.log(this.nestingProfiles);
     }
   }
   fillNestingProfiles(){
