@@ -39,7 +39,7 @@ export class Issue {
   revision_files: FileAttachment[] = [];
   archive_revision_files: FileAttachment[] = [];
   labor: number = 0;
-  contractDueDate: number = 0;
+  contract_due_date: number = 0;
   checks: IssueCheck[] = [];
   ready: string = '000';
   readyM: boolean = false;
