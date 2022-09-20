@@ -98,13 +98,13 @@
   border-right: 1px #e1eaf4 solid;
   position: relative;
   padding: 5px;
-  min-height: 200px;
+  min-height: 150px;
 }
 .col-day-hidden{
   background: #d9d9d929;
   border-bottom: 1px #e1eaf4 solid;
   border-right: 1px #e1eaf4 solid;
-  min-height: 200px;
+  min-height: 150px;
 }
 .all-calendar{
   display: flex;

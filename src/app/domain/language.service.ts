@@ -177,6 +177,7 @@ export class LanguageService {
           case 'Отправить': return 'Send';
           case 'Сгенерировать': return 'Generate';
           case 'Создать подзадачу': return 'Create subtask';
+          case 'Создать подзадачу для': return 'Create subtask for';
           case 'Прочее': return 'Other';
           case 'Комплект': return 'Bundle';
           case '': return 'Create list of tray bundles';
@@ -201,7 +202,7 @@ export class LanguageService {
           case 'Добавить строку': return 'Add row';
           case 'Названиe': return 'Name';
           case 'Группа': return 'Group';
-          case 'Вставить из буфера': return 'Paste';
+          case 'Вставить из буфера': return 'Paste from clipboard';
           case 'КАБЕЛИ': return 'ELEC CABELS';
           case 'РАСКРОЙ': return 'NESTING';
           case 'Сгенерируйте материалы из FORAN': return 'Generate materials from FORAN';
@@ -344,7 +345,7 @@ export class LanguageService {
           case 'Код (вставьте код вместо ###)': return 'Code (insert code instead of ###)';
           case 'Добавить новую папку': return 'Add a new folder';
           case 'Выгрузить ексель': return 'Export excel';
-          case '': return '';
+          case 'Ед. изм.': return 'Units';
           case '': return '';
           case '': return '';
           case '': return '';
