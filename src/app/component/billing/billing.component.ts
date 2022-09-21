@@ -13,6 +13,7 @@ import {PartsQtyComponent} from "./parts-qty/parts-qty.component";
 import {WastageComponent} from "./wastage/wastage.component";
 import {BlocksComponent} from "./blocks/blocks.component";
 import {PartsQtyProfileComponent} from "./parts-qty-profile/parts-qty-profile.component";
+import {BlocksProfileComponent} from "./blocks-profile/blocks-profile.component";
 
 @Component({
   selector: 'app-billing',
@@ -503,6 +504,17 @@ export class BillingComponent implements OnInit {
       showHeader: false,
       modal: true,
       data: [this.project, plate],
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+  }
+  showBlockProfile(profile: any) {
+    this.dialogService.open(BlocksProfileComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.project, profile],
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.ref.close();
