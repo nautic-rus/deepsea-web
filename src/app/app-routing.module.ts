@@ -58,7 +58,7 @@ const routes: Routes = [
   { path: 'hull-esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
   { path: 'pipe-esp', component: PipeEspComponent, canActivate: [AuthGuard], data: {animation: 'PipeEspComponent'} },
   { path: 'device-esp', component: DeviceEspComponent, canActivate: [AuthGuard], data: {animation: 'DeviceEspComponent'} },
-  { path: 'accommodation-esp', component: AccommodationEspComponent, canActivate: [AuthGuard], data: {animation: 'AccommodationEspComponent'} },
+  { path: 'accommodation-esp', component: DeviceEspComponent, canActivate: [AuthGuard], data: {animation: 'DeviceEspComponent'} },
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
   { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },
