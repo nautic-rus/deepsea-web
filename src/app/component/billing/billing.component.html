@@ -328,7 +328,7 @@
                           <span class="mr-5">%</span>
                         </div>
                         <div class="w-34 table-body cy">
-                          <span [innerHTML]="profile.profileForecast.toString() * roundDecimal(profile.grossWeight) | highLight: search"></span>
+                          <span [innerHTML]="profile.profileForecast.toString() * roundDecimal(profile.grossWeight) + 'kg' | highLight: search"></span>
                         </div>
                       </div>
                     </div>
@@ -345,7 +345,7 @@
                       </div>
                       <div class="text-center-y info-row">
                         <div class="w-50 table-body">
-                          <span [innerHTML]="round(profile.partsweight, 1).toString() | highLight: search"></span>
+                          <span [innerHTML]="round(profile.partsweight, 1).toString() + 'kg' | highLight: search"></span>
                         </div>
                         <div class="w-50 table-body cy">
                           <span [innerHTML]="round(profile.realLenght, 10).toString() | highLight: search"></span>
