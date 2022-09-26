@@ -25,6 +25,8 @@ export class WeightControlComponent implements OnInit {
   loading = true;
   project = '1701';
   projects: string[] = ['1701', '3095'];
+  customNumber = '';
+  customName = '';
 
   constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService) { }
 
@@ -44,6 +46,7 @@ export class WeightControlComponent implements OnInit {
     });
     this.m.getWCDrawings().then(res => {
       this.drawings = res.filter(x => x.project == this.project);
+      this.drawings.push({name: 'Ввести номер чертежа вручную', number: 'XXXXXX-XXX-XXX'});
       this.drawings.forEach(d => d.filter = d.number + d.name);
       //console.log(res);
     });
@@ -121,7 +124,8 @@ export class WeightControlComponent implements OnInit {
   }
 
   isSaveDisabled() {
-    return !this.selectedDrawing.name || !this.selectedZone.name || !this.newControl.weight || !this.newControl.x || !this.newControl.y || !this.newControl.z;
+    return (this.selectedDrawing.name == 'Ввести номер чертежа вручную' && (this.customName.trim() == '' || this.customNumber.trim() == '')) ||
+    !this.selectedDrawing.name || !this.selectedZone.name || !this.newControl.weight || !this.newControl.x || !this.newControl.y || !this.newControl.z;
   }
 
   checkSideChange() {
