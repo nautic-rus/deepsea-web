@@ -113,6 +113,11 @@ export class WeightControlComponent implements OnInit {
 
     this.newControl.project = this.project;
 
+    if (this.newControl.docName == 'Ввести номер чертежа вручную'){
+      this.newControl.docNumber = this.customNumber;
+      this.newControl.docName = this.customName;
+    }
+
     console.log(this.newControl);
 
     this.m.setWeightControl(this.newControl).then(res => {
