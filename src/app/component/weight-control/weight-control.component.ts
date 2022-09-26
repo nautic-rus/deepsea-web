@@ -24,25 +24,33 @@ export class WeightControlComponent implements OnInit {
   totalZ = 0;
   loading = true;
   project = '1701';
-  projects: string[] = ['1701'];
+  projects: string[] = ['1701', '3095'];
 
   constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
+    this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    if (this.projects.length == 0){
+      this.projects = ['1701'];
+    }
+    this.project = this.projects[0];
+    this.fillControl();
+  }
+  fillControl(){
     this.m.getWeightControl().then(res => {
-      this.controls = res;
+      this.controls = res.filter(x => x.project == this.project);
       console.log(res);
       this.fillTotals();
     });
     this.m.getWCDrawings().then(res => {
-      this.drawings = res;
+      this.drawings = res.filter(x => x.project == this.project);
       this.drawings.forEach(d => d.filter = d.number + d.name);
-      console.log(res);
+      //console.log(res);
     });
     this.m.getWCZones().then(res => {
-      this.zones = res;
+      this.zones = res.filter(x => x.project == this.project);
       this.zones.forEach(z => z.filter = z.number + z.name);
-      console.log(res);
+      //console.log(res);
     });
   }
   fillTotals(){
@@ -99,6 +107,8 @@ export class WeightControlComponent implements OnInit {
 
     this.newControl.user = this.auth.getUser().login;
     this.newControl.date = new Date().getTime();
+
+    this.newControl.project = this.project;
 
     console.log(this.newControl);
 

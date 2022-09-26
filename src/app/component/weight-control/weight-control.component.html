@@ -3,7 +3,7 @@
     <div class="card-head df sticky-card space-between mb-40">
       <div class="df">
         <div class="mr-10">
-          <p-dropdown [disabled]="loading" placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+          <p-dropdown (ngModelChange)="fillControl()" placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
           </p-dropdown>
         </div>
         <div class="mr-10">
