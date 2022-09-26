@@ -317,7 +317,7 @@
                       <div class="df">
                         <div class="w-33 table-header-column cy">{{t.tr('Profile QTY')}}</div>
                         <div class="w-33 table-header-column cy">{{t.tr('Scrap')}}</div>
-                        <div class="w-34 table-header-column cy">{{t.tr('Profiles Forecast')}}</div>
+                        <div class="w-34 table-header-column cy">{{t.tr('Weight Forecast')}}</div>
                       </div>
                       <div class="text-center-y info-row">
                         <div class="w-33 table-body cy">
@@ -328,7 +328,7 @@
                           <span class="mr-5">%</span>
                         </div>
                         <div class="w-34 table-body cy">
-                          <span [innerHTML]="profile.profileForecast.toString() | highLight: search"></span>
+                          <span [innerHTML]="profile.profileForecast.toString() * roundDecimal(profile.grossWeight) + 'kg' | highLight: search"></span>
                         </div>
                       </div>
                     </div>
@@ -345,7 +345,7 @@
                       </div>
                       <div class="text-center-y info-row">
                         <div class="w-50 table-body">
-                          <span [innerHTML]="round(profile.partsweight, 1).toString() | highLight: search"></span>
+                          <span [innerHTML]="round(profile.partsweight, 1).toString() + 'kg' | highLight: search"></span>
                         </div>
                         <div class="w-50 table-body cy">
                           <span [innerHTML]="round(profile.realLenght, 10).toString() | highLight: search"></span>
@@ -376,7 +376,7 @@
                     <div class="button-show cursor-pointer" (click)="showPartsQtyProfile(profile); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
-                <div class="row-one-back opacity">
+                <div class="row-one-back">
                   <div class="df lxy">
                     <div class="icon-back-orange cxy ml-10">
                       <img src="assets/icons/sections.svg" height="18">
@@ -384,7 +384,7 @@
                     <div class="title-medium-bold ml-10">Blocks</div>
                   </div>
                   <div class="cxy">
-                    <div class="button-show cursor-default ">Show</div>
+                    <div class="button-show cursor-default" (click)="showBlockProfile(profile); $event.stopPropagation();">Show</div>
                   </div>
                 </div>
                 <div class="row-one-back background-gray opacity">

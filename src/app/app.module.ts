@@ -133,6 +133,7 @@ import { ShowTaskComponent } from './component/navi/daily-tasks/show-task/show-t
 import { DeleteDailyTaskComponent } from './component/navi/daily-tasks/show-task/delete-daily-task/delete-daily-task.component';
 import {AutoCompleteModule} from "primeng/autocomplete";
 import { AccommodationsEspGenerationWaitComponent } from './component/documents/accommodation-esp/accommodations-esp-generation-wait/accommodations-esp-generation-wait.component';
+import { BlocksProfileComponent } from './component/billing/blocks-profile/blocks-profile.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -216,7 +217,8 @@ Quill.register('modules/imageResize', ImageResize);
     MonthTasksComponent,
     ShowTaskComponent,
     DeleteDailyTaskComponent,
-    AccommodationsEspGenerationWaitComponent
+    AccommodationsEspGenerationWaitComponent,
+    BlocksProfileComponent
   ],
     imports: [
         BrowserModule,

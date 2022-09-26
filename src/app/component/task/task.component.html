@@ -684,7 +684,7 @@
             </div>
           </div>
           <div class="df mt-5">
-            <div class="df text-y height-32 normal-text w-40">contract_due_date</div>
+            <div class="df text-y height-32 normal-text w-40">{{t.tr('Контрактный срок исп.')}}</div>
             <div [class.no-edit]="!auth.hasPerms('contractDueDate')" [hidden]="edit == 'contractDueDate'" (click)="edit = 'contractDueDate'"  class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.contract_due_date)}}</div>
             <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'contractDueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="contractDueDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
             <div class="w-15 df">

@@ -346,7 +346,7 @@ export class LanguageService {
           case 'Добавить новую папку': return 'Add a new folder';
           case 'Выгрузить ексель': return 'Export excel';
           case 'Ед. изм.': return 'Units';
-          case '': return '';
+          case 'Контрактный срок исп.': return 'Contract due date';
           case '': return '';
           case '': return '';
           case '': return '';

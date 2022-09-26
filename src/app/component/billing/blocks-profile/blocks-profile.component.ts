@@ -6,17 +6,17 @@ import _ from "underscore";
 import * as XLSX from "xlsx";
 
 @Component({
-  selector: 'app-blocks',
-  templateUrl: './blocks.component.html',
-  styleUrls: ['./blocks.component.css']
+  selector: 'app-blocks-profile',
+  templateUrl: './blocks-profile.component.html',
+  styleUrls: ['./blocks-profile.component.css']
 })
-export class BlocksComponent implements OnInit {
+export class BlocksProfileComponent implements OnInit {
 
-  plates: any[] = [];
+  profiles: any[] = [];
   parts: any[] = [];
   partsByBlocks: any[] = [];
   filters:  { block: any[], name: any[] } = { block: [], name: [] };
-  plate: any;
+  profile: any;
   project = '';
 
   constructor(public ref: DynamicDialogRef, public t: LanguageService, private conf: DynamicDialogConfig, public s: SpecManagerService) {
@@ -25,9 +25,9 @@ export class BlocksComponent implements OnInit {
 
   ngOnInit(): void {
     this.project = this.conf.data[0];
-    this.plate = this.conf.data[1];
-    console.log(this.plate);
-    this.s.hullPlates(this.project, this.plate.mat, this.plate.scantling.split('x')[0]).then(res => {
+    this.profile = this.conf.data[1];
+    console.log(this.profile);
+    this.s.hullProfiles(this.project, this.profile.mat, this.profile.KSE).then(res => {
       this.parts = _.sortBy(res, x => x.code);
       _.forEach(_.groupBy(this.parts, x => x.block), block => {
         this.partsByBlocks.push({
