@@ -101,6 +101,7 @@ export class GCodeComponent implements OnInit, OnDestroy {
         fetch(this.cmap).then(res => {
           res.text().then(text => {
             if (project == 'N002'){
+              console.log('GENERATING TAP');
               this.s.createTAP(text.split('\n'), cmapuser + ' at ' + new Date(+cmapdate).toDateString()).then(res => {
                 this.code = '';
                 let newCode = '';
