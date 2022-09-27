@@ -1037,7 +1037,7 @@
 .tabs-button-tray{
   padding: 0 10px;
   height: 35px;
-  min-width: 84px;
+  min-width: 70px;
   border-radius: 20px;
   font-weight: 500;
   color: #39b8b6;
@@ -1049,7 +1049,7 @@
 .tabs-button-equip{
   padding: 0 10px;
   height: 35px;
-  min-width: 84px;
+  min-width: 70px;
   border-radius: 20px;
   font-weight: 500;
   color: #39b8b6;
