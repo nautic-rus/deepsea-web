@@ -96,15 +96,26 @@ export class GCodeComponent implements OnInit, OnDestroy {
       this.cmap = params.cmap != null ? params.cmap : this.cmap;
       let cmapuser = params.cmapuser != null ? params.cmapuser : '';
       let cmapdate = params.cmapdate != null ? params.cmapdate : 0;
+      let project = params.foranProject != null ? params.foranProject : 'N004';
       if (this.cmap != ''){
         fetch(this.cmap).then(res => {
           res.text().then(text => {
-            this.s.createCNC(text.split('\n'), cmapuser + ' at ' + new Date(+cmapdate).toDateString()).then(res => {
-              this.code = '';
-              let newCode = '';
-              res.forEach(x => newCode += (newCode != '' ? '\n' : '') + x);
-              this.code = newCode;
-            });
+            if (project == 'N002'){
+              this.s.createTAP(text.split('\n'), cmapuser + ' at ' + new Date(+cmapdate).toDateString()).then(res => {
+                this.code = '';
+                let newCode = '';
+                res.forEach(x => newCode += (newCode != '' ? '\n' : '') + x);
+                this.code = newCode;
+              });
+            }
+            else{
+              this.s.createCNC(text.split('\n'), cmapuser + ' at ' + new Date(+cmapdate).toDateString()).then(res => {
+                this.code = '';
+                let newCode = '';
+                res.forEach(x => newCode += (newCode != '' ? '\n' : '') + x);
+                this.code = newCode;
+              });
+            }
           });
         });
       }
