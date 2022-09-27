@@ -93,6 +93,9 @@ export class MaterialsComponent implements OnInit {
         });
       });
       this.materialsSrc = [...this.materials];
+      for (let x = 0; x < 20; x ++){
+        this.materials.push(null);
+      }
     });
   }
   setPath(code: string){
