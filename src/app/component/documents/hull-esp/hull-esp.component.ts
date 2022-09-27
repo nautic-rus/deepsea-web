@@ -712,7 +712,18 @@ export class HullEspComponent implements OnInit {
             while (zipped.includes(name)){
               name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
             }
-            name = format == 'cnc' ? name.replace('.txt', '.MPG') : name.replace('.txt', '.ESI');
+
+            if (format == 'essi'){
+              name = name.replace('.txt', '.ESI');
+            }
+            else if (format == 'tap'){
+              name = name.replace('.txt', '.TAP');
+            }
+            else{
+              name = name.replace('.txt', '.MPG');
+            }
+
+
             name = name.replace('C-' + this.project + '-', '');
             zipped.push(name);
             // @ts-ignore
@@ -1090,6 +1101,22 @@ export class HullEspComponent implements OnInit {
               element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
               // @ts-ignore
               element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.MPG'));
+
+              element.style.display = 'none';
+              document.body.appendChild(element);
+
+              element.click();
+
+              document.body.removeChild(element);
+            });
+          }
+          else if (this.cmapFormat == 'tap'){
+            this.s.createTAP(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+              var element = document.createElement('a');
+              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+              // @ts-ignore
+              element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.TAP'));
 
               element.style.display = 'none';
               document.body.appendChild(element);

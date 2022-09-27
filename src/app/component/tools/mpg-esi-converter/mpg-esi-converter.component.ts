@@ -17,7 +17,7 @@ export class MpgEsiConverterComponent implements OnInit {
   constructor(public s: SpecManagerService, public auth: AuthManagerService, public t: LanguageService, public ref: DynamicDialogRef) { }
   loaded: any[] = [];
   loadCount = 0;
-  extensions = ['.mpg', '.esi'];
+  extensions = ['.mpg', '.esi', '.tap'];
   extension = this.extensions[0];
   ngOnInit(): void {
   }
@@ -35,6 +35,12 @@ export class MpgEsiConverterComponent implements OnInit {
           if (this.extension == '.mpg'){
             // @ts-ignore
             this.s.createCNC(l.split('\n'), this.auth.getUser().login).then(res => {
+              this.loaded.push({fileName: name, data: res.join('\n')});
+            });
+          }
+          else if (this.extension == '.tap'){
+            // @ts-ignore
+            this.s.createTAP(l.split('\n'), this.auth.getUser().login).then(res => {
               this.loaded.push({fileName: name, data: res.join('\n')});
             });
           }

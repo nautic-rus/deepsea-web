@@ -867,6 +867,9 @@
                         <div class="df all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision, 'essi')">
                           <div class="row-download">.ESI</div>
                         </div>
+                        <div class="df all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision, 'tap')">
+                          <div class="row-download">.TAP</div>
+                        </div>
                       </ng-template>
                     </p-overlayPanel>
                   </div>
@@ -938,6 +941,9 @@
                             </div>
                             <div class="df all-row-user-menu cursor-pointer" (click)="openFile(file, 'essi')">
                               <div class="row-download">.ESI</div>
+                            </div>
+                            <div class="df all-row-user-menu cursor-pointer" (click)="openFile(file, 'tap')">
+                              <div class="row-download">.TAP</div>
                             </div>
                           </ng-template>
                         </p-overlayPanel>
