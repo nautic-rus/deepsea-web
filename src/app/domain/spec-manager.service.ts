@@ -80,6 +80,9 @@ export class SpecManagerService {
   async createESSI(lines: string[], user: string) {
     return await this.http.post<string[]>(props.httpSpec + '/createESSI', JSON.stringify(lines), {params: {user}}).toPromise();
   }
+  async createTAP(lines: string[], user: string) {
+    return await this.http.post<string[]>(props.httpSpec + '/createTAP', JSON.stringify(lines), {params: {user}}).toPromise();
+  }
   async insertNestLock(project: string, nestId: string, user: string) {
     return await this.http.get<string>(props.httpSpec + '/insertNestLock', {params: {project, nestId, user}}).toPromise();
   }
