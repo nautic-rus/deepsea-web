@@ -1110,7 +1110,7 @@ export class HullEspComponent implements OnInit {
               document.body.removeChild(element);
             });
           }
-          if (this.cmapFormat == 'tap'){
+          else if (this.cmapFormat == 'tap'){
             this.s.createTAP(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
 
               var element = document.createElement('a');
