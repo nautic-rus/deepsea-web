@@ -24,25 +24,36 @@ export class WeightControlComponent implements OnInit {
   totalZ = 0;
   loading = true;
   project = '1701';
-  projects: string[] = ['1701'];
+  projects: string[] = ['1701', '3095'];
+  customNumber = '';
+  customName = '';
 
   constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
+    this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    if (this.projects.length == 0){
+      this.projects = ['1701'];
+    }
+    this.project = this.projects[0];
+    this.fillControl();
+  }
+  fillControl(){
     this.m.getWeightControl().then(res => {
-      this.controls = res;
+      this.controls = res.filter(x => x.project == this.project);
       console.log(res);
       this.fillTotals();
     });
     this.m.getWCDrawings().then(res => {
-      this.drawings = res;
+      this.drawings = res.filter(x => x.project == this.project);
+      this.drawings.push({name: 'Ввести номер чертежа вручную', number: 'XXXXXX-XXX-XXX'});
       this.drawings.forEach(d => d.filter = d.number + d.name);
-      console.log(res);
+      //console.log(res);
     });
     this.m.getWCZones().then(res => {
-      this.zones = res;
+      this.zones = res.filter(x => x.project == this.project);
       this.zones.forEach(z => z.filter = z.number + z.name);
-      console.log(res);
+      //console.log(res);
     });
   }
   fillTotals(){
@@ -100,6 +111,13 @@ export class WeightControlComponent implements OnInit {
     this.newControl.user = this.auth.getUser().login;
     this.newControl.date = new Date().getTime();
 
+    this.newControl.project = this.project;
+
+    if (this.newControl.docName == 'Ввести номер чертежа вручную'){
+      this.newControl.docNumber = this.customNumber;
+      this.newControl.docName = this.customName;
+    }
+
     console.log(this.newControl);
 
     this.m.setWeightControl(this.newControl).then(res => {
@@ -111,7 +129,8 @@ export class WeightControlComponent implements OnInit {
   }
 
   isSaveDisabled() {
-    return !this.selectedDrawing.name || !this.selectedZone.name || !this.newControl.weight || !this.newControl.x || !this.newControl.y || !this.newControl.z;
+    return (this.selectedDrawing.name == 'Ввести номер чертежа вручную' && (this.customName.trim() == '' || this.customNumber.trim() == '')) ||
+    !this.selectedDrawing.name || !this.selectedZone.name || !this.newControl.weight || !this.newControl.x || !this.newControl.y || !this.newControl.z;
   }
 
   checkSideChange() {

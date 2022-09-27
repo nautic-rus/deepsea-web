@@ -3,7 +3,7 @@
     <div class="card-head df sticky-card space-between mb-40">
       <div class="df">
         <div class="mr-10">
-          <p-dropdown [disabled]="loading" placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+          <p-dropdown (ngModelChange)="fillControl()" placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
           </p-dropdown>
         </div>
         <div class="mr-10">
@@ -101,7 +101,7 @@
   <ng-template pTemplate="content">
     <div class="">
       <div class="big-text-create mb-1">Чертёж</div>
-      <p-dropdown appendTo="body" [options]="drawings" [(ngModel)]="selectedDrawing" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите чертёж">
+      <p-dropdown appendTo="body" [options]="drawings" [(ngModel)]="selectedDrawing" [filter]="true" filterBy="filter" placeholder="Выберите чертёж">
         <ng-template pTemplate="selectedItem">
           <div class="country-item country-item-value" *ngIf="selectedDrawing">
             <div>{{selectedDrawing.number + ' - ' + selectedDrawing.name}}</div>
@@ -113,10 +113,21 @@
           </div>
         </ng-template>
       </p-dropdown>
+      <div class="mt-1" *ngIf="selectedDrawing.name == 'Ввести номер чертежа вручную'">
+        <div class="big-text-create mb-1">Введите номер чертежа и название</div>
+        <div class="df cx">
+          <div class="w-25">
+            <input type="text" pInputText placeholder="НОМЕР" [(ngModel)]="customNumber"/>
+          </div>
+          <div class="w-75 pl-10">
+            <input type="text" pInputText placeholder="НАЗВАНИЕ" [(ngModel)]="customName"/>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="mt-1">
       <div class="big-text-create mb-1">Помещение</div>
-      <p-dropdown appendTo="body" [options]="zones" [(ngModel)]="selectedZone" [filter]="true" filterBy="filter" [showClear]="true" placeholder="Выберите помещение">
+      <p-dropdown appendTo="body" [options]="zones" [(ngModel)]="selectedZone" [filter]="true" filterBy="filter" placeholder="Выберите помещение">
         <ng-template pTemplate="selectedItem">
           <div class="country-item country-item-value" *ngIf="selectedZone">
             <div>{{selectedZone.number + ' - ' + selectedZone.name}}</div>
