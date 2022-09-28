@@ -3,11 +3,11 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addMaterial()">
-          <img src="assets/icons/plus3.svg" height="18">
-        </div>
-      </div>
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addMaterial()">-->
+<!--          <img src="assets/icons/plus3.svg" height="18">-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <img src="assets/icons/list.svg" height="22">
@@ -70,7 +70,10 @@
               <div class="card-spool df">
                 <div class="w-5 position-relative ">
 <!--                  <div class="title-bold mb-20" [class.dxf-enabled]="dxfEnabled" [innerHTML]="deviceGroup.label | highLight: search"></div>-->
-                  <div *ngIf="!deviceGroup.accommodation" class="materials-button-mini blue-button cxy" [pTooltip]="l.tr('Добавить')" [class.disabled-button]="!auth.hasPerms('add-material-device')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label)">
+                  <div *ngIf="!deviceGroup.accommodation" class="materials-button-mini blue-button cxy" [pTooltip]="l.tr('Добавить')" [class.disabled-button]="!auth.hasPerms('add-material-device')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label, deviceGroup.label)">
+                    <img src="assets/icons/plus3.svg" height="15">
+                  </div>
+                  <div *ngIf="deviceGroup.accommodation" class="materials-button-mini blue-button cxy" [pTooltip]="l.tr('Добавить')" [class.disabled-button]="!auth.hasPerms('add-material-device')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label)">
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
                   <div *ngIf="deviceGroup.accommodation" class="kpl-flag cxy">
