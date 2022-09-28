@@ -8,6 +8,7 @@ import {DayCalendar} from "../../domain/classes/day-calendar";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import _ from "underscore";
 import {LanguageService} from "../../domain/language.service";
+import {DailyTask} from "../../domain/interfaces/daily-task";
 
 @Component({
   selector: 'app-employees',
@@ -22,26 +23,70 @@ export class EmployeesComponent implements OnInit {
   todayStatic = new Date();
   currentMonth = this.today.getMonth();
   currentYear = this.today.getFullYear();
-  days: DayCalendar[] = [];
-  selectedStatus = '';
+  selectedDepartments: string[] = [];
   users: User[] = [];
+  dailyTasks: DailyTask[] = [];
+  userStats: any = Object();
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
   ngOnInit(): void {
-    this.issues.getCalendar().then(res =>{
-      this.days = res;
+    this.fill();
+  }
+  fill(){
+    let days = this.getDaysInMonth();
+    this.issues.getDailyTasks().then(res => {
+      this.dailyTasks = res;
+
+      this.auth.getUsers().then(res =>{
+        this.users = res.filter(x => x.visibility.includes('k'));
+        this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
+        // this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
+        this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
+        this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != 'IT' && x != 'Management'));
+        this.departments = _.sortBy(this.departments, x => x);
+        this.selectedDepartments = [...this.departments];
+        this.departments = _.sortBy(this.departments, x => this.getOrder(x));
+
+        this.users.forEach(user => {
+          let tasks = this.dailyTasks.filter(x => x.userLogin == user.login);
+          let daysSum = Object({});
+
+
+          let totalSum = 0;
+          days.forEach(d => {
+            let sum = 0;
+            let date = new Date(this.currentYear, this.currentMonth, d).getTime();
+            tasks.filter(t => this.sameDay(date, t.date)).forEach(x => sum += x.time);
+            daysSum[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
+            totalSum += sum;
+          });
+
+
+          this.userStats[user.login] = Object({days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
+        });
+
+
+      });
     });
-    this.auth.getUsers().then(res =>{
-      this.users = res.filter(x => x.visibility.includes('k'));
-      this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
-      this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
-      this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
-      this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null));
-      this.departments = _.sortBy(this.departments, x => x);
-      this.departments.push(this.t.tr('Все'));
-      this.department = this.t.tr('Все');
-    });
+  }
+  getHours(time: number, minutes: string = '') {
+    let hours = Math.floor(time).toString();
+    return hours == '0' && minutes == '' ? '-' : hours;
+  }
+  getMinutes(time: number){
+    let minutes = Math.round((time - Math.floor(time)) * 60).toString();
+    if (minutes.length == 1){
+      minutes = '0' + minutes;
+    }
+    return minutes == '00' ? '' : minutes;
+  }
+  sameDay(dLong1: number, dLong2: number) {
+    let d1 = new Date(dLong1);
+    let d2 = new Date(dLong2);
+    return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
   }
   getDaysInMonth() {
     let daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -52,7 +97,7 @@ export class EmployeesComponent implements OnInit {
     return array;
   }
   getUsers(){
-    return this.users.filter(x => x.visibility.includes('k')).filter(x => x.department == this.department || this.department == this.t.tr('Все'));
+    return this.users.filter(x => x.visibility.includes('k')).filter(x => this.selectedDepartments.includes(x.department));
   }
   isWeekend(day: number) {
     let date = new Date(this.currentYear, this.currentMonth, day).getDay();
@@ -67,12 +112,14 @@ export class EmployeesComponent implements OnInit {
     this.today = new Date(this.currentYear, this.currentMonth - 1, this.today.getDate());
     this.currentMonth = this.today.getMonth();
     this.currentYear = this.today.getFullYear();
+    this.fill();
   }
 
   nextMonth() {
     this.today = new Date(this.currentYear, this.currentMonth + 1, this.today.getDate());
     this.currentMonth = this.today.getMonth();
     this.currentYear = this.today.getFullYear();
+    this.fill();
   }
 
   setToday(){
@@ -107,48 +154,42 @@ export class EmployeesComponent implements OnInit {
     });
   }
 
-  setDayCalendar(user: string, day: string, status: string){
-    this.issues.setDayCalendar(user, day, status).then(() => {
-      this.issues.getCalendar().then(res => {
-        this.days = res;
-      });
-    });
-  }
 
-  getDayStyle(user: string, day: string) {
-    let find = this.days.find(x => x.day == day && x.user == user);
-    if (find != null){
-      switch (find.status) {
-        case 'sick': return { background: 'rgba(166, 0, 255, 0.1)', 'border-radius': '5px', 'cursor': 'default','font-weight': '600', 'color': '#323130' };
-        case 'vacation': return { background: 'rgba(80, 200, 120, 0.27)', 'border-radius': '5px', 'cursor': 'default', 'font-weight': '600', 'color': '#323130' };
-        case 'off': return { background: 'rgba(255, 0, 0, 0.15)', 'border-radius': '5px', 'cursor': 'default', 'font-weight': '600', 'color': '#323130' };
-        default: return {};
-      }
+  selectDepartment(department: string) {
+    if (this.selectedDepartments.includes(department)){
+      this.selectedDepartments.splice(this.selectedDepartments.indexOf(department), 1);
     }
-    else {
-      return {};
+    else{
+      this.selectedDepartments.push(department);
     }
-  }
-  getDayLetter(user: string, day: string) {
-    let find = this.days.find(x => x.day == day && x.user == user);
-    if (find != null){
-      switch (find.status) {
-        case 'sick': return this.t.tr('Б');
-        case 'vacation': return this.t.tr('О');
-        case 'off': return this.t.tr('В');
-        default: return '';
-      }
-    }
-    else {
-      return '';
-    }
-  }
-
-  selectStatus(status: string) {
-    this.selectedStatus = status;
   }
 
   getDay(day: number) {
     return 'D' + day + 'M' + this.currentMonth + 'Y' + this.currentYear;
+  }
+
+  getPic(dep: string, selected: boolean) {
+    switch (dep){
+      case 'Design department': return selected ? 'paintbrushw' : 'paintbrush';
+      case 'Devices department': return selected ? 'hookw' : 'hookg';
+      case 'Electrical department': return selected ? 'elec' : 'elecg';
+      case 'Hull department': return selected ? 'hull' : 'hullg';
+      case 'Outfitting department': return selected ? 'outfittingw' : 'outfittingg';
+      case 'Stability department': return selected ? 'paintbrush' : 'paintbrush';
+      case 'System department': return selected ? 'pipew' : 'pipeg';
+      default: return 'plus';
+    }
+  }
+  getOrder(dep: string) {
+    switch (dep){
+      case 'Design department': return 6;
+      case 'Devices department': return 3;
+      case 'Electrical department': return 2;
+      case 'Hull department': return 0;
+      case 'Outfitting department': return 4;
+      case 'Stability department': return 5;
+      case 'System department': return 1;
+      default: return 100;
+    }
   }
 }

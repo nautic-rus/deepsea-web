@@ -177,4 +177,24 @@
   outline: 1px solid rgba(255, 0, 0, 0.15);
   outline-offset: -1px;
 }
-
+.dept{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.gray-b{
+  background-color: rgba(9,30,66,0.04);
+}
+.dep-selected{
+  background-color: #3B82F6;
+}
+.hours-font{
+  font-size: 17px;
+  font-weight: 500;
+}
+.minute-font{
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: -14px;
+}

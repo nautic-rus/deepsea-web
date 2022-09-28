@@ -2,9 +2,12 @@
   <div class="card">
 
     <div class="calendar-header">
-      <div class="p-d-flex mr-1">
-        <p-dropdown [placeholder]="t.tr('ОТДЕЛ')" class="select" [(ngModel)]="department" [options]="departments" styleClass="width-270 border">
-        </p-dropdown>
+      <div class="df w-20 min-width-265">
+        <div class="mr-10" *ngFor="let dep of departments">
+          <div class="dept gray-b cxy" [pTooltip]="dep" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">
+            <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="22">
+          </div>
+        </div>
       </div>
       <div class="cxy pr-10">
         <button class="today" (click)="setToday()">
@@ -19,17 +22,20 @@
           <img src="assets/icons/right-arrow.png" height="12">
         </button>
       </div>
-      <div class="month-name">{{getMonth() + ' ' + this.currentYear}}
-      </div>
-      <div class="p-ml-auto status-buttons mr-1 cxy">
-        <div [class.sick-selected]="selectedStatus == 'sick'" (click)="selectStatus('sick')" class="privat-status sick cxy mx-1">{{t.tr('Б')}}</div>
-        <div [class.vacation-selected]="selectedStatus == 'vacation'" (click)="selectStatus('vacation')"  class="privat-status vacation cxy mx-1">{{t.tr('О')}}</div>
-        <div [class.off-selected]="selectedStatus == 'off'" (click)="selectStatus('off')"  class="privat-status off cxy mx-1">{{t.tr('В')}}</div>
-      </div>
+      <div class="month-name cxy width-250">{{getMonth() + ' ' + this.currentYear}}</div>
+
+
+
+
+<!--      <div class="p-ml-auto status-buttons mr-1 cxy">-->
+<!--        <div [class.sick-selected]="selectedStatus == 'sick'" (click)="selectStatus('sick')" class="privat-status sick cxy mx-1">{{t.tr('Б')}}</div>-->
+<!--        <div [class.vacation-selected]="selectedStatus == 'vacation'" (click)="selectStatus('vacation')"  class="privat-status vacation cxy mx-1">{{t.tr('О')}}</div>-->
+<!--        <div [class.off-selected]="selectedStatus == 'off'" (click)="selectStatus('off')"  class="privat-status off cxy mx-1">{{t.tr('В')}}</div>-->
+<!--      </div>-->
     </div>
     <div class="users-days">
       <div class="df sticky">
-        <div class="w-20 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
+        <div class="w-20 min-width-265 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
@@ -39,20 +45,22 @@
         </div>
       </div>
       <div class="df hover-user" *ngFor="let user of getUsers()">
-        <div class="w-20 users pl-10 cursor-pointer" (click)="showUserCard(user)">
-          {{user.userName}}
+        <div class="w-20 min-width-265 users pl-10 cursor-pointer">
+          <span>{{user.userName}}</span>
+          <span *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto mr-10">{{userStats[user.login]?.totalSum?.hours + ' ' + 'h'}}</span>
+          <span class="mr-10" *ngIf="userStats[user.login]?.totalSum?.minutes != ''">{{userStats[user.login]?.totalSum?.minutes + ' ' + 'm'}}</span>
         </div>
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
-              <div *ngFor="let day of getDaysInMonth()" (click)="setDayCalendar(user.login, getDay(day), selectedStatus)" (contextmenu)="$event.preventDefault(); setDayCalendar(user.login, getDay(day), 'removed');" [ngStyle]="getDayStyle(user.login, getDay(day))" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
-                {{getDayLetter(user.login, getDay(day))}}
+              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
+                <span class="hours-font">{{userStats[user.login]?.days[day]?.hours}}</span>
+                <span class="minute-font">{{userStats[user.login]?.days[day]?.minutes}}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 </div>
