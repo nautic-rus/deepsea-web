@@ -61,8 +61,8 @@ export class AddMaterialToEspComponent implements OnInit {
     this.selectedMaterial.name = '';
     this.docNumber = this.dialog.data[0];
     this.project = this.docNumber.split('-')[0];
-    this.forLabel = this.dialog.data[1];
-    this.label = '#';
+    this.forLabel = this.dialog.data[2];
+    this.label = this.dialog.data[1] + '.#';
     this.materialManager.getMaterials(this.project).then(res => {
       this.materials = res;
       this.materialsSrc = res;

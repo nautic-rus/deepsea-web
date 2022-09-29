@@ -739,6 +739,9 @@ export class TaskComponent implements OnInit {
     if (this.edit == 'dueDate'){
       this.issue.due_date = this.dueDate.getTime();
     }
+    if (this.edit == 'contractDueDate'){
+      this.issue.contract_due_date = this.contractDueDate.getTime();
+    }
     this.issueManager.updateIssue(this.auth.getUser().login, "edit-" + this.edit, this.issue).then(issue => {
       this.edit = '';
       if (issue.id != null){

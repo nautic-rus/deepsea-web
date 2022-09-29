@@ -803,11 +803,11 @@ export class DeviceEspComponent implements OnInit {
     });
   }
 
-  addMaterial(label: string = '') {
+  addMaterial(label: string = '', userId: string = '') {
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label]
+      data: [this.docNumber, label, userId]
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;

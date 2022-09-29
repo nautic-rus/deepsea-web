@@ -41,7 +41,7 @@ export class DeviceEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getDevicesEspFiles(this.issue.doc_number, this.rev, this.lang).then(res => {
+    this.s.getDevicesEspFiles(this.issue.doc_number, this.rev, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
