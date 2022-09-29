@@ -40,7 +40,7 @@ export class TaskComponent implements OnInit {
   message = '';
   comment = false;
   messageFilter = 'all';
-  issueRevisions = ['-', 'A', 'B', 'C', 'D', '1', '2', '3', '4']
+  issueRevisions = ['-', 'A', 'B', 'C', 'D', '0', '1', '2', '3', '4']
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
   edit = '';
