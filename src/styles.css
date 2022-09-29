@@ -376,6 +376,9 @@ body,p{
 .height-35{
   height: 35px;
 }
+.height-45{
+  height: 45px;
+}
 .height-50{
   height: 50px;
 }
@@ -1108,4 +1111,7 @@ cdk-virtual-scroll-viewport{
 }
 .transparent-button{
   border: 1px solid #ced4da;
+}
+.color-white{
+  color: white;
 }
