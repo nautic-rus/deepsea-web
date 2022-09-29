@@ -129,6 +129,7 @@ export class EmployeesComponent implements OnInit {
     this.today = new Date();
     this.currentMonth = this.today.getMonth();
     this.currentYear = this.today.getFullYear();
+    this.fill();
   }
 
   getMonth() {
