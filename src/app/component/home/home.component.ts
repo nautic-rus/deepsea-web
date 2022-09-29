@@ -327,13 +327,13 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         date: false,
       },
       {
-        field: 'contractDueDate',
+        field: 'contract_due_date',
         header: 'Contract Due Date',
         headerLocale: 'Contract Due Date',
         sort: true,
         filter: true,
         skip: false,
-        filters: this.getFilters(this.issues, 'contractDueDate'),
+        filters: this.getFilters(this.issues, 'contract_due_date'),
         defaultValue: '',
         hidden: false,
         date: true,
@@ -531,6 +531,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       }
     } else if (field == 'doc_number') {
       return issueElement != '' ? issueElement : '-';
+    } else if (field == 'contract_due_date') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     } else {
       return issueElement;
     }
