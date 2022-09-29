@@ -347,9 +347,9 @@ export class LanguageService {
           case 'Выгрузить ексель': return 'Export excel';
           case 'Ед. изм.': return 'Units';
           case 'Контрактный срок исп.': return 'Contract due date';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Месяц': return 'Month';
+          case 'День': return 'Day';
+          case 'Задачи': return 'Tasks';
           case '': return '';
           case '': return '';
           case '': return '';

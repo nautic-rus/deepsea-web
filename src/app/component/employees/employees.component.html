@@ -9,21 +9,47 @@
           </div>
         </div>
       </div>
-      <div class="cxy pr-10">
-        <button class="today" (click)="setToday()">
-          <span class="today-in">{{t.tr('Сегодня')}}</span>
-        </button>
-      </div>
-      <div class="cxy pr-10">
-        <button class="today cxy" (click)="prevMonth()">
-          <img src="assets/icons/left-arrow.png" height="12">
-        </button>
-        <button class="today cxy" (click)="nextMonth()">
-          <img src="assets/icons/right-arrow.png" height="12">
-        </button>
-      </div>
-      <div class="month-name cxy width-250">{{getMonth() + ' ' + this.currentYear}}</div>
+      <div class="df" *ngIf="selectedView == 'month'">
+        <div class="cxy pr-10" >
+          <button class="today" (click)="setToday()">
+            <span class="today-in">{{t.tr('Сегодня')}}</span>
+          </button>
+        </div>
+        <div class="cxy pr-10">
+          <button class="today cxy" (click)="prevMonth()">
+            <img src="assets/icons/left-arrow.png" height="12">
+          </button>
+          <button class="today cxy" (click)="nextMonth()">
+            <img src="assets/icons/right-arrow.png" height="12">
+          </button>
+        </div>
+        <div class="df width-200">
+          <div class="violet-button color-white button-change cxy cursor-pointer mr-10">{{t.tr('Месяц')}}</div>
+          <div (click)="changeView()" class="gray-b button-change cxy cursor-pointer">{{t.tr('День')}}</div>
+        </div>
+        <div class="month-name cxy width-250">{{getMonth() + ' ' + this.currentYear}}</div>
 
+      </div>
+      <div class="df" *ngIf="selectedView == 'day'">
+        <div class="cxy pr-10" >
+          <button class="today" (click)="setToday()">
+            <span class="today-in">{{t.tr('Сегодня')}}</span>
+          </button>
+        </div>
+        <div class="cxy pr-10">
+          <button class="today cxy" (click)="prevDay()">
+            <img src="assets/icons/left-arrow.png" height="12">
+          </button>
+          <button class="today cxy" (click)="nextDay()">
+            <img src="assets/icons/right-arrow.png" height="12">
+          </button>
+        </div>
+        <div class="df width-200">
+          <div (click)="changeView()" class="gray-b button-change cxy cursor-pointer mr-10">{{t.tr('Месяц')}}</div>
+          <div class="violet-button color-white button-change cxy cursor-pointer">{{t.tr('День')}}</div>
+        </div>
+        <div class="month-name cxy width-250">{{getCurrentDay() + ' ' + getMonth() + ' ' + this.currentYear}}</div>
+      </div>
 
 
 
@@ -33,7 +59,7 @@
 <!--        <div [class.off-selected]="selectedStatus == 'off'" (click)="selectStatus('off')"  class="privat-status off cxy mx-1">{{t.tr('В')}}</div>-->
 <!--      </div>-->
     </div>
-    <div class="users-days">
+    <div class="users-days" *ngIf="selectedView == 'month'">
       <div class="df sticky">
         <div class="w-20 min-width-265 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
         <div class="w-80">
@@ -47,8 +73,8 @@
       <div class="df hover-user" *ngFor="let user of getUsers()">
         <div class="w-20 min-width-265 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
-          <span *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto mr-10">{{userStats[user.login]?.totalSum?.hours + ' ' + 'h'}}</span>
-          <span class="mr-10" *ngIf="userStats[user.login]?.totalSum?.minutes != ''">{{userStats[user.login]?.totalSum?.minutes + ' ' + 'm'}}</span>
+          <span *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto hours-font mr-10">{{userStats[user.login]?.totalSum?.hours}}</span>
+          <span class="mr-10 minute-font ml-minus10" *ngIf="userStats[user.login]?.totalSum?.minutes != ''">{{userStats[user.login]?.totalSum?.minutes}}</span>
         </div>
         <div class="w-80">
           <div class="calendar w-100">
@@ -62,5 +88,36 @@
         </div>
       </div>
     </div>
+    <div class="users-days" *ngIf="selectedView == 'day'">
+      <div class="df sticky">
+        <div class="w-20 min-width-265 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
+        <div class="w-80">
+          <div class="calendar w-100">
+            <div class="day-task cxy header-users">{{t.tr('Задачи')}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="df hover-user" *ngFor="let user of getUsers()">
+        <div class="w-20 min-width-265 users pl-10 cursor-pointer">
+          <span>{{user.userName}}</span>
+        </div>
+        <div class="w-80">
+          <div class="calendar w-100">
+            <div class="month-date-day">
+              <div *ngFor="let task of getUserTasksOfSelectedDay(userStats[user.login]?.tasks)" class="day-number-one cxy flex-column">
+                <div class="text-black-mini">{{getHours(task.time) + ':'}}{{getTaskMinutes(task.time)}}</div>
+                <div class="task-one cursor-pointer">
+                  <div class="df">
+                    <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text">{{trimText(task.docNumber, 20)}}</div>
+                    <div [pTooltip]="task.details" class="cx task-text line-text">{{task.details}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

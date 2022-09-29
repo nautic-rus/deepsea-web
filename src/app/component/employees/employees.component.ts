@@ -27,6 +27,7 @@ export class EmployeesComponent implements OnInit {
   users: User[] = [];
   dailyTasks: DailyTask[] = [];
   userStats: any = Object();
+  selectedView: string = 'month';
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
@@ -51,20 +52,22 @@ export class EmployeesComponent implements OnInit {
         this.users.forEach(user => {
           let tasks = this.dailyTasks.filter(x => x.userLogin == user.login);
           let daysSum = Object({});
-
+          let tasksByDay = Object({});
 
           let totalSum = 0;
           days.forEach(d => {
             let sum = 0;
             let date = new Date(this.currentYear, this.currentMonth, d).getTime();
             tasks.filter(t => this.sameDay(date, t.date)).forEach(x => sum += x.time);
+            tasksByDay[d] = tasks.filter(t => this.sameDay(date, t.date));
             daysSum[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
             totalSum += sum;
           });
 
 
-          this.userStats[user.login] = Object({days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
+          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
         });
+        console.log(this.userStats);
 
 
       });
@@ -191,5 +194,46 @@ export class EmployeesComponent implements OnInit {
       case 'System department': return 1;
       default: return 100;
     }
+  }
+
+  changeView() {
+    this.selectedView = this.selectedView == 'month' ? 'day' : 'month';
+  }
+
+  getUserTasksOfSelectedDay(tasks: any[]) {
+    return tasks.filter(t => this.sameDay(t.date, this.today.getTime()));
+  }
+
+  prevDay() {
+    this.today = new Date(this.today.getTime() - 24 * 60 * 60 * 1000);
+    this.currentMonth = this.today.getMonth();
+    this.currentYear = this.today.getFullYear();
+    this.fill();
+  }
+
+  nextDay() {
+    this.today = new Date(this.today.getTime() + 24 * 60 * 60 * 1000);
+    this.currentMonth = this.today.getMonth();
+    this.currentYear = this.today.getFullYear();
+    this.fill();
+  }
+
+  getCurrentDay() {
+    return this.today.getDate();
+  }
+  trimText(input: string, length = 10){
+    let res = input;
+    if (res.length > length){
+      res = res.substr(0, length) + '..';
+    }
+    return res;
+  }
+
+  getTaskMinutes(time: number){
+    let minutes = Math.round((time - Math.floor(time)) * 60).toString();
+    if (minutes.length == 1){
+      minutes = '0' + minutes;
+    }
+    return minutes;
   }
 }

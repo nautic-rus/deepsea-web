@@ -59,6 +59,16 @@
   height: 45px;
   border-bottom: 1px solid #f3f2f1;
 }
+.month-date-day{
+  display: flex;
+  height: 45px;
+  border-bottom: 1px solid #f3f2f1;
+}
+.day-task{
+  height: 45px;
+  border-bottom: 1px solid #f3f2f1;
+  background-color: white;
+}
 .day-number-header{
   border-right: 1px solid #f3f2f1;
   color: #333;
@@ -66,6 +76,9 @@
 }
 .day-number{
   border-right: 1px solid #f3f2f1;
+  color: #333;
+}
+.day-number-one{
   color: #333;
 }
 .off-day{
@@ -197,4 +210,34 @@
   font-size: 12px;
   font-weight: 500;
   margin-top: -14px;
+}
+.task-one{
+  background-color: rgba(72, 135, 225, 0.25);
+  color: rgb(36, 68, 113);
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 0 4px 1px 4px;
+  margin: 0 4px;
+  height: 18px;
+}
+.line-text{
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline;
+}
+.task-text{
+  font-size: 12px;
+  font-weight: 600;
+}
+.button-change{
+  height: 35px;
+  width: 80px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.text-black-mini{
+  font-weight: 700;
+  color: #3a3a3a;
+  font-size: 12px;
 }
