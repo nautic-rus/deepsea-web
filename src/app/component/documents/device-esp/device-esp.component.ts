@@ -295,31 +295,10 @@ export class DeviceEspComponent implements OnInit {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
           }
-          d.userIdGrouped = d.userId.includes('.') ? d.userId.split('.')[0] : d.userId;
+          d.label = d.userId.includes('.') ? d.userId.split('.')[0] : d.userId;
         });
+        this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
 
-        this.devicesGrouped.splice(0, this.devicesGrouped.length);
-        _.forEach(_.groupBy(this.devices, x => x.userIdGrouped), g => {
-          let newDevice = JSON.parse(JSON.stringify(g[0]));
-          newDevice.userId = newDevice.userIdGrouped;
-          let count = 0;
-          g.forEach(x => count += x.count);
-          newDevice.count = count;
-          this.devicesGrouped.push(newDevice);
-        });
-        this.devices = this.devicesGrouped;
-
-
-        let findSplit = this.devices.filter((x: any) => x.userId.includes('.') && x.userId.split('.').length > 1);
-        if (findSplit.length > 0){
-          let min = _.sortBy(findSplit,x => x.userId.split('.').length)[0].userId.split('.').length;
-          this.devices.forEach((x: any) => x.label = x.userId.includes('.') ? x.userId.split('.').slice(0, min).join('.') : x.userId);
-          this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
-        }
-        else{
-          this.devices.forEach((x: any) => x.label = x.userId);
-          this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
-        }
 
         this.devices.forEach((d: any) => d.userId = this.removeLeftZeros(d.userId));
         this.devicesSrc = [...this.devices];
