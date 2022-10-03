@@ -295,7 +295,14 @@ export class DeviceEspComponent implements OnInit {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
           }
-          d.label = d.userId.includes('.') ? d.userId.split('.')[0] : d.userId;
+          d.label = d.userId.includes('.') ? d.userId[0] : d.userId;
+          let find = this.devices.find((x: any) => d.userId.includes(x.userId));
+          if (find == null){
+            d.label = d.userId;
+          }
+          else{
+            d.label = find.userId;
+          }
         });
         this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
 
