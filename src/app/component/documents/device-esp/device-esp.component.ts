@@ -475,6 +475,7 @@ export class DeviceEspComponent implements OnInit {
     });
   }
   round(input: number) {
+    if (input < 0.01) return 0.01;
     return Math.round(input * 100) / 100;
   }
   roundDecimal(input: number){
