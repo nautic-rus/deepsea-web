@@ -15,6 +15,7 @@
         [virtualScroll]="false"
         [scrollHeight]="'78vh'"
         [virtualRowHeight]="1"
+        columnResizeMode="expand"
         stateStorage="local"
         stateKey="state"
         styleClass="p-datatable-striped"
@@ -98,7 +99,7 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th style="width:30px" pResizableColumn></th>
-            <th style="width:192px" pResizableColumn pReorderableColumn *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th style="width:192px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
