@@ -116,4 +116,7 @@ export class SpecManagerService {
   async addDeviceToSystem(docNumber: string, stock: string, units: string, count: string, label: string, forLabel: string) {
     return await this.http.get<any[]>(props.httpSpec + '/addDeviceToSystem', {params: {docNumber, stock, units, count, label, forLabel}}).toPromise();
   }
+  async addGroupToSystem(docNumber: string, stock: string, userId: string) {
+    return await this.http.get<any>(props.httpSpec + '/addGroupToSystem', {params: {docNumber, stock, userId}}).toPromise();
+  }
 }

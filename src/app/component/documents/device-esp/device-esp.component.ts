@@ -22,6 +22,7 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import * as XLSX from "xlsx";
 import {DeviceEspGenerationWaitComponent} from "./device-esp-generation-wait/device-esp-generation-wait.component";
 import {AddMaterialToEspComponent} from "./add-material-to-esp/add-material-to-esp.component";
+import {AddGroupDeviceComponent} from "./add-group-device/add-group-device.component";
 
 @Component({
   selector: 'app-device-esp',
@@ -265,7 +266,6 @@ export class DeviceEspComponent implements OnInit {
           this.devices.push(newDevice);
         });
 
-
         let findSplit = this.devices.filter((x: any) => x.userId.includes('.') && x.userId.split('.').length > 1);
         if (findSplit.length > 0){
           let min = _.sortBy(findSplit,x => x.userId.split('.').length)[0].userId.split('.').length;
@@ -276,6 +276,7 @@ export class DeviceEspComponent implements OnInit {
           this.devices.forEach((x: any) => x.label = x.userId);
           this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
         }
+
 
         this.devices.forEach((d: any) => d.userId = this.removeLeftZeros(d.userId));
         this.devicesSrc = [...this.devices];
@@ -295,8 +296,8 @@ export class DeviceEspComponent implements OnInit {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
           }
-          d.label = d.userId.includes('.') ? d.userId[0] : d.userId;
-          let find = this.devices.find((x: any) => d.userId.includes(x.userId));
+          //d.label = d.userId.includes('.') ? d.userId[0] : d.userId;
+          let find = this.devices.find((x: any) => d.userId.includes(x.userId + '.'));
           if (find == null){
             d.label = d.userId;
           }
@@ -849,5 +850,18 @@ export class DeviceEspComponent implements OnInit {
   }
   getZones(zone: string) {
     return zone.split(',');
+  }
+
+  addGroupAccommodation() {
+    this.dialogService.open(AddGroupDeviceComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, this.devices]
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.fillRevisions();
+      });
+    });
   }
 }
