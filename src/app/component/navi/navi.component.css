@@ -182,7 +182,7 @@
 .menu-grid{
   display: grid;
   grid-template-columns: 25px 100px 25px;
-  column-gap: 15px;
+  column-gap: 10px;
 }
 .arrow-down{
   transform: rotate(-180deg);

@@ -960,3 +960,11 @@
 .sort-active{
   color: #3278b3;
 }
+@media (max-width: 1600px){
+  .sections-004{
+    padding-top: 92px;
+    width: 820px;
+    grid-template-columns: 14% 15% 17% 14% 14% 11% 10% 8%;
+    grid-template-rows: 60px 45px 35px 40px 40px 55px 40px;
+  }
+}

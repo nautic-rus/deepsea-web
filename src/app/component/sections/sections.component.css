@@ -128,10 +128,10 @@
     background: url("../../../assets/63m1100.png") 0 0 no-repeat;
   }
   .sections-002{
-    padding-top: 240px;
+    padding-top: 168px;
     width: 1340px;
-    grid-template-columns: 7% 7.3% 8.9% 11.3% 12% 11.4% 11.4% 11.5% 11% 7% 0.1%;
-    grid-template-rows: 57px 50px 66px 50px 51px 67px 74px;
+    grid-template-columns: 3% 7.3% 8.9% 11.3% 12% 11.4% 11.4% 11.5% 11% 7% 0.1%;
+    grid-template-rows: 57px 45px 66px 40px 51px 67px 74px;
   }
   .number-card {
     font-size: 13px;
@@ -223,9 +223,10 @@
     background: url("../../../assets/NR004-2.png") 0 0 no-repeat;
   }
   .sections-004{
-    width: 1400px;
-    grid-template-columns: 11% 17% 17% 14% 13% 11% 10% 8%;
-    grid-template-rows: 120px 80px 50px 75px 75px 90px 70px;
+    padding-top: 60px;
+    width: 1320px;
+    grid-template-columns: 11% 15% 17% 13% 13% 10% 9% 8%;
+    grid-template-rows: 120px 80px 50px 45px 75px 70px 90px;
   }
   .number-card {
     font-size: 13px;
@@ -238,9 +239,9 @@
     background: url("../../../assets/NR004-3.png") 0 0 no-repeat;
   }
   .sections-004{
-    width: 1250px;
+    width: 1150px;
     grid-template-columns: 11% 17% 17% 14% 13% 11% 10% 8%;
-    grid-template-rows: 110px 60px 50px 60px 60px 80px 70px;
+    grid-template-rows: 110px 75px 50px 60px 60px 80px 70px;
   }
   .number-card {
     font-size: 13px;
@@ -253,9 +254,10 @@
     background: url("../../../assets/NR004-4.png") 0 0 no-repeat;
   }
   .sections-004{
-    width: 1100px;
+    width: 1057px;
     grid-template-columns: 13% 17% 17% 14% 13% 11% 10% 8%;
-    grid-template-rows: 80px 60px 45px 50px 60px 70px 50px;
+    grid-template-rows: 120px 60px 45px 50px 50px 70px 70px;
+
   }
   .number-card {
     font-size: 13px;
@@ -268,9 +270,9 @@
     background: url("../../../assets/NR004-5.png") 0 0 no-repeat;
   }
   .sections-004{
-    width: 950px;
+    width: 924px;
     grid-template-columns: 14% 15% 17% 14% 14% 11% 10% 8%;
-    grid-template-rows: 60px 45px 40px 45px 50px 60px 45px;
+    grid-template-rows: 100px 55px 40px 45px 45px 60px 60px;
   }
   .number-card {
     font-size: 13px;
@@ -283,8 +285,8 @@
     background: url("../../../assets/NR004-6.png") 0 0 no-repeat;
   }
   .sections-004{
-    padding-top: 92px;
-    width: 820px;
+    padding-top: 100px;
+    width: 826px;
     grid-template-columns: 14% 15% 17% 14% 14% 11% 10% 8%;
     grid-template-rows: 60px 45px 35px 40px 40px 55px 40px;
   }

@@ -364,6 +364,9 @@ body,p{
 .min-width-270{
   min-width: 270px;
 }
+.min-width-340{
+  min-width: 340px;
+}
 .min-width-360{
   min-width: 360px;
 }

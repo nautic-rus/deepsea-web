@@ -3,7 +3,7 @@
     <div class="empty-card"></div>
     <div class="card-head df sticky-card">
       <div class="mr-10 mb-10">
-        <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-160 border">
         </p-dropdown>
       </div>
       <div class="mr-10 mb-10">
@@ -25,18 +25,26 @@
           <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
         </div>
       </div>
-      <div class="df min-width-360">
+      <div class="df min-width-340">
         <div class="mr-10 mb-10 ml-10">
-          <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-170 border">
+          <p-dropdown class="select" [(ngModel)]="sortValue" [options]="sortValues" (ngModelChange)="sortChanged()" styleClass="width-160 border">
           </p-dropdown>
         </div>
         <span class="p-input-icon-left p-ml-auto">
           <i class="pi pi-search"></i>
-          <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+          <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-160" />
         </span>
       </div>
     </div>
     <div class="empty-card-bottom"></div>
+    <div *ngIf="pipes.length == 0">
+      <div class="cxy loading">
+        <div class="cxy card-height">
+          <img src="assets/whale.gif" height="120">
+          <div class="cx loading-text">PLEASE WAIT...</div>
+        </div>
+      </div>
+    </div>
 
     <div *ngIf="selectedView == 'tiles'">
       <div class="tile">
@@ -230,7 +238,7 @@
               </div>
             </div>
             <div class="p-ml-auto df align-center">
-              <div *ngIf="pipe.stock != ''" class="df">
+              <div *ngIf="pipe.stock.trim() != ''" class="df">
                 <div class="trm">
                   <span [innerHTML]="pipe.stock | highLight: search"></span>
                 </div>
@@ -238,6 +246,9 @@
                   <img src="assets/icons/trm.svg" height="14">
                   <div class="copy-tooltip-list" [hidden]="!showTooltip('t' + i)">Copied!</div>
                 </div>
+              </div>
+              <div class="pulse">
+                <div *ngIf="pipe.stock.trim() == ''" class="dot red"></div>
               </div>
               <div></div>
             </div>

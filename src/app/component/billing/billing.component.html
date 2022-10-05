@@ -85,6 +85,16 @@
                         </span>
                       </div>
                     </div>
+                    <div *ngIf="plate.stockCode.trim() != ''" class="position-relative df mt-3px">
+                      <div class="trm">
+                        <span [innerHTML]="plate.stockCode | highLight: search"></span>
+                      </div>
+                      <div (click)="copyTrmCode(plate.stockCode, 't' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                        <img src="assets/icons/trm.svg" height="12">
+                        <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      </div>
+                    </div>
+                    <div *ngIf="plate.stockCode.trim() == ''" class="invisible-trm mb-5"></div>
                   </div>
                   <div class="mt-minus5">
                     <div class="text-center-x mb-5">
@@ -117,7 +127,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="flex-end-top">
+                  <div class="flex-end-top ml-minus20">
                     <div class="kpl-flag cxy">
                       <div class="text-center-x pr-5">
                         KPL
@@ -128,18 +138,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="plate.stockCode.trim() != ''" class="position-relative df mb-5">
-                  <div class="trm">
-                    <span [innerHTML]="plate.stockCode | highLight: search"></span>
-                  </div>
-                  <div (click)="copyTrmCode(plate.stockCode, 't' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
-                    <img src="assets/icons/trm.svg" height="12">
-                    <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
-                  </div>
-                </div>
-                <div *ngIf="plate.stockCode.trim() == ''" class="invisible-trm mb-5">
 
-                </div>
                 <div class="df mb-10">
                   <div class="left-label-nest cxy">NEST</div>
                   <div class="w-100">
@@ -242,7 +241,7 @@
           <div *ngIf="profile != null" class="dash-card-tile" [class.flip-card]="profile.side == 'back'">
             <div class="dash-card-tile-side-front" (click)="handleBackClickProfile($event, profile)" [class.block-card]="profile != null && profile.isDisabled">
               <div *ngIf="profile != null">
-                <div class="top-row-tile">
+                <div class="top-row-tile-pr">
                   <div class="pulse">
                     <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) >= 3" class="dot red"></div>
                     <div *ngIf="profile.profileForecast > profile.stock && abs(getForecastValueProfile(profile) - getStockValueProfile(profile)) < 3" class="dot orange"></div>

@@ -162,8 +162,8 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
-  width: 340px;
-  height: 248px;
+  width: 324px;
+  height: 230px;
   position: relative;
   perspective: 1000px;
 }
@@ -261,9 +261,14 @@
 
 }
 .top-row-tile{
-  height: 74px;
+  height: 80px;
   display: grid;
-  grid-template-columns: auto 120px 3.5fr 1.5fr;
+  grid-template-columns: 0 140px 140px auto;
+}
+.top-row-tile-pr{
+  height: 80px;
+  display: grid;
+  grid-template-columns: 0 120px 3.5fr 1.5fr;
 }
 .row-list{
   display: grid;
@@ -272,7 +277,6 @@
 .title-bold{
   font-weight: 500;
   font-size: 16px;
-  line-height: 30px;
   color: #3a3a3a;
 }
 .title-medium-bold{
@@ -485,7 +489,7 @@
   background-color: #FBC948;
   color: #ffffff;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 11px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 1px 4px;

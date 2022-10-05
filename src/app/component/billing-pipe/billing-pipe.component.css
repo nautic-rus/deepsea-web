@@ -46,7 +46,7 @@
   background-color: #EEF2FF!important;
 }
 .min-height-card{
-  min-height: calc(100vh - 117px);
+  min-height: calc(100vh - 77px);
 }
 .sticky-card{
   position: sticky;
@@ -111,13 +111,13 @@
   position: relative;
 }
 .all-tabs{
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #dee2e6;
   color: #343a40;
   background: #f8f9fa;
   font-weight: 700;
   border-radius: 6px;
-  min-width: 100px;
+  min-width: 75px;
 }
 .all-tabs:hover{
   background-color: #E9ECEF;
@@ -140,11 +140,6 @@
   height: calc(100vh - 270px);
   flex-direction: column;
 }
-.loading-text{
-  color: #323130a8;
-  font-weight: 500;
-  font-size: xx-large;
-}
 .loading-text-mini{
   color: #323130a8;
   font-weight: 500;
@@ -162,8 +157,8 @@
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
-  width: 340px;
-  height: 210px;
+  width: 320px;
+  height: 180px;
   position: relative;
   perspective: 1000px;
 }
@@ -568,15 +563,15 @@
   background-color: #78a9b7;
 }
 .top-row-pipe-tile{
-  height: 50px;
+  height: 40px;
   display: grid;
   grid-template-columns: auto 34px;
 }
 .two-row-pipe{
-  height: 30px;
+  height: 22px;
 }
 .three-row-pipe{
-  height: 30px;
+  height: 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
@@ -586,7 +581,7 @@
   grid-template-columns: 0.8fr 1fr;
 }
 .fife-row-pipe{
-  height: 40px;
+  height: 32px;
   display: grid;
   grid-template-columns: 0.5fr 1fr;
 }
@@ -637,4 +632,8 @@
 }
 .angle-cut{
   transform: rotate(45deg);
+}
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
 }
