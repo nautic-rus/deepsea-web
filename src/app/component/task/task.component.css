@@ -1098,3 +1098,6 @@
   font-family: inherit;
   font-weight: 400;
 }
+.progress-bar{
+  width: 200px;
+}

@@ -186,6 +186,7 @@ export class TaskComponent implements OnInit {
     }];
   selectedChecks: any = [];
   groupedChecks: any[] = [];
+  ready = Object({model: 0, drawing: 0, nesting: 0});
 
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
@@ -247,6 +248,15 @@ export class TaskComponent implements OnInit {
     });
     this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
     this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
+
+    let readySplit = this.issue.ready.split('|');
+    if (this.issue.ready.includes('|')){
+      this.ready.model = +readySplit[0];
+      this.ready.drawing = +readySplit[1];
+      this.ready.nesting = +readySplit[2];
+    }
+
+
     this.fillGroupedChecks();
   }
   close(){
@@ -904,16 +914,16 @@ export class TaskComponent implements OnInit {
     return res;
   }
 
-  setIssueReady(number: number) {
-    let ready = this.issue.ready;
+  setIssueReady(number: number, value: number) {
+    let ready = this.issue.ready.split('|');
     if (number == 0){
-      this.issue.ready = (ready[0] == '0' ? '1' : '0') + '' + ready[1] + '' + ready[2];
+      this.issue.ready = (value.toString()) + '' + ready[1] + '' + ready[2];
     }
     else if (number == 1){
-      this.issue.ready = ready[0] + '' + (ready[1] == '0' ? '1' : '0') + ready[2] + '';
+      this.issue.ready = ready[0] + '' + (value.toString()) + ready[2] + '';
     }
     else if (number == 2){
-      this.issue.ready = ready[0] + '' + ready[1] + '' + (ready[2] == '0' ? '1' : '0');
+      this.issue.ready = ready[0] + '' + ready[1] + '' + (value.toString());
     }
     this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
       this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
@@ -939,5 +949,32 @@ export class TaskComponent implements OnInit {
 
   isVisible(value: string) {
     return this.issueTypes.find(x => x.type_name == this.issue.issue_type && x.visible_row.includes(value));
+  }
+  changePreparedness(){
+    return this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to;
+  }
+
+  nonZero(number: number) {
+    return number >= 0 ? number : 0;
+  }
+  limitPreparedness(number: number){
+    if (number < 0){
+      return 0;
+    }
+    else if (number > 100){
+      return 100;
+    }
+    else{
+      return number;
+    }
+  }
+
+  updatePreparedness() {
+    this.issue.ready = [this.ready.model, this.ready.drawing, this.ready.nesting].join('|');
+    this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+      this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
+        this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue.'});
+      });
+    });
   }
 }

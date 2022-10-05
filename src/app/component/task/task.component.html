@@ -173,23 +173,53 @@
       <div *ngIf="issue.issue_type == 'RKD'">
         <div class="big-text mb-1 mt-2">{{t.tr('Preparedness')}}</div>
         <div class="checklist">
-          <label class="container">
-            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(0)" type="checkbox" [checked]="issue.ready[0] == '1'">
-            <span class="checkmark"></span>
-            <span class="text-checkbox">Model</span>
-          </label>
 
-          <label class="container">
-            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(1)" type="checkbox" [checked]="issue.ready[1] == '1'">
-            <span class="checkmark"></span>
-            <span class="text-checkbox">Drawing</span>
-          </label>
+          <div class="progress df">
+            Model:
+            <button [disabled]="changePreparedness()" class="ml-1" (click)="ready.model = limitPreparedness(ready.model - 10)">-</button>
+            <div class="progress-bar mx-1">
+              <p-progressBar [value]="ready.model"></p-progressBar>
+            </div>
+            <button [disabled]="changePreparedness()" (click)="ready.model = limitPreparedness(ready.model + 10)">+</button>
+          </div>
+          <div class="progress df mt-1">
+            Drawing:
+            <button [disabled]="changePreparedness()" class="ml-1" (click)="ready.drawing = limitPreparedness(ready.drawing - 10)">-</button>
+            <div class="progress-bar mx-1">
+              <p-progressBar [value]="ready.drawing"></p-progressBar>
+            </div>
+            <button [disabled]="changePreparedness()" (click)="ready.drawing = limitPreparedness(ready.drawing + 10)">+</button>
+          </div>
+          <div class="progress df mt-1">
+            Nesting:
+            <button [disabled]="changePreparedness()" class="ml-1" (click)="ready.nesting = limitPreparedness(ready.nesting - 10)">-</button>
+            <div class="progress-bar mx-1">
+              <p-progressBar [value]="ready.nesting"></p-progressBar>
+            </div>
+            <button [disabled]="changePreparedness()" (click)="ready.nesting = limitPreparedness(ready.nesting + 10)">+</button>
+          </div>
 
-          <label class="container">
-            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(2)" type="checkbox" [checked]="issue.ready[2] == '1'">
-            <span class="checkmark"></span>
-            <span class="text-checkbox">Nesting</span>
-          </label>
+          <button class="mt-1" (click)="updatePreparedness()">UPDATE PREPAREDNESS</button>
+
+
+
+<!--          <label class="container">-->
+<!--            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(0, 1)" type="checkbox" [checked]="issue.ready[0] == '1'">-->
+<!--            <span class="checkmark"></span>-->
+<!--            <span class="text-checkbox">Model</span>-->
+<!--          </label>-->
+
+<!--          <label class="container">-->
+<!--            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(1, 1)" type="checkbox" [checked]="issue.ready[1] == '1'">-->
+<!--            <span class="checkmark"></span>-->
+<!--            <span class="text-checkbox">Drawing</span>-->
+<!--          </label>-->
+
+<!--          <label class="container">-->
+<!--            <input [disabled]="this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to" (change)="setIssueReady(2, 1)" type="checkbox" [checked]="issue.ready[2] == '1'">-->
+<!--            <span class="checkmark"></span>-->
+<!--            <span class="text-checkbox">Nesting</span>-->
+<!--          </label>-->
         </div>
       </div>
       <div class="big-text mb-1 mt-2">{{t.tr('Чек-лист')}}</div>
