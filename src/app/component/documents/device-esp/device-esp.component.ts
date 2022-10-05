@@ -297,7 +297,7 @@ export class DeviceEspComponent implements OnInit {
             d.userId = d.userId.split('#')[0];
           }
           //d.label = d.userId.includes('.') ? d.userId[0] : d.userId;
-          let find = this.devices.find((x: any) => d.userId.includes(x.userId + '.'));
+          let find = this.devices.find((x: any) => d.userId.startsWith(x.userId + '.'));
           if (find == null){
             d.label = d.userId;
           }
