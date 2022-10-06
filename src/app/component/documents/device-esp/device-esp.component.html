@@ -94,6 +94,7 @@
                       <div class="w-10 pr-10 df">
 <!--                        <div class="text-table-col cy">{{hideGroup(device.userId, deviceGroup.label)}}</div>-->
                         <div class="text-table-col cy">{{device.userId}}</div>
+                        <button *ngIf="device.fromAux == 1" (click)="removeDeviceFromSystem(device)">-</button>
                       </div>
                       <div *ngIf="!deviceGroup.accommodation" class="w-5 mm-text pr-10 cy">{{device.count}}</div>
                       <div *ngIf="deviceGroup.accommodation" class="w-5 mm-text pr-10 cy"></div>

@@ -864,4 +864,13 @@ export class DeviceEspComponent implements OnInit {
       });
     });
   }
+
+  removeDeviceFromSystem(device: any) {
+    this.s.removeDeviceFromSystem(this.docNumber, device.material.code, device.units, device.count, device.userId, '').then(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.fillRevisions();
+      });
+    });
+  }
 }
