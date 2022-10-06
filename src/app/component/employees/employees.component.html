@@ -61,11 +61,14 @@
     </div>
     <div class="users-days" *ngIf="selectedView == 'month'">
       <div class="df sticky">
-        <div class="w-20 min-width-265 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
+        <div class="w-20 min-width-265 users pl-10 header-users">
+          <span>{{t.tr('Сотрудники')}}</span>
+          <span class="p-ml-auto hours-font mr-10">{{workingHours}}</span>
+        </div>
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
-              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}</div>
+              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>
             </div>
           </div>
         </div>
