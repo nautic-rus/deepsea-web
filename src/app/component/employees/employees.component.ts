@@ -40,11 +40,11 @@ export class EmployeesComponent implements OnInit {
       this.dailyTasks = res;
 
       this.auth.getUsers().then(res =>{
-        this.users = res.filter(x => x.visibility.includes('k'));
+        this.users = res.filter(x => x.visibility.includes('k') && !x.login.includes('isaev'));
         this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
         // this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
         this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
-        this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != 'IT' && x != 'Management'));
+        this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != 'Management'));
         this.departments = _.sortBy(this.departments, x => x);
         this.selectedDepartments = [...this.departments];
         this.departments = _.sortBy(this.departments, x => this.getOrder(x));
@@ -236,5 +236,9 @@ export class EmployeesComponent implements OnInit {
       minutes = '0' + minutes;
     }
     return minutes;
+  }
+
+  getDepartment() {
+    return this.departments.filter(x => x != 'IT');
   }
 }

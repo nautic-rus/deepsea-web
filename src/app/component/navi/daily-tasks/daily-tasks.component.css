@@ -18,6 +18,13 @@
   background-color: #3B82F6;
   border-color: #3B82F6;
 }
+/deep/.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #3B82F6;
+}
+/deep/.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover
+.p-inputswitch-slider {
+  background: #3B82F6;
+}
 .daily-task{
   width: 50vw;
   max-width: 650px;

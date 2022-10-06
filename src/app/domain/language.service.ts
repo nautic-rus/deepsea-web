@@ -350,7 +350,7 @@ export class LanguageService {
           case 'Месяц': return 'Month';
           case 'День': return 'Day';
           case 'Задачи': return 'Tasks';
-          case '': return '';
+          case 'Опергруппа': return 'Operations group';
           case '': return '';
           case '': return '';
           case '': return '';
