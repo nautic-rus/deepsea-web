@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="df hover-user" *ngFor="let user of getUsers()">
+      <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of getUsers()">
         <div class="w-20 min-width-265 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
           <span *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto hours-font mr-10">{{userStats[user.login]?.totalSum?.hours}}</span>
@@ -79,7 +79,7 @@
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
-              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
+              <div *ngFor="let day of getDaysInMonth()" [class.management]="user.visibility.includes('r')" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
                 <span class="hours-font">{{userStats[user.login]?.days[day]?.hours}}</span>
                 <span class="minute-font">{{userStats[user.login]?.days[day]?.minutes}}</span>
               </div>
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <div class="df hover-user" *ngFor="let user of getUsers()">
+      <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of getUsers()">
         <div class="w-20 min-width-265 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
         </div>
@@ -118,6 +118,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

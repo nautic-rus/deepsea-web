@@ -111,6 +111,7 @@
 .hover-user:hover{
   background-color: hsla(220, 11%, 97%, 1);
 }
+
 .today-day-everyone{
   background-color: #0037ff0a!important;
 }
@@ -240,4 +241,8 @@
   font-weight: 700;
   color: #3a3a3a;
   font-size: 12px;
+}
+.management{
+  background-color: #FEF9F2 !important;
+  z-index: 10;
 }

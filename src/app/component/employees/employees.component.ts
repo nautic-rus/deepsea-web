@@ -42,12 +42,17 @@ export class EmployeesComponent implements OnInit {
       this.auth.getUsers().then(res =>{
         this.users = res.filter(x => x.visibility.includes('k') && !x.login.includes('isaev'));
         this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
+        this.users.forEach(user => user.props = Object({department: (user.visibility.includes('r') ? 'Managers' : '')}));
         // this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
         this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
         this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != 'Management'));
         this.departments = _.sortBy(this.departments, x => x);
+        this.departments.push('Managers');
         this.selectedDepartments = [...this.departments];
         this.departments = _.sortBy(this.departments, x => this.getOrder(x));
+
+        console.log(this.users);
+
 
         this.users.forEach(user => {
           let tasks = this.dailyTasks.filter(x => x.userLogin == user.login);
@@ -100,7 +105,7 @@ export class EmployeesComponent implements OnInit {
     return array;
   }
   getUsers(){
-    return this.users.filter(x => x.visibility.includes('k')).filter(x => this.selectedDepartments.includes(x.department));
+    return this.users.filter(x => x.visibility.includes('k')).filter(x => this.selectedDepartments.includes(x.department) && (x.props?.department == '' || this.selectedDepartments.includes(x.props?.department)));
   }
   isWeekend(day: number) {
     let date = new Date(this.currentYear, this.currentMonth, day).getDay();
@@ -181,7 +186,7 @@ export class EmployeesComponent implements OnInit {
       case 'Outfitting department': return selected ? 'outfittingw' : 'outfittingg';
       case 'Stability department': return selected ? 'paintbrush' : 'paintbrush';
       case 'System department': return selected ? 'pipew' : 'pipeg';
-      default: return 'plus';
+      default: return selected ? 'manager' : 'managerg';
     }
   }
   getOrder(dep: string) {
