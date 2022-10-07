@@ -175,28 +175,30 @@
         <div class="checklist">
 
           <div class="progress df">
-            Model:
-            <button [disabled]="changePreparedness()" class="ml-1" (click)="ready.model = limitPreparedness(ready.model - 10)">-</button>
+            <span class="width-100">Model:</span>
+            <div [class.disabled]="changePreparedness()" class="minus-plus ml-1 cxy cursor-pointer" (click)="ready.model = limitPreparedness(ready.model - 10)">-</div>
             <div class="progress-bar mx-1">
               <p-progressBar [value]="ready.model"></p-progressBar>
             </div>
-            <button [disabled]="changePreparedness()" (click)="ready.model = limitPreparedness(ready.model + 10)">+</button>
+            <div [class.disabled]="changePreparedness()" class="minus-plus cxy cursor-pointer" (click)="ready.model = limitPreparedness(ready.model + 10)">+</div>
           </div>
           <div class="progress df mt-1">
-            Drawing:
-            <button [disabled]="changePreparedness()" class="ml-1" (click)="ready.drawing = limitPreparedness(ready.drawing - 10)">-</button>
+            <span class="width-100">Drawing:</span>
+
+            <div [class.disabled]="changePreparedness()" class="minus-plus ml-1 cxy cursor-pointer" (click)="ready.drawing = limitPreparedness(ready.drawing - 10)">-</div>
             <div class="progress-bar mx-1">
               <p-progressBar [value]="ready.drawing"></p-progressBar>
             </div>
-            <button [disabled]="changePreparedness()" (click)="ready.drawing = limitPreparedness(ready.drawing + 10)">+</button>
+            <div [class.disabled]="changePreparedness()" class="minus-plus cxy cursor-pointer" (click)="ready.drawing = limitPreparedness(ready.drawing + 10)">+</div>
           </div>
           <div class="progress df mt-1">
-            Nesting:
-            <button [disabled]="changePreparedness()" class="ml-1" (click)="ready.nesting = limitPreparedness(ready.nesting - 10)">-</button>
+            <span class="width-100">Nesting:</span>
+
+            <div [class.disabled]="changePreparedness()" class="minus-plus ml-1 cxy cursor-pointer" (click)="ready.nesting = limitPreparedness(ready.nesting - 10)">-</div>
             <div class="progress-bar mx-1">
               <p-progressBar [value]="ready.nesting"></p-progressBar>
             </div>
-            <button [disabled]="changePreparedness()" (click)="ready.nesting = limitPreparedness(ready.nesting + 10)">+</button>
+            <div [class.disabled]="changePreparedness()" class="minus-plus cxy cursor-pointer" (click)="ready.nesting = limitPreparedness(ready.nesting + 10)">+</div>
           </div>
 
           <button class="mt-1" (click)="updatePreparedness()">UPDATE PREPAREDNESS</button>

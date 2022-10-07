@@ -26,9 +26,9 @@ export class DailyTasksComponent implements OnInit {
   tasksSrc: DailyTask[] = [];
   invalid: string[] = [];
   dayHoursToWork = 23;
+  checked: boolean = false;
 
-
-  projects: string[] = ['NR002', 'NR004', 'P701', 'P707', 'English', 'Other'];
+  projects: string[] = ['NR002', 'NR004', 'P701', 'P707', 'English', 'Operations group', 'Other'];
   filteredProjects: string[] = [...this.projects];
 
   docNumbers: string[] = [];
@@ -109,12 +109,15 @@ export class DailyTasksComponent implements OnInit {
     this.docNumbers = _.sortBy(this.issues.filter(x => x.project == task.project && x.issue_type == 'RKD').map(x => x.doc_number), x => x);
     this.filteredDocNumbers = [...this.docNumbers];
 
-    if (task.project == 'English' || task.project == 'Other'){
+    if (task.project == 'Operations group' || task.project == 'English' || task.project == 'Other'){
       this.docNumbers = ['-'];
       task.docNumber = '-';
       task.action = '-';
       if (task.project == 'English'){
         task.details = 'English Lesson';
+      }
+      if (task.project == 'Operations group'){
+        task.details = 'Operations group';
       }
     }
     // else{
@@ -265,5 +268,36 @@ export class DailyTasksComponent implements OnInit {
       }
     });
     this.filteredActions = filtered;
+  }
+
+  createOpTask() {
+    if (this.checked){
+      let timeUsed = 0;
+      this.tasks.forEach(t => timeUsed += t.time);
+      timeUsed = timeUsed < 8 ? 8 - timeUsed : 0;
+
+      let newTask = {
+        date: this.calendarDay,
+        userLogin: this.auth.getUser().login,
+        userName: this.auth.getUserName(this.auth.getUser().login),
+        dateCreated: new Date(),
+        project: 'Operations group',
+        docNumber: '-',
+        details: 'Operations group',
+        time: timeUsed,
+        action: '-',
+        id: this.generateId(20),
+        hours: Math.floor(timeUsed),
+        minutes: Math.round((timeUsed - Math.floor(timeUsed)) * 60),
+        projectValue: '',
+        docNumberValue: '',
+        actionValue: '',
+        hidden: false
+      };
+      this.tasks = [newTask];
+    }
+    else{
+      this.tasks = [];
+    }
   }
 }

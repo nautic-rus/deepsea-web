@@ -28,6 +28,27 @@ export class EmployeesComponent implements OnInit {
   dailyTasks: DailyTask[] = [];
   userStats: any = Object();
   selectedView: string = 'month';
+  specialDays = [
+    Object({day: 3, month: 11, year: 2022, hours: 7}),
+    Object({day: 4, month: 11, year: 2022, hours: 0}),
+    Object({day: 2, month: 1, year: 2023, hours: 0}),
+    Object({day: 3, month: 1, year: 2023, hours: 0}),
+    Object({day: 4, month: 1, year: 2023, hours: 0}),
+    Object({day: 5, month: 1, year: 2023, hours: 0}),
+    Object({day: 6, month: 1, year: 2023, hours: 0}),
+    Object({day: 22, month: 2, year: 2023, hours: 7}),
+    Object({day: 23, month: 2, year: 2023, hours: 0}),
+    Object({day: 24, month: 2, year: 2023, hours: 0}),
+    Object({day: 7, month: 3, year: 2023, hours: 7}),
+    Object({day: 8, month: 3, year: 2023, hours: 0}),
+    Object({day: 1, month: 5, year: 2023, hours: 0}),
+    Object({day: 8, month: 5, year: 2023, hours: 0}),
+    Object({day: 9, month: 5, year: 2023, hours: 0}),
+    Object({day: 12, month: 6, year: 2023, hours: 0}),
+    Object({day: 3, month: 11, year: 2023, hours: 7}),
+    Object({day: 6, month: 11, year: 2023, hours: 0}),
+  ];
+  workingHours = 0;
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
@@ -40,19 +61,27 @@ export class EmployeesComponent implements OnInit {
       this.dailyTasks = res;
 
       this.auth.getUsers().then(res =>{
-        this.users = res.filter(x => x.visibility.includes('k'));
+        this.users = res.filter(x => x.visibility.includes('k') && !x.login.includes('isaev'));
         this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
+        this.users.forEach(user => user.props = Object({department: (user.visibility.includes('r') ? 'Managers' : '')}));
         // this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
         this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
-        this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != 'IT' && x != 'Management'));
-        this.departments = _.sortBy(this.departments, x => x);
-        this.selectedDepartments = [...this.departments];
-        this.departments = _.sortBy(this.departments, x => this.getOrder(x));
+
+        if (this.departments.length == 0){
+          this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != 'Management'));
+          this.departments = _.sortBy(this.departments, x => x);
+          this.departments.push('Managers');
+          this.selectedDepartments = [...this.departments];
+          this.departments = _.sortBy(this.departments, x => this.getOrder(x));
+
+        }
+
 
         this.users.forEach(user => {
           let tasks = this.dailyTasks.filter(x => x.userLogin == user.login);
           let daysSum = Object({});
           let tasksByDay = Object({});
+          let tasksOperationsGroupCount = Object({});
 
           let totalSum = 0;
           days.forEach(d => {
@@ -60,18 +89,36 @@ export class EmployeesComponent implements OnInit {
             let date = new Date(this.currentYear, this.currentMonth, d).getTime();
             tasks.filter(t => this.sameDay(date, t.date)).forEach(x => sum += x.time);
             tasksByDay[d] = tasks.filter(t => this.sameDay(date, t.date));
+            tasksOperationsGroupCount[d] = tasks.filter(t => this.sameDay(date, t.date) && t.project == 'Operations group').length;
             daysSum[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
             totalSum += sum;
           });
 
 
-          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
+          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, tasksOperationsGroupCount: tasksOperationsGroupCount, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
         });
-        console.log(this.userStats);
 
 
       });
     });
+    this.workingHours = this.getMonthWorkingHours();
+  }
+  getMonthWorkingHours(){
+    let hours = 0;
+    this.getDaysInMonth().forEach(day => {
+      let date = new Date(this.currentYear, this.currentMonth, day);
+      let dayOfWeek = date.getDay();
+
+      let findSpecial = this.specialDays.find(x => x.day == day && (x.month - 1) == this.currentMonth && x.year == this.currentYear);
+      if (findSpecial != null){
+        hours += findSpecial.hours;
+      }
+      else if (dayOfWeek != 0 && dayOfWeek != 6){
+        hours += 8;
+      }
+
+    });
+    return hours;
   }
   getHours(time: number, minutes: string = '') {
     let hours = Math.floor(time).toString();
@@ -100,13 +147,16 @@ export class EmployeesComponent implements OnInit {
     return array;
   }
   getUsers(){
-    return this.users.filter(x => x.visibility.includes('k')).filter(x => this.selectedDepartments.includes(x.department));
+    return this.users.filter(x => x.visibility.includes('k')).filter(x => this.selectedDepartments.includes(x.department) && (x.props?.department == '' || this.selectedDepartments.includes(x.props?.department)));
   }
   isWeekend(day: number) {
     let date = new Date(this.currentYear, this.currentMonth, day).getDay();
-    return date == 0 || date == 6;
+    return date == 0 || date == 6 || this.specialDays.find(x => x.day == day && (x.month - 1) == this.currentMonth && x.year == this.currentYear)?.hours == 0;
   }
-
+  isShorter(day: number){
+    let special = this.specialDays.find(x => x.day == day && (x.month - 1) == this.currentMonth && x.year == this.currentYear);
+    return special != null && special.hours != 0;
+  }
   isCurrentDay(day: any) {
     return day == this.todayStatic.getDate() && this.currentMonth == this.todayStatic.getMonth();
   }
@@ -181,7 +231,7 @@ export class EmployeesComponent implements OnInit {
       case 'Outfitting department': return selected ? 'outfittingw' : 'outfittingg';
       case 'Stability department': return selected ? 'paintbrush' : 'paintbrush';
       case 'System department': return selected ? 'pipew' : 'pipeg';
-      default: return 'plus';
+      default: return selected ? 'manager' : 'managerg';
     }
   }
   getOrder(dep: string) {
@@ -236,5 +286,9 @@ export class EmployeesComponent implements OnInit {
       minutes = '0' + minutes;
     }
     return minutes;
+  }
+
+  getDepartment() {
+    return this.departments.filter(x => x != 'IT');
   }
 }

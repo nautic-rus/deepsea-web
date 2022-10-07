@@ -61,16 +61,19 @@
     </div>
     <div class="users-days" *ngIf="selectedView == 'month'">
       <div class="df sticky">
-        <div class="w-20 min-width-265 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
+        <div class="w-20 min-width-265 users pl-10 header-users">
+          <span>{{t.tr('Сотрудники')}}</span>
+          <span class="p-ml-auto hours-font mr-10">{{workingHours}}</span>
+        </div>
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
-              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}</div>
+              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="df hover-user" *ngFor="let user of getUsers()">
+      <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of getUsers()">
         <div class="w-20 min-width-265 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
           <span *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto hours-font mr-10">{{userStats[user.login]?.totalSum?.hours}}</span>
@@ -79,9 +82,10 @@
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
-              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
+              <div *ngFor="let day of getDaysInMonth()" [class.management]="user.visibility.includes('r')" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
                 <span class="hours-font">{{userStats[user.login]?.days[day]?.hours}}</span>
                 <span class="minute-font">{{userStats[user.login]?.days[day]?.minutes}}</span>
+                <span *ngIf="userStats[user.login]?.tasksOperationsGroupCount[day] > 0" class="triangle" pTooltip="Operations group"></span>
               </div>
             </div>
           </div>
@@ -97,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="df hover-user" *ngFor="let user of getUsers()">
+      <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of getUsers()">
         <div class="w-20 min-width-265 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
         </div>
@@ -118,6 +122,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>

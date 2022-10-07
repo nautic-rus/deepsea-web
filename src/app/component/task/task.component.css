@@ -1101,3 +1101,14 @@
 .progress-bar{
   width: 200px;
 }
+.minus-plus{
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  border: 1px solid #e2e2f3;
+  color: #BFC2C6;
+}
+.minus-plus:hover{
+  box-shadow: 0px 0px 3px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 50%;
+}

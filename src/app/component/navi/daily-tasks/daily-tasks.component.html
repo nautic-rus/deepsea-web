@@ -13,6 +13,14 @@
       <div class="big-text-create mb-1 mt-1">{{t.tr('Выбор даты')}}</div>
       <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" styleClass="width-220" [(ngModel)]="calendarDay" (ngModelChange)="dayChanged()"></p-calendar>
     </div>
+    <div class="df cy mt-35">
+      <div class="big-text-create mb-1 mr-10">{{t.tr('Опергруппа')}}</div>
+      <div>
+        <p-inputSwitch [(ngModel)]="checked" (ngModelChange)="createOpTask()"></p-inputSwitch>
+      </div>
+
+    </div>
+
     <!--    <div>-->
     <!--      <div class="big-text-create mb-1 mt-1">{{t.tr('Отработанные часы')}}</div>-->
     <!--      <p-inputNumber [(ngModel)]="amountOfHours"></p-inputNumber>-->

@@ -23,4 +23,5 @@ export class User {
   visible_projects: string[] = [];
   visible_pages: string[] = [];
   shared_access: string = '';
+  props: any = Object();
 }
