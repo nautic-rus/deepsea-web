@@ -351,7 +351,7 @@ export class LanguageService {
           case 'День': return 'Day';
           case 'Задачи': return 'Tasks';
           case 'Опергруппа': return 'Operations group';
-          case '': return '';
+          case 'Обновить готовность': return 'Update preparedness' ;
           case '': return '';
           case '': return '';
           case '': return '';

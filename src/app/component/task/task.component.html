@@ -171,37 +171,39 @@
         </div>
       </div>
       <div *ngIf="issue.issue_type == 'RKD'">
-        <div class="big-text mb-1 mt-2">{{t.tr('Preparedness')}}</div>
+        <div class="big-text mb-10 mt-2">{{t.tr('Preparedness')}}</div>
         <div class="checklist">
 
           <div class="progress df">
             <span class="width-100">Model:</span>
             <div [class.disabled]="changePreparedness()" class="minus-plus ml-1 cxy cursor-pointer" (click)="ready.model = limitPreparedness(ready.model - 10)">-</div>
             <div class="progress-bar mx-1">
-              <p-progressBar [value]="ready.model"></p-progressBar>
+              <p-progressBar class="custom-progress" [style]="{'background':'red'}" [value]="ready.model"></p-progressBar>
             </div>
             <div [class.disabled]="changePreparedness()" class="minus-plus cxy cursor-pointer" (click)="ready.model = limitPreparedness(ready.model + 10)">+</div>
           </div>
-          <div class="progress df mt-1">
+          <div class="progress df mt-5">
             <span class="width-100">Drawing:</span>
 
             <div [class.disabled]="changePreparedness()" class="minus-plus ml-1 cxy cursor-pointer" (click)="ready.drawing = limitPreparedness(ready.drawing - 10)">-</div>
             <div class="progress-bar mx-1">
-              <p-progressBar [value]="ready.drawing"></p-progressBar>
+              <p-progressBar class="custom-progress" [value]="ready.drawing"></p-progressBar>
             </div>
             <div [class.disabled]="changePreparedness()" class="minus-plus cxy cursor-pointer" (click)="ready.drawing = limitPreparedness(ready.drawing + 10)">+</div>
           </div>
-          <div class="progress df mt-1">
+          <div class="progress df mt-5">
             <span class="width-100">Nesting:</span>
 
             <div [class.disabled]="changePreparedness()" class="minus-plus ml-1 cxy cursor-pointer" (click)="ready.nesting = limitPreparedness(ready.nesting - 10)">-</div>
             <div class="progress-bar mx-1">
-              <p-progressBar [value]="ready.nesting"></p-progressBar>
+              <p-progressBar class="custom-progress" [value]="ready.nesting"></p-progressBar>
             </div>
             <div [class.disabled]="changePreparedness()" class="minus-plus cxy cursor-pointer" (click)="ready.nesting = limitPreparedness(ready.nesting + 10)">+</div>
           </div>
+          <div class="mt-10 flex-end">
+            <div tabindex="10" (click)="updatePreparedness()" pButton [label]="t.tr('Обновить готовность')" class="button-ok"></div>
 
-          <button class="mt-1" (click)="updatePreparedness()">UPDATE PREPAREDNESS</button>
+          </div>
 
 
 
