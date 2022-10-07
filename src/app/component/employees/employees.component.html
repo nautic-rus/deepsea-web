@@ -85,10 +85,7 @@
               <div *ngFor="let day of getDaysInMonth()" [class.management]="user.visibility.includes('r')" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
                 <span class="hours-font">{{userStats[user.login]?.days[day]?.hours}}</span>
                 <span class="minute-font">{{userStats[user.login]?.days[day]?.minutes}}</span>
-
-                <span *ngIf="userStats[user.login]?.tasksOperationsGroupCount[day] > 0" class="triangle"></span>
-
-<!--                <div *ngIf="userStats[user.login]?.days[day]?.hours == '8'">1</div>-->
+                <span *ngIf="userStats[user.login]?.tasksOperationsGroupCount[day] > 0" class="triangle" pTooltip="Operations group"></span>
               </div>
             </div>
           </div>
