@@ -88,7 +88,7 @@ export class MaterialsComponent implements OnInit {
         this.nodesSrc = res;
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
-        this.materials.forEach((x: any) => {
+        this.materials.filter(x => x != null).forEach((x: any) => {
           x.path = this.setPath(x.code);
         });
       });
@@ -386,5 +386,18 @@ export class MaterialsComponent implements OnInit {
       res = res.substr(0, length) + '..';
     }
     return res;
+  }
+
+  searchChange() {
+    if (this.selectedView == 'tiles'){
+      this.materials = this.materialsSrc.filter(x => x != null && (x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase()).includes(this.search.toLowerCase().trim()));
+      console.log(this.materials);
+      for (let x = 0; x < 20; x ++){
+        this.materials.push(null);
+      }
+    }
+    else{
+      this.materials = this.materialsSrc.filter(x => x != null && (x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase()).includes(this.search.toLowerCase().trim()));
+    }
   }
 }

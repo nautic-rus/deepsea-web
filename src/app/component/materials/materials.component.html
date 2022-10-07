@@ -45,7 +45,7 @@
         </div>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (input)="table.filterGlobal(search, 'contains')"  class="border" />
+          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChange()" class="border" />
         </span>
       </div>
 
