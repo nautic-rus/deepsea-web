@@ -81,6 +81,7 @@ export class EmployeesComponent implements OnInit {
           let tasks = this.dailyTasks.filter(x => x.userLogin == user.login);
           let daysSum = Object({});
           let tasksByDay = Object({});
+          let tasksOperationsGroupCount = Object({});
 
           let totalSum = 0;
           days.forEach(d => {
@@ -88,12 +89,13 @@ export class EmployeesComponent implements OnInit {
             let date = new Date(this.currentYear, this.currentMonth, d).getTime();
             tasks.filter(t => this.sameDay(date, t.date)).forEach(x => sum += x.time);
             tasksByDay[d] = tasks.filter(t => this.sameDay(date, t.date));
+            tasksOperationsGroupCount[d] = tasks.filter(t => this.sameDay(date, t.date) && t.project == 'Operations group').length;
             daysSum[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
             totalSum += sum;
           });
 
 
-          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
+          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, tasksOperationsGroupCount: tasksOperationsGroupCount, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
         });
 
 
