@@ -291,4 +291,22 @@ export class EmployeesComponent implements OnInit {
   getDepartment() {
     return this.departments.filter(x => x != 'IT');
   }
+
+  getDep(dep: string){
+    if (this.t.language == 'ru'){
+      switch (dep) {
+        case 'Design department': return 'Отдел дизайна';
+        case 'Devices department': return 'Отдел устройств';
+        case 'Electrical department': return 'Электротехнический отдел';
+        case 'Hull department': return 'Корпусный отдел';
+        case 'Outfitting department': return 'Отдел достройки';
+        case 'System department': return 'Системный отдел';
+        case 'Managers': return 'Руководители отделов';
+        default: return dep;
+      }
+    }
+    else{
+      return dep;
+    }
+  }
 }

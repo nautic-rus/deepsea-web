@@ -4,7 +4,7 @@
     <div class="calendar-header">
       <div class="df w-20 min-width-265">
         <div class="mr-10" *ngFor="let dep of departments">
-          <div class="dept gray-b cxy" [pTooltip]="dep" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">
+          <div class="dept gray-b cxy" [pTooltip]="getDep(dep)" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">
             <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="22">
           </div>
         </div>
@@ -85,7 +85,7 @@
               <div *ngFor="let day of getDaysInMonth()" [class.management]="user.visibility.includes('r')" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
                 <span class="hours-font">{{userStats[user.login]?.days[day]?.hours}}</span>
                 <span class="minute-font">{{userStats[user.login]?.days[day]?.minutes}}</span>
-                <span *ngIf="userStats[user.login]?.tasksOperationsGroupCount[day] > 0" class="triangle" pTooltip="Operations group"></span>
+                <span *ngIf="userStats[user.login]?.tasksOperationsGroupCount[day] > 0" class="triangle" [pTooltip]="t.tr('Опергруппа')"></span>
               </div>
             </div>
           </div>

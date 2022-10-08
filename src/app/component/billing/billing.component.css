@@ -46,7 +46,7 @@
   background-color: #EEF2FF!important;
 }
 .min-height-card{
-  min-height: calc(100vh - 117px);
+  min-height: calc(100vh - 77px);
 }
 .sticky-card{
   position: sticky;
