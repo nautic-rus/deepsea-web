@@ -702,8 +702,15 @@ export class HullEspComponent implements OnInit {
         forkJoin(texts.map(text => {
           this.cmapuser = this.auth.getUserName(files[texts.indexOf(text)].author);
           this.cmapdate = files[texts.indexOf(text)].upload_date;
-          return format == 'cnc' ? this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()) :
-            this.s.createESSI(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+          if (format == 'essi'){
+            return this.s.createESSI(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+          }
+          else if (format == 'tap'){
+            return this.s.createTAP(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+          }
+          else{
+            return this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+          }
         })).subscribe(cncs => {
           let zip = new JSZip();
           cncs.forEach(cnc => {
