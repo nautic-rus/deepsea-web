@@ -396,13 +396,14 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   defineReadyState(issue: Issue){
+    return issue.ready.includes('|') ? issue.ready.split('|').map(x => x + '%').join('/') : '-';
     let states = [];
-    states.push(issue.ready[0] == '1' ? 'М' : '-');
-    states.push(issue.ready[1] == '1' ? 'Ч' : '-');
-    states.push(issue.ready[2] == '1' ? 'Р' : '-');
-    issue.readyM = issue.ready[0] == '1';
-    issue.readyD = issue.ready[1] == '1';
-    issue.readyN = issue.ready[2] == '1';
+    states.push(issue.ready[0] + '%');
+    states.push(issue.ready[1] + '%');
+    states.push(issue.ready[2] + '%');
+    // issue.readyM = issue.ready[0] == '1';
+    // issue.readyD = issue.ready[1] == '1';
+    // issue.readyN = issue.ready[2] == '1';
     return states.join('/');
   }
   newTask(issue: object | null) {
