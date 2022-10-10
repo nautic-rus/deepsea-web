@@ -8,6 +8,11 @@
 <!--          <img src="assets/icons/plus3.svg" height="18">-->
 <!--        </div>-->
 <!--      </div>-->
+      <div class="mr-10">
+        <div (click)="addGroupAccommodation()" class="materials-button yellow-button cxy" [pTooltip]="l.tr('Сгруппировать по материалу')" tooltipPosition="top">
+          <img src="assets/icons/group2.svg" height="24">
+        </div>
+      </div>
       <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <img src="assets/icons/list.svg" height="22">
@@ -36,11 +41,7 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <div class="mr-10">
-        <div (click)="addGroupAccommodation()" class="materials-button green-button cxy">
-          <img src="assets/icons/plus.svg" height="26">
-        </div>
-      </div>
+
       <div class="p-ml-auto df mr-10">
         <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
           <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
