@@ -352,8 +352,8 @@ export class LanguageService {
           case 'Задачи': return 'Tasks';
           case 'Опергруппа': return 'Operations group';
           case 'Обновить готовность': return 'Update preparedness' ;
-          case '': return '';
-          case '': return '';
+          case 'Сгруппировать по материалу': return 'Group by material';
+          case 'Выгрузить excel': return 'Upload excel';
           case '': return '';
           case '': return '';
           case '': return '';
