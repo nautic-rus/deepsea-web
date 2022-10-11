@@ -9,7 +9,7 @@
         [scrollable]="true"
         [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
         [reorderableColumns]="true"
-        [resizableColumns]="true"
+
         [columns]="selectedColumns"
         (onColReorder)="saveReorderedColumns($event)"
         [virtualScroll]="false"
@@ -98,7 +98,7 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th style="width:30px" pResizableColumn></th>
-            <th style="width:192px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th style="width:158px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -119,7 +119,7 @@
               <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
-            <td style="width:192px" class="cursor-pointer" *ngFor="let col of columns">
+            <td style="width:158px" class="cursor-pointer" *ngFor="let col of columns">
               <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
               <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
             </td>
