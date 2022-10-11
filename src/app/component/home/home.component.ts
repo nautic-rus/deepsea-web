@@ -308,7 +308,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         headerLocale: 'Preparedness',
         sort: true,
         filter: false,
-        skip: false,
+        skip: true,
         filters: this.getFilters(this.issues, 'ready'),
         defaultValue: '',
         hidden: false,
@@ -377,7 +377,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         issue.started_date = new Date(issue.started_date);
         issue.start_date = new Date(issue.start_date);
         issue.due_date = new Date(issue.due_date);
-        issue.ready = this.defineReadyState(issue);
+        // issue.ready = this.defineReadyState(issue);
       });
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
       this.cols.forEach(col => col.hidden = !this.selectedCols.includes(col.headerLocale));
@@ -396,15 +396,15 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   defineReadyState(issue: Issue){
-    return issue.ready.includes('|') ? issue.ready.split('|').map(x => x + '%').join('/') : '-';
+    return issue.ready.includes('|') ? issue.ready.split('|').map(x => +x) : [];
     let states = [];
-    states.push(issue.ready[0] + '%');
-    states.push(issue.ready[1] + '%');
-    states.push(issue.ready[2] + '%');
+    states.push(issue.ready[0]);
+    states.push(issue.ready[1]);
+    states.push(issue.ready[2]);
     // issue.readyM = issue.ready[0] == '1';
     // issue.readyD = issue.ready[1] == '1';
     // issue.readyN = issue.ready[2] == '1';
-    return states.join('/');
+    return states;
   }
   newTask(issue: object | null) {
     this.dialogService.open(CreateTaskComponent, {
@@ -534,7 +534,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       return issueElement != '' ? issueElement : '-';
     } else if (field == 'contract_due_date') {
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
-    } else {
+    }
+    else {
       return issueElement;
     }
   }
@@ -785,5 +786,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   saveReorderedColumns(event: any) {
     this.cols = event.columns;
     localStorage.setItem('id', JSON.stringify(event.columns));
+  }
+
+  getWidth(r: number) {
+    return {
+      width: r + 'px'
+    };
   }
 }

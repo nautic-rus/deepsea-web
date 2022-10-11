@@ -98,7 +98,7 @@
         <ng-template pTemplate="header" let-columns>
           <tr>
             <th style="width:30px" pResizableColumn></th>
-            <th style="width:158px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th style="width:156px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -119,9 +119,28 @@
               <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
-            <td style="width:158px" class="cursor-pointer" *ngFor="let col of columns">
-              <div *ngIf="col.skip == false"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
-              <div *ngIf="col.skip" [innerHTML]="col.defaultValue"></div>
+            <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
+              <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
+<!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
+              <div *ngIf="col.field == 'ready'">
+                <div *ngFor="let r of defineReadyState(issue); let i = index">
+                  <div class="df cy" *ngIf="i == 0">
+                    <div class="text-progress">{{'M' + ' ' + r + '%'}}</div>
+                    <div class="model-progress" [ngStyle]="getWidth(r)"></div>
+
+                  </div>
+                  <div class="df cy" *ngIf="i == 1">
+                    <div class="text-progress">{{'D' + ' ' + r + '%'}}</div>
+                    <div class="drawing-progress" [ngStyle]="getWidth(r)"></div>
+
+                  </div>
+                  <div class="df cy" *ngIf="i == 2">
+                    <div class="text-progress">{{'N' + ' ' + r + '%'}}</div>
+                    <div class="nesting-progress" [ngStyle]="getWidth(r)"></div>
+
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
         </ng-template>
