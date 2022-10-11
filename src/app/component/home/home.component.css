@@ -208,23 +208,24 @@ element.style {
 .clicked{
   background-color: #3B82F6;
 }
+.progress-empty{
+  width: 100px;
+  background-color: #F2F4F6;
+}
 .model-progress{
   height: 8px;
   border-radius: 1px;
-  background-color: #00ACAC;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 .drawing-progress{
   height: 8px;
   border-radius: 1px;
-  background-color: #2F8EE5;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 .nesting-progress{
   height: 8px;
   border-radius: 1px;
-  background-color: #F1B263;
-  opacity: 0.4;
+  opacity: 0.6;
 }
 .text-progress{
   font-weight: 600;

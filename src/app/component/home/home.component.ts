@@ -396,7 +396,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   defineReadyState(issue: Issue){
-    return issue.ready.includes('|') ? issue.ready.split('|').map(x => +x) : [];
+    return issue.ready.includes('|') ? issue.ready.split('|').map(x => +x) : (issue.issue_type == 'RKD' ? [0, 0, 0] : []);
     let states = [];
     states.push(issue.ready[0]);
     states.push(issue.ready[1]);
@@ -790,7 +790,19 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   getWidth(r: number) {
     return {
-      width: r + 'px'
+      width: r + 'px',
+      'background-color': this.defineColor(r)
     };
+  }
+  defineColor(r: number): string{
+    if (r < 50){
+      return '#f16383';
+    }
+    else if (r < 80){
+      return '#F1B263';
+    }
+    else{
+      return '#00ACAC';
+    }
   }
 }
