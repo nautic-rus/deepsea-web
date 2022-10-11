@@ -124,12 +124,12 @@
 <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
               <div *ngIf="col.field == 'ready'">
                 <div *ngFor="let r of defineReadyState(issue); let i = index">
-                  <div class="df cy mb-10" *ngIf="i == 0">
+                  <div class="df cy mb-5" *ngIf="i == 0">
 <!--                    <div class="text-progress">{{'M' + ' ' + r + '%'}}</div>-->
                     <div class="model-progress" [ngStyle]="getWidth(r)" pTooltip="{{'Model' + ' ' + r + '%'}}"></div>
 
                   </div>
-                  <div class="df cy mb-10" *ngIf="i == 1">
+                  <div class="df cy mb-5" *ngIf="i == 1">
 <!--                    <div class="text-progress">{{'D' + ' ' + r + '%'}}</div>-->
                     <div class="drawing-progress" [ngStyle]="getWidth(r)" pTooltip="{{'Drawing' + ' ' + r + '%'}}"></div>
 
