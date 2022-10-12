@@ -23,19 +23,19 @@ export class WeightControlComponent implements OnInit {
   totalY = 0;
   totalZ = 0;
   loading = true;
-  project = '1701';
-  projects: string[] = ['1701', '3095'];
+  project = '01701.414 - Орион';
+  projects: string[] = ['03095.410 - Андромеда', '03095.411 - Кастор', '03095.412 - Поллукс', '03095.413 - Альхена', '01701.414 - Орион', '01701.415 - Лев', '03070.404 - Механик Степанов', '03070.405 - Механик Цуранов', '200101.2220 - Капитан Головатюк', '200101.2221 - Капитан Немо'];
   customNumber = '';
   customName = '';
 
   constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
-    this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
-    if (this.projects.length == 0){
-      this.projects = ['1701'];
-    }
-    this.project = this.projects[0];
+    // this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    // if (this.projects.length == 0){
+    //   this.projects = ['01701.414 - Орион'];
+    // }
+    //this.project = this.projects[0];
     this.fillControl();
   }
   fillControl(){
