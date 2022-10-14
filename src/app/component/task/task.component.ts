@@ -692,7 +692,7 @@ export class TaskComponent implements OnInit {
           //   this.askForSendToYardToApproval();
           // }
         }
-        else if (value == 'Reject' && this.issue.issue_type == 'Development'){
+        else if (value == 'Reject' && this.issue.issue_type == 'DEVELOPMENT'){
           this.issue.responsible = '';
           this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
             this.issue.status = 'Rejected';
@@ -700,10 +700,10 @@ export class TaskComponent implements OnInit {
             this.statusChanged();
           });
         }
-        else if (value == 'Accept to work' && this.issue.issue_type == 'Development'){
+        else if (value == 'Accept to work' && this.issue.issue_type == 'DEVELOPMENT'){
           this.askForAcceptToWork()
         }
-        else if (value == 'To publish' && this.issue.issue_type == 'Development'){
+        else if (value == 'To publish' && this.issue.issue_type == 'DEVELOPMENT'){
           this.assignToResponsible()
         }
         else{
