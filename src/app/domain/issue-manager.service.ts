@@ -85,6 +85,9 @@ export class IssueManagerService {
   async updateIssue(user: string, message: string, issue: Issue): Promise<Issue> {
     return await this.http.post<Issue>(props.http + '/updateIssue', JSON.stringify(issue), {params: {user, message}}).toPromise();
   }
+  async combineIssues(firstIssue: number, secondIssue: number, user: string): Promise<string> {
+    return await this.http.get<string>(props.http + '/combineIssues', {params: {firstIssue, secondIssue, user}}).toPromise();
+  }
   async setHullPartList(project: string, docNumber: string, user: string, revision: string) {
     return await this.http.get(props.httpSpec + '/setHullPartList', {responseType: 'text', params: {project, docNumber, user, revision}}).toPromise();
   }

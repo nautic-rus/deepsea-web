@@ -21,6 +21,9 @@ export class AcceptToWorkComponent implements OnInit {
   today: Date = new Date();
   overtime = false;
   users: User[] = [];
+  userIssues: Issue[] = [];
+  // @ts-ignore
+  selectedUserIssue: Issue = null;
 
   constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef,public t: LanguageService) { }
 
@@ -32,19 +35,26 @@ export class AcceptToWorkComponent implements OnInit {
       weekHeader: "№",
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
+    this.issueManager.getIssues(this.auth.getUser().login).then(res => {
+      this.userIssues = res;
+    });
   }
   close(){
     this.ref.close('exit');
   }
 
   commit() {
-    this.issueManager.assignUser(this.issue.id, this.selectedUser, this.issue.start_date.toString(), this.issue.due_date.toString(), this.issue.overtime, 'Accepted', this.auth.getUser().login).then(res => {
-      this.issue.status = 'Accepted';
-      this.issue.action = this.issue.status;
-      this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-        this.ref.close();
+
+    this.issueManager.combineIssues(this.issue.id, this.selectedUserIssue.id, this.auth.getUser().login).then(() => {
+      this.issueManager.assignUser(this.issue.id, this.selectedUser, this.issue.start_date.toString(), this.issue.due_date.toString(), this.issue.overtime, 'Accepted', this.auth.getUser().login).then(res => {
+        this.issue.status = 'Accepted';
+        this.issue.action = this.issue.status;
+        this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+          this.ref.close();
+        });
       });
     });
+
   }
   getUsers() {
     return this.auth.users.filter(x => x.visibility.includes('c'));
