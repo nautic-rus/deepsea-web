@@ -700,7 +700,7 @@ export class TaskComponent implements OnInit {
             this.statusChanged();
           });
         }
-        else if (value == 'Accept to work' && this.issue.issue_type == 'DEVELOPMENT'){
+        else if (value == 'To work' && this.issue.issue_type == 'DEVELOPMENT'){
           this.askForAcceptToWork()
         }
         else if (value == 'To publish' && this.issue.issue_type == 'DEVELOPMENT'){
