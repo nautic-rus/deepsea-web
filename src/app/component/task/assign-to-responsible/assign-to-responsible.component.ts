@@ -39,7 +39,8 @@ export class AssignToResponsibleComponent implements OnInit {
   }
 
   commit() {
-    this.issueManager.assignUser(this.issue.id, this.selectedUser, this.issue.start_date.toString(), this.dueDate.getTime().toString(), this.issue.overtime, 'Accepted', this.auth.getUser().login).then(res => {
+    this.issue.responsible = this.selectedUser;
+    this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
       this.issue.status = 'Published';
       this.issue.action = this.issue.status;
       this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
