@@ -135,6 +135,8 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import { AccommodationsEspGenerationWaitComponent } from './component/documents/accommodation-esp/accommodations-esp-generation-wait/accommodations-esp-generation-wait.component';
 import { BlocksProfileComponent } from './component/billing/blocks-profile/blocks-profile.component';
 import { AddGroupDeviceComponent } from './component/documents/device-esp/add-group-device/add-group-device.component';
+import { AcceptToWorkComponent } from './component/task/accept-to-work/accept-to-work.component';
+import { AssignToResponsibleComponent } from './component/task/assign-to-responsible/assign-to-responsible.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -220,7 +222,9 @@ Quill.register('modules/imageResize', ImageResize);
     DeleteDailyTaskComponent,
     AccommodationsEspGenerationWaitComponent,
     BlocksProfileComponent,
-    AddGroupDeviceComponent
+    AddGroupDeviceComponent,
+    AcceptToWorkComponent,
+    AssignToResponsibleComponent
   ],
     imports: [
         BrowserModule,
