@@ -28,6 +28,8 @@ import {CreateCheckListComponent} from "./create-check-list/create-check-list.co
 import {IssueCheck} from "../../domain/classes/issue-check";
 import * as props from "../../props";
 import {IssueType} from "../../domain/classes/issue-type";
+import {AcceptToWorkComponent} from "./accept-to-work/accept-to-work.component";
+import {AssignToResponsibleComponent} from "./assign-to-responsible/assign-to-responsible.component";
 
 @Component({
   selector: 'app-task',
@@ -690,13 +692,19 @@ export class TaskComponent implements OnInit {
           //   this.askForSendToYardToApproval();
           // }
         }
-        else if (value == 'Reject' && this.issue.issue_type == 'Development'){
+        else if (value == 'Reject' && this.issue.issue_type == 'DEVELOPMENT'){
           this.issue.responsible = '';
           this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
             this.issue.status = 'Rejected';
             this.issue.action = 'Rejected';
             this.statusChanged();
           });
+        }
+        else if (value == 'To work' && this.issue.issue_type == 'DEVELOPMENT'){
+          this.askForAcceptToWork()
+        }
+        else if (value == 'To publish' && this.issue.issue_type == 'DEVELOPMENT'){
+          this.assignToResponsible()
         }
         else{
           this.issue.status = value;
@@ -974,6 +982,32 @@ export class TaskComponent implements OnInit {
     this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
       this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login).then(() => {
         this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue.'});
+      });
+    });
+  }
+
+  askForAcceptToWork() {
+    this.dialogService.open(AcceptToWorkComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
+    });
+  }
+
+  assignToResponsible() {
+    this.dialogService.open(AssignToResponsibleComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
       });
     });
   }
