@@ -241,13 +241,13 @@
 
 
 
-      <div *ngIf="issue.combined_issues.length > 0" class="big-text mb-1 mt-2">Combined</div>
+      <div *ngIf="issue.combined_issues.length > 0" class="big-text mb-1 mt-2">Linked</div>
 
       <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0" (click)="contentClick('combined_issues')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('combined_issues')">
           <img src="assets/icons/arrow-right.png">
         </div>
-        <div>Combined Issues</div>
+        <div>Linked Issues</div>
       </div>
       <div collapseContent #contentCombined="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="issue.combined_issues.length > 0">
