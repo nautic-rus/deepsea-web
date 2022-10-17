@@ -244,7 +244,7 @@ export class IssueManagerService {
         switch (input) {
           case 'In Work': return styled ? '<div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'В работу';
           case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/icons/like.svg"></span><span class="cxy button-text">Исполнено</span></div>' : 'Исполнено';
-          case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
+          case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
           case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/icons/check.svg"></span><span class="cxy button-text">На проверку</span></div>' : 'На проверку';
           case 'Not resolved': return styled ? '<div class="buttons-pick-not-resolved"><span class="icon-not-resolved cxy"><img src="assets/icons/dislike.svg"></span><span class="cxy button-text">Не исполнено</span></div>' : 'Не исполнено';
           case 'Closed': return styled ? '<div class="buttons-pick-close"><span class="icon-close cxy"><img src="assets/icons/close-task.svg"></span><span class="cxy button-text">Закрыть</span></div>' : 'Закрыть';
@@ -269,6 +269,7 @@ export class IssueManagerService {
           case 'Recovery': return styled ? '<div class="buttons-pick-recover"><span class="icon-recover cxy"><img src="assets/icons/recover.svg" height="16"></span><span class="cxy button-text">Восстановить</span></div>' : 'Восстановить';
           case 'To publish': return styled ? '<div class="buttons-pick-publish"><span class="icon-publish cxy"><img src="assets/icons/publish.svg" height="18"></span><span class="cxy button-text">Опубликовать</span></div>' : 'Опубликовать';
           case 'Accept': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Принять</span></div>' : 'Принять';
+          case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
 
 
           default: return input;
@@ -278,7 +279,7 @@ export class IssueManagerService {
         switch (input) {
           case 'In Work': return styled ? '<div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">To work</span></div>' : 'To work';
           case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/icons/like.svg"></span><span class="cxy button-text">Resolved</span></div>' : 'Resolved';
-          case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Reject</span></div>' : 'Reject';
+          case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Reject</span></div>' : 'Reject';
           case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/icons/check.svg"></span><span class="cxy button-text">To check</span></div>' : 'To check';
           case 'Not resolved': return styled ? '<div class="buttons-pick-not-resolved"><span class="icon-not-resolved cxy"><img src="assets/icons/dislike.svg"></span><span class="cxy button-text">Not resolved</span></div>' : 'Not resolved';
           case 'Closed': return styled ? '<div class="buttons-pick-close"><span class="icon-close cxy"><img src="assets/icons/close-task.svg"></span><span class="cxy button-text">Close</span></div>' : 'Close';
@@ -303,6 +304,7 @@ export class IssueManagerService {
           case 'Recovery': return styled ? '<div class="buttons-pick-recover"><span class="icon-recover cxy"><img src="assets/icons/recover.svg" height="16"></span><span class="cxy button-text">Recovery</span></div>' : 'Recovery';
           case 'To publish': return styled ? '<div class="buttons-pick-publish"><span class="icon-publish cxy"><img src="assets/icons/publish.svg" height="18"></span><span class="cxy button-text">To publish</span></div>' : 'To publish';
           case 'Accept': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Accept</span></div>' : 'Accept';
+          case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Reject</span></div>' : 'Reject';
 
 
           default: return input;
