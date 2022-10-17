@@ -5,7 +5,7 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="big-text mb-1 mt-1">Assignee</div>
+  <div class="big-text mb-1 mt-1">{{t.tr('Ответственный')}}</div>
   <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
               [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-270">
     <ng-template let-user pTemplate="item">
@@ -15,7 +15,7 @@
       </div>
     </ng-template>
   </p-dropdown>
-
+  <div class="big-text mb-1 mt-1">{{t.tr('Срок завершения')}}</div>
   <p-dropdown appendTo = "body" [options]="userIssues" [(ngModel)]="selectedUserIssue" [filter]="true" filterBy="name" optionValue="id" optionLabel="name"
               [showClear]="true" [placeholder]="'Select issue'" class="p-dropdown-150" styleClass="width-270">
     <ng-template let-issue pTemplate="item">
