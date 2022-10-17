@@ -1,4 +1,4 @@
-<div style="height: 430px; width: 400px;">
+<div style="height: 300px; width: 400px;">
   <div class="task-header-assign">
     <div class="task-name">Accept to Work</div>
     <div class="task-button cxy" (click)="close()">
@@ -19,7 +19,7 @@
       <div class="big-text mb-1 mt-1">{{t.tr('Срок завершения')}}</div>
     <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
   </div>
-  <div class="form-footer pt-10">
+  <div class="form-footer pt-30">
     <div class="mr-5 cx">
       <div [class.disabled-button]="selectedUser == ''" tabindex="10" (click)="commit()" pButton [label]="t.tr('Назначить')" class="button-ok"></div>
     </div>
