@@ -238,6 +238,50 @@
         </div>
       </div>
 
+
+
+
+      <div *ngIf="issue.combined_issues.length > 0" class="big-text mb-1 mt-2">Linked</div>
+
+      <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0" (click)="contentClick('combined_issues')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('combined_issues')">
+          <img src="assets/icons/arrow-right.png">
+        </div>
+        <div>Linked Issues</div>
+      </div>
+      <div collapseContent #contentCombined="collapseContent" class="collapse-body">
+        <div class="ovf-auto" *ngIf="issue.combined_issues.length > 0">
+          <div class="subtask cy" *ngFor="let childIssue of issue.combined_issues">
+            <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
+              <div class="pr-10">{{t.tr('Согласование')}}</div>
+              <div class="pr-10 min-width-220">
+                <span>{{childIssue.doc_number}}</span>
+                <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+              </div>
+              <div class="df min-width-180">
+                <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>
+                <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+              </div>
+              <div class="df min-width-180">
+                <div class="min-text mt-2px">{{t.tr('Ответственный - ')}}</div>
+                <div [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+              </div>
+              <div class="" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
       <div *ngIf="issue.child_issues.length > 0" class="big-text mb-1 mt-2">{{t.tr('Подзадачи')}}</div>
 
       <div [collapse]="contentApproval" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="getIssuesOfType(issue.child_issues, 'APPROVAL').length > 0" (click)="contentClick('approval')">

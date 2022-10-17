@@ -19,7 +19,8 @@ export class SendToApprovalComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
-  selectedUsers: string[] = ['stropilov', 'lvov', 'n.novikov'];
+  //selectedUsers: string[] = ['stropilov', 'lvov', 'n.novikov'];
+  selectedUsers: string[] = [];
   issue: Issue = new Issue();
   users: User[] = [];
 
@@ -28,7 +29,7 @@ export class SendToApprovalComponent implements OnInit {
     this.issues.getIssueTypes().then(res => {
       var findType = res.find(x => x.type_name == this.issue.issue_type);
       if (findType != null){
-        this.selectedUsers = findType.local_approval.split(',');
+        this.selectedUsers = findType.local_approval.split(',').filter(x => x != '');
       }
     });
   }
@@ -270,6 +271,7 @@ export class SendToApprovalComponent implements OnInit {
     }
   }
   sendCommit(){
+    console.log(this.selectedUsers);
     this.selectedUsers.forEach(user => {
       const issue = new Issue();
       issue.name = 'Согласование ' + this.issue.doc_number;

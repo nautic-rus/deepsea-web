@@ -23,7 +23,7 @@ export class AcceptToWorkComponent implements OnInit {
   users: User[] = [];
   userIssues: Issue[] = [];
   // @ts-ignore
-  selectedUserIssue: Issue = null;
+  selectedUserIssue: number = 0;
 
   constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef,public t: LanguageService) { }
 
@@ -45,8 +45,10 @@ export class AcceptToWorkComponent implements OnInit {
 
   commit() {
 
-    this.issueManager.combineIssues(this.issue.id, this.selectedUserIssue.id, this.auth.getUser().login).then(() => {
-      this.issueManager.assignUser(this.issue.id, this.selectedUser, this.issue.start_date.toString(), this.issue.due_date.toString(), this.issue.overtime, 'Accepted', this.auth.getUser().login).then(res => {
+
+    this.issueManager.combineIssues(this.issue.id, this.selectedUserIssue, this.auth.getUser().login).then(() => {
+      this.issue.assigned_to = this.selectedUser;
+      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
         this.issue.status = 'Accepted';
         this.issue.action = this.issue.status;
         this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {

@@ -25,6 +25,7 @@ export class Issue {
   overtime: string = '';
   period: string = '';
   child_issues: Issue[] = [];
+  combined_issues: Issue[] = [];
   action: string = '';
   actions: IssueAction[] = [];
   last_update: number = 0;
