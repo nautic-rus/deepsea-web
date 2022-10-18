@@ -1,0 +1,20 @@
+<div class="all-page-montage">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head df sticky-card">
+      <div class="mr-10">
+        <p-dropdown placeholder="ПРОЕКТ" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="empty-card-bottom"></div>
+
+    <div class="tile">
+      <div *ngFor="let drawing of drawings; let i = index" class="card-tile" [class.hidden-card]="drawing == null">
+        <div>{{drawing.name}}</div>
+        <div *ngFor="let eq of drawing.group">{{eq.EUSERID}}{{eq.BSDESCRIPTION}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+

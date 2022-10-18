@@ -12,7 +12,7 @@
       <div class="df" *ngIf="selectedView == 'month'">
         <div class="cxy pr-10" >
           <button class="today" (click)="setToday()">
-            <span class="today-in">{{t.tr('Сегодня')}}</span>
+            <span>{{t.tr('Сегодня')}}</span>
           </button>
         </div>
         <div class="cxy pr-10">
@@ -76,8 +76,11 @@
       <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of getUsers()">
         <div class="w-20 min-width-265 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
-          <span *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto hours-font mr-10">{{userStats[user.login]?.totalSum?.hours}}</span>
-          <span class="mr-10 minute-font ml-minus10" *ngIf="userStats[user.login]?.totalSum?.minutes != ''">{{userStats[user.login]?.totalSum?.minutes}}</span>
+          <span (click)="showUserTasks()" *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto green-button hours-button cxy mr-10">
+            <span class="hours-font">{{userStats[user.login]?.totalSum?.hours}}</span>
+          <span class="minute-font" *ngIf="userStats[user.login]?.totalSum?.minutes != ''">{{userStats[user.login]?.totalSum?.minutes}}</span>
+          </span>
+
         </div>
         <div class="w-80">
           <div class="calendar w-100">
@@ -86,6 +89,14 @@
                 <span class="hours-font">{{userStats[user.login]?.days[day]?.hours}}</span>
                 <span class="minute-font">{{userStats[user.login]?.days[day]?.minutes}}</span>
                 <span *ngIf="userStats[user.login]?.tasksOperationsGroupCount[day] > 0" class="triangle" [pTooltip]="t.tr('Опергруппа')"></span>
+                <span class="right-hours cursor-default">
+                  <span class="english df" pTooltip="English">
+                    <span class="english-hours">{{userStats[user.login]?.tasksEnglishCount[day].hours}}</span>
+                    <span class="english-minute" *ngIf="userStats[user.login]?.tasksEnglishCount[day].minutes > 0">{{userStats[user.login]?.tasksEnglishCount[day].minutes}}</span>
+                  </span>
+<!--                  <span class="door" pTooltip="Door">2</span>-->
+                </span>
+
               </div>
             </div>
           </div>
@@ -112,7 +123,7 @@
                 <div class="text-black-mini">{{getHours(task.time) + ':'}}{{getTaskMinutes(task.time)}}</div>
                 <div class="task-one cursor-pointer">
                   <div class="df">
-                    <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text">{{trimText(task.docNumber, 20)}}</div>
+                    <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text" [pTooltip]="task.docNumber">{{trimText(task.docNumber, 20)}}</div>
                     <div [pTooltip]="task.details" class="cx task-text line-text">{{task.details}}</div>
                   </div>
                 </div>

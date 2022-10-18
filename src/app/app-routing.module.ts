@@ -37,6 +37,7 @@ import {ObjViewComponent} from "./component/obj-view/obj-view.component";
 import {DeviceEspComponent} from "./component/documents/device-esp/device-esp.component";
 import {AccommodationEspComponent} from "./component/documents/accommodation-esp/accommodation-esp.component";
 import {MonthTasksComponent} from "./component/month-tasks/month-tasks.component";
+import {MontageComponent} from "./component/documents/montage/montage.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -75,6 +76,8 @@ const routes: Routes = [
   { path: 'user-watch', component: UserWatchComponent, canActivate: [AuthGuard], data: {animation: 'UserWatchComponent'} },
   { path: 'spool-view', component: ObjViewComponent, data: {animation: 'ObjViewComponent'} },
   { path: 'diary', component: MonthTasksComponent, canActivate: [AuthGuard], data: {animation: 'MonthTasksComponent'} },
+  { path: 'montage', component: MontageComponent, canActivate: [AuthGuard], data: {animation: 'MontageComponent'} },
+
   { path: '**', redirectTo: '/' },
 ];
 
