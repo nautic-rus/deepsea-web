@@ -208,7 +208,7 @@
 .x-label{
   border-radius: 6px;
   padding: 0 4px;
-  background-color: #c7c5c5cc;
+  background-color: #d1d1d1cc;
   font-weight: bold;
   color: #fff;
   font-size: 11px;
@@ -219,7 +219,7 @@
 .y-label{
   border-radius: 6px;
   padding: 0 4px;
-  background-color: #9b9a9aba;
+  background-color: #a7a7a7ba;
   font-weight: bold;
   color: #fff;
   font-size: 11px;
@@ -230,7 +230,7 @@
 .z-label{
   border-radius: 6px;
   padding: 0 4px;
-  background-color: #727171d1;
+  background-color: #919191d1;
   font-weight: bold;
   color: #fff;
   font-size: 11px;
