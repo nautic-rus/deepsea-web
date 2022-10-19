@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import _ from "underscore";
 import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {Material} from "../../../domain/classes/material";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-montage',
@@ -12,7 +13,7 @@ import {Material} from "../../../domain/classes/material";
 })
 export class MontageComponent implements OnInit {
 
-  constructor(public s: SpecManagerService, public router: Router, public route: ActivatedRoute, public materialManager: MaterialManagerService) { }
+  constructor(public s: SpecManagerService, public router: Router, public route: ActivatedRoute, public materialManager: MaterialManagerService, public auth: AuthManagerService) { }
 
   drawings: any[] = [];
   equips: any[] = [];
@@ -41,12 +42,16 @@ export class MontageComponent implements OnInit {
       this.equips = res;
       this.equips.forEach(eq => {
         eq.MATERIAL = this.materials.find(x => x.code == eq.CSTOCK_CODE);
+        if (eq.MATERIAL != null){
+          eq.MATERIAL.materialCloudDirectory = '';
+        }
       });
       console.log(this.equips);
-      this.drawings.splice(0, this.drawings.length);
-      _.forEach(_.groupBy(_.sortBy(this.equips, x => x.BSFOUNDATION + x.EUSERID), (x: any) => x.BSFOUNDATION), group => {
-        this.drawings.push(Object({name: group[0].BSFOUNDATION, group: group}));
-      });
+      this.drawings = [...this.equips];
+      // this.drawings.splice(0, this.drawings.length);
+      // _.forEach(_.groupBy(_.sortBy(this.equips, x => x.BSFOUNDATION + x.EUSERID), (x: any) => x.BSFOUNDATION), group => {
+      //   this.drawings.push(Object({name: group[0].BSFOUNDATION, group: group}));
+      // });
     });
   }
   round(input: number) {
@@ -64,6 +69,32 @@ export class MontageComponent implements OnInit {
     return this.tooltips.includes(index);
   }
 
-
-
+  getName(login: string){
+    return login[0].toUpperCase() + login.substr(1);
+  }
+  getDate(dateLong: number): string{
+    if (dateLong == 0){
+      return '--/--/----';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+  createMaterialCloudDirectory(material: any){
+    console.log(material);
+    material.materialCloudDirectory = 'LOADING';
+    this.materialManager.createMaterialCloudDirectory(this.project.replace('N002', '200101').replace('N004', '210101'), material.code).then(res => {
+      console.log(res);
+      material.materialCloudDirectory = res;
+    });
+  }
+  openMaterialCloudDirectory(material: any) {
+    window.open(material.materialCloudDirectory);
+  }
+  trimText(input: string, length = 50){
+    let res = input;
+    if (res.length > length){
+      res = res.substr(0, length) + '..';
+    }
+    return res;
+  }
 }
