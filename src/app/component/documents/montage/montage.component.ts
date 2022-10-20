@@ -22,6 +22,13 @@ export class MontageComponent implements OnInit {
   search: string = '';
   tooltips: string[] = [];
   materials: Material[] = [];
+  sortValues: any[] = [
+    'by Name',
+    'by UserId',
+    'by System',
+    'by Status',
+  ];
+  sortValue = this.sortValues[0];
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -96,5 +103,26 @@ export class MontageComponent implements OnInit {
       res = res.substr(0, length) + '..';
     }
     return res;
+  }
+
+  sortChanged() {
+    switch (this.sortValues.indexOf(this.sortValue)) {
+      case 0:{
+        this.drawings = _.sortBy(this.equips, x => x.BSFOUNDATION);
+        break;
+      }
+      case 1:{
+        this.drawings = _.sortBy(this.equips, x => x.EUSERID);
+        break;
+      }
+      case 2:{
+        this.drawings = _.sortBy(this.equips, x => x.SYSTEMNAME);
+        break;
+      }
+      case 3:{
+        this.drawings = _.sortBy(this.equips, x => x.STATUS);
+        break;
+      }
+    }
   }
 }

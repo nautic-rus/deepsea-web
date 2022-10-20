@@ -328,8 +328,14 @@ body,p{
 .min-width-90{
   min-width: 90px;
 }
+.min-width-100{
+  min-width: 100px;
+}
 .min-width-105{
   min-width: 105px;
+}
+.min-width-120{
+  min-width: 120px;
 }
 .min-width-150{
   min-width: 150px;
