@@ -131,6 +131,9 @@
 .height-tiles{
   height: calc(100vh - 205px);
 }
+.cloud:hover{
+  transform: scale(1.1);
+}
 .tile{
   display: flex;
   flex-wrap: wrap;
