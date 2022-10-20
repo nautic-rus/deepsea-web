@@ -30,6 +30,16 @@ export class MontageComponent implements OnInit {
   ];
   sortValue = this.sortValues[0];
 
+  drawingValues: any[] = [];
+  selectedDrawings: string[] = [];
+
+  sfiValues: any[] = [];
+  selectedSfi: string[] = [];
+
+  systemValues: any[] = [];
+  selectedSystems: string[] = [];
+
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.project = this.projects.includes(params.foranProject) ? params.foranProject : this.project;
@@ -55,11 +65,52 @@ export class MontageComponent implements OnInit {
       });
       console.log(this.equips);
       this.drawings = [...this.equips];
+      this.fillFilters();
+      this.applyFilters();
       // this.drawings.splice(0, this.drawings.length);
       // _.forEach(_.groupBy(_.sortBy(this.equips, x => x.BSFOUNDATION + x.EUSERID), (x: any) => x.BSFOUNDATION), group => {
       //   this.drawings.push(Object({name: group[0].BSFOUNDATION, group: group}));
       // });
     });
+  }
+  fillFilters(){
+    this.drawingValues.splice(0, this.drawingValues.length);
+    this.sfiValues.splice(0, this.sfiValues.length);
+    this.systemValues.splice(0, this.systemValues.length);
+
+    _.sortBy( _.uniq(this.equips.map(x => x.BSFOUNDATION), x => x), y => y).forEach(z => this.drawingValues.push(z));
+    // if (this.drawingValues.length > 0){
+    //   this.drawing = this.drawingValues[0];
+    // }
+    _.sortBy(_.uniq(this.equips.map(x => this.getSfiGroup(x.EUSERID)), x => x), y => y).forEach(z => this.sfiValues.push(z));
+    // if (this.sfiValues.length > 0){
+    //   this.sfi = this.sfiValues[0];
+    // }
+    _.sortBy( _.uniq(this.equips.map(x => x.SYSTEMNAME), x => x), y => y).forEach(z => this.systemValues.push(z));
+    // if (this.systemValues.length > 0){
+    //   this.system = this.systemValues[0];
+    // }
+
+    // this.selectedDrawings = [...this.drawingValues];
+    // this.selectedSfi = [...this.sfiValues];
+    // this.selectedSystems = [...this.systemValues];
+  }
+  applyFilters(){
+    this.drawings = [...this.equips];
+    this.drawings = this.drawings.filter(x => this.selectedDrawings.length == 0 || this.selectedDrawings.find(y => x.BSFOUNDATION.includes(y)) != null);
+    this.drawings = this.drawings.filter(x => this.selectedSfi.length == 0 || this.selectedSfi.find(y => x.EUSERID.includes(y)) != null);
+    this.drawings = this.drawings.filter(x => this.selectedSystems.length == 0 || this.selectedSystems.find(y => x.SYSTEMNAME.includes(y)) != null);
+  }
+  getSfiGroup(input: string){
+    if (input.includes('.')){
+      return input.split('.')[0];
+    }
+    else if (input.includes('-')){
+      return input.split('-')[0];
+    }
+    else{
+      return input;
+    }
   }
   round(input: number) {
     return Math.round(input * 100) / 100;
@@ -124,5 +175,9 @@ export class MontageComponent implements OnInit {
         break;
       }
     }
+  }
+
+  filterChanged() {
+    this.applyFilters();
   }
 }
