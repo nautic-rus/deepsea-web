@@ -86,7 +86,7 @@
   border-radius: 10px;
   flex-direction: column;
   display: grid;
-  grid-template-columns: 50px 1.5fr 0.35fr 1.6fr 0.7fr 1.2fr;
+  grid-template-columns: 50px 1.5fr 0.35fr 1.6fr 0.7fr 1.2fr 20px;
 }
 .trm-abs{
   position: absolute;
@@ -247,40 +247,18 @@
 }
 .four-row-m{
 }
-.pulse{
-  width: 15px;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-}
-.dot {
-  border-radius: 50%;
-  height: 16px;
-  width: 16px;
-  transform: scale(1);
-}
-.dot.red {
-  background: #FC6161;
-  box-shadow: 0 0 0 0 rgba(255, 83, 73, 1);
-  animation: pulse-red 1s infinite;
-}
-
-@keyframes pulse-red {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(255, 83, 73, 0.7);
-  }
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
-  }
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
-  }
-}
-.status-pulse{
+.status{
   position: absolute;
-  bottom: 10px;
-  left: 15px;
+  right: 0;
+  height: 100%;
+  width: 20px;
+  background-color: #C8E5FC;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  letter-spacing: 2px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #589acf;
 }
