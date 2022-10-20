@@ -949,6 +949,50 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-publish{
+  color: white;
+  background-color: #E898BB;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-publish:hover{
+  background: #A06C84;
+  transition: 0.3s;
+}
+.icon-publish{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #A06C84;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.buttons-pick-accept{
+  color: white;
+  background-color: #52BE80;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-accept:hover{
+  background: #3C885B;
+  transition: 0.3s;
+}
+.icon-accept{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #3C885B;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .button-text{
   padding-right: 8px;
   padding-left: 8px;

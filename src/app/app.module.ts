@@ -137,6 +137,8 @@ import { BlocksProfileComponent } from './component/billing/blocks-profile/block
 import { AddGroupDeviceComponent } from './component/documents/device-esp/add-group-device/add-group-device.component';
 import { AcceptToWorkComponent } from './component/task/accept-to-work/accept-to-work.component';
 import { AssignToResponsibleComponent } from './component/task/assign-to-responsible/assign-to-responsible.component';
+import { UserTasksComponent } from './component/employees/user-tasks/user-tasks.component';
+import { MontageComponent } from './component/documents/montage/montage.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -224,7 +226,9 @@ Quill.register('modules/imageResize', ImageResize);
     BlocksProfileComponent,
     AddGroupDeviceComponent,
     AcceptToWorkComponent,
-    AssignToResponsibleComponent
+    AssignToResponsibleComponent,
+    UserTasksComponent,
+    MontageComponent
   ],
     imports: [
         BrowserModule,

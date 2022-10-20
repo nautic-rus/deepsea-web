@@ -1,11 +1,11 @@
-<div style="height: 430px; width: 400px;">
+<div style="height: 300px; width: 370px;">
   <div class="task-header-assign">
     <div class="task-name">Accept to Work</div>
     <div class="task-button cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="big-text mb-1 mt-1">Assignee</div>
+  <div class="big-text mb-1 mt-1">{{t.tr('Ответственный')}}</div>
   <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
               [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-270">
     <ng-template let-user pTemplate="item">
@@ -15,7 +15,7 @@
       </div>
     </ng-template>
   </p-dropdown>
-
+  <div class="big-text mb-1 mt-1">{{t.tr('Срок завершения')}}</div>
   <p-dropdown appendTo = "body" [options]="userIssues" [(ngModel)]="selectedUserIssue" [filter]="true" filterBy="name" optionValue="id" optionLabel="name"
               [showClear]="true" [placeholder]="'Select issue'" class="p-dropdown-150" styleClass="width-270">
     <ng-template let-issue pTemplate="item">
@@ -25,7 +25,7 @@
     </ng-template>
   </p-dropdown>
 
-  <div class="form-footer pt-10">
+  <div class="form-footer pt-30">
     <div class="mr-5 cx">
       <div [class.disabled-button]="selectedUser == '' && selectedUserIssue == null" tabindex="10" (click)="commit()" pButton [label]="t.tr('Назначить')" class="button-ok"></div>
     </div>

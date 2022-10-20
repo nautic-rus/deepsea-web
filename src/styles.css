@@ -325,11 +325,20 @@ body,p{
 .min-width-75{
   min-width: 75px;
 }
+.min-width-80{
+  min-width: 80px;
+}
 .min-width-90{
   min-width: 90px;
 }
+.min-width-100{
+  min-width: 100px;
+}
 .min-width-105{
   min-width: 105px;
+}
+.min-width-120{
+  min-width: 120px;
 }
 .min-width-150{
   min-width: 150px;
@@ -358,11 +367,17 @@ body,p{
 .min-width-250{
   min-width: 250px;
 }
+.min-width-260{
+  min-width: 260px;
+}
 .min-width-265{
   min-width: 265px;
 }
 .min-width-270{
   min-width: 270px;
+}
+.min-width-280{
+  min-width: 280px;
 }
 .min-width-340{
   min-width: 340px;

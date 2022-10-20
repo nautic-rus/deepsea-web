@@ -9,6 +9,7 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import _ from "underscore";
 import {LanguageService} from "../../domain/language.service";
 import {DailyTask} from "../../domain/interfaces/daily-task";
+import {UserTasksComponent} from "./user-tasks/user-tasks.component";
 
 @Component({
   selector: 'app-employees',
@@ -82,6 +83,7 @@ export class EmployeesComponent implements OnInit {
           let daysSum = Object({});
           let tasksByDay = Object({});
           let tasksOperationsGroupCount = Object({});
+          let tasksEnglishCount = Object({});
 
           let totalSum = 0;
           days.forEach(d => {
@@ -90,12 +92,19 @@ export class EmployeesComponent implements OnInit {
             tasks.filter(t => this.sameDay(date, t.date)).forEach(x => sum += x.time);
             tasksByDay[d] = tasks.filter(t => this.sameDay(date, t.date));
             tasksOperationsGroupCount[d] = tasks.filter(t => this.sameDay(date, t.date) && t.project == 'Operations group').length;
+
+            tasksEnglishCount[d] = 0;
+            tasks.filter(t => this.sameDay(date, t.date) && t.project == 'English' && t.details == 'English Lesson').forEach(x => tasksEnglishCount[d] += x.time);
+            if (tasksEnglishCount[d] > 0){
+              tasksEnglishCount[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
+            }
+
             daysSum[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
             totalSum += sum;
           });
 
 
-          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, tasksOperationsGroupCount: tasksOperationsGroupCount, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
+          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, tasksOperationsGroupCount: tasksOperationsGroupCount, tasksEnglishCount: tasksEnglishCount, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
         });
 
 
@@ -308,5 +317,14 @@ export class EmployeesComponent implements OnInit {
     else{
       return dep;
     }
+  }
+
+  showUserTasks() {
+    this.dialogService.open(UserTasksComponent, {
+      showHeader: false,
+      modal: true
+    }).onClose.subscribe(res => {
+
+    });
   }
 }

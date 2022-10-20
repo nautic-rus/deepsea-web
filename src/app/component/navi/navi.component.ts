@@ -32,7 +32,8 @@ export class NaviComponent implements OnInit {
       {id: 'hull-documents', label: 'Hull', url: 'documents', icon: 'assets/icons/hull.svg', height: 20, params: {'department': 'Hull'}},
       {id: 'pipe-documents', label: 'Systems', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'System'}},
       {id: 'device-documents', label: 'Devices', url: 'documents', icon: 'assets/icons/hook.svg', height: 20, params: {'department': 'Devices'}},
-      {id: 'accommodation-documents', label: 'Accommodation', url: 'documents', icon: 'assets/icons/outfitting.svg', height: 20, params: {'department': 'Accommodation'}}
+      {id: 'accommodation-documents', label: 'Accommodation', url: 'documents', icon: 'assets/icons/outfitting.svg', height: 20, params: {'department': 'Accommodation'}},
+      {id: 'montage', label: 'Montage List', url: 'montage', icon: 'assets/icons/pump.png', height: 22, params: {}},
     ].filter(x => this.auth.getUser().visible_pages.includes(x.id))},
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},
