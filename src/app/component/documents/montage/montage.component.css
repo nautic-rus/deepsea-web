@@ -279,3 +279,8 @@
     box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
   }
 }
+.status-pulse{
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+}
