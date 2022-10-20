@@ -682,6 +682,14 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
+      <div class="mr-10">
+        <div *ngIf="!cloudLoading" [pTooltip]="'Open Cloud'" tooltipPosition="top" (click)="openCloud()" class="materials-button green-button cxy">
+          <img src="assets/icons/cloud1.svg" height="26">
+        </div>
+        <div *ngIf="cloudLoading" [pTooltip]="'Open Cloud'" tooltipPosition="top" class="materials-button green-button cxy">
+          <p-progressSpinner [style]="{width: '35px', height: '35px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
+        </div>
+      </div>
       <div class="p-ml-auto df mr-12">
 <!--        <div class="cy">-->
 <!--          <div class="text-view-files">View files of revision</div>-->
