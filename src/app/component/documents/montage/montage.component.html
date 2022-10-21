@@ -101,13 +101,18 @@
         </div>
 
         <div class="min-width-160">
-          <div class="title-bold">{{drawing.BSFOUNDATION}}</div>
+          <div class="df">
+            <div *ngIf="drawing.HULLBLOCK != ''" class="title-bold mr-10">{{drawing.HULLBLOCK}}</div>
+            <div class="title-bold">{{drawing.BSFOUNDATION}}</div>
+          </div>
+
           <div class="">
             <div *ngIf="drawing.BSFOUNDATION_DESCR != ''" class="title-bold-m">{{drawing.BSFOUNDATION_DESCR}}</div>
             <div *ngIf="drawing.BSFOUNDATION_DESCR == ''" class="title-bold-m">Drawing name</div>
           </div>
           <div class="df mt-15">
-            <div class="text-medium">{{drawing.SYSTEMNAME + ' ' + drawing.SYSTEMDESCR}}</div>
+            <div *ngIf="drawing.SYSTEMDESCR == ''" class="text-medium mr-5">{{drawing.SYSTEMNAME}}</div>
+            <div class="text-medium">{{drawing.SYSTEMDESCR}}</div>
           </div>
         </div>
 
