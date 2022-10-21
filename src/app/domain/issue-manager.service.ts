@@ -154,6 +154,12 @@ export class IssueManagerService {
   async createCloudPath(id: number) {
     return await this.http.get<string>(props.http + '/createDocumentCloudDirectory', { params: {id}}).toPromise();
   }
+  async getProjectNames() {
+    return await this.http.get<any>(props.http + '/projectNames').toPromise();
+  }
+  async getCloudFiles(filter: string) {
+    return await this.http.get<FileAttachment[]>(props.http + '/cloudFiles', { params: {filter}}).toPromise();
+  }
   async getNestingFiles() {
     return await this.http.get<FileAttachment[]>(props.http + '/nestingFiles').toPromise();
   }

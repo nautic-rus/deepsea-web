@@ -5,6 +5,9 @@ import _ from "underscore";
 import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {Material} from "../../../domain/classes/material";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {IssueManagerService} from "../../../domain/issue-manager.service";
+import * as props from '../../../props';
+
 
 @Component({
   selector: 'app-montage',
@@ -13,7 +16,7 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 })
 export class MontageComponent implements OnInit {
 
-  constructor(public s: SpecManagerService, public router: Router, public route: ActivatedRoute, public materialManager: MaterialManagerService, public auth: AuthManagerService) { }
+  constructor(public s: SpecManagerService, public router: Router, public route: ActivatedRoute, public materialManager: MaterialManagerService, public auth: AuthManagerService, public issueManager: IssueManagerService) { }
 
   drawings: any[] = [];
   equips: any[] = [];
@@ -61,12 +64,31 @@ export class MontageComponent implements OnInit {
         eq.MATERIAL = this.materials.find(x => x.code == eq.CSTOCK_CODE);
         if (eq.MATERIAL != null){
           eq.MATERIAL.materialCloudDirectory = '';
+          eq.MATERIAL.materialCloudFiles = [];
         }
       });
       console.log(this.equips);
       this.drawings = [...this.equips];
       this.fillFilters();
       this.applyFilters();
+      this.issueManager.getProjectNames().then(projectNames => {
+        let findProject = projectNames.find((x: any) => x.foran == this.project);
+        if (findProject != null){
+          this.issueManager.getCloudFiles(findProject.cloud + '/Materials').then(cloudFiles => {
+            this.equips.filter(x => x.MATERIAL != null).forEach(eq => {
+              let findEqFiles = cloudFiles.filter(x => x.url.includes(eq.MATERIAL.code));
+              let findDirectory = findEqFiles.find(x => x.name.includes(eq.MATERIAL.code));
+              if (findDirectory != null){
+                eq.MATERIAL.materialCloudDirectory = findDirectory.url.replace(props.rest  + '/cloud?path=', props.cloud + '/apps/files/?dir=');
+              }
+              let findFiles = findEqFiles.filter(x => !x.name.includes(eq.MATERIAL.code));
+              if (findFiles != null){
+                eq.MATERIAL.materialCloudFiles = findFiles;
+              }
+            });
+          });
+        }
+      });
       // this.drawings.splice(0, this.drawings.length);
       // _.forEach(_.groupBy(_.sortBy(this.equips, x => x.BSFOUNDATION + x.EUSERID), (x: any) => x.BSFOUNDATION), group => {
       //   this.drawings.push(Object({name: group[0].BSFOUNDATION, group: group}));
