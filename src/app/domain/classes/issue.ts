@@ -38,6 +38,7 @@ export class Issue {
   first_local_approval_date: number = 0;
   revision: string = '';
   revision_files: FileAttachment[] = [];
+  cloud_files: FileAttachment[] = [];
   archive_revision_files: FileAttachment[] = [];
   labor: number = 0;
   contract_due_date: number = 0;

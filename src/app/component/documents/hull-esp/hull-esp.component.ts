@@ -72,6 +72,8 @@ export class HullEspComponent implements OnInit {
   nestContentRead = false;
   collapsed: string[] = [];
   miscIssues: Issue[] = [];
+  cloudLoading = false;
+  cloudDate = false;
   quillModules =
     {
       imageResize: {},
@@ -217,11 +219,24 @@ export class HullEspComponent implements OnInit {
     return input == '-' ? '<div class="text-none">Нет</div>' : input;
   }
   getDateNoTime(dateLong: number): string{
+    if (this.cloudDate){
+      return this.getCloudDateNoTime(dateLong);
+    }
     if (dateLong == 0) {
       return '';
     }
     else{
       let date = new Date(dateLong);
+      return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    }
+  }
+  getCloudDateNoTime(dateLong: number): string{
+    if (dateLong == 0) {
+      return '';
+    }
+    else{
+      let date = new Date(0);
+      date.setUTCSeconds(dateLong);
       return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
     }
   }
@@ -415,8 +430,8 @@ export class HullEspComponent implements OnInit {
   fillSketches(){
     let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
     this.parts.forEach((p: any) => {
-      p.SKETCH = '';
-      p.NESTING = '';
+      p.SKETCH = 'LOADING ...';
+      p.NESTING = 'LOADING ...';
     });
     this.nestContentRead = true;
     _.sortBy(nesting, x => x.upload_date).filter(x => x.name.includes('profiles')).forEach(file => {
@@ -495,6 +510,7 @@ export class HullEspComponent implements OnInit {
   fillRevisions(){
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
+      console.log(res);
       this.issue = res;
       this.miscIssues.splice(0, this.miscIssues.length);
       this.issueManager.getIssues(this.auth.getUser().login).then(issues => {
@@ -505,13 +521,13 @@ export class HullEspComponent implements OnInit {
           })
         });
       });
-      this.issueRevisions.push(this.issue.revision);
-      this.issue.revision_files.map(x => x.revision).forEach(gr => {
-        if (!this.issueRevisions.includes(gr)){
-          this.issueRevisions.push(gr);
-        }
-      });
-      this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
+      // this.issueRevisions.push(this.issue.revision);
+      // this.issue.revision_files.map(x => x.revision).forEach(gr => {
+      //   if (!this.issueRevisions.includes(gr)){
+      //     this.issueRevisions.push(gr);
+      //   }
+      // });
+      //this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
       //this.selectedRevision = this.issueRevisions[0];
       this.fillParts();
     });
@@ -583,6 +599,9 @@ export class HullEspComponent implements OnInit {
     }
   }
   getDate(dateLong: number): string{
+    if (this.cloudDate){
+      return this.getCloudDateNoTime(dateLong);
+    }
     if (dateLong == 0){
       return '--/--/----';
     }
@@ -793,7 +812,7 @@ export class HullEspComponent implements OnInit {
     this.editor = event;
   }
 
-  getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
+  getRevisionFilesOfGroupAux(fileGroup: string, revision: string): FileAttachment[] {
     let files = this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision);
     if (this.fileSort == 'name'){
       return this.sortReverse ? _.sortBy(files, x => x.name).reverse() : _.sortBy(files, x => x.name);
@@ -802,7 +821,19 @@ export class HullEspComponent implements OnInit {
       return this.sortReverse ? _.sortBy(files, x => x.upload_date).reverse() : _.sortBy(files, x => x.upload_date);
     }
   }
-
+  getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
+    if (this.issue.cloud_files.length == 0){
+      return this.getRevisionFilesOfGroupAux(fileGroup, revision);
+    }
+    this.cloudDate = true;
+    let files = this.issue.cloud_files.filter(x => (x.group == fileGroup || fileGroup == 'all'));
+    if (this.fileSort == 'name'){
+      return this.sortReverse ? _.sortBy(files, x => x.name).reverse() : _.sortBy(files, x => x.name);
+    }
+    else {
+      return this.sortReverse ? _.sortBy(files, x => x.upload_date).reverse() : _.sortBy(files, x => x.upload_date);
+    }
+  }
   createEsp() {
     this.dialogService.open(HullEspGenerationWaitComponent, {
       showHeader: false,
@@ -1185,5 +1216,16 @@ export class HullEspComponent implements OnInit {
   setFileSort(value: string) {
     this.fileSort = value;
     this.sortReverse = !this.sortReverse;
+  }
+
+  openCloud() {
+    this.cloudLoading = true;
+    this.issueManager.createCloudPath(this.issue.id).then(res => {
+      this.cloudLoading = false;
+      console.log(res);
+      if (!res.includes('ERROR')){
+        window.open(res);
+      }
+    });
   }
 }

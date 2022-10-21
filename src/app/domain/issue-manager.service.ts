@@ -151,11 +151,14 @@ export class IssueManagerService {
   async clearRevisionFiles(issueId: number, user: string, fileGroup: string, revision: string) {
     return await this.http.get(props.http + '/clearRevisionFiles', { responseType: 'text', params: {issueId, user, fileGroup, revision}}).toPromise();
   }
+  async createCloudPath(id: number) {
+    return await this.http.get<string>(props.http + '/createDocumentCloudDirectory', { params: {id}}).toPromise();
+  }
   async getNestingFiles() {
     return await this.http.get<FileAttachment[]>(props.http + '/nestingFiles').toPromise();
   }
   async getAmountTask(project:string, department:string, status: string) {
-    return await this.http.get(props.http + '/getAmountTask',{params: {project, department, status}}).toPromise(); //reques amount of task
+    return await this.http.get<string>(props.http + '/getAmountTask',{params: {project, department, status}}).toPromise(); //reques amount of task
   }
   async dingUser(user: string, message: string) {
     return await this.http.get(props.http + '/sendNotificationToUser',{params: {user, message}}).toPromise();

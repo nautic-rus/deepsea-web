@@ -21,6 +21,7 @@ export class VacantWastageComponent implements OnInit {
 
   ngOnInit(): void {
     this.wastage = this.conf.data;
+    console.log(this.wastage);
   }
   close() {
     this.ref.close();
@@ -35,7 +36,7 @@ export class VacantWastageComponent implements OnInit {
     this.wastage.filter((x: any) => x != null).forEach(nest => {
       data.push({
         'KPL': nest.CHILDKPL,
-        'Material': nest.MAT,
+        'Material': nest.MATERIAL,
         'Weight': nest.CHILDWEIGHT,
       })
     });
