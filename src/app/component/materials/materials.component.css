@@ -42,9 +42,6 @@
 /deep/.p-dialog .p-dialog-footer {
   margin-top: -10px;
 }
-/deep/.p-datatable-scrollable .p-datatable-tbody>tr>td {
-  flex: 0 0 0 !important;
-}
 .p-input-icon-left > .p-inputtext {
   padding-left: 2.5rem!important;
 }

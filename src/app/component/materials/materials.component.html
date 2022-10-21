@@ -227,7 +227,7 @@
                      [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">
               <ng-template pTemplate="header">
                 <tr class="df">
-                  <th pSortableColumn="cloud" class="cxy w-1 width-30">{{t.tr(' ')}}
+                  <th pSortableColumn="cloud" class="max-width-50 cxy">{{t.tr(' ')}}
                   </th>
                   <th pSortableColumn="name" class="cxy min-width-220 w-27">{{t.tr('Наименование')}}
                     <p-sortIcon field="name"></p-sortIcon>
@@ -260,7 +260,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-material let-i="rowIndex">
                 <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-                  <td class="text-14">
+                  <td class="max-width-50 text-14">
                     <svg *ngIf="material.materialCloudDirectory == ''" (click)="createMaterialCloudDirectory(material)" class="cloud cursor-pointer" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="26px"
                          viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
                 <path style="fill:#ffffff;" d="M430.751,223.448c0.067-1.356,0.204-2.693,0.204-4.066c0-44.942-36.433-81.374-81.374-81.374 c-8.933,0-17.505,1.493-25.547,4.152c-23.713-32.081-61.696-52.976-104.653-52.976c-71.907,0-130.199,58.293-130.199,130.199	                      c0,0.684,0.093,1.345,0.103,2.028c-46.478,9.387-81.477,50.446-81.477,99.691c0,56.178,45.54,101.718,101.718,101.718h292.949	c56.178,0,101.718-45.541,101.718-101.718C504.192,274.746,473.155,235.709,430.751,223.448z"/>
