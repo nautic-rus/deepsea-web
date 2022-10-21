@@ -416,7 +416,7 @@ export class IssueManagerService {
           case 'System': return 'Системы';
           case 'Electric': return 'Электрика';
           case 'Equipment': return 'Устройства';
-          case 'Outfitting': return 'Достройка';
+          case 'Accommodation': return 'Достройка';
           default: return input;
         }
       }
@@ -434,7 +434,7 @@ export class IssueManagerService {
           case 'System department': return 'Системный отдел';
           case 'Electrical department': return 'Электротехнический отдел';
           case 'Devices department': return 'Отдел устройств';
-          case 'Outfitting department': return 'Отдел достройки';
+          case 'Accommodation department': return 'Отдел достройки';
           case 'Design department': return 'Отдел дизайна';
           case 'IT': return 'IT-отдел';
           default: return input;

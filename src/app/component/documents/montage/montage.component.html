@@ -145,34 +145,45 @@
             </div>
           </div>
         </div>
-        <div class="cy px-10 min-width-100 flex-column">
-          <div class="mm-text mb-10">supplier</div>
-          <div class="df" *ngIf="drawing.MATERIAL != null">
-            <img *ngIf="drawing.MATERIAL.provider != ''" class="pr-5" src="assets/icons/delivery.svg" height="30">
-            <div class="text-table-col cy" >{{drawing.MATERIAL.provider}}</div>
+        <div class="cxy cursor-default mr-20">
+          <div class="cxy flex-column">
+            <img src="assets/icons/gravity.svg">
+            <div class="mm-text">COG</div>
           </div>
-          <div class="df" *ngIf="drawing.MATERIAL == null">
-            <img class="pr-5" src="assets/icons/delivery1.svg" height="30">
+          <div class="ml-10">
+            <div class="x-label mb-5">
+              <span class="coordinate-name">X</span>
+              <span>{{round(drawing.XCOG)}}</span>
+            </div>
+            <div class="y-label mb-5">
+              <span class="coordinate-name">Y</span>
+              <span>{{round(drawing.YCOG)}}</span>
+            </div>
+            <div class="z-label">
+              <span class="coordinate-name">Z</span>
+              <span>{{round(drawing.ZCOG)}}</span>
+            </div>
           </div>
         </div>
         <div class="three-row-m df">
-          <div class="cxy cursor-default mr-20">
-            <div class="cxy flex-column">
-              <img src="assets/icons/gravity.svg">
-              <div class="mm-text">COG</div>
+
+          <div class="creator cursor-default df mr-10">
+            <div class="mr-10">
+              <div class="mm-text mb-6">supplier</div>
+              <div class="" *ngIf="drawing.MATERIAL != null && drawing.MATERIAL.provider != ''">
+                <div class="text-medium cy">{{drawing.MATERIAL.provider}}</div>
+              </div>
+              <div class="" *ngIf="drawing.MATERIAL == null || drawing.MATERIAL.provider == ''">
+                <img class="pl-10" src="assets/icons/delivery1.svg" height="30">
+              </div>
             </div>
             <div class="ml-10">
-              <div class="x-label mb-5">
-                <span class="coordinate-name">X</span>
-                <span>{{round(drawing.XCOG)}}</span>
+              <div class="mm-text mb-6">maker</div>
+              <div class="" *ngIf="drawing.MATERIAL != null && drawing.MATERIAL.manufacturer != ''">
+                <div class="text-medium cy" >{{drawing.MATERIAL.manufacturer}}</div>
               </div>
-              <div class="y-label mb-5">
-                <span class="coordinate-name">Y</span>
-                <span>{{round(drawing.YCOG)}}</span>
-              </div>
-              <div class="z-label">
-                <span class="coordinate-name">Z</span>
-                <span>{{round(drawing.ZCOG)}}</span>
+              <div class="" *ngIf="drawing.MATERIAL == null || drawing.MATERIAL.manufacturer == ''">
+                <img class="pl-10" src="assets/icons/factory.svg" height="18">
               </div>
             </div>
           </div>

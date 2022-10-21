@@ -181,7 +181,7 @@
   padding: 1px 4px;
   border-radius: 4px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 15px;
   color: #fff;
   background-color: #61D42D;
   min-width: 63px;
@@ -196,7 +196,8 @@
   border: 1px solid #dee2e685;
   padding: 6px;
   border-radius: 6px;
-  min-width: 140px;
+  min-width: 150px;
+  max-width: 200px;
 }
 .creator-cog{
   border: 1px solid #dee2e685;

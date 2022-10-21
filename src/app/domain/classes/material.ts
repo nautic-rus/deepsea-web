@@ -12,6 +12,7 @@ export class Material {
   singleWeight: number = 0;
   document: string = '';
   provider: string = '';
+  manufacturer: string = '';
   note: string = '';
   removed: number = 0;
   coefficient: number = 1;

@@ -237,7 +237,7 @@ export class EmployeesComponent implements OnInit {
       case 'Devices department': return selected ? 'hookw' : 'hookg';
       case 'Electrical department': return selected ? 'elec' : 'elecg';
       case 'Hull department': return selected ? 'hull' : 'hullg';
-      case 'Outfitting department': return selected ? 'outfittingw' : 'outfittingg';
+      case 'Accommodation department': return selected ? 'outfittingw' : 'outfittingg';
       case 'Stability department': return selected ? 'paintbrush' : 'paintbrush';
       case 'System department': return selected ? 'pipew' : 'pipeg';
       default: return selected ? 'manager' : 'managerg';
@@ -249,7 +249,7 @@ export class EmployeesComponent implements OnInit {
       case 'Devices department': return 3;
       case 'Electrical department': return 2;
       case 'Hull department': return 0;
-      case 'Outfitting department': return 4;
+      case 'Accommodation department': return 4;
       case 'Stability department': return 5;
       case 'System department': return 1;
       default: return 100;
@@ -308,7 +308,7 @@ export class EmployeesComponent implements OnInit {
         case 'Devices department': return 'Отдел устройств';
         case 'Electrical department': return 'Электротехнический отдел';
         case 'Hull department': return 'Корпусный отдел';
-        case 'Outfitting department': return 'Отдел достройки';
+        case 'Accommodation department': return 'Отдел достройки';
         case 'System department': return 'Системный отдел';
         case 'Managers': return 'Руководители отделов';
         default: return dep;

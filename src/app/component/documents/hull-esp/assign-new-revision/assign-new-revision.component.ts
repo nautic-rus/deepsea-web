@@ -264,7 +264,7 @@ export class AssignNewRevisionComponent implements OnInit {
       case 'Системы': return 'System';
       case 'Электрика': return 'Electric';
       case 'Устройства': return 'Equipment';
-      case 'Достройка': return 'Outfitting';
+      case 'Достройка': return 'Accommodation';
       default: return department;
     }
   }
