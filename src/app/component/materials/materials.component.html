@@ -2,7 +2,7 @@
   <div>
     <div class="card-head mb-20 df">
       <div class="mr-10">
-        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
       <div class="mr-10">
@@ -54,7 +54,7 @@
       <div class="w-100 df">
         <div class="w-15">
           <div class="menu-card">
-            <p-tree class="tree" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu)" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
+            <p-tree class="tree" *ngIf="project != ''" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu)" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>

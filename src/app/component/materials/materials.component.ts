@@ -79,7 +79,7 @@ export class MaterialsComponent implements OnInit {
       this.selectedView = 'tiles';
     }, 1000);
     //this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
-    this.project = this.projects[0];
+    this.project = '';
     this.materialManager.getMaterials(this.project).then(res => {
       res.forEach(m => m.materialCloudDirectory = '');
       this.materials = res;
@@ -181,8 +181,9 @@ export class MaterialsComponent implements OnInit {
   }
   addMaterial(action: string = 'add', material: Material = new Material()) {
     if (action == 'add'){
+      material.projects.splice(0, material.projects.length);
       //material.projects = [this.project];
-      material.projects = this.projects;
+      material.projects.push(this.project);
     }
     this.dialogService.open(AddMaterialComponent, {
       showHeader: true,
@@ -399,5 +400,25 @@ export class MaterialsComponent implements OnInit {
     else{
       this.materials = this.materialsSrc.filter(x => x != null && (x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase()).includes(this.search.toLowerCase().trim()));
     }
+  }
+
+  projectChanged() {
+    this.materialManager.getMaterials(this.project).then(res => {
+      res.forEach(m => m.materialCloudDirectory = '');
+      this.materials = res;
+      this.materialsSrc = res;
+      this.materialManager.getMaterialNodes().then(res => {
+        this.nodesSrc = res;
+        this.nodes = this.getNodes(res, this.materialsSrc, '');
+        this.setParents(this.nodes, '');
+        this.materials.filter(x => x != null).forEach((x: any) => {
+          x.path = this.setPath(x.code);
+        });
+      });
+      this.materialsSrc = [...this.materials];
+      for (let x = 0; x < 20; x ++){
+        this.materials.push(null);
+      }
+    });
   }
 }
