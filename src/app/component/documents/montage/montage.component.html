@@ -114,26 +114,32 @@
             <div class="text-medium">{{drawing.SYSTEMDESCR}}</div>
           </div>
         </div>
-        <div *ngIf="drawing.eqStatus > 0" class="creator-status cursor-default df mr-10">
-          <div>
+        <div  class="creator-status cursor-default df mr-10">
+          <div *ngIf="drawing.eqStatus > 0">
             <div class="mm-text mb-6">status</div>
-            <div class="cy position-relative">
-              <img src="assets/icons/circle-ok1.svg" height="30">
-              <div class="okay">OK</div>
+            <div pTooltip="Checked" tooltipPosition="top" class="cxy position-relative width-30">
+              <svg class="checked-status cursor-pointer" pTooltip="checked" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path style="fill:#61D42D" fill-rule="evenodd" d="M12,2 C17.5229861,2 22,6.47701386 22,12 C22,17.5229861 17.5229861,22 12,22 C6.47701386,22 2,17.5229861 2,12 C2,6.47701386 6.47701386,2 12,2 Z M10.85725,15.7765003 L16.70725,9.92650027 C17.09825,9.53650027 17.09825,8.90350027 16.70725,8.51250027 C16.31625,8.12250027 15.68425,8.12250027 15.29325,8.51250027 L10.85725,12.9485003 L8.70725,10.7985003 C8.31625,10.4075003 7.68425,10.4075003 7.29325,10.7985003 C6.90225,11.1895003 6.90225,11.8215003 7.29325,12.2125003 L10.85725,15.7765003 Z"/>
+              </svg>
             </div>
           </div>
+          <div *ngIf="drawing.eqStatus == 0">
+            <div class="mm-text mb-6">status</div>
+            <div [class.hidden-group]="!auth.hasPerms('change-status')" (click)="changeStatus(+drawing.BSOID)" pTooltip="Not checked" tooltipPosition="top" class="cxy position-relative width-30">
+              <svg class="checked-status cursor-pointer" pTooltip="checked" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path style="fill:#FC3F1D" fill-rule="evenodd" d="M12,2 C17.5229861,2 22,6.47701386 22,12 C22,17.5229861 17.5229861,22 12,22 C6.47701386,22 2,17.5229861 2,12 C2,6.47701386 6.47701386,2 12,2 Z M10.85725,15.7765003 L16.70725,9.92650027 C17.09825,9.53650027 17.09825,8.90350027 16.70725,8.51250027 C16.31625,8.12250027 15.68425,8.12250027 15.29325,8.51250027 L10.85725,12.9485003 L8.70725,10.7985003 C8.31625,10.4075003 7.68425,10.4075003 7.29325,10.7985003 C6.90225,11.1895003 6.90225,11.8215003 7.29325,12.2125003 L10.85725,15.7765003 Z"/>
+              </svg>
+            </div>
+          </div>
+
+
           <div class="ml-10">
             <div class="mm-text mb-6">user</div>
             <div class="text-medium">{{getName(drawing.eqStatusUser)}}</div>
             <div class="mm-text">{{getDate(drawing.eqStatusDate)}}</div>
           </div>
         </div>
-        <div class="cx flex-column" *ngIf="drawing.eqStatus == 0" >
-          <div class="mm-text mb-6 cx">status</div>
-          <div class="cxy">
-            <div [class.hidden-group]="!auth.hasPerms('change-status')" class="status-button blue-button cxy" (click)="changeStatus(+drawing.BSOID)">Change</div>
-          </div>
-        </div>
+
 
         <div class="cy min-width-80 cursor-default pr-10">
           <div pTooltip="Weight" tooltipPosition="top" class="df">
