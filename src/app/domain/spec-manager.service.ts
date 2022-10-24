@@ -125,4 +125,7 @@ export class SpecManagerService {
   async getEqFoundations(project: string) {
     return await this.http.get<any[]>(props.httpSpec + '/eqFoundations', {params: {project}}).toPromise();
   }
+  async updateStatusEqFoundations(project: string, id: number, user: string) {
+    return await this.http.get<any[]>(props.httpSpec + '/eqFoundationsUpdateStatus', {params: {project, id, user}}).toPromise();
+  }
 }

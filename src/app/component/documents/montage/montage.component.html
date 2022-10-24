@@ -228,7 +228,8 @@
             </div>
           </div>
         </div>
-        <div class="status cxy cursor-default">status</div>
+        <div><button (click)="changeStatus(+drawing.BSOID)">CHANGE STATUS</button></div>
+        <div class="status cxy cursor-default">{{formatStatus(drawing.eqStatus)}}</div>
       </div>
     </div>
   </div>

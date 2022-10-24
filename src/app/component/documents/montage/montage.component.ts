@@ -198,8 +198,21 @@ export class MontageComponent implements OnInit {
       }
     }
   }
-
+  changeStatus(id: number){
+    this.s.updateStatusEqFoundations(this.project, id, this.auth.getUser().login).then(res => {
+      console.log(res);
+      this.fill();
+    });
+  }
   filterChanged() {
     this.applyFilters();
+  }
+
+  formatStatus(eqStatus: number) {
+    switch (eqStatus) {
+      case 1: return 'SUCCESS';
+      case 0: return 'ERROR';
+      default: return 'UNDEFINED';
+    }
   }
 }
