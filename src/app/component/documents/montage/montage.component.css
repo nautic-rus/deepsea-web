@@ -207,6 +207,10 @@
   font-weight: 700;
   font-size: 14px;
 }
+.hidden-group{
+  pointer-events: none;
+  opacity: 0.5;
+}
 .creator{
   border: 1px solid #dee2e685;
   padding: 6px;

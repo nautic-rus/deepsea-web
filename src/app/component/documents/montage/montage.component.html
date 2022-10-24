@@ -128,12 +128,11 @@
             <div class="mm-text">{{getDate(drawing.eqStatusDate)}}</div>
           </div>
         </div>
-        <div class="cx flex-column" *ngIf="drawing.eqStatus == 0">
+        <div class="cx flex-column" *ngIf="drawing.eqStatus == 0" >
           <div class="mm-text mb-6 cx">status</div>
           <div class="cxy">
-            <div class="status-button blue-button cxy" (click)="changeStatus(+drawing.BSOID)">Change</div>
+            <div [class.hidden-group]="!auth.hasPerms('change-status')" class="status-button blue-button cxy" (click)="changeStatus(+drawing.BSOID)">Change</div>
           </div>
-
         </div>
 
         <div class="cy min-width-80 cursor-default pr-10">
