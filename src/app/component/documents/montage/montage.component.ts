@@ -150,6 +150,9 @@ export class MontageComponent implements OnInit {
   }
 
   getName(login: string){
+    if (login == ''){
+      return '';
+    }
     return login[0].toUpperCase() + login.substr(1);
   }
   getDate(dateLong: number): string{

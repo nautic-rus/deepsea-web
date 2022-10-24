@@ -67,7 +67,7 @@
         <div class="w-85">
           <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
             <div *ngFor="let material of materials; let i = index" class="dash-card">
-              <div *ngIf="material != null" class="dash-card-tile">
+              <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
                 <div class="top-row-doc">
                   <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(material.name, 50)}}</div>
                   <div class="p-ml-auto">
