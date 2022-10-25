@@ -784,7 +784,7 @@
               <td [ngStyle]="mw(14)" class="w-15 text-14 space-between">
                 <span>
                   {{part.NESTING}}
-                  {{part.QTY != 0 ? ('(' + part.QTY + ')') : ''}}
+                  <span *ngIf="part.NESTING != '' && part.NESTING != 'LOADING ...'">{{part.QTY != 0 ? ('(' + part.QTY + ')') : ''}}</span>
                   <!--                {{part.NEST_ID}}-->
                 </span>
                 <span>
@@ -846,13 +846,13 @@
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
-                  <div *ngIf="false && auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                  <div *ngIf="auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/plus1.svg" height="16">
                     </div>
                     <div class="cy ml-1">Add files</div>
                   </div>
-                  <div *ngIf="false && fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/download-arrow.png">
                     </div>
@@ -883,7 +883,7 @@
                   </div>
 
 
-                  <div *ngIf="false && auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy icon-rotate">
                       <img src="assets/icons/broom.png">
                     </div>
@@ -956,7 +956,7 @@
                           </ng-template>
                         </p-overlayPanel>
                       </div>
-                      <div class="cxy" *ngIf="false && auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
+                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
                         <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
                           <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>
