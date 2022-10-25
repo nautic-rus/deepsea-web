@@ -354,7 +354,7 @@ export class LanguageService {
           case 'Обновить готовность': return 'Update preparedness' ;
           case 'Сгруппировать по материалу': return 'Group by material';
           case 'Выгрузить excel': return 'Upload excel';
-          case '': return '';
+          case 'Вы подтверждаете статус готовности оборудования?': return 'Do you confirm the equipment readiness status?';
           case '': return '';
           case '': return '';
           case '': return '';
