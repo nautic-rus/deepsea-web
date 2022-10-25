@@ -139,6 +139,7 @@ import { AcceptToWorkComponent } from './component/task/accept-to-work/accept-to
 import { AssignToResponsibleComponent } from './component/task/assign-to-responsible/assign-to-responsible.component';
 import { UserTasksComponent } from './component/employees/user-tasks/user-tasks.component';
 import { MontageComponent } from './component/documents/montage/montage.component';
+import { CheckedConfirmationComponent } from './component/documents/montage/checked-confirmation/checked-confirmation.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -228,7 +229,8 @@ Quill.register('modules/imageResize', ImageResize);
     AcceptToWorkComponent,
     AssignToResponsibleComponent,
     UserTasksComponent,
-    MontageComponent
+    MontageComponent,
+    CheckedConfirmationComponent
   ],
     imports: [
         BrowserModule,

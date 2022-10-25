@@ -7,6 +7,9 @@ import {Material} from "../../../domain/classes/material";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import * as props from '../../../props';
+import {DeleteComponent} from "../../task/delete/delete.component";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {CheckedConfirmationComponent} from "./checked-confirmation/checked-confirmation.component";
 
 
 @Component({
@@ -16,7 +19,7 @@ import * as props from '../../../props';
 })
 export class MontageComponent implements OnInit {
 
-  constructor(public s: SpecManagerService, public router: Router, public route: ActivatedRoute, public materialManager: MaterialManagerService, public auth: AuthManagerService, public issueManager: IssueManagerService) { }
+  constructor(public ref: DynamicDialogRef, private dialogService: DialogService, public s: SpecManagerService, public router: Router, public route: ActivatedRoute, public materialManager: MaterialManagerService, public auth: AuthManagerService, public issueManager: IssueManagerService) { }
 
   drawings: any[] = [];
   equips: any[] = [];
@@ -201,10 +204,25 @@ export class MontageComponent implements OnInit {
       }
     }
   }
+  removeIssue() {
+    this.dialogService.open(CheckedConfirmationComponent, {
+      showHeader: false,
+      modal: true,
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+  }
   changeStatus(id: number){
-    this.s.updateStatusEqFoundations(this.project, id, this.auth.getUser().login).then(res => {
-      console.log(res);
-      this.fill();
+    this.dialogService.open(CheckedConfirmationComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.project, id]
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.fill();
+      }
     });
   }
   filterChanged() {
