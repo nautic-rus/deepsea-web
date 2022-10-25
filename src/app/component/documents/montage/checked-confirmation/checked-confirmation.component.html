@@ -1,16 +1,14 @@
-<div style="height: 264px; width: 350px;">
-  <div class="task-header-assign mt-40">
-    <div class=" question cxy">
-      <div class="question-icon">?</div>
+<div class="pt-20" style="height: 180px; width: 400px;">
+  <div class="df flex-end">
+    <div class="task-button-close cxy" (click)="close()">
+      <i class="pi pi-times"></i>
     </div>
   </div>
-  <div>
-    <div class="confirm-text">{{t.tr('Подтверждение')}}</div>
-  </div>
+
   <div class="mt-1 cxy">
     <div class="delete-text">{{t.tr('Вы подтверждаете статус готовности оборудования?')}}</div>
   </div>
-  <div class="footer-delete mt-2">
+  <div class="footer-delete mt-40">
     <div class="mr-10 cx">
       <div tabindex="10" (click)="commit()" pButton [label]="t.tr ('ОК')" class="button-ok"></div>
     </div>

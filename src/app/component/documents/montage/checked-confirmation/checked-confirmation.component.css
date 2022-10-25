@@ -1,26 +1,8 @@
 /deep/.p-dialog .p-dialog-content {
   padding: 0 1.5rem 1rem 1.5rem;
 }
-.question{
-  position: relative;
-  box-sizing: content-box;
-  justify-content: center;
-  width: 5em;
-  height: 5em;
-  margin: 1.25em auto 1.875em;
-  border: .25em solid transparent;
-  border-radius: 50%;
-  border-color: #000;
-  font-family: inherit;
-  line-height: 5em;
-  cursor: default;
-  border-color: #c9dae1;
-  color: #87adbd;
-}
-.question-icon{
-  display: flex;
-  align-items: center;
-  font-size: 3.75em;
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 10px;
 }
 .confirm-text{
   position: relative;
@@ -35,7 +17,7 @@
   word-wrap: break-word;
 }
 .delete-text{
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.7;
 }
 .footer-delete{
@@ -43,9 +25,24 @@
   justify-content: flex-end;
   align-items: flex-end;
 }
+.task-button-close{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
 .button-ok{
   border: none;
-  min-width: 24px;
+  min-width: 80px;
   border-radius: 3px;
   text-shadow: none;
   padding: 8px 10px;
