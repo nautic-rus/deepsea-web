@@ -84,6 +84,7 @@ export class NestingComponent implements OnInit {
   selectedAllMaterialsRest = false;
   previewClick: string = '';
   selectedTitle = 'Plates';
+  docs: FileAttachment[] = [];
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -101,6 +102,16 @@ export class NestingComponent implements OnInit {
 
       this.loadingBlocks = true;
       this.loadingMaterials = true;
+
+      this.issueManager.getProjectNames().then(projectNames => {
+        let findProject = projectNames.find((x: any) => x.pdsp == this.project);
+        if (findProject != null){
+          this.issueManager.getCloudFiles(findProject.cloudRkd).then(docs => {
+            this.docs = docs;
+          });
+        }
+      });
+
       this.issueManager.getNestingFiles().then(files => {
         this.nestingFiles = files;
         this.s.getHullNestingByProjectPlates(this.project).then(res => {
@@ -441,6 +452,9 @@ export class NestingComponent implements OnInit {
     let files: any[] = [];
     this.nestingPlates.filter((x: any) => x != null).forEach((nest: any) => {
       let find = this.nestingFiles.find(x => x.name.includes(nest.FILE));
+      if (find == null){
+        find = this.docs.find(x => x.name.includes(nest.FILE));
+      }
       if (find != null){
         files.push(find);
       }
@@ -595,10 +609,16 @@ export class NestingComponent implements OnInit {
   }
   isDisabledNestTemplate(nest: any) {
     let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
+    if (searchDxf == null){
+      searchDxf = this.docs.find(x => x.name.includes(nest.FILE));
+    }
     return searchDxf == null;
   }
   isDisabledCuttingMap(nest: any) {
     let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
+    if (searchDxf == null){
+      searchDxf = this.docs.find(x => x.name.includes(nest.CMAP));
+    }
     return searchDxf == null;
   }
   showNesting(part: any) {
@@ -671,6 +691,9 @@ export class NestingComponent implements OnInit {
     }
     this.previewClick = index;
     let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
+    if (searchDxf == null){
+      searchDxf = this.docs.find(x => x.name.includes(nest.FILE));
+    }
     if (searchDxf != null){
       if (!this.dxfEnabled){
         this.dxfEnabled = !this.dxfEnabled;
@@ -745,6 +768,9 @@ export class NestingComponent implements OnInit {
 
   downloadNestingFile(nest: any) {
     let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
+    if (searchDxf == null){
+      searchDxf = this.docs.find(x => x.name.includes(nest.FILE));
+    }
     if (searchDxf != null){
       window.open(searchDxf.url);
     }
@@ -930,6 +956,9 @@ export class NestingComponent implements OnInit {
     }
     this.previewClick = index;
     let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
+    if (searchCMAP == null){
+      searchCMAP = this.docs.find(x => x.name.includes(nest.CMAP));
+    }
     if (searchCMAP != null){
       this.dxfEnabled = false;
       this.cutEnabled = false;
@@ -978,6 +1007,9 @@ export class NestingComponent implements OnInit {
 
   downloadCuttingFile(nest: any, cmapFormat = 'cnc') {
     let searchCMAP = this.nestingFiles.find(x => x.name.includes(nest.CMAP));
+    if (searchCMAP == null){
+      searchCMAP = this.docs.find(x => x.name.includes(nest.CMAP));
+    }
     if (searchCMAP != null){
       this.cmap = searchCMAP.url;
       this.cmapuser = searchCMAP.author;
