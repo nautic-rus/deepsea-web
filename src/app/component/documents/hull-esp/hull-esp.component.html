@@ -690,6 +690,11 @@
           <p-progressSpinner [style]="{width: '35px', height: '35px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
         </div>
       </div>
+      <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
+        <div [pTooltip]="'Show help'" tooltipPosition="top" (click)="showHelp()" class="materials-button cxy">
+          <i class="pi pi-question-circle" style="font-size: 2rem"></i>
+        </div>
+      </div>
       <div class="p-ml-auto df mr-12">
 <!--        <div class="cy">-->
 <!--          <div class="text-view-files">View files of revision</div>-->
@@ -784,7 +789,7 @@
               <td [ngStyle]="mw(14)" class="w-15 text-14 space-between">
                 <span>
                   {{part.NESTING}}
-                  {{part.QTY != 0 ? ('(' + part.QTY + ')') : ''}}
+                  <span *ngIf="part.NESTING != '' && part.NESTING != 'LOADING ...'">{{part.QTY != 0 ? ('(' + part.QTY + ')') : ''}}</span>
                   <!--                {{part.NEST_ID}}-->
                 </span>
                 <span>
@@ -852,7 +857,7 @@
                     </div>
                     <div class="cy ml-1">Add files</div>
                   </div>
-                  <div *ngIf="false && fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/download-arrow.png">
                     </div>

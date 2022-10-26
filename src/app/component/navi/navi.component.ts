@@ -60,10 +60,10 @@ export class NaviComponent implements OnInit {
       this.tc = res;
       this.tcFilled = true;
     });
-    this.issueManager.getTimeAndWeather().then(res => {
-      this.weather = res;
-      this.timeTick();
-    });
+    // this.issueManager.getTimeAndWeather().then(res => {
+    //   this.weather = res;
+    //   this.timeTick();
+    // });
   }
   timeTick(){
     setTimeout(() => {

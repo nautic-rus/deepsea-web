@@ -193,6 +193,16 @@ export class HullEspComponent implements OnInit {
 
       if (this.issue.id == 0){
         this.fillRevisions();
+        setTimeout(() => {
+          this.parts.forEach((part: any) => {
+            if (part.NESTING == 'LOADING ...'){
+              part.NESTING = '';
+            }
+            if (part.SKETCH == 'LOADING ...'){
+              part.SKETCH = '';
+            }
+          });
+        }, 5000);
       }
 
     });
@@ -477,6 +487,14 @@ export class HullEspComponent implements OnInit {
             part.NESTING = '';
           }
         });
+        this.parts.forEach((part: any) => {
+          if (part.NESTING == 'LOADING ...'){
+            part.NESTING = '';
+          }
+          if (part.SKETCH == 'LOADING ...'){
+            part.SKETCH = '';
+          }
+        });
         this.parts = [...this.parts];
       });
     });
@@ -502,6 +520,14 @@ export class HullEspComponent implements OnInit {
         }
         else{
           part.NESTING = '';
+        }
+      });
+      this.parts.forEach((part: any) => {
+        if (part.NESTING == 'LOADING ...'){
+          part.NESTING = '';
+        }
+        if (part.SKETCH == 'LOADING ...'){
+          part.SKETCH = '';
         }
       });
       this.parts = [...this.parts];
@@ -923,7 +949,21 @@ export class HullEspComponent implements OnInit {
   isDisabledNest(part: any) {
     let nesting = part.NESTING != null && part.NESTING[0] == 'N' ? this.getRevisionFilesOfGroup('Nesting Plates', this.selectedRevision) : (this.getRevisionFilesOfGroup('Nesting Profiles', this.selectedRevision));
     let searchDxf = nesting.find(x => x.name.includes(part.NESTING) && part.NESTING != '');
+    // if (searchDxf == null){
+    //   searchDxf = nesting.find(x => {
+    //     let xNesting = this.replaceAll(this.replaceAll(this.replaceAll(x.name, '_0_', '-'), '_', '-'), '.dxf', '');
+    //     console.log(xNesting);
+    //     return part.NESTING.includes(xNesting) && part.NESTING != '';
+    //   })
+    // }
     return searchDxf == null;
+  }
+  replaceAll(input: string, r1: string, r2: string){
+    let res = input;
+    while (res.includes(r1)){
+      res = res.replace(r1, r2)
+    }
+    return res;
   }
   isDisabledNestTemplate(part: any) {
     let nesting = this.getRevisionFilesOfGroup('Profile Sketches', this.selectedRevision);
@@ -1095,6 +1135,7 @@ export class HullEspComponent implements OnInit {
     return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
   }
   showCuttingFile(file: FileAttachment) {
+    console.log(file);
     this.cmap = file.url;
     this.dxfEnabled = false;
     this.cutEnabled = false;
@@ -1227,5 +1268,9 @@ export class HullEspComponent implements OnInit {
         window.open(res);
       }
     });
+  }
+
+  showHelp() {
+    window.open('/assets/help/hull-help.mp4', '_blank');
   }
 }
