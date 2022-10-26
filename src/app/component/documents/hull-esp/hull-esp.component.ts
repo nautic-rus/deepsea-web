@@ -193,6 +193,16 @@ export class HullEspComponent implements OnInit {
 
       if (this.issue.id == 0){
         this.fillRevisions();
+        setTimeout(() => {
+          this.parts.forEach((part: any) => {
+            if (part.NESTING == 'LOADING ...'){
+              part.NESTING = '';
+            }
+            if (part.SKETCH == 'LOADING ...'){
+              part.SKETCH = '';
+            }
+          });
+        }, 5000);
       }
 
     });
@@ -1125,6 +1135,7 @@ export class HullEspComponent implements OnInit {
     return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
   }
   showCuttingFile(file: FileAttachment) {
+    console.log(file);
     this.cmap = file.url;
     this.dxfEnabled = false;
     this.cutEnabled = false;

@@ -83,6 +83,7 @@ export class GCodeComponent implements OnInit, OnDestroy {
   querySubscription: any;
   windowMode = 0;
   loading = true;
+  fileFound = false;
 
   constructor(@Inject(DOCUMENT) private document: Document, private renderer2: Renderer2, public route: ActivatedRoute, public s: SpecManagerService) { }
 
@@ -102,7 +103,7 @@ export class GCodeComponent implements OnInit, OnDestroy {
           res.text().then(text => {
             if (project == 'N002'){
               console.log('GENERATING TAP');
-              this.s.createTAP(text.split('\n'), cmapuser + ' at ' + new Date(+cmapdate).toDateString()).then(res => {
+              this.s.createTAP(text.split('\n'), cmapuser + ' at ' + new Date(this.getCloudDateNoTime(+cmapdate)).toDateString()).then(res => {
                 this.code = '';
                 let newCode = '';
                 res.forEach(x => newCode += (newCode != '' ? '\n' : '') + x);
@@ -110,7 +111,7 @@ export class GCodeComponent implements OnInit, OnDestroy {
               });
             }
             else{
-              this.s.createCNC(text.split('\n'), cmapuser + ' at ' + new Date(+cmapdate).toDateString()).then(res => {
+              this.s.createCNC(text.split('\n'), cmapuser + ' at ' + new Date(this.getCloudDateNoTime(+cmapdate)).toDateString()).then(res => {
                 this.code = '';
                 let newCode = '';
                 res.forEach(x => newCode += (newCode != '' ? '\n' : '') + x);
@@ -146,9 +147,13 @@ export class GCodeComponent implements OnInit, OnDestroy {
       this.renderer2.appendChild(this.document.body, textScript);
 
 
-    }, 1000);
+    }, 3000);
   }
-
+  getCloudDateNoTime(dateLong: number): number{
+    let date = new Date(0);
+    date.setUTCSeconds(dateLong);
+    return date.getTime();
+  }
   ngOnDestroy(): void {
     this.querySubscription.unsubscribe();
   }
