@@ -1258,4 +1258,8 @@ export class HullEspComponent implements OnInit {
       }
     });
   }
+
+  showHelp() {
+    window.open('/assets/help/hull-help.mp4', '_blank');
+  }
 }

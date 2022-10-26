@@ -690,6 +690,11 @@
           <p-progressSpinner [style]="{width: '35px', height: '35px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
         </div>
       </div>
+      <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
+        <div [pTooltip]="'Show help'" tooltipPosition="top" (click)="showHelp()" class="materials-button cxy">
+          <i class="pi pi-question-circle" style="font-size: 2rem"></i>
+        </div>
+      </div>
       <div class="p-ml-auto df mr-12">
 <!--        <div class="cy">-->
 <!--          <div class="text-view-files">View files of revision</div>-->
