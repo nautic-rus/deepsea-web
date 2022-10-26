@@ -191,8 +191,8 @@ export class DocumentsComponent implements OnInit {
           this.issueManager.getProjectNames().then(projectNames => {
             let findProject = projectNames.find((x: any) => x.pdsp == this.project);
             if (findProject != null){
-              this.issueManager.getCloudFiles(findProject.cloudRkd).then(docs => {
-                this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || nestingFiles.find(x => issue.id == x.issue_id) != null  || docs.find(x => x.url.includes(issue.doc_number) != null));
+              this.issueManager.getCloudFiles(findProject.cloudRkd + '/Documents/Hull').then(docs => {
+                this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || docs.find(d => d.url.includes(issue.doc_number)) != null);
                 this.issues = this.issues.filter(x => x.department == this.department);
                 this.issues = _.sortBy(this.issues, x => x.doc_number);
               });

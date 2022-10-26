@@ -104,85 +104,85 @@ export class NestingComponent implements OnInit {
       this.loadingMaterials = true;
 
       this.issueManager.getProjectNames().then(projectNames => {
-        let findProject = projectNames.find((x: any) => x.pdsp == this.project);
+        let findProject = projectNames.find((x: any) => x.foran == this.project);
         if (findProject != null){
           this.issueManager.getCloudFiles(findProject.cloudRkd).then(docs => {
             this.docs = docs;
-          });
-        }
-      });
-
-      this.issueManager.getNestingFiles().then(files => {
-        this.nestingFiles = files;
-        this.s.getHullNestingByProjectPlates(this.project).then(res => {
-          console.log(res);
-          this.nestingSource = res;
-          this.s.getHullNestingByProjectProfiles(this.project).then(resProfiles => {
-            console.log(resProfiles);
-            this.nestingProfilesSrc = resProfiles;
-          });
-          this.nestingSource.forEach((nest: any) => {
-            nest.MATERIAL = this.getNestingMaterial(nest);
-            nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
-            nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
-            if (nest.NESTID.includes('U0')){
-              nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
-              nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
-            }
-            nest.doughnut = [
-              {
-                name: "Usage",
-                value: nest.USAGE
-              },
-              {
-                name: "Left",
-                value: (100 - nest.USAGE)
-              }
-            ];
-            nest.stacked = [
-              {
-                name: '',
-                series: [
-                  {
-                    name: "Usage",
-                    value: nest.USAGE
-                  },
-                  {
-                    name: "Left",
-                    value: (100 - nest.USAGE)
+            this.issueManager.getNestingFiles().then(files => {
+              this.nestingFiles = files;
+              this.s.getHullNestingByProjectPlates(this.project).then(res => {
+                this.nestingSource = res;
+                this.s.getHullNestingByProjectProfiles(this.project).then(resProfiles => {
+                  console.log(resProfiles);
+                  this.nestingProfilesSrc = resProfiles;
+                });
+                this.nestingSource.forEach((nest: any) => {
+                  nest.MATERIAL = this.getNestingMaterial(nest);
+                  nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
+                  nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
+                  if (nest.NESTID.includes('U0')){
+                    nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
+                    nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
                   }
-                ]
-              }
-            ];
-            nest.LOCKED = false;
-          });
-          this.nestingSource = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
+                  nest.doughnut = [
+                    {
+                      name: "Usage",
+                      value: nest.USAGE
+                    },
+                    {
+                      name: "Left",
+                      value: (100 - nest.USAGE)
+                    }
+                  ];
+                  nest.stacked = [
+                    {
+                      name: '',
+                      series: [
+                        {
+                          name: "Usage",
+                          value: nest.USAGE
+                        },
+                        {
+                          name: "Left",
+                          value: (100 - nest.USAGE)
+                        }
+                      ]
+                    }
+                  ];
+                  nest.LOCKED = false;
+                });
+                this.nestingSource = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
 
-          if (this.blocks.length == 0){
-            let blocks: string[] = [];
-            this.blocks.splice(0, this.blocks.length);
-            this.nestingSource.forEach((n: any) => {
-              if (!blocks.includes(n.BLOCKS)){
-                blocks.push(n.BLOCKS);
-              }
-            });
-            _.sortBy(blocks, x => x).forEach(block => {
-              this.blocks.push({
-                name: block,
-                selected: false
+                if (this.blocks.length == 0){
+                  let blocks: string[] = [];
+                  this.blocks.splice(0, this.blocks.length);
+                  this.nestingSource.forEach((n: any) => {
+                    if (!blocks.includes(n.BLOCKS)){
+                      blocks.push(n.BLOCKS);
+                    }
+                  });
+                  _.sortBy(blocks, x => x).forEach(block => {
+                    this.blocks.push({
+                      name: block,
+                      selected: false
+                    });
+                  });
+                }
+
+
+
+                this.loadingBlocks = false;
+                this.loadingMaterials = false;
+
+                this.fetchNesting();
+                this.initMaterials();
+
               });
             });
-          }
 
 
-
-          this.loadingBlocks = false;
-          this.loadingMaterials = false;
-
-          this.fetchNesting();
-          this.initMaterials();
-
-        });
+          });
+        }
       });
     });
   }
@@ -610,6 +610,7 @@ export class NestingComponent implements OnInit {
   isDisabledNestTemplate(nest: any) {
     let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
     if (searchDxf == null){
+      console.log(nest);
       searchDxf = this.docs.find(x => x.name.includes(nest.FILE));
     }
     return searchDxf == null;
