@@ -69,6 +69,15 @@ export class MontageComponent implements OnInit {
           eq.MATERIAL.materialCloudDirectory = '';
           eq.MATERIAL.materialCloudFiles = [];
         }
+        let dNumb = this.getDocNumberFromDescr(eq.SYSTEMDESCR);
+        if (dNumb != null){
+          eq.DRAWINGNAME = eq.SYSTEMDESCR.replace(dNumb, '').trim();
+          eq.DRAWINGNUMBER = dNumb;
+        }
+        else{
+          eq.DRAWINGNAME = '';
+          eq.DRAWINGNUMBER = '';
+        }
       });
       console.log(this.equips);
       this.drawings = [...this.equips];
@@ -234,6 +243,28 @@ export class MontageComponent implements OnInit {
       case 1: return 'SUCCESS';
       case 0: return 'ERROR';
       default: return 'UNDEFINED';
+    }
+  }
+
+  clearNumber(descr: string) {
+    let r = new RegExp('\\d{6}-\\w{3,4}-\\d{3,4}');
+    if (r.test(descr)){
+      // @ts-ignore
+      let match = r.exec(descr)[0];
+      return descr.replace(' ' + match, '');
+    }
+    else{
+      return descr;
+    }
+  }
+  getDocNumberFromDescr(descr: string) {
+    let r = new RegExp('\\d{6}-\\w{3,4}-\\d{3,4}');
+    if (r.test(descr)){
+      // @ts-ignore
+      return  r.exec(descr)[0];
+    }
+    else{
+      return '';
     }
   }
 }
