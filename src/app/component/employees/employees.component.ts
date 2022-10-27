@@ -85,6 +85,12 @@ export class EmployeesComponent implements OnInit {
           let tasksOperationsGroupCount = Object({});
           let tasksEnglishCount = Object({});
 
+          let tasksThisMonth: any[] = [];
+          days.forEach(d => {
+            let date = new Date(this.currentYear, this.currentMonth, d).getTime();
+            tasks.filter(t => this.sameDay(date, t.date)).forEach(t => tasksThisMonth.push(t));
+          });
+
           let totalSum = 0;
           days.forEach(d => {
             let sum = 0;
@@ -104,7 +110,7 @@ export class EmployeesComponent implements OnInit {
           });
 
 
-          this.userStats[user.login] = Object({tasks: tasks, tasksByDay: tasksByDay, tasksOperationsGroupCount: tasksOperationsGroupCount, tasksEnglishCount: tasksEnglishCount, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
+          this.userStats[user.login] = Object({tasks: tasks, tasksThisMonth: tasksThisMonth, tasksByDay: tasksByDay, tasksOperationsGroupCount: tasksOperationsGroupCount, tasksEnglishCount: tasksEnglishCount, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
         });
 
 
@@ -319,10 +325,11 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  showUserTasks() {
+  showUserTasks(login: string, tasks: any[]) {
     this.dialogService.open(UserTasksComponent, {
       showHeader: false,
-      modal: true
+      modal: true,
+      data: [login, tasks, this.currentMonth]
     }).onClose.subscribe(res => {
 
     });

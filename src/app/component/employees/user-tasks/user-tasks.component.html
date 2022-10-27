@@ -1,1 +1,33 @@
-<p>user-tasks works!</p>
+<div class="pt-20" style="height: 450px; width: 350px;">
+  <div class="df space-between">
+    <div class="big-name pl-4">{{userName}}</div>
+    <div class="task-button-close cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="medium-text cxy mt-15">Октябрь 2022</div>
+  <div class="grid-three mt-15 mb-10">
+    <div  class="df">
+      <img pTooltip="Total time" tooltipPosition="top" src="assets/icons/work2.svg" height="26">
+      <div class="ml-5 df align-end">176h</div>
+    </div>
+    <div class="df">
+      <img pTooltip="English" tooltipPosition="top" src="assets/icons/abc.svg" height="26">
+      <div class="ml-5 df align-end">0h</div>
+    </div>
+    <div class="df">
+      <img pTooltip="Time control" tooltipPosition="top" src="assets/icons/id.svg" height="26">
+      <div class="ml-5 df align-end">170h</div>
+    </div>
+  </div>
+
+  <div class="tasks-all">
+    <div class="df space-between task-tile" *ngFor="let taskGroup of tasksGrouped">
+      <div>{{taskGroup.docNumber}}</div>
+      <div>{{this.getHours(taskGroup.time, this.getMinutes(taskGroup.time))}}:{{this.getMinutes(taskGroup.time)}}</div>
+    </div>
+  </div>
+
+
+
+</div>

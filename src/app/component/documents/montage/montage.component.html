@@ -99,14 +99,9 @@
         </div>
 
         <div class="min-width-160 mr-10">
-          <div class="">
-<!--            <div *ngIf="drawing.SYSTEMDESCR == ''" class="title-bold mr-5">{{drawing.SYSTEMNAME}}</div>-->
-            <div class="title-bold">{{drawing.DRAWINGNUMBER}}</div>
-            <div class="title-bold-m">{{drawing.DRAWINGNAME}}</div>
-          </div>
-          <div class="df mt-15">
-            <div *ngIf="drawing.HULLBLOCK != ''" class="text-medium mr-10">{{drawing.HULLBLOCK}}</div>
-            <div class="text-medium mr-10">{{drawing.BSFOUNDATION}}</div>
+          <div class="df">
+            <div *ngIf="drawing.HULLBLOCK != ''" class="title-bold mr-10">{{drawing.HULLBLOCK}}</div>
+            <div class="title-bold mr-10">{{drawing.BSFOUNDATION}}</div>
             <img *ngIf="drawing.foundationStatus > 0" class="mt-2px" src="assets/icons/status-ok.svg" height="16">
           </div>
 
@@ -114,7 +109,10 @@
 <!--            <div *ngIf="drawing.BSFOUNDATION_DESCR != ''" class="title-bold-m">{{drawing.BSFOUNDATION_DESCR}}</div>-->
 <!--            <div *ngIf="drawing.BSFOUNDATION_DESCR == ''" class="title-bold-m">Drawing name</div>-->
 <!--          </div>-->
-
+          <div class="df mt-15">
+            <div *ngIf="drawing.SYSTEMDESCR == ''" class="text-medium mr-5">{{drawing.SYSTEMNAME}}</div>
+            <div class="text-medium">{{drawing.SYSTEMDESCR}}</div>
+          </div>
         </div>
         <div  class="creator-status cursor-default df mr-10">
           <div *ngIf="drawing.eqStatus > 0">

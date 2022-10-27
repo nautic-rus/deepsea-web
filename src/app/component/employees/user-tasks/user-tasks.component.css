@@ -1,0 +1,45 @@
+/deep/.p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 10px;
+}
+.task-button-close{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.big-name{
+  font-size: 24px;
+  font-weight: 500;
+}
+.medium-text{
+  font-weight: 500;
+  font-size: 17px;
+}
+.task-tile{
+  background-color: #4887e140;
+  color: #244471;
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 6px;
+  font-weight: 500;
+}
+.tasks-all{
+  height: 305px;
+  overflow: auto;
+}
+.grid-three{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
