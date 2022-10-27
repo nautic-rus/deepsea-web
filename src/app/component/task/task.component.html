@@ -253,7 +253,7 @@
         <div class="ovf-auto" *ngIf="issue.combined_issues.length > 0">
           <div class="subtask cy" *ngFor="let childIssue of issue.combined_issues">
             <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
-              <div class="pr-10">{{t.tr('Согласование')}}</div>
+              <div class="pr-10">{{childIssue.issue_type}}</div>
               <div class="pr-10 min-width-220">
                 <span>{{childIssue.doc_number}}</span>
                 <span [innerHTML]="issueManager.trim(childIssue.name)"></span>

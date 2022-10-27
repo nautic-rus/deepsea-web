@@ -207,7 +207,8 @@ export class IssueManagerService {
           case 'Comments fixed': return styled ? '<span style="color: #9d7900; background-color: #ffefb2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Замечания устранены</span>' : 'Замечания устранены';
           case 'Cancel': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Аннулирован</span>' : 'Аннулирован';
           case 'To publish': return styled ? '<span style="color: #9C6480; background-color: #F2CFE2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На публикации</span>' : 'На публикации';
-          case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Опубликован</span>' : 'Опубликован';
+          case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Опубликовано</span>' : 'Опубликовано';
+          case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Принято</span>' : 'Принято';
 
           default: return input;
         }
@@ -240,6 +241,7 @@ export class IssueManagerService {
           case 'Cancel': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Cancel</span>' : 'Cancel';
           case 'To publish': return styled ? '<span style="color: #9C6480; background-color: #F2CFE2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">To publish</span>' : 'To publish';
           case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Published</span>' : 'Published';
+          case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Accepted</span>' : 'Accepted';
 
           default: return input;
         }

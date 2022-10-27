@@ -356,7 +356,7 @@ export class LanguageService {
           case 'Выгрузить excel': return 'Upload excel';
           case 'Вы подтверждаете статус готовности оборудования?': return 'Do you confirm the equipment readiness status?';
           case 'Связанная задача': return 'Link issue';
-          case '': return '';
+          case 'Accepted': return 'Принято';
           case '': return '';
           case '': return '';
           case '': return '';
