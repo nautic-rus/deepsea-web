@@ -91,7 +91,12 @@ export class MontageComponent implements OnInit {
               let findEqFiles = cloudFiles.filter(x => x.url.includes(eq.MATERIAL.code));
               let findDirectory = findEqFiles.find(x => x.name.includes(eq.MATERIAL.code));
               if (findDirectory != null){
-                eq.MATERIAL.materialCloudDirectory = findDirectory.url.replace(props.rest  + '/cloud?path=', props.cloud + '/apps/files/?dir=');
+                let r = new RegExp('(?<=path=).+');
+                if (r.test(findDirectory.url)){
+                  // @ts-ignore
+                  let match = r.exec(findDirectory.url)[0];
+                  eq.MATERIAL.materialCloudDirectory = props.cloud + '/apps/files/?dir=' + match;
+                }
               }
               let findFiles = findEqFiles.filter(x => !x.name.includes(eq.MATERIAL.code));
               if (findFiles != null){
