@@ -9,21 +9,22 @@
   <div class="grid-three mt-15 mb-10">
     <div  class="df">
       <img pTooltip="Total time" tooltipPosition="top" src="assets/icons/work2.svg" height="26">
-      <div class="ml-5 df align-end">176h</div>
+      <div class="ml-5 df align-end">{{totalSum.hours}}h</div>
     </div>
     <div class="df">
       <img pTooltip="English" tooltipPosition="top" src="assets/icons/abc.svg" height="26">
-      <div class="ml-5 df align-end">0h</div>
+      <div class="ml-5 df align-end">{{totalSumEnglish.hours}}<span *ngIf="totalSumEnglish.hours != '-'">h</span></div>
     </div>
     <div class="df">
       <img pTooltip="Time control" tooltipPosition="top" src="assets/icons/id.svg" height="26">
-      <div class="ml-5 df align-end">170h</div>
+      <div class="ml-5 df align-end">{{roundHours(tcTime)}}h</div>
     </div>
   </div>
 
   <div class="tasks-all">
     <div class="df space-between task-tile" *ngFor="let taskGroup of tasksGrouped">
-      <div>{{taskGroup.docNumber}}</div>
+      <div *ngIf="taskGroup.docNumber == ''">{{taskGroup.details}}</div>
+      <div>{{taskGroup.docNumber}}{{taskGroup.details}}</div>
       <div>{{this.getHours(taskGroup.time, this.getMinutes(taskGroup.time))}}:{{this.getMinutes(taskGroup.time)}}</div>
     </div>
   </div>

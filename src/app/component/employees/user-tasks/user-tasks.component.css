@@ -28,12 +28,10 @@
   font-size: 17px;
 }
 .task-tile{
-  background-color: #4887e140;
-  color: #244471;
   font-size: 13px;
-  border-radius: 3px;
   padding: 6px;
   font-weight: 500;
+  border-bottom: 1px solid #605e5c1a;
 }
 .tasks-all{
   height: 305px;
