@@ -32,6 +32,7 @@ export class ObjViewComponent implements OnInit {
 
   errorMessage = '';
   objZip = '';
+  blob: any;
   spool = '';
   docNumber = '';
   spoolIndexes: number[] = [];
@@ -60,8 +61,7 @@ export class ObjViewComponent implements OnInit {
     });
 
   }
-
-  findModelAndLoad(){
+  findModelAndLoadAux(){
     this.issues.getIssues('op').then(res => {
       let findDoc = res.find(x => x.doc_number == this.docNumber);
       if (findDoc == null){
@@ -91,6 +91,35 @@ export class ObjViewComponent implements OnInit {
         //this.loadModel();
       });
     });
+  }
+  findModelAndLoad(){
+    if (this.spool == 'full'){
+      this.issues.getIssues('op').then(res => {
+        let findDoc = res.find(x => x.doc_number == this.docNumber);
+        if (findDoc == null){
+          this.errorMessage = 'There is no document found via specified document number. Please contact the issuer.';
+          return;
+        }
+        this.issues.getIssueDetails(findDoc.id).then(docDetails => {
+          let findZip = docDetails.revision_files.find(x => x.group == 'Spool Models' && x.name.includes('.zip'));
+          if (findZip == null){
+            this.errorMessage = 'There is no model for specified document. Please contact to document responsible user';
+            return;
+          }
+          this.objZip = findZip.url;
+          if (this.spool == 'full'){
+            this.loadModel();
+          }
+        });
+      });
+    }
+    else{
+      this.s.getSpoolFiles(this.docNumber, this.spool, this.isom).then(res => {
+        this.blob = res;
+        this.spool = 'blob';
+        this.loadModel();
+      });
+    }
   }
   loadModel(){
     const objLoader = new OBJLoader();
@@ -141,7 +170,27 @@ export class ObjViewComponent implements OnInit {
 
     let count = 0;
     let group = new THREE.Group();
-    if (this.spool == 'full'){
+    if (this.spool == 'blob'){
+      JSZip.loadAsync(this.blob).then(res => {
+        forkJoin(Object.keys(res.files).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
+          let length = texts.length;
+          texts.forEach(text => {
+            group.add(objLoader.parse(text));
+          });
+          group.children.forEach(x => {
+            // @ts-ignore
+            //x.children[0].material = material;
+            // @ts-ignore
+            //x.children[0].map = 'bricks';
+          });
+          this.scene.add(group);
+          this.setView(group);
+          this.render();
+          this.loading = false;
+        });
+      });
+    }
+    else if (this.spool == 'full'){
       fetch(this.objZip).then(response => response.blob()).then(blob => {
         JSZip.loadAsync(blob).then(res => {
           forkJoin(Object.keys(res.files).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
