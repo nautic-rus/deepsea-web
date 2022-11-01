@@ -92,6 +92,7 @@ export class EmployeesComponent implements OnInit {
           });
 
           let totalSum = 0;
+          let totalSumEnglish = 0;
           days.forEach(d => {
             let sum = 0;
             let date = new Date(this.currentYear, this.currentMonth, d).getTime();
@@ -101,16 +102,28 @@ export class EmployeesComponent implements OnInit {
 
             tasksEnglishCount[d] = 0;
             tasks.filter(t => this.sameDay(date, t.date) && t.project == 'English' && t.details == 'English Lesson').forEach(x => tasksEnglishCount[d] += x.time);
-            if (tasksEnglishCount[d] > 0){
-              tasksEnglishCount[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
+            if (tasksEnglishCount[d] > 0) {
+              tasksEnglishCount[d] = Object({
+                hours: this.getHours(sum, this.getMinutes(sum)),
+                minutes: this.getMinutes(sum)
+              });
             }
+            totalSumEnglish += tasksEnglishCount[d];
 
             daysSum[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
             totalSum += sum;
           });
 
 
-          this.userStats[user.login] = Object({tasks: tasks, tasksThisMonth: tasksThisMonth, tasksByDay: tasksByDay, tasksOperationsGroupCount: tasksOperationsGroupCount, tasksEnglishCount: tasksEnglishCount, days: daysSum, totalSum:  Object({hours: this.getHours(totalSum), minutes: this.getMinutes(totalSum)})});
+          this.userStats[user.login] = Object({
+            tasks: tasks, tasksThisMonth: tasksThisMonth, tasksByDay: tasksByDay,
+            tasksOperationsGroupCount: tasksOperationsGroupCount, tasksEnglishCount: tasksEnglishCount,
+            days: daysSum,
+            totalSum: Object({hours: this.getHours(totalSum, this.getMinutes(totalSum)), minutes: this.getMinutes(totalSum)}),
+            totalSumEnglish: Object({hours: this.getHours(totalSumEnglish, this.getMinutes(totalSumEnglish)), minutes: this.getMinutes(totalSumEnglish)})
+          });
+
+
         });
 
 
@@ -325,11 +338,11 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  showUserTasks(login: string, tasks: any[]) {
+  showUserTasks(login: string, tasks: any[], totalSum: any, totalSumEnglish: any, tcid: any) {
     this.dialogService.open(UserTasksComponent, {
       showHeader: false,
       modal: true,
-      data: [login, tasks, this.currentMonth]
+      data: [login, tasks, this.currentMonth, totalSum, totalSumEnglish, tcid]
     }).onClose.subscribe(res => {
 
     });
