@@ -36,6 +36,10 @@ export class MaterialManagerService {
   async setWeightControl(control: any) {
     return await this.http.post<string>(props.http + '/setWeightControl', JSON.stringify(control)).toPromise();
   }
+  async removeWeightControl(control: any, user: String) {
+    // @ts-ignore
+    return await this.http.post<string>(props.http + '/removeWeightControl', JSON.stringify(control), {params: {user}}).toPromise();
+  }
   async getWCDrawings() {
     return await this.http.get<any[]>(props.http + '/wcDrawings').toPromise();
   }

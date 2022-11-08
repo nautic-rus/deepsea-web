@@ -84,6 +84,8 @@ export class WeightControlComponent implements OnInit {
     this.newControl.x = 1;
     this.newControl.y = 1;
     this.newControl.z = 1;
+    this.newControl.removedDate = 0;
+    this.newControl.removedUser = '';
     this.addNew = true;
   }
 
@@ -118,6 +120,10 @@ export class WeightControlComponent implements OnInit {
       this.newControl.docName = this.customName;
     }
 
+    this.newControl.removedDate = 0;
+
+    this.newControl.removedUser = '';
+
     console.log(this.newControl);
 
     this.m.setWeightControl(this.newControl).then(res => {
@@ -132,7 +138,11 @@ export class WeightControlComponent implements OnInit {
     return (this.selectedDrawing.name == 'Ввести номер чертежа вручную' && (this.customName.trim() == '' || this.customNumber.trim() == '')) ||
     !this.selectedDrawing.name || !this.selectedZone.name || !this.newControl.weight || !this.newControl.x || !this.newControl.y || !this.newControl.z;
   }
-
+  removeWeightControl(control: any){
+    this.m.removeWeightControl(control, this.auth.getUser().login).then(res => {
+      this.fillControl();
+    });
+  }
   checkSideChange() {
     let left = this.newControl.side == 1;
     // if (left && this.newControl.x > 0 || !left && this.newControl.x < 0){

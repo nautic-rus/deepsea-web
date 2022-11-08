@@ -74,7 +74,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-control let-i="rowIndex">
           <tr style="font-size: small">
-            <td>{{i + 1}}</td>
+            <td>{{i + 1}}<button (click)="removeWeightControl(control)">DEL</button></td>
             <td>{{control.docNumber + ' - ' + control.docName}}</td>
             <td>{{control.zoneNumber + ' - ' + control.zoneName}}</td>
             <td>{{control.moveElement}}</td>
