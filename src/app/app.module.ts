@@ -140,6 +140,7 @@ import { AssignToResponsibleComponent } from './component/task/assign-to-respons
 import { UserTasksComponent } from './component/employees/user-tasks/user-tasks.component';
 import { MontageComponent } from './component/documents/montage/montage.component';
 import { CheckedConfirmationComponent } from './component/documents/montage/checked-confirmation/checked-confirmation.component';
+import { RemoveWeightComponent } from './component/weight-control/remove-weight/remove-weight.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -230,7 +231,8 @@ Quill.register('modules/imageResize', ImageResize);
     AssignToResponsibleComponent,
     UserTasksComponent,
     MontageComponent,
-    CheckedConfirmationComponent
+    CheckedConfirmationComponent,
+    RemoveWeightComponent
   ],
     imports: [
         BrowserModule,

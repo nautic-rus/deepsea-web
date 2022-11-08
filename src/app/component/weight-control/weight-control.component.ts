@@ -3,6 +3,9 @@ import {MaterialManagerService} from "../../domain/material-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import * as XLSX from "xlsx";
 import {LanguageService} from "../../domain/language.service";
+import {DeleteComponent} from "../task/delete/delete.component";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {RemoveWeightComponent} from "./remove-weight/remove-weight.component";
 
 @Component({
   selector: 'app-weight-control',
@@ -28,7 +31,7 @@ export class WeightControlComponent implements OnInit {
   customNumber = '';
   customName = '';
 
-  constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService) { }
+  constructor(public m: MaterialManagerService, public auth: AuthManagerService, public t: LanguageService, private dialogService: DialogService, public ref: DynamicDialogRef) { }
 
   ngOnInit(): void {
     // this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
@@ -138,9 +141,15 @@ export class WeightControlComponent implements OnInit {
     return (this.selectedDrawing.name == 'Ввести номер чертежа вручную' && (this.customName.trim() == '' || this.customNumber.trim() == '')) ||
     !this.selectedDrawing.name || !this.selectedZone.name || !this.newControl.weight || !this.newControl.x || !this.newControl.y || !this.newControl.z;
   }
-  removeWeightControl(control: any){
-    this.m.removeWeightControl(control, this.auth.getUser().login).then(res => {
-      this.fillControl();
+  removeWeightControl(control: any) {
+    this.dialogService.open(RemoveWeightComponent, {
+      showHeader: false,
+      modal: true,
+      data: control
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.fillControl();
+      }
     });
   }
   checkSideChange() {

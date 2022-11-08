@@ -187,3 +187,21 @@
   align-items: center;
   margin-top: 16px;
 }
+.task-button{
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 3px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.button-disabled{
+  pointer-events: none;
+  opacity: 0.5;
+}
