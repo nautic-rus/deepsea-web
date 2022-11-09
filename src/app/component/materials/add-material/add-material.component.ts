@@ -49,8 +49,7 @@ export class AddMaterialComponent implements OnInit {
   materialTranslationRu: MaterialTranslation = {lang: 'ru', name: '', description: ''};
 
   constructor(public t: LanguageService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
-    this.projects = dialog.data[0];
-    this.project = this.projects[0];
+    this.project = dialog.data[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
     this.approved = this.material.approved == 1;
     this.itt = this.material.itt == 1;
