@@ -802,6 +802,9 @@ body,p{
 .padding-10{
   padding: 10px;
 }
+.pt-3{
+  padding-top: 3px;
+}
 .pt-5{
   padding-top: 5px;
 }
