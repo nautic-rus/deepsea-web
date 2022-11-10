@@ -40,10 +40,22 @@ export class ObjViewComponent implements OnInit {
   isom = 0;
 
   loading = true;
+  selectedSegment = '';
+
+
+  raycaster = new THREE.Raycaster();
+  pointer = new THREE.Vector2();
 
   public constructor(public route: ActivatedRoute, public issues: IssueManagerService, public s: SpecManagerService) {
   }
-
+  onPointerMove(event: any ) {
+    console.log('click');
+    // calculate pointer position in normalized device coordinates
+    // (-1 to +1) for both components
+    this.pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    this.pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+    this.render('click');
+  }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.spool = params.spool ? params.spool : '';
@@ -175,7 +187,9 @@ export class ObjViewComponent implements OnInit {
         forkJoin(Object.keys(res.files).map(fileName => res.files[fileName].async('string'))).subscribe(texts => {
           let length = texts.length;
           texts.forEach(text => {
-            group.add(objLoader.parse(text));
+            let object = objLoader.parse(text);
+            object.name = Object.keys(res.files)[texts.indexOf(text)];
+            group.add(object);
           });
           group.children.forEach(x => {
             // @ts-ignore
@@ -306,6 +320,8 @@ export class ObjViewComponent implements OnInit {
 
     this.controls.update();
 
+    //window.addEventListener( 'click', (ev) => this.onPointerMove(ev) );
+
 
     //this.controls.target = new THREE.Vector3(center.x, center.y, center.z);
     //this.controls.update();
@@ -313,7 +329,36 @@ export class ObjViewComponent implements OnInit {
     //this.camera.updateMatrix();
     //this.camera.updateProjectionMatrix();
   }
-  render() {
+  render(action: string = '') {
+    // update the picking ray with the camera and pointer position
+    //this.raycaster.setFromCamera( this.pointer, this.camera );
+
+    // this.scene.children.forEach((gr: any) => {
+    //   if (gr.type == 'Group'){
+    //     gr.children.forEach((ch: any) => {
+    //       ch.children.forEach((mesh: any) => {
+    //         mesh.material.color?.set( 0xffffff );
+    //       });
+    //     });
+    //   }
+    // });
+    //
+    // if (action == 'click'){
+    //   // calculate objects intersecting the picking ray
+    //   const intersects = this.raycaster.intersectObjects( this.scene.children );
+    //
+    //   if (intersects.length > 0){
+    //     // @ts-ignore
+    //     intersects[0].object.material.color.set( 0xff0000 );
+    //     // @ts-ignore
+    //     console.log(intersects[0].object.parent?.name.replace('.obj', ''));
+    //     // @ts-ignore
+    //     this.selectedSegment = intersects[0].object.parent?.name.replace('.obj', '');
+    //     //console.log(intersects[0].parent.name);
+    //   }
+    // }
+
+
     this.renderer.render( this.scene, this.camera );
   }
 }

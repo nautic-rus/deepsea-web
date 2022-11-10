@@ -1,4 +1,7 @@
 <div class="page" [class.window-mode]="windowMode == 1">
+  <div class="selected-segment" *ngIf="selectedSegment != ''">
+    {{selectedSegment}}
+  </div>
   <div [hidden]="errorMessage != ''">
     <div class="loading" *ngIf="loading">LOADING... PLEASE WAIT...</div>
     <canvas #model id="model"></canvas>
