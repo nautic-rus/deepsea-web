@@ -182,7 +182,7 @@ export class AddMaterialToEspComponent implements OnInit {
   }
 
   removeNode(node: any) {
-    this.materialManager.updateMaterialNode(node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
+    this.materialManager.updateMaterialNode(this.project, node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
       this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
