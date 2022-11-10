@@ -43,18 +43,18 @@
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Проект')}}</div>
                 <div>
-                  <p-autoComplete [placeholder]="t.tr('Введите проект...')" [completeOnFocus]="true"  [(ngModel)]="task.project" [suggestions]="filteredProjects" (ngModelChange)="onProjectChanged(task)" (completeMethod)="filterProjects($event)">
+                  <p-autoComplete [placeholder]="t.tr('Введите проект...')" appendTo = "body" [completeOnFocus]="true"  [(ngModel)]="task.project" [suggestions]="filteredProjects" (ngModelChange)="onProjectChanged(task)" (completeMethod)="filterProjects($event)">
                   </p-autoComplete>
                 </div>
               </div>
               <div>
                 <div class="big-text-create mb-1 ">{{t.tr('Номер документа')}}</div>
-                <p-autoComplete [placeholder]="t.tr('Введите документ...')" [completeOnFocus]="true"  [(ngModel)]="task.docNumber" [suggestions]="filteredDocNumbers" (completeMethod)="filterDocNumbers($event)">
+                <p-autoComplete [placeholder]="t.tr('Введите документ...')" appendTo = "body" [completeOnFocus]="true"  [(ngModel)]="task.docNumber" [suggestions]="filteredDocNumbers" (completeMethod)="filterDocNumbers($event)">
                 </p-autoComplete>
               </div>
               <div>
                 <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
-                <p-autoComplete [placeholder]="t.tr('Введите действие...')" [completeOnFocus]="true" [(ngModel)]="task.action" [suggestions]="filteredActions" (completeMethod)="filterActions($event)">
+                <p-autoComplete [placeholder]="t.tr('Введите действие...')" appendTo = "body" [completeOnFocus]="true" [(ngModel)]="task.action" [suggestions]="filteredActions" (completeMethod)="filterActions($event)">
                 </p-autoComplete>
               </div>
             </div>
