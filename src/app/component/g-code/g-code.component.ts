@@ -12,6 +12,7 @@ export class GCodeComponent implements OnInit, OnDestroy {
 
   code = '';
   cmap = '';
+  path = '';
   querySubscription: any;
   windowMode = 0;
   loading = true;
@@ -27,9 +28,16 @@ export class GCodeComponent implements OnInit, OnDestroy {
 
     this.querySubscription = this.route.queryParams.subscribe(params => {
       this.cmap = params.cmap != null ? params.cmap : this.cmap;
+      this.path = params.path != null ? params.path : this.path;
       let cmapuser = params.cmapuser != null ? params.cmapuser : '';
       let cmapdate = params.cmapdate != null ? params.cmapdate : 0;
       let project = params.foranProject != null ? params.foranProject : 'N004';
+      this.windowMode = params.window != null ? params.window : this.windowMode;
+
+      if (this.windowMode){
+        this.cmap = this.cmap + '?path=' + this.path;
+        console.log(this.cmap);
+      }
       if (this.cmap != ''){
         fetch(this.cmap).then(res => {
           res.text().then(text => {
@@ -53,7 +61,6 @@ export class GCodeComponent implements OnInit, OnDestroy {
           });
         });
       }
-      this.windowMode = params.window != null ? params.window : this.windowMode;
     });
 
     let textScript = this.renderer2.createElement('script');

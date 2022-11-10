@@ -3,7 +3,7 @@ import {MaterialTranslation} from "../interfaces/material-translation";
 
 export class Material {
   id: string = Material.generateId(20);
-  projects: string[] = [];
+  project: string = '';
   name: string = 'New Material';
   description: string = '';
   category: string = '00002';

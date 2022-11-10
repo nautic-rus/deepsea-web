@@ -610,7 +610,6 @@ export class NestingComponent implements OnInit {
   isDisabledNestTemplate(nest: any) {
     let searchDxf = this.nestingFiles.find(x => x.name.includes(nest.FILE));
     if (searchDxf == null){
-      console.log(nest);
       searchDxf = this.docs.find(x => x.name.includes(nest.FILE));
     }
     return searchDxf == null;
@@ -960,6 +959,7 @@ export class NestingComponent implements OnInit {
     if (searchCMAP == null){
       searchCMAP = this.docs.find(x => x.name.includes(nest.CMAP));
     }
+    console.log(searchCMAP);
     if (searchCMAP != null){
       this.dxfEnabled = false;
       this.cutEnabled = false;
@@ -1097,9 +1097,18 @@ export class NestingComponent implements OnInit {
     if (this.cmapView != null && !this.cmapView.closed){
       this.cmapView.close();
     }
-    let url = '/gcode?navi=0&window=1&cmap=' + this.cmap + '&cmapuser=' + this.cmapuser + '&cmapdate=' + this.cmapdate;
+    let path = '';
+    let rPath = new RegExp('(?<=path=).+');
+    if (rPath.test(this.cmap)){
+      // @ts-ignore
+      path = rPath.exec(this.cmap)[0];
+      // @ts-ignore
+      this.cmap = new RegExp('.+(?=\\?)').exec(this.cmap)[0];
+    }
+    let url = '/gcode?navi=0&window=1&cmap=' + this.cmap + '&path=' + path + '&cmapuser=' + this.cmapuser + '&cmapdate=' + this.cmapdate;
     this.dxfEnabledForNesting = false;
     this.dxfEnabled = false;
+    console.log(url);
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
   isDesktop() {

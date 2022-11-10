@@ -35,7 +35,7 @@ export class MaterialsComponent implements OnInit {
   selectedNodePath = '';
   selectedNodeCode = '';
   tooltips: string[] = [];
-  projects: string[] = ['200101', '210101'];
+  projects: string[] = ['200101', '210101', '000000'];
   project = '';
   selectedMaterial: Material = new Material();
   items = [
@@ -84,7 +84,7 @@ export class MaterialsComponent implements OnInit {
       res.forEach(m => m.materialCloudDirectory = '');
       this.materials = res;
       this.materialsSrc = res;
-      this.materialManager.getMaterialNodes().then(res => {
+      this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodesSrc = res;
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
@@ -180,17 +180,12 @@ export class MaterialsComponent implements OnInit {
     }
   }
   addMaterial(action: string = 'add', material: Material = new Material()) {
-    if (action == 'add'){
-      material.projects.splice(0, material.projects.length);
-      //material.projects = [this.project];
-      material.projects.push(this.project);
-    }
     this.dialogService.open(AddMaterialComponent, {
       showHeader: true,
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование матерала').replace('clone', 'Клонирование материала'),
       modal: true,
       closable: true,
-      data: [this.projects, material, action, this.materialsSrc, this.selectedNodeCode]
+      data: [this.project, material, action, this.materialsSrc, this.selectedNodeCode]
     }).onClose.subscribe(res => {
       if (res != null && res.code != ''){
         let findMaterial = this.materials.find(x => x.id == res.id);
@@ -304,7 +299,7 @@ export class MaterialsComponent implements OnInit {
 
   save() {
     this.materialManager.updateMaterialNode(this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
-      this.materialManager.getMaterialNodes().then(res => {
+      this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
         this.hide();
@@ -314,7 +309,7 @@ export class MaterialsComponent implements OnInit {
 
   removeNode(node: any) {
     this.materialManager.updateMaterialNode(node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
-      this.materialManager.getMaterialNodes().then(res => {
+      this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
       });
@@ -407,7 +402,7 @@ export class MaterialsComponent implements OnInit {
       res.forEach(m => m.materialCloudDirectory = '');
       this.materials = res;
       this.materialsSrc = res;
-      this.materialManager.getMaterialNodes().then(res => {
+      this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodesSrc = res;
         this.nodes = this.getNodes(res, this.materialsSrc, '');
         this.setParents(this.nodes, '');
