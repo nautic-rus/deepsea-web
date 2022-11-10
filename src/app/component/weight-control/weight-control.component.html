@@ -46,7 +46,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <div class="cards">
       <p-table #dt [value]="controls" scrollHeight="calc(100vh - 230px)" responsiveLayout="scroll">
@@ -101,10 +100,7 @@
       </p-table>
     </div>
   </div>
-
-
 </div>
-
 <p-dialog [(visible)]="addNew" header="Добавить новую строку" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="">
@@ -148,13 +144,11 @@
         </ng-template>
       </p-dropdown>
     </div>
-
     <div class="mt-1">
       <div class="big-text-create mb-1">Перемещаемый элемент</div>
       <input type="text" pInputText [(ngModel)]="newControl.moveElement"/>
       <small class="p-error" *ngIf="!newControl.moveElement"></small>
     </div>
-
     <div class="mt-1">
       <div class="big-text-create mb-10">Установка/демонтаж</div>
       <div class="df">
@@ -165,13 +159,11 @@
           <p-radioButton value="1" [(ngModel)]="newControl.mount" (ngModelChange)="checkMountChange()"></p-radioButton> Демонтаж
         </div>
       </div>
-
     </div>
     <div class="mt-1">
       <div class="mb-1">
         <label for="weight"><span class="big-text-create pr-5">Вес </span> <span class="red-text">КИЛОГРАММЫ</span></label>
       </div>
-
       <p-inputNumber [useGrouping]="false" mode="decimal" id="weight" [minFractionDigits]="1" locale="en-US" [(ngModel)]="newControl.weight"></p-inputNumber>
       <small class="p-error" *ngIf="!newControl.weight"></small>
     </div>
@@ -187,7 +179,6 @@
           <p-radioButton id="left" value="1" [(ngModel)]="newControl.side" (ngModelChange)="checkSideChange()"></p-radioButton> Левый борт
         </div>
       </div>
-
       <div class="df">
         <div class="mr-5">
           <label for="x">
@@ -213,7 +204,6 @@
       </div>
     </div>
   </ng-template>
-
   <ng-template pTemplate="footer">
     <div class="df justify-content-end">
       <div class="mr-5 cx">
@@ -221,6 +211,5 @@
       </div>
       <div tabindex="10" [class.disabled-button]="isSaveDisabled()" (click)="save()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
     </div>
-
   </ng-template>
 </p-dialog>
