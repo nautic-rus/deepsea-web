@@ -85,6 +85,7 @@ export class NestingComponent implements OnInit {
   previewClick: string = '';
   selectedTitle = 'Plates';
   docs: FileAttachment[] = [];
+  onLoad = true;
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -100,90 +101,93 @@ export class NestingComponent implements OnInit {
       this.cmapuser = params.cmapuser != null ? params.cmapuser : '';
       this.cmapdate = params.cmapdate != null ? +params.cmapdate : 0;
 
-      this.loadingBlocks = true;
-      this.loadingMaterials = true;
 
-      this.issueManager.getProjectNames().then(projectNames => {
-        let findProject = projectNames.find((x: any) => x.foran == this.project);
-        if (findProject != null){
-          this.issueManager.getCloudFiles(findProject.cloudRkd).then(docs => {
-            this.docs = docs;
-            this.issueManager.getNestingFiles().then(files => {
-              this.nestingFiles = files;
-              this.s.getHullNestingByProjectPlates(this.project).then(res => {
-                this.nestingSource = res;
-                this.s.getHullNestingByProjectProfiles(this.project).then(resProfiles => {
-                  console.log(resProfiles);
-                  this.nestingProfilesSrc = resProfiles;
-                });
-                this.nestingSource.forEach((nest: any) => {
-                  nest.MATERIAL = this.getNestingMaterial(nest);
-                  nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
-                  nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
-                  if (nest.NESTID.includes('U0')){
-                    nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
-                    nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
-                  }
-                  nest.doughnut = [
-                    {
-                      name: "Usage",
-                      value: nest.USAGE
-                    },
-                    {
-                      name: "Left",
-                      value: (100 - nest.USAGE)
-                    }
-                  ];
-                  nest.stacked = [
-                    {
-                      name: '',
-                      series: [
-                        {
-                          name: "Usage",
-                          value: nest.USAGE
-                        },
-                        {
-                          name: "Left",
-                          value: (100 - nest.USAGE)
-                        }
-                      ]
-                    }
-                  ];
-                  nest.LOCKED = false;
-                });
-                this.nestingSource = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
-
-                if (this.blocks.length == 0){
-                  let blocks: string[] = [];
-                  this.blocks.splice(0, this.blocks.length);
-                  this.nestingSource.forEach((n: any) => {
-                    if (!blocks.includes(n.BLOCKS)){
-                      blocks.push(n.BLOCKS);
-                    }
+      if (this.onLoad){
+        this.loadingBlocks = true;
+        this.loadingMaterials = true;
+        this.issueManager.getProjectNames().then(projectNames => {
+          let findProject = projectNames.find((x: any) => x.foran == this.project);
+          if (findProject != null){
+            this.issueManager.getCloudFiles(findProject.cloudRkd).then(docs => {
+              this.docs = docs;
+              this.issueManager.getNestingFiles().then(files => {
+                this.nestingFiles = files;
+                this.s.getHullNestingByProjectPlates(this.project).then(res => {
+                  this.nestingSource = res;
+                  this.s.getHullNestingByProjectProfiles(this.project).then(resProfiles => {
+                    console.log(resProfiles);
+                    this.nestingProfilesSrc = resProfiles;
                   });
-                  _.sortBy(blocks, x => x).forEach(block => {
-                    this.blocks.push({
-                      name: block,
-                      selected: false
+                  this.nestingSource.forEach((nest: any) => {
+                    nest.MATERIAL = this.getNestingMaterial(nest);
+                    nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
+                    nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 4) + '-' + nest.NESTID.substr(5);
+                    if (nest.NESTID.includes('U0')){
+                      nest.FILE = 'N-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
+                      nest.CMAP = 'C-' + this.project + '-' + nest.NESTID.substr(1, 5) + '-' + nest.NESTID.substr(6);
+                    }
+                    nest.doughnut = [
+                      {
+                        name: "Usage",
+                        value: nest.USAGE
+                      },
+                      {
+                        name: "Left",
+                        value: (100 - nest.USAGE)
+                      }
+                    ];
+                    nest.stacked = [
+                      {
+                        name: '',
+                        series: [
+                          {
+                            name: "Usage",
+                            value: nest.USAGE
+                          },
+                          {
+                            name: "Left",
+                            value: (100 - nest.USAGE)
+                          }
+                        ]
+                      }
+                    ];
+                    nest.LOCKED = false;
+                  });
+                  this.nestingSource = this.nestingSource.filter((x: any) => !this.isDisabledNestTemplate(x) && !this.isDisabledCuttingMap(x));
+
+                  if (this.blocks.length == 0){
+                    let blocks: string[] = [];
+                    this.blocks.splice(0, this.blocks.length);
+                    this.nestingSource.forEach((n: any) => {
+                      if (!blocks.includes(n.BLOCKS)){
+                        blocks.push(n.BLOCKS);
+                      }
                     });
-                  });
-                }
+                    _.sortBy(blocks, x => x).forEach(block => {
+                      this.blocks.push({
+                        name: block,
+                        selected: false
+                      });
+                    });
+                  }
 
 
 
-                this.loadingBlocks = false;
-                this.loadingMaterials = false;
+                  this.loadingBlocks = false;
+                  this.loadingMaterials = false;
 
-                this.fetchNesting();
-                this.initMaterials();
+                  this.fetchNesting();
+                  this.initMaterials();
 
+                });
               });
+
+
             });
-
-
-          });
-        }
-      });
+          }
+        });
+        this.onLoad = false;
+      }
     });
   }
   getNestingMaterial(n: any){
@@ -193,6 +197,7 @@ export class NestingComponent implements OnInit {
     return this.getNestingMaterial(n1) == this.getNestingMaterial(n2) && n1.PARENTNESTID == n2.PARENTNESTID;
   }
   projectChanged() {
+    this.onLoad = true;
     this.blocks.splice(0, this.blocks.length);
     this.materials.splice(0, this.materials.length);
     this.nestingPlates.splice(0, this.nestingPlates.length);
