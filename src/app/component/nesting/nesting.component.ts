@@ -1063,7 +1063,7 @@ export class NestingComponent implements OnInit {
                     var element = document.createElement('a');
                     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
                     // @ts-ignore
-                    element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.CNC'));
+                    element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.MPG'));
                     element.style.display = 'none';
                     document.body.appendChild(element);
 
