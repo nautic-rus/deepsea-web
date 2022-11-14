@@ -106,6 +106,7 @@ export class AddMaterialComponent implements OnInit {
       this.messageService.add({severity:'error', summary:'Code Error', detail:'You need to specify material weight.', life: 8000});
       return;
     }
+    this.material.project = this.project;
     this.materialManager.updateMaterial(this.material, this.auth.getUser().login, 0).then(res => {
       this.ref.close(this.material);
     });
