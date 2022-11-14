@@ -291,7 +291,7 @@ export class DeviceEspComponent implements OnInit {
     this.s.getDevices(this.docNumber).then(res => {
       if (res.length > 0){
         console.log(res);
-        this.devices = _.sortBy(res, x => this.addLeftZeros(x.userId, 5));
+        this.devices = _.sortBy(res, x => (x.elemType == 'accommodation' ? '1' : '0') + this.addLeftZeros(x.userId, 5));
         this.devices.forEach((d: any) => {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
