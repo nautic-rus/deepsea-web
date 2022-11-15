@@ -96,6 +96,12 @@
 <!--                        <div class="text-table-col cy">{{hideGroup(device.userId, deviceGroup.label)}}</div>-->
                         <div class="text-table-col cy">{{device.userId}}</div>
                         <button *ngIf="device.fromAux == 1" (click)="removeDeviceFromSystem(device)">-</button>
+                        <button [disabled]="editing != 0" *ngIf="device.elemType == 'accommodation'" (click)="newLabel = device.userId; editing = device.id">edit</button>
+                        <div *ngIf="editing == device.id">
+                          <input [(ngModel)]="newLabel">
+                          <button (click)=saveEditing()>save</button>
+                          <button (click)="editing = 0">cancel</button>
+                        </div>
                       </div>
                       <div *ngIf="!deviceGroup.accommodation" class="w-5 mm-text pr-10 cy">{{device.count}}</div>
                       <div *ngIf="deviceGroup.accommodation" class="w-5 mm-text pr-10 cy"></div>

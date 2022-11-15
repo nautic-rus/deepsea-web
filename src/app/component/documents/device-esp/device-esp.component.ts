@@ -147,7 +147,8 @@ export class DeviceEspComponent implements OnInit {
   pipesSrc: any[] = [];
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
-
+  editing = 0;
+  newLabel = '';
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -291,7 +292,7 @@ export class DeviceEspComponent implements OnInit {
     this.s.getDevices(this.docNumber).then(res => {
       if (res.length > 0){
         console.log(res);
-        this.devices = _.sortBy(res, x => (x.elemType == 'accommodation' ? '1' : '0') + this.addLeftZeros(x.userId, 5));
+        this.devices = _.sortBy(res, x => this.addLeftZeros(x.userId, 5));
         this.devices.forEach((d: any) => {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
@@ -867,6 +868,15 @@ export class DeviceEspComponent implements OnInit {
 
   removeDeviceFromSystem(device: any) {
     this.s.removeDeviceFromSystem(this.docNumber, device.material.code, device.units, device.count, device.userId, '').then(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.fillRevisions();
+      });
+    });
+  }
+
+  saveEditing() {
+    this.s.setAccommodationLabel(this.docNumber, this.addLeftZeros(this.newLabel, 8), this.editing).then(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
         this.fillRevisions();

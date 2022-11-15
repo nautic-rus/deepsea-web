@@ -125,6 +125,9 @@ export class SpecManagerService {
   async addGroupToSystem(docNumber: string, stock: string, userId: string) {
     return await this.http.get<any>(props.httpSpec + '/addGroupToSystem', {params: {docNumber, stock, userId}}).toPromise();
   }
+  async setAccommodationLabel(docNumber: string, userId: string, oid: number) {
+    return await this.http.get<any>(props.httpSpec + '/setAccommodationLabel', {params: {docNumber, userId, oid}}).toPromise();
+  }
   async getEqFoundations(project: string) {
     return await this.http.get<any[]>(props.httpSpec + '/eqFoundations', {params: {project}}).toPromise();
   }
