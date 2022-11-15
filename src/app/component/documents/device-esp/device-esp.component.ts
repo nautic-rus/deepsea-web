@@ -296,12 +296,12 @@ export class DeviceEspComponent implements OnInit {
     this.s.getDevices(this.docNumber).then(res => {
       if (res.length > 0){
         console.log(res);
-        this.devices = _.sortBy(res, x => this.addLeftZeros(x.userId, 5));
+        this.devices = _.sortBy(res, x => this.addLeftZeros(x.userId.includes('.') ? x.userId.split('.')[0] : x.userId, 5));
         this.devices.forEach((d: any) => {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
           }
-          //d.label = d.userId.includes('.') ? d.userId[0] : d.userId;
+          //d.label = d.userId.includes('.') ? d.userId.split('.')[0] : d.userId;
           let find = this.devices.find((x: any) => d.userId.startsWith(x.userId + '.'));
           if (find == null){
             d.label = d.userId;
@@ -312,6 +312,7 @@ export class DeviceEspComponent implements OnInit {
         });
         this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
 
+        this.devicesGrouped = _.sortBy(this.devicesGrouped, x => this.addLeftZeros(x.label.includes('.') ? x.label.split('.')[0] : x.label, 5));
 
         this.devices.forEach((d: any) => d.userId = this.removeLeftZeros(d.userId));
         this.devicesSrc = [...this.devices];
