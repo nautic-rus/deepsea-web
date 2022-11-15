@@ -1130,3 +1130,36 @@
   font-weight: 600;
   padding: 0 2px 2px 2px;
 }
+.task-button{
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 3px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.task-name-change-commit{
+  font-size: x-large;
+  border-radius: 3px;
+  text-align: justify;
+  position: relative;
+  height: 28px!important;
+  padding: 4px !important;
+}
+.task-name-button{
+  padding: 0px 6px;
+  background-color: rgba(9, 30, 66, 0.04);
+  height: 28px;
+  border-radius: 2px;
+  box-shadow: 2px 2px 6px 0px rgba(34, 60, 80, 0.2);
+  border: 1px solid #dedede69;
+}
+.task-name-button:hover{
+  background-color: rgba(9, 30, 66, 0.08);
+}

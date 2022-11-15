@@ -23,6 +23,10 @@ import * as XLSX from "xlsx";
 import {DeviceEspGenerationWaitComponent} from "./device-esp-generation-wait/device-esp-generation-wait.component";
 import {AddMaterialToEspComponent} from "./add-material-to-esp/add-material-to-esp.component";
 import {AddGroupDeviceComponent} from "./add-group-device/add-group-device.component";
+import {RemoveWeightComponent} from "../../weight-control/remove-weight/remove-weight.component";
+import {
+  RemoveDeviceFromSystemComponent
+} from "./device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component";
 
 @Component({
   selector: 'app-device-esp',
@@ -866,14 +870,30 @@ export class DeviceEspComponent implements OnInit {
     });
   }
 
+  // removeDeviceFromSystem(device: any) {
+  //   this.s.removeDeviceFromSystem(this.docNumber, device.material.code, device.units, device.count, device.userId, '').then(res => {
+  //     this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+  //       this.issue = issue;
+  //       this.fillRevisions();
+  //     });
+  //   });
+  // }
+
   removeDeviceFromSystem(device: any) {
-    this.s.removeDeviceFromSystem(this.docNumber, device.material.code, device.units, device.count, device.userId, '').then(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
-      });
+    this.dialogService.open(RemoveDeviceFromSystemComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, device.material.code, device.units, device.count, device.userId, '']
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+          this.issue = issue;
+          this.fillRevisions();
+        });
+      }
     });
   }
+
 
   saveEditing() {
     this.s.setAccommodationLabel(this.docNumber, this.addLeftZeros(this.newLabel, 8), this.editing).then(res => {

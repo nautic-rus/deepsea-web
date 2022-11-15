@@ -211,6 +211,12 @@ body,p{
 .width-10{
   width: 10px;
 }
+.width-15{
+  width: 15px;
+}
+.width-20{
+  width: 20px;
+}
 .width-30{
   width: 30px;
 }
@@ -494,6 +500,9 @@ body,p{
 }
 .text-center-x{
   text-align: center;
+}
+.position-absolute{
+  position: absolute;
 }
 .position-relative{
   position: relative;

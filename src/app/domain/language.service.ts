@@ -299,7 +299,7 @@ export class LanguageService {
           case 'Швартовное': return 'Mooring';
           case 'Добавить': return 'Add material';
           case 'Копировать': return 'Copy material';
-          case 'Редактировать': return 'Edit material';
+          case 'Редактировать': return 'Edit';
           case 'Номер': return 'Number';
           case 'ВЕС': return 'WEIGHT';
           case 'Вес кг': return 'weight kg';
@@ -357,8 +357,8 @@ export class LanguageService {
           case 'Вы подтверждаете статус готовности оборудования?': return 'Do you confirm the equipment readiness status?';
           case 'Связанная задача': return 'Link issue';
           case 'Accepted': return 'Принято';
-          case '': return '';
-          case '': return '';
+          case 'Вы подтверждаете удаление элемента?': return 'Do you confirm the deletion of the item?';
+          case 'Удалить позицию': return 'Delete a position';
           case '': return '';
           case '': return '';
           case '': return '';

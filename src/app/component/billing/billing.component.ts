@@ -545,4 +545,8 @@ export class BillingComponent implements OnInit {
   showTooltip(index: string) {
     return this.tooltips.includes(index);
   }
+  roundUp(input: number) {
+    return Math.ceil(input);
+  }
+
 }

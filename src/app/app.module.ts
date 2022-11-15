@@ -141,6 +141,7 @@ import { UserTasksComponent } from './component/employees/user-tasks/user-tasks.
 import { MontageComponent } from './component/documents/montage/montage.component';
 import { CheckedConfirmationComponent } from './component/documents/montage/checked-confirmation/checked-confirmation.component';
 import { RemoveWeightComponent } from './component/weight-control/remove-weight/remove-weight.component';
+import { RemoveDeviceFromSystemComponent } from './component/documents/device-esp/device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -232,7 +233,8 @@ Quill.register('modules/imageResize', ImageResize);
     UserTasksComponent,
     MontageComponent,
     CheckedConfirmationComponent,
-    RemoveWeightComponent
+    RemoveWeightComponent,
+    RemoveDeviceFromSystemComponent
   ],
     imports: [
         BrowserModule,
