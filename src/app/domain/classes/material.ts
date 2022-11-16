@@ -35,7 +35,7 @@ export class Material {
     let code = '0001';
     let prefix = prefixSrc;
     while (prefix.length < 12){
-      prefix += 'NON';
+      prefix += 'X';
     }
     let filter = _.sortBy(materials.filter(x => x.code.startsWith(prefix)), x => x.code);
     if (filter.length > 0){

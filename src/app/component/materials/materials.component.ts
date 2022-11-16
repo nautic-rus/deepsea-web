@@ -86,11 +86,20 @@ export class MaterialsComponent implements OnInit {
       this.materialsSrc = res;
       this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodesSrc = res;
-        this.nodes = this.getNodes(res, this.materialsSrc, '');
-        this.setParents(this.nodes, '');
-        this.materials.filter(x => x != null).forEach((x: any) => {
-          x.path = this.setPath(x.code);
-        });
+        if (this.project == '000000'){
+          this.nodes = this.getNodes2(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code, 2);
+          });
+        }
+        else{
+          this.nodes = this.getNodes(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code);
+          });
+        }
       });
       this.materialsSrc = [...this.materials];
       for (let x = 0; x < 20; x ++){
@@ -98,28 +107,50 @@ export class MaterialsComponent implements OnInit {
       }
     });
   }
-  setPath(code: string){
+  setPath(code: string, length = 3){
     let count = 1;
     let path = '';
-    let root = code.substr(0, 3 * count);
+    let root = code.substr(0, length * count);
     let findNode = this.nodesSrc.find((x: any) => x.data == root);
     while (findNode != null){
       path = path + '/' + findNode.label;
       count += 1;
-      findNode = this.nodesSrc.find((x: any) => x.data == code.substr(0, 3 * count));
+      findNode = this.nodesSrc.find((x: any) => x.data == code.substr(0, length * count));
     }
     return path.split('/').filter(x => x != '');
   }
   createNode(node: any){
-    this.addNew = true;
-    this.newNode = {};
-    this.newNode.data = node.data + '###';
-    this.newNode.label = '';
-    // this.newNode.label = node.label;
-    this.newNode.check = node.data;
-    this.newNode.checkChildren = node.children.map((x: any) => x.data);
-
+    if (this.project == '000000'){
+      this.addNew = true;
+      this.newNode = {};
+      this.newNode.data = node.data + '##';
+      this.newNode.label = '';
+      // this.newNode.label = node.label;
+      this.newNode.check = node.data;
+      this.newNode.checkChildren = node.children.map((x: any) => x.data);
+    }
+    else{
+      this.addNew = true;
+      this.newNode = {};
+      this.newNode.data = node.data + '###';
+      this.newNode.label = '';
+      // this.newNode.label = node.label;
+      this.newNode.check = node.data;
+      this.newNode.checkChildren = node.children.map((x: any) => x.data);
+    }
     console.log(this.newNode);
+  }
+  getNodes2(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
+    let res: any[] = [];
+    rootNodes.filter(x => x.data.length == parent.length + 2 && x.data.startsWith(parent)).forEach(n => {
+      res.push({
+        data: n.data,
+        children: this.getNodes2(rootNodes, materials, n.data),
+        label: n.label,
+        count: materials.filter(x => x.code.startsWith(n.data)).length
+      });
+    });
+    return res;
   }
   getNodes(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
     let res: any[] = [];
@@ -294,14 +325,26 @@ export class MaterialsComponent implements OnInit {
   }
 
   isSaveDisabled() {
-    return (this.newNode.data.length != (this.newNode.check.length + 3)) || this.newNode.checkChildren.includes(this.newNode.data) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNode.data)) || this.newNode.data.includes('#');
+    return (this.newNode.data.length != (this.newNode.check.length + 3) && this.newNode.data.length != (this.newNode.check.length + 2)) || this.newNode.checkChildren.includes(this.newNode.data) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNode.data)) || this.newNode.data.includes('#');
   }
 
   save() {
     this.materialManager.updateMaterialNode(this.project, this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
       this.materialManager.getMaterialNodes(this.project).then(res => {
-        this.nodes = this.getNodes(res, this.materialsSrc, '');
-        this.setParents(this.nodes, '');
+        if (this.project == '000000'){
+          this.nodes = this.getNodes2(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code, 2);
+          });
+        }
+        else{
+          this.nodes = this.getNodes(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code);
+          });
+        }
         this.hide();
       });
     });
@@ -405,10 +448,20 @@ export class MaterialsComponent implements OnInit {
       this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodesSrc = res;
         this.nodes = this.getNodes(res, this.materialsSrc, '');
-        this.setParents(this.nodes, '');
-        this.materials.filter(x => x != null).forEach((x: any) => {
-          x.path = this.setPath(x.code);
-        });
+        if (this.project == '000000'){
+          this.nodes = this.getNodes2(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code, 2);
+          });
+        }
+        else{
+          this.nodes = this.getNodes(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code);
+          });
+        }
       });
       this.materialsSrc = [...this.materials];
       for (let x = 0; x < 20; x ++){
