@@ -2,7 +2,7 @@
   <div>
     <div class="card-head mb-20 df">
       <div class="mr-10">
-        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
       <div class="mr-10">
@@ -343,7 +343,12 @@
   <ng-template pTemplate="content">
     <div class="mb-10">
       <div class="big-text-create mb-1">{{t.tr('Код (вставьте код вместо ###)')}}</div>
-        <input type="text" pInputText [(ngModel)]="newNode.data"/>
+      <div class="cx">
+        <div class="cxy">
+          {{newNode.data}}
+        </div>
+        <input type="text" pInputText [(ngModel)]="newNodeSuffix"/>
+      </div>
       <small class="p-error" *ngIf="!newNode.data"></small>
     </div>
     <div class="">

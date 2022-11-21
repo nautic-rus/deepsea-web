@@ -47,6 +47,7 @@ export class MaterialsComponent implements OnInit {
   ];
   addNew = false;
   newNode: any = {};
+  newNodeSuffix = '';
   selectedView: string = '';
   // @ts-ignore
   @ViewChild('table') table: Table;
@@ -123,19 +124,19 @@ export class MaterialsComponent implements OnInit {
     if (this.project == '000000'){
       this.addNew = true;
       this.newNode = {};
-      this.newNode.data = node.data + '##';
+      this.newNodeSuffix = '##';
+      this.newNode.data = node.data;
       this.newNode.label = '';
       // this.newNode.label = node.label;
-      this.newNode.check = node.data;
       this.newNode.checkChildren = node.children.map((x: any) => x.data);
     }
     else{
       this.addNew = true;
       this.newNode = {};
-      this.newNode.data = node.data + '###';
+      this.newNodeSuffix = '###';
+      this.newNode.data = node.data;
       this.newNode.label = '';
       // this.newNode.label = node.label;
-      this.newNode.check = node.data;
       this.newNode.checkChildren = node.children.map((x: any) => x.data);
     }
     console.log(this.newNode);
@@ -325,10 +326,11 @@ export class MaterialsComponent implements OnInit {
   }
 
   isSaveDisabled() {
-    return (this.newNode.data.length != (this.newNode.check.length + 3) && this.newNode.data.length != (this.newNode.check.length + 2)) || this.newNode.checkChildren.includes(this.newNode.data) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNode.data)) || this.newNode.data.includes('#');
+    return (this.newNodeSuffix.length != 2 && this.newNodeSuffix.length != 3) || this.newNode.checkChildren.includes(this.newNode.data + this.newNodeSuffix) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNodeSuffix)) || this.newNodeSuffix.includes('#');
   }
 
   save() {
+    this.newNode.data += this.newNodeSuffix;
     this.materialManager.updateMaterialNode(this.project, this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
       this.materialManager.getMaterialNodes(this.project).then(res => {
         if (this.project == '000000'){
