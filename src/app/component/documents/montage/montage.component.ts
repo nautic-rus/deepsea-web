@@ -87,6 +87,7 @@ export class MontageComponent implements OnInit {
         let findProject = projectNames.find((x: any) => x.foran == this.project);
         if (findProject != null){
           this.issueManager.getCloudFiles(findProject.cloud + '/Materials').then(cloudFiles => {
+            console.log(cloudFiles);
             this.equips.filter(x => x.MATERIAL != null).forEach(eq => {
               let findEqFiles = cloudFiles.filter(x => x.url.includes(eq.MATERIAL.code));
               let findDirectory = findEqFiles.find(x => x.name.includes(eq.MATERIAL.code));
@@ -96,6 +97,9 @@ export class MontageComponent implements OnInit {
                   // @ts-ignore
                   let match = r.exec(findDirectory.url)[0];
                   eq.MATERIAL.materialCloudDirectory = props.cloud + '/apps/files/?dir=' + match;
+                }
+                else{
+                  eq.materialCloudDirectory = '';
                 }
               }
               let findFiles = findEqFiles.filter(x => !x.name.includes(eq.MATERIAL.code));
@@ -185,10 +189,19 @@ export class MontageComponent implements OnInit {
     this.materialManager.createMaterialCloudDirectory(this.project.replace('N002', '200101').replace('N004', '210101'), material.code).then(res => {
       console.log(res);
       material.materialCloudDirectory = res;
+      window.open(material.materialCloudDirectory);
     });
   }
   openMaterialCloudDirectory(material: any) {
-    window.open(material.materialCloudDirectory);
+    // console.log(material.materialCloudDirectory);
+    // console.log(material.materialCloudFiles);
+    // window.open(material.materialCloudDirectory);
+    if (material.materialCloudDirectory != ''){
+      window.open(material.materialCloudDirectory);
+    }
+    else{
+      this.createMaterialCloudDirectory(material);
+    }
   }
   trimText(input: string, length = 50){
     let res = input;

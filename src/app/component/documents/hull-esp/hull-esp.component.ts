@@ -539,7 +539,7 @@ export class HullEspComponent implements OnInit {
       console.log(res);
       this.issue = res;
       this.miscIssues.splice(0, this.miscIssues.length);
-      this.issueManager.getIssues(this.auth.getUser().login).then(issues => {
+      this.issueManager.getIssues('op').then(issues => {
         issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
         this.miscIssues.forEach(x => {
           issues.filter(y => y.parent_id == x.id).forEach(ch => {
