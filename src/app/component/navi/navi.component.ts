@@ -37,7 +37,7 @@ export class NaviComponent implements OnInit {
     ].filter(x => this.auth.getUser().visible_pages.includes(x.id))},
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},
-    {id: 'nesting', label: 'Nesting', url: 'nesting', icon: 'assets/icons/nesting.svg', height: 20, child: [], params: {}},
+    {id: 'nesting', label: 'Nesting', url: 'nesting', icon: 'assets/icons/cut2.svg', height: 26, child: [], params: {}},
 
 
     // {id: 'nesting', label: 'Nesting', url: '', icon: 'assets/icons/nesting.svg', height: 20, child: [

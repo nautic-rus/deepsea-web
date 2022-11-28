@@ -2,7 +2,11 @@
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
-  <div></div>
+  <div class="cxy flex-column mx-10 text-top">
+    <div>{{auth.getUser().login}}</div>
+    <div>{{auth.getUser().groups}}</div>
+
+  </div>
   <div class="cxy">
     <div pTooltip="Cloud" tooltipPosition="bottom">
       <a href="https://cloud.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/cloud.png"></a>
