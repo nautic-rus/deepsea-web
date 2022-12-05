@@ -50,7 +50,22 @@
       </div>
     </div>
     <div *ngIf="selectedView == 'list'" class="card-overflow">
-      <p-table #table [value]="issues"
+      <div *ngIf="issues.length == 0 && !noResult">
+        <div class="cxy loading">
+          <div class="cxy flex-column">
+            <img src="assets/whale.gif" height="120">
+            <div class="cx loading-text">PLEASE WAIT...</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="issues.length == 0 && noResult">
+        <div class="cxy loading">
+          <div class="cxy flex-column">
+            <div class="cx loading-text">No documents found for project {{project}} and {{department}} department</div>
+          </div>
+        </div>
+      </div>
+      <p-table *ngIf="issues.length != 0" #table [value]="issues"
                [scrollable]="true"
                scrollHeight="calc(100vh - 220px)"
                [virtualScroll]="true"

@@ -23,6 +23,19 @@
 /deep/.p-datatable .p-datatable-header {
   padding: 0.75rem 0 0.75rem 0;
 }
+.loading{
+  position: absolute;;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: large;
+  font-weight: bold;
+}
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+  font-size: 14px;
+}
 .p-input-icon-left > .p-inputtext {
   padding-left: 2.5rem!important;
 }

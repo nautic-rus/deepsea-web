@@ -43,6 +43,7 @@ export class WeightControlComponent implements OnInit {
   }
   fillControl(){
     this.m.getWeightControl().then(res => {
+      console.log(res);
       this.controls = res.filter(x => x.project == this.project);
       console.log(res);
       this.fillTotals();
