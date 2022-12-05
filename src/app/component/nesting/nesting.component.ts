@@ -108,7 +108,9 @@ export class NestingComponent implements OnInit {
         this.issueManager.getProjectNames().then(projectNames => {
           let findProject = projectNames.find((x: any) => x.foran == this.project);
           if (findProject != null){
-            this.issueManager.getCloudFiles(findProject.cloudRkd).then(docs => {
+            this.issueManager.getCloudFiles(findProject.cloudRkd + '/').then(docs => {
+              // console.log(findProject.cloudRkd);
+              // console.log(docs);
               this.docs = docs;
               this.issueManager.getNestingFiles().then(files => {
                 this.nestingFiles = files;
