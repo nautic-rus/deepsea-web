@@ -22,9 +22,22 @@ export class AuthManagerService {
   private authenticated = false;
   private user: User = new User();
   users: User[] = [];
+  checkTimes = 2;
+  checkTime = 0;
 
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, private l: LanguageService) {
     this.fillUsers();
+    this.checkConnection();
+  }
+  checkConnection(){
+    this.http.get(props.http + '/time').toPromise().then(res => {
+
+    }).catch(error => {
+      console.log('no server');
+    });
+    setTimeout(() => {
+      this.checkConnection();
+    }, 3000);
   }
   hasPerms(permissions: string): boolean{
     let find = null;
@@ -159,7 +172,7 @@ export class AuthManagerService {
           return false;
         }
       }).catch(error => {
-        alert('SERVER IS UNAVAILABLE');
+        //alert('SERVER IS UNAVAILABLE');
         this.router.navigate(['login'], {queryParams: qParams});
         return false;
       });

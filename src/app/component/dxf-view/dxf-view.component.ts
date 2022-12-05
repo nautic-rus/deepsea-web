@@ -185,13 +185,18 @@ export class DxfViewComponent implements OnInit, OnDestroy {
 
   fetchDxf(){
     try {
+      console.log('fetch file');
       new DxfFetcher(this.dxfUrl).Fetch().then((res: any) => {
         this.dxfContent = res;
         this.http.get(this.dxfUrl, {responseType: "text"}).subscribe(res => {
+          console.log('file data received: ' + res.length);
           let options = Object.create(DxfViewer.DefaultOptions);
           options.autoResize = true;
+          console.log('start viewer');
           this.dxfViewer = new DxfViewer(document.getElementById('cad-view'), options);
           this.dxfViewer.Load({url: this.dxfUrl, progressCbk: (res: any) => {console.log(res); this.loadingStatus = res.toString()}, fonts: [this.fontUrl]}).then(() => {
+            console.log('viewer loaded');
+
             this.loadingStatus = 'loaded';
 
 
