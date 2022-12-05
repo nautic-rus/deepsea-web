@@ -30,6 +30,8 @@ export class DocumentsComponent implements OnInit {
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   waitForZipFiles = false;
   selectedView: string = 'list';
+  noResult = false;
+
 
   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
 
@@ -101,8 +103,9 @@ export class DocumentsComponent implements OnInit {
     return '-';
   }
 
-   projectChanged(showWithFilesChange: boolean = false) {
-     this.router.navigate([], {queryParams: {project: this.project, department: this.department, showWithFilesOnly: this.showWithFilesOnly ? (showWithFilesChange ? 0 : 1) : (showWithFilesChange ? 1 : 0) }});
+  projectChanged(showWithFilesChange: boolean = false) {
+    this.issues.splice(0, this.issues.length);
+    this.router.navigate([], {queryParams: {project: this.project, department: this.department, showWithFilesOnly: this.showWithFilesOnly ? (showWithFilesChange ? 0 : 1) : (showWithFilesChange ? 1 : 0) }});
   }
   viewTask(issueId: number, project: string, docNumber: string, department: string) {
     let foranProject = project.replace('NR', 'N');
@@ -183,9 +186,10 @@ export class DocumentsComponent implements OnInit {
   }
 
   fillIssues() {
+    this.noResult = false;
     this.issueManager.getIssues('op').then(data => {
       this.issueManager.getNestingFiles().then(nestingFiles => {
-
+        this.noResult = true;
 
         if (this.department == 'Hull'){
           this.issueManager.getProjectNames().then(projectNames => {
