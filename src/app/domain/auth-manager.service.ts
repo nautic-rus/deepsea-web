@@ -95,7 +95,7 @@ export class AuthManagerService {
       return find.avatar;
     }
     else{
-      return '';
+      return 'assets/employees/unknown.jpg';
     }
   }
   login(login: string, password: string, redirectUrl = '', redirect = true, save = true){
