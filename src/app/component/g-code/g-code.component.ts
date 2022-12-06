@@ -17,11 +17,15 @@ export class GCodeComponent implements OnInit, OnDestroy {
   windowMode = 0;
   loading = true;
   fileFound = false;
+  checkCounts = 1;
+  check = 0;
 
   constructor(@Inject(DOCUMENT) private document: Document, private renderer2: Renderer2, public route: ActivatedRoute, public s: SpecManagerService) { }
 
 
   ngOnInit(): void {
+    this.check = 0;
+
     document.addEventListener('simulation', () => {
       this.loading = false;
     });
@@ -74,21 +78,26 @@ export class GCodeComponent implements OnInit, OnDestroy {
   setCode(){
     setTimeout(() => {
       if (this.code != ''){
-
-        let textScript = this.renderer2.createElement('script');
-        textScript.src = 'assets/test/webapp/config.js';
-        this.renderer2.appendChild(this.document.head, textScript);
-        textScript = this.renderer2.createElement('script');
-        textScript.type = 'text/javascript';
-        textScript.text = `
+        this.check += 1;
+        if (this.check > this.checkCounts){
+          let textScript = this.renderer2.createElement('script');
+          textScript.src = 'assets/test/webapp/config.js';
+          this.renderer2.appendChild(this.document.head, textScript);
+          textScript = this.renderer2.createElement('script');
+          textScript.type = 'text/javascript';
+          textScript.text = `
           requirejs.config({
                 baseUrl: 'assets/test/webapp'
             });
         `;
-        this.renderer2.appendChild(this.document.head, textScript);
-        textScript = this.renderer2.createElement('script');
-        textScript.src = 'assets/test/GCode.js';
-        this.renderer2.appendChild(this.document.body, textScript);
+          this.renderer2.appendChild(this.document.head, textScript);
+          textScript = this.renderer2.createElement('script');
+          textScript.src = 'assets/test/GCode.js';
+          this.renderer2.appendChild(this.document.body, textScript);
+        }
+        else {
+          this.setCode();
+        }
       }
       else{
         this.setCode();
