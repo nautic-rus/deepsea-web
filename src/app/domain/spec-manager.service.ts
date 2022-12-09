@@ -34,8 +34,8 @@ export class SpecManagerService {
   async getHullEspFiles(project: string, docNumber: string, docName: string, revision: string) {
     return await this.http.get<any>(props.httpSpec + '/hullEspFiles', {params: {project, docNumber, docName, revision}}).toPromise();
   }
-  async getPipeEspFiles(docNumber: string, revision: string, bySpool: string) {
-    return await this.http.get<any>(props.httpSpec + '/pipeEspFiles', {params: {docNumber, revision, bySpool}}).toPromise();
+  async getPipeEspFiles(docNumber: string, revision: string, bySpool: string, lang: string) {
+    return await this.http.get<any>(props.httpSpec + '/pipeEspFiles', {params: {docNumber, revision, bySpool, lang}}).toPromise();
   }
   async getDevicesEspFiles(docNumber: string, revision: string, lang: string) {
     return await this.http.get<any>(props.httpSpec + '/devicesEspFiles', {params: {docNumber, revision, lang}}).toPromise();

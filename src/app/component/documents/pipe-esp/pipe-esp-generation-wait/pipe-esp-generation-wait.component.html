@@ -27,7 +27,15 @@
           </p-dropdown>
         </div>
       </div>
-
+      <div>
+        <div class="big-text mb-1 mt-1">Select specification language</div>
+      </div>
+      <div class="big-text mb-1 df">
+        <div class="w-100">
+          <p-dropdown appendTo = "body" [(ngModel)]="lang" [options]="langs" styleClass="w-100 h-32 cxy">
+          </p-dropdown>
+        </div>
+      </div>
       <!--      <div class="mt-10">-->
       <!--        <label class="container">-->
       <!--          <input [(ngModel)]="updateRevision" type="checkbox">-->

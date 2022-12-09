@@ -25,6 +25,8 @@ export class PipeEspGenerationWaitComponent implements OnInit {
   revs = ['0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
   rev: string = this.revs[0];
   updateRevision = false;
+  langs = ['Primary', 'Secondary'];
+  lang = this.langs[0];
 
   constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
 
@@ -39,7 +41,7 @@ export class PipeEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getPipeEspFiles(this.issue.doc_number, this.rev, this.conf.data.spools).then(res => {
+    this.s.getPipeEspFiles(this.issue.doc_number, this.rev, this.conf.data.spools, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
