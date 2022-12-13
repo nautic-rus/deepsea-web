@@ -51,6 +51,8 @@ export class MaterialsComponent implements OnInit {
   selectedView: string = '';
   // @ts-ignore
   @ViewChild('table') table: Table;
+  noResult = false;
+  materialsFilled = false;
 
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -103,9 +105,10 @@ export class MaterialsComponent implements OnInit {
         }
       });
       this.materialsSrc = [...this.materials];
-      for (let x = 0; x < 20; x ++){
+      for (let x = 0; x < 10; x ++){
         this.materials.push(null);
       }
+      this.materialsFilled = true;
     });
   }
   setPath(code: string, length = 3){
@@ -433,7 +436,7 @@ export class MaterialsComponent implements OnInit {
     if (this.selectedView == 'tiles'){
       this.materials = this.materialsSrc.filter(x => x != null && (x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase()).includes(this.search.toLowerCase().trim()));
       console.log(this.materials);
-      for (let x = 0; x < 20; x ++){
+      for (let x = 0; x < 10; x ++){
         this.materials.push(null);
       }
     }
@@ -443,6 +446,9 @@ export class MaterialsComponent implements OnInit {
   }
 
   projectChanged() {
+    this.materials.splice(0, this.materials.length);
+    this.nodes.splice(0, this.nodes.length);
+    this.materialsFilled = false;
     this.materialManager.getMaterials(this.project).then(res => {
       res.forEach((m => m.materialCloudDirectory = ''));
       this.materials = res;
@@ -466,9 +472,10 @@ export class MaterialsComponent implements OnInit {
         }
       });
       this.materialsSrc = [...this.materials];
-      for (let x = 0; x < 20; x ++){
+      for (let x = 0; x < 10; x ++){
         this.materials.push(null);
       }
+      this.materialsFilled = true;
     });
   }
 }
