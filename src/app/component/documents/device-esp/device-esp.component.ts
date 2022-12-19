@@ -296,7 +296,7 @@ export class DeviceEspComponent implements OnInit {
     this.s.getDevices(this.docNumber).then(res => {
       if (res.length > 0){
         console.log(res);
-        this.devices = _.sortBy(res, x => x.userId.includes('.') ? this.addLeftZeros(x.userId.split('.')[0], x.userId.split('.')[1]) : (x.userId, 5));
+        this.devices = _.sortBy(res, x => x.userId.includes('.') ? (this.addLeftZeros(x.userId.split('.')[0]) + this.addLeftZeros(x.userId.split('.')[1])) : this.addLeftZeros(x.userId, 5));
         this.devices.forEach((d: any) => {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
