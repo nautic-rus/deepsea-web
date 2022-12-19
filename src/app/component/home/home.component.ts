@@ -590,7 +590,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     });
   }
 
-  trim(input: string, length: number = 65): string {
+  trim(input: string, length: number = 45): string {
     if (input.length <= length) {
       return input;
     } else {

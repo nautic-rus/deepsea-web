@@ -302,3 +302,12 @@
 .button-cancel:hover{
   background-color: #ECEDF0;
 }
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+}
+.loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

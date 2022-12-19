@@ -48,7 +48,6 @@
           <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChange()" class="border" />
         </span>
       </div>
-
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
@@ -65,6 +64,21 @@
           </div>
         </div>
         <div class="w-85">
+          <div *ngIf="project == ''">
+            <div class="cxy loading">
+              <div class="cxy flex-column">
+                <div class="cx loading-text">Select a project to view the materials</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="project != '' && !materialsFilled">
+            <div class="cxy loading">
+              <div class="cxy flex-column">
+                <img src="assets/whale.gif" height="120">
+                <div class="cx loading-text">PLEASE WAIT...</div>
+              </div>
+            </div>
+          </div>
           <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
             <div *ngFor="let material of materials; let i = index" class="dash-card">
               <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
@@ -82,13 +96,6 @@
                     </div>
                   </div>
                 </div>
-
-
-
-
-
-
-
                 <div class="two-row mt-5 mb-5">
                   <div *ngIf="material.description != ''" class="text-medium">{{trimText(material.description, 20)}}</div>
                   <div *ngIf="material.description == ''" class="text-medium">/description/</div>
