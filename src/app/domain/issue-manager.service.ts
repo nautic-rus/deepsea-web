@@ -209,6 +209,7 @@ export class IssueManagerService {
           case 'To publish': return styled ? '<span style="color: #9C6480; background-color: #F2CFE2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На публикации</span>' : 'На публикации';
           case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Опубликовано</span>' : 'Опубликовано';
           case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Принято</span>' : 'Принято';
+          case 'Hold': return styled ? '<span style="color: #B35728; background-color: #FC7635; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На удержании</span>' : 'На удержании';
 
           default: return input;
         }
@@ -242,6 +243,8 @@ export class IssueManagerService {
           case 'To publish': return styled ? '<span style="color: #9C6480; background-color: #F2CFE2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">To publish</span>' : 'To publish';
           case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Published</span>' : 'Published';
           case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Accepted</span>' : 'Accepted';
+          case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Hold</span>' : 'Hold';
+
 
           default: return input;
         }
@@ -281,6 +284,7 @@ export class IssueManagerService {
           case 'To publish': return styled ? '<div class="buttons-pick-publish"><span class="icon-publish cxy"><img src="assets/icons/publish.svg" height="18"></span><span class="cxy button-text">Опубликовать</span></div>' : 'Опубликовать';
           case 'Accept': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Принять</span></div>' : 'Принять';
           case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
+          case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">На удержание</span></div>' : 'На удержание';
 
 
           default: return input;
@@ -316,6 +320,7 @@ export class IssueManagerService {
           case 'To publish': return styled ? '<div class="buttons-pick-publish"><span class="icon-publish cxy"><img src="assets/icons/publish.svg" height="18"></span><span class="cxy button-text">To publish</span></div>' : 'To publish';
           case 'Accept': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Accept</span></div>' : 'Accept';
           case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Reject</span></div>' : 'Reject';
+          case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">Hold</span></div>' : 'Hold';
 
 
           default: return input;

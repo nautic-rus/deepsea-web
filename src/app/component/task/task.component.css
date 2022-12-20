@@ -465,6 +465,28 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-problem{
+  color: white;
+  background-color: #FC7635;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-problem:hover{
+  background: #B35728;
+  transition: 0.3s;
+}
+.icon-problem{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #B35728;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .buttons-pick-pause{
   color: white;
   background-color: #f8b243;
