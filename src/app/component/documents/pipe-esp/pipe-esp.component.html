@@ -33,13 +33,13 @@
           <img src="assets/icons/rotation.svg" height="26">
         </div>
       </div>
-<!--      <div class="mr-10 cy">-->
-<!--        <label class="container margin-bottom-none">-->
-<!--          <span class="text-checkbox">Show only with files</span>-->
-<!--          <input (ngModelChange)="projectChanged(true)" type="checkbox" [(ngModel)]="showWithFilesOnly">-->
-<!--          <span class="checkmark"></span>-->
-<!--        </label>-->
-<!--      </div>-->
+      <div class="mr-10 cy">
+        <label class="container margin-bottom-none">
+          <span class="text-checkbox">SHOW NO SPOOL</span>
+          <input (ngModelChange)="showNoSpoolChanged()" type="checkbox" [(ngModel)]="showNoSpool">
+          <span class="checkmark"></span>
+        </label>
+      </div>
       <div class="p-ml-auto df mr-10">
         <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
           <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
@@ -163,7 +163,7 @@
                         <img src="assets/icons/gasket.svg" height="26">
                       </div>
                     </div>
-                    <div class="w-27 pr-10 title-bold-pipe cy">{{pipe.material.name}}</div>
+                    <div class="w-27 pr-10 title-bold-pipe cy">{{getMaterialName(pipe.material)}}</div>
                     <div class="w-4 pr-10 text-black-mini cy">{{pipe.material.units}}</div>
                     <div class="w-7 pr-10 df">
                       <div class="df">

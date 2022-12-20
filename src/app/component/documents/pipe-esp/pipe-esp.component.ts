@@ -74,6 +74,7 @@ export class PipeEspComponent implements OnInit {
   selectedHeadTab: string = 'Files';
   nestContent: any[] = [];
   nestContentRead = false;
+  showNoSpool = false;
   quillModules =
     {
       imageResize: {},
@@ -252,7 +253,7 @@ export class PipeEspComponent implements OnInit {
   fillPipes(){
     this.s.getPipeSegs(this.docNumber).then(res => {
       if (res.length > 0){
-        this.pipes = _.sortBy(res, x => this.addLeftZeros(x.spool, 5) + this.addLeftZeros(x.spPieceId, 4));
+        this.pipes = _.sortBy(res.filter(x => x.spool != '' || this.showNoSpool), x => this.addLeftZeros(x.spool, 5) + this.addLeftZeros(x.spPieceId, 4));
         this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null, dxf: ''}));
         this.pipesBySpool = _.sortBy(this.pipesBySpool, x => this.addLeftZeros(x.spool, 5));
 
@@ -272,6 +273,7 @@ export class PipeEspComponent implements OnInit {
         });
 
         this.pipesBySpoolSrc = [...this.pipesBySpool];
+        console.log(this.pipesBySpool);
 
         // let findModel = this.issue.revision_files.find(x => x.group == 'Spool Models');
         // if (findModel != null){
@@ -817,7 +819,14 @@ export class PipeEspComponent implements OnInit {
     this.spoolViewEnabled = false;
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
-
+  getMaterialName(material: Material){
+    let res = material.name;
+    let findName = material.translations.find(x => x.lang == this.l.language);
+    if (findName != null){
+      res = findName.name;
+    }
+    return res;
+  }
   downloadFileFromZip(zip: FileAttachment, file: string) {
     fetch(zip.url).then(response => response.blob()).then(blob => {
       JSZip.loadAsync(blob).then(res => {
@@ -836,5 +845,11 @@ export class PipeEspComponent implements OnInit {
         }
       });
     });
+  }
+
+  showNoSpoolChanged() {
+    this.pipes.splice(0, this.pipes.length);
+    this.pipesBySpool.splice(0, this.pipesBySpool.length);
+    this.fillPipes();
   }
 }
