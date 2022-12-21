@@ -309,7 +309,7 @@
   border-radius: 3px;
   text-align: justify;
   position: relative;
-  height: 32px!important;
+  max-height: 100px!important;
 }
 .padding-8{
   padding: 8px;
