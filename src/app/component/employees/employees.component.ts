@@ -62,7 +62,7 @@ export class EmployeesComponent implements OnInit {
       this.dailyTasks = res;
 
       this.auth.getUsers().then(res =>{
-        this.users = res.filter(x => x.visibility.includes('k') && !x.login.includes('isaev'));
+        this.users = res.filter(x => x.visibility.includes('k') && !x.login.includes('isaev') && !x.login.includes('kokovin') );
         this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
         this.users.forEach(user => user.props = Object({department: (user.visibility.includes('r') ? 'Managers' : '')}));
         // this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
