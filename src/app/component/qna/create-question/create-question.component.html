@@ -1,0 +1,104 @@
+<div class="center-create">
+  <div class="header-create-card">
+    ЗАДАТЬ НОВЫЙ ВОПРОС
+    <div class="task-button-create cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-create mb-1">ПРОЕКТ</div>
+      <p-dropdown optionLabel="label" class="select" optionValue="id" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-220 font-14" >
+      </p-dropdown>
+    </div>
+    <div>
+      <div class="big-text-create mb-1 ">ПРИОРИТЕТ</div>
+      <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-220" [(ngModel)]="taskPriority" [options]="taskPriorities">
+      </p-dropdown>
+    </div>
+    <div>
+      <div class="big-text-create mb-1">ОТДЕЛ</div>
+      <p-dropdown class="select" styleClass="width-220" [(ngModel)]="taskDepartment" [options]="taskDepartments">
+      </p-dropdown>
+    </div>
+  </div>
+  <div>
+    <div class="df space-between">
+      <div style="width: 200px">
+        <div class="big-text-create mb-1 mt-1">ДОКУМЕНТ</div>
+        <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
+      </div>
+      <div style="width: 450px">
+        <div class="big-text-create mb-1 mt-1">НАЗВАНИЕ ДОКУМЕНТА</div>
+        <input type="text" pInputText [(ngModel)]="taskSummary">
+      </div>
+    </div>
+    <div class="big-text-create mb-1 mt-1">ОПИСАНИЕ ВОПРОСА</div>
+    <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
+      <div quill-editor-toolbar>
+        <p-header>
+          <span class="ql-formats">
+            <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+            <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+            <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-color" tabindex="-1"></select>
+            <select class="ql-background" tabindex="-1"></select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+            <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+            <select class="ql-align" tabindex="-1">
+              <option selected tabindex="-1"></option>
+              <option value="center" tabindex="-1"></option>
+              <option value="right" tabindex="-1"></option>
+              <option value="justify" tabindex="-1"></option>
+            </select>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+            <button (click)="selectImage.click()">
+              <i class="pi pi-image"></i>
+            </button>
+            <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+            <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button>
+          </span>
+          <span class="ql-formats">
+            <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+          </span>
+        </p-header>
+      </div>
+    </quill-editor>
+    <div class="big-text-create mb-1 mt-1">{{lang.tr('Вложение')}}</div>
+    <div [class.file-drag]="dragOver" class="upload cx cy">
+      <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+        <span class="normal-text no-actions">{{lang.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+      </div>
+    </div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+    <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+      <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+      <div class="cy">{{file}}</div>
+      <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+      <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+    </div>
+  </div>
+</div>
+<div class="form-footer-create">
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="close()" pButton [label]="l.tr('Отмена')" class="button-cancel ml-1"></div>
+  </div>
+  <div tabindex="10" [class.disabled-button]="isCreateTaskDisabled()" (click)="createTask()" pButton [label]="l.tr('Создать')" class="button-ok"></div>
+</div>
+
+
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+
+  </div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>

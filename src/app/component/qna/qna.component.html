@@ -1,0 +1,31 @@
+<div class="all-page">
+  <div class="df">
+    <div class="df w-80">
+      <div class="pl-10">
+        ПРОЕКТЫ
+        <div *ngFor="let project of projects">
+          <div>{{getProjectName(project)}}</div>
+        </div>
+        <div class="df mt-20">
+          <div>ВОПРОСЫ</div>
+          <div class="pl-10">открыто</div>
+          <div class="pl-10">закрыто</div>
+          <div class="pl-10">всего</div>
+        </div>
+      </div>
+      <div class="pl-10">
+        <button (click)="createQuestion()">Задать вопрос</button>
+      </div>
+    </div>
+    <div class="df w-20">
+      <div>
+        <div>ЛЮДИ</div>
+        <div *ngFor="let user of users">
+          {{user.userName}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -50,7 +50,7 @@ export class IssueManagerService {
     return await this.http.get<string[]>(props.http + '/issueDepartments').toPromise();
   }
   async getIssueProjects() {
-    return await this.http.get<string[]>(props.http + '/issueProjects').toPromise();
+    return await this.http.get<any[]>(props.http + '/issueProjects').toPromise();
   }
   async getIssuePeriods() {
     return await this.http.get<IssuePeriod[]>(props.http + '/issuePeriods').toPromise();

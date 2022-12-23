@@ -1,28 +1,23 @@
-import {ApplicationRef, ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
-import {IssueManagerService} from "../../domain/issue-manager.service";
-import {FileAttachment} from "../../domain/classes/file-attachment";
-import {Issue} from "../../domain/classes/issue";
-import {AuthManagerService} from "../../domain/auth-manager.service";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {mouseWheelZoom} from 'mouse-wheel-zoom';
-// @ts-ignore
-import ImageResize from 'quill-image-resize-module';
-import Quill from "quill";
+import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {FileAttachment} from "../../../domain/classes/file-attachment";
+import {Issue} from "../../../domain/classes/issue";
+import {User} from "../../../domain/classes/user";
+import {LanguageService} from "../../../domain/language.service";
+import {IssueManagerService} from "../../../domain/issue-manager.service";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import Delta from "quill-delta";
-import {User} from "../../domain/classes/user";
-import {LanguageService} from "../../domain/language.service";
+import {mouseWheelZoom} from "mouse-wheel-zoom";
+import {LV} from "../../../domain/classes/lv";
 import {PrimeNGConfig} from "primeng/api";
-import {LV} from "../../domain/classes/lv";
-
-Quill.register('modules/imageResize', ImageResize);
-
 
 @Component({
-  selector: 'app-create-task',
-  templateUrl: './create-task.component.html',
-  styleUrls: ['./create-task.component.css'],
+  selector: 'app-create-question',
+  templateUrl: './create-question.component.html',
+  styleUrls: ['./create-question.component.css']
 })
-export class CreateTaskComponent implements OnInit {
+export class CreateQuestionComponent implements OnInit {
+
   issue: Issue = new Issue();
   taskSummary = '';
   taskDetails = '';
@@ -78,38 +73,38 @@ export class CreateTaskComponent implements OnInit {
       imageResize: {},
       clipboard: {
         matchers: [
-            // @ts-ignore
-            ['img', (node, delta) => {
-              let image = delta.ops[0].insert.image;
-              if ((image.indexOf(";base64")) != -1){
-                let ext = image.substring("data:image/".length, image.indexOf(";base64"))
-                let fileName = 'clip' + this.generateId(8)  + '.' + ext;
-                const find = this.loaded.find(x => x.name == fileName);
-                if (find != null){
-                  this.loaded.splice(this.loaded.indexOf(find), 1);
-                }
-                this.awaitForLoad.push(fileName);
-                this.appRef.tick();
-                fetch(image).then(res => res.blob()).then(blob => {
-                  const file = new File([blob], fileName,{ type: "image/png" });
-                  this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
-                    this.loaded.push(res);
-                    this.appRef.tick();
-                    let newDelta = new Delta();
-                    newDelta.retain(this.editor.getSelection().index);
-                    newDelta.insert({image: res.url});
-                    this.editor.updateContents(newDelta, 'user');
-                    this.editor.setSelection(this.editor.getLength());
-                    this.appRef.tick();
-                  });
+          // @ts-ignore
+          ['img', (node, delta) => {
+            let image = delta.ops[0].insert.image;
+            if ((image.indexOf(";base64")) != -1){
+              let ext = image.substring("data:image/".length, image.indexOf(";base64"))
+              let fileName = 'clip' + this.generateId(8)  + '.' + ext;
+              const find = this.loaded.find(x => x.name == fileName);
+              if (find != null){
+                this.loaded.splice(this.loaded.indexOf(find), 1);
+              }
+              this.awaitForLoad.push(fileName);
+              this.appRef.tick();
+              fetch(image).then(res => res.blob()).then(blob => {
+                const file = new File([blob], fileName,{ type: "image/png" });
+                this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
+                  this.loaded.push(res);
+                  this.appRef.tick();
+                  let newDelta = new Delta();
+                  newDelta.retain(this.editor.getSelection().index);
+                  newDelta.insert({image: res.url});
+                  this.editor.updateContents(newDelta, 'user');
+                  this.editor.setSelection(this.editor.getLength());
+                  this.appRef.tick();
                 });
-                return new Delta();
-              }
-              else{
-                return delta;
-              }
-              //return delta;
-            }]
+              });
+              return new Delta();
+            }
+            else{
+              return delta;
+            }
+            //return delta;
+          }]
         ]
       },
       keyboard: {
@@ -131,62 +126,19 @@ export class CreateTaskComponent implements OnInit {
       weekHeader: "№",
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
-    //this.users = this.auth.users;
     this.users = this.getUsers();
     this.itUsers = this.users.filter(x => x.department == 'IT');
-    this.issues.getIssueTypes().then(types => {
-      types.forEach(type => {
-        let allow = true;
-        if (type.type_name == 'RKD' && !this.auth.hasPerms('create_rkd_task')){
-          allow = false;
-        }
-        if (type.type_name == 'PDSP' && !this.auth.hasPerms('create_pdsp_task')){
-          allow = false;
-        }
-        if (type.type_name == 'ORIZ' && !this.auth.hasPerms('create_oriz_task')){
-          allow = false;
-        }
-        if (allow){
-          this.taskTypes.push({label: this.issues.localeTaskType(type.type_name), value: type.type_name});
-        }
-      });
-      if (this.taskTypes.length > 0) {
-        this.taskType = this.taskTypes[0].value;
-      }
-    });
-    this.issues.getTaskPriorities().then(priorities => {
-      priorities.forEach(priority => {
-        this.taskPriorities.push(new LV(this.issues.localeTaskPriority(priority), priority));
-      });
-      this.taskPriorities = this.taskPriorities.reverse();
-      if (this.taskPriorities.length > 0) {
-        this.taskPriority = this.taskPriorities[0].value;
-      }
-    });
     this.issues.getIssueProjects().then(projects => {
-      this.taskProjects = projects.map((x: any) => x.pdsp).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
+      this.taskProjects = projects;
+      this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
       if (this.taskProjects.length > 0 && this.taskProject == '-') {
         this.taskProject = this.taskProjects[0];
       }
     });
-    this.taskPeriods.splice(0, this.taskPeriods.length);
-    this.issues.getIssuePeriods().then(periods => {
-      periods.filter(x => x.project == this.taskProject).forEach(period => {
-        this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
-      });
-      if (this.taskPeriods.length > 0) {
-        this.taskPeriod = this.taskPeriods[0].value;
-      }
-    });
-
-    this.sfiCodes.splice(0, this.sfiCodes.length);
-    this.issues.getSfiCodes().then(sfiCodes => {
-      console.log(sfiCodes);
-      sfiCodes.map(x => new LV(this.l.language == 'ru' ? (x.code + ' - ' + x.ru) : (x.code + ' - ' + x.en), x.code)).forEach(sfiCode => {
-        this.sfiCodes.push(sfiCode);
-      });
-      if (this.sfiCodes.length > 0) {
-        this.sfiCode = this.sfiCodes[0].value;
+    this.issues.getTaskPriorities().then(priorities => {
+      this.taskPriorities = priorities;
+      if (this.taskPriorities.length > 0 && this.taskPriority == '-') {
+        this.taskPriority = this.taskPriorities[0];
       }
     });
 
@@ -195,29 +147,16 @@ export class CreateTaskComponent implements OnInit {
       this.taskDepartment = '-';
     });
 
-    let issue = this.conf.data as Issue;
-    if (issue != null && issue.id != null) {
-      this.taskSummary = issue.name;
-      this.taskType = issue.issue_type;
-      this.taskDetails = issue.details;
-      this.loaded = issue.file_attachments;
-      this.taskPriority = issue.priority;
-      this.assignedToUser = issue.assigned_to;
-      this.responsibleUser = issue.responsible;
-      this.awaitForLoad = issue.file_attachments.map(x => x.name);
-      this.taskProject = issue.project;
-      this.taskDepartment = issue.department;
-      this.taskPriority = issue.priority;
-      this.taskDocNumber = issue.doc_number;
-      this.taskPeriod = issue.period;
-      this.parent_id = issue.parent_id;
-      this.for_revision = issue.for_revision;
-      console.log(issue);
-    }
-
+    let issue = new Issue();
 
   }
-
+  getProjectName(project: any){
+    let res = project.name;
+    if (project.doc_project != ''){
+      res += ' (' + project.doc_project + ')';
+    }
+    return res;
+  }
   handleFileInput(files: FileList | null) {
     if (files != null){
       for (let x = 0; x < files.length; x++){
@@ -439,28 +378,4 @@ export class CreateTaskComponent implements OnInit {
     return this.auth.users.filter(x => x.visibility.includes('c'));
   }
 
-  taskTypeChanged() {
-    if (this.taskType == 'RKD' || this.taskType == 'PDSP'){
-      this.taskProject = this.taskProjects[1];
-      this.taskProjectChanged();
-    }
-    // this.assignedToUser = this.auth.getUser().login;
-    // this.responsibleUser = this.auth.getUser().login;
-  }
-
-  taskProjectChanged() {
-    this.taskPeriods.splice(0, this.taskPeriods.length);
-    this.issues.getIssuePeriods().then(periods => {
-      periods.filter(x => x.project == this.taskProject).forEach(period => {
-        this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
-      });
-      if (this.taskPeriods.length > 0) {
-        this.taskPeriod = this.taskPeriods[0].value;
-      }
-    });
-    this.sfiCodeChanged();
-  }
-  sfiCodeChanged(){
-    //this.taskDocNumber = this.taskProject + '-' + this.sfiCode + '-';
-  }
 }

@@ -233,7 +233,7 @@ export class TaskComponent implements OnInit {
       this.taskDepartments = departments;
     });
     this.issueManager.getIssueProjects().then(projects => {
-      this.taskProjects = projects;
+      this.taskProjects = projects.filter((x: any) => x.pdsp != '').map(x => x.pdsp);
     });
     this.issueManager.getIssuePeriods().then(periods => {
       periods.filter(x => x.project == this.issue.project).forEach(x => {

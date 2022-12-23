@@ -38,6 +38,7 @@ import {DeviceEspComponent} from "./component/documents/device-esp/device-esp.co
 import {AccommodationEspComponent} from "./component/documents/accommodation-esp/accommodation-esp.component";
 import {MonthTasksComponent} from "./component/month-tasks/month-tasks.component";
 import {MontageComponent} from "./component/documents/montage/montage.component";
+import {QnaComponent} from "./component/qna/qna.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -77,6 +78,7 @@ const routes: Routes = [
   { path: 'spool-view', component: ObjViewComponent, data: {animation: 'ObjViewComponent'} },
   { path: 'diary', component: MonthTasksComponent, canActivate: [AuthGuard], data: {animation: 'MonthTasksComponent'} },
   { path: 'montage', component: MontageComponent, canActivate: [AuthGuard], data: {animation: 'MontageComponent'} },
+  { path: 'qna', component: QnaComponent, canActivate: [AuthGuard], data: {animation: 'QnaComponent'} },
 
   { path: '**', redirectTo: '/' },
 ];

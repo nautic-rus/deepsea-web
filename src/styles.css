@@ -430,6 +430,12 @@ body,p{
 .df{
   display: flex;
 }
+.df.c{
+  justify-content: center;
+}
+.df.c.y{
+  align-items: center;
+}
 .cy{
   display: flex;
   align-items: center;

@@ -142,6 +142,8 @@ import { MontageComponent } from './component/documents/montage/montage.componen
 import { CheckedConfirmationComponent } from './component/documents/montage/checked-confirmation/checked-confirmation.component';
 import { RemoveWeightComponent } from './component/weight-control/remove-weight/remove-weight.component';
 import { RemoveDeviceFromSystemComponent } from './component/documents/device-esp/device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component';
+import { QnaComponent } from './component/qna/qna.component';
+import { CreateQuestionComponent } from './component/qna/create-question/create-question.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -234,7 +236,9 @@ Quill.register('modules/imageResize', ImageResize);
     MontageComponent,
     CheckedConfirmationComponent,
     RemoveWeightComponent,
-    RemoveDeviceFromSystemComponent
+    RemoveDeviceFromSystemComponent,
+    QnaComponent,
+    CreateQuestionComponent
   ],
     imports: [
         BrowserModule,
