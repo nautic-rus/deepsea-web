@@ -36,7 +36,7 @@ export class CreateQuestionComponent implements OnInit {
   taskPeriods: LV[] = [];
   taskPeriod: string = '';
   taskTypes: any[] = [];
-  taskPriorities: any[] = [];
+  taskPriorities: any[] = [new LV('Средний'), new LV('Низкий'), new LV('Высокий')];
   assignedToUser = '';
   responsibleUser = '';
   selectedUsers: string[] = [];
@@ -135,12 +135,12 @@ export class CreateQuestionComponent implements OnInit {
         this.taskProject = this.taskProjects[0];
       }
     });
-    this.issues.getTaskPriorities().then(priorities => {
-      this.taskPriorities = priorities;
-      if (this.taskPriorities.length > 0 && this.taskPriority == '-') {
-        this.taskPriority = this.taskPriorities[0];
-      }
-    });
+    // this.issues.getTaskPriorities().then(priorities => {
+    //   this.taskPriorities = priorities.map(x => new LV(x));
+    //   if (this.taskPriorities.length > 0 && this.taskPriority == '-') {
+    //     this.taskPriority = this.taskPriorities[0];
+    //   }
+    // });
 
     this.issues.getIssueDepartments().then(departments => {
       this.taskDepartments = departments;
@@ -152,8 +152,8 @@ export class CreateQuestionComponent implements OnInit {
   }
   getProjectName(project: any){
     let res = project.name;
-    if (project.doc_project != ''){
-      res += ' (' + project.doc_project + ')';
+    if (project.rkd != ''){
+      res += ' (' + project.rkd + ')';
     }
     return res;
   }
@@ -210,50 +210,22 @@ export class CreateQuestionComponent implements OnInit {
     const issue = new Issue();
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
-    issue.issue_type = this.taskType;
+    issue.issue_type = 'QNA';
     issue.started_by = this.auth.getUser().login;
     issue.project = this.taskProject;
-    issue.assigned_to = this.assignedToUser;
+    issue.assigned_to = 'nautic-rus';
     issue.priority = this.taskPriority;
-    issue.start_date = this.startDate.getTime();
-    issue.due_date = this.dueDate.getTime();
+    issue.start_date = new Date().getTime();
     issue.department = this.taskDepartment;
     issue.doc_number = this.taskDocNumber;
-    issue.responsible = this.responsibleUser;
-    issue.period = this.taskPeriod;
     issue.started_by = this.auth.getUser().login;
-    issue.sfi_code = this.sfiCode;
-    issue.status = 'New';
-    issue.action = 'New';
-    issue.for_revision = this.for_revision;
-    issue.parent_id = this.parent_id;
-    if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
-      issue.doc_number = '';
-    }
-    if (issue.issue_type == 'IT'){
-      issue.department = 'IT';
-    }
-    if (issue.issue_type == 'APPROVAL'){
-      // @ts-ignore
-      this.selectedUsers.forEach(user => {
-        issue.file_attachments = this.loaded;
-        issue.responsible = user;
-        this.issues.startIssue(issue).then(res => {
-          this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
-            this.ref.close(res);
-          });
-        });
+    issue.status = 'Новый';
+    issue.file_attachments = this.loaded;
+    this.issues.startIssue(issue).then(res => {
+      this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
+        this.ref.close(res);
       });
-    }
-    else {
-      // @ts-ignore
-      issue.file_attachments = this.loaded;
-      this.issues.startIssue(issue).then(res => {
-        this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
-          this.ref.close(res);
-        });
-      });
-    }
+    });
   }
 
   isLoaded(file: string) {
@@ -362,13 +334,7 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   isCreateTaskDisabled() {
-    switch (this.taskType) {
-      case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
-      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || !((new RegExp('^\\d{6}-\\d{3}-\\d{3,4}$')).test(this.taskDocNumber));
-      case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
-      case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '';
-      default: return false;
-    }
+    return this.taskDetails.trim() == '';
   }
   quillCreated(event: any) {
     this.editor = event;

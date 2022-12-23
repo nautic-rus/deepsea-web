@@ -164,7 +164,7 @@ export class CreateTaskComponent implements OnInit {
       }
     });
     this.issues.getIssueProjects().then(projects => {
-      this.taskProjects = projects.map((x: any) => x.pdsp).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
+      this.taskProjects = projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
       if (this.taskProjects.length > 0 && this.taskProject == '-') {
         this.taskProject = this.taskProjects[0];
       }
