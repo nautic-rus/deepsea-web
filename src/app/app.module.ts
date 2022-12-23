@@ -144,6 +144,8 @@ import { RemoveWeightComponent } from './component/weight-control/remove-weight/
 import { RemoveDeviceFromSystemComponent } from './component/documents/device-esp/device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component';
 import { QnaComponent } from './component/qna/qna.component';
 import { CreateQuestionComponent } from './component/qna/create-question/create-question.component';
+import { LaborComponent } from './component/labor/labor.component';
+import { ElectricEspComponent } from './component/documents/electric-esp/electric-esp.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -238,7 +240,10 @@ Quill.register('modules/imageResize', ImageResize);
     RemoveWeightComponent,
     RemoveDeviceFromSystemComponent,
     QnaComponent,
-    CreateQuestionComponent
+    CreateQuestionComponent,
+    RemoveDeviceFromSystemComponent,
+    LaborComponent,
+    ElectricEspComponent
   ],
     imports: [
         BrowserModule,

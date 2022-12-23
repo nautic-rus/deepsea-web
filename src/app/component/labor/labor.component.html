@@ -1,0 +1,77 @@
+<div class="all-page-labor">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head df sticky-card">
+      <div class="mr-10">
+        <p-dropdown placeholder="Project" optionLabel="label" optionValue="name" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <p-dropdown placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <p-dropdown placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button green-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="ml-10 df tabs-header">
+<!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Plates'" [class.selectedTab]="selectedHeadTab ==  'Plates'">{{t.tr('Листы')}}</div>-->
+<!--        <div class="line-between"></div>-->
+<!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Profiles'" [class.selectedTab]="selectedHeadTab ==  'Profiles'">{{t.tr('Профили')}}</div>-->
+        <!--        <div class="line-between"></div>-->
+        <!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Pipes'" [class.selectedTab]="selectedHeadTab ==  'Pipes'">{{t.tr('Трубы')}}</div>-->
+        <!--        <div class="line-between"></div>-->
+        <!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Valves'" [class.selectedTab]="selectedHeadTab ==  'Valves'">{{t.tr('Клапаны')}}</div>-->
+        <!--        <div class="line-between"></div>-->
+        <!--        <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Cables'" [class.selectedTab]="selectedHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>-->
+      </div>
+<!--      <div class="p-ml-auto df">-->
+<!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
+<!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
+<!--          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">-->
+<!--        </div>-->
+<!--        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">-->
+<!--          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">-->
+<!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
+<!--        </div>-->
+<!--        <div *ngIf="selectedHeadTab == 'Plates'" class="df">-->
+<!--          <div class="mr-10 ml-10">-->
+<!--            <p-dropdown class="select" [(ngModel)]="sortPlatesValue" [options]="sortPlatesValues" (ngModelChange)="sortPlatesChanged()" styleClass="width-170 border">-->
+<!--            </p-dropdown>-->
+<!--          </div>-->
+<!--          <span class="p-input-icon-left p-ml-auto">-->
+<!--            <i class="pi pi-search"></i>-->
+<!--            <input [(ngModel)]="searchPlates" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <div *ngIf="selectedHeadTab == 'Profiles'" class="df">-->
+<!--          <div class="mr-10 ml-10">-->
+<!--            <p-dropdown class="select" [(ngModel)]="sortProfilesValue" [options]="sortProfilesValues" (ngModelChange)="sortProfilesChanged()" styleClass="width-170 border">-->
+<!--            </p-dropdown>-->
+<!--          </div>-->
+<!--          <span class="p-input-icon-left p-ml-auto">-->
+<!--            <i class="pi pi-search"></i>-->
+<!--            <input [(ngModel)]="searchProfiles" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+    <div class="empty-card-bottom"></div>
+    <div *ngFor="let issue of issues" class="dash-card cursor-pointer">
+      <div class="card-task">
+        <div class="left-col">
+          <div class="title-bold mb-5">{{issue.doc_number}}</div>
+          <div class="text-mini-gray">{{issue.name}}</div>
+        </div>
+        <div></div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
