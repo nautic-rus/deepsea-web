@@ -53,7 +53,7 @@ export class AuthManagerService {
   }
   fillUsers(){
     this.getUsers().then(data => {
-      console.log(data);
+      //console.log(data);
       this.users = data;
       this.users.forEach(user => user.userName = this.getUserName(user.login));
       this.users.forEach(user => user.userNameEn = tr(user.userName));

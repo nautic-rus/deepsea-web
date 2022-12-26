@@ -52,7 +52,8 @@
               "node_modules/quill/dist/quill.js",
               "node_modules/quill/dist/quill.min.js",
               "node_modules/quill-image-resize-module/image-resize.min.js",
-              "node_modules/leader-line/leader-line.min.js"
+              "node_modules/leader-line/leader-line.min.js",
+              "node_modules/chart.js/dist/chart.js"
             ]
           },
           "configurations": {

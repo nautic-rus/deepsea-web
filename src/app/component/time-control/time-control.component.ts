@@ -63,6 +63,7 @@ export class TimeControlComponent implements OnInit {
     };
 
     this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
+      console.log(res);
     // this.issueManager.getTimeControl(13).then(res => {
       this.tc = res;
       let days: string[] = [];
@@ -112,7 +113,7 @@ export class TimeControlComponent implements OnInit {
     let t = new Date();
     for (let x = 0; x < count; x ++){
       t.setDate(t.getDate() - 1);
-      if (t.getMonth() == now.getMonth() - 1){
+      if (t.getMonth() == now.getMonth()){
         res.push(t.getTime());
       }
     }
