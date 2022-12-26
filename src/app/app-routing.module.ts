@@ -39,6 +39,7 @@ import {AccommodationEspComponent} from "./component/documents/accommodation-esp
 import {MonthTasksComponent} from "./component/month-tasks/month-tasks.component";
 import {MontageComponent} from "./component/documents/montage/montage.component";
 import {QnaComponent} from "./component/qna/qna.component";
+import {QuestionDetailsComponent} from "./component/qna/question-details/question-details.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -79,7 +80,7 @@ const routes: Routes = [
   { path: 'diary', component: MonthTasksComponent, canActivate: [AuthGuard], data: {animation: 'MonthTasksComponent'} },
   { path: 'montage', component: MontageComponent, canActivate: [AuthGuard], data: {animation: 'MontageComponent'} },
   { path: 'qna', component: QnaComponent, canActivate: [AuthGuard], data: {animation: 'QnaComponent'} },
-
+  { path: 'qna-details', component: QuestionDetailsComponent, canActivate: [AuthGuard], data: {animation: 'QuestionDetailsComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 

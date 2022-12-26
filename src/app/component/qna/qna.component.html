@@ -1,31 +1,26 @@
 <div class="all-page">
   <div class="df">
-    <div class="df w-80">
+    <div class="df w-100">
       <div class="pl-10">
-        ПРОЕКТЫ
-        <div *ngFor="let project of projects">
-          <div>{{getProjectName(project)}}</div>
-        </div>
-        <div class="df mt-20">
-          <div>ВОПРОСЫ</div>
-          <div class="pl-10">открыто</div>
-          <div class="pl-10">закрыто</div>
-          <div class="pl-10">всего</div>
-        </div>
+        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" [options]="projects" styleClass="width-220 font-14" placeholder="ПРОЕКТ"></p-dropdown>
+      </div>
+      <div class="pl-10">
+        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="department" [options]="departments" styleClass="width-220 font-14" placeholder="ОТДЕЛ"></p-dropdown>
       </div>
       <div class="pl-10">
         <button (click)="createQuestion()">Задать вопрос</button>
       </div>
     </div>
-    <div class="df w-20">
-      <div>
-        <div>ЛЮДИ</div>
-        <div *ngFor="let user of users">
-          {{user.userName}}
-        </div>
-      </div>
-
-    </div>
   </div>
-
+  <div class="df w-100" *ngFor="let q of questions" (click)="openQuestion(q.id)">
+    <div>{{q.id}}</div>
+    <div>{{q.status}}</div>
+    <div>{{q.doc_number}}</div>
+    <div>{{q.name}}</div>
+    <div>{{q.last_update}}</div>
+    <div>{{q.assigned_to}}</div>
+    <div>{{q.started_by}}</div>
+    <div>{{q.start_date}}</div>
+    <div>{{q.priority}}</div>
+  </div>
 </div>

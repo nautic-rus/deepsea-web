@@ -1,0 +1,553 @@
+<div class="w-100 p-20">
+  <div class="task-header">
+    <div class="df">
+      <div class="text-head text-bottom">ВОПРОС</div>
+    </div>
+    <div class="task-buttons">
+      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">
+        <img src="assets/icons/link.svg" height="20">
+      </div>
+      <div class="task-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+  </div>
+  <div class="center">
+    <div class="left-content">
+      <div class="pb-10">
+        <span [class.no-edit]="!isEditable()" class="task-name hover-task cursor-pointer" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.name}}</span>
+        <div class="task-name" [hidden]="edit != 'name'">
+          <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
+          <div class="content-end">
+            <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
+              <img src="assets/icons/tick.svg">
+            </div>
+            <div class="task-name-button cxy" (click)="cancelIssueEdit()">
+              <img src="assets/icons/cancel.svg">
+            </div>
+          </div>
+        </div>
+        <div class="task-name" [hidden]="edit != 'doc_number'">
+          <textarea *ngIf="edit == 'doc_number'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.doc_number" class="w-100 task-name-change font"></textarea>
+          <div class="content-end">
+            <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
+              <img src="assets/icons/tick.svg">
+            </div>
+            <div class="task-name-button cxy" (click)="cancelIssueEdit()">
+              <img src="assets/icons/cancel.svg">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <div class="button-status" *ngFor="let status of availableActions">
+          <div [class.disabled-button]="isDisabledStatus(status.value)" (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
+        </div>
+      </div>
+      <div class="df">
+        <div class="big-text mb-1 mt-2">Описание задачи</div>
+      </div>
+      <div class="text description descr-task">
+        <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
+      </div>
+      <div class="" [hidden]="edit != 'description'">
+        <quill-editor (onEditorCreated)="quillCreatedDescription($event)" [modules]="quillModulesDescription" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.details">
+          <div quill-editor-toolbar>
+            <p-header>
+            <span class="ql-formats">
+              <button class="ql-bold quill-button" [pTooltip]="t.tr('Полужирный Ctrl+B')" tooltipPosition="top" aria-label="Bold" tabindex="-1"></button>
+              <button class="ql-italic quill-button" [pTooltip]="t.tr('Курсив Ctrl+I')" tooltipPosition="top" aria-label="Italic" tabindex="-1"></button>
+              <button class="ql-underline quill-button" [pTooltip]="t.tr('Подчеркнутый Ctrl+U')" tooltipPosition="top" aria-label="Underline" tabindex="-1"></button>
+            </span>
+              <span class="ql-formats">
+              <select class="ql-color quill-button" [pTooltip]="t.tr('Цвет текста')" tooltipPosition="top" tabindex="-1"></select>
+              <select class="ql-background quill-button" [pTooltip]="t.tr('Фон текста')" tooltipPosition="top" tabindex="-1"></select>
+            </span>
+              <span class="ql-formats">
+              <button class="ql-list quill-button" [pTooltip]="t.tr('Нумерованный список')" tooltipPosition="top" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+              <button class="ql-list quill-button" [pTooltip]="t.tr('Маркированный список')" tooltipPosition="top" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+              <select class="ql-align quill-button" [pTooltip]="t.tr('Выравнивание')" tooltipPosition="top" tabindex="-1">
+                <option selected tabindex="-1"></option>
+                <option value="center" tabindex="-1"></option>
+                <option value="right" tabindex="-1"></option>
+                <option value="justify" tabindex="-1"></option>
+              </select>
+            </span>
+              <span class="ql-formats">
+              <button class="ql-link quill-button" [pTooltip]="t.tr('Ссылка Ctrl+K')" tooltipPosition="top" aria-label="Insert Link" tabindex="-1"></button>
+              <button class="quill-button" [pTooltip]="t.tr('Файлы и изображения')" tooltipPosition="top" (click)="selectImage.click()">
+                <i class="pi pi-image"></i>
+              </button>
+              <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+              <button class="ql-code-block quill-button" [pTooltip]="t.tr('Фрагмент кода')" tooltipPosition="top" aria-label="Insert Code Block" tabindex="-1"></button>
+            </span>
+              <span class="ql-formats">
+              <button class="ql-clean quill-button" [pTooltip]="t.tr('Отменить форматирование')" tooltipPosition="top" aria-label="Remove Styles" tabindex="-1"></button>
+            </span>
+            </p-header>
+          </div>
+        </quill-editor>
+        <div class="df mt-5">
+          <div class="mr-5 pb-20">
+            <div (click)="commitIssueEdit()" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
+          </div>
+          <div>
+            <div (click)="cancelIssueEdit()" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="big-text mb-1 mt-2">Вложения ({{issue.file_attachments.length}})</div>
+      <div class="attachments-issue">
+        <div *ngFor="let file of issue.file_attachments">
+          <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
+            <div class="cxy">
+              <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+            </div>
+            <div class="attachment-footer-issue">
+              <span class="mr-5" >{{trimFileName(file.name) + ' '}}</span>
+              <div class="p-ml-auto df">
+                <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-cloud-download cloud-download" viewBox="0 0 16 16">
+                    <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                    <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                  </svg>
+                </a>
+                <div *ngIf="file.author == this.auth.getUser().login" class="upload-file cxy" (click)="deleteFile(file.url); $event.stopPropagation();">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash cloud-download" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="big-text mb-1 mt-30">Активность</div>
+      <div class="df">
+        <div class="description mt-5">{{t.tr('Показать')}}:</div>
+        <div [class.check-button]="messageFilter == 'all'" class="button-new mr-10 ml-10" (click)="messageFilter = 'all'">
+          <span>{{t.tr('Все')}}</span>
+        </div>
+        <div [class.check-button]="messageFilter == 'human'" class="button-new mr-10" (click)="messageFilter = 'human'">
+          <span>{{t.tr('Комментарии')}}</span>
+        </div>
+        <div [class.check-button]="messageFilter == 'history'" class="button-new" (click)="messageFilter = 'history'">
+          <span>{{t.tr('История')}}</span>
+        </div>
+      </div>
+      <div class="mt-1 big-text pb-20">
+        <input [style]="{'width':'100%'}" [hidden]="comment" (click)="showComment()" type="text" pInputText [placeholder]="'Добавить комментарий...'" />
+      </div>
+      <div [hidden]="!comment">
+        <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event); dragOver = false" id="editor" [(ngModel)]="message">
+          <div quill-editor-toolbar>
+            <p-header>
+              <span class="ql-formats">
+                <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+                <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+                <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-color" tabindex="-1"></select>
+                <select class="ql-background" tabindex="-1"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+                <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+                <select class="ql-align" tabindex="-1">
+                  <option selected tabindex="-1"></option>
+                  <option value="center" tabindex="-1"></option>
+                  <option value="right" tabindex="-1"></option>
+                  <option value="justify" tabindex="-1"></option>
+                </select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+                <button (click)="selectImage.click()">
+                  <i class="pi pi-image"></i>
+                </button>
+                <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+                <button (click)="selectFiles.click()">
+                  <i class="pi pi-file"></i>
+                </button>
+                <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+                <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button></span>
+              <span class="ql-formats">
+                <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+              </span>
+            </p-header>
+          </div>
+        </quill-editor>
+        <div class="mt-10"></div>
+        <div [class.file-drag]="dragOver" class="upload cx cy">
+          <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+            <span class="normal-text-files no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+          </div>
+        </div>
+        <div class="mb-10"></div>
+        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+        <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+          <div class="cy">{{file}}</div>
+          <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+          <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+        </div>
+
+
+
+
+        <!--        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>-->
+        <!--        <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">-->
+        <!--          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>-->
+        <!--          <div class="cy">{{file}}</div>-->
+        <!--          <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>-->
+        <!--          <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>-->
+        <!--        </div>-->
+        <!--        <div class="mt-10"></div>-->
+        <!--        <div [class.file-drag]="dragOver" class="upload cx cy mb-20">-->
+        <!--          <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">-->
+        <!--            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">-->
+        <!--            <span class="normal-text-files no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>-->
+        <!--          </div>-->
+        <!--        </div>-->
+
+        <div class="flex-end">
+          <div class="mr-5 cx">
+            <div tabindex="11" (click)="comment = false" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
+          </div>
+          <div tabindex="10" (click)="sendMessage()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
+        </div>
+
+      </div>
+
+
+      <div *ngFor="let msg of getMessages(issue)">
+        <div class="issue-message" *ngIf="msg.content != null && (messageFilter == 'all' || messageFilter == 'human')">
+          <div class="df pb-20">
+            <div class="pt-5 mr-10" (click)="openUserInfo(msg.author)">
+              <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+            </div>
+            <div>
+              <div class="df">
+                <span class="bold-text pr-5 cursor-pointer" (click)="openUserInfo(msg.author)">{{auth.getUserName(msg.author)}}</span>
+                <span class="text-descr pr-5">{{t.tr('создал')}}{{localeGender(msg.author)}} {{t.tr('сообщение')}}</span>
+                <span class="text-date">{{getDate(+msg.date)}}</span>
+                <span>
+              </span>
+              </div>
+              <quill-view class="db" *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
+              <div *ngFor="let file of msg.file_attachments">
+                <div (click)="openFile(file.url)" class="attachment-issues-files df mb-5 cursor-pointer">
+                  <div class="cxy">
+                    <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                  </div>
+                  <div class="attachment-footer-issue">
+                    <span class="mr-5" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
+                    <div>{{getDate(+file.upload_date)}}</div>
+                    <div class="p-ml-auto">
+                      <div class="upload-file cxy">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-cloud-download cloud-download" viewBox="0 0 16 16">
+                          <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+                          <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="issue-message" *ngIf="msg.content == null && (messageFilter == 'all' || messageFilter == 'history') && msg.update_message != 'hidden'">
+          <div class="df pb-30">
+            <div class="pt-5 mr-10" (click)="openUserInfo(msg.author)">
+              <img src="{{auth.getUserAvatar(msg.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+            </div>
+            <div *ngIf="msg.name_value == 'status'">
+              <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+              <span class="bold-text">{{issueManager.localeHistory(msg.name_value)}}</span>
+              <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+              <div class="df pt-5">
+                <div class="" [innerHTML]="issueManager.localeStatus(msg.prev_value) | safeHtml"></div>
+                <span class="px-10">
+                    <img src="assets/icons/right-arrow.svg" height="13">
+                  </span>
+                <div [innerHTML]="issueManager.localeStatus(msg.new_value) | safeHtml"></div>
+              </div>
+            </div>
+            <div *ngIf="msg.name_value == 'assign'">
+              <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr px-5">{{t.tr('назначил')}}{{localeGender(msg.author)}}</span>
+              <span class="bold-text">{{t.tr('исполнителя')}}</span>
+              <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+              <div class="df pt-5">
+                <div [innerHTML]="getNoneZeroResult(auth.getUserName(msg.prev_value)) | safeHtml"></div>
+                <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                <div [innerHTML]="getNoneZeroResult(auth.getUserName(msg.new_value)) | safeHtml"></div>
+              </div>
+            </div>
+            <div *ngIf="msg.update_message.includes('edit')">
+              <div *ngIf="msg.name_value == 'priority'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('приоритет')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPriority(msg.prev_value)) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPriority(msg.new_value)) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'issue_comment'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('примечание')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroInput(msg.prev_value) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroInput(msg.new_value) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'department'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('отдел')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskDepartment(msg.prev_value)) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskDepartment(msg.new_value)) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'project'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('проект')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'start_date'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('дату начала')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'contract_due_date'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">contract due date</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'due_date'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('срок исполнения')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'responsible'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('ответственного')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="msg.name_value == 'period'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('этап')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPeriod(msg.prev_value)) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPeriod(msg.new_value)) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor', 'contract_due_date'].includes(msg.name_value)">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('информацию')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5" *ngIf="!msg.name_value.includes('details')">
+                  <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
+                </div>
+                <div class="df pt-5" *ngIf="msg.name_value.includes('details')">
+                  {{t.tr('Изменилось описание к задаче')}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="issue-message" *ngIf="(messageFilter == 'all' || messageFilter == 'history')">
+        <div class="df">
+          <div (click)="openUserInfo(issue.started_by)" class="pt-5 mr-10">
+            <img src="{{auth.getUserAvatar(issue.started_by)}}" height="32" width="32" style="border-radius: 16px; cursor: pointer">
+          </div>
+          <div class="">
+            <span (click)="openUserInfo(issue.started_by)" class="bold-text cursor-pointer">{{auth.getUserName(issue.started_by)}}</span>
+            <span class="text-descr"> {{t.tr('создал')}}{{localeGender(issue.started_by)}} {{t.tr('задачу')}}</span>
+            <span class="text-date"> {{getDate(issue.started_date)}} </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-content">
+      <div class="information">
+        <div class="header-information text-head">Сведения</div>
+        <div class="table table-overflow">
+          <div class="df mt-3px">
+            <div class="df text-y line-text normal-text w40">Статус</div>
+            <div class="df text-y line-text cursor-pointer description-task w60">
+              <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
+            </div>
+          </div>
+          <div class="df mt-3px">
+            <div class="df text-y line-text normal-text w-40">Проект</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.project}}</div>
+            <div [hidden]="edit != 'project'" class="mr-5">
+              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-130 height-32">
+              </p-dropdown>
+            </div>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'project'" (click)="commitIssueEdit()">
+                <div  class="task-name-button cxy mr-5">
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'project'" (click)="cancelIssueEdit()">
+                <div  class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="df mt-3px">
+            <div class="df text-y height-32 normal-text w-40">Отдел</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'department'" (click)="edit = 'department'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.department}}</div>
+            <div class="mr-5" [hidden]="edit != 'department'">
+              <p-dropdown class="select" [(ngModel)]="issue.department" [options]="taskDepartments" styleClass="width-130 h-height-32">
+              </p-dropdown>
+            </div>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'department'" (click)="commitIssueEdit()">
+                <div  class="task-name-button cxy mr-5">
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'department'" (click)="cancelIssueEdit()">
+                <div  class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="df mt-3px">
+            <div class="df text-y height-32 normal-text w-40">Автор</div>
+            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.started_by)}}</div>
+            <div *ngIf="issue.started_by != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.started_by)">
+              <img src="assets/icons/bell.svg" height="15">
+            </div>
+          </div>
+          <div class="df mt-3px">
+            <div class="df text-y height-32 normal-text w-40">Исполнитель</div>
+            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{getAssignedTo(issue.assigned_to)}}</div>
+            <div *ngIf="issue.assigned_to != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.assigned_to)">
+              <img src="assets/icons/bell.svg" height="15">
+            </div>
+          </div>
+          <div class="df mt-3px">
+            <div class="df text-y height-32 normal-text w-40">Приоритет</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'priority'" (click)="edit = 'priority'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
+            <div class="mr-5" [hidden]="edit != 'priority'">
+              <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.priority" [options]="taskPriorities" styleClass="width-130 height-32">
+              </p-dropdown>
+            </div>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'priority'" (click)="commitIssueEdit()">
+                <div  class="task-name-button cxy mr-5">
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'priority'" (click)="cancelIssueEdit()">
+                <div  class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="df mt-3px">
+            <div class="df text-y height-32 normal-text w-40">ID задачи</div>
+            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.id}}</div>
+          </div>
+
+        </div>
+      </div>
+      <div class="mt-1 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
+    </div>
+  </div>
+</div>
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>
+<p-confirmDialog [acceptLabel]="t.tr('Да')" [rejectLabel]="t.tr('Нет')" [header]="t.tr('Подтверждение')" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast key="task" position="bottom-center"></p-toast>

@@ -5,6 +5,9 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AssignNewRevisionComponent} from "../documents/hull-esp/assign-new-revision/assign-new-revision.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {CreateQuestionComponent} from "./create-question/create-question.component";
+import {Issue} from "../../domain/classes/issue";
+import _ from "underscore";
+import {LV} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-qna',
@@ -15,13 +18,20 @@ export class QnaComponent implements OnInit {
 
   users: User[] = [];
   projects: any[] = [];
+  departments: any[] = [];
+  project = '';
+  department = '';
+  questions: Issue[] = [];
   constructor(public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.users = this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
-    this.issueManagerService.getProjectNames().then(res => {
-      this.projects = res;
-      console.log(this.projects);
+    this.issueManagerService.getQuestions().then(res => {
+      this.questions = res;
+      this.questions.forEach(x => x.project = x.project == '' ? '-' : x.project);
+      this.questions.forEach(x => x.department = x.department == '' ? '-' : x.department);
+      this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(x));
+      this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
     });
   }
 
@@ -40,5 +50,9 @@ export class QnaComponent implements OnInit {
     }).onClose.subscribe(res => {
       //todo create and update
     });
+  }
+
+  openQuestion(id: number) {
+
   }
 }
