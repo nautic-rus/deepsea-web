@@ -1,6 +1,5 @@
-<div class="all-page-qna">
-  <div class="min-height-card">
-    <div class="empty-card"></div>
+<div class="all-page">
+  <div class="card">
     <div class="card-head df sticky-card">
       <div class="mr-10">
         <div class="materials-button-qna blue-button cxy" (click)="createQuestion()">
@@ -36,8 +35,17 @@
           </th>
           <th pSortableColumn="status" class="lxy w-20">{{t.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
+
+            <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+
+
           </th>
-          <th pSortableColumn="doc_number" class="cxy w-15">{{t.tr('Документ')}}
+          <th pSortableColumn="doc_number" class="cxy w-15">{{t.tr('Номер документа')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
           <th pSortableColumn="name" class="cxy w-15">{{t.tr('Название')}}

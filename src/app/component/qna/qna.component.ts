@@ -24,6 +24,7 @@ export class QnaComponent implements OnInit {
   project = '';
   department = '';
   questions: Issue[] = [];
+  filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   constructor(public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
   ngOnInit(): void {
