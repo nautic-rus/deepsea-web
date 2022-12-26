@@ -8,6 +8,7 @@ import {CreateQuestionComponent} from "./create-question/create-question.compone
 import {Issue} from "../../domain/classes/issue";
 import _ from "underscore";
 import {LV} from "../../domain/classes/lv";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-qna',
@@ -22,10 +23,13 @@ export class QnaComponent implements OnInit {
   project = '';
   department = '';
   questions: Issue[] = [];
-  constructor(public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService) { }
+  constructor(public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router) { }
 
   ngOnInit(): void {
     this.users = this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
+    this.fillQNA();
+  }
+  fillQNA(){
     this.issueManagerService.getQuestions().then(res => {
       this.questions = res;
       this.questions.forEach(x => x.project = x.project == '' ? '-' : x.project);
@@ -34,7 +38,6 @@ export class QnaComponent implements OnInit {
       this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
     });
   }
-
   getProjectName(project: any) {
     let res = project.pdsp;
     if (project.rkd != ''){
@@ -48,11 +51,11 @@ export class QnaComponent implements OnInit {
       showHeader: false,
       modal: true,
     }).onClose.subscribe(res => {
-      //todo create and update
+      this.fillQNA();
     });
   }
 
   openQuestion(id: number) {
-
+    window.open('/qna-details?id=' + id, '_blank');
   }
 }
