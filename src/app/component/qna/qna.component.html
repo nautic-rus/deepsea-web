@@ -59,12 +59,25 @@
           </th>
           <th pSortableColumn="started_by" class="cxy w-15">{{t.tr('Автор')}}
             <p-sortIcon field="started_by"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'started_by'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.author" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+
           </th>
           <th pSortableColumn="start_date" class="cxy w-15">{{t.tr('Дата начала')}}
             <p-sortIcon field="start_date"></p-sortIcon>
           </th>
           <th pSortableColumn="priority" class="cxy w-15">{{t.tr('Приоритет')}}
             <p-sortIcon field="priority"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'priority'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.priority" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
         </tr>
       </ng-template>
@@ -74,10 +87,10 @@
           <td class="text-14">{{q.status}}</td>
           <td class="text-14">{{q.doc_number}}</td>
           <td class="text-14">{{q.name}}</td>
-          <td class="text-14">{{q.last_update}}</td>
-          <td class="text-14">{{q.assigned_to}}</td>
+          <td class="text-14">{{getDate(q.last_update)}}</td>
+          <td class="text-14">{{auth.getUserName(q.assigned_to)}}</td>
           <td class="text-14">{{q.started_by}}</td>
-          <td class="text-14">{{q.start_date}}</td>
+          <td class="text-14">{{getDate(q.started_date)}}</td>
           <td class="text-14">{{q.priority}}</td>
         </tr>
       </ng-template>

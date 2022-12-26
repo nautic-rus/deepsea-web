@@ -24,7 +24,7 @@ export class QnaComponent implements OnInit {
   project = '';
   department = '';
   questions: Issue[] = [];
-  filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
+  filters:  { status: any[],  author: any[], department: any[], priority: any[] } = { status: [], author: [], department: [], priority: [] };
   constructor(public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
   ngOnInit(): void {
@@ -38,6 +38,9 @@ export class QnaComponent implements OnInit {
       this.questions.forEach(x => x.department = x.department == '' ? '-' : x.department);
       this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(x));
       this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
+      this.filters.status = _.sortBy(_.uniq(res.map(x => x.status)), x => x).map(x => new LV(x));
+      this.filters.author = _.sortBy(_.uniq(res.map(x => x.started_by)), x => x).map(x => new LV(this.auth.getUserName(x), x));
+      this.filters.priority = _.sortBy(_.uniq(res.map(x => x.priority)), x => x).map(x => new LV(this.auth.getUserName(x), x));
     });
   }
   getProjectName(project: any) {
@@ -56,7 +59,13 @@ export class QnaComponent implements OnInit {
       this.fillQNA();
     });
   }
-
+  getDate(dateLong: number): string{
+    if (dateLong == 0){
+      return '--/--/----';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
   openQuestion(id: number) {
     window.open('/qna-details?id=' + id, '_blank');
   }
