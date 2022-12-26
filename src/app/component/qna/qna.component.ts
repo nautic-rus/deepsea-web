@@ -9,6 +9,7 @@ import {Issue} from "../../domain/classes/issue";
 import _ from "underscore";
 import {LV} from "../../domain/classes/lv";
 import {Router} from "@angular/router";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-qna',
@@ -23,7 +24,7 @@ export class QnaComponent implements OnInit {
   project = '';
   department = '';
   questions: Issue[] = [];
-  constructor(public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router) { }
+  constructor(public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.users = this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));

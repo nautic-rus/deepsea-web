@@ -17,6 +17,7 @@ export class LaborComponent implements OnInit {
   stage = '';
   issues: any[] = [];
   issuesSrc: any[] = [];
+  labor: number = 10;
 
   constructor(public issueManagerService: IssueManagerService) { }
 

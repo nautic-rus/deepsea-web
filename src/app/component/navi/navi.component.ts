@@ -35,7 +35,7 @@ export class NaviComponent implements OnInit {
       {id: 'device-documents', label: 'Devices', url: 'documents', icon: 'assets/icons/hook.svg', height: 18, params: {'department': 'Devices'}},
       {id: 'accommodation-documents', label: 'Accommodation', url: 'documents', icon: 'assets/icons/outfitting.svg', height: 18, params: {'department': 'Accommodation'}},
       {id: 'montage', label: 'Montage List', url: 'montage', icon: 'assets/icons/pump.png', height: 20, params: {}},
-    ].filter(x => this.auth.getUser().visible_pages.includes(x.id))},
+    ]},
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},
     {id: 'nesting', label: 'Nesting', url: 'nesting', icon: 'assets/icons/cut2.svg', height: 26, child: [], params: {}},
@@ -55,6 +55,7 @@ export class NaviComponent implements OnInit {
     {id: 'labor-costs', label: 'Labor costs', url: 'labor-costs', icon: 'assets/icons/labor.svg', height: 22, child: [], params: {}},
     {id: 'diary', label: 'Daily Tasks', url: 'diary', icon: 'assets/icons/user-assigned-white.svg', height: 22, child: [], params: {}},
     {id: 'employees', label: 'Daily Reports', url: 'employees', icon: 'assets/icons/clock.svg', height: 22, child: [], params: {}},
+    {id: 'qna', label: 'Q & A', url: 'qna', icon: 'assets/icons/book.svg', height: 22, child: [], params: {}},
 
   ].filter(x => this.auth.getUser().visible_pages.includes(x.id));
 

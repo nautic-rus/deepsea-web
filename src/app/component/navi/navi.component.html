@@ -85,7 +85,7 @@
         <div class="cxy">
           <img [src]="menu.icon" [height]="menu.height">
         </div>
-        <div *ngIf="!collapsed">{{menu.label}}</div>
+        <div class="cy" *ngIf="!collapsed">{{menu.label}}</div>
       </div>
     </div>
     <div *ngIf="menu.child.length != 0" [class.w-40px]="collapsed" class="menu menu-row cy" [collapse]="content" (click)="addCollapse(menu.label + '-' + i)">

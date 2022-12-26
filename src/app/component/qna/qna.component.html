@@ -1,26 +1,78 @@
-<div class="all-page">
-  <div class="df">
-    <div class="df w-100">
-      <div class="pl-10">
-        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" [options]="projects" styleClass="width-220 font-14" placeholder="ПРОЕКТ"></p-dropdown>
+<div class="all-page-qna">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head df sticky-card">
+      <div class="mr-10">
+        <div class="materials-button-qna blue-button cxy" (click)="createQuestion()">
+          <div class="pr-10 cxy">
+            <img src="assets/icons/plus3.svg" height="18">
+          </div>
+          <div class="cxy">
+            Задать вопрос
+          </div>
+        </div>
       </div>
-      <div class="pl-10">
-        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="department" [options]="departments" styleClass="width-220 font-14" placeholder="ОТДЕЛ"></p-dropdown>
+      <div class="mr-10">
+        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" [options]="projects" styleClass="width-200" placeholder="Проект"></p-dropdown>
       </div>
-      <div class="pl-10">
-        <button (click)="createQuestion()">Задать вопрос</button>
+      <div class="mr-10">
+        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="department" [options]="departments" styleClass="width-200" placeholder="Отдел"></p-dropdown>
       </div>
     </div>
-  </div>
-  <div class="df w-100" *ngFor="let q of questions" (click)="openQuestion(q.id)">
-    <div>{{q.id}}</div>
-    <div>{{q.status}}</div>
-    <div>{{q.doc_number}}</div>
-    <div>{{q.name}}</div>
-    <div>{{q.last_update}}</div>
-    <div>{{q.assigned_to}}</div>
-    <div>{{q.started_by}}</div>
-    <div>{{q.start_date}}</div>
-    <div>{{q.priority}}</div>
+    <p-table [value]="questions"
+             [scrollable]="true"
+             scrollHeight="calc(100vh - 220px)"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             [reorderableColumns]="false"
+             [resizableColumns]="false"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['id','doc_number','name','status']">
+      <ng-template pTemplate="header">
+        <tr class="df">
+          <th pSortableColumn="id" class="lxy w-20">{{t.tr('id')}}
+            <p-sortIcon field="id"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status" class="lxy w-20">{{t.tr('Статус')}}
+            <p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th pSortableColumn="doc_number" class="cxy w-15">{{t.tr('Документ')}}
+            <p-sortIcon field="doc_number"></p-sortIcon>
+          </th>
+          <th pSortableColumn="name" class="cxy w-15">{{t.tr('Название')}}
+            <p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="last_update" class="cxy w-15">{{t.tr('Дата изменения')}}
+            <p-sortIcon field="last_update"></p-sortIcon>
+          </th>
+          <th pSortableColumn="assigned_to" class="cxy w-15">{{t.tr('Назначенный')}}
+            <p-sortIcon field="assigned_to"></p-sortIcon>
+          </th>
+          <th pSortableColumn="started_by" class="cxy w-15">{{t.tr('Автор')}}
+            <p-sortIcon field="started_by"></p-sortIcon>
+          </th>
+          <th pSortableColumn="start_date" class="cxy w-15">{{t.tr('Дата начала')}}
+            <p-sortIcon field="start_date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="priority" class="cxy w-15">{{t.tr('Приоритет')}}
+            <p-sortIcon field="priority"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-q>
+        <tr class="cursor-pointer row-table-doc-hover" (click)="openQuestion(q.id)">
+          <td class="text-14">{{q.id}}</td>
+          <td class="text-14">{{q.status}}</td>
+          <td class="text-14">{{q.doc_number}}</td>
+          <td class="text-14">{{q.name}}</td>
+          <td class="text-14">{{q.last_update}}</td>
+          <td class="text-14">{{q.assigned_to}}</td>
+          <td class="text-14">{{q.started_by}}</td>
+          <td class="text-14">{{q.start_date}}</td>
+          <td class="text-14">{{q.priority}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>
