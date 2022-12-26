@@ -62,9 +62,9 @@ export class TimeControlComponent implements OnInit {
       }
     };
 
-    this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
-      console.log(res);
-    // this.issueManager.getTimeControl(13).then(res => {
+    //this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
+    //  console.log(res);
+    this.issueManager.getTimeControl(24).then(res => {
       this.tc = res;
       let days: string[] = [];
       let sets: any[] = [];
@@ -166,14 +166,14 @@ export class TimeControlComponent implements OnInit {
     if (!allowZeroWeekends && input < 0 && [0, 6].includes(new Date(input).getDay())){
       return '--.--';
     }
-    let h = Math.floor(input / 1000 / 60 / 60);
-    let m = Math.floor((input / 1000 / 60/ 60 - h) * 60);
+    let h = Math.floor(Math.abs(input) / 1000 / 60 / 60);
+    let m = Math.floor((Math.abs(input) / 1000 / 60 / 60 - h) * 60);
     if (h == 0 && m == 0){
       return '--.--';
     }
     else{
       if (double){
-        return (h < 0 ? '-' : '') + ('0' + ( h < 0 ? -1 * h : h ).toString()).slice(-2) + '.' + ('0' + m.toString()).slice(-2);
+        return (input < 0 ? '-' : '') + ('0' + (h).toString()).slice(-2) + '.' + ('0' + m.toString()).slice(-2);
       }
       else{
         return h.toString() + ' ч. ' + ('0' + m.toString()).slice(-2) + ' м.';
