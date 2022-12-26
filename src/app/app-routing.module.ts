@@ -39,6 +39,8 @@ import {AccommodationEspComponent} from "./component/documents/accommodation-esp
 import {MonthTasksComponent} from "./component/month-tasks/month-tasks.component";
 import {MontageComponent} from "./component/documents/montage/montage.component";
 import {QnaComponent} from "./component/qna/qna.component";
+import {LaborComponent} from "./component/labor/labor.component";
+import {ElectricEspComponent} from "./component/documents/electric-esp/electric-esp.component";
 import {QuestionDetailsComponent} from "./component/qna/question-details/question-details.component";
 
 const routes: Routes = [
@@ -80,6 +82,8 @@ const routes: Routes = [
   { path: 'diary', component: MonthTasksComponent, canActivate: [AuthGuard], data: {animation: 'MonthTasksComponent'} },
   { path: 'montage', component: MontageComponent, canActivate: [AuthGuard], data: {animation: 'MontageComponent'} },
   { path: 'qna', component: QnaComponent, canActivate: [AuthGuard], data: {animation: 'QnaComponent'} },
+  { path: 'labor', component: LaborComponent, canActivate: [AuthGuard], data: {animation: 'LaborComponent'} },
+  { path: 'electric-esp', component: ElectricEspComponent, canActivate: [AuthGuard], data: {animation: 'ElectricEspComponent'} },
   { path: 'qna-details', component: QuestionDetailsComponent, canActivate: [AuthGuard], data: {animation: 'QuestionDetailsComponent'} },
   { path: '**', redirectTo: '/' },
 ];

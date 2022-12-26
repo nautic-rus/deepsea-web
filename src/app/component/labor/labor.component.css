@@ -1,0 +1,129 @@
+/deep/.p-multiselect-header {
+  display: none!important;
+}
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+/deep/.pi {
+  font-size: 14px;
+}
+/deep/.p-tree{
+  height: calc(100vh - 237px);
+  overflow: auto;
+  padding: 10px;
+  border: none;
+}
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 12px;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 8px;
+  font-weight: 500;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
+.all-page-labor{
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  padding: 0 20px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.min-height-card{
+  min-height: calc(100vh - 77px);
+}
+.empty-card{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+.empty-card-bottom{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 77px;
+  z-index: 7;
+}
+.empty-card-list{
+  height: 10px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+}
+.card-head{
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  height: fit-content;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
+}
+.sticky-card{
+  position: sticky;
+  top: 20px;
+  z-index: 8;
+}
+.tabs-header{
+  background: transparent;
+  border-width: 0 0 1px 0;
+  font-size: 13px;
+  position: relative;
+}
+.all-tabs{
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  color: #343a40;
+  background: #f8f9fa;
+  font-weight: 700;
+  border-radius: 6px;
+  min-width: 100px;
+}
+.all-tabs:hover{
+  background-color: #E9ECEF;
+}
+.line-between{
+  width: 20px;
+  margin-bottom: 30px;
+}
+.materials-button{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.card-task{
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: .5s;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.dash-card{
+  position: relative;
+  width: 100%;
+}
+.left-col{
+  display: grid;
+  grid-template-rows: 30px auto;
+}
+.title-bold{
+  font-weight: 500;
+  font-size: 16px;
+  color: #3a3a3a;
+}
+.text-mini-gray{
+  color: #3a3a3abf;
+  font-weight: 500;
+  font-size: 13px;
+}
