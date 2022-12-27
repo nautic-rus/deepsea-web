@@ -84,8 +84,8 @@
           <td class="text-14">{{q.doc_number}}</td>
           <td class="text-14">{{q.name}}</td>
           <td class="text-14">{{getDate(q.last_update)}}</td>
-          <td class="text-14">{{auth.getUserName(q.assigned_to)}}</td>
-          <td class="text-14">{{q.started_by}}</td>
+          <td class="text-14"><span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span></td>
+          <td class="text-14"><span [innerHTML]="getUserName(q.started_by) | safeHtml"></span></td>
           <td class="text-14">{{getDate(q.started_date)}}</td>
           <td class="text-14">{{q.priority}}</td>
         </tr>

@@ -147,6 +147,7 @@ import { LaborComponent } from './component/labor/labor.component';
 import { ElectricEspComponent } from './component/documents/electric-esp/electric-esp.component';
 import { QuestionDetailsComponent } from './component/qna/question-details/question-details.component';
 import {ChartModule} from "primeng/chart";
+import { AssignQuestionComponent } from './component/qna/assign-question/assign-question.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -245,7 +246,8 @@ Quill.register('modules/imageResize', ImageResize);
     LaborComponent,
     ElectricEspComponent,
     CreateQuestionComponent,
-    QuestionDetailsComponent
+    QuestionDetailsComponent,
+    AssignQuestionComponent
   ],
   imports: [
     BrowserModule,
