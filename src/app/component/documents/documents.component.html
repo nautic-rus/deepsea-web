@@ -76,14 +76,14 @@
                responsiveLayout="scroll"
                [globalFilterFields]="['id','doc_number','name','status']">
         <ng-template pTemplate="header">
-          <tr class="df">
-            <th pSortableColumn="doc_number" class="lxy w-20">{{l.tr('Номер чертежа')}}
+          <tr class="">
+            <th pSortableColumn="doc_number" class="lxy w-100">{{l.tr('Номер чертежа')}}
               <p-sortIcon field="doc_number"></p-sortIcon>
             </th>
-            <th pSortableColumn="name" class="lxy w-20">{{l.tr('Название')}}
+            <th pSortableColumn="name" class="lxy w-100">{{l.tr('Название')}}
               <p-sortIcon field="name"></p-sortIcon>
             </th>
-            <th pSortableColumn="department" class="cxy w-15">{{l.tr('Отдел')}}
+            <th pSortableColumn="department" class="cxy w-100">{{l.tr('Отдел')}}
               <p-sortIcon field="department"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -92,7 +92,7 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="status" class="cxy w-15">{{l.tr('Статус')}}
+            <th pSortableColumn="status" class="cxy w-100">{{l.tr('Статус')}}
               <p-sortIcon field="status"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -101,21 +101,20 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="stage" class="lxy w-20">{{l.tr('Этап')}}
+            <th pSortableColumn="stage" class="lxy w-100">{{l.tr('Этап')}}
               <p-sortIcon field="stage"></p-sortIcon>
             </th>
-            <th style="width:30px" class="w-3">{{l.tr('Ссылка')}}</th>
+            <th class="w-5">{{l.tr('Ссылка')}}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-issue>
           <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
-            <td class="text-14">{{issue.doc_number}}</td>
-            <td class="text-14">{{issue.name}}</td>
-            <td class="text-14">{{issue.department}}</td>
-
-            <td class="text-14" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
-            <td class="text-14">{{issue.stage}}</td>
-            <td style="width:30px" class="text-14">
+            <td class="text-14 w-100">{{issue.doc_number}}</td>
+            <td class="text-14 w-100">{{issue.name}}</td>
+            <td class="text-14 w-100">{{issue.department}}</td>
+            <td class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
+            <td class="text-14 w-100">{{issue.period}}</td>
+            <td class="text-14 w-5">
               <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
                 <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
               </div>

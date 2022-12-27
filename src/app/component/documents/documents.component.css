@@ -24,6 +24,12 @@
 /deep/.p-datatable .p-datatable-header {
   padding: 0.75rem 0 0.75rem 0;
 }
+/deep/.p-datatable-scrollable .p-datatable-thead>tr>th {
+  flex: auto!important;
+}
+/deep/.p-datatable-scrollable .p-datatable-tbody>tr>td, .p-datatable-scrollable .p-datatable-tfoot>tr>td {
+  flex: auto!important;
+}
 .loading{
   position: absolute;;
   left: 50%;
