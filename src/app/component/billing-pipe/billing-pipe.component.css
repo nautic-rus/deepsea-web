@@ -27,6 +27,7 @@
 /deep/.p-datatable .p-datatable-thead > tr > th{
   padding: 8px;
   font-weight: 500;
+
 }
 /deep/.p-datatable .p-datatable-header {
   padding: 0.75rem 0 0.75rem 0;

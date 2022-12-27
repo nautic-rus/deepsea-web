@@ -92,7 +92,19 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th class="w-3">{{l.tr('Ссылка')}}</th>
+            <th pSortableColumn="status" class="cxy w-15">{{l.tr('Статус')}}
+              <p-sortIcon field="status"></p-sortIcon>
+              <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                  </p-multiSelect>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th pSortableColumn="stage" class="lxy w-20">{{l.tr('Этап')}}
+              <p-sortIcon field="stage"></p-sortIcon>
+            </th>
+            <th style="width:30px" class="w-3">{{l.tr('Ссылка')}}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-issue>
@@ -100,7 +112,10 @@
             <td class="text-14">{{issue.doc_number}}</td>
             <td class="text-14">{{issue.name}}</td>
             <td class="text-14">{{issue.department}}</td>
-            <td class="text-14">
+
+            <td class="text-14" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
+            <td class="text-14">{{issue.stage}}</td>
+            <td style="width:30px" class="text-14">
               <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
                 <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
               </div>
