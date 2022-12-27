@@ -13,12 +13,13 @@
   align-items: center;
 }
 .center{
-  height: 680px;
+  height: 77vh;
   display: flex;
 }
 .left-content{
   width: 65%;
-  overflow-y: auto;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   padding-right: 15px;
 }
 .right-content{
@@ -122,7 +123,7 @@
   border-bottom-left-radius: 4px;
 }
 .table-overflow{
-  height: 600px;
+  height: 70vh;
   overflow: auto;
 }
 .normal-text{
@@ -285,10 +286,9 @@
 .parent-task:hover{
   text-decoration: underline;
 }
-.task-header{
+.task-header-qna{
   display: grid;
   grid-template-columns: 66% auto;
-  padding-top: 1rem;
   margin-bottom: 1rem;
 }
 .task-name{
@@ -1086,10 +1086,9 @@
 }
 .attachments-issue{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   max-height: 115px;
   overflow-y: auto;
-
 }
 .attachment-issues-files{
   padding: 3px;
@@ -1115,7 +1114,7 @@
   font-size: calc(0.73rem + 0.1vw);
 }
 .cloud-download{
-  color: #ffff;
+  color: #949494;
 }
 .cloud-download:hover{
   color: rgb(69, 69, 69);

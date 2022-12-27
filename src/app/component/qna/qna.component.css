@@ -66,7 +66,7 @@
 }
 .card-head{
   background: #fff;
-  padding: 12px;
+  padding: 12px 0;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   height: fit-content;
@@ -86,4 +86,7 @@
   border-radius: 6px;
   padding: 0 10px;
   color: white;
+}
+.row-table-doc-hover:hover{
+  background-color: #EEF2FF!important;
 }

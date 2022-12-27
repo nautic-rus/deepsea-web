@@ -6,6 +6,8 @@
   border: 0 none;
 }
 .header-create-card{
+  font-weight: 600;
+  font-size: 1.5rem;
   border-bottom: 0 none;
   background: #ffffff;
   color: #323130;

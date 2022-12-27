@@ -35,15 +35,12 @@
           </th>
           <th pSortableColumn="status" class="lxy w-20">{{t.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
-
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
-
-
           </th>
           <th pSortableColumn="doc_number" class="cxy w-15">{{t.tr('Номер документа')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
@@ -65,7 +62,6 @@
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
-
           </th>
           <th pSortableColumn="start_date" class="cxy w-15">{{t.tr('Дата начала')}}
             <p-sortIcon field="start_date"></p-sortIcon>
