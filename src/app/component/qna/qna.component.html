@@ -42,19 +42,19 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="doc_number" class="lxy w-15">{{t.tr('Номер документа')}}
+          <th pSortableColumn="doc_number" class="lxy">{{t.tr('Номер документа')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
-          <th pSortableColumn="name" class="lxy w-15">{{t.tr('Название')}}
+          <th pSortableColumn="name" class="lxy">{{t.tr('Название')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="last_update" class="lxy w-15">{{t.tr('Дата изменения')}}
+          <th pSortableColumn="last_update" class="lxy">{{t.tr('Дата изменения')}}
             <p-sortIcon field="last_update"></p-sortIcon>
           </th>
-          <th pSortableColumn="assigned_to" class="lxy w-15">{{t.tr('Исполнитель')}}
+          <th pSortableColumn="assigned_to" class="lxy">{{t.tr('Исполнитель')}}
             <p-sortIcon field="assigned_to"></p-sortIcon>
           </th>
-          <th pSortableColumn="started_by" class="lxy w-15">{{t.tr('Автор')}}
+          <th pSortableColumn="started_by" class="lxy-15">{{t.tr('Автор')}}
             <p-sortIcon field="started_by"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'started_by'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -63,10 +63,10 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="start_date" class="lxy w-15">{{t.tr('Дата начала')}}
+          <th pSortableColumn="start_date" class="lxy">{{t.tr('Дата начала')}}
             <p-sortIcon field="start_date"></p-sortIcon>
           </th>
-          <th pSortableColumn="priority" class="lxy w-15">{{t.tr('Приоритет')}}
+          <th pSortableColumn="priority" class="lxy">{{t.tr('Приоритет')}}
             <p-sortIcon field="priority"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'priority'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -80,11 +80,21 @@
       <ng-template pTemplate="body" let-q>
         <tr class="cursor-pointer row-table-doc-hover" (click)="openQuestion(q.id)">
           <td class="text-14">{{q.id}}</td>
-          <td class="text-14">{{q.status}}</td>
+          <td class="text-14" [innerHTML]="questionStatus(q.status) | safeHtml"></td>
           <td class="text-14">{{q.doc_number}}</td>
           <td class="text-14">{{q.name}}</td>
           <td class="text-14">{{getDate(q.last_update)}}</td>
-          <td class="text-14"><span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span></td>
+          <td class="text-14">
+            <span *ngIf="q.assigned_to != 'nautic-rus'" [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
+            <div *ngIf="q.assigned_to == 'nautic-rus'">
+              <div  class="materials-button-assignee light-green-button cxy">
+                <div class="pr-10 cxy">
+                  <img src="assets/icons/check.png" height="16">
+                </div>
+                <div class="cxy">Назначить</div>
+              </div>
+            </div>
+          </td>
           <td class="text-14"><span [innerHTML]="getUserName(q.started_by) | safeHtml"></span></td>
           <td class="text-14">{{getDate(q.started_date)}}</td>
           <td class="text-14">{{q.priority}}</td>

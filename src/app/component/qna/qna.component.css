@@ -87,6 +87,14 @@
   padding: 0 10px;
   color: white;
 }
+.materials-button-assignee{
+  height: 30px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 8px;
+  color: white;
+  font-size: 12px;
+}
 .row-table-doc-hover:hover{
   background-color: #EEF2FF!important;
 }
