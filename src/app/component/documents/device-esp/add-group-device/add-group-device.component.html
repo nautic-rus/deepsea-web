@@ -51,20 +51,20 @@
           </ng-template>
           <ng-template pTemplate="body" let-material let-i="rowIndex">
             <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-              <td class="min-width-220 w-27 text-12">{{material.name}}</td>
-              <td class="min-width-150 w-15 text-12">{{material.description}}</td>
-              <td class="min-width-70 w-7 text-12">{{material.category}}</td>
-              <td class="min-width-70 w-7 text-12">{{material.coefficient}}</td>
-              <td class="min-width-75 w-9 text-12">{{material.singleWeight}}</td>
-              <td class="min-width-70 w-7 text-12">{{material.units}}</td>
-              <td class="min-width-100 w-8 text-12">{{material.provider}}</td>
-              <td class="min-width-100 w-8 text-12">{{material.note}}</td>
+              <td class="min-width-220 w-27 text-12">{{material.m.name}}</td>
+              <td class="min-width-150 w-15 text-12">{{material.m.description}}</td>
+              <td class="min-width-70 w-7 text-12">{{material.m.category}}</td>
+              <td class="min-width-70 w-7 text-12">{{material.m.coefficient}}</td>
+              <td class="min-width-75 w-9 text-12">{{material.m.singleWeight}}</td>
+              <td class="min-width-70 w-7 text-12">{{material.m.units}}</td>
+              <td class="min-width-100 w-8 text-12">{{material.m.provider}}</td>
+              <td class="min-width-100 w-8 text-12">{{material.zone}}</td>
               <td class="min-width-160 w-9 text-12">
                 <div class="df">
                   <div class="trm-materials">
-                    <span>{{material.code}}</span>
+                    <span>{{material.m.code}}</span>
                   </div>
-                  <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
+                  <div (click)="copyTrmCode(material.m.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
                     <img src="assets/icons/trm-sup.svg" height="14">
                     <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>
                   </div>
@@ -82,10 +82,14 @@
         </div>
       </div>
       <div class="height-60 title-bold">
-        <div *ngIf="selectedMaterial.name == ''">Select material</div>
-        <div>{{selectedMaterial.name}}</div>
+        <div *ngIf="selectedMaterial == null">Select material</div>
+        <div *ngIf="selectedMaterial != null">{{selectedMaterial.m.name}}</div>
       </div>
       <div class="pt-20 pb-20">
+        <label>
+          Использовать зону
+          <input type="checkbox" [(ngModel)]="useZone">
+        </label>
         <div class="df mb-10">
           <div class="width-50 mr-10 cy">Label</div>
           <input type="text" pInputText class="width-200" [(ngModel)]="label"/>

@@ -31,7 +31,7 @@ export class AddGroupDeviceComponent implements OnInit {
   tooltips: string[] = [];
   projects: string[] = ['200101', '210101'];
   project = '';
-  selectedMaterial: Material = new Material();
+  selectedMaterial: any;
   label: string = '';
   items = [
     {
@@ -45,19 +45,20 @@ export class AddGroupDeviceComponent implements OnInit {
   docNumber: string = '';
   forLabel = '';
   devices: any[] = [];
+  useZone = false;
 
   constructor(public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
-    this.selectedMaterial.name = '';
+    // this.selectedMaterial.name = '';
     this.docNumber = this.dialog.data[0];
     this.project = this.docNumber.split('-')[0];
     this.devices = this.dialog.data[1];
     let materials: any[] = [];
-    _.forEach(_.groupBy(this.devices.map(x => x.material), x => x.code), group => {
+    _.forEach(_.groupBy(this.devices.map(x => Object({m: x.material, zone: x.zone})), x => x.m.code + x.zone), group => {
       materials.push(group[0]);
     });
-    this.materials = materials;
+    this.materials = _.sortBy(materials, x => x.m.code + x.zone);
     this.materialsSrc = materials;
   }
   createNode(node: any){
@@ -104,7 +105,7 @@ export class AddGroupDeviceComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
-    this.s.addGroupToSystem(this.docNumber, this.selectedMaterial.code, this.label).then(res => {
+    this.s.addGroupToSystem(this.docNumber, this.selectedMaterial.m.code + (this.useZone ? this.selectedMaterial.zone : ''), this.label).then(res => {
       this.ref.close('success');
     });
   }
