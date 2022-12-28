@@ -14,7 +14,7 @@ import {any, object} from "underscore";
 import {MessageService, PrimeNGConfig} from "primeng/api";
 import {ActivatedRoute, Router} from "@angular/router";
 import JSZip from "jszip";
-import {saveAs} from "file-saver";
+
 import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
