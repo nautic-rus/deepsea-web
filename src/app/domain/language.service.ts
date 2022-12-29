@@ -360,7 +360,7 @@ export class LanguageService {
           case 'Вы подтверждаете удаление элемента?': return 'Do you confirm the deletion of the item?';
           case 'Удалить позицию': return 'Delete a position';
           case 'Дата изменения': return 'Last date';
-          case '': return '';
+          case 'Дата создания': return 'Date created';
           case '': return '';
           case '': return '';
           case '': return '';
