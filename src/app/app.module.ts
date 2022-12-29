@@ -148,6 +148,7 @@ import { ElectricEspComponent } from './component/documents/electric-esp/electri
 import { QuestionDetailsComponent } from './component/qna/question-details/question-details.component';
 import {ChartModule} from "primeng/chart";
 import { AssignQuestionComponent } from './component/qna/assign-question/assign-question.component';
+import { SubscribeForNotificationsComponent } from './component/qna/subscribe-for-notifications/subscribe-for-notifications.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -247,7 +248,8 @@ Quill.register('modules/imageResize', ImageResize);
     ElectricEspComponent,
     CreateQuestionComponent,
     QuestionDetailsComponent,
-    AssignQuestionComponent
+    AssignQuestionComponent,
+    SubscribeForNotificationsComponent
   ],
   imports: [
     BrowserModule,

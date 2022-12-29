@@ -6,6 +6,9 @@
           <div class="text-head text-bottom">Вопрос</div>
         </div>
         <div class="task-buttons">
+          <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Подписаться на уведомления')" (click)="subscribeForNotifications()">
+            <img src="assets/icons/bell.svg" height="20">
+          </div>
           <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">
             <img src="assets/icons/link.svg" height="20">
           </div>
@@ -44,7 +47,7 @@
             </div>
             <div class="buttons">
               <div class="button-status" *ngFor="let status of availableActions">
-                <div [class.disabled-button]="isDisabledStatus(status.value)" (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
+                <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
               </div>
             </div>
             <div class="df">
@@ -291,7 +294,7 @@
                   </div>
                   <div *ngIf="msg.name_value == 'assign'">
                     <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
-                    <span class="text-descr px-5">{{t.tr('назначил')}}{{localeGender(msg.author)}}</span>
+                    <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
                     <span class="bold-text">{{t.tr('исполнителя')}}</span>
                     <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                     <div class="df pt-5">
@@ -468,43 +471,11 @@
               </div>
               <div class="df mt-3px">
                 <div class="df text-y line-text normal-text w-40">Проект</div>
-                <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.project}}</div>
-                <div [hidden]="edit != 'project'" class="mr-5">
-                  <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-130 height-32">
-                  </p-dropdown>
-                </div>
-                <div class="w-15 df">
-                  <div [hidden]="edit != 'project'" (click)="commitIssueEdit()">
-                    <div  class="task-name-button cxy mr-5">
-                      <img src="assets/icons/tick.svg">
-                    </div>
-                  </div>
-                  <div [hidden]="edit != 'project'" (click)="cancelIssueEdit()">
-                    <div  class="task-name-button cxy">
-                      <img src="assets/icons/cancel.svg">
-                    </div>
-                  </div>
-                </div>
+                <div class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.project}}</div>
               </div>
               <div class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">Отдел</div>
-                <div [class.no-edit]="!isEditable()" [hidden]="edit == 'department'" (click)="edit = 'department'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.department}}</div>
-                <div class="mr-5" [hidden]="edit != 'department'">
-                  <p-dropdown class="select" [(ngModel)]="issue.department" [options]="taskDepartments" styleClass="width-130 h-height-32">
-                  </p-dropdown>
-                </div>
-                <div class="w-15 df">
-                  <div [hidden]="edit != 'department'" (click)="commitIssueEdit()">
-                    <div  class="task-name-button cxy mr-5">
-                      <img src="assets/icons/tick.svg">
-                    </div>
-                  </div>
-                  <div [hidden]="edit != 'department'" (click)="cancelIssueEdit()">
-                    <div  class="task-name-button cxy">
-                      <img src="assets/icons/cancel.svg">
-                    </div>
-                  </div>
-                </div>
+                <div class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.department}}</div>
               </div>
               <div class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">Автор</div>
@@ -522,18 +493,36 @@
               </div>
               <div class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">Приоритет</div>
-                <div [class.no-edit]="!isEditable()" [hidden]="edit == 'priority'" (click)="edit = 'priority'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
-                <div class="mr-5" [hidden]="edit != 'priority'">
-                  <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.priority" [options]="taskPriorities" styleClass="width-130 height-32">
-                  </p-dropdown>
-                </div>
+                <div class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
+              </div>
+              <div class="df mt-3px">
+                <div class="df text-y height-32 normal-text w-40">Начать исполнение</div>
+                <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.start_date)}}</div>
+                <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
                 <div class="w-15 df">
-                  <div [hidden]="edit != 'priority'" (click)="commitIssueEdit()">
+                  <div [hidden]="edit != 'startDate'" (click)="commitIssueEdit()">
                     <div  class="task-name-button cxy mr-5">
                       <img src="assets/icons/tick.svg">
                     </div>
                   </div>
-                  <div [hidden]="edit != 'priority'" (click)="cancelIssueEdit()">
+                  <div [hidden]="edit != 'startDate'" (click)="cancelIssueEdit()">
+                    <div  class="task-name-button cxy">
+                      <img src="assets/icons/cancel.svg">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="df mt-3px">
+                <div class="df text-y height-32 normal-text w-40">Выполнить до</div>
+                <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.due_date)}}</div>
+                <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
+                <div class="w-15 df">
+                  <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit()">
+                    <div  class="task-name-button cxy mr-5">
+                      <img src="assets/icons/tick.svg">
+                    </div>
+                  </div>
+                  <div [hidden]="edit != 'dueDate'" (click)="cancelIssueEdit()">
                     <div  class="task-name-button cxy">
                       <img src="assets/icons/cancel.svg">
                     </div>

@@ -103,8 +103,8 @@ export class LanguageService {
           case 'изменил': return 'changed';
           case 'назначил': return 'assigned';
           case 'приоритет': return 'priority';
-          case 'исполнителя': return 'executor';
-          case 'Исполнителя': return 'Executor';
+          case 'исполнителя': return 'assignee';
+          case 'Исполнителя': return 'Assignee';
           case 'информацию': return 'information';
           case 'Да': return 'Yes';
           case 'Нет': return 'No';

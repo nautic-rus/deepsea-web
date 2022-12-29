@@ -30,7 +30,7 @@ export class CreateQuestionComponent implements OnInit {
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
   contractDueDate: Date = new Date(this.startDate.getTime() + 259200000);
   today: Date = new Date();
-  taskProjects: string[] = [];
+  taskProjects: LV[] = [];
   sfiCodes: LV[] = [];
   taskDepartments: string[] = [];
   taskPeriods: LV[] = [];
@@ -131,9 +131,7 @@ export class CreateQuestionComponent implements OnInit {
     this.issues.getIssueProjects().then(projects => {
       this.taskProjects = projects;
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
-      if (this.taskProjects.length > 0 && this.taskProject == '-') {
-        this.taskProject = this.taskProjects[0];
-      }
+      this.taskProject = '-';
     });
     // this.issues.getTaskPriorities().then(priorities => {
     //   this.taskPriorities = priorities.map(x => new LV(x));
@@ -219,8 +217,9 @@ export class CreateQuestionComponent implements OnInit {
     issue.department = this.taskDepartment;
     issue.doc_number = this.taskDocNumber;
     issue.started_by = this.auth.getUser().login;
-    issue.status = 'Новый';
+    issue.status = 'New';
     issue.file_attachments = this.loaded;
+    console.log(issue);
     this.issues.startIssue(issue).then(res => {
       this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
         this.ref.close(res);

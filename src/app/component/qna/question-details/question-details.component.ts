@@ -28,6 +28,7 @@ import * as props from "../../../props";
 import {AcceptToWorkComponent} from "../../task/accept-to-work/accept-to-work.component";
 import {AssignToResponsibleComponent} from "../../task/assign-to-responsible/assign-to-responsible.component";
 import {ActivatedRoute, Router} from "@angular/router";
+import {SubscribeForNotificationsComponent} from "../subscribe-for-notifications/subscribe-for-notifications.component";
 
 @Component({
   selector: 'app-question-details',
@@ -892,13 +893,6 @@ export class QuestionDetailsComponent implements OnInit {
 
 
 
-  isDisabledStatus(value: string) {
-    let res = false;
-    if (value == 'Check' && (this.issue.checks.find(x => x.check_status == 0) != null)){
-      res = true;
-    }
-    return res;
-  }
 
   setIssueReady(number: number, value: number) {
     let ready = this.issue.ready.split('|');
@@ -990,4 +984,13 @@ export class QuestionDetailsComponent implements OnInit {
     });
   }
 
+  subscribeForNotifications() {
+    this.dialogService.open(SubscribeForNotificationsComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+
+    });
+  }
 }
