@@ -72,20 +72,6 @@
 
       </div>
       <div class="buttons">
-
-<!--        <div class="buttons-pick-assign cursor-pointer" (click)="assignTask()" *ngIf="(issue.responsible == auth.getUser().login)">-->
-<!--          <span class="icon-assign cxy">-->
-<!--            <img src="assets/icons/user.svg">-->
-<!--          </span>-->
-<!--          <span class="cxy button-text">Назначить</span>-->
-<!--        </div>-->
-<!--        <div class="buttons-pick-change cursor-pointer" (click)="changeResponsible()" *ngIf="(issue.started_by == auth.getUser().login)">-->
-<!--          <span class="icon-change cxy">-->
-<!--            <img src="assets/icons/change.svg">-->
-<!--          </span>-->
-<!--          <span class="cxy button-text">Сменить ответственного</span>-->
-<!--        </div>-->
-
         <div class="button-status" *ngFor="let status of availableActions">
           <div [class.disabled-button]="isDisabledStatus(status.value)" (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
         </div>

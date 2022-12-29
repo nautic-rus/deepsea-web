@@ -45,13 +45,13 @@
                 </div>
               </div>
             </div>
-            <div class="buttons">
+            <div class="buttons mt-10">
               <div class="button-status" *ngFor="let status of availableActions">
                 <div (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
               </div>
             </div>
             <div class="df">
-              <div class="big-text mb-1 mt-2">Описание вопроса</div>
+              <div class="big-text mb-1 mt-5">Описание вопроса</div>
             </div>
             <div class="text description descr-task">
               <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
@@ -465,7 +465,7 @@
             <div class="table table-overflow">
               <div class="df mt-3px">
                 <div class="df text-y line-text normal-text w40">Статус</div>
-                <div class="df text-y line-text cursor-pointer description-task w60">
+                <div class="df height-32 text-y line-text cursor-pointer description-task w60">
                   <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
                 </div>
               </div>
