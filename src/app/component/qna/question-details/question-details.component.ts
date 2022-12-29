@@ -250,6 +250,8 @@ export class QuestionDetailsComponent implements OnInit {
           });
           this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
           this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
+          this.availableActions = this.getAvailableActions(this.issue);
+          console.log(this.availableActions);
         });
       }
     });
@@ -327,7 +329,7 @@ export class QuestionDetailsComponent implements OnInit {
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != 'Approved').length == 0 && allow : allow;
       allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
       if (allow){
-        res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
+        res.push({label: action.action, value: action.action});
       }
     });
     return res;

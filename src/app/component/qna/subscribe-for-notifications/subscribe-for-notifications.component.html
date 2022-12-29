@@ -1,1 +1,31 @@
-<p>subscribe-for-notifications works!</p>
+<div style="height: 430px; width: 400px;">
+  <div class="task-header-assign">
+    <div class="task-name">Подписаться</div>
+    <div class="task-button cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="big-text mb-1 mt-1">Укажите вариант уведомлений и проверьте актуальность контактов</div>
+  <div class="df">
+    Почта
+    <p-inputSwitch [(ngModel)]="emailEnabled"></p-inputSwitch>
+    <input [(ngModel)]="email">
+  </div>
+  <div class="df">
+    РокетЧат
+    <p-inputSwitch [(ngModel)]="rocketEnabled"></p-inputSwitch>
+    <input [(ngModel)]="rocket">
+  </div>
+  <div class="form-footer pt-10">
+    <div class="mr-5 cx">
+      <div tabindex="10" (click)="commit()" pButton [label]="t.tr('Подписаться')" class="button-ok"></div>
+    </div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
+  </div>
+</div>
+
+
+
+
+
+

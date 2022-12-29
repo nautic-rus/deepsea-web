@@ -218,6 +218,7 @@ export class CreateQuestionComponent implements OnInit {
     issue.doc_number = this.taskDocNumber;
     issue.started_by = this.auth.getUser().login;
     issue.status = 'New';
+    issue.action = 'New';
     issue.file_attachments = this.loaded;
     console.log(issue);
     this.issues.startIssue(issue).then(res => {
