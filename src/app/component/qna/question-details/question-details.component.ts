@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Issue} from "../../../domain/classes/issue";
 import {FileAttachment} from "../../../domain/classes/file-attachment";
 import {LV} from "../../../domain/classes/lv";
@@ -33,7 +33,8 @@ import {SubscribeForNotificationsComponent} from "../subscribe-for-notifications
 @Component({
   selector: 'app-question-details',
   templateUrl: './question-details.component.html',
-  styleUrls: ['./question-details.component.css']
+  styleUrls: ['./question-details.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class QuestionDetailsComponent implements OnInit {
 
