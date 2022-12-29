@@ -181,6 +181,9 @@ export class IssueManagerService {
   async getDailyTasks() {
     return await this.http.get<DailyTask[]>(props.http + '/dailyTasks').toPromise();
   }
+  async subscribeForIssue(user: string, issue: number, options: string) {
+    return await this.http.get(props.http + '/subscribeForIssue', {params: {user, issue, options}}).toPromise();
+  }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{

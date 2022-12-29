@@ -48,4 +48,5 @@ export class Issue {
   readyD: boolean = false;
   readyN: boolean = false;
   for_revision = '-';
+  subscribers: string[] = [];
 }

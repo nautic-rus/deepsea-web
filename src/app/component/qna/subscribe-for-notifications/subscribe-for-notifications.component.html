@@ -22,6 +22,10 @@
     </div>
     <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>
+  Users already subscribed
+  <div *ngFor="let user of issue.subscribers">
+    {{this.auth.getUserName(user)}}
+  </div>
 </div>
 
 
