@@ -30,9 +30,7 @@
                 <div class="pr-10 cxy">
                   <img src="assets/icons/plus3.svg" height="18">
                 </div>
-                <div class="cxy">
-                  New task
-                </div>
+                <div class="cxy">{{l.tr('Новая задача')}}</div>
               </div>
             </div>
             <p-multiSelect class="mr-10" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"

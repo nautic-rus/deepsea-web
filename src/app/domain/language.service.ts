@@ -103,8 +103,8 @@ export class LanguageService {
           case 'изменил': return 'changed';
           case 'назначил': return 'assigned';
           case 'приоритет': return 'priority';
-          case 'исполнителя': return 'executor';
-          case 'Исполнителя': return 'Executor';
+          case 'исполнителя': return 'assignee';
+          case 'Исполнителя': return 'Assignee';
           case 'информацию': return 'information';
           case 'Да': return 'Yes';
           case 'Нет': return 'No';
@@ -360,7 +360,7 @@ export class LanguageService {
           case 'Вы подтверждаете удаление элемента?': return 'Do you confirm the deletion of the item?';
           case 'Удалить позицию': return 'Delete a position';
           case 'Дата изменения': return 'Last date';
-          case '': return '';
+          case 'Дата создания': return 'Date created';
           case '': return '';
           case '': return '';
           case '': return '';
