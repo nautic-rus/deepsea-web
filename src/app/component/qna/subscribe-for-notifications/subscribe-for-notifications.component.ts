@@ -42,7 +42,22 @@ export class SubscribeForNotificationsComponent implements OnInit {
   }
 
   commit() {
-
+    let options = [];
+    if (this.emailEnabled){
+      options.push('mail');
+    }
+    if (this.rocketEnabled){
+      options.push('rocket');
+    }
+    if (this.auth.getUser().email != this.email.trim()){
+      this.auth.updateEmail(this.auth.getUser().login, this.email.trim());
+    }
+    if (this.auth.getUser().rocket_login != this.rocket.trim()){
+      this.auth.updateRocketLogin(this.auth.getUser().login, this.rocket.trim());
+    }
+    this.issueManager.subscribeForIssue(this.auth.getUser().login, this.issue.id, options.join(',')).then(res => {
+      this.ref.close();
+    });
   }
   getUsers() {
     return this.auth.users.filter(x => x.visibility.includes('c'));

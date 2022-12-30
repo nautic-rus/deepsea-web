@@ -199,4 +199,10 @@ export class AuthManagerService {
       return login;
     }
   }
+  async updateEmail(user: string, email: string): Promise<any>{
+    return await this.http.get(props.http + '/updateEmail', {params: {user, email}}).toPromise();
+  }
+  async updateRocketLogin(user: string, rocketLogin: string): Promise<any>{
+    return await this.http.get(props.http + '/updateRocketLogin', {params: {user, rocketLogin}}).toPromise();
+  }
 }

@@ -230,6 +230,7 @@ export class QuestionDetailsComponent implements OnInit {
       if (params.id != null){
         this.issueManager.getIssueDetails(params.id).then(issue => {
           this.issue = issue;
+          console.log(issue);
           this.issueManager.getIssueDepartments().then(departments => {
             this.taskDepartments = departments;
           });
@@ -252,7 +253,6 @@ export class QuestionDetailsComponent implements OnInit {
           this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
           this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
           this.availableActions = this.getAvailableActions(this.issue);
-          console.log(this.availableActions);
         });
       }
     });
@@ -893,7 +893,6 @@ export class QuestionDetailsComponent implements OnInit {
       }
     });
   }
-
 
 
 
