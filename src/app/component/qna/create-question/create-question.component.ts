@@ -122,7 +122,7 @@ export class CreateQuestionComponent implements OnInit {
         }
       }
     }
-  constructor(private config: PrimeNGConfig, public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, public l: LanguageService) { }
+  constructor(public t: LanguageService, private config: PrimeNGConfig, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, public l: LanguageService) { }
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
     this.config.setTranslation({

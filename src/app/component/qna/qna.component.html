@@ -6,19 +6,19 @@
           <div class="pr-10 cxy">
             <img src="assets/icons/plus3.svg" height="18">
           </div>
-          <div class="cxy">
-            Задать вопрос
-          </div>
+          <div class="cxy">{{t.tr('Задать вопрос')}}</div>
         </div>
       </div>
       <div class="mr-10">
-        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-200" placeholder="Проект"></p-dropdown>
+        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-200" [placeholder]="t.tr('Проект')"></p-dropdown>
       </div>
       <div class="mr-10">
-        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="department" (ngModelChange)="changedDepartment()" [options]="departments" styleClass="width-200" placeholder="Отдел"></p-dropdown>
+        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="department" (ngModelChange)="changedDepartment()" [options]="departments" styleClass="width-200" [placeholder]="t.tr('Отдел')"></p-dropdown>
       </div>
       <div class="mr-10" (click)="clearFilters()">
-        CLEAR
+        <div class="materials-button gray-button cxy" (click)="clearFilters()" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+          <img src="assets/icons/filter-no.svg" height="18">
+        </div>
       </div>
     </div>
     <p-table [value]="questions"
@@ -33,7 +33,7 @@
              [globalFilterFields]="['id','doc_number','name','status']">
       <ng-template pTemplate="header">
         <tr class="df">
-          <th pSortableColumn="id" class="lxy w-20">{{t.tr('id')}}
+          <th pSortableColumn="id" class="lxy w-20">{{t.tr('Id')}}
             <p-sortIcon field="id"></p-sortIcon>
           </th>
           <th pSortableColumn="id" class="lxy w-20">{{t.tr('Проект')}}
@@ -98,7 +98,7 @@
                 <div class="pr-10 cxy">
                   <img src="assets/icons/check.png" height="16">
                 </div>
-                <div class="cxy">Назначить</div>
+                <div class="cxy">{{t.tr('Назначить')}}</div>
               </div>
             </div>
           </td>

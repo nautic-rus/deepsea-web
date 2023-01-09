@@ -1,11 +1,11 @@
 <div style="height: 340px; width: 400px;">
   <div class="task-header-assign">
-    <div class="task-name">Назначить вопрос</div>
+    <div class="task-name">{{t.tr('Назначить исполнителя')}}</div>
     <div class="task-button cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="big-text mb-1 mt-1">Исполнитель</div>
+  <div class="big-text mb-1 mt-1">{{t.tr('Исполнитель')}}</div>
   <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
               [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-270">
     <ng-template let-user pTemplate="item">
