@@ -63,6 +63,9 @@ export class QnaComponent implements OnInit {
     return res;
   }
   getProject(project: string){
+    if (project == '-'){
+      return 'Без проекта';
+    }
     let find = this.projectDefs.find(x => x.name == project);
     if (find != null){
       return this.getProjectName(find);

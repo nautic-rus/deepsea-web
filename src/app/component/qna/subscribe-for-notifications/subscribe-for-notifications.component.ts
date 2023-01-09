@@ -18,7 +18,7 @@ export class SubscribeForNotificationsComponent implements OnInit {
   startDate: Date = new Date();
   dueDate: Date = new Date();
   today: Date = new Date();
-  emailEnabled = false;
+  emailEnabled = true;
   rocketEnabled = true;
   email = '';
   rocket = '';

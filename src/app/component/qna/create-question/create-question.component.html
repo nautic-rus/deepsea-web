@@ -8,7 +8,7 @@
   <div class="df space-between">
     <div>
       <div class="big-text-create mb-1">Проект</div>
-      <p-dropdown optionLabel="label" class="select" optionValue="name" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-220 font-14" >
+      <p-dropdown optionLabel="label" class="select" optionValue="name" [(ngModel)]="taskProject" [options]="taskProjects" (ngModelChange)="projectChanged()" styleClass="width-220 font-14" >
       </p-dropdown>
     </div>
     <div>
@@ -26,14 +26,14 @@
     <div class="df space-between">
       <div style="width: 220px">
         <div class="big-text-create mb-1 mt-1">Документ</div>
-        <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
+        <p-autoComplete [(ngModel)]="taskDocNumber" [suggestions]="docNumbers" (completeMethod)="filterDocNumbers($event)"></p-autoComplete>
       </div>
       <div style="width: 454px">
         <div class="big-text-create mb-1 mt-1">Тема вопроса</div>
         <input type="text" pInputText [(ngModel)]="taskSummary">
       </div>
     </div>
-    <div class="big-text-create mb-1 mt-1">Описание вопроса</div>
+    <div class="big-text-create mb-1 mt-1">Описание вопроса (обязательно для заполнения*)</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>
         <p-header>

@@ -10,6 +10,7 @@ import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {LV} from "../../../domain/classes/lv";
 import {PrimeNGConfig} from "primeng/api";
+import _ from "underscore";
 
 @Component({
   selector: 'app-create-question',
@@ -19,9 +20,9 @@ import {PrimeNGConfig} from "primeng/api";
 export class CreateQuestionComponent implements OnInit {
 
   issue: Issue = new Issue();
-  taskSummary = '';
+  taskSummary = 'Нет темы';
   taskDetails = '';
-  taskDocNumber = '';
+  taskDocNumber = 'Без документа';
   taskDepartment = '';
   for_revision = '';
   users: User[] = [];
@@ -57,6 +58,9 @@ export class CreateQuestionComponent implements OnInit {
   @ViewChild('img') img;
   // @ts-ignore
   wz;
+  docNumbersSrc: string[] = [];
+  docNumbers: string[] = [];
+  rkdIssues: Issue[] = [];
 
   generateId(length: number): string {
     let result = '';
@@ -131,7 +135,10 @@ export class CreateQuestionComponent implements OnInit {
     this.issues.getIssueProjects().then(projects => {
       this.taskProjects = projects;
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
-      this.taskProject = '-';
+      this.taskProject = 'Без проекта';
+    });
+    this.issues.getIssues('op').then(res => {
+      this.rkdIssues = res;
     });
     // this.issues.getTaskPriorities().then(priorities => {
     //   this.taskPriorities = priorities.map(x => new LV(x));
@@ -141,14 +148,15 @@ export class CreateQuestionComponent implements OnInit {
     // });
 
     this.issues.getIssueDepartments().then(departments => {
-      this.taskDepartments = departments;
-      this.taskDepartment = '-';
+      this.taskDepartments = departments.map(x => x.replace('-', 'Без отдела'));
+      this.taskDepartment = 'Без отдела';
     });
-
-    let issue = new Issue();
 
   }
   getProjectName(project: any){
+    if (project.name == '-'){
+      return 'Без проекта';
+    }
     let res = project.name;
     if (project.rkd != ''){
       res += ' (' + project.rkd + ')';
@@ -344,4 +352,13 @@ export class CreateQuestionComponent implements OnInit {
     return this.auth.users.filter(x => x.visibility.includes('c'));
   }
 
+  filterDocNumbers(event: any) {
+    this.docNumbers = this.docNumbersSrc.filter(x => x.toLowerCase().includes(event.query.toLowerCase().trim()));
+  }
+
+  projectChanged() {
+    console.log(this.rkdIssues);
+    this.docNumbersSrc = _.sortBy(_.uniq(this.rkdIssues.filter(x => x.project == this.taskProject).map(x => x.doc_number), x => x), x => x);
+    this.docNumbers = [...this.docNumbersSrc];
+  }
 }
