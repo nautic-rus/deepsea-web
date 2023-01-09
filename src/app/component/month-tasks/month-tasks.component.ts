@@ -9,6 +9,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {CalendarDay} from "../../domain/classes/calendar-day";
 import {DeleteComponent} from "../task/delete/delete.component";
 import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.component";
+import {User} from "../../domain/classes/user";
 
 @Component({
   selector: 'app-month-tasks',
@@ -28,6 +29,7 @@ export class MonthTasksComponent implements OnInit {
   tasksSrc: DailyTask[] = [];
   tasks: DailyTask[] = [];
   projects: string[] = ['NR002', 'NR004', 'OTHER'];
+  selectedUser: any;
   showError = false;
   options = {
     initialDate : '2019-01-01',
@@ -41,6 +43,7 @@ export class MonthTasksComponent implements OnInit {
     selectMirror: true,
     dayMaxEvents: true
   };
+  users: User[] = [];
 
 
   calendar = this.getCalendar();
@@ -164,9 +167,18 @@ export class MonthTasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.users = this.auth.users.filter(x => x.visibility.includes('c'));
+    this.selectedUser = this.auth.getUser().login;
     this.issueManager.getDailyTasks().then(res => {
-      this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
-      this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
+      this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
+      this.tasks = res.filter(x => x.userLogin == this.selectedUser);
+      this.calendar = this.getCalendar();
+    });
+  }
+  changeUser(){
+    this.issueManager.getDailyTasks().then(res => {
+      this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
+      this.tasks = res.filter(x => x.userLogin == this.selectedUser);
       this.calendar = this.getCalendar();
     });
   }
@@ -195,8 +207,8 @@ export class MonthTasksComponent implements OnInit {
     }).onClose.subscribe(res => {
       setTimeout(() => {
         this.issueManager.getDailyTasks().then(res => {
-          this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
-          this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
+          this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
+          this.tasks = res.filter(x => x.userLogin == this.selectedUser);
           this.calendar = this.getCalendar();
         });
       }, 100);
@@ -211,8 +223,8 @@ export class MonthTasksComponent implements OnInit {
       if (res == 'delete'){
         setTimeout(() => {
           this.issueManager.getDailyTasks().then(res => {
-            this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
-            this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
+            this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
+            this.tasks = res.filter(x => x.userLogin == this.selectedUser);
             this.calendar = this.getCalendar();
           });
         }, 100);
@@ -231,8 +243,8 @@ export class MonthTasksComponent implements OnInit {
     this.showError = false;
     this.date = new Date(this.date.getFullYear(), this.date.getMonth() + value, 1);
     this.issueManager.getDailyTasks().then(res => {
-      this.tasksSrc = res.filter(x => x.userLogin == this.auth.getUser().login);
-      this.tasks = res.filter(x => x.userLogin == this.auth.getUser().login);
+      this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
+      this.tasks = res.filter(x => x.userLogin == this.selectedUser);
       this.calendar = this.getCalendar();
     });
   }
