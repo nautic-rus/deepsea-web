@@ -376,10 +376,10 @@ export class LanguageService {
           case 'Описание вопроса (обязательно для заполнения*)': return 'Description of the question (required*)';
           case 'Документ': return 'Document';
           case 'Трудозатраты': return 'Actual man-hours';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Корректировки': return 'Correction';
+          case 'Разработка': return 'Development';
+          case 'ПДСП': return 'PDSP';
+          case 'РКД': return 'RKD';
           case '': return '';
           case '': return '';
           case '': return '';
