@@ -516,6 +516,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       return this.issueManager.localeTaskType(issueElement);
     } else if (field == 'name') {
       return this.trim(issueElement);
+    } else if (field == 'issue_comment') {
+      return this.trimMin(issueElement);
     } else if (field == 'priority') {
       return this.issueManager.localeTaskPriority(issueElement);
     } else if (field == 'department') {
@@ -591,6 +593,13 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   trim(input: string, length: number = 45): string {
+    if (input.length <= length) {
+      return input;
+    } else {
+      return input.substr(0, length) + '...';
+    }
+  }
+  trimMin(input: string, length: number = 20): string {
     if (input.length <= length) {
       return input;
     } else {

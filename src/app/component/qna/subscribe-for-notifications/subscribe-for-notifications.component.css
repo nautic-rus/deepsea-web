@@ -1,8 +1,21 @@
+/deep/.p-dialog .p-dialog-content{
+  padding-bottom: 1rem;
+}
+/deep/.p-inputtext {
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: #3B82F6;
+}
+/deep/.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover
+.p-inputswitch-slider {
+  background: #3B82F6;
+}
 .task-header-assign{
   display: flex;
   justify-content: space-between;
   padding-top: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .task-button{
   padding: 5px;
@@ -64,10 +77,26 @@
 .p-inputswitch:focus{
   outline: none;
 }
-/deep/.p-dialog .p-dialog-content{
-  padding-bottom: 1rem;
-}
+
 .disabled-button{
   opacity: 0.5;
   pointer-events: none;
+}
+.row-three{
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr;
+}
+.big-text-subscribe{
+  color: #5e6c84;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.subscribed-users{
+  height: 130px;
+  overflow: auto;
+}
+.user{
+  font-size: 14px;
+  font-family: inherit;
 }

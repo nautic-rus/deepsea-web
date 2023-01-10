@@ -80,6 +80,12 @@
   top: 20px;
   z-index: 8;
 }
+.materials-button{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
 .materials-button-qna{
   height: 35px;
   cursor: pointer;
@@ -94,7 +100,6 @@
   padding: 0 8px;
   color: white;
   font-size: 12px;
-  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
 }
 .row-table-doc-hover:hover{
   background-color: #EEF2FF!important;

@@ -9,7 +9,6 @@
         [scrollable]="true"
         [globalFilterFields]="['id','started_by','project','department', 'name', 'assigned_to', 'status', 'doc_number']"
         [reorderableColumns]="true"
-
         [columns]="selectedColumns"
         (onColReorder)="saveReorderedColumns($event)"
         [virtualScroll]="false"
