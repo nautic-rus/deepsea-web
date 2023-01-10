@@ -715,8 +715,8 @@
         <div class="header-information text-head">{{t.tr('Сведения')}}</div>
         <div class="table table-overflow">
           <div class="df mt-3px" *ngIf="isVisible('status')">
-            <div class="df text-y line-text normal-text w40">{{t.tr('Статус')}}</div>
-            <div class="df text-y line-text cursor-pointer description-task w60">
+            <div class="df height-32 text-y line-text normal-text w40">{{t.tr('Статус')}}</div>
+            <div class="df height-32 text-y line-text cursor-pointer description-task w60">
               <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
             </div>
           </div>
@@ -918,7 +918,7 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('labor')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудоемкость')}}</div>
+            <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудозатраты')}}</div>
             <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.labor}}</div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('id')">

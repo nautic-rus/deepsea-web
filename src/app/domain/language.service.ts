@@ -375,7 +375,7 @@ export class LanguageService {
           case 'Тема вопроса': return 'Subject of the question';
           case 'Описание вопроса (обязательно для заполнения*)': return 'Description of the question (required*)';
           case 'Документ': return 'Document';
-          case '': return '';
+          case 'Трудозатраты': return 'Actual man-hours';
           case '': return '';
           case '': return '';
           case '': return '';
