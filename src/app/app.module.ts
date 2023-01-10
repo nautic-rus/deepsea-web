@@ -303,6 +303,7 @@ Quill.register('modules/imageResize', ImageResize);
     FullCalendarModule,
     AutoCompleteModule,
     ChartModule,
+    VirtualScrollerModule,
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

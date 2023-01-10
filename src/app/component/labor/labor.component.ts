@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import _ from "underscore";
+import {Issue} from "../../domain/classes/issue";
+import {AuthManagerService} from "../../domain/auth-manager.service";
+import {zipAll} from "rxjs/operators";
+import {forkJoin, zip} from "rxjs";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-labor',
@@ -15,18 +20,28 @@ export class LaborComponent implements OnInit {
   department = '';
   stages: string[] = [];
   stage = '';
-  issues: any[] = [];
+  issues: Issue[] = [];
   issuesSrc: any[] = [];
   labor: number = 10;
+  laborUpdates: any = Object();
+  issueSpentTime: any[] = [];
 
-  constructor(public issueManagerService: IssueManagerService) { }
+  constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.issueManagerService.getIssues('op').then(res => {
-      this.issuesSrc = res.filter(x => x.issue_type == 'RKD');
-      this.issues = res.filter(x => x.issue_type == 'RKD');
-      this.issues = _.sortBy(this.issues, x => x.doc_number);
-      this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
+    this.issueManagerService.getIssueSpentTime().then(spentTime => {
+      this.issueSpentTime = spentTime;
+      this.issueSpentTime.forEach(x => x.user = this.auth.getUserName(x.user));
+      this.issueManagerService.getIssues('op').then(res => {
+        this.issuesSrc = res.filter(x => x.issue_type == 'RKD');
+        this.issues = res.filter(x => x.issue_type == 'RKD');
+        this.issues = _.sortBy(this.issues, x => x.doc_number);
+        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
+        this.issues.forEach(issue => issue.labor = Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
+        this.issues.forEach(issue => {
+          this.laborUpdates[issue.id] = Object({planHours: issue.plan_hours, locked: issue.plan_hours_locked});
+        });
+      });
     });
     this.issueManagerService.getIssueProjects().then(projects => {
       this.projects = projects;
@@ -45,9 +60,9 @@ export class LaborComponent implements OnInit {
   }
   filterIssues(){
     this.issues = [...this.issuesSrc];
-    this.issues = this.issues.filter(x => x.project == this.project || this.project == '');
-    this.issues = this.issues.filter(x => x.department == this.department || this.department == '');
-    this.issues = this.issues.filter(x => x.period == this.stages || this.stage == '');
+    this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-');
+    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-');
+    this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-');
     this.issues = _.sortBy(this.issues, x => x.doc_number);
   }
 
@@ -61,5 +76,36 @@ export class LaborComponent implements OnInit {
 
   stageChanged() {
     this.filterIssues();
+  }
+
+  getConsumedLabor(id: number, doc_number: string) {
+    let sum = 0;
+    this.issueSpentTime.filter(x => x.id == id).forEach(spent => {
+      sum += spent.value;
+    });
+    return sum;
+  }
+
+  saveLabor() {
+    forkJoin(this.issues.filter(issue => issue.plan_hours != this.laborUpdates[issue.id].planHours).map(issue => this.issueManagerService.setPlanHours(issue.id, this.auth.getUser().login, this.laborUpdates[issue.id].planHours))).subscribe(res => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Сохранено',
+        detail: 'Внесённые данные успешно сохранены'
+      });
+      this.issues.filter(issue => issue.plan_hours != this.laborUpdates[issue.id].planHours).forEach(issue => issue.plan_hours = this.laborUpdates[issue.id].planHours);
+      this.issues.forEach(issue => issue.labor = Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
+    });
+  }
+
+  lockLabor(id: number, state: number) {
+    this.laborUpdates[id].locked = state;
+    this.issueManagerService.lockPlanHours(id, state).then(res => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Сохранено',
+        detail: 'Внесённые данные успешно сохранены'
+      });
+    });
   }
 }

@@ -184,6 +184,12 @@ export class IssueManagerService {
   async subscribeForIssue(user: string, issue: number, options: string) {
     return await this.http.get(props.http + '/subscribeForIssue', {params: {user, issue, options}}).toPromise();
   }
+  async setPlanHours(issue_id: number, user: string, hours: number) {
+    return await this.http.get(props.http + '/setPlanHours', {params: {issue_id, user, hours}}).toPromise();
+  }
+  async lockPlanHours(issue_id: number, state: number) {
+    return await this.http.get(props.http + '/lockPlanHours', {params: {issue_id, state}}).toPromise();
+  }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{

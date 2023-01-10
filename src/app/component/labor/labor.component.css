@@ -118,7 +118,7 @@
   border-radius: 10px;
   transition: .5s;
   display: grid;
-  grid-template-columns: 20px 2fr 2fr 1fr;
+  grid-template-columns: 20px 2fr 2fr 1fr 1fr;
 }
 .dash-card{
   position: relative;

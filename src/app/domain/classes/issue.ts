@@ -49,4 +49,6 @@ export class Issue {
   readyN: boolean = false;
   for_revision = '-';
   subscribers: string[] = [];
+  plan_hours: number = 0;
+  plan_hours_locked: number = 0;
 }
