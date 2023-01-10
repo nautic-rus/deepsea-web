@@ -232,8 +232,14 @@ export class TaskComponent implements OnInit {
     this.issueManager.getIssueDepartments().then(departments => {
       this.taskDepartments = departments;
     });
+    // this.issueManager.getIssueProjects().then(projects => {
+    //   this.taskProjects = projects.filter((x: any) => x.pdsp != '').map(x => x.pdsp);
+    // });
     this.issueManager.getIssueProjects().then(projects => {
-      this.taskProjects = projects.filter((x: any) => x.pdsp != '').map(x => x.pdsp);
+      this.taskProjects = projects.map((x: any) => x.name);
+      // if (this.taskProjects.length > 0 && this.taskProject == '-') {
+      //   this.taskProject = this.taskProjects[0];
+      // }
     });
     this.issueManager.getIssuePeriods().then(periods => {
       periods.filter(x => x.project == this.issue.project).forEach(x => {
