@@ -808,6 +808,13 @@ export class TaskComponent implements OnInit {
       return input.substr(0, length) + '...';
     }
   }
+  trimMin(input: string, length: number = 35): string {
+    if (input.length <= length) {
+      return input;
+    } else {
+      return input.substr(0, length) + '...';
+    }
+  }
 
   isEditable() {
     return this.auth.getUser().login == this.issue.started_by || this.auth.getUser().login == this.issue.responsible;
