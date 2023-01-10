@@ -878,7 +878,7 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('issue_comment')">
             <div class="df text-y height-32 normal-text w-40">{{t.tr('Примечение')}}</div>
-            <div (click)="edit = 'issue_comment'" *ngIf="edit != 'issue_comment'" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{trimMin(issue.issue_comment)}}</div>
+            <div (click)="edit = 'issue_comment'" *ngIf="edit != 'issue_comment'" pTooltip="{{issue.issue_comment}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{trimMin(issue.issue_comment)}}</div>
             <textarea *ngIf="edit == 'issue_comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.issue_comment" class="w-40 cy task-name-change-commit"></textarea>
             <div class="w-15 df">
               <div [hidden]="edit != 'issue_comment'" (click)="commitIssueEdit()">
