@@ -38,8 +38,8 @@ export class CreateTaskComponent implements OnInit {
   taskProjects: string[] = [];
   sfiCodes: LV[] = [];
   taskDepartments: string[] = [];
-  taskPeriods: LV[] = [];
-  taskPeriod: string = '';
+  taskPeriods: LV[] = [new LV('Stage 1'), new LV('Stage 2'), new LV('Stage 3'), new LV('Stage 4'), new LV('Stage 5'), new LV('Stage 6'), new LV('Stage 7'), new LV('Stage 8')];
+  taskPeriod: string = this.taskPeriods[0].value;
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
   assignedToUser = '';
@@ -169,15 +169,15 @@ export class CreateTaskComponent implements OnInit {
         this.taskProject = this.taskProjects[0];
       }
     });
-    this.taskPeriods.splice(0, this.taskPeriods.length);
-    this.issues.getIssuePeriods().then(periods => {
-      periods.filter(x => x.project == this.taskProject).forEach(period => {
-        this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
-      });
-      if (this.taskPeriods.length > 0) {
-        this.taskPeriod = this.taskPeriods[0].value;
-      }
-    });
+    // this.taskPeriods.splice(0, this.taskPeriods.length);
+    // this.issues.getIssuePeriods().then(periods => {
+    //   periods.filter(x => x.project == this.taskProject).forEach(period => {
+    //     this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
+    //   });
+    //   if (this.taskPeriods.length > 0) {
+    //     this.taskPeriod = this.taskPeriods[0].value;
+    //   }
+    // });
 
     this.sfiCodes.splice(0, this.sfiCodes.length);
     this.issues.getSfiCodes().then(sfiCodes => {
@@ -449,15 +449,15 @@ export class CreateTaskComponent implements OnInit {
   }
 
   taskProjectChanged() {
-    this.taskPeriods.splice(0, this.taskPeriods.length);
-    this.issues.getIssuePeriods().then(periods => {
-      periods.filter(x => x.project == this.taskProject).forEach(period => {
-        this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
-      });
-      if (this.taskPeriods.length > 0) {
-        this.taskPeriod = this.taskPeriods[0].value;
-      }
-    });
+    // this.taskPeriods.splice(0, this.taskPeriods.length);
+    // this.issues.getIssuePeriods().then(periods => {
+    //   periods.filter(x => x.project == this.taskProject).forEach(period => {
+    //     this.taskPeriods.push({label: this.issues.localeTaskPeriod(period.name), value: period.name});
+    //   });
+    //   if (this.taskPeriods.length > 0) {
+    //     this.taskPeriod = this.taskPeriods[0].value;
+    //   }
+    // });
     this.sfiCodeChanged();
   }
   sfiCodeChanged(){
