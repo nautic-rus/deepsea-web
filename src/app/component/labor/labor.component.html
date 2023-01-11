@@ -26,7 +26,10 @@
       </div>
     </div>
     <div class="empty-card-bottom"></div>
-    <p-virtualScroller [value]="issues" scrollHeight="80vh" [itemSize]="85">
+
+
+
+    <p-virtualScroller [value]="issues" scrollHeight="80vh" [itemSize]="105">
       <ng-template pTemplate="item" let-issue>
         <div class="dash-card">
           <div class="card-task">
@@ -53,7 +56,7 @@
                 <div (click)="lockLabor(issue.id, 1)" *ngIf="laborUpdates[issue.id].locked == 0">LOCK</div>
                 <div (click)="lockLabor(issue.id, 0)" *ngIf="laborUpdates[issue.id].locked == 1">UNLOCK</div>
               </div>
-              <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>
+<!--              <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>-->
             </div>
           </div>
         </div>

@@ -42,6 +42,9 @@
 /deep/.p-progressbar .p-progressbar-value {
   background: #3B82F6;
 }
+/deep/.p-virtualscroller .p-virtualscroller-content {
+  background: transparent!important;
+}
 .all-page-labor{
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   padding: 0 20px;
