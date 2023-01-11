@@ -19,10 +19,8 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <div class="ml-10 df tabs-header">
-      </div>
-      <div (click)="saveLabor()">
-        SAVE
+      <div [pTooltip]="t.tr('Сохранить')" tooltipPosition="top" class="materials-button yellow-button cxy" (click)="saveLabor()">
+        <img src="assets/icons/diskette.svg" height="24">
       </div>
     </div>
     <div class="empty-card-bottom"></div>
@@ -40,21 +38,38 @@
             <div class="title-bold mb-5">{{issue.doc_number}}</div>
             <div class="text-mini-gray">{{issue.name}}</div>
           </div>
-          <div class="cy">
-            <div *ngIf="issue.period != '-'" [class.period-one-back]="issue.period == 'Stage 1'" [class.period-two-back]="issue.period == 'Stage 2'" [class.period-three-back]="issue.period == 'Stage 3'" [class.period-four-back]="issue.period == 'Stage 4'" [class.period-five-back]="issue.period == 'Stage 5'" class="stage-round cxy">
-              <div class="round-in cxy flex-column">
-                <div class="mm-text">stage</div>
-                <div [class.period-one]="issue.period == 'Stage 1'" [class.period-two]="issue.period == 'Stage 2'" [class.period-three]="issue.period == 'Stage 3'" [class.period-four]="issue.period == 'Stage 4'" [class.period-five]="issue.period == 'Stage 5'" class="period-one">{{replaceStage(issue.period)}}</div>
+          <div class="mm-text">
+            {{issue.period}}
+          </div>
+          <div>
+            <div class="df">
+              <div>
+                <img src="assets/icons/flag-start.svg" height="24">
               </div>
-
-
-
-
-
+              <div class="mm-text">start</div>
             </div>
+            <div *ngIf="issue.start_date == 0"></div>
+            <div class="text-black-min" *ngIf="issue.start_date != 0">{{getDateOnly(issue.start_date)}}</div>
+          </div>
+          <div>
+            <div class="df">
+              <div>
+                <img src="assets/icons/flag-finish.svg" height="24">
+              </div>
+              <div class="mm-text">finish</div>
+            </div>
+            <div *ngIf="issue.due_date == 0"></div>
+            <div class="text-black-mini" *ngIf="issue.due_date != 0">{{getDateOnly(issue.due_date)}}</div>
           </div>
 
-          {{issue.period}}
+
+          <div class="cy">
+            <div [innerHTML]="issueManagerService.localeStatus(issue.status) | safeHtml"></div>
+          </div>
+
+
+
+
           <div class="cy">
             <div class="cx text-black-mini mb-5">
                 <span class="cy">
@@ -62,7 +77,7 @@
                 </span>
               <span class="mx-10 cy">/</span>
               <span class="cursor-pointer width-50 mr-15" *ngIf="laborUpdates[issue.id] != null">
-                  <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
+                  <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1 || !auth.hasPerms('laboriousness')" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
                 </span>
               <div class="cxy unlock cursor-pointer" *ngIf="laborUpdates[issue.id].locked == 0" (click)="lockLabor(issue.id, 1)" [class.disabled-button]="!auth.hasPerms('lock-labor')">
                 <img src="assets/icons/unlock.svg" height="22">
@@ -71,7 +86,9 @@
                 <img src="assets/icons/lock.svg" height="22">
               </div>
             </div>
-            <!--              <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>-->
+          </div>
+          <div class="">
+            <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>
           </div>
         </div>
       </div>

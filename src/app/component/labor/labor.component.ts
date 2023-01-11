@@ -6,6 +6,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {zipAll} from "rxjs/operators";
 import {forkJoin, zip} from "rxjs";
 import {MessageService} from "primeng/api";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-labor',
@@ -26,7 +27,7 @@ export class LaborComponent implements OnInit {
   laborUpdates: any = Object();
   issueSpentTime: any[] = [];
 
-  constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
+  constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.issueManagerService.getIssueSpentTime().then(spentTime => {
@@ -37,7 +38,7 @@ export class LaborComponent implements OnInit {
         this.issues = res.filter(x => x.issue_type == 'RKD');
         this.issues = _.sortBy(this.issues, x => x.doc_number);
         this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
-        this.issues.forEach(issue => issue.labor = Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
+        this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
         this.issues.forEach(issue => {
           this.laborUpdates[issue.id] = Object({planHours: issue.plan_hours, locked: issue.plan_hours_locked});
         });
@@ -110,5 +111,14 @@ export class LaborComponent implements OnInit {
   }
   replaceStage(input: string) {
     return input.replace('Stage ', '');
+  }
+  getDateOnly(dateLong: number): string {
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    // let date = new Date(dateLong);
+    // let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
+    // let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+    // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    // return da + '.' + mo + '.' + ye;
   }
 }

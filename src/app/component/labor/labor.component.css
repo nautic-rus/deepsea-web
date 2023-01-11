@@ -124,7 +124,7 @@
   border-radius: 10px;
   transition: .5s;
   display: grid;
-  grid-template-columns: 20px 2fr 2fr 1fr 1fr;
+  grid-template-columns: 20px 40% 8% 9% 9% 9% 10% 10%;
 }
 .dash-card{
   position: relative;
@@ -150,6 +150,11 @@
 }
 .text-black-mini{
   font-weight: 700;
+  color: #3a3a3a;
+  font-size: 12px;
+}
+.text-black-min{
+  font-weight: 600;
   color: #3a3a3a;
   font-size: 12px;
 }
