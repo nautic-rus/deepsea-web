@@ -108,4 +108,7 @@ export class LaborComponent implements OnInit {
       });
     });
   }
+  replaceStage(input: string) {
+    return input.replace('Stage ', '');
+  }
 }

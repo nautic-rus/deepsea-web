@@ -45,6 +45,9 @@
 /deep/.p-virtualscroller .p-virtualscroller-content {
   background: transparent!important;
 }
+/deep/.p-inputnumber-input {
+  width: 50px;
+}
 .all-page-labor{
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   padding: 0 20px;
@@ -163,4 +166,62 @@
   color: #c63737;
   font-size: 13px;
   font-weight: 500;
+}
+.unlock{
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  background-color: #E9FAEC;
+}
+.lock{
+  width: 36px;
+  height: 36px;
+  border-radius: 20px;
+  background-color: #FFF5F5;
+}
+.stage-round {
+  width: 60px;
+  height: 60px;
+  border-radius: 40px;
+}
+.round-in{
+  width: 46px;
+  height: 46px;
+  border-radius: 30px;
+  background-color: white;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+.period-one-back{
+  background-color: #EF8DAA;
+}
+.period-one{
+  color: #EF8DAA;
+}
+.period-two-back{
+  background-color: #EE6566;
+}
+.period-two{
+  color: #EE6566;
+}
+.period-three-back{
+  background-color: #FCCC68;
+}
+.period-three{
+  color: #FCCC68;
+}
+.period-four-back{
+  background-color: #83C7B7;
+}
+.period-four{
+  color: #83C7B7;
+}
+.period-five-back{
+  background-color: #6CA8BF;
+}
+.period-five-back{
+  color: #6CA8BF;
+}
+.mm-text{
+  color: #7575759e;
+  font-size: 12px;
 }

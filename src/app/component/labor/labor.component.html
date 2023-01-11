@@ -28,7 +28,7 @@
     <div class="empty-card-bottom"></div>
 
 
-    <cdk-virtual-scroll-viewport autosize style="height: 85vh">
+    <cdk-virtual-scroll-viewport autosize style="height: 79vh">
       <div class="dash-card" *cdkVirtualFor="let issue of issues">
         <div class="card-task">
           <div>
@@ -36,23 +36,40 @@
           </div>
           <!--            <div *ngIf="!issue.doc_number.includes('5') "></div>-->
           <!--            <div *ngIf="issue.doc_number.includes('5') " class="deadline cxy">deadline</div>-->
-          <div class="left-col">
+          <div class="left-col mr-10">
             <div class="title-bold mb-5">{{issue.doc_number}}</div>
             <div class="text-mini-gray">{{issue.name}}</div>
           </div>
-          <div>{{issue.period}}</div>
-          <div>
-            <div class="mm-text cx mb-5">Трудоемкость</div>
+          <div class="cy">
+            <div *ngIf="issue.period != '-'" [class.period-one-back]="issue.period == 'Stage 1'" [class.period-two-back]="issue.period == 'Stage 2'" [class.period-three-back]="issue.period == 'Stage 3'" [class.period-four-back]="issue.period == 'Stage 4'" [class.period-five-back]="issue.period == 'Stage 5'" class="stage-round cxy">
+              <div class="round-in cxy flex-column">
+                <div class="mm-text">stage</div>
+                <div [class.period-one]="issue.period == 'Stage 1'" [class.period-two]="issue.period == 'Stage 2'" [class.period-three]="issue.period == 'Stage 3'" [class.period-four]="issue.period == 'Stage 4'" [class.period-five]="issue.period == 'Stage 5'" class="period-one">{{replaceStage(issue.period)}}</div>
+              </div>
+
+
+
+
+
+            </div>
+          </div>
+
+          {{issue.period}}
+          <div class="cy">
             <div class="cx text-black-mini mb-5">
-                <span>
+                <span class="cy">
                   <div>{{getConsumedLabor(issue.id, issue.doc_number)}}</div>
                 </span>
-              <span class="mx-10">/</span>
-              <span class="cursor-pointer" *ngIf="laborUpdates[issue.id] != null">
+              <span class="mx-10 cy">/</span>
+              <span class="cursor-pointer width-50 mr-15" *ngIf="laborUpdates[issue.id] != null">
                   <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
                 </span>
-              <div (click)="lockLabor(issue.id, 1)" *ngIf="laborUpdates[issue.id].locked == 0">LOCK</div>
-              <div (click)="lockLabor(issue.id, 0)" *ngIf="laborUpdates[issue.id].locked == 1">UNLOCK</div>
+              <div class="cxy unlock cursor-pointer" *ngIf="laborUpdates[issue.id].locked == 0" (click)="lockLabor(issue.id, 1)" [class.disabled-button]="!auth.hasPerms('lock-labor')">
+                <img src="assets/icons/unlock.svg" height="22">
+              </div>
+              <div class="cxy lock cursor-pointer" *ngIf="laborUpdates[issue.id].locked == 1" (click)="lockLabor(issue.id, 0)" [class.disabled-button]="!auth.hasPerms('lock-labor')">
+                <img src="assets/icons/lock.svg" height="22">
+              </div>
             </div>
             <!--              <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>-->
           </div>
