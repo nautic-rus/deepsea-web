@@ -28,40 +28,72 @@
     <div class="empty-card-bottom"></div>
 
 
+    <cdk-virtual-scroll-viewport autosize style="height: 85vh">
+      <div class="dash-card" *cdkVirtualFor="let issue of issues">
+        <div class="card-task">
+          <div>
 
-    <p-virtualScroller [value]="issues" scrollHeight="80vh" [itemSize]="105">
-      <ng-template pTemplate="item" let-issue>
-        <div class="dash-card">
-          <div class="card-task">
-            <div>
-
-            </div>
-<!--            <div *ngIf="!issue.doc_number.includes('5') "></div>-->
-<!--            <div *ngIf="issue.doc_number.includes('5') " class="deadline cxy">deadline</div>-->
-            <div class="left-col">
-              <div class="title-bold mb-5">{{issue.doc_number}}</div>
-              <div class="text-mini-gray">{{issue.name}}</div>
-            </div>
-            <div>{{issue.period}}</div>
-            <div>
-              <div class="mm-text cx mb-5">Трудоемкость</div>
-              <div class="cx text-black-mini mb-5">
+          </div>
+          <!--            <div *ngIf="!issue.doc_number.includes('5') "></div>-->
+          <!--            <div *ngIf="issue.doc_number.includes('5') " class="deadline cxy">deadline</div>-->
+          <div class="left-col">
+            <div class="title-bold mb-5">{{issue.doc_number}}</div>
+            <div class="text-mini-gray">{{issue.name}}</div>
+          </div>
+          <div>{{issue.period}}</div>
+          <div>
+            <div class="mm-text cx mb-5">Трудоемкость</div>
+            <div class="cx text-black-mini mb-5">
                 <span>
                   <div>{{getConsumedLabor(issue.id, issue.doc_number)}}</div>
                 </span>
-                <span class="mx-10">/</span>
-                <span class="cursor-pointer" *ngIf="laborUpdates[issue.id] != null">
+              <span class="mx-10">/</span>
+              <span class="cursor-pointer" *ngIf="laborUpdates[issue.id] != null">
                   <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
                 </span>
-                <div (click)="lockLabor(issue.id, 1)" *ngIf="laborUpdates[issue.id].locked == 0">LOCK</div>
-                <div (click)="lockLabor(issue.id, 0)" *ngIf="laborUpdates[issue.id].locked == 1">UNLOCK</div>
-              </div>
-<!--              <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>-->
+              <div (click)="lockLabor(issue.id, 1)" *ngIf="laborUpdates[issue.id].locked == 0">LOCK</div>
+              <div (click)="lockLabor(issue.id, 0)" *ngIf="laborUpdates[issue.id].locked == 1">UNLOCK</div>
             </div>
+            <!--              <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>-->
           </div>
         </div>
-      </ng-template>
-    </p-virtualScroller>
+      </div>
+
+    </cdk-virtual-scroll-viewport>
+
+<!--    <p-virtualScroller [value]="issues" scrollHeight="80vh" [itemSize]="105">-->
+<!--      <ng-template pTemplate="item" let-issue>-->
+<!--        <div class="dash-card">-->
+<!--          <div class="card-task">-->
+<!--            <div>-->
+
+<!--            </div>-->
+<!--&lt;!&ndash;            <div *ngIf="!issue.doc_number.includes('5') "></div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <div *ngIf="issue.doc_number.includes('5') " class="deadline cxy">deadline</div>&ndash;&gt;-->
+<!--            <div class="left-col">-->
+<!--              <div class="title-bold mb-5">{{issue.doc_number}}</div>-->
+<!--              <div class="text-mini-gray">{{issue.name}}</div>-->
+<!--            </div>-->
+<!--            <div>{{issue.period}}</div>-->
+<!--            <div>-->
+<!--              <div class="mm-text cx mb-5">Трудоемкость</div>-->
+<!--              <div class="cx text-black-mini mb-5">-->
+<!--                <span>-->
+<!--                  <div>{{getConsumedLabor(issue.id, issue.doc_number)}}</div>-->
+<!--                </span>-->
+<!--                <span class="mx-10">/</span>-->
+<!--                <span class="cursor-pointer" *ngIf="laborUpdates[issue.id] != null">-->
+<!--                  <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>-->
+<!--                </span>-->
+<!--                <div (click)="lockLabor(issue.id, 1)" *ngIf="laborUpdates[issue.id].locked == 0">LOCK</div>-->
+<!--                <div (click)="lockLabor(issue.id, 0)" *ngIf="laborUpdates[issue.id].locked == 1">UNLOCK</div>-->
+<!--              </div>-->
+<!--&lt;!&ndash;              <p-progressBar [value]="issue.labor" unit="%"></p-progressBar>&ndash;&gt;-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--    </p-virtualScroller>-->
   </div>
 </div>
 <p-toast position="bottom-center"></p-toast>
