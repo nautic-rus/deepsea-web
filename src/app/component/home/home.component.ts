@@ -551,7 +551,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     } else if (field == 'issue_type') {
       return this.issueManager.localeTaskType(issueElement);
     } else if (field == 'name') {
-      return this.trim(issueElement);
+      return issueElement;
     } else if (field == 'priority') {
       return this.issueManager.localeTaskPriority(issueElement);
     } else if (field == 'department') {
@@ -564,6 +564,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       return this.auth.getUserName(issueElement);
     } else if (field == 'doc_number') {
       return issueElement != '' ? issueElement : '-';
+    } else if (field == 'issue_comment') {
+      return issueElement.replace(/<[^>]+>/g, '');
     } else {
       return issueElement;
     }
@@ -639,14 +641,28 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       issues = this.issues;
     }
     let data: any[] = [];
-    // data.push(this.selectedCols);
-    issues.forEach(issue => {
-      let newIssue = new Issue();
-      for (let issueKey in issue) {
+    let cols = this.selectedColumns.map(x => x.field);
+    data.push(this.selectedColumns.map(x => x.header));
+    issues.filter(x => this.showIssue(x)).forEach(issue => {
+      let newIssue: Issue = JSON.parse(JSON.stringify(issue));
+      let rowData: any[] = [];
+      let findSrc = this.issues.find(x => x.id == newIssue.id);
+      console.log(findSrc);
+
+      cols.forEach(c => {
+        if (findSrc != null){
+          // @ts-ignore
+          newIssue[c] = findSrc[c];
+        }
+        if (c == 'name'){
+          // @ts-ignore
+          console.log(newIssue[c]);
+        }
+
         // @ts-ignore
-        newIssue[issueKey] = this.localeColumnForPDF(issue[issueKey], issueKey);
-      }
-      data.push(newIssue);
+        rowData.push(this.localeColumnForPDF(newIssue[c], c));
+      });
+      data.push(rowData);
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
