@@ -516,8 +516,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       return this.issueManager.localeTaskType(issueElement);
     } else if (field == 'name') {
       return this.trim(issueElement);
-    } else if (field == 'issue_comment') {
-      return this.trimMin(issueElement);
     } else if (field == 'priority') {
       return this.issueManager.localeTaskPriority(issueElement);
     } else if (field == 'department') {
