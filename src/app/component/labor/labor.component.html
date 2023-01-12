@@ -15,12 +15,26 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
+        <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <p-dropdown placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
         <div class="materials-button green-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div [pTooltip]="t.tr('Сохранить')" tooltipPosition="top" class="materials-button yellow-button cxy" (click)="saveLabor()">
         <img src="assets/icons/diskette.svg" height="24">
+      </div>
+      <div>
+        {{getSumConsumed() + '/' + getSumPlan()}}
+      </div>
+      <div (click)="lockAll()">
+        LOCK THEM ALL
       </div>
     </div>
     <div class="empty-card-bottom"></div>
@@ -34,12 +48,15 @@
           </div>
           <!--            <div *ngIf="!issue.doc_number.includes('5') "></div>-->
           <!--            <div *ngIf="issue.doc_number.includes('5') " class="deadline cxy">deadline</div>-->
-          <div class="left-col mr-10">
-            <div class="title-bold mb-5">{{issue.doc_number}}</div>
+          <div class="left-col mr-10 cursor-pointer" (click)="openIssue(issue)">
+            <div class="title-bold mb-5">{{issue.doc_number}} // {{issue.issue_type}}</div>
             <div class="text-mini-gray">{{issue.name}}</div>
           </div>
           <div class="mm-text">
             {{issue.period}}
+          </div>
+          <div class="mm-text">
+            {{getDateOnly(issue.contract_due_date)}}
           </div>
           <div>
             <div class="df">
