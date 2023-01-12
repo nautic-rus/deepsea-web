@@ -72,10 +72,16 @@ export class MonthTasksComponent implements OnInit {
   getDayOfWeek(day: number, month: number = this.getMonth(), year: number = this.getYear()){
     return new Date(year, month, day).getDay();
   }
+  // getWeekNumber(day: number, monthChange = 0){
+  //   let date = new Date(this.getYear(), this.getMonth() + monthChange, day);
+  //   let firstJan = new Date(date.getFullYear(), 0, 1);
+  //   return Math.ceil((((date.getTime() - firstJan.getTime()) / 86400000) + firstJan.getDay() + 1) / 7) - 1;
+  // }
   getWeekNumber(day: number, monthChange = 0){
-    let date = new Date(this.getYear(), this.getMonth() + monthChange, day);
-    let firstJan = new Date(date.getFullYear(), 0, 1);
-    return Math.ceil((((date.getTime() - firstJan.getTime()) / 86400000) + firstJan.getDay() + 1) / 7) - 1;
+    let currentDate = new Date(this.getYear(), this.getMonth() + monthChange, day);
+    let startDate = new Date(currentDate.getFullYear(), 0, 1);
+    let days = Math.floor((currentDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
+    return  Math.ceil(days / 7);
   }
   toArray42(length: number){
     let result = [];
