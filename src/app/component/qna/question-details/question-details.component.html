@@ -21,8 +21,8 @@
         <div class="left-content">
           <div>
             <div class="">
-              <span [class.no-edit]="!isEditable()" class="task-name hover-task cursor-pointer" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.name}}</span>
-              <div class="task-name" [hidden]="edit != 'name'">
+              <span [class.no-edit]="!isEditable()" class="task-name-q hover-task cursor-pointer" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.name}}</span>
+              <div class="task-name-q" [hidden]="edit != 'name'">
                 <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
                 <div class="content-end">
                   <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
