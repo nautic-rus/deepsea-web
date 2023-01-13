@@ -357,8 +357,7 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   projectChanged() {
-    console.log(this.rkdIssues);
-    this.docNumbersSrc = _.sortBy(_.uniq(this.rkdIssues.filter(x => x.project == this.taskProject).map(x => x.doc_number), x => x), x => x);
+    this.docNumbersSrc = _.sortBy(_.uniq(this.rkdIssues.filter(x => x.project == this.taskProject && x.issue_type == 'RKD').map(x => x.doc_number), x => x), x => x);
     this.docNumbers = [...this.docNumbersSrc];
   }
 
