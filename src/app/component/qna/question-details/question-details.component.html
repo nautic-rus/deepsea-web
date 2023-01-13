@@ -485,9 +485,16 @@
                 </div>
               </div>
               <div class="df mt-3px">
+                <div class="df text-y height-32 normal-text w-40">{{t.tr('Ответственный')}}</div>
+                <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.responsible)}}</div>
+                <div *ngIf="issue.responsible != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.responsible)">
+                  <img src="assets/icons/bell.svg" height="15">
+                </div>
+              </div>
+              <div class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Исполнитель')}}</div>
-                <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{getAssignedTo(issue.assigned_to)}}</div>
-                <div *ngIf="issue.assigned_to != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.assigned_to)">
+                <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.assigned_to)}}</div>
+                <div *ngIf="issue.assigned_to != 'nautic-rus'" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.assigned_to)">
                   <img src="assets/icons/bell.svg" height="15">
                 </div>
               </div>

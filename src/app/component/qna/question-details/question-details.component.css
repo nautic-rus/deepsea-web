@@ -1188,3 +1188,11 @@
   box-shadow: 0px 0px 3px 0px rgba(34, 60, 80, 0.2);
   border-radius: 50%;
 }
+.materials-button-assignee{
+  height: 30px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 8px;
+  color: white;
+  font-size: 12px;
+}

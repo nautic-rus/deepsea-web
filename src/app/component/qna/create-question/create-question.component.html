@@ -25,7 +25,7 @@
     <div class="df space-between">
       <div style="width: 220px">
         <div class="big-text-create mb-1 mt-1">{{t.tr('Документ')}}</div>
-        <p-autoComplete [(ngModel)]="taskDocNumber" [suggestions]="docNumbers" (completeMethod)="filterDocNumbers($event)"></p-autoComplete>
+        <p-autoComplete [(ngModel)]="taskDocNumber" [suggestions]="docNumbers" (completeMethod)="filterDocNumbers($event)" (ngModelChange)="setDepartmentOnDocNumberSelect()"></p-autoComplete>
       </div>
       <div style="width: 454px">
         <div class="big-text-create mb-1 mt-1">{{t.tr('Тема вопроса')}}</div>

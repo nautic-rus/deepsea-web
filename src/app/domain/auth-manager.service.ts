@@ -61,7 +61,7 @@ export class AuthManagerService {
     });
   }
   getUserName(login: string){
-    if (login == 'nautic-rus'){
+    if (login == 'nautic-rus' || login == ''){
       return 'Не назначен';
     }
     let find = this.users.find(x => x.login == login);

@@ -29,6 +29,8 @@ import {AcceptToWorkComponent} from "../../task/accept-to-work/accept-to-work.co
 import {AssignToResponsibleComponent} from "../../task/assign-to-responsible/assign-to-responsible.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SubscribeForNotificationsComponent} from "../subscribe-for-notifications/subscribe-for-notifications.component";
+import {AssignResponsibleComponent} from "../assign-responsible/assign-responsible.component";
+import {AssignQuestionComponent} from "../assign-question/assign-question.component";
 
 @Component({
   selector: 'app-question-details',
@@ -208,7 +210,7 @@ export class QuestionDetailsComponent implements OnInit {
     this.handleFileInput(event.dataTransfer.files);
   }
   assignTask(){
-    this.dialogService.open(AssignComponent, {
+    this.dialogService.open(AssignQuestionComponent, {
       showHeader: false,
       modal: true,
       data: this.issue
@@ -253,6 +255,7 @@ export class QuestionDetailsComponent implements OnInit {
           this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
           this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
           this.availableActions = this.getAvailableActions(this.issue);
+          console.log(this.availableActions);
         });
       }
     });
@@ -329,6 +332,7 @@ export class QuestionDetailsComponent implements OnInit {
       allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != 'Approved').length == 0 && allow : allow;
       allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
+      allow = action.rule.includes('m') ? true : allow;
       if (allow){
         res.push({label: action.action, value: action.action});
       }
@@ -657,6 +661,9 @@ export class QuestionDetailsComponent implements OnInit {
           });
           // this.askForSendToCloud();
         }
+        else if (value == 'Assign responsible'){
+          this.assignResponsible();
+        }
         else if (value == 'Recovery'){
           this.issue.status = 'New';
           this.issue.action = 'New';
@@ -701,9 +708,6 @@ export class QuestionDetailsComponent implements OnInit {
         }
         else if (value == 'Accept' && this.issue.issue_type == 'DEVELOPMENT'){
           this.askForAcceptToWork()
-        }
-        else if (value == 'To publish' && this.issue.issue_type == 'DEVELOPMENT'){
-          this.assignToResponsible()
         }
         else{
           this.issue.status = value;
@@ -973,18 +977,6 @@ export class QuestionDetailsComponent implements OnInit {
     });
   }
 
-  assignToResponsible() {
-    this.dialogService.open(AssignToResponsibleComponent, {
-      showHeader: false,
-      modal: true,
-      data: this.issue
-    }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
-      });
-    });
-  }
 
   subscribeForNotifications() {
     this.dialogService.open(SubscribeForNotificationsComponent, {
@@ -993,6 +985,23 @@ export class QuestionDetailsComponent implements OnInit {
       data: this.issue
     }).onClose.subscribe(res => {
 
+    });
+  }
+
+  assignQuestion(issue: Issue) {
+
+  }
+
+  assignResponsible() {
+    this.dialogService.open(AssignResponsibleComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
     });
   }
 }

@@ -8,11 +8,11 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {LanguageService} from "../../../domain/language.service";
 
 @Component({
-  selector: 'app-assign-question',
-  templateUrl: './assign-question.component.html',
-  styleUrls: ['./assign-question.component.css']
+  selector: 'app-assign-responsible',
+  templateUrl: './assign-responsible.component.html',
+  styleUrls: ['./assign-responsible.component.css']
 })
-export class AssignQuestionComponent implements OnInit {
+export class AssignResponsibleComponent implements OnInit {
 
   issue: Issue = new Issue();
   selectedUser: string = '';
@@ -38,8 +38,9 @@ export class AssignQuestionComponent implements OnInit {
   }
 
   commit() {
-    this.issueManager.assignUser(this.issue.id, this.selectedUser, this.startDate.getTime().toString(), this.dueDate.getTime().toString(), 'Нет', this.issue.action, this.auth.getUser().login).then(res => {
-      this.issue.status = 'In Work';
+    this.issue.responsible = this.selectedUser;
+    this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+      this.issue.status = 'Assign responsible';
       this.issue.action = this.issue.status;
       this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
         this.ref.close();

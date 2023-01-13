@@ -57,6 +57,9 @@
           <th pSortableColumn="name" class="lxy">{{t.tr('Тема')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
+          <th pSortableColumn="responsible" class="lxy">{{t.tr('Ответственный')}}
+            <p-sortIcon field="responsible"></p-sortIcon>
+          </th>
           <th pSortableColumn="assigned_to" class="lxy">{{t.tr('Исполнитель')}}
             <p-sortIcon field="assigned_to"></p-sortIcon>
           </th>
@@ -92,15 +95,18 @@
           <td class="text-14">{{q.doc_number}}</td>
           <td class="text-14">{{q.name}}</td>
           <td class="text-14">
-            <span *ngIf="q.assigned_to != 'nautic-rus'" [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
-            <div *ngIf="q.assigned_to == 'nautic-rus'" (click)="assignQuestion(q); $event.stopPropagation();">
-              <div  class="materials-button-assignee light-green-button cxy">
-                <div class="pr-10 cxy">
-                  <img src="assets/icons/check.png" height="16">
-                </div>
-                <div class="cxy">{{t.tr('Назначить')}}</div>
-              </div>
-            </div>
+            <span [innerHTML]="getUserName(q.responsible) | safeHtml"></span>
+<!--            <div *ngIf="q.responsible == ''" (click)="assignResponsible(q); $event.stopPropagation();">-->
+<!--              <div  class="materials-button-assignee light-green-button cxy">-->
+<!--                <div class="pr-10 cxy">-->
+<!--                  <img src="assets/icons/check.png" height="16">-->
+<!--                </div>-->
+<!--                <div class="cxy">{{t.tr('Назначить')}}</div>-->
+<!--              </div>-->
+<!--            </div>-->
+          </td>
+          <td class="text-14">
+            <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
           <td class="text-14"><span [innerHTML]="getUserName(q.started_by) | safeHtml"></span></td>
           <td class="text-14">{{getDate(q.started_date)}}</td>

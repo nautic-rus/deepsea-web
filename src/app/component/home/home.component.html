@@ -111,7 +111,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-columns="columns" let-issue>
-          <tr *ngIf="showIssue(issue)" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id)">
+          <tr *ngIf="showIssue(issue)" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id, issue.issue_type)">
             <td style="width:30px" class="cursor-pointer">
               <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>

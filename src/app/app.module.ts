@@ -150,6 +150,7 @@ import {ChartModule} from "primeng/chart";
 import { AssignQuestionComponent } from './component/qna/assign-question/assign-question.component';
 import { SubscribeForNotificationsComponent } from './component/qna/subscribe-for-notifications/subscribe-for-notifications.component';
 import {ScrollingModule} from "@angular/cdk-experimental/scrolling";
+import { AssignResponsibleComponent } from './component/qna/assign-responsible/assign-responsible.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -250,7 +251,8 @@ Quill.register('modules/imageResize', ImageResize);
     CreateQuestionComponent,
     QuestionDetailsComponent,
     AssignQuestionComponent,
-    SubscribeForNotificationsComponent
+    SubscribeForNotificationsComponent,
+    AssignResponsibleComponent
   ],
     imports: [
         BrowserModule,

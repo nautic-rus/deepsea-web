@@ -361,4 +361,11 @@ export class CreateQuestionComponent implements OnInit {
     this.docNumbersSrc = _.sortBy(_.uniq(this.rkdIssues.filter(x => x.project == this.taskProject).map(x => x.doc_number), x => x), x => x);
     this.docNumbers = [...this.docNumbersSrc];
   }
+
+  setDepartmentOnDocNumberSelect() {
+    let find = this.rkdIssues.find(x => x.doc_number == this.taskDocNumber);
+    if (find != null){
+      this.taskDepartment = find.department;
+    }
+  }
 }

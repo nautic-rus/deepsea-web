@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.route.queryParams.subscribe(params => {
       let taskId = params.taskId != null ? params.taskId : '';
       if (taskId != '') {
-        this.viewTask(taskId);
+        this.viewTask(taskId, '');
       }
     });
     if (this.l.language == 'ru'){
@@ -416,8 +416,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     });
   }
 
-  viewTask(id: number) {
+  viewTask(id: number, type: string) {
     this.setIssueViewed(id);
+    if (type == 'QNA'){
+      window.open('/qna-details?id=' + id, '_blank');
+      return;
+    }
     this.issueManager.getIssueDetails(id).then(res => {
       console.log(res);
       if (res.id != null) {

@@ -143,4 +143,8 @@ export class QnaComponent implements OnInit {
     this.department = '';
     this.applyFilters();
   }
+
+  assignResponsible(q: any) {
+    
+  }
 }
