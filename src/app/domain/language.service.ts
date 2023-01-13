@@ -380,7 +380,7 @@ export class LanguageService {
           case 'Разработка': return 'Development';
           case 'ПДСП': return 'PDSP';
           case 'РКД': return 'RKD';
-          case '': return '';
+          case 'Зафиксировать все': return 'Lock them all';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -2,40 +2,49 @@
   <div class="min-height-card">
     <div class="empty-card"></div>
     <div class="card-head df sticky-card">
-      <div class="mr-10">
-        <p-dropdown placeholder="Project" optionLabel="label" optionValue="name" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
-        <p-dropdown placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
-        <p-dropdown placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
-        <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
-        <p-dropdown placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
-        <div class="materials-button green-button cxy">
-          <img src="assets/icons/xls2.svg" height="26">
+      <div class="df">
+        <div class="mr-10">
+          <p-dropdown placeholder="Project" optionLabel="label" optionValue="name" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-10">
+          <p-dropdown placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-10">
+          <p-dropdown placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-10">
+          <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-10">
+          <p-dropdown placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-170 border">
+          </p-dropdown>
+        </div>
+        <div class="mr-10">
+          <div class="materials-button green-button cxy">
+            <img src="assets/icons/xls2.svg" height="26">
+          </div>
+        </div>
+        <div class="mr-10">
+          <div [pTooltip]="t.tr('Сохранить')" tooltipPosition="top" class="materials-button yellow-button cxy" (click)="saveLabor()">
+            <img src="assets/icons/diskette.svg" height="24">
+          </div>
+        </div>
+        <div class="mr-10">
+          <div [pTooltip]="t.tr('Зафиксировать все')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('lock-labor')" class="materials-button red-button cxy" (click)="lockAll()">
+            <img src="assets/icons/lock1.svg" height="24">
+          </div>
         </div>
       </div>
-      <div [pTooltip]="t.tr('Сохранить')" tooltipPosition="top" class="materials-button yellow-button cxy" (click)="saveLabor()">
-        <img src="assets/icons/diskette.svg" height="24">
+      <div class="df text-black-mini">
+        <span class="cxy width-35">{{getSumConsumed()}}</span>
+        <span class="mx-10 cy">/</span>
+        <span class="cxy width-35">{{getSumPlan()}}</span>
       </div>
-      <div>
-        {{getSumConsumed() + '/' + getSumPlan()}}
-      </div>
-      <div (click)="lockAll()">
-        LOCK THEM ALL
-      </div>
+
     </div>
     <div class="empty-card-bottom"></div>
 
@@ -43,20 +52,23 @@
     <cdk-virtual-scroll-viewport autosize style="height: 79vh">
       <div class="dash-card" *cdkVirtualFor="let issue of issues">
         <div class="card-task">
-          <div>
+<!--          <div>-->
 
-          </div>
+<!--          </div>-->
           <!--            <div *ngIf="!issue.doc_number.includes('5') "></div>-->
           <!--            <div *ngIf="issue.doc_number.includes('5') " class="deadline cxy">deadline</div>-->
           <div class="left-col mr-10 cursor-pointer" (click)="openIssue(issue)">
-            <div class="title-bold mb-5">{{issue.doc_number}} // {{issue.issue_type}}</div>
+            <div class="df">
+              <div class="title-bold mb-5 mr-10" [class.no-margin]="issue.doc_number == ''">{{issue.doc_number}}</div>
+              <div class="gray-bold">{{issue.issue_type}}</div>
+            </div>
+
+
             <div class="text-mini-gray">{{issue.name}}</div>
           </div>
           <div class="mm-text">
-            {{issue.period}}
-          </div>
-          <div class="mm-text">
-            {{getDateOnly(issue.contract_due_date)}}
+            <div class="mb-10">{{issue.period}}</div>
+            <div>{{getDateOnly(issue.contract_due_date)}}</div>
           </div>
           <div>
             <div class="df">
@@ -89,9 +101,9 @@
 
           <div class="cy">
             <div class="cx text-black-mini mb-5">
-                <span class="cy">
-                  <div>{{getConsumedLabor(issue.id, issue.doc_number)}}</div>
-                </span>
+              <span class="cy width-20">
+                <div>{{getConsumedLabor(issue.id, issue.doc_number)}}</div>
+              </span>
               <span class="mx-10 cy">/</span>
               <span class="cursor-pointer width-50 mr-15" *ngIf="laborUpdates[issue.id] != null">
                   <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1 || !auth.hasPerms('laboriousness')" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
