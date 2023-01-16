@@ -44,12 +44,12 @@ export class LaboriousnessComponent implements OnInit {
       false,
     );
     if (+this.hoursAmount + issue.labor > issue.plan_hours){
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Ошибка',
-        detail: 'Количество затраченых на работу часов больше чем плановое количество'
-      });
-      return;
+      // this.messageService.add({
+      //   severity: 'error',
+      //   summary: 'Ошибка',
+      //   detail: 'Количество затраченых на работу часов больше чем плановое количество'
+      // });
+      // return;
     }
     this.issues.addDailyTask(t.toJson()).then(r => {
       this.ref.close('success');
