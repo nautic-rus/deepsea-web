@@ -84,7 +84,7 @@
   font-size: 14px;
   font-weight: 600;
   display: grid;
-  grid-template-columns: 75% 20%;
+  grid-template-columns: 72% 20%;
 }
 .sticky-card{
   position: sticky;

@@ -28,7 +28,7 @@ export class QnaComponent implements OnInit {
   department = '';
   questionsSrc: Issue[] = [];
   questions: Issue[] = [];
-  showCompleted = false;
+  showCompleted: boolean = false;
   filters:  { status: any[],  author: any[], department: any[], priority: any[] } = { status: [], author: [], department: [], priority: [] };
   constructor(public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
