@@ -52,11 +52,11 @@
                 <p-autoComplete [placeholder]="t.tr('Введите документ...')" appendTo = "body" [completeOnFocus]="true"  [(ngModel)]="task.docNumber" [suggestions]="filteredDocNumbers" (completeMethod)="filterDocNumbers($event)">
                 </p-autoComplete>
               </div>
-              <div>
-                <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>
-                <p-autoComplete [placeholder]="t.tr('Введите действие...')" appendTo = "body" [completeOnFocus]="true" [(ngModel)]="task.action" [suggestions]="filteredActions" (completeMethod)="filterActions($event)">
-                </p-autoComplete>
-              </div>
+<!--              <div>-->
+<!--                <div class="big-text-create mb-1">{{t.tr('Действие')}}</div>-->
+<!--                <p-autoComplete [placeholder]="t.tr('Введите действие...')" appendTo = "body" [completeOnFocus]="true" [(ngModel)]="task.action" [suggestions]="filteredActions" (completeMethod)="filterActions($event)">-->
+<!--                </p-autoComplete>-->
+<!--              </div>-->
             </div>
             <div class="df two-row-input">
               <div>

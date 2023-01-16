@@ -1069,6 +1069,10 @@
             <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудозатраты')}}</div>
             <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.labor}}</div>
           </div>
+          <div class="df mt-3px" *ngIf="isVisible('labor')">
+            <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>
+            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.labor}} / {{issue.plan_hours}} ({{issue.plan_hours - issue.labor}})</div>
+          </div>
           <div class="df mt-3px" *ngIf="isVisible('id')">
             <div class="df text-y height-32 normal-text w-40">{{t.tr('ID задачи')}}</div>
             <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.id}}</div>

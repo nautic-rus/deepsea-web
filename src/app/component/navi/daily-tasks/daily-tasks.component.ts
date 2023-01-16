@@ -79,24 +79,25 @@ export class DailyTasksComponent implements OnInit {
     this.tasks.forEach(t => timeUsed += t.time);
     timeUsed = timeUsed < 8 ? 8 - timeUsed : 0;
 
-    let newTask = {
-      date: this.calendarDay,
-      userLogin: this.auth.getUser().login,
-      userName: this.auth.getUserName(this.auth.getUser().login),
-      dateCreated: new Date(),
-      project: '',
-      docNumber: '',
-      details: '',
-      time: timeUsed,
-      action: '',
-      id: this.generateId(20),
-      hours: Math.floor(timeUsed),
-      minutes: Math.round((timeUsed - Math.floor(timeUsed)) * 60),
-      projectValue: '',
-      docNumberValue: '',
-      actionValue: '',
-      hidden: false
-    };
+    let newTask = new DailyTask(
+      0,
+      this.calendarDay.getTime(),
+      new Date().getTime(),
+      this.auth.getUser().login,
+      '',
+      '',
+      timeUsed,
+      0,
+      this.auth.getUserName(this.auth.getUser().login),
+      '',
+      '',
+      Math.floor(timeUsed),
+      Math.round((timeUsed - Math.floor(timeUsed)) * 60),
+      '',
+      '',
+      '',
+      false
+    );
     this.tasks.push(newTask);
 
     this.form.push(new FormGroup({
@@ -149,6 +150,12 @@ export class DailyTasksComponent implements OnInit {
         if (typeof (t.date) != "number"){
           t.date = t.date.getTime();
         }
+        if (t.docNumber != '-' && t.docNumber != ''){
+          let findIssue = this.issues.find(x => x.doc_number == t.docNumber);
+          if (findIssue != null){
+            t.id = findIssue.id;
+          }
+        }
         if (typeof (t.dateCreated) != "number"){
           t.dateCreated = t.dateCreated.getTime();
         }
@@ -176,11 +183,11 @@ export class DailyTasksComponent implements OnInit {
         this.error = 'You didnt specify docNumber for task #' + (this.tasks.indexOf(t) + 1).toString();
         //return;
       }
-      if (t.action.trim() == ''){
-        this.invalid.push(t.id + '-a');
-        this.error = 'You didnt specify action for task #' + (this.tasks.indexOf(t) + 1).toString();
-        //return;
-      }
+      // if (t.action.trim() == ''){
+      //   this.invalid.push(t.id + '-a');
+      //   this.error = 'You didnt specify action for task #' + (this.tasks.indexOf(t) + 1).toString();
+      //   //return;
+      // }
       if (t.details.trim() == '' && t.project == 'Other'){
         this.invalid.push(t.id + '-d');
         this.error = 'You didnt specify details for task #' + (this.tasks.indexOf(t) + 1).toString();
@@ -276,24 +283,25 @@ export class DailyTasksComponent implements OnInit {
       this.tasks.forEach(t => timeUsed += t.time);
       timeUsed = timeUsed < 8 ? 8 - timeUsed : 0;
 
-      let newTask = {
-        date: this.calendarDay,
-        userLogin: this.auth.getUser().login,
-        userName: this.auth.getUserName(this.auth.getUser().login),
-        dateCreated: new Date(),
-        project: 'Operations group',
-        docNumber: '-',
-        details: 'Operations group',
-        time: timeUsed,
-        action: '-',
-        id: this.generateId(20),
-        hours: Math.floor(timeUsed),
-        minutes: Math.round((timeUsed - Math.floor(timeUsed)) * 60),
-        projectValue: '',
-        docNumberValue: '',
-        actionValue: '',
-        hidden: false
-      };
+      let newTask = new DailyTask(
+        0,
+        this.calendarDay,
+        new Date().getTime(),
+        this.auth.getUser().login,
+        'Operations group',
+        'Operations group',
+        timeUsed,
+        0,
+        this.auth.getUserName(this.auth.getUser().login),
+        '-',
+        '-',
+        Math.floor(timeUsed),
+        Math.round((timeUsed - Math.floor(timeUsed)) * 60),
+        '',
+        '',
+        '',
+        false
+      );
       this.tasks = [newTask];
     }
     else{

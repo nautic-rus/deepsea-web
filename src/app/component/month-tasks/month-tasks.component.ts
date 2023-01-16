@@ -176,6 +176,7 @@ export class MonthTasksComponent implements OnInit {
     this.users = this.auth.users.filter(x => x.visibility.includes('c'));
     this.selectedUser = this.auth.getUser().login;
     this.issueManager.getDailyTasks().then(res => {
+      console.log(res);
       this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
       this.tasks = res.filter(x => x.userLogin == this.selectedUser);
       this.calendar = this.getCalendar();
