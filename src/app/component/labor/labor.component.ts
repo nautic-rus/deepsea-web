@@ -34,23 +34,20 @@ export class LaborComponent implements OnInit {
   constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, public t: LanguageService) { }
 
   ngOnInit(): void {
-    this.issueManagerService.getIssueSpentTime().then(spentTime => {
-      this.issueSpentTime = spentTime;
-      this.issueSpentTime.forEach(x => x.user = this.auth.getUserName(x.user));
-      this.issueManagerService.getIssues('op').then(res => {
-        this.issuesSrc = res;
-        this.issues = res;
-        this.issues = _.sortBy(this.issues, x => x.doc_number);
-        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
-        this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
-        this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x);
-        this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
-        this.issues.forEach(issue => {
-          this.laborUpdates[issue.id] = Object({planHours: issue.plan_hours, locked: issue.plan_hours_locked});
-        });
-        this.statuses = ['-'].concat(this.statuses);
-        this.taskTypes = ['-'].concat(this.taskTypes);
+    this.issueSpentTime.forEach(x => x.user = this.auth.getUserName(x.user));
+    this.issueManagerService.getIssues('op').then(res => {
+      this.issuesSrc = res;
+      this.issues = res;
+      this.issues = _.sortBy(this.issues, x => x.doc_number);
+      this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
+      this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
+      this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x);
+      this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
+      this.issues.forEach(issue => {
+        this.laborUpdates[issue.id] = Object({planHours: issue.plan_hours, locked: issue.plan_hours_locked});
       });
+      this.statuses = ['-'].concat(this.statuses);
+      this.taskTypes = ['-'].concat(this.taskTypes);
     });
     this.issueManagerService.getIssueProjects().then(projects => {
       this.projects = projects;

@@ -572,9 +572,10 @@ export class TaskComponent implements OnInit {
       data: this.issue
     }).onClose.subscribe(res => {
       if (res == 'success'){
-        this.messageService.add({key:'task', severity:'success', summary:'Set Labor', detail:'You have successfully updated issue labor.'});
+        this.messageService.add({key:'task', severity:'success', summary:'Set Man Hours', detail:'You have successfully updated issue man hours.'});
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
+          console.log(this.issue);
           this.availableActions = this.getAvailableActions(issue);
         });
       }

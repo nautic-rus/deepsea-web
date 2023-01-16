@@ -127,9 +127,6 @@ export class IssueManagerService {
   async getRevisionFiles(): Promise<any>{
     return await this.http.get<any>(props.http + '/revisionFiles').toPromise();
   }
-  async setIssueLabor(user: string, issue_id: number, labor_value: number, labor_comment: string, date: number){
-    return await this.http.get<string>(props.http + '/setLabor', {params: {user, issue_id, labor_value, labor_comment, date}}).toPromise();
-  }
   async getCalendar(): Promise<DayCalendar[]>{
     return await this.http.get<DayCalendar[]>(props.http + '/daysCalendar').toPromise();
   }
@@ -172,7 +169,7 @@ export class IssueManagerService {
   async dingUser(user: string, message: string) {
     return await this.http.get(props.http + '/sendNotificationToUser',{params: {user, message}}).toPromise();
   }
-  async deleteDailyTask(id: string) {
+  async deleteDailyTask(id: number) {
     return await this.http.get(props.http + '/deleteDailyTask',{params: {id}}).toPromise();
   }
   async addDailyTask(task: string) {
