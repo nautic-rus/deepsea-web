@@ -20,6 +20,20 @@
     <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
     <div class="big-text mb-1 mt-1">{{t.tr('Срок завершения')}}</div>
     <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+    <div class="big-text mb-1 mt-1">{{t.tr('Плановая трудоёмкость')}}</div>
+    <span class="cursor-pointer width-50 mr-15">
+      <p-inputNumber [(ngModel)]="labor" mode="decimal"></p-inputNumber>
+    </span>
+    <div class="big-text mb-1 mt-1">{{t.tr('Связанные задачи')}}</div>
+    <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues"
+                   styleClass="width-200 new-task-button p-info" [placeholder]="'Выберите'" [virtualScroll]="true" [itemSize]="20" optionValue="id">
+      <ng-template let-issue pTemplate="item">
+        <div class="country-item">
+          <div>{{issue.doc_number}}</div>
+          <div>{{issue.name}}</div>
+        </div>
+      </ng-template>
+    </p-multiSelect>
   </div>
   <div class="form-footer pt-10">
     <div class="mr-5 cx">

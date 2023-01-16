@@ -28,6 +28,7 @@ export class QnaComponent implements OnInit {
   department = '';
   questionsSrc: Issue[] = [];
   questions: Issue[] = [];
+  showCompleted = false;
   filters:  { status: any[],  author: any[], department: any[], priority: any[] } = { status: [], author: [], department: [], priority: [] };
   constructor(public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
@@ -48,6 +49,8 @@ export class QnaComponent implements OnInit {
         this.filters.status = _.sortBy(_.uniq(res.map(x => x.status)), x => x).map(x => new LV(x));
         this.filters.author = _.sortBy(_.uniq(res.map(x => x.started_by)), x => x).map(x => new LV(this.auth.getUserName(x), x));
         this.filters.priority = _.sortBy(_.uniq(res.map(x => x.priority)), x => x).map(x => new LV(this.auth.getUserName(x), x));
+
+        this.applyFilters();
       });
     });
 
@@ -130,6 +133,7 @@ export class QnaComponent implements OnInit {
     this.questions = this.questionsSrc;
     this.questions = this.questions.filter(x => x.project == this.project || this.project == '');
     this.questions = this.questions.filter(x => x.department == this.department || this.department == '');
+    this.questions = this.questions.filter(x => x.status != 'Closed' || this.showCompleted);
   }
   changedProject() {
     this.applyFilters();
@@ -144,7 +148,8 @@ export class QnaComponent implements OnInit {
     this.applyFilters();
   }
 
-  assignResponsible(q: any) {
-    
+  switchCompleted(){
+    this.showCompleted = !this.showCompleted;
+    this.applyFilters();
   }
 }

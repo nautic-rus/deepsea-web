@@ -21,6 +21,9 @@ export class AssignQuestionComponent implements OnInit {
   today: Date = new Date();
   overtime = false;
   users: User[] = [];
+  labor = 0;
+  issues: Issue[] = [];
+  selectedIssues: number[] = [];
 
   constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef,public t: LanguageService) { }
 
@@ -32,6 +35,9 @@ export class AssignQuestionComponent implements OnInit {
       weekHeader: "№",
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
+    this.issueManager.getIssues('op').then(res => {
+      this.issues = res.filter(x => x.issue_type == 'RKD');
+    });
   }
   close(){
     this.ref.close('exit');
@@ -42,6 +48,11 @@ export class AssignQuestionComponent implements OnInit {
       this.issue.status = 'In Work';
       this.issue.action = this.issue.status;
       this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+        this.issueManager.setPlanHours(this.issue.id, this.auth.getUser().login, this.labor).then(() => {
+          this.selectedIssues.forEach(issueId => {
+            this.issueManager.combineIssues(this.issue.id, issueId, this.auth.getUser().login);
+          });
+        });
         this.ref.close();
       });
     });

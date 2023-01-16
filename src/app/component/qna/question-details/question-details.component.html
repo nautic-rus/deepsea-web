@@ -473,36 +473,40 @@
                 <div class="df text-y line-text normal-text w-40">{{t.tr('Проект')}}</div>
                 <div class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.project}}</div>
               </div>
-              <div class="df mt-3px">
+              <div *ngIf="isVisible('doc_number')" class="df mt-3px">
+                <div class="df text-y height-32 normal-text w-40">{{t.tr('Номер документа')}}</div>
+                <div class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.doc_number}}</div>
+              </div>
+              <div *ngIf="isVisible('department')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Отдел')}}</div>
                 <div class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.department}}</div>
               </div>
-              <div class="df mt-3px">
+              <div *ngIf="isVisible('started_by')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Автор')}}</div>
                 <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.started_by)}}</div>
                 <div *ngIf="issue.started_by != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.started_by)">
                   <img src="assets/icons/bell.svg" height="15">
                 </div>
               </div>
-              <div class="df mt-3px">
+              <div *ngIf="isVisible('responsible')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Ответственный')}}</div>
                 <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.responsible)}}</div>
                 <div *ngIf="issue.responsible != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.responsible)">
                   <img src="assets/icons/bell.svg" height="15">
                 </div>
               </div>
-              <div class="df mt-3px">
+              <div *ngIf="isVisible('assigned_to')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Исполнитель')}}</div>
                 <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.assigned_to)}}</div>
                 <div *ngIf="issue.assigned_to != 'nautic-rus'" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.assigned_to)">
                   <img src="assets/icons/bell.svg" height="15">
                 </div>
               </div>
-              <div class="df mt-3px">
+              <div *ngIf="isVisible('priority')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Приоритет')}}</div>
                 <div class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
               </div>
-              <div class="df mt-3px">
+              <div *ngIf="isVisible('startDate')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Начать исполнение')}}</div>
                 <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.start_date)}}</div>
                 <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
@@ -519,7 +523,7 @@
                   </div>
                 </div>
               </div>
-              <div class="df mt-3px">
+              <div *ngIf="isVisible('dueDate')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('Выполнить до')}}</div>
                 <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.due_date)}}</div>
                 <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
@@ -536,14 +540,22 @@
                   </div>
                 </div>
               </div>
-              <div class="df mt-3px">
+              <div class="df mt-3px" *ngIf="isVisible('labor')">
+                <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудозатраты')}}</div>
+                <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.labor}}</div>
+              </div>
+              <div class="df mt-3px" *ngIf="isVisible('labor')">
+                <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>
+                <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.labor}} / {{issue.plan_hours}} ({{issue.plan_hours - issue.labor}})</div>
+              </div>
+              <div *ngIf="isVisible('id')" class="df mt-3px">
                 <div class="df text-y height-32 normal-text w-40">{{t.tr('ID задачи')}}</div>
                 <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.id}}</div>
               </div>
 
             </div>
           </div>
-          <div class="mt-1 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
+          <div *ngIf="isVisible('started_date')" class="mt-1 min-text">{{t.tr('Создано')}} {{getDate(issue.started_date)}}</div>
         </div>
       </div>
     </div>

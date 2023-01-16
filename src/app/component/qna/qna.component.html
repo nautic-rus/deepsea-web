@@ -20,6 +20,9 @@
           <img src="assets/icons/filter-no.svg" height="18">
         </div>
       </div>
+      <div (click)="switchCompleted()">
+        SWITCH SHOW COMPLETED
+      </div>
     </div>
     <p-table [value]="questions"
              [scrollable]="true"
@@ -57,12 +60,6 @@
           <th pSortableColumn="name" class="lxy">{{t.tr('Тема')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="responsible" class="lxy">{{t.tr('Ответственный')}}
-            <p-sortIcon field="responsible"></p-sortIcon>
-          </th>
-          <th pSortableColumn="assigned_to" class="lxy">{{t.tr('Исполнитель')}}
-            <p-sortIcon field="assigned_to"></p-sortIcon>
-          </th>
           <th pSortableColumn="started_by" class="lxy-15">{{t.tr('Автор')}}
             <p-sortIcon field="started_by"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'started_by'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
@@ -71,6 +68,12 @@
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
+          </th>
+          <th pSortableColumn="responsible" class="lxy">{{t.tr('Ответственный')}}
+            <p-sortIcon field="responsible"></p-sortIcon>
+          </th>
+          <th pSortableColumn="assigned_to" class="lxy">{{t.tr('Исполнитель')}}
+            <p-sortIcon field="assigned_to"></p-sortIcon>
           </th>
           <th pSortableColumn="start_date" class="lxy">{{t.tr('Дата начала')}}
             <p-sortIcon field="start_date"></p-sortIcon>
@@ -94,6 +97,7 @@
           <td class="text-14" [innerHTML]="questionStatus(q.status) | safeHtml"></td>
           <td class="text-14">{{q.doc_number}}</td>
           <td class="text-14">{{q.name}}</td>
+          <td class="text-14">{{getDate(q.started_date)}}</td>
           <td class="text-14">
             <span [innerHTML]="getUserName(q.responsible) | safeHtml"></span>
 <!--            <div *ngIf="q.responsible == ''" (click)="assignResponsible(q); $event.stopPropagation();">-->
@@ -109,7 +113,6 @@
             <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
           <td class="text-14"><span [innerHTML]="getUserName(q.started_by) | safeHtml"></span></td>
-          <td class="text-14">{{getDate(q.started_date)}}</td>
           <td class="text-14">{{q.priority}}</td>
         </tr>
       </ng-template>
