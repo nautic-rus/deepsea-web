@@ -1,5 +1,22 @@
-/deep/.ql-container.ql-editor{
+:host /deep/.ql-container.ql-editor{
   min-height: 100px!important;
+  height: auto!important;
+}
+/deep/.ql-snow .ql-editor img{
+  cursor: pointer;
+}
+/deep/ quill-editor .ql-editor{
+  height: 100px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px;
+}
+/deep/.ql-snow .ql-editor img {
+  transform: translate(-50%, -50%)!important;
+  width: 200px!important;
+}
+/deep/.p-dropdown .p-dropdown-label {
+  width: 120px;
 }
 .custom-progress .p-progressbar {
   background-color: #F5F6F8 !important;
@@ -163,9 +180,6 @@
   color: rgba(66, 82, 110, 0.82);
   font-size: 0.9em;
   white-space: nowrap;
-}
-::ng-deep.p-dropdown .p-dropdown-label {
-  width: 120px;
 }
 .py-10{
   padding-top: 10px;
@@ -387,17 +401,9 @@
   max-width: 95vw;
   max-height: 95vh;
 }
-/deep/.ql-snow .ql-editor img{
-  cursor: pointer;
-}
+
 .profession{
   margin-top: -25px;
-}
-/deep/ quill-editor .ql-editor{
-  height: 100px!important;
-}
-::ng-deep.p-inputtext{
-  font-size: 14px;
 }
 .buttons-pick-check{
   color: white;
@@ -1038,10 +1044,7 @@
 .task-name-button:hover{
   background-color: rgba(9, 30, 66, 0.08);
 }
-::ng-deep.ql-snow .ql-editor img {
-  transform: translate(-50%, -50%)!important;
-  width: 200px!important;
-}
+
 .quill-button{
   border-radius: 3px;
 }

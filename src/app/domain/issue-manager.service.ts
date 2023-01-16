@@ -219,6 +219,7 @@ export class IssueManagerService {
           case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Опубликовано</span>' : 'Опубликовано';
           case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Принято</span>' : 'Принято';
           case 'Hold': return styled ? '<span style="color: #B35728; background-color: #FC7635; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На удержании</span>' : 'На удержании';
+          case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Назначен ответственный</span>' : 'Назначен ответственный';
 
           default: return input;
         }
@@ -253,6 +254,7 @@ export class IssueManagerService {
           case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Published</span>' : 'Published';
           case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Accepted</span>' : 'Accepted';
           case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Hold</span>' : 'Hold';
+          case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Assign responsible</span>' : 'Assign responsible';
 
 
           default: return input;

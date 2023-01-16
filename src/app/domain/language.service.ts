@@ -381,7 +381,7 @@ export class LanguageService {
           case 'ПДСП': return 'PDSP';
           case 'РКД': return 'RKD';
           case 'Зафиксировать все': return 'Lock them all';
-          case '': return '';
+          case 'Трудоёмкость': return 'Plan man-hours';
           case '': return '';
           case '': return '';
           case '': return '';
