@@ -328,8 +328,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'contract_due_date',
-        header: 'Contract Due Date',
-        headerLocale: 'Contract Due Date',
+        header: 'Stage Due Date',
+        headerLocale: 'Stage Due Date',
         sort: true,
         filter: true,
         skip: false,

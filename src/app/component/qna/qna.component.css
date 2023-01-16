@@ -15,12 +15,6 @@
 /deep/.pi {
   font-size: 14px;
 }
-/deep/.p-tree{
-  height: calc(100vh - 237px);
-  overflow: auto;
-  padding: 10px;
-  border: none;
-}
 /deep/.p-datatable .p-datatable-tbody > tr > td{
   padding: 12px;
 }
@@ -28,9 +22,6 @@
   padding: 8px;
   font-weight: 500;
   border-width: 1px 0 1px 0;
-}
-/deep/.p-datatable .p-datatable-header {
-  padding: 0.75rem 0 0.75rem 0;
 }
 /deep/.p-progressbar {
   height: 14px;
