@@ -77,6 +77,9 @@
   cursor: pointer;
   border-radius: 6px;
 }
+.clicked{
+  background-color: #3B82F6;
+}
 .materials-button-qna{
   height: 35px;
   cursor: pointer;

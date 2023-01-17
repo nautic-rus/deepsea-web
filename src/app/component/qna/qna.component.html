@@ -20,8 +20,11 @@
           <img src="assets/icons/filter-no.svg" height="18">
         </div>
       </div>
-      <div (click)="switchCompleted()">
-        SWITCH SHOW COMPLETED
+      <div class="mr-10">
+        <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="switchCompleted()" [pTooltip]="t.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
+          <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">
+          <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">
+        </div>
       </div>
     </div>
     <p-table [value]="questions"

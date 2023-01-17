@@ -169,4 +169,7 @@ export class LaborComponent implements OnInit {
       });
     });
   }
+  round(input: number, digit = 100) {
+    return Math.round(input * digit) / digit;
+  }
 }
