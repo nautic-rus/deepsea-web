@@ -1,5 +1,5 @@
 <div class="center-viewer">
-  <div class="header-user-card">
+  <div class="header-user-card-lb">
     <div class="header-text">{{t.tr('Трудоемкость')}}</div>
     <span class="task-button-user cxy" (click)="close()">
       <i class="pi pi-times"></i>
@@ -14,9 +14,6 @@
       <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
       <label for="calendar">{{t.tr('Дата')}}</label>
     </span>
-  </div>
-  <div class="cxy mt-25">
-
   </div>
   <div class="cxy mt-25">
     <span class="p-float-label w-100">

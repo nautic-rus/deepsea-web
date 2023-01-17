@@ -6,6 +6,9 @@
           <div class="text-head text-bottom">{{t.tr('Вопрос')}}</div>
         </div>
         <div class="task-buttons">
+          <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить часы')" (click)="openLaboriousness()">
+            <img src="assets/icons/laboriousness.svg" height="20">
+          </div>
           <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Подписаться на уведомления')" (click)="subscribeForNotifications()">
             <img src="assets/icons/bell.svg" height="20">
           </div>
