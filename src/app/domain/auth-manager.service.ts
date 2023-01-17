@@ -27,17 +27,17 @@ export class AuthManagerService {
 
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, private l: LanguageService) {
     this.fillUsers();
-    this.checkConnection();
+    //this.checkConnection();
   }
   checkConnection(){
-    this.http.get(props.http + '/time').toPromise().then(res => {
-
-    }).catch(error => {
-      console.log('no server');
-    });
-    setTimeout(() => {
-      this.checkConnection();
-    }, 3000);
+    // this.http.get(props.http + '/time').toPromise().then(res => {
+    //
+    // }).catch(error => {
+    //   console.log('no server');
+    // });
+    // setTimeout(() => {
+    //   this.checkConnection();
+    // }, 3000);
   }
   hasPerms(permissions: string): boolean{
     let find = null;
@@ -52,6 +52,7 @@ export class AuthManagerService {
     this.router.navigate(['login']);
   }
   fillUsers(){
+    console.log('fill users');
     this.getUsers().then(data => {
       //console.log(data);
       this.users = data;
@@ -138,6 +139,7 @@ export class AuthManagerService {
     return this.user;
   }
   async getUsers(): Promise<User[]> {
+    console.log('get users');
     return await this.http.get<User[]>(props.http + '/users').toPromise();
   }
   async checkAuth(qParams: any = null, noGuard = false) {
