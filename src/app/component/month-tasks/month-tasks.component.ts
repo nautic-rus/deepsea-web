@@ -175,19 +175,29 @@ export class MonthTasksComponent implements OnInit {
   ngOnInit(): void {
     this.users = this.auth.users.filter(x => x.visibility.includes('c'));
     this.selectedUser = this.auth.getUser().login;
+    this.fillTasks();
+  }
+  fillTasks(){
     this.issueManager.getDailyTasks().then(res => {
-      console.log(res);
       this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
-      this.tasks = res.filter(x => x.userLogin == this.selectedUser);
-      this.calendar = this.getCalendar();
+      this.issueManager.getIssues('op').then(resIssues => {
+        this.issues = resIssues;
+        this.tasksSrc.forEach(t => {
+          let find = this.issues.find(x => x.id == t.issueId);
+          if (find != null){
+            t.docNumber = find.doc_number;
+            if (t.docNumber == ''){
+              t.details = find.name;
+            }
+          }
+        });
+        this.tasks = this.tasksSrc;
+        this.calendar = this.getCalendar();
+      });
     });
   }
   changeUser(){
-    this.issueManager.getDailyTasks().then(res => {
-      this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
-      this.tasks = res.filter(x => x.userLogin == this.selectedUser);
-      this.calendar = this.getCalendar();
-    });
+    this.fillTasks();
   }
   getTasksOfDay(day: number){
     return this.tasks.filter(x => this.sameDay(x.date, new Date(this.date.getFullYear(), this.date.getMonth(), day).getTime()));
@@ -200,6 +210,9 @@ export class MonthTasksComponent implements OnInit {
       d1.getDate() === d2.getDate();
   }
   trimText(input: string, length = 10){
+    if (input == null){
+      return '';
+    }
     let res = input;
     if (res.length > length){
       res = res.substr(0, length) + '..';
@@ -213,15 +226,15 @@ export class MonthTasksComponent implements OnInit {
       data: [day.number == -1 ? new Date() : new Date(this.date.getFullYear(), this.date.getMonth(), day.number), day.sum]
     }).onClose.subscribe(res => {
       setTimeout(() => {
-        this.issueManager.getDailyTasks().then(res => {
-          this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
-          this.tasks = res.filter(x => x.userLogin == this.selectedUser);
-          this.calendar = this.getCalendar();
-        });
+        this.fillTasks();
       }, 100);
     });
   }
   openTask(task: any){
+    if (task.issueId != 0){
+      window.open('/?taskId=' + task.issueId, '_blank');
+      return;
+    }
     this.dialogService.open(ShowTaskComponent, {
       showHeader: false,
       modal: true,
@@ -229,11 +242,7 @@ export class MonthTasksComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res == 'delete'){
         setTimeout(() => {
-          this.issueManager.getDailyTasks().then(res => {
-            this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
-            this.tasks = res.filter(x => x.userLogin == this.selectedUser);
-            this.calendar = this.getCalendar();
-          });
+          this.fillTasks();
         }, 100);
       }
     });
@@ -249,11 +258,7 @@ export class MonthTasksComponent implements OnInit {
   changeMonth(value: number) {
     this.showError = false;
     this.date = new Date(this.date.getFullYear(), this.date.getMonth() + value, 1);
-    this.issueManager.getDailyTasks().then(res => {
-      this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
-      this.tasks = res.filter(x => x.userLogin == this.selectedUser);
-      this.calendar = this.getCalendar();
-    });
+    this.fillTasks();
   }
 
   getTime(time: number){
