@@ -97,10 +97,13 @@
           <td class="text-14">{{q.id}}</td>
           <td class="text-14">{{getProject(q.project)}}</td>
           <td class="text-14">{{q.department}}</td>
-          <td class="text-14" [innerHTML]="questionStatus(q.status) | safeHtml"></td>
+          <td class="text-14">
+            <span [innerHTML]="questionStatus(q.status) | safeHtml"></span>
+          </td>
           <td class="text-14">{{q.doc_number}}</td>
           <td class="text-14">{{q.name}}</td>
-          <td class="text-14">{{getDate(q.started_date)}}</td>
+          <td class="text-14"><span [innerHTML]="getUserName(q.started_by) | safeHtml"></span></td>
+
           <td class="text-14">
             <span [innerHTML]="getUserName(q.responsible) | safeHtml"></span>
 <!--            <div *ngIf="q.responsible == ''" (click)="assignResponsible(q); $event.stopPropagation();">-->
@@ -115,7 +118,7 @@
           <td class="text-14">
             <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
-          <td class="text-14"><span [innerHTML]="getUserName(q.started_by) | safeHtml"></span></td>
+          <td class="text-14">{{getDate(q.started_date)}}</td>
           <td class="text-14">{{q.priority}}</td>
         </tr>
       </ng-template>

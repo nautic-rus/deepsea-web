@@ -382,7 +382,7 @@ export class LanguageService {
           case 'РКД': return 'RKD';
           case 'Зафиксировать все': return 'Lock them all';
           case 'Трудоёмкость': return 'Plan man-hours';
-          case '': return '';
+          case 'Добавить часы': return 'Add an hours';
           case '': return '';
           case '': return '';
           case '': return '';
