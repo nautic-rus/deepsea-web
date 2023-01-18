@@ -873,18 +873,18 @@ export class TaskComponent implements OnInit {
     //issue.name = this.issue.name;
     issue.department = this.issue.department;
     issue.for_revision = this.issue.revision;
-    this.newTask(issue);
+    this.newTask(issue, 'child');
   }
 
   getIssuesOfType(child_issues: Issue[], issue_type: string) {
     return child_issues.filter(x => x.issue_type == issue_type);
   }
 
-  newTask(issue: object | null) {
+  newTask(issue: object | null, action: string) {
     this.dialogService.open(CreateTaskComponent, {
       showHeader: false,
       modal: true,
-      data: issue
+      data: [issue, action]
     }).onClose.subscribe(() => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
@@ -1028,12 +1028,13 @@ export class TaskComponent implements OnInit {
   }
 
   createCombined() {
-    this.dialogService.open(CombineIssuesComponent, {
-      showHeader: false,
-      modal: true,
-      data: this.issue
-    }).onClose.subscribe(res => {
-
-    });
+    let issue = new Issue();
+    issue.parent_id = this.issue.id;
+    issue.project = this.issue.project;
+    issue.doc_number = this.issue.doc_number;
+    //issue.name = this.issue.name;
+    issue.department = this.issue.department;
+    issue.for_revision = this.issue.revision;
+    this.newTask(issue, 'combine');
   }
 }

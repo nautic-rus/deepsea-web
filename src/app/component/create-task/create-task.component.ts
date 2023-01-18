@@ -56,6 +56,7 @@ export class CreateTaskComponent implements OnInit {
   image = '';
   showImages = false;
   parent_id = 0;
+  action = '';
   // @ts-ignore
   editor;
   // @ts-ignore
@@ -125,7 +126,8 @@ export class CreateTaskComponent implements OnInit {
     }
   constructor(private config: PrimeNGConfig, public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, public l: LanguageService) { }
   ngOnInit(): void {
-    this.issue = this.conf.data as Issue;
+    this.issue = this.conf.data[0] as Issue;
+    this.action = this.conf.data[1];
     this.config.setTranslation({
       dayNamesMin: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
       weekHeader: "№",
@@ -210,7 +212,7 @@ export class CreateTaskComponent implements OnInit {
       this.taskPriority = issue.priority;
       this.taskDocNumber = issue.doc_number;
       this.taskPeriod = issue.period;
-      this.parent_id = issue.parent_id;
+      this.parent_id = this.action == 'child' ? issue.parent_id : 0;
       this.for_revision = issue.for_revision;
       console.log(issue);
     }
@@ -300,6 +302,9 @@ export class CreateTaskComponent implements OnInit {
         issue.file_attachments = this.loaded;
         issue.responsible = user;
         this.issues.startIssue(issue).then(res => {
+          if (this.action == 'combine'){
+            this.issues.combineIssues(this.issue.id, +res, this.auth.getUser().login);
+          }
           this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
             this.ref.close(res);
           });
@@ -310,6 +315,9 @@ export class CreateTaskComponent implements OnInit {
       // @ts-ignore
       issue.file_attachments = this.loaded;
       this.issues.startIssue(issue).then(res => {
+        if (this.action == 'combine'){
+          this.issues.combineIssues(this.issue.id, +res, this.auth.getUser().login);
+        }
         this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
           this.ref.close(res);
         });
