@@ -1,4 +1,4 @@
-<div style="height: 340px; width: 400px;">
+<div style="height: 510px; width: 300px;">
   <div class="task-header-assign">
     <div class="task-name">{{t.tr('Назначить исполнителя')}}</div>
     <div class="task-button cxy" (click)="close()">
@@ -7,7 +7,7 @@
   </div>
   <div class="big-text mb-1 mt-1">{{t.tr('Исполнитель')}}</div>
   <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-              [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-270">
+              [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-300">
     <ng-template let-user pTemplate="item">
       <div class="df">
         <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
@@ -17,16 +17,16 @@
   </p-dropdown>
   <div>
     <div class="big-text mb-1 mt-1">{{t.tr('Дата начала')}}</div>
-    <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+    <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
     <div class="big-text mb-1 mt-1">{{t.tr('Срок завершения')}}</div>
-    <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+    <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
     <div class="big-text mb-1 mt-1">{{t.tr('Плановая трудоёмкость')}}</div>
-    <span class="cursor-pointer width-50 mr-15">
+    <div class="cursor-pointer mr-15 width-300">
       <p-inputNumber [(ngModel)]="labor" mode="decimal"></p-inputNumber>
-    </span>
+    </div>
     <div class="big-text mb-1 mt-1">{{t.tr('Связанные задачи')}}</div>
-    <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues"
-                   styleClass="width-200 new-task-button p-info" [placeholder]="'Выберите'" [virtualScroll]="true" [itemSize]="20" optionValue="id">
+    <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues" filterBy="name,doc_number"
+                   styleClass="width-300 new-task-button p-info" [placeholder]="'Выберите'" [virtualScroll]="true" [itemSize]="44" optionValue="id">
       <ng-template let-issue pTemplate="item">
         <div class="country-item">
           <div>{{issue.doc_number}}</div>

@@ -296,7 +296,7 @@ export class IssueManagerService {
           case 'Accept': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Принять</span></div>' : 'Принять';
           case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">На удержание</span></div>' : 'На удержание';
-          case 'Assign responsible': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">Назначить ответственного</span></div>' : 'Назначить ответственного';
+          case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Назначить ответственного</span></div>' : 'Назначить ответственного';
 
 
           default: return input;
@@ -333,7 +333,7 @@ export class IssueManagerService {
           case 'Accept': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Accept</span></div>' : 'Accept';
           case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Reject</span></div>' : 'Reject';
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">Hold</span></div>' : 'Hold';
-          case 'Assign responsible': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">Assign responsible</span></div>' : 'Assign responsible';
+          case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Assign responsible</span></div>' : 'Assign responsible';
 
 
           default: return input;
