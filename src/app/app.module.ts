@@ -151,6 +151,7 @@ import { AssignQuestionComponent } from './component/qna/assign-question/assign-
 import { SubscribeForNotificationsComponent } from './component/qna/subscribe-for-notifications/subscribe-for-notifications.component';
 import {ScrollingModule} from "@angular/cdk-experimental/scrolling";
 import { AssignResponsibleComponent } from './component/qna/assign-responsible/assign-responsible.component';
+import { CombineIssuesComponent } from './component/task/combine-issues/combine-issues.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -252,7 +253,8 @@ Quill.register('modules/imageResize', ImageResize);
     QuestionDetailsComponent,
     AssignQuestionComponent,
     SubscribeForNotificationsComponent,
-    AssignResponsibleComponent
+    AssignResponsibleComponent,
+    CombineIssuesComponent
   ],
     imports: [
         BrowserModule,

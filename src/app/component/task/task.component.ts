@@ -30,6 +30,7 @@ import * as props from "../../props";
 import {IssueType} from "../../domain/classes/issue-type";
 import {AcceptToWorkComponent} from "./accept-to-work/accept-to-work.component";
 import {AssignToResponsibleComponent} from "./assign-to-responsible/assign-to-responsible.component";
+import {CombineIssuesComponent} from "./combine-issues/combine-issues.component";
 
 @Component({
   selector: 'app-task',
@@ -1023,6 +1024,16 @@ export class TaskComponent implements OnInit {
         this.issue = issue;
         this.availableActions = this.getAvailableActions(issue);
       });
+    });
+  }
+
+  createCombined() {
+    this.dialogService.open(CombineIssuesComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+
     });
   }
 }
