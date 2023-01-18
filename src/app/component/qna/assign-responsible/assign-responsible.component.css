@@ -1,3 +1,27 @@
+/deep/.p-dialog .p-dialog-content{
+  padding-bottom: 1rem;
+}
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+  padding: 8px 10px;
+}
+/deep/.p-dialog .p-dialog-content{
+  border-radius: 5px!important;
+}
+/deep/.p-multiselect-items-wrapper{
+  max-height: 300px !important;
+}
+.p-dropdown-150{
+  max-height: 150px!important;
+}
+.multi-select{
+  max-height: 300px !important;
+  height: 300px !important;
+}
+
 .task-header-assign{
   display: flex;
   justify-content: space-between;
@@ -64,9 +88,7 @@
 .p-inputswitch:focus{
   outline: none;
 }
-/deep/.p-dialog .p-dialog-content{
-  padding-bottom: 1rem;
-}
+
 .disabled-button{
   opacity: 0.5;
   pointer-events: none;

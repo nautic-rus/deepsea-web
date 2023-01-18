@@ -1,6 +1,28 @@
 /deep/.p-dialog .p-dialog-content {
   border-radius: 5px!important;
 }
+/deep/.p-dialog .p-dialog-content{
+  padding-bottom: 1rem;
+}
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+  padding: 8px 10px;
+}
+/deep/.p-dialog .p-dialog-content{
+  border-radius: 5px!important;
+}
+/deep/.p-multiselect-items-wrapper{
+  max-height: 300px !important;
+}
+/deep/.p-multiselect .p-multiselect-label{
+  padding: 8px 10px;
+}
+/deep/.p-inputnumber-input {
+  width: 300px !important;
+}
 .task-header-assign{
   display: flex;
   justify-content: space-between;
