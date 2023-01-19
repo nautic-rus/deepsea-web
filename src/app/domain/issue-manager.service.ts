@@ -218,8 +218,9 @@ export class IssueManagerService {
           case 'To publish': return styled ? '<span style="color: #9C6480; background-color: #F2CFE2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На публикации</span>' : 'На публикации';
           case 'Published': return styled ? '<span style="color: #7D588C; background-color: #DFC9E7; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Опубликовано</span>' : 'Опубликовано';
           case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Принято</span>' : 'Принято';
-          case 'Hold': return styled ? '<span style="color: #B35728; background-color: #FC7635; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На удержании</span>' : 'На удержании';
+          case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На удержании</span>' : 'На удержании';
           case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Назначен ответственный</span>' : 'Назначен ответственный';
+          case 'Joined': return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Объединен</span>' : 'Объединен';
 
           default: return input;
         }
@@ -255,6 +256,7 @@ export class IssueManagerService {
           case 'Accepted': return styled ? '<span style="color: #5D7991; background-color: #C6D8E8; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Accepted</span>' : 'Accepted';
           case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Hold</span>' : 'Hold';
           case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Assign responsible</span>' : 'Assign responsible';
+          case 'Joined': return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Joined</span>' : 'Joined';
 
 
           default: return input;
@@ -297,6 +299,7 @@ export class IssueManagerService {
           case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Отклонить</span></div>' : 'Отклонить';
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">На удержание</span></div>' : 'На удержание';
           case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Назначить ответственного</span></div>' : 'Назначить ответственного';
+          case 'Join': return styled ? '<div class="buttons-pick-join"><span class="icon-join cxy"><img src="assets/icons/join.svg" class="rotate-90" height="20"></span><span class="cxy button-text">Объединить</span></div>' : 'Объединить';
 
 
           default: return input;
@@ -304,7 +307,7 @@ export class IssueManagerService {
       }
       default:{
         switch (input) {
-          case 'In Work': return styled ? '<div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">To work</span></div>' : 'To work';
+          case 'In Work': return styled ? '<div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg" class="rotate-90" height="20"></span><span class="cxy button-text">To work</span></div>' : 'To work';
           case 'Resolved': return styled ? '<div class="buttons-pick-resolved"><span class="icon-resolved cxy"><img src="assets/icons/like.svg"></span><span class="cxy button-text">Resolved</span></div>' : 'Resolved';
           case 'Rejected': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Reject</span></div>' : 'Reject';
           case 'Check': return styled ? '<div class="buttons-pick-check"><span class="icon-check cxy"><img src="assets/icons/check.svg"></span><span class="cxy button-text">To check</span></div>' : 'To check';
@@ -334,6 +337,7 @@ export class IssueManagerService {
           case 'Reject': return styled ? '<div class="buttons-pick-reject"><span class="icon-reject cxy"><img src="assets/icons/rejected.svg"></span><span class="cxy button-text">Reject</span></div>' : 'Reject';
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">Hold</span></div>' : 'Hold';
           case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Assign responsible</span></div>' : 'Assign responsible';
+          case 'Join': return styled ? '<div class="buttons-pick-join"><span class="icon-join cxy"><img src="assets/icons/join.svg" class="rotate-90" height="20"></span><span class="cxy button-text">Join</span></div>' : 'Join';
 
 
           default: return input;
