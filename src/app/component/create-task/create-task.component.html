@@ -1,7 +1,8 @@
 <div class="center-create">
   <div class="header-create-card">
-    <div class="header-create-text" *ngIf="parent_id == 0">{{lang.tr('Создать задачу')}}</div>
-    <div class="header-create-text" *ngIf="parent_id != 0">{{lang.tr('Создать подзадачу для')}} #{{parent_id}}</div>
+    <div class="header-create-text" *ngIf="action == ''">{{lang.tr('Создать задачу')}}</div>
+    <div class="header-create-text" *ngIf="action == 'child'">{{lang.tr('Создать подзадачу для')}} #{{parent_id}}</div>
+    <div class="header-create-text" *ngIf="action == 'combine'">{{lang.tr('Создать связанную задачу для')}} #{{parent_id}}</div>
     <div class="task-button-create cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
@@ -28,6 +29,10 @@
       <div class="big-text-create mb-1 mt-1">{{lang.tr('Этап')}}</div>
       <p-dropdown class="select" styleClass="width-200" [(ngModel)]="taskPeriod" [options]="taskPeriods" optionLabel="label" optionValue="value">
       </p-dropdown>
+    </div>
+    <div *ngIf="taskType.includes('RKD')">
+      <div class="big-text-create mb-1 mt-1">{{lang.tr('Плановая трудоёмкость')}}</div>
+      <p-inputNumber [(ngModel)]="planLabor" mode="decimal"></p-inputNumber>
     </div>
 <!--    <div *ngIf="taskType.includes('RKD') || taskType == 'PDSP'">-->
 <!--      <div class="big-text-create mb-1 mt-1">{{lang.tr('Код SFI')}}</div>-->
