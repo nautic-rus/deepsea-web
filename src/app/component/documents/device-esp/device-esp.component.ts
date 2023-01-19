@@ -27,6 +27,7 @@ import {RemoveWeightComponent} from "../../weight-control/remove-weight/remove-w
 import {
   RemoveDeviceFromSystemComponent
 } from "./device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component";
+import {Material} from "../../../domain/classes/material";
 
 @Component({
   selector: 'app-device-esp',
@@ -903,5 +904,13 @@ export class DeviceEspComponent implements OnInit {
         this.fillRevisions();
       });
     });
+  }
+  getDeviceName(material: Material){
+    let res = material.name;
+    let findName = material.translations.find(x => x.lang == this.l.language);
+    if (findName != null){
+      res = findName.name;
+    }
+    return res;
   }
 }
