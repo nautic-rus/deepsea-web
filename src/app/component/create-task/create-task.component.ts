@@ -44,6 +44,7 @@ export class CreateTaskComponent implements OnInit {
   taskPriorities: any[] = [];
   assignedToUser = '';
   responsibleUser = '';
+  planLabor = 0;
   selectedUsers: string[] = [];
   awaitForLoad: string[] = [];
   taskProject = '';
@@ -197,7 +198,7 @@ export class CreateTaskComponent implements OnInit {
       this.taskDepartment = '-';
     });
 
-    let issue = this.conf.data as Issue;
+    let issue = this.conf.data[0] as Issue;
     if (issue != null && issue.id != null) {
       this.taskSummary = issue.name;
       this.taskType = issue.issue_type;
@@ -212,7 +213,7 @@ export class CreateTaskComponent implements OnInit {
       this.taskPriority = issue.priority;
       this.taskDocNumber = issue.doc_number;
       this.taskPeriod = issue.period;
-      this.parent_id = this.action == 'child' ? issue.parent_id : 0;
+      this.parent_id = issue.parent_id;
       this.for_revision = issue.for_revision;
       console.log(issue);
     }
@@ -289,7 +290,8 @@ export class CreateTaskComponent implements OnInit {
     issue.status = 'New';
     issue.action = 'New';
     issue.for_revision = this.for_revision;
-    issue.parent_id = this.parent_id;
+    issue.parent_id = this.action == 'child' ? this.parent_id : 0;
+    issue.plan_hours = this.planLabor;
     if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
       issue.doc_number = '';
     }
