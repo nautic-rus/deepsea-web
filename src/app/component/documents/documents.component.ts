@@ -33,7 +33,7 @@ export class DocumentsComponent implements OnInit {
   noResult = false;
 
 
-  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, private auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
+  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, public auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
 
   // @ts-ignore
   @ViewChild('table') table: Table;
