@@ -92,7 +92,7 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="status" class="cxy w-100">{{l.tr('Статус')}}
+            <th *ngIf="auth.getUser().groups.includes('Nautic_Rus')" pSortableColumn="status" class="cxy w-100">{{l.tr('Статус')}}
               <p-sortIcon field="status"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -112,7 +112,7 @@
             <td class="text-14 w-100">{{issue.doc_number}}</td>
             <td class="text-14 w-100">{{issue.name}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
-            <td class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
+            <td *ngIf="auth.getUser().groups.includes('Nautic_Rus')" class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
             <td class="text-14 w-100">{{issue.period}}</td>
             <td class="text-14 w-5">
               <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">

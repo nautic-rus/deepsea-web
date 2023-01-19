@@ -165,7 +165,7 @@
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
-                  <div *ngIf="auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                  <div *ngIf="auth.hasPerms('esp-files') && issue.status == 'Delivered'"  class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/plus1.svg" height="16">
                     </div>
