@@ -22,7 +22,7 @@
         <img src="assets/icons/checklist.png" height="20">
       </div>
       <div [class.button-disabled]="issue.status == issue.closing_status" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать связанную задачу')" (click)="createCombined()">
-        <img src="assets/icons/subtask.svg" height="20">
+        <img class="rotate-90" src="assets/icons/linktask.svg" height="20">
       </div>
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
         <img src="assets/icons/subtask.svg" height="20">

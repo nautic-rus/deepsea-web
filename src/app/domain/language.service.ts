@@ -383,7 +383,7 @@ export class LanguageService {
           case 'Зафиксировать все': return 'Lock them all';
           case 'Трудоёмкость': return 'Plan man-hours';
           case 'Добавить часы': return 'Add an hours';
-          case '': return '';
+          case 'Создать связанную задачу': return 'Create related task';
           case '': return '';
           case '': return '';
           case '': return '';
