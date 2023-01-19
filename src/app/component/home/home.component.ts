@@ -410,7 +410,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.dialogService.open(CreateTaskComponent, {
       showHeader: false,
       modal: true,
-      data: issue
+      data: [issue, '']
     }).onClose.subscribe(res => {
       this.fillIssues();
     });

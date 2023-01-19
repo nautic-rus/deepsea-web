@@ -872,7 +872,7 @@ export class QuestionDetailsComponent implements OnInit {
     this.dialogService.open(CreateTaskComponent, {
       showHeader: false,
       modal: true,
-      data: issue
+      data: [issue, '']
     }).onClose.subscribe(() => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
