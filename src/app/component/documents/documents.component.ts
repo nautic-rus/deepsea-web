@@ -107,9 +107,9 @@ export class DocumentsComponent implements OnInit {
     this.issues.splice(0, this.issues.length);
     this.router.navigate([], {queryParams: {project: this.project, department: this.department, showWithFilesOnly: this.showWithFilesOnly ? (showWithFilesChange ? 0 : 1) : (showWithFilesChange ? 1 : 0) }});
   }
-  viewTask(issueId: number, project: string, docNumber: string, department: string) {
+  viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
     let foranProject = project.replace('NR', 'N');
-    switch (department) {
+    switch (assistant == '' ? department : assistant) {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;

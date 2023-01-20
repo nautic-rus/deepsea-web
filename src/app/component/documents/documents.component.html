@@ -30,7 +30,7 @@
     </div>
     <div class="empty-card-bottom"></div>
     <div *ngIf="selectedView == 'tiles'" class="tile">
-      <div *ngFor="let issue of issues; let i = index" class="dash-card cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)" [class.hidden-card]="issue == null">
+      <div *ngFor="let issue of issues; let i = index" class="dash-card cursor-pointer" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)" [class.hidden-card]="issue == null">
         <div *ngIf="issue != null" class="dash-card-tile">
           <div class="top-row-doc">
             <div class="title-bold">{{issue.doc_number}}</div>
@@ -108,7 +108,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-issue>
-          <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department)">
+          <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
             <td class="text-14 w-100">{{issue.doc_number}}</td>
             <td class="text-14 w-100">{{issue.name}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
