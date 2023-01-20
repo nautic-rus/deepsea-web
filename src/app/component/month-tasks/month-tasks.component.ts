@@ -10,6 +10,7 @@ import {CalendarDay} from "../../domain/classes/calendar-day";
 import {DeleteComponent} from "../task/delete/delete.component";
 import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.component";
 import {User} from "../../domain/classes/user";
+import {MenuItem} from "primeng/api";
 
 @Component({
   selector: 'app-month-tasks',
@@ -51,6 +52,9 @@ export class MonthTasksComponent implements OnInit {
     opacity: '1',
     transition: 'opacity 4s'
   };
+
+  items: MenuItem[] = [];
+  selectedTask: any = null;
 
   constructor(public issueManager: IssueManagerService, public dialogService: DialogService, public auth: AuthManagerService, public ref: DynamicDialogRef) { }
 
@@ -173,6 +177,18 @@ export class MonthTasksComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.items = [
+      {
+        label: 'Open',
+        icon: 'pi pi-fw pi-external-link',
+        command: (event: any) => this.openTask(this.selectedTask)
+      },
+      {
+        label: 'Delete',
+        icon: 'pi pi-fw pi-trash',
+        command: (event: any) => this.deleteDailyTask()
+      }
+    ];
     this.users = this.auth.users.filter(x => x.visibility.includes('c'));
     this.selectedUser = this.auth.getUser().login;
     this.fillTasks();
@@ -180,6 +196,7 @@ export class MonthTasksComponent implements OnInit {
   fillTasks(){
     this.issueManager.getDailyTasks().then(res => {
       this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
+      console.log(this.tasksSrc);
       this.issueManager.getIssues('op').then(resIssues => {
         this.issues = resIssues;
         this.tasksSrc.forEach(t => {
@@ -191,6 +208,7 @@ export class MonthTasksComponent implements OnInit {
             }
           }
         });
+        console.log(this.tasksSrc);
         this.tasks = this.tasksSrc;
         this.calendar = this.getCalendar();
       });
@@ -248,10 +266,10 @@ export class MonthTasksComponent implements OnInit {
     });
   }
 
-  deleteDailyTask(task: any) {
-    this.issueManager.deleteDailyTask(task.id).then(() => {
+  deleteDailyTask() {
+    this.issueManager.deleteDailyTask(this.selectedTask.id).then(() => {
     });
-    this.tasks = this.tasks.filter(x => x.id != task.id);
+    this.tasks = this.tasks.filter(x => x.id != this.selectedTask.id);
     this.calendar = this.getCalendar();
   }
 
@@ -277,5 +295,9 @@ export class MonthTasksComponent implements OnInit {
       minutes = '0' + minutes;
     }
     return minutes;
+  }
+
+  selectTask(task: any) {
+    this.selectedTask = task;
   }
 }

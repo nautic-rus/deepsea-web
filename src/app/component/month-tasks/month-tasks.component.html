@@ -66,13 +66,14 @@
           </div>
           <div *ngIf="!cDay.number.toString().includes('s') && cDay.sum != 0" class="pb-5 text-black-mini">worked {{getHours(cDay.sum)}}:{{getMinutes(cDay.sum)}}</div>
           <div *ngIf="cDay.tasks.length > 0" class="">
-            <div class="task-one cursor-pointer" (click)="openTask(task)" *ngFor="let task of cDay.tasks">
+            <div #taskInfo class="task-one cursor-pointer" (click)="openTask(task)" *ngFor="let task of cDay.tasks" (contextmenu)="selectTask(task)">
               <div class="df">
-<!--                <div class="cx task-text-mini pr-5">{{getHours(task.time)}}:{{getMinutes(task.time)}}</div>-->
-<!--                <div class="cx task-text pr-5">{{trimText(task.project, 7)}}</div>-->
-                <div *ngIf="task.docNumber != ''" class="cx task-text pr-5 line-text">{{trimText(task.docNumber, 20)}}</div>
-<!--                <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text">{{trimText(task.action, 7)}}</div>-->
-                <div class="cx task-text line-text">{{task.details}}</div>
+                <div class="cx task-text pr-5 line-text">{{trimText(task.docNumber, 20)}}{{task.docNumber == '' ? '' : ' '}}{{task.details}}</div>
+                <p-contextMenu [target]="taskInfo" appendTo="body" [model]="items"></p-contextMenu>
+
+                <!--                <div class="cx task-text-mini pr-5">{{getHours(task.time)}}:{{getMinutes(task.time)}}</div>-->
+                <!--                <div class="cx task-text pr-5">{{trimText(task.project, 7)}}</div>-->
+                <!--                <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text">{{trimText(task.action, 7)}}</div>-->
               </div>
             </div>
           </div>

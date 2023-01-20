@@ -153,7 +153,7 @@ export class DailyTasksComponent implements OnInit {
         if (t.docNumber != '-' && t.docNumber != ''){
           let findIssue = this.issues.find(x => x.doc_number == t.docNumber);
           if (findIssue != null){
-            t.id = findIssue.id;
+            t.issueId = findIssue.id;
           }
         }
         if (typeof (t.dateCreated) != "number"){
