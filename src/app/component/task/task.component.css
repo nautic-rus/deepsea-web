@@ -493,6 +493,28 @@
   border-bottom-left-radius: 2px;
   border-top-left-radius: 2px;
 }
+.buttons-pick-join{
+  color: white;
+  background-color: #0A7C6E;
+  border-radius: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: .3px;
+  height: 30px;
+}
+.buttons-pick-join:hover{
+  background: #07594D;
+  transition: 0.3s;
+}
+.icon-join{
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 8px;
+  padding-left: 8px;
+  background-color: #07594D;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
 .buttons-pick-pause{
   color: white;
   background-color: #f8b243;
