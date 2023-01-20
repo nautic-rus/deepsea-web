@@ -198,7 +198,7 @@ export class DocumentsComponent implements OnInit {
             if (findProject != null){
               this.issueManager.getCloudFiles(findProject.cloudRkd + '/Documents/Hull').then(docs => {
                 this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || docs.find(d => d.url.includes(issue.doc_number)) != null);
-                this.issues = this.issues.filter(x => x.department == this.department);
+                this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
                 this.issues = _.sortBy(this.issues, x => x.doc_number);
               });
             }
@@ -207,28 +207,28 @@ export class DocumentsComponent implements OnInit {
         else if (this.department == 'System'){
           this.issueManager.getRevisionFiles().then(revFiles => {
             this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
-            this.issues = this.issues.filter(x => x.department == this.department);
+            this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
             this.issues = _.sortBy(this.issues, x => x.doc_number);
           });
         }
         else if (this.department == 'Devices'){
           this.issueManager.getRevisionFiles().then(revFiles => {
             this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
-            this.issues = this.issues.filter(x => x.department == this.department);
+            this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
             this.issues = _.sortBy(this.issues, x => x.doc_number);
           });
         }
         else if (this.department == 'Electric'){
           this.issueManager.getRevisionFiles().then(revFiles => {
             this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
-            this.issues = this.issues.filter(x => x.department == this.department);
+            this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
             this.issues = _.sortBy(this.issues, x => x.doc_number);
           });
         }
         else if (this.department == 'Accommodation'){
           this.issueManager.getRevisionFiles().then(revFiles => {
             this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
-            this.issues = this.issues.filter(x => x.department == this.department);
+            this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
             this.issues = _.sortBy(this.issues, x => x.doc_number);
           });
         }

@@ -51,4 +51,5 @@ export class Issue {
   subscribers: string[] = [];
   plan_hours: number = 0;
   plan_hours_locked: number = 0;
+  assistant = '';
 }
