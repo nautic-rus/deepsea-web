@@ -418,10 +418,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   viewTask(id: number, type: string) {
     this.setIssueViewed(id);
-    if (type == 'QNA'){
-      window.open('/qna-details?id=' + id, '_blank');
-      return;
-    }
     this.issueManager.getIssueDetails(id).then(res => {
       console.log(res);
       if (res.id != null) {

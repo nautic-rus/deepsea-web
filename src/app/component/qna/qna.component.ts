@@ -8,10 +8,11 @@ import {CreateQuestionComponent} from "./create-question/create-question.compone
 import {Issue} from "../../domain/classes/issue";
 import _ from "underscore";
 import {LV} from "../../domain/classes/lv";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LanguageService} from "../../domain/language.service";
 import {AssignToResponsibleComponent} from "../task/assign-to-responsible/assign-to-responsible.component";
 import {AssignQuestionComponent} from "./assign-question/assign-question.component";
+import {TaskComponent} from "../task/task.component";
 
 @Component({
   selector: 'app-qna',
@@ -30,12 +31,33 @@ export class QnaComponent implements OnInit {
   questions: Issue[] = [];
   showCompleted: boolean = false;
   filters:  { status: any[],  author: any[], department: any[], priority: any[] } = { status: [], author: [], department: [], priority: [] };
-  constructor(public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
+  constructor(private route: ActivatedRoute, public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.users = this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
     this.fillQNA();
+    this.route.queryParams.subscribe(params => {
+      let taskId = params.taskId != null ? params.taskId : '';
+      if (taskId != '') {
+        this.viewTask(taskId, '');
+      }
+    });
   }
+  viewTask(id: number, type: string) {
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        }).onClose.subscribe(res => {
+          this.fillQNA();
+        });
+      }
+    });
+  }
+
   fillQNA(){
     this.issueManagerService.getIssueProjects().then(projects => {
       this.projectDefs = projects;
@@ -96,7 +118,8 @@ export class QnaComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   openQuestion(id: number) {
-    window.open('/qna-details?id=' + id, '_blank');
+    this.viewTask(id, '');
+    //window.open('/qna-details?id=' + id, '_blank');
   }
   questionStatus(input: string, styled = true): string {
     return this.issueManagerService.localeStatus(input, true);
@@ -152,4 +175,5 @@ export class QnaComponent implements OnInit {
     this.showCompleted = !this.showCompleted;
     this.applyFilters();
   }
+
 }
