@@ -24,12 +24,14 @@ export class HullEspGenerationWaitComponent implements OnInit {
   revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
   rev: string = this.revs[0];
   updateRevision = false;
+  project = '';
 
   constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
 
 
   ngOnInit(): void {
-    this.issue = this.conf.data;
+    this.issue = this.conf.data[0];
+    this.project = this.conf.data[1];
     this.rev = this.issue.revision;
   }
   close(){
