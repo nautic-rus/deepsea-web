@@ -1,0 +1,62 @@
+<div class="df">
+  <p-dropdown [options]="projects" [(ngModel)]="selectedProject" (ngModelChange)="fillCables()" optionLabel="label" optionValue="value"></p-dropdown>
+  <button (click)="fillCables()">REFRESH</button>
+</div>
+<div>
+  <p-table [value]="cables" [virtualScroll]="true" [scrollable]="true" scrollHeight="86vh" styleClass="p-datatable-sm" [globalFilterFields]="['fromZone']">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="cableId">cableId<p-sortIcon field="cableId"></p-sortIcon></th>
+        <th pSortableColumn="fromEq">fromEq<p-sortIcon field="fromEq"></p-sortIcon></th>
+        <th pSortableColumn="fromEqDescr">fromEqDescr<p-sortIcon field="fromEqDescr"></p-sortIcon></th>
+        <th pSortableColumn="toEq">toEq<p-sortIcon field="toEq"></p-sortIcon></th>
+        <th pSortableColumn="toEqDescr">toEqDescr<p-sortIcon field="toEqDescr"></p-sortIcon></th>
+        <th pSortableColumn="seg">seg<p-sortIcon field="seg"></p-sortIcon></th>
+        <th pSortableColumn="sect">sect<p-sortIcon field="sect"></p-sortIcon></th>
+        <th pSortableColumn="spec">spec<p-sortIcon field="spec"></p-sortIcon></th>
+        <th pSortableColumn="cabType">cabType<p-sortIcon field="cabType"></p-sortIcon></th>
+        <th pSortableColumn="system">system<p-sortIcon field="system"></p-sortIcon></th>
+        <th pSortableColumn="systemDescr">systemDescr<p-sortIcon field="systemDescr"></p-sortIcon></th>
+        <th pSortableColumn="user">user<p-sortIcon field="user"></p-sortIcon></th>
+        <th pSortableColumn="fromZone">fromZone<p-sortIcon field="fromZone"></p-sortIcon>
+          <p-columnFilter class="filter" [field]="'fromZone'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.fromZone" optionValue="value" optionLabel="label" (onChange)="filter($event.value);">
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th pSortableColumn="fromZoneDescr">fromZoneDescr<p-sortIcon field="fromZoneDescr"></p-sortIcon></th>
+        <th pSortableColumn="toZone">toZone<p-sortIcon field="toZone"></p-sortIcon>
+          <p-columnFilter class="filter" [field]="'toZone'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.toZone" optionValue="value" optionLabel="label" (onChange)="filter($event.value);">
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter></th>
+        <th pSortableColumn="toZoneDescr">toZoneDescr<p-sortIcon field="toZoneDescr"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-cable>
+      <tr>
+        <td>{{cable.cableId}}</td>
+        <td>{{cable.fromEq}}</td>
+        <td>{{cable.fromEqDescr}}</td>
+        <td>{{cable.toEq}}</td>
+        <td>{{cable.toEqDescr}}</td>
+        <td>{{cable.seg}}</td>
+        <td>{{cable.sect}}</td>
+        <td>{{cable.spec}}</td>
+        <td>{{cable.cabType}}</td>
+        <td>{{cable.system}}</td>
+        <td>{{cable.systemDescr}}</td>
+        <td>{{cable.user}}</td>
+        <td>{{cable.fromZone}}</td>
+        <td>{{cable.fromZoneDescr}}</td>
+        <td>{{cable.toZone}}</td>
+        <td>{{cable.toZoneDescr}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>

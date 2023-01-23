@@ -41,6 +41,7 @@ import {QnaComponent} from "./component/qna/qna.component";
 import {LaborComponent} from "./component/labor/labor.component";
 import {ElectricEspComponent} from "./component/documents/electric-esp/electric-esp.component";
 import {QuestionDetailsComponent} from "./component/qna/question-details/question-details.component";
+import {CableExplorerComponent} from "./component/tools/cable-explorer/cable-explorer.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -83,6 +84,7 @@ const routes: Routes = [
   { path: 'labor', component: LaborComponent, canActivate: [AuthGuard], data: {animation: 'LaborComponent'} },
   { path: 'electric-esp', component: ElectricEspComponent, canActivate: [AuthGuard], data: {animation: 'ElectricEspComponent'} },
   { path: 'qna-details', component: QuestionDetailsComponent, canActivate: [AuthGuard], data: {animation: 'QuestionDetailsComponent'} },
+  { path: 'cable-explorer', component: CableExplorerComponent, canActivate: [AuthGuard], data: {animation: 'CableExplorerComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 
