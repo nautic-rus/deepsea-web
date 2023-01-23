@@ -1,5 +1,6 @@
 <div class="df">
   <p-dropdown [options]="projects" [(ngModel)]="selectedProject" (ngModelChange)="fillCables()" optionLabel="label" optionValue="value"></p-dropdown>
+  <p-dropdown [options]="zones" [(ngModel)]="selectedZone" (ngModelChange)="filterZone()" optionLabel="label" optionValue="value"></p-dropdown>
   <button (click)="fillCables()">REFRESH</button>
 </div>
 <div>
@@ -14,10 +15,6 @@
         <th pSortableColumn="seg">seg<p-sortIcon field="seg"></p-sortIcon></th>
         <th pSortableColumn="sect">sect<p-sortIcon field="sect"></p-sortIcon></th>
         <th pSortableColumn="spec">spec<p-sortIcon field="spec"></p-sortIcon></th>
-        <th pSortableColumn="cabType">cabType<p-sortIcon field="cabType"></p-sortIcon></th>
-        <th pSortableColumn="system">system<p-sortIcon field="system"></p-sortIcon></th>
-        <th pSortableColumn="systemDescr">systemDescr<p-sortIcon field="systemDescr"></p-sortIcon></th>
-        <th pSortableColumn="user">user<p-sortIcon field="user"></p-sortIcon></th>
         <th pSortableColumn="fromZone">fromZone<p-sortIcon field="fromZone"></p-sortIcon>
           <p-columnFilter class="filter" [field]="'fromZone'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -47,10 +44,6 @@
         <td>{{cable.seg}}</td>
         <td>{{cable.sect}}</td>
         <td>{{cable.spec}}</td>
-        <td>{{cable.cabType}}</td>
-        <td>{{cable.system}}</td>
-        <td>{{cable.systemDescr}}</td>
-        <td>{{cable.user}}</td>
         <td>{{cable.fromZone}}</td>
         <td>{{cable.fromZoneDescr}}</td>
         <td>{{cable.toZone}}</td>
