@@ -23,7 +23,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  projects: string[] = ['NR002', 'NR004'];
+  projects: string[] = ['NR002', 'NR004', '01701-ORION'];
   department = 'Hull';
   project = '';
   issues: Issue[] = [];
@@ -31,6 +31,7 @@ export class DocumentsComponent implements OnInit {
   waitForZipFiles = false;
   selectedView: string = 'list';
   noResult = false;
+  projectNames: any[] = [];
 
 
   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, public auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
@@ -109,6 +110,10 @@ export class DocumentsComponent implements OnInit {
   }
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
     let foranProject = project.replace('NR', 'N');
+    let findProject = this.projectNames.find((x: any) => x.pdsp == project || x.rkd == project);
+    if (findProject != null){
+      foranProject = findProject.foran;
+    }
     switch (this.department) {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
@@ -194,6 +199,7 @@ export class DocumentsComponent implements OnInit {
 
         if (this.department == 'Hull'){
           this.issueManager.getProjectNames().then(projectNames => {
+            this.projectNames = projectNames;
             let findProject = projectNames.find((x: any) => x.pdsp == this.project);
             if (findProject != null){
               this.issueManager.getCloudFiles(findProject.cloudRkd + '/Documents/Hull').then(docs => {
