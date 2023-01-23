@@ -15,6 +15,7 @@
         <th pSortableColumn="seg">seg<p-sortIcon field="seg"></p-sortIcon></th>
         <th pSortableColumn="sect">sect<p-sortIcon field="sect"></p-sortIcon></th>
         <th pSortableColumn="spec">spec<p-sortIcon field="spec"></p-sortIcon></th>
+        <th pSortableColumn="fRout">fRout<p-sortIcon field="fRout"></p-sortIcon></th>
         <th pSortableColumn="fromZone">fromZone<p-sortIcon field="fromZone"></p-sortIcon>
           <p-columnFilter class="filter" [field]="'fromZone'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
             <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -44,6 +45,7 @@
         <td>{{cable.seg}}</td>
         <td>{{cable.sect}}</td>
         <td>{{cable.spec}}</td>
+        <td>{{cable.fRout}}</td>
         <td>{{cable.fromZone}}</td>
         <td>{{cable.fromZoneDescr}}</td>
         <td>{{cable.toZone}}</td>
