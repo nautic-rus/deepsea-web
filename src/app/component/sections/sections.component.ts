@@ -100,6 +100,7 @@ export class SectionsComponent implements OnInit {
       case 'Ready to send': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
       case 'On reApproval': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
       case 'Ready to Delivery': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
+      case 'Hold': return { border: '1px solid #CAD2D3', color: '#777777', 'font-weight': 600, background: 'repeating-linear-gradient(45deg, #DFDFDF, #DFDFDF 5px, #fff 5px, #fff 10px)'};
       case 'Send to Yard Approval': return {'background-color': '#feeccd', border: 'none', color: '#d78a16', 'font-weight': 600};
       case 'Delivered': return {'background-color': '#c8e6c9', border: 'none', color: '#256029', 'font-weight': 600};
       default: {
