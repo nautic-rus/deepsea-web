@@ -20,9 +20,9 @@ import _ from "underscore";
 export class CreateQuestionComponent implements OnInit {
 
   issue: Issue = new Issue();
-  taskSummary = 'Нет темы';
+  taskSummary = '-';
   taskDetails = '';
-  taskDocNumber = 'Без документа';
+  taskDocNumber = '-';
   taskDepartment = '';
   for_revision = '';
   users: User[] = [];
@@ -37,12 +37,12 @@ export class CreateQuestionComponent implements OnInit {
   taskPeriods: LV[] = [];
   taskPeriod: string = '';
   taskTypes: any[] = [];
-  taskPriorities: any[] = [new LV('Средний'), new LV('Низкий'), new LV('Высокий')];
+  taskPriorities: any[] = [new LV(this.issues.localeTaskPriority('High'), 'High'), new LV(this.issues.localeTaskPriority('Low'), 'Low'), new LV(this.issues.localeTaskPriority('Medium'), 'Medium')];
   assignedToUser = '';
   responsibleUser = '';
   selectedUsers: string[] = [];
   awaitForLoad: string[] = [];
-  taskProject = '';
+  taskProject = '-';
   sfiCode = '';
   taskType = 'IT';
   taskPriority = '';
@@ -135,7 +135,7 @@ export class CreateQuestionComponent implements OnInit {
     this.issues.getIssueProjects().then(projects => {
       this.taskProjects = projects;
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
-      this.taskProject = 'Без проекта';
+      this.taskProject = 'No project';
     });
     this.issues.getIssues('op').then(res => {
       this.rkdIssues = res;
@@ -148,14 +148,14 @@ export class CreateQuestionComponent implements OnInit {
     // });
 
     this.issues.getIssueDepartments().then(departments => {
-      this.taskDepartments = departments.map(x => x.replace('-', 'Без отдела'));
-      this.taskDepartment = 'Без отдела';
+      this.taskDepartments = departments.map(x => x);
+      this.taskDepartment = '-';
     });
 
   }
   getProjectName(project: any){
     if (project.name == '-'){
-      return 'Без проекта';
+      return '-';
     }
     let res = project.name;
     if (project.rkd != ''){
@@ -365,6 +365,16 @@ export class CreateQuestionComponent implements OnInit {
     let find = this.rkdIssues.find(x => x.doc_number == this.taskDocNumber);
     if (find != null){
       this.taskDepartment = find.department;
+    }
+  }
+
+  locale(input: string) {
+    switch (input){
+      case 'No project': return 'Без проекта';
+      case 'No Department': return 'Без отдела';
+      case 'No document': return 'Без документа';
+      case 'No summary': return 'Без темы';
+      default: return input;
     }
   }
 }

@@ -119,7 +119,7 @@
             <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
           <td class="text-14">{{getDate(q.started_date)}}</td>
-          <td class="text-14">{{q.priority}}</td>
+          <td class="text-14">{{issueManager.localeTaskPriority(q.priority)}}</td>
         </tr>
       </ng-template>
     </p-table>
