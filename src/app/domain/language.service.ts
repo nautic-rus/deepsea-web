@@ -384,8 +384,8 @@ export class LanguageService {
           case 'Трудоёмкость': return 'Plan man-hours';
           case 'Добавить часы': return 'Add an hours';
           case 'Создать связанную задачу': return 'Create related task';
-          case '': return '';
-          case '': return '';
+          case 'Плановая трудоёмкость': return 'Plan man-hours';
+          case 'Связанные задачи': return 'Related tasks';
           case '': return '';
           case '': return '';
           case '': return '';
