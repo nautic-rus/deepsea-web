@@ -259,11 +259,6 @@ export class QuestionDetailsComponent implements OnInit {
         });
       }
     });
-
-
-
-
-
   }
   close(){
     this.router.navigate(['qna']);

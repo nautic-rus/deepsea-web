@@ -31,6 +31,8 @@ import {IssueType} from "../../domain/classes/issue-type";
 import {AcceptToWorkComponent} from "./accept-to-work/accept-to-work.component";
 import {AssignToResponsibleComponent} from "./assign-to-responsible/assign-to-responsible.component";
 import {CombineIssuesComponent} from "./combine-issues/combine-issues.component";
+import {AssignResponsibleComponent} from "../qna/assign-responsible/assign-responsible.component";
+import {AssignQuestionComponent} from "../qna/assign-question/assign-question.component";
 
 @Component({
   selector: 'app-task',
@@ -335,6 +337,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != x.closing_status).length == 0 && allow : allow;
       allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
+      allow = issue.issue_type == 'QNA' && action.rule.includes('m') ? true : allow;
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
       }
@@ -623,7 +626,15 @@ export class TaskComponent implements OnInit {
       }
       else{
         if (value == 'AssignedTo'){
-          this.assignTask();
+          if (this.issue.issue_type == 'QNA'){
+            this.assignQNATask();
+          }
+          else{
+            this.assignTask();
+          }
+        }
+        else if (value == 'Assign responsible'){
+          this.assignQNAResponsible();
         }
         else if (value == 'Send to Approval'){
           if (this.issue.first_local_approval_date != 0){
@@ -1036,5 +1047,31 @@ export class TaskComponent implements OnInit {
     issue.department = this.issue.department;
     issue.for_revision = this.issue.revision;
     this.newTask(issue, 'combine');
+  }
+
+  assignQNAResponsible() {
+    this.dialogService.open(AssignResponsibleComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
+    });
+  }
+
+  assignQNATask() {
+    this.dialogService.open(AssignQuestionComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
+    });
   }
 }

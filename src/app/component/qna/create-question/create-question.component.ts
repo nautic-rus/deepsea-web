@@ -342,7 +342,7 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   isCreateTaskDisabled() {
-    return this.taskDetails.trim() == '';
+    return this.taskDocNumber.replace('-', '').trim() == '' && this.taskSummary.replace('-', '').trim() == '';
   }
   quillCreated(event: any) {
     this.editor = event;
