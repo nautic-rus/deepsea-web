@@ -189,6 +189,12 @@ export class AuthManagerService {
   async getUserWatches(): Promise<[]> {
     return await this.http.get<[]>(props.http + '/userWatches').toPromise();
   }
+  async getSpyWatches(): Promise<[]> {
+    return await this.http.get<[]>(props.http + '/spyWatches').toPromise();
+  }
+  async getTime(): Promise<number> {
+    return await this.http.get<number>(props.http + '/time').toPromise();
+  }
   isAuth(){
     return this.authenticated;
   }

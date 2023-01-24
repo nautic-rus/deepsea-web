@@ -153,6 +153,7 @@ import {ScrollingModule} from "@angular/cdk-experimental/scrolling";
 import { AssignResponsibleComponent } from './component/qna/assign-responsible/assign-responsible.component';
 import { CombineIssuesComponent } from './component/task/combine-issues/combine-issues.component';
 import { CableExplorerComponent } from './component/tools/cable-explorer/cable-explorer.component';
+import { SpyWatchComponent } from './component/spy-watch/spy-watch.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -256,7 +257,8 @@ Quill.register('modules/imageResize', ImageResize);
     SubscribeForNotificationsComponent,
     AssignResponsibleComponent,
     CombineIssuesComponent,
-    CableExplorerComponent
+    CableExplorerComponent,
+    SpyWatchComponent
   ],
     imports: [
         BrowserModule,
