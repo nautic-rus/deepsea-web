@@ -192,6 +192,7 @@ export class TaskComponent implements OnInit {
   selectedChecks: any = [];
   groupedChecks: any[] = [];
   ready = Object({model: 0, drawing: 0, nesting: 0});
+  issueProjects: any[] = [];
 
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
 
@@ -231,7 +232,11 @@ export class TaskComponent implements OnInit {
     this.issue = this.conf.data as Issue;
     this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
 
-    this.availableActions = this.getAvailableActions(this.issue);
+    this.issueManager.getIssueProjects().then(projects => {
+      this.issueProjects = projects;
+      this.availableActions = this.getAvailableActions(this.issue);
+    });
+
     this.issueManager.getIssueDepartments().then(departments => {
       this.taskDepartments = departments;
     });
@@ -266,6 +271,7 @@ export class TaskComponent implements OnInit {
       this.ready.drawing = +readySplit[1];
       this.ready.nesting = +readySplit[2];
     }
+
 
 
     this.fillGroupedChecks();
@@ -337,7 +343,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != x.closing_status).length == 0 && allow : allow;
       allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
-      allow = issue.issue_type == 'QNA' && action.rule.includes('m') ? true : allow;
+      allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
       }
