@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import _ from "underscore";
 import {interval} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-spy-watch',
@@ -16,10 +17,13 @@ export class SpyWatchComponent implements OnInit {
   selectedUserImageIndex = 0;
   lightBox = false;
   time = 0;
-  constructor(private auth: AuthManagerService) { }
+  constructor(private auth: AuthManagerService, public router: Router) { }
 
 
   refreshUsers(){
+    if (this.auth.getUser().login != 'stropilov' && !this.auth.getUser().login.includes('isaev')){
+      this.router.navigate(['']);
+    }
     this.auth.getSpyWatches().then(res => {
       this.users = _.sortBy(res, (x: any) => x.user);
       this.users.forEach(x => {
