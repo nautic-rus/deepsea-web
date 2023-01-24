@@ -25,15 +25,30 @@
       <p-inputNumber [(ngModel)]="labor" mode="decimal"></p-inputNumber>
     </div>
     <div class="big-text mb-1 mt-1">{{t.tr('Связанные задачи')}}</div>
-    <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues" filterBy="name,doc_number"
-                   styleClass="width-300 new-task-button p-info" [placeholder]="'Выберите'" [virtualScroll]="true" [itemSize]="44" optionValue="id">
+
+    <p-multiSelect appendTo = "body" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" filterBy="name,doc_number" optionValue="name" optionLabel="doc_number"
+                [placeholder]="t.tr('Выберите')" class="p-dropdown-150 width-200" styleClass="width-300" [virtualScroll]="true" [itemSize]="44">
       <ng-template let-issue pTemplate="item">
-        <div class="country-item">
-          <div>{{issue.doc_number}}</div>
+        <div class="df">
+          <div class="pr-5">{{issue.doc_number}}</div>
           <div>{{issue.name}}</div>
         </div>
       </ng-template>
     </p-multiSelect>
+
+
+<!--    <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues" filterBy="name,doc_number"-->
+<!--                   styleClass="width-300 new-task-button p-info" [placeholder]="t.tr('Выберите')" [virtualScroll]="true" [itemSize]="44" optionValue="id">-->
+<!--      <ng-template let-issue pTemplate="item">-->
+<!--        <div class="country-item">-->
+<!--          <div>{{issue.doc_number}}</div>-->
+<!--          <div>{{issue.name}}</div>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--    </p-multiSelect>-->
+
+
+
   </div>
   <div class="form-footer pt-10">
     <div class="mr-5 cx">
