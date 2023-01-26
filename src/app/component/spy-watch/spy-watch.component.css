@@ -3,7 +3,6 @@
 }
 /deep/.p-dialog .p-dialog-header {
   padding: 10px;
-
 }
 .all-page-spy{
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
@@ -14,19 +13,28 @@
 }
 .view-image{
   height: auto;
-  width: 32vw;
+  width: 20vw;
   padding: 5px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  z-index: 1;
 }
 .user-title{
   font-weight: 500;
+  padding: 10px 10px 0 10px;
+}
+.time-title{
+  font-weight: 500;
+  padding: 5px 10px 0 10px;
+  color: #5b7992;
 }
 .user-watches{
   flex-wrap: wrap;
 }
 .user-watch{
+  width: 360px;
+  height: 490px;
   margin: 10px;
   background-color: white;
   border-radius: 10px;
@@ -42,6 +50,10 @@
   border-radius: 10px;
   color: white;
   font-size: xxx-large;
+  z-index: 2;
+}
+.out-work:hover{
+  z-index: 0;
 }
 .over-image{
   width: 70vw;

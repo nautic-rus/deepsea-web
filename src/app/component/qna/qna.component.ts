@@ -62,6 +62,7 @@ export class QnaComponent implements OnInit {
     this.issueManagerService.getIssueProjects().then(projects => {
       this.projectDefs = projects;
       this.issueManagerService.getQuestions().then(res => {
+
         this.questionsSrc = res;
         this.questions = res;
 
@@ -88,9 +89,6 @@ export class QnaComponent implements OnInit {
     return res;
   }
   getProject(project: string){
-    if (project == '-'){
-      return 'Без проекта';
-    }
     let find = this.projectDefs.find(x => x.name == project);
     if (find != null){
       return this.getProjectName(find);
@@ -154,8 +152,8 @@ export class QnaComponent implements OnInit {
   }
   applyFilters(){
     this.questions = this.questionsSrc;
-    this.questions = this.questions.filter(x => x.project == this.project || this.project == '');
-    this.questions = this.questions.filter(x => x.department == this.department || this.department == '');
+    this.questions = this.questions.filter(x => x.project == this.project || this.project == null || this.project == '' || this.project == '-');
+    this.questions = this.questions.filter(x => x.department == this.department || this.department == null || this.department == '' || this.department == '-');
     this.questions = this.questions.filter(x => x.status != 'Closed' || this.showCompleted);
   }
   changedProject() {

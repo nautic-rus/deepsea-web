@@ -1,11 +1,30 @@
+
+<!--<div class="all-page-spy">-->
+<!--  <cdk-virtual-scroll-viewport itemSize="470px" class="cx user-watches" autosize style="height: 85vh;">-->
+<!--    <div class="user-watch cursor-pointer"  *cdkVirtualFor="let user of users" (mouseenter)="hoverUser = user.user" (mouseleave)="hoverUser = ''">-->
+<!--      <div class="cx user-title">{{user.user}} {{user.time}}</div>-->
+<!--      <div class="view-image">-->
+<!--        <img (click)="selectUser(user.user, i)" *ngFor="let img of user.images; let i = index" class="monitor" src="{{'data:image/jpg;base64,' + img}}" />-->
+<!--      </div>-->
+<!--      <div *ngIf="time != 0 && (getAfkMinutes(user.activity) >= 15) && hoverUser != user.user" class="out-work cxy">{{user.timeAfk}}</div>-->
+<!--    </div>-->
+<!--  </cdk-virtual-scroll-viewport>-->
+<!--</div>-->
+
+<!--<p-dialog [header]="selectedUser" [(visible)]="lightBox" [modal]="true">-->
+<!--  <div class="over-image"><img class="full-view-image" src="{{selectedUserImage}}" /></div>-->
+<!--</p-dialog>-->
+
+
 <div class="all-page-spy">
   <div class="cx user-watches">
-    <div class="user-watch cursor-pointer" *ngFor="let user of users">
-      <div class="cx user-title">{{user.user}} {{user.time}}</div>
+    <div class="user-watch cursor-pointer" *ngFor="let user of users" (mouseenter)="hoverUser = user.user" (mouseleave)="hoverUser = ''">
+      <div class="cx user-title">{{user.user}}</div>
+      <div class="cx time-title">{{user.time}}</div>
       <div class="view-image">
         <img (click)="selectUser(user.user, i)" *ngFor="let img of user.images; let i = index" class="monitor" src="{{'data:image/jpg;base64,' + img}}" />
       </div>
-      <div *ngIf="time != 0 && (getAfkMinutes(user.activity) >= 15)" class="out-work cxy">{{user.timeAfk}}</div>
+      <div *ngIf="time != 0 && (getAfkMinutes(user.activity) >= 15) && hoverUser != user.user" class="out-work cxy">{{user.timeAfk}}</div>
     </div>
   </div>
 </div>
