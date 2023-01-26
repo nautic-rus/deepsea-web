@@ -5,7 +5,7 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="big-text mb-1 mt-1">{{t.tr('Ответственный')}}</div>
+  <div class="big-text mb-1 mt-1">{{t.tr('Исполнитель')}}</div>
   <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
               [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-270">
     <ng-template let-user pTemplate="item">
