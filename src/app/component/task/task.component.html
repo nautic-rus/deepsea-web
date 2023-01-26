@@ -229,7 +229,8 @@
 
 
 
-      <div *ngIf="issue.combined_issues.length > 0" class="big-text mb-1 mt-2">Linked</div>
+      <div class="big-text mb-1 mt-2">Linked</div>
+      <button (click)="addCombinedIssue()">addLinked</button>
 
       <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0" (click)="contentClick('combined_issues')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('combined_issues')">

@@ -1080,4 +1080,17 @@ export class TaskComponent implements OnInit {
       });
     });
   }
+
+  addCombinedIssue() {
+    this.dialogService.open(CombineIssuesComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
+    });
+  }
 }

@@ -1,13 +1,15 @@
 <div style="height: 300px; width: 370px;">
   <div class="task-header-assign">
-    <div class="task-name">Accept to Work</div>
+    <div class="task-name">Combine Issues</div>
     <div class="task-button cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
   <div class="big-text mb-1 mt-1">{{t.tr('Связанные задачи')}}</div>
-  <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" filterBy="name,doc_number" [selectedItemsLabel]="'{0} items selected'"
-                 styleClass="width-200 new-task-button p-info" [placeholder]="'Выберите'" [virtualScroll]="true" [itemSize]="40" optionValue="id">
+
+
+  <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
+                 styleClass="width-430 new-task-button p-info" [virtualScroll]="true" [itemSize]="40" optionValue="id">
     <ng-template let-issue pTemplate="item">
       <div class="country-item">
         <div>{{issue.doc_number}}</div>
