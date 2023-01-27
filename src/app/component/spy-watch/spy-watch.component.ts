@@ -17,6 +17,7 @@ export class SpyWatchComponent implements OnInit {
   selectedUserImageIndex = 0;
   lightBox = false;
   time = 0;
+  hoverUser = '';
   constructor(private auth: AuthManagerService, public router: Router) { }
 
 

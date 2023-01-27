@@ -1,6 +1,6 @@
 <div style="height: 300px; width: 370px;">
   <div class="task-header-assign">
-    <div class="task-name">Combine Issues</div>
+    <div class="task-name">{{t.tr('Связать задачи')}}</div>
     <div class="task-button cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
@@ -8,8 +8,8 @@
   <div class="big-text mb-1 mt-1">{{t.tr('Связанные задачи')}}</div>
 
 
-  <p-multiSelect appendTo="body" class="mr-10" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
-                 styleClass="width-430 new-task-button p-info" [virtualScroll]="true" [itemSize]="40" optionValue="id">
+  <p-multiSelect appendTo="body" class="mr-10" filterBy="name,doc_number" optionLabel="doc_number" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
+                 styleClass="w-100 new-task-button p-info" [virtualScroll]="true" [itemSize]="40" optionValue="id">
     <ng-template let-issue pTemplate="item">
       <div class="country-item">
         <div>{{issue.doc_number}}</div>
@@ -18,7 +18,7 @@
     </ng-template>
   </p-multiSelect>
 
-  <div class="form-footer pt-30">
+  <div class="form-footer">
     <div class="mr-5 cx">
       <div [class.disabled-button]="selectedIssues.length == 0" tabindex="10" (click)="commit()" pButton [label]="t.tr('Назначить')" class="button-ok"></div>
     </div>
