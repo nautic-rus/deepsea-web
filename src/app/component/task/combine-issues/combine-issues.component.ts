@@ -24,7 +24,7 @@ export class CombineIssuesComponent implements OnInit {
   users: User[] = [];
   issues: Issue[] = [];
   // @ts-ignore
-  selectedIssues: Issue[] = [];
+  selectedIssues: number[] = [];
 
   constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef,public t: LanguageService) { }
 
@@ -45,9 +45,8 @@ export class CombineIssuesComponent implements OnInit {
   }
 
   commit() {
-    //return;
-    this.selectedIssues.forEach(issue => {
-      this.issueManager.combineIssues(this.issue.id, this.issue.id, this.auth.getUser().login).then(() => {
+    this.selectedIssues.forEach(issueId => {
+      this.issueManager.combineIssues(issueId, this.issue.id, this.auth.getUser().login).then(() => {
 
       });
     });
