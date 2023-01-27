@@ -6,6 +6,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {LanguageService} from "../../../domain/language.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-assign-question',
@@ -49,11 +50,10 @@ export class AssignQuestionComponent implements OnInit {
       this.issue.action = this.issue.status;
       this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
         this.issueManager.setPlanHours(this.issue.id, this.auth.getUser().login, this.labor).then(() => {
-          this.selectedIssues.forEach(issueId => {
-            this.issueManager.combineIssues(this.issue.id, issueId, this.auth.getUser().login);
+          forkJoin(this.selectedIssues.map(issueId => this.issueManager.combineIssues(this.issue.id, issueId, this.auth.getUser().login))).subscribe(res => {
+            this.ref.close();
           });
         });
-        this.ref.close();
       });
     });
   }

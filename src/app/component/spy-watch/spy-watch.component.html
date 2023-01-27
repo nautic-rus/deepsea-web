@@ -19,7 +19,7 @@
 <div class="all-page-spy">
   <div class="cx user-watches">
     <div class="user-watch cursor-pointer" *ngFor="let user of users" (mouseenter)="hoverUser = user.user" (mouseleave)="hoverUser = ''">
-      <div class="cx user-title">{{user.user}}</div>
+      <div class="cx user-title">{{getUser(user.user)}}</div>
       <div class="cx time-title">{{user.time}}</div>
       <div class="view-image">
         <img (click)="selectUser(user.user, i)" *ngFor="let img of user.images; let i = index" class="monitor" src="{{'data:image/jpg;base64,' + img}}" />

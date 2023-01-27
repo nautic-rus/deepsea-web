@@ -90,4 +90,8 @@ export class SpyWatchComponent implements OnInit {
   getAfkMinutes(activity: number) {
     return Math.floor((this.time - activity) / 1000 / 60);
   }
+
+  getUser(user: string) {
+    return user.split('/')[0];
+  }
 }

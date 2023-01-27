@@ -50,6 +50,7 @@ export class CombineIssuesComponent implements OnInit {
 
       });
     });
+    this.ref.close('success');
     // this.issueManager.combineIssues(this.issue.id, this.selectedIssues, this.auth.getUser().login).then(() => {
     //   this.issue.assigned_to = this.selectedUser;
     //   this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
