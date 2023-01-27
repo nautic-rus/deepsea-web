@@ -297,7 +297,7 @@ export class LanguageService {
           case 'Раздел находится в разработке.': return 'Page under construction!';
           case 'Приносим свои извинения.': return 'Please come back later...';
           case 'Швартовное': return 'Mooring';
-          case 'Добавить': return 'Add material';
+          case 'Добавить': return 'Add';
           case 'Копировать': return 'Copy material';
           case 'Редактировать': return 'Edit';
           case 'Номер': return 'Number';
