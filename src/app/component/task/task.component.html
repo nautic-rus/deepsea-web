@@ -230,11 +230,9 @@
 
 
 
-      <div class="big-text mb-1 mt-2">Linked</div>
-      <div class="mr-10">
-        <div (click)="addCombinedIssue()" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" class="materials-button blue-button cxy">
-          <img src="assets/icons/plus3.svg" height="18">
-        </div>
+      <div class="df space-between mb-1 mt-2">
+        <div class="big-text ">Linked</div>
+        <div (click)="addCombinedIssue()" class="button-add-l cxy cursor-pointer">{{t.tr('Создать связанную задачу')}}</div>
       </div>
 
 

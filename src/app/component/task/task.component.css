@@ -1220,3 +1220,17 @@
   cursor: pointer;
   border-radius: 6px;
 }
+.button-add-l{
+  padding: 2px 6px;
+  text-transform: uppercase;
+  font-size: 11px;
+  border-radius: 3px;
+  font-weight: 500;
+  letter-spacing: .5px;
+  color: white;
+  background-color: #36B37E;
+  width: fit-content;
+}
+.button-add-l:hover{
+  background-color: #42c58e;
+}
