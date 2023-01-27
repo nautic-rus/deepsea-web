@@ -11,8 +11,8 @@ import Quill from "quill";
 import Delta from "quill-delta";
 import {User} from "../../domain/classes/user";
 import {LanguageService} from "../../domain/language.service";
-import {PrimeNGConfig} from "primeng/api";
 import {LV} from "../../domain/classes/lv";
+import {PrimeNGConfig} from "primeng/api";
 
 Quill.register('modules/imageResize', ImageResize);
 

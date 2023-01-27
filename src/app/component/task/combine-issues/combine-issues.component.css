@@ -28,7 +28,8 @@
 .form-footer{
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: flex-end;
+  height: 140px;
 }
 .button-ok{
   border: none;
