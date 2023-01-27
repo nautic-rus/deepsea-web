@@ -41,7 +41,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getHullEspFiles(this.issue.project.replace('NR', 'N'), this.issue.doc_number, this.issue.name, this.rev).then(res => {
+    this.s.getHullEspFiles(this.project, this.issue.doc_number, this.issue.name, this.rev).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
