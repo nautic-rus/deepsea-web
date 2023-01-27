@@ -229,12 +229,14 @@
 
 
 
-      <div class="df mb-1 mt-2">
-        <div class="big-text mr-10">Linked</div>
-        <div class="task-button cxy" (click)="addCombinedIssue()">
-          <img class="rotate-90" src="assets/icons/linktask.svg" height="20">
+
+      <div class="big-text mb-1 mt-2">Linked</div>
+      <div class="mr-10">
+        <div (click)="addCombinedIssue()" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" class="materials-button blue-button cxy">
+          <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
+
 
       <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0" (click)="contentClick('combined_issues')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('combined_issues')">
