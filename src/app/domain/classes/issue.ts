@@ -52,4 +52,7 @@ export class Issue {
   plan_hours: number = 0;
   plan_hours_locked: number = 0;
   assistant = '';
+  reason_of_changes = '';
+  modification_of_existing = 0;
+  modification_description = '';
 }

@@ -694,6 +694,22 @@
         </p-dropdown>
       </div>
     </div>
+    <div class="df space-between">
+      <div style="width: 400px">
+        <div class="big-text-create mb-1 mt-1">reasonOfModification</div>
+        <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="reasonOfModification">
+      </div>
+      <div style="width: 200px">
+        modificationOfExisting<p-checkbox [(ngModel)]="modificationOfExisting" [binary]="true"></p-checkbox>
+      </div>
+    </div>
+    <div class="df space-between">
+      <div style="width: 400px">
+        <div class="big-text-create mb-1 mt-1">modificationDescription</div>
+        <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="modificationDescription">
+      </div>
+    </div>
+
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
       <div quill-editor-toolbar>

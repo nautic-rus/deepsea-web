@@ -64,6 +64,9 @@ export class CreateTaskComponent implements OnInit {
   @ViewChild('img') img;
   // @ts-ignore
   wz;
+  reasonOfModification = '';
+  modificationOfExisting = false;
+  modificationDescription = '';
 
   generateId(length: number): string {
     let result = '';
@@ -292,6 +295,9 @@ export class CreateTaskComponent implements OnInit {
     issue.for_revision = this.for_revision;
     issue.parent_id = this.action == 'child' ? this.parent_id : 0;
     issue.plan_hours = this.planLabor;
+    issue.reason_of_changes = this.reasonOfModification;
+    issue.modification_of_existing = this.modificationOfExisting ? 1 : 0;
+    issue.modification_description = this.modificationDescription;
     if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
       issue.doc_number = '';
     }

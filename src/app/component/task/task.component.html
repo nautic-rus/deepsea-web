@@ -78,6 +78,14 @@
           <div [class.disabled-button]="isDisabledStatus(status.value)" (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
         </div>
       </div>
+      <div *ngIf="issue.modification_description != ''">
+        <div class="df">
+          <div class="big-text mb-1 mt-2">{{t.tr('Описание задачи')}}</div>
+        </div>
+        <div class="text description descr-task">
+          <textarea [(ngModel)]="issue.modification_description" (click)="editorClicked($event)"></textarea>
+        </div>
+      </div>
       <div class="df">
         <div class="big-text mb-1 mt-2">{{t.tr('Описание задачи')}}</div>
       </div>
@@ -1052,6 +1060,24 @@
             <div class="df text-y height-32 normal-text w-40">{{t.tr('Дата первой отправки')}}</div>
             <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{getDateNoTime(issue.first_send_date)}}</div>
           </div>
+          <div class="df mt-3px" *ngIf="isVisible('modification_of_existing')">
+            <div class="df text-y height-32 normal-text w-40">modification_of_existing</div>
+            <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" pTooltip="{{issue.modification_of_existing}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{issue.modification_of_existing}}</div>
+            <textarea *ngIf="edit == 'modification_of_existing'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.modification_of_existing" class="w-40 cy task-name-change-commit"></textarea>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'modification_of_existing'" (click)="commitIssueEdit()">
+                <div class="task-name-button cxy ml-5 mr-5" >
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'modification_of_existing'" (click)="cancelIssueEdit()">
+                <div class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="df mt-3px" *ngIf="isVisible('revision')">
             <div class="df text-y height-32 normal-text w-40">{{t.tr('Ревизия')}}</div>
             <div [class.no-edit]="!isEditable()" [hidden]="edit == 'revision'" (click)="edit = 'revision'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.revision}}</div>
@@ -1067,6 +1093,23 @@
               </div>
               <div [hidden]="edit != 'revision'" (click)="cancelIssueEdit()">
                 <div  class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="df mt-3px" *ngIf="isVisible('reason_of_changes')">
+            <div class="df text-y height-32 normal-text w-40">reason_of_changes</div>
+            <div (click)="edit = 'reason_of_changes'" *ngIf="edit != 'reason_of_changes'" pTooltip="{{issue.reason_of_changes}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{trimMin(issue.reason_of_changes)}}</div>
+            <textarea *ngIf="edit == 'reason_of_changes'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.reason_of_changes" class="w-40 cy task-name-change-commit"></textarea>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'reason_of_changes'" (click)="commitIssueEdit()">
+                <div class="task-name-button cxy ml-5 mr-5" >
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'reason_of_changes'" (click)="cancelIssueEdit()">
+                <div class="task-name-button cxy">
                   <img src="assets/icons/cancel.svg">
                 </div>
               </div>

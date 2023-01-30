@@ -195,6 +195,7 @@ export class MonthTasksComponent implements OnInit {
   }
   fillTasks(){
     this.issueManager.getDailyTasks().then(res => {
+      console.log(res);
       this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
       console.log(this.tasksSrc);
       this.issueManager.getIssues('op').then(resIssues => {
