@@ -5,22 +5,24 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="big-text mb-1 mt-1">{{t.tr('Связанные задачи')}}</div>
-
+  <div class="big-text mb-1 mt-1">{{t.tr('Выбрать задачи')}}</div>
 
   <p-multiSelect appendTo="body" class="mr-10" filterBy="name,doc_number" optionLabel="doc_number" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
-                 styleClass="w-100 new-task-button p-info" [virtualScroll]="true" [itemSize]="40" optionValue="id">
+                 styleClass="w-100 new-task-button p-info" [virtualScroll]="true" [itemSize]="60" optionValue="id">
     <ng-template let-issue pTemplate="item">
-      <div class="country-item">
-        <div>{{issue.doc_number}}</div>
-        <div>{{issue.name}}</div>
+      <div class="country-item df">
+        <div>
+          <div class="min-text">{{issue.issue_type}}</div>
+          <div>{{issue.doc_number}}</div>
+          <div>{{issue.name}}</div>
+        </div>
       </div>
     </ng-template>
   </p-multiSelect>
 
   <div class="form-footer">
     <div class="mr-5 cx">
-      <div [class.disabled-button]="selectedIssues.length == 0" tabindex="10" (click)="commit()" pButton [label]="t.tr('Назначить')" class="button-ok"></div>
+      <div [class.disabled-button]="selectedIssues.length == 0" tabindex="10" (click)="commit()" pButton [label]="t.tr('ОК')" class="button-ok"></div>
     </div>
     <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>

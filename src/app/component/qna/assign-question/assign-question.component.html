@@ -27,10 +27,11 @@
     <div class="big-text mb-1 mt-1">{{t.tr('Связанные задачи')}}</div>
 
     <p-multiSelect appendTo = "body" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" filterBy="name,doc_number" optionValue="id" optionLabel="doc_number"
-                [placeholder]="t.tr('Выберите')" class="p-dropdown-150 width-200" styleClass="width-300" [virtualScroll]="true" [itemSize]="44">
+                [placeholder]="t.tr('Выберите')" class="p-dropdown-150 width-200" styleClass="width-300" [virtualScroll]="true" [itemSize]="60">
       <ng-template let-issue pTemplate="item">
-        <div class="df">
-          <div class="pr-5">{{issue.doc_number}}</div>
+        <div>
+          <div class="min-text">{{issue.issue_type}}</div>
+          <div>{{issue.doc_number}}</div>
           <div>{{issue.name}}</div>
         </div>
       </ng-template>

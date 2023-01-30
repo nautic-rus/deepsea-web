@@ -96,3 +96,7 @@
   opacity: 0.5;
   pointer-events: none;
 }
+.min-text{
+  color: #7b7e85d4;
+  font-size: 12px;
+}
