@@ -696,16 +696,16 @@
     </div>
     <div class="df space-between">
       <div style="width: 400px">
-        <div class="big-text-create mb-1 mt-1">reasonOfModification</div>
-        <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="reasonOfModification">
+        <div class="big-text-create mb-1 mt-1">Reason of modification</div>
+        <p-dropdown class="select" styleClass="width-300" [(ngModel)]="reasonOfModification" [options]="reasonsOfChange" optionLabel="label" optionValue="value"></p-dropdown>
       </div>
       <div style="width: 200px">
-        modificationOfExisting<p-checkbox [(ngModel)]="modificationOfExisting" [binary]="true"></p-checkbox>
+        Modification of existing<p-dropdown class="select" styleClass="width-100" [(ngModel)]="modificationOfExisting" [options]="yesNo" optionLabel="label" optionValue="value"></p-dropdown>
       </div>
     </div>
     <div class="df space-between">
       <div style="width: 400px">
-        <div class="big-text-create mb-1 mt-1">modificationDescription</div>
+        <div class="big-text-create mb-1 mt-1">Modification description</div>
         <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="modificationDescription">
       </div>
     </div>

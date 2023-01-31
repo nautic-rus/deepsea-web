@@ -142,6 +142,9 @@ export class IssueManagerService {
   async getSfiCodes(){
     return await this.http.get<SfiCode[]>(props.http + '/sfiCodes').toPromise();
   }
+  async getReasonsOfChange(){
+    return await this.http.get<any[]>(props.http + '/reasonsOfChange').toPromise();
+  }
   async getForanParts(project = 'N004'){
     return await this.http.get(props.httpSpec + '/foranPartsExcel', { responseType: 'text', params: {project}}).toPromise();
   }

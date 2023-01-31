@@ -65,8 +65,10 @@ export class CreateTaskComponent implements OnInit {
   // @ts-ignore
   wz;
   reasonOfModification = '';
-  modificationOfExisting = false;
+  modificationOfExisting = 'no';
   modificationDescription = '';
+  reasonsOfChange: any[] = [];
+  yesNo: any[] = [new LV('yes'), new LV('no')];
 
   generateId(length: number): string {
     let result = '';
@@ -159,6 +161,9 @@ export class CreateTaskComponent implements OnInit {
       if (this.taskTypes.length > 0) {
         this.taskType = this.taskTypes[0].value;
       }
+    });
+    this.issues.getReasonsOfChange().then(reasons => {
+      this.reasonsOfChange = reasons;
     });
     this.issues.getTaskPriorities().then(priorities => {
       priorities.forEach(priority => {

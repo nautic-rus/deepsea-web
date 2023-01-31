@@ -62,6 +62,7 @@ export class TaskComponent implements OnInit {
   editorDescription;
   showHistory = ['_taskStatus'];
   availableActions: any[] = [];
+  reasonsOfChange: any[] = [];
   taskDepartments: string[] = [];
   taskPriorities: LV[] = [];
   taskPeriods: LV[] = [];
@@ -73,6 +74,7 @@ export class TaskComponent implements OnInit {
   today: Date = new Date();
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];
+  yesNo: any[] = [new LV('yes'), new LV('no')];
   quillModulesModificationDescription =
     {
       imageResize: {},
@@ -285,6 +287,10 @@ export class TaskComponent implements OnInit {
     this.issueManager.getIssueProjects().then(projects => {
       this.issueProjects = projects;
       this.availableActions = this.getAvailableActions(this.issue);
+    });
+
+    this.issueManager.getReasonsOfChange().then(reasons => {
+      this.reasonsOfChange = reasons;
     });
 
     this.issueManager.getIssueDepartments().then(departments => {
@@ -1172,5 +1178,9 @@ export class TaskComponent implements OnInit {
         this.availableActions = this.getAvailableActions(issue);
       });
     });
+  }
+
+  formatChanges(rChange: string) {
+    return this.reasonsOfChange.find(x => x.value == rChange).label;
   }
 }

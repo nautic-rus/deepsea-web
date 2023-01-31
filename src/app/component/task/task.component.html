@@ -132,7 +132,7 @@
 
       </div>
 
-      <div *ngIf="issue.modification_description != ''">
+      <div>
         <div class="big-text mb-1 mt-2">Modification Description</div>
         <div class="text description descr-task">
           <quill-view [hidden]="edit == 'modification_description'" [content]="issue.modification_description" (click)="editorModificationClicked($event)"></quill-view>
@@ -830,6 +830,19 @@
                   <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
                 </div>
               </div>
+              <div *ngIf="msg.name_value == 'reason_of_changes'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">reason of changes</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="formatChanges(msg.prev_value)"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="formatChanges(msg.new_value)"></div>
+                </div>
+              </div>
               <div *ngIf="msg.name_value == 'contract_due_date'">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
@@ -882,7 +895,7 @@
                   <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPeriod(msg.new_value)) | safeHtml"></div>
                 </div>
               </div>
-              <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor', 'contract_due_date'].includes(msg.name_value)">
+              <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor', 'contract_due_date', 'reason_of_changes'].includes(msg.name_value)">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
                 <span class="bold-text">{{t.tr('информацию')}}</span>
@@ -1105,7 +1118,10 @@
           <div class="df mt-3px" *ngIf="isVisible('modification_of_existing')">
             <div class="df text-y height-32 normal-text w-40">Modification of existing</div>
             <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" pTooltip="{{issue.modification_of_existing}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{issue.modification_of_existing}}</div>
-            <textarea *ngIf="edit == 'modification_of_existing'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.modification_of_existing" class="w-40 cy task-name-change-commit"></textarea>
+            <div class="mr-5" [hidden]="edit != 'modification_of_existing'">
+              <p-dropdown class="select" [(ngModel)]="issue.modification_of_existing" [options]="yesNo" optionValue="value" optionLabel="label" styleClass="width-130 height-32">
+              </p-dropdown>
+            </div>
             <div class="w-15 df">
               <div [hidden]="edit != 'modification_of_existing'" (click)="commitIssueEdit()">
                 <div class="task-name-button cxy ml-5 mr-5" >
@@ -1142,8 +1158,10 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('reason_of_changes')">
             <div class="df text-y height-32 normal-text w-40">Reason of changes</div>
-            <div (click)="edit = 'reason_of_changes'" *ngIf="edit != 'reason_of_changes'" pTooltip="{{issue.reason_of_changes}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{trimMin(issue.reason_of_changes)}}</div>
-            <textarea *ngIf="edit == 'reason_of_changes'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.reason_of_changes" class="w-40 cy task-name-change-commit"></textarea>
+            <div (click)="edit = 'reason_of_changes'" *ngIf="edit != 'reason_of_changes'" pTooltip="{{issue.reason_of_changes}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{formatChanges(issue.reason_of_changes)}}</div>
+            <div class="mr-5" [hidden]="edit != 'reason_of_changes'">
+              <p-dropdown appendTo="body" class="select" [(ngModel)]="issue.reason_of_changes" [options]="reasonsOfChange" optionValue="value" optionLabel="label" styleClass="width-130 height-32"></p-dropdown>
+            </div>
             <div class="w-15 df">
               <div [hidden]="edit != 'reason_of_changes'" (click)="commitIssueEdit()">
                 <div class="task-name-button cxy ml-5 mr-5" >
