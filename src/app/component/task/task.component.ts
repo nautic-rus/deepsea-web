@@ -73,6 +73,56 @@ export class TaskComponent implements OnInit {
   today: Date = new Date();
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];
+  quillModulesModificationDescription =
+    {
+      imageResize: {},
+      clipboard: {
+        matchers: [
+          // @ts-ignore
+          ['img', (node, delta) => {
+            let image = delta.ops[0].insert.image;
+            if ((image.indexOf(";base64")) != -1){
+              let ext = image.substring("data:image/".length, image.indexOf(";base64"))
+              let fileName = 'clip' + this.generateId(8)  + '.' + ext;
+              const find = this.loaded.find(x => x.name == fileName);
+              if (find != null){
+                this.loaded.splice(this.loaded.indexOf(find), 1);
+              }
+              this.awaitForLoad.push(fileName);
+              this.appRef.tick();
+              fetch(image).then(res => res.blob()).then(blob => {
+                const file = new File([blob], fileName,{ type: "image/png" });
+                this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+                  this.loaded.push(res);
+                  this.appRef.tick();
+                  let newDelta = new Delta();
+                  newDelta.retain(this.editorDescription.getSelection().index);
+                  newDelta.insert({image: res.url});
+                  this.editorDescription.updateContents(newDelta, 'user');
+                  this.editorDescription.setSelection(this.editorDescription.getLength());
+                  this.appRef.tick();
+                });
+              });
+              return new Delta();
+            }
+            else{
+              return delta;
+            }
+            //return delta;
+          }]
+        ]
+      },
+      keyboard: {
+        bindings: {
+          tab: {
+            key: 9,
+            handler: function () {
+              return true;
+            }
+          }
+        }
+      }
+    }
   quillModulesDescription =
     {
       imageResize: {},
@@ -537,6 +587,20 @@ export class TaskComponent implements OnInit {
     }
     else if (this.isEditable()){
       this.edit = 'description';
+    }
+  }
+  editorModificationClicked(event: any){
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.target.localName == 'img'){
+      this.showImage(event.target.currentSrc);
+      //window.open(event.target.currentSrc);
+    }
+    else if (event.target.localName == 'a'){
+      window.open(event.target.href, '_blank');
+    }
+    else if (this.isEditable()){
+      this.edit = 'modification_description';
     }
   }
   showImage(url: string){

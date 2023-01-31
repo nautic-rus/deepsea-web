@@ -78,14 +78,6 @@
           <div [class.disabled-button]="isDisabledStatus(status.value)" (click)="changeStatus(status.value)" [innerHTML]="issueManager.localeStatusAsButton(status.value) | safeHtml"></div>
         </div>
       </div>
-      <div *ngIf="issue.modification_description != ''">
-        <div class="df">
-          <div class="big-text mb-1 mt-2">{{t.tr('Описание задачи')}}</div>
-        </div>
-        <div class="text description descr-task">
-          <textarea [(ngModel)]="issue.modification_description" (click)="editorClicked($event)"></textarea>
-        </div>
-      </div>
       <div class="df">
         <div class="big-text mb-1 mt-2">{{t.tr('Описание задачи')}}</div>
       </div>
@@ -139,6 +131,56 @@
         </div>
 
       </div>
+
+      <div *ngIf="issue.modification_description != ''">
+        <div class="big-text mb-1 mt-2">Modification Description</div>
+        <div class="text description descr-task">
+          <quill-view [hidden]="edit == 'modification_description'" [content]="issue.modification_description" (click)="editorModificationClicked($event)"></quill-view>
+        </div>
+        <div class="" [hidden]="edit != 'modification_description'">
+          <quill-editor (onEditorCreated)="quillCreatedDescription($event)" [modules]="quillModulesModificationDescription" (contextmenu)="editorModificationClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.modification_description">
+            <div quill-editor-toolbar>
+              <p-header>
+            <span class="ql-formats">
+              <button class="ql-bold quill-button" [pTooltip]="t.tr('Полужирный Ctrl+B')" tooltipPosition="top" aria-label="Bold" tabindex="-1"></button>
+              <button class="ql-italic quill-button" [pTooltip]="t.tr('Курсив Ctrl+I')" tooltipPosition="top" aria-label="Italic" tabindex="-1"></button>
+              <button class="ql-underline quill-button" [pTooltip]="t.tr('Подчеркнутый Ctrl+U')" tooltipPosition="top" aria-label="Underline" tabindex="-1"></button>
+            </span>
+                <span class="ql-formats">
+              <select class="ql-color quill-button" [pTooltip]="t.tr('Цвет текста')" tooltipPosition="top" tabindex="-1"></select>
+              <select class="ql-background quill-button" [pTooltip]="t.tr('Фон текста')" tooltipPosition="top" tabindex="-1"></select>
+            </span>
+                <span class="ql-formats">
+              <button class="ql-list quill-button" [pTooltip]="t.tr('Нумерованный список')" tooltipPosition="top" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+              <button class="ql-list quill-button" [pTooltip]="t.tr('Маркированный список')" tooltipPosition="top" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+              <select class="ql-align quill-button" [pTooltip]="t.tr('Выравнивание')" tooltipPosition="top" tabindex="-1">
+                <option selected tabindex="-1"></option>
+                <option value="center" tabindex="-1"></option>
+                <option value="right" tabindex="-1"></option>
+                <option value="justify" tabindex="-1"></option>
+              </select>
+            </span>
+                <span class="ql-formats">
+              <button class="ql-link quill-button" [pTooltip]="t.tr('Ссылка Ctrl+K')" tooltipPosition="top" aria-label="Insert Link" tabindex="-1"></button>
+              <button class="ql-code-block quill-button" [pTooltip]="t.tr('Фрагмент кода')" tooltipPosition="top" aria-label="Insert Code Block" tabindex="-1"></button>
+            </span>
+                <span class="ql-formats">
+              <button class="ql-clean quill-button" [pTooltip]="t.tr('Отменить форматирование')" tooltipPosition="top" aria-label="Remove Styles" tabindex="-1"></button>
+            </span>
+              </p-header>
+            </div>
+          </quill-editor>
+          <div class="df mt-5">
+            <div class="mr-5 pb-20">
+              <div (click)="commitIssueEdit()" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
+            </div>
+            <div>
+              <div (click)="cancelIssueEdit()" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="big-text mb-1 mt-2">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
       <div class="attachments-issue">
         <div *ngFor="let file of issue.file_attachments">
@@ -1061,7 +1103,7 @@
             <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{getDateNoTime(issue.first_send_date)}}</div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('modification_of_existing')">
-            <div class="df text-y height-32 normal-text w-40">modification_of_existing</div>
+            <div class="df text-y height-32 normal-text w-40">Modification of existing</div>
             <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" pTooltip="{{issue.modification_of_existing}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{issue.modification_of_existing}}</div>
             <textarea *ngIf="edit == 'modification_of_existing'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.modification_of_existing" class="w-40 cy task-name-change-commit"></textarea>
             <div class="w-15 df">
@@ -1099,7 +1141,7 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('reason_of_changes')">
-            <div class="df text-y height-32 normal-text w-40">reason_of_changes</div>
+            <div class="df text-y height-32 normal-text w-40">Reason of changes</div>
             <div (click)="edit = 'reason_of_changes'" *ngIf="edit != 'reason_of_changes'" pTooltip="{{issue.reason_of_changes}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{trimMin(issue.reason_of_changes)}}</div>
             <textarea *ngIf="edit == 'reason_of_changes'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.reason_of_changes" class="w-40 cy task-name-change-commit"></textarea>
             <div class="w-15 df">

@@ -558,6 +558,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       return this.issueManager.localeTaskDepartment(issueElement);
     } else if (field == 'due_date') {
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    } else if (field == 'contract_due_date') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     } else if (field == 'last_update') {
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     } else if (field == 'responsible') {
