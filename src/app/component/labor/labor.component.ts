@@ -50,6 +50,7 @@ export class LaborComponent implements OnInit {
         });
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
+        console.log(this.issues);
       });
     });
     this.issueManagerService.getIssueProjects().then(projects => {
@@ -69,11 +70,11 @@ export class LaborComponent implements OnInit {
   }
   filterIssues(){
     this.issues = [...this.issuesSrc];
-    this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-');
-    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-');
-    this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-');
-    this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-');
-    this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.stage, false) || this.status == '' || this.status == '-');
+    this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
+    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
+    this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
+    this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
+    this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.stage, false) || this.status == '' || this.status == '-' || this.status == null);
     this.issues = _.sortBy(this.issues, x => x.doc_number);
   }
 
