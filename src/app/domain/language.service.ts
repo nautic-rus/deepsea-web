@@ -393,7 +393,7 @@ export class LanguageService {
           case 'Причина изменения': return 'Reason of modification';
           case 'Описание изменения': return 'Modification description';
           case 'Изменение существующего': return 'Modification of existing';
-          case '': return '';
+          case 'Связанные': return 'Linked';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -400,6 +400,9 @@ body,p{
 .max-width-50{
   max-width: 50px;
 }
+.height-30{
+  height: 30px;
+}
 .height-32{
   height: 32px;
 }

@@ -133,7 +133,7 @@
       </div>
 
       <div>
-        <div class="big-text mb-1 mt-2">Modification Description</div>
+        <div class="big-text mb-1 mt-2">{{t.tr('Описание изменения')}}</div>
         <div class="text description descr-task">
           <quill-view [hidden]="edit == 'modification_description'" [content]="issue.modification_description" (click)="editorModificationClicked($event)"></quill-view>
         </div>
@@ -281,7 +281,7 @@
 
 
       <div class="df space-between mb-1 mt-2">
-        <div class="big-text ">Linked</div>
+        <div class="big-text">{{t.tr('Связанные задачи')}}</div>
         <div (click)="addCombinedIssue()" class="button-add-l cxy cursor-pointer">{{t.tr('Привязать задачу')}}</div>
       </div>
 
@@ -290,7 +290,7 @@
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('combined_issues')">
           <img src="assets/icons/arrow-right.png">
         </div>
-        <div>Linked Issues</div>
+        <div>{{t.tr('Связанные задачи')}}</div>
       </div>
       <div collapseContent #contentCombined="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="issue.combined_issues.length > 0">
@@ -933,15 +933,15 @@
         <div class="header-information text-head">{{t.tr('Сведения')}}</div>
         <div class="table table-overflow">
           <div class="df mt-3px" *ngIf="isVisible('status')">
-            <div class="df height-32 text-y line-text normal-text w40">{{t.tr('Статус')}}</div>
-            <div class="df height-32 text-y line-text cursor-pointer description-task w60">
+            <div class="df height-30 text-y line-text normal-text w-40">{{t.tr('Статус')}}</div>
+            <div class="df height-30 text-y line-text cursor-pointer description-task w-60">
               <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('start_date')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Дата начала')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.start_date)}}</div>
-            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Дата начала')}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.start_date)}}</div>
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-30 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'startDate'" (click)="commitIssueEdit()">
                 <div  class="task-name-button cxy mr-5">
@@ -956,9 +956,9 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('due_date')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Срок исполнения')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.due_date)}}</div>
-            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Срок исполнения')}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.due_date)}}</div>
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-30 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit()">
                 <div  class="task-name-button cxy mr-5">
@@ -973,9 +973,9 @@
             </div>
           </div>
           <div class="df mt-3px">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Контрактный срок исп.')}}</div>
-            <div [class.no-edit]="!auth.hasPerms('contractDueDate')" [hidden]="edit == 'contractDueDate'" (click)="edit = 'contractDueDate'"  class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.contract_due_date)}}</div>
-            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'contractDueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="contractDueDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-32 mr-5"></p-calendar>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Контрактный срок исп.')}}</div>
+            <div [class.no-edit]="!auth.hasPerms('contractDueDate')" [hidden]="edit == 'contractDueDate'" (click)="edit = 'contractDueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{getDateNoTime(issue.contract_due_date)}}</div>
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'contractDueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="contractDueDate" dateFormat="dd.mm.yy" styleClass="background width-130 height-30 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'contractDueDate'" (click)="commitIssueEdit()">
                 <div  class="task-name-button cxy mr-5">
@@ -991,9 +991,9 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('project')">
             <div class="df text-y line-text normal-text w-40">{{t.tr('Проект')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.project}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{issue.project}}</div>
             <div [hidden]="edit != 'project'" class="mr-5">
-              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-130 height-32">
+              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-130 height-30">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -1010,10 +1010,10 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('department')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Отдел')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'department'" (click)="edit = 'department'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.department}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Отдел')}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'department'" (click)="edit = 'department'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{issue.department}}</div>
             <div class="mr-5" [hidden]="edit != 'department'">
-              <p-dropdown class="select" [(ngModel)]="issue.department" [options]="taskDepartments" styleClass="width-130 h-height-32">
+              <p-dropdown class="select" [(ngModel)]="issue.department" [options]="taskDepartments" styleClass="width-130 h-height-30">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -1030,31 +1030,31 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('started_by')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Автор')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.started_by)}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Автор')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{auth.getUserName(issue.started_by)}}</div>
             <div *ngIf="issue.started_by != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.started_by)">
               <img src="assets/icons/bell.svg" height="15">
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('responsible')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Отвественный')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{auth.getUserName(issue.responsible)}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Отвественный')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{auth.getUserName(issue.responsible)}}</div>
             <div *ngIf="issue.responsible != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.responsible)">
               <img src="assets/icons/bell.svg" height="15">
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('assigned_to')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Исполнитель')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{getAssignedTo(issue.assigned_to)}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Исполнитель')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{getAssignedTo(issue.assigned_to)}}</div>
             <div *ngIf="issue.assigned_to != ''" class="ding cxy ml-8 cursor-pointer" (click)="dingUser(issue.assigned_to)">
               <img src="assets/icons/bell.svg" height="15">
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('priority')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Приоритет')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'priority'" (click)="edit = 'priority'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Приоритет')}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'priority'" (click)="edit = 'priority'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPriority(issue.priority))}}</div>
             <div class="mr-5" [hidden]="edit != 'priority'">
-              <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.priority" [options]="taskPriorities" styleClass="width-130 height-32">
+              <p-dropdown class="select" optionLabel="label" optionValue="value" [(ngModel)]="issue.priority" [options]="taskPriorities" styleClass="width-130 height-30">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -1071,10 +1071,10 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('period')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Этап')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPeriod(issue.period))}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Этап')}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{getWithNoResult(issueManager.localeTaskPeriod(issue.period))}}</div>
             <div class="mr-5" [hidden]="edit != 'period'">
-              <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" optionValue="value" optionLabel="label" styleClass="width-130 height-32">
+              <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" optionValue="value" optionLabel="label" styleClass="width-130 height-30">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -1091,11 +1091,11 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('overtime')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Сверхурочные')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.overtime}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Сверхурочные')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.overtime}}</div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('issue_comment')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Примечение')}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Примечение')}}</div>
             <div (click)="edit = 'issue_comment'" *ngIf="edit != 'issue_comment'" pTooltip="{{issue.issue_comment}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{trimMin(issue.issue_comment)}}</div>
             <textarea *ngIf="edit == 'issue_comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.issue_comment" class="w-40 cy task-name-change-commit"></textarea>
             <div class="w-15 df">
@@ -1112,14 +1112,14 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('first_send_date')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Дата первой отправки')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{getDateNoTime(issue.first_send_date)}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Дата первой отправки')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{getDateNoTime(issue.first_send_date)}}</div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('modification_of_existing')">
-            <div class="df text-y height-32 normal-text w-40">Modification of existing</div>
-            <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" pTooltip="{{issue.modification_of_existing}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{issue.modification_of_existing}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Изменение существующего')}}</div>
+            <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{issue.modification_of_existing}}</div>
             <div class="mr-5" [hidden]="edit != 'modification_of_existing'">
-              <p-dropdown class="select" [(ngModel)]="issue.modification_of_existing" [options]="yesNo" optionValue="value" optionLabel="label" styleClass="width-130 height-32">
+              <p-dropdown class="select" [(ngModel)]="issue.modification_of_existing" [options]="yesNo" optionValue="value" optionLabel="label" styleClass="width-130 height-30">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -1137,10 +1137,10 @@
           </div>
 
           <div class="df mt-3px" *ngIf="isVisible('revision')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Ревизия')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'revision'" (click)="edit = 'revision'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.revision}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Ревизия')}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'revision'" (click)="edit = 'revision'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{issue.revision}}</div>
             <div class="mr-5" [hidden]="edit != 'revision'">
-              <p-dropdown appendTo = "body" class="select" [(ngModel)]="issue.revision" [options]="issueRevisions" styleClass="width-130 height-32">
+              <p-dropdown appendTo = "body" class="select" [(ngModel)]="issue.revision" [options]="issueRevisions" styleClass="width-130 height-30">
               </p-dropdown>
             </div>
             <div class="w-15 df">
@@ -1157,10 +1157,10 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('reason_of_changes')">
-            <div class="df text-y height-32 normal-text w-40">Reason of changes</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Причина изменения')}}</div>
             <div (click)="edit = 'reason_of_changes'" *ngIf="edit != 'reason_of_changes'" pTooltip="{{issue.reason_of_changes}}" class="pl-3 cy df cursor-pointer description-task hover-task w-40">{{formatChanges(issue.reason_of_changes)}}</div>
             <div class="mr-5" [hidden]="edit != 'reason_of_changes'">
-              <p-dropdown appendTo="body" class="select" [(ngModel)]="issue.reason_of_changes" [options]="reasonsOfChange" optionValue="value" optionLabel="label" styleClass="width-130 height-32"></p-dropdown>
+              <p-dropdown appendTo="body" class="select" [(ngModel)]="issue.reason_of_changes" [options]="reasonsOfChange" optionValue="value" optionLabel="label" styleClass="width-130 height-30"></p-dropdown>
             </div>
             <div class="w-15 df">
               <div [hidden]="edit != 'reason_of_changes'" (click)="commitIssueEdit()">
@@ -1176,8 +1176,8 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('plan_hours')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Плановая трудоёмкость')}}</div>
-            <div [class.no-edit]="issue.started_by != this.auth.getUser().login" [hidden]="edit == 'plan_hours'" (click)="edit = 'plan_hours'" class="pl-3 pt-6 height-32 cursor-pointer description-task hover-task width-130">{{issue.plan_hours}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Плановая трудоёмкость')}}</div>
+            <div [class.no-edit]="issue.started_by != this.auth.getUser().login" [hidden]="edit == 'plan_hours'" (click)="edit = 'plan_hours'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{issue.plan_hours}}</div>
             <div class="mr-5" [hidden]="edit != 'plan_hours'">
               <p-inputNumber [(ngModel)]="issue.plan_hours" mode="decimal"></p-inputNumber>
             </div>
@@ -1195,16 +1195,16 @@
             </div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('labor')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.plan_hours}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.plan_hours}}</div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('labor')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('Трудозатраты')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.labor}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('Трудозатраты')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.labor}}</div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('id')">
-            <div class="df text-y height-32 normal-text w-40">{{t.tr('ID задачи')}}</div>
-            <div class="pl-3 df text-y height-32 cursor-pointer description-task w-45">{{issue.id}}</div>
+            <div class="df text-y height-30 normal-text w-40">{{t.tr('ID задачи')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.id}}</div>
           </div>
 
         </div>
