@@ -390,9 +390,9 @@ export class LanguageService {
           case 'Связать задачи': return 'Link Tasks';
           case 'Выбрать задачи': return 'Select tasks';
           case 'Привязать задачу': return 'Link a task';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Причина изменения': return 'Reason of modification';
+          case 'Описание изменения': return 'Modification description';
+          case 'Изменение существующего': return 'Modification of existing';
           case '': return '';
           case '': return '';
           case '': return '';
