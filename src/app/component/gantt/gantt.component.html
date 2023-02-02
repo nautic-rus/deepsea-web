@@ -1,45 +1,65 @@
 <div class="">
   <div class="top-header">
     <div class="p-d-flex gantt-headers">
-      <div class="mr-1">
-        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border" (ngModelChange)="projectChanged()">
+      <div class="mr-10">
+        <p-dropdown appendTo="body" placeholder="Project" optionLabel="label" optionValue="name" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <div class="mr-1">
-        <p-dropdown placeholder="ИСПОЛНИТЕЛЬ" class="select" [(ngModel)]="assignee" [options]="assignees" optionValue="value" optionLabel="label" styleClass="width-170 border" (ngModelChange)="assigneeChanged()">
+      <div class="mr-10">
+        <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <p-dropdown appendTo="body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
       <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="startDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
       <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="endDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
     </div>
 
-    <div class="df gantt-row gantt-header-days">
-      <div class="issues-header"></div>
+<!--    <div class="df gantt-row gantt-header-days">-->
+<!--      <div class="issues-header"></div>-->
+<!--      <div [ngStyle]="getRowStyle()" class="df">-->
+<!--        <div *ngFor="let day of days" class="day">{{day.name}}</div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+
+<div class="periods position-relative">
+  <div class="df">
+    <div class="issues-header border-right">
+      <div class="df gantt-row">
+        <div class="issue-col w-150px df c y">№ документа</div>
+        <div class="issue-col w-80px df c y">Статус</div>
+        <div class="issue-col w-80px df c y">Испол.</div>
+        <div class="issue-col w-40px df c y">План</div>
+      </div>
+      <div class="df gantt-row" *ngFor="let issue of issues; let i = index">
+        <div class="issue-col w-150px cursor-pointer" (click)="openIssue(issue)">
+          <div class="issue-docNumber cx">{{issue.doc_number}}</div>
+          <div class="issue-name cx">{{trimName(issue.name)}}</div>
+        </div>
+        <div class="issue-col w-80px df c y">{{issue.status}}</div>
+        <div class="issue-col w-80px df c y">{{auth.getUserTrimName(issue.assigned_to)}}</div>
+        <div class="issue-col w-40px df c y">{{issue.plan_hours}}/{{issue.labor}}</div>
+      </div>
+    </div>
+    <div class="issue-periods">
       <div [ngStyle]="getRowStyle()" class="df">
-        <div *ngFor="let day of days" class="day">{{day.name}}</div>
+        <div *ngFor="let day of days" class="day">{{day.name}} {{day.dayOfWeek}}</div>
+      </div>
+      <div [ngStyle]="getRowStyle()" class="df gantt-row"  *ngFor="let issue of issues; let i = index">
+        <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period df cxy" (dragstart)="dragStart($event, issue)" draggable="true">
+          <div [ngStyle]="getIssueRowConsumedStyle(issue)"></div>
+        </div>
       </div>
     </div>
   </div>
-
-<div class="df gantt-row" *ngFor="let issue of issues1; let i = index">
-  <div class="issues-header border-right">
-    <div class="df">
-      <div class="issue-col">{{'Issue # ' + (i + 1)}}</div>
-      <div class="issue-col">{{getDateWithTime(issue.startDate)}}</div>
-      <div class="issue-col">{{getDateWithTime(issue.endDate)}}</div>
-    </div>
-  </div>
-  <div [ngStyle]="getRowStyle()" class="df">
-    <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period" (dragstart)="dragStart($event, issue)" draggable="true"></div>
-    <div class="cxy" (dragstart)="dragStartMove($event, issue, i, 'right')" draggable="true" [ngStyle]="getRightArrow(issue)"></div>
-    <div class="cxy" (dragstart)="dragStartMove($event, issue, i, 'left')" draggable="true" [ngStyle]="getLeftArrow(issue)"></div>
-    <div #element1 (mouseup)="onAnchorDrop($event, element1)" (dragstart)="dragStart($event, element1)" class="anchor left-anchor" [ngStyle]="getLeftAnchor(issue)"></div>
-    <div #element2 draggable="true" (dragstart)="dragStartAnchor($event, element2)" class="anchor right-anchor" [ngStyle]="getRightAnchor(issue)"></div>
-  </div>
 </div>
-
-
-
 
 
 

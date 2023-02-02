@@ -23,7 +23,7 @@
           <p-dropdown placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-170 border">
           </p-dropdown>
         </div>
-        <div class="mr-10">
+        <div class="mr-10" (click)="exportXls()">
           <div class="materials-button green-button cxy">
             <img src="assets/icons/xls2.svg" height="26">
           </div>
