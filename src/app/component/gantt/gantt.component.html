@@ -17,8 +17,9 @@
         <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="startDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
-      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="endDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
+      <div class="cxy cursor-pointer" (click)="saveChanged()">SAVE</div>
+<!--      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="startDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>-->
+<!--      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="endDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>-->
     </div>
 
 <!--    <div class="df gantt-row gantt-header-days">-->

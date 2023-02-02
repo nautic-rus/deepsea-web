@@ -157,6 +157,9 @@ export class IssueManagerService {
   async createCloudPath(id: number) {
     return await this.http.get<string>(props.http + '/createDocumentCloudDirectory', { params: {id}}).toPromise();
   }
+  async setIssuePeriods(id: number, start: number, end: number) {
+    return await this.http.get<string>(props.http + '/setIssuePeriods', { params: {id, start, end}}).toPromise();
+  }
   async getProjectNames() {
     return await this.http.get<any>(props.http + '/projectNames').toPromise();
   }
