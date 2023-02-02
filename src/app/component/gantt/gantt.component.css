@@ -154,3 +154,9 @@
   height: 87vh;
   overflow: auto;
 }
+.issue-docNumber{
+  font-size: 10px;
+}
+.issue-name{
+  font-size: 8px;
+}

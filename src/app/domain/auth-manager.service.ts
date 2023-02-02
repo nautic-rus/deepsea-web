@@ -83,7 +83,6 @@ export class AuthManagerService {
     if (find != null){
       if (this.l.language == 'ru'){
         return find.surname + ' ' + find.name.substr(0,1) + '.';
-
       }
       else{
         return tr(find.surname) + ' ' + tr(find.name).substr(0,1) + '.';

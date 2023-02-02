@@ -5,6 +5,8 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import _ from "underscore";
 import {Issue} from "../../domain/classes/issue";
 import {DailyTask} from "../../domain/interfaces/daily-task";
+import {TaskComponent} from "../task/task.component";
+import {DialogService} from "primeng/dynamicdialog";
 declare var LeaderLine: any;
 
 @Component({
@@ -61,9 +63,10 @@ export class GanttComponent implements OnInit {
   leaders: any = [];
   minWidth = this.msPerDay;
   issueSpentTime: DailyTask[] = [];
+  movedIssues: Issue[] = [];
 
 
-  constructor(private auth: AuthManagerService, private issueManagerService: IssueManagerService) { }
+  constructor(public auth: AuthManagerService, private issueManagerService: IssueManagerService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.issueManagerService.getDailyTasks().then(res => {
@@ -234,15 +237,47 @@ export class GanttComponent implements OnInit {
       left: this.getDayFrom(issue.startDate) + 'px',
       width: this.getDayFrom(issue.endDate + this.msPerDay, issue.startDate) + 'px',
       height: this.issueHeight + 'px',
-      'background-color': 'rgba(33, 150, 243, 0.12)',
+      'background-color': this.isIssueMoved(issue) ? 'rgba(231,223,139,0.51)' : 'rgba(33, 150, 243, 0.12)',
+      'border': '1px solid rgba(33, 150, 243, 0.12)',
+      'border-radius': '12px',
+    }
+  }
+  getIssueRowConsumedStyle(issue: any) {
+    if (issue.labor == 0){
+      return {
+        display: 'none'
+      }
+    }
+    if (issue.labor > issue.plan_hours){
+      return{
+        position: 'absolute',
+        top: '',
+        left: '0px',
+        width: this.getDayFrom(issue.startDate + issue.labor / 8 * this.msPerDay, issue.startDate) + 'px',
+        height: this.issueHeight + 'px',
+        'background-color': 'rgba(255,146,108,0.51)',
+        'border': '1px solid rgba(33, 150, 243, 0.12)',
+        'border-radius': '12px',
+      }
+    }
+    return{
+      position: 'absolute',
+      top: '',
+      left: '0px',
+      width: this.getDayFrom(issue.startDate + issue.labor / 8 * this.msPerDay, issue.startDate) + 'px',
+      height: this.issueHeight + 'px',
+      'background-color': 'rgba(177,255,166,0.51)',
       'border': '1px solid rgba(33, 150, 243, 0.12)',
       'border-radius': '12px',
     }
   }
 
-
+  isIssueMoved(issue: any){
+    return this.movedIssues.find(x => x.id == issue.id) != null;
+  }
 
   dragStart(event: DragEvent, issue: any) {
+    this.movedIssues.push(issue);
     event.preventDefault();
     this.mouseMove = (e: any) => {
       let width = issue.endDate - issue.startDate;
@@ -389,13 +424,25 @@ export class GanttComponent implements OnInit {
     this.timeLineLength = this.endDate.getTime() - this.startDate.getTime();
     this.timeLineLengthPx = this.timeLineLength / this.msPerDay * this.dayWidth + this.dayWidth;
   }
-
+  dayOfWeek(input: number){
+    switch (input) {
+      case 0: return 'Вс';
+      case 1: return 'Пн';
+      case 2: return 'Вт';
+      case 3: return 'Ср';
+      case 4: return 'Чт';
+      case 5: return 'Пт';
+      case 6: return 'Сб';
+      default: return '';
+    }
+  }
   fillDays() {
     this.days.splice(0, this.days.length);
     for (let day = this.startDate.getTime(); day < this.endDate.getTime(); day = day + this.msPerDay){
       let date = new Date(day);
       this.days.push({
         name: ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1),
+        dayOfWeek: this.dayOfWeek(date.getDay()),
         date: date,
       });
     }
@@ -471,4 +518,19 @@ export class GanttComponent implements OnInit {
 
   }
 
+  trimName(name: string, length: number = 20) {
+    return name.substr(0, length) + (name.length > length ? '...' : '');
+  }
+
+  openIssue(issue: Issue) {
+    this.issueManagerService.getIssueDetails(issue.id).then(res => {
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        });
+      }
+    });
+  }
 }

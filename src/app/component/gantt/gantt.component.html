@@ -34,23 +34,28 @@
     <div class="issues-header border-right">
       <div class="df gantt-row">
         <div class="issue-col w-150px df c y">№ документа</div>
-        <div class="issue-col w-80px df c y">Нач</div>
-        <div class="issue-col w-80px df c y">Зав</div>
+        <div class="issue-col w-80px df c y">Статус</div>
+        <div class="issue-col w-80px df c y">Испол.</div>
         <div class="issue-col w-40px df c y">План</div>
       </div>
       <div class="df gantt-row" *ngFor="let issue of issues; let i = index">
-        <div class="issue-col w-150px df c y">{{issue.doc_number}}</div>
-        <div class="issue-col w-80px df c y">{{getDate(issue.startDate)}}</div>
-        <div class="issue-col w-80px df c y">{{getDate(issue.endDate)}}</div>
-        <div class="issue-col w-40px df c y">{{issue.plan_hours}}</div>
+        <div class="issue-col w-150px cursor-pointer" (click)="openIssue(issue)">
+          <div class="issue-docNumber cx">{{issue.doc_number}}</div>
+          <div class="issue-name cx">{{trimName(issue.name)}}</div>
+        </div>
+        <div class="issue-col w-80px df c y">{{issue.status}}</div>
+        <div class="issue-col w-80px df c y">{{auth.getUserTrimName(issue.assigned_to)}}</div>
+        <div class="issue-col w-40px df c y">{{issue.plan_hours}}/{{issue.labor}}</div>
       </div>
     </div>
     <div class="issue-periods">
       <div [ngStyle]="getRowStyle()" class="df">
-        <div *ngFor="let day of days" class="day">{{day.name}}</div>
+        <div *ngFor="let day of days" class="day">{{day.name}} {{day.dayOfWeek}}</div>
       </div>
       <div [ngStyle]="getRowStyle()" class="df gantt-row"  *ngFor="let issue of issues; let i = index">
-        <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period" (dragstart)="dragStart($event, issue)" draggable="true"></div>
+        <div [ngStyle]="getIssueRowStyle(issue)" class="issue-period df cxy" (dragstart)="dragStart($event, issue)" draggable="true">
+          <div [ngStyle]="getIssueRowConsumedStyle(issue)"></div>
+        </div>
       </div>
     </div>
   </div>
