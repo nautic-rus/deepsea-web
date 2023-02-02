@@ -18,6 +18,7 @@
 .day{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   width: 80px;
+  min-width: 80px;
   height: 22px;
   display: flex;
   justify-content: center;
@@ -42,10 +43,19 @@
   z-index: 4;
 }
 .issues-header{
-  min-width: 300px;
-  position: sticky;
+  width: 450px;
   left: 0;
   background: #ffffff;
+  top: 0;
+  position: sticky;
+  height: 100%;
+  z-index: 11;
+}
+.issue-periods{
+  width: calc(100vw - 500px);
+  height: 100%;
+  z-index: 10;
+  overflow: auto;
 }
 .issues-left{
   min-width: 300px;
@@ -61,6 +71,18 @@
   font-weight: 500;
   font-size: 12px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.issue-col.w-150px{
+  width: 150px;
+}
+.issue-col.w-100px{
+  width: 100px;
+}
+.issue-col.w-80px{
+  width: 80px;
+}
+.issue-col.w-40px{
+  width: 40px;
 }
 .gantt-row{
   height: 30px;
@@ -94,7 +116,7 @@
   left: 0;
   top: 0;
   background-color: white;
-  z-index: 4;
+  z-index: 12;
 }
 .gantt-header-days{
   position: sticky;
@@ -126,4 +148,9 @@
 }
 .gantt-row-hover:hover{
   background-color: #f2f4f7!important;
+}
+.periods{
+  width: 100%;
+  height: 87vh;
+  overflow: auto;
 }

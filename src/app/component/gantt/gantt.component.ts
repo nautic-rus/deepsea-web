@@ -4,6 +4,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import _ from "underscore";
 import {Issue} from "../../domain/classes/issue";
+import {DailyTask} from "../../domain/interfaces/daily-task";
 declare var LeaderLine: any;
 
 @Component({
@@ -26,13 +27,21 @@ declare var LeaderLine: any;
 export class GanttComponent implements OnInit {
   project: string = 'NR002';
   projects: string[] = ['NR002', 'NR004'];
+  departments: string[] = [];
+  department = 'System';
+  stages: string[] = [];
+  stage = 'Stage 2';
+  statuses: string[] = [];
+  status = '';
+  taskTypes: string[] = [];
+  taskType = '';
   assignee: string = 'all';
   assignees: any[] = [];
   issueType = 'RKD';
   sourceIssues: any[] = [];
   issues: any[] = [];
 
-  issues1: any[] = [];
+  //issues1: any[] = [];
   currentDate = new Date().getTime();
   msPerDay = 1000 * 60 * 60 * 24;
   daysBeforeInitial = 15;
@@ -51,34 +60,71 @@ export class GanttComponent implements OnInit {
   anchorSize = 12;
   leaders: any = [];
   minWidth = this.msPerDay;
+  issueSpentTime: DailyTask[] = [];
 
 
-  constructor(private auth: AuthManagerService, private issueManager: IssueManagerService) { }
+  constructor(private auth: AuthManagerService, private issueManagerService: IssueManagerService) { }
 
   ngOnInit(): void {
+    this.issueManagerService.getDailyTasks().then(res => {
+      this.issueSpentTime = res;
+      this.issueManagerService.getIssues('op').then(res => {
+        this.sourceIssues = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
+        this.issues = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
+        this.issues = _.sortBy(this.issues, x => x.doc_number);
+        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
+        this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
+        this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x);
+        this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
+        this.statuses = ['-'].concat(this.statuses);
+        this.taskTypes = ['-'].concat(this.taskTypes);
 
+        this.filterIssues();
+        //this.fillDays();
 
-    this.fillDays();
-
-    this.issueManager.getIssues('op').then(res => {
-      this.sourceIssues = res;
-      this.fillIssues();
-    });
-    this.assignees.push({
-      label: 'All',
-      value: 'All'
-    });
-    this.assignee = 'All';
-    this.auth.getUsers().then(res => {
-      _.sortBy(res.filter(x => x.visibility.includes('c')), x => this.auth.getUserName(x.login)).forEach(user => {
-        this.assignees.push({
-          label: this.auth.getUserName(user.login),
-          value: user.login
-        })
       });
     });
+    this.issueManagerService.getIssueProjects().then(projects => {
+      this.projects = projects;
+      this.projects.forEach((x: any) => x.label = this.getProjectName(x));
+    });
+    this.issueManagerService.getIssueDepartments().then(departments => {
+      this.departments = departments;
+    });
   }
-
+  defineStartEndDate(issue: any){
+    issue.startDate = issue.start_date;
+    if (issue.plan_hours == 0){
+      //issue.plan_hours = 16;
+    }
+    issue.endDate = issue.startDate + issue.plan_hours / 8 * this.msPerDay;
+  }
+  defineGlobalStartEndDate(){
+    let start = _.min(this.issues.map(x => x.startDate).filter(x => x > 0), x => x);
+    let end = _.max(this.issues.map(x => x.endDate).filter(x => x != 0), x => x);
+    console.log(new Date(start));
+    console.log(new Date(end));
+    this.startDate = new Date(start);
+    this.endDate = new Date(end);
+    this.endDate.setDate(this.endDate.getDate() + 1);
+    this.endDate = new Date(this.endDate.getTime() - 1);
+    // this.startDate = new Date(start - this.msPerDay * 5);
+    // this.endDate = new Date(end + this.msPerDay * 5);
+  }
+  getProjectName(project: any){
+    let res = project.name;
+    if (project.rkd != ''){
+      res += ' (' + project.rkd + ')';
+    }
+    return res;
+  }
+  getConsumedLabor(id: number, doc_number: string) {
+    let sum = 0;
+    this.issueSpentTime.filter(x => x.issueId == id).forEach(spent => {
+      sum += spent.time;
+    });
+    return sum;
+  }
   isBetween(startDate: number, endDate: number, date: number){
     return startDate <= date && date <= endDate;
   }
@@ -108,9 +154,36 @@ export class GanttComponent implements OnInit {
   }
 
   projectChanged() {
-    this.fillIssues();
+    this.filterIssues();
   }
-
+  departmentChanged() {
+    this.filterIssues();
+  }
+  stageChanged() {
+    this.filterIssues();
+  }
+  taskTypeChanged() {
+    this.filterIssues();
+  }
+  statusChanged() {
+    this.filterIssues();
+  }
+  filterIssues(){
+    this.days.splice(0, this.days.length);
+    this.issues.splice(0, this.issues.length);
+    this.issues = [...this.sourceIssues];
+    this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
+    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
+    this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
+    this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
+    this.issues = _.sortBy(this.issues, x => x.doc_number);
+    console.log(this.issues);
+    this.issues.forEach(x => this.defineStartEndDate(x));
+    this.defineGlobalStartEndDate();
+    this.fillDays();
+    this.timeLineLength = this.endDate.getTime() - this.startDate.getTime();
+    this.timeLineLengthPx = this.timeLineLength / this.msPerDay * this.dayWidth + this.dayWidth;
+  }
   assigneeChanged() {
     this.fillIssues();
   }
@@ -150,11 +223,16 @@ export class GanttComponent implements OnInit {
     }
   }
   getIssueRowStyle(issue: any) {
+    if (issue.startDate == 0 || issue.endDate == 0 || issue.plan_hours == 0){
+      return {
+        display: 'none'
+      }
+    }
     return{
       position: 'absolute',
       top: '2px',
       left: this.getDayFrom(issue.startDate) + 'px',
-      width: this.getDayFrom(issue.endDate, issue.startDate) + 'px',
+      width: this.getDayFrom(issue.endDate + this.msPerDay, issue.startDate) + 'px',
       height: this.issueHeight + 'px',
       'background-color': 'rgba(33, 150, 243, 0.12)',
       'border': '1px solid rgba(33, 150, 243, 0.12)',
@@ -292,6 +370,9 @@ export class GanttComponent implements OnInit {
     }
   }
   getDate(dateLong: number): string{
+    if (dateLong == 0){
+      return '--.--.----';
+    }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
@@ -300,23 +381,36 @@ export class GanttComponent implements OnInit {
     return  ('0' + date.getHours()).slice(-2) + ":" + ('0' + (date.getMinutes() + 1)).slice(-2) + ' ' + ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   periodChanged() {
+    this.endDate.setHours(15);
+    this.endDate.setMinutes(0);
+    this.endDate.setSeconds(0);
     this.fillDays();
+    this.issues.forEach(x => this.defineStartEndDate(x));
+    this.timeLineLength = this.endDate.getTime() - this.startDate.getTime();
+    this.timeLineLengthPx = this.timeLineLength / this.msPerDay * this.dayWidth + this.dayWidth;
   }
 
   fillDays() {
     this.days.splice(0, this.days.length);
-    this.issues1.splice(0, this.issues1.length);
-    for (let day = this.startDate.getTime(); day <= this.endDate.getTime(); day = day + this.msPerDay){
+    for (let day = this.startDate.getTime(); day < this.endDate.getTime(); day = day + this.msPerDay){
       let date = new Date(day);
       this.days.push({
         name: ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1),
         date: date,
       });
-      this.issues1.push({
-        startDate: 1645700244263,
-        endDate: 1645900244263
-      })
     }
+    // this.issues1.splice(0, this.issues1.length);
+    // for (let day = this.startDate.getTime(); day <= this.endDate.getTime(); day = day + this.msPerDay){
+    //   let date = new Date(day);
+    //   this.days.push({
+    //     name: ('0' + date.getDate()).slice(-2) + '/' + (date.getMonth() + 1),
+    //     date: date,
+    //   });
+    //   this.issues1.push({
+    //     startDate: 1675232228655,
+    //     endDate: 1675832228655
+    //   })
+    // }
   }
 
 
