@@ -23,7 +23,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  projects: string[] = ['NR002', 'NR004', '01701-ORION', '03070-CRABBER'];
+  projects: string[] = ['NR002', 'NR004', '01701-ORION', '03070-CRABBER', '01701-LEV'];
   department = 'Hull';
   project = '';
   issues: Issue[] = [];
@@ -200,9 +200,16 @@ export class DocumentsComponent implements OnInit {
         if (this.department == 'Hull'){
           this.issueManager.getProjectNames().then(projectNames => {
             this.projectNames = projectNames;
+            console.log(this.projectNames);
+            console.log(this.project);
             let findProject = projectNames.find((x: any) => x.pdsp == this.project);
+            if (findProject == null){
+              findProject = projectNames.find((x: any) => x.name == this.project);
+            }
             if (findProject != null){
+              console.log(findProject);
               this.issueManager.getCloudFiles(findProject.cloudRkd + '/Documents/Hull').then(docs => {
+                console.log('docs received');
                 this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || docs.find(d => d.url.includes(issue.doc_number)) != null);
                 this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
                 this.issues = _.sortBy(this.issues, x => x.doc_number);

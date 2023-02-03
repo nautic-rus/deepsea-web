@@ -17,7 +17,23 @@
         <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <div class="cxy cursor-pointer" (click)="saveChanged()">SAVE</div>
+      <div class="mr-10">
+        <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="selectedUsers" (ngModelChange)="filterIssues()" [filter]="true" filterBy="surname,name,login" optionValue="login" optionLabel="login"
+                       [placeholder]="'Assignee'" class="p-dropdown-150 width-200" styleClass="width-300" [virtualScroll]="true" [itemSize]="60">
+          <ng-template let-user pTemplate="item">
+            <div>
+              <div></div>
+              <div>{{auth.getUserName(user.login)}}</div>
+            </div>
+          </ng-template>
+        </p-multiSelect>
+      </div>
+      <div class="cxy cursor-pointer p-button" (click)="saveChanged()">SAVE</div>
+      <div class="cxy pl-10">Выбранный период: </div>
+      <div class="cxy">{{getDate(startDate.getTime())}} - </div>
+      <div class="cxy">{{getDate(endDate.getTime())}}</div>
+      <div class="cxy pl-10">Увеличить интервал (дней)</div>
+      <div class="cxy"><p-inputNumber [(ngModel)]="addDaysValue" (ngModelChange)="addDays()"></p-inputNumber></div>
 <!--      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="startDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>-->
 <!--      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [(ngModel)]="endDate" (ngModelChange)="periodChanged()" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>-->
     </div>
@@ -38,6 +54,7 @@
         <div class="issue-col w-80px df c y">Статус</div>
         <div class="issue-col w-80px df c y">Испол.</div>
         <div class="issue-col w-40px df c y">План</div>
+        <div class="issue-col w-40px df c y">Этап</div>
       </div>
       <div class="df gantt-row" *ngFor="let issue of issues; let i = index">
         <div class="issue-col w-150px cursor-pointer" (click)="openIssue(issue)">
@@ -47,6 +64,7 @@
         <div class="issue-col w-80px df c y">{{issue.status}}</div>
         <div class="issue-col w-80px df c y">{{auth.getUserTrimName(issue.assigned_to)}}</div>
         <div class="issue-col w-40px df c y">{{issue.plan_hours}}/{{issue.labor}}</div>
+        <div class="issue-col w-40px df c y">{{getDate(issue.contract_due_date)}}</div>
       </div>
     </div>
     <div class="issue-periods">

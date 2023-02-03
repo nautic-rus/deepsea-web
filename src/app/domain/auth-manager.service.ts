@@ -5,13 +5,14 @@ import {CookieService} from "ngx-cookie-service";
 import {User} from "./classes/user";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {Issue} from "./classes/issue";
 import _ from "underscore";
 import {LanguageService} from "./language.service";
 import { transliterate as tr, slugify } from 'transliteration';
 import {DayCalendar} from "./classes/day-calendar";
 import {TimeControlInterval} from "./classes/time-control-interval";
+import EventEmitter from "events";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class AuthManagerService {
   users: User[] = [];
   checkTimes = 2;
   checkTime = 0;
+  usersFilled = new Subject();
 
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, private l: LanguageService) {
     this.fillUsers();
@@ -59,6 +61,7 @@ export class AuthManagerService {
       this.users.forEach(user => user.userName = this.getUserName(user.login));
       this.users.forEach(user => user.userNameEn = tr(user.userName));
       this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
+      this.usersFilled.next();
     });
   }
   getUserName(login: string){

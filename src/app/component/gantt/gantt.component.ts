@@ -7,6 +7,7 @@ import {Issue} from "../../domain/classes/issue";
 import {DailyTask} from "../../domain/interfaces/daily-task";
 import {TaskComponent} from "../task/task.component";
 import {DialogService} from "primeng/dynamicdialog";
+import {User} from "../../domain/classes/user";
 declare var LeaderLine: any;
 
 @Component({
@@ -42,7 +43,8 @@ export class GanttComponent implements OnInit {
   issueType = 'RKD';
   sourceIssues: any[] = [];
   issues: any[] = [];
-
+  users: User[] = [];
+  selectedUsers: string[] = [];
   //issues1: any[] = [];
   currentDate = new Date().getTime();
   msPerDay = 1000 * 60 * 60 * 24;
@@ -64,11 +66,22 @@ export class GanttComponent implements OnInit {
   minWidth = this.msPerDay;
   issueSpentTime: DailyTask[] = [];
   movedIssues: Issue[] = [];
+  addDaysValue = 0;
 
 
   constructor(public auth: AuthManagerService, private issueManagerService: IssueManagerService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
+    this.users = this.auth.users.filter(x => x.visibility.includes('c'));
+    this.fillUsersAndIssues();
+    this.auth.usersFilled.subscribe(res => {
+      console.log('fill');
+      this.fillUsersAndIssues();
+    });
+  }
+  fillUsersAndIssues(){
+    this.users = this.auth.users.filter(x => x.visibility.includes('c'));
+    this.selectedUsers = this.users.map(x => x.login);
     this.issueManagerService.getDailyTasks().then(res => {
       this.issueSpentTime = res;
       this.issueManagerService.getIssues('op').then(res => {
@@ -107,8 +120,8 @@ export class GanttComponent implements OnInit {
     let end = _.max(this.issues.map(x => x.endDate).filter(x => x != 0), x => x);
     console.log(new Date(start));
     console.log(new Date(end));
-    this.startDate = new Date(start);
-    this.endDate = new Date(end);
+    this.startDate = new Date(start - this.addDaysValue * this.msPerDay);
+    this.endDate = new Date(end + this.addDaysValue * this.msPerDay);
     this.endDate.setDate(this.endDate.getDate() + 1);
     this.endDate = new Date(this.endDate.getTime() - 1);
     // this.startDate = new Date(start - this.msPerDay * 5);
@@ -180,6 +193,7 @@ export class GanttComponent implements OnInit {
     this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
     this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
     this.issues = _.sortBy(this.issues, x => x.doc_number);
+    this.issues = this.issues.filter(x => this.selectedUsers.find(y => y == x.assigned_to) != null);
     console.log(this.issues);
     this.issues.forEach(x => this.defineStartEndDate(x));
     this.defineGlobalStartEndDate();
@@ -229,6 +243,18 @@ export class GanttComponent implements OnInit {
     if (issue.startDate == 0 || issue.endDate == 0 || issue.plan_hours == 0){
       return {
         display: 'none'
+      }
+    }
+    if (issue.due_date > issue.contract_due_date){
+      return{
+        position: 'absolute',
+        top: '2px',
+        left: this.getDayFrom(issue.startDate) + 'px',
+        width: this.getDayFrom(issue.endDate + this.msPerDay, issue.startDate) + 'px',
+        height: this.issueHeight + 'px',
+        'background-color': 'rgba(248,6,59,0.84)',
+        'border': '1px solid rgba(33, 150, 243, 0.12)',
+        'border-radius': '12px',
       }
     }
     return{
@@ -542,5 +568,9 @@ export class GanttComponent implements OnInit {
       }
     });
     this.movedIssues.splice(0, this.movedIssues.length);
+  }
+
+  addDays() {
+    this.filterIssues();
   }
 }

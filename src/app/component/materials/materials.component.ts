@@ -4,7 +4,7 @@ import {MessageService, TreeNode} from "primeng/api";
 import {DialogService} from "primeng/dynamicdialog";
 import {LanguageService} from "../../domain/language.service";
 import {Issue} from "../../domain/classes/issue";
-import {object} from "underscore";
+import _, {object} from "underscore";
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {AddMaterialComponent} from "./add-material/add-material.component";
 import {AuthManagerService} from "../../domain/auth-manager.service";
@@ -149,7 +149,7 @@ export class MaterialsComponent implements OnInit {
     rootNodes.filter(x => x.data.length == parent.length + 2 && x.data.startsWith(parent)).forEach(n => {
       res.push({
         data: n.data,
-        children: this.getNodes2(rootNodes, materials, n.data),
+        children: _.sortBy(this.getNodes2(rootNodes, materials, n.data), x => x.label),
         label: n.label,
         count: materials.filter(x => x.code.startsWith(n.data)).length
       });
