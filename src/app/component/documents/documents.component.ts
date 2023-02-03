@@ -23,7 +23,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  projects: string[] = ['NR002', 'NR004', '01701-ORION'];
+  projects: string[] = ['NR002', 'NR004', '01701-ORION', '03070-CRABBER'];
   department = 'Hull';
   project = '';
   issues: Issue[] = [];

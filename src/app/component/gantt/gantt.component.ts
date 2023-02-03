@@ -533,4 +533,14 @@ export class GanttComponent implements OnInit {
       }
     });
   }
+
+  saveChanged() {
+    this.movedIssues.forEach(x => {
+      let issue = this.issues.find(y => y.id == x.id);
+      if (issue != null){
+        this.issueManagerService.setIssuePeriods(issue.id, issue.startDate, issue.endDate);
+      }
+    });
+    this.movedIssues.splice(0, this.movedIssues.length);
+  }
 }
