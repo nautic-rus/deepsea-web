@@ -26,9 +26,14 @@ export class AuthManagerService {
   checkTimes = 2;
   checkTime = 0;
   usersFilled = new Subject();
+  filled = false;
 
   constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, private l: LanguageService) {
-    this.fillUsers();
+    console.log('init auth');
+    if (!this.filled){
+      this.fillUsers();
+    }
+
     //this.checkConnection();
   }
   checkConnection(){
@@ -56,6 +61,7 @@ export class AuthManagerService {
   fillUsers(){
     console.log('fill users');
     this.getUsers().then(data => {
+      this.filled = true;
       //console.log(data);
       this.users = data;
       this.users.forEach(user => user.userName = this.getUserName(user.login));
