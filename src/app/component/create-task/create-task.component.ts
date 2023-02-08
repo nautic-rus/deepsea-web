@@ -13,6 +13,7 @@ import {User} from "../../domain/classes/user";
 import {LanguageService} from "../../domain/language.service";
 import {LV} from "../../domain/classes/lv";
 import {PrimeNGConfig} from "primeng/api";
+import {lab} from "d3";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -68,7 +69,7 @@ export class CreateTaskComponent implements OnInit {
   modificationOfExisting = 'no';
   modificationDescription = '';
   reasonsOfChange: any[] = [];
-  yesNo: any[] = [new LV('yes'), new LV('no')];
+  yesNo: any[] = [new LV(this.changeLang('Yes'), 'Yes'), new LV(this.changeLang('No'), 'No')];
 
   generateId(length: number): string {
     let result = '';
@@ -483,5 +484,14 @@ export class CreateTaskComponent implements OnInit {
   }
   sfiCodeChanged(){
     //this.taskDocNumber = this.taskProject + '-' + this.sfiCode + '-';
+  }
+
+  changeLang(label: string) {
+    if (this.lang.language == 'ru'){
+      return label.replace('Yes', 'Да').replace('No', 'Нет');
+    }
+    else {
+      return label;
+    }
   }
 }

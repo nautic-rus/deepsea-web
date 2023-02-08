@@ -74,7 +74,7 @@ export class TaskComponent implements OnInit {
   today: Date = new Date();
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];
-  yesNo: any[] = [new LV('yes'), new LV('no')];
+  yesNo: any[] = [new LV('Yes'), new LV('No')];
   quillModulesModificationDescription =
     {
       imageResize: {},
