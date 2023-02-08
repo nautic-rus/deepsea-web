@@ -394,7 +394,7 @@ export class LanguageService {
           case 'Описание изменения': return 'Modification description';
           case 'Изменение существующего': return 'Modification of existing';
           case 'Связанные': return 'Linked';
-          case '': return '';
+          case 'Исполнено': return 'Done';
           case '': return '';
           case '': return '';
           case '': return '';
