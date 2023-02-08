@@ -33,6 +33,11 @@
           <img src="assets/icons/rotation.svg" height="26">
         </div>
       </div>
+      <div class="mr-10">
+        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
+          <img src="assets/icons/plus3.svg" height="34">
+        </div>
+      </div>
       <div class="mr-10 cy">
         <label class="container margin-bottom-none">
           <span class="text-checkbox">Show no spool</span>
@@ -93,13 +98,18 @@
                     </div>
                   </div>
 
-                  <div class="cursor-pointer show-model mb-20" (click)="showSpoolModel(pipeSpool.spool)">
+                  <div *ngIf="!pipeSpool.aux" class="cursor-pointer show-model mb-20" (click)="showSpoolModel(pipeSpool.spool)">
                     <div class="three-d-model cxy">3D</div>
                   </div>
 
-                  <div *ngIf="show2dEnabled()" class="cursor-pointer show-model-one mb-20" (click)="showDxfInViewerZip(spoolsArchive, '-' + pipeSpool.spool)">
+                  <div *ngIf="!pipeSpool.aux && show2dEnabled()" class="cursor-pointer show-model-one mb-20" (click)="showDxfInViewerZip(spoolsArchive, '-' + pipeSpool.spool)">
                     <div class="two-d-model cxy">2D</div>
                   </div>
+
+                  <div *ngIf="pipeSpool.aux" class="cursor-pointer show-model mb-20" (click)="deleteAux(pipeSpool.material.code, pipeSpool.material.units, pipeSpool.length, pipeSpool.spool + '.' + pipeSpool.spPieceId)">
+                    <div class="three-d-model cxy">DEL</div>
+                  </div>
+
 
                   <div *ngIf="pipeSpool.dxf != ''" class="df icons-download">
                     <div class="cxy mr-15 cursor-pointer" (click)="showDxfInViewer(pipeSpool.dxf)">

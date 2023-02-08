@@ -27,6 +27,8 @@ import {AssignNewRevisionComponent} from "../hull-esp/assign-new-revision/assign
 import {Material} from "../../../domain/classes/material";
 import {forkJoin} from "rxjs";
 import {PipeEspGenerationWaitComponent} from "./pipe-esp-generation-wait/pipe-esp-generation-wait.component";
+import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
+import {RemoveDeviceFromSystemComponent} from "../device-esp/device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component";
 
 @Component({
   selector: 'app-pipe-esp',
@@ -254,7 +256,7 @@ export class PipeEspComponent implements OnInit {
     this.s.getPipeSegs(this.docNumber).then(res => {
       if (res.length > 0){
         this.pipes = _.sortBy(res.filter(x => x.spool != '' || this.showNoSpool), x => this.addLeftZeros(x.spool, 5) + this.addLeftZeros(x.spPieceId, 4));
-        this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null, dxf: ''}));
+        this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null, dxf: '', aux: x.find(y => y.compType == 'AUX') != null}));
         this.pipesBySpool = _.sortBy(this.pipesBySpool, x => this.addLeftZeros(x.spool, 5));
 
         this.s.getSpoolLocks(this.docNumber).then(spoolLocks => {
@@ -851,5 +853,33 @@ export class PipeEspComponent implements OnInit {
     this.pipes.splice(0, this.pipes.length);
     this.pipesBySpool.splice(0, this.pipesBySpool.length);
     this.fillPipes();
+  }
+
+  addMaterial() {
+    this.dialogService.open(AddMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, '-', '']
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.fillRevisions();
+      });
+    });
+  }
+
+  deleteAux(code: string, units: string, count: number, label: string) {
+    this.dialogService.open(RemoveDeviceFromSystemComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, code, units, count, label, '']
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+          this.issue = issue;
+          this.fillRevisions();
+        });
+      }
+    });
   }
 }
