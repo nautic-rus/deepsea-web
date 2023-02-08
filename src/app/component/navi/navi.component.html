@@ -2,11 +2,7 @@
   <div class="cy ml-1">
     <a href="https://deep-sea.ru/"><img class="cursor-pointer" src="assets/deepsea_white.svg" height="30"></a>
   </div>
-  <div class="cxy flex-column mx-10 text-top">
-    <div>{{auth.getUser().login}}</div>
-    <div>{{auth.getUser().groups}}</div>
-
-  </div>
+  <div></div>
   <div class="cxy">
     <div pTooltip="Cloud" tooltipPosition="bottom">
       <a href="https://cloud.nautic-rus.ru/" target="_blank"><img class="cursor-pointer" src="assets/icons/cloud.png"></a>
@@ -33,7 +29,7 @@
   </div>
   <div class="cxy">
     <div>
-      <div *ngIf="isOnline()" class="image-online cursor-pointer">
+      <div *ngIf="isOnline()" class="image-online cursor-pointer" pTooltip="{{auth.getUser().login}} {{auth.getUser().groups}}" tooltipPosition="bottom">
         <img class="image__src"  src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
       </div>
       <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
