@@ -106,10 +106,6 @@
                     <div class="two-d-model cxy">2D</div>
                   </div>
 
-                  <div *ngIf="pipeSpool.aux" class="cursor-pointer show-model mb-20" (click)="deleteAux(pipeSpool.material.code, pipeSpool.material.units, pipeSpool.length, pipeSpool.spool)">
-                    <div class="three-d-model cxy">DEL</div>
-                  </div>
-
 
                   <div *ngIf="pipeSpool.dxf != ''" class="df icons-download">
                     <div class="cxy mr-15 cursor-pointer" (click)="showDxfInViewer(pipeSpool.dxf)">
@@ -130,6 +126,9 @@
                     <div class="w-6 pr-10 df">
                       <div class="text-table-col cy" *ngIf="pipe.spPieceId != 0">{{pipe.spPieceId}}</div>
                       <div class="mm-text cy" *ngIf="pipe.spPieceId == 0">{{pipe.line + '-' + pipe.pls + '-' + pipe.elem}}</div>
+                      <div *ngIf="pipe.compType == 'AUX'" class="cursor-pointer show-model mb-20" (click)="deleteAux(pipe)">
+                        <div class="three-d-model cxy">DEL</div>
+                      </div>
                     </div>
                     <div class="w-5 mm-text cy pr-10">{{pipe.typeCode}}</div>
                     <div class="w-7 pr-10 cxy">

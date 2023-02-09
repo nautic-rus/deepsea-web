@@ -868,11 +868,12 @@ export class PipeEspComponent implements OnInit {
     });
   }
 
-  deleteAux(code: string, units: string, count: number, label: string) {
+  deleteAux(p: any) {
+    this.search = '';
     this.dialogService.open(RemoveDeviceFromSystemComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, code, units, count, label, '']
+      data: [this.docNumber, p.material.code, p.material.units, p.length, p.spool, '', 'pipes']
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
@@ -881,5 +882,7 @@ export class PipeEspComponent implements OnInit {
         });
       }
     });
+
+
   }
 }

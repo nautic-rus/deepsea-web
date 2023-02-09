@@ -22,6 +22,7 @@ export class RemoveDeviceFromSystemComponent implements OnInit {
     this.ref.close('exit');
   }
   commit() {
+    console.log(this.conf.data[0], this.conf.data[1], this.conf.data[2], this.conf.data[3], this.conf.data[4]);
     this.s.removeDeviceFromSystem(this.conf.data[0], this.conf.data[1], this.conf.data[2], this.conf.data[3], this.conf.data[4], '').then(res => {
       this.ref.close('success');
     });
