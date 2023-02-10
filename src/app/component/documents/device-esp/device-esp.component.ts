@@ -911,6 +911,13 @@ export class DeviceEspComponent implements OnInit {
     if (findName != null){
       res = findName.name;
     }
+    let desc = material.description;
+    if (findName != null){
+      desc = findName.description;
+    }
+    if (desc != ''){
+      res = res + ', ' + desc;
+    }
     return res;
   }
 }
