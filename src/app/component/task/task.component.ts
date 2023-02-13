@@ -1181,7 +1181,13 @@ export class TaskComponent implements OnInit {
   }
 
   formatChanges(rChange: string) {
-    return this.reasonsOfChange.find(x => x.value == rChange).label;
+    let find = this.reasonsOfChange.find(x => x.value == rChange);
+    if (find != null){
+      return find.label;
+    }
+    else{
+      return '';
+    }
   }
 
   commentDone() {
