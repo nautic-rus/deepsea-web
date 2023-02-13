@@ -8,6 +8,7 @@ import {forkJoin, zip} from "rxjs";
 import {MessageService} from "primeng/api";
 import {LanguageService} from "../../domain/language.service";
 import {DailyTask} from "../../domain/interfaces/daily-task";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-labor',
@@ -175,6 +176,27 @@ export class LaborComponent implements OnInit {
   }
 
   exportXls() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = [];
 
+    this.issues.forEach(issue => {
+      data.push({type: issue.issue_type, name: issue.name, doc_number: issue.doc_number, period: issue.period, contract_due_date: this.getDateOnly(issue.contract_due_date), start: this.getDateOnly(issue.start_date), due: this.getDateOnly(issue.due_date), status: this.issueManagerService.localeStatus(issue.status, false), manHours: this.getConsumedLabor(issue.id, issue.doc_number), plan: issue.labor})
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    //worksheet['!cols'] = [{wch:13},{wch:13},{wch:10},{wch:10},{wch:10},{wch:10},{wch:8},{wch:14},{wch:10},{wch:10},{wch:10}];
+
+    XLSX.writeFile(workbook, fileName);
+  }
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
   }
 }
