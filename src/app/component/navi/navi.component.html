@@ -67,6 +67,11 @@
 <!--      </ng-template>-->
 <!--    </p-overlayPanel>-->
   </div>
+  <div class="admin">
+    <div pTooltip="AdminConsole" tooltipPosition="bottom">
+      <a routerLink="/admin">A</a>
+    </div>
+  </div>
 
   <div class="exit cxy">
     <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">
