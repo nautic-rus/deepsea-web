@@ -11,9 +11,11 @@
   <div class="cxy"></div>
   <div class="cxy"></div>
   <div class="cy ml-1">
-<!--    <div pTooltip="Daily Tasks" tooltipPosition="bottom" routerLink="diary">-->
-<!--      <img class="cursor-pointer" src="assets/icons/tasks-doc.svg" height="30">-->
-<!--    </div>-->
+    <div *ngIf="auth.hasPerms('admin')">
+      <a routerLink="/admin">
+        <img src="assets/icons/key.svg" height="26">
+      </a>
+    </div>
   </div>
   <div class="cxy">
     <div (click)="t.switchLang()">
@@ -67,11 +69,7 @@
 <!--      </ng-template>-->
 <!--    </p-overlayPanel>-->
   </div>
-  <div class="admin">
-    <div pTooltip="AdminConsole" tooltipPosition="bottom">
-      <a routerLink="/admin">A</a>
-    </div>
-  </div>
+
 
   <div class="exit cxy">
     <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">

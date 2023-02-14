@@ -64,14 +64,14 @@ export class EmployeesComponent implements OnInit {
       this.auth.getUsers().then(res =>{
         this.users = res.filter(x => x.visibility.includes('k') && !x.login.includes('isaev') && !x.login.includes('kokovin') );
         this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
-        this.users.forEach(user => user.props = Object({department: (user.visibility.includes('r') ? 'Managers' : '')}));
+        this.users.forEach(user => user.props = Object({department: (user.visibility.includes('r') ? '6' : '')}));
         // this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
         this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
 
         if (this.departments.length == 0){
-          this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != 'Management'));
+          this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != '6' && x != '0'));
           this.departments = _.sortBy(this.departments, x => x);
-          this.departments.push('Managers');
+          this.departments.push('6');
           this.selectedDepartments = [...this.departments];
           this.departments = _.sortBy(this.departments, x => this.getOrder(x));
 
@@ -252,25 +252,26 @@ export class EmployeesComponent implements OnInit {
 
   getPic(dep: string, selected: boolean) {
     switch (dep){
-      case 'Design department': return selected ? 'paintbrushw' : 'paintbrush';
-      case 'Devices department': return selected ? 'hookw' : 'hookg';
-      case 'Electrical department': return selected ? 'elec' : 'elecg';
-      case 'Hull department': return selected ? 'hull' : 'hullg';
-      case 'Accommodation department': return selected ? 'outfittingw' : 'outfittingg';
-      case 'Stability department': return selected ? 'paintbrush' : 'paintbrush';
-      case 'System department': return selected ? 'pipew' : 'pipeg';
+      case '1': return selected ? 'hull' : 'hullg';
+      case '2': return selected ? 'pipew' : 'pipeg';
+      case '3': return selected ? 'elec' : 'elecg';
+      case '4': return selected ? 'hookw' : 'hookg';
+      case '5': return selected ? 'outfittingw' : 'outfittingg';
+      case '6': return selected ? 'manager' : 'managerg';
+      case '7': return selected ? 'paintbrushw' : 'paintbrush';
+      case 'IT': return selected ? 'code' : 'codeg';
+      case 'Nautic Is': return selected ? 'iceland' : 'icelandg';
       default: return selected ? 'manager' : 'managerg';
     }
   }
   getOrder(dep: string) {
     switch (dep){
-      case 'Design department': return 6;
-      case 'Devices department': return 3;
-      case 'Electrical department': return 2;
       case 'Hull department': return 0;
-      case 'Accommodation department': return 4;
-      case 'Stability department': return 5;
       case 'System department': return 1;
+      case 'Electrical department': return 2;
+      case 'Devices department': return 3;
+      case 'Accommodation department': return 4;
+      case 'Design department': return 6;
       default: return 100;
     }
   }
@@ -323,18 +324,27 @@ export class EmployeesComponent implements OnInit {
   getDep(dep: string){
     if (this.t.language == 'ru'){
       switch (dep) {
-        case 'Design department': return 'Отдел дизайна';
-        case 'Devices department': return 'Отдел устройств';
-        case 'Electrical department': return 'Электротехнический отдел';
-        case 'Hull department': return 'Корпусный отдел';
-        case 'Accommodation department': return 'Отдел достройки';
-        case 'System department': return 'Системный отдел';
-        case 'Managers': return 'Руководители отделов';
+        case '7': return 'Отдел дизайна';
+        case '4': return 'Отдел устройств';
+        case '3': return 'Электротехнический отдел';
+        case '1': return 'Корпусный отдел';
+        case '5': return 'Отдел достройки';
+        case '2': return 'Системный отдел';
+        case '6': return 'Руководители';
         default: return dep;
       }
     }
     else{
-      return dep;
+      switch (dep) {
+        case '7': return 'Design department';
+        case '4': return 'Devices department';
+        case '3': return 'Electrical department';
+        case '1': return 'Hull department';
+        case '5': return 'Accommodation department';
+        case '2': return 'System department';
+        case '6': return 'Managers';
+        default: return dep;
+      }
     }
   }
 
