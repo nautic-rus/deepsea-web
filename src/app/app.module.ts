@@ -154,6 +154,7 @@ import { AssignResponsibleComponent } from './component/qna/assign-responsible/a
 import { CombineIssuesComponent } from './component/task/combine-issues/combine-issues.component';
 import { CableExplorerComponent } from './component/tools/cable-explorer/cable-explorer.component';
 import { SpyWatchComponent } from './component/spy-watch/spy-watch.component';
+import { AdminComponent } from './component/admin/admin.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -259,6 +260,7 @@ Quill.register('modules/imageResize', ImageResize);
     CombineIssuesComponent,
     CableExplorerComponent,
     SpyWatchComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
