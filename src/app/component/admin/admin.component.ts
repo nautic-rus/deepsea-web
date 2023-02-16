@@ -12,7 +12,10 @@ import {Issue} from "../../domain/classes/issue";
 import {User} from "../../domain/classes/user";
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {CreateUserComponent} from "../create-user/create-user.component";
-import {RolesComponent} from "../roles/roles.component";
+import {Projects} from "../../domain/interfaces/project";
+import {Roles} from "../../domain/interfaces/roles";
+import {RoleService} from "./role.service";
+import {ProjectService} from "./project.service";
 
 @Component({
   selector: 'app-admin',
@@ -21,32 +24,52 @@ import {RolesComponent} from "../roles/roles.component";
 })
 export class AdminComponent implements OnInit {
   users: Users[] = [];
-  cols: any[] = [];
+  roles: Roles[] = [];
+  projects: Projects[] = [];
+  colsUsers: any[] = [];
+  colsRoles: any[] = [];
+  colsProjects: any[] = [];
   // @ts-ignore
   @ViewChild('search') search;
   // @ts-ignore
   @ViewChild('dt') dt: Table;
-  constructor(public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
+  constructor(public roleService: RoleService, public projcetSerivce: ProjectService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
 
   ngOnInit(): void {
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
       this.router.navigate([this.auth.getUser().visible_pages[0]]);
     }
     this.setCols();
-    this.fillUsers();
+
+    this.fillData();
   }
 
-  fillUsers(): void {
+  fillData(): void {
+    this.fillUsers();
+    this.fillRoles();
+    this.fillProjects();
+  }
+
+  fillUsers() {
     this.userService.getUsers()
       .subscribe(users => this.users = users);
   }
+  fillRoles() {
+    this.roleService.getRoles()
+      .subscribe(roles => this.roles = roles);
+  }
 
-  localeColumn(userElement: string, field: string, user: Users): string {
+  fillProjects(): void {
+    this.projcetSerivce.getProjects()
+      .subscribe(projects => this.projects = projects);
+  }
+
+  localeColumn(dataElement: string, field: string, user: Users): string {
     if (field == 'avatar') {
-      return '<div class="df"><img src="' + userElement + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
+      return '<div class="df"><img src="' + dataElement + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
     }
     else {
-      return userElement;
+      return dataElement;
     }
   }
 
@@ -64,18 +87,124 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  roles() {
-    this.dialogService.open(RolesComponent, {
-      showHeader: false,
-      modal: true,
-      data: ['']
-    }).onClose.subscribe(res => {
-      this.fillUsers();
-    });
-  }
-
   setCols() {
-    this.cols = [
+    this.colsRoles = [
+      {
+        field: 'name',
+        header: 'Name',
+        headerLocale: 'Name',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
+      {
+        field: 'description',
+        header: 'Description',
+        headerLocale: 'Description',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+    ];
+
+    this.colsProjects = [
+      {
+        field: 'id',
+        header: 'ID',
+        headerLocale: 'ID',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
+      {
+        field: 'name',
+        header: 'Name',
+        headerLocale: 'Name',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'foran',
+        header: 'Foran',
+        headerLocale: 'Foran',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'rkd',
+        header: 'RKD',
+        headerLocale: 'RKD',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'pdsp',
+        header: 'PDSP',
+        headerLocale: 'PDSP',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'factory',
+        header: 'Factory',
+        headerLocale: 'Factory',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'managers',
+        header: 'Managers',
+        headerLocale: 'Managers',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'status',
+        header: 'Status',
+        headerLocale: 'Status',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+    ];
+
+    this.colsUsers = [
       {
         field: 'id',
         header: 'ID',

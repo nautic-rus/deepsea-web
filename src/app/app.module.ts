@@ -156,7 +156,6 @@ import { CableExplorerComponent } from './component/tools/cable-explorer/cable-e
 import { SpyWatchComponent } from './component/spy-watch/spy-watch.component';
 import { AdminComponent } from './component/admin/admin.component';
 import { CreateUserComponent } from './component/create-user/create-user.component';
-import { RolesComponent } from './component/roles/roles.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -264,7 +263,6 @@ Quill.register('modules/imageResize', ImageResize);
     SpyWatchComponent,
     AdminComponent,
     CreateUserComponent,
-    RolesComponent,
   ],
   imports: [
     BrowserModule,
