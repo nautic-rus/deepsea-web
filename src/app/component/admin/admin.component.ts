@@ -9,6 +9,10 @@ import {DialogService} from "primeng/dynamicdialog";
 import {Users} from "../../domain/interfaces/users";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Issue} from "../../domain/classes/issue";
+import {User} from "../../domain/classes/user";
+import {CreateTaskComponent} from "../create-task/create-task.component";
+import {CreateUserComponent} from "../create-user/create-user.component";
+import {RolesComponent} from "../roles/roles.component";
 
 @Component({
   selector: 'app-admin',
@@ -50,16 +54,24 @@ export class AdminComponent implements OnInit {
 
   }
 
-  isUserUpdated(): void {
-
+  newUser(user: object | null) {
+    this.dialogService.open(CreateUserComponent, {
+      showHeader: false,
+      modal: true,
+      data: [user, '']
+    }).onClose.subscribe(res => {
+      this.fillUsers();
+    });
   }
 
-  isUserNew(): void {
-
-  }
-
-  viewUser(): void {
-
+  roles() {
+    this.dialogService.open(RolesComponent, {
+      showHeader: false,
+      modal: true,
+      data: ['']
+    }).onClose.subscribe(res => {
+      this.fillUsers();
+    });
   }
 
   setCols() {
@@ -110,72 +122,6 @@ export class AdminComponent implements OnInit {
         date: false
       },
       {
-        field: 'login',
-        header: 'Login',
-        headerLocale: 'Login',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false,
-      },
-      {
-        field: 'password',
-        header: 'Password',
-        headerLocale: 'Password',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'gender',
-        header: 'Gender',
-        headerLocale: 'Gender',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'birthday',
-        header: 'Birthday',
-        headerLocale: 'Birthday',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'email',
-        header: 'Email',
-        headerLocale: 'Email',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'phone',
-        header: 'Phone',
-        headerLocale: 'Phone',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
         field: 'profession',
         header: 'Profession',
         headerLocale: 'Profession',
@@ -186,105 +132,172 @@ export class AdminComponent implements OnInit {
         hidden: false,
         date: false
       },
-      {
-        field: 'department',
-        header: 'Department',
-        headerLocale: 'Department',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'permissions',
-        header: 'Permissions',
-        headerLocale: 'Permissions',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'visible_projects',
-        header: 'Visible projects',
-        headerLocale: 'Visible projects',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'visible_pages',
-        header: 'Visible pages',
-        headerLocale: 'Visible pages',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'rocket_login',
-        header: 'Rocket login',
-        headerLocale: 'Rocket login',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'tcid',
-        header: 'Tc id',
-        headerLocale: 'Tc id',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
-      {
-        field: 'visibility',
-        header: 'Visibility',
-        headerLocale: 'Visibility',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'groups',
-        header: 'Groups',
-        headerLocale: 'Groups',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'token',
-        header: 'Token',
-        headerLocale: 'Token',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      }
+      // {
+      //   field: 'login',
+      //   header: 'Login',
+      //   headerLocale: 'Login',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false,
+      // },
+      // {
+      //   field: 'password',
+      //   header: 'Password',
+      //   headerLocale: 'Password',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'gender',
+      //   header: 'Gender',
+      //   headerLocale: 'Gender',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'birthday',
+      //   header: 'Birthday',
+      //   headerLocale: 'Birthday',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'email',
+      //   header: 'Email',
+      //   headerLocale: 'Email',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'phone',
+      //   header: 'Phone',
+      //   headerLocale: 'Phone',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      //
+      // {
+      //   field: 'department',
+      //   header: 'Department',
+      //   headerLocale: 'Department',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'permissions',
+      //   header: 'Permissions',
+      //   headerLocale: 'Permissions',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'visible_projects',
+      //   header: 'Visible projects',
+      //   headerLocale: 'Visible projects',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'visible_pages',
+      //   header: 'Visible pages',
+      //   headerLocale: 'Visible pages',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'rocket_login',
+      //   header: 'Rocket login',
+      //   headerLocale: 'Rocket login',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'tcid',
+      //   header: 'Tc id',
+      //   headerLocale: 'Tc id',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: true
+      // },
+      // {
+      //   field: 'visibility',
+      //   header: 'Visibility',
+      //   headerLocale: 'Visibility',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'groups',
+      //   header: 'Groups',
+      //   headerLocale: 'Groups',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'token',
+      //   header: 'Token',
+      //   headerLocale: 'Token',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // }
     ];
   }
 
