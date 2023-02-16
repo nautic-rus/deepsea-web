@@ -39,7 +39,6 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th style="width:30px" pResizableColumn></th>
             <th style="width:156px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
@@ -57,10 +56,6 @@
         </ng-template>
         <ng-template pTemplate="body" let-columns="columns" let-user>
           <tr class="task-row">
-            <td style="width:30px" class="cursor-pointer">
-              <div class="update-task"></div>
-              <div class="new-task"></div>
-            </td>
             <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
               <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.user[col.field], col.field, this.user) | safeHtml"></div></div>
               <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->

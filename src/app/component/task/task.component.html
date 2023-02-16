@@ -27,7 +27,7 @@
       <div [class.button-disabled]="issue.closing_status.includes(issue.status)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
         <img src="assets/icons/subtask.svg" height="20">
       </div>
-      <div [class.button-disabled]="!(this.auth.getUser().login == issue.started_by || issue.assigned_to || issue.responsible)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить часы')" (click)="openLaboriousness()">
+      <div [class.button-disabled]="!(this.auth.getUser().login == issue.started_by || this.auth.getUser().login == issue.assigned_to || this.auth.getUser().login == issue.responsible)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить часы')" (click)="openLaboriousness()">
         <img src="assets/icons/laboriousness.svg" height="20">
       </div>
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">
