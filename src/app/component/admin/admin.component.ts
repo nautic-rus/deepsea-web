@@ -12,8 +12,8 @@ import {Issue} from "../../domain/classes/issue";
 import {User} from "../../domain/classes/user";
 import {CreateTaskComponent} from "../create-task/create-task.component";
 import {CreateUserComponent} from "../create-user/create-user.component";
-import {Projects} from "../../domain/interfaces/project";
 import {Roles} from "../../domain/interfaces/roles";
+import {Projects} from "../../domain/interfaces/project";
 import {RoleService} from "./role.service";
 import {ProjectService} from "./project.service";
 
@@ -33,43 +33,45 @@ export class AdminComponent implements OnInit {
   @ViewChild('search') search;
   // @ts-ignore
   @ViewChild('dt') dt: Table;
-  constructor(public roleService: RoleService, public projcetSerivce: ProjectService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
+  constructor(public roleService: RoleService, public projectService: ProjectService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
 
   ngOnInit(): void {
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
       this.router.navigate([this.auth.getUser().visible_pages[0]]);
     }
     this.setCols();
-
-    this.fillData();
-  }
-
-  fillData(): void {
     this.fillUsers();
     this.fillRoles();
     this.fillProjects();
   }
 
-  fillUsers() {
+  fillUsers(): void {
     this.userService.getUsers()
       .subscribe(users => this.users = users);
   }
-  fillRoles() {
+
+  fillRoles(): void {
     this.roleService.getRoles()
-      .subscribe(roles => this.roles = roles);
+      .subscribe(roles => {
+        console.log(roles);
+        this.roles = roles;
+      });
   }
 
   fillProjects(): void {
-    this.projcetSerivce.getProjects()
-      .subscribe(projects => this.projects = projects);
+    this.projectService.getProjects()
+      .subscribe(projects => {
+        console.log(projects);
+        this.projects = projects;
+      });
   }
 
-  localeColumn(dataElement: string, field: string, user: Users): string {
+  localeColumn(userElement: string, field: string): string {
     if (field == 'avatar') {
-      return '<div class="df"><img src="' + dataElement + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
+      return '<div class="df"><img src="' + userElement + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
     }
     else {
-      return dataElement;
+      return userElement;
     }
   }
 
@@ -126,17 +128,6 @@ export class AdminComponent implements OnInit {
         date: false,
       },
       {
-        field: 'name',
-        header: 'Name',
-        headerLocale: 'Name',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
-      {
         field: 'foran',
         header: 'Foran',
         headerLocale: 'Foran',
@@ -170,31 +161,9 @@ export class AdminComponent implements OnInit {
         date: true
       },
       {
-        field: 'factory',
-        header: 'Factory',
-        headerLocale: 'Factory',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
-      {
-        field: 'managers',
-        header: 'Managers',
-        headerLocale: 'Managers',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
-      {
-        field: 'status',
-        header: 'Status',
-        headerLocale: 'Status',
+        field: 'cloud',
+        header: 'Cloud',
+        headerLocale: 'Cloud',
         sort: true,
         filter: false,
         skip: false,

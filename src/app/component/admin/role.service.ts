@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class RoleService {
-  private usersUrl = `${props.http}/roles`;  // URL to web api
+  private usersUrl = `${props.http}/adminRoles`;  // URL to web api
 
   constructor(private http: HttpClient) { }
 
