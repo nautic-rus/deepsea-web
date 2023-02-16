@@ -4,8 +4,8 @@
       <div class="users">
         <div class="card">
           <p-table class="users"
-                   #dt
-                   id="dt"
+                   #usr
+                   id="usr"
                    dataKey="id"
                    [value]="users"
                    [scrollable]="true"
@@ -29,7 +29,7 @@
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
+            <input #search pInputText type="text" (input)="usr.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
           </span>
               </div>
             </ng-template>
@@ -51,7 +51,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-columns="columns" let-user>
-              <tr class="task-row" >
+              <tr [class.task-update]="isUserUpdated(user.id)" [class.task-new]="isUserNew(user.id)" class="task-row" (click)="viewUser(user.id)">
                 <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
                   <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.user[col.field], col.field) | safeHtml"></div></div>
                   <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
@@ -70,12 +70,13 @@
       <div class="right" >
        <div class="roles card2">
          <p-table class="roles"
-                  #dt
-                  id="roles"
+                  #rls
+                  id="rls"
                   dataKey="id"
                   [value]="roles"
                   [scrollable]="true"
                   [columns]="colsRoles"
+                  (onColReorder)="saveReorderedColumnsUsers($event)"
                   [virtualScroll]="false"
                   [scrollHeight]="'30vh'"
                   [virtualRowHeight]="1"
@@ -95,7 +96,7 @@
                </div>
                <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
+            <input #search pInputText type="text" (input)="rls.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
           </span>
              </div>
            </ng-template>
@@ -128,8 +129,8 @@
        </div>
         <div class="projects card2">
           <p-table class="projects"
-                   #dt
-                   id="projects"
+                   #prcts
+                   id="prcts"
                    dataKey="id"
                    [value]="projects"
                    [scrollable]="true"
@@ -153,7 +154,7 @@
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
+            <input #search pInputText type="text" (input)="prcts.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
           </span>
               </div>
             </ng-template>

@@ -3,7 +3,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
-import {UserService} from "./user.service";
+import {UserService} from "../user/user.service";
 import {LanguageService} from "../../domain/language.service";
 import {DialogService} from "primeng/dynamicdialog";
 import {Users} from "../../domain/interfaces/users";
@@ -16,6 +16,9 @@ import {Roles} from "../../domain/interfaces/roles";
 import {Projects} from "../../domain/interfaces/project";
 import {RoleService} from "./role.service";
 import {ProjectService} from "./project.service";
+import {TaskComponent} from "../task/task.component";
+import {UserComponent} from "../user/user.component";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-admin',
@@ -32,7 +35,9 @@ export class AdminComponent implements OnInit {
   // @ts-ignore
   @ViewChild('search') search;
   // @ts-ignore
-  @ViewChild('dt') dt: Table;
+  @ViewChild('users') usr: Table;
+  @ViewChild('roles') rls: Table;
+  @ViewChild('projects') prcts: Table;
   constructor(public roleService: RoleService, public projectService: ProjectService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
 
   ngOnInit(): void {
@@ -50,6 +55,7 @@ export class AdminComponent implements OnInit {
       .subscribe(users => this.users = users);
   }
 
+
   fillRoles(): void {
     this.roleService.getRoles()
       .subscribe(roles => {
@@ -66,6 +72,11 @@ export class AdminComponent implements OnInit {
       });
   }
 
+  saveReorderedColumnsUsers(event: any) {
+    this.colsUsers = event.columns;
+    localStorage.setItem('id', JSON.stringify(event.columns));
+  }
+
   localeColumn(userElement: string, field: string): string {
     if (field == 'avatar') {
       return '<div class="df"><img src="' + userElement + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
@@ -79,6 +90,14 @@ export class AdminComponent implements OnInit {
 
   }
 
+  isUserNew(id: number) {
+    return this.users.find(x => x.id == id) == null;
+  }
+
+  isUserUpdated(id: number) {
+    return !this.isUserNew(id) && this.users.find(x => x.id == id) == null;
+  }
+
   newUser(user: object | null) {
     this.dialogService.open(CreateUserComponent, {
       showHeader: false,
@@ -86,6 +105,30 @@ export class AdminComponent implements OnInit {
       data: [user, '']
     }).onClose.subscribe(res => {
       this.fillUsers();
+    });
+  }
+
+  viewUser(id: number) {
+    this.userService.getUserDetails(id).subscribe(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(UserComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        }).onClose.subscribe(res => {
+          if (this.usr != null) {
+            this.usr.resetScrollTop = function() { }
+          }
+          let user = res as User;
+          if (user != null && user.id != null) {
+            this.newUser(user);
+          }
+          this.router.navigate([''], {queryParams: {taskId: null}, queryParamsHandling: 'merge'});
+        });
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Url User', detail: 'Cannot find user defined in url.'});
+      }
     });
   }
 
