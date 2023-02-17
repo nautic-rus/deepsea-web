@@ -155,7 +155,7 @@ import { CombineIssuesComponent } from './component/task/combine-issues/combine-
 import { CableExplorerComponent } from './component/tools/cable-explorer/cable-explorer.component';
 import { SpyWatchComponent } from './component/spy-watch/spy-watch.component';
 import { AdminComponent } from './component/admin/admin.component';
-import { CreateUserComponent } from './component/create-user/create-user.component';
+import { CreateUserComponent } from './component/user/create-user/create-user.component';
 import { UserComponent } from './component/user/user.component';
 
 Quill.register('modules/imageResize', ImageResize);

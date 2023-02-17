@@ -11,7 +11,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Issue} from "../../domain/classes/issue";
 import {User} from "../../domain/classes/user";
 import {CreateTaskComponent} from "../create-task/create-task.component";
-import {CreateUserComponent} from "../create-user/create-user.component";
+import {CreateUserComponent} from "../user/create-user/create-user.component";
 import {Roles} from "../../domain/interfaces/roles";
 import {Projects} from "../../domain/interfaces/project";
 import {RoleService} from "./role.service";
@@ -111,6 +111,7 @@ export class AdminComponent implements OnInit {
   viewUser(id: number) {
     this.userService.getUserDetails(id).subscribe(res => {
       console.log(res);
+      console.log(res.id);
       if (res.id != null) {
         this.dialogService.open(UserComponent, {
           showHeader: false,

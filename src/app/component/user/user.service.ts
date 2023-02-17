@@ -24,8 +24,8 @@ export class UserService {
     return this.http.get<any>(this.usersUrl);
   }
 
-  getUserDetails(id: number) {
-    return this.http.get<any>(props.http + '/userDetails', {params: {id}})
+  getUserDetails(id: number): Observable<Users>{
+    return this.http.get<Users>(props.http + '/userDetails', {params: {id}})
   }
 
 
