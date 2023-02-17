@@ -157,6 +157,8 @@ import { SpyWatchComponent } from './component/spy-watch/spy-watch.component';
 import { AdminComponent } from './component/admin/admin.component';
 import { CreateUserComponent } from './component/user/create-user/create-user.component';
 import { UserComponent } from './component/user/user.component';
+import { RoleComponent } from './component/role/role.component';
+import { CreateRoleComponent } from './component/role/create-role/create-role.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -265,6 +267,8 @@ Quill.register('modules/imageResize', ImageResize);
     AdminComponent,
     CreateUserComponent,
     UserComponent,
+    RoleComponent,
+    CreateRoleComponent,
   ],
   imports: [
     BrowserModule,

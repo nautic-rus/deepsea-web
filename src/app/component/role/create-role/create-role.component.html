@@ -1,0 +1,18 @@
+<div class="w75">
+  <div class="role-header">
+    <div>
+      <div class="name">{{lang.tr('Роль')}}</div>
+      <input type="text" id="name" pInputText [(ngModel)]="name">
+    </div>
+    <div>
+      <div class="description">{{lang.tr('Описание')}}</div>
+      <input type="text" id="description" pInputText [(ngModel)]="description">
+    </div>
+  </div>
+  <div class="form-footer-create">
+    <div class="mr-5 cx">
+      <div tabindex="11" (click)="close()" pButton [label]="lang.tr('Отмена')" class="button-cancel ml-1"></div>
+    </div>
+    <div tabindex="10" (click)="createRole()" pButton [label]="lang.tr('Создать')" class="button-ok"></div>
+  </div>
+</div>

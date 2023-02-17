@@ -14,11 +14,13 @@ import {CreateTaskComponent} from "../create-task/create-task.component";
 import {CreateUserComponent} from "../user/create-user/create-user.component";
 import {Roles} from "../../domain/interfaces/roles";
 import {Projects} from "../../domain/interfaces/project";
-import {RoleService} from "./role.service";
+import {RoleService} from "../role/role.service";
 import {ProjectService} from "./project.service";
 import {TaskComponent} from "../task/task.component";
 import {UserComponent} from "../user/user.component";
 import {Table} from "primeng/table";
+import {CreateRoleComponent} from "../role/create-role/create-role.component";
+import {RoleComponent} from "../role/role.component";
 
 @Component({
   selector: 'app-admin',
@@ -86,8 +88,47 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  showUser(user: Users): void {
+  isRoleNew(name: string) {
+    return this.roles.find(x => x.name == name) == null;
+  }
 
+  isRoleUpdated(name: string) {
+    return !this.isRoleNew(name) && this.roles.find(x => x.name == name) == null;
+  }
+
+  newRole(role: object | null) {
+    this.dialogService.open(CreateRoleComponent, {
+      showHeader: false,
+      modal: true,
+      data: [role, '']
+    }).onClose.subscribe(res => {
+      this.fillRoles();
+    });
+  }
+
+  viewRole(name: string) {
+    this.roleService.getRoleDetails(name).subscribe(res => {
+      console.log(res);
+      console.log(res.name);
+      if (res.name != null) {
+        this.dialogService.open(RoleComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        }).onClose.subscribe(res => {
+          if (this.rls != null) {
+            this.rls.resetScrollTop = function() { }
+          }
+          let role = res as Roles;
+          if (role != null && role.name != null) {
+            this.newRole(role);
+          }
+          this.router.navigate([''], {queryParams: {taskId: null}, queryParamsHandling: 'merge'});
+        });
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Url Role', detail: 'Cannot find role defined in url.'});
+      }
+    });
   }
 
   isUserNew(id: number) {
@@ -132,6 +173,8 @@ export class AdminComponent implements OnInit {
       }
     });
   }
+
+
 
   setCols() {
     this.colsRoles = [
