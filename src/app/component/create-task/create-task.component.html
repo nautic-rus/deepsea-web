@@ -292,8 +292,8 @@
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Название задачи')}}</div>
     <input (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div>
-      <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить исполнителя')}}</div>
-      <p-dropdown [options]="itUsers" [(ngModel)]="assignedToUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
+      <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответсвенного')}}</div>
+      <p-dropdown [options]="itUsers" [(ngModel)]="responsibleUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
                   [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-220 max-height-150">
         <ng-template let-user pTemplate="item">
           <div class="df">
