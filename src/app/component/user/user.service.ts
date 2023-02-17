@@ -24,6 +24,10 @@ export class UserService {
     return this.http.get<any>(this.usersUrl);
   }
 
+  getUserDetails(id: number): Observable<Users>{
+    return this.http.get<Users>(props.http + '/userDetails', {params: {id}})
+  }
+
 
 
   private handleError<T>(operation = 'operation', result?: T) {

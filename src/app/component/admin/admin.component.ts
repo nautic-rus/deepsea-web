@@ -3,12 +3,22 @@ import {DeviceDetectorService} from "ngx-device-detector";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
-import {UserService} from "./user.service";
+import {UserService} from "../user/user.service";
 import {LanguageService} from "../../domain/language.service";
 import {DialogService} from "primeng/dynamicdialog";
 import {Users} from "../../domain/interfaces/users";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Issue} from "../../domain/classes/issue";
+import {User} from "../../domain/classes/user";
+import {CreateTaskComponent} from "../create-task/create-task.component";
+import {CreateUserComponent} from "../user/create-user/create-user.component";
+import {Roles} from "../../domain/interfaces/roles";
+import {Projects} from "../../domain/interfaces/project";
+import {RoleService} from "./role.service";
+import {ProjectService} from "./project.service";
+import {TaskComponent} from "../task/task.component";
+import {UserComponent} from "../user/user.component";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-admin',
@@ -17,12 +27,18 @@ import {Issue} from "../../domain/classes/issue";
 })
 export class AdminComponent implements OnInit {
   users: Users[] = [];
-  cols: any[] = [];
+  roles: Roles[] = [];
+  projects: Projects[] = [];
+  colsUsers: any[] = [];
+  colsRoles: any[] = [];
+  colsProjects: any[] = [];
   // @ts-ignore
   @ViewChild('search') search;
   // @ts-ignore
-  @ViewChild('dt') dt: Table;
-  constructor(public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
+  @ViewChild('users') usr: Table;
+  @ViewChild('roles') rls: Table;
+  @ViewChild('projects') prcts: Table;
+  constructor(public roleService: RoleService, public projectService: ProjectService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
 
   ngOnInit(): void {
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
@@ -30,6 +46,8 @@ export class AdminComponent implements OnInit {
     }
     this.setCols();
     this.fillUsers();
+    this.fillRoles();
+    this.fillProjects();
   }
 
   fillUsers(): void {
@@ -37,7 +55,29 @@ export class AdminComponent implements OnInit {
       .subscribe(users => this.users = users);
   }
 
-  localeColumn(userElement: string, field: string, user: Users): string {
+
+  fillRoles(): void {
+    this.roleService.getRoles()
+      .subscribe(roles => {
+        console.log(roles);
+        this.roles = roles;
+      });
+  }
+
+  fillProjects(): void {
+    this.projectService.getProjects()
+      .subscribe(projects => {
+        console.log(projects);
+        this.projects = projects;
+      });
+  }
+
+  saveReorderedColumnsUsers(event: any) {
+    this.colsUsers = event.columns;
+    localStorage.setItem('id', JSON.stringify(event.columns));
+  }
+
+  localeColumn(userElement: string, field: string): string {
     if (field == 'avatar') {
       return '<div class="df"><img src="' + userElement + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
     }
@@ -50,20 +90,134 @@ export class AdminComponent implements OnInit {
 
   }
 
-  isUserUpdated(): void {
-
+  isUserNew(id: number) {
+    return this.users.find(x => x.id == id) == null;
   }
 
-  isUserNew(): void {
-
+  isUserUpdated(id: number) {
+    return !this.isUserNew(id) && this.users.find(x => x.id == id) == null;
   }
 
-  viewUser(): void {
+  newUser(user: object | null) {
+    this.dialogService.open(CreateUserComponent, {
+      showHeader: false,
+      modal: true,
+      data: [user, '']
+    }).onClose.subscribe(res => {
+      this.fillUsers();
+    });
+  }
 
+  viewUser(id: number) {
+    this.userService.getUserDetails(id).subscribe(res => {
+      console.log(res);
+      console.log(res.id);
+      if (res.id != null) {
+        this.dialogService.open(UserComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        }).onClose.subscribe(res => {
+          if (this.usr != null) {
+            this.usr.resetScrollTop = function() { }
+          }
+          let user = res as User;
+          if (user != null && user.id != null) {
+            this.newUser(user);
+          }
+          this.router.navigate([''], {queryParams: {taskId: null}, queryParamsHandling: 'merge'});
+        });
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Url User', detail: 'Cannot find user defined in url.'});
+      }
+    });
   }
 
   setCols() {
-    this.cols = [
+    this.colsRoles = [
+      {
+        field: 'name',
+        header: 'Name',
+        headerLocale: 'Name',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
+      {
+        field: 'description',
+        header: 'Description',
+        headerLocale: 'Description',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+    ];
+
+    this.colsProjects = [
+      {
+        field: 'id',
+        header: 'ID',
+        headerLocale: 'ID',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
+      {
+        field: 'foran',
+        header: 'Foran',
+        headerLocale: 'Foran',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'rkd',
+        header: 'RKD',
+        headerLocale: 'RKD',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'pdsp',
+        header: 'PDSP',
+        headerLocale: 'PDSP',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'cloud',
+        header: 'Cloud',
+        headerLocale: 'Cloud',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+    ];
+
+    this.colsUsers = [
       {
         field: 'id',
         header: 'ID',
@@ -110,72 +264,6 @@ export class AdminComponent implements OnInit {
         date: false
       },
       {
-        field: 'login',
-        header: 'Login',
-        headerLocale: 'Login',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false,
-      },
-      {
-        field: 'password',
-        header: 'Password',
-        headerLocale: 'Password',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'gender',
-        header: 'Gender',
-        headerLocale: 'Gender',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'birthday',
-        header: 'Birthday',
-        headerLocale: 'Birthday',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'email',
-        header: 'Email',
-        headerLocale: 'Email',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'phone',
-        header: 'Phone',
-        headerLocale: 'Phone',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
         field: 'profession',
         header: 'Profession',
         headerLocale: 'Profession',
@@ -186,105 +274,172 @@ export class AdminComponent implements OnInit {
         hidden: false,
         date: false
       },
-      {
-        field: 'department',
-        header: 'Department',
-        headerLocale: 'Department',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'permissions',
-        header: 'Permissions',
-        headerLocale: 'Permissions',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'visible_projects',
-        header: 'Visible projects',
-        headerLocale: 'Visible projects',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'visible_pages',
-        header: 'Visible pages',
-        headerLocale: 'Visible pages',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'rocket_login',
-        header: 'Rocket login',
-        headerLocale: 'Rocket login',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'tcid',
-        header: 'Tc id',
-        headerLocale: 'Tc id',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
-      {
-        field: 'visibility',
-        header: 'Visibility',
-        headerLocale: 'Visibility',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'groups',
-        header: 'Groups',
-        headerLocale: 'Groups',
-        sort: true,
-        filter: true,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'token',
-        header: 'Token',
-        headerLocale: 'Token',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false
-      }
+      // {
+      //   field: 'login',
+      //   header: 'Login',
+      //   headerLocale: 'Login',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false,
+      // },
+      // {
+      //   field: 'password',
+      //   header: 'Password',
+      //   headerLocale: 'Password',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'gender',
+      //   header: 'Gender',
+      //   headerLocale: 'Gender',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'birthday',
+      //   header: 'Birthday',
+      //   headerLocale: 'Birthday',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'email',
+      //   header: 'Email',
+      //   headerLocale: 'Email',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'phone',
+      //   header: 'Phone',
+      //   headerLocale: 'Phone',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      //
+      // {
+      //   field: 'department',
+      //   header: 'Department',
+      //   headerLocale: 'Department',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'permissions',
+      //   header: 'Permissions',
+      //   headerLocale: 'Permissions',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'visible_projects',
+      //   header: 'Visible projects',
+      //   headerLocale: 'Visible projects',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'visible_pages',
+      //   header: 'Visible pages',
+      //   headerLocale: 'Visible pages',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'rocket_login',
+      //   header: 'Rocket login',
+      //   headerLocale: 'Rocket login',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'tcid',
+      //   header: 'Tc id',
+      //   headerLocale: 'Tc id',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: true
+      // },
+      // {
+      //   field: 'visibility',
+      //   header: 'Visibility',
+      //   headerLocale: 'Visibility',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'groups',
+      //   header: 'Groups',
+      //   headerLocale: 'Groups',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
+      // {
+      //   field: 'token',
+      //   header: 'Token',
+      //   headerLocale: 'Token',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // }
     ];
   }
 
