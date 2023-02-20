@@ -51,7 +51,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-columns="columns" let-user>
-              <tr [class.task-update]="isUserUpdated(user.id)" [class.task-new]="isUserNew(user.id)" class="task-row" (click)="viewUser(user.id)">
+              <tr [class.user-update]="isUserUpdated(user.id)" [class.user-new]="isUserNew(user.id)" class="task-row" (click)="viewUser(user.id)">
                 <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
                   <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.user[col.field], col.field) | safeHtml"></div></div>
                   <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
@@ -87,7 +87,7 @@
            <ng-template pTemplate="caption">
              <div class="p-d-flex">
                <div class="mr-10">
-                 <div class="materials-button-home blue-button cxy" (click)="newUser(null)">
+                 <div class="materials-button-home blue-button cxy" (click)="newRole(null)">
                    <div class="pr-10 cxy">
                      <img src="assets/icons/plus3.svg" height="18">
                    </div>
@@ -118,7 +118,7 @@
              </tr>
            </ng-template>
            <ng-template pTemplate="body" let-columns="columns" let-role>
-             <tr class="task-row" >
+             <tr [class.role-update]="isRoleUpdated(role.name)" [class.role-new]="isRoleNew(role.name)" class="task-row" (click)="viewRole(role.name)">
                <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
                  <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div></div>
                  <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->

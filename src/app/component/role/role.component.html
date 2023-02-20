@@ -1,0 +1,18 @@
+<div class="w75">
+  <div class="role-header">
+    <div>
+      <div class="name">{{lang.tr('Роль')}}</div>
+      <input type="text" id="name" pInputText [(ngModel)]="role.name">
+    </div>
+    <div>
+      <div class="description">{{lang.tr('Описание')}}</div>
+      <input type="text" id="description" pInputText [(ngModel)]="role.description">
+    </div>
+  </div>
+  <div class="form-edit">
+    <div class="mr-5 cx">
+      <div tabindex="1" (click)="deleteRole()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+    </div>
+    <div tabindex="2" (click)="saveRole()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+  </div>
+</div>
