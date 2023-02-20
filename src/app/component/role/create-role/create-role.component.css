@@ -7,6 +7,14 @@
   margin: 1rem;
 }
 
+.form-create{
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 16px;
+}
+
 
 
 

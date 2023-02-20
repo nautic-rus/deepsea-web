@@ -68,6 +68,10 @@
       <div class="visible_projects">{{lang.tr('Доступные проекты')}}</div>
       <input type="text" id="visible_projects" pInputText [(ngModel)]="user.visible_projects">
     </div>
+    <div class="projects">
+      <div class="visible_projects">{{lang.tr('Проекты')}}</div>
+      <input type="text" id="projects" pInputText [(ngModel)]="user.projects">
+    </div>
     <div class="visible_pages">
       <div class="visible_pages">{{lang.tr('Доступные страницы')}}</div>
       <input type="text" id="visible_pages" pInputText [(ngModel)]="user.visible_pages">
@@ -81,7 +85,7 @@
       <input type="text" id="permissions" pInputText [(ngModel)]="user.permissions">
     </div>
     <div class="token">
-      <div class="token">{{lang.tr('Токе')}}</div>
+      <div class="token">{{lang.tr('Токен')}}</div>
       <input type="text" id="token" pInputText [(ngModel)]="user.token">
     </div>
   </div>

@@ -21,10 +21,21 @@ export class RoleService {
   }
 
   getRoleDetails(name: string): Observable<Roles>{
+    console.log(name);
     return this.http.get<Roles>(props.http + '/roleDetails', {params: {name}})
   }
 
   startRole(role: Roles) {
+    console.log(role);
     return this.http.post<string>(props.http + '/startRole', JSON.stringify(role))
+  }
+
+  deleteRole(name: string) {
+    console.log(name);
+    return this.http.get<string>(props.http + '/deleteRole', {params: {name}})
+  }
+
+  saveRole(role: Roles, name: string) {
+    return this.http.post<string>(props.http + '/editRole', JSON.stringify(role), {params: {name}})
   }
 }

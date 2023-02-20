@@ -54,7 +54,10 @@ export class AdminComponent implements OnInit {
 
   fillUsers(): void {
     this.userService.getUsers()
-      .subscribe(users => this.users = users);
+      .subscribe(users => {
+        console.log(users)
+        this.users = users
+      });
   }
 
 
@@ -116,14 +119,7 @@ export class AdminComponent implements OnInit {
           modal: true,
           data: res
         }).onClose.subscribe(res => {
-          if (this.rls != null) {
-            this.rls.resetScrollTop = function() { }
-          }
-          let role = res as Roles;
-          if (role != null && role.name != null) {
-            this.newRole(role);
-          }
-          this.router.navigate([''], {queryParams: {taskId: null}, queryParamsHandling: 'merge'});
+          this.fillRoles();
         });
       } else {
         this.messageService.add({severity: 'error', summary: 'Url Role', detail: 'Cannot find role defined in url.'});
@@ -149,7 +145,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  viewUser(id: number) {
+  viewUser(id: number ) {
     this.userService.getUserDetails(id).subscribe(res => {
       console.log(res);
       console.log(res.id);
@@ -166,7 +162,6 @@ export class AdminComponent implements OnInit {
           if (user != null && user.id != null) {
             this.newUser(user);
           }
-          this.router.navigate([''], {queryParams: {taskId: null}, queryParamsHandling: 'merge'});
         });
       } else {
         this.messageService.add({severity: 'error', summary: 'Url User', detail: 'Cannot find user defined in url.'});

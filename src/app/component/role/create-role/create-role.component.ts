@@ -24,8 +24,15 @@ export class CreateRoleComponent implements OnInit {
 
   createRole() {
     let role: Roles = { name: this.name, description: this.description };
-    this.roleService.startRole(role).subscribe(res =>
-      this.ref.close()
-    )
+    this.roleService.startRole(role).subscribe({
+      next: res => {
+        console.log(res);
+        this.ref.close(res);
+      },
+      error: err => {
+        console.log(err);
+        this.ref.close(err);
+      }
+    });
   }
 }

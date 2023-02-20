@@ -118,7 +118,7 @@
              </tr>
            </ng-template>
            <ng-template pTemplate="body" let-columns="columns" let-role>
-             <tr [class.role-update]="isRoleUpdated(role.id)" [class.role-new]="isRoleNew(role.name)" class="task-row" (click)="viewRole(role.name)">
+             <tr [class.role-update]="isRoleUpdated(role.name)" [class.role-new]="isRoleNew(role.name)" class="task-row" (click)="viewRole(role.name)">
                <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
                  <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div></div>
                  <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
