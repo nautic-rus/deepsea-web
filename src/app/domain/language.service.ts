@@ -412,6 +412,13 @@ export class LanguageService {
           case 'Доступные страницы': return 'Visible pages';
           case 'Права': return 'Permissions';
           case 'Токен': return 'Token';
+          case 'Файлы': return 'Files';
+          case 'Инфо': return 'Info';
+          case 'Сводка': return 'Summary';
+          case 'Архив': return 'Archive';
+          case 'Отв.': return 'Responsible';
+          case 'Исп.': return 'Assign to';
+          case '': return '';
           case '': return '';
           case '': return '';
           case '': return '';

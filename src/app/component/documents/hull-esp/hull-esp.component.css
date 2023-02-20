@@ -888,6 +888,12 @@
   grid-template-columns: 1fr 3fr 2fr 2fr 2fr;
   font-size: 14px;
 }
+.subtask-grid-misc{
+  display: grid;
+  grid-template-columns: 17% 25% 19% 19% 20%;
+  width: 100%;
+  font-size: 14px;
+}
 .subtask:hover{
   background-color: rgba(235, 236, 240, 0.36);
 }
