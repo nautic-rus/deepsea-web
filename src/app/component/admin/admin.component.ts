@@ -15,12 +15,14 @@ import {CreateUserComponent} from "../user/create-user/create-user.component";
 import {Roles} from "../../domain/interfaces/roles";
 import {Projects} from "../../domain/interfaces/project";
 import {RoleService} from "../role/role.service";
-import {ProjectService} from "./project.service";
+import {ProjectService} from "../project/project.service";
 import {TaskComponent} from "../task/task.component";
 import {UserComponent} from "../user/user.component";
 import {Table} from "primeng/table";
 import {CreateRoleComponent} from "../role/create-role/create-role.component";
 import {RoleComponent} from "../role/role.component";
+import {CreateProjectComponent} from "../project/create-project/create-project.component";
+import {ProjectComponent} from "../project/project.component";
 
 @Component({
   selector: 'app-admin',
@@ -127,6 +129,34 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  newProject(project: object | null) {
+    this.dialogService.open(CreateProjectComponent, {
+      showHeader: false,
+      modal: true,
+      data: [project, '']
+    }).onClose.subscribe(res => {
+      this.fillProjects();
+    });
+  }
+
+  viewProject(id: number) {
+    this.projectService.getProjectDetails(id).subscribe(res => {
+      console.log(res);
+      console.log(res.id);
+      if (res.id != null) {
+        this.dialogService.open(ProjectComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        }).onClose.subscribe(res => {
+          this.fillProjects();
+        });
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Url Project', detail: 'Cannot find project defined in url.'});
+      }
+    });
+  }
+
   isUserNew(id: number) {
     return this.users.find(x => x.id == id) == null;
   }
@@ -210,9 +240,9 @@ export class AdminComponent implements OnInit {
         date: false,
       },
       {
-        field: 'foran',
-        header: 'Foran',
-        headerLocale: 'Foran',
+        field: 'name',
+        header: 'Name',
+        headerLocale: 'Name',
         sort: true,
         filter: false,
         skip: false,
@@ -221,9 +251,9 @@ export class AdminComponent implements OnInit {
         date: true
       },
       {
-        field: 'rkd',
-        header: 'RKD',
-        headerLocale: 'RKD',
+        field: 'managers',
+        header: 'Managers',
+        headerLocale: 'Managers',
         sort: true,
         filter: false,
         skip: false,
@@ -232,9 +262,9 @@ export class AdminComponent implements OnInit {
         date: true
       },
       {
-        field: 'pdsp',
-        header: 'PDSP',
-        headerLocale: 'PDSP',
+        field: 'status',
+        header: 'Status',
+        headerLocale: 'Status',
         sort: true,
         filter: false,
         skip: false,
@@ -242,17 +272,39 @@ export class AdminComponent implements OnInit {
         hidden: false,
         date: true
       },
-      {
-        field: 'cloud',
-        header: 'Cloud',
-        headerLocale: 'Cloud',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
+      // {
+      //   field: 'rkd',
+      //   header: 'RKD',
+      //   headerLocale: 'RKD',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: true
+      // },
+      // {
+      //   field: 'pdsp',
+      //   header: 'PDSP',
+      //   headerLocale: 'PDSP',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: true
+      // },
+      // {
+      //   field: 'cloud',
+      //   header: 'Cloud',
+      //   headerLocale: 'Cloud',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: true
+      // },
     ];
 
     this.colsUsers = [
@@ -305,6 +357,17 @@ export class AdminComponent implements OnInit {
         field: 'profession',
         header: 'Profession',
         headerLocale: 'Profession',
+        sort: true,
+        filter: true,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
+        field: 'department',
+        header: 'Department',
+        headerLocale: 'Department',
         sort: true,
         filter: true,
         skip: false,

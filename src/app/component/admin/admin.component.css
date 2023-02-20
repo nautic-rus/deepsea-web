@@ -9,11 +9,11 @@
   grid-template-columns: 1fr 4fr 1fr;
 }
 .users {
-  width: 50%;
+  width: 60%;
   padding: 0 10px 0 0;
 }
 .right {
-  width: 50%;
+  width: 40%;
   padding: 0 0 0 10px;
 }
 .roles {
@@ -48,10 +48,13 @@
 ::ng-deep .p-datatable-scrollable-header-box	{
   padding: 0 !important;
 }
-.task-row{
-
+.user-row:hover{
+  background-color: #F3F2F1!important;
 }
-.task-row:hover{
+.role-row:hover{
+  background-color: #F3F2F1!important;
+}
+.project-row:hover{
   background-color: #F3F2F1!important;
 }
 .hidden-column{

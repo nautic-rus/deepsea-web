@@ -1,0 +1,36 @@
+<div>
+  <div class="role-header">
+    <div>
+      <div class="name">{{lang.tr('Имя')}}</div>
+      <input type="text" id="name" pInputText [(ngModel)]="name">
+    </div>
+    <div>
+      <div class="foran">{{lang.tr('Foran')}}</div>
+      <input type="text" id="foran" pInputText [(ngModel)]="foran">
+    </div>
+    <div>
+      <div class="RKD">{{lang.tr('RKD')}}</div>
+      <input type="text" id="RKD" pInputText [(ngModel)]="rkd">
+    </div>
+    <div>
+      <div class="PDSP">{{lang.tr('PDSP')}}</div>
+      <input type="text" id="PDSP" pInputText [(ngModel)]="pdsp">
+    </div>
+    <div>
+      <div class="factory">{{lang.tr('factory')}}</div>
+      <input type="text" id="factory" pInputText [(ngModel)]="factory">
+    </div>
+    <div>
+      <div class="managers">{{lang.tr('managers')}}</div>
+      <input type="text" id="managers" pInputText [(ngModel)]="managers">
+    </div>
+    <div>
+      <div class="status">{{lang.tr('status')}}</div>
+      <input type="text" id="status" pInputText [(ngModel)]="status">
+    </div>
+  </div>
+  <div class="form-create">
+    <div (click)="close()" pButton [label]="lang.tr('Отмена')" class="button-cancel"></div>
+    <div (click)="createProject()" pButton [label]="lang.tr('Создать')" class="button-create"></div>
+  </div>
+</div>

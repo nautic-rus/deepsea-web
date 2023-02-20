@@ -159,6 +159,8 @@ import { CreateUserComponent } from './component/user/create-user/create-user.co
 import { UserComponent } from './component/user/user.component';
 import { RoleComponent } from './component/role/role.component';
 import { CreateRoleComponent } from './component/role/create-role/create-role.component';
+import { ProjectComponent } from './component/project/project.component';
+import { CreateProjectComponent } from './component/project/create-project/create-project.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -269,6 +271,8 @@ Quill.register('modules/imageResize', ImageResize);
     UserComponent,
     RoleComponent,
     CreateRoleComponent,
+    ProjectComponent,
+    CreateProjectComponent,
   ],
   imports: [
     BrowserModule,

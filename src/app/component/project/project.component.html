@@ -1,0 +1,40 @@
+<div>
+  <div class="role-header">
+    <div>
+      <div class="id">{{lang.tr('ID')}}</div>
+      <p-inputNumber inputId="id" [(ngModel)]="project.id"></p-inputNumber>
+    </div>
+    <div>
+      <div class="name">{{lang.tr('Имя')}}</div>
+      <input type="text" id="name" pInputText [(ngModel)]="project.name">
+    </div>
+    <div>
+      <div class="foran">{{lang.tr('Foran')}}</div>
+      <input type="text" id="foran" pInputText [(ngModel)]="project.foran">
+    </div>
+    <div>
+      <div class="RKD">{{lang.tr('RKD')}}</div>
+      <input type="text" id="RKD" pInputText [(ngModel)]="project.rkd">
+    </div>
+    <div>
+      <div class="PDSP">{{lang.tr('PDSP')}}</div>
+      <input type="text" id="PDSP" pInputText [(ngModel)]="project.pdsp">
+    </div>
+    <div>
+      <div class="factory">{{lang.tr('factory')}}</div>
+      <input type="text" id="factory" pInputText [(ngModel)]="project.factory">
+    </div>
+    <div>
+      <div class="managers">{{lang.tr('managers')}}</div>
+      <input type="text" id="managers" pInputText [(ngModel)]="project.managers">
+    </div>
+    <div>
+      <div class="status">{{lang.tr('status')}}</div>
+      <input type="text" id="status" pInputText [(ngModel)]="project.status">
+    </div>
+  </div>
+  <div class="form-edit">
+    <div tabindex="1" (click)="deleteProject()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+    <div tabindex="2" (click)="saveProject()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+  </div>
+</div>

@@ -3,7 +3,7 @@ import {Users} from "../../domain/interfaces/users";
 import {DynamicDialogConfig} from "primeng/dynamicdialog";
 import {LanguageService} from "../../domain/language.service";
 import {Projects} from "../../domain/interfaces/project";
-import {ProjectService} from "../admin/project.service";
+import {ProjectService} from "../project/project.service";
 
 @Component({
   selector: 'app-user',

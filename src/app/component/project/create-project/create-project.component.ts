@@ -1,0 +1,47 @@
+import { Component, OnInit } from '@angular/core';
+import {LanguageService} from "../../../domain/language.service";
+import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {ProjectService} from "../project.service";
+import {Roles} from "../../../domain/interfaces/roles";
+import {Projects} from "../../../domain/interfaces/project";
+
+@Component({
+  selector: 'app-create-project',
+  templateUrl: './create-project.component.html',
+  styleUrls: ['./create-project.component.css']
+})
+export class CreateProjectComponent implements OnInit {
+  id: any;
+  name: any;
+  foran: any;
+  rkd: any;
+  pdsp: any;
+  factory: any;
+  managers: any;
+  status: any;
+
+
+  constructor(public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService) { }
+
+  ngOnInit(): void {
+  }
+
+  close() {
+    this.ref.close();
+  }
+
+  createProject() {
+    let projects: Projects = { id: 0, name: this.name, foran: this.foran, rkd: this.rkd, pdsp: this.pdsp, factory: this.factory, managers: this.managers, status: this.status };
+    this.projectService.startProject(projects).subscribe({
+      next: res => {
+        console.log(res);
+        this.ref.close(res);
+      },
+      error: err => {
+        console.log(err);
+        this.ref.close(err);
+      }
+    });
+  }
+
+}

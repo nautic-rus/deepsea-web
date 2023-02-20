@@ -51,7 +51,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-columns="columns" let-user>
-              <tr [class.user-update]="isUserUpdated(user.id)" [class.user-new]="isUserNew(user.id)" class="task-row" (click)="viewUser(user.id)">
+              <tr class="user-row" (click)="viewUser(user.id)">
                 <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
                   <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.user[col.field], col.field) | safeHtml"></div></div>
                   <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
@@ -61,12 +61,6 @@
           </p-table>
         </div>
       </div>
-<!--      <div class="roles card2">-->
-<!--        <div >MEOW</div>-->
-<!--      </div>-->
-<!--      <div class="projects card2">-->
-<!--        <div >MEOW</div>-->
-<!--      </div>-->
       <div class="right" >
        <div class="roles card2">
          <p-table class="roles"
@@ -118,7 +112,7 @@
              </tr>
            </ng-template>
            <ng-template pTemplate="body" let-columns="columns" let-role>
-             <tr [class.role-update]="isRoleUpdated(role.name)" [class.role-new]="isRoleNew(role.name)" class="task-row" (click)="viewRole(role.name)">
+             <tr class="role-row" (click)="viewRole(role.name)">
                <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
                  <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div></div>
                  <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
@@ -145,11 +139,11 @@
             <ng-template pTemplate="caption">
               <div class="p-d-flex">
                 <div class="mr-10">
-                  <div class="materials-button-home blue-button cxy">
+                  <div class="materials-button-home blue-button cxy" (click)="newProject(null)">
                     <div class="pr-10 cxy">
                       <img src="assets/icons/plus3.svg" height="18">
                     </div>
-                    <div class="cxy">{{l.tr('Новый проект')}}</div>
+                    <div class="cxy" >{{l.tr('Новый проект')}}</div>
                   </div>
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
@@ -176,7 +170,7 @@
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-columns="columns" let-project>
-              <tr class="task-row" >
+              <tr class="project-row" (click)="viewProject(project.id)">
                 <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
                   <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.project[col.field], col.field) | safeHtml"></div></div>
                   <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
