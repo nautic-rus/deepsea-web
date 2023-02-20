@@ -171,7 +171,7 @@ export class HullEspComponent implements OnInit {
   ];
   selectedTab = this.fileGroups[0].name;
   issueRevisions: string[] = [];
-  filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[]  } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
+  filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[] } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
   cmap = '';
   cmapFormat = '';
   cmapuser = '';
