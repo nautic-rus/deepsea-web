@@ -421,6 +421,7 @@ export class LanguageService {
           case 'Карточка пользователя': return 'User Card';
           case 'Создание пользователя': return 'Create User';
           case 'Общий доступ': return 'Shared access';
+          case 'Гендер': return 'Gender';
           case '': return '';
           case '': return '';
           case '': return '';
