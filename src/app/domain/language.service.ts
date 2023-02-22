@@ -419,6 +419,8 @@ export class LanguageService {
           case 'Отв.': return 'Responsible';
           case 'Исп.': return 'Assign to';
           case 'Карточка пользователя': return 'User Card';
+          case 'Создание пользователя': return 'Create User';
+          case 'Общий доступ': return 'Shared access';
           case '': return '';
           case '': return '';
           case '': return '';
