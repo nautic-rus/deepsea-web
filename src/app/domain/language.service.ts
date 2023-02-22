@@ -243,7 +243,6 @@ export class LanguageService {
           case 'Приварное': return 'Welded';
           case 'Зашивка': return 'Lining';
           case 'Дельные вещи': return 'Practical things';
-          case 'Пол': return 'Floor';
           case 'Мебель': return 'Furniture';
           case 'Оборудование, техника': return 'Technique';
           case 'Инвентарное имущество': return 'Inventory property';
