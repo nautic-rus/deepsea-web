@@ -115,4 +115,7 @@ export class CreateUserComponent implements OnInit {
     });
   }
 
+  isUserTaskDisabled() {
+    return this.login.trim() == '' || this.surname == '';
+  }
 }

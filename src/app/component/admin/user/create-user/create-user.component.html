@@ -1,88 +1,91 @@
-<div>
-  <div class="user-header">
-    <div>
-      <div class="id">{{lang.tr('ID')}}</div>
-      <p-inputNumber inputId="id" [(ngModel)]="id"></p-inputNumber>
-    </div>
-    <div>
-      <div class="avatar">{{lang.tr('Аватар')}}</div>
-      <input type="text" id="avatar" pInputText [(ngModel)]="avatar">
-    </div>
-    <div>
-      <div class="name">{{lang.tr('Имя')}}</div>
-      <input type="text" id="name" pInputText [(ngModel)]="name">
-    </div>
-    <div>
-      <div class="surname">{{lang.tr('Фамилия')}}</div>
-      <input type="text" id="surname" pInputText [(ngModel)]="surname">
-    </div>
-    <div class="login">
-      <div class="login">{{lang.tr('Логин')}}</div>
-      <input type="text" id="login" pInputText [(ngModel)]="login">
-    </div>
-    <div class="password">
-      <div class="password">{{lang.tr('Пароль')}}</div>
-      <input type="text" id="password" pInputText [(ngModel)]="password">
-    </div>
-    <div class="profession">
-      <div class="profession">{{lang.tr('Должность')}}</div>
-      <input type="text" id="profession" pInputText [(ngModel)]="profession">
-    </div>
-    <div class="department">
-      <div class="department">{{lang.tr('Отдел')}}</div>
-      <input type="text" id="department" pInputText [(ngModel)]="department">
-    </div>
-    <div class="birthday">
-      <div class="birthday">{{lang.tr('День рождения')}}</div>
-      <p-calendar appendTo="body" id="birthday" [(ngModel)]="userBD"></p-calendar>
-    </div>
-    <div class="email">
-      <div class="email">{{lang.tr('Почта')}}</div>
-      <input type="text" id="email" pInputText [(ngModel)]="email">
-    </div>
-    <div class="phone">
-      <div class="phone">{{lang.tr('Телефон')}}</div>
-      <input type="text" id="phone" pInputText [(ngModel)]="phone">
-    </div>
-    <div class="tcid">
-      <div class="tcid">{{lang.tr('TcId')}}</div>
-      <p-inputNumber inputId="tcid" [(ngModel)]="tcid"></p-inputNumber>
-    </div>
-    <div class="rocketLogin">
-      <div class="rocketLogin">{{lang.tr('Рокет логин')}}</div>
-      <input type="text" id="rocketLogin" pInputText [(ngModel)]="rocket_login">
-    </div>
-    <div class="gender">
-      <div class="gender">{{lang.tr('Гендер')}}</div>
-      <p-dropdown appendTo="body" id="gender" [options]="genders" [(ngModel)]="gender" optionLabel="name" optionValue="name"></p-dropdown>
-    </div>
-    <div class="visibility">
-      <div class="visibility">{{lang.tr('Видимость')}}</div>
-      <input type="text" id="visibility" pInputText [(ngModel)]="visibility">
-    </div>
-    <div class="sharedAccess">
-      <div class="sharedAccess">{{lang.tr('Shared Access')}}</div>
-      <p-multiSelect appendTo="body" id="sharedAccess" [options]="shared_access" [(ngModel)]="shared_access" optionLabel="name" optionValue="name"></p-multiSelect>
-    </div>
-    <div class="visible_projects">
-      <div class="visible_projects">{{lang.tr('Доступные проекты')}}</div>
-      <p-multiSelect appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
-    </div>
-    <div class="groups">
-      <div class="groups">{{lang.tr('Группа')}}</div>
-      <p-multiSelect appendTo="body" id="groups" [options]="groups" [(ngModel)]="groups" optionLabel="name" optionValue="name"></p-multiSelect>
-    </div>
-    <div class="permissions">
-      <div class="permissions">{{lang.tr('Права')}}</div>
-      <p-multiSelect appendTo="body" id="permissions" [options]="roles" [(ngModel)]="permissions" optionLabel="name" optionValue="name"></p-multiSelect>
-    </div>
-    <div class="token">
-      <div class="token">{{lang.tr('Токен')}}</div>
-      <input type="text" id="token" pInputText [(ngModel)]="token">
+<div class="center-user">
+  <div class="header-user-card">
+    <div class="header-user-text">{{lang.tr('Создание пользователя')}}</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="form-create">
-    <div (click)="close()" pButton [label]="lang.tr('Отмена')" class="button-cancel"></div>
-    <div (click)="createUser()" pButton [label]="lang.tr('Создать')" class="button-create"></div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('ID')}}</div>
+      <p-inputNumber inputStyleClass="width-100" inputId="id" [(ngModel)]="id">
+      </p-inputNumber>
+    </div>
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Гендер')}}</div>
+      <p-dropdown styleClass="width-100" appendTo="body" id="gender" [options]="genders" [(ngModel)]="gender" optionLabel="name" optionValue="name"></p-dropdown>
+    </div>
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Фамилия')}}</div>
+      <input class="width-211" type="text" id="surname" pInputText [(ngModel)]="surname">
+    </div>
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Имя')}}</div>
+      <input class="width-211" type="text" id="name" pInputText [(ngModel)]="name">
+    </div>
   </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин')}}</div>
+      <input class="width-211" type="text" id="login" pInputText [(ngModel)]="login">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Пароль')}}</div>
+      <input class="width-211" type="text" id="password" pInputText [(ngModel)]="password">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин RocketChat')}}</div>
+      <input class="width-211" type="text" id="rocketLogin" pInputText [(ngModel)]="rocket_login">
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>
+      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="department">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Должность')}}</div>
+      <input class="width-211" type="text" id="profession" pInputText [(ngModel)]="profession">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Аватар')}}</div>
+      <input class="width-211" type="text" id="avatar" pInputText [(ngModel)]="avatar">
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Почта')}}</div>
+      <input class="width-211" type="text" id="email" pInputText [(ngModel)]="email">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Телефон')}}</div>
+      <input class="width-211" type="text" id="phone" pInputText [(ngModel)]="phone">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Time Control ID')}}</div>
+      <p-inputNumber inputStyleClass="width-211" inputId="tcid" [(ngModel)]="tcid"></p-inputNumber>
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="permissions" optionLabel="name" optionValue="name"></p-multiSelect>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
+      <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="visibility">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Общий доступ')}}</div>
+      <input class="width-211" type="text" id="sharedAccess" pInputText [(ngModel)]="shared_access">
+    </div>
+  </div>
+  <div>
+    <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
+    <p-multiSelect styleClass="w-100" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
+  </div>
+</div>
+
+<div class="form-footer-user">
+  <div tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="createUser()" pButton [label]="lang.tr('Создать')" class="button-ok"></div>
 </div>
