@@ -1,5 +1,5 @@
 <div class="all-page time-control">
-  <div class="card">
+  <div class="card" *ngIf="auth.getUser().tcid != 0">
     <div class="time-control-header">
       <div class="p-d-flex mr-1">
         <span class="status-work" *ngIf="isOnline()">На работе</span><span class="status-not-work" *ngIf="!isOnline()">Отсутствует</span>
@@ -43,6 +43,9 @@
       <div class="text-bold">Всего отработано:</div><span class="text-thin mx-1"> {{formatTime(getTotalWork(), false, false, false)}}</span><span class="text-bold"> Норма в месяц: </span><span class="text-thin mx-1">{{formatTime(getTotalNorm(), false, false, false)}}</span><span class="text-bold"> Переработок за месяц: </span><span class="text-thin mx-1">{{formatTime(getTotalOverWork(), true, false, false)}}</span>
 
     </div>
+  </div>
+  <div class="card" *ngIf="auth.getUser().tcid == 0">
+   <div>У вас нет доступа к этой странице, обратитесь к администратору</div>
   </div>
 </div>
 

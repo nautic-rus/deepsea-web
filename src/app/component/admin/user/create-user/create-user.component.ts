@@ -24,7 +24,8 @@ export class CreateUserComponent implements OnInit {
   surname: string = "";
   profession: string = "";
   department: string = "";
-  birthday: string = formatDate(new Date(), 'yyyy/MM/dd', 'en');
+  birthday: string = formatDate(new Date(), 'MM/dd/yyyy', 'en');
+  userBD: Date = new Date();
   email: string = "";
   phone: string = "";
   tcid: number = 0;
@@ -47,6 +48,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userBD = new Date();
     this.fillRoles();
     this.fillProjects();
     this.genders = [
@@ -84,7 +86,7 @@ export class CreateUserComponent implements OnInit {
       surname: this.surname,
       profession: this.profession,
       department: this.department,
-      birthday: this.birthday,
+      birthday: formatDate(this.userBD, 'MM/dd/yyyy', 'en'),
       email: this.email,
       phone: this.phone,
       tcid: this.tcid,
@@ -99,7 +101,7 @@ export class CreateUserComponent implements OnInit {
       groups: this.groups,
       permissions: this.permissions,
       token: this.token,
-      projects: this.visible_projects
+      projects: this.visible_projects,
     };
     this.userService.startUser(user).subscribe({
       next: res => {
