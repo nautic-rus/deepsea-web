@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {LanguageService} from "../../../domain/language.service";
+import {LanguageService} from "../../../../domain/language.service";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
 import {ProjectService} from "../project.service";
-import {Roles} from "../../../domain/interfaces/roles";
-import {Projects} from "../../../domain/interfaces/project";
-import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {Roles} from "../../../../domain/interfaces/roles";
+import {Projects} from "../../../../domain/interfaces/project";
+import {AuthManagerService} from "../../../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-create-project',

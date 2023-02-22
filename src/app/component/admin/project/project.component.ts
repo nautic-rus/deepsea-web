@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {LanguageService} from "../../domain/language.service";
+import {LanguageService} from "../../../domain/language.service";
 import {ProjectService} from "./project.service";
-import {Projects} from "../../domain/interfaces/project";
+import {Projects} from "../../../domain/interfaces/project";
 
 @Component({
   selector: 'app-project',

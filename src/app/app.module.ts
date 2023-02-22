@@ -155,12 +155,12 @@ import { CombineIssuesComponent } from './component/task/combine-issues/combine-
 import { CableExplorerComponent } from './component/tools/cable-explorer/cable-explorer.component';
 import { SpyWatchComponent } from './component/spy-watch/spy-watch.component';
 import { AdminComponent } from './component/admin/admin.component';
-import { CreateUserComponent } from './component/user/create-user/create-user.component';
-import { UserComponent } from './component/user/user.component';
-import { RoleComponent } from './component/role/role.component';
-import { CreateRoleComponent } from './component/role/create-role/create-role.component';
-import { ProjectComponent } from './component/project/project.component';
-import { CreateProjectComponent } from './component/project/create-project/create-project.component';
+import { CreateUserComponent } from './component/admin/user/create-user/create-user.component';
+import { UserComponent } from './component/admin/user/user.component';
+import { RoleComponent } from './component/admin/role/role.component';
+import { CreateRoleComponent } from './component/admin/role/create-role/create-role.component';
+import { ProjectComponent } from './component/admin/project/project.component';
+import { CreateProjectComponent } from './component/admin/project/create-project/create-project.component';
 
 Quill.register('modules/imageResize', ImageResize);
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Roles} from "../../domain/interfaces/roles";
+import {Roles} from "../../../domain/interfaces/roles";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {LanguageService} from "../../domain/language.service";
+import {LanguageService} from "../../../domain/language.service";
 import {RoleService} from "./role.service";
-import {Pages} from "../../domain/interfaces/pages";
+import {Pages} from "../../../domain/interfaces/pages";
 import {PageService} from "./page.service";
 
 @Component({
