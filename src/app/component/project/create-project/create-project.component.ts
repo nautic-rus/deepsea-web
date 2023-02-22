@@ -4,6 +4,7 @@ import {DynamicDialogRef} from "primeng/dynamicdialog";
 import {ProjectService} from "../project.service";
 import {Roles} from "../../../domain/interfaces/roles";
 import {Projects} from "../../../domain/interfaces/project";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-create-project',
@@ -21,9 +22,10 @@ export class CreateProjectComponent implements OnInit {
   status: any;
 
 
-  constructor(public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService) { }
+  constructor(public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
+    this.managers = this.auth.getUser().login;
   }
 
   close() {

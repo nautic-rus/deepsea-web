@@ -1,4 +1,4 @@
-<div class="w75">
+<div>
   <div class="user-header">
     <div>
       <div class="id">{{lang.tr('ID')}}</div>
@@ -34,7 +34,7 @@
     </div>
     <div class="birthday">
       <div class="birthday">{{lang.tr('День рождения')}}</div>
-      <p-calendar id="birthday" [(ngModel)]="user.birthday"></p-calendar>
+      <p-calendar appendTo="body" id="birthday" [(ngModel)]="birthday"></p-calendar>
     </div>
     <div class="email">
       <div class="email">{{lang.tr('Почта')}}</div>
@@ -53,8 +53,8 @@
       <input type="text" id="rocketLogin" pInputText [(ngModel)]="user.rocket_login">
     </div>
     <div class="gender">
-      <div class="gender">{{lang.tr('Пол')}}</div>
-      <p-dropdown id="gender" [options]="genders" [(ngModel)]="user.gender" optionLabel="name" optionValue="name"></p-dropdown>
+      <div class="gender">{{lang.tr('Гендер')}}</div>
+      <p-dropdown appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div class="visibility">
       <div class="visibility">{{lang.tr('Видимость')}}</div>
@@ -66,15 +66,7 @@
     </div>
     <div class="visible_projects">
       <div class="visible_projects">{{lang.tr('Доступные проекты')}}</div>
-      <input type="text" id="visible_projects" pInputText [(ngModel)]="user.visible_projects">
-    </div>
-    <div class="projects">
-      <div class="visible_projects">{{lang.tr('Проекты')}}</div>
-      <input type="text" id="projects" pInputText [(ngModel)]="user.projects">
-    </div>
-    <div class="visible_pages">
-      <div class="visible_pages">{{lang.tr('Доступные страницы')}}</div>
-      <input type="text" id="visible_pages" pInputText [(ngModel)]="user.visible_pages">
+      <p-multiSelect appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="user.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <div class="groups">
       <div class="groups">{{lang.tr('Группа')}}</div>
@@ -82,11 +74,15 @@
     </div>
     <div class="permissions">
       <div class="permissions">{{lang.tr('Права')}}</div>
-      <input type="text" id="permissions" pInputText [(ngModel)]="user.permissions">
+      <p-multiSelect appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <div class="token">
       <div class="token">{{lang.tr('Токен')}}</div>
       <input type="text" id="token" pInputText [(ngModel)]="user.token">
     </div>
+  </div>
+  <div class="form-edit">
+    <div tabindex="1" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+    <div tabindex="2" (click)="saveUser()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
   </div>
 </div>

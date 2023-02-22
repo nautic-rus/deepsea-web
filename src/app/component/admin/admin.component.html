@@ -13,7 +13,6 @@
                    [virtualScroll]="false"
                    [scrollHeight]="'78vh'"
                    [virtualRowHeight]="1"
-                   stateKey="state"
                    styleClass="p-datatable-striped"
                    scrollDirection="both"
           >
@@ -72,9 +71,8 @@
                   [columns]="colsRoles"
                   (onColReorder)="saveReorderedColumnsUsers($event)"
                   [virtualScroll]="false"
-                  [scrollHeight]="'30vh'"
+                  [scrollHeight]="'35vh'"
                   [virtualRowHeight]="1"
-                  stateKey="state"
                   styleClass="p-datatable-striped"
                   scrollDirection="both"
          >
@@ -132,9 +130,8 @@
                    [virtualScroll]="false"
                    [scrollHeight]="'35vh'"
                    [virtualRowHeight]="1"
-                   stateKey="state"
                    styleClass="p-datatable-striped"
-                   scrollDirection="both"
+                   scrollDirection="stateProject"
           >
             <ng-template pTemplate="caption">
               <div class="p-d-flex">

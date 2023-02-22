@@ -8,6 +8,10 @@
       <div class="description">{{lang.tr('Описание')}}</div>
       <input type="text" id="description" pInputText [(ngModel)]="this.description">
     </div>
+    <div class="visible_pages">
+      <div class="visible_pages">{{lang.tr('Доступные страницы')}}</div>
+      <p-multiSelect appendTo="body" id="visible_pages" [options]="pages" [(ngModel)]="selectedPages" optionLabel="name" optionValue="name"></p-multiSelect>
+    </div>
   </div>
   <div class="form-create">
     <div (click)="createRole()" pButton [label]="lang.tr('Создать')" class="button-create"></div>

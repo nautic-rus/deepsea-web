@@ -175,7 +175,7 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  viewUser(id: number ) {
+  viewUser(id: number) {
     this.userService.getUserDetails(id).subscribe(res => {
       console.log(res);
       console.log(res.id);
@@ -185,21 +185,13 @@ export class AdminComponent implements OnInit {
           modal: true,
           data: res
         }).onClose.subscribe(res => {
-          if (this.usr != null) {
-            this.usr.resetScrollTop = function() { }
-          }
-          let user = res as User;
-          if (user != null && user.id != null) {
-            this.newUser(user);
-          }
+          this.fillUsers();
         });
       } else {
-        this.messageService.add({severity: 'error', summary: 'Url User', detail: 'Cannot find user defined in url.'});
+        this.messageService.add({severity: 'error', summary: 'Url Project', detail: 'Cannot find project defined in url.'});
       }
     });
   }
-
-
 
   setCols() {
     this.colsRoles = [
@@ -218,6 +210,17 @@ export class AdminComponent implements OnInit {
         field: 'description',
         header: 'Description',
         headerLocale: 'Description',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
+      {
+        field: 'visible_pages',
+        header: 'Visible Pages',
+        headerLocale: 'Visible Pages',
         sort: true,
         filter: false,
         skip: false,
