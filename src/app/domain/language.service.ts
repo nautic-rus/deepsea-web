@@ -422,6 +422,8 @@ export class LanguageService {
           case 'Создание пользователя': return 'Create User';
           case 'Общий доступ': return 'Shared access';
           case 'Гендер': return 'Gender';
+          case 'Отправить данные для входа': return 'Send login data';
+          case 'Логин RocketChat': return 'Login RocketChat';
           case '': return '';
           case '': return '';
           case '': return '';

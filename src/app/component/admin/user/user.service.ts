@@ -35,6 +35,11 @@ export class UserService {
     return this.http.get<string>(props.http + '/deleteUser', {params: {id}});
   }
 
+  sendLogPass(id: number) {
+    console.log(id);
+    return this.http.get<string>(props.http + '/sendLogPass', {params: {id}});
+  }
+
   saveUser(user: Users, id: number) {
     console.log(user);
     return this.http.post<string>(props.http + '/editUser', JSON.stringify(user), {params: {id}})
