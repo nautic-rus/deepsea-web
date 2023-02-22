@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {LanguageService} from "../../../domain/language.service";
+import {LanguageService} from "../../../../domain/language.service";
 import {DynamicDialogRef} from "primeng/dynamicdialog";
 import {ProjectService} from "../../project/project.service";
-import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {Projects} from "../../../domain/interfaces/project";
-import {Roles} from "../../../domain/interfaces/roles";
+import {AuthManagerService} from "../../../../domain/auth-manager.service";
+import {Projects} from "../../../../domain/interfaces/project";
+import {Roles} from "../../../../domain/interfaces/roles";
 import {RoleService} from "../../role/role.service";
 import {UserService} from "../user.service";
-import {Users} from "../../../domain/interfaces/users";
+import {Users} from "../../../../domain/interfaces/users";
 import {formatDate} from "@angular/common";
 
 @Component({

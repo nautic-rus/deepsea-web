@@ -3,7 +3,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
-import {UserService} from "../user/user.service";
+import {UserService} from "./user/user.service";
 import {LanguageService} from "../../domain/language.service";
 import {DialogService} from "primeng/dynamicdialog";
 import {Users} from "../../domain/interfaces/users";
@@ -11,18 +11,18 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {Issue} from "../../domain/classes/issue";
 import {User} from "../../domain/classes/user";
 import {CreateTaskComponent} from "../create-task/create-task.component";
-import {CreateUserComponent} from "../user/create-user/create-user.component";
+import {CreateUserComponent} from "./user/create-user/create-user.component";
 import {Roles} from "../../domain/interfaces/roles";
 import {Projects} from "../../domain/interfaces/project";
-import {RoleService} from "../role/role.service";
-import {ProjectService} from "../project/project.service";
+import {RoleService} from "./role/role.service";
+import {ProjectService} from "./project/project.service";
 import {TaskComponent} from "../task/task.component";
-import {UserComponent} from "../user/user.component";
+import {UserComponent} from "./user/user.component";
 import {Table} from "primeng/table";
-import {CreateRoleComponent} from "../role/create-role/create-role.component";
-import {RoleComponent} from "../role/role.component";
-import {CreateProjectComponent} from "../project/create-project/create-project.component";
-import {ProjectComponent} from "../project/project.component";
+import {CreateRoleComponent} from "./role/create-role/create-role.component";
+import {RoleComponent} from "./role/role.component";
+import {CreateProjectComponent} from "./project/create-project/create-project.component";
+import {ProjectComponent} from "./project/project.component";
 
 @Component({
   selector: 'app-admin',

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Users} from "../../domain/interfaces/users";
+import {Users} from "../../../domain/interfaces/users";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {LanguageService} from "../../domain/language.service";
-import {Projects} from "../../domain/interfaces/project";
+import {LanguageService} from "../../../domain/language.service";
+import {Projects} from "../../../domain/interfaces/project";
 import {ProjectService} from "../project/project.service";
 import {UserService} from "./user.service";
-import {Roles} from "../../domain/interfaces/roles";
+import {Roles} from "../../../domain/interfaces/roles";
 import {RoleService} from "../role/role.service";
 
 @Component({
@@ -36,6 +36,10 @@ export class UserComponent implements OnInit {
     this.birthday = new Date(this.user.birthday);
     this.fillRoles();
     this.fillProjects();
+  }
+
+  close() {
+    this.ref.close();
   }
 
   fillProjects(): void {
@@ -78,5 +82,8 @@ export class UserComponent implements OnInit {
         this.ref.close(err);
       }
     });
+  }
+  isUserTaskDisabled() {
+    return this.user.login.trim() == '' || this.user.surname == '';
   }
 }

@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import * as props from "../../props";
-import {User} from "../../domain/classes/user";
-import {Users} from "../../domain/interfaces/users";
-import {Projects} from "../../domain/interfaces/project";
+import * as props from "../../../props";
+import {User} from "../../../domain/classes/user";
+import {Users} from "../../../domain/interfaces/users";
+import {Projects} from "../../../domain/interfaces/project";
 
 @Injectable({
   providedIn: 'root'

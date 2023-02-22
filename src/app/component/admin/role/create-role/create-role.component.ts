@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Roles} from "../../../domain/interfaces/roles";
-import {LanguageService} from "../../../domain/language.service";
+import {Roles} from "../../../../domain/interfaces/roles";
+import {LanguageService} from "../../../../domain/language.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {RoleService} from "../role.service";
 import {PageService} from "../page.service";
-import {Pages} from "../../../domain/interfaces/pages";
+import {Pages} from "../../../../domain/interfaces/pages";
 
 @Component({
   selector: 'app-create-role',

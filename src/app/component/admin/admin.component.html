@@ -87,14 +87,14 @@
                  </div>
                </div>
                <span class="p-input-icon-left p-ml-auto">
-            <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="rls.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
-          </span>
+                <i class="pi pi-search"></i>
+                <input #search pInputText type="text" (input)="rls.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
+              </span>
              </div>
            </ng-template>
            <ng-template pTemplate="header" let-columns>
              <tr>
-               <th style="width:156px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+               <th style="width: 33%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
                  <div class="header">
                    {{l.tr(col.header)}}
                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -111,7 +111,7 @@
            </ng-template>
            <ng-template pTemplate="body" let-columns="columns" let-role>
              <tr class="role-row" (click)="viewRole(role.name)">
-               <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
+               <td style="width: 33%" class="cursor-pointer" *ngFor="let col of columns">
                  <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div></div>
                  <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
                </td>
@@ -144,9 +144,9 @@
                   </div>
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
-            <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="prcts.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
-          </span>
+                  <i class="pi pi-search"></i>
+                  <input #search pInputText type="text" (input)="prcts.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
+                </span>
               </div>
             </ng-template>
             <ng-template pTemplate="header" let-columns>

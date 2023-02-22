@@ -1,10 +1,10 @@
 import {Injectable, OnInit} from '@angular/core';
-import * as props from "../../props";
+import * as props from "../../../props";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Roles} from "../../domain/interfaces/roles";
-import {LanguageService} from "../../domain/language.service";
-import {Users} from "../../domain/interfaces/users";
+import {Roles} from "../../../domain/interfaces/roles";
+import {LanguageService} from "../../../domain/language.service";
+import {Users} from "../../../domain/interfaces/users";
 import {DynamicDialogConfig} from "primeng/dynamicdialog";
 
 @Injectable({
