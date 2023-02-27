@@ -71,6 +71,19 @@ export class UserComponent implements OnInit {
     });
   }
 
+  sendLogPass() {
+    this.userService.sendLogPass(this.user.id).subscribe({
+      next: res => {
+        console.log(res);
+        this.ref.close(res);
+      },
+      error: err => {
+        console.log(err);
+        this.ref.close(err);
+      }
+    });
+  }
+
   saveUser() {
     this.userService.saveUser(this.user, this.id).subscribe({
       next: res => {

@@ -34,6 +34,8 @@ export class RoleService {
   }
 
   saveRole(role: Roles, name: string) {
+    console.log(role)
+    console.log(name)
     return this.http.post<string>(props.http + '/editRole', JSON.stringify(role), {params: {name}});
   }
 }

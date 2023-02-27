@@ -7,13 +7,8 @@
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('ID')}}</div>
-      <p-inputNumber inputStyleClass="width-100" inputId="id" [(ngModel)]="user.id">
-      </p-inputNumber>
-    </div>
-    <div>
-      <div class="big-text-user mb-1">{{lang.tr('Пол')}}</div>
-      <p-dropdown styleClass="width-100" appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender" optionLabel="name" optionValue="name"></p-dropdown>
+      <div class="big-text-user mb-1">{{lang.tr('Гендер')}}</div>
+      <p-dropdown styleClass="width-211" appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
       <div class="big-text-user mb-1">{{lang.tr('Фамилия')}}</div>
@@ -87,6 +82,9 @@
 </div>
 
 <div class="form-footer-user">
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="sendLogPass()" pButton [label]="lang.tr('Отправить данные для входа')" class="button-cancel ml-1"></div>
+  </div>
   <div class="mr-5 cx">
     <div tabindex="11" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
   </div>
