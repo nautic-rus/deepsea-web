@@ -1,36 +1,61 @@
-<div>
-  <div class="role-header">
-    <div>
-      <div class="name">{{lang.tr('Имя')}}</div>
-      <input type="text" id="name" pInputText [(ngModel)]="name">
-    </div>
-    <div>
-      <div class="foran">{{lang.tr('Foran')}}</div>
-      <input type="text" id="foran" pInputText [(ngModel)]="foran">
-    </div>
-    <div>
-      <div class="RKD">{{lang.tr('RKD')}}</div>
-      <input type="text" id="RKD" pInputText [(ngModel)]="rkd">
-    </div>
-    <div>
-      <div class="PDSP">{{lang.tr('PDSP')}}</div>
-      <input type="text" id="PDSP" pInputText [(ngModel)]="pdsp">
-    </div>
-    <div>
-      <div class="factory">{{lang.tr('factory')}}</div>
-      <input type="text" id="factory" pInputText [(ngModel)]="factory">
-    </div>
-    <div>
-      <div class="managers">{{lang.tr('managers')}}</div>
-      <input type="text" id="managers" pInputText [(ngModel)]="managers">
-    </div>
-    <div>
-      <div class="status">{{lang.tr('status')}}</div>
-      <input type="text" id="status" pInputText [(ngModel)]="status">
+<div class="center-create-project">
+  <div class="header-user-card">
+    <div class="header-user-text">{{lang.tr('Проекты')}}</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="form-create">
-    <div (click)="close()" pButton [label]="lang.tr('Отмена')" class="button-cancel"></div>
-    <div (click)="createProject()" pButton [label]="lang.tr('Создать')" class="button-create"></div>
+
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Проект')}}</div>
+      <input class="width-211" type="text" id="name" pInputText [(ngModel)]="name">
+    </div>
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Foran')}}</div>
+      <input class="width-211" type="text" id="foran" pInputText [(ngModel)]="foran">
+    </div>
   </div>
+
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('РКД')}}</div>
+      <input class="width-211" type="text" id="RKD" pInputText [(ngModel)]="rkd">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('ПДСП')}}</div>
+      <input class="width-211" type="text" id="PDSP" pInputText [(ngModel)]="pdsp">
+    </div>
+
+
+
+
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Завод')}}</div>
+      <input class="width-211" type="text" id="factory" pInputText [(ngModel)]="factory">
+    </div>
+
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Статус')}}</div>
+      <input class="width-211" type="text" id="status" pInputText [(ngModel)]="status">
+    </div>
+  </div>
+  <div>
+    <div class="big-text-user mb-1 mt-1">{{lang.tr('Менеджеры')}}</div>
+    <input class="width-211" type="text" id="managers" pInputText [(ngModel)]="managers">
+  </div>
+
+
 </div>
+
+<div class="form-footer-user">
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="close()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+  </div>
+  <div tabindex="10" (click)="createProject()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+</div>
+
+
+

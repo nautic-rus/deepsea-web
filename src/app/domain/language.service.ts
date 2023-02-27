@@ -421,9 +421,9 @@ export class LanguageService {
           case 'Создание пользователя': return 'Create User';
           case 'Общий доступ': return 'Shared access';
           case 'Пол': return 'Gender';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Проекты пользователя': return 'User Projects';
+          case 'Завод': return 'Factory';
+          case 'Менеджеры': return 'Managers';
           case '': return '';
           case '': return '';
           case '': return '';
