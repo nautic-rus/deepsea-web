@@ -161,6 +161,8 @@ import { RoleComponent } from './component/admin/role/role.component';
 import { CreateRoleComponent } from './component/admin/role/create-role/create-role.component';
 import { ProjectComponent } from './component/admin/project/project.component';
 import { CreateProjectComponent } from './component/admin/project/create-project/create-project.component';
+import { RightComponent } from './component/admin/right/right.component';
+import { CreateRightComponent } from './component/admin/right/create-right/create-right.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -273,6 +275,8 @@ Quill.register('modules/imageResize', ImageResize);
     CreateRoleComponent,
     ProjectComponent,
     CreateProjectComponent,
+    RightComponent,
+    CreateRightComponent,
   ],
   imports: [
     BrowserModule,

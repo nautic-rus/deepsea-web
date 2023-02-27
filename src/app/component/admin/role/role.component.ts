@@ -3,8 +3,9 @@ import {Roles} from "../../../domain/interfaces/roles";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 import {RoleService} from "./role.service";
-import {Pages} from "../../../domain/interfaces/pages";
 import {PageService} from "./page.service";
+import {Rights} from "../../../domain/interfaces/rights";
+import {RightService} from "../right/right.service";
 
 @Component({
   selector: 'app-role',
@@ -12,14 +13,14 @@ import {PageService} from "./page.service";
   styleUrls: ['./role.component.css']
 })
 export class RoleComponent implements OnInit {
-  pages: Pages[] = [];
+  rights: Rights[] = [];
   role: Roles;
   name: any;
 
-  constructor(public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public pageService: PageService) { }
+  constructor(public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
-    this.fillPages();
+    this.fillRights();
     this.role = this.conf.data as Roles;
     this.name = this.role.name;
   }
@@ -28,11 +29,11 @@ export class RoleComponent implements OnInit {
     this.ref.close();
   }
 
-  fillPages(): void {
-    this.pageService.getPages()
-      .subscribe(pages => {
-        console.log(pages);
-        this.pages = pages;
+  fillRights(): void {
+    this.rightService.getRights()
+      .subscribe(rights => {
+        console.log(rights);
+        this.rights = rights;
       });
   }
 

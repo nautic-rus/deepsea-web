@@ -1,0 +1,12 @@
+<div>
+  <div class="right-header">
+    <div>
+      <div class="name">{{lang.tr('Роль')}}</div>
+      <input type="text" id="name" pInputText [(ngModel)]="right.name">
+    </div>
+  </div>
+  <div class="form-edit">
+    <div (click)="saveRight()" pButton [label]="lang.tr('Сохранить')" class="button-create"></div>
+    <div (click)="deleteRight()" pButton [label]="lang.tr('Удалить')" class="button-cancel"></div>
+  </div>
+</div>

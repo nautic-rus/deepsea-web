@@ -1,5 +1,4 @@
-<div *ngIf="device.isDesktop()" class="">
-  <div class="all-page">
+<div class="all-page">
     <div class="df">
       <div class="users">
         <div class="card">
@@ -61,64 +60,121 @@
         </div>
       </div>
       <div class="right" >
-       <div class="roles card2">
-         <p-table class="roles"
-                  #rls
-                  id="rls"
-                  dataKey="id"
-                  [value]="roles"
-                  [scrollable]="true"
-                  [columns]="colsRoles"
-                  (onColReorder)="saveReorderedColumnsUsers($event)"
-                  [virtualScroll]="false"
-                  [scrollHeight]="'35vh'"
-                  [virtualRowHeight]="1"
-                  styleClass="p-datatable-striped"
-                  scrollDirection="both"
-         >
-           <ng-template pTemplate="caption">
-             <div class="p-d-flex">
-               <div class="mr-10">
-                 <div class="materials-button-home blue-button cxy" (click)="newRole(null)">
-                   <div class="pr-10 cxy">
-                     <img src="assets/icons/plus3.svg" height="18">
-                   </div>
-                   <div class="cxy">{{l.tr('Новая роль')}}</div>
-                 </div>
-               </div>
-               <span class="p-input-icon-left p-ml-auto">
+        <div class="df">
+          <div class="roles card2">
+            <p-table class="roles"
+                     #rls
+                     id="rls"
+                     dataKey="id"
+                     [value]="roles"
+                     [scrollable]="true"
+                     [columns]="colsRoles"
+                     (onColReorder)="saveReorderedColumnsUsers($event)"
+                     [virtualScroll]="false"
+                     [scrollHeight]="'35vh'"
+                     [virtualRowHeight]="1"
+                     styleClass="p-datatable-striped"
+                     scrollDirection="both"
+            >
+              <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                  <div class="mr-10">
+                    <div class="materials-button-home blue-button cxy" (click)="newRole(null)">
+                      <div class="pr-10 cxy">
+                        <img src="assets/icons/plus3.svg" height="18">
+                      </div>
+                      <div class="cxy">{{l.tr('Новая роль')}}</div>
+                    </div>
+                  </div>
+                  <span class="p-input-icon-left p-ml-auto">
                 <i class="pi pi-search"></i>
                 <input #search pInputText type="text" (input)="rls.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
               </span>
-             </div>
-           </ng-template>
-           <ng-template pTemplate="header" let-columns>
-             <tr>
-               <th style="width: 33%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
-                 <div class="header">
-                   {{l.tr(col.header)}}
-                   <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
-                   <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
-                   <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                       <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                       </p-multiSelect>
-                     </ng-template>
-                   </p-columnFilter>
-                 </div>
-               </th>
-             </tr>
-           </ng-template>
-           <ng-template pTemplate="body" let-columns="columns" let-role>
-             <tr class="role-row" (click)="viewRole(role.name)">
-               <td style="width: 33%" class="cursor-pointer" *ngFor="let col of columns">
-                 <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div></div>
-                 <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
-               </td>
-             </tr>
-           </ng-template>
-         </p-table>
-       </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th style="width: 33%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    <div class="header">
+                      {{l.tr(col.header)}}
+                      <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+                      <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
+                      <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                          </p-multiSelect>
+                        </ng-template>
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-columns="columns" let-role>
+                <tr class="role-row" (click)="viewRole(role.name)">
+                  <td style="width: 33%" class="cursor-pointer" *ngFor="let col of columns">
+                    <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div></div>
+                    <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class="rights card2">
+            <p-table class="rights"
+                     #rghts
+                     id="rghts"
+                     dataKey="id"
+                     [value]="rights"
+                     [scrollable]="true"
+                     [columns]="colsRights"
+                     [virtualScroll]="false"
+                     [scrollHeight]="'35vh'"
+                     [virtualRowHeight]="1"
+                     styleClass="p-datatable-striped"
+                     scrollDirection="both"
+            >
+              <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                  <div class="mr-10">
+                    <div class="materials-button-home blue-button cxy" (click)="newRight(null)">
+                      <div class="pr-10 cxy">
+                        <img src="assets/icons/plus3.svg" height="18">
+                      </div>
+                      <div class="cxy">{{l.tr('Новое право')}}</div>
+                    </div>
+                  </div>
+                  <span class="p-input-icon-left p-ml-auto">
+                </span>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th style="width: 33%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    <div class="header">
+                      {{l.tr(col.header)}}
+                      <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+                      <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
+                      <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                          <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                          </p-multiSelect>
+                        </ng-template>
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-columns="columns" let-right>
+                <tr class="right-row" (click)="viewRight(right.name)">
+                  <td style="width: 33%" class="cursor-pointer" *ngFor="let col of columns">
+                    <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.right[col.field], col.field) | safeHtml"></div></div>
+                    <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
         <div class="projects card2">
           <p-table class="projects"
                    #prcts
@@ -179,6 +235,5 @@
       </div>
     </div>
   </div>
-</div>
 <p-toast position="bottom-center"></p-toast>
 

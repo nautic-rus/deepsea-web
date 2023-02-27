@@ -23,6 +23,10 @@ import {CreateRoleComponent} from "./role/create-role/create-role.component";
 import {RoleComponent} from "./role/role.component";
 import {CreateProjectComponent} from "./project/create-project/create-project.component";
 import {ProjectComponent} from "./project/project.component";
+import {Rights} from "../../domain/interfaces/rights";
+import {RightService} from "./right/right.service";
+import {CreateRightComponent} from "./right/create-right/create-right.component";
+import {RightComponent} from "./right/right.component";
 
 @Component({
   selector: 'app-admin',
@@ -32,17 +36,19 @@ import {ProjectComponent} from "./project/project.component";
 export class AdminComponent implements OnInit {
   users: Users[] = [];
   roles: Roles[] = [];
+  rights: Rights[] = [];
   projects: Projects[] = [];
   colsUsers: any[] = [];
   colsRoles: any[] = [];
   colsProjects: any[] = [];
+  colsRights: any[] = [];
   // @ts-ignore
   @ViewChild('search') search;
   // @ts-ignore
   @ViewChild('users') usr: Table;
   @ViewChild('roles') rls: Table;
   @ViewChild('projects') prcts: Table;
-  constructor(public roleService: RoleService, public projectService: ProjectService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
+  constructor(public roleService: RoleService, public projectService: ProjectService, public rightService: RightService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
 
   ngOnInit(): void {
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
@@ -52,6 +58,7 @@ export class AdminComponent implements OnInit {
     this.fillUsers();
     this.fillRoles();
     this.fillProjects();
+    this.fillRights();
   }
 
   fillUsers(): void {
@@ -71,6 +78,14 @@ export class AdminComponent implements OnInit {
       });
   }
 
+  fillRights(): void {
+    this.rightService.getRights()
+      .subscribe(rights => {
+        console.log(rights);
+        this.rights = rights;
+      })
+  }
+
   fillProjects(): void {
     this.projectService.getProjects()
       .subscribe(projects => {
@@ -84,12 +99,12 @@ export class AdminComponent implements OnInit {
     localStorage.setItem('id', JSON.stringify(event.columns));
   }
 
-  localeColumn(userElement: string, field: string): string {
+  localeColumn(element: string, field: string): string {
     if (field == 'avatar') {
-      return '<div class="df"><img src="' + userElement + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
+      return '<div class="df"><img src="' + element + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
     }
     else {
-      return userElement;
+      return element;
     }
   }
 
@@ -127,6 +142,34 @@ export class AdminComponent implements OnInit {
         this.messageService.add({severity: 'error', summary: 'Url Role', detail: 'Cannot find role defined in url.'});
       }
     });
+  }
+
+  newRight(right: object | null) {
+    this.dialogService.open(CreateRightComponent, {
+      showHeader: false,
+      modal: true,
+      data: [right, '']
+    }).onClose.subscribe(res => {
+      this.fillRights();
+    })
+  }
+
+  viewRight(name: string) {
+    this.rightService.getRightDetails(name).subscribe(res => {
+      console.log(res);
+      console.log(res.name);
+      if (res.name != null) {
+        this.dialogService.open(RightComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        }).onClose.subscribe(res => {
+          this.fillRights();
+        });
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Url Right', detail: 'Cannot find right defined in url.'});
+      }
+    })
   }
 
   newProject(project: object | null) {
@@ -194,6 +237,19 @@ export class AdminComponent implements OnInit {
   }
 
   setCols() {
+    this.colsRights = [
+      {
+        field: 'name',
+        header: 'Name',
+        headerLocale: 'Name',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
+    ]
     this.colsRoles = [
       {
         field: 'name',
@@ -218,9 +274,9 @@ export class AdminComponent implements OnInit {
         date: true
       },
       {
-        field: 'visible_pages',
-        header: 'Visible Pages',
-        headerLocale: 'Visible Pages',
+        field: 'rights',
+        header: 'Pattern rights',
+        headerLocale: 'Pattern rights',
         sort: true,
         filter: false,
         skip: false,
