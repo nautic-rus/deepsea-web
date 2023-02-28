@@ -291,37 +291,44 @@ export class HullEspComponent implements OnInit {
     }
   }
   fillParts(){
-    this.s.getHullPatList(this.project, this.docNumber).then(res => {
-      if (res != ''){
-        this.parts = res;
-        _.forEach(
-          _.groupBy(this.parts, x => x.ELEM_TYPE.replace('FS', 'PL') + '-' + x.THICKNESS + '-' + (x.ELEM_TYPE.replace('FS', 'PL') == 'PL' ? '' : x.WIDTH) + '-' + x.MATERIAL),
-          group => {
-            let sum = 0;
-            group.forEach(x => sum += x.WEIGHT_UNIT);
-            this.groupedParts.push(
-              {
-                material: group[0].MATERIAL,
-                sumWeight: this.round(sum),
-                thickness: group[0].THICKNESS,
-                width: group[0].WIDTH,
-                type: group[0].ELEM_TYPE.replace('FS', 'PL'),
-              }
-            )
-          }
-        );
-        this.groupedParts = _.sortBy(this.groupedParts, x => x.type + '-' + this.addLeftZeros(x.thickness.toString()));
+    this.issueManager.getIssueProjects().then(projects => {
+      let findProject = projects.find(x => x.name == this.project);
+      let project = this.project;
+      if (findProject != null){
+        project = findProject.foran;
+      }
+      this.s.getHullPatList(project, this.docNumber).then(res => {
+        if (res != ''){
+          this.parts = res;
+          _.forEach(
+            _.groupBy(this.parts, x => x.ELEM_TYPE.replace('FS', 'PL') + '-' + x.THICKNESS + '-' + (x.ELEM_TYPE.replace('FS', 'PL') == 'PL' ? '' : x.WIDTH) + '-' + x.MATERIAL),
+            group => {
+              let sum = 0;
+              group.forEach(x => sum += x.WEIGHT_UNIT);
+              this.groupedParts.push(
+                {
+                  material: group[0].MATERIAL,
+                  sumWeight: this.round(sum),
+                  thickness: group[0].THICKNESS,
+                  width: group[0].WIDTH,
+                  type: group[0].ELEM_TYPE.replace('FS', 'PL'),
+                }
+              )
+            }
+          );
+          this.groupedParts = _.sortBy(this.groupedParts, x => x.type + '-' + this.addLeftZeros(x.thickness.toString()));
 
-        //this.parts.forEach((x: any) => x.NEST_ID = x.NEST_ID.replace('MU', 'U'));
-        this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
-        this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
-        this.filters.SYMMETRY = this.getFilters(this.parts, 'SYMMETRY');
-      }
-      else{
-        this.noResult = true;
-      }
-      console.log(res);
-      this.fillSketches();
+          //this.parts.forEach((x: any) => x.NEST_ID = x.NEST_ID.replace('MU', 'U'));
+          this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
+          this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
+          this.filters.SYMMETRY = this.getFilters(this.parts, 'SYMMETRY');
+        }
+        else{
+          this.noResult = true;
+        }
+        console.log(res);
+        this.fillSketches();
+      });
     });
   }
   addLeftZeros(input: string, length = 10){
