@@ -29,8 +29,8 @@ export class CreateUserComponent implements OnInit {
   email: string = "";
   phone: string = "";
   tcid: number = 0;
-  avatar: string = "";
-  avatar_full: string = "";
+  avatar: string = "assets/employees/account-user.png";
+  avatar_full: string = "assets/employees/account-user_full.png";
   rocket_login: string = "";
   gender: string = "";
   visibility: string = "";
