@@ -44,5 +44,9 @@ export class RightComponent implements OnInit {
       }
     });
   }
+  close() {
+    this.ref.close();
+  }
+
 
 }

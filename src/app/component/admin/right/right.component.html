@@ -1,12 +1,19 @@
-<div>
-  <div class="right-header">
-    <div>
-      <div class="name">{{lang.tr('Роль')}}</div>
-      <input type="text" id="name" pInputText [(ngModel)]="right.name">
+<div class="center-right">
+  <div class="header-user-card">
+    <div class="header-user-text">{{lang.tr('Права')}}</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="form-edit">
-    <div (click)="saveRight()" pButton [label]="lang.tr('Сохранить')" class="button-create"></div>
-    <div (click)="deleteRight()" pButton [label]="lang.tr('Удалить')" class="button-cancel"></div>
+  <div>
+    <div class="big-text-user mb-1 mt-1">{{lang.tr('Право')}}</div>
+    <input class="w-100" type="text" id="name" pInputText [(ngModel)]="right.name">
   </div>
+</div>
+
+<div class="form-footer-user">
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="deleteRight()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+  </div>
+  <div tabindex="10" (click)="saveRight()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
 </div>

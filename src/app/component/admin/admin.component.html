@@ -62,7 +62,7 @@
       <div class="right" >
         <div class="df">
           <div class="roles card2">
-            <p-table class="roles"
+            <p-table class="roles word-break"
                      #rls
                      id="rls"
                      dataKey="id"
@@ -149,7 +149,7 @@
               </ng-template>
               <ng-template pTemplate="header" let-columns>
                 <tr>
-                  <th style="width: 33%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+                  <th style="width: 100%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
                     <div class="header">
                       {{l.tr(col.header)}}
                       <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -166,7 +166,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-columns="columns" let-right>
                 <tr class="right-row" (click)="viewRight(right.name)">
-                  <td style="width: 33%" class="cursor-pointer" *ngFor="let col of columns">
+                  <td style="width: 100%" class="cursor-pointer" *ngFor="let col of columns">
                     <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.right[col.field], col.field) | safeHtml"></div></div>
                     <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
                   </td>

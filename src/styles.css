@@ -1190,3 +1190,6 @@ cdk-virtual-scroll-viewport{
 .rotate-90{
   transform: rotate(90deg);
 }
+.word-break{
+  word-break: break-all;
+}

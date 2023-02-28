@@ -424,9 +424,9 @@ export class LanguageService {
           case 'Проекты пользователя': return 'User Projects';
           case 'Завод': return 'Factory';
           case 'Менеджеры': return 'Managers';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Создать роль': return 'Create a role';
+          case 'Новое право': return 'New right';
+          case 'Право': return 'Right';
           case '': return '';
           case '': return '';
           case '': return '';
