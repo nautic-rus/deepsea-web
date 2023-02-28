@@ -191,20 +191,25 @@ export class HullEspComponent implements OnInit {
       this.search = params.search != null ? params.search : '';
       this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
 
-      if (this.issue.id == 0){
-        this.fillRevisions();
-        setTimeout(() => {
-          this.parts.forEach((part: any) => {
-            if (part.NESTING == 'LOADING ...'){
-              part.NESTING = '';
-            }
-            if (part.SKETCH == 'LOADING ...'){
-              part.SKETCH = '';
-            }
-          });
-        }, 5000);
-      }
-
+      this.issueManager.getIssueProjects().then(projects => {
+        let findProject = projects.find(x => x.name == this.project);
+        if (findProject != null) {
+          this.project = findProject.foran;
+        }
+        if (this.issue.id == 0){
+          this.fillRevisions();
+          setTimeout(() => {
+            this.parts.forEach((part: any) => {
+              if (part.NESTING == 'LOADING ...'){
+                part.NESTING = '';
+              }
+              if (part.SKETCH == 'LOADING ...'){
+                part.SKETCH = '';
+              }
+            });
+          }, 5000);
+        }
+      });
     });
   }
   closeShowImage() {
