@@ -11,9 +11,11 @@
   <div class="cxy"></div>
   <div class="cxy"></div>
   <div class="cy ml-1">
-<!--    <div pTooltip="Daily Tasks" tooltipPosition="bottom" routerLink="diary">-->
-<!--      <img class="cursor-pointer" src="assets/icons/tasks-doc.svg" height="30">-->
-<!--    </div>-->
+    <div *ngIf="auth.hasPerms('admin')">
+      <a routerLink="/admin">
+        <img src="assets/icons/key.svg" height="32">
+      </a>
+    </div>
   </div>
   <div class="cxy">
     <div (click)="t.switchLang()">
@@ -30,10 +32,14 @@
   <div class="cxy">
     <div>
       <div *ngIf="isOnline()" class="image-online cursor-pointer" pTooltip="{{auth.getUser().login}} {{auth.getUser().groups}}" tooltipPosition="bottom">
-        <img class="image__src"  src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+        <a routerLink="/time-control">
+          <img class="image__src"  src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+        </a>
       </div>
       <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
-        <img class="image__src" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+        <a routerLink="/time-control">
+          <img class="image__src" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+        </a>
       </div>
     </div>
 <!--    <div>-->
@@ -67,6 +73,7 @@
 <!--      </ng-template>-->
 <!--    </p-overlayPanel>-->
   </div>
+
 
   <div class="exit cxy">
     <img (click)="auth.exit()" src="assets/icons/exit.png" class="cursor-pointer" [pTooltip]="t.tr('Выйти')" tooltipPosition="bottom">

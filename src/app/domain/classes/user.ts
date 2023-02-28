@@ -20,6 +20,7 @@ export class User {
   department: string = '';
   avatar_full: string = '';
   rocket_login: string = '';
+  cloud_password: string = '';
   visible_projects: string[] = [];
   visible_pages: string[] = [];
   shared_access: string = '';

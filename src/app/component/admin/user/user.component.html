@@ -1,0 +1,93 @@
+<div class="center-user">
+  <div class="header-user-card">
+    <div class="header-user-text">{{lang.tr('Карточка пользователя')}}</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Гендер')}}</div>
+      <p-dropdown styleClass="width-211" appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender" optionLabel="name" optionValue="name"></p-dropdown>
+    </div>
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Фамилия')}}</div>
+      <input class="width-211" type="text" id="surname" pInputText [(ngModel)]="user.surname">
+    </div>
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('Имя')}}</div>
+      <input class="width-211" type="text" id="name" pInputText [(ngModel)]="user.name">
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин')}}</div>
+      <input class="width-211" type="text" id="login" pInputText [(ngModel)]="user.login">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Пароль')}}</div>
+      <input class="width-211" type="text" id="password" pInputText [(ngModel)]="user.password">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин RocketChat')}}</div>
+      <input class="width-211" type="text" id="rocketLogin" pInputText [(ngModel)]="user.rocket_login">
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>
+      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="user.department">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Должность')}}</div>
+      <input class="width-211" type="text" id="profession" pInputText [(ngModel)]="user.profession">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Аватар')}}</div>
+      <input class="width-211" type="text" id="avatar" pInputText [(ngModel)]="user.avatar">
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Почта')}}</div>
+      <input class="width-211" type="text" id="email" pInputText [(ngModel)]="user.email">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Телефон')}}</div>
+      <input class="width-211" type="text" id="phone" pInputText [(ngModel)]="user.phone">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Time Control ID')}}</div>
+      <p-inputNumber inputStyleClass="width-211" inputId="tcid" [(ngModel)]="user.tcid"></p-inputNumber>
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
+      <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="user.visibility">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Общий доступ')}}</div>
+      <input class="width-211" type="text" id="sharedAccess" pInputText [(ngModel)]="user.shared_access">
+    </div>
+  </div>
+  <div>
+    <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
+    <p-multiSelect styleClass="w-100" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="user.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
+  </div>
+</div>
+
+<div class="form-footer-user">
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="sendLogPass()" pButton [label]="lang.tr('Отправить данные для входа')" class="button-cancel ml-1"></div>
+  </div>
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+  </div>
+  <div tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="saveUser()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+</div>
+

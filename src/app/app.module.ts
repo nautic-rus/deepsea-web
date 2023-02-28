@@ -154,6 +154,15 @@ import { AssignResponsibleComponent } from './component/qna/assign-responsible/a
 import { CombineIssuesComponent } from './component/task/combine-issues/combine-issues.component';
 import { CableExplorerComponent } from './component/tools/cable-explorer/cable-explorer.component';
 import { SpyWatchComponent } from './component/spy-watch/spy-watch.component';
+import { AdminComponent } from './component/admin/admin.component';
+import { CreateUserComponent } from './component/admin/user/create-user/create-user.component';
+import { UserComponent } from './component/admin/user/user.component';
+import { RoleComponent } from './component/admin/role/role.component';
+import { CreateRoleComponent } from './component/admin/role/create-role/create-role.component';
+import { ProjectComponent } from './component/admin/project/project.component';
+import { CreateProjectComponent } from './component/admin/project/create-project/create-project.component';
+import { RightComponent } from './component/admin/right/right.component';
+import { CreateRightComponent } from './component/admin/right/create-right/create-right.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -259,6 +268,15 @@ Quill.register('modules/imageResize', ImageResize);
     CombineIssuesComponent,
     CableExplorerComponent,
     SpyWatchComponent,
+    AdminComponent,
+    CreateUserComponent,
+    UserComponent,
+    RoleComponent,
+    CreateRoleComponent,
+    ProjectComponent,
+    CreateProjectComponent,
+    RightComponent,
+    CreateRightComponent,
   ],
   imports: [
     BrowserModule,

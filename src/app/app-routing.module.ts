@@ -43,6 +43,7 @@ import {ElectricEspComponent} from "./component/documents/electric-esp/electric-
 import {QuestionDetailsComponent} from "./component/qna/question-details/question-details.component";
 import {CableExplorerComponent} from "./component/tools/cable-explorer/cable-explorer.component";
 import {SpyWatchComponent} from "./component/spy-watch/spy-watch.component";
+import {AdminComponent} from "./component/admin/admin.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -87,6 +88,7 @@ const routes: Routes = [
   { path: 'qna-details', component: QuestionDetailsComponent, canActivate: [AuthGuard], data: {animation: 'QuestionDetailsComponent'} },
   { path: 'cable-explorer', component: CableExplorerComponent, canActivate: [AuthGuard], data: {animation: 'CableExplorerComponent'} },
   { path: 'spy-watch', component: SpyWatchComponent, canActivate: [AuthGuard], data: {animation: 'SpyWatchComponent'} },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: {animation: 'AdminComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 

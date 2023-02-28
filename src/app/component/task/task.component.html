@@ -27,7 +27,7 @@
       <div [class.button-disabled]="issue.closing_status.includes(issue.status)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
         <img src="assets/icons/subtask.svg" height="20">
       </div>
-      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить часы')" (click)="openLaboriousness()">
+      <div [class.button-disabled]="!(this.auth.getUser().login == issue.started_by || this.auth.getUser().login == issue.assigned_to || this.auth.getUser().login == issue.responsible)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить часы')" (click)="openLaboriousness()">
         <img src="assets/icons/laboriousness.svg" height="20">
       </div>
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку задачи')" (click)="copyIssueUrl()">
@@ -36,7 +36,7 @@
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать задачу')" (click)="copyIssue()">
         <img src="assets/icons/copy.svg" height="20">
       </div>
-      <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by)">
+      <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by) || issue.labor > 0">
         <img src="assets/icons/trash.svg" height="20">
       </div>
       <div class="task-button-close cxy" (click)="close()">

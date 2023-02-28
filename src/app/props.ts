@@ -2,7 +2,8 @@ export const origin = 'deep-sea.ru'
 export const baseUrl = `https://${origin}/`;
 
 export const http = `https://${origin}/rest`;
-export const http1 = 'http://192.168.1.122:1112';
+// export const http = `http://192.168.1.151:1112`;
+export const http1 = 'http://192.168.1.121:1112';
 
 export const rest = `https://${origin}/rest`;
 

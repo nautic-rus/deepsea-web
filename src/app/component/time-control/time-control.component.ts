@@ -19,7 +19,7 @@ export class TimeControlComponent implements OnInit {
   @ViewChild('chart') chart: any;
 
 
-  constructor(private auth: AuthManagerService, public issueManager: IssueManagerService) { }
+  constructor(public auth: AuthManagerService, public issueManager: IssueManagerService) { }
 
   ngOnInit(): void {
     this.basicData = {
@@ -64,7 +64,7 @@ export class TimeControlComponent implements OnInit {
 
     //this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
     //  console.log(res);
-    this.issueManager.getTimeControl(24).then(res => {
+    this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
       this.tc = res;
       let days: string[] = [];
       let sets: any[] = [];
@@ -139,6 +139,7 @@ export class TimeControlComponent implements OnInit {
       timeSpent += (x.endTime - x.startTime);
     });
     timeSpent -= norm * 60 * 60 * 1000;
+    console.log(timeSpent)
     return timeSpent;
   }
   getTotalWork(){
@@ -153,7 +154,7 @@ export class TimeControlComponent implements OnInit {
     let timeSpent = 0;
     this.getPrevDays().forEach(d => {
       if (![0, 6].includes(new Date(d).getDay())){
-        timeSpent += 8 * 60 * 60 * 1000;
+        timeSpent += 9 * 60 * 60 * 1000;
       }
     });
     return timeSpent;
@@ -181,6 +182,11 @@ export class TimeControlComponent implements OnInit {
     }
   }
   getTotalOverWork(){
+    let timeSpent = 0;
+    this.getPrevDays().forEach(d => {
+      timeSpent += this.getWorkedTime(d);
+    });
     return this.getTotalWork() - this.getTotalNorm();
   }
+
 }

@@ -2,10 +2,10 @@
   <div class="card">
 
     <div class="calendar-header">
-      <div class="df w-20 min-width-265">
-        <div class="mr-10" *ngFor="let dep of departments">
+      <div class="cy w-20 min-width-265">
+        <div class="mr-5" *ngFor="let dep of departments">
           <div class="dept gray-b cxy" [pTooltip]="getDep(dep)" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">
-            <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="22">
+            <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="20">
           </div>
         </div>
       </div>
