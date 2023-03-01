@@ -46,4 +46,8 @@ export class CreateProjectComponent implements OnInit {
     });
   }
 
+  isProjectDisabled() {
+    return this.name == '' || this.foran == '' || this.rkd == '' || this.pdsp == '' || this.factory == '' || this.managers == '';
+  }
+
 }
