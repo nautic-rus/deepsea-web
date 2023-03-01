@@ -12,15 +12,15 @@ import {AuthManagerService} from "../../../../domain/auth-manager.service";
   styleUrls: ['./create-project.component.css']
 })
 export class CreateProjectComponent implements OnInit {
+
   id: any;
-  name: any;
-  foran: any;
-  rkd: any;
-  pdsp: any;
-  factory: any;
+  name: string = '';
+  foran: string = '';
+  rkd: string = '';
+  pdsp: string = '';
+  factory: string = '';
   managers: any;
   status: any;
-
 
   constructor(public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public auth: AuthManagerService) { }
 
@@ -47,7 +47,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
   isProjectDisabled() {
-    return this.name == '' || this.foran == '' || this.rkd == '' || this.pdsp == '' || this.factory == '' || this.managers == '';
+    return this.name == '' || this.foran == '' || this.rkd == '' || this.pdsp == '' || this.factory == '';
   }
 
 }
