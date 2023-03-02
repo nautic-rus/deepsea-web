@@ -34,9 +34,13 @@
     </div>
   </div>
   <div class="df space-between">
+<!--    <div>-->
+<!--      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>-->
+<!--      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="this.department.name">-->
+<!--    </div>-->
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>
-      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="user.department">
+      <p-dropdown styleClass="width-211" appendTo="body" id="department" [options]="departments" [(ngModel)]="this.department" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Должность')}}</div>

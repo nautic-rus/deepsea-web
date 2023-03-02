@@ -7,6 +7,9 @@ import {ProjectService} from "../project/project.service";
 import {UserService} from "./user.service";
 import {Roles} from "../../../domain/interfaces/roles";
 import {RoleService} from "../role/role.service";
+import {Departments} from "../../../domain/interfaces/departments";
+import {DepartmentService} from "../department.service";
+import {any} from "underscore";
 
 @Component({
   selector: 'app-user',
@@ -20,10 +23,13 @@ export class UserComponent implements OnInit {
   genders: any[];
   projects: Projects[];
   roles: Roles[];
+  departments: Departments[] = [];
+  department: string = "";
   birthday: Date;
 
 
-  constructor(public conf: DynamicDialogConfig, public lang: LanguageService,  public ref: DynamicDialogRef, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
+
+  constructor(public conf: DynamicDialogConfig, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -32,10 +38,26 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.conf.data as Users;
-    this.id = this.user.id;
-    this.birthday = new Date(this.user.birthday);
     this.fillRoles();
     this.fillProjects();
+    this.fillDepartments();
+    this.localeRow()
+  }
+
+  localeRow(): void {
+    this.id = this.user.id;
+    this.birthday = new Date(this.user.birthday);
+    this.department = this.getDepartmentName(this.user.id_department)
+    console.log(this.department + " meow")
+  }
+
+  getDepartmentName(id: any): any {
+    let findDep = this.departments.find(x => {
+      console.log(x.id.toString + " 1")
+      console.log(id.toString + " 1")
+      x.id.toString() == id.toString()
+    });
+    return findDep != null ? findDep.name : '-';
   }
 
   close() {
@@ -55,6 +77,14 @@ export class UserComponent implements OnInit {
       .subscribe(roles => {
         console.log(roles);
         this.roles = roles;
+      });
+  }
+
+  fillDepartments(): void {
+    this.departmentService.getDepartments()
+      .subscribe(departments => {
+        console.log(departments);
+        this.departments = departments;
       });
   }
 
@@ -85,6 +115,7 @@ export class UserComponent implements OnInit {
   }
 
   saveUser() {
+    // this.user.department = this.getDepartmentId(this.user.department)
     this.userService.saveUser(this.user, this.id).subscribe({
       next: res => {
         console.log(res);

@@ -86,6 +86,7 @@ export class CreateUserComponent implements OnInit {
       surname: this.surname,
       profession: this.profession,
       department: this.department,
+      id_department: parseInt(this.department),
       birthday: formatDate(this.userBD, 'MM/dd/yyyy', 'en'),
       email: this.email,
       phone: this.phone,

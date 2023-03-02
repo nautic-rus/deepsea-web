@@ -6,6 +6,7 @@ export interface Users {
   surname: string;
   profession: string;
   department: string;
+  id_department: number
   birthday: string;
   email: string;
   phone: string;

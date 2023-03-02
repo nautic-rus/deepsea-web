@@ -27,6 +27,8 @@ import {Rights} from "../../domain/interfaces/rights";
 import {RightService} from "./right/right.service";
 import {CreateRightComponent} from "./right/create-right/create-right.component";
 import {RightComponent} from "./right/right.component";
+import {Departments} from "../../domain/interfaces/departments";
+import {DepartmentService} from "./department.service";
 
 @Component({
   selector: 'app-admin',
@@ -38,6 +40,7 @@ export class AdminComponent implements OnInit {
   roles: Roles[] = [];
   rights: Rights[] = [];
   projects: Projects[] = [];
+  departments: Departments[] = [];
   colsUsers: any[] = [];
   colsRoles: any[] = [];
   colsProjects: any[] = [];
@@ -48,7 +51,7 @@ export class AdminComponent implements OnInit {
   @ViewChild('users') usr: Table;
   @ViewChild('roles') rls: Table;
   @ViewChild('projects') prcts: Table;
-  constructor(public roleService: RoleService, public projectService: ProjectService, public rightService: RightService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
+  constructor(public roleService: RoleService, public departmentService: DepartmentService, public projectService: ProjectService, public rightService: RightService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
 
   ngOnInit(): void {
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
@@ -59,6 +62,7 @@ export class AdminComponent implements OnInit {
     this.fillRoles();
     this.fillProjects();
     this.fillRights();
+    this.fillDepartments();
   }
 
   fillUsers(): void {
@@ -94,18 +98,34 @@ export class AdminComponent implements OnInit {
       });
   }
 
+  fillDepartments(): void {
+    this.departmentService.getDepartments()
+      .subscribe(departments => {
+        console.log(departments);
+        this.departments = departments;
+      });
+  }
+
   saveReorderedColumnsUsers(event: any) {
     this.colsUsers = event.columns;
     localStorage.setItem('id', JSON.stringify(event.columns));
   }
 
-  localeColumn(element: string, field: string): string {
+  localeColumn(element: any, field: string): string {
     if (field == 'avatar') {
       return '<div class="df"><img src="' + element + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
+    }
+    if (field == 'id_department') {
+      return this.getDepartmentName(element)
     }
     else {
       return element;
     }
+  }
+
+  getDepartmentName(id: any): any {
+    let findDep = this.departments.find(x => x.id.toString() == id.toString());
+    return findDep != null ? findDep.name : '-';
   }
 
   isRoleNew(name: string) {
@@ -424,7 +444,7 @@ export class AdminComponent implements OnInit {
         date: false
       },
       {
-        field: 'department',
+        field: 'id_department',
         header: 'Department',
         headerLocale: 'Department',
         sort: true,
