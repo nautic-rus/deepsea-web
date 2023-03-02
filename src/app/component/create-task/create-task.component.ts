@@ -142,7 +142,7 @@ export class CreateTaskComponent implements OnInit {
     });
     //this.users = this.auth.users;
     this.users = this.getUsers();
-    this.itUsers = this.users.filter(x => x.department == '7');
+    this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueTypes().then(types => {
       types.forEach(type => {
         let allow = true;
