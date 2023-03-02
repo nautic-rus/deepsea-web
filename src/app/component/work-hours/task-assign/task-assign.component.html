@@ -1,0 +1,54 @@
+<div class="center-task-assign">
+  <div class="header-task-assign">
+    <div class="header-task-assign-text">{{t.tr('Назначить задачу')}}</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Проект')}}</div>
+      <p-dropdown appendTo = "body" placeholder="Progect" [(ngModel)]="project" [options]="projects" styleClass="width-211" (ngModelChange)="projectChanged()"></p-dropdown>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
+      <p-dropdown appendTo = "body" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-211"></p-dropdown>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Этап')}}</div>
+      <p-dropdown appendTo = "body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-211"></p-dropdown>
+    </div>
+  </div>
+  <div class="df space-between mb-10">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Тип')}}</div>
+      <p-dropdown appendTo = "body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-211"></p-dropdown>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Статус')}}</div>
+      <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-211"></p-dropdown>
+    </div>
+    <div>
+      <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+        </span>
+    </div>
+  </div>
+  <div class="task-cont">
+    <div *ngFor="let issue of issues" #table>
+      <div class="task-row cursor-pointer">{{issue.name}}</div>
+
+
+    </div>
+  </div>
+
+
+</div>
+
+<!--<div class="form-footer-user">-->
+<!--  <div class="mr-5 cx">-->
+<!--    <div tabindex="11" (click)="deleteRole()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>-->
+<!--  </div>-->
+<!--  <div tabindex="10" (click)="saveRole()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>-->
+<!--</div>-->

@@ -1,0 +1,44 @@
+<div class="all-page">
+  <div class="card">
+    <div class="calendar-header">
+      <div class="cy w-20">
+        <p-multiSelect [options]="departments" [(ngModel)]="selectedDepartments" optionLabel="department"></p-multiSelect>
+      </div>
+
+    </div>
+    <div class="users-days">
+      <div class="df sticky">
+        <div class="w-20 min-width-265 users pl-10 header-users">
+          <span>{{t.tr('Сотрудники')}}</span>
+        </div>
+        <div class="w-80">
+          <div class="calendar w-100">
+            <div class="month-date">
+              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="df hover-user" *ngFor="let user of getUsers()">
+        <div class="w-20 min-width-265 users pl-10 cursor-pointer">
+          <span>{{user.userName}}</span>
+        </div>
+        <div class="w-80">
+          <div class="calendar w-100">
+            <div class="month-date" #addTask>
+              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
+
+              </div>
+            </div>
+          </div>
+          <p-contextMenu (onHide)="hoverEnabled = true" [target]="addTask" appendTo="body" [model]="items"></p-contextMenu>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+

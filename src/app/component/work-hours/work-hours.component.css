@@ -1,0 +1,74 @@
+/deep/.p-component{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+}
+.calendar-header{
+  height: 65px;
+  color: #323130;
+  border: 1px solid #f3f2f1;
+  border-width: 1px 0 1px 0;
+  padding: 0.75rem 0 0.75rem;
+  font-weight: 600;
+  display: flex;
+}
+.day-number-header{
+  border-right: 1px solid #f3f2f1;
+  color: #333;
+  background-color: white;
+}
+.off-day{
+  background-color: #f7f7f8;
+}
+.today-day{
+  background-color: #f5f7ff;
+  border-top: 3px solid #0553CC;
+}
+.users-days{
+  height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+.users{
+  font-size: 14px;
+  color: #323130;
+  border-bottom: 1px solid #f3f2f1;
+  border-right: 1px solid #f3f2f1;
+  display: flex;
+  align-items: center;
+}
+.header-users{
+  background-color: white;
+  font-weight: 600;
+}
+.hours-font{
+  font-size: 17px;
+  font-weight: 500;
+}
+.month-date{
+  display: grid;
+  grid-template-columns: repeat(31, 1fr);
+  height: 45px;
+  border-bottom: 1px solid #f3f2f1;
+}
+.hover-user:hover{
+  background-color: hsla(220, 11%, 97%, 1);
+}
+.day-number{
+  border-right: 1px solid #f3f2f1;
+  color: #333;
+  position: relative;
+}
+/*.day-number:hover{*/
+/*  border: 2px solid #FFB240;*/
+/*}*/
+.day-border{
+  border: 2px solid #FFB240;
+}

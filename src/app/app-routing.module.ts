@@ -44,6 +44,7 @@ import {QuestionDetailsComponent} from "./component/qna/question-details/questio
 import {CableExplorerComponent} from "./component/tools/cable-explorer/cable-explorer.component";
 import {SpyWatchComponent} from "./component/spy-watch/spy-watch.component";
 import {AdminComponent} from "./component/admin/admin.component";
+import {WorkHoursComponent} from "./component/work-hours/work-hours.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -89,6 +90,7 @@ const routes: Routes = [
   { path: 'cable-explorer', component: CableExplorerComponent, canActivate: [AuthGuard], data: {animation: 'CableExplorerComponent'} },
   { path: 'spy-watch', component: SpyWatchComponent, canActivate: [AuthGuard], data: {animation: 'SpyWatchComponent'} },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: {animation: 'AdminComponent'} },
+  { path: 'work-hours', component: WorkHoursComponent, canActivate: [AuthGuard], data: {animation: 'WorkHoursComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 
