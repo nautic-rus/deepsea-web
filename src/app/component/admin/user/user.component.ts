@@ -28,7 +28,6 @@ export class UserComponent implements OnInit {
   birthday: Date;
 
 
-
   constructor(public conf: DynamicDialogConfig, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
