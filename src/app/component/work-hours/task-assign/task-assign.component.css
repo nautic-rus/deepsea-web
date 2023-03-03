@@ -89,9 +89,11 @@
   background-color: #ECEDF0;
 }
 .task-cont{
-  height: 400px;
+  height: 390px;
   overflow: auto;
   word-break: break-word;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
 }
 .task-row{
   padding: 8px 5px;

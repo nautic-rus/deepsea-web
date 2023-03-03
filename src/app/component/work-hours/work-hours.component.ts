@@ -8,6 +8,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {TaskAssignComponent} from "./task-assign/task-assign.component";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {MenuItem} from "primeng/api";
+import {ContextMenu} from "primeng/contextmenu";
 
 @Component({
   selector: 'app-work-hours',
@@ -99,7 +100,14 @@ export class WorkHoursComponent implements OnInit {
   getUsers(){
     return this.users;
   }
-  selectDay(day: any) {
+  selectDay(day: any, user: any) {
+    if (!this.hoverEnabled){
+      this.hoverEnabled = true;
+      this.setHover(day, user);
+      setTimeout(() => {
+        this.hoverEnabled = false;
+      }, 100);
+    }
     this.hoverEnabled = false;
     this.selectedDay = day;
   }

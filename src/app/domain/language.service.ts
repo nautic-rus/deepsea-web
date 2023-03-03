@@ -427,8 +427,8 @@ export class LanguageService {
           case 'Создать роль': return 'Create a role';
           case 'Новое право': return 'New right';
           case 'Право': return 'Right';
-          case '': return '';
-          case '': return '';
+          case 'Тип': return 'Type';
+          case 'Выберите задачу из списка': return 'Select a task from the list';
           case '': return '';
           case '': return '';
           case '': return '';
