@@ -1,6 +1,6 @@
 <div class="center-role">
   <div class="header-user-card">
-    <div class="header-user-text">{{lang.tr('Доступные страницы')}}</div>
+    <div class="header-user-text">{{lang.tr('Роли')}}</div>
     <div class="task-button-user cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
@@ -18,8 +18,8 @@
 
 
   <div>
-    <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные страницы')}}</div>
-    <p-multiSelect styleClass="w-100" appendTo="body" id="visible_pages" [options]="rights" [(ngModel)]="role.rights" optionLabel="name" optionValue="name"></p-multiSelect>
+    <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
+    <p-multiSelect styleClass="w-100" appendTo="body" id="rights" [options]="rights" [(ngModel)]="role.rights" optionLabel="name" optionValue="name"></p-multiSelect>
   </div>
 </div>
 

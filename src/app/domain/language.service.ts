@@ -427,6 +427,8 @@ export class LanguageService {
           case 'Создать роль': return 'Create a role';
           case 'Новое право': return 'New right';
           case 'Право': return 'Right';
+          case 'Гендер': return 'Gender';
+          case 'Логин RocketChat': return 'Login RocketChat';
           case '': return '';
           case '': return '';
           case '': return '';
