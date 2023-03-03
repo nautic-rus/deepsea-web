@@ -154,7 +154,7 @@ export class AdminComponent implements OnInit {
         this.dialogService.open(RoleComponent, {
           showHeader: false,
           modal: true,
-          data: res
+          data: [res, this.departments]
         }).onClose.subscribe(res => {
           this.fillRoles();
         });
@@ -246,7 +246,7 @@ export class AdminComponent implements OnInit {
         this.dialogService.open(UserComponent, {
           showHeader: false,
           modal: true,
-          data: res
+          data: [res, this.departments]
         }).onClose.subscribe(res => {
           this.fillUsers();
         });
