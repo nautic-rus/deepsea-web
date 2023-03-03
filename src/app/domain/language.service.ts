@@ -429,6 +429,10 @@ export class LanguageService {
           case 'Право': return 'Right';
           case 'Тип': return 'Type';
           case 'Выберите задачу из списка': return 'Select a task from the list';
+          case 'Гендер': return 'Gender';
+          case 'Логин RocketChat': return 'Login RocketChat';
+          case '': return '';
+          case '': return '';
           case '': return '';
           case '': return '';
           case '': return '';
