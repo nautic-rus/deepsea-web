@@ -30,6 +30,8 @@ export class TaskAssignComponent implements OnInit {
   laborUpdates: any = Object();
   issueSpentTime: DailyTask[] = [];
   searchValue = '';
+  selectedIssue = Object();
+
 
   constructor(public t: LanguageService, public ref: DynamicDialogRef, public issueManagerService: IssueManagerService) { }
 
@@ -107,4 +109,7 @@ export class TaskAssignComponent implements OnInit {
     }
   }
 
+  selectIssue(issue: any) {
+    this.selectedIssue = issue;
+  }
 }
