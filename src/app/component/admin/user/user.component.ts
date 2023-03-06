@@ -55,7 +55,7 @@ export class UserComponent implements OnInit {
     let findDep = this.departments.find(x => {
       console.log(x.id.toString + " 1")
       console.log(id.toString + " 1")
-      x.id.toString() == id.toString()
+      return x.id.toString() == id.toString()
     });
     return findDep != null ? findDep.name : '-';
   }

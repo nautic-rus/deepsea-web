@@ -9,6 +9,24 @@ import {TaskAssignComponent} from "./task-assign/task-assign.component";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {MenuItem} from "primeng/api";
 
+export interface PlanHour{
+  day: number;
+  month: number;
+  year: number;
+  hour_type: number;
+  day_type: number;
+  day_of_week: number;
+  user: number;
+  id: number;
+  task_id: number;
+}
+export interface PlanDay{
+  day: number;
+  month: number;
+  year: number;
+  day_type: number;
+  planHours: PlanHour[];
+}
 @Component({
   selector: 'app-work-hours',
   templateUrl: './work-hours.component.html',
@@ -50,7 +68,9 @@ export class WorkHoursComponent implements OnInit {
   dayHover: any = null;
   userHover: any = null;
   hoverEnabled = true;
-
+  pHours: PlanHour[] = [];
+  userPDays: any = Object();
+  headerPDays: PlanDay[] = [];
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService) { }
 
   ngOnInit(): void {
@@ -76,6 +96,10 @@ export class WorkHoursComponent implements OnInit {
     this.issueManagerService.getIssueDepartments().then(departments => {
       this.departments = departments;
     });
+    this.auth.getUsersPlanHours().subscribe(planHours => {
+      this.pHours = planHours;
+      this.fillDays();
+    });
   }
   getDaysInMonth() {
     let daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -91,6 +115,9 @@ export class WorkHoursComponent implements OnInit {
   }
   isCurrentDay(day: any) {
     return day == this.todayStatic.getDate() && this.currentMonth == this.todayStatic.getMonth();
+  }
+  isCurrentPDay(pDay: PlanDay) {
+    return pDay.day == this.todayStatic.getDate() && pDay.month == this.todayStatic.getMonth() && pDay.year == this.todayStatic.getFullYear();
   }
   isShorter(day: number){
     let special = this.specialDays.find(x => x.day == day && (x.month - 1) == this.currentMonth && x.year == this.currentYear);
@@ -127,5 +154,28 @@ export class WorkHoursComponent implements OnInit {
     }
     this.userHover = null;
     this.dayHover = null;
+  }
+
+  fillDays() {
+    let userPDays: any = Object();
+    this.users.forEach(user => {
+      let planDays: PlanDay[] = [];
+      let userPlanHours = this.pHours.filter(x => x.user == user.id);
+      _.forEach(_.groupBy(userPlanHours, x => x.day + '-' + x.month + '-' + x.year), group => {
+        planDays.push({day: group[0].day, month: group[0].month, year: group[0].year, day_type: group[0].day_type, planHours: group});
+      });
+      userPDays[user.id] = _.sortBy(planDays, x => this.addLeftZeros(x.year) + '-' + this.addLeftZeros(x.month) + '-' + this.addLeftZeros(x.day));
+      if (planDays.length > this.headerPDays.length){
+        this.headerPDays = planDays;
+      }
+    });
+    this.userPDays = userPDays;
+  }
+  addLeftZeros(input: any, length: number = 4){
+    let res = input.toString();
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
   }
 }

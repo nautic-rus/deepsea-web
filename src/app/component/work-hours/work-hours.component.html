@@ -14,7 +14,8 @@
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date">
-              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>
+<!--              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>-->
+              <div *ngFor="let pDay of headerPDays" [class.off-day]="pDay.day_type == 3" [class.today-day]="isCurrentPDay(pDay)" class="day-number-header cxy">{{pDay.day + '-' + pDay.month}}<span *ngIf="pDay.day_type == 2">*</span></div>
             </div>
           </div>
         </div>
@@ -26,9 +27,8 @@
         <div class="w-80">
           <div class="calendar w-100">
             <div class="month-date" #addTask>
-              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
-
-              </div>
+<!--              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>-->
+              <div *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" class="day-number-header cxy"><span *ngIf="pDay.day_type == 2">*</span></div>
             </div>
           </div>
           <p-contextMenu (onHide)="hoverEnabled = true" [target]="addTask" appendTo="body" [model]="items"></p-contextMenu>

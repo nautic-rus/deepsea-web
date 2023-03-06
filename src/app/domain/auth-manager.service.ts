@@ -13,6 +13,7 @@ import { transliterate as tr, slugify } from 'transliteration';
 import {DayCalendar} from "./classes/day-calendar";
 import {TimeControlInterval} from "./classes/time-control-interval";
 import EventEmitter from "events";
+import {PlanHour} from "../component/work-hours/work-hours.component";
 
 @Injectable({
   providedIn: 'root'
@@ -220,5 +221,8 @@ export class AuthManagerService {
   }
   async updateRocketLogin(user: string, rocketLogin: string): Promise<any>{
     return await this.http.get(props.http + '/updateRocketLogin', {params: {user, rocketLogin}}).toPromise();
+  }
+  getUsersPlanHours(userId: number = 0, startDate = 0, available: number = 0){
+    return this.http.get<PlanHour[]>(props.http + '/userPlanHours', {params: {userId, startDate, available}});
   }
 }
