@@ -32,13 +32,13 @@
       <div class="big-text-user mb-1 mt-35"></div>
       <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+          <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
         </span>
     </div>
   </div>
   <div class="big-text-user mb-1 mt-1">{{t.tr('Выберите задачу из списка')}}</div>
   <div class="task-cont">
-    <div *ngFor="let issue of issues" #table>
+    <div *ngFor="let issue of issues">
       <div class="task-row cursor-pointer">{{issue.name}}</div>
 
 
