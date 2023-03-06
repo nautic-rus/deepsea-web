@@ -19,7 +19,7 @@ export class CreateUserComponent implements OnInit {
 
   id: number = 0;
   login: string = "";
-  password: string = "";
+  password: string = this.generatePassword();
   name: string = "";
   surname: string = "";
   profession: string = "";
@@ -55,6 +55,10 @@ export class CreateUserComponent implements OnInit {
       {name: 'male'},
       {name: 'female'}
     ]
+  }
+
+  generatePassword() {
+    return Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
   }
 
   fillProjects(): void {

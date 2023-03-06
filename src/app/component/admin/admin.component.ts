@@ -246,7 +246,7 @@ export class AdminComponent implements OnInit {
         this.dialogService.open(UserComponent, {
           showHeader: false,
           modal: true,
-          data: res
+          data: [res, this.departments]
         }).onClose.subscribe(res => {
           this.fillUsers();
         });
@@ -295,8 +295,8 @@ export class AdminComponent implements OnInit {
       },
       {
         field: 'rights',
-        header: 'Pattern rights',
-        headerLocale: 'Pattern rights',
+        header: 'Rights',
+        headerLocale: 'Rights',
         sort: true,
         filter: false,
         skip: false,

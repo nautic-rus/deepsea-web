@@ -28,36 +28,40 @@ export class UserComponent implements OnInit {
   birthday: Date;
 
 
-
   constructor(public conf: DynamicDialogConfig, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
-    ]
+    ];
+    this.departments = conf.data[1];
   }
 
   ngOnInit(): void {
-    this.user = this.conf.data as Users;
+    this.user = this.conf.data[0] as Users;
     this.fillRoles();
     this.fillProjects();
-    this.fillDepartments();
-    this.localeRow()
+    // this.fillDepartments();
+    this.localeRow();
   }
 
   localeRow(): void {
     this.id = this.user.id;
     this.birthday = new Date(this.user.birthday);
-    this.department = this.getDepartmentName(this.user.id_department)
-    console.log(this.department + " meow")
+    this.department = this.getDepartmentName(this.user.id_department);
   }
 
   getDepartmentName(id: any): any {
     let findDep = this.departments.find(x => {
-      console.log(x.id.toString + " 1")
-      console.log(id.toString + " 1")
-      return x.id.toString() == id.toString()
+      return x.id.toString() == id.toString();
     });
     return findDep != null ? findDep.name : '-';
+  }
+
+  getDepartmentId(name: any): any {
+    let findDep = this.departments.find(x => {
+      return x.name.toString() == name.toString();
+    });
+    return findDep !=null ? findDep.id : 0;
   }
 
   close() {
@@ -115,7 +119,8 @@ export class UserComponent implements OnInit {
   }
 
   saveUser() {
-    // this.user.department = this.getDepartmentId(this.user.department)
+    this.user.department = this.department;
+    this.user.id_department = this.getDepartmentId(this.department)
     this.userService.saveUser(this.user, this.id).subscribe({
       next: res => {
         console.log(res);

@@ -154,7 +154,7 @@ export class TimeControlComponent implements OnInit {
     let timeSpent = 0;
     this.getPrevDays().forEach(d => {
       if (![0, 6].includes(new Date(d).getDay())){
-        timeSpent += 9 * 60 * 60 * 1000;
+        timeSpent += 8 * 60 * 60 * 1000;
       }
     });
     return timeSpent;

@@ -16,7 +16,6 @@ export class CreateRoleComponent implements OnInit {
   selectedPages: string[] = [];
   name: string = "";
   description: string = "";
-  visible_pages: string[] = ["-"];
 
   constructor( public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public pageService: PageService) { }
 
@@ -37,7 +36,7 @@ export class CreateRoleComponent implements OnInit {
   }
 
   createRole() {
-    let role: Roles = { name: this.name, description: this.description, rights: this.selectedPages };
+    let role: Roles = { name: this.name, description: this.description, rights: this.selectedPages};
     this.roleService.startRole(role).subscribe({
       next: res => {
         console.log(res);
