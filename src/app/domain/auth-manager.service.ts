@@ -225,4 +225,7 @@ export class AuthManagerService {
   getUsersPlanHours(userId: number = 0, startDate = 0, available: number = 0){
     return this.http.get<PlanHour[]>(props.http + '/userPlanHours', {params: {userId, startDate, available}});
   }
+  planUserTask(userId: number, taskId: number, fromHour: number, amountOfHours: number, allowMove: number){
+    return this.http.get<string>(props.http + '/planUserTask', {params: {userId, taskId, fromHour, amountOfHours, allowMove}});
+  }
 }
