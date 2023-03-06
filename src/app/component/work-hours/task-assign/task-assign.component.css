@@ -90,7 +90,6 @@
 }
 .task-cont{
   height: 390px;
-  overflow: auto;
   word-break: break-word;
   border-radius: 6px;
   border: 1px solid #ced4da;
@@ -99,5 +98,8 @@
   padding: 8px 5px;
 }
 .task-row:hover{
+  background-color: #EEF5FA !important;
+}
+.select-row{
   background-color: #EEF5FA !important;
 }

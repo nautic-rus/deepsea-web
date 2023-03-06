@@ -8,7 +8,7 @@
   <div class="df space-between">
     <div>
       <div class="big-text-user mb-1 mt-1">{{t.tr('Проект')}}</div>
-      <p-dropdown appendTo = "body" placeholder="Progect" [(ngModel)]="project" [options]="projects" styleClass="width-211" (ngModelChange)="projectChanged()"></p-dropdown>
+      <p-dropdown appendTo = "body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-211" (ngModelChange)="projectChanged()"></p-dropdown>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
@@ -32,18 +32,29 @@
       <div class="big-text-user mb-1 mt-35"></div>
       <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+          <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
         </span>
     </div>
   </div>
   <div class="big-text-user mb-1 mt-1">{{t.tr('Выберите задачу из списка')}}</div>
+
   <div class="task-cont">
-    <div *ngFor="let issue of issues" #table>
-      <div class="task-row cursor-pointer">{{issue.name}}</div>
-
-
-    </div>
+    <p-virtualScroller [value]="issues" scrollHeight="380px" [itemSize]="34">
+      <ng-template pTemplate="item" let-issue>
+        <div class="task-row cursor-pointer" [class.select-row]="selectedIssue == issue" (click)="selectIssue(issue)">{{issue.name}}</div>
+      </ng-template>
+    </p-virtualScroller>
   </div>
+
+
+
+<!--  <div class="task-cont">-->
+<!--    <div *ngFor="let issue of issues">-->
+<!--      <div class="task-row cursor-pointer">{{issue.name}}</div>-->
+
+
+<!--    </div>-->
+<!--  </div>-->
 
 
 </div>
