@@ -68,11 +68,11 @@
               <div class="df space-between">
                 <div class="">
                   <div class="big-text-create mb-1 mt-1">Hours</div>
-                  <p-inputNumber class="mr-15" (ngModelChange)="check()" [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [max]="dayHoursToWork" mode="decimal" [(ngModel)]="task.hours"></p-inputNumber>
+                  <p-inputNumber class="mr-15" inputStyleClass="width-70" (ngModelChange)="check()" [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [max]="dayHoursToWork" mode="decimal" [(ngModel)]="task.hours"></p-inputNumber>
                 </div>
                 <div class="">
                   <div class="big-text-create mb-1 mt-1">Minutes</div>
-                  <p-inputNumber class="mr-15" (ngModelChange)="check()" [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [min]="0" [max]="59" mode="decimal" [(ngModel)]="task.minutes"></p-inputNumber>
+                  <p-inputNumber class="mr-15" inputStyleClass="width-70" (ngModelChange)="check()" [disabled]="task.hidden" [class.ng-dirty]="isInvalid(task.id + '-t')" [class.ng-touched]="isInvalid(task.id + '-t')" [class.ng-invalid]="isInvalid(task.id + '-t')" [min]="0" [max]="59" mode="decimal" [(ngModel)]="task.minutes"></p-inputNumber>
                 </div>
               </div>
 
