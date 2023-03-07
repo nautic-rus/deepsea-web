@@ -34,6 +34,7 @@ export class QnaComponent implements OnInit {
   constructor(private route: ActivatedRoute, public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
   ngOnInit(): void {
+
     this.users = this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
     this.fillQNA();
     this.route.queryParams.subscribe(params => {

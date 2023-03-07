@@ -11,6 +11,7 @@ import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {LV} from "../../../domain/classes/lv";
 import {PrimeNGConfig} from "primeng/api";
 import _ from "underscore";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-create-question',
@@ -151,7 +152,6 @@ export class CreateQuestionComponent implements OnInit {
       this.taskDepartments = departments.map(x => x);
       this.taskDepartment = '-';
     });
-
   }
   getProjectName(project: any){
     if (project.name == '-'){
@@ -235,7 +235,6 @@ export class CreateQuestionComponent implements OnInit {
       });
     });
   }
-
   isLoaded(file: string) {
     return this.loaded.find(x => x.name == file);
   }

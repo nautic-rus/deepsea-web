@@ -891,7 +891,12 @@ export class TaskComponent implements OnInit {
   }
 
   copyIssueUrl() {
-    navigator.clipboard.writeText(location.origin + '?taskId=' + this.issue.id);
+    if (this.issue.issue_type == 'QNA'){
+      navigator.clipboard.writeText(location.origin + '/qna?taskId=' + this.issue.id);
+    }
+    else{
+      navigator.clipboard.writeText(location.origin + '?taskId=' + this.issue.id);
+    }
     this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
   }
 

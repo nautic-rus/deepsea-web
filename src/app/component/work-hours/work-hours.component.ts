@@ -137,13 +137,14 @@ export class WorkHoursComponent implements OnInit {
     }
     this.hoverEnabled = false;
     this.selectedDay = day;
+    this.userHover = user;
   }
 
   openTaskAssign() {
     this.dialogService.open(TaskAssignComponent, {
       showHeader: false,
       modal: true,
-      data: any
+      data: [this.selectedDay, this.userHover]
     });
   }
 

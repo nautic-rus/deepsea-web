@@ -1,11 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {LanguageService} from "../../../domain/language.service";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import _ from "underscore";
 import {Issue} from "../../../domain/classes/issue";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DailyTask} from "../../../domain/interfaces/daily-task";
 import {Table} from "primeng/table";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {User} from "../../../domain/classes/user";
+import {PlanDay} from "../work-hours.component";
 
 @Component({
   selector: 'app-task-assign',
@@ -31,9 +34,11 @@ export class TaskAssignComponent implements OnInit {
   issueSpentTime: DailyTask[] = [];
   searchValue = '';
   selectedIssue = Object();
+  user: User;
+  pDay: PlanDay;
 
 
-  constructor(public t: LanguageService, public ref: DynamicDialogRef, public issueManagerService: IssueManagerService) { }
+  constructor(public t: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManagerService: IssueManagerService, public auth: AuthManagerService) { }
 
   @ViewChild('table') table: Table;
 
@@ -53,6 +58,10 @@ export class TaskAssignComponent implements OnInit {
         });
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
+
+        this.pDay = this.conf.data[0];
+        this.user = this.conf.data[1];
+
         console.log(this.issues);
       });
     });
@@ -111,5 +120,8 @@ export class TaskAssignComponent implements OnInit {
 
   selectIssue(issue: any) {
     this.selectedIssue = issue;
+  }
+  assignTaskToUser(){
+    //this.auth.planUserTask()
   }
 }
