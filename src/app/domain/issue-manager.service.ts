@@ -495,7 +495,7 @@ export class IssueManagerService {
   getAssignedTo(user: string) {
     let res = this.auth.getUserName(user);
     if (res == ''){
-      res = 'Не назначен';
+      res = this.lang.language == 'ru' ? 'Не назначен' : 'Not assigned';
     }
     return res;
   }
