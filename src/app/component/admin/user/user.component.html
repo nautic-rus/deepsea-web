@@ -68,7 +68,7 @@
   <div class="df space-between">
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>
-      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
@@ -86,7 +86,7 @@
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
-      <p-multiSelect styleClass="width-310" appendTo="body" id="rights" [options]="roles" [(ngModel)]="user.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
+      <p-multiSelect styleClass="width-310" appendTo="body" id="rights" [options]="rights" [(ngModel)]="user.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
   </div>
 </div>
