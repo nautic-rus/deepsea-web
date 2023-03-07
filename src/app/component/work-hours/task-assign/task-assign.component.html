@@ -59,9 +59,10 @@
 
 </div>
 
-<!--<div class="form-footer-user">-->
-<!--  <div class="mr-5 cx">-->
-<!--    <div tabindex="11" (click)="deleteRole()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>-->
-<!--  </div>-->
-<!--  <div tabindex="10" (click)="saveRole()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>-->
-<!--</div>-->
+<div class="form-footer-user">
+  <p-checkbox [(ngModel)]="allowMove" label="ALLOW MOVE"></p-checkbox>
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="cancel()" pButton [label]="'Cancel'" class="button-cancel ml-1"></div>
+  </div>
+  <div tabindex="10" (click)="save()" pButton [label]="'Save'" class="button-ok"></div>
+</div>

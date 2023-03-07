@@ -65,7 +65,7 @@ export class WorkHoursComponent implements OnInit {
   users: User[] = [];
   selectedDepartments: string[] = [];
   items: MenuItem[] = [];
-  selectedDay: any = null;
+  selectedDay: PlanDay;
   dayHover: any = null;
   userHover: any = null;
   hoverEnabled = true;
@@ -144,7 +144,7 @@ export class WorkHoursComponent implements OnInit {
     this.dialogService.open(TaskAssignComponent, {
       showHeader: false,
       modal: true,
-      data: [this.selectedDay, this.userHover]
+      data: [this.selectedDay, this.userHover, this.userPDays[this.userHover.id]]
     });
   }
 
@@ -186,5 +186,26 @@ export class WorkHoursComponent implements OnInit {
       res = '0' + res;
     }
     return res;
+  }
+
+  getDayStyle(day: PlanDay) {
+    let busyHours = day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0);
+    let oneHourLength = 45 / 8;
+    if (busyHours.length == 0){
+      return {};
+    }
+    else{
+      return {
+        position: 'absolute',
+        left: '0',
+        height: '45px',
+        width: (busyHours.length * oneHourLength) + 'px',
+        'background-color': 'red'
+      };
+    }
+  }
+  showBusyHoursCount(day: PlanDay){
+    let busyHours = day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0);
+    console.log(busyHours);
   }
 }

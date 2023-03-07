@@ -28,7 +28,9 @@
           <div class="calendar w-100">
             <div class="month-date" #addTask>
               <!--              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>-->
-              <div *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" class="day-number cxy" (mouseenter)="setHover(pDay, user)" (mouseleave)="resetHover()" (contextmenu)="selectDay(pDay, user)" [class.day-border]="dayHover == pDay && userHover == user"><span *ngIf="pDay.day_type == 2">*</span>
+              <div (click)="showBusyHoursCount(pDay)" #day *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" class="day-number cxy" (mouseenter)="setHover(pDay, user)" (mouseleave)="resetHover()" (contextmenu)="selectDay(pDay, user)" [class.day-border]="dayHover == pDay && userHover == user">
+                <span *ngIf="pDay.day_type == 2">*</span>
+                <div [ngStyle]="getDayStyle(pDay)"></div>
               </div>
             </div>
           </div>
