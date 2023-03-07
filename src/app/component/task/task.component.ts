@@ -686,7 +686,7 @@ export class TaskComponent implements OnInit {
   getAssignedTo(user: string) {
     let res = this.auth.getUserName(user);
     if (res == ''){
-      res = 'Не назначен';
+      res = this.t.language == 'ru' ? 'Не назначен' : 'Not assigned';
     }
     return res;
   }

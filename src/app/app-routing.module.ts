@@ -45,6 +45,7 @@ import {CableExplorerComponent} from "./component/tools/cable-explorer/cable-exp
 import {SpyWatchComponent} from "./component/spy-watch/spy-watch.component";
 import {AdminComponent} from "./component/admin/admin.component";
 import {WorkHoursComponent} from "./component/work-hours/work-hours.component";
+import {ElecComponent} from "./component/elec/elec.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -91,6 +92,7 @@ const routes: Routes = [
   { path: 'spy-watch', component: SpyWatchComponent, canActivate: [AuthGuard], data: {animation: 'SpyWatchComponent'} },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: {animation: 'AdminComponent'} },
   { path: 'work-hours', component: WorkHoursComponent, canActivate: [AuthGuard], data: {animation: 'WorkHoursComponent'} },
+  { path: 'elec', component: ElecComponent, canActivate: [AuthGuard], data: {animation: 'ElecComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 

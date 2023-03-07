@@ -10,6 +10,8 @@ import {RoleService} from "../role/role.service";
 import {Departments} from "../../../domain/interfaces/departments";
 import {DepartmentService} from "../department.service";
 import {any} from "underscore";
+import {Rights} from "../../../domain/interfaces/rights";
+import {RightService} from "../right/right.service";
 
 @Component({
   selector: 'app-user',
@@ -24,11 +26,12 @@ export class UserComponent implements OnInit {
   projects: Projects[];
   roles: Roles[];
   departments: Departments[] = [];
+  rights: Rights[] = [];
   department: string = "";
   birthday: Date;
 
 
-  constructor(public conf: DynamicDialogConfig, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
+  constructor(public conf: DynamicDialogConfig, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -40,6 +43,7 @@ export class UserComponent implements OnInit {
     this.user = this.conf.data[0] as Users;
     this.fillRoles();
     this.fillProjects();
+    this.fillRights();
     // this.fillDepartments();
     this.localeRow();
   }
@@ -84,11 +88,11 @@ export class UserComponent implements OnInit {
       });
   }
 
-  fillDepartments(): void {
-    this.departmentService.getDepartments()
-      .subscribe(departments => {
-        console.log(departments);
-        this.departments = departments;
+  fillRights(): void {
+    this.rightService.getRights()
+      .subscribe(rights => {
+        console.log(rights);
+        this.rights = rights;
       });
   }
 
@@ -120,7 +124,8 @@ export class UserComponent implements OnInit {
 
   saveUser() {
     this.user.department = this.department;
-    this.user.id_department = this.getDepartmentId(this.department)
+    console.log(this.user)
+    this.user.id_department = this.getDepartmentId(this.department);
     this.userService.saveUser(this.user, this.id).subscribe({
       next: res => {
         console.log(res);
@@ -134,5 +139,15 @@ export class UserComponent implements OnInit {
   }
   isUserTaskDisabled() {
     return this.user.login.trim() == '' || this.user.surname == '';
+  }
+  roleChanged() {
+    this.user.permissions = [];
+    this.user.groups.forEach(group => {
+      this.roleService.getRoleRights(group)
+        .subscribe(rights => {
+          console.log(rights);
+          this.user.permissions = this.user.permissions.concat(rights)
+        });
+    })
   }
 }

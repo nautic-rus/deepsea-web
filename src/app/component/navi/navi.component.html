@@ -11,7 +11,7 @@
   <div class="cxy"></div>
   <div class="cxy"></div>
   <div class="cy ml-1">
-    <div *ngIf="auth.hasPerms('admin')">
+    <div *ngIf="auth.hasRole('Admin') || auth.hasPerms('admin')">
       <a routerLink="/admin">
         <img src="assets/icons/key.svg" height="32">
       </a>
