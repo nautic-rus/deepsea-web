@@ -96,14 +96,6 @@ export class UserComponent implements OnInit {
       });
   }
 
-  fillDepartments(): void {
-    this.departmentService.getDepartments()
-      .subscribe(departments => {
-        console.log(departments);
-        this.departments = departments;
-      });
-  }
-
   deleteUser() {
     this.userService.deleteUser(this.user.id).subscribe({
       next: res => {
@@ -147,5 +139,15 @@ export class UserComponent implements OnInit {
   }
   isUserTaskDisabled() {
     return this.user.login.trim() == '' || this.user.surname == '';
+  }
+  roleChanged() {
+    this.user.permissions = [];
+    this.user.groups.forEach(group => {
+      this.roleService.getRoleRights(group)
+        .subscribe(rights => {
+          console.log(rights);
+          this.user.permissions = this.user.permissions.concat(rights)
+        });
+    })
   }
 }

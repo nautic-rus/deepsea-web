@@ -18,9 +18,14 @@ export class RoleService {
     return this.http.get<any>(props.http + '/adminRoles');
   }
 
-  getRoleDetails(name: string): Observable<Roles>{
+  getRoleDetails(name: string) {
     console.log(name);
-    return this.http.get<Roles>(props.http + '/roleDetails', {params: {name}});
+    return this.http.get<any>(props.http + '/roleDetails', {params: {name}});
+  }
+
+  getRoleRights(name: string) {
+    console.log(name);
+    return this.http.get<any>(props.http + '/roleRights', {params: {name}});
   }
 
   startRole(role: Roles) {
