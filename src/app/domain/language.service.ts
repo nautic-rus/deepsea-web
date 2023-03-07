@@ -371,7 +371,7 @@ export class LanguageService {
           case 'Укажите вариант уведомлений и проверьте актуальность контактов': return 'Specify the notification option and check the relevance of contacts';
           case 'Подписавшиеся пользователи': return 'Subscribed users';
           case 'Задать новый вопрос': return 'Ask a new question';
-          case 'Тема вопроса': return 'Subject of the question';
+          case 'Тема вопроса (обязательно для заполнения*)': return 'Subject of the question (required*)';
           case 'Описание вопроса (обязательно для заполнения*)': return 'Description of the question (required*)';
           case 'Документ': return 'Document';
           case 'Трудозатраты': return 'Actual man-hours';
