@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {LanguageService} from "../../domain/language.service";
+import {DeviceDetectorService} from "ngx-device-detector";
 
 @Component({
   selector: 'app-elec',
@@ -7,13 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ElecComponent implements OnInit {
 
-  constructor() { }
+  constructor(public device: DeviceDetectorService, public l: LanguageService) { }
 
   ngOnInit(): void {
   }
 
   isDesktop() {
-
+    return this.device.isDesktop() && window.innerWidth > 1296;
   }
 
 }

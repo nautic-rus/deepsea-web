@@ -54,7 +54,7 @@ export class AdminComponent implements OnInit {
   constructor(public roleService: RoleService, public departmentService: DepartmentService, public projectService: ProjectService, public rightService: RightService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
 
   ngOnInit(): void {
-    if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
+    if (!this.auth.getUser().visible_pages.includes('admin') && this.auth.getUser().visible_pages.length > 0){
       this.router.navigate([this.auth.getUser().visible_pages[0]]);
     }
     this.setCols();
