@@ -54,6 +54,13 @@ export class AuthManagerService {
     }
     return this.user.permissions.includes(permissions) || find != null && find.permissions.includes(permissions);
   }
+  hasRole(role: string): boolean {
+    let find = null;
+    if (this.user.shared_access != '' && this.user.shared_access != this.user.login){
+      find = this.users.find(x => x.login == this.user.shared_access);
+    }
+    return this.user.groups.includes(role) || find != null && find.groups.includes(role);
+  }
   exit(){
     this.setUser(new User(), true);
     this.authenticated = false;
