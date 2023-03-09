@@ -203,6 +203,7 @@ export class WorkHoursComponent implements OnInit {
       height: '40px',
       width: (day.planHours.length * oneHourLength) + 'px',
       'background-color': this.getTaskColor(day.taskId),
+      'border-radius': '6px',
     };
   }
   showBusyHoursCount(day: PlanDay){
@@ -225,6 +226,6 @@ export class WorkHoursComponent implements OnInit {
     let r = eq1 % 255;
     let g = eq2 % 255;
     let b = eq3 % 255;
-    return `rgb(${r}, ${g}, ${b})`;
+    return `rgba(${r}, ${g}, ${b}, 0.6)`;
   }
 }

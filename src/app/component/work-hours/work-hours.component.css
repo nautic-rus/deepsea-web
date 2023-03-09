@@ -55,7 +55,7 @@
 }
 .month-date{
   display: grid;
-  grid-template-columns: repeat(31, 1fr);
+  grid-template-columns: repeat(32, 1fr);
   height: 45px;
   border-bottom: 1px solid #f3f2f1;
 }
@@ -68,11 +68,21 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   width: 48px;
+}
+.border-none{
+  border: none;
 }
 /*.day-number:hover{*/
 /*  border: 2px solid #FFB240;*/
 /*}*/
 .day-border{
   border: 2px solid #FFB240;
+}
+.plan-hours{
+  color: white;
+  font-size: 11px;
+  padding-left: 3px;
+  font-weight: 700;
 }
