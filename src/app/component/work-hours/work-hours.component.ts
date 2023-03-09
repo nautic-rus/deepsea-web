@@ -216,7 +216,7 @@ export class WorkHoursComponent implements OnInit {
     _.forEach(_.groupBy(busyHours, x => x.task_id),group => {
       res.push({taskId: group[0].task_id, planHours: group});
     });
-    return res;
+    return res.reverse();
   }
   getTaskColor(taskId: number){
     let eq1 = Math.pow(taskId, 1);
