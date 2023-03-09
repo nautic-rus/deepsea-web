@@ -8,7 +8,7 @@ import {DailyTask} from "../../../domain/interfaces/daily-task";
 import {Table} from "primeng/table";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {User} from "../../../domain/classes/user";
-import {PlanDay} from "../work-hours.component";
+import {PlanDay, PlanHour} from "../work-hours.component";
 
 @Component({
   selector: 'app-task-assign',
@@ -33,14 +33,15 @@ export class TaskAssignComponent implements OnInit {
   laborUpdates: any = Object();
   issueSpentTime: DailyTask[] = [];
   searchValue = '';
-  selectedIssue = Object();
+  selectedIssue: Issue;
   user: User;
   pDay: PlanDay;
-
+  userPDays: PlanHour;
+  allowMove: boolean = false;
+  @ViewChild('table') table: Table;
 
   constructor(public t: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManagerService: IssueManagerService, public auth: AuthManagerService) { }
 
-  @ViewChild('table') table: Table;
 
   ngOnInit(): void {
     this.issueManagerService.getDailyTasks().then(res => {
@@ -61,6 +62,7 @@ export class TaskAssignComponent implements OnInit {
 
         this.pDay = this.conf.data[0];
         this.user = this.conf.data[1];
+        this.userPDays = this.conf.data[2];
 
         console.log(this.issues);
       });
@@ -124,4 +126,24 @@ export class TaskAssignComponent implements OnInit {
   assignTaskToUser(){
     //this.auth.planUserTask()
   }
+
+  cancel() {
+    this.close();
+  }
+
+  save() {
+    let planHours = this.pDay.planHours;
+    let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.allowMove));
+    if (freeHour != null){
+      this.auth.planUserTask(this.user.id, this.selectedIssue.id, freeHour.id, this.selectedIssue.plan_hours, 0).subscribe({
+        next: () => {
+          this.close();
+        }
+      });
+    }
+    else{
+      alert("there is no free hour left for this day");
+    }
+  }
+
 }

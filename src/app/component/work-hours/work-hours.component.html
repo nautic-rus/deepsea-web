@@ -8,10 +8,10 @@
     </div>
     <div class="users-days">
       <div class="df sticky">
-        <div class="w-20 min-width-265 users pl-10 header-users">
+        <div class="w-15 min-width-265 users pl-10 header-users">
           <span>{{t.tr('Сотрудники')}}</span>
         </div>
-        <div class="w-80">
+        <div class="w-85">
           <div class="calendar w-100">
             <div class="month-date">
 <!--              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>-->
@@ -21,14 +21,18 @@
         </div>
       </div>
       <div class="df hover-user" *ngFor="let user of getUsers()">
-        <div class="w-20 min-width-265 users pl-10 cursor-pointer">
+        <div class="w-15 min-width-265 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
         </div>
-        <div class="w-80">
+        <div class="w-85">
           <div class="calendar w-100">
             <div class="month-date" #addTask>
               <!--              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>-->
-              <div *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" class="day-number cxy" (mouseenter)="setHover(pDay, user)" (mouseleave)="resetHover()" (contextmenu)="selectDay(pDay, user)" [class.day-border]="dayHover == pDay && userHover == user"><span *ngIf="pDay.day_type == 2">*</span>
+              <div (click)="showBusyHoursCount(pDay)" #day *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" [class.border-none]="hasTask(pDay)" class="day-number cxy" (mouseenter)="setHover(pDay, user)" (mouseleave)="resetHover()" (contextmenu)="selectDay(pDay, user)" [class.day-border]="dayHover == pDay && userHover == user">
+                <span *ngIf="pDay.day_type == 2"></span>
+                <div *ngFor="let task of getTasksOfDay(pDay)" [ngStyle]="getDayStyle(task)" class="plan-hours">
+                  {{task.planHours.length}}
+                </div>
               </div>
             </div>
           </div>

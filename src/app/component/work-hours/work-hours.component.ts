@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LanguageService} from "../../domain/language.service";
 import {User} from "../../domain/classes/user";
-import _, {any} from "underscore";
+import _, {any, uniq} from "underscore";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
 import {DialogService} from "primeng/dynamicdialog";
@@ -26,6 +26,10 @@ export interface PlanDay{
   month: number;
   year: number;
   day_type: number;
+  planHours: PlanHour[];
+}
+export interface TaskOfDay{
+  taskId: number;
   planHours: PlanHour[];
 }
 @Component({
@@ -65,7 +69,7 @@ export class WorkHoursComponent implements OnInit {
   users: User[] = [];
   selectedDepartments: string[] = [];
   items: MenuItem[] = [];
-  selectedDay: any = null;
+  selectedDay: PlanDay;
   dayHover: any = null;
   userHover: any = null;
   hoverEnabled = true;
@@ -144,7 +148,12 @@ export class WorkHoursComponent implements OnInit {
     this.dialogService.open(TaskAssignComponent, {
       showHeader: false,
       modal: true,
-      data: [this.selectedDay, this.userHover]
+      data: [this.selectedDay, this.userHover, this.userPDays[this.userHover.id]]
+    }).onClose.subscribe(() => {
+      this.auth.getUsersPlanHours().subscribe(planHours => {
+        this.pHours = planHours;
+        this.fillDays();
+      });
     });
   }
 
@@ -186,5 +195,62 @@ export class WorkHoursComponent implements OnInit {
       res = '0' + res;
     }
     return res;
+  }
+
+  getDayStyle(day: TaskOfDay) {
+    let oneHourLength = 48 / 8;
+    return {
+      height: '40px',
+      width: (day.planHours.length * oneHourLength) + 'px',
+      'background-color': this.getTaskColor(day.taskId),
+      'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
+      'border-bottom-left-radius': this.nextDaySameTask(day) ? '6px' : '',
+      'border-top-right-radius': this.prevDaySameTask(day) ? '6px' : '',
+      'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
+    };
+  }
+  showBusyHoursCount(day: PlanDay){
+    let busyHours = day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0);
+    console.log(busyHours);
+  }
+
+  getTasksOfDay(day: PlanDay) {
+    let res: TaskOfDay[] = [];
+    let busyHours = _.sortBy(day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0), x => x.id);
+    _.forEach(_.groupBy(busyHours, x => x.task_id),group => {
+      res.push({taskId: group[0].task_id, planHours: group});
+    });
+    return res.reverse();
+  }
+  getTaskColor(taskId: number){
+    let eq1 = Math.pow(taskId, 1);
+    let eq2 = Math.pow(taskId, 2);
+    let eq3 = Math.pow(taskId, 3);
+    let r = eq1 % 255;
+    let g = eq2 % 255;
+    let b = eq3 % 255;
+    return `rgba(${r}, ${g}, ${b}, 0.6)`;
+  }
+  nextDaySameTask(day: TaskOfDay){
+    if (day.planHours.length == 8){
+      let last = day.planHours[day.planHours.length - 1];
+      let next = this.pHours.filter(x => x.id > last.id && x.task_id == day.taskId);
+      return next.length > 0;
+    }
+    return false;
+  }
+  prevDaySameTask(day: TaskOfDay){
+    if (day.planHours.length > 0){
+      let first = day.planHours[0];
+      let prev = this.pHours.filter(x => x.id < first.id && x.task_id == day.taskId);
+      return prev.length > 0;
+    }
+    return false;
+  }
+  checkNextPrev(day: TaskOfDay){
+    return this.prevDaySameTask(day) || this.nextDaySameTask(day);
+  }
+  hasTask(day: PlanDay){
+    return day.planHours.find(x => x.task_id != 0);
   }
 }
