@@ -22,6 +22,8 @@ import {
 } from "../accommodation-esp/accommodations-esp-generation-wait/accommodations-esp-generation-wait.component";
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
+import {Trays} from "../../../domain/interfaces/trays";
+import {TrayService} from "./tray.service";
 
 @Component({
   selector: 'app-trays',
@@ -31,6 +33,7 @@ import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-m
 export class TraysComponent implements OnInit {
 
 
+  trays: Trays[] = [];
   accommodations: any = [];
   accommodationsSrc: any = [];
   noResult = false;
@@ -43,7 +46,6 @@ export class TraysComponent implements OnInit {
   issueId = 0;
   issue: Issue = new Issue();
   selectedDevice = Object();
-  cmapView: Window | null = null;
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
   message = '';
@@ -55,7 +57,6 @@ export class TraysComponent implements OnInit {
   wz;
   // @ts-ignore
   editor;
-  groupedByPartCode = false;
   waitForZipFiles = false;
   dxfEnabled = false;
   spoolViewEnabled = false;
@@ -65,10 +66,7 @@ export class TraysComponent implements OnInit {
   spoolView: Window | null = null;
   dxfDoc: string = '';
   search: string = '';
-  searchNesting: string = '';
   selectedHeadTab: string = 'Files';
-  nestContent: any[] = [];
-  nestContentRead = false;
   quillModules =
     {
       imageResize: {},
@@ -138,16 +136,13 @@ export class TraysComponent implements OnInit {
   issueRevisions: string[] = [];
   filters:  { ELEM_TYPE: any[], MATERIAL: any[], SYMMETRY: any[]  } = { ELEM_TYPE: [],  MATERIAL: [], SYMMETRY: [] };
   cmap = '';
-  cmapuser = '';
-  cmapdate = 0;
   tooltips: string[] = [];
   selectedView: string = 'tiles';
-  pipesSrc: any[] = [];
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
 
 
-  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
+  constructor(public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -161,6 +156,15 @@ export class TraysComponent implements OnInit {
         this.fillRevisions();
       }
     });
+
+    this.fillTrays(this.project, this.docNumber);
+  }
+  fillTrays(project: string, docNumber: string): void {
+    this.trayService.getTraysBySystems(project, docNumber)
+      .subscribe(trays => {
+        console.log(trays);
+        this.trays = trays;
+      });
   }
   closeShowImage() {
     this.showImages = false;
@@ -597,30 +601,6 @@ export class TraysComponent implements OnInit {
     return {
       'min-width': value + '%'
     }
-  }
-
-  getPipeDefs(selectedPipe: any) {
-    let res = [];
-    res.push({name: 'Code', value: selectedPipe.material.code});
-    res.push({name: 'Units', value: selectedPipe.material.units});
-    res.push({name: 'Single Weight', value: selectedPipe.material.singleWeight});
-    res.push({name: 'Document', value: selectedPipe.material.document});
-    res.push({name: 'Provider', value: selectedPipe.material.provider});
-    res.push({name: 'Spool', value: selectedPipe.spool});
-    res.push({name: 'Spool Piece', value: selectedPipe.spPieceId});
-    res.push({name: 'Type Code', value: selectedPipe.typeCode});
-    res.push({name: 'Zone', value: selectedPipe.zone});
-    res.push({name: 'SMAT', value: selectedPipe.smat});
-    res.push({name: 'Length', value: selectedPipe.length});
-    res.push({name: 'Radius', value: selectedPipe.radius});
-    res.push({name: 'Angle', value: selectedPipe.angle});
-    res.push({name: 'Weight', value: selectedPipe.weight});
-    res.push({name: 'Insul', value: selectedPipe.insul});
-    return res;
-  }
-
-  isGS(values: any[]) {
-    return values.find((x: any) => x.smat.toLowerCase().includes('gs')) != null;
   }
 
   showDxf(){
