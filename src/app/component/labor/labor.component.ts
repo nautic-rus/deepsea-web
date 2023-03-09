@@ -180,7 +180,17 @@ export class LaborComponent implements OnInit {
     let data: any[] = [];
 
     this.issues.forEach(issue => {
-      data.push({type: issue.issue_type, name: issue.name, doc_number: issue.doc_number, period: issue.period, contract_due_date: this.getDateOnly(issue.contract_due_date), start: this.getDateOnly(issue.start_date), due: this.getDateOnly(issue.due_date), status: this.issueManagerService.localeStatus(issue.status, false), manHours: this.getConsumedLabor(issue.id, issue.doc_number), plan: issue.labor})
+      data.push({
+        type: issue.issue_type,
+        name: issue.name,
+        doc_number: issue.doc_number,
+        period: issue.period,
+        contract_due_date: this.getDateOnly(issue.contract_due_date),
+        start: this.getDateOnly(issue.start_date),
+        due: this.getDateOnly(issue.due_date),
+        status: this.issueManagerService.localeStatus(issue.status, false),
+        manHours: this.getConsumedLabor(issue.id, issue.doc_number),
+        plan: this.laborUpdates[issue.id].planHours})
     });
 
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
