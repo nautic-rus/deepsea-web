@@ -33,6 +33,11 @@ export class RoleService {
     return this.http.post<string>(props.http + '/startRole', JSON.stringify(role));
   }
 
+  setRoleForAll(name: string) {
+    console.log(name);
+    return this.http.get<any>(props.http + '/setRoleForAll', {params: {name}});
+  }
+
   deleteRole(name: string) {
     console.log(name);
     return this.http.get<string>(props.http + '/deleteRole', {params: {name}});

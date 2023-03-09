@@ -71,23 +71,17 @@
       <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups" (ngModelChange)="roleChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="rights" [options]="rights" [(ngModel)]="user.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
+    </div>
+    <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
       <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="user.visibility">
     </div>
-    <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Общий доступ')}}</div>
-      <input class="width-211" type="text" id="sharedAccess" pInputText [(ngModel)]="user.shared_access">
-    </div>
   </div>
-  <div class="df space-between">
-    <div>
+  <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
-      <p-multiSelect styleClass="width-310" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="user.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
-    </div>
-    <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
-      <p-multiSelect styleClass="width-310" appendTo="body" id="rights" [options]="rights" [(ngModel)]="user.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
-    </div>
+      <p-multiSelect styleClass="h-100" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="user.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
   </div>
 </div>
 

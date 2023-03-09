@@ -165,7 +165,7 @@ import { RightComponent } from './component/admin/right/right.component';
 import { CreateRightComponent } from './component/admin/right/create-right/create-right.component';
 import { WorkHoursComponent } from './component/work-hours/work-hours.component';
 import { TaskAssignComponent } from './component/work-hours/task-assign/task-assign.component';
-import { ElecComponent } from './component/elec/elec.component';
+import { TraysComponent } from './component/documents/trays/trays.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -282,7 +282,7 @@ Quill.register('modules/imageResize', ImageResize);
     CreateRightComponent,
     WorkHoursComponent,
     TaskAssignComponent,
-    ElecComponent,
+    TraysComponent,
   ],
   imports: [
     BrowserModule,
