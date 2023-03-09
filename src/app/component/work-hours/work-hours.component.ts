@@ -198,7 +198,7 @@ export class WorkHoursComponent implements OnInit {
       return {
         position: 'absolute',
         left: '0',
-        height: '45px',
+        height: '40px',
         width: (busyHours.length * oneHourLength) + 'px',
         'background-color': 'red'
       };
