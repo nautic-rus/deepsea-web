@@ -60,7 +60,7 @@
 </div>
 
 <div class="form-footer-user">
-  <p-checkbox [(ngModel)]="allowMove" label="ALLOW MOVE"></p-checkbox>
+  <p-checkbox [(ngModel)]="allowMove" [binary]="true" label="ALLOW MOVE"></p-checkbox>
   <div class="mr-5 cx">
     <div tabindex="11" (click)="cancel()" pButton [label]="'Cancel'" class="button-cancel ml-1"></div>
   </div>

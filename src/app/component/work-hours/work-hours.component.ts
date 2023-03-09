@@ -203,7 +203,8 @@ export class WorkHoursComponent implements OnInit {
       height: '40px',
       width: (day.planHours.length * oneHourLength) + 'px',
       'background-color': this.getTaskColor(day.taskId),
-      'border-radius': '6px',
+      'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
+      'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
   }
   showBusyHoursCount(day: PlanDay){
@@ -227,5 +228,27 @@ export class WorkHoursComponent implements OnInit {
     let g = eq2 % 255;
     let b = eq3 % 255;
     return `rgba(${r}, ${g}, ${b}, 0.6)`;
+  }
+  nextDaySameTask(day: TaskOfDay){
+    if (day.planHours.length == 8){
+      let last = day.planHours[day.planHours.length - 1];
+      let next = this.pHours.filter(x => x.id > last.id && x.task_id == day.taskId);
+      return next.length > 0;
+    }
+    return false;
+  }
+  prevDaySameTask(day: TaskOfDay){
+    if (day.planHours.length > 0){
+      let first = day.planHours[0];
+      let prev = this.pHours.filter(x => x.id < first.id && x.task_id == day.taskId);
+      return prev.length > 0;
+    }
+    return false;
+  }
+  checkNextPrev(day: TaskOfDay){
+    return this.prevDaySameTask(day) || this.nextDaySameTask(day);
+  }
+  hasTask(day: PlanDay){
+    return day.planHours.find(x => x.task_id != 0);
   }
 }
