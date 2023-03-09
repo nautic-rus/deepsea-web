@@ -1,0 +1,167 @@
+<div class="all-page h-100">
+  <div class="all-card">
+    <div class="card-head df">
+      <div class="mr-2">{{issue.name}}</div>
+      <div class="mr-2">{{issue.doc_number}}</div>
+      <span class="p-ml-auto p-input-icon-left">
+        <i class="pi pi-search"></i>
+         <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text"
+                [placeholder]="l.tr('Поиск...')" class="border width-170"/>
+      </span>
+    </div>
+    <div class="w-100 df">
+      <div class="card-sp-tile mr-20">
+        <div class="loading-text"></div>
+        <div class="cxy loading">
+          <div class="cxy flex-column">
+            <div class="cx loading-text">For this kind of drawings there are no specification provided.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-32 right-content-card mt-20">
+        <div class="df tabs-header">
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'"
+               [class.selectedTab]="selectedHeadTab ==  'Files'">Files
+          </div>
+        </div>
+
+        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
+          <div class="mb-30" *ngFor="let fileGroup of fileGroups"
+               [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
+            <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true"
+                        [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
+              <div>
+                <div class="df">
+                  <div *ngIf="auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15"
+                       (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                    <div class="cxy">
+                      <img src="assets/icons/plus1.svg" height="16">
+                    </div>
+                    <div class="cy ml-1">Add files</div>
+                  </div>
+                  <div class="ml-1 button-details df cursor-pointer mb-15"
+                       (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                    <div class="cxy">
+                      <img src="assets/icons/download-arrow.png">
+                    </div>
+                    <div class="cy ml-1">Download all</div>
+                  </div>
+                  <div *ngIf="auth.hasPerms('esp-files')"
+                       [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0"
+                       class="ml-1 button-details df cursor-pointer mb-15"
+                       (click)="clearFiles(fileGroup.name, selectedRevision)">
+                    <div class="cxy icon-rotate">
+                      <img src="assets/icons/broom.png">
+                    </div>
+                    <div class="cy ml-1">Clear</div>
+                  </div>
+                </div>
+                <div class="">
+                  <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
+                    <div class="attachment-files df mb-6 cursor-pointer">
+                      <div class="cxy">
+                        <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                      </div>
+                      <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+                      <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+
+                      <div class="cxy" *ngIf="file.name.includes('.dxf')">
+                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
+                             (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                            <path
+                              d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="cxy" *ngIf="!file.name.includes('.dxf')"></div>
+                      <div class="cxy" (click)="openFile(file)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                             viewBox="0 0 24 24">
+                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                      </div>
+                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                             viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="fileGroup.name == 'Pipe Spools' && spoolsArchive != null">
+                    <div *ngFor="let file of spoolsArchiveContent">
+                      <div class="attachment-files df mb-6 cursor-pointer">
+                        <div class="cxy">
+                          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="25"/>
+                        </div>
+                        <span class="file-name-esp mx-10 cy">{{trimFileName(file, 30) + ' '}}</span>
+                        <span class="cy">{{' ' + getDate(spoolsArchive.upload_date)}}</span>
+
+                        <div class="cxy" *ngIf="file.includes('.dxf')">
+                          <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
+                               (click)="showDxfInViewerZip(spoolsArchive, file); $event.stopPropagation()">
+                            <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                              <path
+                                d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                            </svg>
+                          </div>
+                        </div>
+                        <div class="cxy" (click)="downloadFileFromZip(spoolsArchive, file)">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                               viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                          </svg>
+                        </div>
+                        <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file)">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                               viewBox="0 0 24 24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pt-5 dxf-view" *ngIf="dxfEnabled">
+  <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top"
+          class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link"
+          (click)="openDxf()"></button>
+  <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top"
+          class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out"
+          (click)="exitDxf()"></button>
+  <app-dxf-view></app-dxf-view>
+</div>
+
+<div class="progress-spinner" *ngIf="waitForZipFiles">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img src="assets/whale.gif" height="120">
+    <div class="cx wait-text">PLEASE WAIT...</div>
+  </div>
+</div>
+
+<div [hidden]="!showImages">
+  <div class="image-preview-backdrop" (click)="closeShowImage()">
+  </div>
+  <div class="image-preview-scale">
+    <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
+  </div>
+</div>

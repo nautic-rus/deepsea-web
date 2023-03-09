@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LanguageService} from "../../../../domain/language.service";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ProjectService} from "../../project/project.service";
 import {AuthManagerService} from "../../../../domain/auth-manager.service";
 import {Projects} from "../../../../domain/interfaces/project";
@@ -9,6 +9,9 @@ import {RoleService} from "../../role/role.service";
 import {UserService} from "../user.service";
 import {Users} from "../../../../domain/interfaces/users";
 import {formatDate} from "@angular/common";
+import {Rights} from "../../../../domain/interfaces/rights";
+import {RightService} from "../../right/right.service";
+import {Departments} from "../../../../domain/interfaces/departments";
 
 @Component({
   selector: 'app-create-user',
@@ -43,22 +46,34 @@ export class CreateUserComponent implements OnInit {
   genders: any[] = [];
   roles: Roles[] = [];
   visible_projects: any[] = [];
+  departments: Departments[] = [];
+  rights: Rights[] = [];
 
-  constructor(public lang: LanguageService, public ref: DynamicDialogRef, public userService: UserService, public projectService: ProjectService, public auth: AuthManagerService, public roleService: RoleService) {
+  constructor(public conf: DynamicDialogConfig, public lang: LanguageService, public rightService: RightService, public ref: DynamicDialogRef, public userService: UserService, public projectService: ProjectService, public auth: AuthManagerService, public roleService: RoleService) {
+    this.genders = [
+      {name: 'male'},
+      {name: 'female'}
+    ]
+    this.departments = conf.data[1];
   }
 
   ngOnInit(): void {
     this.userBD = new Date();
     this.fillRoles();
     this.fillProjects();
-    this.genders = [
-      {name: 'male'},
-      {name: 'female'}
-    ]
+    this.fillRights();
+
   }
 
   generatePassword() {
     return Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+  }
+
+  getDepartmentId(name: any): any {
+    let findDep = this.departments.find(x => {
+      return x.name.toString() == name.toString();
+    });
+    return findDep !=null ? findDep.id : 0;
   }
 
   fillProjects(): void {
@@ -76,6 +91,13 @@ export class CreateUserComponent implements OnInit {
         this.roles = roles;
       });
   }
+  fillRights(): void {
+    this.rightService.getRights()
+      .subscribe(rights => {
+        console.log(rights);
+        this.rights = rights;
+      });
+  }
 
   close() {
     this.ref.close();
@@ -90,7 +112,7 @@ export class CreateUserComponent implements OnInit {
       surname: this.surname,
       profession: this.profession,
       department: this.department,
-      id_department: parseInt(this.department),
+      id_department: parseInt(this.getDepartmentId(this.department)),
       birthday: formatDate(this.userBD, 'MM/dd/yyyy', 'en'),
       email: this.email,
       phone: this.phone,
@@ -119,8 +141,17 @@ export class CreateUserComponent implements OnInit {
       }
     });
   }
-
   isUserTaskDisabled() {
     return this.login.trim() == '' || this.surname == '';
+  }
+  roleChanged() {
+    this.permissions = [];
+    this.groups.forEach(group => {
+      this.roleService.getRoleRights(group)
+        .subscribe(rights => {
+          console.log(rights);
+          this.permissions = this.permissions.concat(rights)
+        });
+    })
   }
 }

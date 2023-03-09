@@ -36,7 +36,7 @@
   <div class="df space-between">
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>
-      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="department">
+      <p-dropdown styleClass="width-211" appendTo="body" id="department" [options]="departments" [(ngModel)]="this.department" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Должность')}}</div>
@@ -63,22 +63,22 @@
   </div>
   <div class="df space-between">
     <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="this.groups" (ngModelChange)="roleChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+    </div>
+    <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
-      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="permissions" optionLabel="name" optionValue="name"></p-multiSelect>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="rights" [options]="this.rights" [(ngModel)]="this.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
-      <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="visibility">
+      <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="this.visibility">
     </div>
+  </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Общий доступ')}}</div>
-      <input class="width-211" type="text" id="sharedAccess" pInputText [(ngModel)]="shared_access">
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
+      <p-multiSelect styleClass="h-100" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="this.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
-  </div>
-  <div>
-    <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
-    <p-multiSelect styleClass="w-100" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
-  </div>
 </div>
 
 <div class="form-footer-user">

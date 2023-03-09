@@ -31,17 +31,15 @@ export class NaviComponent implements OnInit {
     {id: 'documents', label: 'Documents', url: '', icon: 'assets/icons/docs.svg', height: 17, params: {}, child: [
       {id: 'hull-documents', label: 'Hull', url: 'documents', icon: 'assets/icons/hull.svg', height: 19, params: {'department': 'Hull'}},
       {id: 'pipe-documents', label: 'Systems', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'System'}},
+      {id: 'trays', label: 'Cable', url: 'documents', icon: 'assets/icons/light.svg', height: 16, params: {'department': 'Cable'}},
       {id: 'electric-documents', label: 'Electric', url: 'documents', icon: 'assets/icons/light.svg', height: 18, params: {'department': 'Electric'}},
       {id: 'device-documents', label: 'Devices', url: 'documents', icon: 'assets/icons/hook.svg', height: 18, params: {'department': 'Devices'}},
       {id: 'accommodation-documents', label: 'Accommodation', url: 'documents', icon: 'assets/icons/outfitting.svg', height: 18, params: {'department': 'Accommodation'}},
       {id: 'montage', label: 'Montage List', url: 'montage', icon: 'assets/icons/pump.png', height: 20, params: {}},
     ]},
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
-    {id: 'elec', label: 'Elec', url: 'elec', icon: 'assets/icons/wrench.svg', height: 17, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 20, child: [], params: {}},
     {id: 'nesting', label: 'Nesting', url: 'nesting', icon: 'assets/icons/cut2.svg', height: 26, child: [], params: {}},
-
-
     // {id: 'nesting', label: 'Nesting', url: '', icon: 'assets/icons/nesting.svg', height: 20, child: [
     //     {id: 'nesting', label: 'Hull', url: 'nesting', icon: 'assets/icons/hull.svg', height: 20, params: {}},
     //     {id: 'nesting-pipe', label: 'Pipe', url: 'nesting-pipe', icon: 'assets/icons/pipe.svg', height: 16, params: {}}

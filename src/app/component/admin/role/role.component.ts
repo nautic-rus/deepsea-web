@@ -16,7 +16,7 @@ export class RoleComponent implements OnInit {
   rights: Rights[] = [];
   role: Roles;
   name: any;
-
+  checkBox = true;
   constructor(public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
@@ -62,5 +62,8 @@ export class RoleComponent implements OnInit {
         this.ref.close(err);
       }
     });
+    if (this.checkBox) {
+      this.roleService.setRoleForAll(this.role.name)
+    }
   }
 }

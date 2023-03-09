@@ -118,6 +118,7 @@ export class DocumentsComponent implements OnInit {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+      case 'Cable': window.open(`/trays?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'Electric': window.open(`/electric-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'Accommodation': window.open(`/accommodation-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       default: break;
@@ -228,6 +229,13 @@ export class DocumentsComponent implements OnInit {
           this.issueManager.getRevisionFiles().then(revFiles => {
             this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
             this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
+            this.issues = _.sortBy(this.issues, x => x.doc_number);
+          });
+        }
+        else if (this.department == 'Cable'){
+          this.issueManager.getRevisionFiles().then(revFiles => {
+            this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
+            this.issues = this.issues.filter(x => (x.department == 'Electric' || x.assistant == 'Electric') && x.doc_number.includes("-871-") && !x.doc_number.includes("200101-871-001Э4"));
             this.issues = _.sortBy(this.issues, x => x.doc_number);
           });
         }
