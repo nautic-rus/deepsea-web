@@ -76,9 +76,11 @@ export class WorkHoursComponent implements OnInit {
   pHours: PlanHour[] = [];
   userPDays: any = Object();
   headerPDays: PlanDay[] = [];
+  loading = false;
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.fill();
     this.items = [
       {
@@ -150,6 +152,7 @@ export class WorkHoursComponent implements OnInit {
       modal: true,
       data: [this.selectedDay, this.userHover, this.userPDays[this.userHover.id]]
     }).onClose.subscribe(() => {
+      this.loading = true;
       this.auth.getUsersPlanHours().subscribe(planHours => {
         this.pHours = planHours;
         this.fillDays();
@@ -188,6 +191,7 @@ export class WorkHoursComponent implements OnInit {
       }
     });
     this.userPDays = userPDays;
+    this.loading = false;
   }
   addLeftZeros(input: any, length: number = 4){
     let res = input.toString();
@@ -203,8 +207,8 @@ export class WorkHoursComponent implements OnInit {
       height: '40px',
       width: (day.planHours.length * oneHourLength) + 'px',
       'background-color': this.getTaskColor(day.taskId),
-      'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
-      'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
+      // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
+      // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
   }
   showBusyHoursCount(day: PlanDay){
@@ -218,7 +222,7 @@ export class WorkHoursComponent implements OnInit {
     _.forEach(_.groupBy(busyHours, x => x.task_id),group => {
       res.push({taskId: group[0].task_id, planHours: group});
     });
-    return res.reverse();
+    return _.sortBy(res, x => _.min(x.planHours.map(y => y.id)));
   }
   getTaskColor(taskId: number){
     let eq1 = Math.pow(taskId, 1);

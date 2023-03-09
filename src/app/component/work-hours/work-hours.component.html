@@ -39,6 +39,7 @@
           <p-contextMenu #contextMenu (onHide)="hoverEnabled = true" [target]="addTask" appendTo="body" [model]="items"></p-contextMenu>
         </div>
       </div>
+      <div class="spinner" *ngIf="loading"><p-progressSpinner></p-progressSpinner></div>
     </div>
 
   </div>
