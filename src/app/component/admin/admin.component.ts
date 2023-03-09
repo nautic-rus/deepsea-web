@@ -232,7 +232,7 @@ export class AdminComponent implements OnInit {
     this.dialogService.open(CreateUserComponent, {
       showHeader: false,
       modal: true,
-      data: [user, '']
+      data: [user, this.departments]
     }).onClose.subscribe(res => {
       this.fillUsers();
     });
