@@ -134,16 +134,14 @@ export class TaskAssignComponent implements OnInit {
   save() {
     let planHours = this.pDay.planHours;
     let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.allowMove));
-    if (freeHour != null){
-      this.auth.planUserTask(this.user.id, this.selectedIssue.id, freeHour.id, this.selectedIssue.plan_hours, this.allowMove ? 1 : 0).subscribe({
-        next: () => {
-          this.close();
-        }
-      });
+    if (freeHour == null){
+      freeHour = planHours[0];
     }
-    else{
-      alert("there is no free hour left for this day");
-    }
+    this.auth.planUserTask(this.user.id, this.selectedIssue.id, freeHour.id, this.selectedIssue.plan_hours, this.allowMove ? 1 : 0).subscribe({
+      next: () => {
+        this.close();
+      }
+    });
   }
 
 }

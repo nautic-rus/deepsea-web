@@ -9,6 +9,7 @@ import {TaskAssignComponent} from "./task-assign/task-assign.component";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {MenuItem} from "primeng/api";
 import {ContextMenu} from "primeng/contextmenu";
+import {LV} from "../../domain/classes/lv";
 import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.component";
 import {TaskComponent} from "../task/task.component";
 import {Issue} from "../../domain/classes/issue";
@@ -42,7 +43,7 @@ export interface TaskOfDay{
 })
 export class WorkHoursComponent implements OnInit {
 
-  departments: string[] = [];
+  departments: LV[] = [];
   department = '';
   today = new Date();
   todayStatic = new Date();
@@ -94,6 +95,7 @@ export class WorkHoursComponent implements OnInit {
       {
         label: 'Clear task',
         icon: 'pi pi-fw pi-trash',
+        command: (event: any) => this.deleteUserTask()
       }
     ];
   }
@@ -102,9 +104,8 @@ export class WorkHoursComponent implements OnInit {
       this.users = res.filter(x => x.visibility.includes('k'));
       this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
       this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
-    });
-    this.issueManagerService.getIssueDepartments().then(departments => {
-      this.departments = departments;
+      this.departments = _.uniq(this.users.map(x => x.department)).map(x => new LV(x));
+      this.selectedDepartments = this.departments.map(x => x.value);
     });
     this.auth.getUsersPlanHours().subscribe(planHours => {
       this.pHours = planHours;
@@ -134,7 +135,7 @@ export class WorkHoursComponent implements OnInit {
     return special != null && special.hours != 0;
   }
   getUsers(){
-    return this.users;
+    return this.users.filter(x => this.selectedDepartments.includes(x.department));
   }
   selectDay(day: any, user: any) {
     if (!this.hoverEnabled){
@@ -268,5 +269,69 @@ export class WorkHoursComponent implements OnInit {
         data: res
       });
     });
+  }
+
+  deleteUserTask() {
+    this.loading = true;
+    let pDay = this.dayHover as PlanDay;
+    let findTask = pDay.planHours.find(x => x.task_id != 0);
+    if (findTask != null){
+      this.auth.deleteUserTask(findTask.user, findTask.task_id, 0).subscribe(res => {
+        console.log(res);
+        this.auth.getUsersPlanHours().subscribe(planHours => {
+          this.pHours = planHours;
+          this.fillDays();
+          this.loading = false;
+
+        });
+      });
+    }
+  }
+
+  fillNextDays() {
+    this.loading = true;
+    let latestPHour = _.sortBy(this.pHours,x => x.id).reverse();
+    if (latestPHour.length > 0){
+      let newDate = new Date(latestPHour[0].year, latestPHour[0].month, latestPHour[0].day);
+      this.headerPDays.splice(0, this.headerPDays.length);
+      this.userPDays = Object();
+      this.auth.getUsersPlanHours(0, newDate.getTime()).subscribe(planHours => {
+        this.pHours = planHours;
+        this.fillDays();
+      });
+    }
+  }
+
+  fillPrevDays() {
+    this.loading = true;
+    let latestPHour = _.sortBy(this.pHours,x => x.id);
+    if (latestPHour.length > 0){
+      let newDate = new Date(latestPHour[0].year, latestPHour[0].month, latestPHour[0].day);
+      newDate.setDate(-27);
+      this.headerPDays.splice(0, this.headerPDays.length);
+      this.userPDays = Object();
+      this.auth.getUsersPlanHours(0, newDate.getTime()).subscribe(planHours => {
+        this.pHours = planHours;
+        this.fillDays();
+      });
+    }
+  }
+
+  formatMonth(month: number) {
+    switch (month){
+      case 0: return 'jan';
+      case 1: return 'feb';
+      case 2: return 'mar';
+      case 3: return 'apr';
+      case 4: return 'may';
+      case 5: return 'jun';
+      case 6: return 'jul';
+      case 7: return 'aug';
+      case 8: return 'sep';
+      case 9: return 'oct';
+      case 10: return 'nov';
+      case 11: return 'dec';
+      default: return month;
+    }
   }
 }
