@@ -224,10 +224,6 @@ export class AdminComponent implements OnInit {
     return this.users.find(x => x.id == id) == null;
   }
 
-  isUserUpdated(id: number) {
-    return !this.isUserNew(id) && this.users.find(x => x.id == id) == null;
-  }
-
   newUser(user: object | null) {
     this.dialogService.open(CreateUserComponent, {
       showHeader: false,

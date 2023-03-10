@@ -15,14 +15,16 @@
       </div>
       <span class="p-ml-auto p-input-icon-left">
         <i class="pi pi-search"></i>
-         <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text"
+         <input [(ngModel)]="search" pInputText type="text"
                 [placeholder]="l.tr('Поиск...')" class="border width-170"/>
       </span>
     </div>
     <div class="w-100 df">
-      <div class="card-sp-tile mr-20" [class.card-height-with-dxf]="dxfEnabled">
-        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the system description using FORAN app in {{project}} project</div>
-        <div *ngIf="trays.length == 0 && !noResult">
+      <div class="card-sp-tile mr-20">
+        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need
+          to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
+        </div>
+        <div *ngIf="trays.length == 0">
           <div class="cxy loading">
             <div class="cxy card-height">
               <img src="assets/whale.gif" height="120">
@@ -32,159 +34,55 @@
         </div>
 
         <div *ngIf="selectedView == 'list'">
-          <p-table #table [value]="accommodations"
+          <p-table class="users"
+                   #usr
+                   id="usr"
+                   dataKey="id"
+                   [value]="trays"
                    [scrollable]="true"
-                   scrollHeight="calc(100vh - 225px)"
-                   [virtualScroll]="true"
-                   [virtualRowHeight]="28"
+                   [columns]="colsTrays"
+                   [virtualScroll]="false"
+                   [scrollHeight]="'78vh'"
+                   [virtualRowHeight]="1"
                    styleClass="p-datatable-striped"
-                   responsiveLayout="scroll">
-            <ng-template pTemplate="header">
-              <tr *ngIf="accommodations.length != 0" class="df">
-                <th [ngStyle]="mw(7)" pSortableColumn="spool" class="lxy w-5">{{'System'}}
-                  <p-sortIcon field="spool"></p-sortIcon>
+                   scrollDirection="both"
+          >
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th style="width:156px" pResizableColumn pReorderableColumn *ngFor="let col of columns"
+                    [pSortableColumn]="col.field">
+                  <div class="header">
+                    {{l.tr(col.header)}}
+                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
+                                [field]="col.field"></p-sortIcon>
+                    <p-columnFilter class="filter" type="date" [field]="col.field" display="menu"
+                                    *ngIf="col.date == true"></p-columnFilter>
+                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field"
+                                    matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
+                                    [showAddButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters"
+                                       optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                       (onChange)="filter($event.value);">
+                        </p-multiSelect>
+                      </ng-template>
+                    </p-columnFilter>
+                  </div>
                 </th>
-                <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'Id'}}
-                  <p-sortIcon field="spPieceId"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(21)" pSortableColumn="material.name" class="lxy w-35">{{'Desc'}}
-                  <p-sortIcon field="material.name"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(18)" pSortableColumn="stock" class="lxy w-30">{{'Stock'}}
-                  <p-sortIcon field="stock"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(15)" pSortableColumn="material.units" class="lxy w-15">{{'Weight'}}
-                  <p-sortIcon field="material.units"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(15)" pSortableColumn="radius" class="lxy w-15">{{'Zone'}}
-                  <p-sortIcon field="radius"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(15)" pSortableColumn="angle" class="lxy w-15">{{'Line'}}
-                  <p-sortIcon field="angle"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="length" class="lxy w-5">{{'Type'}}
-                  <p-sortIcon field="length"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="weight" class="lxy w-5">{{'Type'}}
-                  <p-sortIcon field="weight"></p-sortIcon>
-                </th>
-
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-pipe>
-              <tr  class="cursor-pointer task-row" >
-                <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.spool}}</td>
-                <td [ngStyle]="mw(5)" class="w-5 text-14">{{pipe.spPieceId}}</td>
-                <td [ngStyle]="mw(21)" class="w-35 text-14">{{pipe.material.name}}</td>
-                <td [ngStyle]="mw(18)" class="w-30 text-14">{{pipe.stock}}</td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14">{{pipe.material.units}}</td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14">{{round(pipe.radius)}}</td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14">{{roundAngle(pipe.angle)}}°</td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.length)}}</td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14">{{round(pipe.weight)}}</td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.typeCode}}</td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14">{{pipe.smat}}</td>
+            <ng-template pTemplate="body" let-columns="columns" let-user>
+              <tr class="user-row">
+                <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
+                  <div *ngIf="col.skip == false && col.field != 'ready'">
+                    <div [innerHTML]="localeColumn(this.user[col.field], col.field) | safeHtml"></div>
+                  </div>
+                  <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
+                </td>
               </tr>
             </ng-template>
           </p-table>
         </div>
-      </div>
-
-      <div class="w-32 right-content-card mt-20">
-        <div class="df tabs-header">
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
-        </div>
-
-        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
-          <div class="mb-30" *ngFor="let fileGroup of fileGroups" [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
-            <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
-              <div>
-                <div class="df">
-                  <div *ngIf="auth.hasPerms('esp-files')" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
-                    <div class="cxy">
-                      <img src="assets/icons/plus1.svg" height="16">
-                    </div>
-                    <div class="cy ml-1">Add files</div>
-                  </div>
-                  <div class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
-                    <div class="cxy">
-                      <img src="assets/icons/download-arrow.png">
-                    </div>
-                    <div class="cy ml-1">Download all</div>
-                  </div>
-                  <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
-                    <div class="cxy icon-rotate">
-                      <img src="assets/icons/broom.png">
-                    </div>
-                    <div class="cy ml-1">Clear</div>
-                  </div>
-                </div>
-                <div class="">
-                  <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
-                    <div  class="attachment-files df mb-6 cursor-pointer">
-                      <div class="cxy">
-                        <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
-                      </div>
-                      <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 30) + ' '}}</span>
-                      <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
-
-                      <div class="cxy" *ngIf="file.name.includes('.dxf')" >
-                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
-                            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
-                          </svg>
-                        </div>
-                      </div>
-                      <div class="cxy" *ngIf="!file.name.includes('.dxf')" ></div>
-                      <div class="cxy" (click)="openFile(file)">
-                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                        </svg>
-                      </div>
-                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
-                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div *ngIf="fileGroup.name == 'Pipe Spools' && spoolsArchive != null">
-                    <div *ngFor="let file of spoolsArchiveContent">
-                      <div  class="attachment-files df mb-6 cursor-pointer">
-                        <div class="cxy">
-                          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="25"/>
-                        </div>
-                        <span class="file-name-esp mx-10 cy">{{trimFileName(file, 30) + ' '}}</span>
-                        <span class="cy">{{' ' + getDate(spoolsArchive.upload_date)}}</span>
-
-                        <div class="cxy" *ngIf="file.includes('.dxf')" >
-                          <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewerZip(spoolsArchive, file); $event.stopPropagation()">
-                            <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
-                              <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
-                            </svg>
-                          </div>
-                        </div>
-                        <div class="cxy" (click)="downloadFileFromZip(spoolsArchive, file)">
-                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                          </svg>
-                        </div>
-                        <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file)">
-                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </p-fieldset>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>

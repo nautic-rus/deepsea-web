@@ -10,6 +10,6 @@ export class TrayService {
   constructor(private http: HttpClient) { }
 
   getTraysBySystems(project: string, docNumber: string) {
-    return this.http.get<any>(props.httpSpec + '/setHullPartList', { params: {project, docNumber}});
+    return this.http.get<any>(props.httpSpec + '/traysBySystems', { params: {project, docNumber}});
   }
 }
