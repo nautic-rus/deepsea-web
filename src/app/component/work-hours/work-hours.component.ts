@@ -138,14 +138,7 @@ export class WorkHoursComponent implements OnInit {
     return this.users.filter(x => this.selectedDepartments.includes(x.department));
   }
   selectDay(day: any, user: any) {
-    if (!this.hoverEnabled){
-      this.hoverEnabled = true;
-      this.setHover(day, user);
-      setTimeout(() => {
-        this.hoverEnabled = false;
-      }, 100);
-    }
-    this.hoverEnabled = false;
+    this.setHover(day, user);
     this.selectedDay = day;
     this.userHover = user;
   }
@@ -166,9 +159,9 @@ export class WorkHoursComponent implements OnInit {
 
 
   setHover(day: any, user: User) {
-    if (!this.hoverEnabled){
-      return;
-    }
+    // if (!this.hoverEnabled){
+    //   return;
+    // }
     this.dayHover = day;
     this.userHover = user;
   }
