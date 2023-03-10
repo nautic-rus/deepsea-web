@@ -70,6 +70,7 @@
   align-items: center;
   justify-content: flex-start;
   width: 48px;
+  z-index: 1;
 }
 .border-none{
   border: none;
@@ -85,6 +86,8 @@
   font-size: 11px;
   padding-left: 3px;
   font-weight: 700;
+  z-index: 2;
+  cursor: pointer;
 }
 .spinner{
   position: absolute;

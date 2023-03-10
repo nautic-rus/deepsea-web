@@ -9,6 +9,9 @@ import {TaskAssignComponent} from "./task-assign/task-assign.component";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {MenuItem} from "primeng/api";
 import {ContextMenu} from "primeng/contextmenu";
+import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.component";
+import {TaskComponent} from "../task/task.component";
+import {Issue} from "../../domain/classes/issue";
 
 export interface PlanHour{
   day: number;
@@ -211,10 +214,10 @@ export class WorkHoursComponent implements OnInit {
       // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
   }
-  showBusyHoursCount(day: PlanDay){
-    let busyHours = day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0);
-    console.log(busyHours);
-  }
+  // showBusyHoursCount(day: PlanDay){
+  //   let busyHours = day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0);
+  //   console.log(busyHours);
+  // }
 
   getTasksOfDay(day: PlanDay) {
     let res: TaskOfDay[] = [];
@@ -254,5 +257,16 @@ export class WorkHoursComponent implements OnInit {
   }
   hasTask(day: PlanDay){
     return day.planHours.find(x => x.task_id != 0);
+  }
+
+  openTask(taskId: number){
+    console.log(taskId);
+    this.issueManagerService.getIssueDetails(taskId).then(res => {
+      this.dialogService.open(TaskComponent, {
+        showHeader: false,
+        modal: true,
+        data: res
+      });
+    });
   }
 }
