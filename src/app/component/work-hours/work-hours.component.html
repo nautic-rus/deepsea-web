@@ -2,9 +2,12 @@
   <div class="card">
     <div class="calendar-header">
       <div class="cy w-20">
-        <p-multiSelect [options]="departments" [(ngModel)]="selectedDepartments" optionLabel="department"></p-multiSelect>
+        <p-multiSelect [options]="departments" [(ngModel)]="selectedDepartments" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
-
+      <div class="w-100 cx">
+        <div (click)="fillPrevDays()">PREV</div>
+        <div (click)="fillNextDays()">NEXT</div>
+      </div>
     </div>
     <div class="users-days">
       <div class="df sticky">
@@ -15,7 +18,10 @@
           <div class="calendar w-100">
             <div class="month-date">
 <!--              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>-->
-              <div *ngFor="let pDay of headerPDays" [class.off-day]="pDay.day_type == 3" [class.today-day]="isCurrentPDay(pDay)" class="day-number-header cxy">{{pDay.day + '-' + pDay.month}}<span *ngIf="pDay.day_type == 2">*</span></div>
+              <div *ngFor="let pDay of headerPDays" [class.off-day]="pDay.day_type == 3" [class.today-day]="isCurrentPDay(pDay)" class="day-number-header cxy position-relative">
+                <div class="plan-day-day">{{pDay.day}}<span *ngIf="pDay.day_type == 2">*</span></div>
+                <div class="plan-day-month">{{formatMonth(pDay.month)}}</div>
+              </div>
             </div>
           </div>
         </div>
