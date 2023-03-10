@@ -46,6 +46,8 @@ export class TraysComponent implements OnInit {
   traysArchive: any;
   traysArchiveContent: any[] = [];
   colsTrays: any[] = [];
+  traysByCode: any = [];
+
 
   constructor(public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
   }
@@ -103,6 +105,8 @@ export class TraysComponent implements OnInit {
       .subscribe(trays => {
         console.log(trays);
         this.trays = trays;
+        this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({stockCode: x[0].stockCode, values: x}));
+        console.log(this.traysByCode)
       });
   }
 
