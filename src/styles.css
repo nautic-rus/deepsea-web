@@ -259,6 +259,9 @@ body,p{
 .width-156{
   width: 156px;
 }
+.width-158{
+  width: 158px;
+}
 .width-160{
   width: 160px;
 }
@@ -315,6 +318,9 @@ body,p{
 }
 .width-340{
   width: 340px;
+}
+.width-345{
+  width: 345px;
 }
 .width-430{
   width: 430px;
@@ -384,6 +390,9 @@ body,p{
 }
 .min-width-200{
   min-width: 200px;
+}
+.min-width-210{
+  min-width: 220px;
 }
 .min-width-220{
   min-width: 220px;
@@ -669,6 +678,9 @@ body,p{
 .mt-20{
   margin-top: 20px;
 }
+.mt-24{
+  margin-top: 24px;
+}
 .mt-25{
   margin-top: 25px;
 }
@@ -680,6 +692,9 @@ body,p{
 }
 .mt-35{
   margin-top: 35px;
+}
+.mt-36{
+  margin-top: 36px;
 }
 .mt-40{
   margin-top: 40px;

@@ -41,7 +41,6 @@
   font-size: 14px;
   color: #323130;
   border-bottom: 1px solid #f3f2f1;
-  border-right: 1px solid #f3f2f1;
   display: flex;
   align-items: center;
 }
@@ -55,7 +54,7 @@
 }
 .month-date{
   display: grid;
-  grid-template-columns: repeat(32, 1fr);
+  grid-template-columns: repeat(32, 48px);
   height: 45px;
   border-bottom: 1px solid #f3f2f1;
 }
@@ -100,10 +99,52 @@
   left: 50%;
   top: 25%;
   transform: translate(-50%, -50%);
+  color: #9b9b9b;
+  font-weight: 500;
+  font-size: 14px;
 }
 .plan-day-month{
   position: absolute;
   left: 50%;
   top: 70%;
   transform: translate(-50%, -50%);
+  color: #9b9b9b;
+  font-weight: 600;
+  font-size: 13px;
+}
+.task-row{
+  padding: 8px 5px;
+}
+.task-row:hover{
+  background-color: #EEF5FA !important;
+}
+.select-row{
+  background-color: #EEF5FA !important;
+}
+.prev-month{
+  width: 40px;
+  height: 35px;
+  cursor: pointer;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding: 0 10px;
+  color: white;
+}
+.next-month{
+  width: 40px;
+  height: 35px;
+  cursor: pointer;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 0 10px;
+  color: white;
+}
+.big-text-user{
+  color: #5e6c84;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.issues-all{
+  font-size: 14px;
 }
