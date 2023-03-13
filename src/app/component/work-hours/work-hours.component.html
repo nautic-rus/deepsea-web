@@ -9,45 +9,90 @@
         <div (click)="fillNextDays()">NEXT</div>
       </div>
     </div>
-    <div class="users-days">
-      <div class="df sticky">
-        <div class="w-15 min-width-265 users pl-10 header-users">
-          <span>{{t.tr('Сотрудники')}}</span>
-        </div>
-        <div class="w-85">
-          <div class="calendar w-100">
-            <div class="month-date">
-<!--              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>-->
-              <div *ngFor="let pDay of headerPDays" [class.off-day]="pDay.day_type == 3" [class.today-day]="isCurrentPDay(pDay)" class="day-number-header cxy position-relative">
-                <div class="plan-day-day">{{pDay.day}}<span *ngIf="pDay.day_type == 2">*</span></div>
-                <div class="plan-day-month">{{formatMonth(pDay.month)}}</div>
-              </div>
-            </div>
+    <div class="df">
+      <div class="users-days">
+        <div class="df sticky">
+          <div class="w-15 min-width-200 users pl-10 header-users">
+            <span>{{t.tr('Сотрудники')}}</span>
           </div>
-        </div>
-      </div>
-      <div class="df hover-user" *ngFor="let user of getUsers()">
-        <div class="w-15 min-width-265 users pl-10 cursor-pointer">
-          <span>{{user.userName}}</span>
-        </div>
-        <div class="w-85">
-          <div class="calendar w-100">
-            <div class="month-date" #addTask>
-              <!--              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>-->
-              <div #day *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" [class.border-none]="hasTask(pDay)" class="day-number cxy" (contextmenu)="selectDay(pDay, user)">
-                <span *ngIf="pDay.day_type == 2"></span>
-                <div (click)="openTask(task.taskId)" *ngFor="let task of getTasksOfDay(pDay)" [ngStyle]="getDayStyle(task)" class="plan-hours">
-                  {{task.planHours.length}}
+          <div class="w-85">
+            <div class="calendar w-100">
+              <div class="month-date">
+                <!--              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>-->
+                <div *ngFor="let pDay of headerPDays" [class.off-day]="pDay.day_type == 3" [class.today-day]="isCurrentPDay(pDay)" class="day-number-header cxy position-relative">
+                  <div class="plan-day-day">{{pDay.day}}<span *ngIf="pDay.day_type == 2">*</span></div>
+                  <div class="plan-day-month">{{formatMonth(pDay.month)}}</div>
                 </div>
               </div>
             </div>
           </div>
-          <p-contextMenu #contextMenu (onHide)="hoverEnabled = true" [target]="addTask" appendTo="body" [model]="items"></p-contextMenu>
         </div>
+        <div class="df hover-user" *ngFor="let user of getUsers()">
+          <div class="w-15 min-width-200 users pl-10 cursor-pointer">
+            <span>{{user.userName}}</span>
+          </div>
+          <div class="w-85">
+            <div class="calendar w-100">
+              <div class="month-date" #addTask>
+                <!--              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>-->
+                <div pDroppable="issue" (onDrop)="dragDrop($event, pDay)" #day *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" [class.border-none]="hasTask(pDay)" class="day-number cxy" (contextmenu)="selectDay(pDay, user)">
+                  <span *ngIf="pDay.day_type == 2"></span>
+                  <div (click)="openTask(task.taskId)" *ngFor="let task of getTasksOfDay(pDay)" [ngStyle]="getDayStyle(task)" class="plan-hours">
+                    {{task.planHours.length}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p-contextMenu #contextMenu (onHide)="hoverEnabled = true" [target]="addTask" appendTo="body" [model]="items"></p-contextMenu>
+          </div>
+        </div>
+        <div class="spinner" *ngIf="loading"><p-progressSpinner></p-progressSpinner></div>
       </div>
-      <div class="spinner" *ngIf="loading"><p-progressSpinner></p-progressSpinner></div>
+      <div class="w-20">
+        <div class="header-task-assign">
+          <div class="header-task-assign-text">{{t.tr('Назначить задачу')}}</div>
+          <div class="task-button-user cxy" (click)="close()">
+            <i class="pi pi-times"></i>
+          </div>
+        </div>
+        <div class="df space-between">
+          <div>
+            <div class="big-text-user mb-1 mt-1">{{t.tr('Проект')}}</div>
+            <p-dropdown appendTo = "body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-211" (ngModelChange)="projectChanged()"></p-dropdown>
+          </div>
+          <div>
+            <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
+            <p-dropdown appendTo = "body" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-211"></p-dropdown>
+          </div>
+          <div>
+            <div class="big-text-user mb-1 mt-1">{{t.tr('Этап')}}</div>
+            <p-dropdown appendTo = "body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-211"></p-dropdown>
+          </div>
+        </div>
+        <div class="df space-between mb-10">
+          <div>
+            <div class="big-text-user mb-1 mt-1">{{t.tr('Тип')}}</div>
+            <p-dropdown appendTo = "body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-211"></p-dropdown>
+          </div>
+          <div>
+            <div class="big-text-user mb-1 mt-1">{{t.tr('Статус')}}</div>
+            <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-211"></p-dropdown>
+          </div>
+        </div>
+        <div>
+          <div class="big-text-user mb-1 mt-35"></div>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+          </span>
+        </div>
+        <p-virtualScroller [value]="issues" scrollHeight="380px" [itemSize]="34">
+          <ng-template pTemplate="item" let-issue>
+            <div pDraggable="issue" (dragstart)="drag($event, issue)" class="task-row cursor-pointer" [class.select-row]="selectedIssue == issue" (click)="selectIssue(issue)">{{issue.name}}</div>
+          </ng-template>
+        </p-virtualScroller>
+      </div>
     </div>
-
   </div>
 </div>
 

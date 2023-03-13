@@ -385,6 +385,9 @@ body,p{
 .min-width-200{
   min-width: 200px;
 }
+.min-width-210{
+  min-width: 220px;
+}
 .min-width-220{
   min-width: 220px;
 }

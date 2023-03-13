@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LanguageService} from "../../domain/language.service";
 import {User} from "../../domain/classes/user";
 import _, {any, uniq} from "underscore";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
-import {DialogService} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {TaskAssignComponent} from "./task-assign/task-assign.component";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {MenuItem} from "primeng/api";
@@ -13,6 +13,7 @@ import {LV} from "../../domain/classes/lv";
 import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.component";
 import {TaskComponent} from "../task/task.component";
 import {Issue} from "../../domain/classes/issue";
+import {DailyTask} from "../../domain/interfaces/daily-task";
 
 export interface PlanHour{
   day: number;
@@ -49,7 +50,9 @@ export class WorkHoursComponent implements OnInit {
   todayStatic = new Date();
   currentMonth = this.today.getMonth();
   currentYear = this.today.getFullYear();
-  issues: any[] = [];
+  issues: Issue[] = [];
+  issuesSrc: Issue[] = [];
+  draggableIssue: Issue;
   specialDays = [
     Object({day: 3, month: 11, year: 2022, hours: 7}),
     Object({day: 4, month: 11, year: 2022, hours: 0}),
@@ -81,11 +84,24 @@ export class WorkHoursComponent implements OnInit {
   userPDays: any = Object();
   headerPDays: PlanDay[] = [];
   loading = false;
-  constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService) { }
+  stages: string[] = [];
+  stage = '';
+  taskTypes: string[] = [];
+  taskType = '';
+  statuses: string[] = [];
+  status = '';
+  searchValue = '';
+  selectedIssue: Issue;
+  projects: string[] = ['N002', 'N004', 'P701', 'P707'];
+  project = '';
+  issueSpentTime: DailyTask[] = [];
+
+  constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.fill();
+    this.fillIssues();
     this.items = [
       {
         label: 'Add task',
@@ -111,6 +127,33 @@ export class WorkHoursComponent implements OnInit {
       this.pHours = planHours;
       this.fillDays();
     });
+  }
+  fillIssues(){
+    this.issueManagerService.getDailyTasks().then(res => {
+      this.issueSpentTime = res;
+      this.issueManagerService.getIssues('op').then(res => {
+        this.issuesSrc = res;
+        this.issues = res;
+        this.issues = _.sortBy(this.issues, x => x.doc_number);
+        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
+        this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
+        this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x);
+        this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
+        this.statuses = ['-'].concat(this.statuses);
+        this.taskTypes = ['-'].concat(this.taskTypes);
+      });
+    });
+    this.issueManagerService.getIssueProjects().then(projects => {
+      this.projects = projects;
+      this.projects.forEach((x: any) => x.label = this.getProjectName(x));
+    });
+  }
+  getConsumedLabor(id: number, doc_number: string) {
+    let sum = 0;
+    this.issueSpentTime.filter(x => x.issueId == id).forEach(spent => {
+      sum += spent.time;
+    });
+    return sum;
   }
   getDaysInMonth() {
     let daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
@@ -309,7 +352,46 @@ export class WorkHoursComponent implements OnInit {
       });
     }
   }
-
+  projectChanged() {
+    this.filterIssues();
+  }
+  departmentChanged() {
+    this.filterIssues();
+  }
+  stageChanged() {
+    this.filterIssues();
+  }
+  taskTypeChanged() {
+    this.filterIssues();
+  }
+  statusChanged() {
+    this.filterIssues();
+  }
+  filterIssues(){
+    this.issues = [...this.issuesSrc];
+    this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
+    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
+    this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
+    this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
+    this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.stage, false) || this.status == '' || this.status == '-' || this.status == null);
+    this.issues = _.sortBy(this.issues, x => x.doc_number);
+    if (this.searchValue.trim() != ''){
+      this.issues = this.issues.filter(x => (x.name + x.doc_number).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
+    }
+  }
+  close() {
+    this.ref.close();
+  }
+  getProjectName(project: any){
+    let res = project.name;
+    if (project.rkd != ''){
+      res += ' (' + project.rkd + ')';
+    }
+    return res;
+  }
+  selectIssue(issue: any) {
+    this.selectedIssue = issue;
+  }
   formatMonth(month: number) {
     switch (month){
       case 0: return 'jan';
@@ -326,5 +408,22 @@ export class WorkHoursComponent implements OnInit {
       case 11: return 'dec';
       default: return month;
     }
+  }
+
+  drag(event: DragEvent, issue: any) {
+    this.cd.detach();
+    this.draggableIssue = issue;
+  }
+
+  dragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  dragDrop(event: DragEvent, pDay: PlanDay) {
+    event.preventDefault();
+    this.cd.reattach();
+    console.log(pDay);
+    console.log(this.draggableIssue);
   }
 }

@@ -36,6 +36,7 @@
 .users-days{
   height: calc(100vh - 210px);
   overflow-y: auto;
+  width: 80%;
 }
 .users{
   font-size: 14px;
@@ -106,4 +107,13 @@
   left: 50%;
   top: 70%;
   transform: translate(-50%, -50%);
+}
+.task-row{
+  padding: 8px 5px;
+}
+.task-row:hover{
+  background-color: #EEF5FA !important;
+}
+.select-row{
+  background-color: #EEF5FA !important;
 }
