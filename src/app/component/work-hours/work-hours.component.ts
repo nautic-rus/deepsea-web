@@ -393,20 +393,39 @@ export class WorkHoursComponent implements OnInit {
     this.selectedIssue = issue;
   }
   formatMonth(month: number) {
-    switch (month){
-      case 0: return 'jan';
-      case 1: return 'feb';
-      case 2: return 'mar';
-      case 3: return 'apr';
-      case 4: return 'may';
-      case 5: return 'jun';
-      case 6: return 'jul';
-      case 7: return 'aug';
-      case 8: return 'sep';
-      case 9: return 'oct';
-      case 10: return 'nov';
-      case 11: return 'dec';
-      default: return month;
+    if (this.t.language == 'en'){
+      switch (month) {
+        case 0: return 'Jan';
+        case 1: return 'Feb';
+        case 2: return 'Mar';
+        case 3: return 'Apr';
+        case 4: return 'May';
+        case 5: return 'Jun';
+        case 6: return 'Jul';
+        case 7: return 'Aug';
+        case 8: return 'Sep';
+        case 9: return 'Oct';
+        case 10: return 'Nov';
+        case 11: return 'Dec';
+        default: return month;
+      }
+    }
+    else{
+      switch (month) {
+        case 0: return 'Янв';
+        case 1: return 'Февр';
+        case 2: return 'Март';
+        case 3: return 'Апр';
+        case 4: return 'Май';
+        case 5: return 'Июнь';
+        case 6: return 'Июль';
+        case 7: return 'Авг';
+        case 8: return 'Сент';
+        case 9: return 'Окт';
+        case 10: return 'Нояб';
+        case 11: return 'Дек';
+        default: return month;
+      }
     }
   }
 
