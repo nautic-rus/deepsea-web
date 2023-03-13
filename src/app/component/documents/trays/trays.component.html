@@ -25,16 +25,31 @@
         </div>
         <div *ngIf="selectedView == 'tiles'">
           <div class="tile">
-            <div *ngIf="trays.length != 0" class="card-tile">
+            <div *ngIf="trays.length != 0" class="card-tile title-bold px-10">
               Сводные данные
             </div>
             <div *ngIf="trays.length != 0">
               <div *ngFor="let tray of traysByCode; let i = index" class="card-tile"
                    [class.hidden-card]="tray == null">
-                <div class="card-spool df">
-                  <div class="w-7 position-relative">
-                    <div class="title-bold mb-20" [class.selected-spool]="tray == tray.stockCode"
-                         [innerHTML]="tray.stockCode | highLight: search"></div>
+                <div class="top-row">
+                  <div class="">
+                    <div class="cy h-100">
+                      <div class="cx">
+                        <div>meow</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center-y">
+                    <div class="title-name">{{tray.trayDesc}}</div>
+                  </div>
+                  <div class="p-ml-auto text-center-y">
+                    <div class="df">
+                      <div class="trm">{{tray.stockCode}}</div>
+                      <div (click)="copyTrmCode(tray.stockCode, 't' + i)" class="trm-copy cursor-pointer cxy">
+                        <img src="assets/icons/trm.svg" height="16">
+                        <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -42,15 +57,30 @@
             <div *ngIf="cableBoxes.length != 0">
               <div *ngFor="let cableBox of cableBoxesByCode; let i = index" class="card-tile"
                    [class.hidden-card]="cableBox == null">
-                <div class="card-spool df">
-                  <div class="w-7 position-relative">
-                    <div class="title-bold mb-20" [class.selected-spool]="cableBox == cableBox.stockCode"
-                         [innerHTML]="cableBox.stockCode | highLight: search"></div>
+                <div class="top-row">
+                  <div class="">
+                    <div class="cy h-100">
+                      <div class="cx">
+                        <div>meow</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center-y">
+                    <div class="title-name">{{cableBox.code}}</div>
+                  </div>
+                  <div class="p-ml-auto text-center-y">
+                    <div class="df">
+                      <div class="trm">{{cableBox.stockCode}}</div>
+                      <div (click)="copyTrmCode(cableBox.stockCode, 't' + i)" class="trm-copy cursor-pointer cxy">
+                        <img src="assets/icons/trm.svg" height="16">
+                        <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div *ngIf="cableBoxes.length != 0" class="card-tile">
+            <div *ngIf="cableBoxes.length != 0" class="card-tile title-bold px-10">
               Cable boxes
             </div>
             <div *ngIf="cableBoxes.length != 0" class="card-tile">

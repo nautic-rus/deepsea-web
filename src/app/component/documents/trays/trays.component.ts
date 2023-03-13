@@ -53,6 +53,7 @@ export class TraysComponent implements OnInit {
   traysByCode: any = [];
   cableBoxesByCode: any = [];
   cableBoxesById: any = [];
+  tooltips: string[] = [];
 
   constructor(public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
   }
@@ -112,7 +113,7 @@ export class TraysComponent implements OnInit {
         if (trays.length > 0) {
           console.log(trays);
           this.trays = _.sortBy(trays);
-          this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({stockCode: x[0].stockCode, values: x}));
+          this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({stockCode: x[0].stockCode, trayDesc: x[0].trayDesc, values: x}));
         } else {
           this.noResultTrays = true;
         }
@@ -125,7 +126,7 @@ export class TraysComponent implements OnInit {
         if (boxes.length > 0) {
           console.log(boxes);
           this.cableBoxes = _.sortBy(boxes);
-          this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => x.stockCode), x => Object({stockCode: x[0].stockCode, values: x}));
+          this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => x.stockCode), x => Object({stockCode: x[0].stockCode, desc: x[0].desc, code: x[0].code, values: x}));
           this.cableBoxesById = _.map(_.groupBy(this.cableBoxes, x => x.userId), x => Object({userId: x[0].userId, values: x}));
         } else {
           this.noResultBoxes = true;
@@ -137,6 +138,19 @@ export class TraysComponent implements OnInit {
     return {
       'min-width': value + '%'
     }
+  }
+
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
+  }
+
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
   }
 
   localeColumn(element: any, field: string): string {
