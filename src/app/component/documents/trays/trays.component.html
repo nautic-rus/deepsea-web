@@ -35,10 +35,11 @@
                   <div class="">
                     <div class="cy h-100">
                       <div class="cx">
-                        <div>meow</div>
+                        <div>Some id</div>
                       </div>
                     </div>
                   </div>
+<!--                  <div>{{getGroupLength(tray)}}</div>-->
                   <div class="text-center-y">
                     <div class="title-name">{{tray.trayDesc}}</div>
                   </div>
@@ -61,7 +62,7 @@
                   <div class="">
                     <div class="cy h-100">
                       <div class="cx">
-                        <div>meow</div>
+                        <div>Some id</div>
                       </div>
                     </div>
                   </div>
@@ -83,19 +84,41 @@
             <div *ngIf="cableBoxes.length != 0" class="card-tile title-bold px-10">
               Cable boxes
             </div>
-            <div *ngIf="cableBoxes.length != 0" class="card-tile">
-              <div *ngFor="let cableBox of cableBoxesById; let i = index"
-                   [class.hidden-card]="cableBox == null">
-                <div class="card-spool df">
-                  <div class="w-7 position-relative">
-                    <div class="title-bold mb-20" [class.selected-spool]="cableBox == cableBox.userId"
-                         [innerHTML]="cableBox.userId | highLight: search"></div>
+            <div *ngIf="cableBoxes.length != 0" class="bottom-card ovf-auto pl-10 pr-10 card-tile">
+              <div class="df sticky">
+                <div class="w-10 table-header-column cy">{{l.tr('USER ID')}}</div>
+                <div class="w-30 table-header-column cy">{{l.tr('DESCRIPTION')}}</div>
+<!--                <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>-->
+<!--                <div class="w-20 table-header-column cy">{{l.tr('FSQ')}}</div>-->
+                <div class="w-10 table-header-column cy">{{l.tr('WEIGHT')}}</div>
+                <div class="w-20 table-header-column cy">{{l.tr('COORDINATES')}}</div>
+              </div>
+              <div *ngFor="let cableBox of cableBoxes; let i = index" class="df cursor-pointer info-row">
+                <div class="w-10 table-body cy">{{cableBox.userId}}</div>
+                <div class="w-30 table-body cy">{{cableBox.code}}</div>
+<!--                <div class="w-10 table-body cy">{{cableBox.zone}}</div>-->
+<!--                <div class="w-20 table-body cy">{{cableBox.oid}}</div>-->
+                <div class="w-10 table-body cy">{{round(cableBox.weight)}}</div>
+                <div class="w-20 table-body-equip cy">
+                  <div class="">
+                    <div class="df coordinates-row mr-5">
+                      <div class="coordinates-x cxy">X<sub>1</sub>:</div>
+                      <span class="coordinates-count cxy">{{' ' + cableBox.x_cog}}</span>
+                    </div>
+                    <div class="df coordinates-row mr-5">
+                      <div class="coordinates-y cxy">Y<sub>1</sub>:</div>
+                      <span class="coordinates-count cxy">{{' ' + cableBox.y_cog}}</span>
+                    </div>
+                    <div class="df coordinates-row mr-5">
+                      <div class="coordinates-z cxy">Z<sub>1</sub>:</div>
+                      <span class="coordinates-count cxy">{{' ' + cableBox.z_cog}}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
