@@ -12,4 +12,8 @@ export class TrayService {
   getTraysBySystems(project: string, docNumber: string) {
     return this.http.get<any>(props.httpSpec + '/traysBySystems', { params: {project, docNumber}});
   }
+
+  getCableBoxesBySystems(project: string, docNumber: string) {
+    return this.http.get<any>(props.httpSpec + '/cableBoxesBySystems', { params: {project, docNumber}});
+  }
 }

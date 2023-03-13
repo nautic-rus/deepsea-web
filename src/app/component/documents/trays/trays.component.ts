@@ -10,7 +10,7 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DialogService} from "primeng/dynamicdialog";
-import _ from "underscore";
+import _, {sortBy} from "underscore";
 import {IssueMessage} from "../../../domain/classes/issue-message";
 import {UserCardComponent} from "../../employees/user-card/user-card.component";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
@@ -24,6 +24,8 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {Trays} from "../../../domain/interfaces/trays";
 import {TrayService} from "./tray.service";
+import {sort} from "d3";
+import {CableBoxes} from "../../../domain/interfaces/cableBoxes";
 
 @Component({
   selector: 'app-trays',
@@ -33,21 +35,25 @@ import {TrayService} from "./tray.service";
 export class TraysComponent implements OnInit {
 
   issue: Issue = new Issue();
-  selectedView: string = 'list';
+  selectedView: string = 'tiles';
   search: string = '';
-  noResult = false;
+  noResultTrays = false;
+  noResultBoxes= false;
   docNumber = '';
   project = '';
   department = '';
   issueId = 0;
   dxfDoc: string = '';
   trays: Trays[] = [];
+  cableBoxes: CableBoxes[] = [];
   issueRevisions: string[] = [];
   traysArchive: any;
   traysArchiveContent: any[] = [];
   colsTrays: any[] = [];
   traysByCode: any = [];
-
+  cableBoxesByCode: any = [];
+  cableBoxesById: any = [];
+  tooltips: string[] = [];
 
   constructor(public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
   }
@@ -97,16 +103,34 @@ export class TraysComponent implements OnInit {
       }
 
       this.fillTrays();
+      this.fillCableBoxes();
     });
   }
 
   fillTrays(): void {
     this.trayService.getTraysBySystems(this.project, this.docNumber)
       .subscribe(trays => {
-        console.log(trays);
-        this.trays = trays;
-        this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({stockCode: x[0].stockCode, values: x}));
-        console.log(this.traysByCode)
+        if (trays.length > 0) {
+          console.log(trays);
+          this.trays = _.sortBy(trays);
+          this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({stockCode: x[0].stockCode, trayDesc: x[0].trayDesc, values: x}));
+        } else {
+          this.noResultTrays = true;
+        }
+      });
+  }
+
+  fillCableBoxes(): void {
+    this.trayService.getCableBoxesBySystems(this.project, this.docNumber)
+      .subscribe(boxes => {
+        if (boxes.length > 0) {
+          console.log(boxes);
+          this.cableBoxes = _.sortBy(boxes);
+          this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => x.stockCode), x => Object({stockCode: x[0].stockCode, desc: x[0].desc, code: x[0].code, values: x}));
+          this.cableBoxesById = _.map(_.groupBy(this.cableBoxes, x => x.userId), x => Object({userId: x[0].userId, values: x}));
+        } else {
+          this.noResultBoxes = true;
+        }
       });
   }
 
@@ -114,6 +138,19 @@ export class TraysComponent implements OnInit {
     return {
       'min-width': value + '%'
     }
+  }
+
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
+  }
+
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
   }
 
   localeColumn(element: any, field: string): string {

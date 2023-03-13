@@ -3,16 +3,6 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="p-ml-auto df mr-10">
-        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
-          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
-          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
-        </div>
-        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">
-          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
-          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
-        </div>
-      </div>
       <span class="p-ml-auto p-input-icon-left">
         <i class="pi pi-search"></i>
          <input [(ngModel)]="search" pInputText type="text"
@@ -21,10 +11,11 @@
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20">
-        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need
+        <div class="loading-text" *ngIf="noResultTrays && noResultBoxes">No result for drawing {{docNumber}} of
+          project {{project}}. You need
           to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
         </div>
-        <div *ngIf="trays.length == 0">
+        <div *ngIf="trays.length == 0 && cableBoxes.length == 0">
           <div class="cxy loading">
             <div class="cxy card-height">
               <img src="assets/whale.gif" height="120">
@@ -32,43 +23,79 @@
             </div>
           </div>
         </div>
-        <div *ngIf="selectedView == 'list'">
-          <p-table class="trays"
-                   #trs
-                   id="trs"
-                   dataKey="id"
-                   [value]="trays"
-                   [scrollable]="true"
-                   [columns]="colsTrays"
-                   [virtualScroll]="false"
-                   [scrollHeight]="'78vh'"
-                   [virtualRowHeight]="1"
-                   styleClass="p-datatable-striped"
-                   scrollDirection="both"
-          >
-            <ng-template pTemplate="header" let-columns>
-              <tr>
-                <th style="width:156px" pResizableColumn pReorderableColumn *ngFor="let col of columns"
-                    [pSortableColumn]="col.field">
-                  <div class="header">
-                    {{l.tr(col.header)}}
-                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
-                                [field]="col.field"></p-sortIcon>
+        <div *ngIf="selectedView == 'tiles'">
+          <div class="tile">
+            <div *ngIf="trays.length != 0" class="card-tile title-bold px-10">
+              Сводные данные
+            </div>
+            <div *ngIf="trays.length != 0">
+              <div *ngFor="let tray of traysByCode; let i = index" class="card-tile"
+                   [class.hidden-card]="tray == null">
+                <div class="top-row">
+                  <div class="">
+                    <div class="cy h-100">
+                      <div class="cx">
+                        <div>meow</div>
+                      </div>
+                    </div>
                   </div>
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-columns="columns" let-user>
-              <tr class="user-row">
-                <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
-                  <div *ngIf="col.skip == false && col.field != 'ready'">
-                    <div [innerHTML]="localeColumn(this.user[col.field], col.field) | safeHtml"></div>
+                  <div class="text-center-y">
+                    <div class="title-name">{{tray.trayDesc}}</div>
                   </div>
-                  <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
+                  <div class="p-ml-auto text-center-y">
+                    <div class="df">
+                      <div class="trm">{{tray.stockCode}}</div>
+                      <div (click)="copyTrmCode(tray.stockCode, 't' + i)" class="trm-copy cursor-pointer cxy">
+                        <img src="assets/icons/trm.svg" height="16">
+                        <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="cableBoxes.length != 0">
+              <div *ngFor="let cableBox of cableBoxesByCode; let i = index" class="card-tile"
+                   [class.hidden-card]="cableBox == null">
+                <div class="top-row">
+                  <div class="">
+                    <div class="cy h-100">
+                      <div class="cx">
+                        <div>meow</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center-y">
+                    <div class="title-name">{{cableBox.code}}</div>
+                  </div>
+                  <div class="p-ml-auto text-center-y">
+                    <div class="df">
+                      <div class="trm">{{cableBox.stockCode}}</div>
+                      <div (click)="copyTrmCode(cableBox.stockCode, 't' + i)" class="trm-copy cursor-pointer cxy">
+                        <img src="assets/icons/trm.svg" height="16">
+                        <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="cableBoxes.length != 0" class="card-tile title-bold px-10">
+              Cable boxes
+            </div>
+            <div *ngIf="cableBoxes.length != 0" class="card-tile">
+              <div *ngFor="let cableBox of cableBoxesById; let i = index"
+                   [class.hidden-card]="cableBox == null">
+                <div class="card-spool df">
+                  <div class="w-7 position-relative">
+                    <div class="title-bold mb-20" [class.selected-spool]="cableBox == cableBox.userId"
+                         [innerHTML]="cableBox.userId | highLight: search"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
