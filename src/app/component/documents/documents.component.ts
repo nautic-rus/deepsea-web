@@ -233,6 +233,7 @@ export class DocumentsComponent implements OnInit {
           });
         }
         else if (this.department == 'Trays'){
+          this.showWithFilesOnly = false;
           this.issueManager.getRevisionFiles().then(revFiles => {
             this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || revFiles.find((x: any) => issue.id == x.issue_id) != null);
             this.issues = this.issues.filter(x => (x.department == 'Electric' || x.assistant == 'Electric') && x.doc_number.includes("-871-") && !x.doc_number.includes("200101-871-001Э4"));
