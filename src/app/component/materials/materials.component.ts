@@ -434,14 +434,39 @@ export class MaterialsComponent implements OnInit {
 
   searchChange() {
     if (this.selectedView == 'tiles'){
-      this.materials = this.materialsSrc.filter(x => x != null && (x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase()).includes(this.search.toLowerCase().trim()));
+      this.materials = this.materialsSrc.filter(x => {
+        let notNull = x != null;
+        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
+        let findInTranslate = false;
+        if (x.translations != null){
+          x.translations.forEach((y: any) => {
+            if ((y.name.toLowerCase() + y.description.toLowerCase()).includes(this.search.toLowerCase().trim())){
+              findInTranslate = true;
+            }
+          });
+        }
+        return notNull && (findInName || findInTranslate);
+      });
       console.log(this.materials);
       for (let x = 0; x < 10; x ++){
         this.materials.push(null);
       }
     }
     else{
-      this.materials = this.materialsSrc.filter(x => x != null && (x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase()).includes(this.search.toLowerCase().trim()));
+      this.materials = this.materialsSrc.filter(x => {
+        let notNull = x != null;
+        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
+        let findInTranslate = false;
+        if (x.translations != null){
+          x.translations.forEach((y: any) => {
+            if ((y.name.toLowerCase() + y.description.toLowerCase()).includes(this.search.toLowerCase().trim())){
+              findInTranslate = true;
+            }
+          });
+        }
+        return notNull && (findInName || findInTranslate);
+      });
+      console.log(this.materials);
     }
   }
 
