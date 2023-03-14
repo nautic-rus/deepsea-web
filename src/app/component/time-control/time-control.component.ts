@@ -3,6 +3,7 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {TimeControlInterval} from "../../domain/classes/time-control-interval";
 import _ from "underscore";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-time-control',
@@ -19,9 +20,12 @@ export class TimeControlComponent implements OnInit {
   @ViewChild('chart') chart: any;
 
 
-  constructor(public auth: AuthManagerService, public issueManager: IssueManagerService) { }
+  constructor(public auth: AuthManagerService, public issueManager: IssueManagerService, private router: Router) { }
 
   ngOnInit(): void {
+    if (!this.auth.hasRole('Nautic_Rus')) {
+      this.router.navigate([this.auth.getUser().visible_pages[0]]);
+    }
     this.basicData = {
       labels: [],
       datasets: [
