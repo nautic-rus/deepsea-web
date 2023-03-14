@@ -38,7 +38,7 @@ export class TraysComponent implements OnInit {
   selectedView: string = 'tiles';
   search: string = '';
   noResultTrays = false;
-  noResultBoxes= false;
+  noResultBoxes = false;
   docNumber = '';
   project = '';
   department = '';
@@ -114,8 +114,11 @@ export class TraysComponent implements OnInit {
         if (trays.length > 0) {
           console.log(trays);
           this.trays = _.sortBy(trays, x => x.stockCode);
-          this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({stockCode: x[0].stockCode, trayDesc: x[0].trayDesc, values: x}));
-
+          this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
+            stockCode: x[0].stockCode,
+            trayDesc: x[0].trayDesc,
+            values: x
+          }));
         } else {
           this.noResultTrays = true;
         }
@@ -128,9 +131,16 @@ export class TraysComponent implements OnInit {
         if (boxes.length > 0) {
           console.log(boxes);
           this.cableBoxes = _.sortBy(boxes, x => x.userId);
-          this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => x.stockCode), x => Object({stockCode: x[0].stockCode, desc: x[0].desc, code: x[0].code, values: x}));
-          this.cableBoxesById = _.map(_.groupBy(this.cableBoxes, x => x.userId), x => Object({userId: x[0].userId, values: x}));
-          console.log("lenegnneg" + this.cableBoxesByCode)
+          this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
+            stockCode: x[0].stockCode,
+            desc: x[0].desc,
+            code: x[0].code,
+            values: x
+          }));
+          this.cableBoxesById = _.map(_.groupBy(this.cableBoxes, x => x.userId), x => Object({
+            userId: x[0].userId,
+            values: x
+          }));
         } else {
           this.noResultBoxes = true;
         }
@@ -139,16 +149,18 @@ export class TraysComponent implements OnInit {
 
   getGroupLength(group: any[]) {
     let res = 0;
-    group.forEach(row => {
-      res += row.length;
-    });
-    return res;
+    console.log(group);
+     group.forEach(x => {
+       res += x.length;
+     });
+     return res;
   }
 
   getGroupWeight(group: any[]) {
     let res = 0;
-    group.forEach(row => {
-      res += row.weight;
+    console.log(group);
+    group.forEach(x => {
+      res += x.weight;
     });
     return res;
   }
@@ -177,7 +189,7 @@ export class TraysComponent implements OnInit {
   }
 
   localeColumn(element: any, field: string): string {
-      return element;
+    return element;
   }
 
   setCols() {
