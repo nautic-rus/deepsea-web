@@ -53,6 +53,8 @@ export class WorkHoursComponent implements OnInit {
   issues: Issue[] = [];
   issuesSrc: Issue[] = [];
   draggableIssue: Issue;
+  draggableEvent: DragEvent;
+  dragValue = 0;
   specialDays = [
     Object({day: 3, month: 11, year: 2022, hours: 7}),
     Object({day: 4, month: 11, year: 2022, hours: 0}),
@@ -95,6 +97,8 @@ export class WorkHoursComponent implements OnInit {
   projects: string[] = ['N002', 'N004', 'P701', 'P707'];
   project = '';
   issueSpentTime: DailyTask[] = [];
+  showWithoutPlan = false;
+  dragValues = Object();
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
@@ -141,6 +145,7 @@ export class WorkHoursComponent implements OnInit {
         this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
+        this.issues.forEach(x => this.dragValues[x.id] = x.plan_hours);
       });
     });
     this.issueManagerService.getIssueProjects().then(projects => {
@@ -374,6 +379,7 @@ export class WorkHoursComponent implements OnInit {
     this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
     this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
     this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.stage, false) || this.status == '' || this.status == '-' || this.status == null);
+    this.issues = this.issues.filter(x => x.plan_hours > 0 || this.showWithoutPlan);
     this.issues = _.sortBy(this.issues, x => x.doc_number);
     if (this.searchValue.trim() != ''){
       this.issues = this.issues.filter(x => (x.name + x.doc_number).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
@@ -429,9 +435,12 @@ export class WorkHoursComponent implements OnInit {
     }
   }
 
-  drag(event: DragEvent, issue: any) {
+  drag(event: DragEvent, issue: any, dragValue: number) {
+    console.log(event);
     this.cd.detach();
     this.draggableIssue = issue;
+    this.draggableEvent = event;
+    this.dragValue = dragValue;
   }
 
   dragOver(event: DragEvent) {
@@ -439,10 +448,37 @@ export class WorkHoursComponent implements OnInit {
     event.stopPropagation();
   }
 
-  dragDrop(event: DragEvent, pDay: PlanDay) {
+  dragDrop(event: DragEvent, pDay: PlanDay, user: User) {
     event.preventDefault();
     this.cd.reattach();
     console.log(pDay);
     console.log(this.draggableIssue);
+    let planHours = pDay.planHours;
+    let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.draggableEvent.ctrlKey));
+    if (freeHour == null){
+      freeHour = planHours[0];
+    }
+    this.loading = true;
+    this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
+      next: () => {
+        this.auth.getUsersPlanHours().subscribe(planHours => {
+          this.pHours = planHours;
+          this.fillDays();
+          this.loading = false;
+        });
+      }
+    });
+  }
+
+  getPlanned(issue: Issue) {
+    return this.pHours.filter(x => x.task_id == issue.id).length;
+  }
+  getDate(dateLong: number): string{
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear();
+  }
+
+  clearFilters() {
+
   }
 }
