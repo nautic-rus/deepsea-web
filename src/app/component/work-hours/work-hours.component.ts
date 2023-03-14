@@ -54,6 +54,7 @@ export class WorkHoursComponent implements OnInit {
   issuesSrc: Issue[] = [];
   draggableIssue: Issue;
   draggableEvent: DragEvent;
+  dragValue = 0;
   specialDays = [
     Object({day: 3, month: 11, year: 2022, hours: 7}),
     Object({day: 4, month: 11, year: 2022, hours: 0}),
@@ -97,6 +98,7 @@ export class WorkHoursComponent implements OnInit {
   project = '';
   issueSpentTime: DailyTask[] = [];
   showWithoutPlan = false;
+  dragValues = Object();
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
@@ -143,6 +145,7 @@ export class WorkHoursComponent implements OnInit {
         this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
+        this.issues.forEach(x => this.dragValues[x.id] = x.plan_hours);
       });
     });
     this.issueManagerService.getIssueProjects().then(projects => {
@@ -432,11 +435,12 @@ export class WorkHoursComponent implements OnInit {
     }
   }
 
-  drag(event: DragEvent, issue: any) {
+  drag(event: DragEvent, issue: any, dragValue: number) {
     console.log(event);
     this.cd.detach();
     this.draggableIssue = issue;
     this.draggableEvent = event;
+    this.dragValue = dragValue;
   }
 
   dragOver(event: DragEvent) {
@@ -454,9 +458,14 @@ export class WorkHoursComponent implements OnInit {
     if (freeHour == null){
       freeHour = planHours[0];
     }
-    this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.draggableIssue.plan_hours, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
+    this.loading = true;
+    this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
       next: () => {
-        this.close();
+        this.auth.getUsersPlanHours().subscribe(planHours => {
+          this.pHours = planHours;
+          this.fillDays();
+          this.loading = false;
+        });
       }
     });
   }
