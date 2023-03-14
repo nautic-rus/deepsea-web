@@ -241,6 +241,39 @@
   color: #323130;
   font-size: 13px;
 }
+.coordinates-row{
+  min-width: 85px;
+}
+.coordinates-x{
+  background-color: #c8e6c961;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  color: #256029;
+  font-weight: 700;
+  font-size: 11px;
+}
+.coordinates-y{
+  background-color: #feedaf87;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  color: #8a5340;
+  font-weight: 700;
+  font-size: 11px;
+}
+.coordinates-z{
+  background-color: #ffcdd275;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  color: #c63737;
+  font-weight: 700;
+  font-size: 11px;
+}
+.coordinates-count{
+
+}
 .table-body-support{
   padding: 0.75rem 0.75rem;
   color: #323130;
@@ -815,6 +848,12 @@
 .db{
   display: block;
 }
+.bottom-card{
+  background-color: white;
+  border-radius: 10px;
+  position: relative;
+}
+
 .text-date{
   color: rgba(66, 82, 110, 0.82);
   font-size: 0.9em;
@@ -936,8 +975,8 @@
 .four-col{
   width: 250px;
 }
-.height-40{
-  height: 40px;
+.height-60{
+  height: 60px;
 }
 .angle-pipe{
   transform: rotate(230deg);
@@ -1194,4 +1233,16 @@
   font-size: 12px;
   padding: 4px 6px;
   color: #3a3a3ade;
+}
+.table-header-column{
+  padding: 10px;
+  font-weight: 600;
+  color: #a4a4a4;
+  background: #ffffff;
+  font-size: 14px;
+  border-bottom: 1px solid #f3f2f1;
+}
+.info-row{
+  border-bottom: 1px solid #f3f2f1;
+  display: flex;
 }
