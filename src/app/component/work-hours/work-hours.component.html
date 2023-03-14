@@ -93,11 +93,17 @@
           </span>
           </div>
         </div>
+        <div (click)="clearFilters()">
+          CLEAR FILTERS
+        </div>
         <cdk-virtual-scroll-viewport autosize style="height: calc(100vh - 390px)">
           <div class="h-100 issues-all" *cdkVirtualFor="let issue of issues">
             <div pDraggable="issue" (dragstart)="drag($event, issue)" class="task-row cursor-pointer" [class.select-row]="selectedIssue == issue" (click)="selectIssue(issue)">
               <div>{{issue.doc_number}}</div>
               <div>{{issue.name}}</div>
+              <div>{{issue.status}}</div>
+              <div>{{auth.getUserName(issue.assigned_to)}}</div>
+              <div>{{getDate(issue.contract_due_date)}}</div>
               <div>
                 <span>{{getPlanned(issue)}}</span>
                 <span>/</span>
