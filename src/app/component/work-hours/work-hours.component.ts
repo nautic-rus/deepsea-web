@@ -100,7 +100,7 @@ export class WorkHoursComponent implements OnInit {
   showWithoutPlan = false;
   dragValues = Object();
 
-  constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
+  constructor(public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -480,5 +480,18 @@ export class WorkHoursComponent implements OnInit {
 
   clearFilters() {
 
+  }
+
+  getDateOnly(dateLong: number): string {
+    if (dateLong == 0){
+      return '--/--/--';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    // let date = new Date(dateLong);
+    // let ye = new Intl.DateTimeFormat('ru', { year: '2-digit' }).format(date);
+    // let mo = new Intl.DateTimeFormat('ru', { month: '2-digit' }).format(date);
+    // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
+    // return da + '.' + mo + '.' + ye;
   }
 }

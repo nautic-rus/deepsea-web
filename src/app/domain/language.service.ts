@@ -431,7 +431,7 @@ export class LanguageService {
           case 'Выберите задачу из списка': return 'Select a task from the list';
           case 'Гендер': return 'Gender';
           case 'Логин RocketChat': return 'Login RocketChat';
-          case '': return '';
+          case 'Показать незапланированные': return 'Show without plan';
           case '': return '';
           case '': return '';
           case '': return '';

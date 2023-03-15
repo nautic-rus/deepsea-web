@@ -5,13 +5,30 @@
         <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
 
-      <div class="df ml-20">
+      <div class="df ml-20 w-80">
         <div class="cxy cursor-pointer prev-month blue-button" (click)="fillPrevDays()">
           <img src="assets/icons/arrow-l.svg" height="16">
         </div>
         <div class="cxy cursor-pointer next-month blue-button" (click)="fillNextDays()">
           <img src="assets/icons/arrow-r2.svg" height="16">
         </div>
+      </div>
+      <div class="width-425 pl-25 cy">
+        <div class="w-100 df space-between">
+          <div class="mr-10">
+            <div class="materials-button gray-button cxy" (click)="clearFilters()" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+              <img src="assets/icons/filter-no.svg" height="18">
+            </div>
+          </div>
+          <div class="mr-1 cy mt-10">
+            <label class="container margin-bottom-none">
+              <span class="text-checkbox">{{t.tr('Показать незапланированные')}}</span>
+              <input (change)="filterIssues()" type="checkbox" [(ngModel)]="showWithoutPlan">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -52,11 +69,20 @@
             <p-contextMenu #contextMenu (onHide)="hoverEnabled = true" [target]="addTask" appendTo="body" [model]="items"></p-contextMenu>
           </div>
         </div>
-        <div class="spinner" *ngIf="loading"><p-progressSpinner></p-progressSpinner></div>
+
+        <div  *ngIf="loading">
+          <div class="cxy loading">
+            <div class="cxy flex-column">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+          </div>
+        </div>
+
       </div>
-      <div class="width-425 pl-20">
+      <div class="width-425">
         <div class="df space-between">
-          <div>
+          <div class="ml-20">
             <div class="big-text-user mb-1">{{t.tr('Проект')}}</div>
             <p-dropdown appendTo = "body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-130" (ngModelChange)="projectChanged()"></p-dropdown>
           </div>
@@ -65,8 +91,8 @@
             <p-dropdown appendTo = "body" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
-        <div class="df space-between">
-          <div>
+        <div class="df space-between ">
+          <div class="ml-20">
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Этап')}}</div>
             <p-dropdown appendTo = "body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-130"></p-dropdown>
           </div>
@@ -75,13 +101,9 @@
             <p-dropdown appendTo = "body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
-        <div class="df space-between">
-          <div>
-            <p-checkbox name="all" [binary]="true" [(ngModel)]="showWithoutPlan" (ngModelChange)="filterIssues()" label="Show without plan"></p-checkbox>
-          </div>
-        </div>
+
         <div class="df space-between mb-10">
-          <div>
+          <div class="ml-20">
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Статус')}}</div>
             <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-130"></p-dropdown>
           </div>
@@ -93,24 +115,43 @@
           </span>
           </div>
         </div>
-        <div (click)="clearFilters()">
-          CLEAR FILTERS
-        </div>
-        <cdk-virtual-scroll-viewport autosize style="height: calc(100vh - 390px)">
+
+        <cdk-virtual-scroll-viewport class="background-gray" autosize style="height: calc(100vh - 390px)">
           <div class="h-100 issues-all" *cdkVirtualFor="let issue of issues">
-            <div pDraggable="issue" (dragstart)="drag($event, issue, dragValues[issue.id])" class="task-row cursor-pointer" [class.select-row]="selectedIssue == issue" (click)="selectIssue(issue)">
-              <div>{{issue.doc_number}}</div>
-              <div>{{issue.name}}</div>
-              <div>{{issue.status}}</div>
-              <div>{{auth.getUserName(issue.assigned_to)}}</div>
-              <div>{{getDate(issue.contract_due_date)}}</div>
-              <div>
-                <span>{{getPlanned(issue)}}</span>
-                <span>/</span>
-                <span>{{issue.plan_hours}}</span>
+            <div pDraggable="issue" (dragstart)="drag($event, issue, dragValues[issue.id])" class="cursor-pointer"  (click)="selectIssue(issue)">
+              <div class="one-row-w df space-between">
+                <div class="title-bold">{{issue.doc_number}}</div>
+                <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
               </div>
-              <p-inputNumber [(ngModel)]="dragValues[issue.id]"></p-inputNumber>
+              <div class="text-mini-gray mb-5">
+                <div>{{issue.name}}</div>
+              </div>
+              <div class="df mm-text space-between mb-5">
+                <div class="mm-text df">
+                  <div>{{t.tr('Исполнитель') + ' ' + '-'}}</div>
+                  <div class="pl-2px">{{auth.getUserName(issue.assigned_to)}}</div>
+                </div>
+                <div class="df">
+                  <img src="assets/icons/flag-finish.svg" height="20">
+                  <div>{{getDateOnly(issue.contract_due_date)}}</div>
+                </div>
+              </div>
+              <div class="df text-black-mini">
+              <span class="cy width-20">
+                <div>{{getPlanned(issue)}}</div>
+              </span>
+                <span class="mx-10 cy">/</span>
+                <span class="cursor-pointer width-50 mr-15">
+                  <p-inputNumber inputStyleClass="width-50" [(ngModel)]="dragValues[issue.id]" mode="decimal"></p-inputNumber>
+                </span>
+              </div>
             </div>
+<!--            <div>-->
+<!--              <span>{{getPlanned(issue)}}</span>-->
+<!--              <span>/</span>-->
+<!--              <span>{{issue.plan_hours}}</span>-->
+<!--            </div>-->
+<!--            <p-inputNumber [(ngModel)]="dragValues[issue.id]"></p-inputNumber>-->
           </div>
         </cdk-virtual-scroll-viewport>
       </div>

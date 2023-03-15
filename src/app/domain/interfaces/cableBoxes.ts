@@ -1,3 +1,5 @@
+import {Material} from "../classes/material";
+
 export interface CableBoxes {
   system: string;
   userId: string;
@@ -22,4 +24,5 @@ export interface CableBoxes {
   y_n2: number;
   z_n2: number;
   length: number;
+  material: Material;
 }
