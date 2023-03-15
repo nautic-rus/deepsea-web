@@ -8,6 +8,11 @@
           <img src="assets/icons/list.svg" height="22">
         </div>
       </div>
+      <div class="mr-10">
+        <div (click)="exportSketches()" [pTooltip]="l.tr('Выгрузить excel')" tooltipPosition="top" class="materials-button green-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
       <!--      <span class="p-ml-auto p-input-icon-left">-->
       <!--        <i class="pi pi-search"></i>-->
       <!--         <input [(ngModel)]="search" pInputText type="text"-->
@@ -38,7 +43,7 @@
                    [class.hidden-card]="tray == null">
                 <div class="df">
                   <div class="text-center-y">
-                    <div class="title-name">{{tray.desc}}</div>
+                    <div class="title-name">{{getName(tray.desc, tray.trayDesc)}}</div>
                   </div>
                   <div class="p-ml-auto text-center-y">
                     <div class="df">
@@ -61,7 +66,7 @@
                    [class.hidden-card]="cableBox == null">
                 <div class="df">
                   <div class="text-center-y">
-                    <div class="title-name">{{cableBox.desc + " " + cableBox.code}}</div>
+                    <div class="title-name">{{getName(cableBox.desc, cableBox.code)}}</div>
                   </div>
                   <div class="p-ml-auto text-center-y">
                     <div class="df">
@@ -94,7 +99,7 @@
               </div>
               <div *ngFor="let cableBox of cableBoxes; let i = index" class="df cursor-pointer info-row">
                 <div class="w-10 table-body cy">{{cableBox.userId}}</div>
-                <div class="w-30 table-body cy">{{cableBox.material.name + " " + cableBox.code}}</div>
+                <div class="w-30 table-body cy">{{getName(cableBox.material.name, cableBox.code)}}</div>
                 <!--                <div class="w-10 table-body cy">{{cableBox.zone}}</div>-->
                 <!--                <div class="w-20 table-body cy">{{cableBox.oid}}</div>-->
                 <div class="w-10 table-body cy">{{round(cableBox.weight)}}</div>
@@ -114,7 +119,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="w-30 table-body cy">
+                <div class="p-ml-auto w-30 table-body cy">
                   <div class="df">
                     <div class="trm">{{cableBox.stockCode}}</div>
                     <div (click)="copyTrmCode(cableBox.stockCode, 't' + i)" class="trm-copy cursor-pointer cxy">

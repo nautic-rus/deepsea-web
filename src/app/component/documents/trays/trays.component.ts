@@ -29,6 +29,7 @@ import {CableBoxes} from "../../../domain/interfaces/cableBoxes";
 import {
   DeviceEspGenerationWaitComponent
 } from "../device-esp/device-esp-generation-wait/device-esp-generation-wait.component";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-trays',
@@ -215,16 +216,12 @@ export class TraysComponent implements OnInit {
         if (boxes.length > 0) {
           console.log(boxes);
           this.cableBoxes = _.sortBy(boxes, x => x.userId);
-          this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
+          this.cableBoxesByCode = _.sortBy(_.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
             stockCode: x[0].stockCode,
             code: x[0].code,
             desc: x[0].material.name,
             values: x
-          }));
-          this.cableBoxesById = _.map(_.groupBy(this.cableBoxes, x => x.userId), x => Object({
-            userId: x[0].userId,
-            values: x
-          }));
+          })), x => x.stockCode);
         } else {
           this.noResultBoxes = true;
         }
@@ -237,7 +234,7 @@ export class TraysComponent implements OnInit {
     group.forEach(x => {
       res += x.length;
     });
-    return res;
+    return res / 1000.0;
   }
 
   getGroupWeight(group: any[]) {
@@ -247,6 +244,10 @@ export class TraysComponent implements OnInit {
       res += x.weight;
     });
     return res;
+  }
+
+  getName(str: any, subStr: any) {
+    return str.isEmpty ? subStr : str;
   }
 
   round(value: number) {
@@ -280,6 +281,10 @@ export class TraysComponent implements OnInit {
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });
+  }
+
+  exportSketches() {
+  //
   }
 
   newImportantMessage() {
