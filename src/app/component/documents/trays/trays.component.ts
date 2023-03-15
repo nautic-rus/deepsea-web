@@ -29,6 +29,7 @@ import {CableBoxes} from "../../../domain/interfaces/cableBoxes";
 import {
   DeviceEspGenerationWaitComponent
 } from "../device-esp/device-esp-generation-wait/device-esp-generation-wait.component";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-trays',
@@ -280,6 +281,10 @@ export class TraysComponent implements OnInit {
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });
+  }
+
+  exportSketches() {
+  //
   }
 
   newImportantMessage() {
