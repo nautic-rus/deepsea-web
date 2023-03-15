@@ -76,3 +76,15 @@
 .button-cancel:hover{
   background-color: #ECEDF0;
 }
+
+.table-body{
+  padding: 0.75rem 0.75rem;
+  color: #323130;
+  font-size: 13px;
+  font-weight: 600;
+}
+.info-row{
+  border-bottom: 1px solid #f3f2f1;
+  display: flex;
+}
+

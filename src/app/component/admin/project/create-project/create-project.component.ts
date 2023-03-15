@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {LanguageService} from "../../../../domain/language.service";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ProjectService} from "../project.service";
 import {Roles} from "../../../../domain/interfaces/roles";
 import {Projects} from "../../../../domain/interfaces/project";
 import {AuthManagerService} from "../../../../domain/auth-manager.service";
+import {Users} from "../../../../domain/interfaces/users";
+import _ from "underscore";
 
 @Component({
   selector: 'app-create-project',
@@ -21,10 +23,15 @@ export class CreateProjectComponent implements OnInit {
   factory: string = '';
   managers: any;
   status: any;
+  users: Users[] = [];
+  selectedUsers: Users[] = [];
+  colsUsers: any[] = [];
 
-  constructor(public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public auth: AuthManagerService) { }
+  constructor(public lang: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public projectService: ProjectService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
+    this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;
+    this.colsUsers = this.conf.data[2];
     this.managers = this.auth.getUser().login;
   }
 
@@ -44,6 +51,10 @@ export class CreateProjectComponent implements OnInit {
         this.ref.close(err);
       }
     });
+  }
+
+  setAvatar(avatar: string) {
+    return '<div class="df"><img src="' + avatar + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
   }
 
   isProjectDisabled() {

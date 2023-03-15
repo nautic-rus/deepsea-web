@@ -3,6 +3,7 @@ import * as props from "../../../props";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Projects} from "../../../domain/interfaces/project";
+import {List} from "underscore";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class ProjectService {
     return this.http.get<string>(props.http + '/deleteProject', {params: {id}});
   }
 
-  saveProject(project: Projects, id: number) {
+  saveProject(project: Projects, id: number, idUsers: List<number>) {
     return this.http.post<string>(props.http + '/editProject', JSON.stringify(project), {params: {id}})
   }
 }

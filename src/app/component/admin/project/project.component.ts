@@ -4,6 +4,7 @@ import {LanguageService} from "../../../domain/language.service";
 import {ProjectService} from "./project.service";
 import {Projects} from "../../../domain/interfaces/project";
 import {Users} from "../../../domain/interfaces/users";
+import _, {groupBy} from "underscore";
 
 @Component({
   selector: 'app-project',
@@ -22,7 +23,7 @@ export class ProjectComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.conf.data)
     this.project = this.conf.data[0] as Projects;
-    this.users = this.conf.data[1] as Users[];
+    this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;
     this.colsUsers = this.conf.data[2];
     this.id = this.project.id;
   }
@@ -49,7 +50,7 @@ export class ProjectComponent implements OnInit {
   }
 
   saveProject() {
-    this.projectService.saveProject(this.project, this.id).subscribe({
+    this.projectService.saveProject(this.project, this.id, this.selectedUsers.map(x => x.id)).subscribe({
       next: res => {
         console.log(res);
         this.ref.close(res);
