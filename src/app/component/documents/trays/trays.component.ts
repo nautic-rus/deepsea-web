@@ -234,7 +234,7 @@ export class TraysComponent implements OnInit {
     group.forEach(x => {
       res += x.length;
     });
-    return res;
+    return res / 1000.0;
   }
 
   getGroupWeight(group: any[]) {
