@@ -167,6 +167,7 @@ import { WorkHoursComponent } from './component/work-hours/work-hours.component'
 import { TaskAssignComponent } from './component/work-hours/task-assign/task-assign.component';
 import { TraysComponent } from './component/documents/trays/trays.component';
 import {DragDropModule} from "primeng/dragdrop";
+import { TrayEspGenerationWaitComponent } from './component/documents/trays/tray-esp-generation-wait/tray-esp-generation-wait.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -284,6 +285,7 @@ Quill.register('modules/imageResize', ImageResize);
     WorkHoursComponent,
     TaskAssignComponent,
     TraysComponent,
+    TrayEspGenerationWaitComponent,
   ],
     imports: [
         BrowserModule,

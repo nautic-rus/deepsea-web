@@ -1,3 +1,5 @@
+import {Material} from "../classes/material";
+
 export interface Trays {
   system: string;
   oid: number;
@@ -20,4 +22,5 @@ export interface Trays {
   y_n2: number;
   z_n2: number;
   length: number;
+  material: Material;
 }

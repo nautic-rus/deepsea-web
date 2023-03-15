@@ -26,6 +26,9 @@ import {Trays} from "../../../domain/interfaces/trays";
 import {TrayService} from "./tray.service";
 import {sort, sum} from "d3";
 import {CableBoxes} from "../../../domain/interfaces/cableBoxes";
+import {
+  DeviceEspGenerationWaitComponent
+} from "../device-esp/device-esp-generation-wait/device-esp-generation-wait.component";
 
 @Component({
   selector: 'app-trays',
@@ -117,6 +120,7 @@ export class TraysComponent implements OnInit {
           this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
             stockCode: x[0].stockCode,
             trayDesc: x[0].trayDesc,
+            desc: x[0].material.name,
             values: x
           }));
         } else {
@@ -133,8 +137,8 @@ export class TraysComponent implements OnInit {
           this.cableBoxes = _.sortBy(boxes, x => x.userId);
           this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
             stockCode: x[0].stockCode,
-            desc: x[0].desc,
             code: x[0].code,
+            desc: x[0].material.name,
             values: x
           }));
           this.cableBoxesById = _.map(_.groupBy(this.cableBoxes, x => x.userId), x => Object({
@@ -188,8 +192,14 @@ export class TraysComponent implements OnInit {
     return this.tooltips.includes(index);
   }
 
-  localeColumn(element: any, field: string): string {
-    return element;
+  createEsp(value: string = '1') {
+    this.dialogService.open(DeviceEspGenerationWaitComponent, {
+      showHeader: false,
+      modal: true,
+      data: {issue: this.issue, spools: value}
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
   }
 
   setCols() {
