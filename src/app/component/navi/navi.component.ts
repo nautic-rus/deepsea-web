@@ -31,7 +31,7 @@ export class NaviComponent implements OnInit {
     {id: 'documents', label: 'Documents', url: '', icon: 'assets/icons/docs.svg', height: 17, params: {}, child: [
       {id: 'hull-documents', label: 'Hull', url: 'documents', icon: 'assets/icons/hull.svg', height: 19, params: {'department': 'Hull'}},
       {id: 'pipe-documents', label: 'Systems', url: 'documents', icon: 'assets/icons/pipe.svg', height: 16, params: {'department': 'System'}},
-      {id: 'trays', label: 'Trays & CableBoxes', url: 'documents', icon: 'assets/icons/light.svg', height: 16, params: {'department': 'Trays'}},
+      {id: 'trays', label: 'Trays', url: 'documents', icon: 'assets/icons/plug.svg', height: 18, params: {'department': 'Trays'}},
       {id: 'electric-documents', label: 'Electric', url: 'documents', icon: 'assets/icons/light.svg', height: 18, params: {'department': 'Electric'}},
       {id: 'device-documents', label: 'Devices', url: 'documents', icon: 'assets/icons/hook.svg', height: 18, params: {'department': 'Devices'}},
       {id: 'accommodation-documents', label: 'Accommodation', url: 'documents', icon: 'assets/icons/outfitting.svg', height: 18, params: {'department': 'Accommodation'}},

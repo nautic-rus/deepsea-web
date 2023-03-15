@@ -231,6 +231,7 @@
   transform: translate(-50%, -50%);
   font-size: large;
   font-weight: bold;
+  z-index: 1;
 }
 .loading-text{
   color: #323130a8;
@@ -268,3 +269,4 @@
   color: #3a3a3a;
   font-size: 12px;
 }
+
