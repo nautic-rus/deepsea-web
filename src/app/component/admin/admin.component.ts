@@ -210,7 +210,7 @@ export class AdminComponent implements OnInit {
         this.dialogService.open(ProjectComponent, {
           showHeader: false,
           modal: true,
-          data: res
+          data: [res, this.users, this.colsUsers]
         }).onClose.subscribe(res => {
           this.fillProjects();
         });

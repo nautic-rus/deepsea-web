@@ -292,11 +292,6 @@
 .normal-weight{
   font-weight: normal;
 }
-.table-body-equip{
-  padding: 5px;
-  color: #323130;
-  font-size: 14px;
-}
 .table-row:hover{
   background-color: #F3F2F1;
 }
@@ -1209,6 +1204,10 @@
   font-size: 24px;
   line-height: 30px;
   color: #3a3a3a;
+}
+.text-center-y{
+  display: flex;
+  align-items: center;
 }
 .trm{
   background-color: #f9c851;
