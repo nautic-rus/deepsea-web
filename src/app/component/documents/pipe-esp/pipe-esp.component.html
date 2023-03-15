@@ -122,7 +122,7 @@
                   </div>
                 </div>
                 <div class="w-93">
-                  <div class="df height-40" *ngFor="let pipe of pipeSpool.values; let p = index">
+                  <div class="df pt-5 pb-5" *ngFor="let pipe of pipeSpool.values; let p = index">
                     <div class="w-6 pr-10 df">
                       <div class="text-table-col cy" *ngIf="pipe.spPieceId != 0">{{pipe.spPieceId}}</div>
                       <div class="mm-text cy" *ngIf="pipe.spPieceId == 0">{{pipe.line + '-' + pipe.pls + '-' + pipe.elem}}</div>
@@ -172,7 +172,7 @@
                         <img src="assets/icons/gasket.svg" height="26">
                       </div>
                     </div>
-                    <div class="w-27 pr-10 title-bold-pipe cy">{{getMaterialName(pipe.material)}}</div>
+                    <div class="w-27 pr-10 title-bold-pipe line-14 cy">{{getMaterialName(pipe.material)}}</div>
                     <div class="w-4 pr-10 text-black-mini cy">{{pipe.material.units}}</div>
                     <div class="w-7 pr-10 df">
                       <div class="df">
