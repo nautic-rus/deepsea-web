@@ -215,7 +215,7 @@ export class TraysComponent implements OnInit {
       .subscribe(boxes => {
         if (boxes.length > 0) {
           console.log(boxes);
-          this.cableBoxes = _.sortBy(boxes, x => x.userId);
+          this.cableBoxes = _.sortBy(boxes, x => x.stockCode);
           this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
             stockCode: x[0].stockCode,
             code: x[0].code,
@@ -248,6 +248,10 @@ export class TraysComponent implements OnInit {
       res += x.weight;
     });
     return res;
+  }
+
+  getName(str: any, subStr: any) {
+    return str.isEmpty ? subStr : str;
   }
 
   round(value: number) {
