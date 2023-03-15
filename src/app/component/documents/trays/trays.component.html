@@ -8,11 +8,11 @@
           <img src="assets/icons/list.svg" height="22">
         </div>
       </div>
-<!--      <span class="p-ml-auto p-input-icon-left">-->
-<!--        <i class="pi pi-search"></i>-->
-<!--         <input [(ngModel)]="search" pInputText type="text"-->
-<!--                [placeholder]="l.tr('Поиск...')" class="border width-170"/>-->
-<!--      </span>-->
+      <!--      <span class="p-ml-auto p-input-icon-left">-->
+      <!--        <i class="pi pi-search"></i>-->
+      <!--         <input [(ngModel)]="search" pInputText type="text"-->
+      <!--                [placeholder]="l.tr('Поиск...')" class="border width-170"/>-->
+      <!--      </span>-->
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20">
@@ -40,8 +40,6 @@
                   <div class="text-center-y">
                     <div class="title-name">{{tray.desc}}</div>
                   </div>
-                  <div class="text-center-y">Total length: {{round(getGroupLength(tray.values))}}</div>
-                  <div class="text-center-y">Total weight: {{round(getGroupWeight(tray.values))}}</div>
                   <div class="p-ml-auto text-center-y">
                     <div class="df">
                       <div class="trm">{{tray.stockCode}}</div>
@@ -52,6 +50,10 @@
                     </div>
                   </div>
                 </div>
+                <div class="df">
+                  <div class="text-center-y">Total length: {{round(getGroupLength(tray.values))}}</div>
+                  <div class="text-center-y">Total weight: {{round(getGroupWeight(tray.values))}}</div>
+                </div>
               </div>
             </div>
             <div *ngIf="cableBoxes.length != 0">
@@ -61,8 +63,6 @@
                   <div class="text-center-y">
                     <div class="title-name">{{cableBox.desc + " " + cableBox.code}}</div>
                   </div>
-                  <div class="text-center-y">Total weight: {{round(getGroupWeight(cableBox.values))}}</div>
-                  <div class="text-center-y">Total count: {{cableBox.values.length}}</div>
                   <div class="p-ml-auto text-center-y">
                     <div class="df">
                       <div class="trm">{{cableBox.stockCode}}</div>
@@ -73,6 +73,10 @@
                     </div>
                   </div>
                 </div>
+                <div class="df">
+                  <div class="text-center-y">Total weight: {{round(getGroupWeight(cableBox.values))}}</div>
+                  <div class="text-center-y">Total count: {{cableBox.values.length}}</div>
+                </div>
               </div>
             </div>
             <div *ngIf="cableBoxes.length != 0" class="card-tile title-bold px-10">
@@ -82,8 +86,8 @@
               <div class="df sticky">
                 <div class="w-10 table-header-column cy">{{l.tr('USER ID')}}</div>
                 <div class="w-30 table-header-column cy">{{l.tr('DESCRIPTION')}}</div>
-<!--                <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>-->
-<!--                <div class="w-20 table-header-column cy">{{l.tr('FSQ')}}</div>-->
+                <!--                <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>-->
+                <!--                <div class="w-20 table-header-column cy">{{l.tr('FSQ')}}</div>-->
                 <div class="w-10 table-header-column cy">{{l.tr('WEIGHT')}}</div>
                 <div class="w-20 table-header-column cy">{{l.tr('COORDINATES')}}</div>
                 <div class="w-30 table-header-column cy">{{l.tr('STOCK CODE')}}</div>
@@ -91,8 +95,8 @@
               <div *ngFor="let cableBox of cableBoxes; let i = index" class="df cursor-pointer info-row">
                 <div class="w-10 table-body cy">{{cableBox.userId}}</div>
                 <div class="w-30 table-body cy">{{cableBox.material.name + " " + cableBox.code}}</div>
-<!--                <div class="w-10 table-body cy">{{cableBox.zone}}</div>-->
-<!--                <div class="w-20 table-body cy">{{cableBox.oid}}</div>-->
+                <!--                <div class="w-10 table-body cy">{{cableBox.zone}}</div>-->
+                <!--                <div class="w-20 table-body cy">{{cableBox.oid}}</div>-->
                 <div class="w-10 table-body cy">{{round(cableBox.weight)}}</div>
                 <div class="w-20 table-body-equip cy">
                   <div class="">
