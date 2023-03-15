@@ -26,6 +26,11 @@
               <input (change)="filterIssues()" type="checkbox" [(ngModel)]="showWithoutPlan">
               <span class="checkmark"></span>
             </label>
+            <label class="container margin-bottom-none">
+              <span class="text-checkbox">Show assigned</span>
+              <input (change)="filterIssues()" type="checkbox" [(ngModel)]="showAssigned">
+              <span class="checkmark"></span>
+            </label>
           </div>
         </div>
 
