@@ -215,17 +215,13 @@ export class TraysComponent implements OnInit {
       .subscribe(boxes => {
         if (boxes.length > 0) {
           console.log(boxes);
-          this.cableBoxes = _.sortBy(boxes, x => x.stockCode);
-          this.cableBoxesByCode = _.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
+          this.cableBoxes = _.sortBy(boxes, x => x.userId);
+          this.cableBoxesByCode = _.sortBy(_.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
             stockCode: x[0].stockCode,
             code: x[0].code,
             desc: x[0].material.name,
             values: x
-          }));
-          this.cableBoxesById = _.map(_.groupBy(this.cableBoxes, x => x.userId), x => Object({
-            userId: x[0].userId,
-            values: x
-          }));
+          })), x => x.stockCode);
         } else {
           this.noResultBoxes = true;
         }
