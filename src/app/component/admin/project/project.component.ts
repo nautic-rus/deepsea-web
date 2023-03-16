@@ -17,6 +17,7 @@ export class ProjectComponent implements OnInit {
   users: Users[] = [];
   selectedUsers: Users[] = [];
   colsUsers: any[] = [];
+  scrollHeight: string = '600px';
 
   constructor(public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
 
@@ -33,7 +34,7 @@ export class ProjectComponent implements OnInit {
   }
 
   setAvatar(avatar: string) {
-    return '<div class="df"><img src="' + avatar + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
+    return '<div class="df"><img src="' + avatar + '" width="26px" height="26px" style="border-radius: 13px"/><div class="ml-1 cy">' + '</div></div>';
   }
 
   deleteProject() {

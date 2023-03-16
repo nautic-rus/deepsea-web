@@ -77,10 +77,9 @@
   background-color: #ECEDF0;
 }
 .table-body{
-  padding: 0.75rem 0.75rem;
+  padding: 0.1rem 0.1rem;
   color: #323130;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;
 }
 .info-row{
   border-bottom: 1px solid #f3f2f1;
