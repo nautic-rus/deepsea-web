@@ -271,9 +271,6 @@
   font-weight: 700;
   font-size: 11px;
 }
-.coordinates-count{
-
-}
 .table-body-support{
   padding: 0.75rem 0.75rem;
   color: #323130;
@@ -933,6 +930,10 @@
   min-width: 1100px;
   transition: 0.5s;
 }
+.card-grid{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 20px;
+}
 .hidden-card{
   opacity: 0 !important;
   height: 0 !important;
@@ -957,10 +958,6 @@
 .text-black-mini{
   font-weight: 700;
   color: #3a3a3a;
-  font-size: 12px;
-}
-.mm-text{
-  color: #7575759e;
   font-size: 12px;
 }
 .one-col{
@@ -1158,10 +1155,6 @@
   font-weight: 600;
   padding: 0 2px 2px 2px;
 }
-.mm-text{
-  color: #7575759e;
-  font-size: 12px;
-}
 .title-bold-pipe{
   font-weight: 500;
   font-size: 14px;
@@ -1227,4 +1220,16 @@
 .info-row{
   border-bottom: 1px solid #f3f2f1;
   display: flex;
+}
+.attribute{
+  color: #e1e1e1;
+  font-weight: 600;
+}
+.text-table-col{
+  font-size: 14px;
+  color: #495057;
+}
+.mm-text{
+  color: rgba(117, 117, 117, 0.72);
+  font-size: 12px;
 }
