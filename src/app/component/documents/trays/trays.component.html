@@ -27,7 +27,7 @@
           project {{project}}. You need
           to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
         </div>
-        <div *ngIf="trays.length == 0 && cableBoxes.length == 0 && !noResultTrays && !noResultBoxes">
+        <div *ngIf="trays.length == 0 && cableBoxes.length == 0 && noResultTrays && noResultBoxes">
           <div class="cxy loading">
             <div class="cxy card-height">
               <img src="assets/whale.gif" height="120">
@@ -156,12 +156,19 @@
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
+                  <div class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                    <div class="cxy">
+                      <img src="assets/icons/plus1.svg" height="16">
+                    </div>
+                    <div class="cy ml-1">Add files</div>
+                  </div>
                   <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/download-arrow.png">
                     </div>
                     <div class="cy ml-1">Download all</div>
                   </div>
+
 
                   <div *ngIf="fileGroup.name == 'Cutting Map'">
                     <div class="ml-1 button-details df cursor-pointer mb-15" (click)="$event.ctrlKey ? downloadFilesCVC(fileGroup.name, selectedRevision, 'txt') : download.toggle($event)">
@@ -183,6 +190,14 @@
                         </div>
                       </ng-template>
                     </p-overlayPanel>
+                  </div>
+
+
+                  <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                    <div class="cxy icon-rotate">
+                      <img src="assets/icons/broom.png">
+                    </div>
+                    <div class="cy ml-1">Clear</div>
                   </div>
                 </div>
                 <div class="" *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length != 0">
@@ -206,6 +221,8 @@
                       </div>
                       <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
                       <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+
+
 
                       <div class="cxy" *ngIf="file.name.includes('.dxf')" >
                         <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
@@ -249,9 +266,21 @@
                           </ng-template>
                         </p-overlayPanel>
                       </div>
+                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                      </div>
                     </div>
                   </div>
                 </div>
+                <!--                <div class="df right-top-revision">-->
+                <!--                  <div class="pt-5">View files of revision</div>-->
+                <!--                  <div class="ml-1">-->
+                <!--                    <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" (ngModelChange)="viewRevisionChanged()" styleClass="w-100 h-32 cxy">-->
+                <!--                    </p-dropdown>-->
+                <!--                  </div>-->
+                <!--                </div>-->
               </div>
             </p-fieldset>
           </div>
