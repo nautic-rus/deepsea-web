@@ -922,8 +922,8 @@
   display: flex;
   flex-wrap: wrap;
 }
-.card-tile{
-  margin-bottom: 20px;
+.card-tile-t{
+  margin-bottom: 10px;
   width: 100%;
   height: fit-content;
   background-color: white;
@@ -1204,35 +1204,6 @@
   font-size: 24px;
   line-height: 30px;
   color: #3a3a3a;
-}
-.text-center-y{
-  display: flex;
-  align-items: center;
-}
-.trm{
-  background-color: #f9c851;
-  color: #ffffff;
-  font-size: 16px;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  padding: 2px 4px;
-}
-.trm-copy{
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  padding: 2px 4px;
-  border: 1px solid #f9c851;
-  width: 30px;
-}
-.copy-tooltip{
-  position: absolute;
-  top: 5px;
-  background-color: #ffffff;
-  border-radius: 2px;
-  box-shadow: 1px 1px 13px 0px rgba(34, 60, 80, 0.16);
-  font-size: 12px;
-  padding: 4px 6px;
-  color: #3a3a3ade;
 }
 .table-header-column{
   padding: 10px;

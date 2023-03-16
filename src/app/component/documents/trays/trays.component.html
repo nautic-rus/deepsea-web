@@ -35,11 +35,11 @@
         </div>
         <div *ngIf="selectedView == 'tiles'">
           <div class="tile">
-            <div *ngIf="trays.length != 0" class="card-tile title-bold px-10">
+            <div *ngIf="trays.length != 0" class="card-tile-t title-bold px-10">
               Сводные данные
             </div>
-            <div *ngIf="trays.length != 0">
-              <div *ngFor="let tray of traysByCode; let i = index" class="card-tile"
+            <div class="w-100" *ngIf="trays.length != 0">
+              <div *ngFor="let tray of traysByCode; let i = index" class="card-tile-t"
                    [class.hidden-card]="tray == null">
                 <div class="df">
                   <div class="text-center-y">
@@ -54,6 +54,7 @@
                       </div>
                     </div>
                   </div>
+                  <div class="width-20"></div>
                 </div>
                 <div class="df">
                   <div class="text-center-y">Total length: {{round(getGroupLength(tray.values))}}</div>
@@ -61,8 +62,8 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="cableBoxes.length != 0">
-              <div *ngFor="let cableBox of cableBoxesByCode; let i = index" class="card-tile"
+            <div class="w-100" *ngIf="cableBoxes.length != 0">
+              <div *ngFor="let cableBox of cableBoxesByCode; let i = index" class="card-tile-t"
                    [class.hidden-card]="cableBox == null">
                 <div class="df">
                   <div class="text-center-y">
@@ -84,10 +85,10 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="cableBoxes.length != 0" class="card-tile title-bold px-10">
+            <div *ngIf="cableBoxes.length != 0" class="card-tile-t title-bold px-10">
               Cable boxes
             </div>
-            <div *ngIf="cableBoxes.length != 0" class="bottom-card ovf-auto pl-10 pr-10 card-tile">
+            <div *ngIf="cableBoxes.length != 0" class="bottom-card ovf-auto pl-10 pr-10 card-tile-t">
               <div class="df sticky">
                 <div class="w-10 table-header-column cy">{{l.tr('USER ID')}}</div>
                 <div class="w-30 table-header-column cy">{{l.tr('DESCRIPTION')}}</div>
