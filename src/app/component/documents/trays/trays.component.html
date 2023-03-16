@@ -120,12 +120,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="p-ml-auto w-30 table-body cy">
+                <div class="p-ml-auto w-30 position-relative table-body cy">
                   <div class="df">
                     <div class="trm">{{cableBox.stockCode}}</div>
                     <div (click)="copyTrmCode(cableBox.stockCode, 'tr' + i)" class="trm-copy cursor-pointer cxy">
                       <img src="assets/icons/trm.svg" height="16">
-                      <div class="copy-tooltip" [hidden]="!showTooltip('tr' + i)">Copied!</div>
+                      <div class="copy-tooltip-t" [hidden]="!showTooltip('tr' + i)">Copied!</div>
                     </div>
                   </div>
                 </div>
