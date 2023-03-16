@@ -141,6 +141,8 @@ export class UserComponent implements OnInit {
     return this.user.login.trim() == '' || this.user.surname == '';
   }
   roleChanged() {
+    console.log(this.user.permissions)
+    console.log(this.user.groups)
     this.user.permissions = [];
     this.user.groups.forEach(group => {
       this.roleService.getRoleRights(group)

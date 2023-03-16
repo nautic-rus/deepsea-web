@@ -36,14 +36,30 @@
     </div>
 
   </div>
-  <div class="df">
-    <div class="mr-10">
+  <div class="df space-between">
+    <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Менеджеры')}}</div>
-      <input class="width-211" type="text" id="managers" pInputText [(ngModel)]="project.managers">
+      <p-dropdown styleClass="width-211" appendTo="body" id="managers" [options]="users" [(ngModel)]="project.managers"
+                  optionLabel="login" optionValue="login"></p-dropdown>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Статус')}}</div>
       <input class="width-211" type="text" id="status" pInputText [(ngModel)]="project.status">
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Пользователи')}}</div>
+      <p-multiSelect styleClass="width-211 mycontainer" appendTo="body" id="users" [options]="users" [(ngModel)]="selectedUsers"
+                     [filter]="true" filterBy="name,login,surname,department" optionValue="login" optionLabel="login" [scrollHeight]="scrollHeight">
+        <ng-template let-users pTemplate="item">
+          <div class="df">
+            <div class="table-body cy width-40" [innerHTML]="setAvatar(users.avatar) | safeHtml"></div>
+            <div class="table-body cy width-150">{{users.name}}</div>
+            <div class="table-body cy width-150">{{users.surname}}</div>
+            <div class="table-body cy width-430">{{users.profession}}</div>
+            <div class="table-body cy width-150">{{users.department}}</div>
+          </div>
+        </ng-template>
+      </p-multiSelect>
     </div>
   </div>
 </div>

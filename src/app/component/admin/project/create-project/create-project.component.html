@@ -44,7 +44,23 @@
   </div>
   <div>
     <div class="big-text-user mb-1 mt-1">{{lang.tr('Менеджеры')}}</div>
-    <input class="width-211" type="text" id="managers" pInputText [(ngModel)]="managers">
+    <p-dropdown styleClass="width-211" appendTo="body" id="managers" [options]="users" [(ngModel)]="this.managers"
+                optionLabel="login" optionValue="login"></p-dropdown>
+  </div>
+  <div>
+    <div class="big-text-user mb-1 mt-1">{{lang.tr('Пользователи')}}</div>
+    <p-multiSelect styleClass="width-211" appendTo="body" id="users" [options]="users" [(ngModel)]="selectedUsers"
+                   [filter]="true" filterBy="name,login,surname,department" optionValue="login" optionLabel="login">
+      <ng-template let-users pTemplate="item">
+        <div class="df">
+          <div class="table-body cy" [innerHTML]="setAvatar(users.avatar) | safeHtml"></div>
+          <div class="table-body cy">{{users.name}}</div>
+          <div class="table-body cy">{{users.surname}}</div>
+          <div class="table-body cy">{{users.profession}}</div>
+          <div class="table-body cy">{{users.department}}</div>
+        </div>
+      </ng-template>
+    </p-multiSelect>
   </div>
 
 
