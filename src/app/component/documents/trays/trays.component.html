@@ -63,25 +63,25 @@
               </div>
             </div>
             <div class="w-100" *ngIf="cableBoxes.length != 0">
-              <div *ngFor="let box of cableBoxesByCode; let i = index" class="card-tile-t"
-                   [class.hidden-card]="box == null">
+              <div *ngFor="let cableBox of cableBoxesByCode; let i = index" class="card-tile-t"
+                   [class.hidden-card]="cableBox == null">
                 <div class="df">
                   <div class="text-center-y">
-                    <div class="title-name">{{getName(box.desc, box.code)}}</div>
+                    <div class="title-name">{{getName(cableBox.desc, cableBox.code)}}</div>
                   </div>
                   <div class="p-ml-auto text-center-y">
                     <div class="df">
-                      <div class="trm">{{box.stockCode}}</div>
-                      <div (click)="copyTrmCode(box.stockCode, 'c' + i)" class="trm-copy cursor-pointer cxy">
+                      <div class="trm">{{cableBox.stockCode}}</div>
+                      <div (click)="copyTrmCode(cableBox.stockCode, 't' + i)" class="trm-copy cursor-pointer cxy">
                         <img src="assets/icons/trm.svg" height="16">
-                        <div class="copy-tooltip" [hidden]="!showTooltip('c' + i)">Copied!</div>
+                        <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="df">
-                  <div class="text-center-y">Total weight: {{round(getGroupWeight(box.values))}}</div>
-                  <div class="text-center-y">Total count: {{box.values.length}}</div>
+                  <div class="text-center-y">Total weight: {{round(getGroupWeight(cableBox.values))}}</div>
+                  <div class="text-center-y">Total count: {{cableBox.values.length}}</div>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@
                 <div class="w-20 table-header-column cy">{{l.tr('COORDINATES')}}</div>
                 <div class="w-30 table-header-column cy">{{l.tr('STOCK CODE')}}</div>
               </div>
-              <div *ngFor="let cableBox of cableBoxes; let j = index" class="df cursor-pointer info-row">
+              <div *ngFor="let cableBox of cableBoxes; let i = index" class="df cursor-pointer info-row">
                 <div class="w-10 table-body cy">{{cableBox.userId}}</div>
                 <div class="w-30 table-body cy">{{getName(cableBox.material.name, cableBox.code)}}</div>
                 <!--                <div class="w-10 table-body cy">{{cableBox.zone}}</div>-->
@@ -120,12 +120,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="p-ml-auto w-30 table-body cy">
+                <div class="p-ml-auto w-30 position-relative table-body cy">
                   <div class="df">
                     <div class="trm">{{cableBox.stockCode}}</div>
-                    <div (click)="copyTrmCode(cableBox.stockCode, 'b' + j)" class="trm-copy cursor-pointer cxy">
+                    <div (click)="copyTrmCode(cableBox.stockCode, 'tr' + i)" class="trm-copy cursor-pointer cxy">
                       <img src="assets/icons/trm.svg" height="16">
-                      <div class="copy-tooltip" [hidden]="!showTooltip('b' + j)">Copied!</div>
+                      <div class="copy-tooltip-t" [hidden]="!showTooltip('tr' + i)">Copied!</div>
                     </div>
                   </div>
                 </div>

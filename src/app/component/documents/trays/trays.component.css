@@ -1045,6 +1045,17 @@
   padding: 4px 6px;
   color: #3a3a3ade;
 }
+.copy-tooltip-t{
+  position: absolute;
+  top: -10px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  box-shadow: 1px 1px 13px 0px rgba(34, 60, 80, 0.16);
+  font-size: 12px;
+  padding: 4px 6px;
+  color: #3a3a3ade;
+  z-index: 10;
+}
 .dot {
   border-radius: 50%;
   height: 16px;
