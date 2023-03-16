@@ -5,6 +5,7 @@ import {ProjectService} from "./project.service";
 import {Projects} from "../../../domain/interfaces/project";
 import {Users} from "../../../domain/interfaces/users";
 import _, {groupBy} from "underscore";
+import {UserService} from "../user/user.service";
 
 @Component({
   selector: 'app-project',
@@ -19,7 +20,7 @@ export class ProjectComponent implements OnInit {
   colsUsers: any[] = [];
   scrollHeight: string = '600px';
 
-  constructor(public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
+  constructor(public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
 
   ngOnInit(): void {
     console.log(this.conf.data)
@@ -54,6 +55,14 @@ export class ProjectComponent implements OnInit {
     this.projectService.saveProject(this.project, this.id, this.selectedUsers.map(x => x.id)).subscribe({
       next: res => {
         console.log(res);
+        this.userService.saveUsersProject(this.selectedUsers.map(x => x.id), this.project.id).subscribe({
+          next: res => {
+            console.log(res);
+          },
+          error: err => {
+            console.log(err);
+          }
+        })
         this.ref.close(res);
       },
       error: err => {
@@ -61,6 +70,6 @@ export class ProjectComponent implements OnInit {
         this.ref.close(err);
       }
     });
-  }
 
+  }
 }

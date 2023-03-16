@@ -8,10 +8,6 @@
 
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('ID')}}</div>
-      <p-inputNumber inputStyleClass="width-211" inputId="id" [(ngModel)]="project.id"></p-inputNumber>
-    </div>
-    <div>
       <div class="big-text-user mb-1">{{lang.tr('Проект')}}</div>
       <input class="width-211" type="text" id="name" pInputText [(ngModel)]="project.name">
     </div>
@@ -19,13 +15,13 @@
       <div class="big-text-user mb-1">{{lang.tr('Foran')}}</div>
       <input class="width-211" type="text" id="foran" pInputText [(ngModel)]="project.foran">
     </div>
+    <div>
+      <div class="big-text-user mb-1">{{lang.tr('РКД')}}</div>
+      <input class="width-211" type="text" id="RKD" pInputText [(ngModel)]="project.rkd">
+    </div>
   </div>
 
   <div class="df space-between">
-    <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('РКД')}}</div>
-      <input class="width-211" type="text" id="RKD" pInputText [(ngModel)]="project.rkd">
-    </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('ПДСП')}}</div>
       <input class="width-211" type="text" id="PDSP" pInputText [(ngModel)]="project.pdsp">
@@ -34,21 +30,20 @@
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Завод')}}</div>
       <input class="width-211" type="text" id="factory" pInputText [(ngModel)]="project.factory">
     </div>
-
-  </div>
-  <div class="df space-between">
-    <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Менеджеры')}}</div>
-      <p-dropdown styleClass="width-211" appendTo="body" id="managers" [options]="users" [(ngModel)]="project.managers"
-                  optionLabel="login" optionValue="login"></p-dropdown>
-    </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Статус')}}</div>
       <input class="width-211" type="text" id="status" pInputText [(ngModel)]="project.status">
     </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Менеджеры')}}</div>
+      <p-dropdown styleClass="width-310" appendTo="body" id="managers" [options]="users" [(ngModel)]="project.managers"
+                  optionLabel="login" optionValue="login"></p-dropdown>
+    </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Пользователи')}}</div>
-      <p-multiSelect styleClass="width-211 mycontainer" appendTo="body" id="users" [options]="users" [(ngModel)]="selectedUsers"
+      <p-multiSelect styleClass="width-310 mycontainer" appendTo="body" id="users" [options]="users" [(ngModel)]="selectedUsers"
                      [filter]="true" filterBy="name,login,surname,department" optionValue="login" optionLabel="login" [scrollHeight]="scrollHeight">
         <ng-template let-users pTemplate="item">
           <div class="df">
