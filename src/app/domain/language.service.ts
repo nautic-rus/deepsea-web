@@ -432,8 +432,8 @@ export class LanguageService {
           case 'Гендер': return 'Gender';
           case 'Логин RocketChat': return 'Login RocketChat';
           case 'Показать незапланированные': return 'Show without plan';
-          case '': return '';
-          case '': return '';
+          case 'Кабельные коробки': return 'Cable boxes';
+          case 'Сводные данные': return 'Summary';
           case '': return '';
           case '': return '';
           case '': return '';
