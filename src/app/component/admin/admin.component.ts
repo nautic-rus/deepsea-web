@@ -392,7 +392,7 @@ export class AdminComponent implements OnInit {
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: false,
+        date: false
       },
 
       {
@@ -422,7 +422,7 @@ export class AdminComponent implements OnInit {
         header: 'Surname',
         headerLocale: 'Surname',
         sort: true,
-        filter: true,
+        filter: false,
         skip: false,
         defaultValue: '',
         hidden: false,
@@ -433,7 +433,7 @@ export class AdminComponent implements OnInit {
         header: 'Profession',
         headerLocale: 'Profession',
         sort: true,
-        filter: true,
+        filter: false,
         skip: false,
         defaultValue: '',
         hidden: false,
@@ -444,7 +444,7 @@ export class AdminComponent implements OnInit {
         header: 'Department',
         headerLocale: 'Department',
         sort: true,
-        filter: true,
+        filter: false,
         skip: false,
         defaultValue: '',
         hidden: false,

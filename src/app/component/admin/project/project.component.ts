@@ -16,7 +16,7 @@ export class ProjectComponent implements OnInit {
   project: Projects;
   id: any;
   users: Users[] = [];
-  selectedUsers: Users[] = [];
+  selectedUsers: number[] = [];
   colsUsers: any[] = [];
   scrollHeight: string = '600px';
 
@@ -36,7 +36,7 @@ export class ProjectComponent implements OnInit {
     this.userService.getUsersProject(id)
       .subscribe(users => {
         console.log(users);
-        this.selectedUsers = users;
+        this.selectedUsers = users.map((x: any) => x);
       });
   }
 
@@ -53,6 +53,14 @@ export class ProjectComponent implements OnInit {
     this.projectService.deleteProject(this.project.id).subscribe({
       next: res => {
         console.log(res);
+        this.userService.deleteUsersProject(this.project.id).subscribe({
+          next: res => {
+            console.log(res);
+          },
+          error: err => {
+            console.log(err);
+          }
+        })
         this.ref.close(res);
       },
       error: err => {
@@ -63,10 +71,10 @@ export class ProjectComponent implements OnInit {
   }
 
   saveProject() {
-    this.projectService.saveProject(this.project, this.id, this.selectedUsers.map(x => x.id)).subscribe({
+    this.projectService.saveProject(this.project, this.id, this.selectedUsers).subscribe({
       next: res => {
         console.log(res);
-        this.userService.saveUsersProject(this.selectedUsers.map(x => x.id), this.project.id).subscribe({
+        this.userService.saveUsersProject(this.selectedUsers, this.project.id).subscribe({
           next: res => {
             console.log(res);
           },
