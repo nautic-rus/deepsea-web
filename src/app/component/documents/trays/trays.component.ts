@@ -219,7 +219,90 @@ export class TraysComponent implements OnInit {
   }
 
   exportSketches() {
-  //
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = [];
+
+    data.push({
+      N: "SUMMARY",
+      MATERIAL: "-",
+      UNITS: "-",
+      QTY: "-",
+      WGT_KG: "-",
+      STOCK_CODE: "-"
+    });
+
+    _.forEach(_.groupBy(_.sortBy(this.trays, x => "" + '#' + x.material.name + '#' + x.stockCode), x => {return x.stockCode}), group => {
+      let summ = 0;
+      let weight = 0;
+      group.forEach((tray: any) => {
+        weight += tray.weight;
+        summ += tray.length;
+      });
+      summ = this.round(summ);
+      data.push({
+        N: "",
+        MATERIAL: group[0].material.name,
+        UNITS: group[0].material.units,
+        QTY: summ,
+        WGT_KG: this.round(weight),
+        STOCK_CODE: group[0].stockCode
+      });
+    });
+
+    _.forEach(_.groupBy(_.sortBy(this.cableBoxes, x => x.userId + '#' + x.material.name + '#' + x.stockCode), x => {return x.stockCode}), group => {
+      let summ = 0;
+      let weight = 0;
+      group.forEach((box: any) => {
+        weight += box.weight;
+        summ += box.length;
+      });
+      summ = group.length;
+      data.push({
+        N: "",
+        MATERIAL: group[0].material.name,
+        UNITS: group[0].material.units,
+        QTY: summ,
+        WGT_KG: this.round(weight),
+        STOCK_CODE: group[0].stockCode
+      });
+    });
+
+    data.push({
+      N: "CABLE BOXES",
+      MATERIAL: "-",
+      UNITS: "-",
+      QTY: "-",
+      WGT_KG: "-",
+      STOCK_CODE: "-"
+    });
+
+    _.forEach(_.sortBy(this.cableBoxes, x => x.userId), box => {
+      data.push({
+        N: "",
+        MATERIAL: box.material.name,
+        UNITS: box.material.units,
+        QTY: "1",
+        WGT_KG: this.round(box.weight),
+        STOCK_CODE: box.stockCode
+      });
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    worksheet['!cols'] = [{wch:15},{wch:60},{wch:5},{wch:5},{wch:5},{wch:20}];
+
+    XLSX.writeFile(workbook, fileName);
+  }
+
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
   }
 
   addMaterial() {

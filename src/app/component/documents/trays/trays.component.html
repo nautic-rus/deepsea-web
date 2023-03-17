@@ -10,13 +10,13 @@
           </svg>
         </div>
       </div>
-      <div class="mr-10" *ngIf="false">
-        <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" (click)="exportSketches()" class="materials-button green-button cxy">
+      <div class="mr-10">
+        <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" *ngIf="'Electric' == auth.getUser().department" (click)="exportSketches()" class="materials-button green-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" *ngIf="'Electric' == auth.getUser().department" tooltipPosition="top" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="20">
         </div>
       </div>
