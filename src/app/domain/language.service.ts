@@ -434,7 +434,7 @@ export class LanguageService {
           case 'Показать незапланированные': return 'Show without plan';
           case 'Кабельные коробки': return 'Cable boxes';
           case 'Сводные данные': return 'Summary';
-          case '': return '';
+          case 'Пользователи': return 'Users';
           case '': return '';
           case '': return '';
           case '': return '';

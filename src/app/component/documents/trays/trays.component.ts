@@ -222,6 +222,19 @@ export class TraysComponent implements OnInit {
   //
   }
 
+  addMaterial() {
+    this.dialogService.open(AddMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, '-', '']
+    }).onClose.subscribe(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.fillRevisions();
+      });
+    });
+  }
+
   getRevisionFilesOfGroupAux(fileGroup: string, revision: string): FileAttachment[] {
     let files = this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision);
     if (this.fileSort == 'name'){

@@ -3,23 +3,23 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-files')" (click)="createEsp()">
+      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="'Electric' == auth.getUser().department" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <svg class="icon-top-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
           </svg>
         </div>
       </div>
-      <div class="mr-10">
+      <div class="mr-10" *ngIf="false">
         <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" (click)="exportSketches()" class="materials-button green-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <!--      <span class="p-ml-auto p-input-icon-left">-->
-      <!--        <i class="pi pi-search"></i>-->
-      <!--         <input [(ngModel)]="search" pInputText type="text"-->
-      <!--                [placeholder]="l.tr('Поиск...')" class="border width-170"/>-->
-      <!--      </span>-->
+      <div class="mr-10">
+        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
+          <img src="assets/icons/plus3.svg" height="20">
+        </div>
+      </div>
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20">
@@ -27,7 +27,7 @@
           project {{project}}. You need
           to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
         </div>
-        <div *ngIf="trays.length == 0 && cableBoxes.length == 0 && noResultTrays && noResultBoxes">
+        <div *ngIf="trays.length == 0 && cableBoxes.length == 0 && !noResultTrays && !noResultBoxes">
           <div class="cxy loading">
             <div class="cxy card-height">
               <img src="assets/whale.gif" height="120">
@@ -156,7 +156,7 @@
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
-                  <div class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                  <div *ngIf="'Electric' == auth.getUser().department && issue.status == 'Delivered'" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/plus1.svg" height="16">
                     </div>
@@ -193,7 +193,7 @@
                   </div>
 
 
-                  <div *ngIf="auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="'Electric' == auth.getUser().department" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy icon-rotate">
                       <img src="assets/icons/broom.png">
                     </div>
@@ -266,7 +266,7 @@
                           </ng-template>
                         </p-overlayPanel>
                       </div>
-                      <div class="cxy" *ngIf="auth.hasPerms('esp-files')" (click)="deleteFile(file.url)">
+                      <div class="cxy" *ngIf="'Electric' == auth.getUser().department" (click)="deleteFile(file.url)">
                         <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
                           <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>

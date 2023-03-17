@@ -49,4 +49,9 @@ export class UserService {
     console.log(idUsers);
     return this.http.post<string>(props.http + '/editUsersProject', {params: {idUsers: {idUsers}, idProject: {idProject}}})
   }
+
+  getUsersProject(id: number) {
+    console.log(id)
+    return this.http.get<any>(props.http + '/usersProject', {params: {id}});
+  }
 }

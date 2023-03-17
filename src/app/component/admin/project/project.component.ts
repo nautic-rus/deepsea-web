@@ -28,7 +28,18 @@ export class ProjectComponent implements OnInit {
     this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;
     this.colsUsers = this.conf.data[2];
     this.id = this.project.id;
+    this.fillSelectedUsers(this.id);
+    console.log(this.selectedUsers)
   }
+
+  fillSelectedUsers(id: number): void {
+    this.userService.getUsersProject(id)
+      .subscribe(users => {
+        console.log(users);
+        this.selectedUsers = users;
+      });
+  }
+
 
   close() {
     this.ref.close();
