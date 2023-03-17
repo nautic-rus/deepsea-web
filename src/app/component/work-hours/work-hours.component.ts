@@ -469,6 +469,16 @@ export class WorkHoursComponent implements OnInit {
           this.fillDays();
           this.filterIssues();
           this.loading = false;
+
+          let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id), x => x.id);
+
+          if (planHours.length > 0){
+            let first = plannedHours[0];
+            let last = plannedHours[plannedHours.length - 1];
+            let dateStart = new Date(first.year, first.month, first.day);
+            let dateDue = new Date(last.year, last.month, last.day);
+            this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+          }
         });
       }
     });
