@@ -44,4 +44,9 @@ export class UserService {
     console.log(user);
     return this.http.post<string>(props.http + '/editUser', JSON.stringify(user), {params: {id}})
   }
+
+  saveUsersProject(idUsers: number[], idProject: number) {
+    console.log(idUsers);
+    return this.http.post<string>(props.http + '/editUsersProject', {params: {idUsers: {idUsers}, idProject: {idProject}}})
+  }
 }

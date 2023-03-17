@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FileAttachment} from "../../../../domain/classes/file-attachment";
 import {Issue} from "../../../../domain/classes/issue";
 import {AuthManagerService} from "../../../../domain/auth-manager.service";
@@ -19,32 +19,33 @@ export class TrayEspGenerationWaitComponent implements OnInit {
 
   issue: Issue = new Issue();
 
-  trays: Trays[] = [];
-  cableBoxes: CableBoxes[] = [];
-
   selectRevision = true;
   generationWait = false;
 
   resUrls: string[] = [];
-  revs = ['0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
+  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
   rev: string = this.revs[0];
-  langs = ['Primary', 'Secondary'];
-  lang = this.langs[0];
   updateRevision = false;
+  project = '';
 
-  constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
+  constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) {
+  }
+
 
   ngOnInit(): void {
-    this.issue = this.conf.data.issue;
+    this.issue = this.conf.data[0];
+    this.project = this.conf.data[1];
+    this.rev = this.issue.revision;
   }
-  close(){
+
+  close() {
     this.ref.close('exit');
   }
 
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getDevicesEspFiles(this.issue.doc_number, this.rev, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
+    this.s.getElecEspFiles(this.project, this.issue.doc_number, this.issue.name, this.rev).then(res => {
       this.generationWait = false;
       this.resUrls.splice(0, this.resUrls.length);
       this.resUrls.push(res);
@@ -56,11 +57,11 @@ export class TrayEspGenerationWaitComponent implements OnInit {
         file.revision = this.rev;
         file.author = this.auth.getUser().login;
         file.group = 'Part List';
-        file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+        //file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
         file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
         files.push(file);
       });
-
+      //this.issue.revision = this.rev;
       // this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
       //   this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', 'PROD').then(() => {
       //     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(files)).then(res => {
@@ -78,35 +79,49 @@ export class TrayEspGenerationWaitComponent implements OnInit {
   openFile(file: string) {
     window.open(file);
   }
+
   getFileExtensionIcon(file: string) {
-    switch (file.toLowerCase().split('.').pop()){
-      case 'pdf': return 'pdf.svg';
-      case 'dwg': return 'dwg.svg';
-      case 'xls': return 'xls.svg';
-      case 'xlsx': return 'xls.svg';
-      case 'doc': return 'doc.svg';
-      case 'docx': return 'doc.svg';
-      case 'png': return 'png.svg';
-      case 'jpg': return 'jpg.svg';
-      case 'txt': return 'txt.svg';
-      case 'zip': return 'zip.svg';
-      case 'mp4': return 'mp4.svg';
-      default: return 'file.svg';
+    switch (file.toLowerCase().split('.').pop()) {
+      case 'pdf':
+        return 'pdf.svg';
+      case 'dwg':
+        return 'dwg.svg';
+      case 'xls':
+        return 'xls.svg';
+      case 'xlsx':
+        return 'xls.svg';
+      case 'doc':
+        return 'doc.svg';
+      case 'docx':
+        return 'doc.svg';
+      case 'png':
+        return 'png.svg';
+      case 'jpg':
+        return 'jpg.svg';
+      case 'txt':
+        return 'txt.svg';
+      case 'zip':
+        return 'zip.svg';
+      case 'mp4':
+        return 'mp4.svg';
+      default:
+        return 'file.svg';
     }
   }
-  trimFileName(input: string, length: number = 10): string{
+
+  trimFileName(input: string, length: number = 10): string {
     let split = input.split('.');
     let name = split[0];
     let extension = split[1];
-    if (name.length > length){
+    if (name.length > length) {
       return name.substr(0, length - 2) + '..' + name.substr(name.length - 2, 2) + '.' + extension;
-    }
-    else{
+    } else {
       return input;
     }
   }
-  getDate(dateLong: number): string{
-    if (dateLong == 0){
+
+  getDate(dateLong: number): string {
+    if (dateLong == 0) {
       return '--/--/----';
     }
     let date = new Date(dateLong);

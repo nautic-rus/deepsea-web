@@ -30,6 +30,9 @@ import {
   DeviceEspGenerationWaitComponent
 } from "../device-esp/device-esp-generation-wait/device-esp-generation-wait.component";
 import * as XLSX from "xlsx";
+import {HullEspGenerationWaitComponent} from "../hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component";
+import {TrayEspGenerationWaitComponent} from "./tray-esp-generation-wait/tray-esp-generation-wait.component";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-trays',
@@ -58,7 +61,6 @@ export class TraysComponent implements OnInit {
   cableBoxesByCode: any = [];
   cableBoxesById: any = [];
   tooltips: string[] = [];
-  length: number = 0;
   selectedHeadTab: string = 'Files';
   fileGroups = [
     {
@@ -74,70 +76,18 @@ export class TraysComponent implements OnInit {
       need_rights: false
     }
   ];
+  cloudDate = false;
   selectedRevision = 'PROD';
+  fileSort = 'name';
+  sortReverse = false;
   waitForZipFiles = false;
+  cmapuser = '';
   dxfEnabled = false;
-  spoolsArchive: any;
-  spoolsArchiveContent: any[] = [];
-  comment = false;
-  message = '';
-  awaitForLoad: string[] = [];
-  loaded: FileAttachment[] = [];
-  // @ts-ignore
-  editor;
-  quillModules =
-    {
-      imageResize: {},
-      clipboard: {
-        matchers: [
-          // @ts-ignore
-          ['img', (node, delta) => {
-            let image = delta.ops[0].insert.image;
-            if ((image.indexOf(";base64")) != -1) {
-              let ext = image.substring("data:image/".length, image.indexOf(";base64"))
-              let fileName = 'clip' + this.generateId(8) + '.' + ext;
-              const find = this.loaded.find(x => x.name == fileName);
-              if (find != null) {
-                this.loaded.splice(this.loaded.indexOf(find), 1);
-              }
-              this.awaitForLoad.push(fileName);
-              this.appRef.tick();
-              fetch(image).then(res => res.blob()).then(blob => {
-                const file = new File([blob], fileName, {type: "image/png"});
-                this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
-                  this.loaded.push(res);
-                  this.appRef.tick();
-                  this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
-                  this.appRef.tick();
-                });
-              });
-              return new Delta();
-            } else {
-              return delta;
-            }
-            //return delta;
-          }]
-        ]
-      },
-      keyboard: {
-        bindings: {
-          tab: {
-            key: 9,
-            handler: function () {
-              return true;
-            }
-          }
-        }
-      }
-    }
-  messageFilter = 'all';
-  showImages = false;
-  // @ts-ignore
-  @ViewChild('img') img;
-  image = '';
-  // @ts-ignore
-  wz;
-
+  cmapdate = 0;
+  cmapFormat = '';
+  cutEnabled = false;
+  cmap = '';
+  miscIssues: Issue[] = [];
 
 
   constructor(public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
@@ -162,30 +112,15 @@ export class TraysComponent implements OnInit {
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
-      this.issueRevisions.push(this.issue.revision);
-      this.issue.revision_files.map(x => x.revision).forEach(gr => {
-        if (!this.issueRevisions.includes(gr)) {
-          this.issueRevisions.push(gr);
-        }
-      });
-      this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
-
-      let findSpools = this.issue.revision_files.find(x => x.group == 'Pipe Spools' && x.name.includes('.zip'));
-      if (findSpools != null) {
-        this.traysArchive = findSpools;
-        this.traysArchiveContent.splice(0, this.traysArchiveContent.length);
-        fetch(findSpools.url).then(response => response.blob()).then(blob => {
-          JSZip.loadAsync(blob).then(res => {
-            Object.keys(res.files).forEach(file => {
-              let name = file.split('/');
-              if (name.length > 1 && name[1] != '') {
-                this.traysArchiveContent.push(name[1]);
-              }
-            });
-          });
+      this.miscIssues.splice(0, this.miscIssues.length);
+      this.issueManager.getIssues('op').then(issues => {
+        issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+        this.miscIssues.forEach(x => {
+          issues.filter(y => y.parent_id == x.id).forEach(ch => {
+            this.miscIssues.push(ch);
+          })
         });
-
-      }
+      });
 
       this.fillTrays();
       this.fillCableBoxes();
@@ -234,7 +169,7 @@ export class TraysComponent implements OnInit {
     group.forEach(x => {
       res += x.length;
     });
-    return res / 1000.0;
+    return res;
   }
 
   getGroupWeight(group: any[]) {
@@ -273,11 +208,11 @@ export class TraysComponent implements OnInit {
     return this.tooltips.includes(index);
   }
 
-  createEsp(value: string = '1') {
-    this.dialogService.open(DeviceEspGenerationWaitComponent, {
+  createEsp() {
+    this.dialogService.open(TrayEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
-      data: {issue: this.issue, spools: value}
+      data: [this.issue, this.project]
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });
@@ -287,73 +222,28 @@ export class TraysComponent implements OnInit {
   //
   }
 
-  newImportantMessage() {
-    let res = 0;
-    let completed = false;
-    _.sortBy(this.getMessages(this.issue), x => x.date).reverse().forEach(msg => {
-      if (msg.to_be_replied == 1 && msg.author != this.auth.getUser().login && !completed) {
-        res += 1;
-      } else {
-        completed = true;
-      }
-    });
-    return res;
-  }
-
-  getMessages(issue: Issue) {
-    let res: any[] = [];
-    issue.messages.filter(x => x.prefix == 'turkey').forEach(x => res.push(x));
-    //issue.history.forEach(x => res.push(x));
-    // @ts-ignore
-    return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
-  }
-
-  getArchive() {
-    return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
-  }
-
-  getFileExtensionIcon(file: string) {
-    switch (file.toLowerCase().split('.').pop()) {
-      case 'pdf':
-        return 'pdf.svg';
-      case 'dwg':
-        return 'dwg.svg';
-      case 'xls':
-        return 'xls.svg';
-      case 'xlsx':
-        return 'xls.svg';
-      case 'doc':
-        return 'doc.svg';
-      case 'docx':
-        return 'doc.svg';
-      case 'png':
-        return 'png.svg';
-      case 'jpg':
-        return 'jpg.svg';
-      case 'txt':
-        return 'txt.svg';
-      case 'zip':
-        return 'zip.svg';
-      case 'mp4':
-        return 'mp4.svg';
-      default:
-        return 'file.svg';
+  getRevisionFilesOfGroupAux(fileGroup: string, revision: string): FileAttachment[] {
+    let files = this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision);
+    if (this.fileSort == 'name'){
+      return this.sortReverse ? _.sortBy(files, x => x.name).reverse() : _.sortBy(files, x => x.name);
     }
-  }
-
-  trimFileName(input: string, length: number = 10): string {
-    let split = input.split('.');
-    let name = split[0];
-    let extension = split[1];
-    if (name.length > length) {
-      return name.substr(0, length - 2) + '..' + name.substr(name.length - 2, 2) + '.' + extension;
-    } else {
-      return input;
+    else {
+      return this.sortReverse ? _.sortBy(files, x => x.upload_date).reverse() : _.sortBy(files, x => x.upload_date);
     }
   }
 
   getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
-    return _.sortBy(this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == revision), x => x.upload_date + x.name).reverse();
+    if (this.issue.cloud_files.length == 0){
+      return this.getRevisionFilesOfGroupAux(fileGroup, revision);
+    }
+    this.cloudDate = true;
+    let files = this.issue.cloud_files.filter(x => (x.group == fileGroup || fileGroup == 'all'));
+    if (this.fileSort == 'name'){
+      return this.sortReverse ? _.sortBy(files, x => x.name).reverse() : _.sortBy(files, x => x.name);
+    }
+    else {
+      return this.sortReverse ? _.sortBy(files, x => x.upload_date).reverse() : _.sortBy(files, x => x.upload_date);
+    }
   }
 
   addFilesToGroup(file_group: string, revision: string) {
@@ -369,7 +259,11 @@ export class TraysComponent implements OnInit {
     });
   }
 
-  downloadFiles(group: string, revision: string) {
+  downloadFiles(group: string, revision: string, format = 'cnc') {
+    if (group == 'Cutting Map'){
+      this.downloadFilesCVC(group, revision, format);
+      return;
+    }
     let files = this.getRevisionFilesOfGroup(group, revision);
     let zipped: string[] = [];
     this.waitForZipFiles = true;
@@ -378,17 +272,262 @@ export class TraysComponent implements OnInit {
       blobs.forEach(blob => {
         // @ts-ignore
         let name: string = blob.url.split('/').pop();
-        while (zipped.includes(name)) {
+        while (zipped.includes(name)){
           name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
         }
         zipped.push(name);
         zip.file(name, blob.blob());
       });
-      zip.generateAsync({type: "blob"}).then(res => {
+      zip.generateAsync({type:"blob"}).then(res => {
         this.waitForZipFiles = false;
         saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
       });
     });
+  }
+
+  downloadFilesCVC(group: string, revision: string, format = 'cnc') {
+    let files = this.getRevisionFilesOfGroup(group, revision);
+    let zipped: string[] = [];
+    this.waitForZipFiles = true;
+    forkJoin(files.map(x => fetch(x.url))).subscribe(blobs => {
+      forkJoin(blobs.map(file => file.text())).subscribe(texts => {
+
+        if (format == 'txt'){
+          let zip = new JSZip();
+          texts.forEach(txt => {
+            // @ts-ignore
+            let name: string = blobs[texts.indexOf(txt)].url.split('/').pop();
+            while (zipped.includes(name)) {
+              name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+            }
+            name = name.replace('C-' + this.project + '-', '');
+            // @ts-ignore
+            zip.file(name, txt);
+          });
+          zip.generateAsync({type: "blob"}).then(res => {
+            this.waitForZipFiles = false;
+            saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
+          });
+          return;
+        }
+
+        forkJoin(texts.map(text => {
+          this.cmapuser = this.auth.getUserName(files[texts.indexOf(text)].author);
+          this.cmapdate = files[texts.indexOf(text)].upload_date;
+          if (format == 'essi'){
+            return this.s.createESSI(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+          }
+          else if (format == 'tap'){
+            return this.s.createTAP(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+          }
+          else{
+            return this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString());
+          }
+        })).subscribe(cncs => {
+          let zip = new JSZip();
+          cncs.forEach(cnc => {
+            // @ts-ignore
+            let name: string = blobs[cncs.indexOf(cnc)].url.split('/').pop();
+            while (zipped.includes(name)){
+              name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
+            }
+
+            if (format == 'essi'){
+              name = name.replace('.txt', '.ESI');
+            }
+            else if (format == 'tap'){
+              name = name.replace('.txt', '.TAP');
+            }
+            else{
+              name = name.replace('.txt', '.MPG');
+            }
+
+
+            name = name.replace('C-' + this.project + '-', '');
+            zipped.push(name);
+            // @ts-ignore
+            zip.file(name, cnc.join('\n'));
+          });
+          zip.generateAsync({type: "blob"}).then(res => {
+            this.waitForZipFiles = false;
+            saveAs(res, this.issue.doc_number + '-' + new Date().getTime() + '.zip');
+          });
+        });
+      });
+    });
+  }
+
+  setFileSort(value: string) {
+    this.fileSort = value;
+    this.sortReverse = !this.sortReverse;
+  }
+
+  getFileExtensionIcon(file: string) {
+    switch (file.toLowerCase().split('.').pop()){
+      case 'pdf': return 'pdf.svg';
+      case 'dwg': return 'dwg.svg';
+      case 'xls': return 'xls.svg';
+      case 'xlsx': return 'xls.svg';
+      case 'doc': return 'doc.svg';
+      case 'docx': return 'doc.svg';
+      case 'png': return 'png.svg';
+      case 'jpg': return 'jpg.svg';
+      case 'txt': return 'txt.svg';
+      case 'zip': return 'zip.svg';
+      case 'mp4': return 'mp4.svg';
+      default: return 'file.svg';
+    }
+  }
+
+  trimFileName(input: string, length: number = 10): string{
+    let split = input.split('.');
+    let name = split[0];
+    let extension = split[1];
+    if (name.length > length){
+      return name.substr(0, length - 2) + '..' + name.substr(name.length - 2, 2) + '.' + extension;
+    }
+    else{
+      return input;
+    }
+  }
+
+  getDate(dateLong: number): string{
+    if (this.cloudDate){
+      return this.getCloudDateNoTime(dateLong);
+    }
+    if (dateLong == 0){
+      return '--/--/----';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
+  getCloudDateNoTime(dateLong: number): string{
+    if (dateLong == 0) {
+      return '';
+    }
+    else{
+      let date = new Date(0);
+      date.setUTCSeconds(dateLong);
+      return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    }
+  }
+
+  showDxfInViewer(url: string) {
+    if (!this.dxfEnabled){
+      this.dxfEnabled = !this.dxfEnabled;
+    }
+    this.router.navigate([], {queryParams: {dxf: null, search: null, searchNesting: null}, queryParamsHandling: 'merge'}).then(() => {
+      // @ts-ignore
+      this.router.navigate([], {queryParams: {dxf: url, search: null, searchNesting: null}, queryParamsHandling: 'merge'});
+    });
+  }
+
+  showCuttingFile(file: FileAttachment) {
+    console.log(file);
+    this.cmap = file.url;
+    this.dxfEnabled = false;
+    this.cutEnabled = false;
+    this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
+      setTimeout(() => {
+        this.cutEnabled = true;
+        console.log(this.cutEnabled);
+        // @ts-ignore
+        this.router.navigate([], {queryParams: {cmap: file.url, cmapuser: this.auth.getUserName(file.author), cmapdate: file.upload_date}, queryParamsHandling: 'merge'});
+        const style = document.createElement('style');
+        style.innerHTML = `
+          .editBlock pre {
+            height: 42vh !important;
+          }
+          .viewContainer .TwoDView {
+            height: 45vh !important;
+          }
+        `;
+        document.head.appendChild(style);
+      });
+    });
+  }
+
+  openFile(file: FileAttachment, cmapFormat = 'cnc') {
+    if (file.group == 'Cutting Map'){
+      this.cmap = file.url;
+      this.cmapFormat = cmapFormat;
+      this.cmapuser = this.auth.getUserName(file.author);
+      this.downloadOpenedCMAP();
+    }
+    else{
+      window.open(file.url, '_blank');
+    }
+  }
+
+  deleteFile(fileUrl: string){
+    this.dialogService.open(ClearFilesComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.issueManager.deleteRevisionFile(fileUrl, this.auth.getUser().login).then(() => {
+          this.fillRevisions();
+        });
+      }
+    });
+  }
+
+  downloadOpenedCMAP() {
+    if (this.cmap != ''){
+      fetch(this.cmap).then(res => {
+        res.text().then(text => {
+          if (this.cmapFormat == 'cnc'){
+            this.s.createCNC(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+              var element = document.createElement('a');
+              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+              // @ts-ignore
+              element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.MPG'));
+
+              element.style.display = 'none';
+              document.body.appendChild(element);
+
+              element.click();
+
+              document.body.removeChild(element);
+            });
+          }
+          else if (this.cmapFormat == 'tap'){
+            this.s.createTAP(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+              var element = document.createElement('a');
+              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+              // @ts-ignore
+              element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.TAP'));
+
+              element.style.display = 'none';
+              document.body.appendChild(element);
+
+              element.click();
+
+              document.body.removeChild(element);
+            });
+          }
+          else{
+            this.s.createESSI(text.split('\n'), this.cmapuser + ' at ' + new Date(this.cmapdate).toDateString()).then(res => {
+
+              var element = document.createElement('a');
+              element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(res.join('\n')));
+              // @ts-ignore
+              element.setAttribute('download', this.cmap.split('/').pop().replace('C-' + this.project + '-', '').replace('.txt', '.ESI'));
+              element.style.display = 'none';
+              document.body.appendChild(element);
+
+              element.click();
+
+              document.body.removeChild(element);
+            });
+          }
+        });
+      });
+    }
   }
 
   clearFiles(fileGroup: string, revision: string) {
@@ -397,7 +536,7 @@ export class TraysComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      if (res == 'success') {
+      if (res == 'success'){
         this.issueManager.clearRevisionFiles(this.issue.id, this.auth.getUser().login, fileGroup, revision).then(() => {
           this.fillRevisions();
         });
@@ -405,288 +544,15 @@ export class TraysComponent implements OnInit {
     });
   }
 
-  getDate(dateLong: number): string {
-    if (dateLong == 0) {
-      return '--/--/----';
-    }
-    let date = new Date(dateLong);
-    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  openIssue(id: number) {
+    window.open('/?taskId=' + id, '_blank');
   }
 
-  showDxfInViewer(url: string) {
-    if (!this.dxfEnabled) {
-      this.dxfEnabled = !this.dxfEnabled;
-    }
-    this.router.navigate([], {
-      queryParams: {dxf: null, searchSpool: null, searchNesting: null},
-      queryParamsHandling: 'merge'
-    }).then(() => {
-      // @ts-ignore
-      this.router.navigate([], {
-        queryParams: {dxf: url, searchSpool: null, searchNesting: null},
-        queryParamsHandling: 'merge'
-      });
-    });
+  getArchive() {
+    return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
   }
 
-  openFile(file: FileAttachment) {
-    window.open(file.url, '_blank');
-  }
 
-  deleteFile(fileUrl: string) {
-    this.dialogService.open(ClearFilesComponent, {
-      showHeader: false,
-      modal: true,
-      data: this.issue
-    }).onClose.subscribe(res => {
-      if (res == 'success') {
-        this.issueManager.deleteRevisionFile(fileUrl, this.auth.getUser().login).then(() => {
-          this.fillRevisions();
-        });
-      }
-    });
-  }
-
-  showDxfInViewerZip(zip: FileAttachment, file: string) {
-    fetch(zip.url).then(response => response.blob()).then(blob => {
-      JSZip.loadAsync(blob).then(res => {
-        let findSpool = Object.keys(res.files).find(x => x.includes(file));
-        if (findSpool != null) {
-          res.files[findSpool].async('string').then(fileBlob => {
-            let blob = new Blob([fileBlob], {type: 'text/plain'});
-            let fileUpload = new File([blob], file);
-            this.issueManager.uploadFile(fileUpload, zip.author, zip.name).then(fileAttachment => {
-              if (!this.dxfEnabled) {
-                this.dxfEnabled = !this.dxfEnabled;
-              }
-              this.router.navigate([], {
-                queryParams: {dxf: null, searchSpool: null, searchNesting: null},
-                queryParamsHandling: 'merge'
-              }).then(() => {
-                // @ts-ignore
-                this.router.navigate([], {
-                  queryParams: {
-                    dxf: fileAttachment.url,
-                    searchSpool: null,
-                    searchNesting: null
-                  }, queryParamsHandling: 'merge'
-                });
-              });
-            });
-          });
-        }
-      });
-    });
-  }
-
-  downloadFileFromZip(zip: FileAttachment, file: string) {
-    fetch(zip.url).then(response => response.blob()).then(blob => {
-      JSZip.loadAsync(blob).then(res => {
-        let findSpool = Object.keys(res.files).find(x => x.includes(file));
-        if (findSpool != null) {
-          res.files[findSpool].async('string').then(fileBlob => {
-            let blob = new Blob([fileBlob], {type: 'text/plain'});
-            const element = document.createElement('a');
-            element.setAttribute('href', URL.createObjectURL(blob));
-            element.setAttribute('download', file);
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-          });
-        }
-      });
-    });
-  }
-
-  showComment() {
-    this.comment = true;
-    this.message = '';
-    this.awaitForLoad = [];
-    this.loaded = [];
-    setTimeout(() => {
-      this.editor.focus();
-    })
-  }
-
-  onEditorPressed(event: KeyboardEvent) {
-    if (event.ctrlKey && event.key === 'Enter') {
-      this.sendMessage();
-    }
-  }
-
-  editorInit(event: any) {
-    this.editor = event;
-  }
-
-  sendMessage() {
-    let message = new IssueMessage();
-    message.author = this.auth.getUser().login;
-    message.content = this.message;
-    message.file_attachments = this.loaded;
-    message.prefix = 'turkey';
-    message.to_be_replied = this.auth.hasPerms('needs-reply') ? 1 : 0;
-    // @ts-ignore
-    this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-      });
-    });
-    this.comment = false;
-  }
-  handleImageInput(files: FileList | null) {
-    if (files != null){
-      for (let x = 0; x < files.length; x++){
-        let file = files.item(x);
-        if (file != null){
-          // @ts-ignore
-          const find = this.loaded.find(x => x.name == file.name);
-          if (find != null){
-            this.loaded.splice(this.loaded.indexOf(find), 1);
-          }
-          this.awaitForLoad.push(file.name);
-        }
-      }
-      for (let x = 0; x < files.length; x++){
-        let file = files.item(x);
-        if (file != null){
-          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
-            this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
-            this.loaded.push(res);
-          });
-        }
-      }
-    }
-  }
-  generateId(length: number): string {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() *
-        charactersLength));
-    }
-    return result;
-  }
-  handleFileInput(files: FileList | null) {
-    if (files != null){
-      for (let x = 0; x < files.length; x++){
-        let file = files.item(x);
-        if (file != null){
-          // @ts-ignore
-          const find = this.loaded.find(x => x.name == file.name);
-          if (find != null){
-            this.loaded.splice(this.loaded.indexOf(find), 1);
-          }
-          this.awaitForLoad.push(file.name);
-        }
-      }
-      for (let x = 0; x < files.length; x++){
-        let file = files.item(x);
-        if (file != null){
-          this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
-            this.loaded.push(res);
-          });
-        }
-      }
-    }
-  }
-  isLoaded(file: string) {
-    return this.loaded.find(x => x.name == file);
-  }
-  remove(file: string) {
-    let find = this.loaded.find(x => x.name == file);
-    if (find != null){
-      this.loaded.splice(this.loaded.indexOf(find), 1);
-    }
-    let findAwait = this.awaitForLoad.find(x => x == file);
-    if (findAwait != null){
-      this.awaitForLoad.splice(this.awaitForLoad.indexOf(findAwait), 1);
-    }
-  }
-  openUserInfo(author: string) {
-    this.dialogService.open(UserCardComponent, {
-      showHeader: false,
-      modal: true,
-      data: author
-    });
-  }
-  localeGender(userId: string){
-    let find = this.auth.users.find(x => x.login == userId);
-    return find != null && find.gender == 'female' && this.l.language == 'ru' ? 'а' : '';
-  }
-  editorClicked(event: any) {
-
-    event.preventDefault();
-    event.stopPropagation();
-    if (event.target.localName == 'img'){
-      this.showImage(event.target.currentSrc);
-    }
-    else if (event.target.localName == 'a'){
-      window.open(event.target.href, '_blank');
-    }
-  }
-  showImage(url: string){
-    this.image = url;
-    this.showImages = true;
-    setTimeout(() => {
-      if (this.wz == null){
-        this.wz = mouseWheelZoom({
-          // @ts-ignore
-          element: document.querySelector('[data-wheel-zoom]'),
-          zoomStep: .25
-        });
-      }
-      this.wz.setSrcAndReset(url);
-    });
-  }
-  onEditorDrop(event: any) {
-    event.preventDefault();
-    let files = event.dataTransfer.files;
-    if (files != null){
-      for (let x = 0; x < files.length; x++){
-        let file = files.item(x);
-        if (file != null){
-          const acceptedImageTypes = ['.jpg', '.jpeg', '.png'];
-          let isImage = false;
-          acceptedImageTypes.forEach(x => {
-            if (file.name.includes(x)){
-              isImage = true;
-            }
-          });
-          if (isImage) {
-            const find = this.loaded.find(x => x.name == file.name);
-            if (find != null) {
-              this.loaded.splice(this.loaded.indexOf(find), 1);
-            }
-            this.awaitForLoad.push(file.name);
-            this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
-              this.message += '<img style="cursor: pointer" src="' + res.url + '"/>';
-              this.loaded.push(res);
-            });
-          }
-        }
-      }
-    }
-  }
-  getAuthor(author: string) {
-    return this.auth.getUserName(author);
-  }
-  getNoneZeroResult(input: string) {
-    return input.length == 0 ? '<div class="text-none">Нет</div>' : input;
-  }
-  getNoneZeroInput(input: string) {
-    return input == '-' ? '<div class="text-none">Нет</div>' : input;
-  }
-  getDateNoTime(dateLong: number): string{
-    if (dateLong == 0) {
-      return '';
-    }
-    else{
-      let date = new Date(dateLong);
-      return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
-    }
-  }
 
   setCols() {
     this.colsTrays = [
