@@ -23,7 +23,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
   styleUrls: ['./documents.component.css']
 })
 export class DocumentsComponent implements OnInit {
-  projects: string[] = ['NR002', 'NR004', '01701-ORION', '03070-CRABBER', '01701-LEV'];
+  projects: string[] = ['NR002', 'NR004', '01701-ORION', '03070-CRABBER', '01701-LEV', '03095-ANDROMEDA'];
   department = 'Hull';
   project = '';
   issues: Issue[] = [];
@@ -214,6 +214,7 @@ export class DocumentsComponent implements OnInit {
                 this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || docs.find(d => d.url.includes(issue.doc_number)) != null);
                 this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
                 this.issues = _.sortBy(this.issues, x => x.doc_number);
+                console.log(this.issues);
               });
             }
           });
