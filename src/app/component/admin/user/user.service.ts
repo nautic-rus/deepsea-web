@@ -58,4 +58,9 @@ export class UserService {
     console.log(id)
     return this.http.get<any>(props.http + '/usersProject', {params: {id}});
   }
+
+  getUserVisibleProjects(id: number) {
+    console.log(id)
+    return this.http.get<any>(props.http + '/userVisibleProjects', {params: {id}});
+  }
 }

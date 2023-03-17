@@ -7,13 +7,14 @@ import {Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {Observable, Subject} from "rxjs";
 import {Issue} from "./classes/issue";
-import _ from "underscore";
+import _, {List} from "underscore";
 import {LanguageService} from "./language.service";
 import { transliterate as tr, slugify } from 'transliteration';
 import {DayCalendar} from "./classes/day-calendar";
 import {TimeControlInterval} from "./classes/time-control-interval";
 import EventEmitter from "events";
 import {PlanHour} from "../component/work-hours/work-hours.component";
+import {UserService} from "../component/admin/user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class AuthManagerService {
   usersFilled = new Subject();
   filled = false;
 
-  constructor(private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, private l: LanguageService) {
+  constructor(private cookie: CookieService, private http: HttpClient, private userService: UserService, private router: Router, private messageService: MessageService, private l: LanguageService) {
     console.log('init auth');
     if (!this.filled){
       this.fillUsers();
@@ -60,6 +61,15 @@ export class AuthManagerService {
       find = this.users.find(x => x.login == this.user.shared_access);
     }
     return this.user.groups.includes(role) || find != null && find.groups.includes(role);
+  }
+  userVisibleProjects(userId: number) {
+    let visible_projects: string[] = [];
+    this.userService.getUserVisibleProjects(userId)
+      .subscribe(project => {
+        visible_projects = project;
+        console.log("meow  " + project)
+      })
+    return visible_projects;
   }
   exit(){
     this.setUser(new User(), true);
@@ -238,4 +248,5 @@ export class AuthManagerService {
   deleteUserTask(userId: number, taskId: number, fromHour: number){
     return this.http.get<any>(props.http + '/deleteUserTask', {params: {userId, taskId, fromHour}});
   }
+
 }
