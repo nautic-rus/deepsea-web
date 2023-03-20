@@ -12,6 +12,7 @@ import {DepartmentService} from "../department.service";
 import {any} from "underscore";
 import {Rights} from "../../../domain/interfaces/rights";
 import {RightService} from "../right/right.service";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-user',
@@ -31,7 +32,7 @@ export class UserComponent implements OnInit {
   birthday: Date;
 
 
-  constructor(public conf: DynamicDialogConfig, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
+  constructor(public conf: DynamicDialogConfig, public auth: AuthManagerService, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -41,6 +42,8 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.conf.data[0] as Users;
+    // this.user.visible_projects = this.auth.userVisibleProjects(this.user.id);
+    console.log(this.user.visible_projects);
     this.fillRoles();
     this.fillProjects();
     this.fillRights();
