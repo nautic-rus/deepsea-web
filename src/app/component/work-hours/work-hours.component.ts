@@ -108,11 +108,11 @@ export class WorkHoursComponent implements OnInit {
     this.fill();
     this.fillIssues();
     this.items = [
-      {
-        label: 'Add task',
-        icon: 'pi pi-fw pi-external-link',
-        command: (event: any) => this.openTaskAssign()
-      },
+      // {
+      //   label: 'Add task',
+      //   icon: 'pi pi-fw pi-external-link',
+      //   command: (event: any) => this.openTaskAssign()
+      // },
       {
         label: 'Clear task',
         icon: 'pi pi-fw pi-trash',
@@ -461,27 +461,34 @@ export class WorkHoursComponent implements OnInit {
     if (freeHour == null){
       freeHour = planHours[0];
     }
-    this.loading = true;
-    this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
-      next: () => {
-        this.auth.getUsersPlanHours().subscribe(planHours => {
-          this.pHours = planHours;
-          this.fillDays();
-          this.filterIssues();
-          this.loading = false;
 
-          let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id), x => x.id);
+    if (this.dragValue <= this.draggableIssue.plan_hours - this.getPlanned(this.draggableIssue)){
+      this.loading = true;
+      this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
+        next: () => {
+          this.auth.getUsersPlanHours().subscribe(planHours => {
+            this.pHours = planHours;
+            this.fillDays();
+            this.filterIssues();
+            this.loading = false;
 
-          if (planHours.length > 0){
-            let first = plannedHours[0];
-            let last = plannedHours[plannedHours.length - 1];
-            let dateStart = new Date(first.year, first.month, first.day);
-            let dateDue = new Date(last.year, last.month, last.day);
-            this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
-          }
-        });
-      }
-    });
+            let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id), x => x.id);
+
+            if (planHours.length > 0){
+              let first = plannedHours[0];
+              let last = plannedHours[plannedHours.length - 1];
+              let dateStart = new Date(first.year, first.month, first.day);
+              let dateDue = new Date(last.year, last.month, last.day);
+              this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+            }
+          });
+        }
+      });
+    }
+    else{
+      alert('no hours left to assign');
+    }
+
   }
 
   getPlanned(issue: Issue) {
