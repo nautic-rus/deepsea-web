@@ -30,7 +30,7 @@
       <p-dropdown class="select" styleClass="width-220 mr-20" [(ngModel)]="taskPeriod" [options]="taskPeriods" optionLabel="label" optionValue="value">
       </p-dropdown>
     </div>
-    <div *ngIf="taskType.includes('RKD')">
+    <div>
       <div class="big-text-create mb-1 mt-1">{{lang.tr('Плановая трудоёмкость')}}</div>
       <p-inputNumber inputStyleClass="width-220" [(ngModel)]="planLabor" mode="decimal"></p-inputNumber>
     </div>
