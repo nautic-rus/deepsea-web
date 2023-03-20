@@ -379,6 +379,7 @@ export class WorkHoursComponent implements OnInit {
   }
   filterIssues(){
     this.issues = [...this.issuesSrc];
+    this.issues = this.issues.filter(x => x.status != x.closing_status);
     this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
     this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
     this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
