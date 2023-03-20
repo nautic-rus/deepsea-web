@@ -324,6 +324,9 @@ export class WorkHoursComponent implements OnInit {
           this.pHours = planHours;
           this.fillDays();
           this.filterIssues();
+
+          this.issueManager.assignUser(this.draggableIssue.id, '', '0', '0', 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+
           this.loading = false;
 
         });
