@@ -217,7 +217,7 @@ export class MaterialsComponent implements OnInit {
   addMaterial(action: string = 'add', material: Material = new Material()) {
     this.dialogService.open(AddMaterialComponent, {
       showHeader: true,
-      header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование матерала').replace('clone', 'Клонирование материала'),
+      header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
       modal: true,
       closable: true,
       data: [this.project, material, action, this.materialsSrc, this.selectedNodeCode]

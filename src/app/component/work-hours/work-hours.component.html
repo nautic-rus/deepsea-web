@@ -128,36 +128,57 @@
 
         <cdk-virtual-scroll-viewport class="background-gray" autosize style="height: calc(100vh - 390px)">
           <div class="h-100 issues-all" *cdkVirtualFor="let issue of issues">
-            <div pDraggable="issue" (dragstart)="drag($event, issue, dragValues[issue.id])" class="cursor-pointer"  (click)="selectIssue(issue)">
-              <div class="one-row-w df space-between">
-                <div class="title-bold">{{issue.doc_number}}</div>
-                <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
-              </div>
-              <div class="text-mini-gray mb-5">
-                <div>{{issue.name}}</div>
-              </div>
-              <div class="df mm-text space-between mb-5">
-                <div class="mm-text df">
-                  <div>{{t.tr('Исполнитель') + ' ' + '-'}}</div>
-                  <div class="pl-2px">{{auth.getUserName(issue.assigned_to)}}</div>
+            <div class="cursor-pointer" (click)="selectIssue(issue)">
+              <div pDraggable="issue" (dragstart)="drag($event, issue, dragValues[issue.id])" >
+                <div class="one-row-w df space-between">
+                  <div class="title-bold">{{issue.doc_number}}</div>
+                  <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
                 </div>
-                <div class="df">
-                  <img src="assets/icons/flag-finish.svg" height="20">
-                  <div>{{getDateOnly(issue.contract_due_date)}}</div>
+                <div class="text-mini-gray mb-5">
+                  <div>{{issue.name}}</div>
+                </div>
+                <div class="df mm-text space-between mb-5">
+                  <div class="mm-text df">
+                    <div>{{t.tr('Исполнитель') + ' ' + '-'}}</div>
+                    <div class="pl-2px">{{auth.getUserName(issue.assigned_to)}}</div>
+                  </div>
+                  <div class="df">
+                    <img src="assets/icons/flag-finish.svg" height="20">
+                    <div>{{getDateOnly(issue.contract_due_date)}}</div>
+                  </div>
                 </div>
               </div>
-              <div class="df text-black-mini justify-content-end mt-1">
-                <span class="cy width-20">
-                  <div>{{getPlanned(issue)}}</div>
-                </span>
-                <span class="mx-10 cy">/</span>
-                <span class="cy width-20 mr-10">
-                  <div>{{issue.plan_hours}}</div>
-                </span>
-                <span class="cursor-pointer width-50">
-                  <p-inputNumber inputStyleClass="width-50" [(ngModel)]="dragValues[issue.id]" mode="decimal"></p-inputNumber>
-                </span>
+              <div>
+                <div class="df space-between mt-1">
+                  <div>
+                    <div class="width-50 mm-text">{{t.tr('назначить')}}</div>
+                  </div>
+                  <div class="df mm-text">
+                    <div class="cxy width-50">{{t.tr('назначено')}}</div>
+                    <div class="mx-10 cy mm-text">/</div>
+                    <div class="cxy width-50">{{t.tr('план')}}</div>
+                  </div>
+                </div>
+                <div class="df space-between mt-2px">
+                  <div>
+                    <div class="cursor-pointer width-50">
+                      <p-inputNumber inputStyleClass="width-50" [(ngModel)]="dragValues[issue.id]" mode="decimal"></p-inputNumber>
+                    </div>
+                  </div>
+                  <div class="df">
+                    <div class="cxy width-50">
+                      <div class="text-black-mini">{{getPlanned(issue)}}</div>
+                    </div>
+                    <div class="mx-10 cy text-black-mini">/</div>
+                    <div class="cxy width-50">
+                      <div class="text-black-mini">{{issue.plan_hours}}</div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+
+
             </div>
 
 <!--            <div>-->
