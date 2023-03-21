@@ -147,6 +147,7 @@ export class WorkHoursComponent implements OnInit {
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
         this.issues.forEach(x => this.dragValues[x.id] = x.plan_hours);
+        this.filterIssues();
       });
     });
     this.issueManagerService.getIssueProjects().then(projects => {
@@ -327,6 +328,9 @@ export class WorkHoursComponent implements OnInit {
 
           this.issueManager.assignUser(this.draggableIssue.id, '', '0', '0', 'Нет', this.draggableIssue.action, this.auth.getUser().login);
 
+          this.draggableIssue.status = 'New';
+          this.draggableIssue.action = this.draggableIssue.status;
+          this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
           this.loading = false;
 
         });
@@ -379,7 +383,7 @@ export class WorkHoursComponent implements OnInit {
   }
   filterIssues(){
     this.issues = [...this.issuesSrc];
-    this.issues = this.issues.filter(x => x.status != x.closing_status);
+    this.issues = this.issues.filter(x => !x.closing_status.includes(x.status));
     this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
     this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
     this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
@@ -484,6 +488,9 @@ export class WorkHoursComponent implements OnInit {
               let dateStart = new Date(first.year, first.month, first.day);
               let dateDue = new Date(last.year, last.month, last.day);
               this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+              this.draggableIssue.status = 'AssignedTo';
+              this.draggableIssue.action = this.draggableIssue.status;
+              this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
             }
           });
         }
