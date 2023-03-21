@@ -55,6 +55,10 @@
                   </div>
                   <div class="text-table-col">{{round(getGroupWeight(tray.values)) + 'kg'}}</div>
                 </div>
+                <div class="df">
+                  <div class="text-center-y attribute mr-10">Total h:</div>
+                  <div class="text-table-col">{{round(getAngleLength(tray.values)) + 'm'}}</div>
+                </div>
                 <div class="p-ml-auto text-center-y">
                   <div class="df">
                     <div class="trm">{{tray.stockCode}}</div>
@@ -88,6 +92,27 @@
                     <div (click)="copyTrmCode(cableBox.stockCode, 'b' + b)" class="trm-copy cursor-pointer cxy">
                       <img src="assets/icons/trm.svg" height="16">
                       <div class="copy-tooltip" [hidden]="!showTooltip('b' + b)">Copied!</div>
+                    </div>
+                  </div>
+                </div>
+                <div></div>
+              </div>
+            </div>
+            <div class="w-100" *ngIf="trays.length != 0">
+              <div class="card-tile-t card-grid">
+                <div class="text-center-y">
+                  <div class="title-name">{{angle.name}}</div>
+                </div>
+                <div class="df">
+                  <div class="text-center-y attribute mr-10">Total count:</div>
+                  <div class="text-table-col" (ngInit)="getSummaryLength()">{{this.summaryLength + 'm'}}</div>
+                </div>
+                <div class="p-ml-auto text-center-y">
+                  <div class="df">
+                    <div class="trm">{{angle.code}}</div>
+                    <div (click)="copyTrmCode(angle.code, 'c')" class="trm-copy cursor-pointer cxy">
+                      <img src="assets/icons/trm.svg" height="16">
+                      <div class="copy-tooltip" [hidden]="!showTooltip('c')">Copied!</div>
                     </div>
                   </div>
                 </div>
