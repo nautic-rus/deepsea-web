@@ -328,6 +328,9 @@ export class WorkHoursComponent implements OnInit {
 
           this.issueManager.assignUser(this.draggableIssue.id, '', '0', '0', 'Нет', this.draggableIssue.action, this.auth.getUser().login);
 
+          this.draggableIssue.status = 'New';
+          this.draggableIssue.action = this.draggableIssue.status;
+          this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
           this.loading = false;
 
         });
@@ -485,6 +488,9 @@ export class WorkHoursComponent implements OnInit {
               let dateStart = new Date(first.year, first.month, first.day);
               let dateDue = new Date(last.year, last.month, last.day);
               this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+              this.draggableIssue.status = 'AssignedTo';
+              this.draggableIssue.action = this.draggableIssue.status;
+              this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
             }
           });
         }

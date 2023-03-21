@@ -49,4 +49,7 @@ export class MaterialManagerService {
   async createMaterialCloudDirectory(project: string, code: string) {
     return await this.http.get<string>(props.http + '/createMaterialCloudDirectory', {params: {project, code}}).toPromise();
   }
+  getMaterialsDetails(project: string, code: string) {
+    return this.http.get<any>(props.http + '/materialsCode', {params: {project, code}});
+  }
 }

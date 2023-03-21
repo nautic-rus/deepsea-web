@@ -932,6 +932,10 @@
 }
 .card-grid{
   display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 20px;
+}
+.card-grid-b{
+  display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 20px;
 }
 .hidden-card{

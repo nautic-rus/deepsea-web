@@ -1,38 +1,27 @@
-import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ApplicationRef, Component, OnInit} from '@angular/core';
 import {Issue} from "../../../domain/classes/issue";
 import {LanguageService} from "../../../domain/language.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FileAttachment} from "../../../domain/classes/file-attachment";
-import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system";
-import Delta from "quill-delta";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DialogService} from "primeng/dynamicdialog";
-import _, {sortBy} from "underscore";
-import {IssueMessage} from "../../../domain/classes/issue-message";
-import {UserCardComponent} from "../../employees/user-card/user-card.component";
-import {mouseWheelZoom} from "mouse-wheel-zoom";
+import _ from "underscore";
 import {UploadRevisionFilesComponent} from "../hull-esp/upload-revision-files/upload-revision-files.component";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
-import {
-  AccommodationsEspGenerationWaitComponent
-} from "../accommodation-esp/accommodations-esp-generation-wait/accommodations-esp-generation-wait.component";
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {Trays} from "../../../domain/interfaces/trays";
 import {TrayService} from "./tray.service";
-import {sort, sum} from "d3";
 import {CableBoxes} from "../../../domain/interfaces/cableBoxes";
-import {
-  DeviceEspGenerationWaitComponent
-} from "../device-esp/device-esp-generation-wait/device-esp-generation-wait.component";
 import * as XLSX from "xlsx";
-import {HullEspGenerationWaitComponent} from "../hull-esp/hull-esp-generation-wait/hull-esp-generation-wait.component";
 import {TrayEspGenerationWaitComponent} from "./tray-esp-generation-wait/tray-esp-generation-wait.component";
 import {forkJoin} from "rxjs";
+import {Material} from "../../../domain/classes/material";
+import {MaterialManagerService} from "../../../domain/material-manager.service";
 
 @Component({
   selector: 'app-trays',
@@ -88,9 +77,17 @@ export class TraysComponent implements OnInit {
   cutEnabled = false;
   cmap = '';
   miscIssues: Issue[] = [];
+  units: string = "006";
+  summaryLength: number = 0;
+  label: string = '';
+  forLabel: string = '';
+  angleStockCode: string = 'MTLESNSTLXXX0047';
+  step: number = 1.2;
+  length: number = 0.3;
+  angle: Material;
 
 
-  constructor(public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
+  constructor(public specService: SpecManagerService, public materialService: MaterialManagerService, public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
   }
 
   ngOnInit(): void {
@@ -124,6 +121,7 @@ export class TraysComponent implements OnInit {
 
       this.fillTrays();
       this.fillCableBoxes();
+      this.fillAngle();
     });
   }
 
@@ -131,12 +129,12 @@ export class TraysComponent implements OnInit {
     this.trayService.getTraysBySystems(this.project, this.docNumber)
       .subscribe(trays => {
         if (trays.length > 0) {
-          console.log(trays);
           this.trays = _.sortBy(trays, x => x.stockCode);
           this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
             stockCode: x[0].stockCode,
             trayDesc: x[0].trayDesc,
             desc: x[0].material.name,
+            totalLength: this.getAngleLength(x),
             values: x
           }));
         } else {
@@ -149,7 +147,6 @@ export class TraysComponent implements OnInit {
     this.trayService.getCableBoxesBySystems(this.project, this.docNumber)
       .subscribe(boxes => {
         if (boxes.length > 0) {
-          console.log(boxes);
           this.cableBoxes = _.sortBy(boxes, x => x.userId);
           this.cableBoxesByCode = _.sortBy(_.map(_.groupBy(this.cableBoxes, x => (x.stockCode + x.code)), x => Object({
             stockCode: x[0].stockCode,
@@ -163,22 +160,51 @@ export class TraysComponent implements OnInit {
       });
   }
 
+  fillAngle(): void {
+    this.materialService.getMaterialsDetails("200101", this.angleStockCode)
+      .subscribe(material => {
+        this.angle = material[0];
+      })
+  }
+
   getGroupLength(group: any[]) {
     let res = 0;
-    console.log(group);
     group.forEach(x => {
       res += x.length;
     });
-    return res;
+    return this.round(res);
   }
 
   getGroupWeight(group: any[]) {
     let res = 0;
-    console.log(group);
     group.forEach(x => {
       res += x.weight;
     });
-    return res;
+    return this.round(res);
+  }
+
+  getAngleLength(group: any[]) {
+    let res = 0;
+    group.forEach(x => {
+      res += x.length;
+    });
+    // this.summaryLength += angleLength;
+    return this.round(this.length * Math.ceil(res / this.step));
+  }
+
+  getSummaryLength() {
+    // console.log(this.traysByCode.totalLength);
+    // this.trays.forEach(tray => {
+    //   this.summaryLength += this.length * tray.length / this.step;
+    //   console.log(this.summaryLength);
+    // })
+    // return this.round(this.summaryLength);
+    this.summaryLength = 0;
+    this.traysByCode.forEach((group: any) => {
+      this.summaryLength += group.totalLength;
+    })
+    this.summaryLength = this.round(this.summaryLength);
+    this.addAngle();
   }
 
   getName(str: any, subStr: any) {
@@ -315,6 +341,13 @@ export class TraysComponent implements OnInit {
         this.issue = issue;
         this.fillRevisions();
       });
+    });
+  }
+
+  addAngle() {
+    console.log(this.summaryLength)
+    this.specService.removeDeviceFromSystem(this.docNumber, this.angleStockCode, "006", this.summaryLength.toString(), this.label, this.forLabel).then(res => {
+      this.specService.addDeviceToSystem(this.docNumber, this.angleStockCode, "006", this.summaryLength.toString(), this.label, this.forLabel);
     });
   }
 
@@ -520,14 +553,12 @@ export class TraysComponent implements OnInit {
   }
 
   showCuttingFile(file: FileAttachment) {
-    console.log(file);
     this.cmap = file.url;
     this.dxfEnabled = false;
     this.cutEnabled = false;
     this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
       setTimeout(() => {
         this.cutEnabled = true;
-        console.log(this.cutEnabled);
         // @ts-ignore
         this.router.navigate([], {queryParams: {cmap: file.url, cmapuser: this.auth.getUserName(file.author), cmapdate: file.upload_date}, queryParamsHandling: 'merge'});
         const style = document.createElement('style');
