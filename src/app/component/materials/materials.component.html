@@ -83,7 +83,7 @@
             <div *ngFor="let material of materials; let i = index" class="dash-card">
               <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
                 <div class="top-row-doc">
-                  <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(material.name, 50)}}</div>
+                  <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(getMaterialName(material), 50)}}</div>
                   <div class="p-ml-auto">
                     <div class="kpl-flag cxy">
                       <div class="text-center-x">
@@ -97,7 +97,7 @@
                   </div>
                 </div>
                 <div class="two-row mt-5 mb-5">
-                  <div *ngIf="material.description != ''" class="text-medium">{{trimText(material.description, 20)}}</div>
+                  <div *ngIf="material.description != ''" class="text-medium">{{trimText(getMaterialDescription(material), 20)}}</div>
                   <div *ngIf="material.description == ''" class="text-medium">/description/</div>
                   <div class="df position-relative content-end pr-10">
                     <div class="trm">
@@ -316,8 +316,8 @@
                         <g></g>
             </svg>
                   </td>
-                  <td class="min-width-220 w-27 text-14">{{material.name}}</td>
-                  <td class="min-width-150 w-15 text-14">{{material.description}}</td>
+                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>
+                  <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>
                   <td class="min-width-75 w-7 text-14">{{material.category}}</td>
                   <td class="min-width-75 w-7 text-14">{{material.coefficient}}</td>
                   <td class="min-width-75 w-7 text-14">{{material.singleWeight}}</td>

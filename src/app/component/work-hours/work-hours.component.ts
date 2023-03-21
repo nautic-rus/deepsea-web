@@ -519,4 +519,13 @@ export class WorkHoursComponent implements OnInit {
     // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
     // return da + '.' + mo + '.' + ye;
   }
+
+  getIssueDesc(taskId: number) {
+    let res = '';
+    let find = this.issues.find(x => x.id == taskId);
+    if (find != null){
+      res = find.doc_number + ' ' + find.name;
+    }
+    return res;
+  }
 }
