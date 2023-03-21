@@ -140,4 +140,7 @@ export class SpecManagerService {
   async getElecInfo(project: string) {
     return await this.http.get<any[]>(props.httpSpec + '/elecInfo', {params: {project}}).toPromise();
   }
+  createHullEsp(project: string, docNumber: string, rev: string, user: string, kind: string){
+    return this.http.get<string>(props.httpSpec + '/createHullEsp', {params: {project, docNumber, rev, user, kind}});
+  }
 }
