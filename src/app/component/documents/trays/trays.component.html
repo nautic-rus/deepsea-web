@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="w-100" *ngIf="cableBoxes.length != 0">
-              <div *ngFor="let cableBox of cableBoxesByCode; let b = index" class="card-tile-t card-grid" [class.hidden-card]="cableBox == null">
+              <div *ngFor="let cableBox of cableBoxesByCode; let b = index" class="card-tile-t card-grid-b" [class.hidden-card]="cableBox == null">
                 <div class="text-center-y">
                   <div class="title-name">{{getName(cableBox.desc, cableBox.code)}}</div>
                 </div>
@@ -99,14 +99,15 @@
               </div>
             </div>
             <div class="w-100" *ngIf="trays.length != 0">
-              <div class="card-tile-t card-grid">
+              <div class="card-tile-t card-grid-b">
                 <div class="text-center-y">
                   <div class="title-name">{{angle.name}}</div>
                 </div>
                 <div class="df">
                   <div class="text-center-y attribute mr-10">Total count:</div>
-                  <div class="text-table-col" (ngInit)="getSummaryLength()">{{this.summaryLength + 'm'}}</div>
+                  <div class="text-table-col cy" (ngInit)="getSummaryLength()">{{this.summaryLength + 'm'}}</div>
                 </div>
+                <div></div>
                 <div class="p-ml-auto text-center-y">
                   <div class="df">
                     <div class="trm">{{angle.code}}</div>
