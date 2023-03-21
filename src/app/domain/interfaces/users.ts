@@ -16,7 +16,6 @@ export interface Users {
   gender: string;
   visibility: string;
   visible_projects: string[];
-  projects: string[];
   visible_pages: string[];
   shared_access: string[];
   groups: string[];

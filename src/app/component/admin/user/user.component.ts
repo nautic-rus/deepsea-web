@@ -42,8 +42,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.conf.data[0] as Users;
-    // this.user.visible_projects = this.auth.userVisibleProjects(this.user.id);
-    console.log(this.user.visible_projects);
     this.fillRoles();
     this.fillProjects();
     this.fillRights();
