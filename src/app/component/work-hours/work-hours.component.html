@@ -30,7 +30,7 @@
             </div>
             <div>
               <label class="container margin-bottom-none">
-                <span class="text-checkbox">Show assigned</span>
+                <span class="text-checkbox">{{t.tr('Показать назначенные')}}</span>
                 <input (change)="filterIssues()" type="checkbox" [(ngModel)]="showAssigned">
                 <span class="checkmark"></span>
               </label>
@@ -154,9 +154,9 @@
                     <div class="width-50 mm-text">{{t.tr('назначить')}}</div>
                   </div>
                   <div class="df mm-text">
-                    <div class="cxy width-50">{{t.tr('назначено')}}</div>
-                    <div class="mx-10 cy mm-text">/</div>
                     <div class="cxy width-50">{{t.tr('план')}}</div>
+                    <div class="mx-10 cy mm-text">/</div>
+                    <div class="cxy width-50">{{t.tr('использовано')}}</div>
                   </div>
                 </div>
                 <div class="df space-between mt-2px">
@@ -167,11 +167,11 @@
                   </div>
                   <div class="df">
                     <div class="cxy width-50">
-                      <div class="text-black-mini">{{getPlanned(issue)}}</div>
+                      <div class="text-black-mini">{{issue.plan_hours}}</div>
                     </div>
                     <div class="mx-10 cy text-black-mini">/</div>
                     <div class="cxy width-50">
-                      <div class="text-black-mini">{{issue.plan_hours}}</div>
+                      <div class="text-black-mini">{{getPlanned(issue)}}</div>
                     </div>
                   </div>
                 </div>

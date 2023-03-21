@@ -436,9 +436,9 @@ export class LanguageService {
           case 'Сводные данные': return 'Summary';
           case 'Пользователи': return 'Users';
           case 'назначить': return 'assign';
-          case 'назначено': return 'assigned';
+          case 'использовано': return 'used';
           case 'план': return 'plan';
-          case '': return '';
+          case 'Показать назначенные': return 'Show assigned';
           case '': return '';
           case '': return '';
           case '': return '';
