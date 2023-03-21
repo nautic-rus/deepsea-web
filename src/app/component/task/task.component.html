@@ -1173,9 +1173,9 @@
               </div>
             </div>
           </div>
-          <div class="df mt-3px" *ngIf="isVisible('plan_hours')">
+          <div class="df mt-3px" *ngIf="isVisible('labor')">
             <div class="df text-y height-30 normal-text w-40">{{t.tr('Плановая трудоёмкость')}}</div>
-            <div [class.no-edit]="issue.started_by != this.auth.getUser().login" [hidden]="edit == 'plan_hours'" (click)="edit = 'plan_hours'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{issue.plan_hours}}</div>
+            <div [class.no-edit]="issue.responsible != this.auth.getUser().login" [hidden]="edit == 'plan_hours'" (click)="edit = 'plan_hours'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-130">{{issue.plan_hours}}</div>
             <div class="mr-5" [hidden]="edit != 'plan_hours'">
               <p-inputNumber [(ngModel)]="issue.plan_hours" mode="decimal"></p-inputNumber>
             </div>
@@ -1192,10 +1192,10 @@
               </div>
             </div>
           </div>
-          <div class="df mt-3px" *ngIf="isVisible('labor')">
-            <div class="df text-y height-30 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>
-            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.plan_hours}}</div>
-          </div>
+<!--          <div class="df mt-3px" *ngIf="isVisible('labor')">-->
+<!--            <div class="df text-y height-30 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>-->
+<!--            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.plan_hours}}</div>-->
+<!--          </div>-->
           <div class="df mt-3px" *ngIf="isVisible('labor')">
             <div class="df text-y height-30 normal-text w-40">{{t.tr('Трудозатраты')}}</div>
             <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.labor}}</div>
