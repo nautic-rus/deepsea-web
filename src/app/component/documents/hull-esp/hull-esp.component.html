@@ -651,6 +651,8 @@
     <div class="card-head df">
       <div class="mr-2">{{getBlockName()}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
+      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
+      <div class="mr-2">{{revUser}}</div>
 <!--      <div class="mr-2" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>-->
 <!--      <div class="mr-1">Revision:</div>-->
 <!--      <div class="mr-2">-->
@@ -712,7 +714,11 @@
     <div class="w-100 df">
       <div class="card-sp mr-20">
         <div class="top-line"></div>
-        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project</div>
+        <div class="loading-text" *ngIf="noResult">
+          <div>No result for drawing {{docNumber}} of project {{project}}. Please check the following steps</div>
+          <div>1. You need to add document number {{docNumber}} to the block in the description using FORAN app in {{project}} project. </div>
+          <div>2. Also be sure you have created a specification via pink button above this text.</div>
+        </div>
         <div *ngIf="parts.length == 0 && !noResult">
           <div class="cxy loading">
             <div class="cxy card-height">

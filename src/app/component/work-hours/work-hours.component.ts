@@ -147,6 +147,7 @@ export class WorkHoursComponent implements OnInit {
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
         this.issues.forEach(x => this.dragValues[x.id] = x.plan_hours);
+        this.filterIssues();
       });
     });
     this.issueManagerService.getIssueProjects().then(projects => {

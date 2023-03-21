@@ -178,6 +178,8 @@ export class HullEspComponent implements OnInit {
   cmapdate = 0;
   fileSort = 'name';
   sortReverse = false;
+  revEsp = '';
+  revUser = '';
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -303,8 +305,12 @@ export class HullEspComponent implements OnInit {
         project = findProject.foran;
       }
       this.s.getHullPatList(project, this.docNumber).then(res => {
-        if (res != ''){
-          this.parts = res;
+        console.log(res);
+        if (res != null && res != ''){
+          this.issue.revision = res.rev;
+          this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
+          this.revUser = this.auth.getUserName(res.user);
+          this.parts = res.elements;
           _.forEach(
             _.groupBy(this.parts, x => x.ELEM_TYPE.replace('FS', 'PL') + '-' + x.THICKNESS + '-' + (x.ELEM_TYPE.replace('FS', 'PL') == 'PL' ? '' : x.WIDTH) + '-' + x.MATERIAL),
             group => {
@@ -331,7 +337,6 @@ export class HullEspComponent implements OnInit {
         else{
           this.noResult = true;
         }
-        console.log(res);
         this.fillSketches();
       });
     });
@@ -646,7 +651,10 @@ export class HullEspComponent implements OnInit {
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
-
+  getDateModify(dateLong: number){
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
   getBlockName() {
     if (this.parts.length > 0){
       return this.issue.name;

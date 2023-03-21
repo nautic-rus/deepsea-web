@@ -131,7 +131,7 @@
             <div class="cursor-pointer" (click)="selectIssue(issue)">
               <div pDraggable="issue" (dragstart)="drag($event, issue, dragValues[issue.id])" >
                 <div class="one-row-w df space-between">
-                  <div class="title-bold">{{issue.doc_number}}</div>
+                  <div class="title-bold">{{issue.doc_number}}</div>{{issue.id}}
                   <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
                 </div>
                 <div class="text-mini-gray mb-5">
