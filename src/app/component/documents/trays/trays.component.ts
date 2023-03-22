@@ -8,7 +8,7 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DialogService} from "primeng/dynamicdialog";
-import _ from "underscore";
+import _, {any} from "underscore";
 import {UploadRevisionFilesComponent} from "../hull-esp/upload-revision-files/upload-revision-files.component";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
@@ -264,7 +264,7 @@ export class TraysComponent implements OnInit {
       data.push({
         N: "",
         MATERIAL: group[0].material.name,
-        UNITS: group[0].material.units,
+        UNITS: this.getUnitName(group[0].material.units),
         QTY: summ,
         WGT_KG: this.round(weight),
         STOCK_CODE: group[0].stockCode
@@ -282,11 +282,20 @@ export class TraysComponent implements OnInit {
       data.push({
         N: "",
         MATERIAL: group[0].material.name,
-        UNITS: group[0].material.units,
+        UNITS: this.getUnitName(group[0].material.units),
         QTY: summ,
         WGT_KG: this.round(weight),
         STOCK_CODE: group[0].stockCode
       });
+    });
+
+    data.push({
+      N: "",
+      MATERIAL: this.angle.material.translations[0].name,
+      UNITS: this.getUnitName(this.angle.material.units),
+      QTY: this.angle.length,
+      WGT_KG: this.angle.weight,
+      STOCK_CODE: this.angle.stockCode
     });
 
     data.push({
@@ -300,20 +309,35 @@ export class TraysComponent implements OnInit {
 
     _.forEach(_.sortBy(this.cableBoxes, x => x.userId), box => {
       data.push({
-        N: "",
+        N: box.userId,
         MATERIAL: box.material.name,
-        UNITS: box.material.units,
+        UNITS: this.getUnitName(box.material.units),
         QTY: "1",
         WGT_KG: this.round(box.weight),
         STOCK_CODE: box.stockCode
       });
     });
 
+
+
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    worksheet['!cols'] = [{wch:15},{wch:60},{wch:5},{wch:5},{wch:5},{wch:20}];
+    worksheet['!cols'] = [{wch:15},{wch:60},{wch:5},{wch:5},{wch:10},{wch:20}];
 
     XLSX.writeFile(workbook, fileName);
+  }
+
+  getUnitName(unit: any): string {
+    let result: string = '';
+    switch (unit.toString()) {
+      case "006":
+        result = "метр";
+        break;
+      case "796":
+        result = "шт";
+        break;
+    }
+    return result
   }
 
   generateId(length: number): string {
