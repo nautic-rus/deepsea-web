@@ -84,7 +84,7 @@ export class TraysComponent implements OnInit {
   angleStockCode: string = 'MTLESNSTLXXX0047';
   step: number = 1.2;
   length: number = 0.3;
-  angle: Material;
+  angle: Trays;
 
 
   constructor(public specService: SpecManagerService, public materialService: MaterialManagerService, public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
@@ -121,7 +121,6 @@ export class TraysComponent implements OnInit {
 
       this.fillTrays();
       this.fillCableBoxes();
-      this.fillAngle();
     });
   }
 
@@ -129,6 +128,9 @@ export class TraysComponent implements OnInit {
     this.trayService.getTraysBySystems(this.project, this.docNumber)
       .subscribe(trays => {
         if (trays.length > 0) {
+          this.angle = trays.filter((x: any) => x.stockCode == this.angleStockCode)[0];
+          console.log(this.angle);
+          trays = trays.filter((x: any) => x.stockCode != this.angleStockCode);
           this.trays = _.sortBy(trays, x => x.stockCode);
           this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
             stockCode: x[0].stockCode,
@@ -137,6 +139,7 @@ export class TraysComponent implements OnInit {
             totalLength: this.getAngleLength(x),
             values: x
           }));
+          // this.angle1 = trays.map((x: any) => x.stockCode = this.angleStockCode)
         } else {
           this.noResultTrays = true;
         }
@@ -158,13 +161,6 @@ export class TraysComponent implements OnInit {
           this.noResultBoxes = true;
         }
       });
-  }
-
-  fillAngle(): void {
-    this.materialService.getMaterialsDetails("200101", this.angleStockCode)
-      .subscribe(material => {
-        this.angle = material[0];
-      })
   }
 
   getGroupLength(group: any[]) {
@@ -189,7 +185,7 @@ export class TraysComponent implements OnInit {
       res += x.length;
     });
     // this.summaryLength += angleLength;
-    return this.round(this.length * Math.ceil(res / this.step));
+    return this.round(this.length * Math.ceil(res / this.step) * 2);
   }
 
   getSummaryLength() {
