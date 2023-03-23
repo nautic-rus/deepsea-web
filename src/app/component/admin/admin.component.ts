@@ -404,23 +404,34 @@ export class AdminComponent implements OnInit {
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: true
+        date: false
       },
       {
         field: 'name',
         header: 'Name',
         headerLocale: 'Name',
-        sort: true,
+        sort: false,
         filter: false,
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: true
+        date: false
       },
       {
         field: 'surname',
         header: 'Surname',
         headerLocale: 'Surname',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
+        field: 'groups',
+        header: 'Groups',
+        headerLocale: 'Groups',
         sort: true,
         filter: false,
         skip: false,

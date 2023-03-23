@@ -1,6 +1,6 @@
 <div *ngIf="device.isDesktop()" class="">
   <div class="all-page">
-    <div class="card">
+    <div class="card" [hidden]="!filled">
       <p-table
         #dt
         id="dt"
@@ -102,7 +102,7 @@
                 <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
                 <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                    <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" display="chip" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
@@ -145,6 +145,14 @@
           </tr>
         </ng-template>
       </p-table>
+    </div>
+    <div class="card cxy" *ngIf="issues.length == 0">
+      <div class="cxy loading">
+        <div class="cxy flex-column">
+          <img src="assets/whale.gif" height="120">
+          <div class="cx loading-text">PLEASE WAIT...</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
