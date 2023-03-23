@@ -46,6 +46,7 @@ import {SpyWatchComponent} from "./component/spy-watch/spy-watch.component";
 import {AdminComponent} from "./component/admin/admin.component";
 import {WorkHoursComponent} from "./component/work-hours/work-hours.component";
 import {TraysComponent} from "./component/documents/trays/trays.component";
+import {CablesComponent} from "./component/documents/cables/cables.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -93,6 +94,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: {animation: 'AdminComponent'} },
   { path: 'work-hours', component: WorkHoursComponent, canActivate: [AuthGuard], data: {animation: 'WorkHoursComponent'} },
   { path: 'trays', component: TraysComponent, canActivate: [AuthGuard], data: {animation: 'TraysComponent'} },
+  { path: 'cables', component: CablesComponent, canActivate: [AuthGuard], data: {animation: 'CablesComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 
