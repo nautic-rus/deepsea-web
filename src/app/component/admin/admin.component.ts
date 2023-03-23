@@ -399,12 +399,12 @@ export class AdminComponent implements OnInit {
         field: 'avatar',
         header: 'Avatar',
         headerLocale: 'Avatar',
-        sort: true,
+        sort: false,
         filter: false,
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: true
+        date: false
       },
       {
         field: 'name',
@@ -415,7 +415,7 @@ export class AdminComponent implements OnInit {
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: true
+        date: false
       },
       {
         field: 'surname',
@@ -429,11 +429,22 @@ export class AdminComponent implements OnInit {
         date: false
       },
       {
+        field: 'groups',
+        header: 'Groups',
+        headerLocale: 'Groups',
+        sort: true,
+        filter: true,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
         field: 'profession',
         header: 'Profession',
         headerLocale: 'Profession',
         sort: true,
-        filter: false,
+        filter: true,
         skip: false,
         defaultValue: '',
         hidden: false,
@@ -444,7 +455,7 @@ export class AdminComponent implements OnInit {
         header: 'Department',
         headerLocale: 'Department',
         sort: true,
-        filter: false,
+        filter: true,
         skip: false,
         defaultValue: '',
         hidden: false,
