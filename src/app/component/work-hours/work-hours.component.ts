@@ -535,4 +535,8 @@ export class WorkHoursComponent implements OnInit {
     }
     return res;
   }
+
+  dragEnd(event: DragEvent) {
+    this.cd.reattach();
+  }
 }
