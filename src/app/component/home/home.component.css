@@ -20,6 +20,10 @@
 .filter{
   margin-left: auto;
 }
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+}
 .header{
   display: flex;
   text-align: center;
