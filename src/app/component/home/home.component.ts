@@ -360,6 +360,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
 
   fillIssues() {
+    this.filled = false;
     // let scroll = 0;
     // if (this.dt != null){
     //   scroll = this.dt.el.nativeElement.querySelector('.p-datatable-virtual-scrollable-body').scrollTop;
