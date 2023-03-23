@@ -430,7 +430,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
           if (this.dt != null) {
             this.dt.resetScrollTop = function() { }
           }
-          this.fillIssues();
+          //this.fillIssues();
           let issue = res as Issue;
           if (issue != null && issue.id != null) {
             this.newTask(issue);
