@@ -8,7 +8,7 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DialogService} from "primeng/dynamicdialog";
-import _ from "underscore";
+import _, {any} from "underscore";
 import {UploadRevisionFilesComponent} from "../hull-esp/upload-revision-files/upload-revision-files.component";
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
@@ -84,7 +84,7 @@ export class TraysComponent implements OnInit {
   angleStockCode: string = 'MTLESNSTLXXX0047';
   step: number = 1.2;
   length: number = 0.3;
-  angle: Material;
+  angle: Trays;
 
 
   constructor(public specService: SpecManagerService, public materialService: MaterialManagerService, public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
@@ -121,7 +121,6 @@ export class TraysComponent implements OnInit {
 
       this.fillTrays();
       this.fillCableBoxes();
-      this.fillAngle();
     });
   }
 
@@ -129,6 +128,9 @@ export class TraysComponent implements OnInit {
     this.trayService.getTraysBySystems(this.project, this.docNumber)
       .subscribe(trays => {
         if (trays.length > 0) {
+          this.angle = trays.filter((x: any) => x.stockCode == this.angleStockCode)[0];
+          console.log(this.angle);
+          trays = trays.filter((x: any) => x.stockCode != this.angleStockCode);
           this.trays = _.sortBy(trays, x => x.stockCode);
           this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
             stockCode: x[0].stockCode,
@@ -137,6 +139,7 @@ export class TraysComponent implements OnInit {
             totalLength: this.getAngleLength(x),
             values: x
           }));
+          // this.angle1 = trays.map((x: any) => x.stockCode = this.angleStockCode)
         } else {
           this.noResultTrays = true;
         }
@@ -158,13 +161,6 @@ export class TraysComponent implements OnInit {
           this.noResultBoxes = true;
         }
       });
-  }
-
-  fillAngle(): void {
-    this.materialService.getMaterialsDetails("200101", this.angleStockCode)
-      .subscribe(material => {
-        this.angle = material[0];
-      })
   }
 
   getGroupLength(group: any[]) {
@@ -189,7 +185,7 @@ export class TraysComponent implements OnInit {
       res += x.length;
     });
     // this.summaryLength += angleLength;
-    return this.round(this.length * Math.ceil(res / this.step));
+    return this.round(this.length * Math.ceil(res / this.step) * 2);
   }
 
   getSummaryLength() {
@@ -268,7 +264,7 @@ export class TraysComponent implements OnInit {
       data.push({
         N: "",
         MATERIAL: group[0].material.name,
-        UNITS: group[0].material.units,
+        UNITS: this.getUnitName(group[0].material.units),
         QTY: summ,
         WGT_KG: this.round(weight),
         STOCK_CODE: group[0].stockCode
@@ -286,11 +282,20 @@ export class TraysComponent implements OnInit {
       data.push({
         N: "",
         MATERIAL: group[0].material.name,
-        UNITS: group[0].material.units,
+        UNITS: this.getUnitName(group[0].material.units),
         QTY: summ,
         WGT_KG: this.round(weight),
         STOCK_CODE: group[0].stockCode
       });
+    });
+
+    data.push({
+      N: "",
+      MATERIAL: this.angle.material.translations[0].name,
+      UNITS: this.getUnitName(this.angle.material.units),
+      QTY: this.angle.length,
+      WGT_KG: this.angle.weight,
+      STOCK_CODE: this.angle.stockCode
     });
 
     data.push({
@@ -304,20 +309,35 @@ export class TraysComponent implements OnInit {
 
     _.forEach(_.sortBy(this.cableBoxes, x => x.userId), box => {
       data.push({
-        N: "",
+        N: box.userId,
         MATERIAL: box.material.name,
-        UNITS: box.material.units,
+        UNITS: this.getUnitName(box.material.units),
         QTY: "1",
         WGT_KG: this.round(box.weight),
         STOCK_CODE: box.stockCode
       });
     });
 
+
+
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    worksheet['!cols'] = [{wch:15},{wch:60},{wch:5},{wch:5},{wch:5},{wch:20}];
+    worksheet['!cols'] = [{wch:15},{wch:60},{wch:5},{wch:5},{wch:10},{wch:20}];
 
     XLSX.writeFile(workbook, fileName);
+  }
+
+  getUnitName(unit: any): string {
+    let result: string = '';
+    switch (unit.toString()) {
+      case "006":
+        result = "метр";
+        break;
+      case "796":
+        result = "шт";
+        break;
+    }
+    return result
   }
 
   generateId(length: number): string {

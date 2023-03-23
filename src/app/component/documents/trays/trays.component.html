@@ -3,20 +3,24 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="'Electric' == auth.getUser().department" (click)="createEsp()">
+      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top"
+           *ngIf="'Electric' == auth.getUser().department" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <svg class="icon-top-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+            <path
+              d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
           </svg>
         </div>
       </div>
       <div class="mr-10">
-        <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" *ngIf="'Electric' == auth.getUser().department" (click)="exportSketches()" class="materials-button green-button cxy">
+        <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" *ngIf="'Electric' == auth.getUser().department"
+             (click)="exportSketches()" class="materials-button green-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" *ngIf="'Electric' == auth.getUser().department" tooltipPosition="top" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')"
+             *ngIf="'Electric' == auth.getUser().department" tooltipPosition="top" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="20">
         </div>
       </div>
@@ -41,7 +45,8 @@
               {{l.tr('Сводные данные')}}
             </div>
             <div class="w-100" *ngIf="trays.length != 0">
-              <div *ngFor="let tray of traysByCode; let a = index" class="card-tile-t card-grid" [class.hidden-card]="tray == null">
+              <div *ngFor="let tray of traysByCode; let a = index" class="card-tile-t card-grid"
+                   [class.hidden-card]="tray == null">
                 <div class="text-center-y">
                   <div class="title-name">{{getName(tray.desc, tray.trayDesc)}}</div>
                 </div>
@@ -56,7 +61,7 @@
                   <div class="text-table-col">{{round(getGroupWeight(tray.values)) + 'kg'}}</div>
                 </div>
                 <div class="df">
-                  <div class="text-center-y attribute mr-10">Total h:</div>
+                  <div class="text-center-y attribute mr-10">Total H:</div>
                   <div class="text-table-col">{{round(getAngleLength(tray.values)) + 'm'}}</div>
                 </div>
                 <div class="p-ml-auto text-center-y">
@@ -72,7 +77,8 @@
               </div>
             </div>
             <div class="w-100" *ngIf="cableBoxes.length != 0">
-              <div *ngFor="let cableBox of cableBoxesByCode; let b = index" class="card-tile-t card-grid-b" [class.hidden-card]="cableBox == null">
+              <div *ngFor="let cableBox of cableBoxesByCode; let b = index" class="card-tile-t card-grid-b"
+                   [class.hidden-card]="cableBox == null">
                 <div class="text-center-y">
                   <div class="title-name">{{getName(cableBox.desc, cableBox.code)}}</div>
                 </div>
@@ -101,19 +107,24 @@
             <div class="w-100" *ngIf="trays.length != 0">
               <div class="card-tile-t card-grid-b">
                 <div class="text-center-y">
-                  <div class="title-name">{{angle.name}}</div>
+                  <div class="title-name">{{angle.material.translations[0].name}}</div>
                 </div>
                 <div class="df">
-                  <div class="text-center-y attribute mr-10">Total count:</div>
-                  <div class="text-table-col cy" (ngInit)="getSummaryLength()">{{this.summaryLength + 'm'}}</div>
+                  <div class="text-center-y attribute mr-10">Total H:</div>
+                  <div class="text-table-col">{{angle.length + 'm'}}</div>
                 </div>
-                <div></div>
+                <div class="df">
+                  <div class="text-center-y attribute mr-10">Total
+                    <img class="ml-5" src="assets/icons/weight3.svg" height="18">
+                  </div>
+                  <div class="text-table-col">{{angle.weight + 'kg'}}</div>
+                </div>
                 <div class="p-ml-auto text-center-y">
                   <div class="df">
-                    <div class="trm">{{angle.code}}</div>
-                    <div (click)="copyTrmCode(angle.code, 'c')" class="trm-copy cursor-pointer cxy">
+                    <div class="trm">{{angle.stockCode}}</div>
+                    <div (click)="copyTrmCode(angle.stockCode, 'd')" class="trm-copy cursor-pointer cxy">
                       <img src="assets/icons/trm.svg" height="16">
-                      <div class="copy-tooltip" [hidden]="!showTooltip('c')">Copied!</div>
+                      <div class="copy-tooltip" [hidden]="!showTooltip('d')">Copied!</div>
                     </div>
                   </div>
                 </div>
@@ -130,8 +141,8 @@
                 <!--                <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>-->
                 <!--                <div class="w-20 table-header-column cy">{{l.tr('FSQ')}}</div>-->
                 <div class="w-10 table-header-column cy">{{l.tr('WEIGHT')}}</div>
-                <div class="w-20 table-header-column cy">{{l.tr('COORDINATES')}}</div>
-                <div class="w-30 table-header-column cy">{{l.tr('STOCK CODE')}}</div>
+                <div class="w-30 table-header-column cy">{{l.tr('COORDINATES')}}</div>
+                <div class="w-20 table-header-column cy">{{l.tr('STOCK CODE')}}</div>
               </div>
               <div *ngFor="let cableBox of cableBoxes; let c = index" class="df cursor-pointer info-row">
                 <div class="w-10 table-body cy">{{cableBox.userId}}</div>
@@ -139,23 +150,23 @@
                 <!--                <div class="w-10 table-body cy">{{cableBox.zone}}</div>-->
                 <!--                <div class="w-20 table-body cy">{{cableBox.oid}}</div>-->
                 <div class="w-10 table-body cy">{{round(cableBox.weight) + 'kg'}}</div>
-                <div class="w-20 table-body-equip cy">
-                  <div class="">
+                <div class="w-30 table-body-equip cy">
+                  <div class="df">
                     <div class="df coordinates-row mr-5">
-                      <div class="coordinates-x cxy">X<sub>1</sub>:</div>
+                      <div class="coordinates-x cxy">X:</div>
                       <span class="mm-text cxy">{{' ' + round(cableBox.x_cog)}}</span>
                     </div>
                     <div class="df coordinates-row mr-5">
-                      <div class="coordinates-y cxy">Y<sub>1</sub>:</div>
+                      <div class="coordinates-y cxy">Y:</div>
                       <span class="mm-text cxy">{{' ' + round(cableBox.y_cog)}}</span>
                     </div>
                     <div class="df coordinates-row mr-5">
-                      <div class="coordinates-z cxy">Z<sub>1</sub>:</div>
+                      <div class="coordinates-z cxy">Z:</div>
                       <span class="mm-text cxy">{{' ' + round(cableBox.z_cog)}}</span>
                     </div>
                   </div>
                 </div>
-                <div class="p-ml-auto w-30 position-relative table-body cy">
+                <div class="p-ml-auto w-20 position-relative table-body cy">
                   <div class="df">
                     <div class="trm">{{cableBox.stockCode}}</div>
                     <div (click)="copyTrmCode(cableBox.stockCode, 'c' + c)" class="trm-copy cursor-pointer cxy">
@@ -172,23 +183,31 @@
       </div>
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'"
+               [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'"
+               [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'"
+               [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
         </div>
 
         <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
-          <div class="mb-30" *ngFor="let fileGroup of fileGroups" [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
-            <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
+          <div class="mb-30" *ngFor="let fileGroup of fileGroups"
+               [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
+            <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true"
+                        [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
-                  <div *ngIf="'Electric' == auth.getUser().department && issue.status == 'Delivered'" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                  <div *ngIf="'Electric' == auth.getUser().department && issue.status == 'Delivered'"
+                       class="button-details df cursor-pointer mb-15"
+                       (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/plus1.svg" height="16">
                     </div>
                     <div class="cy ml-1">Add files</div>
                   </div>
-                  <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15"
+                       (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/download-arrow.png">
                     </div>
@@ -197,7 +216,8 @@
 
 
                   <div *ngIf="fileGroup.name == 'Cutting Map'">
-                    <div class="ml-1 button-details df cursor-pointer mb-15" (click)="$event.ctrlKey ? downloadFilesCVC(fileGroup.name, selectedRevision, 'txt') : download.toggle($event)">
+                    <div class="ml-1 button-details df cursor-pointer mb-15"
+                         (click)="$event.ctrlKey ? downloadFilesCVC(fileGroup.name, selectedRevision, 'txt') : download.toggle($event)">
                       <div class="cxy">
                         <img src="assets/icons/download-arrow.png">
                       </div>
@@ -205,13 +225,16 @@
                     </div>
                     <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
                       <ng-template pTemplate>
-                        <div class="df border-bottom all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision, 'cnc')">
+                        <div class="df border-bottom all-row-user-menu cursor-pointer"
+                             (click)="downloadFiles(fileGroup.name, selectedRevision, 'cnc')">
                           <div class="row-download">.MPG</div>
                         </div>
-                        <div class="df all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision, 'essi')">
+                        <div class="df all-row-user-menu cursor-pointer"
+                             (click)="downloadFiles(fileGroup.name, selectedRevision, 'essi')">
                           <div class="row-download">.ESI</div>
                         </div>
-                        <div class="df all-row-user-menu cursor-pointer" (click)="downloadFiles(fileGroup.name, selectedRevision, 'tap')">
+                        <div class="df all-row-user-menu cursor-pointer"
+                             (click)="downloadFiles(fileGroup.name, selectedRevision, 'tap')">
                           <div class="row-download">.TAP</div>
                         </div>
                       </ng-template>
@@ -219,7 +242,10 @@
                   </div>
 
 
-                  <div *ngIf="'Electric' == auth.getUser().department" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="'Electric' == auth.getUser().department"
+                       [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0"
+                       class="ml-1 button-details df cursor-pointer mb-15"
+                       (click)="clearFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy icon-rotate">
                       <img src="assets/icons/broom.png">
                     </div>
@@ -232,7 +258,8 @@
                     <div class="cy mx-10 cursor-pointer" (click)="setFileSort('name')">
                       <img [class.files-sorted]="fileSort == 'name'" src="assets/icons/sort.svg" height="16">
                     </div>
-                    <div class="cy cursor-pointer" [class.files-sorted]="fileSort == 'date'" (click)="setFileSort('date')">
+                    <div class="cy cursor-pointer" [class.files-sorted]="fileSort == 'date'"
+                         (click)="setFileSort('date')">
                       <img src="assets/icons/sort.svg" height="16">
                     </div>
                     <div></div>
@@ -241,7 +268,7 @@
                   </div>
                   <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
 
-                    <div  class="attachment-files df mb-6 cursor-pointer">
+                    <div class="attachment-files df mb-6 cursor-pointer">
                       <div class="cxy">
                         <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                       </div>
@@ -249,32 +276,41 @@
                       <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
 
 
-
-                      <div class="cxy" *ngIf="file.name.includes('.dxf')" >
-                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
-                            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                      <div class="cxy" *ngIf="file.name.includes('.dxf')">
+                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
+                             (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                            <path
+                              d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
                           </svg>
                         </div>
                       </div>
-                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')" (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
-                        <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
-                          <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')"
+                           (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
+                        <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                          <path
+                            d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
                         </svg>
                       </div>
                       <div class="cxy" *ngIf="!file.name.includes('.dxf') && file.group != 'Cutting Map'"></div>
 
                       <div *ngIf="file.group != 'Cutting Map'" class="cxy" (click)="openFile(file)">
-                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                             viewBox="0 0 24 24">
                           <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                         </svg>
                       </div>
 
                       <div class="cxy" *ngIf="file.group == 'Cutting Map'">
                         <div class="cxy" (click)="download.toggle($event)">
-                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                               viewBox="0 0 24 24">
                             <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                           </svg>
                         </div>
@@ -293,7 +329,8 @@
                         </p-overlayPanel>
                       </div>
                       <div class="cxy" *ngIf="'Electric' == auth.getUser().department" (click)="deleteFile(file.url)">
-                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                             viewBox="0 0 24 24">
                           <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                         </svg>
                       </div>
@@ -322,36 +359,44 @@
           </div>
           <div class="">
             <div class="subtask" *ngFor="let childIssue of miscIssues">
-              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)" >
+              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)">
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
                 <div class="py-10 px-10 subtask-text">
                   <span>{{childIssue.doc_number + ' '}}</span>
                   <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
                 </div>
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-                <div class="dfc px-10 py-10 subtask-text" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+                <div class="cy px-10 py-10 subtask-text"
+                     [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+                <div class="cy px-10 py-10 subtask-text"
+                     [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                <div class="dfc px-10 py-10 subtask-text"
+                     [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
               </div>
             </div>
           </div>
         </div>
         <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
           <div *ngFor="let file of getArchive()">
-            <div  class="attachment-files-archive df mb-6 cursor-pointer">
+            <div class="attachment-files-archive df mb-6 cursor-pointer">
               <div class="cxy">
                 <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
               </div>
               <span class="file-name-esp mx-10 min-width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
-              <span class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
-              <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
-                <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class="" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
-                  <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
-                    <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+              <span
+                class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
+              <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')">
+                <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=""
+                     (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                  <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                       xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                    <path
+                      d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
                   </svg>
                 </div>
               </div>
-              <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')" >
+              <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')">
               </div>
               <div class="cxy ml-10" (click)="openFile(file)">
                 <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
