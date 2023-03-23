@@ -128,9 +128,9 @@
 
         <cdk-virtual-scroll-viewport class="background-gray" autosize style="height: calc(100vh - 390px)">
           <div class="h-100 issues-all" *cdkVirtualFor="let issue of issues">
-            <div class="cursor-pointer" (click)="selectIssue(issue); openTask(issue.id)">
+            <div class="cursor-pointer" (click)="selectIssue(issue);">
               <div pDraggable="issue" (dragstart)="drag($event, issue, dragValues[issue.id])" >
-                <div class="one-row-w df space-between">
+                <div class="one-row-w df space-between" (click)="openTask(issue.id)">
                   <div class="title-bold">{{issue.doc_number}}</div>
                   <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
                 </div>
@@ -162,7 +162,7 @@
                 <div class="df space-between mt-2px">
                   <div>
                     <div class="cursor-pointer width-50">
-                      <p-inputNumber inputStyleClass="width-50" [(ngModel)]="dragValues[issue.id]" mode="decimal"></p-inputNumber>
+                      <p-inputNumber [disabled]="issue.plan_hours == 0" inputStyleClass="width-50" [(ngModel)]="dragValues[issue.id]" mode="decimal"></p-inputNumber>
                     </div>
                   </div>
                   <div class="df">
