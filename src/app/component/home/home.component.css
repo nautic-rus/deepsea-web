@@ -4,6 +4,9 @@
 /deep/.p-datatable-resizable .p-datatable-tbody>tr>td{
   white-space: break-spaces!important;
 }
+/deep/.p-multiselect-filter-container .p-inputtext {
+  min-width: 150px;
+}
 .top-menu{
   display: grid;
   grid-template-columns: 1fr 4fr 1fr;
