@@ -41,6 +41,7 @@ export class HullEspGenerationWaitComponent implements OnInit {
 
   getEsp() {
     this.generationWait = true;
+    this.selectRevision = false;
     this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
       if (!this.generateFiles){
         this.generationWait = false;
