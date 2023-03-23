@@ -143,4 +143,7 @@ export class SpecManagerService {
   createHullEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createHullEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
+  createPipeEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
+    return this.http.get<string>(props.httpSpec + '/createHullEsp', {params: {project, docNumber, rev, user, kind, taskId}});
+  }
 }

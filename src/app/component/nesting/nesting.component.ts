@@ -92,7 +92,7 @@ export class NestingComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.project = params.foranProject != null ? params.foranProject : 'N004';
-      this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+      //this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
       if (!this.projects.includes(this.project)){
         this.project = this.projects[0];
       }
