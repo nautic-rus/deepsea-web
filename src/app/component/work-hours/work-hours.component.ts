@@ -588,7 +588,7 @@ export class WorkHoursComponent implements OnInit {
                       let last = plannedHours[plannedHours.length - 1];
                       let dateStart = new Date(first.year, first.month, first.day);
                       let dateDue = new Date(last.year, last.month, last.day);
-                      this.issueManager.assignUser(this.taskOfDay.taskId, findUser.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', 'AssignedTo', this.auth.getUser().login);
+                      this.issueManager.assignUser(this.taskOfDay.taskId, findUser.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', 'AssignedTo', this.auth.getUser().login, 1);
                     }
                   }
                 });

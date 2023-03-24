@@ -37,8 +37,8 @@ export class IssueManagerService {
     formData.append('file', file, file.name);
     return await this.http.post<FileAttachment>(props.http + '/createFileCloudUrl', formData, {params: {filePath, login, password}}).toPromise();
   }
-  async assignUser(id: number, user: string, startDate: string, dueDate: string, overtime: string, action: string, author: string){
-    return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime, action, author}}).toPromise();
+  async assignUser(id: number, user: string, startDate: string, dueDate: string, overtime: string, action: string, author: string, hidden: number = 0){
+    return await this.http.get<string[]>(props.http + '/assignIssue', {params: {id, user, startDate, dueDate, overtime, action, author, hidden}}).toPromise();
   }
   async changeResponsible(id: number, user: string){
     return await this.http.get<string[]>(props.http + '/changeResponsible', {params: {id, user}}).toPromise();
