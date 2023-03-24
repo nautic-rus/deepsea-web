@@ -333,6 +333,7 @@ export class HullEspComponent implements OnInit {
           this.filters.ELEM_TYPE = this.getFilters(this.parts, 'ELEM_TYPE');
           this.filters.MATERIAL = this.getFilters(this.parts, 'MATERIAL');
           this.filters.SYMMETRY = this.getFilters(this.parts, 'SYMMETRY');
+          this.noResult = false;
         }
         else{
           this.noResult = true;
