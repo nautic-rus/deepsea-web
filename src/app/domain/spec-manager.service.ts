@@ -96,7 +96,7 @@ export class SpecManagerService {
     return await this.http.get<any[]>(props.httpSpec + '/hullSystems', {params: {project}}).toPromise();
   }
   async getPipeSegs(docNumber: string) {
-    return await this.http.get<any[]>(props.httpSpec + '/pipeSegs', {params: {docNumber}}).toPromise();
+    return await this.http.get<any>(props.httpSpec + '/pipeSegs', {params: {docNumber}}).toPromise();
   }
   async getSpoolFiles(docNumber: string, spool: string, isom: number) {
     return await this.http.get(props.httpSpec + '/spoolFiles', {responseType: 'arraybuffer', params: {docNumber, spool, isom}}).toPromise();

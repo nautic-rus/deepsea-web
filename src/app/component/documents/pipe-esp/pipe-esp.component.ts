@@ -165,6 +165,8 @@ export class PipeEspComponent implements OnInit {
   pipesSrc: any[] = [];
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
+  revEsp = '';
+  revUser = '';
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -252,10 +254,19 @@ export class PipeEspComponent implements OnInit {
       }
     }
   }
+  getDateModify(dateLong: number){
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
   fillPipes(){
     this.s.getPipeSegs(this.docNumber).then(res => {
-      if (res.length > 0){
-        this.pipes = _.sortBy(res.filter(x => x.spool != '' || this.showNoSpool), x => this.addLeftZeros(x.spool, 5) + this.addLeftZeros(x.spPieceId, 4));
+      console.log(res);
+      if (res != null && res != '' && res.elements.length != 0){
+        this.issue.revision = res.rev;
+        let segs = res.elements;
+        this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
+        this.revUser = this.auth.getUserName(res.user);
+        this.pipes = _.sortBy(segs.filter((x: any) => x.spool != '' || this.showNoSpool), x => this.addLeftZeros(x.spool, 5) + this.addLeftZeros(x.spPieceId, 4));
         this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null, dxf: '', aux: x.find(y => y.compType == 'AUX') != null}));
         this.pipesBySpool = _.sortBy(this.pipesBySpool, x => this.addLeftZeros(x.spool, 5));
 
@@ -582,7 +593,7 @@ export class PipeEspComponent implements OnInit {
     this.dialogService.open(PipeEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
-      data: {issue: this.issue, spools: value}
+      data: [this.issue, this.project]
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });

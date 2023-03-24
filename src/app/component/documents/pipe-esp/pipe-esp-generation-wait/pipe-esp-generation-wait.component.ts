@@ -17,7 +17,7 @@ export class PipeEspGenerationWaitComponent implements OnInit {
 
 
   issue: Issue = new Issue();
-
+  project = '';
   selectRevision = true;
   generationWait = false;
 
@@ -27,12 +27,15 @@ export class PipeEspGenerationWaitComponent implements OnInit {
   updateRevision = false;
   langs = ['Primary', 'Secondary'];
   lang = this.langs[0];
+  generateFiles = false;
 
   constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
 
 
   ngOnInit(): void {
-    this.issue = this.conf.data.issue;
+    this.issue = this.conf.data[0];
+    this.project = this.conf.data[1];
+    this.rev = this.issue.revision;
   }
   close(){
     this.ref.close('exit');
@@ -41,31 +44,40 @@ export class PipeEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getPipeEspFiles(this.issue.doc_number, this.rev, this.conf.data.spools, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
-      this.generationWait = false;
-      this.resUrls.splice(0, this.resUrls.length);
-      this.resUrls.push(res);
-      let files: FileAttachment[] = [];
 
-      this.resUrls.forEach(fileUrl => {
-        let file = new FileAttachment();
-        file.url = fileUrl;
-        file.revision = this.rev;
-        file.author = this.auth.getUser().login;
-        file.group = 'Part List';
-        file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
-        file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
-        files.push(file);
-      });
-
-      // this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-      //   this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', 'PROD').then(() => {
-      //     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(files)).then(res => {
-      //
-      //     });
-      //   });
-      // });
+    this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'pipe', this.issue.id).subscribe(res => {
+      if (!this.generateFiles){
+        this.generationWait = false;
+        this.close();
+      }
     });
+    if (this.generateFiles){
+      this.s.getPipeEspFiles(this.issue.doc_number, this.rev, this.conf.data.spools, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
+        this.generationWait = false;
+        this.resUrls.splice(0, this.resUrls.length);
+        this.resUrls.push(res);
+        let files: FileAttachment[] = [];
+
+        this.resUrls.forEach(fileUrl => {
+          let file = new FileAttachment();
+          file.url = fileUrl;
+          file.revision = this.rev;
+          file.author = this.auth.getUser().login;
+          file.group = 'Part List';
+          file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+          file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
+          files.push(file);
+        });
+
+        // this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+        //   this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', 'PROD').then(() => {
+        //     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(files)).then(res => {
+        //
+        //     });
+        //   });
+        // });
+      });
+    }
   }
 
   getFileName(file: string) {

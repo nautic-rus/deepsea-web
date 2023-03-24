@@ -26,6 +26,10 @@ export interface PlanHour{
   id: number;
   task_id: number;
 }
+export interface PlannedHours{
+  taskId: number;
+  hours: number;
+}
 export interface PlanDay{
   day: number;
   month: number;
@@ -48,7 +52,7 @@ export class WorkHoursComponent implements OnInit {
   department = '';
   today = new Date();
   todayStatic = new Date();
-  currentMonth = this.today.getMonth();
+  currentMonth = '';
   currentYear = this.today.getFullYear();
   issues: Issue[] = [];
   issuesSrc: Issue[] = [];
@@ -83,6 +87,7 @@ export class WorkHoursComponent implements OnInit {
   userHover: any = null;
   hoverEnabled = true;
   pHours: PlanHour[] = [];
+  plannedHours: PlannedHours[] = [];
   userPDays: any = Object();
   headerPDays: PlanDay[] = [];
   loading = false;
@@ -130,7 +135,11 @@ export class WorkHoursComponent implements OnInit {
     });
     this.auth.getUsersPlanHours().subscribe(planHours => {
       this.pHours = planHours;
-      this.fillDays();
+      this.auth.getPlannedHours().subscribe(plannedHours => {
+        this.plannedHours = plannedHours;
+        console.log(this.plannedHours);
+        this.fillDays();
+      });
     });
   }
   fillIssues(){
@@ -162,28 +171,11 @@ export class WorkHoursComponent implements OnInit {
     });
     return sum;
   }
-  getDaysInMonth() {
-    let daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-    let array = [];
-    for (let x = 0; x < daysInMonth; x++){
-      array.push(x + 1);
-    }
-    return array;
-  }
-  isWeekend(day: number) {
-    let date = new Date(this.currentYear, this.currentMonth, day).getDay();
-    return date == 0 || date == 6 || this.specialDays.find(x => x.day == day && (x.month - 1) == this.currentMonth && x.year == this.currentYear)?.hours == 0;
-  }
-  isCurrentDay(day: any) {
-    return day == this.todayStatic.getDate() && this.currentMonth == this.todayStatic.getMonth();
-  }
+
   isCurrentPDay(pDay: PlanDay) {
     return pDay.day == this.todayStatic.getDate() && pDay.month == this.todayStatic.getMonth() && pDay.year == this.todayStatic.getFullYear();
   }
-  isShorter(day: number){
-    let special = this.specialDays.find(x => x.day == day && (x.month - 1) == this.currentMonth && x.year == this.currentYear);
-    return special != null && special.hours != 0;
-  }
+
   getUsers(){
     return this.users.filter(x => this.selectedDepartments.includes(x.department));
   }
@@ -239,6 +231,7 @@ export class WorkHoursComponent implements OnInit {
     });
     this.userPDays = userPDays;
     this.loading = false;
+    this.currentMonth = this.formatMonth(this.headerPDays[0].month, true).toString();
   }
   addLeftZeros(input: any, length: number = 4){
     let res = input.toString();
@@ -322,23 +315,53 @@ export class WorkHoursComponent implements OnInit {
       this.auth.deleteUserTask(findTask.user, findTask.task_id, 0).subscribe(res => {
         console.log(res);
         this.auth.getUsersPlanHours().subscribe(planHours => {
-          this.pHours = planHours;
-          this.fillDays();
-          this.filterIssues();
+          this.auth.getPlannedHours().subscribe(plannedHours => {
+            this.plannedHours = plannedHours;
+            this.pHours = planHours;
+            this.fillDays();
+            this.filterIssues();
 
-          this.issueManager.assignUser(this.draggableIssue.id, '', '0', '0', 'Нет', this.draggableIssue.action, this.auth.getUser().login);
+            this.issueManager.assignUser(this.draggableIssue.id, '', '0', '0', 'Нет', this.draggableIssue.action, this.auth.getUser().login);
 
-          this.draggableIssue.status = 'New';
-          this.draggableIssue.action = this.draggableIssue.status;
-          this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
-          this.loading = false;
+            this.draggableIssue.status = 'New';
+            this.draggableIssue.action = this.draggableIssue.status;
+            this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
+            this.loading = false;
+
+          });
 
         });
       });
     }
   }
-
   fillNextDays() {
+    this.loading = true;
+    let latestPHour = _.sortBy(this.pHours,x => x.id);
+    if (latestPHour.length > 0){
+      let newDate = new Date(latestPHour[0].year, latestPHour[0].month + 1, latestPHour[0].day);
+      this.headerPDays.splice(0, this.headerPDays.length);
+      this.userPDays = Object();
+      this.auth.getUsersPlanHours(0, newDate.getTime()).subscribe(planHours => {
+        this.pHours = planHours;
+        this.fillDays();
+      });
+    }
+  }
+
+  fillPrevDays() {
+    this.loading = true;
+    let latestPHour = _.sortBy(this.pHours,x => x.id);
+    if (latestPHour.length > 0){
+      let newDate = new Date(latestPHour[0].year, latestPHour[0].month - 1, latestPHour[0].day);
+      this.headerPDays.splice(0, this.headerPDays.length);
+      this.userPDays = Object();
+      this.auth.getUsersPlanHours(0, newDate.getTime()).subscribe(planHours => {
+        this.pHours = planHours;
+        this.fillDays();
+      });
+    }
+  }
+  fillNextDaysAux() {
     this.loading = true;
     let latestPHour = _.sortBy(this.pHours,x => x.id).reverse();
     if (latestPHour.length > 0){
@@ -352,7 +375,7 @@ export class WorkHoursComponent implements OnInit {
     }
   }
 
-  fillPrevDays() {
+  fillPrevDaysAux() {
     this.loading = true;
     let latestPHour = _.sortBy(this.pHours,x => x.id);
     if (latestPHour.length > 0){
@@ -409,21 +432,21 @@ export class WorkHoursComponent implements OnInit {
   selectIssue(issue: any) {
     this.selectedIssue = issue;
   }
-  formatMonth(month: number) {
+  formatMonth(month: number, full: Boolean = false) {
     if (this.t.language == 'en'){
       switch (month) {
-        case 0: return 'Jan';
-        case 1: return 'Feb';
-        case 2: return 'Mar';
-        case 3: return 'Apr';
-        case 4: return 'May';
-        case 5: return 'Jun';
-        case 6: return 'Jul';
-        case 7: return 'Aug';
-        case 8: return 'Sep';
-        case 9: return 'Oct';
-        case 10: return 'Nov';
-        case 11: return 'Dec';
+        case 0: return 'Jan' + (full ? 'uary' : '');
+        case 1: return 'Feb' + (full ? 'rary' : '');
+        case 2: return 'Mar' + (full ? 'ch' : '');
+        case 3: return 'Apr' + (full ? 'il' : '');
+        case 4: return 'May' + (full ? '' : '');
+        case 5: return 'Jun' + (full ? 'e' : '');
+        case 6: return 'Jul' + (full ? 'y' : '');
+        case 7: return 'Aug' + (full ? 'ust' : '');
+        case 8: return 'Sep' + (full ? 'tember' : '');
+        case 9: return 'Oct' + (full ? 'ober' : '');
+        case 10: return 'Nov' + (full ? 'ember' : '');
+        case 11: return 'Dec' + (full ? 'ember' : '');
         default: return month;
       }
     }
@@ -475,23 +498,27 @@ export class WorkHoursComponent implements OnInit {
       this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
         next: () => {
           this.auth.getUsersPlanHours().subscribe(planHours => {
-            this.pHours = planHours;
-            this.fillDays();
-            this.filterIssues();
-            this.loading = false;
+            this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
+              this.plannedHours = plannedHoursAlready;
+              this.pHours = planHours;
+              this.fillDays();
+              this.filterIssues();
+              this.loading = false;
 
-            let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id), x => x.id);
+              let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id), x => x.id);
 
-            if (planHours.length > 0){
-              let first = plannedHours[0];
-              let last = plannedHours[plannedHours.length - 1];
-              let dateStart = new Date(first.year, first.month, first.day);
-              let dateDue = new Date(last.year, last.month, last.day);
-              this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
-              this.draggableIssue.status = 'AssignedTo';
-              this.draggableIssue.action = this.draggableIssue.status;
-              this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
-            }
+              if (planHours.length > 0){
+                let first = plannedHours[0];
+                let last = plannedHours[plannedHours.length - 1];
+                let dateStart = new Date(first.year, first.month, first.day);
+                let dateDue = new Date(last.year, last.month, last.day);
+                this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+                this.draggableIssue.status = 'AssignedTo';
+                this.draggableIssue.action = this.draggableIssue.status;
+                this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
+              }
+            });
+
           });
         }
       });
@@ -503,7 +530,8 @@ export class WorkHoursComponent implements OnInit {
   }
 
   getPlanned(issue: Issue) {
-    return this.pHours.filter(x => x.task_id == issue.id).length;
+    let planned = this.plannedHours.find(x => x.taskId == issue.id);
+    return planned != null ? planned.hours : 0;
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
