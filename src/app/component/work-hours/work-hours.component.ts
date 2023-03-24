@@ -452,18 +452,18 @@ export class WorkHoursComponent implements OnInit {
     }
     else{
       switch (month) {
-        case 0: return 'Янв';
-        case 1: return 'Февр';
+        case 0: return 'Янв' + (full ? 'арь' : '');
+        case 1: return 'Февр' + (full ? 'аль' : '');
         case 2: return 'Март';
-        case 3: return 'Апр';
+        case 3: return 'Апр' + (full ? 'ель' : '');
         case 4: return 'Май';
         case 5: return 'Июнь';
         case 6: return 'Июль';
-        case 7: return 'Авг';
-        case 8: return 'Сент';
-        case 9: return 'Окт';
-        case 10: return 'Нояб';
-        case 11: return 'Дек';
+        case 7: return 'Авг' + (full ? 'уст' : '');
+        case 8: return 'Сент' + (full ? 'ябрь' : '');
+        case 9: return 'Окт' + (full ? 'ябрь' : '');
+        case 10: return 'Нояб' + (full ? 'рь' : '');
+        case 11: return 'Дек' + (full ? 'абрь' : '');
         default: return month;
       }
     }
