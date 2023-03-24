@@ -242,9 +242,9 @@ export class WorkHoursComponent implements OnInit {
   }
 
   getDayStyle(day: TaskOfDay) {
-    let oneHourLength = 48 / 8;
+    let oneHourLength = 40 / 8;
     return {
-      height: '40px',
+      height: '100%',
       width: (day.planHours.length * oneHourLength) + 'px',
       'background-color': this.getTaskColor(day.taskId),
       // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
