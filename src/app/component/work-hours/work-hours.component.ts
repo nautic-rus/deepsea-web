@@ -116,7 +116,7 @@ export class WorkHoursComponent implements OnInit {
     this.items = [
       {
         label: 'Fold left',
-        icon: 'pi pi-fw pi-external-link',
+        icon: 'pi pi-fw pi-arrow-circle-left',
         command: (event: any) => this.foldTaskLeft()
       },
       {
