@@ -146,7 +146,7 @@
         </ng-template>
       </p-table>
     </div>
-    <div class="card cxy" [hidden]="filled">
+    <div class="card cxy" *ngIf="issues.length == 0">
       <div class="cxy loading">
         <div class="cxy flex-column">
           <img src="assets/whale.gif" height="120">

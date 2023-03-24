@@ -1,16 +1,150 @@
 <div class="all-page">
-    <div class="df">
-      <div class="users">
-        <div class="card">
-          <p-table class="users"
-                   #usr
-                   id="usr"
+  <div class="df">
+    <div class="users">
+      <div class="card">
+        <p-table class="users"
+                 #usr
+                 id="usr"
+                 dataKey="id"
+                 [value]="users"
+                 scrollHeight="calc(100vh - 220px)"
+                 [scrollable]="true"
+                 [virtualScroll]="true"
+                 [scrollHeight]="'78vh'"
+                 [virtualRowHeight]="40"
+                 [reorderableColumns]="false"
+                 [resizableColumns]="false"
+                 styleClass="p-datatable-striped"
+                 responsiveLayout="scroll"
+                 [globalFilterFields]="['profession','department','groups']">
+
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+              <div class="mr-10">
+                <div class="materials-button-home blue-button cxy" (click)="newUser(null)">
+                  <div class="pr-10 cxy">
+                    <img src="assets/icons/plus3.svg" height="18">
+                  </div>
+                  <div class="cxy">{{l.tr('Новый пользователь')}}</div>
+                </div>
+              </div>
+              <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input #search pInputText type="text" (input)="usr.filterGlobal(search.value, 'contains')"
+                   [placeholder]="l.tr('Поиск...')" class="border"/>
+          </span>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr class="df">
+              <th pSortableColumn="id" class="lxy">{{l.tr('ID')}}
+                <p-sortIcon field="id"></p-sortIcon>
+              </th>
+              <th pSortableColumn="avatar" class="lxy">{{l.tr('Аватар')}}
+              </th>
+              <th pSortableColumn="name" class="lxy">{{l.tr('Имя')}}
+              </th>
+              <th pSortableColumn="surname" class="lxy">{{l.tr('Фамилия')}}
+                <p-sortIcon field="surname"></p-sortIcon>
+              </th>
+              <th pSortableColumn="profession" class="lxy">{{l.tr('Должность')}}
+                <p-sortIcon field="profession"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'profession'" matchMode="in" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.profession"
+                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+              <th pSortableColumn="department" class="lxy">{{l.tr('Отдел')}}
+                <p-sortIcon field="department"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department"
+                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+<!--              <th pSortableColumn="groups" class="lxy w-18">{{l.tr('Группа')}}-->
+<!--                <p-sortIcon field="groups"></p-sortIcon>-->
+<!--                <p-columnFilter class="filter" [field]="'groups'" matchMode="contains" display="menu" [showMatchModes]="false"-->
+<!--                                [showOperator]="false" [showAddButton]="false">-->
+<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.groups"-->
+<!--                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"-->
+<!--                                   (onChange)="filter($event.value);">-->
+<!--                    </p-multiSelect>-->
+<!--                  </ng-template>-->
+<!--                </p-columnFilter>-->
+<!--              </th>-->
+              <th pSortableColumn="groups" class="lxy">{{l.tr('Группа')}}
+                <p-sortIcon field="groups"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+
+          <!--            <ng-template pTemplate="header" let-columns>-->
+          <!--              <tr>-->
+          <!--                <th style="width:134px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">-->
+          <!--                  <div class="header">-->
+          <!--                    {{l.tr(col.header)}}-->
+          <!--                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>-->
+          <!--&lt;!&ndash;                    <p-columnFilter class="filter" type="profession" [field]="col.field" display="menu" *ngIf="col.profession == true"></p-columnFilter>&ndash;&gt;-->
+          <!--                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+          <!--                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+          <!--                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">-->
+          <!--                        </p-multiSelect>-->
+          <!--                      </ng-template>-->
+          <!--                    </p-columnFilter>-->
+          <!--                  </div>-->
+          <!--                </th>-->
+          <!--              </tr>-->
+          <!--            </ng-template>-->
+          <!--            <ng-template pTemplate="body" let-columns="columns" let-user>-->
+          <!--              <tr class="user-row" (click)="viewUser(user.id)">-->
+          <!--                <td style="width:134px" class="cursor-pointer" *ngFor="let col of columns">-->
+          <!--                  <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.user[col.field], col.field) | safeHtml"></div></div>-->
+          <!--                  &lt;!&ndash;              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>&ndash;&gt;-->
+          <!--                </td>-->
+          <!--              </tr>-->
+          <!--            </ng-template>-->
+
+          <ng-template pTemplate="body" let-user>
+            <tr class="cursor-pointer row-table-doc-hover" (click)="viewUser(user.id)">
+              <td class="text-14 width-10">{{user.id}}</td>
+              <td class="text-14 width-10">
+                <span [innerHTML]="setAvatar(user.avatar) | safeHtml"></span>
+              </td>
+              <td class="text-14">{{user.name}}</td>
+              <td class="text-14">{{user.surname}}</td>
+              <td class="text-14">{{user.profession}}</td>
+              <td class="text-14">{{this.getDepartmentName(user.id_department)}}</td>
+              <td class="text-14">{{user.groups}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <div class="right">
+      <div class="df">
+        <div class="roles card2">
+          <p-table class="roles word-break"
+                   #rls
+                   id="rls"
                    dataKey="id"
-                   [value]="users"
+                   [value]="roles"
                    [scrollable]="true"
-                   [columns]="colsUsers"
+                   [columns]="colsRoles"
+                   (onColReorder)="saveReorderedColumnsUsers($event)"
                    [virtualScroll]="false"
-                   [scrollHeight]="'78vh'"
+                   [scrollHeight]="'35vh'"
                    [virtualRowHeight]="1"
                    styleClass="p-datatable-striped"
                    scrollDirection="both"
@@ -18,29 +152,37 @@
             <ng-template pTemplate="caption">
               <div class="p-d-flex">
                 <div class="mr-10">
-                  <div class="materials-button-home blue-button cxy" (click)="newUser(null)">
+                  <div class="materials-button-home blue-button cxy" (click)="newRole(null)">
                     <div class="pr-10 cxy">
                       <img src="assets/icons/plus3.svg" height="18">
                     </div>
-                    <div class="cxy">{{l.tr('Новый пользователь')}}</div>
+                    <div class="cxy">{{l.tr('Новая роль')}}</div>
                   </div>
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
-            <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="usr.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
-          </span>
+                <i class="pi pi-search"></i>
+                <input #search pInputText type="text" (input)="rls.filterGlobal(search.value, 'contains')"
+                       [placeholder]="l.tr('Поиск...')" class="border"/>
+              </span>
               </div>
             </ng-template>
             <ng-template pTemplate="header" let-columns>
               <tr>
-                <th style="width:156px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+                <th style="width: 33%" pResizableColumn pReorderableColumn *ngFor="let col of columns"
+                    [pSortableColumn]="col.field">
                   <div class="header">
                     {{l.tr(col.header)}}
-                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
-                    <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
-                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
+                                [field]="col.field"></p-sortIcon>
+                    <p-columnFilter class="filter" type="date" [field]="col.field" display="menu"
+                                    *ngIf="col.date == true"></p-columnFilter>
+                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field"
+                                    matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
+                                    [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters"
+                                       optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                       (onChange)="filter($event.value);">
                         </p-multiSelect>
                       </ng-template>
                     </p-columnFilter>
@@ -48,173 +190,63 @@
                 </th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-columns="columns" let-user>
-              <tr class="user-row" (click)="viewUser(user.id)">
-                <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
-                  <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.user[col.field], col.field) | safeHtml"></div></div>
+            <ng-template pTemplate="body" let-columns="columns" let-role>
+              <tr class="role-row" (click)="viewRole(role.name)">
+                <td style="width: 33%" class="cursor-pointer" *ngFor="let col of columns">
+                  <div *ngIf="col.skip == false && col.field != 'ready'">
+                    <div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div>
+                  </div>
                   <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
                 </td>
               </tr>
             </ng-template>
           </p-table>
         </div>
-      </div>
-      <div class="right" >
-        <div class="df">
-          <div class="roles card2">
-            <p-table class="roles word-break"
-                     #rls
-                     id="rls"
-                     dataKey="id"
-                     [value]="roles"
-                     [scrollable]="true"
-                     [columns]="colsRoles"
-                     (onColReorder)="saveReorderedColumnsUsers($event)"
-                     [virtualScroll]="false"
-                     [scrollHeight]="'35vh'"
-                     [virtualRowHeight]="1"
-                     styleClass="p-datatable-striped"
-                     scrollDirection="both"
-            >
-              <ng-template pTemplate="caption">
-                <div class="p-d-flex">
-                  <div class="mr-10">
-                    <div class="materials-button-home blue-button cxy" (click)="newRole(null)">
-                      <div class="pr-10 cxy">
-                        <img src="assets/icons/plus3.svg" height="18">
-                      </div>
-                      <div class="cxy">{{l.tr('Новая роль')}}</div>
-                    </div>
-                  </div>
-                  <span class="p-input-icon-left p-ml-auto">
-                <i class="pi pi-search"></i>
-                <input #search pInputText type="text" (input)="rls.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
-              </span>
-                </div>
-              </ng-template>
-              <ng-template pTemplate="header" let-columns>
-                <tr>
-                  <th style="width: 33%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
-                    <div class="header">
-                      {{l.tr(col.header)}}
-                      <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
-                      <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
-                      <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                          <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                          </p-multiSelect>
-                        </ng-template>
-                      </p-columnFilter>
-                    </div>
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-columns="columns" let-role>
-                <tr class="role-row" (click)="viewRole(role.name)">
-                  <td style="width: 33%" class="cursor-pointer" *ngFor="let col of columns">
-                    <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.role[col.field], col.field) | safeHtml"></div></div>
-                    <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </div>
-          <div class="rights card2">
-            <p-table class="rights"
-                     #rghts
-                     id="rghts"
-                     dataKey="id"
-                     [value]="rights"
-                     [scrollable]="true"
-                     [columns]="colsRights"
-                     [virtualScroll]="false"
-                     [scrollHeight]="'35vh'"
-                     [virtualRowHeight]="1"
-                     styleClass="p-datatable-striped"
-                     scrollDirection="both"
-            >
-              <ng-template pTemplate="caption">
-                <div class="p-d-flex">
-                  <div class="mr-10">
-                    <div class="materials-button-home blue-button cxy" (click)="newRight(null)">
-                      <div class="pr-10 cxy">
-                        <img src="assets/icons/plus3.svg" height="18">
-                      </div>
-                      <div class="cxy">{{l.tr('Новое право')}}</div>
-                    </div>
-                  </div>
-                  <span class="p-input-icon-left p-ml-auto">
-                </span>
-                </div>
-              </ng-template>
-              <ng-template pTemplate="header" let-columns>
-                <tr>
-                  <th style="width: 100%" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
-                    <div class="header">
-                      {{l.tr(col.header)}}
-                      <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
-                      <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
-                      <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                          <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                          </p-multiSelect>
-                        </ng-template>
-                      </p-columnFilter>
-                    </div>
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-columns="columns" let-right>
-                <tr class="right-row" (click)="viewRight(right.name)">
-                  <td style="width: 100%" class="cursor-pointer" *ngFor="let col of columns">
-                    <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.right[col.field], col.field) | safeHtml"></div></div>
-                    <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </div>
-        </div>
-        <div class="projects card2">
-          <p-table class="projects"
-                   #prcts
-                   id="prcts"
+        <div class="rights card2">
+          <p-table class="rights"
+                   #rghts
+                   id="rghts"
                    dataKey="id"
-                   [value]="projects"
+                   [value]="rights"
                    [scrollable]="true"
-                   [columns]="colsProjects"
+                   [columns]="colsRights"
                    [virtualScroll]="false"
                    [scrollHeight]="'35vh'"
                    [virtualRowHeight]="1"
                    styleClass="p-datatable-striped"
-                   scrollDirection="stateProject"
+                   scrollDirection="both"
           >
             <ng-template pTemplate="caption">
               <div class="p-d-flex">
                 <div class="mr-10">
-                  <div class="materials-button-home blue-button cxy" (click)="newProject(null)">
+                  <div class="materials-button-home blue-button cxy" (click)="newRight(null)">
                     <div class="pr-10 cxy">
                       <img src="assets/icons/plus3.svg" height="18">
                     </div>
-                    <div class="cxy" >{{l.tr('Новый проект')}}</div>
+                    <div class="cxy">{{l.tr('Новое право')}}</div>
                   </div>
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
-                  <i class="pi pi-search"></i>
-                  <input #search pInputText type="text" (input)="prcts.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
                 </span>
               </div>
             </ng-template>
             <ng-template pTemplate="header" let-columns>
               <tr>
-                <th style="width:156px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+                <th style="width: 100%" pResizableColumn pReorderableColumn *ngFor="let col of columns"
+                    [pSortableColumn]="col.field">
                   <div class="header">
                     {{l.tr(col.header)}}
-                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
-                    <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
-                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
+                                [field]="col.field"></p-sortIcon>
+                    <p-columnFilter class="filter" type="date" [field]="col.field" display="menu"
+                                    *ngIf="col.date == true"></p-columnFilter>
+                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field"
+                                    matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
+                                    [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters"
+                                       optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                       (onChange)="filter($event.value);">
                         </p-multiSelect>
                       </ng-template>
                     </p-columnFilter>
@@ -222,10 +254,12 @@
                 </th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-columns="columns" let-project>
-              <tr class="project-row" (click)="viewProject(project.id)">
-                <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
-                  <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.project[col.field], col.field) | safeHtml"></div></div>
+            <ng-template pTemplate="body" let-columns="columns" let-right>
+              <tr class="right-row" (click)="viewRight(right.name)">
+                <td style="width: 100%" class="cursor-pointer" *ngFor="let col of columns">
+                  <div *ngIf="col.skip == false && col.field != 'ready'">
+                    <div [innerHTML]="localeColumn(this.right[col.field], col.field) | safeHtml"></div>
+                  </div>
                   <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
                 </td>
               </tr>
@@ -233,7 +267,75 @@
           </p-table>
         </div>
       </div>
+      <div class="projects card2">
+        <p-table class="projects"
+                 #prcts
+                 id="prcts"
+                 dataKey="id"
+                 [value]="projects"
+                 [scrollable]="true"
+                 [columns]="colsProjects"
+                 [virtualScroll]="false"
+                 [scrollHeight]="'35vh'"
+                 [virtualRowHeight]="1"
+                 styleClass="p-datatable-striped"
+                 scrollDirection="stateProject"
+        >
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+              <div class="mr-10">
+                <div class="materials-button-home blue-button cxy" (click)="newProject(null)">
+                  <div class="pr-10 cxy">
+                    <img src="assets/icons/plus3.svg" height="18">
+                  </div>
+                  <div class="cxy">{{l.tr('Новый проект')}}</div>
+                </div>
+              </div>
+              <span class="p-input-icon-left p-ml-auto">
+                  <i class="pi pi-search"></i>
+                  <input #search pInputText type="text" (input)="prcts.filterGlobal(search.value, 'contains')"
+                         [placeholder]="l.tr('Поиск...')" class="border"/>
+                </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th style="width:156px" pResizableColumn pReorderableColumn *ngFor="let col of columns"
+                  [pSortableColumn]="col.field">
+                <div class="header">
+                  {{l.tr(col.header)}}
+                  <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
+                              [field]="col.field"></p-sortIcon>
+                  <p-columnFilter class="filter" type="date" [field]="col.field" display="menu"
+                                  *ngIf="col.date == true"></p-columnFilter>
+                  <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field"
+                                  matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
+                                  [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters"
+                                     optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                     (onChange)="filter($event.value);">
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-columns="columns" let-project>
+            <tr class="project-row" (click)="viewProject(project.id)">
+              <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
+                <div *ngIf="col.skip == false && col.field != 'ready'">
+                  <div [innerHTML]="localeColumn(this.project[col.field], col.field) | safeHtml"></div>
+                </div>
+                <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </div>
   </div>
+</div>
 <p-toast position="bottom-center"></p-toast>
 

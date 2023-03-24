@@ -328,8 +328,6 @@ export class TaskComponent implements OnInit {
       this.ready.nesting = +readySplit[2];
     }
 
-
-
     this.fillGroupedChecks();
   }
   close(){

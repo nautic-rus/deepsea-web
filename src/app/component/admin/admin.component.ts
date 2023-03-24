@@ -29,6 +29,8 @@ import {CreateRightComponent} from "./right/create-right/create-right.component"
 import {RightComponent} from "./right/right.component";
 import {Departments} from "../../domain/interfaces/departments";
 import {DepartmentService} from "./department.service";
+import _ from "underscore";
+import {LV} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-admin',
@@ -45,6 +47,7 @@ export class AdminComponent implements OnInit {
   colsRoles: any[] = [];
   colsProjects: any[] = [];
   colsRights: any[] = [];
+  filters:  { profession: any[],  department: any[], groups: any[]} = { profession: [], department: [], groups: [] };
   // @ts-ignore
   @ViewChild('search') search;
   // @ts-ignore
@@ -70,6 +73,7 @@ export class AdminComponent implements OnInit {
       .subscribe(users => {
         console.log(users)
         this.users = users
+        this.filters.profession = _.sortBy(_.uniq(users.map((x: any) => x.profession)), x => x).map(x => new LV(x));
       });
   }
 
@@ -79,6 +83,7 @@ export class AdminComponent implements OnInit {
       .subscribe(roles => {
         console.log(roles);
         this.roles = roles;
+        this.filters.groups = _.sortBy(_.uniq(roles.map((x: any) => x.name)), x => x).map(x => new LV(x));
       });
   }
 
@@ -103,6 +108,7 @@ export class AdminComponent implements OnInit {
       .subscribe(departments => {
         console.log(departments);
         this.departments = departments;
+        this.filters.department = _.sortBy(_.uniq(departments.map((x: any) => x.name)), x => x).map(x => new LV(x));
       });
   }
 
@@ -121,6 +127,10 @@ export class AdminComponent implements OnInit {
     else {
       return element;
     }
+  }
+
+  setAvatar(avatar: string) {
+    return '<div class="df"><img src="' + avatar + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
   }
 
   getDepartmentName(id: any): any {
@@ -399,23 +409,23 @@ export class AdminComponent implements OnInit {
         field: 'avatar',
         header: 'Avatar',
         headerLocale: 'Avatar',
-        sort: true,
+        sort: false,
         filter: false,
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: true
+        date: false
       },
       {
         field: 'name',
         header: 'Name',
         headerLocale: 'Name',
-        sort: true,
+        sort: false,
         filter: false,
         skip: false,
         defaultValue: '',
         hidden: false,
-        date: true
+        date: false
       },
       {
         field: 'surname',
@@ -429,11 +439,22 @@ export class AdminComponent implements OnInit {
         date: false
       },
       {
+        field: 'groups',
+        header: 'Groups',
+        headerLocale: 'Groups',
+        sort: true,
+        filter: false,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
         field: 'profession',
         header: 'Profession',
         headerLocale: 'Profession',
         sort: true,
-        filter: false,
+        filter: true,
         skip: false,
         defaultValue: '',
         hidden: false,
@@ -444,7 +465,18 @@ export class AdminComponent implements OnInit {
         header: 'Department',
         headerLocale: 'Department',
         sort: true,
-        filter: false,
+        filter: true,
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
+        field: 'groups',
+        header: 'Groups',
+        headerLocale: 'Groups',
+        sort: true,
+        filter: true,
         skip: false,
         defaultValue: '',
         hidden: false,

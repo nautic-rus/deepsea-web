@@ -9,11 +9,11 @@
   grid-template-columns: 1fr 4fr 1fr;
 }
 .users {
-  width: 55%;
+  width: 60%;
   padding: 0 10px 0 0;
 }
 .right {
-  width: 45%;
+  width: 40%;
   padding: 0 0 0 10px;
 }
 .rights {
