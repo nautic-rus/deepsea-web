@@ -86,6 +86,7 @@ export class WorkHoursComponent implements OnInit {
   dayHover: any = null;
   userHover: any = null;
   hoverEnabled = true;
+  taskOfDay: TaskOfDay;
   pHours: PlanHour[] = [];
   plannedHours: PlannedHours[] = [];
   userPDays: any = Object();
@@ -113,11 +114,11 @@ export class WorkHoursComponent implements OnInit {
     this.fill();
     this.fillIssues();
     this.items = [
-      // {
-      //   label: 'Add task',
-      //   icon: 'pi pi-fw pi-external-link',
-      //   command: (event: any) => this.openTaskAssign()
-      // },
+      {
+        label: 'Fold left',
+        icon: 'pi pi-fw pi-external-link',
+        command: (event: any) => this.foldTaskLeft()
+      },
       {
         label: 'Clear task',
         icon: 'pi pi-fw pi-trash',
@@ -309,27 +310,20 @@ export class WorkHoursComponent implements OnInit {
 
   deleteUserTask() {
     this.loading = true;
-    let pDay = this.dayHover as PlanDay;
-    let findTask = pDay.planHours.find(x => x.task_id != 0);
-    if (findTask != null){
-      this.auth.deleteUserTask(findTask.user, findTask.task_id, 0).subscribe(res => {
-        console.log(res);
+    if (this.taskOfDay.planHours.length > 0){
+      this.auth.deleteUserTask(this.taskOfDay.planHours[0].user, this.taskOfDay.taskId, 0).subscribe(res => {
         this.auth.getUsersPlanHours().subscribe(planHours => {
           this.auth.getPlannedHours().subscribe(plannedHours => {
             this.plannedHours = plannedHours;
             this.pHours = planHours;
             this.fillDays();
             this.filterIssues();
-
             this.issueManager.assignUser(this.draggableIssue.id, '', '0', '0', 'Нет', this.draggableIssue.action, this.auth.getUser().login);
-
             this.draggableIssue.status = 'New';
             this.draggableIssue.action = this.draggableIssue.status;
             this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
             this.loading = false;
-
           });
-
         });
       });
     }
@@ -566,5 +560,47 @@ export class WorkHoursComponent implements OnInit {
 
   dragEnd(event: DragEvent) {
     this.cd.reattach();
+  }
+
+  foldTaskLeft() {
+    this.loading = true;
+    if (this.taskOfDay.planHours.length > 0){
+      let user = this.taskOfDay.planHours[0].user;
+      let freeHour = _.sortBy(this.taskOfDay.planHours,x => x.id)[0];
+      let findPlanned = this.plannedHours.find(x => x.taskId == this.taskOfDay.taskId);
+      if (findPlanned != null){
+        this.auth.deleteUserTask(user, this.taskOfDay.taskId, 0).subscribe(res => {
+          this.auth.planUserTask(user, this.taskOfDay.taskId, freeHour.id, findPlanned!.hours, 0).subscribe({
+            next: () => {
+              this.auth.getUsersPlanHours().subscribe(planHours => {
+                this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
+                  this.plannedHours = plannedHoursAlready;
+                  this.pHours = planHours;
+                  this.fillDays();
+                  this.filterIssues();
+                  this.loading = false;
+
+                  let findUser = this.users.find(x => x.id == user);
+                  if (findUser != null){
+                    let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.taskOfDay.taskId && x.user == user), x => x.id);
+                    if (planHours.length > 0){
+                      let first = plannedHours[0];
+                      let last = plannedHours[plannedHours.length - 1];
+                      let dateStart = new Date(first.year, first.month, first.day);
+                      let dateDue = new Date(last.year, last.month, last.day);
+                      this.issueManager.assignUser(this.taskOfDay.taskId, findUser.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', 'AssignedTo', this.auth.getUser().login);
+                    }
+                  }
+                });
+              });
+            }
+          });
+        });
+      }
+    }
+  }
+
+  selectTaskOfDay(task: TaskOfDay) {
+    this.taskOfDay = task;
   }
 }
