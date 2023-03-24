@@ -125,7 +125,7 @@
               <td class="text-14">{{user.name}}</td>
               <td class="text-14">{{user.surname}}</td>
               <td class="text-14">{{user.profession}}</td>
-              <td class="text-14">{{user.department}}</td>
+              <td class="text-14">{{this.getDepartmentName(user.id_department)}}</td>
               <td class="text-14">{{user.groups}}</td>
             </tr>
           </ng-template>

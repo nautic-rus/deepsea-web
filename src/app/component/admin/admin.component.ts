@@ -130,7 +130,7 @@ export class AdminComponent implements OnInit {
   }
 
   setAvatar(avatar: string) {
-    return '<div class="df"><img src="' + avatar + '" width="26px" height="26px" style="border-radius: 13px"/><div class="ml-1 cy">' + '</div></div>';
+    return '<div class="df"><img src="' + avatar + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + '</div></div>';
   }
 
   getDepartmentName(id: any): any {

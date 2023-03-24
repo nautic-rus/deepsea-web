@@ -358,6 +358,21 @@ body,p{
 .width-530{
   width: 530px;
 }
+.min-width-5{
+   min-width: 5px;
+ }
+.min-width-10{
+  min-width: 10px;
+}
+.min-width-20{
+  min-width: 20px;
+}
+.min-width-30{
+  min-width: 30px;
+}
+.min-width-40{
+  min-width: 40px;
+}
 .min-width-50{
   min-width: 50px;
 }
