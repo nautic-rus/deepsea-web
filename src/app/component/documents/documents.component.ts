@@ -40,7 +40,10 @@ export class DocumentsComponent implements OnInit {
   @ViewChild('table') table: Table;
   showWithFilesOnly = true;
   ngOnInit(): void {
-    this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    this.issueManager.getIssueProjects().then(res => {
+      this.projects = res.map(x => x.name);
+      this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    });
     this.route.queryParams.subscribe(params => {
       if (params.project != null && this.projects.find(x => x == params.project) != null){
         this.project = params.project;

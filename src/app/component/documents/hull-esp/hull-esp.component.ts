@@ -306,7 +306,7 @@ export class HullEspComponent implements OnInit {
       }
       this.s.getHullPatList(project, this.docNumber).then(res => {
         console.log(res);
-        if (res != null && res != ''){
+        if (res != null && res != ''&& res.elements.length > 0){
           this.issue.revision = res.rev;
           this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
           this.revUser = this.auth.getUserName(res.user);
