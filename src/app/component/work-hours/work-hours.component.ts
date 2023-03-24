@@ -566,7 +566,7 @@ export class WorkHoursComponent implements OnInit {
     this.loading = true;
     if (this.taskOfDay.planHours.length > 0){
       let user = this.taskOfDay.planHours[0].user;
-      let freeHour = _.sortBy(this.taskOfDay.planHours,x => x.id)[0];
+      let freeHour = _.sortBy(this.pHours.filter(x => x.task_id == this.taskOfDay.taskId && x.user == user),x => x.id)[0];
       let findPlanned = this.plannedHours.find(x => x.taskId == this.taskOfDay.taskId);
       if (findPlanned != null){
         this.auth.deleteUserTask(user, this.taskOfDay.taskId, 0).subscribe(res => {
