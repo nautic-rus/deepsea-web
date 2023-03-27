@@ -83,8 +83,8 @@
 
 <div class="left-panel left-panel-collapse ovf-auto" [ngStyle]="collapseStyle()" (mouseleave)="collapseLeftNavi()" (mouseenter)="collapseLeftNaviOpen()">
   <div [class.position-relative]="menu.id == 'home'" *ngFor="let menu of menus; let i = index">
-    <div class="high cxy" *ngIf="menu.id == 'home'">
-      {{issuesImportantCount}}
+    <div *ngIf="menu.id == 'home'">
+      <div *ngIf="issuesImportantCount != 0" class="high cxy">{{issuesImportantCount}}</div>
     </div>
     <div *ngIf="menu.child.length == 0" [class.w-40px]="collapsed" class="menu menu-row cy" [queryParams]="menu.params" [routerLink]="menu.url" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
       <div (auxclick)="onMiddleClick($event, menu.url)" class="df menu-grid">

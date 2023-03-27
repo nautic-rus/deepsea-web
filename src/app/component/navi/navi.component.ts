@@ -68,7 +68,7 @@ export class NaviComponent implements OnInit {
       this.tcFilled = true;
     });
     this.issueManager.getIssues(this.auth.getUser().login).then(res => {
-      this.issuesImportantCount = res.filter(x => x.priority == 'High').filter(x => x.status != x.closing_status).length;
+      this.issuesImportantCount = res.filter(x => x.assigned_to == this.auth.getUser().login || x.responsible == this.auth.getUser().login).filter(x => x.priority == 'High').filter(x => !x.closing_status.includes(x.status)).length;
     });
     // this.issueManager.getTimeAndWeather().then(res => {
     //   this.weather = res;
