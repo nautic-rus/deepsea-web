@@ -92,6 +92,7 @@ export class WorkHoursComponent implements OnInit {
   userPDays: any = Object();
   headerPDays: PlanDay[] = [];
   loading = false;
+  currentDate = new Date();
   stages: string[] = [];
   stage = '';
   taskTypes: string[] = [];
@@ -134,7 +135,7 @@ export class WorkHoursComponent implements OnInit {
       this.departments = _.uniq(this.users.map(x => x.department)).map(x => new LV(x));
       this.selectedDepartments = this.departments.map(x => x.value);
     });
-    this.auth.getUsersPlanHours().subscribe(planHours => {
+    this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
       this.pHours = planHours;
       this.auth.getPlannedHours().subscribe(plannedHours => {
         this.plannedHours = plannedHours;
@@ -312,7 +313,7 @@ export class WorkHoursComponent implements OnInit {
     this.loading = true;
     if (this.taskOfDay.planHours.length > 0){
       this.auth.deleteUserTask(this.taskOfDay.planHours[0].user, this.taskOfDay.taskId, 0).subscribe(res => {
-        this.auth.getUsersPlanHours().subscribe(planHours => {
+        this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
           this.auth.getPlannedHours().subscribe(plannedHours => {
             this.plannedHours = plannedHours;
             this.pHours = planHours;
@@ -332,10 +333,10 @@ export class WorkHoursComponent implements OnInit {
     this.loading = true;
     let latestPHour = _.sortBy(this.pHours,x => x.id);
     if (latestPHour.length > 0){
-      let newDate = new Date(latestPHour[0].year, latestPHour[0].month + 1, latestPHour[0].day);
+      this.currentDate = new Date(latestPHour[0].year, latestPHour[0].month + 1, latestPHour[0].day);
       this.headerPDays.splice(0, this.headerPDays.length);
       this.userPDays = Object();
-      this.auth.getUsersPlanHours(0, newDate.getTime()).subscribe(planHours => {
+      this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
         this.pHours = planHours;
         this.fillDays();
       });
@@ -346,10 +347,10 @@ export class WorkHoursComponent implements OnInit {
     this.loading = true;
     let latestPHour = _.sortBy(this.pHours,x => x.id);
     if (latestPHour.length > 0){
-      let newDate = new Date(latestPHour[0].year, latestPHour[0].month - 1, latestPHour[0].day);
+      this.currentDate = new Date(latestPHour[0].year, latestPHour[0].month - 1, latestPHour[0].day);
       this.headerPDays.splice(0, this.headerPDays.length);
       this.userPDays = Object();
-      this.auth.getUsersPlanHours(0, newDate.getTime()).subscribe(planHours => {
+      this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
         this.pHours = planHours;
         this.fillDays();
       });
@@ -491,7 +492,7 @@ export class WorkHoursComponent implements OnInit {
       this.loading = true;
       this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
         next: () => {
-          this.auth.getUsersPlanHours().subscribe(planHours => {
+          this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
             this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
               this.plannedHours = plannedHoursAlready;
               this.pHours = planHours;
@@ -572,7 +573,7 @@ export class WorkHoursComponent implements OnInit {
         this.auth.deleteUserTask(user, this.taskOfDay.taskId, 0).subscribe(res => {
           this.auth.planUserTask(user, this.taskOfDay.taskId, freeHour.id, findPlanned!.hours, 0).subscribe({
             next: () => {
-              this.auth.getUsersPlanHours().subscribe(planHours => {
+              this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
                 this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
                   this.plannedHours = plannedHoursAlready;
                   this.pHours = planHours;
