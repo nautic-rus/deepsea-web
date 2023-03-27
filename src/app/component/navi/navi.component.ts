@@ -24,6 +24,7 @@ export class NaviComponent implements OnInit {
   tcFilled = false;
   collapsed = true;
   collapsedMenu: string[] = [];
+  issuesImportantCount = 0;
   menus = [
     {id: 'home', label: 'Home', url: '', icon: 'assets/icons/home1.svg', height: 17, child: [], params: {}},
     {id: 'sections', label: 'Sections', url: 'sections', icon: 'assets/icons/sections1.svg', height: 17, child: [], params: {}},
@@ -65,6 +66,9 @@ export class NaviComponent implements OnInit {
     this.issueManager.getTimeControl(this.auth.getUser().tcid).then(res => {
       this.tc = res;
       this.tcFilled = true;
+    });
+    this.issueManager.getIssues(this.auth.getUser().login).then(res => {
+      this.issuesImportantCount = res.filter(x => x.priority == 'High').filter(x => x.status != x.closing_status).length;
     });
     // this.issueManager.getTimeAndWeather().then(res => {
     //   this.weather = res;

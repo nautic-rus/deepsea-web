@@ -203,3 +203,14 @@
   display: flex;
   justify-content: center;
 }
+.high{
+  position: absolute;
+  right: 6px;
+  bottom: -6px;
+  background-color: red;
+  border-radius: 22px;
+  color: white;
+  font-size: 11px;
+  width: 18px;
+  height: 18px;
+}
