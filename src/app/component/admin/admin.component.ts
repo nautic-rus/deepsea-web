@@ -299,17 +299,17 @@ export class AdminComponent implements OnInit {
         hidden: false,
         date: true
       },
-      {
-        field: 'rights',
-        header: 'Rights',
-        headerLocale: 'Rights',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
+      // {
+      //   field: 'rights',
+      //   header: 'Rights',
+      //   headerLocale: 'Rights',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: true
+      // },
     ];
 
     this.colsProjects = [
@@ -346,17 +346,17 @@ export class AdminComponent implements OnInit {
         hidden: false,
         date: true
       },
-      {
-        field: 'status',
-        header: 'Status',
-        headerLocale: 'Status',
-        sort: true,
-        filter: false,
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: true
-      },
+      // {
+      //   field: 'status',
+      //   header: 'Status',
+      //   headerLocale: 'Status',
+      //   sort: true,
+      //   filter: false,
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: true
+      // },
       // {
       //   field: 'rkd',
       //   header: 'RKD',
