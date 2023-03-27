@@ -205,7 +205,7 @@
 }
 .high{
   position: absolute;
-  right: 6px;
+  left: 6px;
   bottom: -6px;
   background-color: #EF4444;
   border-radius: 22px;
