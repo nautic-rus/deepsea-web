@@ -71,7 +71,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <div class="buttons">
         <div class="button-status" *ngFor="let status of availableActions">
@@ -276,15 +275,10 @@
         </div>
       </div>
 
-
-
-
-
       <div class="df space-between mb-1 mt-2">
         <div class="big-text">{{t.tr('Связанные задачи')}}</div>
         <div (click)="addCombinedIssue()" class="button-add-l cxy cursor-pointer">{{t.tr('Привязать задачу')}}</div>
       </div>
-
 
       <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0" (click)="contentClick('combined_issues')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('combined_issues')">
@@ -314,16 +308,6 @@
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
 
       <div *ngIf="issue.child_issues.length > 0" class="big-text mb-1 mt-2">{{t.tr('Подзадачи')}}</div>
 
@@ -762,6 +746,20 @@
                 <div [innerHTML]="getNoneZeroResult(auth.getUserName(msg.new_value)) | safeHtml"></div>
               </div>
             </div>
+            <div *ngIf="msg.name_value == 'due_date'">
+              <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+              <span class="bold-text">{{t.tr('срок исполнения')}}</span>
+              <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+              <div class="df pt-5">
+                <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
+                <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
+              </div>
+            </div>
+
             <div *ngIf="msg.update_message.includes('edit')">
               <div *ngIf="msg.name_value == 'priority'">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
@@ -854,19 +852,7 @@
                   <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
                 </div>
               </div>
-              <div *ngIf="msg.name_value == 'due_date'">
-                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
-                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
-                <span class="bold-text">{{t.tr('срок исполнения')}}</span>
-                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
-                <div class="df pt-5">
-                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
-                  <span class="px-10">
-                  <img src="assets/icons/right-arrow.svg" height="13">
-                </span>
-                  <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
-                </div>
-              </div>
+
               <div *ngIf="msg.name_value == 'responsible'">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
