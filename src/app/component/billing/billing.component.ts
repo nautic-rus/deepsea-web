@@ -27,7 +27,7 @@ export class BillingComponent implements OnInit {
   platesSource: any[] = [];
   profilesSource: any[] = [];
 
-  projects: string[] = ['N002', 'N004', 'P701', 'P707'];
+  projects: string[] = ['N002', 'N004', 'N005', 'P701', 'P707'];
   project = '';
   search: string = '';
   searchPlates: string = '';
@@ -64,7 +64,7 @@ export class BillingComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.project = params.foranProject != null ? params.foranProject : 'N004';
-      this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+      //this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
       if (!this.projects.includes(this.project)) {
         this.project = this.projects[0];
       }
