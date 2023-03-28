@@ -63,6 +63,9 @@
 .project-row:hover{
   background-color: #F3F2F1!important;
 }
+.right-row:hover{
+  background-color: #F3F2F1!important;
+}
 .hidden-column{
   width: 0;
 }
