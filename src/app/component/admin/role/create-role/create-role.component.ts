@@ -5,6 +5,8 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {RoleService} from "../role.service";
 import {PageService} from "../page.service";
 import {Pages} from "../../../../domain/interfaces/pages";
+import {Rights} from "../../../../domain/interfaces/rights";
+import {RightService} from "../../right/right.service";
 
 @Component({
   selector: 'app-create-role',
@@ -12,31 +14,31 @@ import {Pages} from "../../../../domain/interfaces/pages";
   styleUrls: ['./create-role.component.css']
 })
 export class CreateRoleComponent implements OnInit {
-  pages: Pages[] = [];
-  selectedPages: string[] = [];
+  rights: Rights[] = [];
+  selectedRights: string[] = [];
   name: string = "";
   description: string = "";
 
-  constructor( public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public pageService: PageService) { }
+  constructor( public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
-    this.fillPages();
+    this.fillRights();
   }
 
   close() {
     this.ref.close();
   }
 
-  fillPages(): void {
-    this.pageService.getPages()
-      .subscribe(pages => {
-        console.log(pages);
-        this.pages = pages;
+  fillRights(): void {
+    this.rightService.getRights()
+      .subscribe(rights => {
+        console.log(rights);
+        this.rights = rights;
       });
   }
 
   createRole() {
-    let role: Roles = { name: this.name, description: this.description, rights: this.selectedPages};
+    let role: Roles = { name: this.name, description: this.description, rights: this.selectedRights};
     this.roleService.startRole(role).subscribe({
       next: res => {
         console.log(res);

@@ -117,7 +117,7 @@
           <!--            </ng-template>-->
 
           <ng-template pTemplate="body" let-user>
-            <tr class="cursor-pointer row-table-doc-hover" (click)="viewUser(user.id)">
+            <tr class="cursor-pointer row-table-doc-hover user-row" (click)="viewUser(user.id)">
               <td class="text-14 width-10">{{user.id}}</td>
               <td class="text-14 width-10">
                 <span [innerHTML]="setAvatar(user.avatar) | safeHtml"></span>
@@ -129,6 +129,7 @@
               <td class="text-14">{{user.groups}}</td>
             </tr>
           </ng-template>
+
         </p-table>
       </div>
     </div>
@@ -142,12 +143,11 @@
                    [value]="roles"
                    [scrollable]="true"
                    [columns]="colsRoles"
-                   (onColReorder)="saveReorderedColumnsUsers($event)"
                    [virtualScroll]="false"
                    [scrollHeight]="'35vh'"
                    [virtualRowHeight]="1"
                    styleClass="p-datatable-striped"
-                   scrollDirection="both"
+                   scrollDirection="stateProject"
           >
             <ng-template pTemplate="caption">
               <div class="p-d-flex">
@@ -172,20 +172,6 @@
                     [pSortableColumn]="col.field">
                   <div class="header">
                     {{l.tr(col.header)}}
-                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
-                                [field]="col.field"></p-sortIcon>
-                    <p-columnFilter class="filter" type="date" [field]="col.field" display="menu"
-                                    *ngIf="col.date == true"></p-columnFilter>
-                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field"
-                                    matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
-                                    [showAddButton]="false">
-                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters"
-                                       optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
-                                       (onChange)="filter($event.value);">
-                        </p-multiSelect>
-                      </ng-template>
-                    </p-columnFilter>
                   </div>
                 </th>
               </tr>
@@ -236,20 +222,6 @@
                     [pSortableColumn]="col.field">
                   <div class="header">
                     {{l.tr(col.header)}}
-                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
-                                [field]="col.field"></p-sortIcon>
-                    <p-columnFilter class="filter" type="date" [field]="col.field" display="menu"
-                                    *ngIf="col.date == true"></p-columnFilter>
-                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field"
-                                    matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
-                                    [showAddButton]="false">
-                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters"
-                                       optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
-                                       (onChange)="filter($event.value);">
-                        </p-multiSelect>
-                      </ng-template>
-                    </p-columnFilter>
                   </div>
                 </th>
               </tr>
@@ -304,20 +276,6 @@
                   [pSortableColumn]="col.field">
                 <div class="header">
                   {{l.tr(col.header)}}
-                  <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true"
-                              [field]="col.field"></p-sortIcon>
-                  <p-columnFilter class="filter" type="date" [field]="col.field" display="menu"
-                                  *ngIf="col.date == true"></p-columnFilter>
-                  <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field"
-                                  matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
-                                  [showAddButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters"
-                                     optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
-                                     (onChange)="filter($event.value);">
-                      </p-multiSelect>
-                    </ng-template>
-                  </p-columnFilter>
                 </div>
               </th>
             </tr>
