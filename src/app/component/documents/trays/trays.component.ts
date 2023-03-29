@@ -130,6 +130,7 @@ export class TraysComponent implements OnInit {
         if (trays.length > 0) {
           this.angle = trays.filter((x: any) => x.stockCode == this.angleStockCode)[0];
           console.log(this.angle);
+          this.addAngle();
           trays = trays.filter((x: any) => x.stockCode != this.angleStockCode);
           this.trays = _.sortBy(trays, x => x.stockCode);
           this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
@@ -365,9 +366,9 @@ export class TraysComponent implements OnInit {
   }
 
   addAngle() {
-    console.log(this.summaryLength)
-    this.specService.removeDeviceFromSystem(this.docNumber, this.angleStockCode, "006", this.summaryLength.toString(), this.label, this.forLabel).then(res => {
-      this.specService.addDeviceToSystem(this.docNumber, this.angleStockCode, "006", this.summaryLength.toString(), this.label, this.forLabel);
+    console.log("ADD ANGLEEEEE")
+    this.specService.removeDeviceFromSystem(this.docNumber, this.angle.stockCode, this.angle.material.units, this.round(this.angle.length).toString(), this.label, this.forLabel).then(res => {
+      this.specService.addDeviceToSystem(this.docNumber, this.angle.stockCode, this.angle.material.units, this.round(this.angle.length).toString(), this.label, this.forLabel);
     });
   }
 
