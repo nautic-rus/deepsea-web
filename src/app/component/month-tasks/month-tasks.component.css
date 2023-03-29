@@ -1,3 +1,13 @@
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-component {
+  font-size: 14px!important;
+}
+/deep/.p-inputtext {
+  font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
+}
 .card-report{
   background: rgba(255, 255, 255, 0.9);
   padding: 0 20px 20px 20px;

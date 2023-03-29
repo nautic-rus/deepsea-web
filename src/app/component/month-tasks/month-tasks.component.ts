@@ -189,7 +189,11 @@ export class MonthTasksComponent implements OnInit {
         command: (event: any) => this.deleteDailyTask()
       }
     ];
-    this.users = this.auth.users.filter(x => x.visibility.includes('c'));
+    this.auth.usersFilled.subscribe({
+      next: value => {
+        this.users = this.auth.users.filter(x => x.visibility.includes('c') && x.groups.includes('Nautic_Rus'));
+      }
+    });
     this.selectedUser = this.auth.getUser().login;
     this.fillTasks();
   }
