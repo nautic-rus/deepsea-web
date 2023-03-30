@@ -20,12 +20,17 @@
         </div>
         <div *ngIf="selectedView == 'tiles'">
           <div class="tile">
-            <div class="w-100" *ngIf="cables.length != 0">
-              <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="400">
-                <ng-template pTemplate="item" let-cable let-i="index" class="width-250">
+            <div class="w-100 " *ngIf="cables.length != 0">
+              <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="450">
+                <ng-template pTemplate="item" let-cable let-i="index">
                   <div class="card-tile-t w-100"
                        [class.hidden-card]="cable == null">
                     <div class="top-row df">
+                      <div [ngSwitch]="cable.f_rout" class="cxy mr-2">
+                        <div *ngSwitchCase="0" class="point red-point"></div>
+                        <div *ngSwitchCase="1" class="point green-point"></div>
+                        <div *ngSwitchCase="2" class="point yellow-point"></div>
+                      </div>
                       <div class="cxy mr-2">
                         <div class="title-bold">{{cable.code}}</div>
                       </div>
@@ -61,21 +66,30 @@
                     </div>
                     <div class="top-row df space-between">
                       <div>FROM</div>
-                      <div class="top-line-card mb-10"></div>
+                      <div class="top-line-card"></div>
                       <div>TO</div>
                     </div>
                     <div class="bottom-grid">
-                      <div class="df mb-5 pl-8 info-row cxy">
-                        <div class="flex-end mr-10">
-                          {{cable.from_system}}
+                      <div class="df pl-8 info-row cxy">
+                        <div>
+                          <div class="flex-end mr-10">
+                            {{cable.from_system.split(' ')[0].replace('.', '')}}
+                          </div>
+                          <div class="flex-end mr-10">
+                            {{cable.from_system.split(' ').splice(1).join(' ')}}
+                          </div>
                         </div>
                         <div class="cx">SYSTEM</div>
-                        <div class="flex-start mr-10">
-                          {{cable.to_system}}
+                        <div>
+                          <div class="flex-start mr-10">
+                            {{cable.to_system.split(' ')[0].replace('.', '')}}
+                          </div>
+                          <div class="flex-start mr-10">
+                            {{cable.to_system.split(' ').splice(1).join(' ')}}
+                          </div>
                         </div>
-
                       </div>
-                      <div class="df mb-5 pl-8 info-row cxy space-around">
+                      <div class="df pl-8 info-row cxy space-around">
                         <div>
                           <div class="flex-end mr-10">
                             {{cable.from_eq_id}} ({{cable.from_eq}})
@@ -94,7 +108,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="df mb-5 pl-8 info-row cxy space-around">
+                      <div class="df pl-8 info-row cxy space-around">
                         <div>
                           <div class="flex-end mr-10">
                             {{cable.from_zone}}
@@ -113,7 +127,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="df mb-5 pl-8 info-row cxy space-around">
+                      <div class="df pl-8 info-row cxy space-around">
                         <div>
                           <div class="df flex-end mr-10">
                             <div class="df coordinates-row mr-5">
@@ -148,7 +162,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="mb-5 pl-8 cxy">
+                      <div class="pl-8 cxy">
                         <div class="cx">{{cable.cab_route_area}}</div>
                       </div>
                     </div>

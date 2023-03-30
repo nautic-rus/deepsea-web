@@ -451,6 +451,9 @@ body,p{
 .max-width-50{
   max-width: 50px;
 }
+.max-width-420{
+  max-width: 420px;
+}
 .height-30{
   height: 30px;
 }

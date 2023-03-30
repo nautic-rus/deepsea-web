@@ -28,6 +28,7 @@ export class CablesComponent implements OnInit {
   selectedHeadTab: string = 'Files';
   selectedView: string = 'tiles';
   tooltips: string[] = [];
+  cable_rout: string = "";
 
   constructor(private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
   }
@@ -74,7 +75,6 @@ export class CablesComponent implements OnInit {
           this.noResultCables = true;
         }
       });
-
   }
 
   openIssue(id: number) {

@@ -1091,7 +1091,7 @@
 .card-tile-t {
   margin-bottom: 10px;
   width: 100%;
-  height: fit-content;
+  height: 430px;
   background-color: white;
   position: relative;
   padding: 10px;
@@ -1118,8 +1118,26 @@
 
 .info-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 5fr 2fr 5fr;
   border-bottom: 1px solid #f3f2f1;
+}
+
+.point {
+  width: 16px;
+  height: 16px;
+  border-radius: 10px;
+}
+
+.red-point {
+  background-color: #ff0000;
+}
+
+.yellow-point {
+  background-color: #FFB300;
+}
+
+.green-point {
+  background-color: #00ff0d;
 }
 
 .bottom-grid {
