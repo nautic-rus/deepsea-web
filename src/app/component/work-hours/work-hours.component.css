@@ -29,6 +29,12 @@
 .off-day{
   background-color: #f7f7f8;
 }
+.icon-dfx{
+  fill: #3B82F6;
+}
+.icon-dfx:hover{
+  fill: #2563EA;
+}
 .today-day{
   background-color: #f5f7ff;
   border-top: 3px solid #0553CC;
