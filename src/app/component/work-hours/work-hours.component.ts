@@ -14,6 +14,8 @@ import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.compone
 import {TaskComponent} from "../task/task.component";
 import {Issue} from "../../domain/classes/issue";
 import {DailyTask} from "../../domain/interfaces/daily-task";
+import {concatAll, zipAll} from "rxjs/operators";
+import {concat, forkJoin} from "rxjs";
 
 export interface PlanHour{
   day: number;
@@ -40,6 +42,7 @@ export interface PlanDay{
 export interface TaskOfDay{
   taskId: number;
   planHours: PlanHour[];
+  tooltip: string;
 }
 @Component({
   selector: 'app-work-hours',
@@ -124,7 +127,12 @@ export class WorkHoursComponent implements OnInit {
         label: 'Clear task',
         icon: 'pi pi-fw pi-trash',
         command: (event: any) => this.deleteUserTask()
-      }
+      },
+      {
+        label: 'Fold left all',
+        icon: 'pi pi-fw pi-arrow-circle-left',
+        command: (event: any) => this.foldAllTaskLeft()
+      },
     ];
   }
   fill(){
@@ -262,7 +270,7 @@ export class WorkHoursComponent implements OnInit {
     let res: TaskOfDay[] = [];
     let busyHours = _.sortBy(day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0), x => x.id);
     _.forEach(_.groupBy(busyHours, x => x.task_id),group => {
-      res.push({taskId: group[0].task_id, planHours: group});
+      res.push({taskId: group[0].task_id, planHours: group, tooltip: this.getIssueDesc(group[0].task_id)});
     });
     return _.sortBy(res, x => _.min(x.planHours.map(y => y.id)));
   }
@@ -319,11 +327,15 @@ export class WorkHoursComponent implements OnInit {
             this.pHours = planHours;
             this.fillDays();
             this.filterIssues();
-            this.issueManager.assignUser(this.draggableIssue.id, '', '0', '0', 'Нет', this.draggableIssue.action, this.auth.getUser().login);
-            this.draggableIssue.status = 'New';
-            this.draggableIssue.action = this.draggableIssue.status;
-            this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
-            this.loading = false;
+
+            let task = this.issuesSrc.find(x => x.id == this.taskOfDay.taskId);
+            if (task != null){
+              this.issueManager.assignUser(task.id, '', '0', '0', 'Нет', task.action, this.auth.getUser().login);
+              task.status = 'New';
+              task.action = task.status;
+              this.issueManager.updateIssue(this.auth.getUser().login, 'status', task);
+              this.loading = false;
+            }
           });
         });
       });
@@ -552,7 +564,7 @@ export class WorkHoursComponent implements OnInit {
 
   getIssueDesc(taskId: number) {
     let res = '';
-    let find = this.issues.find(x => x.id == taskId);
+    let find = this.issuesSrc.find(x => x.id == taskId);
     if (find != null){
       res = find.doc_number + ' ' + find.name;
     }
@@ -564,8 +576,8 @@ export class WorkHoursComponent implements OnInit {
   }
 
   foldTaskLeft() {
-    this.loading = true;
     if (this.taskOfDay.planHours.length > 0){
+      this.loading = true;
       let user = this.taskOfDay.planHours[0].user;
       let freeHour = _.sortBy(this.pHours.filter(x => x.task_id == this.taskOfDay.taskId && x.user == user),x => x.id)[0];
       let findPlanned = this.plannedHours.find(x => x.taskId == this.taskOfDay.taskId);
@@ -599,6 +611,34 @@ export class WorkHoursComponent implements OnInit {
         });
       }
     }
+  }
+  foldAllTaskLeft() {
+    this.loading = true;
+    let user = this.selectedDay.planHours[0].user;
+    let freeHour = this.selectedDay.planHours[0];
+    let plannedHours = this.pHours.filter(x => x.user == user && x.id >= freeHour.id && x.task_id != freeHour.task_id);
+    let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
+    let assign: any[] = [];
+    _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
+      assign.push({task: group[0].task_id, hours: group.length});
+    });
+    forkJoin(tasks.map(x => this.auth.deleteUserTask(user,x, 0))).subscribe({
+      next: value => {
+        concat(assign.reverse().map((x: any) => this.auth.planUserTask(user, x.task, freeHour.id, x.hours, 0).subscribe())).subscribe({
+          next: assignRes => {
+            this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
+              this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
+                this.plannedHours = plannedHoursAlready;
+                this.pHours = planHours;
+                this.fillDays();
+                this.filterIssues();
+                this.loading = false;
+              });
+            });
+          }
+        });
+      }
+    });
   }
 
   selectTaskOfDay(task: TaskOfDay) {

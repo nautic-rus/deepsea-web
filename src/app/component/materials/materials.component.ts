@@ -370,7 +370,32 @@ export class MaterialsComponent implements OnInit {
 
   exportXLS() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    let data: any[] = this.materials;
+    let data: any[] = this.materials.filter(x => x != null);
+    console.log(data);
+    data.forEach(d => {
+      d.sp1 = d.code.slice(0, 3);
+      d.sp2 = d.code.slice(0, 6);
+      d.sp3 = d.code.slice(0, 9);
+      d.sp4 = d.code.slice(0, 12);
+      let findSp1 = this.nodesSrc.find((x: any) => x.data == d.sp1);
+      let findSp2 = this.nodesSrc.find((x: any) => x.data == d.sp2);
+      let findSp3 = this.nodesSrc.find((x: any) => x.data == d.sp3);
+      let findSp4 = this.nodesSrc.find((x: any) => x.data == d.sp4);
+      if (findSp1 != null){
+        d.sp1 = findSp1.label;
+      }
+      if (findSp2 != null){
+        d.sp2 = findSp2.label;
+      }
+      if (findSp3 != null){
+        d.sp3 = findSp3.label;
+      }
+      if (findSp4 != null){
+        d.sp4 = findSp4.label;
+      }
+    });
+
+
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
