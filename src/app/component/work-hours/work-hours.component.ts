@@ -90,6 +90,7 @@ export class WorkHoursComponent implements OnInit {
   userHover: any = null;
   hoverEnabled = true;
   taskOfDay: TaskOfDay;
+  searchingIssue: Issue;
   pHours: PlanHour[] = [];
   plannedHours: PlannedHours[] = [];
   userPDays: any = Object();
@@ -119,11 +120,11 @@ export class WorkHoursComponent implements OnInit {
     this.fill();
     this.fillIssues();
     this.items = [
-      {
-        label: 'Fold left',
-        icon: 'pi pi-fw pi-arrow-circle-left',
-        command: (event: any) => this.foldTaskLeft()
-      },
+      // {
+      //   label: 'Fold left',
+      //   icon: 'pi pi-fw pi-arrow-circle-left',
+      //   command: (event: any) => this.foldTaskLeft()
+      // },
       {
         label: 'Clear task',
         icon: 'pi pi-fw pi-trash',
@@ -258,6 +259,7 @@ export class WorkHoursComponent implements OnInit {
       height: '100%',
       width: (day.planHours.length * oneHourLength) + 'px',
       'background-color': this.getTaskColor(day.taskId),
+      'border': this.getSearchingBorder(day)
       // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
       // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
@@ -266,7 +268,14 @@ export class WorkHoursComponent implements OnInit {
   //   let busyHours = day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0);
   //   console.log(busyHours);
   // }
-
+  getSearchingBorder(day: TaskOfDay){
+    if (this.searchingIssue != null && this.searchingIssue.id == day.taskId){
+      return '4px solid red';
+    }
+    else{
+      return 'none';
+    }
+  }
   getTasksOfDay(day: PlanDay) {
     let res: TaskOfDay[] = [];
     let busyHours = _.sortBy(day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0), x => x.id);
@@ -328,14 +337,18 @@ export class WorkHoursComponent implements OnInit {
             this.pHours = planHours;
             this.fillDays();
             this.filterIssues();
-
             let task = this.issuesSrc.find(x => x.id == this.taskOfDay.taskId);
             if (task != null){
               this.issueManager.assignUser(task.id, '', '0', '0', 'Нет', task.action, this.auth.getUser().login);
               task.status = 'New';
               task.action = task.status;
               this.issueManager.updateIssue(this.auth.getUser().login, 'status', task);
-              this.loading = false;
+            }
+            let daysBefore = this.pHours.filter(x => x.id < this.taskOfDay.planHours[0].id && x.user == this.taskOfDay.planHours[0].user);
+            let daysBeforeR = _.sortBy(daysBefore, x => x.id).reverse();
+            this.selectedDay = this.userPDays[daysBeforeR[0].user].find((x: any) => x.planHours.includes(daysBeforeR[0]));
+            if (this.selectedDay != null){
+              this.foldAllTaskLeft();
             }
           });
         });
@@ -617,7 +630,10 @@ export class WorkHoursComponent implements OnInit {
     this.loading = true;
     let user = this.selectedDay.planHours[0].user;
     let freeHour = this.selectedDay.planHours[0];
-    let plannedHours = this.pHours.filter(x => x.user == user && x.id >= freeHour.id && x.task_id != freeHour.task_id);
+    if (freeHour.task_id != 0){
+      freeHour = this.pHours.filter(x => x.user == freeHour.user && x.task_id == freeHour.task_id)[0];
+    }
+    let plannedHours = this.pHours.filter(x => x.user == user && x.id >= freeHour.id);
     let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
     let assign: any[] = [];
     _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
@@ -644,5 +660,15 @@ export class WorkHoursComponent implements OnInit {
 
   selectTaskOfDay(task: TaskOfDay) {
     this.taskOfDay = task;
+  }
+
+  searchIssue(issue: Issue) {
+    if (this.searchingIssue == issue){
+      // @ts-ignore
+      this.searchingIssue = null;
+    }
+    else{
+      this.searchingIssue = issue;
+    }
   }
 }
