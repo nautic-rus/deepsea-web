@@ -27,6 +27,7 @@ export class CablesComponent implements OnInit {
   noResultCables = false;
   selectedHeadTab: string = 'Files';
   selectedView: string = 'tiles';
+  tooltips: string[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
   }
@@ -68,14 +69,33 @@ export class CablesComponent implements OnInit {
       .subscribe(cables => {
         if (cables.length > 0) {
           this.cables = _.sortBy(cables, x => x.stockCode);
+          console.log(this.cables);
         } else {
           this.noResultCables = true;
         }
       });
+
   }
 
   openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
+  }
+
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
+  }
+
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
+  }
+
+  round(value: number) {
+    return Math.round(value * 100) / 100;
   }
 
   setCols() {

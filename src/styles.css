@@ -539,6 +539,10 @@ body,p{
   display: flex;
   justify-content: flex-end;
 }
+.flex-start{
+  display: flex;
+  justify-content: flex-start;
+}
 .text-end-y{
   display: flex;
   align-items: flex-end;
