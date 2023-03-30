@@ -1245,3 +1245,10 @@ cdk-virtual-scroll-viewport{
 .word-break{
   word-break: break-all;
 }
+app-materials .p-virtualscroller-item{
+  display: flex;
+  justify-content: center;
+}
+app-materials .p-virtualscroller .p-virtualscroller-content{
+  background: none;
+}

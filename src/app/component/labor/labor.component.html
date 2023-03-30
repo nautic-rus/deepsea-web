@@ -91,13 +91,9 @@
             <div class="text-black-mini" *ngIf="issue.due_date != 0">{{getDateOnly(issue.due_date)}}</div>
           </div>
 
-
           <div class="cy">
             <div [innerHTML]="issueManagerService.localeStatus(issue.status) | safeHtml"></div>
           </div>
-
-
-
 
           <div class="cy">
             <div class="cx text-black-mini mb-5">
