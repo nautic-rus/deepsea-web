@@ -418,7 +418,7 @@ export class WorkHoursComponent implements OnInit {
     this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
     this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
     this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
-    this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.stage, false) || this.status == '' || this.status == '-' || this.status == null);
+    this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.status, false) || this.status == '' || this.status == '-' || this.status == null);
     this.issues = this.issues.filter(x => x.plan_hours > 0 || this.showWithoutPlan);
     this.issues = this.issues.filter(x => (this.getPlanned(x) != x.plan_hours || x.plan_hours == 0) || this.showAssigned);
     this.issues = _.sortBy(this.issues, x => x.doc_number);

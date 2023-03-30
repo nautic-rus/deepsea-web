@@ -97,34 +97,34 @@
         <div class="df space-between mt-5">
           <div class="ml-20">
             <div class="big-text-user mb-1">{{t.tr('Проект')}}</div>
-            <p-dropdown appendTo="body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-130" (ngModelChange)="projectChanged()"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-150" (ngModelChange)="projectChanged()"></p-dropdown>
           </div>
           <div>
             <div class="big-text-user mb-1">{{t.tr('Отдел')}}</div>
-            <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-150"></p-dropdown>
           </div>
         </div>
         <div class="df space-between ">
           <div class="ml-20">
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Этап')}}</div>
-            <p-dropdown appendTo="body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-130"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-150"></p-dropdown>
           </div>
           <div>
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Тип')}}</div>
-            <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-130"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-150"></p-dropdown>
           </div>
         </div>
 
         <div class="df space-between mb-10">
           <div class="ml-20">
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Статус')}}</div>
-            <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-130"></p-dropdown>
+            <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-150"></p-dropdown>
           </div>
           <div>
             <div class="big-text-user mb-1 mt-24"></div>
             <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-130" />
+            <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-150" />
           </span>
           </div>
         </div>
@@ -137,10 +137,16 @@
                   <div class="title-bold">{{issue.doc_number}}</div>
                   <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
                 </div>
-                <div class="text-mini-gray mb-5">
+                <div class="text-mini-gray df space-between">
                   <div>{{issue.name}}</div>
+                  <div class="width-20 mr-10">
+                    <svg class="icon-dfx ml-5" width="20px" height="20px" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                      <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                    </svg>
+                  </div>
                 </div>
-                <div class="df mm-text space-between mb-5">
+                <div class="df mm-text space-between mt-2px">
                   <div class="mm-text df">
                     <div>{{t.tr('Исполнитель') + ' ' + '-'}}</div>
                     <div class="pl-2px">{{auth.getUserName(issue.assigned_to)}}</div>
@@ -152,7 +158,7 @@
                 </div>
               </div>
               <div>
-                <div class="df space-between mt-1">
+                <div class="df space-between">
                   <div>
                     <div class="width-50 mm-text">{{t.tr('назначить')}}</div>
                   </div>
@@ -165,7 +171,7 @@
                 <div class="df space-between mt-2px">
                   <div>
                     <div class="cursor-pointer width-50">
-                      <p-inputNumber [disabled]="issue.plan_hours == 0" inputStyleClass="width-50" [(ngModel)]="dragValues[issue.id]" mode="decimal"></p-inputNumber>
+                      <p-inputNumber [disabled]="issue.plan_hours == 0" inputStyleClass="width-70" [(ngModel)]="dragValues[issue.id]" mode="decimal"></p-inputNumber>
                     </div>
                   </div>
                   <div class="df">
