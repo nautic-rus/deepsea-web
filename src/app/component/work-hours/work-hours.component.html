@@ -15,7 +15,28 @@
         <div class="w-100 cxy">
           <div class="cxy">{{currentMonth}}</div>
         </div>
+        <div class="mr-10">
+          <div class="materials-button-w red-button cxy space-between" [pTooltip]="t.tr('Больничный')" tooltipPosition="top">
+            <div class="pr-10 cxy">
+              <img src="assets/icons/hospital.svg" height="18">
+            </div>
+            <div class="cursor-pointer">
+              <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="vacation"></p-inputNumber>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <div class="materials-button-w yellow-button cxy space-between" [pTooltip]="t.tr('Отпуск')" tooltipPosition="top">
+            <div class="pr-10 cxy">
+              <img src="assets/icons/summer.svg" height="18">
+            </div>
+            <div class="cursor-pointer">
+              <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="vacation"></p-inputNumber>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="width-425 pl-25 cy">
         <div class="w-100 df space-between">
           <div class="mr-10">

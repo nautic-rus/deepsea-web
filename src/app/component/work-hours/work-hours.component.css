@@ -276,4 +276,13 @@
   color: #3a3a3a;
   font-size: 12px;
 }
+.materials-button-w{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+  font-size: 14px;
+  width: 100px;
+}
 

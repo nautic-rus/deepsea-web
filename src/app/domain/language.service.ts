@@ -441,9 +441,9 @@ export class LanguageService {
           case 'Показать назначенные': return 'Show assigned';
           case 'срок исполнения': return 'due date';
           case 'отдел': return 'department';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Отпуск': return 'Vacation';
+          case 'дни': return 'days';
+          case 'Больничный': return 'Medical';
           case '': return '';
           case '': return '';
           case '': return '';

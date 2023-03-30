@@ -235,6 +235,9 @@ body,p{
 .width-70{
   width: 70px;
 }
+.width-80{
+  width: 80px;
+}
 .width-90{
   width: 90px;
 }
@@ -889,6 +892,9 @@ body,p{
 .my-20{
   margin-top: 20px;
   margin-bottom: 20px;
+}
+.padding-none{
+   padding: 0 5px !important;
 }
 .padding-5{
   padding: 5px 0;

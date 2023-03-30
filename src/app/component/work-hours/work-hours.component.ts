@@ -110,6 +110,7 @@ export class WorkHoursComponent implements OnInit {
   showWithoutPlan = false;
   showAssigned = false;
   dragValues = Object();
+  vacation = '';
 
   constructor(public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
