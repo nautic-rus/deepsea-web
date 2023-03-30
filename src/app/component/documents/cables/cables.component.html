@@ -1,1 +1,89 @@
-<p>cables works!</p>
+<div class="all-page h-100">
+  <div class="all-card">
+    <div class="card-head df">
+      <div class="mr-2">{{issue.name}}</div>
+      <div class="mr-2">{{issue.doc_number}}</div>
+    </div>
+    <div class="w-100 df">
+      <div class="card-sp-tile mr-20">
+        <div class="loading-text" *ngIf="noResultCables">No result for drawing {{docNumber}} of
+          project {{project}}. You need
+          to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
+        </div>
+        <div *ngIf="cables.length == 0 && !noResultCables">
+          <div class="cxy loading">
+            <div class="cxy card-height">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedView == 'tiles'">
+          <div class="tile">
+            <div class="w-100" *ngIf="cables.length != 0">
+              <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="100">
+                <ng-template pTemplate="item" let-cable let-i="index">
+                  <div class="card-tile-t card-grid"
+                       [class.hidden-card]="cable == null">
+                    <div class="text-center-y df">
+                      <div class="title-name">{{cable.code}}</div>
+                      <div class="title-name">{{cable.description}}</div>
+                    </div>
+                    <div class="df">
+                      <div class="text-center-y attribute mr-10">nom section</div>
+                      <div class="text-table-col">{{cable.nom_section}}</div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-virtualScroller>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="w-32 right-content-card mt-20">
+        <div class="df tabs-header">
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'"
+               [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'"
+               [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'"
+               [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
+        </div>
+
+        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
+
+        </div>
+        <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
+          <div class="subtask-grid-misc py-10">
+            <div class="head-subtask">{{l.tr('Тип')}}</div>
+            <div class="head-subtask">{{l.tr('Название')}}</div>
+            <div class="head-subtask">{{l.tr('Отв.')}}</div>
+            <div class="head-subtask">{{l.tr('Исп.')}}</div>
+            <div class="head-subtask">{{l.tr('Статус')}}</div>
+          </div>
+          <div class="">
+            <div class="subtask" *ngFor="let childIssue of miscIssues">
+              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)">
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
+                <div class="py-10 px-10 subtask-text">
+                  <span>{{childIssue.doc_number + ' '}}</span>
+                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                </div>
+                <div class="cy px-10 py-10 subtask-text"
+                     [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+                <div class="cy px-10 py-10 subtask-text"
+                     [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                <div class="dfc px-10 py-10 subtask-text"
+                     [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

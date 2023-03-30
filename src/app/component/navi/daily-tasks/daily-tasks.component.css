@@ -24,6 +24,9 @@
 .p-inputswitch-slider {
   background: #3B82F6;
 }
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+}
 .daily-task{
   width: 50vw;
   max-width: 650px;
