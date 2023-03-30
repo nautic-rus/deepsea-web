@@ -75,6 +75,7 @@ export class TaskComponent implements OnInit {
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];
   yesNo: any[] = [new LV('Yes'), new LV('No')];
+  planned = false;
   quillModulesModificationDescription =
     {
       imageResize: {},
@@ -282,6 +283,9 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
     this.issue = this.conf.data as Issue;
+    this.auth.getPlannedHours().subscribe(res => {
+      this.planned = res.find((x: any) => x.task_id = this.issue.id) != null;
+    });
     this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
 
     this.issueManager.getIssueProjects().then(projects => {

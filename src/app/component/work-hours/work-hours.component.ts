@@ -111,7 +111,8 @@ export class WorkHoursComponent implements OnInit {
   showWithoutPlan = false;
   showAssigned = false;
   dragValues = Object();
-  vacation = '';
+  vacation = 0;
+  medical = 0;
 
   constructor(public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
@@ -491,7 +492,6 @@ export class WorkHoursComponent implements OnInit {
   }
 
   drag(event: DragEvent, issue: any, dragValue: number) {
-    console.log(event);
     this.cd.detach();
     this.draggableIssue = issue;
     this.draggableEvent = event;
@@ -504,19 +504,20 @@ export class WorkHoursComponent implements OnInit {
   }
 
   dragDrop(event: DragEvent, pDay: PlanDay, user: User) {
+    console.log('drop');
     event.preventDefault();
     this.cd.reattach();
     console.log(pDay);
     console.log(this.draggableIssue);
     let planHours = pDay.planHours;
-    let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.draggableEvent.ctrlKey));
+    let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.draggableEvent.ctrlKey || this.draggableIssue.id < 0));
     if (freeHour == null){
       freeHour = planHours[0];
     }
 
-    if (this.dragValue <= this.draggableIssue.plan_hours - this.getPlanned(this.draggableIssue)){
+    if (this.draggableIssue.id < 0 || this.dragValue <= this.draggableIssue.plan_hours - this.getPlanned(this.draggableIssue)){
       this.loading = true;
-      this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, this.draggableEvent.ctrlKey ? 1 : 0).subscribe({
+      this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, (this.draggableEvent.ctrlKey || this.draggableIssue.id < 0) ? 1 : 0).subscribe({
         next: () => {
           this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
             this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
@@ -670,5 +671,9 @@ export class WorkHoursComponent implements OnInit {
     else{
       this.searchingIssue = issue;
     }
+  }
+
+  getIssue(name: string) {
+    return this.issuesSrc.find(x => x.issue_type == name);
   }
 }
