@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {MaterialManagerService} from "../../domain/material-manager.service";
 import {MessageService, TreeNode} from "primeng/api";
 import {DialogService} from "primeng/dynamicdialog";
@@ -18,6 +18,7 @@ import {RemoveConfirmationComponent} from "./remove-confirmation/remove-confirma
 import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import {Table} from "primeng/table";
+import {VirtualScroller} from "primeng/virtualscroller";
 
 @Component({
   selector: 'app-materials',
@@ -53,6 +54,11 @@ export class MaterialsComponent implements OnInit {
   @ViewChild('table') table: Table;
   noResult = false;
   materialsFilled = false;
+  public innerWidth: any;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.innerWidth = window.innerWidth;
+  }
 
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -77,6 +83,7 @@ export class MaterialsComponent implements OnInit {
     //   });
     // });
 
+    this.innerWidth = window.innerWidth;
 
     setTimeout(() => {
       this.selectedView = 'tiles';
@@ -537,6 +544,25 @@ export class MaterialsComponent implements OnInit {
       if (material.translations.length > 0){
         res = material.translations[0].description;
       }
+    }
+    return res;
+  }
+  chunkMaterials(chunkSize = 3){
+    let res: any[] = [];
+    for (let i = 0; i < this.materials.length; i += chunkSize) {
+      const chunk = this.materials.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
+  }
+
+  defineChunkSize() {
+    let res = 2;
+    if (this.innerWidth > 1600){
+      res = 3;
+    }
+    if (this.innerWidth > 1800){
+      res = 4;
     }
     return res;
   }

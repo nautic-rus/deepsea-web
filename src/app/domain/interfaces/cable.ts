@@ -28,7 +28,7 @@ export interface Cable {
   to_eq_desc: string;
   to_zone: string;
   to_zone_desc: string;
-  route_area: string;
+  cab_route_area: string;
   stock_code: string;
   material: Material;
 }
