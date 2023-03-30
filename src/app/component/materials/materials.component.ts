@@ -381,18 +381,11 @@ export class MaterialsComponent implements OnInit {
       let findSp2 = this.nodesSrc.find((x: any) => x.data == d.sp2);
       let findSp3 = this.nodesSrc.find((x: any) => x.data == d.sp3);
       let findSp4 = this.nodesSrc.find((x: any) => x.data == d.sp4);
-      if (findSp1 != null){
-        d.sp1 = findSp1.label;
-      }
-      if (findSp2 != null){
-        d.sp2 = findSp2.label;
-      }
-      if (findSp3 != null){
-        d.sp3 = findSp3.label;
-      }
-      if (findSp4 != null){
-        d.sp4 = findSp4.label;
-      }
+      d.sp1 = findSp1 != null ? findSp1.label : '';
+      d.sp2 = findSp2 != null ? findSp2.label : '';
+      d.sp3 = findSp3 != null ? findSp3.label : d.code.slice(6, 9);
+      d.sp4 = findSp4 != null ? findSp4.label : d.code.slice(9, 12);
+      d.sp5 = d.code;
     });
 
 
