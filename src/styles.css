@@ -451,6 +451,9 @@ body,p{
 .max-width-50{
   max-width: 50px;
 }
+.max-width-420{
+  max-width: 420px;
+}
 .height-30{
   height: 30px;
 }
@@ -538,6 +541,10 @@ body,p{
 .flex-end{
   display: flex;
   justify-content: flex-end;
+}
+.flex-start{
+  display: flex;
+  justify-content: flex-start;
 }
 .text-end-y{
   display: flex;
@@ -650,6 +657,9 @@ body,p{
 }
 .mb-minus5{
   margin-bottom: -5px;
+}
+.mb-minus10{
+  margin-bottom: -10px;
 }
 .mb-minus20{
   margin-bottom: -20px;
