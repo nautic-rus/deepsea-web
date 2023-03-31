@@ -7,6 +7,7 @@ import {IssueManagerService} from "../../../domain/issue-manager.service";
 import _ from "underscore";
 import {CableService} from "./cable.service";
 import {LanguageService} from "../../../domain/language.service";
+import {Equipment} from "../../../domain/interfaces/equipment";
 
 @Component({
   selector: 'app-cables',
@@ -21,14 +22,18 @@ export class CablesComponent implements OnInit {
   department = '';
   issueId = 0;
   cables: Cable[] = [];
+  equipments: Equipment[] = [];
   issueRevisions: string[] = [];
   miscIssues: Issue[] = [];
   colsTrays: any[] = [];
   noResultCables = false;
   selectedHeadTab: string = 'Files';
+  equipmentHeadTab: string = 'Cables'
+  selectedEq: string = '';
   selectedView: string = 'tiles';
   tooltips: string[] = [];
-  cable_rout: string = "";
+  cable_rout: string[] = [];
+  selectedTab: string = 'Cables';
 
   constructor(private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
   }
@@ -65,12 +70,47 @@ export class CablesComponent implements OnInit {
     });
   }
 
+
   fillCables(): void {
     this.cableService.getCablesBySystems(this.project, this.docNumber)
       .subscribe(cables => {
         if (cables.length > 0) {
-          this.cables = _.sortBy(cables, x => x.stockCode);
-          console.log(this.cables);
+          let re = "/\\(([^)]+)\\)/";
+          this.cables = _.sortBy(cables, x => x.stock_code);
+          // this.equipments = _.map(_.groupBy(this.cables, x => (x.from_eq, x.to_eq)), x => Object({
+          //   from_eq: x[0].from_eq,
+          //   values: x
+          // }))
+          this.equipments = _.map(this.cables, x => ({
+            id: x.from_eq_id,
+            name: x.from_eq,
+            desc: x.from_eq_desc,
+            zone: x.from_zone,
+            zone_desc: x.from_zone_desc,
+            system: x.from_system,
+            x: x.from_x,
+            y: x.from_y,
+            z: x.from_z,
+            stock_code: x.from_stock_code
+          })).concat(_.map(this.cables, x => ({
+            id: x.to_eq_id,
+            name: x.to_eq,
+            desc: x.to_eq_desc,
+            zone: x.to_zone,
+            zone_desc: x.to_zone_desc,
+            system: x.to_system,
+            x: x.to_x,
+            y: x.to_y,
+            z: x.to_z,
+            stock_code: x.to_stock_code
+          }))) as Equipment[]
+
+          this.equipments = _.sortBy(_.uniq(this.equipments, x =>
+            [x.id, x.name, x.desc, x.zone, x.zone_desc, x.x, x.y, x.z, x.stock_code].join('-')
+          ), x => x.name)
+
+
+          console.log(this.equipments)
         } else {
           this.noResultCables = true;
         }
@@ -96,6 +136,12 @@ export class CablesComponent implements OnInit {
 
   round(value: number) {
     return Math.round(value * 100) / 100;
+  }
+
+  getNodeByRout(rout: string) {
+    let re = "\\(([^)]+)\\)";
+    let res = rout.match(re)
+    console.log(res);
   }
 
   setCols() {

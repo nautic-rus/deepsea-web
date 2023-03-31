@@ -3,219 +3,308 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-    </div>
-    <div class="w-100 df">
-      <div class="card-sp-tile mr-20">
-        <div class="loading-text" *ngIf="noResultCables">No result for drawing {{docNumber}} of
-          project {{project}}. You need
-          to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
-        </div>
-        <div *ngIf="cables.length == 0 && !noResultCables">
-          <div class="cxy loading">
-            <div class="cxy card-height">
-              <img src="assets/whale.gif" height="120">
-              <div class="cx loading-text">PLEASE WAIT...</div>
-            </div>
+      <div class="p-ml-auto mr-10 df">
+        <div class="df all-tabs-button mr-2" *ngIf="cables.length != 0">
+          <div class="tabs-button-cable cursor-pointer cxy" (click)="selectedTab = 'Cables'"
+               [class.selected-tab]="selectedTab == 'Cables'">Cables
+          </div>
+          <div class="tabs-button-equip cursor-pointer cxy" (click)="selectedTab = 'Equipment'"
+               [class.selected-tab]="selectedTab == 'Equipment'">Equipment
           </div>
         </div>
-        <div *ngIf="selectedView == 'tiles'">
-          <div class="tile">
-            <div class="w-100 " *ngIf="cables.length != 0">
-              <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="450">
-                <ng-template pTemplate="item" let-cable let-i="index">
-                  <div class="card-tile-t w-100"
-                       [class.hidden-card]="cable == null">
-                    <div class="top-row df">
-                      <div [ngSwitch]="cable.f_rout" class="cxy mr-2">
-                        <div *ngSwitchCase="0" class="point red-point"></div>
-                        <div *ngSwitchCase="1" class="point green-point"></div>
-                        <div *ngSwitchCase="2" class="point yellow-point"></div>
-                      </div>
-                      <div class="cxy mr-2">
-                        <div class="title-bold">{{cable.code}}</div>
-                      </div>
-                      <div class="cxy mr-2">
-                        <div class=title-medium-bold>{{cable.description}}</div>
-                      </div>
-                      <div class="df cxy mr-2">
-                        <div class="text-center-y attribute mr-10">Section:</div>
-                        <div class="text-table-col">{{cable.nom_section}}</div>
-                      </div>
-                      <div class="df cxy mr-2">
-                        <div class="text-center-y attribute mr-10">Diameter:</div>
-                        <div class="text-table-col">{{cable.diameter}}</div>
-                      </div>
-                      <div class="df cxy mr-2">
-                        <div class="text-center-y attribute mr-10">Seg:</div>
-                        <div class="text-table-col">{{cable.seg_code}}</div>
-                      </div>
-                      <div class="df cxy mr-2">
-                        <div class="text-center-y attribute mr-10">Length:</div>
-                        <div class="text-table-col">{{round(cable.length) + 'm'}}</div>
-                        <div class="text-center-y attribute mr-10">{{' (' + cable.l_correction + '%)'}}</div>
-                      </div>
-                      <div class="p-ml-auto text-center-y">
-                        <div class="df">
-                          <div class="trm">{{cable.stock_code}}</div>
-                          <div (click)="copyTrmCode(cable.stock_code, 'c' + i)" class="trm-copy cursor-pointer cxy">
-                            <img src="assets/icons/trm.svg" height="16">
-                            <div class="copy-tooltip" [hidden]="!showTooltip('c' + i)">Copied!</div>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170"/>
+        </span>
+      </div>
+    </div>
+    <div [hidden]="selectedTab != 'Cables'">
+      <div class="w-100 df">
+        <div class="card-sp-tile mr-20">
+          <div class="loading-text" *ngIf="noResultCables">No result for drawing {{docNumber}} of
+            project {{project}}. You need
+            to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
+          </div>
+          <div *ngIf="cables.length == 0 && !noResultCables">
+            <div class="cxy loading">
+              <div class="cxy card-height">
+                <img src="assets/whale.gif" height="120">
+                <div class="cx loading-text">PLEASE WAIT...</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedView == 'tiles'">
+            <div class="tile">
+              <div class="w-100 " *ngIf="cables.length != 0">
+                <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="250">
+                  <ng-template pTemplate="cable" let-cable let-i="index">
+                    <div class="card-tile-t w-100"
+                         [class.hidden-card]="cable == null">
+                      <div class="top-row df">
+                        <div [ngSwitch]="cable.f_rout" class="cxy mr-1">
+                          <div *ngSwitchCase="0" class="point red-point" pTooltip="{{l.tr('Не проложен')}}"
+                               tooltipPosition="right"></div>
+                          <div *ngSwitchCase="1" class="point green-point" pTooltip="{{l.tr('Проложен')}}"
+                               tooltipPosition="right"></div>
+                          <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{l.tr('Проложен частично')}}"
+                               tooltipPosition="right"></div>
+                        </div>
+                        <div class="cxy mr-2">
+                          <div class="title-medium-bold">{{cable.code}}</div>
+                        </div>
+                        <div class="cxy mr-2">
+                          <div class=title-name>{{cable.description}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">Sec:</div>
+                          <div class="title-name">{{cable.nom_section}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">D:</div>
+                          <div class="title-name">{{cable.diameter}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">Seg:</div>
+                          <div class="title-name">{{cable.seg_code}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">L:</div>
+                          <div class="title-name">{{round(cable.length) + 'm'}}</div>
+                          <div
+                            class="text-center-y attribute mr-10 title-name" pTooltip="{{l.tr('Поправка длины')}}"
+                            tooltipPosition="right">
+                            {{' (' + cable.l_correction + '%)'}}</div>
+                        </div>
+                        <div class="p-ml-auto text-center-y">
+                          <div class="df">
+                            <div class="trm">{{cable.stock_code}}</div>
+                            <div (click)="copyTrmCode(cable.stock_code, 'c' + i)" class="trm-copy cursor-pointer cxy">
+                              <img src="assets/icons/trm.svg" height="16">
+                              <div class="copy-tooltip" [hidden]="!showTooltip('c' + i)">Copied!</div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="top-row df space-between">
-                      <div>FROM</div>
-                      <div class="top-line-card"></div>
-                      <div>TO</div>
-                    </div>
-                    <div class="bottom-grid">
-                      <div class="df pl-8 info-row cxy">
-                        <div>
-                          <div class="flex-end mr-10">
+                      <div class="top-row df space-between">
+                        <div class="title-medium-bold">FROM</div>
+                        <div class="top-line-card"></div>
+                        <div class="title-medium-bold">ROUTE</div>
+                        <div class="top-line-card"></div>
+                        <div class="title-medium-bold">TO</div>
+                      </div>
+                      <div class="bottom-grid">
+                        <div class="df pl-8 info-row cxy space-around">
+                          <div>
+                            <div class="flex-end mr-10">
+                              {{cable.from_eq_id}} ({{cable.from_eq}}) - {{cable.from_eq_desc}}
+                            </div>
+                          </div>
+                          <div class="df coordinates-row cxy">
+                            <span class="mm-text flex-end">{{' ' + round(cable.from_x)}}</span>
+                            <div class="coordinates-x cxy mr-5 ml-5">X</div>
+                            <span class="mm-text flex-start">{{' ' + round(cable.to_x)}}</span>
+                          </div>
+                          <div>
+                            <div class="flex-start mr-10">
+                              {{cable.to_eq_id}} ({{cable.to_eq}}) -   {{cable.to_eq_desc}}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="df pl-8 info-row cxy space-around">
+                          <div>
+                            <div class="flex-end mr-10">
+                              {{cable.from_zone}} - {{cable.from_zone_desc}}
+                            </div>
+                          </div>
+                          <div class="df coordinates-row cxy">
+                            <span class="mm-text flex-end">{{' ' + round(cable.from_y)}}</span>
+                            <div class="coordinates-y cxy mr-5 ml-5">Y</div>
+                            <span class="mm-text flex-start">{{' ' + round(cable.to_y)}}</span>
+                          </div>
+                          <div>
+                            <div class="flex-start mr-10">
+                              {{cable.to_zone}} - {{cable.to_zone_desc}}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="df pl-8 info-row cxy">
+                          <div>
+                            <!--                          <div class="flex-end mr-10">-->
+                            <!--                            {{cable.from_system.split(' ')[0].replace('.', '')}}-->
+                            <!--                          </div>-->
+                            <!--                          <div class="flex-end mr-10">-->
+                            <!--                            {{cable.from_system.split(' ').splice(1).join(' ')}}-->
+                            <!--                          </div>-->
                             {{cable.from_system.split(' ')[0].replace('.', '')}}
                           </div>
-                          <div class="flex-end mr-10">
-                            {{cable.from_system.split(' ').splice(1).join(' ')}}
+                          <div class="df coordinates-row cxy">
+                            <span class="mm-text flex-end">{{' ' + round(cable.from_z)}}</span>
+                            <div class="coordinates-z cxy mr-5 ml-5">Z</div>
+                            <span class="mm-text flex-start">{{' ' + round(cable.to_z)}}</span>
                           </div>
-                        </div>
-                        <div class="cx">SYSTEM</div>
-                        <div>
-                          <div class="flex-start mr-10">
+                          <div>
+                            <!--                          <div class="flex-start mr-10">-->
+                            <!--                            {{cable.to_system.split(' ')[0].replace('.', '')}}-->
+                            <!--                          </div>-->
+                            <!--                          <div class="flex-start mr-10">-->
+                            <!--                            {{cable.to_system.split(' ').splice(1).join(' ')}}-->
+                            <!--                          </div>-->
                             {{cable.to_system.split(' ')[0].replace('.', '')}}
                           </div>
-                          <div class="flex-start mr-10">
+                        </div>
+                        <div class="df pl-8 info-row cxy">
+                          <div>
+                            {{cable.from_system.split(' ').splice(1).join(' ')}}
+                          </div>
+                          <div></div>
+                          <div>
                             {{cable.to_system.split(' ').splice(1).join(' ')}}
                           </div>
                         </div>
+                        <!--                      <div class="pl-8 cxy">-->
+                        <!--                        <div class="cx">{{getNodeByRout(cable.cab_route_area)}}</div>-->
+                        <!--                      </div>-->
                       </div>
-                      <div class="df pl-8 info-row cxy space-around">
-                        <div>
-                          <div class="flex-end mr-10">
-                            {{cable.from_eq_id}} ({{cable.from_eq}})
-                          </div>
-                          <div class="flex-end mr-10">
-                            {{cable.from_eq_desc}}
-                          </div>
-                        </div>
-                        <div class="cx">EQUIPMENT</div>
-                        <div>
-                          <div class="flex-start mr-10">
-                            {{cable.to_eq_id}} ({{cable.to_eq}})
-                          </div>
-                          <div class="flex-start mr-10">
-                            {{cable.to_eq_desc}}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="df pl-8 info-row cxy space-around">
-                        <div>
-                          <div class="flex-end mr-10">
-                            {{cable.from_zone}}
-                          </div>
-                          <div class="flex-end mr-10">
-                            {{cable.from_zone_desc}}
-                          </div>
-                        </div>
-                        <div class="cx">ZONE</div>
-                        <div>
-                          <div class="flex-start mr-10">
-                            {{cable.to_zone}}
-                          </div>
-                          <div class="flex-start mr-10">
-                            {{cable.to_zone_desc}}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="df pl-8 info-row cxy space-around">
-                        <div>
-                          <div class="df flex-end mr-10">
-                            <div class="df coordinates-row mr-5">
-                              <div class="coordinates-x cxy">X:</div>
-                              <span class="mm-text cxy">{{' ' + round(cable.from_x)}}</span>
-                            </div>
-                            <div class="df coordinates-row mr-5">
-                              <div class="coordinates-y cxy">Y:</div>
-                              <span class="mm-text cxy">{{' ' + round(cable.from_y)}}</span>
-                            </div>
-                            <div class="df mr-5">
-                              <div class="coordinates-z cxy">Z:</div>
-                              <span class="mm-text cxy">{{' ' + round(cable.from_z)}}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="cx">COORDINATES</div>
-                        <div class="w-30 table-body-equip cy flex-start">
-                          <div class="df flex-start">
-                            <div class="df coordinates-row mr-5">
-                              <div class="coordinates-x cxy">X:</div>
-                              <span class="mm-text cxy">{{' ' + round(cable.to_x)}}</span>
-                            </div>
-                            <div class="df coordinates-row mr-5">
-                              <div class="coordinates-y cxy">Y:</div>
-                              <span class="mm-text cxy">{{' ' + round(cable.to_y)}}</span>
-                            </div>
-                            <div class="df coordinates-row mr-5">
-                              <div class="coordinates-z cxy">Z:</div>
-                              <span class="mm-text cxy">{{' ' + round(cable.to_z)}}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="pl-8 cxy">
-                        <div class="cx">{{cable.cab_route_area}}</div>
-                      </div>
+
+
                     </div>
-                  </div>
-                </ng-template>
-              </p-virtualScroller>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <div class="w-32 right-content-card mt-20">
-        <div class="df tabs-header">
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'"
-               [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'"
-               [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'"
-               [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
-        </div>
-
-        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
-
-        </div>
-        <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
-          <div class="subtask-grid-misc py-10">
-            <div class="head-subtask">{{l.tr('Тип')}}</div>
-            <div class="head-subtask">{{l.tr('Название')}}</div>
-            <div class="head-subtask">{{l.tr('Отв.')}}</div>
-            <div class="head-subtask">{{l.tr('Исп.')}}</div>
-            <div class="head-subtask">{{l.tr('Статус')}}</div>
-          </div>
-          <div class="">
-            <div class="subtask" *ngFor="let childIssue of miscIssues">
-              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)">
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
-                <div class="py-10 px-10 subtask-text">
-                  <span>{{childIssue.doc_number + ' '}}</span>
-                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
-                </div>
-                <div class="cy px-10 py-10 subtask-text"
-                     [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
-                <div class="cy px-10 py-10 subtask-text"
-                     [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-                <div class="dfc px-10 py-10 subtask-text"
-                     [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+                  </ng-template>
+                </p-virtualScroller>
               </div>
             </div>
           </div>
         </div>
-        <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
+        <div class="w-32 right-content-card mt-20">
+          <div class="df tabs-header">
+            <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'"
+                 [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
+            <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'"
+                 [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
+            <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'"
+                 [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
+          </div>
+
+          <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
+
+          </div>
+          <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
+            <div class="subtask-grid-misc py-10">
+              <div class="head-subtask">{{l.tr('Тип')}}</div>
+              <div class="head-subtask">{{l.tr('Название')}}</div>
+              <div class="head-subtask">{{l.tr('Отв.')}}</div>
+              <div class="head-subtask">{{l.tr('Исп.')}}</div>
+              <div class="head-subtask">{{l.tr('Статус')}}</div>
+            </div>
+            <div class="">
+              <div class="subtask" *ngFor="let childIssue of miscIssues">
+                <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)">
+                  <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
+                  <div class="py-10 px-10 subtask-text">
+                    <span>{{childIssue.doc_number + ' '}}</span>
+                    <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                  </div>
+                  <div class="cy px-10 py-10 subtask-text"
+                       [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+                  <div class="cy px-10 py-10 subtask-text"
+                       [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                  <div class="dfc px-10 py-10 subtask-text"
+                       [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
+          </div>
         </div>
       </div>
+    </div>
+    <div [hidden]="selectedTab != 'Equipment'">
+      <div class="w-100 df">
+        <div class="card-eq-tile mr-20">
+          <div class="loading-text" *ngIf="noResultCables">No result for drawing {{docNumber}} of
+            project {{project}}. You need
+            to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
+          </div>
+          <div *ngIf="cables.length == 0 && !noResultCables">
+            <div class="cxy loading">
+              <div class="cxy card-height">
+                <img src="assets/whale.gif" height="120">
+                <div class="cx loading-text">PLEASE WAIT...</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="tile">
+              <div class="w-100 " *ngIf="cables.length != 0">
+              </div>
+              <div class="w-100" *ngIf="equipments.length != 0">
+                <div *ngFor="let eq of equipments; let e = index" class="card-tile-eq card-grid-eq"
+                     [class.hidden-card]="eq == null">
+                  <div class="text-center-y df cursor-pointer">
+                    <div class="title-name mr-10">{{eq.name}}</div>
+                    <div class="text-center-y attribute mr-10 title-name">{{eq.id}}</div>
+                    <div class="text-center-y attribute mr-10 title-name">{{eq.desc}}</div>
+                  </div>
+                  <div class="text-center-y cursor-pointer">
+                    <div class="title-name mr-10">{{eq.zone}}</div>
+                    <div class="text-center-y attribute mr-10 title-name">{{eq.zone_desc}}</div>
+                  </div>
+                  <div class="text-center-y cursor-pointer">
+                    <div class="text-table-col">{{eq.system}}</div>
+                  </div>
+                  <div class="text-center-y space-between">
+                    <div class="df mr-5">
+                      <div class="coordinates-x cxy">X:</div>
+                      <span class="mm-text cxy">{{' ' + round(eq.x)}}</span>
+                    </div>
+                    <div class="df mr-5">
+                      <div class="coordinates-y cxy">Y:</div>
+                      <span class="mm-text cxy">{{' ' + round(eq.y)}}</span>
+                    </div>
+                    <div class="df mr-5">
+                      <div class="coordinates-z cxy">Z:</div>
+                      <span class="mm-text cxy">{{' ' + round(eq.z)}}</span>
+                    </div>
+                    <div class="p-ml-auto text-center-y">
+                      <div class="df">
+                        <div class="trm">{{eq.stock_code}}</div>
+                        <div (click)="copyTrmCode(eq.stock_code, 'e' + e)" class="trm-copy cursor-pointer cxy">
+                          <img src="assets/icons/trm.svg" height="16">
+                          <div class="copy-tooltip" [hidden]="!showTooltip('e' + e)">Copied!</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-75 right-content-card mt-20">
+          <div class="df tabs-header">
+            <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = 'Cables'"
+                 [class.selectedTab]="equipmentHeadTab ==  'Cables'">{{l.tr('Кабели')}}</div>
+            <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = '3D'"
+                 [class.selectedTab]="equipmentHeadTab ==  '3D'">{{l.tr('3D')}}</div>
+          </div>
+
+          <div *ngIf="equipmentHeadTab == 'Cables'" class="card-tabs">
+            <div class="loading-text" *ngIf="selectedEq == ''">Please select the equipment
+            </div>
+            <div *ngIf="selectedEq != ''">
+
+            </div>
+          </div>
+          <div *ngIf="equipmentHeadTab == '3D'" class="card-tabs">
+            <div class="loading-text" *ngIf="selectedEq == ''">Please select the equipment
+            </div>
+            <div *ngIf="selectedEq != ''">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
