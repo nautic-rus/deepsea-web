@@ -16,7 +16,7 @@
           <div class="cxy">{{currentMonth}}</div>
         </div>
         <div class="mr-10">
-          <div class="materials-button-w red-button cxy space-between" [pTooltip]="t.tr('Больничный')" tooltipPosition="top">
+          <div class="materials-button-w yellow-button cxy space-between" [pTooltip]="t.tr('Больничный')" tooltipPosition="top">
             <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('SICK'), medical * 8)" (dragend)="dragEnd($event)">
               <img src="assets/icons/hospital.svg" height="18">
             </div>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="">
-          <div class="materials-button-w yellow-button cxy space-between" [pTooltip]="t.tr('Отпуск')" tooltipPosition="top">
+          <div class="materials-button-w green-button cxy space-between" [pTooltip]="t.tr('Отпуск')" tooltipPosition="top">
             <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('VACATION'), vacation * 8)" (dragend)="dragEnd($event)">
               <img src="assets/icons/summer.svg" height="18">
             </div>
