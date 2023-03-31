@@ -875,7 +875,7 @@ export class HullEspComponent implements OnInit {
     }
   }
   getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
-    if (this.issue.cloud_files.length == 0){
+    if (this.issue.cloud_files.length == 0 || fileGroup == 'Other'){
       return this.getRevisionFilesOfGroupAux(fileGroup, revision);
     }
     this.cloudDate = true;
