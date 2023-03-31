@@ -8,6 +8,7 @@ import _ from "underscore";
 import {CableService} from "./cable.service";
 import {LanguageService} from "../../../domain/language.service";
 import {Equipment} from "../../../domain/interfaces/equipment";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-cables',
@@ -29,13 +30,15 @@ export class CablesComponent implements OnInit {
   noResultCables = false;
   selectedHeadTab: string = 'Files';
   equipmentHeadTab: string = 'Cables'
-  selectedEq: string = '';
+  selectedEq: Equipment;
   selectedView: string = 'tiles';
   tooltips: string[] = [];
   cable_rout: string[] = [];
   selectedTab: string = 'Cables';
+  url: string = "https://threejs.org/editor/";
+  urlSafe: SafeResourceUrl;
 
-  constructor(private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
+  constructor(public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
   }
 
   ngOnInit(): void {
@@ -50,6 +53,8 @@ export class CablesComponent implements OnInit {
         this.fillRevisions();
       }
     });
+
+    this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
   fillRevisions() {
@@ -76,7 +81,7 @@ export class CablesComponent implements OnInit {
       .subscribe(cables => {
         if (cables.length > 0) {
           let re = "/\\(([^)]+)\\)/";
-          this.cables = _.sortBy(cables, x => x.stock_code);
+          this.cables = _.sortBy(cables, x => x.id);
           // this.equipments = _.map(_.groupBy(this.cables, x => (x.from_eq, x.to_eq)), x => Object({
           //   from_eq: x[0].from_eq,
           //   values: x
@@ -142,6 +147,11 @@ export class CablesComponent implements OnInit {
     let re = "\\(([^)]+)\\)";
     let res = rout.match(re)
     console.log(res);
+  }
+
+  viewEqInfo(eq: Equipment) {
+    this.selectedEq = eq;
+    console.log(this.selectedEq);
   }
 
   setCols() {

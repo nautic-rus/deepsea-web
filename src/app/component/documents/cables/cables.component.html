@@ -238,43 +238,48 @@
               <div class="w-100 " *ngIf="cables.length != 0">
               </div>
               <div class="w-100" *ngIf="equipments.length != 0">
-                <div *ngFor="let eq of equipments; let e = index" class="card-tile-eq card-grid-eq"
+                <div *ngFor="let eq of equipments; let e = index"
                      [class.hidden-card]="eq == null">
-                  <div class="text-center-y df cursor-pointer">
-                    <div class="title-name mr-10">{{eq.name}}</div>
-                    <div class="text-center-y attribute mr-10 title-name">{{eq.id}}</div>
-                    <div class="text-center-y attribute mr-10 title-name">{{eq.desc}}</div>
-                  </div>
-                  <div class="text-center-y cursor-pointer">
-                    <div class="title-name mr-10">{{eq.zone}}</div>
-                    <div class="text-center-y attribute mr-10 title-name">{{eq.zone_desc}}</div>
-                  </div>
-                  <div class="text-center-y cursor-pointer">
-                    <div class="text-table-col">{{eq.system}}</div>
-                  </div>
-                  <div class="text-center-y space-between">
-                    <div class="df mr-5">
-                      <div class="coordinates-x cxy">X:</div>
-                      <span class="mm-text cxy">{{' ' + round(eq.x)}}</span>
+                  <div class="card-tile-eq card-grid-eq"
+                       (click)="selectedEq = eq"
+                       [class.selected-eq]="selectedEq == eq">
+                    <div class="text-center-y df cursor-pointer">
+                      <div class="title-name mr-10">{{eq.name}}</div>
+                      <div class="text-center-y attribute mr-10 title-name">{{eq.id}}</div>
+                      <div class="text-center-y attribute mr-10 title-name">{{eq.desc}}</div>
                     </div>
-                    <div class="df mr-5">
-                      <div class="coordinates-y cxy">Y:</div>
-                      <span class="mm-text cxy">{{' ' + round(eq.y)}}</span>
+                    <div class="text-center-y cursor-pointer">
+                      <div class="title-name mr-10">{{eq.zone}}</div>
+                      <div class="text-center-y attribute mr-10 title-name">{{eq.zone_desc}}</div>
                     </div>
-                    <div class="df mr-5">
-                      <div class="coordinates-z cxy">Z:</div>
-                      <span class="mm-text cxy">{{' ' + round(eq.z)}}</span>
+                    <div class="text-center-y cursor-pointer">
+                      <div class="text-table-col">{{eq.system}}</div>
                     </div>
-                    <div class="p-ml-auto text-center-y">
-                      <div class="df">
-                        <div class="trm">{{eq.stock_code}}</div>
-                        <div (click)="copyTrmCode(eq.stock_code, 'e' + e)" class="trm-copy cursor-pointer cxy">
-                          <img src="assets/icons/trm.svg" height="16">
-                          <div class="copy-tooltip" [hidden]="!showTooltip('e' + e)">Copied!</div>
+                    <div class="text-center-y space-between">
+                      <div class="df mr-5">
+                        <div class="coordinates-x cxy">X:</div>
+                        <span class="mm-text cxy">{{' ' + round(eq.x)}}</span>
+                      </div>
+                      <div class="df mr-5">
+                        <div class="coordinates-y cxy">Y:</div>
+                        <span class="mm-text cxy">{{' ' + round(eq.y)}}</span>
+                      </div>
+                      <div class="df mr-5">
+                        <div class="coordinates-z cxy">Z:</div>
+                        <span class="mm-text cxy">{{' ' + round(eq.z)}}</span>
+                      </div>
+                      <div class="p-ml-auto text-center-y">
+                        <div class="df">
+                          <div class="trm">{{eq.stock_code}}</div>
+                          <div (click)="copyTrmCode(eq.stock_code, 'e' + e)" class="trm-copy cursor-pointer cxy">
+                            <img src="assets/icons/trm.svg" height="16">
+                            <div class="copy-tooltip" [hidden]="!showTooltip('e' + e)">Copied!</div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -289,18 +294,10 @@
           </div>
 
           <div *ngIf="equipmentHeadTab == 'Cables'" class="card-tabs">
-            <div class="loading-text" *ngIf="selectedEq == ''">Please select the equipment
-            </div>
-            <div *ngIf="selectedEq != ''">
 
-            </div>
           </div>
           <div *ngIf="equipmentHeadTab == '3D'" class="card-tabs">
-            <div class="loading-text" *ngIf="selectedEq == ''">Please select the equipment
-            </div>
-            <div *ngIf="selectedEq != ''">
-
-            </div>
+            <iframe class="w-100 h-100" [src]="urlSafe"></iframe>
           </div>
         </div>
       </div>
