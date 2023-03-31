@@ -132,6 +132,12 @@ export class AccommodationEspComponent implements OnInit {
       icon: 'assets/icons/files.svg',
       collapsed: false,
       need_rights: false
+    },
+    {
+      name: 'Other',
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true,
+      need_rights: false
     }
   ];
   selectedTab = this.fileGroups[0].name;
