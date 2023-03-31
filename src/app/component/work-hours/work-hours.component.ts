@@ -160,7 +160,7 @@ export class WorkHoursComponent implements OnInit {
       this.issueSpentTime = res;
       this.issueManagerService.getIssues('op').then(res => {
         this.issuesSrc = res;
-        this.issues = res;
+        this.issues = res.filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP'].includes(x.issue_type));
         this.issues = _.sortBy(this.issues, x => x.doc_number);
         this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
         this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
