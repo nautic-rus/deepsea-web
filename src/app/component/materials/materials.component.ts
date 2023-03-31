@@ -503,6 +503,7 @@ export class MaterialsComponent implements OnInit {
       res.forEach((m => m.materialCloudDirectory = ''));
       this.materials = res;
       this.materialsSrc = res;
+      console.log(res);
       this.materialManager.getMaterialNodes(this.project).then(res => {
         this.nodesSrc = res;
         this.nodes = this.getNodes(res, this.materialsSrc, '');

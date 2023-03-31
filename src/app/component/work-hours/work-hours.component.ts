@@ -349,7 +349,7 @@ export class WorkHoursComponent implements OnInit {
             let daysBeforeR = _.sortBy(daysBefore, x => x.id).reverse();
             this.selectedDay = this.userPDays[daysBeforeR[0].user].find((x: any) => x.planHours.includes(daysBeforeR[0]));
             if (this.selectedDay != null){
-              this.foldAllTaskLeft();
+              //this.foldAllTaskLeft();
             }
           });
         });
