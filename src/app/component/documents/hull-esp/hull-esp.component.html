@@ -856,7 +856,7 @@
 <!--              <div class="cy ml-1">Download all files</div>-->
 <!--            </div>-->
 <!--          </div>-->
-          <div class="mb-30" *ngFor="let fileGroup of fileGroups" [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
+          <div class="mb-15" *ngFor="let fileGroup of fileGroups" [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
@@ -925,8 +925,6 @@
                       </div>
                       <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
                       <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
-
-
 
                       <div class="cxy" *ngIf="file.name.includes('.dxf')" >
                         <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
