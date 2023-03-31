@@ -75,6 +75,7 @@ export class TaskComponent implements OnInit {
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];
   yesNo: any[] = [new LV('Yes'), new LV('No')];
+  planned: any[];
   quillModulesModificationDescription =
     {
       imageResize: {},
@@ -282,6 +283,9 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
     this.issue = this.conf.data as Issue;
+    this.auth.getPlannedHours().subscribe(res => {
+      this.planned = res;
+    });
     this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
 
     this.issueManager.getIssueProjects().then(projects => {
@@ -844,6 +848,14 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit() {
+    let find = this.planned.find(x => x.taskId == this.issue.id);
+    if (find != null){
+      if (find.hours > this.issue.plan_hours){
+        this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is less then amount of you entered'});
+        this.cancelIssueEdit();
+        return;
+      }
+    }
     if (this.edit == 'startDate'){
       this.issue.start_date = this.startDate.getTime();
     }

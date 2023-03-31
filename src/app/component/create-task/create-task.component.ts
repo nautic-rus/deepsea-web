@@ -39,7 +39,7 @@ export class CreateTaskComponent implements OnInit {
   taskProjects: string[] = [];
   sfiCodes: LV[] = [];
   taskDepartments: string[] = [];
-  taskPeriods: LV[] = [new LV('Stage 1'), new LV('Stage 2'), new LV('Stage 3'), new LV('Stage 4'), new LV('Stage 5'), new LV('Stage 6'), new LV('Stage 7'), new LV('Stage 8')];
+  taskPeriods: LV[] = [new LV('-'), new LV('Stage 1'), new LV('Stage 2'), new LV('Stage 3'), new LV('Stage 4'), new LV('Stage 5'), new LV('Stage 6'), new LV('Stage 7'), new LV('Stage 8')];
   taskPeriod: string = this.taskPeriods[0].value;
   taskTypes: any[] = [];
   taskPriorities: any[] = [];

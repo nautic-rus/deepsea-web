@@ -246,7 +246,7 @@ export class LanguageService {
           case 'Мебель': return 'Furniture';
           case 'Оборудование, техника': return 'Technique';
           case 'Инвентарное имущество': return 'Inventory property';
-          case 'Аварийно-спасательное и противопожарное имущество': return 'Rescue and fire fighting equipment.ts';
+          case 'Аварийно-спасательное и противопожарное имущество': return 'Rescue and fire fighting equipment';
           case 'СУДОВЫЕ СИСТЕМЫ': return 'SHIP SYSTEMS';
           case 'Арматура': return 'Fittings';
           case 'Ручная': return 'Hand';
@@ -256,7 +256,7 @@ export class LanguageService {
           case 'Изоляция труб': return 'Pipe insulation';
           case 'Насос': return 'Pump';
           case 'Вентиляция и кондиционирование': return 'Ventilation and air conditioning';
-          case 'Механическое оборудование': return 'Mechanical equipment.ts';
+          case 'Механическое оборудование': return 'Mechanical equipment';
           case 'Контрольно-измерительные приборы': return 'Control and measuring instruments';
           case 'Давление': return 'Pressure';
           case 'Температура': return 'Temperature';
@@ -270,7 +270,7 @@ export class LanguageService {
           case 'Аккумуляторная батарея': return 'Accumulator battery';
           case 'Щит питания и управления': return 'Power and control board';
           case 'Коробки соединительные, розетки, выключатели, штепсели': return 'MGA';
-          case 'Навигационное оборудование': return 'Navigation equipment.ts';
+          case 'Навигационное оборудование': return 'Navigation equipment';
           case 'Оборудование радиосвязи': return 'Radio communication';
           case 'Освещение': return 'Lighting';
           case 'Автоматизация': return 'Automation';
@@ -278,7 +278,7 @@ export class LanguageService {
           case 'Электрообогрев': return 'Electrical heating';
           case 'Сигнальные средства': return 'Signal means';
           case 'Защита от коррозии': return 'Corrosion protection';
-          case 'Специальное оборудование (рыбопоисковое и т.п.)': return 'Special equipment.ts';
+          case 'Специальное оборудование (рыбопоисковое и т.п.)': return 'Special equipment';
           case 'Кабель': return 'Cable';
           case 'Кабель в поставке': return 'Cable supplier';
           case 'Кабель завод-строитель': return 'Сable Yard';
@@ -353,7 +353,7 @@ export class LanguageService {
           case 'Обновить готовность': return 'Update preparedness' ;
           case 'Сгруппировать по материалу': return 'Group by material';
           case 'Выгрузить excel': return 'Upload excel';
-          case 'Вы подтверждаете статус готовности оборудования?': return 'Do you confirm the equipment.ts readiness status?';
+          case 'Вы подтверждаете статус готовности оборудования?': return 'Do you confirm the equipment readiness status?';
           case 'Связанная задача': return 'Link issue';
           case 'Accepted': return 'Принято';
           case 'Вы подтверждаете удаление элемента?': return 'Do you confirm the deletion of the item?';
@@ -441,10 +441,10 @@ export class LanguageService {
           case 'Показать назначенные': return 'Show assigned';
           case 'срок исполнения': return 'due date';
           case 'отдел': return 'department';
-          case 'Поправка длины': return 'Correction';
-          case 'Проложен': return 'Full routed';
-          case 'Не проложен': return 'Not routed';
-          case 'Частично проложен': return 'Partially routed';
+          case 'Отпуск': return 'Vacation';
+          case 'дни': return 'days';
+          case 'Больничный': return 'Medical';
+          case '': return '';
           case '': return '';
           case '': return '';
           case '': return '';

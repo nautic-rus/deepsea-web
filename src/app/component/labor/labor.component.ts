@@ -31,6 +31,7 @@ export class LaborComponent implements OnInit {
   issuesSrc: any[] = [];
   labor: number = 10;
   laborUpdates: any = Object();
+  lockedByPlan: any = Object();
   issueSpentTime: DailyTask[] = [];
 
   constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, public t: LanguageService) { }
@@ -52,6 +53,11 @@ export class LaborComponent implements OnInit {
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
         console.log(this.issues);
+        this.auth.getPlannedHours().subscribe(planned => {
+          this.issues.forEach(issue => {
+            this.lockedByPlan[issue.id] = planned.find((x: any) => x.task_id = issue.id) != null;
+          });
+        });
       });
     });
     this.issueManagerService.getIssueProjects().then(projects => {
