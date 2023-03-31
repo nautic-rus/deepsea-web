@@ -284,7 +284,7 @@ export class TaskComponent implements OnInit {
     });
     this.issue = this.conf.data as Issue;
     this.auth.getPlannedHours().subscribe(res => {
-      this.planned = res.find((x: any) => x.task_id = this.issue.id) != null;
+      this.planned = res.find((x: any) => x.taskId == this.issue.id) != null;
     });
     this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
 
