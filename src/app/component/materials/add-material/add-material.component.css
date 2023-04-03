@@ -13,6 +13,11 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.quad-row{
+  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
 .left-text{
   width: 50px;
 }

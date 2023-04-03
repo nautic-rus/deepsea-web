@@ -30,6 +30,8 @@ export class AddMaterialComponent implements OnInit {
   material: Material = new Material();
   approved = false;
   itt = false;
+  tp620 = false;
+  certRS = false;
   action = '';
   materialPrefix = '';
   materials: Material[] = [];
@@ -53,6 +55,8 @@ export class AddMaterialComponent implements OnInit {
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
     this.approved = this.material.approved == 1;
     this.itt = this.material.itt == 1;
+    this.tp620 = this.material.tp620 == 1;
+    this.certRS = this.material.certRS == 1;
     this.action = dialog.data[2];
     this.materials = dialog.data[3];
     this.materialPrefix = dialog.data[4];
@@ -81,6 +85,8 @@ export class AddMaterialComponent implements OnInit {
   createMaterial() {
     this.material.approved = this.approved ? 1 : 0;
     this.material.itt = this.itt ? 1 : 0;
+    this.material.tp620 = this.tp620 ? 1 : 0;
+    this.material.certRS = this.certRS ? 1 : 0;
     if (this.material.code.substring(0, 12) != Material.generateCode(this.materialPrefix, this.materials).substring(0, 12)){
       this.messageService.add({severity:'error', summary:'Code Error', detail:'You cannot modify base first 12 length symbols of code. Please create another block with code you wish.', life: 8000});
       return;
@@ -127,5 +133,23 @@ export class AddMaterialComponent implements OnInit {
 
   getLabel(action: string) {
     return action.replace('add', 'Create').replace('edit', 'Update').replace('clone', 'Clone');
+  }
+
+  unitsChanged() {
+    if (this.material.units == '166'){
+      this.material.singleWeight = 1;
+    }
+  }
+
+  getUnitsText() {
+    switch (this.material.units) {
+      case '796': return 'Вес кг. 1 штуки:';
+      case '006': return 'Вес кг. 1 метра:';
+      case '055': return 'Вес кг. 1 кв. м.:';
+      case '166': return '';
+      case '112': return 'Вес кг. 1 литра:';
+      case '113': return 'Вес кг. 1 куб. м.:';
+      default: return this.material.units;
+    }
   }
 }
