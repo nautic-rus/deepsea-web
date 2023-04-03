@@ -102,8 +102,8 @@
               </span>
               <span class="mx-10 cy">/</span>
               <span class="cursor-pointer width-50 mr-15" *ngIf="laborUpdates[issue.id] != null">
-                  <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1 || !auth.hasPerms('laboriousness') || (lockedByPlan[issue.id] == true)" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
-                </span>
+                <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1 || !auth.hasPerms('laboriousness') || (lockedByPlan[issue.id] == true)" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
+              </span>
               <div class="cxy unlock cursor-pointer" *ngIf="laborUpdates[issue.id].locked == 0" (click)="lockLabor(issue.id, 1)" [class.disabled-button]="!auth.hasPerms('lock-labor')">
                 <img src="assets/icons/unlock.svg" height="22">
               </div>

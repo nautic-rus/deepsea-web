@@ -55,7 +55,7 @@ export class LaborComponent implements OnInit {
         console.log(this.issues);
         this.auth.getPlannedHours().subscribe(planned => {
           this.issues.forEach(issue => {
-            this.lockedByPlan[issue.id] = planned.find((x: any) => x.task_id = issue.id) != null;
+            this.lockedByPlan[issue.id] = planned.find((x: any) => x.task_id == issue.id) != null;
           });
         });
       });
