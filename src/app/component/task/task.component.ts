@@ -848,6 +848,11 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit() {
+    if (this.issue.plan_hours_locked == 1){
+      this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});
+      this.cancelIssueEdit();
+      return;
+    }
     let find = this.planned.find(x => x.taskId == this.issue.id);
     if (find != null){
       if (find.hours > this.issue.plan_hours){
