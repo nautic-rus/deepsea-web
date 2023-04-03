@@ -444,10 +444,10 @@ export class LanguageService {
           case 'Отпуск': return 'Vacation';
           case 'дни': return 'days';
           case 'Больничный': return 'Medical';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Поправка длины': return 'Correction';
+          case 'Проложен': return 'Full routed';
+          case 'Не проложен': return 'Not routed';
+          case 'Частично проложен': return 'Partially routed';
           case '': return '';
           case '': return '';
           case '': return '';
