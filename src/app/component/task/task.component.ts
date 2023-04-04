@@ -849,17 +849,19 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit() {
-    if (this.issue.plan_hours_locked == 1){
-      this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});
-      this.cancelIssueEdit();
-      return;
-    }
-    let find = this.planned.find(x => x.taskId == this.issue.id);
-    if (find != null){
-      if (find.hours > this.issue.plan_hours){
-        this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is less then amount of you entered'});
+    if (this.edit == 'plan_hours'){
+      if (this.issue.plan_hours_locked == 1){
+        this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});
         this.cancelIssueEdit();
         return;
+      }
+      let find = this.planned.find(x => x.taskId == this.issue.id);
+      if (find != null){
+        if (find.hours > this.issue.plan_hours){
+          this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is less then amount of you entered'});
+          this.cancelIssueEdit();
+          return;
+        }
       }
     }
     if (this.edit == 'startDate'){
