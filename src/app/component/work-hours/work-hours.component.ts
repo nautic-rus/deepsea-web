@@ -16,6 +16,7 @@ import {Issue} from "../../domain/classes/issue";
 import {DailyTask} from "../../domain/interfaces/daily-task";
 import {concatAll, zipAll} from "rxjs/operators";
 import {concat, forkJoin} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
 
 export interface PlanHour{
   day: number;
@@ -113,10 +114,14 @@ export class WorkHoursComponent implements OnInit {
   dragValues = Object();
   vacation = 0;
   medical = 0;
+  taskId = 0;
 
-  constructor(public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
+  constructor(public route: ActivatedRoute, public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.taskId = params.taskId != null ? params.taskId : 0;
+    });
     this.loading = true;
     this.fill();
     this.fillIssues();
@@ -439,6 +444,11 @@ export class WorkHoursComponent implements OnInit {
     this.issues = _.sortBy(this.issues, x => x.doc_number);
     if (this.searchValue.trim() != ''){
       this.issues = this.issues.filter(x => (x.name + x.doc_number).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
+    }
+    if (this.taskId != 0){
+      console.log(this.taskId);
+      this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
+      this.taskId = 0;
     }
   }
   close() {

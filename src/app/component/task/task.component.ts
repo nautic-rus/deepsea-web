@@ -33,6 +33,7 @@ import {AssignToResponsibleComponent} from "./assign-to-responsible/assign-to-re
 import {CombineIssuesComponent} from "./combine-issues/combine-issues.component";
 import {AssignResponsibleComponent} from "../qna/assign-responsible/assign-responsible.component";
 import {AssignQuestionComponent} from "../qna/assign-question/assign-question.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-task',
@@ -247,7 +248,7 @@ export class TaskComponent implements OnInit {
   ready = Object({model: 0, drawing: 0, nesting: 0});
   issueProjects: any[] = [];
 
-  constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, public router: Router) { }
 
   generateId(length: number): string {
     let result = '';
@@ -1212,5 +1213,10 @@ export class TaskComponent implements OnInit {
 
   commentDone() {
 
+  }
+
+  goToPlan(taskId: number) {
+    this.ref.close();
+    this.router.navigate(['work-hours'], {queryParams: {taskId}});
   }
 }
