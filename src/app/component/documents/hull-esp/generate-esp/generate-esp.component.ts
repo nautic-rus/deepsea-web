@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import {Issue} from "../../../../domain/classes/issue";
+import {AuthManagerService} from "../../../../domain/auth-manager.service";
+import {IssueManagerService} from "../../../../domain/issue-manager.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SpecManagerService} from "../../../../domain/spec-manager.service";
 import {LanguageService} from "../../../../domain/language.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {Issue} from "../../../../domain/classes/issue";
-import {IssueManagerService} from "../../../../domain/issue-manager.service";
-import {AuthManagerService} from "../../../../domain/auth-manager.service";
 import {FileAttachment} from "../../../../domain/classes/file-attachment";
 
 @Component({
-  selector: 'app-hull-esp-generation-wait',
-  templateUrl: './hull-esp-generation-wait.component.html',
-  styleUrls: ['./hull-esp-generation-wait.component.css']
+  selector: 'app-generate-esp',
+  templateUrl: './generate-esp.component.html',
+  styleUrls: ['./generate-esp.component.css']
 })
-export class HullEspGenerationWaitComponent implements OnInit {
+export class GenerateEspComponent implements OnInit {
 
   issue: Issue = new Issue();
 
@@ -23,9 +23,9 @@ export class HullEspGenerationWaitComponent implements OnInit {
   resUrls: string[] = [];
   revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
   rev: string = this.revs[0];
-  updateRevision = false;
-  generateFiles = false;
+  isFinal = false;
   project = '';
+  kind = '';
 
   constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
 
@@ -33,7 +33,11 @@ export class HullEspGenerationWaitComponent implements OnInit {
   ngOnInit(): void {
     this.issue = this.conf.data[0];
     this.project = this.conf.data[1];
-    this.rev = this.issue.revision;
+    this.kind = this.conf.data[2];
+    this.rev = this.conf.data[3];
+    if (this.kind.includes('final')){
+      this.revs = this.revs.filter(x => x > this.rev);
+    }
   }
   close(){
     this.ref.close('exit');
@@ -42,40 +46,10 @@ export class HullEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.generationWait = true;
     this.selectRevision = false;
-    // this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
-    //   if (!this.generateFiles){
-    //     this.generationWait = false;
-    //     this.close();
-    //   }
-    // });
-    if (true || this.generateFiles){
-      this.selectRevision = false;
-      this.s.getHullEspFiles(this.project, this.issue.doc_number, this.issue.name, this.rev).then(res => {
-        this.generationWait = false;
-        this.resUrls.splice(0, this.resUrls.length);
-        this.resUrls.push(res);
-        let files: FileAttachment[] = [];
-
-        this.resUrls.forEach(fileUrl => {
-          let file = new FileAttachment();
-          file.url = fileUrl;
-          file.revision = this.rev;
-          file.author = this.auth.getUser().login;
-          file.group = 'Part List';
-          //file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
-          file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
-          files.push(file);
-        });
-        //this.issue.revision = this.rev;
-        // this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-        //   this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', 'PROD').then(() => {
-        //     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(files)).then(res => {
-        //
-        //     });
-        //   });
-        // });
-      });
-    }
+    let kind = this.kind.replace('-final', '') + (this.isFinal ? '-final' : '');
+    this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, kind, this.issue.id).subscribe(res => {
+      this.close();
+    });
   }
 
   getFileName(file: string) {

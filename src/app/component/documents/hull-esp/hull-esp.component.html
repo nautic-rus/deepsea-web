@@ -661,6 +661,11 @@
 <!--      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">-->
 <!--        <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>-->
 <!--      </div>-->
+      <div class="mr-10" [pTooltip]="l.tr('Refresh Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="refreshEsp()">
+        <div class="materials-button pink-button cxy">
+           <i class="pi pi-refresh" style="font-size: 2.5rem"></i>
+        </div>
+      </div>
       <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <svg class="icon-top-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">

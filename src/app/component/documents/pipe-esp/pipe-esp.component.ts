@@ -29,6 +29,7 @@ import {forkJoin} from "rxjs";
 import {PipeEspGenerationWaitComponent} from "./pipe-esp-generation-wait/pipe-esp-generation-wait.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {RemoveDeviceFromSystemComponent} from "../device-esp/device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component";
+import {GenerateEspComponent} from "../hull-esp/generate-esp/generate-esp.component";
 
 @Component({
   selector: 'app-pipe-esp',
@@ -172,6 +173,8 @@ export class PipeEspComponent implements OnInit {
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
   revEsp = '';
+  kindEsp = '';
+  revEspNoDate = '';
   revUser = '';
 
 
@@ -271,6 +274,8 @@ export class PipeEspComponent implements OnInit {
         this.issue.revision = res.rev;
         let segs = res.elements;
         this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
+        this.revEspNoDate = res.rev;
+        this.kindEsp = res.kind;
         this.revUser = this.auth.getUserName(res.user);
         this.pipes = _.sortBy(segs.filter((x: any) => x.spool != '' || this.showNoSpool), x => this.addLeftZeros(x.spool, 5) + this.addLeftZeros(x.spPieceId, 4));
         this.pipesBySpool = _.map(_.groupBy(this.pipes, x => x.spool), x => Object({spool: x[0].spool, values: x, locked: null, dxf: '', aux: x.find(y => y.compType == 'AUX') != null}));
@@ -905,7 +910,15 @@ export class PipeEspComponent implements OnInit {
         });
       }
     });
+  }
 
-
+  refreshEsp() {
+    this.dialogService.open(GenerateEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
   }
 }

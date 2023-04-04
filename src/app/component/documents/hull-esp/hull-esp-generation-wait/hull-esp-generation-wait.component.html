@@ -23,18 +23,18 @@
       </div>
       <div class="big-text mb-1 df">
         <div class="w-45 mr-2">
-          <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
+          <p-dropdown [disabled]="true" appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
           </p-dropdown>
         </div>
       </div>
 
-      <div class="mt-10">
-        <label class="container">
-          <input [(ngModel)]="generateFiles" type="checkbox">
-          <span class="checkmark"></span>
-          <span class="big-text-checkbox">Generate files</span>
-        </label>
-      </div>
+<!--      <div class="mt-10">-->
+<!--        <label class="container">-->
+<!--          <input [(ngModel)]="generateFiles" type="checkbox">-->
+<!--          <span class="checkmark"></span>-->
+<!--          <span class="big-text-checkbox">Generate files</span>-->
+<!--        </label>-->
+<!--      </div>-->
     </div>
 
     <div>

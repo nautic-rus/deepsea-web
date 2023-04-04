@@ -1,7 +1,7 @@
-<div style="height: 330px; width: 300px;">
+<div style="height: 330px; width: 450px;">
   <div class="center-cloud">
     <div class="header-cloud-card">
-      <div class="header-cloud-text">Spec files</div>
+      <div class="header-cloud-text">REFRESH SPEC</div>
       <div class="task-button-create cxy" (click)="close()">
         <i class="pi pi-times"></i>
       </div>
@@ -9,7 +9,7 @@
     <div class="df space-between"></div>
     <div>
       <div *ngIf="generationWait" class="big-text mb-1 mt-1">
-        <div class="cx">It takes up to five minutes to generate files. Please be patient.</div>
+        <div class="cx">It takes up to five minutes to generate spec. Please be patient.</div>
         <div class="cxy loading">
           <div class="cxy card-height">
             <img src="assets/whale.gif" height="120">
@@ -22,34 +22,19 @@
         <div class="big-text mb-1 mt-1">{{t.tr('Выберите номер ревизии')}}</div>
       </div>
       <div class="big-text mb-1 df">
-        <div class="w-100">
-          <p-dropdown [disabled]="true" appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
+        <div class="w-45 mr-2">
+          <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
           </p-dropdown>
         </div>
       </div>
-      <div>
-        <div class="big-text mb-1 mt-1">Select specification language</div>
-      </div>
-      <div class="big-text mb-1 df">
-        <div class="w-100">
-          <p-dropdown appendTo = "body" [(ngModel)]="lang" [options]="langs" styleClass="w-100 h-32 cxy">
-          </p-dropdown>
-        </div>
-      </div>
+
       <div class="mt-10">
         <label class="container">
-          <input [(ngModel)]="generateFiles" type="checkbox">
+          <input [(ngModel)]="isFinal" type="checkbox">
           <span class="checkmark"></span>
-          <span class="big-text-checkbox">Generate files</span>
+          <span class="big-text-checkbox">Final revision</span>
         </label>
       </div>
-      <!--      <div class="mt-10">-->
-      <!--        <label class="container">-->
-      <!--          <input [(ngModel)]="updateRevision" type="checkbox">-->
-      <!--          <span class="checkmark"></span>-->
-      <!--          <span class="big-text-checkbox">Update revision</span>-->
-      <!--        </label>-->
-      <!--      </div>-->
     </div>
 
     <div>
