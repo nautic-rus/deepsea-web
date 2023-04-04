@@ -839,10 +839,16 @@ export class PipeEspComponent implements OnInit {
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
   getMaterialName(material: Material){
-    let res = material.name + ' (' + material.description + ')';
+    let name = material.name;
+    let desc = material.description;
     let findName = material.translations.find(x => x.lang == this.l.language);
     if (findName != null){
-      res = findName.name + ' (' + material.description + ')';
+      name = findName.name;
+      desc = material.description;
+    }
+    let res = name;
+    if (desc != ''){
+      res = name + ' (' + desc + ')';
     }
     return res;
   }
