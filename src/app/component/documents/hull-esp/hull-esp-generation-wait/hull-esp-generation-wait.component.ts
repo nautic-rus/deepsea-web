@@ -42,13 +42,13 @@ export class HullEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.generationWait = true;
     this.selectRevision = false;
-    // this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
-    //   if (!this.generateFiles){
-    //     this.generationWait = false;
-    //     this.close();
-    //   }
-    // });
-    if (true || this.generateFiles){
+    this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
+      if (!this.generateFiles){
+        this.generationWait = false;
+        this.close();
+      }
+    });
+    if (this.generateFiles){
       this.selectRevision = false;
       this.s.getHullEspFiles(this.project, this.issue.doc_number, this.issue.name, this.rev).then(res => {
         this.generationWait = false;

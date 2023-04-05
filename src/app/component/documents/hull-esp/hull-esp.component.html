@@ -649,6 +649,10 @@
 <div  class="all-page h-100">
   <div class="all-card">
     <div class="card-head df">
+      <div class="mr-2">{{getBlockName()}}</div>
+      <div class="mr-2">{{issue.doc_number}}</div>
+      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
+      <div class="mr-2">{{revUser}}</div>
 <!--      <div class="mr-2" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>-->
 <!--      <div class="mr-1">Revision:</div>-->
 <!--      <div class="mr-2">-->
@@ -657,11 +661,11 @@
 <!--      <div class="mr-1" *ngIf="auth.hasPerms('esp-revision')">-->
 <!--        <button pButton [pTooltip]="l.tr('Publish Revision')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-plus-circle" (click)="askForSendToCloud()"></button>-->
 <!--      </div>-->
-      <div class="mr-10" [pTooltip]="l.tr('Refresh Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="refreshEsp()">
-        <div class="materials-button yellow-button cxy">
-          <img src="assets/icons/refresh.svg" height="20">
-        </div>
-      </div>
+<!--      <div class="mr-10" [pTooltip]="l.tr('Refresh Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="refreshEsp()">-->
+<!--        <div class="materials-button pink-button cxy">-->
+<!--           <i class="pi pi-refresh" style="font-size: 2.5rem"></i>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <svg class="icon-top-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -698,10 +702,6 @@
           <img src="assets/icons/question1.svg" height="24">
         </div>
       </div>
-      <div class="mr-2">{{getBlockName()}}</div>
-      <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
-      <div class="mr-2">{{revUser}}</div>
       <div class="p-ml-auto df mr-12">
 <!--        <div class="cy">-->
 <!--          <div class="text-view-files">View files of revision</div>-->

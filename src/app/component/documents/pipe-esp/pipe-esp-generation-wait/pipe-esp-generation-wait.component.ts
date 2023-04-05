@@ -45,13 +45,13 @@ export class PipeEspGenerationWaitComponent implements OnInit {
     this.selectRevision = false;
     this.generationWait = true;
 
-    // this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'pipe', this.issue.id).subscribe(res => {
-    //   if (!this.generateFiles){
-    //     this.generationWait = false;
-    //     this.close();
-    //   }
-    // });
-    if (true  || this.generateFiles){
+    this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'pipe', this.issue.id).subscribe(res => {
+      if (!this.generateFiles){
+        this.generationWait = false;
+        this.close();
+      }
+    });
+    if (this.generateFiles){
       this.s.getPipeEspFiles(this.issue.doc_number, this.rev, this.conf.data.spools, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
         this.generationWait = false;
         this.resUrls.splice(0, this.resUrls.length);
