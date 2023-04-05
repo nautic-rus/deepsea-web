@@ -51,6 +51,7 @@ export class MaterialsSummaryComponent implements OnInit {
   materialsFilled = false;
   materialsSummarySrc: any[] = [];
   materialsSummary: any[] = [];
+  materialPurchases: any[] = [];
 
   constructor(public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -58,14 +59,6 @@ export class MaterialsSummaryComponent implements OnInit {
     this.project = '';
     this.issueManager.getIssueProjects().then(res => {
       this.projects = res;
-    });
-    this.materialManager.getMaterialNodes(this.project).then(res => {
-      this.nodesSrc = res;
-      this.nodes = this.getNodes(res, this.materialsSrc, '');
-      this.setParents(this.nodes, '');
-      this.materials.filter(x => x != null).forEach((x: any) => {
-        x.path = this.setPath(x.code);
-      });
     });
   }
   setPath(code: string, length = 3){
@@ -120,7 +113,7 @@ export class MaterialsSummaryComponent implements OnInit {
         data: n.data,
         children: this.getNodes(rootNodes, materials, n.data),
         label: n.label,
-        count: this.materialsSummarySrc.filter(x => x.code.startsWith(n.data)).length
+        count: this.materialsSummarySrc.filter(x => x.A1.startsWith(n.data)).length
       });
     });
     return res;
@@ -301,9 +294,7 @@ export class MaterialsSummaryComponent implements OnInit {
       materialsValue.forEach((m => m.materialCloudDirectory = ''));
       this.materials = materialsValue;
       this.materialsSrc = materialsValue;
-      this.materialsSrc = [...this.materials];
       this.materialManager.getMaterialsSummary([this.project.foran], ['pipe']).then(materialsSummary => {
-        console.log(materialsSummary);
         this.materialsFilled = true;
         this.materialsSummarySrc = materialsSummary;
         this.materialsSummarySrc.forEach(x => {
@@ -318,6 +309,10 @@ export class MaterialsSummaryComponent implements OnInit {
           this.setParents(this.nodes, '');
           this.materials.filter(x => x != null).forEach((x: any) => {
             x.path = this.setPath(x.code);
+          });
+          this.materialManager.getMaterialPurchases(this.project.foran).then(materialPurchases => {
+            this.materialPurchases = materialPurchases;
+            console.log(this.materialPurchases);
           });
         });
       });
