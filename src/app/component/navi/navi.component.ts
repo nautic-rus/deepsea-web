@@ -52,12 +52,12 @@ export class NaviComponent implements OnInit {
     ].filter(x => this.auth.getUser().visible_pages.includes(x.id)), params: {}},
     {id: 'weight', label: 'Weight', url: 'weight', icon: 'assets/icons/weight.svg', height: 14, child: [], params: {}},
     {id: 'weight-control', label: 'Weight control', url: 'weight-control', icon: 'assets/icons/preferences.svg', height: 14, child: [], params: {}},
-    {id: 'labor', label: 'Laboriousness', url: 'labor', icon: 'assets/icons/laboriousness1.svg', height: 14, child: [], params: {}},
+    {id: 'labor', label: 'Man hours', url: 'labor', icon: 'assets/icons/man-hours.svg', height: 16, child: [], params: {}},
     // {id: 'labor-costs', label: 'Labor costs', url: 'labor-costs', icon: 'assets/icons/labor.svg', height: 22, child: [], params: {}},
-    {id: 'diary', label: 'Daily Tasks', url: 'diary', icon: 'assets/icons/user-assigned-white.svg', height: 14, child: [], params: {}},
-    {id: 'employees', label: 'Daily Reports', url: 'employees', icon: 'assets/icons/clock.svg', height: 14, child: [], params: {}},
-    {id: 'qna', label: 'Q & A', url: 'qna', icon: 'assets/icons/book.svg', height: 14, child: [], params: {}},
-    {id: 'work-hours', label: 'Working hours', url: 'work-hours', icon: 'assets/icons/chart2.svg', height: 12, child: [], params: {}},
+    {id: 'diary', label: 'Calendar', url: 'diary', icon: 'assets/icons/calendar.svg', height: 14, child: [], params: {}},
+    {id: 'employees', label: 'Daily Reports', url: 'employees', icon: 'assets/icons/clock1.svg', height: 14, child: [], params: {}},
+    {id: 'qna', label: 'Q & A', url: 'qna', icon: 'assets/icons/book.svg', height: 17, child: [], params: {}},
+    {id: 'work-hours', label: 'Planer', url: 'work-hours', icon: 'assets/icons/chart2.svg', height: 12, child: [], params: {}},
   ].filter(x => this.auth.getUser().visible_pages.includes(x.id));
 
   ngOnInit(): void {

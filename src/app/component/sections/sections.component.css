@@ -6,7 +6,7 @@
   background: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   position: relative;
-  height: calc(100vh - 116px);
+  height: calc(100vh - 106px);
 }
 .project-number{
   position: absolute;
