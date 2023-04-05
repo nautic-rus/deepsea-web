@@ -1,9 +1,9 @@
 /deep/.pi{
-  font-size: 14px;
+  font-size: 13px;
 }
 /deep/.p-component {
-  font-size: 14px!important;
+  font-size: 13px!important;
 }
 /deep/.p-datatable .p-datatable-tbody > tr > td {
-  padding: 12px;
+  padding: 10px;
 }

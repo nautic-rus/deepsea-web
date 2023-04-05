@@ -448,7 +448,7 @@ export class LanguageService {
           case 'Проложен': return 'Full routed';
           case 'Не проложен': return 'Not routed';
           case 'Частично проложен': return 'Partially routed';
-          case '': return '';
+          case 'примечание': return 'note';
           case '': return '';
           case '': return '';
           case '': return '';
