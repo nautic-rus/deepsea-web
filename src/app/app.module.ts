@@ -170,6 +170,7 @@ import {DragDropModule} from "primeng/dragdrop";
 import { TrayEspGenerationWaitComponent } from './component/documents/trays/tray-esp-generation-wait/tray-esp-generation-wait.component';
 import { CablesComponent } from './component/documents/cables/cables.component';
 import { GenerateEspComponent } from './component/documents/hull-esp/generate-esp/generate-esp.component';
+import { DoclistComponent } from './component/doclist/doclist.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -290,6 +291,7 @@ Quill.register('modules/imageResize', ImageResize);
     TrayEspGenerationWaitComponent,
     CablesComponent,
     GenerateEspComponent,
+    DoclistComponent,
   ],
     imports: [
         BrowserModule,

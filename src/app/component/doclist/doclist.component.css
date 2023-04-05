@@ -1,0 +1,257 @@
+/deep/.p-multiselect-header {
+  display: none!important;
+}
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/ .p-datatable-scrollable-header-box{
+  padding-right: 0!important;
+}
+/deep/.pi{
+  font-size: 13px;
+}
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 10px!important;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 8px;
+  border-width: 1px 0 1px 0;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
+.loading{
+  position: absolute;;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: large;
+  font-weight: bold;
+}
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+  font-size: 14px;
+}
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem!important;
+}
+.icon-categories{
+  border-radius: 3px;
+  padding: 6px;
+  border: 1px solid #605e5c;
+  height: 36px;
+  width: 36px;
+}
+.card-overflow{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0 20px 20px 20px;
+  border-radius: 8px;
+  height: calc(100vh - 200px);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.icon-categories:hover{
+  background-color: rgba(50, 49, 48, 0.07);
+}
+.text-14{
+  font-size: 13px;
+}
+.text-12{
+  font-size: 12px;
+}
+.margin-bottom-none{
+  margin-bottom: 0;
+}
+.filter{
+  margin-left: auto;
+}
+.header{
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+.image-preview-backdrop{
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: calc(100%*4);
+  height: calc(100%*4);
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.progress-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.progress-spinner:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.53);
+}
+.row-table-doc-hover:hover{
+  background-color: #EEF5FA!important;
+}
+.min-width-35{
+  min-width: 35px;
+}
+.wait-text{
+  background-color: white;
+}
+.task-button{
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 5px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.image-preview-scale{
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  z-index: 1002;
+  overflow: hidden;
+}
+.all-page-doc{
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  padding: 0 20px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.min-height-card{
+  min-height: calc(100vh - 77px);
+}
+.sticky-card{
+  position: sticky;
+  top: 20px;
+  z-index: 8;
+}
+.empty-card{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+.empty-card-bottom{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 77px;
+  z-index: 7;
+}
+.card-head{
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  height: fit-content;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
+}
+.tile{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.dash-card{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  width: 340px;
+  height: 130px;
+  position: relative;
+}
+.dash-card-tile{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+.top-row-doc{
+  height: 30px;
+}
+.title-bold{
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 30px;
+  color: #3a3a3a;
+}
+.header-card{
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.name-card{
+  font-family: "Charlie Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  box-sizing: border-box;
+  position: absolute;
+  right: 0px;
+  border-radius: 0px 10px 0px 12px;
+  padding: 0px 12px 2px;
+  font-size: 13px;
+  word-spacing: 1px;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.hull{
+  background: #61D42D;
+}
+.pipe{
+  background: #FBC948;
+}
+.text-medium{
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(52, 58, 64, 0.65);
+}
+.hidden-card{
+  opacity: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 10px 0 10px !important;
+}
+.copy-link{
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background-color: #EBF4FD;
+  border-radius: 50%;
+}
+.copy-link:hover{
+  background-color: #e0effd;
+}

@@ -94,8 +94,8 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th style="width:30px" pResizableColumn></th>
-            <th style="width:156px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">
+            <th style="width:26px"></th>
+            <th style="width:148px"  *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
                 {{l.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
@@ -112,11 +112,11 @@
         </ng-template>
         <ng-template pTemplate="body" let-columns="columns" let-issue>
           <tr *ngIf="showIssue(issue)" [class.task-update]="isTaskUpdated(issue.id, issue.last_update)" [class.task-new]="isTaskNew(issue.id)" class="task-row" (click)="viewTask(issue.id, issue.issue_type)">
-            <td style="width:30px" class="cursor-pointer">
+            <td style="width:26px" class="cursor-pointer">
               <div class="update-task" *ngIf="isTaskUpdated(issue.id, issue.last_update)"></div>
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
-            <td style="width:156px" class="cursor-pointer" *ngFor="let col of columns">
+            <td style="width:148px" class="cursor-pointer" *ngFor="let col of columns">
               <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
 <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
               <div *ngIf="col.field == 'ready'">
