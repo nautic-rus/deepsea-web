@@ -1,6 +1,37 @@
-<div>
-  <div class="">Contract number<input [(ngModel)]="contract" pInputText></div>
-  <div class="">Amount<p-inputNumber [(ngModel)]="amount"></p-inputNumber>{{units}}</div>
-  <div class="" (click)="commit()">OK</div>
-  <div class="" (click)="cancel()">CANCEL</div>
+<div class="purchased">
+  <div class="header-user-card">
+    <div class="header-user-text">{{t.tr('Добавить закупку')}}</div>
+    <div class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+  <div class="space-between">
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Номер договора')}}</div>
+      <input class="width-270" type="text" id="name" [(ngModel)]="contract" pInputText>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Сумма')}}</div>
+      <div class="df">
+        <p-inputNumber inputStyleClass="width-270" [(ngModel)]="amount"></p-inputNumber>
+        <div class="df align-end pl-10">{{units}}</div>
+      </div>
+    </div>
+  </div>
 </div>
+<div class="form-footer-user">
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
+  </div>
+  <div tabindex="10" (click)="commit()" pButton [label]="t.tr('Ок')" class="button-ok"></div>
+</div>
+
+
+
+
+<!--<div>-->
+<!--  <div class="">Contract number<input [(ngModel)]="contract" pInputText></div>-->
+<!--  <div class="">Amount<p-inputNumber [(ngModel)]="amount"></p-inputNumber>{{units}}</div>-->
+<!--  <div class="" (click)="commit()">OK</div>-->
+<!--  <div class="" (click)="close()">CANCEL</div>-->
+<!--</div>-->

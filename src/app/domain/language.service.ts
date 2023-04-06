@@ -450,9 +450,9 @@ export class LanguageService {
           case 'Частично проложен': return 'Partially routed';
           case 'примечание': return 'note';
           case 'Перейти к плану': return 'Go to Plan';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Добавить закупку': return 'Add purchased';
+          case 'Номер договора': return 'Contract number';
+          case 'Сумма': return 'Amount';
           case '': return '';
           case '': return '';
           case '': return '';

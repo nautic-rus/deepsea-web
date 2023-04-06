@@ -109,8 +109,12 @@
                     </div>
                   </td>
                   <td class="min-width-20 w-5 cx text-small">
-                    {{getPurchasedCount(material.A1)}}
-                    <div class="pl-10" (click)="addStock(material.A1, material.A4)">ADD</div>
+                    <div class="mr-10">{{getPurchasedCount(material.A1)}}</div>
+                    <div class="materials-button-purchased light-green-button cxy" (click)="addStock(material.A1, material.A4)">
+<!--                      <img src="assets/icons/plus3.svg" height="12">-->
+                      <div class="">+</div>
+                      <div class="ml-5">Add</div>
+                    </div>
                   </td>
                 </tr>
               </ng-template>

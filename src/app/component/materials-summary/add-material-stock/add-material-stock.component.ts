@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {MaterialManagerService} from "../../../domain/material-manager.service";
+import {LanguageService} from "../../../domain/language.service";
 export interface MaterialPurchase{
   code: string,
   project: string,
@@ -22,7 +23,7 @@ export class AddMaterialStockComponent implements OnInit {
   project: string = '';
   code: string = '';
   units: string = '';
-  constructor(public conf: DynamicDialogConfig, public ref: DynamicDialogRef, public auth: AuthManagerService, public materialManager: MaterialManagerService) { }
+  constructor(public conf: DynamicDialogConfig, public ref: DynamicDialogRef, public auth: AuthManagerService, public materialManager: MaterialManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.project = this.conf.data[0];
@@ -44,7 +45,7 @@ export class AddMaterialStockComponent implements OnInit {
     });
   }
 
-  cancel() {
+  close() {
     this.ref.close('exit');
   }
 }

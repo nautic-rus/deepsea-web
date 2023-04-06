@@ -79,6 +79,12 @@
   cursor: pointer;
   border-radius: 6px;
 }
+.materials-button-purchased{
+  padding: 4px;
+  cursor: pointer;
+  border-radius: 6px;
+  color: white;
+}
 .materials-button-mini{
   height: 30px;
   width: 30px;
