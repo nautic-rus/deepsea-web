@@ -7,7 +7,7 @@ import {IssueManagerService} from "../../../domain/issue-manager.service";
 import _ from "underscore";
 import {CableService} from "./cable.service";
 import {LanguageService} from "../../../domain/language.service";
-import {Equipment} from "../../../domain/interfaces/equipment";
+import {Equipment} from "../../../domain/classes/equipment";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
@@ -152,6 +152,44 @@ export class CablesComponent implements OnInit {
   viewEqInfo(eq: Equipment) {
     this.selectedEq = eq;
     console.log(this.selectedEq);
+  }
+
+  onClickFromEquipment(cable: Cable) {
+    this.selectedEq = ({
+      id: cable.from_eq_id,
+      name: cable.from_eq,
+      desc: cable.from_eq_desc,
+      zone: cable.from_zone,
+      zone_desc: cable.from_zone_desc,
+      system: cable.from_system,
+      x: cable.from_x,
+      y: cable.from_y,
+      z: cable.from_z,
+      stock_code: cable.from_stock_code
+    });
+    console.log(this.selectedEq)
+    this.selectedTab = 'Equipment'
+  }
+
+  onClickToEquipment(cable: Cable) {
+    this.selectedEq = ({
+      id: cable.to_eq_id,
+      name: cable.to_eq,
+      desc: cable.to_eq_desc,
+      zone: cable.to_zone,
+      zone_desc: cable.to_zone_desc,
+      system: cable.to_system,
+      x: cable.to_x,
+      y: cable.to_y,
+      z: cable.to_z,
+      stock_code: cable.to_stock_code
+    });
+    this.selectedTab = 'Equipment'
+  }
+
+  onSelectEquipment(eq: Equipment) {
+    this.selectedEq = eq;
+    console.log(this.selectedEq)
   }
 
   setCols() {

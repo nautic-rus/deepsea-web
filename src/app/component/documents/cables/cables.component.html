@@ -36,7 +36,7 @@
           <div *ngIf="selectedView == 'tiles'">
             <div class="tile">
               <div class="w-100 " *ngIf="cables.length != 0">
-                <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="250">
+                <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="185">
                   <ng-template pTemplate="cable" let-cable let-i="index">
                     <div class="card-tile-t w-100"
                          [class.hidden-card]="cable == null">
@@ -93,80 +93,62 @@
                         <div class="title-medium-bold">TO</div>
                       </div>
                       <div class="bottom-grid">
-                        <div class="df pl-8 info-row cxy space-around">
-                          <div>
-                            <div class="flex-end mr-10">
-                              {{cable.from_eq_id}} ({{cable.from_eq}}) - {{cable.from_eq_desc}}
+                        <div class="pl-8">
+                          <div class="df space-between">
+                            <div class="title-name mr-10 cy">{{cable.from_zone}}</div>
+                            <div class="attribute mr-10 text-table-col cxy">{{cable.from_zone_desc}}</div>
+                            <div class="df mr-10 cursor-pointer cy" (click)="onClickFromEquipment(cable)">
+                              <div class="attribute mr-10 text-table-col cx">{{cable.from_eq_desc}}</div>
+                              <div>
+                                <div class="title-name flex-end">{{cable.from_eq}}</div>
+                                <div class="attribute text-table-col flex-end">({{cable.from_eq_id}})</div>
+                              </div>
+
                             </div>
                           </div>
+                          <div>
+                            <div
+                              class="title-name mr-10 flex-end">{{cable.from_system.split(' ')[0].replace('.', '')}}</div>
+                            <div
+                              class="text-center-y attribute mr-10 text-table-col flex-end"> {{cable.from_system.split(' ').splice(1).join(' ')}}</div>
+                          </div>
+                        </div>
+                        <div>
                           <div class="df coordinates-row cxy">
                             <span class="mm-text flex-end">{{' ' + round(cable.from_x)}}</span>
                             <div class="coordinates-x cxy mr-5 ml-5">X</div>
                             <span class="mm-text flex-start">{{' ' + round(cable.to_x)}}</span>
-                          </div>
-                          <div>
-                            <div class="flex-start mr-10">
-                              {{cable.to_eq_id}} ({{cable.to_eq}}) -   {{cable.to_eq_desc}}
-                            </div>
-                          </div>
-                        </div>
-                        <div class="df pl-8 info-row cxy space-around">
-                          <div>
-                            <div class="flex-end mr-10">
-                              {{cable.from_zone}} - {{cable.from_zone_desc}}
-                            </div>
                           </div>
                           <div class="df coordinates-row cxy">
                             <span class="mm-text flex-end">{{' ' + round(cable.from_y)}}</span>
                             <div class="coordinates-y cxy mr-5 ml-5">Y</div>
                             <span class="mm-text flex-start">{{' ' + round(cable.to_y)}}</span>
                           </div>
-                          <div>
-                            <div class="flex-start mr-10">
-                              {{cable.to_zone}} - {{cable.to_zone_desc}}
-                            </div>
-                          </div>
-                        </div>
-                        <div class="df pl-8 info-row cxy">
-                          <div>
-                            <!--                          <div class="flex-end mr-10">-->
-                            <!--                            {{cable.from_system.split(' ')[0].replace('.', '')}}-->
-                            <!--                          </div>-->
-                            <!--                          <div class="flex-end mr-10">-->
-                            <!--                            {{cable.from_system.split(' ').splice(1).join(' ')}}-->
-                            <!--                          </div>-->
-                            {{cable.from_system.split(' ')[0].replace('.', '')}}
-                          </div>
                           <div class="df coordinates-row cxy">
                             <span class="mm-text flex-end">{{' ' + round(cable.from_z)}}</span>
                             <div class="coordinates-z cxy mr-5 ml-5">Z</div>
                             <span class="mm-text flex-start">{{' ' + round(cable.to_z)}}</span>
                           </div>
+                        </div>
+                        <div class="pl-8">
+                          <div class="df space-between">
+                            <div class="text-center-y df mr-10 cursor-pointer" (click)="onClickToEquipment(cable)">
+                              <div>
+                                <div class="title-name mr-10">{{cable.to_eq}}</div>
+                                <div class="text-center-y attribute mr-10 text-table-col">({{cable.to_eq_id}})</div>
+                              </div>
+                              <div class="text-center-y attribute mr-10 text-table-col">{{cable.to_eq_desc}}</div>
+                            </div>
+                              <div class="text-center-y attribute mr-10 text-table-col cy">{{cable.to_zone_desc}}</div>
+                              <div class="title-name mr-10 cy">{{cable.to_zone}}</div>
+                          </div>
                           <div>
-                            <!--                          <div class="flex-start mr-10">-->
-                            <!--                            {{cable.to_system.split(' ')[0].replace('.', '')}}-->
-                            <!--                          </div>-->
-                            <!--                          <div class="flex-start mr-10">-->
-                            <!--                            {{cable.to_system.split(' ').splice(1).join(' ')}}-->
-                            <!--                          </div>-->
-                            {{cable.to_system.split(' ')[0].replace('.', '')}}
+                            <div class="title-name mr-10">{{cable.to_system.split(' ')[0].replace('.', '')}}</div>
+                            <div
+                              class="text-center-y attribute mr-10 text-table-col"> {{cable.to_system.split(' ').splice(1).join(' ')}}</div>
                           </div>
                         </div>
-                        <div class="df pl-8 info-row cxy">
-                          <div>
-                            {{cable.from_system.split(' ').splice(1).join(' ')}}
-                          </div>
-                          <div></div>
-                          <div>
-                            {{cable.to_system.split(' ').splice(1).join(' ')}}
-                          </div>
-                        </div>
-                        <!--                      <div class="pl-8 cxy">-->
-                        <!--                        <div class="cx">{{getNodeByRout(cable.cab_route_area)}}</div>-->
-                        <!--                      </div>-->
                       </div>
-
-
                     </div>
                   </ng-template>
                 </p-virtualScroller>
@@ -241,19 +223,21 @@
                 <div *ngFor="let eq of equipments; let e = index"
                      [class.hidden-card]="eq == null">
                   <div class="card-tile-eq card-grid-eq"
-                       (click)="selectedEq = eq"
+                       (click)="onSelectEquipment(eq)"
                        [class.selected-eq]="selectedEq == eq">
                     <div class="text-center-y df cursor-pointer">
                       <div class="title-name mr-10">{{eq.name}}</div>
-                      <div class="text-center-y attribute mr-10 title-name">{{eq.id}}</div>
-                      <div class="text-center-y attribute mr-10 title-name">{{eq.desc}}</div>
+                      <div class="text-center-y attribute mr-10 text-table-col">{{eq.id}}</div>
+                      <div class="text-center-y attribute mr-10 text-table-col">{{eq.desc}}</div>
                     </div>
                     <div class="text-center-y cursor-pointer">
                       <div class="title-name mr-10">{{eq.zone}}</div>
-                      <div class="text-center-y attribute mr-10 title-name">{{eq.zone_desc}}</div>
+                      <div class="text-center-y attribute mr-10 text-table-col">{{eq.zone_desc}}</div>
                     </div>
-                    <div class="text-center-y cursor-pointer">
-                      <div class="text-table-col">{{eq.system}}</div>
+                    <div class="cursor-pointer">
+                      <div class="title-name mr-10">{{eq.system.split(' ')[0].replace('.', '')}}</div>
+                      <div
+                        class="text-center-y attribute mr-10 text-table-col"> {{eq.system.split(' ').splice(1).join(' ')}}</div>
                     </div>
                     <div class="text-center-y space-between">
                       <div class="df mr-5">
@@ -293,11 +277,21 @@
                  [class.selectedTab]="equipmentHeadTab ==  '3D'">{{l.tr('3D')}}</div>
           </div>
 
-          <div *ngIf="equipmentHeadTab == 'Cables'" class="card-tabs">
+          <div [hidden]="equipmentHeadTab != 'Cables'" class="card-tabs">
+            <div *ngIf="selectedEq == null">
+              Please select the equipment
+            </div>
+            <div *ngIf="selectedEq != null">
+              {{selectedEq.name}}
+            </div>
+
 
           </div>
-          <div *ngIf="equipmentHeadTab == '3D'" class="card-tabs">
-            <iframe class="w-100 h-100" [src]="urlSafe"></iframe>
+          <div [hidden]="equipmentHeadTab != '3D'" class="card-tabs">
+            <div *ngIf="selectedEq == null">
+              Please select the equipment
+            </div>
+            <iframe class="w-100 h-100" *ngIf="selectedEq != null" [src]="urlSafe"></iframe>
           </div>
         </div>
       </div>

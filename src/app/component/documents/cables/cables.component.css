@@ -1092,7 +1092,7 @@
 .card-tile-t {
   margin-bottom: 10px;
   width: 100%;
-  height: 220px;
+  height: 170px;
   background-color: white;
   position: relative;
   padding: 10px;
@@ -1139,7 +1139,7 @@
 
 .info-row {
   display: grid;
-  grid-template-columns: 4fr 1fr 4fr;
+  grid-template-rows: 1fr 2fr;
   /*border-bottom: 1px solid #f3f2f1;*/
 }
 
@@ -1213,7 +1213,7 @@
 
 .bottom-grid {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 2fr;
+  grid-template-columns: 4fr 1fr 4fr;
 }
 
 .top-line-card {
@@ -1405,7 +1405,6 @@
 
 .text-table-col {
   font-size: 14px;
-  color: #495057;
 }
 
 .show-model {
@@ -1537,7 +1536,7 @@
 
 .title-name {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   color: #3a3a3a;
 }
 
@@ -1557,7 +1556,7 @@
 }
 
 .attribute {
-  color: #cbcbcb;
+  color: #cbcbcb !important;
   font-weight: 600;
 }
 
