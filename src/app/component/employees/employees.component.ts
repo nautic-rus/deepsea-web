@@ -71,7 +71,8 @@ export class EmployeesComponent implements OnInit {
         if (this.departments.length == 0){
           this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != '6' && x != '0'));
           this.departments = _.sortBy(this.departments, x => x);
-          this.departments.push('6');
+          // this.departments.push('6');
+          this.departments = this.departments.filter(x => ['Hull', 'System', 'Electric', 'Devices', 'Accommodation', 'Design'].includes(x));
           this.selectedDepartments = [...this.departments];
           this.departments = _.sortBy(this.departments, x => this.getOrder(x));
 
@@ -252,13 +253,13 @@ export class EmployeesComponent implements OnInit {
 
   getPic(dep: string, selected: boolean) {
     switch (dep){
-      case '1': return selected ? 'hull' : 'hullg';
-      case '2': return selected ? 'pipew' : 'pipeg';
-      case '3': return selected ? 'elec' : 'elecg';
-      case '4': return selected ? 'hookw' : 'hookg';
-      case '5': return selected ? 'outfittingw' : 'outfittingg';
+      case 'Hull': return selected ? 'hull' : 'hullg';
+      case 'System': return selected ? 'pipew' : 'pipeg';
+      case 'Electric': return selected ? 'elec' : 'elecg';
+      case 'Devices': return selected ? 'hookw' : 'hookg';
+      case 'Accommodation': return selected ? 'outfittingw' : 'outfittingg';
       case '6': return selected ? 'manager' : 'managerg';
-      case '7': return selected ? 'paintbrushw' : 'paintbrush';
+      case 'Design': return selected ? 'paintbrushw' : 'paintbrush';
       case 'IT': return selected ? 'code' : 'codeg';
       case 'Nautic Is': return selected ? 'iceland' : 'icelandg';
       default: return selected ? 'manager' : 'managerg';

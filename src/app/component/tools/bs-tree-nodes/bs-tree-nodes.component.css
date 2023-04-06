@@ -2,10 +2,10 @@
   display: none!important;
 }
 /deep/.p-component{
-  font-size: 14px!important;
+  font-size: 13px!important;
 }
 /deep/.p-inputtext{
-  font-size: 14px!important;
+  font-size: 13px!important;
   padding: 8px 10px 8px 10px;
 }
 /deep/.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
@@ -13,17 +13,17 @@
   height: 1.5rem;
 }
 /deep/.pi {
-  font-size: 14px;
+  font-size: 13px;
 }
 /deep/.p-datatable .p-datatable-tbody > tr > td{
-  padding: 12px;
+  padding: 10px;
 }
 /deep/.p-treetable .p-treetable-thead > tr > th{
-  padding: 15px;
+  padding: 12px;
   font-weight: 500 !important;
 }
 /deep/.p-datatable .p-datatable-header {
-  padding: 0.75rem 0 0.75rem 0;
+  padding: 10px 0 10px 0;
 }
 .p-input-icon-left > .p-inputtext {
   padding-left: 2.5rem!important;

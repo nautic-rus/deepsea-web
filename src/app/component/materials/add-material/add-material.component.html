@@ -48,23 +48,44 @@
     <div class="df">
       <div class="cy left-text">КЕИ:</div>
       <div class="ml-1">
-        <p-dropdown [(ngModel)]="material.units" [options]="units" optionLabel="label" optionValue="value" placeholder="" class="select" styleClass="width-200 border-material">
+        <p-dropdown (onChange)="unitsChanged()" [(ngModel)]="material.units" [options]="units" optionLabel="label" optionValue="value" placeholder="" class="select" styleClass="width-200 border-material">
         </p-dropdown>
-      </div>
-    </div>
-    <div class="df">
-      <div class="cy right-text">Вес кг:</div>
-      <div class="ml-1">
-        <p-inputNumber [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" class="width-200 " locale="en-US"></p-inputNumber>
       </div>
     </div>
   </div>
 
   <div class="double-row mt-1">
     <div class="df">
+      <div class="cy right-text">{{getUnitsText()}}</div>
+      <div class="ml-1">
+        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" class="width-200 " locale="en-US"></p-inputNumber>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy right-text">Density</div>
+      <div class="ml-1">
+        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" class="width-200 " locale="en-US"></p-inputNumber>
+      </div>
+    </div>
+  </div>
+
+  <div class="quad-row mt-1">
+    <div class="df">
       <div class="cy left-text">ИТТ:</div>
       <div class="ml-1">
         <p-checkbox name="itt" [binary]="true" [(ngModel)]="itt"></p-checkbox>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy left-text">TP620:</div>
+      <div class="ml-1">
+        <p-checkbox name="itt" [binary]="true" [(ngModel)]="tp620"></p-checkbox>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy left-text">CertRS:</div>
+      <div class="ml-1">
+        <p-checkbox name="itt" [binary]="true" [(ngModel)]="certRS"></p-checkbox>
       </div>
     </div>
     <div class="df">

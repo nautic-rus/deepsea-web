@@ -33,6 +33,7 @@ import {AssignToResponsibleComponent} from "./assign-to-responsible/assign-to-re
 import {CombineIssuesComponent} from "./combine-issues/combine-issues.component";
 import {AssignResponsibleComponent} from "../qna/assign-responsible/assign-responsible.component";
 import {AssignQuestionComponent} from "../qna/assign-question/assign-question.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-task',
@@ -247,7 +248,7 @@ export class TaskComponent implements OnInit {
   ready = Object({model: 0, drawing: 0, nesting: 0});
   issueProjects: any[] = [];
 
-  constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef) { }
+  constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, public router: Router) { }
 
   generateId(length: number): string {
     let result = '';
@@ -848,17 +849,19 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit() {
-    if (this.issue.plan_hours_locked == 1){
-      this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});
-      this.cancelIssueEdit();
-      return;
-    }
-    let find = this.planned.find(x => x.taskId == this.issue.id);
-    if (find != null){
-      if (find.hours > this.issue.plan_hours){
-        this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is less then amount of you entered'});
+    if (this.edit == 'plan_hours'){
+      if (this.issue.plan_hours_locked == 1){
+        this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});
         this.cancelIssueEdit();
         return;
+      }
+      let find = this.planned.find(x => x.taskId == this.issue.id);
+      if (find != null){
+        if (find.hours > this.issue.plan_hours){
+          this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is less then amount of you entered'});
+          this.cancelIssueEdit();
+          return;
+        }
       }
     }
     if (this.edit == 'startDate'){
@@ -1212,5 +1215,10 @@ export class TaskComponent implements OnInit {
 
   commentDone() {
 
+  }
+
+  goToPlan(taskId: number) {
+    this.ref.close();
+    this.router.navigate(['work-hours'], {queryParams: {taskId}});
   }
 }

@@ -69,10 +69,10 @@
     <div class="df space-between">
       <div class="users-days w-100">
         <div class="df sticky">
-          <div class="w-10 min-width-170 users pl-10 header-users">
+          <div class="w-10 min-width-150 users header-users">
             <span>{{t.tr('Сотрудники')}}</span>
           </div>
-          <div class="w-90">
+          <div class="w-90 back-white">
             <div class="calendar w-100">
               <div class="month-date">
                 <!--              <div *ngFor="let day of getDaysInMonth()" [class.off-day]="isWeekend(day)" [class.today-day]="isCurrentDay(day)" class="day-number-header cxy">{{day}}<span *ngIf="isShorter(day)">*</span></div>-->
@@ -85,7 +85,7 @@
           </div>
         </div>
         <div class="df hover-user" *ngFor="let user of getUsers()">
-          <div class="w-10 min-width-170 users pl-10 cursor-pointer">
+          <div class="w-10 min-width-150 users">
             <span>{{user.userName}}</span>
           </div>
           <div class="w-90">
@@ -114,38 +114,38 @@
         </div>
 
       </div>
-      <div class="width-420">
+      <div class="width-330" *ngIf="issues.length > 0">
         <div class="df space-between mt-5">
-          <div class="ml-20">
+          <div class="ml-10">
             <div class="big-text-user mb-1">{{t.tr('Проект')}}</div>
-            <p-dropdown appendTo="body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-150" (ngModelChange)="projectChanged()"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-130" (onChange)="projectChanged()"></p-dropdown>
           </div>
           <div>
             <div class="big-text-user mb-1">{{t.tr('Отдел')}}</div>
-            <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-150"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (onChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
         <div class="df space-between ">
-          <div class="ml-20">
+          <div class="ml-10">
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Этап')}}</div>
-            <p-dropdown appendTo="body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-150"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (onChange)="stageChanged()" styleClass="width-130"></p-dropdown>
           </div>
           <div>
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Тип')}}</div>
-            <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-150"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (onChange)="taskTypeChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
 
         <div class="df space-between mb-10">
-          <div class="ml-20">
+          <div class="ml-10">
             <div class="big-text-user mb-1 mt-4px">{{t.tr('Статус')}}</div>
-            <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-150"></p-dropdown>
+            <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (onChange)="statusChanged()" styleClass="width-130"></p-dropdown>
           </div>
           <div>
             <div class="big-text-user mb-1 mt-24"></div>
             <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-150" />
+            <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-130" />
           </span>
           </div>
         </div>

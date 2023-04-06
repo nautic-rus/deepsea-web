@@ -27,6 +27,7 @@ import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock
 import {forkJoin, from, merge, of, zip} from "rxjs";
 import {map} from "rxjs/operators";
 import {GroupedParts} from "./interfaces/grouped-parts";
+import {GenerateEspComponent} from "./generate-esp/generate-esp.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -185,7 +186,9 @@ export class HullEspComponent implements OnInit {
   fileSort = 'name';
   sortReverse = false;
   revEsp = '';
+  revEspNoDate = '';
   revUser = '';
+  kindEsp = '';
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -315,7 +318,9 @@ export class HullEspComponent implements OnInit {
         if (res != null && res != ''&& res.elements.length > 0){
           this.issue.revision = res.rev;
           this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
+          this.revEspNoDate = res.rev;
           this.revUser = this.auth.getUserName(res.user);
+          this.kindEsp = res.kind;
           this.parts = res.elements;
           _.forEach(
             _.groupBy(this.parts, x => x.ELEM_TYPE.replace('FS', 'PL') + '-' + x.THICKNESS + '-' + (x.ELEM_TYPE.replace('FS', 'PL') == 'PL' ? '' : x.WIDTH) + '-' + x.MATERIAL),
@@ -1299,5 +1304,15 @@ export class HullEspComponent implements OnInit {
 
   showHelp() {
     window.open('/assets/help/hull-help.mp4', '_blank');
+  }
+
+  refreshEsp() {
+    this.dialogService.open(GenerateEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
   }
 }
