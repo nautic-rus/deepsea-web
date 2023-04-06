@@ -13,6 +13,7 @@ import {RemoveConfirmationComponent} from "../materials/remove-confirmation/remo
 import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import {IssueManagerService} from "../../domain/issue-manager.service";
+import {AddMaterialStockComponent} from "./add-material-stock/add-material-stock.component";
 
 @Component({
   selector: 'app-materials-summary',
@@ -338,7 +339,22 @@ export class MaterialsSummaryComponent implements OnInit {
     return res;
   }
 
-  addStock() {
+  addStock(code: string, units: string) {
+    this.dialogService.open(AddMaterialStockComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.project.foran, code, units]
+    }).onClose.subscribe(res => {
+      if (res != 'exit'){
+        console.log(res);
+        this.materialPurchases.push(res);
+      }
+    });
+  }
 
+  getPurchasedCount(code: string) {
+    let res = 0;
+    this.materialPurchases.filter(x => x.code == code).forEach(x => res += x.qty);
+    return res;
   }
 }

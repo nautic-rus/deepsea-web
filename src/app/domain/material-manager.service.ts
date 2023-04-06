@@ -58,4 +58,7 @@ export class MaterialManagerService {
   getMaterialsDetails(project: string, code: string) {
     return this.http.get<any>(props.http + '/materialsCode', {params: {project, code}});
   }
+  addMaterialPurchase(materialPurchase: any) {
+    return this.http.post<any>(props.httpSpec + '/materialPurchase', materialPurchase);
+  }
 }

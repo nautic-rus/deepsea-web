@@ -172,6 +172,7 @@ import { CablesComponent } from './component/documents/cables/cables.component';
 import { GenerateEspComponent } from './component/documents/hull-esp/generate-esp/generate-esp.component';
 import { MaterialsSummaryComponent } from './component/materials-summary/materials-summary.component';
 import { DoclistComponent } from './component/doclist/doclist.component';
+import { AddMaterialStockComponent } from './component/materials-summary/add-material-stock/add-material-stock.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -294,6 +295,7 @@ Quill.register('modules/imageResize', ImageResize);
     GenerateEspComponent,
     MaterialsSummaryComponent,
     DoclistComponent,
+    AddMaterialStockComponent,
   ],
     imports: [
         BrowserModule,

@@ -1,0 +1,6 @@
+<div>
+  <div class="">Contract number<input [(ngModel)]="contract" pInputText></div>
+  <div class="">Amount<p-inputNumber [(ngModel)]="amount"></p-inputNumber>{{units}}</div>
+  <div class="" (click)="commit()">OK</div>
+  <div class="" (click)="cancel()">CANCEL</div>
+</div>

@@ -109,8 +109,8 @@
                     </div>
                   </td>
                   <td class="min-width-20 w-5 cx text-small">
-                    {{0}}
-                    <div class="pl-10" (click)="addStock()">ADD</div>
+                    {{getPurchasedCount(material.A1)}}
+                    <div class="pl-10" (click)="addStock(material.A1, material.A4)">ADD</div>
                   </td>
                 </tr>
               </ng-template>
