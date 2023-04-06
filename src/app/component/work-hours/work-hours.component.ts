@@ -276,7 +276,7 @@ export class WorkHoursComponent implements OnInit {
   // }
   getSearchingBorder(day: TaskOfDay){
     if (this.searchingIssue != null && this.searchingIssue.id == day.taskId){
-      return '4px solid red';
+      return '2px solid #FFB240';
     }
     else{
       return 'none';
