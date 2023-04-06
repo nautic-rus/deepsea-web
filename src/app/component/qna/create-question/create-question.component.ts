@@ -149,7 +149,8 @@ export class CreateQuestionComponent implements OnInit {
     // });
 
     this.issues.getIssueDepartments().then(departments => {
-      this.taskDepartments = departments.map(x => x);
+      let nonActive = ['Design', 'IT', 'Nautic Is', 'Manager'];
+      this.taskDepartments = departments.map(x => x).filter(x => !nonActive.includes(x));
       this.taskDepartment = '-';
     });
   }
