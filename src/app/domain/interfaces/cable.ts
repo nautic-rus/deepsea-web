@@ -9,7 +9,8 @@ export interface Cable {
   seg_code: string;
   f_rout: number;
   length: number;
-  l_correction: number;
+  ext_len_1: number;
+  ext_len_2: number;
   from_system: string;
   from_eq_id: string;
   from_eq_desc: string;

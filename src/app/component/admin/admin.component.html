@@ -16,7 +16,7 @@
                  [resizableColumns]="false"
                  styleClass="p-datatable-striped"
                  responsiveLayout="scroll"
-                 [globalFilterFields]="['profession','department','groups']">
+                 [globalFilterFields]="['id','name','surname','profession','department','groups','login','mail']">
 
           <ng-template pTemplate="caption">
             <div class="p-d-flex">
@@ -44,6 +44,7 @@
               <th pSortableColumn="avatar" class="lxy">{{l.tr('Аватар')}}
               </th>
               <th pSortableColumn="name" class="lxy">{{l.tr('Имя')}}
+                <p-sortIcon field="name"></p-sortIcon>
               </th>
               <th pSortableColumn="surname" class="lxy">{{l.tr('Фамилия')}}
                 <p-sortIcon field="surname"></p-sortIcon>
