@@ -76,6 +76,7 @@ export class DeviceEspComponent implements OnInit {
   selectedHeadTab: string = 'Files';
   nestContent: any[] = [];
   nestContentRead = false;
+  miscIssues: Issue[] = [];
   quillModules =
     {
       imageResize: {},
@@ -449,6 +450,15 @@ export class DeviceEspComponent implements OnInit {
     return this.device.isDesktop() && window.innerWidth > 1296;
   }
   fillRevisions(){
+    this.miscIssues.splice(0, this.miscIssues.length);
+    this.issueManager.getIssues('op').then(issues => {
+      issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+      this.miscIssues.forEach(x => {
+        issues.filter(y => y.parent_id == x.id).forEach(ch => {
+          this.miscIssues.push(ch);
+        })
+      });
+    });
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
@@ -925,5 +935,8 @@ export class DeviceEspComponent implements OnInit {
       res = res + ', ' + desc;
     }
     return res;
+  }
+  openIssue(id: number) {
+    window.open('/?taskId=' + id, '_blank');
   }
 }
