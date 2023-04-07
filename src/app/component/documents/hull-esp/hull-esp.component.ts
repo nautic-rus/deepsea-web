@@ -189,6 +189,7 @@ export class HullEspComponent implements OnInit {
   revEspNoDate = '';
   revUser = '';
   kindEsp = '';
+  nc = false;
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -201,6 +202,8 @@ export class HullEspComponent implements OnInit {
       this.dxfDoc = params.dxf != null ? params.dxf : '';
       this.search = params.search != null ? params.search : '';
       this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
+      this.nc = (params.nc != null && +params.nc == 1);
+      console.log(this.docNumber);
 
       this.issueManager.getIssueProjects().then(projects => {
         let findProject = projects.find(x => x.name == this.project);
@@ -584,7 +587,13 @@ export class HullEspComponent implements OnInit {
       // });
       //this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
       //this.selectedRevision = this.issueRevisions[0];
-      this.fillParts();
+      if (this.issue.issue_type != 'PDSP'){
+        this.fillParts();
+      }
+      else{
+        this.noResult = true;
+        this.fileGroups = this.fileGroups.filter(x => ['Drawings', 'Part List', 'Other'].includes(x.name));
+      }
     });
   }
   editorClicked(event: any) {
@@ -880,7 +889,7 @@ export class HullEspComponent implements OnInit {
     }
   }
   getRevisionFilesOfGroup(fileGroup: string, revision: string): FileAttachment[] {
-    if (this.issue.cloud_files.length == 0 || fileGroup == 'Other'){
+    if (this.nc || this.issue.cloud_files.length == 0 || fileGroup == 'Other'){
       return this.getRevisionFilesOfGroupAux(fileGroup, revision);
     }
     this.cloudDate = true;

@@ -14,6 +14,13 @@
         <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
+      <div class="mr-1 cy">
+        <label class="container margin-bottom-none">
+          <span class="text-checkbox">Show only with files</span>
+          <input (change)="projectChanged()" type="checkbox" [(ngModel)]="showWithFilesOnly">
+          <span class="checkmark"></span>
+        </label>
+      </div>
 
 <!--      <div class="p-ml-auto mr-10 df">-->
 <!--        <span class="p-input-icon-left">-->
