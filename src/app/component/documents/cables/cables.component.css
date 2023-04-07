@@ -1402,11 +1402,6 @@
     box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
   }
 }
-
-.text-table-col {
-  font-size: 14px;
-}
-
 .show-model {
   width: 30px;
   height: 22px;
@@ -1557,7 +1552,6 @@
 
 .attribute {
   color: #cbcbcb !important;
-  font-weight: 600;
 }
 
 .text-table-col {
