@@ -5,10 +5,10 @@
   min-height: 55px;
 }
 /deep/.p-component{
-  font-size: 14px!important;
+  font-size: 13px!important;
 }
 /deep/.p-inputtext{
-  font-size: 14px!important;
+  font-size: 13px!important;
   padding: 8px 10px 8px 10px;
 }
 /deep/.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
@@ -16,7 +16,7 @@
   height: 1.5rem;
 }
 /deep/.pi {
-  font-size: 14px;
+  font-size: 13px;
 }
 /deep/.p-tree{
   height: calc(100vh - 237px);
@@ -135,7 +135,7 @@
   display: none;
 }
 .height-tiles{
-  height: calc(100vh - 205px);
+  height: calc(100vh - 192px);
 }
 .cloud:hover{
   transform: scale(1.1);
@@ -145,11 +145,11 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-.dash-card{
+.dash-card-s{
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 20px;
-  width: 350px;
+  width: 340px;
   height: 180px;
   position: relative;
 }
@@ -162,19 +162,17 @@
   border-radius: 10px;
 }
 .top-row-doc{
-  display: grid;
-  grid-template-columns: 270px 60px;
-  height: 40px;
+  height: 60px;
 }
 .two-row{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 20px;
+  height: 25px;
 }
 .three-row{
   display: grid;
-  grid-template-columns: 183px 147px;
-  height: 30px;
+  grid-template-columns: 1fr 1fr;
+  height: 40px;
 }
 .four-row{
   display: grid;
@@ -192,7 +190,7 @@
   color: rgba(52, 58, 64, 0.65);
 }
 .kpl-flag{
-  padding: 1px 4px;
+  padding: 2px 4px;
   border-radius: 4px;
   font-weight: 500;
   font-size: 12px;
@@ -200,6 +198,7 @@
   background-color: #61D42D;
   width: fit-content;
   letter-spacing: 1px;
+  height: fit-content;
 }
 .coef{
   padding: 1px 4px;

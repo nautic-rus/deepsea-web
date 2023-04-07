@@ -1,5 +1,5 @@
 <div class="all-page">
-  <div>
+  <div class="">
     <div class="card-head mb-20 df">
       <div class="mr-10" *ngIf="projects.length > 0">
         <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionLabel="name" styleClass="width-170 border">
@@ -42,24 +42,18 @@
           <div class="tile height-tiles ovf-auto">
             <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
-                <div class="dash-card" *ngFor="let material of chunk; let j = index">
+                <div class="dash-card-s" *ngFor="let material of chunk; let j = index">
                   <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
                     <div class="top-row-doc">
-                      <div class="title-bold cursor-default">{{trimText(material.A2 + (material.A3), 50)}}</div>
-                      <div class="p-ml-auto">
-                        <div class="kpl-flag cxy">
-                          <div class="text-center-x">
-                            <span [innerHTML]="(material.A4) | highLight: search"></span>
-                          </div>
-                        </div>
-                        <div class="coef p-ml-auto mt-5">
-                          <span class="pr-2">coef.</span>
-                          <span>{{material.A2}}</span>
-                        </div>
-                      </div>
+                      <div class="title-bold cursor-default" pTooltip="{{material.A2}}" tooltipPosition="top">{{trimText(material.A2, 90)}}</div>
                     </div>
                     <div class="two-row mt-5 mb-5">
-                      <div class="text-medium">{{trimText(material.A2, 20)}}</div>
+                      <div class="kpl-flag cxy">
+                        <div class="text-center-x">
+                          <span>{{material.A5 + ' ' + material.A4}}</span>
+                        </div>
+                      </div>
+                      <div class="text-medium"></div>
                       <div class="df position-relative content-end pr-10">
                         <div class="trm">
                           <span [innerHTML]="material.A1 | highLight: search"></span>
@@ -70,32 +64,21 @@
                         </div>
                       </div>
                     </div>
-                    <div class="three-row df">
+                    <div class="three-row df align-end">
                       <div class="df">
-                        <div class="text-table-col pr-10">{{material.A4}}</div>
                         <div class="df">
-                          <img class="pr-5" src="assets/icons/weight3.svg" height="16">
-                          <div class="text-table-col">{{material.A5}}</div>
+                          <div class="mm-text mr-5">Unit</div>
+                          <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                          <div class="text-table-col">{{material.A6 + 'kg'}}</div>
                         </div>
                       </div>
-                    </div>
-                    <div class="four-row mb-10 mt-10">
-                      <div>
+                      <div class="df">
                         <div class="df">
-                          <img class="pr-5" src="assets/icons/delivery.svg" height="30">
-                          <div class="thick-text mt-4px">{{material.A6}}</div>
+                          <div class="mm-text mr-5">Total</div>
+                          <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                          <div class="text-table-col">{{material.A7 + 'kg'}}</div>
                         </div>
                       </div>
-                      <div>
-                        <div class="df">
-                          <img class="pr-5 mt-2px" src="assets/icons/note.svg" height="16">
-                          <div class="thick-text mt-4px">{{material.A7}}</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="line"></div>
-                    <div class="mm-text mt-5">
-<!--                      <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>-->
                     </div>
                   </div>
                 </div>
