@@ -26,6 +26,8 @@ export class DoclistComponent implements OnInit {
   taskTypes: string[] = ['-', 'RKD', 'PDSP'];
   statuses: string[] = [];
   status = '';
+  showWithFilesOnly = true;
+  revisionFiles: any[] = [];
   constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
 
   ngOnInit(): void {
@@ -37,6 +39,10 @@ export class DoclistComponent implements OnInit {
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
       this.issues = this.issuesSrc;
+      this.issueManager.getRevisionFiles().then(revisionFiles => {
+        this.revisionFiles = revisionFiles;
+        this.filterIssues();
+      });
     });
   }
 
@@ -73,6 +79,7 @@ export class DoclistComponent implements OnInit {
   }
   filterIssues(){
     this.issues = [...this.issuesSrc];
+    this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
     this.issues = this.issues.filter(x => this.project == null || x.project == this.project.name || this.project.name == '' || this.project.name == '-');
     this.issues = this.issues.filter(x => this.department == null || x.department == this.department || this.department == '' || this.department == '-');
     this.issues = this.issues.filter(x => this.taskType == null || x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-');
