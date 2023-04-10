@@ -85,7 +85,7 @@
   border-radius: 6px;
   height: fit-content;
   color: white;
-  width: 55px;
+  width: 60px;
 }
 .materials-button-mini{
   height: 30px;
@@ -165,7 +165,7 @@
 }
 .top-row-doc{
   display: grid;
-  grid-template-columns: 265px 55px;
+  grid-template-columns: 260px 60px;
   height: 60px;
 }
 .two-row{
@@ -175,7 +175,7 @@
 }
 .three-row{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   height: 30px;
 }
 .four-row{
