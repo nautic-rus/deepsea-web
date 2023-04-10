@@ -76,6 +76,9 @@ export class IssueManagerService {
   async getIssueDetails(id: number): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id}}).toPromise();
   }
+  async getIssueDetailsByDocNumber(docNumber: string): Promise<Issue> {
+    return await this.http.get<Issue>(props.http + '/issueDetails', {params: {docNumber}}).toPromise();
+  }
   async getHullPartList(docNum: string): Promise<HullPL> {
     return await this.http.get<HullPL>(props.httpSpec + '/getHullPartList', {params: {docNum}}).toPromise();
   }

@@ -322,6 +322,8 @@ export class MaterialsSummaryComponent implements OnInit {
             this.materialPurchases = materialPurchases;
             console.log(this.materialPurchases);
           });
+          this.materialsSummary.forEach(x => x.path = this.setPath(x.A1));
+          this.materialsSummary = _.sortBy(this.materialsSummary, x => x.path);
         });
       });
     });

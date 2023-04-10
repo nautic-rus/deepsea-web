@@ -15,6 +15,7 @@ export class DocMComponent implements OnInit {
 
   issue: Issue = new Issue();
   docNumber = '';
+  tryGetDetails = 0;
 
   constructor(public route: ActivatedRoute, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService) {
   }
@@ -23,12 +24,30 @@ export class DocMComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       let id = params.id ? params.id : 0;
       this.docNumber = params.docNumber ? params.docNumber : '';
-      this.issues.getIssueDetails(id).then(res => {
-        this.issue = res;
-      });
+      if (id != 0){
+        this.issues.getIssueDetails(id).then(res => {
+          this.issue = res;
+        });
+      }
+      else if (this.docNumber != ''){
+        this.tryGetIssueDetails();
+      }
     });
   }
-
+  tryGetIssueDetails(){
+    if (++this.tryGetDetails == 3 || this.issue != null && this.issue.id != null && this.issue.id != 0){
+      return;
+    }
+    this.issues.getIssueDetailsByDocNumber(this.docNumber).then(res => {
+      if (res.id == null){
+        this.docNumber = this.docNumber.substr(0, this.docNumber.length - 2);
+        this.tryGetIssueDetails();
+      }
+      else{
+        this.issue = res;
+      }
+    });
+  }
   commit() {
   }
 
@@ -36,7 +55,7 @@ export class DocMComponent implements OnInit {
   }
 
   getRevisionFiles(revision: string) {
-    return this.issue.revision_files.filter(x => x.revision == revision);
+    return this.issue.revision_files;
   }
   openFile(url: string) {
     window.open(url);
