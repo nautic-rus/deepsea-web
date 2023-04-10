@@ -40,13 +40,13 @@
             </div>
           </div>
           <div class="tile height-tiles ovf-auto">
-            <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
+            <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="180">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
                 <div class="dash-card-s" *ngFor="let material of chunk; let j = index">
                   <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
                     <div class="top-row-doc">
                       <div *ngIf="material.A2 != ''" class="title-bold cursor-default" pTooltip="{{material.A2}}" tooltipPosition="top">{{trimText(material.A2, 90)}}</div>
-                      <div *ngIf="material.A2 == ''" class="text-medium">/Material name/</div>
+                      <div *ngIf="material.A2 == ''" class="title-bold" pTooltip="{{material.A3}}" tooltipPosition="top">{{trimText(material.A3, 90)}}</div>
                     </div>
                     <div class="two-row mt-5 mb-5">
                       <div class="kpl-flag cxy">
@@ -65,7 +65,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="three-row df align-end">
+                    <div class="three-row df align-end mb-5">
                       <div class="df">
                         <div class="df">
                           <div class="mm-text mr-5">Unit</div>
@@ -81,6 +81,10 @@
                         </div>
                       </div>
                     </div>
+                    <div class="line"></div>
+                      <div class="mm-text mt-5">
+                        <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+                      </div>
                   </div>
                 </div>
               </ng-template>
