@@ -80,10 +80,12 @@
   border-radius: 6px;
 }
 .materials-button-purchased{
-  padding: 4px;
+  padding: 2px 6px;
   cursor: pointer;
   border-radius: 6px;
+  height: fit-content;
   color: white;
+  width: 55px;
 }
 .materials-button-mini{
   height: 30px;
@@ -162,6 +164,8 @@
   border-radius: 10px;
 }
 .top-row-doc{
+  display: grid;
+  grid-template-columns: 265px 55px;
   height: 60px;
 }
 .two-row{
@@ -200,7 +204,7 @@
   height: fit-content;
 }
 .coef{
-  padding: 1px 4px;
+  padding: 2px 4px;
   border-radius: 4px;
   font-weight: 500;
   font-size: 12px;
@@ -208,6 +212,7 @@
   background-color: #6EC5FF;
   width: fit-content;
   letter-spacing: 1px;
+  height: fit-content;
 }
 .text-table-col{
   font-weight: 500;

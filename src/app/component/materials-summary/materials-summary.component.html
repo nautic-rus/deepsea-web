@@ -47,9 +47,13 @@
                     <div class="top-row-doc">
                       <div *ngIf="material.A2 != ''" class="title-bold cursor-default" pTooltip="{{material.A2}}" tooltipPosition="top">{{trimText(material.A2, 90)}}</div>
                       <div *ngIf="material.A2 == ''" class="title-bold" pTooltip="{{material.A3}}" tooltipPosition="top">{{trimText(material.A3, 90)}}</div>
+                      <div class="materials-button-purchased light-green-button cxy" (click)="addStock(material.A1, material.A4)">
+                        <div class="">+</div>
+                        <div class="ml-5">Add</div>
+                      </div>
                     </div>
                     <div class="two-row mt-5 mb-5">
-                      <div class="kpl-flag cxy">
+                      <div class="coef cxy">
                         <div class="text-center-x">
                           <span>{{material.A5 + ' ' + material.A4}}</span>
                         </div>
@@ -163,7 +167,7 @@
 <!--                  <td class="min-width-20 w-5 cx text-small">-->
 <!--                    <div class="mr-10">{{getPurchasedCount(material.A1)}}</div>-->
 <!--                    <div class="materials-button-purchased light-green-button cxy" (click)="addStock(material.A1, material.A4)">-->
-<!--&lt;!&ndash;                      <img src="assets/icons/plus3.svg" height="12">&ndash;&gt;-->
+<!--                      <img src="assets/icons/plus3.svg" height="12">-->
 <!--                      <div class="">+</div>-->
 <!--                      <div class="ml-5">Add</div>-->
 <!--                    </div>-->
