@@ -45,7 +45,8 @@
                 <div class="dash-card-s" *ngFor="let material of chunk; let j = index">
                   <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
                     <div class="top-row-doc">
-                      <div class="title-bold cursor-default" pTooltip="{{material.A2}}" tooltipPosition="top">{{trimText(material.A2, 90)}}</div>
+                      <div *ngIf="material.A2 != ''" class="title-bold cursor-default" pTooltip="{{material.A2}}" tooltipPosition="top">{{trimText(material.A2, 90)}}</div>
+                      <div *ngIf="material.A2 == ''" class="text-medium">/Material name/</div>
                     </div>
                     <div class="two-row mt-5 mb-5">
                       <div class="kpl-flag cxy">
