@@ -14,52 +14,75 @@ import _ from "underscore";
 })
 export class DoclistComponent implements OnInit {
 
-  projects: string[] = ['NR002', 'NR004', '01701-ORION', '03070-CRABBER', '01701-LEV', '03095-ANDROMEDA'];
-  project = '';
-  department = '';
-  departments: string[] = [];
+  projects: any[] = [];
+  project: any;
+  department: string = '';
+  departments: string[] = ['Hull', 'System', 'Devices', 'Trays', 'Cables', 'Electric', 'Accommodation' ];
+  issuesSrc: Issue[] = [];
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
-  issuesSrc: any[] = [];
   taskType = '';
-  taskTypes: string[] = [];
+  taskTypes: string[] = ['-', 'RKD', 'PDSP'];
   statuses: string[] = [];
   status = '';
-
+  showWithFilesOnly = true;
+  revisionFiles: any[] = [];
   constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.issueManager.getIssueProjects().then(projects => {
+      this.projects = projects;
+      this.projects.forEach((x: any) => x.label = this.getProjectName(x));
+      this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
+    });
+    this.issueManager.getIssues('op').then(res => {
+      this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
+      this.issues = this.issuesSrc;
+      this.issueManager.getRevisionFiles().then(revisionFiles => {
+        this.revisionFiles = revisionFiles;
+        this.filterIssues();
+      });
+    });
   }
 
-  projectChanged(showWithFilesChange: boolean = false) {
-    this.issues.splice(0, this.issues.length);
-    this.router.navigate([], {queryParams: {project: this.project, department: this.department}});
+
+  getProjectName(project: any){
+    let res = project.name;
+    if (project.rkd != ''){
+      res += ' (' + project.rkd + ')';
+    }
+    return res;
+  }
+  projectChanged() {
+    this.filterIssues();
   }
 
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
     let foranProject = project.replace('NR', 'N');
-    let findProject = this.projectNames.find((x: any) => x.pdsp == project || x.rkd == project);
+    let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
     if (findProject != null){
       foranProject = findProject.foran;
     }
-    switch (this.department) {
-      case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
-      case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
-      case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
-      case 'Trays': window.open(`/trays?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
-      case 'Cables': window.open(`/cables?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
-      case 'Electric': window.open(`/electric-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
-      case 'Accommodation': window.open(`/accommodation-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
+    console.log(department);
+    console.log(project);
+    switch (department) {
+      case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Trays': window.open(`/trays?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Cables': window.open(`/cables?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Electric': window.open(`/electric-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Accommodation': window.open(`/accommodation-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
       default: break;
     }
   }
   filterIssues(){
     this.issues = [...this.issuesSrc];
-    this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
-    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
-    this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
-    this.issues = this.issues.filter(x => this.issueManager.localeStatus(x.status, false) == this.issueManager.localeStatus(this.status, false) || this.status == '' || this.status == '-' || this.status == null);
+    this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
+    this.issues = this.issues.filter(x => this.project == null || x.project == this.project.name || this.project.name == '' || this.project.name == '-');
+    this.issues = this.issues.filter(x => this.department == null || x.department == this.department || this.department == '' || this.department == '-');
+    this.issues = this.issues.filter(x => this.taskType == null || x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-');
     this.issues = _.sortBy(this.issues, x => x.doc_number);
   }
 
@@ -77,4 +100,11 @@ export class DoclistComponent implements OnInit {
     this.filterIssues();
   }
 
+  getDate(dateLong: number): string {
+    if (dateLong == 0) {
+      return '--/--/----';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
 }

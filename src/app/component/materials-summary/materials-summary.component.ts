@@ -53,6 +53,11 @@ export class MaterialsSummaryComponent implements OnInit {
   materialsSummarySrc: any[] = [];
   materialsSummary: any[] = [];
   materialPurchases: any[] = [];
+  public innerWidth: any;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.innerWidth = window.innerWidth;
+  }
 
   constructor(public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -61,6 +66,7 @@ export class MaterialsSummaryComponent implements OnInit {
     this.issueManager.getIssueProjects().then(res => {
       this.projects = res;
     });
+    this.innerWidth = window.innerWidth;
   }
   setPath(code: string, length = 3){
     let count = 1;
@@ -304,6 +310,7 @@ export class MaterialsSummaryComponent implements OnInit {
           x.A7 = +x.A7;
         });
         this.materialsSummary = this.materialsSummarySrc;
+        console.log(this.materialsSummary);
         this.materialManager.getMaterialNodes(this.project.rkd).then(materialNodes => {
           this.nodesSrc = materialNodes;
           this.nodes = this.getNodes(materialNodes, this.materialsSrc, '');
@@ -351,10 +358,27 @@ export class MaterialsSummaryComponent implements OnInit {
       }
     });
   }
-
+  chunkMaterials(chunkSize = 3){
+    let res: any[] = [];
+    for (let i = 0; i < this.materialsSummary.length; i += chunkSize) {
+      const chunk = this.materialsSummary.slice(i, i + chunkSize);
+      res.push(chunk);
+    }
+    return res;
+  }
   getPurchasedCount(code: string) {
     let res = 0;
     this.materialPurchases.filter(x => x.code == code).forEach(x => res += x.qty);
+    return res;
+  }
+  defineChunkSize() {
+    let res = 2;
+    if (this.innerWidth > 1600){
+      res = 3;
+    }
+    if (this.innerWidth > 1800){
+      res = 4;
+    }
     return res;
   }
 }

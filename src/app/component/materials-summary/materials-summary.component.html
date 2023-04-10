@@ -1,5 +1,5 @@
 <div class="all-page">
-  <div>
+  <div class="">
     <div class="card-head mb-20 df">
       <div class="mr-10" *ngIf="projects.length > 0">
         <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionLabel="name" styleClass="width-170 border">
@@ -8,7 +8,6 @@
       <div class="mr-10">
         {{selectedNodePath}}
       </div>
-
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
@@ -40,86 +39,139 @@
               </div>
             </div>
           </div>
-          <div class="cards table-small">
-            <p-table #table [value]="materialsSummary"
-                     [scrollable]="true"
-                     scrollHeight="calc(100vh - 226px)"
-                     [virtualScroll]="true"
-                     [virtualRowHeight]="40"
-                     [reorderableColumns]="false"
-                     [resizableColumns]="false"
-                     styleClass="p-datatable-striped p-datatable-sm"
-                     [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">
-              <ng-template pTemplate="header">
-                <tr class="df">
-                  <th pSortableColumn="cloud" class="max-width-50 cxy">Pos
-                  </th>
-                  <th pSortableColumn="A2" class="cxy min-width-360 w-50">Name
-                    <p-sortIcon field="A2"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="A4" class="cxy min-width-20">Units
-                    <p-sortIcon field="A4"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="A5" class="cxy min-width-20">Qty
-                    <p-sortIcon field="A5"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="A6" class="cxy min-width-20">Unit weight
-                    <p-sortIcon field="A6"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="A7" class="cxy min-width-20">Total weight
-                    <p-sortIcon field="A7"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="A8" class="cxy min-width-20">Documents
-                    <p-sortIcon field="A8"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="A1" class="cxy min-width-20">Code
-                    <p-sortIcon field="A1"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="notes" class="cxy min-width-20">Purchased
-                    <p-sortIcon field="notes"></p-sortIcon>
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-material let-i="rowIndex">
-                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-                  <td class="max-width-50">
-                    {{i + 1}}
-                  </td>
-                  <td class="min-width-360 w-50 text-small">{{material.A2}}({{material.A3}})</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.A4}}</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.A5}}</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.A6}}</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.A7}}</td>
-                  <td class="min-width-20 w-5 text-small">
-                   <div class="df flex-column text-small">
-                     <div *ngFor="let doc of material.A8.split(',')">
-                       {{doc}}
-                     </div>
-                   </div>
-                  </td>
-                  <td class="min-width-20 w-5 cx text-small">
-                    <div class="df">
-                      <div class="trm-materials">
-                        <span>{{material.A1}}</span>
+          <div class="tile height-tiles ovf-auto">
+            <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="180">
+              <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
+                <div class="dash-card-s" *ngFor="let material of chunk; let j = index">
+                  <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
+                    <div class="top-row-doc">
+                      <div *ngIf="material.A2 != ''" class="title-bold cursor-default" pTooltip="{{material.A2}}" tooltipPosition="top">{{trimText(material.A2, 90)}}</div>
+                      <div *ngIf="material.A2 == ''" class="title-bold" pTooltip="{{material.A3}}" tooltipPosition="top">{{trimText(material.A3, 90)}}</div>
+                    </div>
+                    <div class="two-row mt-5 mb-5">
+                      <div class="kpl-flag cxy">
+                        <div class="text-center-x">
+                          <span>{{material.A5 + ' ' + material.A4}}</span>
+                        </div>
                       </div>
-                      <div (click)="copyTrmCode(material.A1, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
-                        <img src="assets/icons/trm-sup.svg" height="14">
-                        <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      <div class="text-medium"></div>
+                      <div class="df position-relative content-end pr-10">
+                        <div class="trm">
+                          <span [innerHTML]="material.A1 | highLight: search"></span>
+                        </div>
+                        <div (click)="copyTrmCode(material.A1, 't' + i + '-' + j)" class="trm-copy cursor-pointer cxy">
+                          <img src="assets/icons/trm.svg" height="12">
+                          <div class="copy-tooltip" [hidden]="!showTooltip('t' + i + '-' + j)">Copied!</div>
+                        </div>
                       </div>
                     </div>
-                  </td>
-                  <td class="min-width-20 w-5 cx text-small">
-                    <div class="mr-10">{{getPurchasedCount(material.A1)}}</div>
-                    <div class="materials-button-purchased light-green-button cxy" (click)="addStock(material.A1, material.A4)">
-<!--                      <img src="assets/icons/plus3.svg" height="12">-->
-                      <div class="">+</div>
-                      <div class="ml-5">Add</div>
+                    <div class="three-row df align-end mb-5">
+                      <div class="df">
+                        <div class="df">
+                          <div class="mm-text mr-5">Unit</div>
+                          <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                          <div class="text-table-col">{{material.A6 + 'kg'}}</div>
+                        </div>
+                      </div>
+                      <div class="df">
+                        <div class="df">
+                          <div class="mm-text mr-5">Total</div>
+                          <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                          <div class="text-table-col">{{material.A7 + 'kg'}}</div>
+                        </div>
+                      </div>
                     </div>
-                  </td>
-                </tr>
+                    <div class="line"></div>
+                      <div class="mm-text mt-5">
+                        <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+                      </div>
+                  </div>
+                </div>
               </ng-template>
-            </p-table>
+            </p-virtualScroller>
           </div>
+
+
+          <!--          <div class="cards table-small">-->
+<!--            <p-table #table [value]="materialsSummary"-->
+<!--                     [scrollable]="true"-->
+<!--                     scrollHeight="calc(100vh - 226px)"-->
+<!--                     [virtualScroll]="true"-->
+<!--                     [virtualRowHeight]="40"-->
+<!--                     [reorderableColumns]="false"-->
+<!--                     [resizableColumns]="false"-->
+<!--                     styleClass="p-datatable-striped p-datatable-sm"-->
+<!--                     [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">-->
+<!--              <ng-template pTemplate="header">-->
+<!--                <tr class="df">-->
+<!--                  <th pSortableColumn="cloud" class="max-width-50 cxy">Pos-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="A2" class="cxy min-width-360 w-50">Name-->
+<!--                    <p-sortIcon field="A2"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="A4" class="cxy min-width-20">Units-->
+<!--                    <p-sortIcon field="A4"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="A5" class="cxy min-width-20">Qty-->
+<!--                    <p-sortIcon field="A5"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="A6" class="cxy min-width-20">Unit weight-->
+<!--                    <p-sortIcon field="A6"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="A7" class="cxy min-width-20">Total weight-->
+<!--                    <p-sortIcon field="A7"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="A8" class="cxy min-width-20">Documents-->
+<!--                    <p-sortIcon field="A8"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="A1" class="cxy min-width-20">Code-->
+<!--                    <p-sortIcon field="A1"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="notes" class="cxy min-width-20">Purchased-->
+<!--                    <p-sortIcon field="notes"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--              <ng-template pTemplate="body" let-material let-i="rowIndex">-->
+<!--                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">-->
+<!--                  <td class="max-width-50">-->
+<!--                    {{i + 1}}-->
+<!--                  </td>-->
+<!--                  <td class="min-width-360 w-50 text-small">{{material.A2}}({{material.A3}})</td>-->
+<!--                  <td class="min-width-20 w-5 cx text-small">{{material.A4}}</td>-->
+<!--                  <td class="min-width-20 w-5 cx text-small">{{material.A5}}</td>-->
+<!--                  <td class="min-width-20 w-5 cx text-small">{{material.A6}}</td>-->
+<!--                  <td class="min-width-20 w-5 cx text-small">{{material.A7}}</td>-->
+<!--                  <td class="min-width-20 w-5 text-small">-->
+<!--                   <div class="df flex-column text-small">-->
+<!--                     <div *ngFor="let doc of material.A8.split(',')">-->
+<!--                       {{doc}}-->
+<!--                     </div>-->
+<!--                   </div>-->
+<!--                  </td>-->
+<!--                  <td class="min-width-20 w-5 cx text-small">-->
+<!--                    <div class="df">-->
+<!--                      <div class="trm-materials">-->
+<!--                        <span>{{material.A1}}</span>-->
+<!--                      </div>-->
+<!--                      <div (click)="copyTrmCode(material.A1, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">-->
+<!--                        <img src="assets/icons/trm-sup.svg" height="14">-->
+<!--                        <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                  <td class="min-width-20 w-5 cx text-small">-->
+<!--                    <div class="mr-10">{{getPurchasedCount(material.A1)}}</div>-->
+<!--                    <div class="materials-button-purchased light-green-button cxy" (click)="addStock(material.A1, material.A4)">-->
+<!--&lt;!&ndash;                      <img src="assets/icons/plus3.svg" height="12">&ndash;&gt;-->
+<!--                      <div class="">+</div>-->
+<!--                      <div class="ml-5">Add</div>-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--            </p-table>-->
+<!--          </div>-->
         </div>
       </div>
     </div>

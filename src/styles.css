@@ -1266,3 +1266,10 @@ app-materials .p-virtualscroller-item{
 app-materials .p-virtualscroller .p-virtualscroller-content{
   background: none;
 }
+app-materials-summary .p-virtualscroller-item{
+  display: flex;
+  justify-content: center;
+}
+app-materials-summary .p-virtualscroller .p-virtualscroller-content{
+  background: none;
+}
