@@ -97,7 +97,7 @@
                           <div class="df space-between">
                             <div class="title-name mr-10 cy" *ngIf="cable.from_zone != ''">{{cable.from_zone}}</div>
                             <div class="attribute mr-10 text-table-col cxy" *ngIf="cable.from_zone_desc != ''">{{cable.from_zone_desc}}</div>
-                            <div class="df mr-10 cursor-pointer cy" (click)="onClickFromEquipment(cable)">
+                            <div class="df mr-10 cy cursor-pointer hover-row" (click)="onClickFromEquipment(cable)">
                               <div class="attribute mr-10 text-table-col cx" *ngIf="cable.from_eq_desc != ''">{{cable.from_eq_desc}}</div>
                               <div>
                                 <div class="title-name flex-end" *ngIf="cable.from_eq != ''">{{cable.from_eq}}</div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="pl-8">
                           <div class="df space-between">
-                            <div class="text-center-y df mr-10 cursor-pointer" (click)="onClickToEquipment(cable)">
+                            <div class="text-center-y df mr-10 cursor-pointer hover-row" (click)="onClickToEquipment(cable)">
                               <div>
                                 <div class="title-name mr-10" *ngIf="cable.to_eq != ''">{{cable.to_eq}}</div>
                                 <div class="text-center-y attribute mr-10 text-table-col" *ngIf="cable.to_eq_id != ''">({{cable.to_eq_id}})</div>
