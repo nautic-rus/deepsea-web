@@ -1,7 +1,7 @@
 <div class="all-page-doc">
   <div class="min-height-card">
     <div class="empty-card"></div>
-    <div class="card-head df sticky-card" *ngIf="projects.length > 0 && issues.length > 0">
+    <div class="card-head df sticky-card" *ngIf="projects.length > 0">
       <div class="mr-1">
         <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" optionLabel="label" styleClass="width-170 border" (ngModelChange)="projectChanged()">
         </p-dropdown>
