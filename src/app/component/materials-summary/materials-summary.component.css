@@ -85,7 +85,7 @@
   border-radius: 6px;
   height: fit-content;
   color: white;
-  width: 60px;
+  width: fit-content;
 }
 .materials-button-mini{
   height: 30px;
@@ -165,7 +165,7 @@
 }
 .top-row-doc{
   display: grid;
-  grid-template-columns: 260px 60px;
+  grid-template-columns: auto auto;
   height: 60px;
 }
 .two-row{

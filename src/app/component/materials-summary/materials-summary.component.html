@@ -61,10 +61,12 @@
                     <div class="top-row-doc">
                       <div *ngIf="material.A2 != ''" class="title-bold cursor-default" pTooltip="{{material.A2}}" tooltipPosition="top">{{trimText(material.A2, 90)}}</div>
                       <div *ngIf="material.A2 == ''" class="title-bold" pTooltip="{{material.A3}}" tooltipPosition="top">{{trimText(material.A3, 90)}}</div>
-                      <div pTooltip="Purchased" tooltipPosition="top" class="materials-button-purchased light-green-button cxy" (click)="addStock(material.A1, material.A4)">
-                        <div class="mr-5 text-bold">{{getPurchasedCount(material.A1)}}</div>
-                        <div class="">+</div>
-                        <div class="ml-5">Add</div>
+                      <div class="p-ml-auto">
+                        <div pTooltip="Purchased" tooltipPosition="top" class="materials-button-purchased light-green-button cxy" (click)="addStock(material.A1, material.A4)">
+                          <div class="mr-5 text-bold">{{getPurchasedCount(material.A1)}}</div>
+                          <div class="">+</div>
+                          <div class="ml-5">Add</div>
+                        </div>
                       </div>
                     </div>
                     <div class="two-row mt-5 mb-5">

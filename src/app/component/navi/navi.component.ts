@@ -29,6 +29,7 @@ export class NaviComponent implements OnInit {
     {id: 'home', label: 'Home', url: '', icon: 'assets/icons/home1.svg', height: 14, child: [], params: {}},
     {id: 'sections', label: 'Sections', url: 'sections', icon: 'assets/icons/sections1.svg', height: 13, child: [], params: {}},
     {id: 'materials', label: 'Materials', url: 'materials', icon: 'assets/icons/cube.svg', height: 17, child: [], params: {}},
+    {id: 'materials-summary', label: 'Statement', url: 'materials-summary', icon: 'assets/icons/stats1.svg', height: 17, child: [], params: {}},
     {id: 'doclist', label: 'Documents', url: 'doclist', icon: 'assets/icons/docs.svg', height: 13, child: [], params: {}},
     {id: 'documents', label: 'Documents', url: '', icon: 'assets/icons/docs.svg', height: 13, params: {}, child: [
       {id: 'hull-documents', label: 'Hull', url: 'documents', icon: '', height: 1, params: {'department': 'Hull'}},
