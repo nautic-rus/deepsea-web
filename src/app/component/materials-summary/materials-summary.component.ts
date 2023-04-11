@@ -68,7 +68,7 @@ export class MaterialsSummaryComponent implements OnInit {
     });
     this.innerWidth = window.innerWidth;
     setTimeout(() => {
-      this.selectedView = 'tiles';
+      this.selectedView = 'list';
     }, 1000);
     //this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
     this.project = '';

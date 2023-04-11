@@ -169,7 +169,7 @@ export class MaterialsComponent implements OnInit {
       res.push({
         data: n.data,
         children: this.getNodes(rootNodes, materials, n.data),
-        label: n.label,
+        label: n.label + ' (' + n.data.substr(parent.length) + ')',
         count: materials.filter(x => x.code.startsWith(n.data)).length
       });
     });
@@ -299,6 +299,7 @@ export class MaterialsComponent implements OnInit {
   }
 
   contextMenu(event: any, contextMenu: ContextMenu) {
+    console.log(event.node.data.length);
     if (event.node.data.length >= 12){
       this.items = [
         this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
@@ -312,22 +313,24 @@ export class MaterialsComponent implements OnInit {
         }
       ];
     }
-    this.items = [
-      {
-        label: 'New Folder',
-        icon: 'pi pi-fw pi-plus',
-        command: () => this.createNode(event.node)
-      },
-      this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
-        label: 'Remove',
-        icon: 'pi pi-fw pi-trash',
-        command: (event: any) => this.alertNodeContains()
-      } : {
-        label: 'Remove',
-        icon: 'pi pi-fw pi-trash',
-        command: () => this.removeNode(event.node)
-      }
-    ];
+    else{
+      this.items = [
+        {
+          label: 'New Folder',
+          icon: 'pi pi-fw pi-plus',
+          command: () => this.createNode(event.node)
+        },
+        this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
+          label: 'Remove',
+          icon: 'pi pi-fw pi-trash',
+          command: (event: any) => this.alertNodeContains()
+        } : {
+          label: 'Remove',
+          icon: 'pi pi-fw pi-trash',
+          command: () => this.removeNode(event.node)
+        }
+      ];
+    }
   }
 
   hide() {
