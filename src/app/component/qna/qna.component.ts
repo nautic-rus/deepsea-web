@@ -186,6 +186,16 @@ export class QnaComponent implements OnInit {
         default: return department;
       }
     }
+    else{
+      switch (department) {
+        case 'Hull': return 'Hull';
+        case 'System': return 'System';
+        case 'Electric': return 'Electric';
+        case 'Accommodation': return 'Accommodation';
+        case 'Devices': return 'Devices';
+        default: return department;
+      }
+    }
   }
 
 }
