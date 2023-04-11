@@ -311,6 +311,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">На удержание</span></div>' : 'На удержание';
           case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Назначить ответственного</span></div>' : 'Назначить ответственного';
           case 'Joined': return styled ? '<div class="buttons-pick-join"><span class="icon-join cxy"><img src="assets/icons/join.svg" class="rotate-90" height="20"></span><span class="cxy button-text">Объединить</span></div>' : 'Объединить';
+          case 'Checked': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Проверено</span></div>' : 'Проверено';
 
 
           default: return input;
@@ -349,6 +350,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">Hold</span></div>' : 'Hold';
           case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Assign responsible</span></div>' : 'Assign responsible';
           case 'Joined': return styled ? '<div class="buttons-pick-join"><span class="icon-join cxy"><img src="assets/icons/join.svg" class="rotate-90" height="20"></span><span class="cxy button-text">Join</span></div>' : 'Join';
+          case 'Checked': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Checked</span></div>' : 'Checked';
 
 
           default: return input;
