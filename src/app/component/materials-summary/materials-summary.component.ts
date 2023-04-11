@@ -357,12 +357,12 @@ export class MaterialsSummaryComponent implements OnInit {
           });
           this.materialsSummary.forEach(x => x.path = this.setPath(x.A1));
           //this.nodes = _.sortBy(this.nodes,x => x.data);
-          let sorted: any[] = [];
-          this.nodes.forEach((node: any) => {
-            this.materialsSummary.filter(x => x.A1.startsWith(node.data)).forEach(x => sorted.push(x));
-          });
-          this.materialsSummary = sorted;
-          //this.materialsSummary = _.sortBy(this.materialsSummary, x => x.path);
+          // let sorted: any[] = [];
+          // this.nodes.forEach((node: any) => {
+          //   this.materialsSummary.filter(x => x.A1.startsWith(node.data)).forEach(x => sorted.push(x));
+          // });
+          // this.materialsSummary = sorted;
+          this.materialsSummary = _.sortBy(this.materialsSummary, x => x.A1);
         });
       });
     });
