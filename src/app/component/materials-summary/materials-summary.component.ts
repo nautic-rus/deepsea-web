@@ -327,6 +327,7 @@ export class MaterialsSummaryComponent implements OnInit {
 
   projectChanged() {
     this.materials.splice(0, this.materials.length);
+    this.materialsSummary.splice(0, this.materialsSummary.length);
     this.nodes.splice(0, this.nodes.length);
     this.materialsFilled = false;
     this.materialManager.getMaterials(this.project.rkd).then(materialsValue => {
@@ -355,7 +356,13 @@ export class MaterialsSummaryComponent implements OnInit {
             console.log(this.materialPurchases);
           });
           this.materialsSummary.forEach(x => x.path = this.setPath(x.A1));
-          this.materialsSummary = _.sortBy(this.materialsSummary, x => x.path);
+          //this.nodes = _.sortBy(this.nodes,x => x.data);
+          let sorted: any[] = [];
+          this.nodes.forEach((node: any) => {
+            this.materialsSummary.filter(x => x.A1.startsWith(node.data)).forEach(x => sorted.push(x));
+          });
+          this.materialsSummary = sorted;
+          //this.materialsSummary = _.sortBy(this.materialsSummary, x => x.path);
         });
       });
     });
