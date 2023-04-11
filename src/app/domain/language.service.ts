@@ -297,6 +297,7 @@ export class LanguageService {
           case 'Приносим свои извинения.': return 'Please come back later...';
           case 'Швартовное': return 'Mooring';
           case 'Добавить': return 'Add';
+          case 'Добавить материал': return 'Add material';
           case 'Копировать': return 'Copy material';
           case 'Редактировать': return 'Edit';
           case 'Номер': return 'Number';
