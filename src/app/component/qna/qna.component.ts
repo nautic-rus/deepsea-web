@@ -174,5 +174,17 @@ export class QnaComponent implements OnInit {
     this.showCompleted = !this.showCompleted;
     this.applyFilters();
   }
+  localeDepartment(department: string): any {
+    if (this.t.language == 'ru'){
+      switch (department) {
+        case 'Hull': return 'Корпусный';
+        case 'System': return 'Системный';
+        case 'Electric': return 'Электротехнический';
+        case 'Accommodation': return 'Достройки';
+        case 'Devices': return 'Устройств';
+        default: return department;
+      }
+    }
+  }
 
 }

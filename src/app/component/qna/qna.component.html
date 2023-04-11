@@ -96,7 +96,7 @@
         <tr class="cursor-pointer row-table-doc-hover" (click)="openQuestion(q.id)">
           <td class="text-14">{{q.id}}</td>
           <td class="text-14">{{getProject(q.project)}}</td>
-          <td class="text-14">{{q.department}}</td>
+          <td class="text-14">{{localeDepartment(q.department)}}</td>
           <td class="text-14">
             <span [innerHTML]="questionStatus(q.status) | safeHtml"></span>
           </td>
