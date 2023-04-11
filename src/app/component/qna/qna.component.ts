@@ -54,6 +54,7 @@ export class QnaComponent implements OnInit {
           data: res
         }).onClose.subscribe(res => {
           this.fillQNA();
+          this.router.navigate([], {queryParams: {taskId: null}});
         });
       }
     });
