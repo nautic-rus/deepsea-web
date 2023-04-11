@@ -131,8 +131,6 @@
                      [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">
               <ng-template pTemplate="header">
                 <tr class="df">
-                  <th pSortableColumn="cloud" class="max-width-50 cxy">Pos
-                  </th>
                   <th pSortableColumn="A2" class="cxy min-width-360 w-50">Name
                     <p-sortIcon field="A2"></p-sortIcon>
                   </th>
@@ -148,7 +146,7 @@
                   <th pSortableColumn="A7" class="cxy min-width-20">Total weight
                     <p-sortIcon field="A7"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="A8" class="cxy min-width-20">Documents
+                  <th pSortableColumn="A8" class="cxy min-width-20">Path
                     <p-sortIcon field="A8"></p-sortIcon>
                   </th>
                   <th pSortableColumn="A1" class="cxy min-width-20">Code
@@ -161,9 +159,6 @@
               </ng-template>
               <ng-template pTemplate="body" let-material let-i="rowIndex">
                 <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-                  <td class="max-width-50">
-                    {{i + 1}}
-                  </td>
                   <td class="min-width-360 w-50 text-small">{{material.A2}}({{material.A3}})</td>
                   <td class="min-width-20 w-5 cx text-small">{{material.A4}}</td>
                   <td class="min-width-20 w-5 cx text-small">{{material.A5}}</td>
@@ -171,9 +166,7 @@
                   <td class="min-width-20 w-5 cx text-small">{{material.A7}}</td>
                   <td class="min-width-20 w-5 text-small">
                    <div class="df flex-column text-small">
-                     <div *ngFor="let doc of material.A8.split(',')">
-                       {{doc}}
-                     </div>
+                     <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
                    </div>
                   </td>
                   <td class="min-width-20 w-5 cx text-small">
