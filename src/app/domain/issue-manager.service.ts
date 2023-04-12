@@ -230,7 +230,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На удержании</span>' : 'На удержании';
           case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Назначен ответственный</span>' : 'Назначен ответственный';
           case 'Joined': return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Объединен</span>' : 'Объединен';
-          case 'Checked': return styled ? '<span style="color: #5D9980; background-color: #82D8B5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Проверено</span>' : 'Проверено';
+          case 'Checked': return styled ? '<span style="color: #507667; background-color: #82d8b596; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Проверено</span>' : 'Проверено';
 
           default: return input;
         }
@@ -267,7 +267,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Hold</span>' : 'Hold';
           case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Assign responsible</span>' : 'Assign responsible';
           case 'Joined': return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Joined</span>' : 'Joined';
-          case 'Checked': return styled ? '<span style="color: #5D9980; background-color: #82D8B5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Checked</span>' : 'Checked';
+          case 'Checked': return styled ? '<span style="color: #507667; background-color: #82d8b596; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Checked</span>' : 'Checked';
 
 
           default: return input;
