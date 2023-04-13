@@ -103,16 +103,19 @@
                             </div>
                             <div class="title-name flex-end" *ngIf="cable.from_eq != ''">{{cable.from_eq}}</div>
                           </div>
-                          <div class="df flex-end">
+                          <div class="flex-end">
                             <div class="attribute mr-10 text-table-col cxy"
                                  *ngIf="cable.from_zone_desc != ''">{{cable.from_zone_desc}}</div>
                             <div class="title-name cy" *ngIf="cable.from_zone != ''">{{cable.from_zone}}</div>
                           </div>
-                          <div *ngIf="cable.from_system != ''" class="grid-from-system">
-                            <div
-                              class="attribute mr-10 text-table-col flex-end"> {{cable.from_system.split(' ').splice(1).join(' ')}}</div>
-                            <div
-                              class="title-name">{{cable.from_system.split(' ')[0].replace('.', '').split('-').splice(1, 3).join('-')}}</div>
+
+                          <div *ngIf="cable.from_system != ''">
+                            <div class="flex-end">
+                              <div class="attribute mr-10 text-table-col flex-end">
+                                <div>{{cable.from_system.split(' ').splice(1).join(' ')}}</div>
+                              </div>
+                              <div class="title-name width-fit">{{cable.from_system.split(' ')[0].replace('.', '').split('-').splice(1, 3).join('-')}}</div>
+                            </div>
                           </div>
                         </div>
                         <div>
@@ -136,16 +139,14 @@
                           <div class="df cursor-pointer hover-row"
                                (click)="onClickToEquipment(cable)">
                             <div class="title-name mr-10" *ngIf="cable.from_eq != ''">{{cable.from_eq}}</div>
-                            <div class="attribute mr-10 text-table-col сч" *ngIf="cable.to_eq_id != ''">
+                            <div class="attribute mr-10 text-table-col flex-end" *ngIf="cable.to_eq_id != ''">
                               ({{cable.to_eq_id}})
                             </div>
-                            <div class="attribute text-table-col cx"
-                                 *ngIf="cable.to_eq_desc != ''">{{cable.to_eq_desc}}</div>
+                            <div class="attribute text-table-col flex-end" *ngIf="cable.to_eq_desc != ''">{{cable.to_eq_desc}}</div>
                           </div>
                           <div class="df">
                             <div class="title-name mr-10 cy" *ngIf="cable.to_zone != ''">{{cable.to_zone}}</div>
-                            <div class="attribute text-table-col cxy"
-                                 *ngIf="cable.to_zone_desc != ''">{{cable.to_zone_desc}}</div>
+                            <div class="attribute text-table-col cxy" *ngIf="cable.to_zone_desc != ''">{{cable.to_zone_desc}}</div>
                           </div>
                           <div *ngIf="cable.to_system != ''" class="grid-to-system">
                             <div
