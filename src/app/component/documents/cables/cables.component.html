@@ -108,11 +108,11 @@
                                  *ngIf="cable.from_zone_desc != ''">{{cable.from_zone_desc}}</div>
                             <div class="title-name cy" *ngIf="cable.from_zone != ''">{{cable.from_zone}}</div>
                           </div>
-                          <div *ngIf="cable.from_system != ''" class="df flex-end">
+                          <div *ngIf="cable.from_system != ''" class="grid-from-system">
                             <div
-                              class="attribute mr-10 text-table-col"> {{cable.from_system.split(' ').splice(1).join(' ')}}</div>
+                              class="attribute mr-10 text-table-col flex-end"> {{cable.from_system.split(' ').splice(1).join(' ')}}</div>
                             <div
-                              class="title-name">{{cable.from_system.split(' ')[0].replace('.', '')}}</div>
+                              class="title-name">{{cable.from_system.split(' ')[0].replace('.', '').split('-').splice(1, 3).join('-')}}</div>
                           </div>
                         </div>
                         <div>
@@ -147,9 +147,9 @@
                             <div class="attribute text-table-col cxy"
                                  *ngIf="cable.to_zone_desc != ''">{{cable.to_zone_desc}}</div>
                           </div>
-                          <div *ngIf="cable.to_system != ''" class="df flex-end">
+                          <div *ngIf="cable.to_system != ''" class="grid-to-system">
                             <div
-                              class="title-name">{{cable.to_system.split(' ')[0].replace('.', '')}}</div>
+                              class="title-name">{{cable.to_system.split(' ')[0].replace('.', '').split('-').splice(1, 3).join('-')}}</div>
                             <div
                               class="attribute mr-10 text-table-col"> {{cable.to_system.split(' ').splice(1).join(' ')}}</div>
                           </div>
