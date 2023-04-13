@@ -1123,7 +1123,7 @@
 
 .card-grid-eq {
   display: grid;
-  grid-template-rows: 20% 20% 40% 20%;
+  grid-template-rows: 15% 15% 55% 15%;
 }
 
 .cable_info {
@@ -1213,7 +1213,7 @@
 
 .bottom-grid {
   display: grid;
-  grid-template-columns: 4fr 1fr 4fr;
+  grid-template-columns: 8fr 3fr 8fr;
 }
 
 .top-line-card {
@@ -1492,6 +1492,16 @@
 .grid-zone {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.grid-from-system {
+  display: grid;
+  grid-template-columns: 85% 15%;
+}
+
+.grid-to-system {
+  display: grid;
+  grid-template-columns: 15% 85%;
 }
 
 .zone {
