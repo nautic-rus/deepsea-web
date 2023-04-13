@@ -67,6 +67,38 @@ export class MaterialsSummaryComponent implements OnInit {
       this.projects = res;
     });
     this.innerWidth = window.innerWidth;
+    setTimeout(() => {
+      this.selectedView = 'list';
+    }, 1000);
+    //this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x));
+    this.project = '';
+    this.materialManager.getMaterials(this.project).then(res => {
+      res.forEach(m => m.materialCloudDirectory = '');
+      this.materials = res;
+      this.materialsSrc = res;
+      this.materialManager.getMaterialNodes(this.project).then(res => {
+        this.nodesSrc = res;
+        if (this.project == '000000'){
+          this.nodes = this.getNodes2(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code, 2);
+          });
+        }
+        else{
+          this.nodes = this.getNodes(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code);
+          });
+        }
+      });
+      this.materialsSrc = [...this.materials];
+      for (let x = 0; x < 10; x ++){
+        this.materials.push(null);
+      }
+      this.materialsFilled = true;
+    });
   }
   setPath(code: string, length = 3){
     let count = 1;
@@ -80,6 +112,44 @@ export class MaterialsSummaryComponent implements OnInit {
     }
     return path.split('/').filter(x => x != '');
   }
+  searchChange() {
+    if (this.selectedView == 'tiles'){
+      this.materials = this.materialsSrc.filter(x => {
+        let notNull = x != null;
+        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
+        let findInTranslate = false;
+        if (x.translations != null){
+          x.translations.forEach((y: any) => {
+            if ((y.name.toLowerCase() + y.description.toLowerCase()).includes(this.search.toLowerCase().trim())){
+              findInTranslate = true;
+            }
+          });
+        }
+        return notNull && (findInName || findInTranslate);
+      });
+      console.log(this.materials);
+      for (let x = 0; x < 10; x ++){
+        this.materials.push(null);
+      }
+    }
+    else{
+      this.materials = this.materialsSrc.filter(x => {
+        let notNull = x != null;
+        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
+        let findInTranslate = false;
+        if (x.translations != null){
+          x.translations.forEach((y: any) => {
+            if ((y.name.toLowerCase() + y.description.toLowerCase()).includes(this.search.toLowerCase().trim())){
+              findInTranslate = true;
+            }
+          });
+        }
+        return notNull && (findInName || findInTranslate);
+      });
+      console.log(this.materials);
+    }
+  }
+
   createNode(node: any){
     if (this.project == '000000'){
       this.addNew = true;
@@ -255,46 +325,9 @@ export class MaterialsSummaryComponent implements OnInit {
     return res;
   }
 
-  searchChange() {
-    if (this.selectedView == 'tiles'){
-      this.materials = this.materialsSrc.filter(x => {
-        let notNull = x != null;
-        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
-        let findInTranslate = false;
-        if (x.translations != null){
-          x.translations.forEach((y: any) => {
-            if ((y.name.toLowerCase() + y.description.toLowerCase()).includes(this.search.toLowerCase().trim())){
-              findInTranslate = true;
-            }
-          });
-        }
-        return notNull && (findInName || findInTranslate);
-      });
-      console.log(this.materials);
-      for (let x = 0; x < 10; x ++){
-        this.materials.push(null);
-      }
-    }
-    else{
-      this.materials = this.materialsSrc.filter(x => {
-        let notNull = x != null;
-        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
-        let findInTranslate = false;
-        if (x.translations != null){
-          x.translations.forEach((y: any) => {
-            if ((y.name.toLowerCase() + y.description.toLowerCase()).includes(this.search.toLowerCase().trim())){
-              findInTranslate = true;
-            }
-          });
-        }
-        return notNull && (findInName || findInTranslate);
-      });
-      console.log(this.materials);
-    }
-  }
-
   projectChanged() {
     this.materials.splice(0, this.materials.length);
+    this.materialsSummary.splice(0, this.materialsSummary.length);
     this.nodes.splice(0, this.nodes.length);
     this.materialsFilled = false;
     this.materialManager.getMaterials(this.project.rkd).then(materialsValue => {
@@ -322,6 +355,14 @@ export class MaterialsSummaryComponent implements OnInit {
             this.materialPurchases = materialPurchases;
             console.log(this.materialPurchases);
           });
+          this.materialsSummary.forEach(x => x.path = this.setPath(x.A1));
+          //this.nodes = _.sortBy(this.nodes,x => x.data);
+          // let sorted: any[] = [];
+          // this.nodes.forEach((node: any) => {
+          //   this.materialsSummary.filter(x => x.A1.startsWith(node.data)).forEach(x => sorted.push(x));
+          // });
+          // this.materialsSummary = sorted;
+          this.materialsSummary = _.sortBy(this.materialsSummary, x => x.A1);
         });
       });
     });

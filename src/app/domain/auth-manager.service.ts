@@ -31,7 +31,7 @@ export class AuthManagerService {
   filled = false;
 
   constructor(private cookie: CookieService, private http: HttpClient, private userService: UserService, private router: Router, private messageService: MessageService, private l: LanguageService) {
-    console.log('init auth');
+    //console.log('init auth');
     if (!this.filled){
       this.fillUsers();
     }
@@ -80,7 +80,7 @@ export class AuthManagerService {
     this.router.navigate(['login']);
   }
   fillUsers(){
-    console.log('fill users');
+    //console.log('fill users');
     this.getUsers().then(data => {
       this.filled = true;
       //console.log(data);
@@ -168,7 +168,7 @@ export class AuthManagerService {
     return this.user;
   }
   async getUsers(): Promise<User[]> {
-    console.log('get users');
+    //console.log('get users');
     return await this.http.get<User[]>(props.http + '/users').toPromise();
   }
   async checkAuth(qParams: any = null, noGuard = false) {

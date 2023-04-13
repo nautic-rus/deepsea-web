@@ -149,7 +149,7 @@
                         <div class="w-20 table-header-column cy">{{t.tr('Parts')}}</div>
                         <div class="w-35 table-header-column cy">{{t.tr('Weight')}}</div>
                       </div>
-                      <div class="text-center-y info-row">
+                      <div class="text-center-y info-row df">
                         <div class="w-25 table-body cy">
                           <span [innerHTML]="roundUp(plate.wastages).toString() | highLight: searchPlates"></span>
                         </div>
@@ -177,7 +177,7 @@
                         <div class="w-50 table-header-column cy">{{t.tr('Parts Weight')}}</div>
                         <div class="w-50 table-header-column cy">{{t.tr('Parts QTY')}}</div>
                       </div>
-                      <div class="text-center-y info-row">
+                      <div class="text-center-y info-row df">
                         <div class="w-50 table-body">
                           <span [innerHTML]="round(plate.realWeight, 1).toString() | highLight: searchPlates"></span>
                           <span class="pl-2">kg</span>

@@ -76,6 +76,9 @@ export class IssueManagerService {
   async getIssueDetails(id: number): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id}}).toPromise();
   }
+  async getIssueDetailsByDocNumber(docNumber: string): Promise<Issue> {
+    return await this.http.get<Issue>(props.http + '/issueDetails', {params: {docNumber}}).toPromise();
+  }
   async getHullPartList(docNum: string): Promise<HullPL> {
     return await this.http.get<HullPL>(props.httpSpec + '/getHullPartList', {params: {docNum}}).toPromise();
   }
@@ -206,7 +209,7 @@ export class IssueManagerService {
           case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Приостановлено</span>' : 'Приостановлено';
           case 'Archive': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Архив</span>' : 'Архив';
           case 'Not resolved': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не исполнено</span>' : 'Не исполнено';
-          case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Закрыто</span>' : 'Закрыто';
+          case 'Closed': return styled ? '<span style="color: #454955; background-color: #dae4ff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Закрыто</span>' : 'Закрыто';
           case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На согласовании</span>' : 'На согласовании';
           case 'Approved': return styled ? '<span style="color: #2e604b; background-color: #ceede1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Согласовано</span>' : 'Согласовано';
           case 'Not Approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Не согласовано</span>' : 'Не согласовано';
@@ -227,7 +230,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">На удержании</span>' : 'На удержании';
           case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Назначен ответственный</span>' : 'Назначен ответственный';
           case 'Joined': return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Объединен</span>' : 'Объединен';
-          case 'Checked': return styled ? '<span style="color: #5D9980; background-color: #82D8B5; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Проверено</span>' : 'Проверено';
+          case 'Checked': return styled ? '<span style="color: #507667; background-color: #82d8b596; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Проверено</span>' : 'Проверено';
 
           default: return input;
         }
@@ -235,15 +238,15 @@ export class IssueManagerService {
       default:{
         switch (input) {
           case 'In Work': return styled ? '<span style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Work</span>' : 'In Work';
-          case 'Resolved': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Completed</span>' : 'Completed';
+          case 'Resolved': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Resolved</span>' : 'Resolved';
           case 'New': return styled ? '<span style="color: #23547b; background-color: #b3e5fc; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">New</span>' : 'New';
-          case 'Rejected': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Declined</span>' : 'Declined';
+          case 'Rejected': return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Rejected</span>' : 'Rejected';
           case 'Check': return styled ? '<span style="color: #694382; background-color: #eccfff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">On Check</span>' : 'On Check';
           case 'In Rework': return styled ? '<span style="color: #3f6b73; background-color: #cbebf1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">In Rework</span>' : 'In Rework';
           case 'Paused': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Paused</span>' : 'Paused';
           case 'Archive': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Archive</span>' : 'Archive';
           case 'Not resolved': return styled ? '<span style="color: #8a5340; background-color: #feedaf; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Not resolved</span>' : 'Not resolved';
-          case 'Closed': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Closed</span>' : 'Closed';
+          case 'Closed': return styled ? '<span style="color: #454955; background-color: #dae4ff; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Closed</span>' : 'Closed';
           case 'Send to Approval': return styled ? '<span style="color: #805b36; background-color: #ffd8b2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">On Approval</span>' : 'On Approval';
           case 'Approved': return styled ? '<span style="color: #2e604b; background-color: #ceede1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Approved</span>' : 'Approved';
           case 'Not Approved': return styled ? '<span style="color: #a3392b; background-color: #F5BBB2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Not Approved</span>' : 'Not Approved';
@@ -264,7 +267,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<span style="color: #9d4c22; background-color: #fc763585; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Hold</span>' : 'Hold';
           case 'Assign responsible': return styled ? '<span style="color: #686e46; background-color: #e1efa1; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Assign responsible</span>' : 'Assign responsible';
           case 'Joined': return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Joined</span>' : 'Joined';
-          case 'Checked': return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Checked</span>' : 'Checked';
+          case 'Checked': return styled ? '<span style="color: #507667; background-color: #82d8b596; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 12px; letter-spacing: .3px;">Checked</span>' : 'Checked';
 
 
           default: return input;
@@ -308,6 +311,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">На удержание</span></div>' : 'На удержание';
           case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Назначить ответственного</span></div>' : 'Назначить ответственного';
           case 'Joined': return styled ? '<div class="buttons-pick-join"><span class="icon-join cxy"><img src="assets/icons/join.svg" class="rotate-90" height="20"></span><span class="cxy button-text">Объединить</span></div>' : 'Объединить';
+          case 'Checked': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Проверено</span></div>' : 'Проверено';
 
 
           default: return input;
@@ -346,6 +350,7 @@ export class IssueManagerService {
           case 'Hold': return styled ? '<div class="buttons-pick-problem"><span class="icon-problem cxy"><img src="assets/icons/problem.svg" height="18"></span><span class="cxy button-text">Hold</span></div>' : 'Hold';
           case 'Assign responsible': return styled ? '<div class="buttons-pick-rs"><span class="icon-rs cxy"><img src="assets/icons/assign.png"></span><span class="cxy button-text">Assign responsible</span></div>' : 'Assign responsible';
           case 'Joined': return styled ? '<div class="buttons-pick-join"><span class="icon-join cxy"><img src="assets/icons/join.svg" class="rotate-90" height="20"></span><span class="cxy button-text">Join</span></div>' : 'Join';
+          case 'Checked': return styled ? '<div class="buttons-pick-accept"><span class="icon-accept cxy"><img src="assets/icons/accept.svg" height="18"></span><span class="cxy button-text">Checked</span></div>' : 'Checked';
 
 
           default: return input;

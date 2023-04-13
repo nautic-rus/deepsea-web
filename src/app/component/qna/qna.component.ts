@@ -54,6 +54,7 @@ export class QnaComponent implements OnInit {
           data: res
         }).onClose.subscribe(res => {
           this.fillQNA();
+          this.router.navigate([], {queryParams: {taskId: null}});
         });
       }
     });
@@ -173,6 +174,28 @@ export class QnaComponent implements OnInit {
   switchCompleted(){
     this.showCompleted = !this.showCompleted;
     this.applyFilters();
+  }
+  localeDepartment(department: string): any {
+    if (this.t.language == 'ru'){
+      switch (department) {
+        case 'Hull': return 'Корпусный';
+        case 'System': return 'Системный';
+        case 'Electric': return 'Электротехнический';
+        case 'Accommodation': return 'Достройки';
+        case 'Devices': return 'Устройств';
+        default: return department;
+      }
+    }
+    else{
+      switch (department) {
+        case 'Hull': return 'Hull';
+        case 'System': return 'System';
+        case 'Electric': return 'Electric';
+        case 'Accommodation': return 'Accommodation';
+        case 'Devices': return 'Devices';
+        default: return department;
+      }
+    }
   }
 
 }

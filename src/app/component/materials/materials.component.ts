@@ -47,6 +47,7 @@ export class MaterialsComponent implements OnInit {
     },
   ];
   addNew = false;
+  forNode: any;
   newNode: any = {};
   newNodeSuffix = '';
   selectedView: string = '';
@@ -143,6 +144,7 @@ export class MaterialsComponent implements OnInit {
     else{
       this.addNew = true;
       this.newNode = {};
+      this.forNode = node;
       this.newNodeSuffix = '###';
       this.newNode.data = node.data;
       this.newNode.label = '';
@@ -169,7 +171,7 @@ export class MaterialsComponent implements OnInit {
       res.push({
         data: n.data,
         children: this.getNodes(rootNodes, materials, n.data),
-        label: n.label,
+        label: n.label + ' (' + n.data.substr(parent.length) + ')',
         count: materials.filter(x => x.code.startsWith(n.data)).length
       });
     });
@@ -299,6 +301,7 @@ export class MaterialsComponent implements OnInit {
   }
 
   contextMenu(event: any, contextMenu: ContextMenu) {
+    console.log(event.node.data.length);
     if (event.node.data.length >= 12){
       this.items = [
         this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
@@ -312,22 +315,24 @@ export class MaterialsComponent implements OnInit {
         }
       ];
     }
-    this.items = [
-      {
-        label: 'New Folder',
-        icon: 'pi pi-fw pi-plus',
-        command: () => this.createNode(event.node)
-      },
-      this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
-        label: 'Remove',
-        icon: 'pi pi-fw pi-trash',
-        command: (event: any) => this.alertNodeContains()
-      } : {
-        label: 'Remove',
-        icon: 'pi pi-fw pi-trash',
-        command: () => this.removeNode(event.node)
-      }
-    ];
+    else{
+      this.items = [
+        {
+          label: 'New Folder',
+          icon: 'pi pi-fw pi-plus',
+          command: () => this.createNode(event.node)
+        },
+        this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
+          label: 'Remove',
+          icon: 'pi pi-fw pi-trash',
+          command: (event: any) => this.alertNodeContains()
+        } : {
+          label: 'Remove',
+          icon: 'pi pi-fw pi-trash',
+          command: () => this.removeNode(event.node)
+        }
+      ];
+    }
   }
 
   hide() {
@@ -342,32 +347,33 @@ export class MaterialsComponent implements OnInit {
   save() {
     this.newNode.data += this.newNodeSuffix;
     this.materialManager.updateMaterialNode(this.project, this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
-      this.materialManager.getMaterialNodes(this.project).then(res => {
-        if (this.project == '000000'){
-          this.nodes = this.getNodes2(res, this.materialsSrc, '');
-          this.setParents(this.nodes, '');
-          this.materials.filter(x => x != null).forEach((x: any) => {
-            x.path = this.setPath(x.code, 2);
-          });
-        }
-        else{
-          this.nodes = this.getNodes(res, this.materialsSrc, '');
-          this.setParents(this.nodes, '');
-          this.materials.filter(x => x != null).forEach((x: any) => {
-            x.path = this.setPath(x.code);
-          });
-        }
-        this.hide();
-      });
+      this.newNode.children = [];
+      this.forNode.children.push(this.newNode);
+      this.setParents(this.nodes, '');
+      this.hide();
+      // this.materialManager.getMaterialNodes(this.project).then(res => {
+      //   if (this.project == '000000'){
+      //     this.nodes = this.getNodes2(res, this.materialsSrc, '');
+      //     this.setParents(this.nodes, '');
+      //     this.materials.filter(x => x != null).forEach((x: any) => {
+      //       x.path = this.setPath(x.code, 2);
+      //     });
+      //   }
+      //   else{
+      //     this.nodes = this.getNodes(res, this.materialsSrc, '');
+      //     this.setParents(this.nodes, '');
+      //     this.materials.filter(x => x != null).forEach((x: any) => {
+      //       x.path = this.setPath(x.code);
+      //     });
+      //   }
+      //   this.hide();
+      // });
     });
   }
 
   removeNode(node: any) {
     this.materialManager.updateMaterialNode(this.project, node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
-      this.materialManager.getMaterialNodes(this.project).then(res => {
-        this.nodes = this.getNodes(res, this.materialsSrc, '');
-        this.setParents(this.nodes, '');
-      });
+      node.parent.children.splice(this.forNode.children.indexOf(node), 1);
     });
   }
 
