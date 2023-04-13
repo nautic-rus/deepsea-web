@@ -47,6 +47,7 @@ export class MaterialsComponent implements OnInit {
     },
   ];
   addNew = false;
+  forNode: any;
   newNode: any = {};
   newNodeSuffix = '';
   selectedView: string = '';
@@ -143,6 +144,7 @@ export class MaterialsComponent implements OnInit {
     else{
       this.addNew = true;
       this.newNode = {};
+      this.forNode = node;
       this.newNodeSuffix = '###';
       this.newNode.data = node.data;
       this.newNode.label = '';
@@ -345,32 +347,33 @@ export class MaterialsComponent implements OnInit {
   save() {
     this.newNode.data += this.newNodeSuffix;
     this.materialManager.updateMaterialNode(this.project, this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
-      this.materialManager.getMaterialNodes(this.project).then(res => {
-        if (this.project == '000000'){
-          this.nodes = this.getNodes2(res, this.materialsSrc, '');
-          this.setParents(this.nodes, '');
-          this.materials.filter(x => x != null).forEach((x: any) => {
-            x.path = this.setPath(x.code, 2);
-          });
-        }
-        else{
-          this.nodes = this.getNodes(res, this.materialsSrc, '');
-          this.setParents(this.nodes, '');
-          this.materials.filter(x => x != null).forEach((x: any) => {
-            x.path = this.setPath(x.code);
-          });
-        }
-        this.hide();
-      });
+      this.newNode.children = [];
+      this.forNode.children.push(this.newNode);
+      this.setParents(this.nodes, '');
+      this.hide();
+      // this.materialManager.getMaterialNodes(this.project).then(res => {
+      //   if (this.project == '000000'){
+      //     this.nodes = this.getNodes2(res, this.materialsSrc, '');
+      //     this.setParents(this.nodes, '');
+      //     this.materials.filter(x => x != null).forEach((x: any) => {
+      //       x.path = this.setPath(x.code, 2);
+      //     });
+      //   }
+      //   else{
+      //     this.nodes = this.getNodes(res, this.materialsSrc, '');
+      //     this.setParents(this.nodes, '');
+      //     this.materials.filter(x => x != null).forEach((x: any) => {
+      //       x.path = this.setPath(x.code);
+      //     });
+      //   }
+      //   this.hide();
+      // });
     });
   }
 
   removeNode(node: any) {
     this.materialManager.updateMaterialNode(this.project, node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
-      this.materialManager.getMaterialNodes(this.project).then(res => {
-        this.nodes = this.getNodes(res, this.materialsSrc, '');
-        this.setParents(this.nodes, '');
-      });
+      node.parent.children.splice(this.forNode.children.indexOf(node), 1);
     });
   }
 
