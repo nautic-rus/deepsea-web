@@ -644,28 +644,30 @@ export class WorkHoursComponent implements OnInit {
     if (freeHour.task_id != 0){
       freeHour = this.pHours.filter(x => x.user == freeHour.user && x.task_id == freeHour.task_id)[0];
     }
-    let plannedHours = this.pHours.filter(x => x.user == user && x.id >= freeHour.id);
-    let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
-    let assign: any[] = [];
-    _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
-      assign.push({task: group[0].task_id, hours: group.length});
-    });
-    forkJoin(tasks.map(x => this.auth.deleteUserTask(user,x, 0))).subscribe({
-      next: value => {
-        concat(assign.reverse().map((x: any) => this.auth.planUserTask(user, x.task, freeHour.id, x.hours, 0).subscribe())).subscribe({
-          next: assignRes => {
-            this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
-              this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
-                this.plannedHours = plannedHoursAlready;
-                this.pHours = planHours;
-                this.fillDays();
-                this.filterIssues();
-                this.loading = false;
+    this.auth.getUsersPlanHours(user, 0, 1).subscribe(userPlanHours => {
+      let plannedHours = userPlanHours.filter((x: any) => x.id >= freeHour.id);
+      let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
+      let assign: any[] = [];
+      _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
+        assign.push({task: group[0].task_id, hours: group.length});
+      });
+      forkJoin(tasks.map(x => this.auth.deleteUserTask(user,x, 0))).subscribe({
+        next: value => {
+          concat(assign.reverse().map((x: any) => this.auth.planUserTask(user, x.task, freeHour.id, x.hours, 0).subscribe())).subscribe({
+            next: assignRes => {
+              this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
+                this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
+                  this.plannedHours = plannedHoursAlready;
+                  this.pHours = planHours;
+                  this.fillDays();
+                  this.filterIssues();
+                  this.loading = false;
+                });
               });
-            });
-          }
-        });
-      }
+            }
+          });
+        }
+      });
     });
   }
 

@@ -190,7 +190,7 @@ export class MaterialsSummaryComponent implements OnInit {
         data: n.data,
         children: this.getNodes(rootNodes, materials, n.data),
         label: n.label,
-        count: this.materialsSummarySrc.filter(x => x.A1.startsWith(n.data)).length
+        count: this.materialsSummarySrc.filter(x => x.code.startsWith(n.data)).length
       });
     });
     return res;
@@ -228,7 +228,7 @@ export class MaterialsSummaryComponent implements OnInit {
     if (this.selectedNode != null){
       this.selectedNodePath = this.getNodePath(this.selectedNode);
       this.selectedNodeCode = this.selectedNode.data;
-      this.materialsSummary = this.materialsSummarySrc.filter(x => x.A1.startsWith(this.selectedNodeCode));
+      this.materialsSummary = this.materialsSummarySrc.filter(x => x.code.startsWith(this.selectedNodeCode));
     }
   }
   selectMaterial(material: any) {
@@ -355,14 +355,14 @@ export class MaterialsSummaryComponent implements OnInit {
             this.materialPurchases = materialPurchases;
             console.log(this.materialPurchases);
           });
-          this.materialsSummary.forEach(x => x.path = this.setPath(x.A1));
+          this.materialsSummary.forEach(x => x.path = this.setPath(x.code));
           //this.nodes = _.sortBy(this.nodes,x => x.data);
           // let sorted: any[] = [];
           // this.nodes.forEach((node: any) => {
           //   this.materialsSummary.filter(x => x.A1.startsWith(node.data)).forEach(x => sorted.push(x));
           // });
           // this.materialsSummary = sorted;
-          this.materialsSummary = _.sortBy(this.materialsSummary, x => x.A1);
+          this.materialsSummary = _.sortBy(this.materialsSummary, x => x.code);
         });
       });
     });
