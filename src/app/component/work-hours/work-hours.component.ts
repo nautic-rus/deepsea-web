@@ -52,7 +52,7 @@ export interface TaskOfDay{
 })
 export class WorkHoursComponent implements OnInit {
 
-  departments: LV[] = [];
+  departments: any[] = [];
   department = '';
   today = new Date();
   todayStatic = new Date();
@@ -151,7 +151,8 @@ export class WorkHoursComponent implements OnInit {
       //this.departments = _.uniq(this.users.map(x => x.department)).map(x => new LV(x));
       //this.selectedDepartments = this.departments.map(x => x.value);
       this.issueManager.getDepartments().subscribe(departments => {
-        this.departments = departments;
+        this.departments = departments.filter(x => x.visible_man_hours == 1);
+        this.selectedDepartments = [...this.departments.map(x => x.name)];
       });
     });
     this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
