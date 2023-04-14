@@ -4,7 +4,7 @@ import {Table} from "primeng/table";
 import {LanguageService} from "../../domain/language.service";
 import {MaterialManagerService} from "../../domain/material-manager.service";
 import {MessageService} from "primeng/api";
-import {DialogService} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {MaterialNode} from "../../domain/classes/material-node";
 import _ from "underscore";
@@ -14,6 +14,8 @@ import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AddMaterialStockComponent} from "./add-material-stock/add-material-stock.component";
+import {PartsQtyComponent} from "../billing/parts-qty/parts-qty.component";
+import {DrawingShowComponent} from "./drawing-show/drawing-show.component";
 
 @Component({
   selector: 'app-materials-summary',
@@ -59,7 +61,7 @@ export class MaterialsSummaryComponent implements OnInit {
     this.innerWidth = window.innerWidth;
   }
 
-  constructor(public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
+  constructor(public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.project = '';
@@ -421,5 +423,16 @@ export class MaterialsSummaryComponent implements OnInit {
       res = 4;
     }
     return res;
+  }
+  showDrawings(drawing: any) {
+    this.dialogService.open(DrawingShowComponent, {
+      showHeader: false,
+      modal: true,
+      data: [drawing],
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
   }
 }

@@ -173,6 +173,7 @@ import { GenerateEspComponent } from './component/documents/hull-esp/generate-es
 import { MaterialsSummaryComponent } from './component/materials-summary/materials-summary.component';
 import { DoclistComponent } from './component/doclist/doclist.component';
 import { AddMaterialStockComponent } from './component/materials-summary/add-material-stock/add-material-stock.component';
+import { DrawingShowComponent } from './component/materials-summary/drawing-show/drawing-show.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -296,6 +297,7 @@ Quill.register('modules/imageResize', ImageResize);
     MaterialsSummaryComponent,
     DoclistComponent,
     AddMaterialStockComponent,
+    DrawingShowComponent,
   ],
     imports: [
         BrowserModule,
