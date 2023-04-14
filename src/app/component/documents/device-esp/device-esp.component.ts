@@ -575,6 +575,9 @@ export class DeviceEspComponent implements OnInit {
         this.issue = issue;
         this.fillRevisions();
       });
+      if (res == 'uploaded'){
+        this.issueManager.notifyDocUpload(this.issue.id);
+      }
     });
   }
   downloadFiles(group: string, revision: string) {

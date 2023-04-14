@@ -81,6 +81,7 @@ export class QnaComponent implements OnInit {
 
   }
   getProjectName(project: any){
+    return project.factory;
     let res = project.pdsp;
     if (res == ''){
       res = project.name;

@@ -731,6 +731,9 @@ export class HullEspComponent implements OnInit {
         this.issue = issue;
         this.fillRevisions();
       });
+      if (res == 'uploaded'){
+        this.issueManager.notifyDocUpload(this.issue.id);
+      }
     });
   }
 

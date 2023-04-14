@@ -49,6 +49,12 @@ export class IssueManagerService {
   async getIssueDepartments() {
     return await this.http.get<string[]>(props.http + '/issueDepartments').toPromise();
   }
+  getDepartments() {
+    return this.http.get<any[]>(props.http + '/departments');
+  }
+  notifyDocUpload(taskId: number) {
+    return this.http.get<any[]>(props.http + '/notifyDocUpload', {params: {taskId}});
+  }
   async getIssueProjects() {
     return await this.http.get<any[]>(props.http + '/issueProjects').toPromise();
   }
