@@ -1,0 +1,67 @@
+<div class="all-parts-container" >
+  <div class="header-parts">
+    <div *ngIf="drawing.name != ''" class="header-parts-text">{{drawing.name}}</div>
+    <div *ngIf="drawing.name == ''" class="header-parts-text">{{drawing.desc}}</div>
+    <div class="df">
+<!--      <div class="mr-30">-->
+<!--        <div (click)="exportXls()" class="materials-button xls-button cxy">-->
+<!--          <img src="assets/icons/xls2.svg" height="26">-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="parts-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+
+  </div>
+  <div class="">
+    <p-table #table [value]="drawing.documents"
+             [scrollable]="true"
+             scrollHeight="60vh"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             [reorderableColumns]="false"
+             [resizableColumns]="false"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll"
+             [globalFilterFields]="['code','block','name','description', 'weight']">
+      <ng-template pTemplate="header">
+        <tr class="df">
+          <th pSortableColumn="docNumber" class="lxy w-20">{{'Doc Number'}}
+            <p-sortIcon field="docNumber"></p-sortIcon>
+          </th>
+          <th pSortableColumn="rev" class="lxy w-20">{{t.tr('rev')}}
+            <p-sortIcon field="rev"></p-sortIcon>
+          </th>
+          <th pSortableColumn="date" class="lxy w-20">{{t.tr('Date')}}
+            <p-sortIcon field="date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="user" class="lxy w-20">{{t.tr('User')}}
+            <p-sortIcon field="user"></p-sortIcon>
+          </th>
+          <th pSortableColumn="units" class="lxy w-20">{{t.tr('Units')}}
+            <p-sortIcon field="units"></p-sortIcon>
+          </th>
+          <th pSortableColumn="qty" class="lxy w-20">{{t.tr('QTY')}}
+            <p-sortIcon field="qty"></p-sortIcon>
+          </th>
+          <th pSortableColumn="totalWeight" class="lxy w-20">{{t.tr('Total Weight kg')}}
+            <p-sortIcon field="totalWeight"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-material>
+        <tr class="cursor-pointer row-table-doc-hover">
+          <td class="w-20 text-14">{{material.docNumber}}</td>
+          <td class="w-20 text-14">{{material.rev}}</td>
+          <td class="w-20 text-14">{{getDate(material.date)}}</td>
+          <td class="w-20 text-14">{{auth.getUserName(material.user)}}</td>
+          <td class="w-20 text-14">{{material.units}}</td>
+          <td class="w-20 text-14">{{round(material.qty,1000)}}</td>
+          <td class="w-20 text-14">{{round(material.totalWeight, 1000)}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+</div>

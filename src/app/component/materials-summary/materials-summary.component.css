@@ -67,7 +67,7 @@
   padding: 15px 0 15px 0;
   width: 100%;
   min-width: 250px;
-  height: calc(100vh - 204px);
+  height: calc(100vh - 192px);
   background-color: #ffffff;
   border-radius: 10px;
   position: relative;
@@ -83,9 +83,10 @@
   padding: 2px 6px;
   cursor: pointer;
   border-radius: 6px;
-  height: fit-content;
+  height: 30px;
   color: white;
   width: fit-content;
+  min-width: 50px;
 }
 .materials-button-mini{
   height: 30px;
@@ -163,6 +164,17 @@
   padding: 10px;
   border-radius: 10px;
 }
+.dash-card-tile-list{
+  position: relative;
+  width: calc(100% - 10px);
+  height: 100%;
+  background-color: white;
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin-left: 10px;
+  display: grid;
+  grid-template-columns: 50px 2fr 1fr 1fr 1fr 1fr 1fr;
+}
 .top-row-doc{
   display: grid;
   grid-template-columns: auto auto;
@@ -184,8 +196,12 @@
 }
 .title-bold{
   font-weight: 500;
-  font-size: 15px;
+  font-size: 14px;
   color: #3a3a3a;
+}
+.tiles-card{
+  height: calc(86vh - 61px);
+  overflow: auto;
 }
 .text-medium{
   font-size: 13px;
@@ -193,7 +209,7 @@
   color: rgba(52, 58, 64, 0.65);
 }
 .kpl-flag{
-  padding: 2px 4px;
+  padding: 1px 4px;
   border-radius: 4px;
   font-weight: 500;
   font-size: 12px;
@@ -204,12 +220,23 @@
   height: fit-content;
 }
 .coef{
-  padding: 2px 4px;
+  padding: 1px 4px;
   border-radius: 4px;
   font-weight: 500;
   font-size: 12px;
   color: #fff;
   background-color: #6EC5FF;
+  width: fit-content;
+  letter-spacing: 1px;
+  height: fit-content;
+}
+.draw{
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  background-color: #7A929E;
   width: fit-content;
   letter-spacing: 1px;
   height: fit-content;
@@ -325,4 +352,26 @@
 }
 .text-small{
   font-size: small;
+}
+
+
+
+.dash-card-list{
+  height: 90px;
+}
+.one-cols{
+
+}
+.two-cols{
+  display: grid;
+  grid-template-rows: 55px 15px;
+}
+.three-cols{
+  display: grid;
+  grid-template-rows: 1fr 1.5fr;
+}
+.mini-extra-gray-text{
+  color: #4c566a;
+  font-weight: 500;
+  font-size: 12px;
 }

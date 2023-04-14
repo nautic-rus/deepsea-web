@@ -1,6 +1,6 @@
 <div class="all-page">
   <div class="">
-    <div class="card-head mb-20 df">
+    <div class="card-head mb-10 df">
       <div class="mr-10" *ngIf="projects.length > 0">
         <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionLabel="name" styleClass="width-170 border">
         </p-dropdown>
@@ -37,7 +37,7 @@
             </p-tree>
           </div>
         </div>
-        <div class="w-85">
+        <div class="w-85 tiles-card ">
           <div *ngIf="project == ''">
             <div class="cxy loading">
               <div class="cxy flex-column">
@@ -53,6 +53,78 @@
               </div>
             </div>
           </div>
+
+          <div *ngIf="selectedView == 'list'">
+            <div class="mb-10 cursor-pointer dash-card-list"  *ngFor="let material of materialsSummary; let j = index; let i= index">
+              <div class="dash-card-tile-list">
+                <div class="one-cols cxy">
+                  <div class="cxy" (click)="showDrawings(material); $event.stopPropagation();">
+                    <img class="cxy" src="assets/icons/eye-show.svg" height="30">
+                  </div>
+                </div>
+                <div class="px-10 two-cols">
+                  <div *ngIf="material.name != ''" class="title-bold cursor-default">{{material.name}}</div>
+                  <div *ngIf="material.name == ''" class="title-bold">{{material.desc}}</div>
+                  <div>
+                    <div class="line"></div>
+                    <div class="mm-text mt-2px">
+                      <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">Purchased</div>
+                  <div class="cxy">
+                    <div class="materials-button-purchased blue-button cxy mb-5" (click)="addStock(material.code, material.units)">
+                      <div class="mr-5 text-bold">{{getPurchasedCount(material.code)}}</div>
+                      <div class="">+</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">{{material.unitsValue}}</div>
+                  <div class="cxy">
+                    <div class="text-table-col">{{material.qty + ' ' + material.units}}</div>
+                  </div>
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">Unit Weight</div>
+                  <div class="cxy">
+                    <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                    <div class="text-table-col">{{material.weight + ' ' + 'kg'}}</div>
+                  </div>
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">Total Weight</div>
+                  <div class="cxy">
+                    <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                    <div class="text-table-col">{{material.weightTotal + ' ' + 'kg'}}</div>
+                  </div>
+                </div>
+                <div class="cxy">
+                  <div class="df position-relative content-end pr-10">
+                    <div class="trm">
+                      <span [innerHTML]="material.code | highLight: search"></span>
+                    </div>
+                    <div (click)="copyTrmCode(material.code, 't' + i + '-' + j)" class="trm-copy cursor-pointer cxy">
+                      <img src="assets/icons/trm.svg" height="12">
+                      <div class="copy-tooltip" [hidden]="!showTooltip('t' + i + '-' + j)">Copied!</div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+            <div class="empty-card-list"></div>
+
+
+
+          </div>
+
           <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
             <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="180">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
@@ -109,9 +181,9 @@
                       </div>
                     </div>
                     <div class="line"></div>
-                      <div class="mm-text mt-5">
-                        <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
-                      </div>
+                    <div class="mm-text mt-5">
+                      <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+                    </div>
                   </div>
                 </div>
               </ng-template>
@@ -119,78 +191,6 @@
           </div>
 
 
-          <div *ngIf="selectedView == 'list'" class="cards table-small">
-            <p-table #table [value]="materialsSummary"
-                     [scrollable]="true"
-                     scrollHeight="calc(100vh - 226px)"
-                     [virtualScroll]="true"
-                     [virtualRowHeight]="40"
-                     [reorderableColumns]="false"
-                     [resizableColumns]="false"
-                     styleClass="p-datatable-striped p-datatable-sm"
-                     [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">
-              <ng-template pTemplate="header">
-                <tr class="df">
-                  <th pSortableColumn="name" class="cxy min-width-360 w-50">Name
-                    <p-sortIcon field="name"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="units" class="cxy min-width-20">Units
-                    <p-sortIcon field="units"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="qty" class="cxy min-width-20">Qty
-                    <p-sortIcon field="qty"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="weight" class="cxy min-width-20">Unit weight
-                    <p-sortIcon field="weight"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="totalWeight" class="cxy min-width-20">Total weight
-                    <p-sortIcon field="totalWeight"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="path" class="cxy min-width-20">Path
-                    <p-sortIcon field="path"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="code" class="cxy min-width-20">Code
-                    <p-sortIcon field="code"></p-sortIcon>
-                  </th>
-                  <th pSortableColumn="purchased" class="cxy min-width-20">Purchased
-                    <p-sortIcon field="purchased"></p-sortIcon>
-                  </th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-material let-i="rowIndex">
-                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-                  <td class="min-width-360 w-50 text-small">{{material.name}}({{material.desc}})</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.units}}</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.qty}}</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.weight}}</td>
-                  <td class="min-width-20 w-5 cx text-small">{{material.weightTotal}}</td>
-                  <td class="min-width-20 w-5 text-small">
-                   <div class="df flex-column text-small">
-                     <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
-                   </div>
-                  </td>
-                  <td class="min-width-20 w-5 cx text-small">
-                    <div class="df">
-                      <div class="trm-materials">
-                        <span>{{material.code}}</span>
-                      </div>
-                      <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
-                        <img src="assets/icons/trm-sup.svg" height="14">
-                        <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="min-width-20 w-5 cx text-small">
-                    <div class="mr-10">{{getPurchasedCount(material.code)}}</div>
-                    <div class="materials-button-purchased light-green-button cxy" (click)="addStock(material.code, material.units)">
-                      <div class="">+</div>
-                      <div class="ml-5">Add</div>
-                    </div>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </div>
         </div>
       </div>
     </div>
