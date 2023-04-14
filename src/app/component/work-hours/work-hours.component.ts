@@ -148,8 +148,11 @@ export class WorkHoursComponent implements OnInit {
       this.users = res.filter(x => x.visibility.includes('k'));
       this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
       this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
-      this.departments = _.uniq(this.users.map(x => x.department)).map(x => new LV(x));
-      this.selectedDepartments = this.departments.map(x => x.value);
+      //this.departments = _.uniq(this.users.map(x => x.department)).map(x => new LV(x));
+      //this.selectedDepartments = this.departments.map(x => x.value);
+      this.issueManager.getDepartments().subscribe(departments => {
+        this.departments = departments;
+      });
     });
     this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
       this.pHours = planHours;

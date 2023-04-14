@@ -17,7 +17,8 @@ export class DoclistComponent implements OnInit {
   projects: any[] = [];
   project: any;
   department: string = '';
-  departments: string[] = ['Hull', 'System', 'Devices', 'Trays', 'Cables', 'Electric', 'Accommodation' ];
+  //departments: string[] = ['Hull', 'System', 'Devices', 'Trays', 'Cables', 'Electric', 'Accommodation' ];
+  departments: string[] = [];
   issuesSrc: Issue[] = [];
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
@@ -43,6 +44,9 @@ export class DoclistComponent implements OnInit {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
       });
+    });
+    this.issueManager.getDepartments().subscribe(departments => {
+      this.departments = departments.filter(x => x.visible_documents == 1);
     });
   }
 

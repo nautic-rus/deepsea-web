@@ -155,6 +155,7 @@ export class CreateQuestionComponent implements OnInit {
     });
   }
   getProjectName(project: any){
+    return project.factory;
     if (project.name == '-'){
       return '-';
     }

@@ -277,7 +277,7 @@ export class UploadRevisionFilesComponent implements OnInit {
       file.group = this.fileGroup;
     });
     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
-      this.ref.close();
+      this.ref.close('uploaded');
     });
   }
   localeDepartment(department: string){

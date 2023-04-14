@@ -6,8 +6,8 @@
         <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" optionLabel="label" styleClass="width-170 border" (ngModelChange)="projectChanged()">
         </p-dropdown>
       </div>
-      <div class="mr-1">
-        <p-dropdown placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
+      <div class="mr-1" *ngIf="departments.length > 0">
+        <p-dropdown optionLabel="name" optionValue="name" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
       <div class="mr-1">
