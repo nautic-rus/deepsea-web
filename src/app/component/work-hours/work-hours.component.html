@@ -122,7 +122,7 @@
           </div>
           <div>
             <div class="big-text-user mb-1">{{t.tr('Отдел')}}</div>
-            <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (onChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
+            <p-dropdown optionValue="name" optionLabel="name" appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (onChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
         <div class="df space-between ">
