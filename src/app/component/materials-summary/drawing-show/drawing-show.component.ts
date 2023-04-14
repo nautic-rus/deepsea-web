@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
+import {User} from "../../../domain/classes/user";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-drawing-show',
@@ -12,7 +14,7 @@ export class DrawingShowComponent implements OnInit {
   material: any;
   drawing: any;
 
-  constructor(public ref: DynamicDialogRef, public t: LanguageService, private conf: DynamicDialogConfig) { }
+  constructor(public ref: DynamicDialogRef, public t: LanguageService, private conf: DynamicDialogConfig, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.drawing = this.conf.data[0];
@@ -31,6 +33,9 @@ export class DrawingShowComponent implements OnInit {
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+  getUser(author: string) {
+    return this.auth.getUserName(author);
   }
 
 }

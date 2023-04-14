@@ -55,7 +55,7 @@
           <td class="w-20 text-14">{{material.docNumber}}</td>
           <td class="w-20 text-14">{{material.rev}}</td>
           <td class="w-20 text-14">{{getDate(material.date)}}</td>
-          <td class="w-20 text-14">{{material.user}}</td>
+          <td class="w-20 text-14">{{auth.getUserName(material.user)}}</td>
           <td class="w-20 text-14">{{material.units}}</td>
           <td class="w-20 text-14">{{round(material.qty,1000)}}</td>
           <td class="w-20 text-14">{{round(material.totalWeight, 1000)}}</td>
