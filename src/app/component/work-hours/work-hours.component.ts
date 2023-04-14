@@ -649,7 +649,7 @@ export class WorkHoursComponent implements OnInit {
       freeHour = this.pHours.filter(x => x.user == freeHour.user && x.task_id == freeHour.task_id)[0];
     }
     this.auth.getUsersPlanHours(user, 0, 1).subscribe(userPlanHours => {
-      let plannedHours = userPlanHours.filter((x: any) => x.id >= freeHour.id);
+      let plannedHours = userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id != 0);
       let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
       let assign: any[] = [];
       _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {

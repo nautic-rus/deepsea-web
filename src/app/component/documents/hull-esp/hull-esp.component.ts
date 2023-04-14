@@ -732,7 +732,7 @@ export class HullEspComponent implements OnInit {
         this.fillRevisions();
       });
       if (res == 'uploaded'){
-        this.issueManager.notifyDocUpload(this.issue.id);
+        this.issueManager.notifyDocUpload(this.issue.id).subscribe(() => {});;
       }
     });
   }
