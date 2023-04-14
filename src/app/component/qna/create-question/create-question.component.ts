@@ -134,7 +134,7 @@ export class CreateQuestionComponent implements OnInit {
     this.users = this.getUsers();
     this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueProjects().then(projects => {
-      this.taskProjects = projects.filter(x => x != '' && this.auth.getUser().visible_projects.includes(x.name));
+      this.taskProjects = projects.filter(x => x.factory != '' && this.auth.getUser().visible_projects.includes(x.name));
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
       this.taskProject = 'No project';
     });
