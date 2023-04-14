@@ -3,56 +3,17 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-<!--      <div class="mr-10">-->
-<!--        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addMaterial()">-->
-<!--          <img src="assets/icons/plus3.svg" height="18">-->
-<!--        </div>-->
-<!--      </div>-->
-      <div class="mr-10">
-        <div (click)="addGroupAccommodation()" class="materials-button yellow-button cxy" [pTooltip]="l.tr('Сгруппировать по материалу')" tooltipPosition="top">
-          <img src="assets/icons/group2.svg" height="24">
-        </div>
-      </div>
-      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" (click)="createEsp()">
-        <div class="materials-button pink-button cxy">
-          <img src="assets/icons/list.svg" height="22">
-        </div>
-      </div>
-<!--      <div class="mr-10" [pTooltip]="l.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">-->
-<!--        <div class="materials-button pink-button cxy">-->
-<!--          <img src="assets/icons/list.svg" height="22">-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="mr-10" [pTooltip]="l.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">-->
-<!--        <div class="materials-button violet-button cxy">-->
-<!--          <img src="assets/icons/lists.svg" height="24">-->
-<!--        </div>-->
-<!--      </div>-->
-      <div class="mr-10">
-        <div [pTooltip]="l.tr('Show In Viewer')" [class.disabled-button]="isDisabledDxf()" (click)="showDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
-          <svg class="icon-top-button" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
-            <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
-          </svg>
-        </div>
-      </div>
-      <div class="mr-10">
-        <div (click)="exportSketches()" [pTooltip]="l.tr('Выгрузить excel')" tooltipPosition="top" class="materials-button green-button cxy">
-          <img src="assets/icons/xls2.svg" height="26">
-        </div>
-      </div>
-
-      <div class="p-ml-auto df mr-10">
-        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
-          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
-          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
-        </div>
-        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">
-          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
-          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
-        </div>
-      </div>
-      <span class="p-input-icon-left">
+      <!--      <div class="p-ml-auto df mr-10">-->
+      <!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
+      <!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
+      <!--          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">-->
+      <!--        </div>-->
+      <!--        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">-->
+      <!--          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">-->
+      <!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <span class="p-ml-auto p-input-icon-left">
         <i class="pi pi-search"></i>
          <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
 
@@ -60,190 +21,12 @@
       </span>
     </div>
     <div class="w-100 df">
-      <div class="card-sp-tile mr-20" [class.card-height-with-dxf]="dxfEnabled">
-        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the system description using FORAN app in {{project}} project</div>
-        <div *ngIf="devices.length == 0 && !noResult">
-          <div class="cxy loading">
-            <div class="cxy card-height">
-              <img src="assets/whale.gif" height="120">
-              <div class="cx loading-text">PLEASE WAIT...</div>
-            </div>
+      <div class="card-sp-tile mr-20">
+        <div class="loading-text"></div>
+        <div class="cxy loading">
+          <div class="cxy flex-column">
+            <div class="cx loading-text">For this kind of drawings there are no specification provided.</div>
           </div>
-        </div>
-        <div *ngIf="selectedView == 'tiles'">
-          <div class="tile">
-            <div *ngFor="let deviceGroup of devicesGrouped; let i = index" class="card-tile" [class.hidden-card]="deviceGroup == null">
-              <div class="card-spool df">
-                <div class="w-5 position-relative ">
-<!--                  <div class="title-bold mb-20" [class.dxf-enabled]="dxfEnabled" [innerHTML]="deviceGroup.label | highLight: search"></div>-->
-                  <div *ngIf="!deviceGroup.accommodation" class="materials-button-mini blue-button cxy" [pTooltip]="l.tr('Добавить')" [class.disabled-button]="!auth.hasPerms('add-material-device')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label, deviceGroup.label)">
-                    <img src="assets/icons/plus3.svg" height="15">
-                  </div>
-                  <div *ngIf="deviceGroup.accommodation" class="materials-button-mini blue-button cxy" [pTooltip]="l.tr('Добавить')" [class.disabled-button]="!auth.hasPerms('add-material-device')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label)">
-                    <img src="assets/icons/plus3.svg" height="15">
-                  </div>
-                  <div *ngIf="deviceGroup.accommodation" class="kpl-flag cxy mt-5">
-                    <div class="text-center-x">
-                      <span [innerHTML]="'ACC' | highLight: search"></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="w-95">
-                  <div class="mt-5 mb-5" *ngFor="let device of deviceGroup.devices; let p = index">
-                    <div class="one-row-device mb-2px df">
-
-                      <div class="w-15 pr-10 df">
-<!--                        <div class="text-table-col cy">{{hideGroup(device.userId, deviceGroup.label)}}</div>-->
-                        <div class="text-table-col cy width-70"><span *ngIf="!device.userId.includes('*')">{{device.userId}}</span></div>
-
-                        <div class="task-button cxy mx-5 cursor-pointer"  (click)="removeDeviceFromSystem(device)" *ngIf="device.fromAux == 1" tooltipPosition="top" [pTooltip]="l.tr('Удалить позицию')">
-                          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="15" height="15" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><g xmlns="http://www.w3.org/2000/svg"><path d="m424 64h-88v-16c0-26.467-21.533-48-48-48h-64c-26.467 0-48 21.533-48 48v16h-88c-22.056 0-40 17.944-40 40v56c0 8.836 7.164 16 16 16h8.744l13.823 290.283c1.221 25.636 22.281 45.717 47.945 45.717h242.976c25.665 0 46.725-20.081 47.945-45.717l13.823-290.283h8.744c8.836 0 16-7.164 16-16v-56c0-22.056-17.944-40-40-40zm-216-16c0-8.822 7.178-16 16-16h64c8.822 0 16 7.178 16 16v16h-96zm-128 56c0-4.411 3.589-8 8-8h336c4.411 0 8 3.589 8 8v40c-4.931 0-331.567 0-352 0zm313.469 360.761c-.407 8.545-7.427 15.239-15.981 15.239h-242.976c-8.555 0-15.575-6.694-15.981-15.239l-13.751-288.761h302.44z" fill="#505f79" data-original="#000000" style="" class=""/><path d="m256 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z" fill="#505f79" data-original="#000000" style="" class=""/><path d="m336 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z" fill="#505f79" data-original="#000000" style="" class=""/><path d="m176 448c8.836 0 16-7.164 16-16v-208c0-8.836-7.164-16-16-16s-16 7.164-16 16v208c0 8.836 7.163 16 16 16z" fill="#505f79" data-original="#000000" style="" class=""/></g></g></svg>
-                        </div>
-
-                        <div class="task-button cxy mx-5 cursor-pointer" [class.disabled]="editing != 0" (click)="newLabel = device.userId; editing = device.id" *ngIf="device.elemType == 'accommodation'" tooltipPosition="top" [pTooltip]="l.tr('Редактировать')">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><g><g><path style="fill:#505f79;" d="M444.255,297.913c-11.423,0-20.682,9.259-20.682,20.682v125.66c0,14.547-11.835,26.381-26.381,26.381H67.746    c-14.547,0-26.381-11.835-26.381-26.381V114.81c0-14.547,11.835-26.381,26.381-26.381h125.66c11.422,0,20.682-9.26,20.682-20.682    s-9.26-20.682-20.682-20.682H67.746c-37.355,0-67.746,30.391-67.746,67.746v329.445C0.001,481.609,30.392,512,67.746,512h329.445    c37.355,0,67.746-30.391,67.746-67.746v-125.66C464.937,307.172,455.678,297.913,444.255,297.913z"/></g></g><g><g><path style="fill:#505f79;" d="M505.942,100.185L411.815,6.058c-8.077-8.077-21.172-8.077-29.249,0L147.249,241.376    c-3.878,3.879-6.058,9.14-6.058,14.625v94.127c0,11.423,9.26,20.682,20.682,20.682h94.127c5.486,0,10.746-2.179,14.624-6.057    l235.318-235.319c3.879-3.879,6.058-9.14,6.058-14.625S509.821,104.064,505.942,100.185z M247.434,329.445h-64.878v-64.878    L397.191,49.932l64.878,64.878L247.434,329.445z"/></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
-                        </div>
-
-                        <div class="df mt-3px position-absolute" *ngIf="editing == device.id">
-                          <textarea *ngIf="editing == device.id" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="newLabel" class="width-70 task-name-change-commit"></textarea>
-                          <div class="df">
-                            <div (click)="saveEditing()">
-                              <div class="task-name-button cxy ml-5 mr-5" >
-                                <img src="assets/icons/tick.svg">
-                              </div>
-                            </div>
-                            <div (click)="editing = 0">
-                              <div class="task-name-button cxy">
-                                <img src="assets/icons/cancel.svg">
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-
-
-<!--                        <div *ngIf="editing == device.id">-->
-<!--                          <input [(ngModel)]="newLabel">-->
-<!--                          <button (click)=saveEditing()>save</button>-->
-<!--                          <button (click)="editing = 0">cancel</button>-->
-<!--                        </div>-->
-                      </div>
-                      <div *ngIf="!deviceGroup.accommodation" class="w-5 mm-text pr-10 cy">{{device.count}}</div>
-                      <div *ngIf="deviceGroup.accommodation" class="w-5 mm-text pr-10 cy"></div>
-                      <div class="w-35 pr-10 title-bold-pipe cy">{{getDeviceName(device.material)}}</div>
-                      <div class="w-10 pr-10 text-black-mini cy">{{device.units}}</div>
-                      <div class="w-10 pr-10 text-black-mini cy">
-                        <div>{{round(device.count)}}</div>
-                      </div>
-                      <div class="w-10 pr-10 align-center df">
-                        <div class="df cursor-default" [pTooltip]="l.tr('Вес')" tooltipPosition="top">
-                          <img class="pr-5" src="assets/icons/weight3.svg" height="20">
-                          <div class="text-table-col cy">{{round(device.weight)}}</div>
-                        </div>
-                      </div>
-                      <div class="w-25 cy justify-content-end">
-                        <div class="cy pr-10">
-                          <div *ngIf="!deviceGroup.accommodation" class="kpl-flag cxy">
-                            <div class="text-center-x">
-                              <span  [innerHTML]="(device.elemType) | highLight: search"></span>
-                            </div>
-                          </div>
-                        </div>
-                        <div *ngIf="device.stock.trim() != ''" class="df position-relative">
-                          <div class="trm">
-                            <span [innerHTML]="device.stock | highLight: search"></span>
-                          </div>
-                          <div (click)="copyTrmCode(device.stock, 's' + p + 'sp' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
-                            <img src="assets/icons/trm.svg" height="14">
-                            <div class="copy-tooltip" [hidden]="!showTooltip('s' + p + 'sp' + i)">Copied!</div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="two-row-device df">
-                      <div class="w-15"></div>
-                      <div class="pr-10 df">
-                        <div class="attribute mr-10 cy">rooms</div>
-                        <div class="text-table-col grid-zone cy">
-                          <div *ngFor="let zone of getZones(device.zone)">
-                            <div class="pr-2 pl-2 zone">{{zone}}</div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-
-                  </div>
-                </div>
-
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="selectedView == 'list'">
-          <p-table #table [value]="devices"
-                   [scrollable]="true"
-                   scrollHeight="calc(100vh - 225px)"
-                   [virtualScroll]="true"
-                   [virtualRowHeight]="28"
-                   styleClass="p-datatable-striped"
-                   responsiveLayout="scroll"
-                   [globalFilterFields]="['PART_CODE','ELEM_TYPE','MATERIAL','NEST_ID']">
-            <ng-template pTemplate="header">
-              <tr *ngIf="devices.length != 0" class="df">
-                <th [ngStyle]="mw(7)" pSortableColumn="spool" class="lxy w-5">{{'Spool'}}
-                  <p-sortIcon field="spool"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(5)" pSortableColumn="spPieceId" class="cxy w-5">{{'Id'}}
-                  <p-sortIcon field="spPieceId"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(21)" pSortableColumn="material.name" class="lxy w-35">{{'Material'}}
-                  <p-sortIcon field="material.name"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(18)" pSortableColumn="stock" class="lxy w-30">{{'Stock'}}
-                  <p-sortIcon field="stock"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="units" class="lxy w-15">{{'Units'}}
-                  <p-sortIcon field="units"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="radius" class="lxy w-15">{{'Radius'}}
-                  <p-sortIcon field="radius"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="angle" class="lxy w-15">{{'Angle'}}
-                  <p-sortIcon field="angle"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="length" class="lxy w-5">{{'Length'}}
-                  <p-sortIcon field="length"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="weight" class="lxy w-5">{{'Weight'}}
-                  <p-sortIcon field="weight"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="typeCode" class="cxy w-5">{{'Code'}}
-                  <p-sortIcon field="typeCode"></p-sortIcon>
-                </th>
-                <th [ngStyle]="mw(7)" pSortableColumn="smat" class="cxy w-5">{{'Smat'}}
-                  <p-sortIcon field="smat"></p-sortIcon>
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-device>
-              <tr [class.select-row]="selectedDevice == device" class="cursor-pointer task-row" (click)="selectDevice(device)">
-                <td [ngStyle]="mw(7)" class="w-5 text-14">{{device.userId}}</td>
-                <td [ngStyle]="mw(5)" class="w-5 text-14">{{device.userId}}</td>
-                <td [ngStyle]="mw(21)" class="w-35 text-14">{{device.material.name}}</td>
-                <td [ngStyle]="mw(18)" class="w-30 text-14">{{device.stock}}</td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14">{{device.units}}</td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-15 text-14">°</td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
-                <td [ngStyle]="mw(7)" class="w-5 text-14"></td>
-              </tr>
-            </ng-template>
-          </p-table>
         </div>
       </div>
 
@@ -255,7 +38,6 @@
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity
             <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
           </div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
@@ -265,7 +47,7 @@
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
-                  <div *ngIf="auth.getUser().groups.includes('Nautic_Rus') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                  <div *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/plus1.svg" height="16">
                     </div>
@@ -603,49 +385,25 @@
           </div>
 
         </div>
-        <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
-          <div class="subtask-grid-misc py-10">
-            <div class="head-subtask">{{l.tr('Тип')}}</div>
-            <div class="head-subtask">{{l.tr('Название')}}</div>
-            <div class="head-subtask">{{l.tr('Отв.')}}</div>
-            <div class="head-subtask">{{l.tr('Исп.')}}</div>
-            <div class="head-subtask">{{l.tr('Статус')}}</div>
-          </div>
-          <div class="">
-            <div class="subtask" *ngFor="let childIssue of miscIssues">
-              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)" >
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
-                <div class="py-10 px-10 subtask-text">
-                  <span>{{childIssue.doc_number + ' '}}</span>
-                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
-                </div>
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-                <div class="dfc px-10 py-10 subtask-text" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div *ngIf="selectedHeadTab == 'Info'" class="card-tabs">
-<!--          <div class="cxy loading-text" *ngIf="selectedPipe.spool == null">-->
-<!--            Select pipe from left list to view details-->
-<!--          </div>-->
-<!--          <div *ngIf="selectedPipe.spool != null">-->
-<!--            <div class="df">-->
-<!--              <div class="part-details">{{selectedPipe.material.name}}</div>-->
-<!--            </div>-->
-<!--            <div class="df" *ngFor="let pipeDef of getPipeDefs(selectedPipe)">-->
-<!--              <div class="w-30">-->
-<!--                <div>-->
-<!--                  <div class="main-details mt-20">{{pipeDef.name}}:</div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="w-70">-->
-<!--                <div class="mt-20 value-details">{{pipeDef.value}}</div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          <!--          <div class="cxy loading-text" *ngIf="selectedPipe.spool == null">-->
+          <!--            Select pipe from left list to view details-->
+          <!--          </div>-->
+          <!--          <div *ngIf="selectedPipe.spool != null">-->
+          <!--            <div class="df">-->
+          <!--              <div class="part-details">{{selectedPipe.material.name}}</div>-->
+          <!--            </div>-->
+          <!--            <div class="df" *ngFor="let pipeDef of getPipeDefs(selectedPipe)">-->
+          <!--              <div class="w-30">-->
+          <!--                <div>-->
+          <!--                  <div class="main-details mt-20">{{pipeDef.name}}:</div>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--              <div class="w-70">-->
+          <!--                <div class="mt-20 value-details">{{pipeDef.value}}</div>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </div>-->
         </div>
         <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
           <div *ngFor="let file of getArchive()">

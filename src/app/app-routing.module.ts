@@ -49,6 +49,7 @@ import {TraysComponent} from "./component/documents/trays/trays.component";
 import {CablesComponent} from "./component/documents/cables/cables.component";
 import {MaterialsSummaryComponent} from "./component/materials-summary/materials-summary.component";
 import {DoclistComponent} from "./component/doclist/doclist.component";
+import {DesignEspComponent} from "./component/documents/design-esp/design-esp.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -69,6 +70,7 @@ const routes: Routes = [
   { path: 'hull-esp', component: HullEspComponent, canActivate: [AuthGuard], data: {animation: 'HullEspComponent'} },
   { path: 'pipe-esp', component: PipeEspComponent, canActivate: [AuthGuard], data: {animation: 'PipeEspComponent'} },
   { path: 'device-esp', component: DeviceEspComponent, canActivate: [AuthGuard], data: {animation: 'DeviceEspComponent'} },
+  { path: 'design-esp', component: DesignEspComponent, canActivate: [AuthGuard], data: {animation: 'DesignEspComponent'} },
   { path: 'accommodation-esp', component: DeviceEspComponent, canActivate: [AuthGuard], data: {animation: 'DeviceEspComponent'} },
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
