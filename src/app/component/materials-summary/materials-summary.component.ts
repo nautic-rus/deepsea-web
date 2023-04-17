@@ -251,7 +251,7 @@ export class MaterialsSummaryComponent implements OnInit {
     let data: any[] = this.materialsSummary;
     console.log(data);
     data.forEach(d => {
-      d.path = d.path.join('/');
+      d.pathValue = d.path.join('/');
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
