@@ -9,7 +9,6 @@
     </div>
   </div>
   <div class="cxy"></div>
-  <div class="cxy"></div>
   <div class="cy ml-1">
     <div *ngIf="auth.hasRole('Admin') || auth.hasPerms('admin')">
       <a routerLink="/admin">
@@ -18,9 +17,13 @@
     </div>
   </div>
   <div class="cxy">
-    <div (click)="t.switchLang()">
-      <img *ngIf="t.language == 'ru'" class="cursor-pointer" src="assets/icons/russia.png">
-      <img *ngIf="t.language == 'en'" class="cursor-pointer" src="assets/icons/en.png">
+    <div>
+      <img (click)="t.switchLang('ru')" class="cursor-pointer" src="assets/icons/russia.png">
+    </div>
+  </div>
+  <div class="cxy">
+    <div>
+      <img (click)="t.switchLang('en')" class="cursor-pointer" src="assets/icons/en.png">
     </div>
   </div>
 
