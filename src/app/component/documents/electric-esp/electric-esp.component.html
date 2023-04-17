@@ -3,6 +3,7 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
+
 <!--      <div class="p-ml-auto df mr-10">-->
 <!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
 <!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
@@ -13,6 +14,16 @@
 <!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
 <!--        </div>-->
 <!--      </div>-->
+      <div class="mr-10" *ngIf="auth.getUser().department == 'Electric'" (click)="clickOnTrays()">
+        <div class="materials-button blue-button cxy">
+          <div class="cxy">{{l.tr('Trays')}}</div>
+        </div>
+      </div>
+      <div class="mr-10" *ngIf="auth.getUser().department == 'Electric'" (click)="clickOnCables()">
+        <div class="materials-button blue-button cxy">
+          <div class="cxy">{{l.tr('Cables')}}</div>
+        </div>
+      </div>
       <span class="p-ml-auto p-input-icon-left">
         <i class="pi pi-search"></i>
          <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />

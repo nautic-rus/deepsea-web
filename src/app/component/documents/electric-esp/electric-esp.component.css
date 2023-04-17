@@ -843,14 +843,9 @@
   word-wrap: break-word;
 }
 .materials-button{
+  color: white;
   height: 35px;
-  width: 35px;
-  cursor: pointer;
-  border-radius: 6px;
-}
-.materials-button-mini{
-  height: 32px;
-  width: 32px;
+  width: 50px;
   cursor: pointer;
   border-radius: 6px;
 }

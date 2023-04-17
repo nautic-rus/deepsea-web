@@ -1253,6 +1253,12 @@ cdk-virtual-scroll-viewport{
 .gray-button:hover{
   background-color: #475569;
 }
+.white-button{
+  background-color: #ffffff;
+}
+.white-button:hover{
+  background-color: #e1e1e1;
+}
 .transparent-button{
   border: 1px solid #ced4da;
 }

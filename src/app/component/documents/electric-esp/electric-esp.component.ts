@@ -198,6 +198,14 @@ export class ElectricEspComponent implements OnInit {
       return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
     }
   }
+
+  clickOnTrays() {
+    window.open(`/trays?issueId=${this.issueId}&foranProject=${this.project}&docNumber=${this.docNumber}&department=${this.department}`, '_blank');
+  }
+
+  clickOnCables() {
+    window.open(`/cables?issueId=${this.issueId}&foranProject=${this.project}&docNumber=${this.docNumber}&department=${this.department}`, '_blank');
+  }
   getFilters(values: any[], field: string): any[] {
     let res: any[] = [];
     let uniq = _.uniq(values, x => x[field]);
