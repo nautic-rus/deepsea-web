@@ -852,7 +852,7 @@
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
         </div>
 
-        <div *ngIf="selectedHeadTab == 'Files' && parts.length > 0 || noResult" class="card-tabs">
+        <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
 <!--          <div class="flex-end mb-20">-->
 <!--            <div class="button-details-up df cursor-pointer" (click)="downloadFiles('all', selectedRevision)">-->
 <!--              <div class="cxy">-->
@@ -991,7 +991,6 @@
               </div>
             </p-fieldset>
           </div>
-
         </div>
         <div *ngIf="selectedHeadTab == 'Activity'" class="card-tabs">
           <div class="big-text-issues mb-1">Activity</div>
@@ -1257,7 +1256,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <div *ngIf="selectedHeadTab == 'Info'" class="card-tabs">
           <div class="cxy loading-text" *ngIf="selectedPart.PART_CODE == null">
@@ -1420,6 +1418,29 @@
             </div>
           </div>
         </div>
+        <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
+          <div class="subtask-grid-misc py-10">
+            <div class="head-subtask">{{l.tr('Тип')}}</div>
+            <div class="head-subtask">{{l.tr('Название')}}</div>
+            <div class="head-subtask">{{l.tr('Отв.')}}</div>
+            <div class="head-subtask">{{l.tr('Исп.')}}</div>
+            <div class="head-subtask">{{l.tr('Статус')}}</div>
+          </div>
+          <div class="">
+            <div class="subtask" *ngFor="let childIssue of miscIssues">
+              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)" >
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
+                <div class="py-10 px-10 subtask-text">
+                  <span>{{childIssue.doc_number + ' '}}</span>
+                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                </div>
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                <div class="dfc px-10 py-10 subtask-text" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div *ngIf="selectedHeadTab == 'Summary'" class="card-tabs">
           <div class="sum-head pb-10">Summary list</div>
           <div *ngFor="let groupedPart of groupedParts">
@@ -1480,29 +1501,6 @@
             </div>
           </div>
         </div>
-        </div>
-        <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
-          <div class="subtask-grid-misc py-10">
-            <div class="head-subtask">{{l.tr('Тип')}}</div>
-            <div class="head-subtask">{{l.tr('Название')}}</div>
-            <div class="head-subtask">{{l.tr('Отв.')}}</div>
-            <div class="head-subtask">{{l.tr('Исп.')}}</div>
-            <div class="head-subtask">{{l.tr('Статус')}}</div>
-          </div>
-          <div class="">
-            <div class="subtask" *ngFor="let childIssue of miscIssues">
-              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)" >
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
-                <div class="py-10 px-10 subtask-text">
-                  <span>{{childIssue.doc_number + ' '}}</span>
-                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
-                </div>
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
-                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
-                <div class="dfc px-10 py-10 subtask-text" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

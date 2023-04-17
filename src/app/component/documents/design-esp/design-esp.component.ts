@@ -150,6 +150,7 @@ export class DesignEspComponent implements OnInit {
   pipesSrc: any[] = [];
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
+  miscIssues: Issue[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -370,6 +371,15 @@ export class DesignEspComponent implements OnInit {
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
+      this.miscIssues.splice(0, this.miscIssues.length);
+      this.issueManager.getIssues('op').then(issues => {
+        issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+        this.miscIssues.forEach(x => {
+          issues.filter(y => y.parent_id == x.id).forEach(ch => {
+            this.miscIssues.push(ch);
+          })
+        });
+      });
       this.issueRevisions.push(this.issue.revision);
       this.issue.revision_files.map(x => x.revision).forEach(gr => {
         if (!this.issueRevisions.includes(gr)){
@@ -770,5 +780,8 @@ export class DesignEspComponent implements OnInit {
 
   getZones(zone: string) {
     return zone.split(',');
+  }
+  openIssue(id: number) {
+    window.open('/?taskId=' + id, '_blank');
   }
 }
