@@ -6,6 +6,11 @@
         </p-dropdown>
       </div>
       <div class="mr-10">
+        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top"  [class.disabled-button]="materials.length == 0" (click)="exportXLS()">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
         {{selectedNodePath}}
       </div>
       <div class="p-ml-auto mr-10 df">
@@ -55,7 +60,7 @@
           </div>
 
           <div *ngIf="selectedView == 'list'">
-            <div class="mb-10 cursor-pointer dash-card-list"  *ngFor="let material of materialsSummary; let j = index; let i= index">
+            <div class="mb-10 cursor-pointer dash-card-list" *ngFor="let material of materialsSummary; let j = index; let i= index">
               <div class="dash-card-tile-list">
                 <div class="one-cols cxy">
                   <div class="cxy" (click)="showDrawings(material); $event.stopPropagation();">
