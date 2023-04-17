@@ -26,6 +26,7 @@ export class UploadRevisionFilesComponent implements OnInit {
     });
     this.fileGroup = conf.data[1];
   }
+  notify = true;
   ngOnInit(): void {
   }
   reformatFileName(name: string, fileGroup: string){
@@ -277,7 +278,12 @@ export class UploadRevisionFilesComponent implements OnInit {
       file.group = this.fileGroup;
     });
     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
-      this.ref.close('uploaded');
+      if (this.notify){
+        this.ref.close('uploaded');
+      }
+      else{
+        this.ref.close();
+      }
     });
   }
   localeDepartment(department: string){

@@ -21,7 +21,7 @@
         <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
       </div>
     </div>
-
+    <p-checkbox [(ngModel)]="notify" [binary]="true" label="Send email notifications"></p-checkbox>
   </div>
 </div>
 <div class="form-footer-create">
