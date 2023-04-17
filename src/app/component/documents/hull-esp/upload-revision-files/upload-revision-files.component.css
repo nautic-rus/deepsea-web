@@ -1,3 +1,10 @@
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 5px!important;
+}
+/deep/.p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #69B7FF;
+  background: #69B7FF;
+}
 .big-text{
   color: #5e6c84;
   font-size: 12px;
@@ -129,10 +136,7 @@
   width: 100%;
 }
 .form-footer-create{
-  height: 50px;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
   margin-top: 16px;
 }
 .all-file-loading{
