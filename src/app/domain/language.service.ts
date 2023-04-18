@@ -11,8 +11,8 @@ export class LanguageService {
       this.language = res.lang != null ? res.lang : 'en';
     });
   }
-  switchLang(){
-    let lang = this.language == 'ru' ? 'en' : 'ru';
+  switchLang(lang: string){
+    //let lang = this.language == 'ru' ? 'en' : 'ru';
     this.router.navigate([], {queryParams: {lang}, queryParamsHandling: 'merge'}).then(() => {
       location.reload();
     });

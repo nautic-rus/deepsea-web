@@ -30,7 +30,7 @@ export class QnaComponent implements OnInit {
   questionsSrc: Issue[] = [];
   questions: Issue[] = [];
   showCompleted: boolean = false;
-  filters:  { status: any[],  author: any[], department: any[], priority: any[] } = { status: [], author: [], department: [], priority: [] };
+  filters:  { status: any[], author: any[], department: any[], priority: any[], responsible: any[], assigned_to: any[], project: any[] } = { status: [], author: [], department: [], priority: [], responsible: [], assigned_to: [], project: [] };
   constructor(private route: ActivatedRoute, public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
   ngOnInit(): void {
@@ -72,7 +72,11 @@ export class QnaComponent implements OnInit {
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
 
         this.filters.status = _.sortBy(_.uniq(res.map(x => x.status)), x => x).map(x => new LV(x));
+        this.filters.project = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(x));
+        this.filters.department = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
         this.filters.author = _.sortBy(_.uniq(res.map(x => x.started_by)), x => x).map(x => new LV(this.auth.getUserName(x), x));
+        this.filters.responsible = _.sortBy(_.uniq(res.map(x => x.responsible)), x => x).map(x => new LV(this.auth.getUserName(x), x));
+        this.filters.assigned_to = _.sortBy(_.uniq(res.map(x => x.assigned_to)), x => x).map(x => new LV(this.auth.getUserName(x), x));
         this.filters.priority = _.sortBy(_.uniq(res.map(x => x.priority)), x => x).map(x => new LV(this.auth.getUserName(x), x));
 
         this.applyFilters();

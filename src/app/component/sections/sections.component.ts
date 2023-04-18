@@ -171,7 +171,7 @@ export class SectionsComponent implements OnInit {
       let foranProject = issue.project.replace('NR', 'N');
       let department = issue.department;
       let docNumber = issue.doc_number;
-      window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank');
+      window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank');
     }
   }
 

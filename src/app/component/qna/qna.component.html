@@ -29,7 +29,7 @@
     </div>
     <p-table [value]="questions"
              [scrollable]="true"
-             scrollHeight="calc(100vh - 220px)"
+             scrollHeight="calc(100vh - 190px)"
              [virtualScroll]="true"
              [virtualRowHeight]="40"
              [reorderableColumns]="false"
@@ -44,9 +44,21 @@
           </th>
           <th pSortableColumn="project" class="lxy w-20">{{t.tr('Проект')}}
             <p-sortIcon field="project"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'project'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.project" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th pSortableColumn="department" class="lxy w-20">{{t.tr('Отдел')}}
-            <p-sortIcon field="department"></p-sortIcon>
+            <p-sortIcon field="department"></p-sortIcon><p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+
           </th>
           <th pSortableColumn="status" class="lxy w-20">{{t.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
@@ -74,9 +86,21 @@
           </th>
           <th pSortableColumn="responsible" class="lxy">{{t.tr('Ответственный')}}
             <p-sortIcon field="responsible"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'responsible'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.responsible" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th pSortableColumn="assigned_to" class="lxy">{{t.tr('Исполнитель')}}
             <p-sortIcon field="assigned_to"></p-sortIcon>
+            <p-columnFilter class="filter" [field]="'assigned_to'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.assigned_to" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th pSortableColumn="started_date" class="lxy">{{t.tr('Дата создания')}}
             <p-sortIcon field="started_date"></p-sortIcon>
