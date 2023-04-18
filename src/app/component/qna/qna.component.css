@@ -35,7 +35,7 @@
   background: #3B82F6;
 }
 .card{
-  height: calc(100vh - 116px);
+  height: calc(100vh - 107px);
 }
 .empty-card{
   height: 20px;

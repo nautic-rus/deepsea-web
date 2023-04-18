@@ -229,7 +229,10 @@
   width: 18px;
   height: 18px;
 }
-
+.lang-selected{
+  border: 2px solid white;
+  border-radius: 50%;
+}
 
 
 
