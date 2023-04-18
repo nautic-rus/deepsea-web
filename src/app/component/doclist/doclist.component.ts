@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Issue} from "../../domain/classes/issue";
 import {Router} from "@angular/router";
 import {LanguageService} from "../../domain/language.service";
@@ -6,6 +6,7 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {MessageService} from "primeng/api";
 import _ from "underscore";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-doclist',
@@ -31,6 +32,8 @@ export class DoclistComponent implements OnInit {
   revisionFiles: any[] = [];
   constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
 
+
+  @ViewChild('table') table: Table;
   ngOnInit(): void {
     this.issueManager.getIssueProjects().then(projects => {
       this.projects = projects;
