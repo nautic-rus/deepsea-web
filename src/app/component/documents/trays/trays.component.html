@@ -104,8 +104,8 @@
                 <div></div>
               </div>
             </div>
-            <div class="w-100" *ngIf="trays.length != 0">
-              <div class="card-tile-t card-grid-b">
+            <div class="w-100" *ngIf="angles.length != 0">
+              <div class="card-tile-t card-grid-b" *ngFor="let angle of angles">
                 <div class="text-center-y">
                   <div class="title-name">{{angle.material.translations[0].name}}</div>
                 </div>

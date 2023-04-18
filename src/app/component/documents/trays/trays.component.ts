@@ -84,7 +84,7 @@ export class TraysComponent implements OnInit {
   angleStockCode: string = 'MTLESNSTLXXX0047';
   step: number = 1.2;
   length: number = 0.3;
-  angle: Trays;
+  angles: Trays[] = [];
 
 
   constructor(public specService: SpecManagerService, public materialService: MaterialManagerService, public trayService: TrayService, public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) {
@@ -127,11 +127,12 @@ export class TraysComponent implements OnInit {
   fillTrays(): void {
     this.trayService.getTraysBySystems(this.project, this.docNumber)
       .subscribe(trays => {
+        console.log(trays);
         if (trays.length > 0) {
-          // this.angle = trays.filter((x: any) => x.stockCode == this.angleStockCode)[0];
-          // console.log(this.angle);
-          // this.addAngle();
-          // trays = trays.filter((x: any) => x.stockCode != this.angleStockCode);
+          this.angles = trays.filter((x: any) => x.cType == 'ANGLE');
+          console.log(this.angles);
+          this.addAngle();
+          trays = trays.filter((t: any) => !this.angles.map(x => x.stockCode).includes(t.stockCode));
           this.trays = _.sortBy(trays, x => x.stockCode);
           this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
             stockCode: x[0].stockCode,
@@ -140,6 +141,7 @@ export class TraysComponent implements OnInit {
             totalLength: this.getAngleLength(x),
             values: x
           }));
+          console.log(this.traysByCode);
           // this.angle1 = trays.map((x: any) => x.stockCode = this.angleStockCode)
         } else {
           this.noResultTrays = true;
@@ -290,14 +292,17 @@ export class TraysComponent implements OnInit {
       });
     });
 
-    data.push({
-      N: "",
-      MATERIAL: this.angle.material.translations[0].name,
-      UNITS: this.getUnitName(this.angle.material.units),
-      QTY: this.angle.length,
-      WGT_KG: this.angle.weight,
-      STOCK_CODE: this.angle.stockCode
+    this.angles.forEach(angle => {
+      data.push({
+        N: "",
+        MATERIAL: angle.material.translations[0].name,
+        UNITS: this.getUnitName(angle.material.units),
+        QTY: angle.length,
+        WGT_KG: angle.weight,
+        STOCK_CODE: angle.stockCode
+      });
     });
+
 
     data.push({
       N: "CABLE BOXES",
@@ -366,9 +371,11 @@ export class TraysComponent implements OnInit {
   }
 
   addAngle() {
-    console.log("ADD ANGLEEEEE")
-    this.specService.removeDeviceFromSystem(this.docNumber, this.angle.stockCode, this.angle.material.units, this.round(this.angle.length).toString(), this.label, this.forLabel).then(res => {
-      this.specService.addDeviceToSystem(this.docNumber, this.angle.stockCode, this.angle.material.units, this.round(this.angle.length).toString(), this.label, this.forLabel);
+    //console.log("ADD ANGLEEEEE")
+    this.angles.forEach(angle => {
+      this.specService.removeDeviceFromSystem(this.docNumber, angle.stockCode, angle.material.units, this.round(angle.length).toString(), this.label, this.forLabel).then(res => {
+        this.specService.addDeviceToSystem(this.docNumber, angle.stockCode, angle.material.units, this.round(angle.length).toString(), this.label, this.forLabel);
+      });
     });
   }
 
