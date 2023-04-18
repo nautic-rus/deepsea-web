@@ -128,10 +128,10 @@ export class TraysComponent implements OnInit {
     this.trayService.getTraysBySystems(this.project, this.docNumber)
       .subscribe(trays => {
         if (trays.length > 0) {
-          this.angle = trays.filter((x: any) => x.stockCode == this.angleStockCode)[0];
-          console.log(this.angle);
-          this.addAngle();
-          trays = trays.filter((x: any) => x.stockCode != this.angleStockCode);
+          // this.angle = trays.filter((x: any) => x.stockCode == this.angleStockCode)[0];
+          // console.log(this.angle);
+          // this.addAngle();
+          // trays = trays.filter((x: any) => x.stockCode != this.angleStockCode);
           this.trays = _.sortBy(trays, x => x.stockCode);
           this.traysByCode = _.map(_.groupBy(this.trays, x => x.stockCode), x => Object({
             stockCode: x[0].stockCode,
