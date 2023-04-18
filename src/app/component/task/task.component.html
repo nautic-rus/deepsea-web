@@ -283,7 +283,7 @@
         <div (click)="addCombinedIssue()" class="button-add-l cxy cursor-pointer">{{t.tr('Привязать задачу')}}</div>
       </div>
 
-      <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0" (click)="contentClick('combined_issues')">
+      <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0 && auth.hasPerms('visible_related_task')" (click)="contentClick('combined_issues')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('combined_issues')">
           <img src="assets/icons/arrow-right.png">
         </div>
@@ -1162,7 +1162,7 @@
               </div>
             </div>
           </div>
-          <div class="df mt-3px" *ngIf="isVisible('labor')">
+          <div class="df mt-3px" *ngIf="isVisible('labor') && auth.hasPerms('visible_plan_actual_hours')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Плановая трудоёмкость')}}</div>
             <div [class.no-edit]="issue.responsible != this.auth.getUser().login" [hidden]="edit == 'plan_hours'" (click)="edit = 'plan_hours'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.plan_hours}}</div>
             <div class="mr-5" [hidden]="edit != 'plan_hours'">
@@ -1185,7 +1185,7 @@
 <!--            <div class="df text-y height-30 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>-->
 <!--            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.plan_hours}}</div>-->
 <!--          </div>-->
-          <div class="df mt-3px" *ngIf="isVisible('labor')">
+          <div class="df mt-3px" *ngIf="isVisible('labor') && auth.hasPerms('visible_plan_actual_hours')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Трудозатраты')}}</div>
             <div class="pl-3 df text-y height-30 cursor-pointer description-task">{{issue.labor}}</div>
           </div>

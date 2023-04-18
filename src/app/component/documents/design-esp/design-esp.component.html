@@ -38,7 +38,7 @@
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity
             <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
           </div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
+          <div *ngIf="auth.hasPerms('visible_doc_task')" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>

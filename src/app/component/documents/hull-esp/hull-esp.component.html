@@ -845,7 +845,7 @@
 <!--          </div>-->
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">{{l.tr('Инфо')}}</div>
 
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
+          <div *ngIf="auth.hasPerms('visible_doc_task')" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
 <!--          <div *ngIf="miscIssues.length > 0" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">Tasks</div>-->
 
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Summary'" [class.selectedTab]="selectedHeadTab ==  'Summary'">{{l.tr('Сводка')}}</div>
