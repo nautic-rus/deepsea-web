@@ -53,7 +53,7 @@ export class UploadRevisionFilesComponent implements OnInit {
         result = name.split('_').join('-');
       }
     }
-    if (fileGroup == 'Cutting Map'){
+    if (fileGroup == 'Cutting Map' && !name.includes('C-')){
       result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.split('_')[0] + '-' + name.split('_')[1] + '.txt';
       if (name.includes('rev')){
         result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.split('_')[0] + '-' + name.split('_')[1]  + '-' + name.split('_')[3];
