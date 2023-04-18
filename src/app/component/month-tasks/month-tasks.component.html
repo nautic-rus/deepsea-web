@@ -22,7 +22,7 @@
       <div class="cx">
         <div class="cxy month-name mx-10 width-200">{{monthName + ' '}}{{' ' + date.getFullYear()}}</div>
       </div>
-      <div class="df flex-end" *ngIf="auth.hasPerms('change-daily-user')">
+      <div class="df flex-end" *ngIf="auth.filled && auth.hasPerms('change-daily-user')">
         <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" (ngModelChange)="changeUser()" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
                     [showClear]="true" class="p-dropdown-150" styleClass="width-220">
           <ng-template let-user pTemplate="item">

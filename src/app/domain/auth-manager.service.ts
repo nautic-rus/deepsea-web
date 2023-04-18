@@ -82,13 +82,13 @@ export class AuthManagerService {
   fillUsers(){
     //console.log('fill users');
     this.getUsers().then(data => {
-      this.filled = true;
       //console.log(data);
       this.users = data;
       this.users.forEach(user => user.userName = this.getUserName(user.login));
       this.users.forEach(user => user.userNameEn = tr(user.userName));
       this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
       this.usersFilled.next();
+      this.filled = true;
     });
   }
   getUserName(login: string){
