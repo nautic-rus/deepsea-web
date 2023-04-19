@@ -252,6 +252,7 @@ export class MaterialsSummaryComponent implements OnInit {
     console.log(data);
     data.forEach(d => {
       d.pathValue = d.path.join('/');
+      d.drawingsList = _.uniq(d.documents.map((x: any) => x.docNumber)).join(', ');
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
@@ -381,6 +382,13 @@ export class MaterialsSummaryComponent implements OnInit {
         this.materialPurchases.push(res);
       }
     });
+  }
+  getDate(dateLong: number): string {
+    if (dateLong == 0) {
+      return '--/--/----';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   chunkMaterials(chunkSize = 3){
     let res: any[] = [];
