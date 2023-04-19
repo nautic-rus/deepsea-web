@@ -55,15 +55,18 @@ export class RoleComponent implements OnInit {
     this.roleService.saveRole(this.role, this.name).subscribe({
       next: res => {
         console.log(res);
-        this.ref.close(res);
+        if (this.checkBox) {
+          this.roleService.setRoleForAll(this.role.name);
+          this.ref.close(res);
+        }
+        else{
+          this.ref.close(res);
+        }
       },
       error: err => {
         console.log(err);
         this.ref.close(err);
       }
     });
-    if (this.checkBox) {
-      this.roleService.setRoleForAll(this.role.name)
-    }
   }
 }
