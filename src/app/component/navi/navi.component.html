@@ -90,7 +90,7 @@
         <div class="cxy">
           <img [src]="menu.icon" [height]="menu.height">
         </div>
-        <div class="cy">{{menu.label}}</div>
+        <div class="cy">{{translate(menu.label)}}</div>
       </div>
     </div>
     <div *ngIf="menu.child.length != 0" class="menu menu-row cy" [collapse]="content" (click)="addCollapse(menu.label + '-' + i)">
@@ -98,7 +98,7 @@
         <div class="cxy">
           <img [src]="menu.icon" [height]="menu.height">
         </div>
-        <div class="cy">{{menu.label}}</div>
+        <div class="cy">{{translate(menu.label)}}</div>
         <div class="cy arrow-up arrow-down" [class.arrow-down]="collapsedMenu.includes(menu.label + '-' + i)">
           <img src="assets/icons/arrow-d.svg" height="12">
         </div>
@@ -108,7 +108,7 @@
       <div *ngFor="let childMenu of menu.child" class="menu menu-row-child cy" [class.child-menu-collapsed-margin-left]="collapsed" [queryParams]="childMenu.params" [routerLink]="childMenu.url" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
         <div (auxclick)="onMiddleClick($event, childMenu.url)" class="df menu-grid-child">
           <div>-</div>
-          <div>{{childMenu.label}}</div>
+          <div>{{translate(childMenu.label)}}</div>
         </div>
       </div>
     </div>

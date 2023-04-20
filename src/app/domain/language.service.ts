@@ -454,7 +454,7 @@ export class LanguageService {
           case 'Добавить закупку': return 'Add purchased';
           case 'Номер договора': return 'Contract number';
           case 'Сумма': return 'Amount';
-          case '': return '';
+          case 'Домой': return 'Home';
           case '': return '';
           case '': return '';
           case '': return '';
