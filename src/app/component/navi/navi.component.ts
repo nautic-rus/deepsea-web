@@ -164,4 +164,38 @@ export class NaviComponent implements OnInit {
       modal: true,
     });
   }
+
+  translate(label: string) {
+    if (this.t.language == 'en'){
+      return label;
+    }
+    else{
+      switch (label){
+        case 'Home': return 'Домой';
+        case 'Sections': return 'Секции';
+        case 'Materials': return 'Материалы';
+        case 'Statement': return 'Ведомости';
+        case 'Documents': return 'Документы';
+        case 'Hull': return 'Корпус';
+        case 'Systems': return 'Системы';
+        case 'Trays': return 'Кабель-каналы';
+        case 'Cables': return 'Кабели';
+        case 'Electric': return 'Электрика';
+        case 'Devices': return 'Устройства';
+        case 'Accommodation': return 'Достройка';
+        case 'Montage List': return 'Монтаж';
+        case 'Tools': return 'Инструменты';
+        case 'Nesting': return 'Раскрой';
+        case 'Billing': return 'Расчет';
+        case 'Weight': return 'Вес';
+        case 'Weight control': return 'Контроль веса';
+        case 'Man hours': return 'Трудозатраты';
+        case 'Calendar': return 'Календарь';
+        case 'Daily Reports': return 'Отчеты';
+        case 'Planer': return 'Планировщик';
+        case 'Q & A': return 'Книга вопросов';
+        default: return label;
+      }
+    }
+  }
 }
