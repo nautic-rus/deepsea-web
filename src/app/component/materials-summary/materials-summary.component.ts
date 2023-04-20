@@ -191,7 +191,7 @@ export class MaterialsSummaryComponent implements OnInit {
       res.push({
         data: n.data,
         children: this.getNodes(rootNodes, materials, n.data),
-        label: n.label,
+        label: n.label + ' (' + n.data.substr(parent.length) + ')',
         count: this.materialsSummarySrc.filter(x => x.code.startsWith(n.data)).length
       });
     });

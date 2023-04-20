@@ -34,6 +34,7 @@ import {CombineIssuesComponent} from "./combine-issues/combine-issues.component"
 import {AssignResponsibleComponent} from "../qna/assign-responsible/assign-responsible.component";
 import {AssignQuestionComponent} from "../qna/assign-question/assign-question.component";
 import {Router} from "@angular/router";
+import {concat, forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-task',
@@ -808,6 +809,34 @@ export class TaskComponent implements OnInit {
           this.issue.status = value;
           this.issue.action = value;
           this.statusChanged();
+        }
+
+        if (issue.closing_status.includes(value)){
+          let findUser = this.auth.users.find(x => x.login == this.issue.assigned_to);
+          if (findUser != null){
+            this.auth.getUsersPlanHours(findUser.id, 0, 1).subscribe(userPlanHours => {
+              // let plannedHours = userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id != 0);
+              // let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
+              // let assign: any[] = [];
+              // _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
+              //   assign.push({task: group[0].task_id, hours: group.length});
+              // });
+              // forkJoin(tasks.map(x => this.auth.deleteUserTask(user,x, 0))).subscribe({
+              //   next: value => {
+              //     concat(assign.reverse().map((x: any) => this.auth.planUserTask(user, x.task, freeHour.id, x.hours, 0).subscribe())).subscribe({
+              //       next: assignRes => {
+              //         this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
+              //           this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
+              //             this.plannedHours = plannedHoursAlready;
+              //             this.pHours = planHours;
+              //           });
+              //         });
+              //       }
+              //     });
+              //   }
+              // });
+            });
+          }
         }
       }
     });
