@@ -20,7 +20,7 @@ export class MaterialManagerService {
   async getMaterials(project: string) {
     return await this.http.get<Material[]>(props.http + '/materials', {params: {project}}).toPromise();
   }
-  async getMaterialsSummary(projects: string[], kinds: string[]) {
+  async getMaterialsSummary(projects: string, kinds: string) {
     return await this.http.get<Material[]>(props.httpSpec + '/materialsSummary', {params: {projects, kinds}}).toPromise();
   }
   async getMaterialNodes(project: string) {

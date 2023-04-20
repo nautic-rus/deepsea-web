@@ -323,7 +323,7 @@ export class MaterialsSummaryComponent implements OnInit {
       materialsValue.forEach((m => m.materialCloudDirectory = ''));
       this.materials = materialsValue;
       this.materialsSrc = materialsValue;
-      this.materialManager.getMaterialsSummary([this.project.foran], ['pipe']).then(materialsSummary => {
+      this.materialManager.getMaterialsSummary(this.project.foran, 'pipe,hull').then(materialsSummary => {
         this.materialsFilled = true;
         this.materialsSummarySrc = materialsSummary;
         this.materialsSummary = this.materialsSummarySrc;

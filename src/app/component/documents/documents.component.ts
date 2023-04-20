@@ -215,7 +215,10 @@ export class DocumentsComponent implements OnInit {
             if (findProject != null){
               console.log(findProject);
               this.issueManager.getCloudFiles(findProject.cloudRkd + '/Documents/Hull').then(docs => {
+                console.log(data);
                 console.log('docs received');
+                console.log(this.project);
+                console.log(data.filter(x => x.project == this.project));
                 this.issues = data.filter(x => x.issue_type.includes('RKD')).filter(x => x.project == this.project).filter(issue => !this.showWithFilesOnly || docs.find(d => d.url.includes(issue.doc_number)) != null);
                 this.issues = this.issues.filter(x => x.department == this.department || x.assistant == this.department);
                 this.issues = _.sortBy(this.issues, x => x.doc_number);
