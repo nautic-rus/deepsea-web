@@ -56,10 +56,10 @@
              [globalFilterFields]="['id','doc_number','name','status']">
       <ng-template pTemplate="header">
         <tr class="df">
-          <th pSortableColumn="id" class="lxy w-20">{{t.tr('Id')}}
+          <th style="width: 50px" pSortableColumn="id" class="lxy">{{t.tr('Id')}}
             <p-sortIcon field="id"></p-sortIcon>
           </th>
-          <th pSortableColumn="project" class="lxy w-20">{{t.tr('Проект')}}
+          <th pSortableColumn="project" class="lxy">{{t.tr('Проект')}}
             <p-sortIcon field="project"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'project'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -68,7 +68,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="department" class="lxy w-20">{{t.tr('Отдел')}}
+          <th pSortableColumn="department" class="lxy">{{t.tr('Отдел')}}
             <p-sortIcon field="department"></p-sortIcon><p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
@@ -77,7 +77,7 @@
             </p-columnFilter>
 
           </th>
-          <th pSortableColumn="status" class="lxy w-20">{{t.tr('Статус')}}
+          <th pSortableColumn="status" class="lxy">{{t.tr('Статус')}}
             <p-sortIcon field="status"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -92,7 +92,7 @@
           <th pSortableColumn="name" class="lxy">{{t.tr('Тема')}}
             <p-sortIcon field="name"></p-sortIcon>
           </th>
-          <th pSortableColumn="started_by" class="lxy-15">{{t.tr('Автор')}}
+          <th pSortableColumn="started_by" class="lxy">{{t.tr('Автор')}}
             <p-sortIcon field="started_by"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'started_by'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -122,6 +122,7 @@
           <th pSortableColumn="started_date" class="lxy">{{t.tr('Дата создания')}}
             <p-sortIcon field="started_date"></p-sortIcon>
           </th>
+          <th class="lxy">{{t.tr('Рекомендованная дата ответа')}}</th>
           <th pSortableColumn="priority" class="lxy">{{t.tr('Приоритет')}}
             <p-sortIcon field="priority"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'priority'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
@@ -135,15 +136,16 @@
       </ng-template>
       <ng-template pTemplate="body" let-q>
         <tr class="cursor-pointer row-table-doc-hover" (click)="openQuestion(q.id)">
-          <td class="text-14">{{q.id}}</td>
-          <td class="text-14">{{getProject(q.project)}}</td>
+          <td style="width: 50px" class="text-14">{{q.id}}</td>
+          <td class="text-14 break-word">{{getProject(q.project)}}</td>
           <td class="text-14">{{localeDepartment(q.department)}}</td>
           <td class="text-14">
             <span [innerHTML]="questionStatus(q.status) | safeHtml"></span>
           </td>
-          <td class="text-14">{{q.doc_number}}</td>
-          <td class="text-14">{{q.name}}</td>
+          <td class="text-14 break-word">{{q.doc_number}}</td>
+          <td class="text-14 break-word">{{q.name}}</td>
           <td class="text-14"><span [innerHTML]="getUserName(q.started_by) | safeHtml"></span></td>
+
 
           <td class="text-14">
             <span [innerHTML]="getUserName(q.responsible) | safeHtml"></span>
@@ -160,6 +162,7 @@
             <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
           <td class="text-14">{{getDate(q.started_date)}}</td>
+          <td class="text-14">{{getDate(getRecommendDate(q.started_date))}}</td>
           <td class="text-14">{{issueManager.localeTaskPriority(q.priority)}}</td>
         </tr>
       </ng-template>

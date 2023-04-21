@@ -1271,6 +1271,9 @@ cdk-virtual-scroll-viewport{
 .word-break{
   word-break: break-all;
 }
+.break-word{
+  word-break: break-word;
+}
 app-materials .p-virtualscroller-item{
   display: flex;
   justify-content: center;

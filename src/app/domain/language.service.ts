@@ -455,7 +455,7 @@ export class LanguageService {
           case 'Номер договора': return 'Contract number';
           case 'Сумма': return 'Amount';
           case 'Домой': return 'Home';
-          case '': return '';
+          case 'Рекомендованная дата ответа': return 'Recommended response date';
           case '': return '';
           case '': return '';
           case '': return '';
