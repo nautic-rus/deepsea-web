@@ -34,6 +34,7 @@ export class DoclistComponent implements OnInit {
 
 
   @ViewChild('table') table: Table;
+
   ngOnInit(): void {
     this.issueManager.getIssueProjects().then(projects => {
       this.projects = projects;

@@ -37,8 +37,14 @@
           <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">
         </div>
       </div>
+      <div class="p-ml-auto mr-10 df">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+        </span>
+      </div>
     </div>
-    <p-table [value]="questions"
+    <p-table #table [value]="questions"
              [scrollable]="true"
              scrollHeight="calc(100vh - 190px)"
              [virtualScroll]="true"
