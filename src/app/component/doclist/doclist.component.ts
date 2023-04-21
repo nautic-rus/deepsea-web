@@ -7,6 +7,7 @@ import {AuthManagerService} from "../../domain/auth-manager.service";
 import {MessageService} from "primeng/api";
 import _ from "underscore";
 import {Table} from "primeng/table";
+import * as XLSX from "xlsx";
 
 @Component({
   selector: 'app-doclist',
@@ -65,7 +66,40 @@ export class DoclistComponent implements OnInit {
   projectChanged() {
     this.filterIssues();
   }
-
+  exportXLS() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let data: any[] = [];
+    this.issues.filter((x: any) => x != null).forEach(issue => {
+      data.push({
+        'Doc number': issue.doc_number,
+        'Title': issue.name,
+        'Department': issue.department,
+        'Stage': issue.period,
+        'Contract due date': this.getDateOnly(issue.contract_due_date),
+        'Last update': this.getDateOnly(issue.last_update)
+      })
+    });
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
+  }
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
+  }
+  getDateOnly(dateLong: number): string {
+    if (dateLong == 0){
+      return '--/--/--';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
     let foranProject = project.replace('NR', 'N');
     let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));

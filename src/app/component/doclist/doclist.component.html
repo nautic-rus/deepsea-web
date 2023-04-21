@@ -2,24 +2,29 @@
   <div class="min-height-card">
     <div class="empty-card"></div>
     <div class="card-head df sticky-card" *ngIf="projects.length > 0">
-      <div class="mr-1">
+      <div class="mr-10">
         <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" optionLabel="label" styleClass="width-170 border" (ngModelChange)="projectChanged()">
         </p-dropdown>
       </div>
-      <div class="mr-1" *ngIf="departments.length > 0">
+      <div class="mr-10" *ngIf="departments.length > 0">
         <p-dropdown optionLabel="name" optionValue="name" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <div class="mr-1">
+      <div class="mr-10">
         <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <div class="mr-1 cy">
+      <div class="mr-10 cy">
         <label class="container margin-bottom-none">
           <span class="text-checkbox">Show only with files</span>
           <input (change)="projectChanged()" type="checkbox" [(ngModel)]="showWithFilesOnly">
           <span class="checkmark"></span>
         </label>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button green-button cxy" [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
       </div>
       <div class="p-ml-auto mr-10 df">
         <span class="p-input-icon-left">
