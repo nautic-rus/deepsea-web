@@ -15,6 +15,10 @@
   width: 1.5rem;
   height: 1.5rem;
 }
+/deep/.p-tree .p-tree-container .p-treenode .p-treenode-content {
+  padding: 3px;
+  font-size: 13px;
+}
 /deep/.pi {
   font-size: 13px;
 }
@@ -173,7 +177,7 @@
   border-radius: 10px;
   margin-left: 10px;
   display: grid;
-  grid-template-columns: 50px 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 50px 3fr 1fr 1fr 1fr 1fr 1fr;
 }
 .top-row-doc{
   display: grid;
@@ -365,7 +369,7 @@
 }
 .two-cols{
   display: grid;
-  grid-template-rows: 55px 15px;
+  grid-template-rows: 45px 25px;
 }
 .three-cols{
   display: grid;

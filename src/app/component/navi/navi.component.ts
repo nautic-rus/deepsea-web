@@ -171,7 +171,7 @@ export class NaviComponent implements OnInit {
     }
     else{
       switch (label){
-        case 'Home': return 'Домой';
+        case 'Home': return 'Главная';
         case 'Sections': return 'Секции';
         case 'Materials': return 'Материалы';
         case 'Statement': return 'Ведомости';

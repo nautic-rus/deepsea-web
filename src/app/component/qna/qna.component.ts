@@ -70,8 +70,8 @@ export class QnaComponent implements OnInit {
       this.projectDefs = projects;
       this.issueManagerService.getQuestions().then(res => {
 
-        this.questionsSrc = res;
-        this.questions = res;
+        this.questionsSrc = _.sortBy(res, x => x.started_date).reverse();
+        this.questions = _.sortBy(res, x => x.started_date).reverse();
 
         this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(this.getProject(x), x));
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));

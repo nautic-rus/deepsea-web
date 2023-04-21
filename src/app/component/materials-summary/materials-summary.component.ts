@@ -16,6 +16,9 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AddMaterialStockComponent} from "./add-material-stock/add-material-stock.component";
 import {PartsQtyComponent} from "../billing/parts-qty/parts-qty.component";
 import {DrawingShowComponent} from "./drawing-show/drawing-show.component";
+import {jsPDF} from "jspdf";
+import {Issue} from "../../domain/classes/issue";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-materials-summary',
@@ -50,6 +53,7 @@ export class MaterialsSummaryComponent implements OnInit {
   selectedView: string = '';
   // @ts-ignore
   @ViewChild('table') table: Table;
+  @ViewChild('dt') dt: Table;
   noResult = false;
   materialsFilled = false;
   materialsSummarySrc: any[] = [];
@@ -61,7 +65,7 @@ export class MaterialsSummaryComponent implements OnInit {
     this.innerWidth = window.innerWidth;
   }
 
-  constructor(public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
+  constructor(public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.project = '';
@@ -422,6 +426,56 @@ export class MaterialsSummaryComponent implements OnInit {
       if (res == 'success'){
         this.ref.close();
       }
+    });
+  }
+
+  exportPDF() {
+    console.log(this.dt);
+    const doc = new jsPDF('l', 'mm', [297, 210]);
+    this.http.get('/assets/fonts/roboto.txt', {responseType: 'text'}).subscribe(data => {
+      // @ts-ignore
+      doc.addFileToVFS("Roboto.ttf", data);
+      doc.addFont("Roboto.ttf", "Roboto", "regular");
+      doc.setFont("Roboto", 'regular');
+
+      // @ts-ignore
+      let headers: any[] = this.cols.filter(x => this.selectedCols.includes(x.header)).map(col => ({
+        title: col.header,
+        dataKey: col.field
+      }));
+      let issues: any[] = [];
+      if (this.dt.filteredValue == null){
+        this.materialsSummary.forEach(x => this.materialsSummary.push(x));
+      }
+      else{
+        (this.dt.filteredValue as Issue[]).forEach(x => issues.push(x));
+      }
+      let body: any[] = [];
+      issues.forEach(issue => {
+        let newIssue = new Issue();
+        for (let issueKey in issue) {
+          // @ts-ignore
+          newIssue[issueKey] = issue[issueKey];
+        }
+        body.push(newIssue);
+      });
+      body.forEach(issue => {
+        for (let issueKey in issue) {
+          // @ts-ignore
+          issue[issueKey] = this.localeColumnForPDF(issue[issueKey], issueKey, issue);
+        }
+      });
+      // @ts-ignore
+      doc.autoTable({
+        columns: headers,
+        body: body,
+        styles: {
+          font: 'Roboto',
+          fontStyle: 'regular'
+        }
+      });
+      let fileName = 'export_' + this.generateId(8) + '.pdf';
+      doc.save(fileName);
     });
   }
 }

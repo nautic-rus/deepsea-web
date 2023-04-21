@@ -11,6 +11,11 @@
         </div>
       </div>
       <div class="mr-10">
+        <div (click)="exportPDF()" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+          <img src="assets/icons/pdf2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
         {{selectedNodePath}}
       </div>
       <div class="p-ml-auto mr-10 df">
@@ -28,9 +33,9 @@
         </span>
       </div>
     </div>
-    <div class="w-100 df">
+    <div #dt class="w-100 df">
       <div class="w-100 df">
-        <div class="w-15">
+        <div class="w-17">
           <div class="menu-card">
             <p-tree class="tree" *ngIf="project != ''" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
