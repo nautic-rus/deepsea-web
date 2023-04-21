@@ -57,7 +57,7 @@
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th *ngIf="auth.getUser().groups.includes('Nautic_Rus')" pSortableColumn="status" class="cxy w-100">{{l.tr('Статус')}}
+            <th *ngIf="auth.getUser().permissions.includes('visible_doc_status')" pSortableColumn="status" class="cxy w-100">{{l.tr('Статус')}}
               <p-sortIcon field="status"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -83,7 +83,7 @@
             <td class="text-14 w-100">{{issue.doc_number}}</td>
             <td class="text-14 w-100">{{issue.name}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
-            <td *ngIf="auth.getUser().groups.includes('Nautic_Rus')" class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
+            <td *ngIf="auth.getUser().permissions.includes('visible_doc_status')" class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
             <td class="text-14 w-100">{{issue.period}}</td>
             <td class="text-14 w-100">{{getDate(issue.contract_due_date)}}</td>
             <td class="text-14 w-100">{{getDate(issue.last_update)}}</td>
