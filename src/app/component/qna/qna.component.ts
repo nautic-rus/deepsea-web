@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {User} from "../../domain/classes/user";
 import {IssueManagerService} from "../../domain/issue-manager.service";
@@ -13,6 +13,7 @@ import {LanguageService} from "../../domain/language.service";
 import {AssignToResponsibleComponent} from "../task/assign-to-responsible/assign-to-responsible.component";
 import {AssignQuestionComponent} from "./assign-question/assign-question.component";
 import {TaskComponent} from "../task/task.component";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-qna',
@@ -33,7 +34,11 @@ export class QnaComponent implements OnInit {
   filters:  { status: any[], author: any[], department: any[], priority: any[], responsible: any[], assigned_to: any[], project: any[] } = { status: [], author: [], department: [], priority: [], responsible: [], assigned_to: [], project: [] };
   constructor(private route: ActivatedRoute, public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
 
+
+  @ViewChild('table') table: Table;
+
   ngOnInit(): void {
+
 
     this.users = this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
     this.fillQNA();
