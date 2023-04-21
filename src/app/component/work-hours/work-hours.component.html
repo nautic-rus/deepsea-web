@@ -1,5 +1,5 @@
 <div class="all-page">
-  <div class="card">
+  <div class="card-work">
     <div class="calendar-header">
       <div class="cy width-200">
         <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" optionLabel="name" optionValue="name"></p-multiSelect>
@@ -113,7 +113,7 @@
         </div>
 
       </div>
-      <div class="width-330" *ngIf="stages.length > 0">
+      <div class="width-340 background-gray" *ngIf="stages.length > 0">
         <div class="df space-between mt-5">
           <div class="ml-10">
             <div class="big-text-user mb-1">{{t.tr('Проект')}}</div>
