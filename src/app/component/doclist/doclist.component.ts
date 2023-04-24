@@ -8,6 +8,7 @@ import {MessageService} from "primeng/api";
 import _ from "underscore";
 import {Table} from "primeng/table";
 import * as XLSX from "xlsx";
+import {LV} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-doclist',
@@ -22,13 +23,17 @@ export class DoclistComponent implements OnInit {
   //departments: string[] = ['Hull', 'System', 'Devices', 'Trays', 'Cables', 'Electric', 'Accommodation' ];
   departments: any[] = [];
   selectedDepartments: string[] = [];
+  selectedTaskTypes: string[] = [];
   selectedProjects: string[] = [];
+  selectedTaskStages: string[] = [];
   issuesSrc: Issue[] = [];
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
   taskType = '';
-  taskTypes: string[] = ['-', 'RKD', 'PDSP'];
+  taskTypes: LV[] = ['-', 'RKD', 'PDSP'].map(x => new LV(x));
+  taskStages: LV[] = [];
+
   statuses: string[] = [];
   status = '';
   showWithFilesOnly = true;
@@ -39,6 +44,7 @@ export class DoclistComponent implements OnInit {
   @ViewChild('table') table: Table;
 
   ngOnInit(): void {
+    this.selectedTaskTypes = this.taskTypes.map(x => x.value);
     this.issueManager.getIssueProjects().then(projects => {
       this.projects = projects;
       this.projects.forEach((x: any) => x.label = this.getProjectName(x));
@@ -52,6 +58,9 @@ export class DoclistComponent implements OnInit {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
       });
+      console.log(_.uniq(this.issues.map(x => x.period)).map(x => this.getNumber(x)));
+      this.taskStages = _.sortBy(_.uniq(this.issues.map(x => x.period)), x => this.getNumber(x)).map(x => new LV(x));
+      this.selectedTaskStages = this.taskStages.map(x => x.value);
     });
     this.issueManager.getDepartments().subscribe(departments => {
       this.departments = departments.filter(x => x.visible_documents == 1);
@@ -59,7 +68,14 @@ export class DoclistComponent implements OnInit {
     });
   }
 
-
+  getNumber(text: string){
+    let r = new RegExp('\\d+');
+    let res = r.test(text) ? r.exec(text)![0] : '0';
+    while (res.length < 4){
+      res = '0' + res;
+    }
+    return res;
+  }
   getProjectName(project: any){
     let res = project.name;
     if (project.rkd != ''){
@@ -129,7 +145,8 @@ export class DoclistComponent implements OnInit {
     this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
     this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
     this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department));
-    this.issues = this.issues.filter(x => this.taskType == null || x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-');
+    this.issues = this.issues.filter(x => this.selectedTaskTypes.includes(x.issue_type));
+    this.issues = this.issues.filter(x => this.selectedTaskStages.includes(x.period));
     this.issues = _.sortBy(this.issues, x => x.doc_number);
   }
 
@@ -153,5 +170,9 @@ export class DoclistComponent implements OnInit {
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
+  taskStagesChanged() {
+    this.filterIssues();
   }
 }

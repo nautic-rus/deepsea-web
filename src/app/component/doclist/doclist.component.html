@@ -9,9 +9,15 @@
         <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
       </div>
       <div class="mr-10">
-        <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
-        </p-dropdown>
+        <p-multiSelect styleClass="width-200" [options]="taskTypes" [(ngModel)]="selectedTaskTypes" (ngModelChange)="taskTypeChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
+      <div class="mr-10">
+        <p-multiSelect styleClass="width-200" [options]="taskStages" [(ngModel)]="selectedTaskStages" (ngModelChange)="taskStagesChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+      </div>
+<!--      <div class="mr-10">-->
+<!--        <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">-->
+<!--        </p-dropdown>-->
+<!--      </div>-->
       <div class="mr-10 cy">
         <label class="container margin-bottom-none">
           <span class="text-checkbox">Show only with files</span>
