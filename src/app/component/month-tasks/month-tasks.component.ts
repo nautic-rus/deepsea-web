@@ -190,7 +190,7 @@ export class MonthTasksComponent implements OnInit {
       }
     ];
     this.auth.usersFilled.subscribe(() => {
-      this.users = this.auth.users.filter(x => x.visibility.includes('c') && x.groups.includes('Nautic_Rus'));
+      this.users = this.auth.users.filter(x => x.visibility.includes('c') && x.groups.includes('Engineers') || x.groups.includes('Hull Engineers') || x.groups.includes('Chief of Department') || x.groups.includes('Managers') || x.groups.includes('Admin'));
     });
     this.selectedUser = this.auth.getUser().login;
     this.fillTasks();
