@@ -3,12 +3,10 @@
     <div class="empty-card"></div>
     <div class="card-head df sticky-card" *ngIf="projects.length > 0">
       <div class="mr-10">
-        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" optionLabel="label" styleClass="width-170 border" (ngModelChange)="projectChanged()">
-        </p-dropdown>
+        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
       </div>
-      <div class="mr-10" *ngIf="departments.length > 0">
-        <p-dropdown optionLabel="name" optionValue="name" placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
-        </p-dropdown>
+      <div class="mr-10">
+        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
       </div>
       <div class="mr-10">
         <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
@@ -55,21 +53,21 @@
             </th>
             <th pSortableColumn="department" class="cxy w-100">{{l.tr('Отдел')}}
               <p-sortIcon field="department"></p-sortIcon>
-              <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                  </p-multiSelect>
-                </ng-template>
-              </p-columnFilter>
+<!--              <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">-->
+<!--                  </p-multiSelect>-->
+<!--                </ng-template>-->
+<!--              </p-columnFilter>-->
             </th>
             <th *ngIf="auth.getUser().permissions.includes('visible_doc_status')" pSortableColumn="status" class="cxy w-100">{{l.tr('Статус')}}
               <p-sortIcon field="status"></p-sortIcon>
-              <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
-                  </p-multiSelect>
-                </ng-template>
-              </p-columnFilter>
+<!--              <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">-->
+<!--                  </p-multiSelect>-->
+<!--                </ng-template>-->
+<!--              </p-columnFilter>-->
             </th>
             <th pSortableColumn="stage" class="lxy w-100">{{l.tr('Этап')}}
               <p-sortIcon field="stage"></p-sortIcon>

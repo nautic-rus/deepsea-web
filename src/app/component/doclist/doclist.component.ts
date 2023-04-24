@@ -20,7 +20,9 @@ export class DoclistComponent implements OnInit {
   project: any;
   department: string = '';
   //departments: string[] = ['Hull', 'System', 'Devices', 'Trays', 'Cables', 'Electric', 'Accommodation' ];
-  departments: string[] = [];
+  departments: any[] = [];
+  selectedDepartments: string[] = [];
+  selectedProjects: string[] = [];
   issuesSrc: Issue[] = [];
   issues: Issue[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
@@ -41,6 +43,7 @@ export class DoclistComponent implements OnInit {
       this.projects = projects;
       this.projects.forEach((x: any) => x.label = this.getProjectName(x));
       this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
+      this.selectedProjects = [...this.projects.map(x => x.name)];
     });
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
@@ -52,6 +55,7 @@ export class DoclistComponent implements OnInit {
     });
     this.issueManager.getDepartments().subscribe(departments => {
       this.departments = departments.filter(x => x.visible_documents == 1);
+      this.selectedDepartments = [...this.departments.map(x => x.name)];
     });
   }
 
@@ -123,8 +127,8 @@ export class DoclistComponent implements OnInit {
   filterIssues(){
     this.issues = [...this.issuesSrc];
     this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
-    this.issues = this.issues.filter(x => this.project == null || x.project == this.project.name || this.project.name == '' || this.project.name == '-');
-    this.issues = this.issues.filter(x => this.department == null || x.department == this.department || this.department == '' || this.department == '-');
+    this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
+    this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department));
     this.issues = this.issues.filter(x => this.taskType == null || x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-');
     this.issues = _.sortBy(this.issues, x => x.doc_number);
   }
