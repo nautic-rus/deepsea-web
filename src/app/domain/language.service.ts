@@ -456,7 +456,7 @@ export class LanguageService {
           case 'Сумма': return 'Amount';
           case 'Домой': return 'Home';
           case 'Рекомендованная дата ответа': return 'Recommended response date';
-          case '': return '';
+          case 'Пучковая прокладка': return 'Bundle gasket';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -7,6 +7,7 @@ export interface Cable {
   nom_section: string;
   diameter: number;
   seg_code: string;
+  bunch: string;
   f_rout: number;
   length: number;
   ext_len_1: number;
