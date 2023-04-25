@@ -23,6 +23,7 @@ export class CablesComponent implements OnInit {
   department = '';
   issueId = 0;
   cables: Cable[] = [];
+  equipmentCables: Cable[] = [];
   equipments: Equipment[] = [];
   issueRevisions: string[] = [];
   miscIssues: Issue[] = [];
@@ -54,7 +55,7 @@ export class CablesComponent implements OnInit {
       }
     });
 
-    this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
   fillRevisions() {
@@ -169,6 +170,7 @@ export class CablesComponent implements OnInit {
     });
     console.log(this.selectedEq)
     this.selectedTab = 'Equipment'
+    this.setEquipmentCables()
   }
 
   onClickToEquipment(cable: Cable) {
@@ -182,14 +184,25 @@ export class CablesComponent implements OnInit {
       x: cable.to_x,
       y: cable.to_y,
       z: cable.to_z,
-      stock_code: cable.to_stock_code
+      stock_code: cable.from_stock_code
     });
+    console.log(this.selectedEq)
     this.selectedTab = 'Equipment'
+    this.setEquipmentCables()
   }
 
   onSelectEquipment(eq: Equipment) {
     this.selectedEq = eq;
     console.log(this.selectedEq)
+    this.setEquipmentCables()
+  }
+
+  setEquipmentCables() {
+    this.equipmentCables = this.cables.filter(cable =>
+      (cable.to_eq == this.selectedEq.name &&
+        cable.to_eq_id == this.selectedEq.id)
+      || (cable.from_eq == this.selectedEq.name && cable.from_eq_id == this.selectedEq.id)
+    )
   }
 
   setCols() {

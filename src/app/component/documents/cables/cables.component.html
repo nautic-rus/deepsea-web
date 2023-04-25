@@ -138,7 +138,7 @@
                         <div class="pl-8">
                           <div class="df cursor-pointer hover-row"
                                (click)="onClickToEquipment(cable)">
-                            <div class="title-name mr-10" *ngIf="cable.from_eq != ''">{{cable.from_eq}}</div>
+                            <div class="title-name mr-10" *ngIf="cable.to_eq != ''">{{cable.to_eq}}</div>
                             <div class="attribute mr-10 text-table-col flex-end" *ngIf="cable.to_eq_id != ''">
                               ({{cable.to_eq_id}})
                             </div>
@@ -289,7 +289,62 @@
               Please select the equipment
             </div>
             <div *ngIf="selectedEq != null">
-              {{selectedEq.name}}
+              <div class="tile">
+                <div class="w-100 " *ngIf="equipmentCables.length != 0">
+                  <p-virtualScroller [value]="equipmentCables" scrollHeight="calc(100vh - 277px)" [itemSize]="55">
+                    <ng-template pTemplate="cable" let-cable let-i="index">
+                      <div class="card-tile-t w-100"
+                           [class.hidden-card]="cable == null">
+                        <div class="top-row df">
+                          <div [ngSwitch]="cable.f_rout" class="cxy mr-1">
+                            <div *ngSwitchCase="0" class="point red-point" pTooltip="{{l.tr('Не проложен')}}"
+                                 tooltipPosition="top"></div>
+                            <div *ngSwitchCase="1" class="point green-point" pTooltip="{{l.tr('Проложен')}}"
+                                 tooltipPosition="top"></div>
+                            <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{l.tr('Проложен частично')}}"
+                                 tooltipPosition="top"></div>
+                          </div>
+                          <div class="cxy mr-2">
+                            <div class="title-medium-bold">{{cable.code}}</div>
+                          </div>
+                          <div class="cxy mr-2">
+                            <div class=title-name>{{cable.description}}</div>
+                          </div>
+                          <div class="df cxy mr-1">
+                            <div class="text-center-y attribute mr-10 title-name">Sec:</div>
+                            <div class="title-name">{{cable.nom_section}}</div>
+                          </div>
+                          <div class="df cxy mr-1">
+                            <div class="text-center-y attribute mr-10 title-name">D:</div>
+                            <div class="title-name">{{cable.diameter}}</div>
+                          </div>
+                          <div class="df cxy mr-1">
+                            <div class="text-center-y attribute mr-10 title-name">Seg:</div>
+                            <div class="title-name">{{cable.seg_code}}</div>
+                          </div>
+                          <div class="df cxy mr-1">
+                            <div class="text-center-y attribute mr-10 title-name">L:</div>
+                            <div class="title-name">{{round(cable.length) + 'm'}}</div>
+                            <div
+                              class="text-center-y attribute mr-10 title-name" pTooltip="{{l.tr('Поправка длины')}}"
+                              tooltipPosition="right">
+                              {{' (' + cable.ext_len_1 + '-' + cable.ext_len_2 + ')'}}</div>
+                          </div>
+                          <div class="p-ml-auto text-center-y">
+                            <div class="df">
+                              <div class="trm">{{cable.stock_code}}</div>
+                              <div (click)="copyTrmCode(cable.stock_code, 'c' + i)" class="trm-copy cursor-pointer cxy">
+                                <img src="assets/icons/trm.svg" height="16">
+                                <div class="copy-tooltip" [hidden]="!showTooltip('c' + i)">Copied!</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-virtualScroller>
+                </div>
+              </div>
             </div>
 
 
