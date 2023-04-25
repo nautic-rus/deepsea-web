@@ -67,18 +67,15 @@
       <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="this.groups" (ngModelChange)="roleChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
-      <p-multiSelect styleClass="width-211" appendTo="body" id="rights" [options]="this.rights" [(ngModel)]="this.permissions" optionLabel="name" optionValue="name"></p-multiSelect>
-    </div>
-    <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
       <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="this.visibility">
     </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="this.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
+    </div>
   </div>
-  <div>
-    <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
-    <p-multiSelect styleClass="w-100" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="this.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
-  </div>
+
 </div>
 
 <div class="form-footer-user">

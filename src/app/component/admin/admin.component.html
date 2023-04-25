@@ -189,56 +189,56 @@
             </ng-template>
           </p-table>
         </div>
-        <div class="rights card2">
-          <p-table class="rights"
-                   #rghts
-                   id="rghts"
-                   dataKey="id"
-                   [value]="rights"
-                   [scrollable]="true"
-                   [columns]="colsRights"
-                   [virtualScroll]="false"
-                   [scrollHeight]="'35vh'"
-                   [virtualRowHeight]="1"
-                   styleClass="p-datatable-striped"
-                   scrollDirection="both"
-          >
-            <ng-template pTemplate="caption">
-              <div class="p-d-flex">
-                <div class="mr-10">
-                  <div class="materials-button-home blue-button cxy" (click)="newRight(null)">
-                    <div class="pr-10 cxy">
-                      <img src="assets/icons/plus3.svg" height="18">
-                    </div>
-                    <div class="cxy">{{l.tr('Новое право')}}</div>
-                  </div>
-                </div>
-                <span class="p-input-icon-left p-ml-auto">
-                </span>
-              </div>
-            </ng-template>
-            <ng-template pTemplate="header" let-columns>
-              <tr>
-                <th style="width: 100%" pResizableColumn pReorderableColumn *ngFor="let col of columns"
-                    [pSortableColumn]="col.field">
-                  <div class="header">
-                    {{l.tr(col.header)}}
-                  </div>
-                </th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-columns="columns" let-right>
-              <tr class="right-row" (click)="viewRight(right.name)">
-                <td style="width: 100%" class="cursor-pointer" *ngFor="let col of columns">
-                  <div *ngIf="col.skip == false && col.field != 'ready'">
-                    <div [innerHTML]="localeColumn(this.right[col.field], col.field) | safeHtml"></div>
-                  </div>
-                  <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
-                </td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </div>
+<!--        <div class="rights card2">-->
+<!--          <p-table class="rights"-->
+<!--                   #rghts-->
+<!--                   id="rghts"-->
+<!--                   dataKey="id"-->
+<!--                   [value]="rights"-->
+<!--                   [scrollable]="true"-->
+<!--                   [columns]="colsRights"-->
+<!--                   [virtualScroll]="false"-->
+<!--                   [scrollHeight]="'35vh'"-->
+<!--                   [virtualRowHeight]="1"-->
+<!--                   styleClass="p-datatable-striped"-->
+<!--                   scrollDirection="both"-->
+<!--          >-->
+<!--            <ng-template pTemplate="caption">-->
+<!--              <div class="p-d-flex">-->
+<!--                <div class="mr-10">-->
+<!--                  <div class="materials-button-home blue-button cxy" (click)="newRight(null)">-->
+<!--                    <div class="pr-10 cxy">-->
+<!--                      <img src="assets/icons/plus3.svg" height="18">-->
+<!--                    </div>-->
+<!--                    <div class="cxy">{{l.tr('Новое право')}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <span class="p-input-icon-left p-ml-auto">-->
+<!--                </span>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="header" let-columns>-->
+<!--              <tr>-->
+<!--                <th style="width: 100%" pResizableColumn pReorderableColumn *ngFor="let col of columns"-->
+<!--                    [pSortableColumn]="col.field">-->
+<!--                  <div class="header">-->
+<!--                    {{l.tr(col.header)}}-->
+<!--                  </div>-->
+<!--                </th>-->
+<!--              </tr>-->
+<!--            </ng-template>-->
+<!--            <ng-template pTemplate="body" let-columns="columns" let-right>-->
+<!--              <tr class="right-row" (click)="viewRight(right.name)">-->
+<!--                <td style="width: 100%" class="cursor-pointer" *ngFor="let col of columns">-->
+<!--                  <div *ngIf="col.skip == false && col.field != 'ready'">-->
+<!--                    <div [innerHTML]="localeColumn(this.right[col.field], col.field) | safeHtml"></div>-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash;              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>&ndash;&gt;-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </ng-template>-->
+<!--          </p-table>-->
+<!--        </div>-->
       </div>
       <div class="projects card2">
         <p-table class="projects"
