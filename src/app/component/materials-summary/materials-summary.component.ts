@@ -19,6 +19,7 @@ import {DrawingShowComponent} from "./drawing-show/drawing-show.component";
 import {jsPDF} from "jspdf";
 import {Issue} from "../../domain/classes/issue";
 import {HttpClient} from "@angular/common/http";
+import {LV} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-materials-summary',
@@ -29,6 +30,8 @@ export class MaterialsSummaryComponent implements OnInit {
 
   search: string = '';
   nodes: any = [];
+  rootNodes: any[] = [];
+  selectedRootNode: string = '';
   nodesSrc: any = [];
   layers: any = [];
   materials: any [] = [];
@@ -64,6 +67,8 @@ export class MaterialsSummaryComponent implements OnInit {
   onResize(event: any) {
     this.innerWidth = window.innerWidth;
   }
+  loading = false;
+  url = '';
 
   constructor(public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService, private http: HttpClient) { }
 
@@ -334,8 +339,15 @@ export class MaterialsSummaryComponent implements OnInit {
         console.log(this.materialsSummary);
         this.materialManager.getMaterialNodes(this.project.rkd).then(materialNodes => {
           this.nodesSrc = materialNodes;
-          this.nodes = this.getNodes(materialNodes, this.materialsSrc, '');
-          this.setParents(this.nodes, '');
+
+          this.nodes = this.getNodes(this.nodesSrc, this.materialsSrc, '');
+          this.rootNodes = this.nodes.filter((x: any) => x.data.length == 3).map((x: any) => new LV(x.label + ' (' + x.count + ')', x.data));
+          this.selectedRootNode = this.rootNodes[0].value;
+          this.rootNodes = [...this.rootNodes];
+          this.rootNodeChanged();
+          //this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.length == 3), this.materialsSrc, '');
+          //console.log(this.nodes);
+          //this.setParents(this.nodes, '');
           this.materials.filter(x => x != null).forEach((x: any) => {
             x.path = this.setPath(x.code);
           });
@@ -429,7 +441,7 @@ export class MaterialsSummaryComponent implements OnInit {
     });
   }
 
-  exportPDF() {
+  exportPDFAux() {
     console.log(this.dt);
     const doc = new jsPDF('l', 'mm', [297, 210]);
     this.http.get('/assets/fonts/roboto.txt', {responseType: 'text'}).subscribe(data => {
@@ -476,6 +488,25 @@ export class MaterialsSummaryComponent implements OnInit {
       });
       let fileName = 'export_' + this.generateId(8) + '.pdf';
       doc.save(fileName);
+    });
+  }
+  exportPDF(){
+    let find = this.projects.find(x => x.name == this.project.name);
+    if (find != null){
+      this.loading = true;
+      this.materialManager.getMaterialsSummaryPdf(find.rkd, this.selectedRootNode, this.auth.getUser().login).subscribe(pdfUrl => {
+        this.loading = false;
+        this.url = pdfUrl;
+        window.open(this.url, '_blank');
+      });
+    }
+  }
+  rootNodeChanged() {
+    this.selectedNodePath = '';
+    this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.startsWith(this.selectedRootNode)), this.materialsSrc, this.selectedRootNode);
+    this.setParents(this.nodes, '');
+    this.materials.filter(x => x != null).forEach((x: any) => {
+      x.path = this.setPath(x.code);
     });
   }
 }

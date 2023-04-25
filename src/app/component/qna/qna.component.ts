@@ -73,6 +73,7 @@ export class QnaComponent implements OnInit {
 
         this.questionsSrc = _.sortBy(res, x => x.started_date).reverse();
         this.questions = _.sortBy(res, x => x.started_date).reverse();
+        console.log(this.questions);
 
         this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(this.getProject(x), x));
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
@@ -87,7 +88,8 @@ export class QnaComponent implements OnInit {
         this.filters.priority = _.sortBy(_.uniq(res.map(x => x.priority)), x => x).map(x => new LV(this.auth.getUserName(x), x));
 
         this.questions.forEach(q => {
-          q.recommended_response_date = this.getRecommendDate(q.started_date);
+          q.started_date_as_date = new Date(q.started_date);
+          q.recommended_response_date = new Date(this.getRecommendDate(q.started_date));
         })
 
 
@@ -173,7 +175,7 @@ export class QnaComponent implements OnInit {
     this.questions = this.questionsSrc;
     this.questions = this.questions.filter(x => x.project == this.project || this.project == null || this.project == '' || this.project == '-');
     this.questions = this.questions.filter(x => x.department == this.department || this.department == null || this.department == '' || this.department == '-');
-    this.questions = this.questions.filter(x => x.status != 'Closed' || this.showCompleted);
+    this.questions = this.questions.filter(x => !x.closing_status.includes(x.status) || this.showCompleted);
   }
   changedProject() {
     this.applyFilters();
