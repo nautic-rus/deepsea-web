@@ -311,6 +311,10 @@
                             <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{l.tr('Проложен частично')}}"
                                  tooltipPosition="top"></div>
                           </div>
+                          <div class="cxy mr-1" *ngIf="cable.bunch != ''" pTooltip="{{l.tr('Пучковая прокладка')}}"
+                               tooltipPosition="top">
+                            <img src="assets/icons/hub.png" height="18">
+                          </div>
                           <div class="cxy mr-2">
                             <div class="title-medium-bold">{{cable.code}}</div>
                           </div>
