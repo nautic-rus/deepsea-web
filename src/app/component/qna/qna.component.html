@@ -53,7 +53,7 @@
              [resizableColumns]="false"
              styleClass="p-datatable-striped"
              responsiveLayout="scroll"
-             [globalFilterFields]="['id','doc_number','name','status']">
+             [globalFilterFields]="['id','doc_number','name','status','started_date']">
       <ng-template pTemplate="header">
         <tr class="df">
           <th style="width: 50px" pSortableColumn="id" class="lxy">{{t.tr('Id')}}
@@ -121,8 +121,13 @@
           </th>
           <th pSortableColumn="started_date" class="lxy">{{t.tr('Дата создания')}}
             <p-sortIcon field="started_date"></p-sortIcon>
+            <p-columnFilter type="date" [field]="'started_date'" display="menu"></p-columnFilter>
+
           </th>
-          <th class="lxy">{{t.tr('Рекомендованная дата ответа')}}</th>
+          <th pSortableColumn="recommended_response_date" class="lxy">{{t.tr('Рекомендованная дата ответа')}}
+            <p-sortIcon field="recommended_response_date"></p-sortIcon>
+          </th>
+
           <th pSortableColumn="priority" class="lxy">{{t.tr('Приоритет')}}
             <p-sortIcon field="priority"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'priority'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
@@ -162,7 +167,7 @@
             <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
           <td class="text-14">{{getDate(q.started_date)}}</td>
-          <td class="text-14">{{getDate(getRecommendDate(q.started_date))}}</td>
+          <td class="text-14">{{getDate(q.recommended_response_date)}}</td>
           <td class="text-14">{{issueManager.localeTaskPriority(q.priority)}}</td>
         </tr>
       </ng-template>

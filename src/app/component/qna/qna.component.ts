@@ -86,6 +86,11 @@ export class QnaComponent implements OnInit {
         this.filters.assigned_to = _.sortBy(_.uniq(res.map(x => x.assigned_to)), x => x).map(x => new LV(this.auth.getUserName(x), x));
         this.filters.priority = _.sortBy(_.uniq(res.map(x => x.priority)), x => x).map(x => new LV(this.auth.getUserName(x), x));
 
+        this.questions.forEach(q => {
+          q.recommended_response_date = this.getRecommendDate(q.started_date);
+        })
+
+
         this.applyFilters();
       });
     });
