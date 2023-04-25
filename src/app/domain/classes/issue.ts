@@ -55,5 +55,6 @@ export class Issue {
   reason_of_changes = '';
   modification_of_existing = 0;
   modification_description = '';
-  recommended_response_date: number;
+  recommended_response_date: Date;
+  started_date_as_date: Date;
 }

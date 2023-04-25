@@ -5,13 +5,17 @@
         <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionLabel="name" styleClass="width-170 border">
         </p-dropdown>
       </div>
+      <div class="mr-10" >
+        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border">
+        </p-dropdown>
+      </div>
       <div class="mr-10">
-        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top"  [class.disabled-button]="materials.length == 0" (click)="exportXLS()">
+        <div class="materials-button green-button cxy" [class.disabled-button]="loading || selectedRootNode == ''" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div class="mr-10">
-        <div (click)="exportPDF()" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+        <div (click)="exportPDF()" [class.disabled-button]="loading || selectedRootNode == ''" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
           <img src="assets/icons/pdf2.svg" height="26">
         </div>
       </div>
@@ -55,7 +59,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="project != '' && !materialsFilled">
+          <div *ngIf="loading || project != '' && !materialsFilled">
             <div class="cxy loading">
               <div class="cxy flex-column">
                 <img src="assets/whale.gif" height="120">

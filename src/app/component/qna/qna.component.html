@@ -26,7 +26,7 @@
           </ng-template>
         </p-dropdown>
       </div>
-      <div class="mr-10" (click)="clearFilters()">
+      <div class="mr-10" (click)="clearFilters(); table.clear()">
         <div class="materials-button gray-button cxy" (click)="clearFilters()" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
           <img src="assets/icons/filter-no.svg" height="18">
         </div>
@@ -119,18 +119,19 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="started_date" class="lxy">{{t.tr('Дата создания')}}
-            <p-sortIcon field="started_date"></p-sortIcon>
-            <p-columnFilter type="date" [field]="'started_date'" display="menu"></p-columnFilter>
+          <th pSortableColumn="started_date_as_date" class="lxy">{{t.tr('Дата создания')}}
+            <p-sortIcon field="started_date_as_date"></p-sortIcon>
+            <p-columnFilter type="date" field="started_date_as_date" display="menu"></p-columnFilter>
 
           </th>
           <th pSortableColumn="recommended_response_date" class="lxy">{{t.tr('Рекомендованная дата ответа')}}
             <p-sortIcon field="recommended_response_date"></p-sortIcon>
+            <p-columnFilter type="date" field="recommended_response_date" display="menu"></p-columnFilter>
           </th>
 
           <th pSortableColumn="priority" class="lxy">{{t.tr('Приоритет')}}
             <p-sortIcon field="priority"></p-sortIcon>
-            <p-columnFilter class="filter" [field]="'priority'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+            <p-columnFilter class="filter" field="priority" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.priority" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                 </p-multiSelect>
@@ -166,8 +167,8 @@
           <td class="text-14">
             <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
-          <td class="text-14">{{getDate(q.started_date)}}</td>
-          <td class="text-14">{{getDate(q.recommended_response_date)}}</td>
+          <td class="text-14">{{getDate(q.started_date_as_date.getTime())}}</td>
+          <td class="text-14">{{getDate(q.recommended_response_date.getTime())}}</td>
           <td class="text-14">{{issueManager.localeTaskPriority(q.priority)}}</td>
         </tr>
       </ng-template>
