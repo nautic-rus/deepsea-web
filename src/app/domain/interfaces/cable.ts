@@ -32,8 +32,8 @@ export interface Cable {
   to_z: number;
   to_zone: string;
   to_zone_desc: string;
-  cab_route_area: string;
-  cab_rote_area_id: string;
+  cab_route_area: string[];
+  cab_rote_area_id: number[];
   stock_code: string;
   material: Material;
 }

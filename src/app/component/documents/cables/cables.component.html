@@ -14,7 +14,8 @@
         </div>
         <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
-            <input [(ngModel)]="searchPlates" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+            <input [(ngModel)]="searchPlates" (ngModelChange)="searchChanged()" pInputText type="text"
+                   [placeholder]="l.tr('Поиск...')" class="border width-170"/>
           </span>
       </div>
     </div>
@@ -97,10 +98,16 @@
                           </div>
                         </div>
                       </div>
-                      <div class="top-row df space-between">
-                        <div class="title-medium-bold">FROM</div>
-                        <div>{{cable.cab_route_area}}</div>
-                        <div class="title-medium-bold">TO</div>
+                      <div class="top-row">
+                        <div class="df space-between" *ngIf="cable.cab_route_area.length != 0">
+                          <div *ngFor="let node of cable.cab_route_area; let e = index"
+                               [class.hidden-card]="node == null">
+<!--                            <div>{{node}}</div>-->
+                            <div class="node gray-point" pTooltip="{{node}}"
+                                 tooltipPosition="top" ></div>
+
+                          </div>
+                        </div>
                       </div>
                       <div class="bottom-grid">
                         <div class="pl-8">
@@ -239,7 +246,7 @@
             <div class="tile">
               <div class="w-100 " *ngIf="cablesSource.length != 0">
               </div>
-              <div class="w-100" *ngIf="equipments.length != 0">
+              <div class="w-100" *ngIf="equipmentsSource.length != 0">
                 <div *ngFor="let eq of equipments; let e = index"
                      [class.hidden-card]="eq == null">
                   <div class="card-tile-eq card-grid-eq"

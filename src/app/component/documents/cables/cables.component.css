@@ -1143,6 +1143,13 @@
   /*border-bottom: 1px solid #f3f2f1;*/
 }
 
+.node{
+  width: 10px;
+  height: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(114, 114, 114, 0.41);
+}
+
 .point {
   width: 16px;
   height: 16px;
@@ -1173,10 +1180,9 @@
 }
 
 .selected-eq {
-  border: 1px solid #32597852 !important;
+  border: 3px solid rgb(251, 201, 72) !important;
   box-shadow: 0px 0px 10px 0px rgba(34, 60, 80, 0.2) !important
 }
-
 .tabs-button-cable {
   padding: 0 10px;
   height: 35px;
