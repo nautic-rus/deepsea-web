@@ -23,8 +23,10 @@ export class CablesComponent implements OnInit {
   department = '';
   issueId = 0;
   cables: Cable[] = [];
+  cablesSource: Cable[] = [];
   equipmentCables: Cable[] = [];
   equipments: Equipment[] = [];
+  equipmentsSource: Equipment[] = [];
   issueRevisions: string[] = [];
   miscIssues: Issue[] = [];
   colsTrays: any[] = [];
@@ -38,6 +40,7 @@ export class CablesComponent implements OnInit {
   selectedTab: string = 'Cables';
   url: string = "https://threejs.org/editor/";
   urlSafe: SafeResourceUrl;
+  searchPlates: string = '';
 
   constructor(public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
   }
@@ -83,6 +86,7 @@ export class CablesComponent implements OnInit {
         if (cables.length > 0) {
           let re = "/\\(([^)]+)\\)/";
           this.cables = _.sortBy(cables, x => x.id);
+          this.cablesSource = _.sortBy(cables, x => x.id);
           // this.equipments = _.map(_.groupBy(this.cables, x => (x.from_eq, x.to_eq)), x => Object({
           //   from_eq: x[0].from_eq,
           //   values: x
@@ -116,11 +120,34 @@ export class CablesComponent implements OnInit {
           ), x => x.name)
 
 
+          this.equipmentsSource = this.equipments;
+
           console.log(this.equipments)
         } else {
           this.noResultCables = true;
         }
       });
+  }
+
+  searchChanged() {
+    if (this.selectedTab == 'Cables') {
+      if (this.searchPlates.trim() == '') {
+        this.cables = this.cablesSource;
+      } else {
+        this.cables = this.cablesSource.filter((x: any) => {
+          return x == null || (x.code.toString() + x.description.toString() + x.stock_code.toString() + x.from_system.toString() + x.from_eq_id.toString() + x.from_eq_desc.toString() + x.from_eq.toString() + x.from_stock_code.toString() + x.from_zone.toString() + x.from_zone_desc.toString() + x.from_system.toString() + x.to_eq_id.toString() + x.to_eq_desc.toString() + x.to_eq.toString() + x.to_stock_code.toString() + x.to_zone.toString() + x.to_zone_desc.toString()).trim().toLowerCase().includes(this.searchPlates.toString().trim().toLowerCase())
+        });
+      }
+    }
+    if (this.selectedTab == 'Equipment') {
+      if (this.searchPlates.trim() == '') {
+        this.equipments = this.equipmentsSource;
+      } else {
+        this.equipments = this.equipmentsSource.filter((x: any) => {
+          return x == null || (x.id.toString() + x.name.toString() + x.desc.toString() + x.zone.toString() + x.zone_desc.toString() + x.system.toString() + x.stock_code.toString()).trim().toLowerCase().includes(this.searchPlates.toString().trim().toLowerCase())
+        });
+      }
+    }
   }
 
   openIssue(id: number) {
@@ -198,7 +225,7 @@ export class CablesComponent implements OnInit {
   }
 
   setEquipmentCables() {
-    this.equipmentCables = this.cables.filter(cable =>
+    this.equipmentCables = this.cablesSource.filter(cable =>
       (cable.to_eq == this.selectedEq.name &&
         cable.to_eq_id == this.selectedEq.id)
       || (cable.from_eq == this.selectedEq.name && cable.from_eq_id == this.selectedEq.id)

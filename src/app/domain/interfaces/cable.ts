@@ -33,6 +33,7 @@ export interface Cable {
   to_zone: string;
   to_zone_desc: string;
   cab_route_area: string;
+  cab_rote_area_id: string;
   stock_code: string;
   material: Material;
 }

@@ -4,7 +4,7 @@
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
       <div class="p-ml-auto mr-10 df">
-        <div class="df all-tabs-button mr-2" *ngIf="cables.length != 0">
+        <div class="df all-tabs-button mr-2" *ngIf="cablesSource.length != 0">
           <div class="tabs-button-cable cursor-pointer cxy" (click)="selectedTab = 'Cables'"
                [class.selected-tab]="selectedTab == 'Cables'">Cables
           </div>
@@ -12,10 +12,10 @@
                [class.selected-tab]="selectedTab == 'Equipment'">Equipment
           </div>
         </div>
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170"/>
-        </span>
+        <span class="p-input-icon-left p-ml-auto">
+            <i class="pi pi-search"></i>
+            <input [(ngModel)]="searchPlates" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+          </span>
       </div>
     </div>
     <div [hidden]="selectedTab != 'Cables'">
@@ -25,7 +25,7 @@
             project {{project}}. You need
             to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
           </div>
-          <div *ngIf="cables.length == 0 && !noResultCables">
+          <div *ngIf="cablesSource.length == 0 && !noResultCables">
             <div class="cxy loading">
               <div class="cxy card-height">
                 <img src="assets/whale.gif" height="120">
@@ -33,10 +33,18 @@
               </div>
             </div>
           </div>
+          <div *ngIf="cables.length == 0 && cablesSource.length != 0">
+            <div class="cxy loading">
+              <div class="cxy card-height">
+                <div class="cx loading-text">NO SEARCH RESULTS</div>
+              </div>
+            </div>
+          </div>
           <div *ngIf="selectedView == 'tiles'">
             <div class="tile">
-              <div class="w-100 " *ngIf="cables.length != 0">
+              <div class="w-100 " *ngIf="cablesSource.length != 0">
                 <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="185">
+
                   <ng-template pTemplate="cable" let-cable let-i="index">
                     <div class="card-tile-t w-100"
                          [class.hidden-card]="cable == null">
@@ -91,9 +99,7 @@
                       </div>
                       <div class="top-row df space-between">
                         <div class="title-medium-bold">FROM</div>
-                        <div class="top-line-card"></div>
-                        <div class="title-medium-bold">ROUTE</div>
-                        <div class="top-line-card"></div>
+                        <div>{{cable.cab_route_area}}</div>
                         <div class="title-medium-bold">TO</div>
                       </div>
                       <div class="bottom-grid">
@@ -221,7 +227,7 @@
             project {{project}}. You need
             to add document number {{docNumber}} to the system description using FORAN app in {{project}} project
           </div>
-          <div *ngIf="cables.length == 0 && !noResultCables">
+          <div *ngIf="cablesSource.length == 0 && !noResultCables">
             <div class="cxy loading">
               <div class="cxy card-height">
                 <img src="assets/whale.gif" height="120">
@@ -231,7 +237,7 @@
           </div>
           <div>
             <div class="tile">
-              <div class="w-100 " *ngIf="cables.length != 0">
+              <div class="w-100 " *ngIf="cablesSource.length != 0">
               </div>
               <div class="w-100" *ngIf="equipments.length != 0">
                 <div *ngFor="let eq of equipments; let e = index"
