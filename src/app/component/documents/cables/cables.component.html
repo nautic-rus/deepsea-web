@@ -44,7 +44,7 @@
           <div *ngIf="selectedView == 'tiles'">
             <div class="tile">
               <div class="w-100 " *ngIf="cablesSource.length != 0">
-                <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="185">
+                <p-virtualScroller [value]="cables" scrollHeight="calc(100vh - 197px)" [itemSize]="165">
 
                   <ng-template pTemplate="cable" let-cable let-i="index">
                     <div class="card-tile-t w-100"
@@ -102,17 +102,16 @@
                         <div class="df space-between" *ngIf="cable.cab_route_area.length != 0">
                           <div *ngFor="let node of cable.cab_route_area; let e = index"
                                [class.hidden-card]="node == null">
-<!--                            <div>{{node}}</div>-->
+                            <!--                            <div>{{node}}</div>-->
                             <div class="node gray-point" pTooltip="{{node}}"
-                                 tooltipPosition="top" ></div>
+                                 tooltipPosition="top"></div>
 
                           </div>
                         </div>
                       </div>
                       <div class="bottom-grid">
-                        <div class="pl-8">
-                          <div class="df cursor-pointer hover-row flex-end"
-                               (click)="onClickFromEquipment(cable)">
+                        <div class="hover-row cursor-pointer" (click)="onClickFromEquipment(cable)">
+                          <div class="df flex-end">
                             <div class="attribute mr-10 text-table-col cx"
                                  *ngIf="cable.from_eq_desc != ''">{{cable.from_eq_desc}}</div>
                             <div class="attribute mr-10 text-table-col сч" *ngIf="cable.from_eq_id != ''">
@@ -125,14 +124,14 @@
                                  *ngIf="cable.from_zone_desc != ''">{{cable.from_zone_desc}}</div>
                             <div class="title-name cy" *ngIf="cable.from_zone != ''">{{cable.from_zone}}</div>
                           </div>
-
                           <div *ngIf="cable.from_system != ''">
                             <div class="flex-end">
-                              <div class="attribute mr-10 text-table-col flex-end">
-                                <div>{{cable.from_system.split(' ').splice(1).join(' ')}}</div>
-                              </div>
                               <div
-                                class="title-name width-fit">{{cable.from_system.split(' ')[0].replace('.', '').split('-').splice(1, 3).join('-')}}</div>
+                                class="title-name"
+                                pTooltip="{{cable.from_system.split(' ').splice(1).join(' ')}}"
+                                tooltipPosition="left">
+                                {{cable.from_system.split(' ')[0].replace('.', '')}}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -153,9 +152,8 @@
                             <span class="mm-text flex-start">{{' ' + round(cable.to_z)}}</span>
                           </div>
                         </div>
-                        <div class="pl-8">
-                          <div class="df cursor-pointer hover-row"
-                               (click)="onClickToEquipment(cable)">
+                        <div class="cursor-pointer hover-row" (click)="onClickToEquipment(cable)">
+                          <div class="df flex-start">
                             <div class="title-name mr-10" *ngIf="cable.to_eq != ''">{{cable.to_eq}}</div>
                             <div class="attribute mr-10 text-table-col flex-end" *ngIf="cable.to_eq_id != ''">
                               ({{cable.to_eq_id}})
@@ -168,11 +166,15 @@
                             <div class="attribute text-table-col cxy"
                                  *ngIf="cable.to_zone_desc != ''">{{cable.to_zone_desc}}</div>
                           </div>
-                          <div *ngIf="cable.to_system != ''" class="grid-to-system">
-                            <div
-                              class="title-name">{{cable.to_system.split(' ')[0].replace('.', '').split('-').splice(1, 3).join('-')}}</div>
-                            <div
-                              class="attribute mr-10 text-table-col"> {{cable.to_system.split(' ').splice(1).join(' ')}}</div>
+                          <div *ngIf="cable.to_system != ''">
+                            <div class="flex-start">
+                              <div
+                                class="title-name"
+                                pTooltip="{{cable.to_system.split(' ').splice(1).join(' ')}}"
+                                tooltipPosition="right">
+                                {{cable.to_system.split(' ')[0].replace('.', '')}}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -249,7 +251,7 @@
               <div class="w-100" *ngIf="equipmentsSource.length != 0">
                 <div *ngFor="let eq of equipments; let e = index"
                      [class.hidden-card]="eq == null">
-                  <div class="card-tile-eq card-grid-eq"
+                  <div id="{{e}}" class="card-tile-eq card-grid-eq"
                        (click)="onSelectEquipment(eq)"
                        [class.selected-eq]="selectedEq == eq">
                     <div class="text-center-y df cursor-pointer">

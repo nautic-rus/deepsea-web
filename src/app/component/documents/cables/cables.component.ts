@@ -4,11 +4,12 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Trays} from "../../../domain/interfaces/trays";
 import {Cable} from "../../../domain/interfaces/cable";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
-import _ from "underscore";
+import _, {indexOf} from "underscore";
 import {CableService} from "./cable.service";
 import {LanguageService} from "../../../domain/language.service";
 import {Equipment} from "../../../domain/classes/equipment";
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {ScrollService} from "./scroll.service";
 
 @Component({
   selector: 'app-cables',
@@ -42,7 +43,7 @@ export class CablesComponent implements OnInit {
   urlSafe: SafeResourceUrl;
   searchPlates: string = '';
 
-  constructor(public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
+  constructor(private scrollService: ScrollService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
   }
 
   ngOnInit(): void {
@@ -182,48 +183,59 @@ export class CablesComponent implements OnInit {
   }
 
   onClickFromEquipment(cable: Cable) {
-    this.selectedEq = ({
-      id: cable.from_eq_id,
-      name: cable.from_eq,
-      desc: cable.from_eq_desc,
-      zone: cable.from_zone,
-      zone_desc: cable.from_zone_desc,
-      system: cable.from_system,
-      x: cable.from_x,
-      y: cable.from_y,
-      z: cable.from_z,
-      stock_code: cable.from_stock_code
-    });
+    this.selectedEq = this.equipments.filter(_ =>
+      _.id == cable.from_eq_id &&
+      _.name == cable.from_eq &&
+      _.desc == cable.from_eq_desc &&
+      _.zone == cable.from_zone &&
+      _.zone_desc == cable.from_zone_desc &&
+      _.system == cable.from_system &&
+      _.x == cable.from_x &&
+      _.y == cable.from_y &&
+      _.z == cable.from_z &&
+      _.stock_code == cable.from_stock_code)[0]
     console.log(this.selectedEq)
     this.selectedTab = 'Equipment'
     this.setEquipmentCables()
+    setTimeout(()=>{
+      this.scrollToId(this.equipments.indexOf(this.selectedEq).toString());
+    }, 1);
     return this.selectedEq
   }
 
   onClickToEquipment(cable: Cable) {
-    this.selectedEq = ({
-      id: cable.to_eq_id,
-      name: cable.to_eq,
-      desc: cable.to_eq_desc,
-      zone: cable.to_zone,
-      zone_desc: cable.to_zone_desc,
-      system: cable.to_system,
-      x: cable.to_x,
-      y: cable.to_y,
-      z: cable.to_z,
-      stock_code: cable.from_stock_code
-    });
+    this.selectedEq = this.equipments.find(_ =>
+      _.id == cable.to_eq_id &&
+      _.name == cable.to_eq &&
+      _.desc == cable.to_eq_desc &&
+      _.zone == cable.to_zone &&
+      _.zone_desc == cable.to_zone_desc &&
+      _.system == cable.to_system &&
+      _.x == cable.to_x &&
+      _.y == cable.to_y &&
+      _.z == cable.to_z &&
+      _.stock_code == cable.to_stock_code)!
     console.log(this.selectedEq)
     this.selectedTab = 'Equipment'
     this.setEquipmentCables()
+    setTimeout(()=>{
+      this.scrollToId(this.equipments.indexOf(this.selectedEq).toString());
+    }, 1);
     return this.selectedEq
   }
 
   onSelectEquipment(eq: Equipment) {
     this.selectedEq = eq;
-    console.log(this.selectedEq)
     this.setEquipmentCables()
   }
+
+  scrollToId(id: string) {
+    this.scrollService.scrollToElementById(id);
+    // const element = document.getElementById(id)!;
+    // element.scrollIntoView();
+  }
+
+
 
   setEquipmentCables() {
     this.equipmentCables = this.cablesSource.filter(cable =>
