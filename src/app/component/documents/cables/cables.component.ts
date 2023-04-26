@@ -119,7 +119,6 @@ export class CablesComponent implements OnInit {
             [x.id, x.name, x.desc, x.zone, x.zone_desc, x.x, x.y, x.z, x.stock_code].join('-')
           ), x => x.name)
 
-
           this.equipmentsSource = this.equipments;
 
           console.log(this.equipments)
@@ -198,6 +197,7 @@ export class CablesComponent implements OnInit {
     console.log(this.selectedEq)
     this.selectedTab = 'Equipment'
     this.setEquipmentCables()
+    return this.selectedEq
   }
 
   onClickToEquipment(cable: Cable) {
@@ -216,6 +216,7 @@ export class CablesComponent implements OnInit {
     console.log(this.selectedEq)
     this.selectedTab = 'Equipment'
     this.setEquipmentCables()
+    return this.selectedEq
   }
 
   onSelectEquipment(eq: Equipment) {
