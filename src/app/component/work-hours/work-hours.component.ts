@@ -29,6 +29,14 @@ export interface PlanHour{
   id: number;
   task_id: number;
 }
+export interface ConsumedHour{
+  id: number;
+  hour_id: number;
+  user_id: number;
+  date_inserted: number;
+  task_id: number;
+  comment: string;
+}
 export interface PlannedHours{
   taskId: number;
   hours: number;
@@ -44,6 +52,7 @@ export interface TaskOfDay{
   taskId: number;
   planHours: PlanHour[];
   tooltip: string;
+  consumed: boolean;
 }
 @Component({
   selector: 'app-work-hours',
@@ -115,6 +124,8 @@ export class WorkHoursComponent implements OnInit {
   vacation = 0;
   medical = 0;
   taskId = 0;
+  consumed: ConsumedHour[] = [];
+  consumedIds: number[] = [];
 
   constructor(public route: ActivatedRoute, public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
 
@@ -159,8 +170,11 @@ export class WorkHoursComponent implements OnInit {
       this.pHours = planHours;
       this.auth.getPlannedHours().subscribe(plannedHours => {
         this.plannedHours = plannedHours;
-        console.log(this.plannedHours);
-        this.fillDays();
+        this.auth.getConsumedPlanHours(0).subscribe(consumed => {
+          this.consumed = consumed;
+          this.consumedIds = this.consumed.map(x => x.hour_id);
+          this.fillDays();
+        });
       });
     });
   }
@@ -268,7 +282,7 @@ export class WorkHoursComponent implements OnInit {
     return {
       height: '100%',
       width: (day.planHours.length * oneHourLength) + 'px',
-      'background-color': this.getTaskColor(day.taskId),
+      'background-color': this.getTaskColor(day.taskId, day.consumed),
       'border': this.getSearchingBorder(day)
       // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
       // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
@@ -290,17 +304,26 @@ export class WorkHoursComponent implements OnInit {
     let res: TaskOfDay[] = [];
     let busyHours = _.sortBy(day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0), x => x.id);
     _.forEach(_.groupBy(busyHours, x => x.task_id),group => {
-      res.push({taskId: group[0].task_id, planHours: group, tooltip: this.getIssueDesc(group[0].task_id)});
+      let consumedHours = false;
+      group.forEach(ph => {
+        if (this.consumedIds.includes(ph.id)){
+          consumedHours = true;
+        }
+      });
+      res.push({taskId: group[0].task_id, planHours: group, tooltip: this.getIssueDesc(group[0].task_id), consumed: consumedHours});
     });
     return _.sortBy(res, x => _.min(x.planHours.map(y => y.id)));
   }
-  getTaskColor(taskId: number){
+  getTaskColor(taskId: number, consumed: boolean){
     let eq1 = Math.pow(taskId, 1);
     let eq2 = Math.pow(taskId, 2);
     let eq3 = Math.pow(taskId, 3);
     let r = eq1 % 255;
     let g = eq2 % 255;
     let b = eq3 % 255;
+    if (consumed){
+      return `rgba(0, 0, 0, 1)`;
+    }
     return `rgba(${r}, ${g}, ${b}, 0.6)`;
   }
   nextDaySameTask(day: TaskOfDay){

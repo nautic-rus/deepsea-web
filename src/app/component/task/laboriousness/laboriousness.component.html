@@ -6,13 +6,13 @@
     </span>
   </div>
   <div class="cx mt-1 space-between">
-    <span class="p-float-label">
-      <input type="text" id="hours" pInputText [(ngModel)]="hoursAmount">
-      <label for="hours">{{t.tr('Количество часов')}}</label>
+    <span class="">
+      <div>{{t.tr('Количество часов')}}</div>
+      <p-inputNumber [(ngModel)]="hoursAmount" placeholder="Количество часов"></p-inputNumber>
     </span>
     <span class="p-float-label">
-      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" id="calendar" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
-      <label for="calendar">{{t.tr('Дата')}}</label>
+      <div>{{t.tr('Дата')}}</div>
+      <p-calendar [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
     </span>
   </div>
   <div class="cxy mt-25">
@@ -20,6 +20,25 @@
       <textarea id="textarea" rows="4" style="resize: none;" cols="60" [(ngModel)]="comment" pInputTextarea></textarea>
       <label for="textarea">{{t.tr('Комментарий')}}</label>
     </span>
+  </div>
+  <div class="mt-5">
+    Количество часов осталось списать сегодня: {{hoursLeft}}
+  </div>
+  <div class="">
+    Количество часов задачи по плану на сегодня: {{hoursLeftByTaskToday}}
+  </div>
+  <div class="">
+    Количество несписанных из плана часов на задачу: {{hoursLeftByTask}}
+  </div>
+  <div class="mt-5">
+    Согласно плану вы должны сегодня списать часы на:
+    <div *ngFor="let plan of planTasks">
+      <div class="df">
+        <div>Назв: {{plan.name}}</div>
+        <div class="ml-3">План: {{plan.planned}}</div>
+        <div class="ml-3">Использовано: {{plan.consumed}}</div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="form-footer-labor">

@@ -13,7 +13,7 @@ import { transliterate as tr, slugify } from 'transliteration';
 import {DayCalendar} from "./classes/day-calendar";
 import {TimeControlInterval} from "./classes/time-control-interval";
 import EventEmitter from "events";
-import {PlanHour} from "../component/work-hours/work-hours.component";
+import {ConsumedHour, PlanHour} from "../component/work-hours/work-hours.component";
 import {UserService} from "../component/admin/user/user.service";
 
 @Injectable({
@@ -253,5 +253,11 @@ export class AuthManagerService {
   }
   getPlannedHours(){
     return this.http.get<any>(props.http + '/plannedHours');
+  }
+  getConsumedPlanHours(userId: number){
+    return this.http.get<ConsumedHour[]>(props.http + '/consumed', {params: {userId}});
+  }
+  consumePlanHours(planHours: PlanHour[], userId: number, taskId: number, details: string){
+    return this.http.post<any>(props.http + '/consumePlanHours', planHours, {params: {userId, taskId, details}});
   }
 }
