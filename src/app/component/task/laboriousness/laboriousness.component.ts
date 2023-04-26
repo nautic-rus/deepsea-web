@@ -78,9 +78,10 @@ export class LaboriousnessComponent implements OnInit {
       return;
     }
     let consume = _.sortBy(this.availableToday, x => x.id).slice(0, this.hoursAmount);
-    this.auth.consumePlanHours(consume, this.auth.getUser().id, this.issue.id, this.comment).subscribe(res => {
-      console.log(res);
-    });
+    // this.auth.consumePlanHours(consume, this.auth.getUser().id, this.issue.id, this.comment).subscribe(res => {
+    //   console.log(res);
+    // });
+    this.commitAux();
   }
   commitAux(){
     let issue = this.conf.data as Issue;
