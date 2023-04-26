@@ -89,7 +89,7 @@ export class QnaComponent implements OnInit {
 
         this.questions.forEach(q => {
           q.started_date_as_date = new Date(q.started_date);
-          q.recommended_response_date = new Date(this.getRecommendDate(q.started_date));
+          q.due_date = new Date(q.due_date);
         })
 
 

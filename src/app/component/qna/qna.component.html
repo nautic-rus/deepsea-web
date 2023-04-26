@@ -124,9 +124,9 @@
             <p-columnFilter type="date" field="started_date_as_date" display="menu"></p-columnFilter>
 
           </th>
-          <th pSortableColumn="recommended_response_date" class="lxy">{{t.tr('Рекомендованная дата ответа')}}
-            <p-sortIcon field="recommended_response_date"></p-sortIcon>
-            <p-columnFilter type="date" field="recommended_response_date" display="menu"></p-columnFilter>
+          <th pSortableColumn="due_date" class="lxy">{{t.tr('Срок исполнения')}}
+            <p-sortIcon field="due_date"></p-sortIcon>
+            <p-columnFilter type="date" field="due_date" display="menu"></p-columnFilter>
           </th>
 
           <th pSortableColumn="priority" class="lxy">{{t.tr('Приоритет')}}
@@ -168,7 +168,7 @@
             <span [innerHTML]="getUserName(q.assigned_to) | safeHtml"></span>
           </td>
           <td class="text-14">{{getDate(q.started_date_as_date.getTime())}}</td>
-          <td class="text-14">{{getDate(q.recommended_response_date.getTime())}}</td>
+          <td class="text-14">{{getDate(q.due_date.getTime())}}</td>
           <td class="text-14">{{issueManager.localeTaskPriority(q.priority)}}</td>
         </tr>
       </ng-template>
