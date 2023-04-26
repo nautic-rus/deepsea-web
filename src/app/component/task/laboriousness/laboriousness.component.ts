@@ -6,6 +6,8 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {Issue} from "../../../domain/classes/issue";
 import {MessageService} from "primeng/api";
 import {DailyTask} from "../../../domain/interfaces/daily-task";
+import {ConsumedHour, PlanHour} from "../../work-hours/work-hours.component";
+import _ from "underscore";
 
 @Component({
   selector: 'app-laboriousness',
@@ -14,15 +16,74 @@ import {DailyTask} from "../../../domain/interfaces/daily-task";
 })
 export class LaboriousnessComponent implements OnInit {
 
-  hoursAmount = '';
+  hoursAmount = 0;
   calendarDay: Date = new Date();
   comment = '';
   today: Date = new Date();
+  infoText = '';
+  hoursLeft = 0;
+  hoursLeftByTask = 0;
+  hoursLeftByTaskToday = 0;
+  consumed: ConsumedHour[] = [];
+  userPlanHours: PlanHour[] = [];
+  userPlanHoursToday: PlanHour[] = [];
+  taskHours: PlanHour[] = [];
+  issue: Issue;
+  availableToday: PlanHour[] = [];
+  planTasks: any[] = [];
+  userIssues: Issue[] = [];
   constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.issue = this.conf.data as Issue;
+    this.auth.getConsumedPlanHours(this.auth.getUser().id).subscribe(consumed => {
+      this.consumed = consumed;
+      let consumedIds = this.consumed.map(x => x.id);
+      this.auth.getUsersPlanHours(this.auth.getUser().id, 0, 1).subscribe(userPlanHours => {
+        this.userPlanHours = userPlanHours;
+        this.userPlanHoursToday = userPlanHours.filter(x => x.day == this.today.getDate() && x.month == this.today.getMonth() && x.year == this.today.getFullYear() && x.hour_type == 1);
+        this.taskHours = userPlanHours.filter(x => x.task_id == this.issue.id);
+        console.log(this.taskHours);
+        let availableForTask = this.taskHours.filter(x => !consumedIds.includes(x.id));
+        let availableForTaskToday = this.userPlanHoursToday.filter(x => x.task_id == this.issue.id && !consumedIds.includes(x.id));
+        this.availableToday = this.userPlanHoursToday.filter(x => !consumedIds.includes(x.id));
+        this.hoursLeft = this.availableToday.length;
+        this.hoursLeftByTask = availableForTask.length;
+        this.hoursLeftByTaskToday = availableForTaskToday.length;
+
+        this.issues.getIssues(this.auth.getUser().login).then(issues => {
+          this.userIssues = issues;
+          _.forEach(_.groupBy(this.userPlanHoursToday, x => x.task_id), gr => {
+            let findTask = this.userIssues.find(x => x.id == gr[0].task_id);
+            if (findTask != null){
+              this.planTasks.push({
+                name: findTask.name + ', ' + findTask.doc_number,
+                taskId: findTask.id,
+                planned: gr.length,
+                consumed: gr.filter(x => consumedIds.includes(x.id)).length
+              });
+            }
+          });
+        });
+      });
+    });
   }
   commit(){
+    if (this.hoursLeft < this.hoursAmount){
+      this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'На хватает свободных часов для списания на сеодня'});
+      return;
+    }
+    if (this.hoursLeftByTask < this.hoursAmount){
+      this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'На хватает плановых часов задачи для списания'});
+      return;
+    }
+    let consume = _.sortBy(this.availableToday, x => x.id).slice(0, this.hoursAmount);
+    // this.auth.consumePlanHours(consume, this.auth.getUser().id, this.issue.id, this.comment).subscribe(res => {
+    //   console.log(res);
+    // });
+    this.commitAux();
+  }
+  commitAux(){
     let issue = this.conf.data as Issue;
     let t: DailyTask = new DailyTask(
       issue.id,

@@ -71,8 +71,8 @@ export class AdminComponent implements OnInit {
   fillUsers(): void {
     this.userService.getUsers()
       .subscribe(users => {
-        console.log(users)
-        this.users = users
+        console.log(users);
+        this.users = users;
         this.filters.profession = _.sortBy(_.uniq(users.map((x: any) => x.profession)), x => x).map(x => new LV(x));
       });
   }

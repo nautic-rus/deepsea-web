@@ -372,9 +372,20 @@ export class MaterialsComponent implements OnInit {
   }
 
   removeNode(node: any) {
-    console.log(node);
     this.materialManager.updateMaterialNode(this.project, node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
-      node.parent.children.splice(node.parent.children.indexOf(node), 1);
+      if (node.parent != null){
+        node.parent.children.splice(node.parent.children.indexOf(node), 1);
+      }
+      else{
+        this.materialManager.getMaterialNodes(this.project).then(res => {
+          this.nodesSrc = res;
+          this.nodes = this.getNodes(res, this.materialsSrc, '');
+          this.setParents(this.nodes, '');
+          this.materials.filter(x => x != null).forEach((x: any) => {
+            x.path = this.setPath(x.code);
+          });
+        });
+      }
     });
   }
 
