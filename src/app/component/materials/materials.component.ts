@@ -19,6 +19,7 @@ import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import {Table} from "primeng/table";
 import {VirtualScroller} from "primeng/virtualscroller";
+import {LV} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-materials',
@@ -35,6 +36,8 @@ export class MaterialsComponent implements OnInit {
   selectedNode: any;
   selectedNodePath = '';
   selectedNodeCode = '';
+  selectedRootNode: string = '';
+  rootNodes: any[] = [];
   tooltips: string[] = [];
   projects: string[] = ['200101', '210101', '000000'];
   project = '';
@@ -538,6 +541,10 @@ export class MaterialsComponent implements OnInit {
           this.materials.filter(x => x != null).forEach((x: any) => {
             x.path = this.setPath(x.code);
           });
+          this.rootNodes = this.nodes.filter((x: any) => x.data.length == 3).map((x: any) => new LV(x.label + ' (' + x.count + ')', x.data));
+          this.selectedRootNode = this.rootNodes[0].value;
+          this.rootNodes = [...this.rootNodes];
+          this.rootNodeChanged();
         }
       });
       this.materialsSrc = [...this.materials];
@@ -584,5 +591,13 @@ export class MaterialsComponent implements OnInit {
       res = 4;
     }
     return res;
+  }
+  rootNodeChanged() {
+    this.selectedNodePath = '';
+    this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.startsWith(this.selectedRootNode)), this.materialsSrc, this.selectedRootNode);
+    this.setParents(this.nodes, '');
+    this.materials.filter(x => x != null).forEach((x: any) => {
+      x.path = this.setPath(x.code);
+    });
   }
 }

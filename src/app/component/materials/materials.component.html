@@ -5,6 +5,10 @@
         <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
+      <div class="mr-10" >
+        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border">
+        </p-dropdown>
+      </div>
       <div class="mr-10">
         <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" [class.disabled-button]="selectedNode == null" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
@@ -53,7 +57,7 @@
       <div class="w-100 df">
         <div class="w-15">
           <div class="menu-card">
-            <p-tree class="tree" *ngIf="project != ''" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu)" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
+            <p-tree class="tree" *ngIf="project != ''" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>
@@ -61,6 +65,18 @@
                 </div>
               </ng-template>
             </p-tree>
+
+
+
+
+<!--            <p-tree class="tree" *ngIf="project != ''" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu)" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">-->
+<!--              <ng-template let-node pTemplate="default">-->
+<!--                <div class="df">-->
+<!--                  <div>{{node.label}}</div>-->
+<!--                  <div class="mini-notes cxy">{{node.count}}</div>-->
+<!--                </div>-->
+<!--              </ng-template>-->
+<!--            </p-tree>-->
           </div>
         </div>
         <div class="w-85">
