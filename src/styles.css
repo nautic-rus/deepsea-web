@@ -169,6 +169,9 @@ body,p{
 .w-65{
   width: 65%;
 }
+.w-68{
+  width: 68%;
+}
 .w-75{
   width: 75%;
 }
@@ -749,6 +752,9 @@ body,p{
 }
 .mb-1{
   margin-bottom: 0.2rem;
+}
+.mb-1r{
+  margin-bottom: 1rem;
 }
 .mb-2{
   margin-bottom: 2rem;

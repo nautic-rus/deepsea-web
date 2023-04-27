@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
@@ -8,6 +8,8 @@ import {MessageService} from "primeng/api";
 import {DailyTask} from "../../../domain/interfaces/daily-task";
 import {ConsumedHour, PlanHour} from "../../work-hours/work-hours.component";
 import _ from "underscore";
+import {ShowTaskComponent} from "../../navi/daily-tasks/show-task/show-task.component";
+import {TaskComponent} from "../task.component";
 
 @Component({
   selector: 'app-laboriousness',
@@ -32,18 +34,18 @@ export class LaboriousnessComponent implements OnInit {
   availableToday: PlanHour[] = [];
   planTasks: any[] = [];
   userIssues: Issue[] = [];
-  constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService) { }
+  constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.issue = this.conf.data as Issue;
     this.auth.getConsumedPlanHours(this.auth.getUser().id).subscribe(consumed => {
       this.consumed = consumed;
-      let consumedIds = this.consumed.map(x => x.id);
+      let consumedIds = this.consumed.map(x => x.hour_id);
+      console.log(consumedIds);
       this.auth.getUsersPlanHours(this.auth.getUser().id, 0, 1).subscribe(userPlanHours => {
         this.userPlanHours = userPlanHours;
         this.userPlanHoursToday = userPlanHours.filter(x => x.day == this.today.getDate() && x.month == this.today.getMonth() && x.year == this.today.getFullYear() && x.hour_type == 1);
         this.taskHours = userPlanHours.filter(x => x.task_id == this.issue.id);
-        console.log(this.taskHours);
         let availableForTask = this.taskHours.filter(x => !consumedIds.includes(x.id));
         let availableForTaskToday = this.userPlanHoursToday.filter(x => x.task_id == this.issue.id && !consumedIds.includes(x.id));
         this.availableToday = this.userPlanHoursToday.filter(x => !consumedIds.includes(x.id));
@@ -54,6 +56,8 @@ export class LaboriousnessComponent implements OnInit {
         this.issues.getIssues(this.auth.getUser().login).then(issues => {
           this.userIssues = issues;
           _.forEach(_.groupBy(this.userPlanHoursToday, x => x.task_id), gr => {
+            console.log(gr);
+            console.log(consumedIds);
             let findTask = this.userIssues.find(x => x.id == gr[0].task_id);
             if (findTask != null){
               this.planTasks.push({
@@ -70,7 +74,7 @@ export class LaboriousnessComponent implements OnInit {
   }
   commit(){
     if (this.hoursLeft < this.hoursAmount){
-      this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'На хватает свободных часов для списания на сеодня'});
+      this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'На хватает свободных часов для списания на сегодня'});
       return;
     }
     if (this.hoursLeftByTask < this.hoursAmount){
@@ -78,9 +82,9 @@ export class LaboriousnessComponent implements OnInit {
       return;
     }
     let consume = _.sortBy(this.availableToday, x => x.id).slice(0, this.hoursAmount);
-    // this.auth.consumePlanHours(consume, this.auth.getUser().id, this.issue.id, this.comment).subscribe(res => {
-    //   console.log(res);
-    // });
+    this.auth.consumePlanHours(consume, this.auth.getUser().id, this.issue.id, this.comment).subscribe(res => {
+      this.close();
+    });
     this.commitAux();
   }
   commitAux(){
@@ -128,5 +132,15 @@ export class LaboriousnessComponent implements OnInit {
   }
   close() {
     this.ref.close('exit');
+  }
+
+  openTask(taskId: number) {
+    this.issues.getIssueDetails(taskId).then(res => {
+      this.dialogService.open(TaskComponent, {
+        showHeader: false,
+        modal: true,
+        data: res
+      });
+    });
   }
 }
