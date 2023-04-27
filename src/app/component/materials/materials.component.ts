@@ -50,6 +50,7 @@ export class MaterialsComponent implements OnInit {
     },
   ];
   addNew = false;
+  editing = false;
   forNode: any;
   newNode: any = {};
   newNodeSuffix = '';
@@ -155,6 +156,16 @@ export class MaterialsComponent implements OnInit {
       this.newNode.checkChildren = node.children.map((x: any) => x.data);
     }
     console.log(this.newNode);
+  }
+  editNode(node: any){
+    this.addNew = true;
+    this.forNode = node;
+    this.newNode = {};
+    this.newNodeSuffix = '';
+    this.newNode.data = node.data;
+    this.newNode.label = node.label.replace(' (' + node.data.slice(-3) + ')', '');
+    this.newNode.checkChildren = node.children.map((x: any) => x.data);
+    this.editing = true;
   }
   getNodes2(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
     let res: any[] = [];
@@ -307,6 +318,11 @@ export class MaterialsComponent implements OnInit {
     console.log(event.node.data.length);
     if (event.node.data.length >= 12){
       this.items = [
+        {
+          label: 'Edit Folder',
+          icon: 'pi pi-fw pi-pencil',
+          command: () => this.editNode(event.node)
+        },
         this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
           label: 'Remove',
           icon: 'pi pi-fw pi-trash',
@@ -325,6 +341,11 @@ export class MaterialsComponent implements OnInit {
           icon: 'pi pi-fw pi-plus',
           command: () => this.createNode(event.node)
         },
+        {
+          label: 'Edit Folder',
+          icon: 'pi pi-fw pi-pencil',
+          command: () => this.editNode(event.node)
+        },
         this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
           label: 'Remove',
           icon: 'pi pi-fw pi-trash',
@@ -341,18 +362,30 @@ export class MaterialsComponent implements OnInit {
   hide() {
     this.newNode = {};
     this.addNew = false;
+    this.editing = false;
   }
 
   isSaveDisabled() {
-    return (this.newNodeSuffix.length != 2 && this.newNodeSuffix.length != 3) || this.newNode.checkChildren.includes(this.newNode.data + this.newNodeSuffix) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNodeSuffix)) || this.newNodeSuffix.includes('#');
+    if (this.editing){
+      return this.newNode.label.trim().length == 0;
+    }
+    else{
+      return (this.newNodeSuffix.length != 2 && this.newNodeSuffix.length != 3) || this.newNode.checkChildren.includes(this.newNode.data + this.newNodeSuffix) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNodeSuffix)) || this.newNodeSuffix.includes('#');
+    }
   }
 
   save() {
     this.newNode.data += this.newNodeSuffix;
     this.materialManager.updateMaterialNode(this.project, this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
-      this.newNode.children = [];
-      this.forNode.children.push(this.newNode);
-      this.setParents(this.nodes, '');
+      if (!this.editing){
+        this.newNode.children = [];
+        this.forNode.children.push(this.newNode);
+        this.setParents(this.nodes, '');
+      }
+      else{
+        this.forNode.label = this.newNode.label + ' (' + this.newNode.data + ')';
+      }
+      this.editing = false;
       this.hide();
       // this.materialManager.getMaterialNodes(this.project).then(res => {
       //   if (this.project == '000000'){

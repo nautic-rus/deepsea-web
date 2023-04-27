@@ -473,9 +473,9 @@
 </div>
 <p-toast position="bottom-center"></p-toast>
 <p-contextMenu #nodeMenu [model]="items"></p-contextMenu>
-<p-dialog [(visible)]="addNew" [header]="t.tr('Добавить новую папку')" [modal]="true" styleClass="p-fluid width-300">
+<p-dialog [(visible)]="addNew" [header]="editing ? 'Редактировать название' : t.tr('Добавить новую папку')" [modal]="true" styleClass="p-fluid width-300">
   <ng-template pTemplate="content">
-    <div class="mb-10">
+    <div class="mb-10" *ngIf="!editing">
       <div class="big-text-create mb-1">{{t.tr('Код (вставьте код вместо ###)')}}</div>
       <div class="cx">
         <div class="cxy mr-1">
@@ -494,7 +494,7 @@
   <ng-template pTemplate="footer">
     <div class="cx">
       <div tabindex="11" (click)="hide()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
-      <div tabindex="10" [class.disabled-button]="isSaveDisabled()" (click)="save()" pButton [label]="t.tr('Создать')" class="button-ok"></div>
+      <div tabindex="10" [class.disabled-button]="isSaveDisabled()" (click)="save()" pButton [label]="editing ? 'Изменить' : t.tr('Создать')" class="button-ok"></div>
     </div>
 <!--    <button pButton pRipple label="ОТМЕНА" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>-->
 <!--    <button [disabled]="isSaveDisabled()" pButton pRipple label="СОХРАНИТЬ" icon="pi pi-check" class="p-button-text" (click)="save()"></button>-->
