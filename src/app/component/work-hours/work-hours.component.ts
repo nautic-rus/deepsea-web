@@ -52,7 +52,7 @@ export interface TaskOfDay{
   taskId: number;
   planHours: PlanHour[];
   tooltip: string;
-  consumed: boolean;
+  consumedAmount: number;
 }
 @Component({
   selector: 'app-work-hours',
@@ -282,8 +282,19 @@ export class WorkHoursComponent implements OnInit {
     return {
       height: '100%',
       width: (day.planHours.length * oneHourLength) + 'px',
-      'background-color': this.getTaskColor(day.taskId, day.consumed),
-      'border': this.getSearchingBorder(day)
+      'background-color': this.getTaskColor(day.taskId),
+      'border': this.getSearchingBorder(day),
+      'padding-left': day.consumedAmount * oneHourLength + 'px',
+      // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
+      // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
+    };
+  }
+  getConsumedDayStyle(day: TaskOfDay) {
+    let oneHourLength = 40 / 8;
+    return {
+      height: '100%',
+      width: (day.consumedAmount * oneHourLength) + 'px',
+      'pointer-events': 'none'
       // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
       // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
@@ -304,26 +315,23 @@ export class WorkHoursComponent implements OnInit {
     let res: TaskOfDay[] = [];
     let busyHours = _.sortBy(day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0), x => x.id);
     _.forEach(_.groupBy(busyHours, x => x.task_id),group => {
-      let consumedHours = false;
+      let consumedHours = 0;
       group.forEach(ph => {
         if (this.consumedIds.includes(ph.id)){
-          consumedHours = true;
+          consumedHours += 1;
         }
       });
-      res.push({taskId: group[0].task_id, planHours: group, tooltip: this.getIssueDesc(group[0].task_id), consumed: consumedHours});
+      res.push({taskId: group[0].task_id, planHours: group, tooltip: this.getIssueDesc(group[0].task_id), consumedAmount: consumedHours});
     });
     return _.sortBy(res, x => _.min(x.planHours.map(y => y.id)));
   }
-  getTaskColor(taskId: number, consumed: boolean){
+  getTaskColor(taskId: number){
     let eq1 = Math.pow(taskId, 1);
     let eq2 = Math.pow(taskId, 2);
     let eq3 = Math.pow(taskId, 3);
     let r = eq1 % 255;
     let g = eq2 % 255;
     let b = eq3 % 255;
-    if (consumed){
-      return `rgba(0, 0, 0, 1)`;
-    }
     return `rgba(${r}, ${g}, ${b}, 0.6)`;
   }
   nextDaySameTask(day: TaskOfDay){
@@ -350,12 +358,18 @@ export class WorkHoursComponent implements OnInit {
   }
 
   openTask(taskId: number){
-    console.log(taskId);
+    this.cd.detach();
     this.issueManagerService.getIssueDetails(taskId).then(res => {
       this.dialogService.open(TaskComponent, {
         showHeader: false,
         modal: true,
         data: res
+      }).onClose.subscribe(res => {
+        setTimeout(() => {
+          this.loading = true;
+          this.fill();
+          this.cd.reattach();
+        }, 100);
       });
     });
   }
@@ -546,8 +560,9 @@ export class WorkHoursComponent implements OnInit {
     this.cd.reattach();
     console.log(pDay);
     console.log(this.draggableIssue);
+
     let planHours = pDay.planHours;
-    let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.draggableEvent.ctrlKey || this.draggableIssue.id < 0));
+    let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.draggableEvent.ctrlKey || this.draggableIssue.id < 0) && !this.consumedIds.includes(x.id));
     if (freeHour == null){
       freeHour = planHours[0];
     }
@@ -698,8 +713,17 @@ export class WorkHoursComponent implements OnInit {
     });
   }
 
-  selectTaskOfDay(task: TaskOfDay) {
+  selectTaskOfDay(task: TaskOfDay, day: any, user: any, cm: ContextMenu, event: MouseEvent) {
+    this.cd.detach();
+    event.preventDefault();
+    event.stopPropagation();
     this.taskOfDay = task;
+    this.selectDay(day, user);
+    cm.position(event);
+    cm.show();
+    cm.onHide.subscribe(() => {
+      this.cd.reattach();
+    });
   }
 
   searchIssue(issue: Issue) {

@@ -9,6 +9,7 @@ import {LanguageService} from "../../../domain/language.service";
 import {DeleteDailyTaskComponent} from "./show-task/delete-daily-task/delete-daily-task.component";
 import {AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {LV} from "../../../domain/classes/lv";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-daily-tasks',
@@ -44,7 +45,7 @@ export class DailyTasksComponent implements OnInit {
 
   form = new FormArray([]);
 
-  constructor(public auth: AuthManagerService, public issue: IssueManagerService, public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, public conf: DynamicDialogConfig) { }
+  constructor(private messageService: MessageService, public auth: AuthManagerService, public issue: IssueManagerService, public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, public conf: DynamicDialogConfig) { }
 
   ngOnInit(): void {
     this.calendarDay = this.conf.data[0];
@@ -154,6 +155,24 @@ export class DailyTasksComponent implements OnInit {
           let findIssue = this.issues.find(x => x.doc_number == t.docNumber);
           if (findIssue != null){
             t.issueId = findIssue.id;
+            this.auth.getConsumedPlanHours(this.auth.getUser().id).subscribe(consumed => {
+              let consumedIds = consumed.map(x => x.hour_id);
+              let today: Date = new Date();
+              this.auth.getUsersPlanHours(this.auth.getUser().id, 0, 1).subscribe(userPlanHours => {
+                let userPlanHoursToday = userPlanHours.filter(x => x.day == today.getDate() && x.month == today.getMonth() && x.year == today.getFullYear() && x.hour_type == 1);
+                let availableToday = userPlanHoursToday.filter(x => !consumedIds.includes(x.id));
+                if (availableToday.length >= t.hours){
+                  let consume = _.sortBy(availableToday, x => x.id).slice(0, t.hours);
+                  this.auth.consumePlanHours(consume, this.auth.getUser().id, t.issueId, t.details).subscribe(res => {
+                    this.close();
+                  });
+                }
+                else{
+                  this.messageService.add({key:'month-tasks', severity:'error', summary:'Ошибка', detail:'На хватает свободных часов для списания на сегодня'});
+                  return;
+                }
+              });
+            });
           }
         }
         if (typeof (t.dateCreated) != "number"){
@@ -170,8 +189,6 @@ export class DailyTasksComponent implements OnInit {
     this.invalid.splice(0, this.invalid.length);
     this.error = '';
     this.tasks.filter(t => !t.hidden).forEach(t => {
-
-
       t.time = t.hours + t.minutes / 60;
       if (t.project.trim() == ''){
         this.invalid.push(t.id + '-p');
@@ -291,7 +308,7 @@ export class DailyTasksComponent implements OnInit {
         'Operations group',
         'Operations group',
         timeUsed,
-        0,
+        -3,
         this.auth.getUserName(this.auth.getUser().login),
         '-',
         '-',
