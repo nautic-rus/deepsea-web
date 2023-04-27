@@ -191,7 +191,7 @@ export class MaterialsComponent implements OnInit {
   }
   getNodePath(node: any){
     let parent = node.parent;
-    let res = node.label;
+    let res = node.label != null ? node.label : '';
     while (parent != null){
       res = parent.label + "/" + res;
       parent = parent.parent;
@@ -444,7 +444,7 @@ export class MaterialsComponent implements OnInit {
   }
 
   selectPath(p: string, path: string[]) {
-    let searchIn = this.nodes;
+    let searchIn = this.nodesSrc;
     path.forEach(x => {
       let node = searchIn.find((n: any) => n.label == x);
       if (node != null && p.includes(node.label)){
