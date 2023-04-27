@@ -376,8 +376,9 @@ export class WorkHoursComponent implements OnInit {
 
   deleteUserTask() {
     this.loading = true;
-    if (this.taskOfDay.planHours.length > 0){
-      this.auth.deleteUserTask(this.taskOfDay.planHours[0].user, this.taskOfDay.taskId, 0).subscribe(res => {
+    let planned = this.taskOfDay.planHours.filter(x => !this.consumedIds.includes(x.id));
+    if (planned.length > 0){
+      this.auth.deleteUserTask(this.taskOfDay.planHours[0].user, this.taskOfDay.taskId, planned[0].id).subscribe(res => {
         this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
           this.auth.getPlannedHours().subscribe(plannedHours => {
             this.plannedHours = plannedHours;
@@ -400,6 +401,9 @@ export class WorkHoursComponent implements OnInit {
           });
         });
       });
+    }
+    else{
+      this.loading = false;
     }
   }
   fillNextDays() {
