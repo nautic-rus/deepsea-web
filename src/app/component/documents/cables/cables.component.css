@@ -48,7 +48,7 @@
 }
 
 .card-sp-tile {
-  width: 68%;
+  width: 68vw;
   margin-top: 20px;
   border-radius: 8px;
 }
@@ -1092,12 +1092,10 @@
 .card-tile-t {
   margin-bottom: 10px;
   width: 100%;
-  height: 150px;
+  height: 200px;
   background-color: white;
-  position: relative;
   padding: 10px;
   border-radius: 10px;
-  transition: 0.5s;
 }
 
 .card-tile-eq {
@@ -1179,7 +1177,7 @@
 }
 
 .selected-eq {
-  border: 2px solid rgb(251, 201, 72) !important;
+  border: 2px solid rgb(97, 212, 45) !important;
 }
 
 .tabs-button-cable {
@@ -1217,9 +1215,22 @@
 }
 
 .bottom-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: 8fr 3fr 8fr;
 }
+
+.route {
+  width: 60vw;
+  height: 30px;
+  padding: 10px;
+  border-radius: 8px;
+  /*overflow-x: auto;*/
+  color: #323130;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 
 .top-line-card {
   border-top: 3px solid #f3f2f1;
@@ -1536,13 +1547,18 @@
 
 .top-row {
   background: rgba(255, 255, 255, 0.9);
-  padding: 12px;
+  padding: 10px;
   border-radius: 8px;
-  height: 35px;
+  height: 25px;
   align-items: center;
   color: #323130;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
+}
+
+.nodeRoute {
+  /*writing-mode: vertical-rl;*/
+  color: rgba(94, 94, 94, 0.63);
 }
 
 .title-name {
@@ -1558,6 +1574,24 @@
 
 .hover-row:hover {
   box-shadow: 0px 0px 10px 0px rgba(34, 60, 80, 0.2);
+}
+
+.equip-style {
+  padding: 5px;
+  border-radius: 6px;
+  background-color: rgba(0, 211, 255, 0.035);
+}
+
+.zone-style {
+  padding: 5px;
+  border-radius: 6px;
+  background-color: rgba(0, 255, 60, 0.035);
+}
+
+.system-style {
+  padding: 5px;
+  border-radius: 6px;
+  background-color: rgba(255, 0, 128, 0.035);
 }
 
 .text-center-y {

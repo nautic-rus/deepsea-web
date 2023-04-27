@@ -55,7 +55,6 @@
     </div>
     <div class="empty-card-bottom"></div>
 
-
     <div *ngIf="selectedView == 'tiles'">
       <div *ngIf="selectedHeadTab == 'Plates'" class="tile">
         <div *ngFor="let plate of plates; let i = index" class="dash-card cursor-pointer" [class.hidden-card]="plate == null">
