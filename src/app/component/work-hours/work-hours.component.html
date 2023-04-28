@@ -96,7 +96,7 @@
 <!--                  <div (click)="openTask(task.taskId)" (contextmenu)="selectTaskOfDay(task, pDay, user, contextMenu, $event)" *ngFor="let task of getTasksOfDay(pDay)" [ngStyle]="getDayStyle(task)" class="plan-hours" pTooltip="{{task.tooltip}}" tooltipPosition="top">-->
 <!--                    {{task.planHours.length - task.consumedAmount}}-->
 <!--                  </div>-->
-                  <span class="plan-hours-common" *ngFor="let task of getTasksOfDay(pDay)">
+                  <span (contextmenu)="selectTaskOfDay(task, pDay, user, contextMenu, $event)" class="plan-hours-common" *ngFor="let task of getTasksOfDay(pDay)">
                     <div (click)="openTask(task.taskId)" *ngIf="task.consumedAmount == 0" [ngStyle]="getDayStyle(task)" class="plan-hours" pTooltip="{{task.tooltip}}" tooltipPosition="top">
                       {{task.planHours.length - task.consumedAmount}}
                     </div>
