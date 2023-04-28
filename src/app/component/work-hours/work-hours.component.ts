@@ -127,7 +127,7 @@ export class WorkHoursComponent implements OnInit {
   consumed: ConsumedHour[] = [];
   consumedIds: number[] = [];
 
-  constructor(public route: ActivatedRoute, public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
+  constructor(public route: ActivatedRoute, public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, public cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -173,6 +173,9 @@ export class WorkHoursComponent implements OnInit {
         this.auth.getConsumedPlanHours(0).subscribe(consumed => {
           this.consumed = consumed;
           this.consumedIds = this.consumed.map(x => x.hour_id);
+          this.plannedHours.forEach(pH => {
+            pH.hours -= this.consumed.filter(x => x.task_id == pH.taskId).length;
+          })
           this.fillDays();
         });
       });
@@ -690,15 +693,16 @@ export class WorkHoursComponent implements OnInit {
       freeHour = this.pHours.filter(x => x.user == freeHour.user && x.task_id == freeHour.task_id)[0];
     }
     this.auth.getUsersPlanHours(user, 0, 1).subscribe(userPlanHours => {
-      let plannedHours = userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id != 0);
+      let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id != 0), x => x.id);
       let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
       let assign: any[] = [];
       _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
-        assign.push({task: group[0].task_id, hours: group.length});
+        assign.push({task: group[0].task_id, hours: group.length, min: _.sortBy(group, y => y.id)[0].id});
       });
-      forkJoin(tasks.map(x => this.auth.deleteUserTask(user,x, 0))).subscribe({
+      assign = _.sortBy(assign, x => x.min);
+      forkJoin(tasks.map(x => this.auth.deleteUserTask(user, x, freeHour.id))).subscribe({
         next: value => {
-          concat(assign.reverse().map((x: any) => this.auth.planUserTask(user, x.task, freeHour.id, x.hours, 0).subscribe())).subscribe({
+          concat(assign.map((x: any) => this.auth.planUserTask(user, x.task, freeHour.id, x.hours, 0).subscribe())).subscribe({
             next: assignRes => {
               this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
                 this.auth.getPlannedHours().subscribe(plannedHoursAlready => {

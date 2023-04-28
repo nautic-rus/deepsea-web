@@ -814,27 +814,33 @@ export class TaskComponent implements OnInit {
         if (issue.closing_status.includes(value)){
           let findUser = this.auth.users.find(x => x.login == this.issue.assigned_to);
           if (findUser != null){
-            this.auth.getUsersPlanHours(findUser.id, 0, 1).subscribe(userPlanHours => {
-              // let plannedHours = userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id != 0);
-              // let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
-              // let assign: any[] = [];
-              // _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
-              //   assign.push({task: group[0].task_id, hours: group.length});
-              // });
-              // forkJoin(tasks.map(x => this.auth.deleteUserTask(user,x, 0))).subscribe({
-              //   next: value => {
-              //     concat(assign.reverse().map((x: any) => this.auth.planUserTask(user, x.task, freeHour.id, x.hours, 0).subscribe())).subscribe({
-              //       next: assignRes => {
-              //         this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
-              //           this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
-              //             this.plannedHours = plannedHoursAlready;
-              //             this.pHours = planHours;
-              //           });
-              //         });
-              //       }
-              //     });
-              //   }
-              // });
+            this.auth.getConsumedPlanHours(findUser.id).subscribe(consumed => {
+              this.auth.getUsersPlanHours(findUser!.id, 0, 1).subscribe(userPlanHours => {
+                let userPlanHoursToday = _.sortBy(userPlanHours.filter(x => x.day == this.today.getDate() && x.month == this.today.getMonth() && x.year == this.today.getFullYear() && x.hour_type == 1), x => x.id);
+                if (userPlanHoursToday.length > 0){
+                  let consumedByTask = consumed.filter(x => x.task_id == this.issue.id && userPlanHoursToday.map(y => y.id).includes(x.hour_id));
+                  let latestConsumed = userPlanHoursToday[0].id;
+                  if (consumedByTask.length > 0){
+                    latestConsumed = _.sortBy(consumedByTask, x => x.hour_id).reverse()[0].hour_id;
+                  }
+                  let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id > latestConsumed).filter(x => x.task_id != 0), x => x.id);
+                  let taskHours = plannedHours.filter(x => x.task_id == this.issue.id);
+                  if (taskHours.length > 0){
+                    this.auth.deleteUserTask(findUser!.id, this.issue.id, taskHours[0].id).subscribe(() => {
+                      let assign: any[] = [];
+                      _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
+                        assign.push({task: group[0].task_id, hours: group.length, min: _.sortBy(group, y => y.id)[0].id});
+                      });
+                      assign = _.sortBy(assign, x => x.min);
+                      forkJoin(assign.map(x => this.auth.deleteUserTask(findUser!.id, x.task, latestConsumed))).subscribe({
+                        next: value => {
+                          concat(assign.reverse().map((x: any) => this.auth.planUserTask(findUser!.id, x.task, latestConsumed, x.hours, 0).subscribe())).subscribe();
+                        }
+                      });
+                    });
+                  }
+                }
+              });
             });
           }
         }
