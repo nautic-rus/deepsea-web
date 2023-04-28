@@ -10,10 +10,10 @@
         </div>
       </div>
       <div class="mr-10">
-        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-200" [placeholder]="t.tr('Проект')"></p-dropdown>
+        <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-170" [placeholder]="t.tr('Проект')"></p-dropdown>
       </div>
       <div class="mr-10">
-        <p-dropdown class="select" optionValue="value" [(ngModel)]="department" (ngModelChange)="changedDepartment()" [options]="departments" styleClass="width-200" [placeholder]="t.tr('Отдел')">
+        <p-dropdown class="select" optionValue="value" [(ngModel)]="department" (ngModelChange)="changedDepartment()" [options]="departments" styleClass="width-170" [placeholder]="t.tr('Отдел')">
           <ng-template pTemplate="selectedItem">
             <div class="flex align-items-center gap-2">
               <div>{{localeDepartment(department)}}</div>
@@ -35,6 +35,30 @@
         <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="switchCompleted()" [pTooltip]="t.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
           <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">
           <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="count-status">
+          <span class="pr-5">{{t.tr('Новый - ')}}</span>
+          <span>{{statusesCount('New')}}</span>
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="count-status">
+          <span class="pr-5">{{t.tr('В работе - ')}}</span>
+          <span>{{statusesCount('AssignedTo') + statusesCount('In Work') + statusesCount('In Rework') + statusesCount('Assign responsible')}}</span>
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="count-status">
+          <span class="pr-5">{{t.tr('Приостановлено - ')}}</span>
+          <span>{{statusesCount('Paused')}}</span>
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="count-status">
+          <span class="pr-5">{{t.tr('Исполнено - ')}}</span>
+          <span>{{statusesCount('Resolved')}}</span>
         </div>
       </div>
       <div class="p-ml-auto mr-10 df">
@@ -86,7 +110,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="doc_number" class="lxy">{{t.tr('Номер документа')}}
+          <th pSortableColumn="doc_number" class="lxy">{{t.tr('Документ')}}
             <p-sortIcon field="doc_number"></p-sortIcon>
           </th>
           <th pSortableColumn="name" class="lxy">{{t.tr('Тема')}}
@@ -101,7 +125,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="responsible" class="lxy">{{t.tr('Ответственный')}}
+          <th pSortableColumn="responsible" class="lxy">{{t.tr('Отв.')}}
             <p-sortIcon field="responsible"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'responsible'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -110,7 +134,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
-          <th pSortableColumn="assigned_to" class="lxy">{{t.tr('Исполнитель')}}
+          <th pSortableColumn="assigned_to" class="lxy">{{t.tr('Исп.')}}
             <p-sortIcon field="assigned_to"></p-sortIcon>
             <p-columnFilter class="filter" [field]="'assigned_to'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -124,7 +148,7 @@
             <p-columnFilter type="date" field="started_date_as_date" display="menu"></p-columnFilter>
 
           </th>
-          <th pSortableColumn="due_date" class="lxy">{{t.tr('Срок исполнения')}}
+          <th pSortableColumn="due_date" class="lxy">{{t.tr('Срок исп.')}}
             <p-sortIcon field="due_date"></p-sortIcon>
             <p-columnFilter type="date" field="due_date" display="menu"></p-columnFilter>
           </th>

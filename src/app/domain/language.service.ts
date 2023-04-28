@@ -416,7 +416,6 @@ export class LanguageService {
           case 'Инфо': return 'Info';
           case 'Сводка': return 'Summary';
           case 'Архив': return 'Archive';
-          case 'Отв.': return 'Responsible';
           case 'Исп.': return 'Assign to';
           case 'Карточка пользователя': return 'User Card';
           case 'Создание пользователя': return 'Create User';
@@ -457,13 +456,12 @@ export class LanguageService {
           case 'Домой': return 'Home';
           case 'Рекомендованная дата ответа': return 'Recommended response date';
           case 'Пучковая прокладка': return 'Bundle gasket';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Отв.': return 'Resp.';
+          case 'Срок исп.': return 'Due date';
+          case 'Новый - ': return 'New - ';
+          case 'В работе - ': return 'In work - ';
+          case 'Приостановлено - ': return 'Paused - ';
+          case 'Исполнено - ': return 'Resolved - ';
           case '': return '';
           case '': return '';
           case '': return '';
