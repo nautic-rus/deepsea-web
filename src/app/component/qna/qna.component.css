@@ -98,4 +98,8 @@
 .row-table-doc-hover:hover{
   background-color: #EEF2FF!important;
 }
-
+.count-status{
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  padding: 7px 10px 7px 10px;
+}

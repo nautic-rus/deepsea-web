@@ -220,4 +220,8 @@ export class QnaComponent implements OnInit {
     let date = new Date(dateLong);
     return date.setDate(date.getDate() +3);
   }
+
+  statusesCount(status: string) {
+    return this.questions.filter(x => x.status == status).length;
+  }
 }
