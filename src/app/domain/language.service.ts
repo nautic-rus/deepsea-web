@@ -463,7 +463,7 @@ export class LanguageService {
           case 'Приостановлено - ': return 'Paused - ';
           case 'Исполнено - ': return 'Resolved - ';
           case 'Закрыто - ': return 'Closed - ';
-          case '': return '';
+          case 'Отклонено - ': return 'Rejected - ';
           case '': return '';
           case '': return '';
           default: return input;

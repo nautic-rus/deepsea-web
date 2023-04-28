@@ -103,7 +103,7 @@
   padding: 10px;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 11px;
+  font-size: calc(0.1rem + 0.5vw);
   letter-spacing: .3px;
   width: 125px;
 }
@@ -125,4 +125,8 @@
 .close{
   color: #454955;
   background-color: #dae4ff;
+}
+.reject{
+  color: #c63737;
+  background-color: #ffcdd2;
 }
