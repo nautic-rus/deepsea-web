@@ -127,7 +127,7 @@ export class WorkHoursComponent implements OnInit {
   consumed: ConsumedHour[] = [];
   consumedIds: number[] = [];
 
-  constructor(public route: ActivatedRoute, public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, private cd: ChangeDetectorRef) { }
+  constructor(public route: ActivatedRoute, public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, public cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -173,6 +173,9 @@ export class WorkHoursComponent implements OnInit {
         this.auth.getConsumedPlanHours(0).subscribe(consumed => {
           this.consumed = consumed;
           this.consumedIds = this.consumed.map(x => x.hour_id);
+          this.plannedHours.forEach(pH => {
+            pH.hours -= this.consumed.filter(x => x.task_id == pH.taskId).length;
+          })
           this.fillDays();
         });
       });
