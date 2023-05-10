@@ -99,7 +99,34 @@
   background-color: #EEF2FF!important;
 }
 .count-status{
+  border-radius: 6px;
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: calc(0.1rem + 0.5vw);
+  letter-spacing: .3px;
+  width: 125px;
+}
+.all{
   border: 1px solid #ced4da;
-  border-radius: 5px;
-  padding: 7px 10px 7px 10px;
+}
+.new{
+  color: #23547b;
+  background-color: #b3e5fc;
+}
+.work{
+  color: #256029;
+  background-color: #c8e6c9;
+}
+.resolve{
+  color: #805b36;
+  background-color: #ffd8b2;
+}
+.close{
+  color: #454955;
+  background-color: #dae4ff;
+}
+.reject{
+  color: #c63737;
+  background-color: #ffcdd2;
 }

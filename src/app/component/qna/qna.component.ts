@@ -33,6 +33,11 @@ export class QnaComponent implements OnInit {
   questionsSrc: Issue[] = [];
   questions: Issue[] = [];
   showCompleted: boolean = false;
+  showNew: boolean = false;
+  showWork: boolean = false;
+  showResolve: boolean = false;
+  showClose: boolean = false;
+  showReject: boolean = false;
   filters:  { status: any[], author: any[], department: any[], priority: any[], responsible: any[], assigned_to: any[], project: any[] } = { status: [], author: [], department: [], priority: [], responsible: [], assigned_to: [], project: [] };
 
   constructor(private route: ActivatedRoute, public issueManager: IssueManagerService, public auth: AuthManagerService, public issueManagerService: IssueManagerService, private dialogService: DialogService, private router: Router, public t: LanguageService) { }
@@ -59,7 +64,15 @@ export class QnaComponent implements OnInit {
           modal: true,
           data: res
         }).onClose.subscribe(res => {
-          this.fillQNA();
+          this.issueManagerService.getQuestions().then(resIssues => {
+            let find = resIssues.find(x => x.id == id);
+            if (find != null){
+              let openedQuestion = this.questions.find(x => x.id == id);
+              if (openedQuestion != null){
+                this.questions[this.questions.indexOf(openedQuestion)] = find;
+              }
+            }
+          });
           this.router.navigate([], {queryParams: {taskId: null}});
         });
       }
@@ -175,7 +188,12 @@ export class QnaComponent implements OnInit {
     this.questions = this.questionsSrc;
     this.questions = this.questions.filter(x => x.project == this.project || this.project == null || this.project == '' || this.project == '-');
     this.questions = this.questions.filter(x => x.department == this.department || this.department == null || this.department == '' || this.department == '-');
-    this.questions = this.questions.filter(x => !x.closing_status.includes(x.status) || this.showCompleted);
+    //this.questions = this.questions.filter(x => !x.closing_status.includes(x.status) || this.showCompleted);
+    this.questions = this.questions.filter(x => x.status == 'New' && this.showNew || !this.showNew);
+    this.questions = this.questions.filter(x => x.status == 'Rejected' && this.showReject || !this.showReject);
+    this.questions = this.questions.filter(x => (x.status == 'AssignedTo' || x.status == 'In Work' || x.status == 'In Rework' || x.status == 'Assign responsible' || x.status == 'Paused') && this.showWork || !this.showWork);
+    this.questions = this.questions.filter(x => x.status == 'Resolved' && this.showResolve || !this.showResolve);
+    this.questions = this.questions.filter(x => !x.closing_status.includes(x.status) && !this.showClose || x.closing_status.includes(x.status) && this.showClose);
   }
   changedProject() {
     this.applyFilters();
@@ -185,6 +203,7 @@ export class QnaComponent implements OnInit {
   }
 
   clearFilters() {
+    this.resetStatusFilters();
     this.project = '';
     this.department = '';
     this.applyFilters();
@@ -192,6 +211,46 @@ export class QnaComponent implements OnInit {
 
   switchCompleted(){
     this.showCompleted = !this.showCompleted;
+    this.applyFilters();
+  }
+  switchNew(){
+    this.showReject = false;
+    this.showWork = false;
+    this.showResolve = false;
+    this.showClose = false;
+    this.showNew = !this.showNew;
+    this.applyFilters();
+  }
+  switchWork(){
+    this.showReject = false;
+    this.showNew = false;
+    this.showResolve = false;
+    this.showClose = false;
+    this.showWork = !this.showWork;
+    this.applyFilters();
+  }
+  switchResolve(){
+    this.showReject = false;
+    this.showNew = false;
+    this.showWork = false;
+    this.showClose = false;
+    this.showResolve = !this.showResolve;
+    this.applyFilters();
+  }
+  switchClose(){
+    this.showReject = false;
+    this.showNew = false;
+    this.showWork = false;
+    this.showResolve = false;
+    this.showClose = !this.showClose;
+    this.applyFilters();
+  }
+  switchReject(){
+    this.showNew = false;
+    this.showWork = false;
+    this.showResolve = false;
+    this.showClose = false;
+    this.showReject = !this.showReject;
     this.applyFilters();
   }
   localeDepartment(department: string): any {
@@ -222,6 +281,12 @@ export class QnaComponent implements OnInit {
   }
 
   statusesCount(status: string) {
-    return this.questions.filter(x => x.status == status).length;
+    return this.questionsSrc.filter(x => x.status == status).length;
+  }
+  resetStatusFilters(){
+    this.showNew = false;
+    this.showWork = false;
+    this.showResolve = false;
+    this.showClose = false;
   }
 }

@@ -462,8 +462,8 @@ export class LanguageService {
           case 'В работе - ': return 'In work - ';
           case 'Приостановлено - ': return 'Paused - ';
           case 'Исполнено - ': return 'Resolved - ';
-          case '': return '';
-          case '': return '';
+          case 'Закрыто - ': return 'Closed - ';
+          case 'Отклонено - ': return 'Rejected - ';
           case '': return '';
           case '': return '';
           default: return input;

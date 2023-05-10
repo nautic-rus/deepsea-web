@@ -26,42 +26,49 @@
           </ng-template>
         </p-dropdown>
       </div>
-      <div class="mr-10" (click)="clearFilters(); table.clear()">
-        <div class="materials-button gray-button cxy" (click)="clearFilters()" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+      <div class="mr-10" (click)="clearFilters(); table.clear();">
+        <div class="materials-button gray-button cxy" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
           <img src="assets/icons/filter-no.svg" height="18">
         </div>
       </div>
-      <div class="mr-10">
-        <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="switchCompleted()" [pTooltip]="t.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
-          <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">
-          <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">
-        </div>
-      </div>
-      <div class="mr-10">
-        <div class="count-status">
-          <span class="pr-5">{{t.tr('Новый - ')}}</span>
-          <span>{{statusesCount('New')}}</span>
-        </div>
-      </div>
-      <div class="mr-10">
-        <div class="count-status">
-          <span class="pr-5">{{t.tr('В работе - ')}}</span>
-          <span>{{statusesCount('AssignedTo') + statusesCount('In Work') + statusesCount('In Rework') + statusesCount('Assign responsible')}}</span>
-        </div>
-      </div>
-      <div class="mr-10">
-        <div class="count-status">
-          <span class="pr-5">{{t.tr('Приостановлено - ')}}</span>
-          <span>{{statusesCount('Paused')}}</span>
-        </div>
-      </div>
-      <div class="mr-10">
-        <div class="count-status">
-          <span class="pr-5">{{t.tr('Исполнено - ')}}</span>
-          <span>{{statusesCount('Resolved')}}</span>
-        </div>
-      </div>
+
       <div class="p-ml-auto mr-10 df">
+        <div class="mr-10">
+          <div class="count-status all cursor-pointer">
+            <span class="pr-5">{{t.tr('Всего - ')}}</span>
+            <span>{{statusesCount('Resolved') + statusesCount('Closed') + statusesCount('New') + statusesCount('AssignedTo') + statusesCount('In Work') + statusesCount('In Rework') + statusesCount('Assign responsible') + statusesCount('Paused') + statusesCount('Rejected')}}</span>
+          </div>
+        </div>
+        <div class="mr-10">
+          <div class="count-status new cursor-pointer" [class.clicked]="showNew" (click)="switchNew()">
+            <span class="pr-5">{{t.tr('Новый - ')}}</span>
+            <span>{{statusesCount('New')}}</span>
+          </div>
+        </div>
+        <div class="mr-10">
+          <div class="count-status reject cursor-pointer" [class.clicked]="showReject" (click)="switchReject()">
+            <span class="pr-5">{{t.tr('Отклонено - ')}}</span>
+            <span>{{statusesCount('Rejected')}}</span>
+          </div>
+        </div>
+        <div class="mr-10">
+          <div class="count-status work cursor-pointer" [class.clicked]="showWork" (click)="switchWork()">
+            <span class="pr-5">{{t.tr('В работе - ')}}</span>
+            <span>{{statusesCount('AssignedTo') + statusesCount('In Work') + statusesCount('In Rework') + statusesCount('Assign responsible') + statusesCount('Paused')}}</span>
+          </div>
+        </div>
+        <div class="mr-10">
+          <div class="count-status resolve cursor-pointer" [class.clicked]="showResolve" (click)="switchResolve()">
+            <span class="pr-5">{{t.tr('Исполнено - ')}}</span>
+            <span>{{statusesCount('Resolved')}}</span>
+          </div>
+        </div>
+        <div class="mr-10">
+          <div class="count-status close cursor-pointer" [class.clicked]="showClose" (click)="switchClose()">
+            <span class="pr-5">{{t.tr('Закрыто - ')}}</span>
+            <span>{{statusesCount('Closed')}}</span>
+          </div>
+        </div>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
