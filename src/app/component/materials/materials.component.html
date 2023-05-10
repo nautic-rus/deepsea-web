@@ -56,8 +56,8 @@
     <div class="w-100 df">
       <div class="w-100 df">
         <div class="w-15">
-          <div class="menu-card">
-            <p-tree class="tree" *ngIf="project != ''" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu)" (selectionChange)="selectNode()">
+          <div class="menu-card" (contextmenu)="contextMenuOut($event, nodeMenu)">
+            <p-tree class="tree" *ngIf="project != ''" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>

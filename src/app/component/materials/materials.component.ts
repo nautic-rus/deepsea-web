@@ -315,7 +315,7 @@ export class MaterialsComponent implements OnInit {
   }
 
   contextMenu(event: any, contextMenu: ContextMenu) {
-    console.log(event.node.data.length);
+    event.originalEvent.stopPropagation();
     if (event.node.data.length >= 12){
       this.items = [
         {
@@ -356,6 +356,28 @@ export class MaterialsComponent implements OnInit {
           command: () => this.removeNode(event.node)
         }
       ];
+    }
+  }
+  contextMenuOut(event: any, contextMenu: ContextMenu) {
+    event.stopPropagation();
+    if (this.project != ''){
+      this.items = [
+        {
+          label: 'New Folder',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.newNode = {};
+            this.forNode = this.nodesSrc.find((x: any) => x.data == this.selectedRootNode);
+            this.newNodeSuffix = '###';
+            this.newNode.data = this.selectedRootNode;
+            this.newNode.label = '';
+            // this.newNode.label = node.label;
+            this.newNode.checkChildren = this.nodes.map((x: any) => x.data);
+            this.addNew = true;
+          }
+        }
+      ];
+      contextMenu.show(event);
     }
   }
 
