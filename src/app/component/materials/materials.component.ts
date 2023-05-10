@@ -373,6 +373,7 @@ export class MaterialsComponent implements OnInit {
             this.newNode.label = '';
             // this.newNode.label = node.label;
             this.newNode.checkChildren = this.nodes.map((x: any) => x.data);
+            this.forNode.children = this.nodes;
             this.addNew = true;
           }
         }
@@ -442,6 +443,7 @@ export class MaterialsComponent implements OnInit {
           this.materials.filter(x => x != null).forEach((x: any) => {
             x.path = this.setPath(x.code);
           });
+          this.rootNodeChanged();
         });
       }
     });
