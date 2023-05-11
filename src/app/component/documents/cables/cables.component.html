@@ -202,7 +202,163 @@
             <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'"
                  [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
           </div>
+
           <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
+            <div class="mb-30" *ngFor="let fileGroup of fileGroups"
+                 [class.hidden-group]="!auth.hasPerms('esp-files') && fileGroup.need_rights">
+              <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true"
+                          [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
+                <div>
+                  <div class="df">
+                    <div *ngIf="'Electric' == auth.getUser().department && issue.status == 'Delivered'"
+                         class="button-details df cursor-pointer mb-15"
+                         (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
+                      <div class="cxy">
+                        <img src="assets/icons/plus1.svg" height="16">
+                      </div>
+                      <div class="cy ml-1">Add files</div>
+                    </div>
+                    <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15"
+                         (click)="downloadFiles(fileGroup.name, selectedRevision)">
+                      <div class="cxy">
+                        <img src="assets/icons/download-arrow.png">
+                      </div>
+                      <div class="cy ml-1">Download all</div>
+                    </div>
+
+
+                    <div *ngIf="fileGroup.name == 'Cutting Map'">
+                      <div class="ml-1 button-details df cursor-pointer mb-15"
+                           (click)="$event.ctrlKey ? downloadFilesCVC(fileGroup.name, selectedRevision, 'txt') : download.toggle($event)">
+                        <div class="cxy">
+                          <img src="assets/icons/download-arrow.png">
+                        </div>
+                        <div class="cy ml-1">Download all</div>
+                      </div>
+                      <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
+                        <ng-template pTemplate>
+                          <div class="df border-bottom all-row-user-menu cursor-pointer"
+                               (click)="downloadFiles(fileGroup.name, selectedRevision, 'cnc')">
+                            <div class="row-download">.MPG</div>
+                          </div>
+                          <div class="df all-row-user-menu cursor-pointer"
+                               (click)="downloadFiles(fileGroup.name, selectedRevision, 'essi')">
+                            <div class="row-download">.ESI</div>
+                          </div>
+                          <div class="df all-row-user-menu cursor-pointer"
+                               (click)="downloadFiles(fileGroup.name, selectedRevision, 'tap')">
+                            <div class="row-download">.TAP</div>
+                          </div>
+                        </ng-template>
+                      </p-overlayPanel>
+                    </div>
+
+
+                    <div *ngIf="'Electric' == auth.getUser().department"
+                         [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0"
+                         class="ml-1 button-details df cursor-pointer mb-15"
+                         (click)="clearFiles(fileGroup.name, selectedRevision)">
+                      <div class="cxy icon-rotate">
+                        <img src="assets/icons/broom.png">
+                      </div>
+                      <div class="cy ml-1">Clear</div>
+                    </div>
+                  </div>
+                  <div class="" *ngIf="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length != 0">
+                    <div class="attachment-files df mb-6">
+                      <div></div>
+                      <div class="cy mx-10 cursor-pointer" (click)="setFileSort('name')">
+                        <img [class.files-sorted]="fileSort == 'name'" src="assets/icons/sort.svg" height="16">
+                      </div>
+                      <div class="cy cursor-pointer" [class.files-sorted]="fileSort == 'date'"
+                           (click)="setFileSort('date')">
+                        <img src="assets/icons/sort.svg" height="16">
+                      </div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name, selectedRevision)">
+
+                      <div class="attachment-files df mb-6 cursor-pointer">
+                        <div class="cxy">
+                          <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                        </div>
+                        <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
+                        <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+
+
+                        <div class="cxy" *ngIf="file.name.includes('.dxf')">
+                          <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
+                               (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                            <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                              <path
+                                d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                            </svg>
+                          </div>
+                        </div>
+                        <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')"
+                             (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
+                          <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                               xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                            <path
+                              d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                          </svg>
+                        </div>
+                        <div class="cxy" *ngIf="!file.name.includes('.dxf') && file.group != 'Cutting Map'"></div>
+
+                        <div *ngIf="file.group != 'Cutting Map'" class="cxy" (click)="openFile(file)">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                               viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                          </svg>
+                        </div>
+
+                        <div class="cxy" *ngIf="file.group == 'Cutting Map'">
+                          <div class="cxy" (click)="download.toggle($event)">
+                            <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                 viewBox="0 0 24 24">
+                              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                            </svg>
+                          </div>
+                          <p-overlayPanel #download [style]="{width: '50px', 'border-radius': '4px', 'z-index': 11}">
+                            <ng-template pTemplate>
+                              <div class="df border-bottom all-row-user-menu cursor-pointer" (click)="openFile(file)">
+                                <div class="row-download">.MPG</div>
+                              </div>
+                              <div class="df all-row-user-menu cursor-pointer" (click)="openFile(file, 'essi')">
+                                <div class="row-download">.ESI</div>
+                              </div>
+                              <div class="df all-row-user-menu cursor-pointer" (click)="openFile(file, 'tap')">
+                                <div class="row-download">.TAP</div>
+                              </div>
+                            </ng-template>
+                          </p-overlayPanel>
+                        </div>
+                        <div class="cxy" *ngIf="'Electric' == auth.getUser().department" (click)="deleteFile(file.url)">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                               viewBox="0 0 24 24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--                <div class="df right-top-revision">-->
+                  <!--                  <div class="pt-5">View files of revision</div>-->
+                  <!--                  <div class="ml-1">-->
+                  <!--                    <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" (ngModelChange)="viewRevisionChanged()" styleClass="w-100 h-32 cxy">-->
+                  <!--                    </p-dropdown>-->
+                  <!--                  </div>-->
+                  <!--                </div>-->
+                </div>
+              </p-fieldset>
+            </div>
 
           </div>
           <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
@@ -232,6 +388,35 @@
             </div>
           </div>
           <div *ngIf="selectedHeadTab == 'Archive'" class="card-tabs">
+            <div *ngFor="let file of getArchive()">
+              <div class="attachment-files-archive df mb-6 cursor-pointer">
+                <div class="cxy">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
+                </div>
+                <span class="file-name-esp mx-10 min-width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
+                <span
+                  class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
+                <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')">
+                  <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=""
+                       (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                    <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                      <path
+                        d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="cxy ml-10 load-cloud" *ngIf="!file.name.includes('.dxf')">
+                </div>
+                <div class="cxy ml-10" (click)="openFile(file)">
+                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

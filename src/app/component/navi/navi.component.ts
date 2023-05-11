@@ -36,6 +36,7 @@ export class NaviComponent implements OnInit {
       {id: 'pipe-documents', label: 'Systems', url: 'documents', icon: '', height: 1, params: {'department': 'System'}},
       {id: 'trays', label: 'Trays', url: 'documents', icon: '', height: 1, params: {'department': 'Trays'}},
       {id: 'cables', label: 'Cables', url: 'documents', icon: '', height: 1, params: {'department': 'Cables'}},
+      {id: 'equipments', label: 'Equipments', url: 'documents', icon: '', height: 1, params: {'department': 'Equipments'}},
       {id: 'electric-documents', label: 'Electric', url: 'documents', icon: '', height: 1, params: {'department': 'Electric'}},
       {id: 'device-documents', label: 'Devices', url: 'documents', icon: '', height: 1, params: {'department': 'Devices'}},
       {id: 'accommodation-documents', label: 'Accommodation', url: 'documents', icon: '', height: 1, params: {'department': 'Accommodation'}},
