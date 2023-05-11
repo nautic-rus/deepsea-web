@@ -50,6 +50,7 @@ import {CablesComponent} from "./component/documents/cables/cables.component";
 import {MaterialsSummaryComponent} from "./component/materials-summary/materials-summary.component";
 import {DoclistComponent} from "./component/doclist/doclist.component";
 import {DesignEspComponent} from "./component/documents/design-esp/design-esp.component";
+import {EquipmentsComponent} from "./component/documents/equipments/equipments.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -99,6 +100,7 @@ const routes: Routes = [
   { path: 'work-hours', component: WorkHoursComponent, canActivate: [AuthGuard], data: {animation: 'WorkHoursComponent'} },
   { path: 'trays', component: TraysComponent, canActivate: [AuthGuard], data: {animation: 'TraysComponent'} },
   { path: 'cables', component: CablesComponent, canActivate: [AuthGuard], data: {animation: 'CablesComponent'} },
+  { path: 'equipments', component: EquipmentsComponent, canActivate: [AuthGuard], data: {animation: 'EquipmentsComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
   { path: 'doclist', component: DoclistComponent, canActivate: [AuthGuard], data: {animation: 'DoclistComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },

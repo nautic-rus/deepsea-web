@@ -304,4 +304,5 @@
 }
 .plan-hours-common{
   height: 100%;
+  display: flex;
 }
