@@ -110,6 +110,7 @@ export class WorkHoursComponent implements OnInit {
   stages: string[] = [];
   stage = '';
   taskTypes: string[] = [];
+  taskDepartments: string[] = [];
   taskType = '';
   statuses: string[] = [];
   status = '';
@@ -117,6 +118,7 @@ export class WorkHoursComponent implements OnInit {
   selectedIssue: Issue;
   projects: string[] = ['N002', 'N004', 'P701', 'P707'];
   project = '';
+  taskDepartment = '';
   issueSpentTime: DailyTask[] = [];
   showWithoutPlan = false;
   showAssigned = false;
@@ -135,7 +137,6 @@ export class WorkHoursComponent implements OnInit {
     });
     this.loading = true;
     this.fill();
-    this.fillIssues();
     this.items = [
       // {
       //   label: 'Fold left',
@@ -159,11 +160,14 @@ export class WorkHoursComponent implements OnInit {
       this.users = res.filter(x => x.visibility.includes('k'));
       this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
       this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
-      //this.departments = _.uniq(this.users.map(x => x.department)).map(x => new LV(x));
-      //this.selectedDepartments = this.departments.map(x => x.value);
       this.issueManager.getDepartments().subscribe(departments => {
         this.departments = departments.filter(x => x.visible_man_hours == 1);
-        this.selectedDepartments = [...this.departments.map(x => x.name)];
+        if (localStorage.getItem('selectedDepartments') != null){
+          this.selectedDepartments = JSON.parse(localStorage.getItem('selectedDepartments')!);
+        }
+        else{
+          this.selectedDepartments = [...this.departments.map(x => x.name)];
+        }
       });
     });
     this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
@@ -176,6 +180,7 @@ export class WorkHoursComponent implements OnInit {
           this.plannedHours.forEach(pH => {
             pH.hours -= this.consumed.filter(x => x.task_id == pH.taskId).length;
           })
+          this.fillIssues();
           this.fillDays();
         });
       });
@@ -188,13 +193,14 @@ export class WorkHoursComponent implements OnInit {
         this.issuesSrc = res;
         this.issues = res.filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP'].includes(x.issue_type));
         this.issues = _.sortBy(this.issues, x => x.doc_number);
-        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
+        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => this.sortStage(x));
         this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
         this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x);
-        this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
+        this.taskDepartments = _.sortBy(_.uniq(this.issues.map(x => x.department)).filter(x => x != ''), x => x);
+        this.issuesSrc.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
-        this.issues.forEach(x => this.dragValues[x.id] = x.plan_hours);
+        this.issuesSrc.forEach(x => this.dragValues[x.id] = (x.plan_hours - this.getPlanned(x)));
         this.filterIssues();
       });
     });
@@ -210,7 +216,10 @@ export class WorkHoursComponent implements OnInit {
     });
     return sum;
   }
-
+  sortStage(stage: string){
+    let r = new RegExp('\\d+');
+    return r.test(stage) ? this.addLeftZeros(r.exec(stage)![0]) : stage;
+  }
   isCurrentPDay(pDay: PlanDay) {
     return pDay.day == this.todayStatic.getDate() && pDay.month == this.todayStatic.getMonth() && pDay.year == this.todayStatic.getFullYear();
   }
@@ -282,12 +291,13 @@ export class WorkHoursComponent implements OnInit {
 
   getDayStyle(day: TaskOfDay) {
     let oneHourLength = 40 / 8;
+    let width = day.planHours.length - day.consumedAmount;
     return {
       height: '100%',
-      width: (day.planHours.length * oneHourLength) + 'px',
-      'background-color': this.getTaskColor(day.taskId),
+      width: (width * oneHourLength) + 'px',
+      'background-color': width == 0 ? 'transparent' : this.getTaskColor(day.taskId),
       'border': this.getSearchingBorder(day),
-      'padding-left': day.consumedAmount * oneHourLength + 'px',
+      'padding-left': width == 0 ? '0' : '2px',
       // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
       // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
@@ -368,8 +378,10 @@ export class WorkHoursComponent implements OnInit {
         data: res
       }).onClose.subscribe(res => {
         setTimeout(() => {
-          this.loading = true;
-          this.fill();
+          if (res == 'updated'){
+            this.loading = true;
+            this.fill();
+          }
           this.cd.reattach();
         }, 100);
       });
@@ -464,25 +476,36 @@ export class WorkHoursComponent implements OnInit {
     }
   }
   projectChanged() {
+    localStorage.setItem('project', this.project);
     this.filterIssues();
   }
   departmentChanged() {
+    localStorage.setItem('taskDepartment', this.taskDepartment);
     this.filterIssues();
   }
   stageChanged() {
+    localStorage.setItem('stage', this.stage);
     this.filterIssues();
   }
   taskTypeChanged() {
+    localStorage.setItem('taskType', this.taskType);
     this.filterIssues();
   }
   statusChanged() {
+    localStorage.setItem('status', this.status);
     this.filterIssues();
   }
   filterIssues(){
+    this.project = localStorage.getItem('project') != null ? localStorage.getItem('project')! : this.project;
+    this.taskDepartment = localStorage.getItem('taskDepartment') != null ? localStorage.getItem('taskDepartment')! : this.taskDepartment;
+    this.stage = localStorage.getItem('stage') != null ? localStorage.getItem('stage')! : this.stage;
+    this.taskType = localStorage.getItem('taskType') != null ? localStorage.getItem('taskType')! : this.taskType;
+    this.status = localStorage.getItem('status') != null ? localStorage.getItem('status')! : this.status;
+
     this.issues = [...this.issuesSrc];
     this.issues = this.issues.filter(x => !x.closing_status.includes(x.status));
     this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
-    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
+    this.issues = this.issues.filter(x => x.department == this.taskDepartment || this.taskDepartment == '' || this.taskDepartment == '-' || this.taskDepartment == null);
     this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
     this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
     this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.status, false) || this.status == '' || this.status == '-' || this.status == null);
@@ -619,7 +642,8 @@ export class WorkHoursComponent implements OnInit {
   }
 
   clearFilters() {
-
+    localStorage.clear();
+    location.reload();
   }
 
   getDateOnly(dateLong: number): string {
@@ -721,16 +745,44 @@ export class WorkHoursComponent implements OnInit {
   }
 
   selectTaskOfDay(task: TaskOfDay, day: any, user: any, cm: ContextMenu, event: MouseEvent) {
-    this.cd.detach();
+    console.log(day);
+    console.log(task);
     event.preventDefault();
     event.stopPropagation();
-    this.taskOfDay = task;
-    this.selectDay(day, user);
-    cm.position(event);
-    cm.show();
-    cm.onHide.subscribe(() => {
-      this.cd.reattach();
-    });
+    if (task.taskId == 0){
+      this.items = [
+        {
+          label: 'Fold left all',
+          icon: 'pi pi-fw pi-arrow-circle-left',
+          command: (event: any) => this.foldAllTaskLeft()
+        }
+      ];
+    }
+    else{
+      this.items = [
+        {
+          label: 'Clear task',
+          icon: 'pi pi-fw pi-trash',
+          command: (event: any) => this.deleteUserTask()
+        },
+        {
+          label: 'Fold left all',
+          icon: 'pi pi-fw pi-arrow-circle-left',
+          command: (event: any) => this.foldAllTaskLeft()
+        },
+      ];
+    }
+    this.cd.reattach();
+    setTimeout(() => {
+      this.cd.detach();
+      this.taskOfDay = task;
+      this.selectDay(day, user);
+      cm.position(event);
+      cm.show();
+      cm.onHide.subscribe(() => {
+        this.cd.reattach();
+      });
+    }, 100);
   }
 
   searchIssue(issue: Issue) {
@@ -745,5 +797,9 @@ export class WorkHoursComponent implements OnInit {
 
   getIssue(name: string) {
     return this.issuesSrc.find(x => x.issue_type == name);
+  }
+
+  saveSelectedDepartments() {
+    localStorage.setItem('selectedDepartments', JSON.stringify(this.selectedDepartments));
   }
 }
