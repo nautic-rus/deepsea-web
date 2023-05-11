@@ -297,6 +297,7 @@ export class WorkHoursComponent implements OnInit {
     return {
       height: '100%',
       width: (day.consumedAmount * oneHourLength) + 'px',
+      'background-color': this.getTaskColor(day.taskId),
       // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
       // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
