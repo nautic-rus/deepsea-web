@@ -7,6 +7,7 @@ import {Projects} from "../../../../domain/interfaces/project";
 import {AuthManagerService} from "../../../../domain/auth-manager.service";
 import {Users} from "../../../../domain/interfaces/users";
 import _ from "underscore";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-create-project',
@@ -26,8 +27,9 @@ export class CreateProjectComponent implements OnInit {
   users: Users[] = [];
   selectedUsers: Users[] = [];
   colsUsers: any[] = [];
+  loading = false;
 
-  constructor(public lang: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public projectService: ProjectService, public auth: AuthManagerService) { }
+  constructor(private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public projectService: ProjectService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;
@@ -40,15 +42,18 @@ export class CreateProjectComponent implements OnInit {
   }
 
   createProject() {
+    this.loading = true;
     let projects: Projects = { id: 0, name: this.name, foran: this.foran, rkd: this.rkd, pdsp: this.pdsp, factory: this.factory, managers: this.managers, status: this.status };
     this.projectService.startProject(projects).subscribe({
       next: res => {
         console.log(res);
-        this.ref.close(res);
+        this.loading = false;
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание проекта'), detail: this.lang.tr('Новый проект создан')});
       },
       error: err => {
         console.log(err);
-        this.ref.close(err);
+        this.loading = false;
+        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Создание проекта'), detail: this.lang.tr('Не удалось создать новый проект')});
       }
     });
   }

@@ -87,11 +87,14 @@
 
 <div class="form-footer-user">
   <div class="mr-5 cx">
-    <div tabindex="11" (click)="sendLogPass()" pButton [label]="lang.tr('Отправить данные для входа')" class="button-cancel ml-1"></div>
+    <div *ngIf="!loading" tabindex="11" (click)="sendLogPass()" pButton [label]="lang.tr('Отправить данные для входа')" class="button-cancel ml-1"></div>
   </div>
   <div class="mr-5 cx">
-    <div tabindex="11" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+    <div *ngIf="!loading" tabindex="11" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
   </div>
-  <div tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="saveUser()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="saveUser()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+  <div class="cxy height-spinner" *ngIf="loading">
+    <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff" animationDuration="1s" ></p-progressSpinner>
+  </div>
 </div>
 

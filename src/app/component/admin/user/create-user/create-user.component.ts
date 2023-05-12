@@ -12,6 +12,7 @@ import {formatDate} from "@angular/common";
 import {Rights} from "../../../../domain/interfaces/rights";
 import {RightService} from "../../right/right.service";
 import {Departments} from "../../../../domain/interfaces/departments";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-create-user',
@@ -48,8 +49,9 @@ export class CreateUserComponent implements OnInit {
   visible_projects: any[] = [];
   departments: Departments[] = [];
   rights: Rights[] = [];
+  loading = false;
 
-  constructor(public conf: DynamicDialogConfig, public lang: LanguageService, public rightService: RightService, public ref: DynamicDialogRef, public userService: UserService, public projectService: ProjectService, public auth: AuthManagerService, public roleService: RoleService) {
+  constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public lang: LanguageService, public rightService: RightService, public ref: DynamicDialogRef, public userService: UserService, public projectService: ProjectService, public auth: AuthManagerService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -104,6 +106,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   createUser() {
+    this.loading = true;
     let user: Users = {
       id: this.id,
       login: this.login,
@@ -131,12 +134,14 @@ export class CreateUserComponent implements OnInit {
     };
     this.userService.startUser(user).subscribe({
       next: res => {
+        this.loading = false;
         console.log(res);
-        this.ref.close(res);
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание пользователя'), detail: this.lang.tr('Новый пользователь создан')});
       },
       error: err => {
+        this.loading = false;
         console.log(err);
-        this.ref.close(err);
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание пользователя'), detail: this.lang.tr('Не удалось создать нового пользователя')});
       }
     });
   }

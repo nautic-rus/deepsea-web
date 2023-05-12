@@ -22,6 +22,7 @@ export class LanguageService {
       case 'en':{
         switch (input) {
           case 'Проект': return 'Project';
+          case 'Проекты': return 'Projects';
           case 'Приоритет': return 'Priority';
           case 'Тип задачи': return 'Task Type';
           case 'Этап': return 'Stage';
@@ -396,6 +397,7 @@ export class LanguageService {
           case 'Связанные': return 'Linked';
           case 'Исполнено': return 'Done';
           case 'Роль': return 'Role';
+          case 'Роли': return 'Roles';
           case 'Новый пользователь': return 'New user';
           case 'Новая роль': return 'New role';
           case 'Новый проект': return 'New project';
@@ -465,6 +467,42 @@ export class LanguageService {
           case 'Закрыто - ': return 'Closed - ';
           case 'Отклонено - ': return 'Rejected - ';
           case 'Информация': return 'Info';
+          case 'Применить ко всем': return 'Apply to all';
+          case 'Отправить данные для входа': return 'Send login information';
+          case 'Удаление пользователя': return 'Deleting a user';
+          case 'Пользователь удалён': return 'User deleted';
+          case 'Не удалось удалить пользователя': return 'Failed to delete user';
+          case 'Данные для входа': return 'Login information';
+          case 'Данные для входа доставлены': return 'Login data delivered';
+          case 'Не удалось доставить данные для входа': return 'Failed to deliver login data';
+          case 'Сохранение пользователя': return 'Saving a user';
+          case 'Данные пользователя сохранены': return 'User data saved';
+          case 'Не удалось сохранить данные пользователя': return 'Failed to save user data';
+          case 'Новый пользователь создан': return 'A new user has been created';
+          case 'Не удалось создать нового пользователя': return 'Failed to create a new user';
+          case 'Создание роли': return 'Creating a Role';
+          case 'Роль создана': return 'Role created';
+          case 'Не удалось создать роль': return 'Failed to create a role';
+          case 'Удаление роли': return 'Removing a Role';
+          case 'Роль удалена': return 'Role deleted';
+          case 'Не удалось удалить роль': return 'Failed to remove a role';
+          case 'Сохранение роли': return 'Saving a role';
+          case 'Данные роли сохранены и применены ко всем пользователям': return 'These roles are saved and applied to all users';
+          case 'Данные роли сохранены': return 'Role data is saved';
+          case 'Не удалось сохранить данные роли': return 'Failed to save role data';
+          case 'Удаление проекта': return 'Deleting a project';
+          case 'Проект удалён': return 'Project deleted';
+          case 'Не удалось удалить проект': return 'Failed to delete project';
+          case 'Сохранение проекта': return 'Saving the project';
+          case 'Проект сохранён': return 'The project has been saved';
+          case 'Не удалось сохранить проект': return 'Failed to save the project';
+          case 'Создание проекта': return 'Creating a project';
+          case 'Новый проект создан': return 'A new project has been created';
+          case 'Не удалось создать новый проект': return 'Failed to create a new project';
+          case '': return '';
+          case '': return '';
+          case '': return '';
+          case '': return '';
           case '': return '';
           default: return input;
         }
