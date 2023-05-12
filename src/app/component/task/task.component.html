@@ -55,7 +55,7 @@
         <div class="task-name" [hidden]="edit != 'name'">
           <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
           <div class="content-end">
-            <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
+            <div class="task-name-button cxy mr-5" (click)="commitIssueEdit($event)">
               <img src="assets/icons/tick.svg">
             </div>
             <div class="task-name-button cxy" (click)="cancelIssueEdit()">
@@ -66,7 +66,7 @@
         <div class="task-name" [hidden]="edit != 'doc_number'">
           <textarea *ngIf="edit == 'doc_number'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.doc_number" class="w-100 task-name-change font"></textarea>
           <div class="content-end">
-            <div class="task-name-button cxy mr-5" (click)="commitIssueEdit()">
+            <div class="task-name-button cxy mr-5" (click)="commitIssueEdit($event)">
               <img src="assets/icons/tick.svg">
             </div>
             <div class="task-name-button cxy" (click)="cancelIssueEdit()">
@@ -125,7 +125,7 @@
         </quill-editor>
         <div class="df mt-5">
           <div class="mr-5 pb-20">
-            <div (click)="commitIssueEdit()" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
+            <div (click)="commitIssueEdit($event)" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
           </div>
           <div>
             <div (click)="cancelIssueEdit()" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
@@ -271,7 +271,7 @@
           </quill-editor>
           <div class="df mt-5">
             <div class="mr-5 pb-20">
-              <div (click)="commitIssueEdit()" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
+              <div (click)="commitIssueEdit($event)" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
             </div>
             <div>
               <div (click)="cancelIssueEdit()" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
@@ -932,7 +932,7 @@
             <div [class.no-edit]="true || !isEditable()" [hidden]="edit == 'startDate'" (click)="edit = 'startDate'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.start_date)}}</div>
             <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'startDate'" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="background width-180 mr-5"></p-calendar>
             <div class="w-15 df">
-              <div [hidden]="edit != 'startDate'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'startDate'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -949,7 +949,7 @@
             <div [class.no-edit]="true || !isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.due_date)}}</div>
             <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-180 mr-5"></p-calendar>
             <div class="w-15 df">
-              <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -966,7 +966,7 @@
             <div [class.no-edit]="true || !auth.hasPerms('contractDueDate')" [hidden]="edit == 'contractDueDate'" (click)="edit = 'contractDueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.contract_due_date)}}</div>
             <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'contractDueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="contractDueDate" dateFormat="dd.mm.yy" styleClass="background width-180 mr-5"></p-calendar>
             <div class="w-15 df">
-              <div [hidden]="edit != 'contractDueDate'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'contractDueDate'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -986,7 +986,7 @@
               </p-dropdown>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'project'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'project'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1006,7 +1006,7 @@
               </p-dropdown>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'department'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'department'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1047,7 +1047,7 @@
               </p-dropdown>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'priority'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'priority'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1067,7 +1067,7 @@
               </p-dropdown>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'period'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'period'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1088,7 +1088,7 @@
             <div (click)="edit = 'issue_comment'" *ngIf="edit != 'issue_comment'" pTooltip="{{issue.issue_comment}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{trimMin(issue.issue_comment)}}</div>
             <textarea *ngIf="edit == 'issue_comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.issue_comment" class="width-180 cy task-name-change-commit"></textarea>
             <div class="w-15 df">
-              <div [hidden]="edit != 'issue_comment'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'issue_comment'" (click)="commitIssueEdit($event)">
                 <div class="task-name-button cxy ml-5 mr-5" >
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1112,7 +1112,7 @@
               </p-dropdown>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'modification_of_existing'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'modification_of_existing'" (click)="commitIssueEdit($event)">
                 <div class="task-name-button cxy ml-5 mr-5" >
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1133,7 +1133,7 @@
               </p-dropdown>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'revision'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'revision'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1152,7 +1152,7 @@
               <p-dropdown appendTo="body" class="select" [(ngModel)]="issue.reason_of_changes" [options]="reasonsOfChange" optionValue="value" optionLabel="label" styleClass="width-180"></p-dropdown>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'reason_of_changes'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'reason_of_changes'" (click)="commitIssueEdit($event)">
                 <div class="task-name-button cxy ml-5 mr-5" >
                   <img src="assets/icons/tick.svg">
                 </div>
@@ -1171,7 +1171,7 @@
               <p-inputNumber inputStyleClass="width-180" [(ngModel)]="issue.plan_hours" mode="decimal"></p-inputNumber>
             </div>
             <div class="w-15 df">
-              <div [hidden]="edit != 'plan_hours'" (click)="commitIssueEdit()">
+              <div [hidden]="edit != 'plan_hours'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
                   <img src="assets/icons/tick.svg">
                 </div>

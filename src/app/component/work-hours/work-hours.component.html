@@ -2,7 +2,7 @@
   <div class="card-work">
     <div class="calendar-header">
       <div class="cy width-200">
-        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" optionLabel="name" optionValue="name"></p-multiSelect>
+        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (onChange)="saveSelectedDepartments()" optionLabel="name" optionValue="name"></p-multiSelect>
       </div>
       <div class="df ml-20 w-80">
         <div class="cxy cursor-pointer prev-month blue-button" (click)="fillPrevDays()">
@@ -89,19 +89,15 @@
           </div>
           <div class="w-90">
             <div class="calendar w-100">
-              <div class="month-date" #addTask>
-                <!--              <div *ngFor="let day of getDaysInMonth()" tabindex="1" [class.management]="user.visibility.includes('r')" (mouseenter)="setHover(day, user)" (mouseleave)="resetHover()" [class.day-border]="dayHover == day && userHover == user" (contextmenu)="selectDay(day)" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy"></div>-->
-                <div pDroppable="issue" (onDrop)="dragDrop($event, pDay, user)" #day *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" [class.border-none]="hasTask(pDay)" class="day-number cxy">
+              <div class="month-date">
+                <div (contextmenu)="selectTaskOfDay({taskId: 0, planHours: [], tooltip: '', consumedAmount: 0}, pDay, user, contextMenu, $event)" pDroppable="issue" (onDrop)="dragDrop($event, pDay, user)" #day *ngFor="let pDay of userPDays[user.id]" [class.off-day]="pDay.day_type == 3" [class.border-none]="hasTask(pDay)" class="day-number cxy">
                   <span *ngIf="pDay.day_type == 2"></span>
-<!--                  <div (click)="openTask(task.taskId)" (contextmenu)="selectTaskOfDay(task, pDay, user, contextMenu, $event)" *ngFor="let task of getTasksOfDay(pDay)" [ngStyle]="getDayStyle(task)" class="plan-hours" pTooltip="{{task.tooltip}}" tooltipPosition="top">-->
-<!--                    {{task.planHours.length - task.consumedAmount}}-->
-<!--                  </div>-->
                   <span (contextmenu)="selectTaskOfDay(task, pDay, user, contextMenu, $event)" class="plan-hours-common" *ngFor="let task of getTasksOfDay(pDay)">
-                    <div (click)="openTask(task.taskId)" *ngIf="task.consumedAmount == 0" [ngStyle]="getDayStyle(task)" class="plan-hours" pTooltip="{{task.tooltip}}" tooltipPosition="top">
-                      {{task.planHours.length - task.consumedAmount}}
-                    </div>
-                    <div (click)="openTask(task.taskId)" *ngIf="task.consumedAmount > 0" [ngStyle]="getConsumedDayStyle(task)" class="plan-hours-consumed" pTooltip="{{task.tooltip}}" tooltipPosition="top">
+                     <div (click)="openTask(task.taskId)" *ngIf="task.consumedAmount > 0" [ngStyle]="getConsumedDayStyle(task)" class="plan-hours-consumed" pTooltip="{{task.tooltip}}" tooltipPosition="top">
                       {{task.consumedAmount}}
+                    </div>
+                    <div (click)="openTask(task.taskId)" *ngIf="task.planHours.length > 0" [ngStyle]="getDayStyle(task)" class="plan-hours" pTooltip="{{task.tooltip}}" tooltipPosition="top">
+                      {{task.planHours.length - task.consumedAmount}}
                     </div>
                   </span>
                 </div>
@@ -129,7 +125,7 @@
           </div>
           <div>
             <div class="big-text-user mb-1">{{t.tr('Отдел')}}</div>
-            <p-dropdown optionValue="name" optionLabel="name" appendTo="body" placeholder="Department" [(ngModel)]="department" [options]="departments" (onChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
+            <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="taskDepartment" [options]="taskDepartments" (onChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
         <div class="df space-between ">

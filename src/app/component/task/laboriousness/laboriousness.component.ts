@@ -143,4 +143,8 @@ export class LaboriousnessComponent implements OnInit {
       });
     });
   }
+
+  notPlannedToday() {
+    return this.planTasks.filter(x => x.taskId == this.issue.id).length == 0;
+  }
 }

@@ -51,6 +51,7 @@ export class TaskComponent implements OnInit {
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
   edit = '';
+  updated = false;
   image = '';
   selectedUser = '';
   showImages = false;
@@ -337,7 +338,7 @@ export class TaskComponent implements OnInit {
     this.fillGroupedChecks();
   }
   close(){
-    this.ref.close('exit');
+    this.ref.close(this.updated ? 'updated' : 'exit');
   }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
@@ -656,10 +657,10 @@ export class TaskComponent implements OnInit {
       data: this.issue
     }).onClose.subscribe(res => {
       if (res == 'success'){
+        this.updated = true;
         this.messageService.add({key:'task', severity:'success', summary:'Set Man Hours', detail:'You have successfully updated issue man hours.'});
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
-          console.log(this.issue);
           this.availableActions = this.getAvailableActions(issue);
         });
       }
@@ -811,7 +812,8 @@ export class TaskComponent implements OnInit {
           this.statusChanged();
         }
 
-        if (issue.closing_status.includes(value)){
+        if (value == 'Check' || value == 'Paused'){
+          this.updated = true;
           let findUser = this.auth.users.find(x => x.login == this.issue.assigned_to);
           if (findUser != null){
             this.auth.getConsumedPlanHours(findUser.id).subscribe(consumed => {
@@ -820,18 +822,23 @@ export class TaskComponent implements OnInit {
                 if (userPlanHoursToday.length > 0){
                   let consumedByTask = consumed.filter(x => x.task_id == this.issue.id && userPlanHoursToday.map(y => y.id).includes(x.hour_id));
                   let latestConsumed = userPlanHoursToday[0].id;
+                  let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= latestConsumed).filter(x => x.task_id != 0), x => x.id);
                   if (consumedByTask.length > 0){
                     latestConsumed = _.sortBy(consumedByTask, x => x.hour_id).reverse()[0].hour_id;
+                    plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id > latestConsumed).filter(x => x.task_id != 0), x => x.id);
                   }
-                  let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id > latestConsumed).filter(x => x.task_id != 0), x => x.id);
                   let taskHours = plannedHours.filter(x => x.task_id == this.issue.id);
+                  console.log(latestConsumed);
+                  console.log(taskHours);
+                  console.log(userPlanHoursToday);
                   if (taskHours.length > 0){
                     this.auth.deleteUserTask(findUser!.id, this.issue.id, taskHours[0].id).subscribe(() => {
                       let assign: any[] = [];
-                      _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
+                      _.forEach(_.groupBy(plannedHours.filter(x => x.task_id != this.issue.id), x => x.task_id), group => {
                         assign.push({task: group[0].task_id, hours: group.length, min: _.sortBy(group, y => y.id)[0].id});
                       });
                       assign = _.sortBy(assign, x => x.min);
+                      console.log(assign);
                       forkJoin(assign.map(x => this.auth.deleteUserTask(findUser!.id, x.task, latestConsumed))).subscribe({
                         next: value => {
                           concat(assign.reverse().map((x: any) => this.auth.planUserTask(findUser!.id, x.task, latestConsumed, x.hours, 0).subscribe())).subscribe();
@@ -883,8 +890,8 @@ export class TaskComponent implements OnInit {
       });
     });
   }
-  commitIssueEdit() {
-    if (this.edit == 'plan_hours'){
+  commitIssueEdit(event: MouseEvent) {
+    if (this.edit == 'plan_hours' && !event.ctrlKey){
       if (this.issue.plan_hours_locked == 1){
         this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});
         this.cancelIssueEdit();

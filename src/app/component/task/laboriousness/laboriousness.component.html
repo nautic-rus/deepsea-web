@@ -22,7 +22,7 @@
     </span>
   </div>
   <div class="mt-5">
-    Количество часов осталось списать сегодня: {{hoursLeft}}
+    Свободных часов на сегодня: {{hoursLeft}}
   </div>
 <!--  <div class="">-->
 <!--    Количество часов задачи по плану на сегодня: {{hoursLeftByTaskToday}}-->
@@ -30,15 +30,16 @@
 <!--  <div class="">-->
 <!--    Количество несписанных из плана часов на задачу: {{hoursLeftByTask}}-->
 <!--  </div>-->
-  <div class="mt-5">
-    Согласно плану вы должны сегодня списать часы на:
-    <div *ngFor="let plan of planTasks">
-      <div class="df" (click)="openTask(plan.taskId)">
-        <div>{{plan.name}}</div>
-        <div class="ml-3">(план: {{plan.planned}}/</div>
-        <div class="ml-3">исп: {{plan.consumed}})</div>
-      </div>
-    </div>
+  <div class="mt-5" *ngIf="notPlannedToday()">
+    Текущей задачи нет в плане на сегодня!
+<!--    Согласно плану вы должны сегодня списать часы на:-->
+<!--    <div *ngFor="let plan of planTasks">-->
+<!--      <div class="df" (click)="openTask(plan.taskId)">-->
+<!--        <div>{{plan.name}}</div>-->
+<!--        <div class="ml-3">(план: {{plan.planned}}/</div>-->
+<!--        <div class="ml-3">исп: {{plan.consumed}})</div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </div>
 <div class="form-footer-labor">
