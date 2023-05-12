@@ -845,7 +845,9 @@
 .materials-button{
   color: white;
   height: 35px;
-  width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: auto;
   cursor: pointer;
   border-radius: 6px;
 }

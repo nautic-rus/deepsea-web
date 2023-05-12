@@ -657,13 +657,13 @@ export class TaskComponent implements OnInit {
       data: this.issue
     }).onClose.subscribe(res => {
       if (res == 'success'){
-        this.updated = true;
         this.messageService.add({key:'task', severity:'success', summary:'Set Man Hours', detail:'You have successfully updated issue man hours.'});
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
           this.availableActions = this.getAvailableActions(issue);
         });
       }
+      this.updated = true;
     });
   }
   editorInit(event: any) {
@@ -891,6 +891,7 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit(event: MouseEvent) {
+    this.updated = true;
     if (this.edit == 'plan_hours' && !event.ctrlKey){
       if (this.issue.plan_hours_locked == 1){
         this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});

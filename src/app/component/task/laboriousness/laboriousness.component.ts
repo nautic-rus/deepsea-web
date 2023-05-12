@@ -77,11 +77,12 @@ export class LaboriousnessComponent implements OnInit {
       this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'На хватает свободных часов для списания на сегодня'});
       return;
     }
-    if (this.hoursLeftByTask < this.hoursAmount){
-      this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'На хватает плановых часов задачи для списания'});
-      return;
-    }
+    // if (this.hoursLeftByTask < this.hoursAmount){
+    //   this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'На хватает плановых часов задачи для списания'});
+    //   return;
+    // }
     let consume = _.sortBy(this.availableToday, x => x.id).slice(0, this.hoursAmount);
+    console.log(consume);
     this.auth.consumePlanHours(consume, this.auth.getUser().id, this.issue.id, this.comment).subscribe(res => {
       this.close();
     });

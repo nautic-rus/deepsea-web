@@ -177,9 +177,9 @@ export class WorkHoursComponent implements OnInit {
         this.auth.getConsumedPlanHours(0).subscribe(consumed => {
           this.consumed = consumed;
           this.consumedIds = this.consumed.map(x => x.hour_id);
-          this.plannedHours.forEach(pH => {
-            pH.hours -= this.consumed.filter(x => x.task_id == pH.taskId).length;
-          })
+          // this.plannedHours.forEach(pH => {
+          //   pH.hours -= this.consumed.filter(x => x.task_id == pH.taskId).length;
+          // })
           this.fillIssues();
           this.fillDays();
         });
@@ -201,6 +201,8 @@ export class WorkHoursComponent implements OnInit {
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
         this.issuesSrc.forEach(x => this.dragValues[x.id] = (x.plan_hours - this.getPlanned(x)));
+        console.log(this.issuesSrc.find(x => x.id == 8749)!.plan_hours);
+        console.log(this.plannedHours.find(x => x.taskId == 8749));
         this.filterIssues();
       });
     });
@@ -496,12 +498,22 @@ export class WorkHoursComponent implements OnInit {
     localStorage.setItem('status', this.status);
     this.filterIssues();
   }
+  showAssignedChanged(){
+    localStorage.setItem('showAssigned', this.showAssigned ? '1' : '0');
+    this.filterIssues();
+  }
+  showWithoutPlanChanged(){
+    localStorage.setItem('showWithoutPlan', this.showWithoutPlan ? '1' : '0');
+    this.filterIssues();
+  }
   filterIssues(){
     this.project = localStorage.getItem('project') != null ? localStorage.getItem('project')! : this.project;
     this.taskDepartment = localStorage.getItem('taskDepartment') != null ? localStorage.getItem('taskDepartment')! : this.taskDepartment;
     this.stage = localStorage.getItem('stage') != null ? localStorage.getItem('stage')! : this.stage;
     this.taskType = localStorage.getItem('taskType') != null ? localStorage.getItem('taskType')! : this.taskType;
     this.status = localStorage.getItem('status') != null ? localStorage.getItem('status')! : this.status;
+    this.showWithoutPlan = localStorage.getItem('showWithoutPlan') != null ? (+localStorage.getItem('showWithoutPlan')! == 1) : this.showWithoutPlan;
+    this.showAssigned = localStorage.getItem('showAssigned') != null ? (+localStorage.getItem('showAssigned')! == 1) : this.showAssigned;
 
     this.issues = [...this.issuesSrc];
     this.issues = this.issues.filter(x => !x.closing_status.includes(x.status));
@@ -511,7 +523,8 @@ export class WorkHoursComponent implements OnInit {
     this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
     this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.status, false) || this.status == '' || this.status == '-' || this.status == null);
     this.issues = this.issues.filter(x => x.plan_hours > 0 || this.showWithoutPlan);
-    this.issues = this.issues.filter(x => (this.getPlanned(x) != x.plan_hours || x.plan_hours == 0) || this.showAssigned);
+    //this.issues = this.issues.filter(x => (this.getPlanned(x) != x.plan_hours || x.plan_hours == 0) || this.showAssigned);
+    this.issues = this.issues.filter(x => (this.dragValues[x.id] != 0 || x.plan_hours == 0) || this.showAssigned);
     this.issues = _.sortBy(this.issues, x => x.doc_number);
     if (this.searchValue.trim() != ''){
       this.issues = this.issues.filter(x => (x.name + x.doc_number).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
@@ -633,6 +646,9 @@ export class WorkHoursComponent implements OnInit {
 
   }
 
+  getConsumed(issue: Issue) {
+    return this.consumed.filter(x => x.task_id == issue.id).length;
+  }
   getPlanned(issue: Issue) {
     let planned = this.plannedHours.find(x => x.taskId == issue.id);
     return planned != null ? planned.hours : 0;

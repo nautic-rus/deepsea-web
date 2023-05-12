@@ -13,6 +13,7 @@ import {any} from "underscore";
 import {Rights} from "../../../domain/interfaces/rights";
 import {RightService} from "../right/right.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-user',
@@ -30,9 +31,9 @@ export class UserComponent implements OnInit {
   rights: Rights[] = [];
   department: string = "";
   birthday: Date;
+  loading = false;
 
-
-  constructor(public conf: DynamicDialogConfig, public auth: AuthManagerService, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
+  constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public auth: AuthManagerService, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -98,43 +99,53 @@ export class UserComponent implements OnInit {
   }
 
   deleteUser() {
+    this.loading = true;
     this.userService.deleteUser(this.user.id).subscribe({
       next: res => {
+        this.loading = false;
         console.log(res);
         this.ref.close(res);
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление пользователя'), detail: this.lang.tr('Пользователь удалён')});
       },
       error: err => {
+        this.loading = false;
         console.log(err);
-        this.ref.close(err);
+        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление пользователя'), detail: this.lang.tr('Не удалось удалить пользователя')});
       }
     });
   }
 
   sendLogPass() {
+    this.loading = true;
     this.userService.sendLogPass(this.user.id).subscribe({
       next: res => {
+        this.loading = false;
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Данные для входа'), detail: this.lang.tr('Данные для входа доставлены')});
         console.log(res);
-        this.ref.close(res);
       },
       error: err => {
+        this.loading = false;
+        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Данные для входа'), detail: this.lang.tr('Не удалось доставить данные для входа')});
         console.log(err);
-        this.ref.close(err);
       }
     });
   }
 
   saveUser() {
+    this.loading = true;
     this.user.department = this.department;
     console.log(this.user)
     this.user.id_department = this.getDepartmentId(this.department);
     this.userService.saveUser(this.user, this.id).subscribe({
       next: res => {
+        this.loading = false;
         console.log(res);
-        this.ref.close(res);
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Сохранение пользователя'), detail: this.lang.tr('Данные пользователя сохранены')});
       },
       error: err => {
+        this.loading = false;
         console.log(err);
-        this.ref.close(err);
+        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Сохранение пользователя'), detail: this.lang.tr('Не удалось сохранить данные пользователя')});
       }
     });
   }

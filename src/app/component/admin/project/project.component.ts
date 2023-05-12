@@ -6,6 +6,7 @@ import {Projects} from "../../../domain/interfaces/project";
 import {Users} from "../../../domain/interfaces/users";
 import _, {groupBy} from "underscore";
 import {UserService} from "../user/user.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-project',
@@ -19,8 +20,9 @@ export class ProjectComponent implements OnInit {
   selectedUsers: number[] = [];
   colsUsers: any[] = [];
   scrollHeight: string = '600px';
+  loading = false;
 
-  constructor(public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
+  constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
 
   ngOnInit(): void {
     console.log(this.conf.data)
@@ -50,6 +52,7 @@ export class ProjectComponent implements OnInit {
   }
 
   deleteProject() {
+    this.loading = true;
     this.projectService.deleteProject(this.project.id).subscribe({
       next: res => {
         console.log(res);
@@ -61,16 +64,20 @@ export class ProjectComponent implements OnInit {
             console.log(err);
           }
         })
+        this.loading = false;
         this.ref.close(res);
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Проект удалён')});
       },
       error: err => {
         console.log(err);
-        this.ref.close(err);
+        this.loading = false;
+        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Не удалось удалить проект')});
       }
     });
   }
 
   saveProject() {
+    this.loading = true;
     this.projectService.saveProject(this.project, this.id, this.selectedUsers).subscribe({
       next: res => {
         console.log(res);
@@ -82,11 +89,13 @@ export class ProjectComponent implements OnInit {
             console.log(err);
           }
         })
-        this.ref.close(res);
+        this.loading = false;
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Сохранение проекта'), detail: this.lang.tr('Проект сохранён')});
       },
       error: err => {
         console.log(err);
-        this.ref.close(err);
+        this.loading = false;
+        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Сохранение проекта'), detail: this.lang.tr('Не удалось сохранить проект')});
       }
     });
 

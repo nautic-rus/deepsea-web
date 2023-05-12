@@ -491,12 +491,18 @@
         </div>
         <div class="w-75 right-content-card mt-20">
           <div class="df tabs-header">
+            <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = 'Info'"
+                 [class.selectedTab]="equipmentHeadTab ==  'Info'">{{l.tr('Информация')}}</div>
             <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = 'Cables'"
                  [class.selectedTab]="equipmentHeadTab ==  'Cables'">{{l.tr('Кабели')}}</div>
             <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = '3D'"
                  [class.selectedTab]="equipmentHeadTab ==  '3D'">{{l.tr('3D')}}</div>
           </div>
-
+          <div [hidden]="equipmentHeadTab != 'Info'" class="card-tabs">
+            <div *ngIf="selectedEq == null">
+              Please select the equipment
+            </div>
+          </div>
           <div [hidden]="equipmentHeadTab != 'Cables'" class="card-tabs">
             <div *ngIf="selectedEq == null">
               Please select the equipment
