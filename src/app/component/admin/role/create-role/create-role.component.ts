@@ -17,6 +17,7 @@ import {MessageService} from "primeng/api";
 export class CreateRoleComponent implements OnInit {
   rights: Rights[] = [];
   selectedRights: string[] = [];
+  selectedPages: string[] = [];
   name: string = "";
   description: string = "";
   loading = false;
@@ -41,7 +42,7 @@ export class CreateRoleComponent implements OnInit {
 
   createRole() {
     this.loading = true;
-    let role: Roles = { name: this.name, description: this.description, rights: this.selectedRights};
+    let role: Roles = { name: this.name, description: this.description, rights: this.selectedRights, pages: this.selectedPages};
     this.roleService.startRole(role).subscribe({
       next: res => {
         this.loading = false;
