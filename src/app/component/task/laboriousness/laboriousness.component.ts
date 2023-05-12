@@ -86,7 +86,7 @@ export class LaboriousnessComponent implements OnInit {
     this.auth.consumePlanHours(consume, this.auth.getUser().id, this.issue.id, this.comment).subscribe(res => {
       this.close();
     });
-    //this.commitAux();
+    this.commitAux();
   }
   commitAux(){
     let issue = this.conf.data as Issue;

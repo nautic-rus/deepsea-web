@@ -891,6 +891,7 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit(event: MouseEvent) {
+    this.updated = true;
     if (this.edit == 'plan_hours' && !event.ctrlKey){
       if (this.issue.plan_hours_locked == 1){
         this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is locked'});
