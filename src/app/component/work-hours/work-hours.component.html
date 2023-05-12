@@ -47,14 +47,14 @@
             <div class="mr-10">
               <label class="container margin-bottom-none">
                 <span class="text-checkbox">{{t.tr('Показать незапланированные')}}</span>
-                <input (change)="filterIssues()" type="checkbox" [(ngModel)]="showWithoutPlan">
+                <input (change)="showWithoutPlanChanged()" type="checkbox" [(ngModel)]="showWithoutPlan">
                 <span class="checkmark"></span>
               </label>
             </div>
             <div>
               <label class="container margin-bottom-none">
                 <span class="text-checkbox">{{t.tr('Показать назначенные')}}</span>
-                <input (change)="filterIssues()" type="checkbox" [(ngModel)]="showAssigned">
+                <input (change)="showAssignedChanged()" type="checkbox" [(ngModel)]="showAssigned">
                 <span class="checkmark"></span>
               </label>
             </div>
@@ -205,7 +205,8 @@
                     </div>
                     <div class="mx-10 cy text-black-mini">/</div>
                     <div class="cxy width-50">
-                      <div class="text-black-mini">{{getPlanned(issue)}}</div>
+<!--                      <div class="text-black-mini">{{getPlanned(issue)}}</div>-->
+                      <div class="text-black-mini">{{getConsumed(issue)}}</div>
                     </div>
                   </div>
                 </div>
