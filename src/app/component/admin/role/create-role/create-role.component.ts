@@ -7,6 +7,7 @@ import {PageService} from "../page.service";
 import {Pages} from "../../../../domain/interfaces/pages";
 import {Rights} from "../../../../domain/interfaces/rights";
 import {RightService} from "../../right/right.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-create-role',
@@ -18,8 +19,9 @@ export class CreateRoleComponent implements OnInit {
   selectedRights: string[] = [];
   name: string = "";
   description: string = "";
+  loading = false;
 
-  constructor( public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
+  constructor(private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
     this.fillRights();
@@ -38,16 +40,23 @@ export class CreateRoleComponent implements OnInit {
   }
 
   createRole() {
+    this.loading = true;
     let role: Roles = { name: this.name, description: this.description, rights: this.selectedRights};
     this.roleService.startRole(role).subscribe({
       next: res => {
+        this.loading = false;
         console.log(res);
-        this.ref.close(res);
+        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание роли'), detail: this.lang.tr('Роль создана')});
       },
       error: err => {
+        this.loading = false;
         console.log(err);
-        this.ref.close(err);
+        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Создание роли'), detail: this.lang.tr('Не удалось создать роль')});
       }
     });
+  }
+
+  isRoleDisabled() {
+    return this.name == '' || this.description == '';
   }
 }
