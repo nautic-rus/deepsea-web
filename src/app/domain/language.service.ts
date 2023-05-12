@@ -464,7 +464,7 @@ export class LanguageService {
           case 'Исполнено - ': return 'Resolved - ';
           case 'Закрыто - ': return 'Closed - ';
           case 'Отклонено - ': return 'Rejected - ';
-          case '': return '';
+          case 'Информация': return 'Info';
           case '': return '';
           default: return input;
         }

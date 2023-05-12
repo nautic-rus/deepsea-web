@@ -42,7 +42,7 @@ export class CablesComponent implements OnInit {
   colsTrays: any[] = [];
   noResultCables = false;
   selectedHeadTab: string = 'Files';
-  equipmentHeadTab: string = 'Cables'
+  equipmentHeadTab: string = 'Info'
   selectedEq: Equipment;
   selectedView: string = 'tiles';
   tooltips: string[] = [];
