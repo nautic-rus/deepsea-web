@@ -206,6 +206,7 @@ export class ElectricEspComponent implements OnInit {
   clickOnCables() {
     window.open(`/cables?issueId=${this.issueId}&foranProject=${this.project}&docNumber=${this.docNumber}&department=${this.department}`, '_blank');
   }
+
   getFilters(values: any[], field: string): any[] {
     let res: any[] = [];
     let uniq = _.uniq(values, x => x[field]);

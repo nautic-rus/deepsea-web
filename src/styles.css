@@ -967,6 +967,9 @@ body,p{
 .pl-2{
   padding-left: 2px;
 }
+.pl-1px{
+  padding-left: 1px;
+}
 .pl-2px{
   padding-left: 2px;
 }
