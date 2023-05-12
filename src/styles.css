@@ -1144,6 +1144,9 @@ cdk-virtual-scroll-viewport{
 .space-around{
   justify-content: space-around;
 }
+.max-height-450{
+  max-height: 450px!important;
+}
 
 
 /* Our own checkbox design */
