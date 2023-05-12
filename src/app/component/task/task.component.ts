@@ -657,13 +657,13 @@ export class TaskComponent implements OnInit {
       data: this.issue
     }).onClose.subscribe(res => {
       if (res == 'success'){
-        this.updated = true;
         this.messageService.add({key:'task', severity:'success', summary:'Set Man Hours', detail:'You have successfully updated issue man hours.'});
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
           this.availableActions = this.getAvailableActions(issue);
         });
       }
+      this.updated = true;
     });
   }
   editorInit(event: any) {
