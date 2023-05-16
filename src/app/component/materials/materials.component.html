@@ -55,7 +55,7 @@
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
-        <div class="w-15">
+        <div class="w-17">
           <div class="menu-card" (contextmenu)="contextMenuOut($event, nodeMenu)">
             <p-tree class="tree" *ngIf="project != ''" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
@@ -79,7 +79,7 @@
 <!--            </p-tree>-->
           </div>
         </div>
-        <div class="w-85">
+        <div class="w-83">
           <div *ngIf="project == ''">
             <div class="cxy loading">
               <div class="cxy flex-column">
