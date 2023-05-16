@@ -700,6 +700,7 @@ export class TaskComponent implements OnInit {
   }
 
   changeStatus(value: string) {
+    let assignedTo = this.issue.assigned_to;
     this.issueManager.getIssueDetails(this.issue.id).then(issue => {
       if (this.issue.status != issue.status){
         this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'This task has been already changed before you have made some changes. Please refresh this page and try again.', life: 8000});
@@ -814,7 +815,7 @@ export class TaskComponent implements OnInit {
 
         if (value == 'Check' || value == 'Paused'){
           this.updated = true;
-          let findUser = this.auth.users.find(x => x.login == this.issue.assigned_to);
+          let findUser = this.auth.users.find(x => x.login == assignedTo);
           if (findUser != null){
             this.auth.getConsumedPlanHours(findUser.id).subscribe(consumed => {
               this.auth.getUsersPlanHours(findUser!.id, 0, 1).subscribe(userPlanHours => {

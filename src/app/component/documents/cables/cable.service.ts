@@ -16,4 +16,8 @@ export class CableService {
     }
     return this.http.get<any>(props.httpSpec + '/cablesBySystems', { params: {project, docNumber}});
   }
+
+  getEquipmentBySystems(project: string, docNumber: string) {
+    return this.http.get<any>(props.httpSpec + '/equipmentsBySystems', { params: {project, docNumber}});
+  }
 }

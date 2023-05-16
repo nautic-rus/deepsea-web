@@ -1,26 +1,29 @@
 
 
 export class EquipmentConnection {
-  oid: string = '';
-  label: string = '';
-  type: number = 0;
-  userid: string = '';
-  node_userid: string = '';
-  zone_seqid: number = 0;
-  zone_name: string = '';
-  zone_descr: string = '';
-  system_seqid: number = 0;
-  system_name: string = '';
-  system_descr: string = '';
-  abbrev: string = '';
-  xcog: number = 0.0;
-  ycog: number = 0.0;
-  zcog: number = 0.0;
-  px: number = 0.0;
-  py: number = 0.0;
-  pz: number = 0.0;
-  weight: number = 0.0;
-  stock_code: string = '';
-  class_name: string = '';
-  surface: string = '';
+  OID: string = '';
+  LABEL: string = '';
+  TYPE: number = 0;
+  USERID: string = '';
+  NODE_USERID: string = '';
+  ZONE_SEQID: number = 0;
+  ZONE_NAME: string = '';
+  ZONE_DESCR: string = '';
+  SYSTEM_OID: number = 0;
+  SYSTEM_NAME: string = '';
+  SYSTEM_DESCR: string = '';
+  ABBREV: string = '';
+  XCOG: number = 0.0;
+  YCOG: number = 0.0;
+  ZCOG: number = 0.0;
+  PX: number = 0.0;
+  PY: number = 0.0;
+  PZ: number = 0.0;
+  WEIGHT: number = 0.0;
+  STOCK_CODE: string = '';
+  CLASS_NAME: string = '';
+  SURFACE: string = '';
+  SUPPORTS: any[] = [];
+  workShopMaterial: any;
+
 }
