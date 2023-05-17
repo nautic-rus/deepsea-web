@@ -204,7 +204,7 @@ export class HullEspComponent implements OnInit {
       this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
       this.nc = (params.nc != null && +params.nc == 1);
       if (this.project == 'N004'){
-        this.nc = true;
+        this.nc = false;
       }
 
       this.issueManager.getIssueProjects().then(projects => {
