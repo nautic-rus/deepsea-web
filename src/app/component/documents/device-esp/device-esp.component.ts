@@ -172,6 +172,12 @@ export class DeviceEspComponent implements OnInit {
       this.issueId = params.issueId != null ? params.issueId : 0;
       this.dxfDoc = params.dxf != null ? params.dxf : '';
 
+      let r = new RegExp('200101-100-10[0-8]');
+      if (r.test(this.docNumber)){
+        this.project = 'N002';
+      }
+
+
       if (this.issue.id == 0){
         this.fillRevisions();
       }
