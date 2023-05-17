@@ -105,7 +105,7 @@ export class AddGroupDeviceComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
-    this.s.addGroupToSystem(this.docNumber, this.selectedMaterial.m.code + (this.useZone ? this.selectedMaterial.zone : ''), this.label).then(res => {
+    this.s.addGroupToSystem(this.docNumber, this.selectedMaterial.m.code + '|' + (this.useZone ? this.selectedMaterial.zone : ''), this.label).then(res => {
       this.ref.close('success');
     });
   }
