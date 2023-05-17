@@ -203,7 +203,9 @@ export class HullEspComponent implements OnInit {
       this.search = params.search != null ? params.search : '';
       this.searchNesting = params.searchNesting != null ? params.searchNesting : '';
       this.nc = (params.nc != null && +params.nc == 1);
-      console.log(this.docNumber);
+      if (this.project == 'N004'){
+        this.nc = false;
+      }
 
       this.issueManager.getIssueProjects().then(projects => {
         let findProject = projects.find(x => x.name == this.project);
