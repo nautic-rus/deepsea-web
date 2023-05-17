@@ -19,6 +19,7 @@ import {UploadRevisionFilesComponent} from "../hull-esp/upload-revision-files/up
 import JSZip from "jszip";
 import {saveAs} from "file-saver";
 import {forkJoin} from "rxjs";
+import {EquipmentConnection} from "../../../domain/interfaces/equipConnect";
 
 @Component({
   selector: 'app-cables',
@@ -37,12 +38,14 @@ export class CablesComponent implements OnInit {
   equipmentCables: Cable[] = [];
   equipments: Equipment[] = [];
   equipmentsSource: Equipment[] = [];
+  eqConnection: EquipmentConnection[] = [];
+  eqCpSource: EquipmentConnection[] = [];
   issueRevisions: string[] = [];
   miscIssues: Issue[] = [];
   colsTrays: any[] = [];
   noResultCables = false;
   selectedHeadTab: string = 'Files';
-  equipmentHeadTab: string = 'Info'
+  equipmentHeadTab: string = 'Cables'
   selectedEq: Equipment;
   selectedView: string = 'tiles';
   tooltips: string[] = [];
@@ -114,6 +117,7 @@ export class CablesComponent implements OnInit {
       });
 
       this.fillCables();
+      this.fillEquipment();
     });
   }
 
@@ -124,6 +128,7 @@ export class CablesComponent implements OnInit {
         if (cables.length > 0) {
           let re = "/\\(([^)]+)\\)/";
           this.cables = _.sortBy(cables, x => x.id);
+          console.log(cables)
           this.cablesSource = _.sortBy(cables, x => x.id);
           // this.equipments = _.map(_.groupBy(this.cables, x => (x.from_eq, x.to_eq)), x => Object({
           //   from_eq: x[0].from_eq,
@@ -166,6 +171,19 @@ export class CablesComponent implements OnInit {
       });
   }
 
+  fillEquipment(): void {
+    this.cableService.getEquipmentBySystems(this.project, this.docNumber)
+      .subscribe(equipments => {
+        this.eqConnection = _.sortBy(equipments, x => this.addLeftZeros(x.LABEL, 5))
+
+        this.eqConnection.forEach((eq: any) => {
+          eq.LABEL = this.addLeftZeros(eq.LABEL, 10);
+          eq.workShopMaterialName = eq.workShopMaterial.name;
+        });
+        console.log(this.eqConnection)
+      })
+  }
+
   searchChanged() {
     if (this.selectedTab == 'Cables') {
       if (this.searchPlates.trim() == '') {
@@ -185,6 +203,14 @@ export class CablesComponent implements OnInit {
         });
       }
     }
+  }
+
+  addLeftZeros(input: string, length: number){
+    let res = input;
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
   }
 
   showTooltip(index: string) {
@@ -251,6 +277,7 @@ export class CablesComponent implements OnInit {
   onSelectEquipment(eq: Equipment) {
     this.selectedEq = eq;
     this.setEquipmentCables()
+    this.setEquipmentInfo()
   }
 
   scrollToId(id: string) {
@@ -266,6 +293,14 @@ export class CablesComponent implements OnInit {
         cable.to_eq_id == this.selectedEq.id)
       || (cable.from_eq == this.selectedEq.name && cable.from_eq_id == this.selectedEq.id)
     )
+  }
+
+  setEquipmentInfo() {
+    this.eqCpSource = this.eqConnection.filter(eq =>
+      (eq.OID == this.selectedEq.id)
+    )
+    console.log(this.selectedEq)
+    console.log(this.eqCpSource)
   }
 
   // right panel

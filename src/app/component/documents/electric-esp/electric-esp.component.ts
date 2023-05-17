@@ -43,6 +43,7 @@ export class ElectricEspComponent implements OnInit {
   issueId = 0;
   issue: Issue = new Issue();
   selectedDevice = Object();
+  miscIssues: Issue[] = [];
   cmapView: Window | null = null;
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
@@ -377,6 +378,15 @@ export class ElectricEspComponent implements OnInit {
     return this.device.isDesktop() && window.innerWidth > 1296;
   }
   fillRevisions(){
+    this.miscIssues.splice(0, this.miscIssues.length);
+    this.issueManager.getIssues('op').then(issues => {
+      issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+      this.miscIssues.forEach(x => {
+        issues.filter(y => y.parent_id == x.id).forEach(ch => {
+          this.miscIssues.push(ch);
+        })
+      });
+    });
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
@@ -781,4 +791,8 @@ export class ElectricEspComponent implements OnInit {
   getZones(zone: string) {
     return zone.split(',');
   }
+  openIssue(id: number) {
+    window.open('/?taskId=' + id, '_blank');
+  }
+
 }

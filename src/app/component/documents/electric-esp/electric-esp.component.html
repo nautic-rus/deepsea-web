@@ -49,6 +49,7 @@
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity
             <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
           </div>
+          <div *ngIf="auth.hasPerms('visible_doc_task')" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
         </div>
@@ -396,6 +397,31 @@
           </div>
 
         </div>
+        <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
+          <div class="subtask-grid-misc py-10">
+            <div class="head-subtask">{{l.tr('Тип')}}</div>
+            <div class="head-subtask">{{l.tr('Название')}}</div>
+            <div class="head-subtask">{{l.tr('Отв.')}}</div>
+            <div class="head-subtask">{{l.tr('Исп.')}}</div>
+            <div class="head-subtask">{{l.tr('Статус')}}</div>
+          </div>
+          <div class="">
+            <div class="subtask" *ngFor="let childIssue of miscIssues">
+              <div class="subtask-grid-misc" (click)="openIssue(childIssue.id)" >
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
+                <div class="py-10 px-10 subtask-text">
+                  <span>{{childIssue.doc_number + ' '}}</span>
+                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                </div>
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
+                <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
+                <div class="dfc px-10 py-10 subtask-text" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <div *ngIf="selectedHeadTab == 'Info'" class="card-tabs">
           <!--          <div class="cxy loading-text" *ngIf="selectedPipe.spool == null">-->
           <!--            Select pipe from left list to view details-->

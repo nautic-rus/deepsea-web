@@ -185,7 +185,7 @@ export class MaterialsComponent implements OnInit {
       res.push({
         data: n.data,
         children: this.getNodes(rootNodes, materials, n.data),
-        label: n.label + ' (' + n.data.substr(parent.length) + ')',
+        label: '(' + n.data.substr(parent.length) + ') ' + n.label,
         count: materials.filter(x => x.code.startsWith(n.data)).length
       });
     });

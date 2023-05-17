@@ -502,6 +502,16 @@
             <div *ngIf="selectedEq == null">
               Please select the equipment
             </div>
+            <div *ngIf="eqCpSource.length == 0 && selectedEq != null">
+              No result INFO for this equipment
+            </div>
+            <div *ngIf="eqCpSource.length != 0">
+              <div class="top-row-equip">
+                <div class="text-center-y">
+                  <div class="title-medium-bold">{{eqCpSource[0].workShopMaterial.name}} {{eqCpSource[0].workShopMaterial.description}}</div>
+                </div>
+              </div>
+            </div>
           </div>
           <div [hidden]="equipmentHeadTab != 'Cables'" class="card-tabs">
             <div *ngIf="selectedEq == null">
@@ -509,148 +519,153 @@
             </div>
             <div *ngIf="selectedEq != null">
               <div class="tile">
-                <div class="w-100 " *ngIf="equipmentCables.length != 0">
-                  <p-virtualScroller [value]="equipmentCables" scrollHeight="calc(100vh - 277px)" [itemSize]="165">
-                    <ng-template pTemplate="cable" let-cable let-i="index">
-                      <div class="card-tile-t w-100"
-                           [class.hidden-card]="cable == null">
-                        <div class="top-row df">
-                          <div [ngSwitch]="cable.f_rout" class="cxy mr-1">
-                            <div *ngSwitchCase="0" class="point red-point" pTooltip="{{l.tr('Не проложен')}}"
-                                 tooltipPosition="top"></div>
-                            <div *ngSwitchCase="1" class="point green-point" pTooltip="{{l.tr('Проложен')}}"
-                                 tooltipPosition="top"></div>
-                            <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{l.tr('Проложен частично')}}"
-                                 tooltipPosition="top"></div>
-                          </div>
-                          <div class="cxy mr-1" *ngIf="cable.bunch != ''" pTooltip="{{l.tr('Пучковая прокладка')}}"
-                               tooltipPosition="top">
-                            <img src="assets/icons/hub.png" height="18">
-                          </div>
-                          <div class="cxy mr-2">
-                            <div class="title-medium-bold">{{cable.code}}</div>
-                          </div>
-                          <div class="cxy mr-2">
-                            <div class=title-name>{{cable.description}}</div>
-                          </div>
-                          <div class="df cxy mr-1">
-                            <div class="text-center-y attribute mr-10 title-name">Sec:</div>
-                            <div class="title-name">{{cable.nom_section}}</div>
-                          </div>
-                          <div class="df cxy mr-1">
-                            <div class="text-center-y attribute mr-10 title-name">D:</div>
-                            <div class="title-name">{{cable.diameter}}</div>
-                          </div>
-                          <div class="df cxy mr-1">
-                            <div class="text-center-y attribute mr-10 title-name">Seg:</div>
-                            <div class="title-name">{{cable.seg_code}}</div>
-                          </div>
-                          <div class="df cxy mr-1">
-                            <div class="text-center-y attribute mr-10 title-name">L:</div>
-                            <div class="title-name">{{round(cable.length) + 'm'}}</div>
-                            <div
-                              class="text-center-y attribute mr-10 title-name" pTooltip="{{l.tr('Поправка длины')}}"
-                              tooltipPosition="right">
-                              {{' (' + cable.ext_len_1 + '-' + cable.ext_len_2 + ')'}}</div>
-                          </div>
-                          <div class="p-ml-auto text-center-y">
-                            <div class="df">
-                              <div class="trm">{{cable.stock_code}}</div>
-                              <div (click)="copyTrmCode(cable.stock_code, 'c' + i)" class="trm-copy cursor-pointer cxy">
-                                <img src="assets/icons/trm.svg" height="16">
-                                <div class="copy-tooltip" [hidden]="!showTooltip('c' + i)">Copied!</div>
-                              </div>
+                <div class="w-100" *ngIf="equipmentCables.length != 0">
+                  <div *ngFor="let cable of equipmentCables; let i = index"
+                       [class.hidden-card]="cable == null">
+                    <div class="card-tile-t w-100"
+                         [class.hidden-card]="cable == null">
+                      <div class="top-row df">
+                        <div [ngSwitch]="cable.f_rout" class="cxy mr-1">
+                          <div *ngSwitchCase="0" class="point red-point" pTooltip="{{l.tr('Не проложен')}}"
+                               tooltipPosition="top"></div>
+                          <div *ngSwitchCase="1" class="point green-point" pTooltip="{{l.tr('Проложен')}}"
+                               tooltipPosition="top"></div>
+                          <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{l.tr('Проложен частично')}}"
+                               tooltipPosition="top"></div>
+                        </div>
+                        <div class="cxy mr-1" *ngIf="cable.bunch != ''" pTooltip="{{l.tr('Пучковая прокладка')}}"
+                             tooltipPosition="top">
+                          <img src="assets/icons/hub.png" height="18">
+                        </div>
+                        <div class="cxy mr-2">
+                          <div class="title-medium-bold">{{cable.code}}</div>
+                        </div>
+                        <div class="cxy mr-2">
+                          <div class=title-name>{{cable.description}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">Sec:</div>
+                          <div class="title-name">{{cable.nom_section}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">D:</div>
+                          <div class="title-name">{{cable.diameter}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">Seg:</div>
+                          <div class="title-name">{{cable.seg_code}}</div>
+                        </div>
+                        <div class="df cxy mr-1">
+                          <div class="text-center-y attribute mr-10 title-name">L:</div>
+                          <div class="title-name">{{round(cable.length) + 'm'}}</div>
+                          <div
+                            class="text-center-y attribute mr-10 title-name" pTooltip="{{l.tr('Поправка длины')}}"
+                            tooltipPosition="right">
+                            {{' (' + cable.ext_len_1 + '-' + cable.ext_len_2 + ')'}}</div>
+                        </div>
+                        <div class="p-ml-auto text-center-y">
+                          <div class="df">
+                            <div class="trm">{{cable.stock_code}}</div>
+                            <div (click)="copyTrmCode(cable.stock_code, 'c' + i)" class="trm-copy cursor-pointer cxy">
+                              <img src="assets/icons/trm.svg" height="16">
+                              <div class="copy-tooltip" [hidden]="!showTooltip('c' + i)">Copied!</div>
                             </div>
                           </div>
                         </div>
-                        <div class="top-row">
-                          <div class="df space-between" *ngIf="cable.cab_route_area.length != 0">
-                            <div *ngFor="let node of cable.cab_route_area; let e = index"
-                                 [class.hidden-card]="node == null">
-                              <!--                            <div>{{node}}</div>-->
-                              <div class="node gray-point" pTooltip="{{node}}"
-                                   tooltipPosition="top"></div>
+                      </div>
+                      <div class="route mb-5">
+                        <!--                        <div  *ngIf="cable.cab_route_area.length != 0">-->
+                        <!--                          {{cable.cab_route_area.join('<->')}}-->
+                        <!--                        </div>-->
+                        <!--                        <div class="df space-between" *ngIf="cable.cab_route_area.length != 0">-->
+                        <!--                          <div *ngFor="let node of cable.cab_route_area; let e = index"-->
+                        <!--                               [class.hidden-card]="node == null">-->
+                        <!--                            <div class="node gray-point" pTooltip="{{node}}"-->
+                        <!--                                 tooltipPosition="top"></div>-->
+                        <!--                          </div>-->
+                        <!--                        </div>-->
+                        <div class="df nodeRoute" *ngIf="cable.cab_route_area.length != 0">
+                          {{cable.cab_route_area.join('<->')}}
+                        </div>
+                      </div>
+                      <div class="bottom-grid mr-1">
 
-                            </div>
-                          </div>
-                        </div>
-                        <div class="bottom-grid">
-                          <div class="hover-row cursor-pointer" (click)="onClickFromEquipment(cable)">
+                        <div class="hover-row cursor-pointer" (click)="onClickFromEquipment(cable)">
+                          <div class="mb-5 equip-style">
                             <div class="df flex-end">
-                              <div class="attribute mr-10 text-table-col cx"
+                              <div class="attribute text-table-col flex-end mr-10"
                                    *ngIf="cable.from_eq_desc != ''">{{cable.from_eq_desc}}</div>
-                              <div class="attribute mr-10 text-table-col сч" *ngIf="cable.from_eq_id != ''">
+                              <div class="attribute mr-10 text-table-col" *ngIf="cable.from_eq_id != ''">
                                 ({{cable.from_eq_id}})
                               </div>
                               <div class="title-name flex-end" *ngIf="cable.from_eq != ''">{{cable.from_eq}}</div>
                             </div>
-                            <div class="flex-end">
-                              <div class="attribute mr-10 text-table-col cxy"
-                                   *ngIf="cable.from_zone_desc != ''">{{cable.from_zone_desc}}</div>
-                              <div class="title-name cy" *ngIf="cable.from_zone != ''">{{cable.from_zone}}</div>
-                            </div>
-                            <div *ngIf="cable.from_system != ''">
-                              <div class="flex-end">
-                                <div
-                                  class="title-name"
-                                  pTooltip="{{cable.from_system.split(' ').splice(1).join(' ')}}"
-                                  tooltipPosition="left">
-                                  {{cable.from_system.split(' ')[0].replace('.', '')}}
-                                </div>
-                              </div>
+                          </div>
+                          <div class="mb-5 zone-style df flex-end">
+                            <div class="attribute text-table-col mr-10"
+                                 *ngIf="cable.from_zone_desc != ''">{{cable.from_zone_desc}}</div>
+                            <div class="title-name"
+                                 *ngIf="cable.from_zone != ''">{{cable.from_zone}}</div>
+                          </div>
+                          <div class="flex-end system-style">
+                            <div
+                              class="title-name" *ngIf="cable.from_system != ''"
+                              pTooltip="{{cable.from_system.split(' ').splice(1).join(' ')}}"
+                              tooltipPosition="left">
+                              {{cable.from_system.split(' ')[0].replace('.', '')}}
                             </div>
                           </div>
-                          <div>
-                            <div class="df coordinates-row cxy">
-                              <span class="mm-text flex-end">{{' ' + round(cable.from_x)}}</span>
-                              <div class="coordinates-x cxy mr-5 ml-5">X</div>
-                              <span class="mm-text flex-start">{{' ' + round(cable.to_x)}}</span>
-                            </div>
-                            <div class="df coordinates-row cxy">
-                              <span class="mm-text flex-end">{{' ' + round(cable.from_y)}}</span>
-                              <div class="coordinates-y cxy mr-5 ml-5">Y</div>
-                              <span class="mm-text flex-start">{{' ' + round(cable.to_y)}}</span>
-                            </div>
-                            <div class="df coordinates-row cxy">
-                              <span class="mm-text flex-end">{{' ' + round(cable.from_z)}}</span>
-                              <div class="coordinates-z cxy mr-5 ml-5">Z</div>
-                              <span class="mm-text flex-start">{{' ' + round(cable.to_z)}}</span>
-                            </div>
+                        </div>
+                        <div>
+                          <div class="df coordinates-row cxy mb-1r">
+                            <span class="mm-text flex-end">{{' ' + round(cable.from_x)}}</span>
+                            <div class="coordinates-x cxy mr-5 ml-5">X</div>
+                            <span class="mm-text flex-start">{{' ' + round(cable.to_x)}}</span>
                           </div>
-                          <div class="cursor-pointer hover-row" (click)="onClickToEquipment(cable)">
-                            <div class="df flex-start">
+                          <div class="df coordinates-row cxy mb-1r">
+                            <span class="mm-text flex-end">{{' ' + round(cable.from_y)}}</span>
+                            <div class="coordinates-y cxy mr-5 ml-5">Y</div>
+                            <span class="mm-text flex-start">{{' ' + round(cable.to_y)}}</span>
+                          </div>
+                          <div class="df coordinates-row cxy mb-1r">
+                            <span class="mm-text flex-end">{{' ' + round(cable.from_z)}}</span>
+                            <div class="coordinates-z cxy mr-5 ml-5">Z</div>
+                            <span class="mm-text flex-start">{{' ' + round(cable.to_z)}}</span>
+                          </div>
+                        </div>
+                        <div class="cursor-pointer hover-row" (click)="onClickToEquipment(cable)">
+                          <div class="mb-5 equip-style">
+                            <div class="df">
                               <div class="title-name mr-10" *ngIf="cable.to_eq != ''">{{cable.to_eq}}</div>
-                              <div class="attribute mr-10 text-table-col flex-end" *ngIf="cable.to_eq_id != ''">
+                              <div class="attribute text-table-col mr-10" *ngIf="cable.to_eq_id != ''">
                                 ({{cable.to_eq_id}})
                               </div>
-                              <div class="attribute text-table-col flex-end"
+                              <div class="attribute text-table-col"
                                    *ngIf="cable.to_eq_desc != ''">{{cable.to_eq_desc}}</div>
                             </div>
-                            <div class="df">
-                              <div class="title-name mr-10 cy" *ngIf="cable.to_zone != ''">{{cable.to_zone}}</div>
-                              <div class="attribute text-table-col cxy"
-                                   *ngIf="cable.to_zone_desc != ''">{{cable.to_zone_desc}}</div>
-                            </div>
-                            <div *ngIf="cable.to_system != ''">
-                              <div class="flex-start">
-                                <div
-                                  class="title-name"
-                                  pTooltip="{{cable.to_system.split(' ').splice(1).join(' ')}}"
-                                  tooltipPosition="right">
-                                  {{cable.to_system.split(' ')[0].replace('.', '')}}
-                                </div>
+                          </div>
+                          <div class="mb-5 zone-style df ">
+                            <div class="title-name mr-10" *ngIf="cable.to_zone != ''">{{cable.to_zone}}</div>
+                            <div class="attribute text-table-col "
+                                 *ngIf="cable.to_zone_desc != ''">{{cable.to_zone_desc}}</div>
+                          </div>
+                          <div *ngIf="cable.to_system != ''" class="system-style">
+                            <div class="flex-start">
+                              <div
+                                class="title-name"
+                                pTooltip="{{cable.to_system.split(' ').splice(1).join(' ')}}"
+                                tooltipPosition="right">
+                                {{cable.to_system.split(' ')[0].replace('.', '')}}
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </ng-template>
-                  </p-virtualScroller>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-
-
           </div>
           <div [hidden]="equipmentHeadTab != '3D'" class="card-tabs">
             <div *ngIf="selectedEq == null">

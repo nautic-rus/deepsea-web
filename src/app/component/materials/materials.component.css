@@ -17,10 +17,13 @@
 }
 /deep/.p-tree .p-tree-container .p-treenode .p-treenode-content {
   padding: 3px;
-  font-size: 13px;
+  font-size: 12px;
+}
+/deep/.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  width: 10px;
 }
 /deep/.pi {
-  font-size: 14px;
+  font-size: 12px;
 }
 /deep/.p-tree{
   height: calc(100vh - 237px);
@@ -144,10 +147,10 @@
   justify-content: center;
 }
 .dash-card{
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-bottom: 15px;
-  width: 344px;
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-bottom: 10px;
+  width: 334px;
   height: 180px;
   position: relative;
 }
@@ -161,7 +164,7 @@
 }
 .top-row-doc{
   display: grid;
-  grid-template-columns: 264px 60px;
+  grid-template-columns: 254px 60px;
   height: 40px;
 }
 .two-row{

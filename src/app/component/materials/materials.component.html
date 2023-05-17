@@ -55,7 +55,7 @@
     </div>
     <div class="w-100 df">
       <div class="w-100 df">
-        <div class="w-15">
+        <div class="w-17">
           <div class="menu-card" (contextmenu)="contextMenuOut($event, nodeMenu)">
             <p-tree class="tree" *ngIf="project != ''" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
@@ -79,7 +79,7 @@
 <!--            </p-tree>-->
           </div>
         </div>
-        <div class="w-85">
+        <div class="w-83">
           <div *ngIf="project == ''">
             <div class="cxy loading">
               <div class="cxy flex-column">
@@ -369,26 +369,26 @@
                   <th pSortableColumn="description" class="cxy min-width-150 w-15">{{t.tr('Обозначение')}}
                     <p-sortIcon field="description"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="kvz" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}
-                    <p-sortIcon field="kvz"></p-sortIcon>
+                  <th pSortableColumn="category" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}
+                    <p-sortIcon field="category"></p-sortIcon>
                   </th>
                   <th pSortableColumn="coefficient" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}
                     <p-sortIcon field="coefficient"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес кг')}}
-                    <p-sortIcon field="weight"></p-sortIcon>
+                  <th pSortableColumn="singleWeight" class="cxy min-width-75 w-7">{{t.tr('Вес кг')}}
+                    <p-sortIcon field="singleWeight"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="code" class="cxy min-width-75 w-7">{{t.tr('КЕИ')}}
-                    <p-sortIcon field="code"></p-sortIcon>
+                  <th pSortableColumn="units" class="cxy min-width-75 w-7">{{t.tr('КЕИ')}}
+                    <p-sortIcon field="units"></p-sortIcon>
                   </th>
                   <th pSortableColumn="provider" class="cxy min-width-190 w-9">{{t.tr('Поставщик')}}
                     <p-sortIcon field="provider"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="notes" class="cxy min-width-190 w-9">{{t.tr('Примечания')}}
-                    <p-sortIcon field="notes"></p-sortIcon>
+                  <th pSortableColumn="note" class="cxy min-width-190 w-9">{{t.tr('Примечания')}}
+                    <p-sortIcon field="note"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="trm" class="cxy min-width-190 w-9">{{t.tr('TRM')}}
-                    <p-sortIcon field="trm"></p-sortIcon>
+                  <th pSortableColumn="code" class="cxy min-width-190 w-9">{{t.tr('TRM')}}
+                    <p-sortIcon field="code"></p-sortIcon>
                   </th>
                 </tr>
               </ng-template>
