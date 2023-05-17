@@ -174,7 +174,7 @@ export class DeviceEspComponent implements OnInit {
 
       let r = new RegExp('200101-100-10[0-8]');
       if (r.test(this.docNumber)){
-        this.project = 'N002';
+        this.project = 'NT02';
       }
 
 

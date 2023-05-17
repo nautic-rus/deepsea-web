@@ -175,6 +175,7 @@ import { DoclistComponent } from './component/doclist/doclist.component';
 import { AddMaterialStockComponent } from './component/materials-summary/add-material-stock/add-material-stock.component';
 import { DrawingShowComponent } from './component/materials-summary/drawing-show/drawing-show.component';
 import { DesignEspComponent } from './component/documents/design-esp/design-esp.component';
+import { MasterComponent } from './component/master/master.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -299,7 +300,8 @@ Quill.register('modules/imageResize', ImageResize);
     DoclistComponent,
     AddMaterialStockComponent,
     DrawingShowComponent,
-    DesignEspComponent
+    DesignEspComponent,
+    MasterComponent
   ],
     imports: [
         BrowserModule,

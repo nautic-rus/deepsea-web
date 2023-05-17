@@ -50,6 +50,7 @@ import {CablesComponent} from "./component/documents/cables/cables.component";
 import {MaterialsSummaryComponent} from "./component/materials-summary/materials-summary.component";
 import {DoclistComponent} from "./component/doclist/doclist.component";
 import {DesignEspComponent} from "./component/documents/design-esp/design-esp.component";
+import {MasterComponent} from "./component/master/master.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -102,6 +103,7 @@ const routes: Routes = [
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
   { path: 'doclist', component: DoclistComponent, canActivate: [AuthGuard], data: {animation: 'DoclistComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
+  { path: 'master', component: MasterComponent, data: {animation: 'MasterComponent'} },
   { path: '**', redirectTo: '/' },
 ];
 
