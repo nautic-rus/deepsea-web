@@ -1,21 +1,12 @@
-<div>PRODUCTION PANEL</div>
-<div class="df">
-  <div>DeepSea</div>
-  <div>{{getDeepSeaStatus()}}</div>
-  <div></div>
-</div>
-<div class="df">
-  <div>DeepSeaSpec</div>
-  <div>{{getDeepSeaSpecStatus()}}</div>
-  <div></div>
-</div>
-<div class="df">
-  <div>DeepSeaOldStatus</div>
-  <div>{{getDeepSeaOldStatus()}}</div>
-  <div></div>
-</div>
-<div class="df">
-  <div>GetAcadStatus</div>
-  <div>{{getAcadStatus()}}</div>
-  <div></div>
+<div class="cx mt-2">PRODUCTION PANEL</div>
+<div class="mt-2">
+ <div class="cx">
+   <div>
+     <div class="df" *ngFor="let app of apps">
+       <div class="mx-1 width-80">{{app.name}}</div>
+       <div class="mx-1" [ngStyle]="getStatusStyle(app.status)">{{app.status}}</div>
+       <div class="mx-1"></div>
+     </div>
+   </div>
+ </div>
 </div>

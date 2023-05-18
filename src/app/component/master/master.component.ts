@@ -9,6 +9,10 @@ export interface HostsStatus{
   deepSeaSpec: number;
   deepSeaOld: number;
 }
+export interface HostApp{
+  name: string;
+  status: string;
+}
 @Component({
   selector: 'app-master',
   templateUrl: './master.component.html',
@@ -18,12 +22,23 @@ export class MasterComponent implements OnInit {
 
   constructor(public auth: AuthManagerService) { }
   hostsStatus: HostsStatus = {acad: 0, deepSea: 0, deepSeaSpec: 0, deepSeaOld: 0};
+  apps: HostApp[] = [];
 
   ngOnInit(): void {
+    this.fetchHostStatus();
     interval(3000).subscribe(tick => {
-      this.auth.hostsStatus().subscribe(status => {
-        this.hostsStatus = status;
-      });
+      this.fetchHostStatus();
+    });
+  }
+  fetchHostStatus(){
+    this.auth.hostsStatus().subscribe(status => {
+      this.hostsStatus = status;
+      this.apps = [
+        { name: 'DeepSea', status: this.getDeepSeaStatus() },
+        { name: 'DeepSeaSpec', status: this.getDeepSeaSpecStatus() },
+        { name: 'DeepSeaOld', status: this.getDeepSeaOldStatus() },
+        { name: 'DeepSeaAcad', status: this.getDeepSeaAcadStatus() },
+      ];
     });
   }
   getDeepSeaStatus(){
@@ -35,7 +50,15 @@ export class MasterComponent implements OnInit {
   getDeepSeaOldStatus(){
     return this.hostsStatus.deepSeaSpec == 0 ? 'Offline' : 'Online';
   }
-  getAcadStatus(){
+  getDeepSeaAcadStatus(){
     return this.hostsStatus.acad == 0 ? 'Offline' : 'Online';
+  }
+
+  getStatusStyle(deepSeaStatus: string) {
+    switch (deepSeaStatus){
+      case 'Online': return { color: 'green' };
+      case 'Offline': return { color: 'red' };
+      default: return { color: 'yellow' };
+    }
   }
 }
