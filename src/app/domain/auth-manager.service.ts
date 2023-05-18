@@ -260,4 +260,7 @@ export class AuthManagerService {
   consumePlanHours(planHours: PlanHour[], userId: number, taskId: number, details: string){
     return this.http.post<any>(props.http + '/consumePlanHours', planHours, {params: {userId, taskId, details}});
   }
+  hostsStatus(){
+    return this.http.get<any>(props.restMaster + '/hostsStatus');
+  }
 }
