@@ -47,7 +47,7 @@
       </div>
       <div class="mr-10 cy">
         <label class="container margin-bottom-none">
-          <span class="text-checkbox">Show no spool</span>
+          <span class="text-checkbox">{{l.tr('Без позиций')}}</span>
           <input (ngModelChange)="showNoSpoolChanged()" type="checkbox" [(ngModel)]="showNoSpool">
           <span class="checkmark"></span>
         </label>
@@ -112,7 +112,6 @@
                   <div *ngIf="!pipeSpool.aux && show2dEnabled()" class="cursor-pointer show-model-one mb-20" (click)="showDxfInViewerZip(spoolsArchive, '-' + pipeSpool.spool)">
                     <div class="two-d-model cxy">2D</div>
                   </div>
-
 
                   <div *ngIf="pipeSpool.dxf != ''" class="df icons-download">
                     <div class="cxy mr-15 cursor-pointer" (click)="showDxfInViewer(pipeSpool.dxf)">
@@ -300,13 +299,13 @@
 
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">Files</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">Activity
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">{{l.tr('Активность')}}
             <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
           </div>
           <div *ngIf="auth.hasPerms('visible_doc_task')" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">Info</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">Archive</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">{{l.tr('Инфо')}}</div>
+          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
         </div>
 
         <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">

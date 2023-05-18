@@ -7,15 +7,28 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class LanguageService {
   language = 'en';
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.route.queryParams.subscribe(res => {
-      this.language = res.lang != null ? res.lang : 'en';
-    });
+    if (localStorage.getItem('lang') != null){
+      this.language = localStorage.getItem('lang')!;
+    }
+    else{
+      if (navigator.language == 'ru-RU'){
+        this.language = 'ru';
+      }
+      else{
+        this.language = 'en';
+      }
+    }
+    // this.route.queryParams.subscribe(res => {
+    //   this.language = res.lang != null ? res.lang : 'en';
+    // });
   }
   switchLang(lang: string){
+    localStorage.setItem('lang', lang);
+    location.reload();
     //let lang = this.language == 'ru' ? 'en' : 'ru';
-    this.router.navigate([], {queryParams: {lang}, queryParamsHandling: 'merge'}).then(() => {
-      location.reload();
-    });
+    // this.router.navigate([], {queryParams: {lang}, queryParamsHandling: 'merge'}).then(() => {
+    //   location.reload();
+    // });
   }
   tr(input: string){
     switch (this.language) {
@@ -499,7 +512,7 @@ export class LanguageService {
           case 'Создание проекта': return 'Creating a project';
           case 'Новый проект создан': return 'A new project has been created';
           case 'Не удалось создать новый проект': return 'Failed to create a new project';
-          case '': return '';
+          case 'Без позиций': return 'Show no spool';
           case '': return '';
           case '': return '';
           case '': return '';
