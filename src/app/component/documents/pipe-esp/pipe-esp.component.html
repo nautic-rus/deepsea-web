@@ -84,19 +84,19 @@
           <div class="tile">
             <div *ngFor="let pipeSpool of pipesBySpool; let i = index" class="card-tile" [class.hidden-card]="pipeSpool == null">
               <div class="card-spool df">
-                <div class="w-7 position-relative">
+                <div class="w-5 position-relative">
                   <div class="title-bold mb-20" [class.dxf-enabled]="dxfEnabled" [class.selected-spool]="pipeSpool == pipeSpool.spool" (click)="searchSpool(pipeSpool.spool)" [innerHTML]="pipeSpool.spool | highLight: search"></div>
                   <div class="pulse">
                     <div *ngIf="pipeSpool.spool == ''" class="dot red"></div>
                   </div>
-                  <div class="galvanic mb-20" *ngIf="isGS(pipeSpool.values)">GALVANIC</div>
+                  <div class="galvanic mb-20" *ngIf="isGS(pipeSpool.values)">GALV</div>
                   <div class="mb-20">
                     <div class="flex-column">
                       <div (click)="lockSpool(pipeSpool)" *ngIf="pipeSpool.locked == null || pipeSpool.locked.lock == 0" class="cxy unlock cursor-pointer">
-                        <img src="assets/icons/unlock.svg" height="22">
+                        <img src="assets/icons/unlock.svg" height="18">
                       </div>
                       <div (click)="lockSpool(pipeSpool)" *ngIf="pipeSpool.locked != null && pipeSpool.locked.lock == 1" class="cxy lock cursor-pointer">
-                        <img src="assets/icons/lock.svg" height="22">
+                        <img src="assets/icons/lock.svg" height="18">
                       </div>
                       <div *ngIf="pipeSpool.locked != null && pipeSpool.locked.lock == 1" class="">
                         <div class="lock-name">{{auth.getUserTrimName(pipeSpool.locked.user)}}</div>
@@ -128,9 +128,9 @@
                     </div>
                   </div>
                 </div>
-                <div class="w-93">
+                <div class="w-95">
                   <div class="df pt-5 pb-5" *ngFor="let pipe of pipeSpool.values; let p = index">
-                    <div class="w-6 pr-10 df">
+                    <div class="w-5 pr-10 df">
                       <div class="text-table-col cy" *ngIf="pipe.spPieceId != 0">{{pipe.spPieceId}}</div>
                       <div class="mm-text cy" *ngIf="pipe.spPieceId == 0">{{pipe.line + '-' + pipe.pls + '-' + pipe.elem}}</div>
                       <div *ngIf="pipe.compType == 'AUX'" class="cursor-pointer show-model mb-20" (click)="deleteAux(pipe)">
@@ -138,45 +138,45 @@
                       </div>
                     </div>
                     <div class="w-5 mm-text cy pr-10">{{pipe.typeCode}}</div>
-                    <div class="w-7 pr-10 cxy">
+                    <div class="w-6 pr-10 cxy">
                       <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'P'">
-                        <img src="assets/icons/pipes-pipe.svg" height="40">
+                        <img src="assets/icons/pipes-pipe.svg" height="30">
                       </div>
                       <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'I'">
-                        <img class="angle-cut" src="assets/icons/pipe-cut.svg" height="40">
+                        <img class="angle-cut" src="assets/icons/pipe-cut.svg" height="30">
                       </div>
                       <div *ngIf="pipe.typeCode == 'PIPE' && pipe.compType == 'B'">
-                        <img class="angle-pipe" src="assets/icons/pipe-angle2.svg" height="34">
+                        <img class="angle-pipe" src="assets/icons/pipe-angle2.svg" height="26">
                       </div>
                       <div *ngIf="pipe.typeCode == 'VALV'">
-                        <img src="assets/icons/valve.svg" height="30">
+                        <img src="assets/icons/valve.svg" height="24">
                       </div>
                       <div *ngIf="pipe.typeCode == 'FWRE'">
-                        <img src="assets/icons/pipes-fwre.svg" height="40">
+                        <img src="assets/icons/pipes-fwre.svg" height="30">
                       </div>
                       <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'A'">
-                        <img class="angle-sleeve" src="assets/icons/pipe-sleeve.svg" height="24">
+                        <img class="angle-sleeve" src="assets/icons/pipe-sleeve.svg" height="18">
                       </div>
                       <div *ngIf="pipe.typeCode == 'FWNR' && pipe.compType == 'E'">
-                        <img src="assets/icons/pipe-elbow.svg" height="30">
+                        <img src="assets/icons/pipe-elbow.svg" height="24">
                       </div>
                       <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'BOLT'">
-                        <img class="angle-screw" src="assets/icons/screw.svg" height="30">
+                        <img class="angle-screw" src="assets/icons/screw.svg" height="24">
                       </div>
                       <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'GASKET'">
-                        <img src="assets/icons/gasket.svg" height="26">
+                        <img src="assets/icons/gasket.svg" height="18">
                       </div>
                       <div *ngIf="pipe.typeCode == 'JOINT' && pipe.compType == 'NUT'">
-                        <img class="angle-screw" src="assets/icons/nut.svg" height="20">
+                        <img class="angle-screw" src="assets/icons/nut.svg" height="16">
                       </div>
                       <div *ngIf="pipe.typeCode == 'BRAW'">
-                        <img src="assets/icons/pipes-braw.svg" height="40">
+                        <img src="assets/icons/pipes-braw.svg" height="30">
                       </div>
                       <div *ngIf="pipe.typeCode == 'FLAN'">
-                        <img src="assets/icons/flange.svg" height="26">
+                        <img src="assets/icons/flange.svg" height="18">
                       </div>
                       <div *ngIf="pipe.typeCode == 'GASK'">
-                        <img src="assets/icons/gasket.svg" height="26">
+                        <img src="assets/icons/gasket.svg" height="18">
                       </div>
                     </div>
                     <div class="w-27 pr-10 title-bold-pipe line-16 cy">{{getMaterialName(pipe.material)}}</div>
@@ -206,7 +206,7 @@
                       </div>
                     </div>
 
-                    <div class="w-20 pr-10 cy p-ml-auto">
+                    <div class="w-22 pr-10 cy p-ml-auto">
                       <div class="cy pr-10">
                         <div class="kpl-flag cxy">
                           <div class="text-center-x">
@@ -219,7 +219,7 @@
                           <span [innerHTML]="pipe.stock | highLight: search"></span>
                         </div>
                         <div (click)="copyTrmCode(pipe.stock, 's' + p + 'sp' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
-                          <img src="assets/icons/trm.svg" height="14">
+                          <img src="assets/icons/trm.svg" height="10">
                           <div class="copy-tooltip" [hidden]="!showTooltip('s' + p + 'sp' + i)">Copied!</div>
                         </div>
                       </div>
