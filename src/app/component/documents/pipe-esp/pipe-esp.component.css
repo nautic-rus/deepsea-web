@@ -904,7 +904,7 @@
   perspective: 1000px;
   padding: 10px;
   border-radius: 10px;
-  min-width: 1100px;
+  /*min-width: 1100px;*/
 }
 .hidden-card{
   opacity: 0 !important;
@@ -995,18 +995,18 @@
   background-color: #FBC948;
   color: #ffffff;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 11px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
   padding: 1px 4px;
-  min-width: 140px;
+  min-width: 115px;
 }
 .trm-copy{
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   padding: 1px 4px;
   border: 1px solid #FBC948;
-  width: 30px;
+  width: 20px;
 }
 .copy-tooltip{
   position: absolute;
@@ -1049,7 +1049,7 @@
   font-weight: 600;
 }
 .text-table-col{
-  font-size: 14px;
+  font-size: 13px;
   color: #495057;
 }
 .show-model{
@@ -1086,7 +1086,7 @@
   padding: 1px 4px;
   border-radius: 4px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 10px;
   color: #fff;
   background-color: #6EC5FF;
   width: fit-content;
@@ -1103,8 +1103,8 @@
   transform: rotate(45deg);
 }
 .three-d-model{
-  height: 22px;
-  width: 30px;
+  height: 20px;
+  width: 28px;
   border: 2px solid #917FBB;
   border-radius: 4px;
   color: #917FBB;
@@ -1112,8 +1112,8 @@
   padding: 0 2px 2px 2px;
 }
 .two-d-model{
-  height: 22px;
-  width: 30px;
+  height: 20px;
+  width: 28px;
   border: 2px solid #3B82F6;
   border-radius: 4px;
   color: #3B82F6;
