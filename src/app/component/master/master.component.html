@@ -2,10 +2,12 @@
 <div class="mt-2">
  <div class="cx">
    <div>
-     <div class="df" *ngFor="let app of apps">
-       <div class="mx-1 width-80">{{app.name}}</div>
-       <div class="mx-1" [ngStyle]="getStatusStyle(app.status)">{{app.status}}</div>
-       <div class="mx-1"></div>
+     <div class="df height-50" *ngFor="let app of apps">
+       <div class="mx-1 width-80 cy">{{app.name}}</div>
+       <div class="mx-1 cy" [ngStyle]="getStatusStyle(app.status)">{{app.status}}</div>
+       <div class="mx-5 cy">
+         <p-button [disabled]="app.status == 'LOADING'" icon="pi pi-refresh" styleClass="p-button-rounded p-button-warning p-button-text"></p-button>
+       </div>
      </div>
    </div>
  </div>
