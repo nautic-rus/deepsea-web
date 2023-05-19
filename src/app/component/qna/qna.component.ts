@@ -289,4 +289,8 @@ export class QnaComponent implements OnInit {
     this.showResolve = false;
     this.showClose = false;
   }
+  getIssuesDueDateLength() {
+    let ques = this.questionsSrc.filter(x => x.status == 'AssignedTo' || x.status == 'In Work' || x.status == 'In Rework' || x.status == 'Assign responsible' || x.status == 'Paused')
+    return ques.filter(x => x.due_date.getTime() == 0).length;
+  }
 }
