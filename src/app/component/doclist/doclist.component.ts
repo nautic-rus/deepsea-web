@@ -31,7 +31,7 @@ export class DoclistComponent implements OnInit {
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
   taskType = '';
-  taskTypes: LV[] = ['-', 'RKD', 'PDSP', 'CORRECTION'].map(x => new LV(x));
+  taskTypes: LV[] = ['-', 'RKD', 'PDSP'].map(x => new LV(x));
   taskStages: LV[] = [];
 
   statuses: string[] = [];
@@ -52,7 +52,7 @@ export class DoclistComponent implements OnInit {
       this.selectedProjects = [...this.projects.map(x => x.name)];
     });
     this.issueManager.getIssues('op').then(res => {
-      this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP' || x.issue_type == 'CORRECTION');
+      this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
       this.issues = this.issuesSrc;
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;

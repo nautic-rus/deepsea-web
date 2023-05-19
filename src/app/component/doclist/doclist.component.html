@@ -57,6 +57,9 @@
             <th pSortableColumn="name" class="lxy w-100">{{l.tr('Название')}}
               <p-sortIcon field="name"></p-sortIcon>
             </th>
+            <th pSortableColumn="doc_number" class="lxy w-100">{{l.tr('Тип')}}
+              <p-sortIcon field="doc_number"></p-sortIcon>
+            </th>
             <th pSortableColumn="department" class="cxy w-100">{{l.tr('Отдел')}}
               <p-sortIcon field="department"></p-sortIcon>
 <!--              <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
@@ -94,6 +97,7 @@
           <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
             <td class="text-14 w-100">{{issue.doc_number}}</td>
             <td class="text-14 w-100">{{issue.name}}</td>
+            <td class="text-14 w-100">{{issue.issue_type}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
             <td *ngIf="auth.getUser().permissions.includes('visible_doc_status')" class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
             <td class="text-14 w-100">{{issue.revision}}</td>
