@@ -599,6 +599,7 @@ export class MaterialsComponent implements OnInit {
             x.path = this.setPath(x.code);
           });
           this.rootNodes = this.nodes.filter((x: any) => x.data.length == 3).map((x: any) => new LV(x.label + ' (' + x.count + ')', x.data));
+          this.rootNodes = [new LV('Ведомость', '-')].concat(this.rootNodes);
           this.selectedRootNode = this.rootNodes[0].value;
           this.rootNodes = [...this.rootNodes];
           this.rootNodeChanged();
@@ -656,5 +657,6 @@ export class MaterialsComponent implements OnInit {
     this.materials.filter(x => x != null).forEach((x: any) => {
       x.path = this.setPath(x.code);
     });
+    this.materials = this.materialsSrc.filter(x => x.code.startsWith(this.selectedRootNode) || this.selectedRootNode == '-');
   }
 }

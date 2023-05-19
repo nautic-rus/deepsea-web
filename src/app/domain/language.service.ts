@@ -513,7 +513,7 @@ export class LanguageService {
           case 'Новый проект создан': return 'A new project has been created';
           case 'Не удалось создать новый проект': return 'Failed to create a new project';
           case 'Без позиций': return 'Show no spool';
-          case '': return '';
+          case 'Обновлено': return 'Last update';
           case '': return '';
           case '': return '';
           case '': return '';

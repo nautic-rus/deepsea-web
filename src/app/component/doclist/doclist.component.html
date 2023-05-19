@@ -57,6 +57,9 @@
             <th pSortableColumn="name" class="lxy w-100">{{l.tr('Название')}}
               <p-sortIcon field="name"></p-sortIcon>
             </th>
+            <th pSortableColumn="doc_number" class="lxy w-100">{{l.tr('Тип')}}
+              <p-sortIcon field="doc_number"></p-sortIcon>
+            </th>
             <th pSortableColumn="department" class="cxy w-100">{{l.tr('Отдел')}}
               <p-sortIcon field="department"></p-sortIcon>
 <!--              <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
@@ -75,13 +78,16 @@
 <!--                </ng-template>-->
 <!--              </p-columnFilter>-->
             </th>
+            <th pSortableColumn="revision" class="lxy w-100">{{l.tr('Ревизия')}}
+              <p-sortIcon field="revision"></p-sortIcon>
+            </th>
             <th pSortableColumn="stage" class="lxy w-100">{{l.tr('Этап')}}
               <p-sortIcon field="stage"></p-sortIcon>
             </th>
-            <th pSortableColumn="contract_due_date" class="lxy w-100">Contract due date
+            <th pSortableColumn="contract_due_date" class="lxy w-100">{{l.tr('Срок исполнения')}}
               <p-sortIcon field="contract_due_date"></p-sortIcon>
             </th>
-            <th pSortableColumn="last_update" class="lxy w-100">Last update
+            <th pSortableColumn="last_update" class="lxy w-100">{{l.tr('Обновлено')}}
               <p-sortIcon field="last_update"></p-sortIcon>
             </th>
             <th class="w-5">{{l.tr('Ссылка')}}</th>
@@ -91,8 +97,10 @@
           <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
             <td class="text-14 w-100">{{issue.doc_number}}</td>
             <td class="text-14 w-100">{{issue.name}}</td>
+            <td class="text-14 w-100">{{issue.issue_type}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
             <td *ngIf="auth.getUser().permissions.includes('visible_doc_status')" class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
+            <td class="text-14 w-100">{{issue.revision}}</td>
             <td class="text-14 w-100">{{issue.period}}</td>
             <td class="text-14 w-100">{{getDate(issue.contract_due_date)}}</td>
             <td class="text-14 w-100">{{getDate(issue.last_update)}}</td>
