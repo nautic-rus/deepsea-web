@@ -425,8 +425,9 @@ export class PipeEspComponent implements OnInit {
     this.miscIssues.splice(0, this.miscIssues.length);
     this.issueManager.getIssues('op').then(issues => {
       //issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+      this.miscIssues.push(this.issue);
       issues.filter(x => this.issue.combined_issues.map(y => y.id).includes(x.id)).forEach(x => this.miscIssues.push(x));
-      this.miscIssues.forEach(x => {
+      issues.filter(x => this.issue.child_issues.map(y => y.id).includes(x.id)).forEach(x => this.miscIssues.push(x));      this.miscIssues.forEach(x => {
         issues.filter(y => y.parent_id == x.id).forEach(ch => {
           this.miscIssues.push(ch);
         })
