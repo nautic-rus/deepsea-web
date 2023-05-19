@@ -68,6 +68,7 @@ export class ElectricEspComponent implements OnInit {
   search: string = '';
   searchNesting: string = '';
   selectedHeadTab: string = 'Files';
+  revEsp = '';
   nestContent: any[] = [];
   nestContentRead = false;
   quillModules =

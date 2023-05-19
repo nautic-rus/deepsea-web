@@ -75,13 +75,16 @@
 <!--                </ng-template>-->
 <!--              </p-columnFilter>-->
             </th>
+            <th pSortableColumn="revision" class="lxy w-100">{{l.tr('Ревизия')}}
+              <p-sortIcon field="revision"></p-sortIcon>
+            </th>
             <th pSortableColumn="stage" class="lxy w-100">{{l.tr('Этап')}}
               <p-sortIcon field="stage"></p-sortIcon>
             </th>
-            <th pSortableColumn="contract_due_date" class="lxy w-100">Contract due date
+            <th pSortableColumn="contract_due_date" class="lxy w-100">{{l.tr('Срок исполнения')}}
               <p-sortIcon field="contract_due_date"></p-sortIcon>
             </th>
-            <th pSortableColumn="last_update" class="lxy w-100">Last update
+            <th pSortableColumn="last_update" class="lxy w-100">{{l.tr('Обновлено')}}
               <p-sortIcon field="last_update"></p-sortIcon>
             </th>
             <th class="w-5">{{l.tr('Ссылка')}}</th>
@@ -93,6 +96,7 @@
             <td class="text-14 w-100">{{issue.name}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
             <td *ngIf="auth.getUser().permissions.includes('visible_doc_status')" class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
+            <td class="text-14 w-100">{{issue.revision}}</td>
             <td class="text-14 w-100">{{issue.period}}</td>
             <td class="text-14 w-100">{{getDate(issue.contract_due_date)}}</td>
             <td class="text-14 w-100">{{getDate(issue.last_update)}}</td>
