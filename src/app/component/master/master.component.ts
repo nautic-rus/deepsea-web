@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthManagerService} from "../../domain/auth-manager.service";
-import {timeout} from "rxjs/operators";
 import {interval} from "rxjs";
 
 export interface HostsStatus{
-  acad: number;
-  deepSea: number;
-  deepSeaSpec: number;
-  deepSeaOld: number;
+  acad: string;
+  deepSea: string;
+  deepSeaSpec: string;
+  deepSeaOld: string;
 }
 export interface HostApp{
   name: string;
@@ -21,7 +20,7 @@ export interface HostApp{
 export class MasterComponent implements OnInit {
 
   constructor(public auth: AuthManagerService) { }
-  hostsStatus: HostsStatus = {acad: 0, deepSea: 0, deepSeaSpec: 0, deepSeaOld: 0};
+  hostsStatus: HostsStatus = {acad: '', deepSea: '', deepSeaSpec: '', deepSeaOld: ''};
   apps: HostApp[] = [];
 
   ngOnInit(): void {
@@ -34,31 +33,31 @@ export class MasterComponent implements OnInit {
     this.auth.hostsStatus().subscribe(status => {
       this.hostsStatus = status;
       this.apps = [
-        { name: 'DeepSea', status: this.getDeepSeaStatus() },
-        { name: 'DeepSeaSpec', status: this.getDeepSeaSpecStatus() },
-        { name: 'DeepSeaOld', status: this.getDeepSeaOldStatus() },
-        { name: 'DeepSeaAcad', status: this.getDeepSeaAcadStatus() },
+        { name: 'DeepSea', status: this.hostsStatus.deepSea },
+        { name: 'DeepSeaSpec', status: this.hostsStatus.deepSeaSpec },
+        { name: 'DeepSeaOld', status: this.hostsStatus.deepSeaOld },
+        { name: 'DeepSeaAcad', status: this.hostsStatus.acad },
       ];
     });
-  }
-  getDeepSeaStatus(){
-    return this.hostsStatus.deepSea == 0 ? 'Offline' : 'Online';
-  }
-  getDeepSeaSpecStatus(){
-    return this.hostsStatus.deepSeaSpec == 0 ? 'Offline' : 'Online';
-  }
-  getDeepSeaOldStatus(){
-    return this.hostsStatus.deepSeaSpec == 0 ? 'Offline' : 'Online';
-  }
-  getDeepSeaAcadStatus(){
-    return this.hostsStatus.acad == 0 ? 'Offline' : 'Online';
   }
 
   getStatusStyle(deepSeaStatus: string) {
     switch (deepSeaStatus){
       case 'Online': return { color: 'green' };
       case 'Offline': return { color: 'red' };
-      default: return { color: 'yellow' };
+      case 'Restarting': return { color: 'purple' };
+      case 'Error': return { color: 'red' };
+      default: return { color: 'blue' };
+    }
+  }
+
+  restartHost(app: HostApp) {
+    switch (app.name){
+      case 'DeepSea': this.auth.publishDeepSea().subscribe(() => this.fetchHostStatus()); break;
+      case 'DeepSeaSpec': this.auth.publishDeepSeaSpec().subscribe(() => this.fetchHostStatus()); break;
+      case 'DeepSeaOld': this.auth.restartDeepSeaOld().subscribe(() => this.fetchHostStatus()); break;
+      case 'DeepSeaAcad': this.auth.restartAcad().subscribe(() => this.fetchHostStatus()); break;
+      default: break;
     }
   }
 }

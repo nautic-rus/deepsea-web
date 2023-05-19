@@ -263,4 +263,16 @@ export class AuthManagerService {
   hostsStatus(){
     return this.http.get<any>(props.restMaster + '/hostsStatus');
   }
+  publishDeepSea(){
+    return this.http.get<any>(props.restMaster + '/publish-deepsea');
+  }
+  publishDeepSeaSpec(){
+    return this.http.get<any>(props.restMaster + '/publish-deepsea-spec');
+  }
+  restartDeepSeaOld(){
+    return this.http.get<any>(props.restMaster + '/restart-deepsea-old');
+  }
+  restartAcad(){
+    return this.http.get<any>(props.restMaster + '/restart-acad');
+  }
 }
