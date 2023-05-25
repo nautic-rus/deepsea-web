@@ -21,11 +21,13 @@ export class ProjectComponent implements OnInit {
   colsUsers: any[] = [];
   scrollHeight: string = '600px';
   loading = false;
+  managers: string[] = []
 
   constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
 
   ngOnInit(): void {
     console.log(this.conf.data)
+    this.managers = this.conf.data[0].managers.split(',')
     this.project = this.conf.data[0] as Projects;
     this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;
     this.colsUsers = this.conf.data[2];
@@ -78,6 +80,7 @@ export class ProjectComponent implements OnInit {
 
   saveProject() {
     this.loading = true;
+    this.project.managers = this.managers.join(',')
     this.projectService.saveProject(this.project, this.id, this.selectedUsers).subscribe({
       next: res => {
         console.log(res);

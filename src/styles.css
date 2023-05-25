@@ -376,6 +376,12 @@ body,p{
 .width-530{
   width: 530px;
 }
+.width-600{
+  width: 600px;
+}
+.width-648{
+  width: 648px;
+}
 .min-width-5{
    min-width: 5px;
  }
