@@ -1187,10 +1187,10 @@
 <!--            <div class="df text-y height-30 normal-text w-40">{{t.tr('Трудоёмкость')}}</div>-->
 <!--            <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{issue.plan_hours}}</div>-->
 <!--          </div>-->
-<!--          <div class="df mt-3px" *ngIf="isVisible('labor') && auth.hasPerms('visible_plan_actual_hours')">-->
-<!--            <div class="df text-y height-30 normal-text w-35">{{t.tr('Трудозатраты')}}</div>-->
-<!--            <div class="pl-3 df text-y height-30 cursor-pointer description-task">{{issue.labor}}</div>-->
-<!--          </div>-->
+          <div class="df mt-3px" *ngIf="isVisible('labor') && auth.hasPerms('visible_plan_actual_hours')">
+            <div class="df text-y height-30 normal-text w-35">{{t.tr('Трудозатраты')}}</div>
+            <div class="pl-3 df text-y height-30 cursor-pointer description-task">{{issue.labor}}</div>
+          </div>
           <div class="df mt-3px" *ngIf="isVisible('id')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('ID задачи')}}</div>
             <div class="pl-3 df text-y height-30 cursor-pointer description-task">{{issue.id}}</div>
