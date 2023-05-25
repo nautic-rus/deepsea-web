@@ -11,7 +11,19 @@ import {DeleteComponent} from "../task/delete/delete.component";
 import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.component";
 import {User} from "../../domain/classes/user";
 import {MenuItem} from "primeng/api";
-
+import {ConsumedHour, PlanHour, PlannedHours} from "../work-hours/work-hours.component";
+export class SpecialDay{
+  day: number;
+  month: number;
+  year: number;
+  kind: string;
+  constructor(day: number, month: number, year: number, kind: string) {
+    this.day = day;
+    this.month = month;
+    this.year = year;
+    this.kind = kind;
+  }
+}
 @Component({
   selector: 'app-month-tasks',
   templateUrl: './month-tasks.component.html',
@@ -30,7 +42,7 @@ export class MonthTasksComponent implements OnInit {
   tasksSrc: DailyTask[] = [];
   tasks: DailyTask[] = [];
   projects: string[] = ['NR002', 'NR004', 'OTHER'];
-  selectedUser: any;
+  selectedUser: User;
   showError = false;
   options = {
     initialDate : '2019-01-01',
@@ -45,9 +57,12 @@ export class MonthTasksComponent implements OnInit {
     dayMaxEvents: true
   };
   users: User[] = [];
+  consumed: ConsumedHour[] = [];
+  consumedIds: number[] = [];
+  planned: PlanHour[] = [];
 
 
-  calendar = this.getCalendar();
+  calendar: CalendarDay[] = [];
   dayOfWeek = {
     opacity: '1',
     transition: 'opacity 4s'
@@ -55,6 +70,23 @@ export class MonthTasksComponent implements OnInit {
 
   items: MenuItem[] = [];
   selectedTask: any = null;
+  specialDays: SpecialDay[] = [
+    new SpecialDay(2, 1, 2023, "weekend"),
+    new SpecialDay(3, 1, 2023, "weekend"),
+    new SpecialDay(4, 1, 2023, "weekend"),
+    new SpecialDay(5, 1, 2023, "weekend"),
+    new SpecialDay(6, 1, 2023, "weekend"),
+    new SpecialDay(22, 2, 2023, "short"),
+    new SpecialDay(23, 2, 2023, "weekend"),
+    new SpecialDay(7, 3, 2023, "short"),
+    new SpecialDay(8, 3, 2023, "weekend"),
+    new SpecialDay(1, 5, 2023, "weekend"),
+    new SpecialDay(8, 5, 2023, "weekend"),
+    new SpecialDay(9, 5, 2023, "weekend"),
+    new SpecialDay(12, 6, 2023, "weekend"),
+    new SpecialDay(3, 11, 2023, "short"),
+    new SpecialDay(6, 11, 2023, "weekend"),
+  ];
 
   constructor(public issueManager: IssueManagerService, public dialogService: DialogService, public auth: AuthManagerService, public ref: DynamicDialogRef) { }
 
@@ -120,6 +152,10 @@ export class MonthTasksComponent implements OnInit {
     if (dayOfWeek == 0 || dayOfWeek == 6){
       result = true;
     }
+    let findSpecial = this.specialDays.find(x => x.day == day && x.month - 1 == date.getMonth() && x.year == date.getFullYear());
+    if (findSpecial != null && findSpecial.kind == "weekend"){
+      result = true;
+    }
     return result;
   }
   isDayCurrent(day: number, month: number = this.getMonth(), year: number = this.getYear()) {
@@ -153,7 +189,6 @@ export class MonthTasksComponent implements OnInit {
           cDay.isCurrent = this.isDayCurrent(+day);
         }
         if (!isNaN(cDay.number)){
-          //console.log(cDay.number);
           cDay.tasks = this.getTasksOfDay(cDay.number);
           cDay.tasks.forEach((t: any) => {
             cDay.sum += t.time;
@@ -189,39 +224,58 @@ export class MonthTasksComponent implements OnInit {
         command: (event: any) => this.deleteDailyTask()
       }
     ];
-    this.auth.usersFilled.subscribe(() => {
+    setTimeout(() => {
       this.users = this.auth.users.filter(x => x.visibility.includes('c') && x.groups.includes('Engineers') || x.groups.includes('Hull Engineers') || x.groups.includes('Chief of Department') || x.groups.includes('Managers') || x.groups.includes('Admin'));
-    });
-    this.selectedUser = this.auth.getUser().login;
-    this.fillTasks();
+      this.selectedUser = this.auth.getUser();
+      this.fillTasks();
+    }, 500);
   }
   fillTasks(){
-    this.issueManager.getDailyTasks().then(res => {
-      console.log(res);
-      this.tasksSrc = res.filter(x => x.userLogin == this.selectedUser);
-      console.log(this.tasksSrc);
-      this.issueManager.getIssues('op').then(resIssues => {
-        this.issues = resIssues;
-        this.tasksSrc.forEach(t => {
-          let find = this.issues.find(x => x.id == t.issueId);
-          if (find != null){
-            t.docNumber = find.doc_number;
-            if (t.docNumber == ''){
-              t.details = find.name;
-            }
-          }
+    this.auth.getConsumedPlanHours(this.selectedUser.id).subscribe(consumedValue => {
+      this.consumed = consumedValue;
+      this.consumedIds = consumedValue.map(x => x.hour_id);
+      this.auth.getUsersPlanHours(this.selectedUser.id, 0, 1).subscribe(planned => {
+        this.planned = planned;
+        this.issueManager.getIssues('op').then(resIssues => {
+          this.issues = resIssues;
+          this.calendar = this.getCalendar();
         });
-        console.log(this.tasksSrc);
-        this.tasks = this.tasksSrc;
-        this.calendar = this.getCalendar();
-      });
+      })
     });
   }
   changeUser(){
     this.fillTasks();
   }
   getTasksOfDay(day: number){
-    return this.tasks.filter(x => this.sameDay(x.date, new Date(this.date.getFullYear(), this.date.getMonth(), day).getTime()));
+    let res: DailyTask[] = [];
+    let userPlanHours = this.planned.filter(x => x.user == this.selectedUser.id && x.task_id != 0).filter(x => this.consumedIds.includes(x.id));
+    let userPlanHoursToday = userPlanHours.filter(x => x.day == day && x.month == this.date.getMonth() && x.year == this.date.getFullYear() && x.hour_type == 1);
+    _.forEach(_.groupBy(userPlanHoursToday, x => x.task_id), gr => {
+      let id = gr[0].task_id;
+      let issue = this.issues.find(x => x.id == id);
+      if (issue != null){
+        res.push(new DailyTask(
+          id,
+          this.date,
+          this.date,
+          this.selectedUser.login,
+          issue.project,
+          issue.name,
+          gr.length,
+          0,
+          issue.assigned_to,
+          issue.doc_number,
+          issue.action,
+          0,
+          0,
+          issue.action,
+          issue.project,
+          issue.doc_number,
+          false
+        ));
+      }
+    });
+    return res;
   }
   sameDay(dLong1: number, dLong2: number) {
     let d1 = new Date(dLong1);

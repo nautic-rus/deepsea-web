@@ -2,14 +2,14 @@
   <div class="card-report">
     <div class="card-head df mb-10">
       <div class="df">
-        <div class="button-add blue-button cxy mr-15" (click)="addDayTask({number: -1, sum: 0})">
-          <div class="pr-10 cxy">
-            <img src="assets/icons/plus3.svg" height="18">
-          </div>
-          <div class="cxy">
-            Add task
-          </div>
-        </div>
+<!--        <div class="button-add blue-button cxy mr-15" (click)="addDayTask({number: -1, sum: 0})">-->
+<!--          <div class="pr-10 cxy">-->
+<!--            <img src="assets/icons/plus3.svg" height="18">-->
+<!--          </div>-->
+<!--          <div class="cxy">-->
+<!--            Add task-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="df">
           <div class="cxy cursor-pointer prev-month blue-button" (click)="changeMonth(-1)">
             <img src="assets/icons/arrow-l.svg" height="16">
@@ -23,12 +23,18 @@
         <div class="cxy month-name mx-10 width-200">{{monthName + ' '}}{{' ' + date.getFullYear()}}</div>
       </div>
       <div class="df flex-end" *ngIf="auth.filled && auth.hasPerms('change-daily-user')">
-        <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" (ngModelChange)="changeUser()" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
+        <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" (ngModelChange)="changeUser()" [filter]="true" filterBy="userName"
                     [showClear]="true" class="p-dropdown-150" styleClass="width-220">
           <ng-template let-user pTemplate="item">
             <div class="df">
               <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
               <div class="cx cy pl-10">{{user.userName}}</div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="selectedItem">
+            <div class="df">
+              <img src="{{selectedUser.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+              <div>{{selectedUser.surname}} {{selectedUser.name}}</div>
             </div>
           </ng-template>
         </p-dropdown>
@@ -51,6 +57,7 @@
         <div
           *ngFor="let cDay of calendar"
           [class.current-day]="cDay.isCurrent"
+          [class.weekend-day]="cDay.isWeekend"
           [class.col-day]="cDay.number != 0"
           [class.col-day-hidden]="cDay.number.toString().includes('h')"
           [class.col-day-week]="cDay.number.toString().includes('s')"
@@ -61,16 +68,12 @@
           <div class="day-of-month" [ngStyle]="dayOfWeek">
             {{cDay.number.toString().replace('h', '').replace('s', '').replace('b', '').replace('a', '')}}
           </div>
-          <div *ngIf="!cDay.number.toString().includes('s') && cDay.sum != 0" class="pb-5 text-black-mini">worked {{getHours(cDay.sum)}}:{{getMinutes(cDay.sum)}}</div>
+          <div *ngIf="!cDay.number.toString().includes('s') && cDay.sum != 0" class="pb-5 text-black-mini">Отработано {{cDay.sum}} часов</div>
           <div *ngIf="cDay.tasks.length > 0" class="">
             <div #taskInfo class="task-one cursor-pointer" (click)="openTask(task)" *ngFor="let task of cDay.tasks" (contextmenu)="selectTask(task)">
               <div class="df">
                 <div class="cx task-text pr-5 line-text">{{trimText(task.docNumber, 20)}}{{task.docNumber == '' ? '' : ' '}}{{task.details}}</div>
                 <p-contextMenu [target]="taskInfo" appendTo="body" [model]="items"></p-contextMenu>
-
-                <!--                <div class="cx task-text-mini pr-5">{{getHours(task.time)}}:{{getMinutes(task.time)}}</div>-->
-                <!--                <div class="cx task-text pr-5">{{trimText(task.project, 7)}}</div>-->
-                <!--                <div *ngIf="task.details == ''" class="cx task-text pr-5 line-text">{{trimText(task.action, 7)}}</div>-->
               </div>
             </div>
           </div>
