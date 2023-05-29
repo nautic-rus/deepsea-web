@@ -664,13 +664,13 @@
   <div *ngIf="taskType == 'CORRECTION'">
     <div class="df space-between">
       <div style="width: 200px">
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Номер документа')}}</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Номер документа *')}}</div>
         <input class="width-220" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
       </div>
-      <div style="width: 450px">
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>
-        <input class="w-100" type="text" pInputText [(ngModel)]="taskSummary">
-      </div>
+<!--      <div style="width: 450px">-->
+<!--        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>-->
+<!--        <input class="w-100" type="text" pInputText [(ngModel)]="taskSummary">-->
+<!--      </div>-->
     </div>
     <div class="df space-between">
       <div>
@@ -687,8 +687,8 @@
         </p-dropdown>
       </div>
       <div>
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Отдел')}}</div>
-        <p-dropdown class="select" styleClass="width-340" [(ngModel)]="taskDepartment" [options]="taskDepartments"></p-dropdown>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Отдел *')}}</div>
+        <p-dropdown class="select" styleClass="width-340" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" [(ngModel)]="taskDepartment" [options]="taskDepartments"></p-dropdown>
       </div>
     </div>
     <div class="df space-between">
@@ -703,7 +703,7 @@
     </div>
     <div class="df space-between">
       <div class="w-100">
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание изменения')}}</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание изменения *')}}</div>
         <input class="w-100" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="modificationDescription">
       </div>
     </div>
