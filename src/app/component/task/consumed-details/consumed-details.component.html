@@ -1,0 +1,9 @@
+<div *ngFor="let cons of getConsumed()">
+  <div class="df">
+    {{getDate(cons.date)}}
+    {{auth.getUserNameById(cons.user)}}
+    {{cons.comment}}
+    {{cons.value}}
+  </div>
+  <button (click)="close()">CLOSE</button>
+</div>
