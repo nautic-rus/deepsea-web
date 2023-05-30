@@ -44,7 +44,10 @@
         <span class="mx-10 cy">/</span>
         <span class="cxy width-35">{{round(getSumPlan())}}</span>
       </div>
-
+      <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChange()" class="border" />
+        </span>
     </div>
     <div class="empty-card-bottom"></div>
 
@@ -52,20 +55,15 @@
     <cdk-virtual-scroll-viewport autosize style="height: 79vh">
       <div class="dash-card" *cdkVirtualFor="let issue of issues">
         <div class="card-task">
-<!--          <div>-->
-
-<!--          </div>-->
-          <!--            <div *ngIf="!issue.doc_number.includes('5') "></div>-->
-          <!--            <div *ngIf="issue.doc_number.includes('5') " class="deadline cxy">deadline</div>-->
           <div class="left-col mr-10 cursor-pointer" (click)="openIssue(issue)">
             <div class="df">
-              <div class="title-bold mb-5 mr-10" [class.no-margin]="issue.doc_number == ''">{{issue.doc_number}}</div>
+              <div class="title-bold mb-5 mr-10" [class.no-margin]="issue.doc_number == ''" [innerHTML]="(issue.doc_number) | highLight: search"></div>
               <div class="gray-bold">{{issue.issue_type}}</div>
             </div>
 
-
-            <div class="text-mini-gray">{{issue.name}}</div>
+            <span class="text-mini-gray" [innerHTML]="(issue.name) | highLight: search"></span>
           </div>
+
           <div class="mm-text">
             <div class="mb-10">{{issue.period}}</div>
             <div>{{getDateOnly(issue.contract_due_date)}}</div>

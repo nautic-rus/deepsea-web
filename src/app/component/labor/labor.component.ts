@@ -33,6 +33,7 @@ export class LaborComponent implements OnInit {
   laborUpdates: any = Object();
   lockedByPlan: any = Object();
   issueSpentTime: DailyTask[] = [];
+  search: string = '';
 
   constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, public t: LanguageService) { }
 
@@ -214,5 +215,21 @@ export class LaborComponent implements OnInit {
         charactersLength));
     }
     return result;
+  }
+
+  searchChange() {
+    this.issues = this.issuesSrc.filter(x => {
+      let notNull = x != null;
+      let findInName = ((x.name.toLowerCase() + x.doc_number.toLowerCase())).includes(this.search.toLowerCase().trim());
+      let findInTranslate = false;
+      if (x.translations != null){
+        x.translations.forEach((y: any) => {
+          if ((y.name.toLowerCase() + y.doc_number.toLowerCase()).includes(this.search.toLowerCase().trim())){
+            findInTranslate = true;
+          }
+        });
+      }
+      return notNull && (findInName || findInTranslate);
+    });
   }
 }
