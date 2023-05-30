@@ -57,8 +57,8 @@ export class LaborComponent implements OnInit {
         this.issues.forEach(issue => {
           this.laborUpdates[issue.id] = Object({planHours: issue.plan_hours, locked: issue.plan_hours_locked});
         });
-        this.statuses = [new LV('-')].concat(this.statuses);
-        this.taskTypes = [new LV('-')].concat(this.taskTypes);
+        // this.statuses = [new LV('-')].concat(this.statuses);
+        // this.taskTypes = [new LV('-')].concat(this.taskTypes);
         this.selectedTaskTypes = this.taskTypes.map(x => x.value);
         this.selectedStatuses = this.statuses.map(x => x.value);
         this.selectedStages = this.stages.map(x => x.value);
