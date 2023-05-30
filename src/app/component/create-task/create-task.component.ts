@@ -450,7 +450,7 @@ export class CreateTaskComponent implements OnInit {
       case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '';
       case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
       case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '';
-      case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '';
+      case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '';
       default: return false;
     }
   }

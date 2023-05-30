@@ -663,20 +663,14 @@
   </div>
   <div *ngIf="taskType == 'CORRECTION'">
     <div class="df space-between">
-      <div style="width: 200px">
+      <div>
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Номер документа *')}}</div>
         <input class="width-220" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
       </div>
-<!--      <div style="width: 450px">-->
-<!--        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>-->
-<!--        <input class="w-100" type="text" pInputText [(ngModel)]="taskSummary">-->
-<!--      </div>-->
-    </div>
-    <div class="df space-between">
       <div>
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного')}}</div>
+        <div class="big-text-create mb-1 mt-1">{{lang.tr('Назначить ответственного *')}}</div>
         <p-dropdown [options]="users" [(ngModel)]="responsibleUser" [filter]="true" [filterBy]="lang.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="lang.language == 'ru' ? 'userName' : 'userNameEn'"
-                    [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-340 max-height-150">
+                    [showClear]="true" [placeholder]="l.tr('Назначить')" class="p-dropdown-150" styleClass="width-220 max-height-150">
           <ng-template let-user pTemplate="item">
             <div class="df">
               <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
@@ -688,9 +682,14 @@
       </div>
       <div>
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Отдел *')}}</div>
-        <p-dropdown class="select" styleClass="width-340" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" [(ngModel)]="taskDepartment" [options]="taskDepartments"></p-dropdown>
+        <p-dropdown class="select" styleClass="width-220" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" [(ngModel)]="taskDepartment" [options]="taskDepartments"></p-dropdown>
       </div>
     </div>
+<!--      <div style="width: 450px">-->
+<!--        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>-->
+<!--        <input class="w-100" type="text" pInputText [(ngModel)]="taskSummary">-->
+<!--      </div>-->
+
     <div class="df space-between">
       <div>
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Причина изменения')}}</div>
