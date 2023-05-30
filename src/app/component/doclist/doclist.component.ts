@@ -33,7 +33,6 @@ export class DoclistComponent implements OnInit {
   taskType = '';
   taskTypes: LV[] = ['-', 'RKD', 'PDSP'].map(x => new LV(x));
   taskStages: LV[] = [];
-
   statuses: string[] = [];
   status = '';
   showWithFilesOnly = true;

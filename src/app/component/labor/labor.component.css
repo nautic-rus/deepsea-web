@@ -1,5 +1,5 @@
-/deep/.p-multiselect-header {
-  display: none!important;
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
 }
 /deep/.p-component{
   font-size: 13px!important;

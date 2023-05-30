@@ -518,7 +518,7 @@ export class LanguageService {
           case 'Номер документа *': return 'Document number *';
           case 'Описание изменения *': return 'Modification description *';
           case 'Назначить ответственного *': return 'Assign responsible *';
-          case '': return '';
+          case 'исп.': return 'used';
           case '': return '';
           case '': return '';
           case '': return '';
