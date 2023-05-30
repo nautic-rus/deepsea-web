@@ -49,7 +49,6 @@
 .users-days{
   height: calc(100vh - 210px);
   overflow-y: auto;
-  overflow-x: hidden;
 }
 .users{
   font-size: 14px;

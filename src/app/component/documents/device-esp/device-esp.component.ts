@@ -146,6 +146,12 @@ export class DeviceEspComponent implements OnInit {
       icon: 'assets/icons/cutting.svg',
       collapsed: true,
       need_rights: false
+    },
+    {
+      name: 'Correction',
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true,
+      need_rights: false
     }
   ];
   selectedTab = this.fileGroups[0].name;
