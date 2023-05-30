@@ -35,6 +35,8 @@ import {AssignResponsibleComponent} from "../qna/assign-responsible/assign-respo
 import {AssignQuestionComponent} from "../qna/assign-question/assign-question.component";
 import {Router} from "@angular/router";
 import {concat, forkJoin} from "rxjs";
+import {ConsumedHour} from "../work-hours/work-hours.component";
+import {ConsumedDetailsComponent} from "./consumed-details/consumed-details.component";
 
 @Component({
   selector: 'app-task',
@@ -249,6 +251,7 @@ export class TaskComponent implements OnInit {
   groupedChecks: any[] = [];
   ready = Object({model: 0, drawing: 0, nesting: 0});
   issueProjects: any[] = [];
+  consumed: ConsumedHour[] = [];
 
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, public router: Router) { }
 
@@ -288,6 +291,9 @@ export class TaskComponent implements OnInit {
     this.issue = this.conf.data as Issue;
     this.auth.getPlannedHours().subscribe(res => {
       this.planned = res;
+    });
+    this.auth.getConsumedPlanHours(0).subscribe(consumed => {
+      this.consumed = consumed;
     });
     this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
 
@@ -1264,5 +1270,19 @@ export class TaskComponent implements OnInit {
   goToPlan(taskId: number) {
     this.ref.close();
     this.router.navigate(['work-hours'], {queryParams: {taskId}});
+  }
+
+  getConsumedHours() {
+    return this.consumed.filter(x => x.task_id == this.issue.id).length;
+  }
+
+  openConsumedDetails() {
+    this.dialogService.open(ConsumedDetailsComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+
+    });
   }
 }
