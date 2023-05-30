@@ -75,6 +75,12 @@ export class CablesComponent implements OnInit {
       icon: 'assets/icons/files.svg',
       collapsed: false,
       need_rights: false
+    },
+    {
+      name: 'Correction',
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true,
+      need_rights: false
     }
   ];
   fileSort = 'name';
