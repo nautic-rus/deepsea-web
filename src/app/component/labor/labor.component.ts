@@ -9,6 +9,7 @@ import {MessageService} from "primeng/api";
 import {LanguageService} from "../../domain/language.service";
 import {DailyTask} from "../../domain/interfaces/daily-task";
 import * as XLSX from "xlsx";
+import {LV} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-labor',
@@ -17,15 +18,20 @@ import * as XLSX from "xlsx";
 })
 export class LaborComponent implements OnInit {
 
-  projects: string[] = ['N002', 'N004', 'P701', 'P707'];
+  projects: any[] = [];
+  selectedProjects: string[] = [];
+  selectedDepartments: string[] = [];
+  selectedStages: string[] = [];
+  selectedTaskTypes: string[] = [];
+  selectedStatuses: string[] = [];
   project = '';
-  departments: string[] = [];
+  departments: LV[] = [];
   department = '';
-  stages: string[] = [];
+  stages: LV[] = [];
   stage = '';
-  statuses: string[] = [];
+  statuses: LV[] = [];
   status = '';
-  taskTypes: string[] = [];
+  taskTypes: LV[] = [];
   taskType = '';
   issues: Issue[] = [];
   issuesSrc: any[] = [];
@@ -44,16 +50,18 @@ export class LaborComponent implements OnInit {
         this.issuesSrc = res;
         this.issues = res;
         this.issues = _.sortBy(this.issues, x => x.doc_number);
-        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x);
-        this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
-        this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x);
+        this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x).map(x => new LV(x));
+        this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x).map(x => new LV(x));
+        this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x).map(x => new LV(x));
         this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
         this.issues.forEach(issue => {
           this.laborUpdates[issue.id] = Object({planHours: issue.plan_hours, locked: issue.plan_hours_locked});
         });
-        this.statuses = ['-'].concat(this.statuses);
-        this.taskTypes = ['-'].concat(this.taskTypes);
-        console.log(this.issues);
+        // this.statuses = [new LV('-')].concat(this.statuses);
+        // this.taskTypes = [new LV('-')].concat(this.taskTypes);
+        this.selectedTaskTypes = this.taskTypes.map(x => x.value);
+        this.selectedStatuses = this.statuses.map(x => x.value);
+        this.selectedStages = this.stages.map(x => x.value);
         this.auth.getPlannedHours().subscribe(planned => {
           this.issues.forEach(issue => {
             this.lockedByPlan[issue.id] = planned.find((x: any) => x.task_id == issue.id) != null;
@@ -64,9 +72,12 @@ export class LaborComponent implements OnInit {
     this.issueManagerService.getIssueProjects().then(projects => {
       this.projects = projects;
       this.projects.forEach((x: any) => x.label = this.getProjectName(x));
+      this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
+      this.selectedProjects = [...this.projects.map(x => x.name)];
     });
     this.issueManagerService.getIssueDepartments().then(departments => {
-      this.departments = departments;
+      this.departments = departments.map(x => new LV(x));
+      this.selectedDepartments = [...this.departments.map(x => x.value)];
     });
   }
   getProjectName(project: any){
@@ -78,11 +89,12 @@ export class LaborComponent implements OnInit {
   }
   filterIssues(){
     this.issues = [...this.issuesSrc];
-    this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
-    this.issues = this.issues.filter(x => x.department == this.department || this.department == '' || this.department == '-' || this.department == null);
-    this.issues = this.issues.filter(x => x.period == this.stage || this.stage == '' || this.stage == '-' || this.stage == null);
-    this.issues = this.issues.filter(x => x.issue_type == this.taskType || this.taskType == '' || this.taskType == '-' || this.taskType == null);
-    this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.status, false) || this.status == '' || this.status == '-' || this.status == null);
+
+    this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
+    this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department));
+    this.issues = this.issues.filter(x => this.selectedTaskTypes.includes(x.issue_type));
+    this.issues = this.issues.filter(x => this.selectedStages.includes(x.period));
+    this.issues = this.issues.filter(x => this.selectedStatuses.includes(x.status));
     this.issues = _.sortBy(this.issues, x => x.doc_number);
   }
 

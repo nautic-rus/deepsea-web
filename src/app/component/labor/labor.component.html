@@ -4,24 +4,19 @@
     <div class="card-head df sticky-card">
       <div class="df">
         <div class="mr-10">
-          <p-dropdown placeholder="Project" optionLabel="label" optionValue="name" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
-          </p-dropdown>
+          <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
         </div>
         <div class="mr-10">
-          <p-dropdown placeholder="Department" [(ngModel)]="department" [options]="departments" (ngModelChange)="departmentChanged()" styleClass="width-170 border">
-          </p-dropdown>
+          <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
         </div>
         <div class="mr-10">
-          <p-dropdown placeholder="Stage" [(ngModel)]="stage" [options]="stages" (ngModelChange)="stageChanged()" styleClass="width-170 border">
-          </p-dropdown>
+          <p-multiSelect styleClass="width-200" [options]="stages" [(ngModel)]="selectedStages" (ngModelChange)="stageChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
         </div>
         <div class="mr-10">
-          <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">
-          </p-dropdown>
+          <p-multiSelect styleClass="width-200" [options]="taskTypes" [(ngModel)]="selectedTaskTypes" (ngModelChange)="taskTypeChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
         </div>
         <div class="mr-10">
-          <p-dropdown placeholder="Status" [(ngModel)]="status" [options]="statuses" (ngModelChange)="statusChanged()" styleClass="width-170 border">
-          </p-dropdown>
+          <p-multiSelect styleClass="width-200" [options]="statuses" [(ngModel)]="selectedStatuses" (ngModelChange)="statusChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
         </div>
         <div class="mr-10" (click)="exportXls()">
           <div class="materials-button green-button cxy">

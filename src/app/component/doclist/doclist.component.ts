@@ -33,7 +33,6 @@ export class DoclistComponent implements OnInit {
   taskType = '';
   taskTypes: LV[] = ['-', 'RKD', 'PDSP'].map(x => new LV(x));
   taskStages: LV[] = [];
-
   statuses: string[] = [];
   status = '';
   showWithFilesOnly = true;
@@ -54,6 +53,7 @@ export class DoclistComponent implements OnInit {
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
       this.issues = this.issuesSrc;
+      console.log(this.issues);
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
@@ -96,7 +96,8 @@ export class DoclistComponent implements OnInit {
         'Department': issue.department,
         'Stage': issue.period,
         'Contract due date': this.getDateOnly(issue.contract_due_date),
-        'Last update': this.getDateOnly(issue.last_update)
+        'Last update': this.getDateOnly(issue.last_update),
+        'Comment': issue.issue_comment
       })
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
