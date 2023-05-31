@@ -177,6 +177,7 @@ import { DrawingShowComponent } from './component/materials-summary/drawing-show
 import { DesignEspComponent } from './component/documents/design-esp/design-esp.component';
 import { MasterComponent } from './component/master/master.component';
 import { ConsumedDetailsComponent } from './component/task/consumed-details/consumed-details.component';
+import { GeneralEspComponent } from './component/documents/general-esp/general-esp.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -303,7 +304,8 @@ Quill.register('modules/imageResize', ImageResize);
     DrawingShowComponent,
     DesignEspComponent,
     MasterComponent,
-    ConsumedDetailsComponent
+    ConsumedDetailsComponent,
+    GeneralEspComponent
   ],
     imports: [
         BrowserModule,

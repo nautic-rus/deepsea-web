@@ -51,6 +51,7 @@ import {MaterialsSummaryComponent} from "./component/materials-summary/materials
 import {DoclistComponent} from "./component/doclist/doclist.component";
 import {DesignEspComponent} from "./component/documents/design-esp/design-esp.component";
 import {MasterComponent} from "./component/master/master.component";
+import {GeneralEspComponent} from "./component/documents/general-esp/general-esp.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -72,6 +73,7 @@ const routes: Routes = [
   { path: 'pipe-esp', component: PipeEspComponent, canActivate: [AuthGuard], data: {animation: 'PipeEspComponent'} },
   { path: 'device-esp', component: DeviceEspComponent, canActivate: [AuthGuard], data: {animation: 'DeviceEspComponent'} },
   { path: 'design-esp', component: DesignEspComponent, canActivate: [AuthGuard], data: {animation: 'DesignEspComponent'} },
+  { path: 'general-esp', component: GeneralEspComponent, canActivate: [AuthGuard], data: {animation: 'GeneralEspComponent'} },
   { path: 'accommodation-esp', component: DeviceEspComponent, canActivate: [AuthGuard], data: {animation: 'DeviceEspComponent'} },
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
