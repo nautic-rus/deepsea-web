@@ -125,6 +125,8 @@ export class WorkHoursComponent implements OnInit {
   dragValues = Object();
   vacation = 0;
   medical = 0;
+  timeOff = 0;
+  studies = 0;
   taskId = 0;
   consumed: ConsumedHour[] = [];
   consumedIds: number[] = [];
@@ -341,13 +343,32 @@ export class WorkHoursComponent implements OnInit {
     return _.sortBy(res, x => _.min(x.planHours.map(y => y.id)));
   }
   getTaskColor(taskId: number){
-    let eq1 = Math.pow(taskId, 1);
-    let eq2 = Math.pow(taskId, 2);
-    let eq3 = Math.pow(taskId, 3);
-    let r = eq1 % 255;
-    let g = eq2 % 255;
-    let b = eq3 % 255;
-    return `rgba(${r}, ${g}, ${b}, 0.6)`;
+    switch (taskId){
+      case -5:{ //УЧЁБА
+        return 'rgb(10,252,252)';
+      }
+      case -4:{ //ОТГУЛ
+        return 'rgb(89,55,241)';
+      }
+      case -3:{ //ОПЕРГРУППА
+        return 'rgb(53,50,54)';
+      }
+      case -2:{ //ОТПУСК
+        return 'rgb(0,255,62)';
+      }
+      case -1:{ //БОЛЬНИЧНЫЙ
+        return 'rgb(248,8,8)';
+      }
+      default:{
+        let eq1 = Math.pow(taskId, 1);
+        let eq2 = Math.pow(taskId, 2);
+        let eq3 = Math.pow(taskId, 3);
+        let r = eq1 % 255;
+        let g = eq2 % 255;
+        let b = eq3 % 255;
+        return `rgba(${r}, ${g}, ${b}, 0.6)`;
+      }
+    }
   }
   nextDaySameTask(day: TaskOfDay){
     if (day.planHours.length == 8){
@@ -614,7 +635,7 @@ export class WorkHoursComponent implements OnInit {
       this.loading = true;
       this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, (this.draggableEvent.ctrlKey || this.draggableIssue.id < 0) ? 1 : 0).subscribe({
         next: () => {
-          this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
+          this.auth.getUsersPlanHours(0, this.currentDate.getTime(), 0).subscribe(planHours => {
             this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
               this.plannedHours = plannedHoursAlready;
               this.pHours = planHours;
@@ -622,18 +643,21 @@ export class WorkHoursComponent implements OnInit {
               this.filterIssues();
               this.loading = false;
 
-              let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id), x => x.id);
 
-              if (planHours.length > 0){
-                let first = plannedHours[0];
-                let last = plannedHours[plannedHours.length - 1];
-                let dateStart = new Date(first.year, first.month, first.day);
-                let dateDue = new Date(last.year, last.month, last.day);
-                this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
-                this.draggableIssue.status = 'AssignedTo';
-                this.draggableIssue.action = this.draggableIssue.status;
-                this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
-              }
+              this.auth.getUsersPlanHours(user.id, 0, 1).subscribe(userPlanHours => {
+                let plannedHours = _.sortBy(userPlanHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id && x.id >= freeHour!.id), x => x.id);
+
+                if (plannedHours.length > 0){
+                  let first = plannedHours[0];
+                  let last = plannedHours[plannedHours.length - 1];
+                  let dateStart = new Date(first.year, first.month, first.day);
+                  let dateDue = new Date(last.year, last.month, last.day);
+                  this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+                  this.draggableIssue.status = 'AssignedTo';
+                  this.draggableIssue.action = this.draggableIssue.status;
+                  this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
+                }
+              });
             });
 
           });

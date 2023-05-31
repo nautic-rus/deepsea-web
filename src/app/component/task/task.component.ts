@@ -838,6 +838,15 @@ export class TaskComponent implements OnInit {
                   console.log(latestConsumed);
                   console.log(taskHours);
                   console.log(userPlanHoursToday);
+                  if (this.issue.closing_status.includes(value)){
+                    let plan = issue.plan_hours;
+                    let consumed = this.consumed.filter(x => x.task_id == issue.id).length;
+                    if (consumed < plan){
+                      this.auth.savePlanHours(findUser!.id, issue.id, consumed - plan, plan).subscribe(res => {
+                        console.log(res);
+                      });
+                    }
+                  }
                   if (taskHours.length > 0){
                     this.auth.deleteUserTask(findUser!.id, this.issue.id, taskHours[0].id).subscribe(() => {
                       let assign: any[] = [];

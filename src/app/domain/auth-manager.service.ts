@@ -274,6 +274,9 @@ export class AuthManagerService {
   consumePlanHours(planHours: PlanHour[], userId: number, taskId: number, details: string){
     return this.http.post<any>(props.http + '/consumePlanHours', planHours, {params: {userId, taskId, details}});
   }
+  savePlanHours(userId: number, taskId: number, value: number, plan: number){
+    return this.http.get<any>(props.http + '/savePlanHours', {params: {userId, taskId, value, plan}});
+  }
   hostsStatus(){
     return this.http.get<any>(props.restMaster + '/hostsStatus');
   }
