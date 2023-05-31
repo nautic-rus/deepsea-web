@@ -96,7 +96,8 @@ export class DoclistComponent implements OnInit {
         'Department': issue.department,
         'Stage': issue.period,
         'Contract due date': this.getDateOnly(issue.contract_due_date),
-        'Last update': this.getDateOnly(issue.last_update)
+        'Last update': this.getDateOnly(issue.last_update),
+        'Comment': issue.issue_comment
       })
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
