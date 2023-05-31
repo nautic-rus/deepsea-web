@@ -519,7 +519,7 @@ export class LanguageService {
           case 'Описание изменения *': return 'Modification description *';
           case 'Назначить ответственного *': return 'Assign responsible *';
           case 'исп.': return 'used';
-          case '': return '';
+          case 'Комментарий': return 'Comment';
           case '': return '';
           case '': return '';
           case '': return '';

@@ -53,6 +53,7 @@ export class DoclistComponent implements OnInit {
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
       this.issues = this.issuesSrc;
+      console.log(this.issues);
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
