@@ -614,7 +614,7 @@ export class WorkHoursComponent implements OnInit {
       this.loading = true;
       this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, (this.draggableEvent.ctrlKey || this.draggableIssue.id < 0) ? 1 : 0).subscribe({
         next: () => {
-          this.auth.getUsersPlanHours(0, this.currentDate.getTime()).subscribe(planHours => {
+          this.auth.getUsersPlanHours(user.id, 0, 1).subscribe(planHours => {
             this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
               this.plannedHours = plannedHoursAlready;
               this.pHours = planHours;
@@ -622,9 +622,9 @@ export class WorkHoursComponent implements OnInit {
               this.filterIssues();
               this.loading = false;
 
-              let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id), x => x.id);
+              let plannedHours = _.sortBy(this.pHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id && x.id >= freeHour!.id), x => x.id);
 
-              if (planHours.length > 0){
+              if (plannedHours.length > 0){
                 let first = plannedHours[0];
                 let last = plannedHours[plannedHours.length - 1];
                 let dateStart = new Date(first.year, first.month, first.day);
