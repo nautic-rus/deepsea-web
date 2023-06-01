@@ -394,6 +394,9 @@ export class WorkHoursComponent implements OnInit {
   }
 
   openTask(taskId: number){
+    if (taskId < 0){
+      return;
+    }
     this.cd.detach();
     this.issueManagerService.getIssueDetails(taskId).then(res => {
       this.dialogService.open(TaskComponent, {
@@ -430,12 +433,12 @@ export class WorkHoursComponent implements OnInit {
               task.action = task.status;
               this.issueManager.updateIssue(this.auth.getUser().login, 'status', task);
             }
-            let daysBefore = this.pHours.filter(x => x.id < this.taskOfDay.planHours[0].id && x.user == this.taskOfDay.planHours[0].user);
-            let daysBeforeR = _.sortBy(daysBefore, x => x.id).reverse();
-            this.selectedDay = this.userPDays[daysBeforeR[0].user].find((x: any) => x.planHours.includes(daysBeforeR[0]));
-            if (this.selectedDay != null){
-              //this.foldAllTaskLeft();
-            }
+            // let daysBefore = this.pHours.filter(x => x.id < this.taskOfDay.planHours[0].id && x.user == this.taskOfDay.planHours[0].user);
+            // let daysBeforeR = _.sortBy(daysBefore, x => x.id).reverse();
+            // this.selectedDay = this.userPDays[daysBeforeR[0].user].find((x: any) => x.planHours.includes(daysBeforeR[0]));
+            // if (this.selectedDay != null){
+            //   //this.foldAllTaskLeft();
+            // }
           });
         });
       });
@@ -619,11 +622,18 @@ export class WorkHoursComponent implements OnInit {
   }
 
   dragDrop(event: DragEvent, pDay: PlanDay, user: User) {
-    console.log('drop');
     event.preventDefault();
     this.cd.reattach();
     console.log(pDay);
     console.log(this.draggableIssue);
+    let date = new Date(pDay.year, pDay.month, pDay.day);
+    let current = new Date();
+    let compare = new Date(current.getFullYear(), current.getMonth(), current.getDate());
+    if (date.getTime() < compare.getTime()){
+      alert('Планирование на прошлые дни невозможно');
+      return;
+    }
+
 
     let planHours = pDay.planHours;
     let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.draggableEvent.ctrlKey || this.draggableIssue.id < 0) && !this.consumedIds.includes(x.id));
@@ -643,21 +653,23 @@ export class WorkHoursComponent implements OnInit {
               this.filterIssues();
               this.loading = false;
 
+              if (this.draggableIssue.id > 0){
+                this.auth.getUsersPlanHours(user.id, 0, 1).subscribe(userPlanHours => {
+                  let plannedHours = _.sortBy(userPlanHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id && x.id >= freeHour!.id), x => x.id);
 
-              this.auth.getUsersPlanHours(user.id, 0, 1).subscribe(userPlanHours => {
-                let plannedHours = _.sortBy(userPlanHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id && x.id >= freeHour!.id), x => x.id);
+                  if (plannedHours.length > 0){
+                    let first = plannedHours[0];
+                    let last = plannedHours[plannedHours.length - 1];
+                    let dateStart = new Date(first.year, first.month, first.day);
+                    let dateDue = new Date(last.year, last.month, last.day);
+                    this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
+                    this.draggableIssue.status = 'AssignedTo';
+                    this.draggableIssue.action = this.draggableIssue.status;
+                    this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
+                  }
+                });
+              }
 
-                if (plannedHours.length > 0){
-                  let first = plannedHours[0];
-                  let last = plannedHours[plannedHours.length - 1];
-                  let dateStart = new Date(first.year, first.month, first.day);
-                  let dateDue = new Date(last.year, last.month, last.day);
-                  this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
-                  this.draggableIssue.status = 'AssignedTo';
-                  this.draggableIssue.action = this.draggableIssue.status;
-                  this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
-                }
-              });
             });
 
           });
