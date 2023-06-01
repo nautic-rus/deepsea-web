@@ -520,8 +520,8 @@ export class LanguageService {
           case 'Назначить ответственного *': return 'Assign responsible *';
           case 'исп.': return 'used';
           case 'Комментарий': return 'Comment';
-          case '': return '';
-          case '': return '';
+          case 'Учёба': return 'Study';
+          case 'Отгул': return 'Day off';
           case '': return '';
           case '': return '';
           case '': return '';

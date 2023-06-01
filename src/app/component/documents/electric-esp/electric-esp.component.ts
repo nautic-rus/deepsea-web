@@ -69,6 +69,7 @@ export class ElectricEspComponent implements OnInit {
   searchNesting: string = '';
   selectedHeadTab: string = 'Files';
   revEsp = '';
+  revEspNoDate = '';
   nestContent: any[] = [];
   nestContentRead = false;
   quillModules =
@@ -254,6 +255,10 @@ export class ElectricEspComponent implements OnInit {
         }
       }
     }
+  }
+  getDateModify(dateLong: number){
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   fillAccommodations(){
     this.s.getAccommodations(this.docNumber).then(res => {
