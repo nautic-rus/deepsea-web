@@ -15,9 +15,9 @@
           <div class="cxy">{{currentMonth + ' ' + currentYear}}</div>
         </div>
         <div class="mr-10">
-          <div class="materials-button-w yellow-button cxy space-between" [pTooltip]="t.tr('Учёба')" tooltipPosition="top">
+          <div class="materials-button-w blue-button cxy space-between" [pTooltip]="t.tr('Учёба')" tooltipPosition="top">
             <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('STUDIES'), studies)" (dragend)="dragEnd($event)">
-              <img src="assets/icons/hospital.svg" height="18">
+              <img src="assets/icons/book1.svg" height="20">
             </div>
             <div class="cursor-pointer">
               <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="studies"></p-inputNumber>
@@ -25,9 +25,9 @@
           </div>
         </div>
         <div class="mr-10">
-          <div class="materials-button-w yellow-button cxy space-between" [pTooltip]="t.tr('Отгул')" tooltipPosition="top">
+          <div class="materials-button-w gray-button cxy space-between" [pTooltip]="t.tr('Отгул')" tooltipPosition="top">
             <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('TIME OFF'), timeOff * 8)" (dragend)="dragEnd($event)">
-              <img src="assets/icons/hospital.svg" height="18">
+              <img src="assets/icons/off.svg" height="21">
             </div>
             <div class="cursor-pointer">
               <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="timeOff"></p-inputNumber>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="mr-10">
-          <div class="materials-button-w yellow-button cxy space-between" [pTooltip]="t.tr('Больничный')" tooltipPosition="top">
+          <div class="materials-button-w red-button cxy space-between" [pTooltip]="t.tr('Больничный')" tooltipPosition="top">
             <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('SICK'), medical * 8)" (dragend)="dragEnd($event)">
               <img src="assets/icons/hospital.svg" height="18">
             </div>

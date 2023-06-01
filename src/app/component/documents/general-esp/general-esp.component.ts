@@ -24,12 +24,11 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 
 @Component({
-  selector: 'app-electric-esp',
-  templateUrl: './electric-esp.component.html',
-  styleUrls: ['./electric-esp.component.css']
+  selector: 'app-general-esp',
+  templateUrl: './general-esp.component.html',
+  styleUrls: ['./general-esp.component.css']
 })
-export class ElectricEspComponent implements OnInit {
-
+export class GeneralEspComponent implements OnInit {
 
   accommodations: any = [];
   accommodationsSrc: any = [];
@@ -43,7 +42,6 @@ export class ElectricEspComponent implements OnInit {
   issueId = 0;
   issue: Issue = new Issue();
   selectedDevice = Object();
-  miscIssues: Issue[] = [];
   cmapView: Window | null = null;
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
@@ -68,8 +66,6 @@ export class ElectricEspComponent implements OnInit {
   search: string = '';
   searchNesting: string = '';
   selectedHeadTab: string = 'Files';
-  revEsp = '';
-  revEspNoDate = '';
   nestContent: any[] = [];
   nestContentRead = false;
   quillModules =
@@ -160,6 +156,7 @@ export class ElectricEspComponent implements OnInit {
   pipesSrc: any[] = [];
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
+  miscIssues: Issue[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -207,15 +204,6 @@ export class ElectricEspComponent implements OnInit {
       return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
     }
   }
-
-  clickOnTrays() {
-    window.open(`/trays?issueId=${this.issueId}&foranProject=${this.project}&docNumber=${this.docNumber}&department=${this.department}`, '_blank');
-  }
-
-  clickOnCables() {
-    window.open(`/cables?issueId=${this.issueId}&foranProject=${this.project}&docNumber=${this.docNumber}&department=${this.department}`, '_blank');
-  }
-
   getFilters(values: any[], field: string): any[] {
     let res: any[] = [];
     let uniq = _.uniq(values, x => x[field]);
@@ -255,10 +243,6 @@ export class ElectricEspComponent implements OnInit {
         }
       }
     }
-  }
-  getDateModify(dateLong: number){
-    let date = new Date(dateLong);
-    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   fillAccommodations(){
     this.s.getAccommodations(this.docNumber).then(res => {
@@ -390,20 +374,20 @@ export class ElectricEspComponent implements OnInit {
     return this.device.isDesktop() && window.innerWidth > 1296;
   }
   fillRevisions(){
-    this.miscIssues.splice(0, this.miscIssues.length);
-    this.issueManager.getIssues('op').then(issues => {
-      //issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
-      this.miscIssues.push(this.issue);
-      issues.filter(x => this.issue.combined_issues.map(y => y.id).includes(x.id)).forEach(x => this.miscIssues.push(x));
-      issues.filter(x => this.issue.child_issues.map(y => y.id).includes(x.id)).forEach(x => this.miscIssues.push(x));      this.miscIssues.forEach(x => {
-        issues.filter(y => y.parent_id == x.id).forEach(ch => {
-          this.miscIssues.push(ch);
-        })
-      });
-    });
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
+      this.miscIssues.splice(0, this.miscIssues.length);
+      this.issueManager.getIssues('op').then(issues => {
+        //issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+        this.miscIssues.push(this.issue);
+        issues.filter(x => this.issue.combined_issues.map(y => y.id).includes(x.id)).forEach(x => this.miscIssues.push(x));
+        issues.filter(x => this.issue.child_issues.map(y => y.id).includes(x.id)).forEach(x => this.miscIssues.push(x));        this.miscIssues.forEach(x => {
+          issues.filter(y => y.parent_id == x.id).forEach(ch => {
+            this.miscIssues.push(ch);
+          })
+        });
+      });
       this.issueRevisions.push(this.issue.revision);
       this.issue.revision_files.map(x => x.revision).forEach(gr => {
         if (!this.issueRevisions.includes(gr)){
@@ -516,6 +500,9 @@ export class ElectricEspComponent implements OnInit {
         this.issue = issue;
         this.fillRevisions();
       });
+      if (res == 'uploaded'){
+        this.issueManager.notifyDocUpload(this.issue.id).subscribe(() => {});
+      }
     });
   }
   downloadFiles(group: string, revision: string) {
@@ -808,5 +795,4 @@ export class ElectricEspComponent implements OnInit {
   openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
   }
-
 }
