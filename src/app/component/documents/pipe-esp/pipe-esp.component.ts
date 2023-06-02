@@ -864,19 +864,25 @@ export class PipeEspComponent implements OnInit {
     this.spoolViewEnabled = false;
     this.dxfView = window.open(url, '_blank', 'height=720,width=1280');
   }
-  getMaterialName(material: Material){
-    let name = material.name;
-    let desc = material.description;
-    let findName = material.translations.find(x => x.lang == this.l.language);
-    if (findName != null){
-      name = findName.name;
-      desc = material.description;
+  getMaterialName(pipe: any){
+    let material = pipe.material as Material;
+    if (pipe.typeCode == 'HVAC'){
+      return material.name;
     }
-    let res = name;
-    if (desc != ''){
-      res = name + ' (' + desc + ')';
+    else{
+      let name = material.name;
+      let desc = material.description;
+      let findName = material.translations.find(x => x.lang == this.l.language);
+      if (findName != null){
+        name = findName.name;
+        desc = material.description;
+      }
+      let res = name;
+      if (desc != ''){
+        res = name + ' (' + desc + ')';
+      }
+      return res;
     }
-    return res;
   }
   downloadFileFromZip(zip: FileAttachment, file: string) {
     fetch(zip.url).then(response => response.blob()).then(blob => {
