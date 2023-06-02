@@ -819,7 +819,8 @@ export class TaskComponent implements OnInit {
           this.statusChanged();
         }
 
-        if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
+        // if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
+        if (this.issue.closing_status.includes(value)){
           this.updated = true;
           let findUser = this.auth.users.find(x => x.login == assignedTo);
           if (findUser != null){
