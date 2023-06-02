@@ -167,6 +167,10 @@ export class DeviceEspComponent implements OnInit {
   spoolsArchiveContent: any[] = [];
   editing = 0;
   newLabel = '';
+  revEsp = '';
+  kindEsp = '';
+  revEspNoDate = '';
+  revUser = '';
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -263,7 +267,7 @@ export class DeviceEspComponent implements OnInit {
     this.s.getDevices(this.docNumber).then(res => {
       if (res.length > 0){
         console.log(res);
-        this.devices = _.sortBy(res.filter(x => x.elemType != 'accommodation'), x => this.addLeftZeros(x.userId, 5));
+        this.devices = _.sortBy(res.filter((x: any) => x.elemType != 'accommodation'), x => this.addLeftZeros(x.userId, 5));
         if (this.devices.find((x: any) => x.userId.includes('#')) != null){
           this.devices.forEach((d: any) => {
             if (d.userId.includes('#')){
@@ -283,7 +287,7 @@ export class DeviceEspComponent implements OnInit {
           this.devices = this.devicesGrouped;
         }
 
-        _.forEach(_.groupBy(res.filter(x => x.elemType == 'accommodation'), x => x.material.code), g => {
+        _.forEach(_.groupBy(res.filter((x: any) => x.elemType == 'accommodation'), x => x.material.code), g => {
           let newDevice = JSON.parse(JSON.stringify(g[0]));
           let sum = 0;
           g.forEach(x => sum += x.weight);
@@ -314,9 +318,14 @@ export class DeviceEspComponent implements OnInit {
   }
   fillDevices(){
     this.s.getDevices(this.docNumber).then(res => {
-      if (res.length > 0){
-        console.log(res);
-        this.devices = _.sortBy(res, x => x.userId.includes('.') ? (this.addLeftZeros(x.userId.split('.')[0]) + this.addLeftZeros(x.userId.split('.')[1])) : this.addLeftZeros(x.userId, 5));
+      console.log(res);
+      if (res != null && res.elements.length > 0){
+        let devices = res.elements;
+        this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
+        this.revEspNoDate = res.rev;
+        this.kindEsp = res.kind;
+        this.revUser = this.auth.getUserName(res.user);
+        this.devices = _.sortBy(devices, x => x.userId.includes('.') ? (this.addLeftZeros(x.userId.split('.')[0]) + this.addLeftZeros(x.userId.split('.')[1])) : this.addLeftZeros(x.userId, 5));
         this.devices.forEach((d: any) => {
           if (d.userId.includes('#')){
             d.userId = d.userId.split('#')[0];
@@ -343,7 +352,10 @@ export class DeviceEspComponent implements OnInit {
       }
     });
   }
-
+  getDateModify(dateLong: number){
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
   removeLeftZeros(input: string){
     let res = input;
     while (res.length > 0 && res[0] == '0'){
@@ -643,7 +655,7 @@ export class DeviceEspComponent implements OnInit {
     this.dialogService.open(DeviceEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
-      data: {issue: this.issue, spools: value}
+      data: {issue: this.issue, spools: value, project: this.project}
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });

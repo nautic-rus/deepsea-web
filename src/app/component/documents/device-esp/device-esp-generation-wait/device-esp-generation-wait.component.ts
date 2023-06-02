@@ -27,12 +27,15 @@ export class DeviceEspGenerationWaitComponent implements OnInit {
   langs = ['Primary', 'Secondary'];
   lang = this.langs[0];
   updateRevision = false;
+  generateFiles = false;
+  project = '';
 
   constructor(private auth: AuthManagerService, private issues: IssueManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
 
 
   ngOnInit(): void {
     this.issue = this.conf.data.issue;
+    this.project = this.conf.data.project;
   }
   close(){
     this.ref.close('exit');
@@ -41,31 +44,32 @@ export class DeviceEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-    this.s.getDevicesEspFiles(this.issue.doc_number, this.rev, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
-      this.generationWait = false;
-      this.resUrls.splice(0, this.resUrls.length);
-      this.resUrls.push(res);
-      let files: FileAttachment[] = [];
 
-      this.resUrls.forEach(fileUrl => {
-        let file = new FileAttachment();
-        file.url = fileUrl;
-        file.revision = this.rev;
-        file.author = this.auth.getUser().login;
-        file.group = 'Part List';
-        file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
-        file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
-        files.push(file);
-      });
-
-      // this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-      //   this.issues.clearRevisionFiles(this.issue.id, this.auth.getUser().login, 'Part List', 'PROD').then(() => {
-      //     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(files)).then(res => {
-      //
-      //     });
-      //   });
-      // });
+    this.s.createDeviceEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+      if (!this.generateFiles){
+        this.generationWait = false;
+        this.close();
+      }
     });
+    if (this.generateFiles){
+      this.s.getDevicesEspFiles(this.issue.doc_number, this.rev, this.lang.replace('Primary', 'en').replace('Secondary', 'ru')).then(res => {
+        this.generationWait = false;
+        this.resUrls.splice(0, this.resUrls.length);
+        this.resUrls.push(res);
+        let files: FileAttachment[] = [];
+        this.resUrls.forEach(fileUrl => {
+          let file = new FileAttachment();
+          file.url = fileUrl;
+          file.revision = this.rev;
+          file.author = this.auth.getUser().login;
+          file.group = 'Part List';
+          file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+          file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
+          files.push(file);
+        });
+      });
+    }
+
   }
 
   getFileName(file: string) {

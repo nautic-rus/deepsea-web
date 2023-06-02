@@ -114,7 +114,7 @@ export class SpecManagerService {
     return await this.http.get<any[]>(props.httpSpec + '/pipeSegs', {params: {project}}).toPromise();
   }
   async getDevices(docNumber: string) {
-    return await this.http.get<any[]>(props.httpSpec + '/devices', {params: {docNumber}}).toPromise();
+    return await this.http.get<any>(props.httpSpec + '/devices', {params: {docNumber}}).toPromise();
   }
   async getAccommodations(docNumber: string) {
     return await this.http.get<any[]>(props.httpSpec + '/accommodations', {params: {docNumber}}).toPromise();
@@ -143,7 +143,7 @@ export class SpecManagerService {
   createHullEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createHullEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
-  createPipeEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
-    return this.http.get<string>(props.httpSpec + '/createHullEsp', {params: {project, docNumber, rev, user, kind, taskId}});
+  createDeviceEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
+    return this.http.get<string>(props.httpSpec + '/createDeviceEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
 }

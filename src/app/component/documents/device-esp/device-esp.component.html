@@ -61,7 +61,17 @@
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20" [class.card-height-with-dxf]="dxfEnabled">
-        <div class="loading-text" *ngIf="noResult">No result for drawing {{docNumber}} of project {{project}}. You need to add document number {{docNumber}} to the system description using FORAN app in {{project}} project</div>
+        <div *ngIf="noResult">
+          <div class="loading-text">
+            No result for drawing {{docNumber}} of project {{project}}.
+          </div>
+          <div>
+            1. You need to add document number {{docNumber}} to the system description using FORAN app in {{project}} project.
+          </div>
+          <div>
+            2. You need to create specification using pink button at the top panel of this page.
+          </div>
+        </div>
         <div *ngIf="devices.length == 0 && !noResult">
           <div class="cxy loading">
             <div class="cxy card-height">
