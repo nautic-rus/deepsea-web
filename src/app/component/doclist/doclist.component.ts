@@ -177,4 +177,5 @@ export class DoclistComponent implements OnInit {
   taskStagesChanged() {
     this.filterIssues();
   }
+
 }

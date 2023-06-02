@@ -25,6 +25,8 @@
           <span class="checkmark"></span>
         </label>
       </div>
+
+
       <div class="mr-10">
         <div class="materials-button green-button cxy" [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
           <img src="assets/icons/xls2.svg" height="26">
@@ -104,7 +106,9 @@
             <td class="text-14 w-100">{{issue.issue_type}}</td>
             <td class="text-14 w-100">{{issue.project}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
-            <td *ngIf="auth.getUser().permissions.includes('visible_doc_status')" class="text-14 w-100" [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></td>
+            <td *ngIf="auth.getUser().permissions.includes('visible_doc_status')" class="text-14">
+              <span [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></span>
+            </td>
             <td class="text-14 w-100">{{issue.revision}}</td>
             <td class="text-14 w-100">{{issue.period}}</td>
             <td class="text-14 w-100">{{getDate(issue.contract_due_date)}}</td>
