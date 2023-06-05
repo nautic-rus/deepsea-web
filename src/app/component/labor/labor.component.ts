@@ -10,6 +10,7 @@ import {LanguageService} from "../../domain/language.service";
 import {DailyTask} from "../../domain/interfaces/daily-task";
 import * as XLSX from "xlsx";
 import {LV} from "../../domain/classes/lv";
+import {ConsumedHour} from "../work-hours/work-hours.component";
 
 @Component({
   selector: 'app-labor',
@@ -38,27 +39,27 @@ export class LaborComponent implements OnInit {
   labor: number = 10;
   laborUpdates: any = Object();
   lockedByPlan: any = Object();
-  issueSpentTime: DailyTask[] = [];
   search: string = '';
+  consumed: ConsumedHour[] = [];
+  consumedIds: number[] = [];
 
   constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, public t: LanguageService) { }
 
   ngOnInit(): void {
-    this.issueManagerService.getDailyTasks().then(res => {
-      this.issueSpentTime = res;
+    this.auth.getConsumedPlanHours(0).subscribe(consumed => {
+      this.consumed = consumed;
+      this.consumedIds = this.consumed.map(x => x.task_id);
       this.issueManagerService.getIssues('op').then(res => {
         this.issuesSrc = res;
         this.issues = res;
         this.issues = _.sortBy(this.issues, x => x.doc_number);
         this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => x).map(x => new LV(x));
-        this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x).map(x => new LV(x));
+        this.statuses = _.sortBy(_.uniq(this.issues.map(x => x.status)).filter(x => x != ''), x => x).map(x => new LV(x));
         this.taskTypes = _.sortBy(_.uniq(this.issues.map(x => x.issue_type)).filter(x => x != ''), x => x).map(x => new LV(x));
         this.issues.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
         this.issues.forEach(issue => {
           this.laborUpdates[issue.id] = Object({planHours: issue.plan_hours, locked: issue.plan_hours_locked});
         });
-        // this.statuses = [new LV('-')].concat(this.statuses);
-        // this.taskTypes = [new LV('-')].concat(this.taskTypes);
         this.selectedTaskTypes = this.taskTypes.map(x => x.value);
         this.selectedStatuses = this.statuses.map(x => x.value);
         this.selectedStages = this.stages.map(x => x.value);
@@ -115,11 +116,7 @@ export class LaborComponent implements OnInit {
   }
 
   getConsumedLabor(id: number, doc_number: string) {
-    let sum = 0;
-    this.issueSpentTime.filter(x => x.issueId == id).forEach(spent => {
-      sum += spent.time;
-    });
-    return sum;
+    return this.consumedIds.filter(x => x == id).length;
   }
 
   saveLabor() {
