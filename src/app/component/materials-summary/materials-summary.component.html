@@ -139,7 +139,7 @@
 
           </div>
 
-          <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
+          <div *ngIf="selectedView == 'tiles'" class="tile height-tiles">
             <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
                 <div class="dash-card-s" *ngFor="let material of chunk; let j = index">
