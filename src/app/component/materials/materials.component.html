@@ -99,7 +99,7 @@
             <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
                 <div class="dash-card" *ngFor="let material of chunk; let j = index">
-                  <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
+                  <div *ngIf="material != null" class="dash-card-tile cursor-pointer" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
                     <div class="top-row-doc">
                       <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(getMaterialName(material), 50)}}</div>
                       <div class="p-ml-auto">
