@@ -11,6 +11,7 @@ import {MaterialNode} from "../../../../domain/classes/material-node";
 import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import _ from "underscore";
+import {Issue} from "../../../../domain/classes/issue";
 
 @Component({
   selector: 'app-add-group-device',
@@ -46,6 +47,9 @@ export class AddGroupDeviceComponent implements OnInit {
   forLabel = '';
   devices: any[] = [];
   useZone = false;
+  issue: Issue;
+  foranProject = '';
+  revEsp = '';
 
   constructor(public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
 
@@ -54,6 +58,9 @@ export class AddGroupDeviceComponent implements OnInit {
     this.docNumber = this.dialog.data[0];
     this.project = this.docNumber.split('-')[0];
     this.devices = this.dialog.data[1];
+    this.issue = this.dialog.data[2];
+    this.foranProject = this.dialog.data[3];
+    this.revEsp = this.dialog.data[4];
     let materials: any[] = [];
     _.forEach(_.groupBy(this.devices.map(x => Object({m: x.material, zone: x.zone})), x => x.m.code + x.zone), group => {
       materials.push(group[0]);
@@ -106,7 +113,9 @@ export class AddGroupDeviceComponent implements OnInit {
   }
   addMaterial() {
     this.s.addGroupToSystem(this.docNumber, this.selectedMaterial.m.code + '|' + (this.useZone ? this.selectedMaterial.zone : ''), this.label).then(res => {
-      this.ref.close('success');
+      this.s.createDeviceEsp(this.foranProject, this.docNumber, this.revEsp, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+        this.ref.close('success');
+      });
     });
   }
 

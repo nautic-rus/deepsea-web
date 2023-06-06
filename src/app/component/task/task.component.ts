@@ -819,8 +819,8 @@ export class TaskComponent implements OnInit {
           this.statusChanged();
         }
 
-        // if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
-        if (this.issue.closing_status.includes(value)){
+        //if (this.issue.closing_status.includes(value)){
+        if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
           this.updated = true;
           let findUser = this.auth.users.find(x => x.login == assignedTo);
           if (findUser != null){
@@ -839,6 +839,10 @@ export class TaskComponent implements OnInit {
                   console.log(latestConsumed);
                   console.log(taskHours);
                   console.log(userPlanHoursToday);
+                  if (consumedByTask.length == 0){
+                    this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'Вы не списали сегодня часы на эту задачу. Необходимо списать использованные часы, затем перевести задачу в другой статус. Несписанные часы будут убраны из плана'});
+                    return;
+                  }
                   if (this.issue.closing_status.includes(value)){
                     let plan = issue.plan_hours;
                     let consumed = this.consumed.filter(x => x.task_id == issue.id).length;

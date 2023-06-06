@@ -169,6 +169,7 @@ export class DeviceEspComponent implements OnInit {
   newLabel = '';
   revEsp = '';
   kindEsp = '';
+  foranProject = '';
   revEspNoDate = '';
   revUser = '';
 
@@ -324,6 +325,7 @@ export class DeviceEspComponent implements OnInit {
         this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
         this.revEspNoDate = res.rev;
         this.kindEsp = res.kind;
+        this.foranProject = res.foranProject;
         this.revUser = this.auth.getUserName(res.user);
         this.devices = _.sortBy(devices, x => x.userId.includes('.') ? (this.addLeftZeros(x.userId.split('.')[0]) + this.addLeftZeros(x.userId.split('.')[1])) : this.addLeftZeros(x.userId, 5));
         this.devices.forEach((d: any) => {
@@ -908,7 +910,7 @@ export class DeviceEspComponent implements OnInit {
     this.dialogService.open(AddGroupDeviceComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, this.devices]
+      data: [this.docNumber, this.devices, this.issue, this.foranProject, this.revEsp]
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
