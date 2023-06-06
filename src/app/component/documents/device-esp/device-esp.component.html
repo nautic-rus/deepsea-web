@@ -3,6 +3,8 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
+      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
+      <div class="mr-2">{{revUser}}</div>
 <!--      <div class="mr-10">-->
 <!--        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addMaterial()">-->
 <!--          <img src="assets/icons/plus3.svg" height="18">-->
