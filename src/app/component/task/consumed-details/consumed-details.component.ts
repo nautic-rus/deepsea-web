@@ -4,6 +4,7 @@ import {Issue} from "../../../domain/classes/issue";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {ConsumedHour, PlanHour} from "../../work-hours/work-hours.component";
 import _ from "underscore";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-consumed-details',
@@ -14,8 +15,9 @@ export class ConsumedDetailsComponent implements OnInit {
 
   issue: Issue;
   planHours: PlanHour[] = [];
+  cons: any[] = [];
   consumed: ConsumedHour[] = [];
-  constructor(public config: DynamicDialogConfig, public auth: AuthManagerService, public ref: DynamicDialogRef) { }
+  constructor(public config: DynamicDialogConfig, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.issue = this.config.data;
@@ -26,6 +28,11 @@ export class ConsumedDetailsComponent implements OnInit {
         this.auth.getUsersPlanHours(userId, 0, 1).subscribe(planHours => {
           this.planHours = this.planHours.concat(planHours);
         });
+      });
+      let cons: any[] = [];
+      _.forEach(_.groupBy(this.consumed.filter(x => x.task_id == this.issue.id), x => (x.date_inserted, x.user_id, x.comment)), gr => {
+        cons.push({date: gr[0].date_inserted, user: gr[0].user_id, comment: gr[0].comment, value: gr.length});
+        this.cons = this.cons.concat(cons);
       });
     });
   }

@@ -1088,6 +1088,12 @@
 .p-dialog .p-dialog-content {
   border-radius: 5px!important;
 }
+.button-hover{
+  width: 50px;
+}
+.button-hover:hover{
+  background-color: rgba(9, 30, 66, 0.08);
+}
 .subtask{
   cursor: pointer;
   position: relative;

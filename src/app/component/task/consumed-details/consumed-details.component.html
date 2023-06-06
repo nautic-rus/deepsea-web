@@ -1,9 +1,58 @@
-<div *ngFor="let cons of getConsumed()">
-  <div class="df">
-    {{getDate(cons.date)}}
-    {{auth.getUserNameById(cons.user)}}
-    {{cons.comment}}
-    {{cons.value}}
+<div class="all-container" >
+  <div class="header-consumed">
+    <div class="header-text">
+      <div>{{t.tr('Трудозатраты')}}</div>
+    </div>
+    <div class="df">
+      <div class="parts-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
   </div>
+  <div>
+    <p-table #table [value]="cons"
+             [scrollable]="true"
+             scrollHeight="30vh"
+             [virtualScroll]="true"
+             [virtualRowHeight]="40"
+             [reorderableColumns]="false"
+             [resizableColumns]="false"
+             styleClass="p-datatable-striped"
+             responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr class="df">
+          <th pSortableColumn="date" class="lxy w-20">{{t.tr('Дата')}}
+            <p-sortIcon field="date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="user" class="lxy w-20">{{t.tr('Пользователь')}}
+            <p-sortIcon field="user"></p-sortIcon>
+          </th>
+          <th pSortableColumn="comment" class="lxy w-20">{{t.tr('Описание')}}
+            <p-sortIcon field="comment"></p-sortIcon>
+          </th>
+          <th pSortableColumn="value" class="lxy w-20">{{t.tr('Часы')}}
+            <p-sortIcon field="value"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cons>
+        <tr class="cursor-pointer row-table-doc-hover">
+          <td class="w-20 text-14">{{getDate(cons.date)}}</td>
+          <td class="w-20 text-14">{{auth.getUserNameById(cons.user)}}</td>
+          <td class="w-20 text-14">{{cons.comment}}</td>
+          <td class="w-20 text-14">{{cons.value}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+<!--  <div *ngFor="let cons of getConsumed()">-->
+<!--    <div class="df">-->
+<!--      {{getDate(cons.date)}}-->
+<!--      {{auth.getUserNameById(cons.user)}}-->
+<!--      {{cons.comment}}-->
+<!--      {{cons.value}}-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
-<button (click)="close()">CLOSE</button>

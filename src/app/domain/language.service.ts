@@ -522,9 +522,9 @@ export class LanguageService {
           case 'Комментарий': return 'Comment';
           case 'Учёба': return 'Study';
           case 'Отгул': return 'Day off';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Дата': return 'Date';
+          case 'Пользователь': return 'User';
+          case 'Часы': return 'Hours';
           case '': return '';
           case '': return '';
           case '': return '';
