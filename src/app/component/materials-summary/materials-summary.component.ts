@@ -339,15 +339,11 @@ export class MaterialsSummaryComponent implements OnInit {
         console.log(this.materialsSummary);
         this.materialManager.getMaterialNodes(this.project.rkd).then(materialNodes => {
           this.nodesSrc = materialNodes;
-
           this.nodes = this.getNodes(this.nodesSrc, this.materialsSrc, '');
           this.rootNodes = this.nodes.filter((x: any) => x.data.length == 3).map((x: any) => new LV(x.label + ' (' + x.count + ')', x.data));
           this.selectedRootNode = this.rootNodes[0].value;
           this.rootNodes = [...this.rootNodes];
           this.rootNodeChanged();
-          //this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.length == 3), this.materialsSrc, '');
-          //console.log(this.nodes);
-          //this.setParents(this.nodes, '');
           this.materials.filter(x => x != null).forEach((x: any) => {
             x.path = this.setPath(x.code);
           });
@@ -356,12 +352,6 @@ export class MaterialsSummaryComponent implements OnInit {
             console.log(this.materialPurchases);
           });
           this.materialsSummary.forEach(x => x.path = this.setPath(x.code));
-          //this.nodes = _.sortBy(this.nodes,x => x.data);
-          // let sorted: any[] = [];
-          // this.nodes.forEach((node: any) => {
-          //   this.materialsSummary.filter(x => x.A1.startsWith(node.data)).forEach(x => sorted.push(x));
-          // });
-          // this.materialsSummary = sorted;
           this.materialsSummary = _.sortBy(this.materialsSummary, x => x.code);
         });
       });
@@ -508,5 +498,6 @@ export class MaterialsSummaryComponent implements OnInit {
     this.materials.filter(x => x != null).forEach((x: any) => {
       x.path = this.setPath(x.code);
     });
+    this.materialsSummary = this.materialsSummarySrc.filter(x => x.code.startsWith(this.selectedRootNode));
   }
 }
