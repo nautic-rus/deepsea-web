@@ -320,13 +320,15 @@ export class DeviceEspComponent implements OnInit {
   fillDevices(){
     this.s.getDevices(this.docNumber).then(res => {
       console.log(res);
-      if (res != null && res.elements.length > 0){
-        let devices = res.elements;
+      if (res != null){
         this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
         this.revEspNoDate = res.rev;
         this.kindEsp = res.kind;
         this.foranProject = res.foranProject;
         this.revUser = this.auth.getUserName(res.user);
+      }
+      if (res != null && res.elements.length > 0){
+        let devices = res.elements;
         this.devices = _.sortBy(devices, x => x.userId.includes('.') ? (this.addLeftZeros(x.userId.split('.')[0]) + this.addLeftZeros(x.userId.split('.')[1])) : this.addLeftZeros(x.userId, 5));
         this.devices.forEach((d: any) => {
           if (d.userId.includes('#')){
@@ -896,10 +898,14 @@ export class DeviceEspComponent implements OnInit {
       modal: true,
       data: [this.docNumber, label, userId]
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
-      });
+      if (res == 'success'){
+        this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+          this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+            this.issue = issue;
+            this.fillRevisions();
+          });
+        });
+      }
     });
   }
   getZones(zone: string) {
@@ -910,7 +916,7 @@ export class DeviceEspComponent implements OnInit {
     this.dialogService.open(AddGroupDeviceComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, this.devices, this.issue, this.foranProject, this.revEsp]
+      data: [this.docNumber, this.devices, this.issue, this.foranProject, this.revEspNoDate]
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
@@ -935,9 +941,16 @@ export class DeviceEspComponent implements OnInit {
       data: [this.docNumber, device.material.code, device.units, device.count, device.userId, '']
     }).onClose.subscribe(res => {
       if (res == 'success'){
-        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-          this.issue = issue;
-          this.fillRevisions();
+        this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+          if (this.devices.length == 1){
+            location.reload();
+          }
+          else{
+            this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+              this.issue = issue;
+              this.fillRevisions();
+            });
+          }
         });
       }
     });

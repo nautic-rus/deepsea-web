@@ -46,8 +46,9 @@ export class GenerateEspComponent implements OnInit {
   getEsp() {
     this.generationWait = true;
     this.selectRevision = false;
-    let kind = this.kind.replace('-final', '') + (this.isFinal ? '-final' : '');
-    this.s.createHullEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, kind, this.issue.id).subscribe(res => {
+    this.s.createPipeEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'pipe', this.issue.id).subscribe(res => {
+      this.issue.revision = this.rev;
+      this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {});
       this.close();
     });
   }

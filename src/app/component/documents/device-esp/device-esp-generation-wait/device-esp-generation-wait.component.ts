@@ -46,6 +46,8 @@ export class DeviceEspGenerationWaitComponent implements OnInit {
     this.generationWait = true;
 
     this.s.createDeviceEsp(this.project.replace('NT02', "N002"), this.issue.doc_number, this.rev, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+      this.issue.revision = this.rev;
+      this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {});
       if (!this.generateFiles){
         this.generationWait = false;
         this.close();

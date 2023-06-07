@@ -120,7 +120,7 @@ export class AddMaterialToEspComponent implements OnInit {
   }
   addMaterial() {
     this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel).then(res => {
-      this.ref.close();
+      this.ref.close('success');
     });
     // console.log(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel)
   }

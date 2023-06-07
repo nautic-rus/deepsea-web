@@ -3,6 +3,7 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
+      <div class="mr-2">rev{{issue.revision}}</div>
       <div class="p-ml-auto mr-10 df">
         <div class="df all-tabs-button mr-2" *ngIf="cablesSource.length != 0">
           <div class="tabs-button-cable cursor-pointer cxy" (click)="selectedTab = 'Cables'"

@@ -3,7 +3,8 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
+      <div class="mr-2">rev{{issue.revision}}</div>
+<!--      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>-->
 
 <!--      <div class="p-ml-auto df mr-10">-->
 <!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->

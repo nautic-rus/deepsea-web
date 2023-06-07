@@ -143,6 +143,9 @@ export class SpecManagerService {
   createHullEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createHullEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
+  createPipeEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
+    return this.http.get<string>(props.httpSpec + '/createPipeEsp', {params: {project, docNumber, rev, user, kind, taskId}});
+  }
   createDeviceEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createDeviceEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }

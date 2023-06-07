@@ -3,6 +3,7 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
+      <div class="mr-2">rev{{issue.revision}}</div>
       <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top"
            *ngIf="'Electric' == auth.getUser().department" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
