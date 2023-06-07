@@ -892,6 +892,25 @@ export class DeviceEspComponent implements OnInit {
     });
   }
 
+  addNextMaterial() {
+    let sorted = _.sortBy(this.devices, (x: any) => x.userId.split('.')[0]);
+    let label = sorted.length > 0 ? (+sorted.reverse()[0].userId.split('.')[0] + 1) : 1;
+
+    this.dialogService.open(AddMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, label, 'NEW']
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+          this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+            this.issue = issue;
+            this.fillRevisions();
+          });
+        });
+      }
+    });
+  }
   addMaterial(label: string = '', userId: string = '') {
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,

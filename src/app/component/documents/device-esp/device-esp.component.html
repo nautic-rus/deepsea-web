@@ -6,7 +6,7 @@
       <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
       <div class="mr-2">{{revUser}}</div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addNextMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
@@ -705,3 +705,4 @@
     <img #img class="image-preview" data-wheel-zoom [src]="image" style="height: unset; width: unset"/>
   </div>
 </div>
+<p-toast key="device" position="bottom-center"></p-toast>

@@ -66,6 +66,10 @@ export class AddMaterialToEspComponent implements OnInit {
     if (this.label == '-.#'){
       this.label = '1000';
     }
+    if (this.forLabel == 'NEW'){
+      this.forLabel = '';
+      this.label = this.dialog.data[1];
+    }
     this.materialManager.getMaterials(this.project).then(res => {
       this.materials = res;
       this.materialsSrc = res;
@@ -119,6 +123,10 @@ export class AddMaterialToEspComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
+    if (this.label.includes('#')){
+      this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
+      return;
+    }
     this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel).then(res => {
       this.ref.close('success');
     });
