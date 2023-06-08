@@ -129,6 +129,11 @@ export class DoclistComponent implements OnInit {
     }
     console.log(department);
     console.log(project);
+    let hullTasks = ['03070-532-0001'];
+    if (hullTasks.includes(docNumber)){
+      department = 'Hull';
+    }
+
     switch (department) {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
       case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;

@@ -172,9 +172,6 @@ export class DeviceEspComponent implements OnInit {
   foranProject = '';
   revEspNoDate = '';
   revUser = '';
-  hullFileGroupList = [
-    '03070-532-0001'
-  ];
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -189,65 +186,6 @@ export class DeviceEspComponent implements OnInit {
       let r = new RegExp('200101-100-10[0-8]');
       if (r.test(this.docNumber)){
         this.project = 'NT02';
-      }
-
-      if (this.hullFileGroupList.includes(this.docNumber)){
-        this.fileGroups = [
-          {
-            name: 'Drawings',
-            icon: 'assets/icons/drawings.svg',
-            collapsed: false,
-            need_rights: false
-          },
-          {
-            name: 'Part List',
-            icon: 'assets/icons/files.svg',
-            collapsed: false,
-            need_rights: false
-          },
-          {
-            name: 'Cutting Map',
-            icon: 'assets/icons/cutting.svg',
-            collapsed: true,
-            need_rights: false
-          },
-          {
-            name: 'Nesting Plates',
-            icon: 'assets/icons/cutting.svg',
-            collapsed: true,
-            need_rights: false
-          },
-          {
-            name: 'Nesting Profiles',
-            icon: 'assets/icons/cutting.svg',
-            collapsed: true,
-            need_rights: false
-          },
-          {
-            name: 'Profile Sketches',
-            icon: 'assets/icons/cutting.svg',
-            collapsed: true,
-            need_rights: false
-          },
-          {
-            name: 'Bending Templates',
-            icon: 'assets/icons/cutting.svg',
-            collapsed: true,
-            need_rights: false
-          },
-          {
-            name: 'Other',
-            icon: 'assets/icons/cutting.svg',
-            collapsed: true,
-            need_rights: false
-          },
-          {
-            name: 'Correction',
-            icon: 'assets/icons/cutting.svg',
-            collapsed: true,
-            need_rights: false
-          }
-        ];
       }
 
 
