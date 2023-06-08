@@ -136,6 +136,79 @@
 
 
 
+
+      <div class="mt-1 big-text pb-20" *ngIf="false">
+        <input [style]="{'width':'100%'}" [hidden]="answer" (click)="showAnswer()" type="text" pInputText [placeholder]="t.tr('Добавить ответ...')" />
+      </div>
+      <div [hidden]="!answer">
+        <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event); dragOver = false" [(ngModel)]="answerMessage">
+          <div quill-editor-toolbar>
+            <p-header>
+              <span class="ql-formats">
+                <button class="ql-bold" aria-label="Bold" tabindex="-1"></button>
+                <button class="ql-italic" aria-label="Italic" tabindex="-1"></button>
+                <button class="ql-underline" aria-label="Underline" tabindex="-1"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-color" tabindex="-1"></select>
+                <select class="ql-background" tabindex="-1"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-list" value="ordered" aria-label="Ordered List" tabindex="-1"></button>
+                <button class="ql-list" value="bullet" aria-label="Unordered List" tabindex="-1"></button>
+                <select class="ql-align" tabindex="-1">
+                  <option selected tabindex="-1"></option>
+                  <option value="center" tabindex="-1"></option>
+                  <option value="right" tabindex="-1"></option>
+                  <option value="justify" tabindex="-1"></option>
+                </select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-link" aria-label="Insert Link" tabindex="-1"></button>
+                <button (click)="selectImage.click()">
+                  <i class="pi pi-image"></i>
+                </button>
+                <input hidden #selectImage type="file" accept="image/*" (change)="handleImageInput(selectImage.files)" multiple>
+                <button (click)="selectFiles.click()">
+                  <i class="pi pi-file"></i>
+                </button>
+                <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+                <button class="ql-code-block" aria-label="Insert Code Block" tabindex="-1"></button></span>
+              <span class="ql-formats">
+                <button class="ql-clean" aria-label="Remove Styles" tabindex="-1"></button>
+              </span>
+            </p-header>
+          </div>
+        </quill-editor>
+        <div class="mt-10"></div>
+        <div [class.file-drag]="dragOver" class="upload cx cy">
+          <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+            <span class="normal-text-files no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+          </div>
+        </div>
+        <div class="mb-10"></div>
+        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+        <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+          <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+          <div class="cy">{{file}}</div>
+          <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+          <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+        </div>
+        <div class="flex-end">
+          <div class="mr-5 cx">
+            <div tabindex="11" (click)="answer = false" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
+          </div>
+          <div tabindex="10" (click)="sendAnswer()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
+        </div>
+      </div>
+
+
+
+
+
+
+
       <div class="big-text mb-1 mt-2">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
       <div class="attachments-issue">
         <div *ngFor="let file of issue.file_attachments">

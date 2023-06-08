@@ -47,7 +47,9 @@ import {ConsumedDetailsComponent} from "./consumed-details/consumed-details.comp
 export class TaskComponent implements OnInit {
   issue: Issue = new Issue();
   message = '';
+  answerMessage = '';
   comment = false;
+  answer = false;
   messageFilter = 'all';
   issueRevisions = ['-', 'A', 'B', 'C', 'D', '0', '1', '2', '3', '4']
   awaitForLoad: string[] = [];
@@ -445,6 +447,15 @@ export class TaskComponent implements OnInit {
       this.editor.focus();
     })
   }
+  showAnswer() {
+    this.answer = true;
+    this.message = '';
+    this.awaitForLoad = [];
+    this.loaded = [];
+    setTimeout(() => {
+      this.editor.focus();
+    })
+  }
   localeGender(userId: string){
     let find = this.auth.users.find(x => x.login == userId);
     return find != null && find.gender == 'female' && this.t.language == 'ru' ? 'а' : '';
@@ -466,6 +477,20 @@ export class TaskComponent implements OnInit {
     }
   }
   sendMessage() {
+    let message = new IssueMessage();
+    message.author = this.auth.getUser().login;
+    message.content = this.message;
+    message.file_attachments = this.loaded;
+
+    // @ts-ignore
+    this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+      });
+    });
+    this.comment = false;
+  }
+  sendAnswer() {
     let message = new IssueMessage();
     message.author = this.auth.getUser().login;
     message.content = this.message;
