@@ -48,6 +48,7 @@ export class TaskComponent implements OnInit {
   issue: Issue = new Issue();
   message = '';
   answerMessage = '';
+  answerFiles: FileAttachment[] = [];
   comment = false;
   answer = false;
   messageFilter = 'all';
@@ -67,6 +68,8 @@ export class TaskComponent implements OnInit {
   editor;
   // @ts-ignore
   editorDescription;
+  // @ts-ignore
+  editorAnswer;
   showHistory = ['_taskStatus'];
   availableActions: any[] = [];
   reasonsOfChange: any[] = [];
@@ -134,6 +137,56 @@ export class TaskComponent implements OnInit {
       }
     }
   quillModulesDescription =
+    {
+      imageResize: {},
+      clipboard: {
+        matchers: [
+          // @ts-ignore
+          ['img', (node, delta) => {
+            let image = delta.ops[0].insert.image;
+            if ((image.indexOf(";base64")) != -1){
+              let ext = image.substring("data:image/".length, image.indexOf(";base64"))
+              let fileName = 'clip' + this.generateId(8)  + '.' + ext;
+              const find = this.loaded.find(x => x.name == fileName);
+              if (find != null){
+                this.loaded.splice(this.loaded.indexOf(find), 1);
+              }
+              this.awaitForLoad.push(fileName);
+              this.appRef.tick();
+              fetch(image).then(res => res.blob()).then(blob => {
+                const file = new File([blob], fileName,{ type: "image/png" });
+                this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+                  this.loaded.push(res);
+                  this.appRef.tick();
+                  let newDelta = new Delta();
+                  newDelta.retain(this.editorDescription.getSelection().index);
+                  newDelta.insert({image: res.url});
+                  this.editorDescription.updateContents(newDelta, 'user');
+                  this.editorDescription.setSelection(this.editorDescription.getLength());
+                  this.appRef.tick();
+                });
+              });
+              return new Delta();
+            }
+            else{
+              return delta;
+            }
+            //return delta;
+          }]
+        ]
+      },
+      keyboard: {
+        bindings: {
+          tab: {
+            key: 9,
+            handler: function () {
+              return true;
+            }
+          }
+        }
+      }
+    }
+  quillModulesAnswer =
     {
       imageResize: {},
       clipboard: {
@@ -291,6 +344,14 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
     this.issue = this.conf.data as Issue;
+
+    let findAnswer = this.issue.messages.find(x => x.prefix == 'answer');
+    if (findAnswer != null){
+      this.answerMessage = findAnswer.content;
+      this.answerFiles = findAnswer.file_attachments;
+      console.log(this.answerMessage);
+    }
+
     this.auth.getPlannedHours().subscribe(res => {
       this.planned = res;
     });
@@ -355,6 +416,9 @@ export class TaskComponent implements OnInit {
   quillCreatedDescription(event: any) {
     this.editorDescription = event;
   }
+  quillCreatedAnswer(event: any) {
+    this.editorDescription = event;
+  }
   quillCreated(event: any) {
     this.editor = event;
   }
@@ -392,7 +456,7 @@ export class TaskComponent implements OnInit {
   }
   getMessages(issue: Issue) {
     let res: any[] = [];
-    issue.messages.forEach(x => res.push(x));
+    issue.messages.filter(x => x.prefix != 'answer').forEach(x => res.push(x));
     issue.history.forEach(x => res.push(x));
     // @ts-ignore
     return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
@@ -493,7 +557,8 @@ export class TaskComponent implements OnInit {
   sendAnswer() {
     let message = new IssueMessage();
     message.author = this.auth.getUser().login;
-    message.content = this.message;
+    message.content = this.answerMessage;
+    message.prefix = 'answer';
     message.file_attachments = this.loaded;
 
     // @ts-ignore
@@ -502,7 +567,7 @@ export class TaskComponent implements OnInit {
         this.issue = issue;
       });
     });
-    this.comment = false;
+    this.answer = false;
   }
   trimFileName(input: string, length: number = 10): string{
     let split = input.split('.');
@@ -617,7 +682,7 @@ export class TaskComponent implements OnInit {
       }
     }
   }
-  editorClicked(event: any) {
+  editorClicked(event: any, allowEdit = true) {
     event.preventDefault();
     event.stopPropagation();
     if (event.target.localName == 'img'){
@@ -627,7 +692,7 @@ export class TaskComponent implements OnInit {
     else if (event.target.localName == 'a'){
       window.open(event.target.href, '_blank');
     }
-    else if (this.isEditable()){
+    else if (this.isEditable() && allowEdit){
       this.edit = 'description';
     }
   }
