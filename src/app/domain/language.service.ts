@@ -525,7 +525,7 @@ export class LanguageService {
           case 'Дата': return 'Date';
           case 'Пользователь': return 'User';
           case 'Часы': return 'Hours';
-          case '': return '';
+          case 'Ответ к задаче': return 'Answer to the task';
           case '': return '';
           case '': return '';
           case '': return '';
