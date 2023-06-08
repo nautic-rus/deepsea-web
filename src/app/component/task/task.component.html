@@ -137,11 +137,11 @@
 
 
 
-      <div class="mt-1 big-text pb-20" *ngIf="false">
+      <div class="mt-1 big-text pb-20" *ngIf="false && (auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible) && answerMessage == ''">
         <input [style]="{'width':'100%'}" [hidden]="answer" (click)="showAnswer()" type="text" pInputText [placeholder]="t.tr('Добавить ответ...')" />
       </div>
       <div [hidden]="!answer">
-        <quill-editor (keydown)="onEditorPressed($event)" (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event); dragOver = false" [(ngModel)]="answerMessage">
+        <quill-editor (onEditorCreated)="editorInit($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event); dragOver = false" [(ngModel)]="answerMessage">
           <div quill-editor-toolbar>
             <p-header>
               <span class="ql-formats">

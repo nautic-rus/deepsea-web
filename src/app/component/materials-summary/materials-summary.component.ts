@@ -499,5 +499,6 @@ export class MaterialsSummaryComponent implements OnInit {
       x.path = this.setPath(x.code);
     });
     this.materialsSummary = this.materialsSummarySrc.filter(x => x.code.startsWith(this.selectedRootNode));
+    this.materialsSummary.forEach(x => x.path = this.setPath(x.code));
   }
 }
