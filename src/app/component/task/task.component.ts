@@ -926,30 +926,30 @@ export class TaskComponent implements OnInit {
                       });
                     });
                   }
-                  // if (value == 'Paused'){
-                  //   this.issue.assigned_to = '';
-                  //   this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
-                  //     this.issue.status = value;
-                  //     this.issue.action = value;
-                  //     this.statusChanged();
-                  //   });
-                  // }
-                  // else if (value == 'Delivered' || value == 'New Revision'){
-                  //   this.issue.delivered_date = new Date().getTime();
-                  //   this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-                  //     this.issue.revision = '0';
-                  //     this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-                  //       this.issue.status = 'Delivered';
-                  //       this.issue.action = this.issue.status;
-                  //       this.statusChanged();
-                  //     });
-                  //   });
-                  // }
-                  // else{
+                  if (value == 'Paused'){
+                    this.issue.assigned_to = '';
+                    this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+                      this.issue.status = value;
+                      this.issue.action = value;
+                      this.statusChanged();
+                    });
+                  }
+                  else if (value == 'Delivered' || value == 'New Revision'){
+                    this.issue.delivered_date = new Date().getTime();
+                    this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+                      this.issue.revision = '0';
+                      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+                        this.issue.status = 'Delivered';
+                        this.issue.action = this.issue.status;
+                        this.statusChanged();
+                      });
+                    });
+                  }
+                  else{
                     this.issue.status = value;
                     this.issue.action = value;
                     this.statusChanged();
-                  //}
+                  }
                 }
               });
             });
