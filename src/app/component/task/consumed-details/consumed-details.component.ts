@@ -22,8 +22,10 @@ export class ConsumedDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.issue = this.config.data;
     this.auth.getConsumedPlanHours(0).subscribe(consumed => {
+      console.log(consumed);
       this.consumed = consumed;
       let consumedByIssue = this.consumed.filter(x => x.task_id == this.issue.id);
+      console.log(consumedByIssue);
       _.uniq(consumedByIssue.map(x => x.user_id)).forEach(userId => {
         this.auth.getUsersPlanHours(userId, 0, 1).subscribe(planHours => {
           this.planHours = this.planHours.concat(planHours);

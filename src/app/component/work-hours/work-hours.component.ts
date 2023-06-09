@@ -342,21 +342,6 @@ export class WorkHoursComponent implements OnInit {
   }
   getTaskColor(taskId: number){
     switch (taskId){
-      case -5:{ //УЧЁБА
-        return 'rgb(10,252,252)';
-      }
-      case -4:{ //ОТГУЛ
-        return 'rgb(89,55,241)';
-      }
-      case -3:{ //ОПЕРГРУППА
-        return 'rgb(53,50,54)';
-      }
-      case -2:{ //ОТПУСК
-        return 'rgb(0,255,62)';
-      }
-      case -1:{ //БОЛЬНИЧНЫЙ
-        return 'rgb(248,8,8)';
-      }
       default:{
         let eq1 = Math.pow(taskId, 1);
         let eq2 = Math.pow(taskId, 2);
