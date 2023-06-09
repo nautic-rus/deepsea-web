@@ -162,7 +162,7 @@
         </div>
       </div>
 
-      <div class="mt-1 big-text pb-20" *ngIf="(auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible) && answerMessage == ''">
+      <div class="mt-1 big-text pb-20" *ngIf="(auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible || auth.getUser().login == 'stropilov') && answerMessage == ''">
         <input [style]="{'width':'100%'}" [hidden]="answer" (click)="showAnswer()" type="text" pInputText [placeholder]="t.tr('Добавить ответ...')" />
       </div>
       <div [hidden]="!answer">

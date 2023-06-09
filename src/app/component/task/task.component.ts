@@ -477,6 +477,9 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != x.closing_status).length == 0 && allow : allow;
       allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
       allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
+      if (issue.issue_type == 'QNA' && this.auth.getUser().login == 'stropilov'){
+        allow = true;
+      }
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
       }
