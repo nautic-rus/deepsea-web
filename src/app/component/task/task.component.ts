@@ -835,26 +835,6 @@ export class TaskComponent implements OnInit {
             this.askForSendToApproval();
           }
         }
-        else if (value == 'Paused'){
-          this.issue.assigned_to = '';
-          this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
-            this.issue.status = value;
-            this.issue.action = value;
-            this.statusChanged();
-          });
-        }
-        else if (value == 'Delivered' || value == 'New Revision'){
-          this.issue.delivered_date = new Date().getTime();
-          this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-            this.issue.revision = '0';
-            this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-              this.issue.status = 'Delivered';
-              this.issue.action = this.issue.status;
-              this.statusChanged();
-            });
-          });
-          // this.askForSendToCloud();
-        }
         else if (value == 'Recovery'){
           this.issue.status = 'New';
           this.issue.action = 'New';
@@ -869,25 +849,6 @@ export class TaskComponent implements OnInit {
             this.issue.action = this.issue.status;
             this.statusChanged();
           });
-          // if (this.issue.first_send_date != 0){
-          //   this.dialogService.open(ConfirmAlreadyExistSendToYardComponent, {
-          //     showHeader: false,
-          //     modal: true,
-          //     data: this.issue
-          //   }).onClose.subscribe(res => {
-          //     if (res == 'yes'){
-          //       this.issue.status = 'Send to Yard Approval';
-          //       this.issue.action = 'Send to Yard Approval';
-          //       this.statusChanged();
-          //     }
-          //     else if (res == 'no'){
-          //       this.askForSendToYardToApproval();
-          //     }
-          //   });
-          // }
-          // else{
-          //   this.askForSendToYardToApproval();
-          // }
         }
         else if (value == 'Reject' && this.issue.issue_type == 'DEVELOPMENT'){
           this.issue.responsible = '';
@@ -903,14 +864,7 @@ export class TaskComponent implements OnInit {
         else if (value == 'To publish' && this.issue.issue_type == 'DEVELOPMENT'){
           this.assignToResponsible()
         }
-        else{
-          this.issue.status = value;
-          this.issue.action = value;
-          this.statusChanged();
-        }
-
-        //if (this.issue.closing_status.includes(value)){
-        if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
+        else if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
           this.updated = true;
           let findUser = this.auth.users.find(x => x.login == assignedTo);
           if (findUser != null){
@@ -926,9 +880,6 @@ export class TaskComponent implements OnInit {
                     plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id > latestConsumed).filter(x => x.task_id != 0), x => x.id);
                   }
                   let taskHours = plannedHours.filter(x => x.task_id == this.issue.id);
-                  console.log(latestConsumed);
-                  console.log(taskHours);
-                  console.log(userPlanHoursToday);
                   if (consumedByTask.length == 0){
                     this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'Вы не списали сегодня часы на эту задачу. Необходимо списать использованные часы, затем перевести задачу в другой статус. Несписанные часы будут убраны из плана'});
                     return;
@@ -957,10 +908,39 @@ export class TaskComponent implements OnInit {
                       });
                     });
                   }
+                  if (value == 'Paused'){
+                    this.issue.assigned_to = '';
+                    this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+                      this.issue.status = value;
+                      this.issue.action = value;
+                      this.statusChanged();
+                    });
+                  }
+                  else if (value == 'Delivered' || value == 'New Revision'){
+                    this.issue.delivered_date = new Date().getTime();
+                    this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+                      this.issue.revision = '0';
+                      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+                        this.issue.status = 'Delivered';
+                        this.issue.action = this.issue.status;
+                        this.statusChanged();
+                      });
+                    });
+                  }
+                  else{
+                    this.issue.status = value;
+                    this.issue.action = value;
+                    this.statusChanged();
+                  }
                 }
               });
             });
           }
+        }
+        else{
+          this.issue.status = value;
+          this.issue.action = value;
+          this.statusChanged();
         }
       }
     });
