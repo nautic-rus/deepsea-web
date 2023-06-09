@@ -300,10 +300,9 @@ export class WorkHoursComponent implements OnInit {
       height: '100%',
       width: (width * oneHourLength) + 'px',
       'background-color': width == 0 ? 'transparent' : this.getTaskColor(day.taskId),
+      'background': width == 0 ? 'transparent' : this.getTaskExtraColor(day.taskId),
       'border': this.getSearchingBorder(day),
       'padding-left': width == 0 ? '0' : '2px',
-      // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
-      // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
     };
   }
   getConsumedDayStyle(day: TaskOfDay) {
@@ -312,8 +311,7 @@ export class WorkHoursComponent implements OnInit {
       height: '100%',
       width: (day.consumedAmount * oneHourLength) + 'px',
       'background-color': this.getTaskColor(day.taskId),
-      // 'border-top-left-radius': this.nextDaySameTask(day) ? '6px' : '',
-      // 'border-bottom-right-radius': this.prevDaySameTask(day) ? '6px' : '',
+      'background': this.getTaskExtraColor(day.taskId),
     };
   }
   // showBusyHoursCount(day: PlanDay){
@@ -358,6 +356,34 @@ export class WorkHoursComponent implements OnInit {
       }
       case -1:{ //БОЛЬНИЧНЫЙ
         return 'rgb(248,8,8)';
+      }
+      default:{
+        let eq1 = Math.pow(taskId, 1);
+        let eq2 = Math.pow(taskId, 2);
+        let eq3 = Math.pow(taskId, 3);
+        let r = eq1 % 255;
+        let g = eq2 % 255;
+        let b = eq3 % 255;
+        return `rgba(${r}, ${g}, ${b}, 0.6)`;
+      }
+    }
+  }
+  getTaskExtraColor(taskId: number){
+    switch (taskId){
+      case -5:{ //УЧЁБА
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #8DB6FA 4px, #8DB6FA 8px)';
+      }
+      case -4:{ //ОТГУЛ
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #96A1B0 4px, #96A1B0 8px)';
+      }
+      case -3:{ //ОПЕРГРУППА
+        return 'rgb(53,50,54)';
+      }
+      case -2:{ //ОТПУСК
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #86DE5E 4px, #86DE5E 8px)';
+      }
+      case -1:{ //БОЛЬНИЧНЫЙ
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #F37878 4px, #F37878 8px)';
       }
       default:{
         let eq1 = Math.pow(taskId, 1);
