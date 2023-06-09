@@ -371,19 +371,19 @@ export class WorkHoursComponent implements OnInit {
   getTaskExtraColor(taskId: number){
     switch (taskId){
       case -5:{ //УЧЁБА
-        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #8DB6FA 4px, #8DB6FA 8px)';
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #8DB6FA 2px, #8DB6FA 4px)';
       }
       case -4:{ //ОТГУЛ
-        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #96A1B0 4px, #96A1B0 8px)';
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #96A1B0 2px, #96A1B0 4px)';
       }
       case -3:{ //ОПЕРГРУППА
         return 'rgb(53,50,54)';
       }
       case -2:{ //ОТПУСК
-        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #86DE5E 4px, #86DE5E 8px)';
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #86DE5E 2px, #86DE5E 4px)';
       }
       case -1:{ //БОЛЬНИЧНЫЙ
-        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 4px, #F37878 4px, #F37878 8px)';
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #F37878 2px, #F37878 4px)';
       }
       default:{
         let eq1 = Math.pow(taskId, 1);
