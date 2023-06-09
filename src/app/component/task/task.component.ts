@@ -580,6 +580,17 @@ export class TaskComponent implements OnInit {
       return input;
     }
   }
+  trimFileAnswerName(input: string, length: number = 20): string{
+    let split = input.split('.');
+    let name = split[0];
+    let extension = split[1];
+    if (name.length > length){
+      return name.substr(0, length - 2) + '..' + name.substr(name.length - 2, 2) + '.' + extension;
+    }
+    else{
+      return input;
+    }
+  }
   handleImageInput(files: FileList | null) {
     if (files != null){
       for (let x = 0; x < files.length; x++){

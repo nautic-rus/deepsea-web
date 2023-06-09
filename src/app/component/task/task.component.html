@@ -141,12 +141,12 @@
           <div class="big-text mb-1 mt-5">{{t.tr('Ответ к задаче')}}</div>
           <quill-view class="db text-light" [content]="answerMessage"></quill-view>
           <div  *ngFor="let file of answerFiles">
-            <div (click)="openFile(file.url)" class="attachment-issues-files df mb-1 mt-1 cursor-pointer">
+            <div (click)="openFile(file.url)" class="attachment-answer df mb-1 mt-1 cursor-pointer">
               <div class="cxy">
                 <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
               </div>
               <div class="attachment-footer-issue">
-                <span class="mr-5" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
+                <span class="mr-5" [pTooltip]="file.name">{{trimFileAnswerName(file.name) + ' '}}</span>
                 <div>{{getDate(+file.upload_date)}}</div>
                 <div class="p-ml-auto">
                   <div class="upload-file cxy">
@@ -162,7 +162,7 @@
         </div>
       </div>
 
-      <div class="mt-1 big-text pb-20" *ngIf="false && (auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible) && answerMessage == ''">
+      <div class="mt-1 big-text pb-20" *ngIf="(auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible) && answerMessage == ''">
         <input [style]="{'width':'100%'}" [hidden]="answer" (click)="showAnswer()" type="text" pInputText [placeholder]="t.tr('Добавить ответ...')" />
       </div>
       <div [hidden]="!answer">

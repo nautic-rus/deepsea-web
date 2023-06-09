@@ -1132,7 +1132,11 @@
   padding: 3px;
   border-radius: 3px;
   width: 280px;
-
+}
+.attachment-answer{
+  padding: 3px;
+  border-radius: 3px;
+  width: 350px;
 }
 .attachment-issues-files:hover{
   background-color: #dadada;
