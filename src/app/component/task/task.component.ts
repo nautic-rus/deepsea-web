@@ -876,7 +876,7 @@ export class TaskComponent implements OnInit {
           this.assignToResponsible()
         }
         //else if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
-        else if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
+        else if (this.issue.closing_status.includes(value)){
           this.updated = true;
           let findUser = this.auth.users.find(x => x.login == assignedTo);
           if (findUser != null){
@@ -892,10 +892,13 @@ export class TaskComponent implements OnInit {
                     plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id > latestConsumed).filter(x => x.task_id != 0), x => x.id);
                   }
                   let taskHours = plannedHours.filter(x => x.task_id == this.issue.id);
-                  // if (consumedByTask.length == 0){
-                  //   this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'Вы не списали сегодня часы на эту задачу. Необходимо списать использованные часы, затем перевести задачу в другой статус. Несписанные часы будут убраны из плана'});
-                  //   return;
-                  // }
+                  if (consumedByTask.length == 0){
+                    if (!confirm('Несписанные часы на задачу будут убраны из плана, подтверждаете действие?')){
+                      return;
+                    }
+                    //this.messageService.add({key:'task', severity:'error', summary:'Ошибка', detail:'Вы не списали сегодня часы на эту задачу. Необходимо списать использованные часы, затем перевести задачу в другой статус. Несписанные часы будут убраны из плана'});
+                    //return;
+                  }
                   if (this.issue.closing_status.includes(value)){
                     let plan = issue.plan_hours;
                     let consumed = this.consumed.filter(x => x.task_id == issue.id).length;
@@ -920,30 +923,30 @@ export class TaskComponent implements OnInit {
                       });
                     });
                   }
-                  if (value == 'Paused'){
-                    this.issue.assigned_to = '';
-                    this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
-                      this.issue.status = value;
-                      this.issue.action = value;
-                      this.statusChanged();
-                    });
-                  }
-                  else if (value == 'Delivered' || value == 'New Revision'){
-                    this.issue.delivered_date = new Date().getTime();
-                    this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-                      this.issue.revision = '0';
-                      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
-                        this.issue.status = 'Delivered';
-                        this.issue.action = this.issue.status;
-                        this.statusChanged();
-                      });
-                    });
-                  }
-                  else{
+                  // if (value == 'Paused'){
+                  //   this.issue.assigned_to = '';
+                  //   this.issueManager.updateIssue(this.auth.getUser().login, "hidden", this.issue).then(() => {
+                  //     this.issue.status = value;
+                  //     this.issue.action = value;
+                  //     this.statusChanged();
+                  //   });
+                  // }
+                  // else if (value == 'Delivered' || value == 'New Revision'){
+                  //   this.issue.delivered_date = new Date().getTime();
+                  //   this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+                  //     this.issue.revision = '0';
+                  //     this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+                  //       this.issue.status = 'Delivered';
+                  //       this.issue.action = this.issue.status;
+                  //       this.statusChanged();
+                  //     });
+                  //   });
+                  // }
+                  // else{
                     this.issue.status = value;
                     this.issue.action = value;
                     this.statusChanged();
-                  }
+                  //}
                 }
               });
             });
