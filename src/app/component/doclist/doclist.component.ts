@@ -49,6 +49,8 @@ export class DoclistComponent implements OnInit {
       this.projects.forEach((x: any) => x.label = this.getProjectName(x));
       this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
       this.selectedProjects = [...this.projects.map(x => x.name)];
+      this.selectedProjects = localStorage.getItem('selectedProjects') != null ? JSON.parse(localStorage.getItem('selectedProjects')!) : this.selectedProjects;
+      this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
     });
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
@@ -61,10 +63,12 @@ export class DoclistComponent implements OnInit {
       console.log(_.uniq(this.issues.map(x => x.period)).map(x => this.getNumber(x)));
       this.taskStages = _.sortBy(_.uniq(this.issues.map(x => x.period)), x => this.getNumber(x)).map(x => new LV(x));
       this.selectedTaskStages = this.taskStages.map(x => x.value);
+      this.selectedTaskStages = localStorage.getItem('selectedTaskStages') != null ? JSON.parse(localStorage.getItem('selectedTaskStages')!) : this.selectedTaskStages;
     });
     this.issueManager.getDepartments().subscribe(departments => {
       this.departments = departments.filter(x => x.visible_documents == 1);
       this.selectedDepartments = [...this.departments.map(x => x.name)];
+      this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
     });
   }
 
@@ -84,6 +88,8 @@ export class DoclistComponent implements OnInit {
     return res;
   }
   projectChanged() {
+    localStorage.setItem('selectedProjects', JSON.stringify(this.selectedProjects));
+    localStorage.setItem('showWithFilesOnly', this.showWithFilesOnly ? 'true' : 'false');
     this.filterIssues();
   }
   exportXLS() {
@@ -148,6 +154,13 @@ export class DoclistComponent implements OnInit {
     }
   }
   filterIssues(){
+    this.selectedProjects = localStorage.getItem('selectedProjects') != null ? JSON.parse(localStorage.getItem('selectedProjects')!) : this.selectedProjects;
+    this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
+    this.selectedTaskTypes = localStorage.getItem('selectedTaskTypes') != null ? JSON.parse(localStorage.getItem('selectedTaskTypes')!) : this.selectedTaskTypes;
+    this.selectedTaskStages = localStorage.getItem('selectedTaskStages') != null ? JSON.parse(localStorage.getItem('selectedTaskStages')!) : this.selectedTaskStages;
+    this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
+
+
     this.issues = [...this.issuesSrc];
     this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
     this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
@@ -164,10 +177,12 @@ export class DoclistComponent implements OnInit {
   }
 
   departmentChanged() {
+    localStorage.setItem('selectedDepartments', JSON.stringify(this.selectedDepartments));
     this.filterIssues();
   }
 
   taskTypeChanged() {
+    localStorage.setItem('selectedTaskTypes', JSON.stringify(this.selectedTaskTypes));
     this.filterIssues();
   }
 
@@ -180,6 +195,7 @@ export class DoclistComponent implements OnInit {
   }
 
   taskStagesChanged() {
+    localStorage.setItem('selectedTaskStages', JSON.stringify(this.selectedTaskStages));
     this.filterIssues();
   }
 
