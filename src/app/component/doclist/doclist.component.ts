@@ -36,11 +36,13 @@ export class DoclistComponent implements OnInit {
   statuses: string[] = [];
   status = '';
   showWithFilesOnly = true;
+  loading = false;
   revisionFiles: any[] = [];
   constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
 
 
   @ViewChild('table') table: Table;
+
 
   ngOnInit(): void {
     this.selectedTaskTypes = this.taskTypes.map(x => x.value);
@@ -50,6 +52,7 @@ export class DoclistComponent implements OnInit {
       this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
       this.selectedProjects = [...this.projects.map(x => x.name)];
     });
+    this.loading = true;
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
       this.issues = this.issuesSrc;
@@ -57,6 +60,7 @@ export class DoclistComponent implements OnInit {
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
+        this.loading = false;
       });
       console.log(_.uniq(this.issues.map(x => x.period)).map(x => this.getNumber(x)));
       this.taskStages = _.sortBy(_.uniq(this.issues.map(x => x.period)), x => this.getNumber(x)).map(x => new LV(x));

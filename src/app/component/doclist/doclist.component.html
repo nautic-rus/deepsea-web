@@ -41,6 +41,14 @@
     </div>
     <div class="empty-card-bottom"></div>
     <div class="card-overflow">
+      <div *ngIf="loading">
+        <div class="cxy loading">
+          <div class="cxy flex-column">
+            <img src="assets/whale.gif" height="120">
+            <div class="cx loading-text">PLEASE WAIT...</div>
+          </div>
+        </div>
+      </div>
       <p-table *ngIf="issues.length != 0" #table [value]="issues"
                [scrollable]="true"
                scrollHeight="calc(100vh - 220px)"
