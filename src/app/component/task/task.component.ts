@@ -484,7 +484,7 @@ export class TaskComponent implements OnInit {
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
       }
     });
-    return res;
+    return _.uniq(res,x => x.value);
   }
 
   statusChanged() {
@@ -879,7 +879,7 @@ export class TaskComponent implements OnInit {
           this.assignToResponsible()
         }
         //else if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
-        else if (this.issue.closing_status.includes(value)){
+        else if ((value == 'Check' || this.issue.closing_status.includes(value))){
           this.updated = true;
           let findUser = this.auth.users.find(x => x.login == assignedTo);
           if (findUser != null){
@@ -953,6 +953,11 @@ export class TaskComponent implements OnInit {
                 }
               });
             });
+          }
+          else{
+            this.issue.status = value;
+            this.issue.action = value;
+            this.statusChanged();
           }
         }
         else{
