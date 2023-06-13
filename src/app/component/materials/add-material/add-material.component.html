@@ -1,5 +1,5 @@
 <div class="dialog pt-5">
-  <div class="df w-100">
+  <div class="df width-600">
     <div class="cy left-text-one-row mr-20">Код материала:</div>
 <!--    <div class="cx df pt-5">-->
 <!--      <p-dropdown class="mx-5" *ngFor="let select of codeSelectors" [options]="select.layer" [(ngModel)]="select.code" (ngModelChange)="selectorChanged()"  [filter]="true" filterBy="info" [showClear]="true">-->
@@ -29,42 +29,40 @@
 <!--        </p-dropdown>-->
 <!--      </div>-->
 <!--    </div>-->
+<!--    <div class="df">-->
+<!--      <div class="cy left-text">КВЗ:</div>-->
+<!--      <div class="ml-1">-->
+<!--        <p-dropdown placeholder="" class="select" [(ngModel)]="material.category" [options]="categories" styleClass="width-200 border-material">-->
+<!--        </p-dropdown>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="df">
-      <div class="cy left-text">КВЗ:</div>
+      <div class="cy left-text">КЕИ:</div>
       <div class="ml-1">
-        <p-dropdown placeholder="" class="select" [(ngModel)]="material.category" [options]="categories" styleClass="width-200 border-material">
+        <p-dropdown styleClass="width-190 border-material" (onChange)="unitsChanged()" [(ngModel)]="material.units" [options]="units" optionLabel="label" optionValue="value" placeholder="">
         </p-dropdown>
       </div>
     </div>
     <div class="df">
       <div class="cy right-text">Коэф. доп.:</div>
       <div class="ml-1">
-        <p-inputNumber [(ngModel)]="material.coefficient" mode="decimal" [minFractionDigits]="2" class="width-200 " locale="en-US"></p-inputNumber>
+        <p-inputNumber [(ngModel)]="material.coefficient" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
       </div>
     </div>
   </div>
 
-  <div class="double-row mt-1">
-    <div class="df">
-      <div class="cy left-text">КЕИ:</div>
-      <div class="ml-1">
-        <p-dropdown (onChange)="unitsChanged()" [(ngModel)]="material.units" [options]="units" optionLabel="label" optionValue="value" placeholder="" class="select" styleClass="width-200 border-material">
-        </p-dropdown>
-      </div>
-    </div>
-  </div>
 
   <div class="double-row mt-1">
     <div class="df">
       <div class="cy right-text">{{getUnitsText()}}</div>
       <div class="ml-1">
-        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" class="width-200 " locale="en-US"></p-inputNumber>
+        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
       </div>
     </div>
     <div class="df">
       <div class="cy right-text">Density</div>
       <div class="ml-1">
-        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" class="width-200 " locale="en-US"></p-inputNumber>
+        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
       </div>
     </div>
   </div>
