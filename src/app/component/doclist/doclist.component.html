@@ -25,12 +25,14 @@
           <span class="checkmark"></span>
         </label>
       </div>
-
-
       <div class="mr-10">
         <div *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="materials-button green-button cxy" [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
+      </div>
+      <div>
+        <span>Number of tasks {{issues.length}}</span>
+        <span>(Всего: {{issuesSrc.length}})</span>
       </div>
       <div class="p-ml-auto mr-10 df">
         <span class="p-input-icon-left">
