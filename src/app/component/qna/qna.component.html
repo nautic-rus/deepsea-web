@@ -57,12 +57,7 @@
             <span>{{statusesCount('AssignedTo') + statusesCount('In Work') + statusesCount('In Rework') + statusesCount('Assign responsible') + statusesCount('Paused')}}({{getIssuesDueDateLength()}})</span>
           </div>
         </div>
-        <div class="mr-10">
-          <div class="count-status resolve cursor-pointer" [class.clicked]="showResolve" (click)="switchResolve()">
-            <span class="pr-5">{{t.tr('Исполнено - ')}}</span>
-            <span>{{statusesCount('Resolved')}}</span>
-          </div>
-        </div>
+
         <div class="mr-10">
           <div class="count-status close cursor-pointer" [class.clicked]="showClose" (click)="switchClose()">
             <span class="pr-5">{{t.tr('Закрыто - ')}}</span>
