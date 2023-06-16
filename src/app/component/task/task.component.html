@@ -137,9 +137,9 @@
 
 
       <div *ngIf="issue.issue_type == 'QNA'">
-        <div class="border-top border-bottom mb-1 mt-1">
+        <div class="mb-1 mt-1">
           <div class="big-text mb-1 mt-5">{{t.tr('Ответ к задаче')}}</div>
-          <div *ngIf="answerMessage != ''">
+          <div *ngIf="answerMessage != '' && !answer" (click)="showAnswer()">
             <quill-view class="db text-light" [content]="answerMessage"></quill-view>
             <div  *ngFor="let file of answerFiles">
               <div (click)="openFile(file.url)" class="attachment-answer df mb-1 mt-1 cursor-pointer">
@@ -161,7 +161,7 @@
               </div>
             </div>
           </div>
-          <div class="mt-1 big-text pb-20" *ngIf="(auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible || auth.getUser().login == 'stropilov') && answerMessage == ''">
+          <div class="big-text" *ngIf="(auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible || auth.getUser().login == 'stropilov' || auth.getUser().login == 'isaev') && answerMessage == ''">
             <input [style]="{'width':'100%'}" [hidden]="answer" (click)="showAnswer()" type="text" pInputText [placeholder]="t.tr('Добавить ответ...')" />
           </div>
           <div [hidden]="!answer">
@@ -218,7 +218,7 @@
             </div>
             <div class="flex-end">
               <div class="mr-5 cx">
-                <div tabindex="11" (click)="answer = false" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
+                <div tabindex="11" (click)="answer = false; answerMessage = answerMessageBeforeEdit" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
               </div>
               <div tabindex="10" (click)="sendAnswer()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
             </div>

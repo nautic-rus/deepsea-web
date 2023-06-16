@@ -48,6 +48,7 @@ export class TaskComponent implements OnInit {
   issue: Issue = new Issue();
   message = '';
   answerMessage = '';
+  answerMessageBeforeEdit = '';
   answerFiles: FileAttachment[] = [];
   comment = false;
   answer = false;
@@ -346,10 +347,10 @@ export class TaskComponent implements OnInit {
     });
     this.issue = this.conf.data as Issue;
 
-    let findAnswer = this.issue.messages.find(x => x.prefix == 'answer');
-    if (findAnswer != null){
-      this.answerMessage = findAnswer.content;
-      this.answerFiles = findAnswer.file_attachments;
+    let findAnswer = this.issue.messages.filter(x => x.prefix == 'answer');
+    if (findAnswer.length > 0){
+      this.answerMessage = findAnswer[findAnswer.length - 1].content;
+      this.answerFiles = findAnswer[findAnswer.length - 1].file_attachments;
       console.log(this.answerMessage);
     }
 
@@ -529,7 +530,7 @@ export class TaskComponent implements OnInit {
   }
   showAnswer() {
     this.answer = true;
-    this.message = '';
+    this.answerMessageBeforeEdit = this.answerMessage;
     this.awaitForLoad = [];
     this.loaded = [];
     setTimeout(() => {
