@@ -1263,7 +1263,7 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('labor') && auth.hasPerms('visible_plan_actual_hours')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Плановая трудоёмкость')}}</div>
-            <div [class.no-edit]="issue.responsible != this.auth.getUser().login" [hidden]="edit == 'plan_hours'" (click)="edit = 'plan_hours'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.plan_hours}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'plan_hours'" (click)="edit = 'plan_hours'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.plan_hours}}</div>
             <div class="mr-5" [hidden]="edit != 'plan_hours'">
               <p-inputNumber inputStyleClass="width-180" [(ngModel)]="issue.plan_hours" mode="decimal"></p-inputNumber>
             </div>
