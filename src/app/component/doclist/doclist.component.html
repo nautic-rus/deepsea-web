@@ -25,12 +25,14 @@
           <span class="checkmark"></span>
         </label>
       </div>
-
-
       <div class="mr-10">
-        <div class="materials-button green-button cxy" [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
+        <div *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="materials-button green-button cxy" [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
+      </div>
+      <div>
+        <span>Number of tasks {{issues.length}}</span>
+        <span>(Всего: {{issuesSrc.length}})</span>
       </div>
       <div class="p-ml-auto mr-10 df">
         <span class="p-input-icon-left">
@@ -103,7 +105,7 @@
             <th pSortableColumn="last_update" class="lxy w-100">{{l.tr('Обновлено')}}
               <p-sortIcon field="last_update"></p-sortIcon>
             </th>
-            <th class="w-5">{{l.tr('Комментарий')}}</th>
+            <th *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{l.tr('Комментарий')}}</th>
             <th class="w-5">{{l.tr('Ссылка')}}</th>
           </tr>
         </ng-template>
@@ -121,7 +123,7 @@
             <td class="text-14 w-100">{{issue.period}}</td>
             <td class="text-14 w-100">{{getDate(issue.contract_due_date)}}</td>
             <td class="text-14 w-100">{{getDate(issue.last_update)}}</td>
-            <td class="text-14 w-100">{{issue.issue_comment}}</td>
+            <td *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="text-14 w-100">{{issue.issue_comment}}</td>
             <td class="text-14 w-5">
               <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
                 <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">

@@ -9,27 +9,27 @@
   <div class="body-user-card">
     <div class="user-info">
       <div class="common-row mb-10">
-        <div class="bigger-text mb-1">Имя</div>
+        <div class="bigger-text mb-5">Имя</div>
         <div class="user-name">{{user.name}}</div>
       </div>
       <div class="common-row mb-10">
-        <div class="bigger-text mb-1">Фамилия</div>
+        <div class="bigger-text mb-5">Фамилия</div>
         <div class="user-name">{{user.surname}}</div>
       </div>
       <div class="common-row mb-10">
-        <div class="bigger-text mb-1">Отдел</div>
+        <div class="bigger-text mb-5">Отдел</div>
         <div class="user-name">{{user.department}}</div>
       </div>
       <div class="common-row mb-10">
-        <div class="bigger-text mb-1">Должность</div>
+        <div class="bigger-text mb-5">Должность</div>
         <div class="user-name">{{user.profession}}</div>
       </div>
       <div class="common-row mb-10">
-        <div class="bigger-text mb-1">Телефон</div>
+        <div class="bigger-text mb-5">Телефон</div>
         <div class="user-name">{{user.phone}}</div>
       </div>
       <div class="common-row mb-10">
-        <div class="bigger-text mb-1">Адрес эл. почты</div>
+        <div class="bigger-text mb-5">Адрес эл. почты</div>
         <div class="user-name">{{user.email}}</div>
       </div>
     </div>
@@ -43,19 +43,19 @@
         <div class="bigger-text mb-10">Написать</div>
       </div>
       <div class="messengers">
-        <div class="cy">
+        <div class="cxy flex-column">
           <a [href]="sanitize('rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + user.rocket_login)">
             <img src="assets/icons/rocket.png">
           </a>
           <div class="mini-text">Rocket</div>
         </div>
-        <div class="cxy cy">
+        <div class="cxy flex-column">
           <a [href]="sanitize('https://web.whatsapp.com/send?phone=' + user.phone)">
             <img src="assets/icons/whatsapp.png">
           </a>
           <div class="mini-text">WhatsApp</div>
         </div>
-        <div class="content-flex-end">
+        <div class="cxy flex-column">
           <a [href]="sanitize('mailto:' + user.email)">
             <img src="assets/icons/mail.png">
           </a>
