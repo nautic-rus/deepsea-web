@@ -10,3 +10,11 @@ export class LV {
     }
   }
 }
+export class LVn {
+  label: string = '';
+  value: number = 0;
+  constructor(label: string, value: number = 0) {
+    this.label = label;
+    this.value = value;
+  }
+}

@@ -15,7 +15,7 @@ import {SendToApprovalComponent} from "./send-to-approval/send-to-approval.compo
 import {ChangeResponsibleComponent} from "./change-responsible/change-responsible.component";
 import {SendToCloudComponent} from "./send-to-cloud/send-to-cloud.component";
 import {DeleteComponent} from "./delete/delete.component";
-import {LV} from "../../domain/classes/lv";
+import {LV, LVn} from "../../domain/classes/lv";
 import {LanguageService} from "../../domain/language.service";
 import {UserCardComponent} from "../employees/user-card/user-card.component";
 import {SendToYardApprovalComponent} from "./send-to-yard-approval/send-to-yard-approval.component";
@@ -86,7 +86,7 @@ export class TaskComponent implements OnInit {
   today: Date = new Date();
   collapsed: string[] = [];
   issueTypes: IssueType[] = [];
-  yesNo: any[] = [new LV('Yes'), new LV('No')];
+  yesNo: any[] = [new LVn('Yes', 1), new LVn('No', 0)];
   planned: any[];
   quillModulesModificationDescription =
     {
@@ -346,7 +346,6 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
     this.issue = this.conf.data as Issue;
-
     let findAnswer = this.issue.messages.filter(x => x.prefix == 'answer');
     if (findAnswer.length > 0){
       this.answerMessage = findAnswer[findAnswer.length - 1].content;
@@ -1034,6 +1033,7 @@ export class TaskComponent implements OnInit {
         }
       }
     }
+    console.log(this.issue.modification_of_existing);
     if (this.edit == 'startDate'){
       this.issue.start_date = this.startDate.getTime();
     }

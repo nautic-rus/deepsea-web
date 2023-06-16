@@ -1203,7 +1203,14 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('modification_of_existing')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Изменение существующего')}}</div>
-            <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" class="pl-3 cy df cursor-pointer description-task hover-task">{{issue.modification_of_existing}}</div>
+            <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" class="pl-3 cy df cursor-pointer description-task hover-task">
+              <div *ngIf="+issue.modification_of_existing == 1">
+                Yes
+              </div>
+              <div *ngIf="+issue.modification_of_existing == 0">
+                No
+              </div>
+            </div>
             <div class="mr-5" [hidden]="edit != 'modification_of_existing'">
               <p-dropdown class="select" [(ngModel)]="issue.modification_of_existing" [options]="yesNo" optionValue="value" optionLabel="label" styleClass="width-180">
               </p-dropdown>
