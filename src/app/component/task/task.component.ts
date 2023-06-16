@@ -74,6 +74,7 @@ export class TaskComponent implements OnInit {
   availableActions: any[] = [];
   reasonsOfChange: any[] = [];
   taskDepartments: string[] = [];
+  userDepartments: any[] = [];
   taskPriorities: LV[] = [];
   taskPeriods: LV[] = [];
   taskProjects: string[] = [];
@@ -362,7 +363,10 @@ export class TaskComponent implements OnInit {
 
     this.issueManager.getIssueProjects().then(projects => {
       this.issueProjects = projects;
-      this.availableActions = this.getAvailableActions(this.issue);
+      this.issueManager.getDepartments().subscribe(userDepartments => {
+        this.userDepartments = userDepartments;
+        this.availableActions = this.getAvailableActions(this.issue);
+      });
     });
 
     this.issueManager.getReasonsOfChange().then(reasons => {
@@ -372,6 +376,7 @@ export class TaskComponent implements OnInit {
     this.issueManager.getIssueDepartments().then(departments => {
       this.taskDepartments = departments;
     });
+
     // this.issueManager.getIssueProjects().then(projects => {
     //   this.taskProjects = projects.filter((x: any) => x.pdsp != '').map(x => x.pdsp);
     // });
@@ -477,6 +482,14 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != x.closing_status).length == 0 && allow : allow;
       allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
       allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
+
+      let isManager = false;
+      let issueDep = this.userDepartments.find(x => x.name == issue.department);
+      if (issueDep != null){
+        isManager = issueDep.manager.includes(this.auth.getUser().login);
+      }
+      allow = action.rule.includes('r') && isManager || allow;
+
       if (issue.issue_type == 'QNA' && this.auth.getUser().login == 'stropilov'){
         allow = true;
       }
@@ -1091,7 +1104,12 @@ export class TaskComponent implements OnInit {
   }
 
   isEditable() {
-    return this.auth.getUser().login == this.issue.started_by || this.auth.getUser().login == this.issue.responsible;
+    let isManager = false;
+    let issueDep = this.userDepartments.find(x => x.name == this.issue.department);
+    if (issueDep != null){
+      isManager = issueDep.manager.includes(this.auth.getUser().login);
+    }
+    return this.auth.getUser().login == this.issue.started_by || this.auth.getUser().login == this.issue.responsible || isManager;
   }
 
   openUserInfo(author: string) {
