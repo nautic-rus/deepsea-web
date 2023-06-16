@@ -981,7 +981,20 @@
                   <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPeriod(msg.new_value)) | safeHtml"></div>
                 </div>
               </div>
-              <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor', 'contract_due_date', 'reason_of_changes'].includes(msg.name_value)">
+              <div *ngIf="msg.name_value == 'modification_of_existing'">
+                <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+                <span class="bold-text">{{t.tr('"Изменение существующего"')}}</span>
+                <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+                <div class="df pt-5">
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeModificationOfExisting(+msg.prev_value)) | safeHtml"></div>
+                  <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                  <div [innerHTML]="getNoneZeroResult(issueManager.localeModificationOfExisting(+msg.new_value)) | safeHtml"></div>
+                </div>
+              </div>
+              <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor', 'contract_due_date', 'reason_of_changes', 'modification_of_existing'].includes(msg.name_value)">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
                 <span class="bold-text">{{t.tr('информацию')}}</span>
