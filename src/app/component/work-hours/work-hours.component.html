@@ -140,32 +140,32 @@
       <div class="width-340 background-gray" *ngIf="stages.length > 0">
         <div class="df space-between mt-5">
           <div class="ml-10">
-            <div class="big-text-user mb-1">{{t.tr('Проект')}}</div>
+            <div class="big-text-user mb-5">{{t.tr('Проект')}}</div>
             <p-dropdown appendTo="body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-130" (onChange)="projectChanged()"></p-dropdown>
           </div>
           <div>
-            <div class="big-text-user mb-1">{{t.tr('Отдел')}}</div>
+            <div class="big-text-user mb-5">{{t.tr('Отдел')}}</div>
             <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="taskDepartment" [options]="taskDepartments" (onChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
         <div class="df space-between ">
           <div class="ml-10">
-            <div class="big-text-user mb-1 mt-4px">{{t.tr('Этап')}}</div>
+            <div class="big-text-user mb-5 mt-4px">{{t.tr('Этап')}}</div>
             <p-dropdown appendTo="body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (onChange)="stageChanged()" styleClass="width-130"></p-dropdown>
           </div>
           <div>
-            <div class="big-text-user mb-1 mt-4px">{{t.tr('Тип')}}</div>
+            <div class="big-text-user mb-5 mt-4px">{{t.tr('Тип')}}</div>
             <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (onChange)="taskTypeChanged()" styleClass="width-130"></p-dropdown>
           </div>
         </div>
 
         <div class="df space-between mb-10">
           <div class="ml-10">
-            <div class="big-text-user mb-1 mt-4px">{{t.tr('Статус')}}</div>
+            <div class="big-text-user mb-5 mt-4px">{{t.tr('Статус')}}</div>
             <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (onChange)="statusChanged()" styleClass="width-130"></p-dropdown>
           </div>
           <div>
-            <div class="big-text-user mb-1 mt-24"></div>
+            <div class="big-text-user mb-5 mt-24"></div>
             <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input (mouseenter)="cd.detach()" (mouseleave)="cd.reattach()" [(ngModel)]="searchValue" (ngModelChange)="filterIssues();" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-130" />
@@ -178,7 +178,7 @@
             <div class="cursor-pointer" (click)="selectIssue(issue);">
               <div pDraggable="issue" (dragstart)="drag($event, issue, dragValues[issue.id])" (dragend)="dragEnd($event)">
                 <div class="one-row-w df space-between" (click)="openTask(issue.id)">
-                  <div class="title-bold">{{issue.doc_number}}</div>
+                  <div class="title-bold-w">{{issue.doc_number}}</div>
                   <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
                 </div>
                 <div class="text-mini-gray">
