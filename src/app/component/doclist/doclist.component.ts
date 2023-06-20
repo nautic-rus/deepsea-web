@@ -46,34 +46,42 @@ export class DoclistComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedTaskTypes = this.taskTypes.map(x => x.value);
-    this.issueManager.getIssueProjects().then(projects => {
-      this.projects = projects;
-      this.projects.forEach((x: any) => x.label = this.getProjectName(x));
-      this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
-      this.selectedProjects = [...this.projects.map(x => x.name)];
-      this.selectedProjects = localStorage.getItem('selectedProjects') != null ? JSON.parse(localStorage.getItem('selectedProjects')!) : this.selectedProjects;
-      this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
-    });
+    // this.issueManager.getIssueProjects().then(projects => {
+    //   this.projects = projects;
+    //   this.projects.forEach((x: any) => x.label = this.getProjectName(x));
+    //   this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
+    //   this.selectedProjects = [...this.projects.map(x => x.name)];
+    //   this.selectedProjects = localStorage.getItem('selectedProjects') != null ? JSON.parse(localStorage.getItem('selectedProjects')!) : this.selectedProjects;
+    //   this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
+    // });
     this.loading = true;
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP');
       this.issues = this.issuesSrc;
-      console.log(this.issues);
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
         this.loading = false;
       });
-      console.log(_.uniq(this.issues.map(x => x.period)).map(x => this.getNumber(x)));
+
+      this.projects = _.sortBy(_.uniq(this.issues.map(x => x.project)), x => x).map(x => new LV(x));
+      this.selectedProjects = localStorage.getItem('selectedProjects') != null ? JSON.parse(localStorage.getItem('selectedProjects')!) : this.selectedProjects;
+      this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
+
+      this.departments = _.sortBy(_.uniq(this.issues.map(x => x.department)), x => x).map(x => new LV(x));
+      this.selectedDepartments = [...this.departments.map(x => x.name)];
+      this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
+
+
       this.taskStages = _.sortBy(_.uniq(this.issues.map(x => x.period)), x => this.getNumber(x)).map(x => new LV(x));
       this.selectedTaskStages = this.taskStages.map(x => x.value);
       this.selectedTaskStages = localStorage.getItem('selectedTaskStages') != null ? JSON.parse(localStorage.getItem('selectedTaskStages')!) : this.selectedTaskStages;
     });
-    this.issueManager.getDepartments().subscribe(departments => {
-      this.departments = departments.filter(x => x.visible_documents == 1);
-      this.selectedDepartments = [...this.departments.map(x => x.name)];
-      this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
-    });
+    // this.issueManager.getDepartments().subscribe(departments => {
+    //   this.departments = departments.filter(x => x.visible_documents == 1);
+    //   this.selectedDepartments = [...this.departments.map(x => x.name)];
+    //   this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
+    // });
   }
 
   getNumber(text: string){
@@ -166,12 +174,15 @@ export class DoclistComponent implements OnInit {
 
 
     this.issues = [...this.issuesSrc];
+    console.log(this.issues.length);
     this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
     this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
+
     this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department));
     this.issues = this.issues.filter(x => this.selectedTaskTypes.includes(x.issue_type));
     this.issues = this.issues.filter(x => this.selectedTaskStages.includes(x.period));
     this.issues = _.sortBy(this.issues, x => x.doc_number);
+
   }
 
   copyUrl(issueId: number, project: string, docNumber: string, department: string){

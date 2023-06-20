@@ -3,10 +3,10 @@
     <div class="empty-card"></div>
     <div class="card-head df sticky-card" *ngIf="projects.length > 0">
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
       <div class="mr-10">
         <p-multiSelect styleClass="width-200" [options]="taskTypes" [(ngModel)]="selectedTaskTypes" (ngModelChange)="taskTypeChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div>
-        <span>Number of tasks {{issues.length}}</span>
+        <span class="mr-5">Number of tasks {{issues.length}}</span>
         <span>(Всего: {{issuesSrc.length}})</span>
       </div>
       <div class="p-ml-auto mr-10 df">
