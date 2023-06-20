@@ -471,7 +471,12 @@ export class TaskComponent implements OnInit {
     const res: any[] = [];
     issue.actions.forEach(action => {
       let allow = false;
-      allow = action.rule.includes('r') && issue.responsible == this.auth.getUser().login || allow;
+      let isManager = false;
+      let issueDep = this.userDepartments.find(x => x.name == issue.department);
+      if (issueDep != null){
+        isManager = issueDep.manager.includes(this.auth.getUser().login);
+      }
+      allow = action.rule.includes('r') && (issue.responsible == this.auth.getUser().login || isManager) || allow;
       allow = action.rule.includes('a') && issue.assigned_to == this.auth.getUser().login || allow;
       allow = action.rule.includes('s') && issue.started_by == this.auth.getUser().login || allow;
       allow = action.rule.includes('g') && this.auth.getUser().groups.includes(issue.issue_type) || allow;
@@ -483,12 +488,6 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
       allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
 
-      let isManager = false;
-      let issueDep = this.userDepartments.find(x => x.name == issue.department);
-      if (issueDep != null){
-        isManager = issueDep.manager.includes(this.auth.getUser().login);
-      }
-      allow = action.rule.includes('r') && isManager || allow;
 
       if (issue.issue_type == 'QNA' && this.auth.getUser().login == 'stropilov'){
         allow = true;
