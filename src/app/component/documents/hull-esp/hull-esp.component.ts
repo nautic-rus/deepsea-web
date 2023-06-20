@@ -28,6 +28,7 @@ import {forkJoin, from, merge, of, zip} from "rxjs";
 import {map} from "rxjs/operators";
 import {GroupedParts} from "./interfaces/grouped-parts";
 import {GenerateEspComponent} from "./generate-esp/generate-esp.component";
+import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -744,7 +745,7 @@ export class HullEspComponent implements OnInit {
         this.fillRevisions();
       });
       if (res == 'uploaded'){
-        this.issueManager.notifyDocUpload(this.issue.id).subscribe(() => {});;
+        this.issueManager.notifyDocUpload(this.issue.id).subscribe(() => {});
       }
     });
   }
@@ -1332,6 +1333,16 @@ export class HullEspComponent implements OnInit {
 
   refreshEsp() {
     this.dialogService.open(GenerateEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
+  }
+
+  addFilesCommon() {
+    this.dialogService.open(UploadMultipleFilesComponent, {
       showHeader: false,
       modal: true,
       data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]

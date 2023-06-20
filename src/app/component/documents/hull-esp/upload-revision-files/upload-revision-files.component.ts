@@ -20,13 +20,19 @@ export class UploadRevisionFilesComponent implements OnInit {
   awaitForLoad: string[] = [];
   issue: Issue = new Issue();
   fileGroup = '';
+  hideSendEmail = false;
+  notify = true;
+
   constructor(public t: LanguageService, public issues: IssueManagerService, public s: SpecManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
     this.issues.getIssueDetails(conf.data[0]).then(res => {
       this.issue = res;
     });
     this.fileGroup = conf.data[1];
+    this.hideSendEmail = conf.data[2] != null && conf.data[2];
+    if (this.hideSendEmail){
+      this.notify = false;
+    }
   }
-  notify = true;
   ngOnInit(): void {
   }
   reformatFileName(name: string, fileGroup: string){
@@ -278,12 +284,7 @@ export class UploadRevisionFilesComponent implements OnInit {
       file.group = this.fileGroup;
     });
     this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
-      if (this.notify){
-        this.ref.close('uploaded');
-      }
-      else{
-        this.ref.close();
-      }
+      this.ref.close('uploaded');
     });
   }
   localeDepartment(department: string){

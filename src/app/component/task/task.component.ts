@@ -900,10 +900,10 @@ export class TaskComponent implements OnInit {
                 if (userPlanHoursToday.length > 0){
                   let consumedByTask = consumed.filter(x => x.task_id == this.issue.id && userPlanHoursToday.map(y => y.id).includes(x.hour_id));
                   let latestConsumed = userPlanHoursToday[0].id;
-                  let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= latestConsumed).filter(x => x.task_id != 0), x => x.id);
+                  let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= latestConsumed).filter(x => x.task_id > 0), x => x.id);
                   if (consumedByTask.length > 0){
                     latestConsumed = _.sortBy(consumedByTask, x => x.hour_id).reverse()[0].hour_id;
-                    plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id > latestConsumed).filter(x => x.task_id != 0), x => x.id);
+                    plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id > latestConsumed).filter(x => x.task_id > 0), x => x.id);
                   }
                   let taskHours = plannedHours.filter(x => x.task_id == this.issue.id);
                   if (consumedByTask.length == 0){

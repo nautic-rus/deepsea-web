@@ -178,6 +178,7 @@ import { DesignEspComponent } from './component/documents/design-esp/design-esp.
 import { MasterComponent } from './component/master/master.component';
 import { ConsumedDetailsComponent } from './component/task/consumed-details/consumed-details.component';
 import { GeneralEspComponent } from './component/documents/general-esp/general-esp.component';
+import { UploadMultipleFilesComponent } from './component/documents/upload-multiple-files/upload-multiple-files.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -305,7 +306,8 @@ Quill.register('modules/imageResize', ImageResize);
     DesignEspComponent,
     MasterComponent,
     ConsumedDetailsComponent,
-    GeneralEspComponent
+    GeneralEspComponent,
+    UploadMultipleFilesComponent
   ],
     imports: [
         BrowserModule,

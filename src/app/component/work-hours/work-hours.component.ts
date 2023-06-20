@@ -777,11 +777,11 @@ export class WorkHoursComponent implements OnInit {
     this.loading = true;
     let user = this.selectedDay.planHours[0].user;
     let freeHour = this.selectedDay.planHours[0];
-    if (freeHour.task_id != 0){
+    if (freeHour.task_id > 0){
       freeHour = this.pHours.filter(x => x.user == freeHour.user && x.task_id == freeHour.task_id)[0];
     }
     this.auth.getUsersPlanHours(user, 0, 1).subscribe(userPlanHours => {
-      let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id != 0), x => x.id);
+      let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id > 0), x => x.id);
       let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
       let assign: any[] = [];
       _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
