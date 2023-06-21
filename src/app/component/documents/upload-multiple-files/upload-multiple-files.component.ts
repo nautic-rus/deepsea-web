@@ -85,7 +85,7 @@ export class UploadMultipleFilesComponent implements OnInit {
   constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef) {
     this.issue = conf.data[0];
     this.rev = this.issue.revision;
-    this.changeRev = this.issue.revision != 'PDSP';
+    this.changeRev = this.issue.issue_type != 'PDSP';
     switch (this.issue.department) {
       default: this.fileGroups = this.hullFileGroups;
     }
