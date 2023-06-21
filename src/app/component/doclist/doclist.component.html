@@ -106,7 +106,7 @@
               <p-sortIcon field="last_update"></p-sortIcon>
             </th>
             <th *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{l.tr('Комментарий')}}</th>
-            <th class="w-5">{{l.tr('Ссылка')}}</th>
+            <th class="w-5">{{l.tr('Файл')}}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-issue>
@@ -125,9 +125,9 @@
             <td class="text-14 w-100">{{getDate(issue.last_update)}}</td>
             <td *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="text-14 w-100">{{issue.issue_comment}}</td>
             <td class="text-14 w-5">
-              <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
-                <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
-              </div>
+<!--              <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">-->
+<!--                <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">-->
+<!--              </div>-->
               <div class="ml-20" *ngIf="hasFiles(issue)">
                 <img pTooltip="Files" tooltipPosition="top" src="assets/icons/attachment.svg" height="16">
               </div>
