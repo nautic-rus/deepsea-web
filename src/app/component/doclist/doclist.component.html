@@ -128,6 +128,9 @@
               <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">
                 <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">
               </div>
+              <div class="ml-20" *ngIf="hasFiles(issue)">
+                <img pTooltip="Files" tooltipPosition="top" src="assets/icons/attachment.svg" height="16">
+              </div>
             </td>
           </tr>
         </ng-template>
