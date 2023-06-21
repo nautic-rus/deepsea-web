@@ -214,4 +214,7 @@ export class DoclistComponent implements OnInit {
     this.filterIssues();
   }
 
+  hasFiles(issue: Issue) {
+    return this.revisionFiles.filter(x => x.issue_id == issue.id).length;
+  }
 }
