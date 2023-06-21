@@ -75,11 +75,13 @@ export class UploadMultipleFilesComponent implements OnInit {
     }
   ];
   isCorrection = false;
-  isSendNotification = false;
+  isSendNotification = true;
   revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'F'];
   rev = '-';
   changeRev = true;
   comment = '';
+  loaded: FileAttachment[] = [];
+
   constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef) {
     this.issue = conf.data[0];
     this.rev = this.issue.revision;
@@ -89,7 +91,7 @@ export class UploadMultipleFilesComponent implements OnInit {
     }
   }
   getRevisionFilesOfGroup(fileGroup: string): FileAttachment[] {
-    let files = this.issue.revision_files.filter(x => (x.group == fileGroup || fileGroup == 'all') && x.revision == 'PROD');
+    let files = this.loaded.filter(x => (x.group == fileGroup || fileGroup == 'all'));
     return _.sortBy(files, x => x.upload_date).reverse();
   }
   ngOnInit(): void {
@@ -99,19 +101,13 @@ export class UploadMultipleFilesComponent implements OnInit {
     this.dialogService.open(UploadRevisionFilesComponent, {
       showHeader: false,
       modal: true,
-      data: [this.issue.id, name, true]
+      data: [this.issue.id, name, true, false]
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
       });
-      if (res == 'uploaded'){
-        if (this.issue.revision != this.rev){
-          this.issue.revision = this.rev;
-          this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {});
-          this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment).subscribe(res => {
-            console.log(res);
-          });
-        }
+      if (res != 'exit'){
+        this.loaded = this.loaded.concat(res);
       }
     });
   }
@@ -152,18 +148,8 @@ export class UploadMultipleFilesComponent implements OnInit {
   openFile(file: FileAttachment) {
     window.open(file.url, '_blank');
   }
-  deleteFile(fileUrl: string){
-    this.dialogService.open(ClearFilesComponent, {
-      showHeader: false,
-      modal: true,
-      data: this.issue
-    }).onClose.subscribe(res => {
-      if (res == 'success'){
-        this.issueManager.deleteRevisionFile(fileUrl, this.auth.getUser().login).then(() => {
-
-        });
-      }
-    });
+  deleteFile(file: FileAttachment){
+    this.loaded.splice(this.loaded.indexOf(file), 1);
   }
 
   close() {
@@ -171,6 +157,18 @@ export class UploadMultipleFilesComponent implements OnInit {
   }
 
   commit() {
+    if (this.issue.revision != this.rev){
+      this.issue.revision = this.rev;
+      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {});
+    }
+    this.issueManager.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
+      this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment).subscribe(res => {
+        this.ref.close();
+      });
+    });
+  }
 
+  clearFilesOfGroup(name: string) {
+    this.loaded = this.loaded.filter(x => x.group != name);
   }
 }

@@ -8,6 +8,7 @@ import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dyna
 import Delta from "quill-delta";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {SpecManagerService} from "../../../../domain/spec-manager.service";
+import {tr} from "date-fns/locale";
 
 @Component({
   selector: 'app-upload-revision-files',
@@ -21,7 +22,7 @@ export class UploadRevisionFilesComponent implements OnInit {
   issue: Issue = new Issue();
   fileGroup = '';
   hideSendEmail = false;
-  notify = true;
+  sendLoaded = true;
 
   constructor(public t: LanguageService, public issues: IssueManagerService, public s: SpecManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
     this.issues.getIssueDetails(conf.data[0]).then(res => {
@@ -29,9 +30,7 @@ export class UploadRevisionFilesComponent implements OnInit {
     });
     this.fileGroup = conf.data[1];
     this.hideSendEmail = conf.data[2] != null && conf.data[2];
-    if (this.hideSendEmail){
-      this.notify = false;
-    }
+    this.sendLoaded = conf.data[3] == null || conf.data[3];
   }
   ngOnInit(): void {
   }
@@ -283,9 +282,17 @@ export class UploadRevisionFilesComponent implements OnInit {
       file.revision = this.issue.revision;
       file.group = this.fileGroup;
     });
-    this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
-      this.ref.close('uploaded');
-    });
+    if (this.sendLoaded){
+      this.issues.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
+        this.ref.close('uploaded');
+      });
+    }
+    else{
+      this.loaded.forEach(file => {
+        file.revision = 'PROD';
+      });
+      this.ref.close(this.loaded);
+    }
   }
   localeDepartment(department: string){
     switch (department) {

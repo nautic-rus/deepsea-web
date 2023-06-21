@@ -12,6 +12,12 @@
                 </div>
                 <div class="cy ml-1">Add files</div>
               </div>
+              <div class="button-details df cursor-pointer mb-15" (click)="clearFilesOfGroup(fileGroup.name)">
+                <div class="cxy">
+                  <img src="assets/icons/trash-3.svg" height="16">
+                </div>
+                <div class="cy ml-1">Clear files</div>
+              </div>
             </div>
             <div *ngIf="getRevisionFilesOfGroup(fileGroup.name).length != 0">
               <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name)">
@@ -26,7 +32,7 @@
                       <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                     </svg>
                   </div>
-                  <div class="cxy" (click)="deleteFile(file.url)">
+                  <div class="cxy" (click)="deleteFile(file)">
                     <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
                       <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     </svg>

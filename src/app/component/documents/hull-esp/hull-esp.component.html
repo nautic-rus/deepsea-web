@@ -702,6 +702,11 @@
           <img src="assets/icons/question1.svg" height="24">
         </div>
       </div>
+      <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
+        <div [pTooltip]="'Add multiple files'" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button green-button cxy">
+          <img src="assets/icons/upload.svg" height="24">
+        </div>
+      </div>
       <div class="p-ml-auto df mr-12">
 <!--        <div class="cy">-->
 <!--          <div class="text-view-files">View files of revision</div>-->
