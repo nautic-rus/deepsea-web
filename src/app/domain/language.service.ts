@@ -527,7 +527,11 @@ export class LanguageService {
           case 'Часы': return 'Hours';
           case 'Ответ к задаче': return 'Answer to the task';
           case 'Файл': return 'File';
-          case '': return '';
+          case 'Помощь': return 'Help';
+          case 'Открыть облако': return 'Open Cloud';
+          case 'Экспорт эскизов': return 'Export Sketches';
+          case 'Показать чертеж': return 'Show Drawing';
+          case 'Получить спецификацию': return 'Get Spec';
           case '': return '';
           case '': return '';
           default: return input;
