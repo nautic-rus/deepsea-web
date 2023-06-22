@@ -203,8 +203,6 @@ export class WorkHoursComponent implements OnInit {
         this.statuses = ['-'].concat(this.statuses);
         this.taskTypes = ['-'].concat(this.taskTypes);
         this.issuesSrc.forEach(x => this.dragValues[x.id] = (x.plan_hours - this.getPlanned(x)));
-        console.log(this.issuesSrc.find(x => x.id == 8749)!.plan_hours);
-        console.log(this.plannedHours.find(x => x.taskId == 8749));
         this.filterIssues();
       });
     });
