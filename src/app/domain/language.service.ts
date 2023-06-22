@@ -534,8 +534,8 @@ export class LanguageService {
           case 'Получить спецификацию': return 'Get Spec';
           case 'Очистить всё': return 'Clear files';
           case 'Загрузка файлов': return 'Uploading files';
-          case 'Корректировка': return 'Correction';
-          case 'Уведомить': return 'Notify';
+          case 'Оперативное решение': return 'Correction';
+          case 'Отправить уведомление на e-mail': return 'Send email notification';
           case '': return '';
           case '': return '';
           case '': return '';

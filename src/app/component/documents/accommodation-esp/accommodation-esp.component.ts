@@ -22,6 +22,7 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import * as XLSX from "xlsx";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {AccommodationsEspGenerationWaitComponent} from "./accommodations-esp-generation-wait/accommodations-esp-generation-wait.component";
+import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 
 @Component({
   selector: 'app-accommodation-esp',
@@ -69,6 +70,8 @@ export class AccommodationEspComponent implements OnInit {
   selectedHeadTab: string = 'Files';
   nestContent: any[] = [];
   nestContentRead = false;
+  kindEsp = '';
+  revEspNoDate = '';
   quillModules =
     {
       imageResize: {},
@@ -781,4 +784,14 @@ export class AccommodationEspComponent implements OnInit {
   getZones(zone: string) {
     return zone.split(',');
   }
+  addFilesCommon() {
+    this.dialogService.open(UploadMultipleFilesComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
+  }
+
 }

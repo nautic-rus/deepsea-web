@@ -842,6 +842,15 @@
 .file-name-esp{
   word-wrap: break-word;
 }
+.materials-button-files{
+  color: white;
+  height: 35px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
 .materials-button{
   color: white;
   height: 35px;
