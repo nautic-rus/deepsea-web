@@ -532,6 +532,15 @@ export class LanguageService {
           case 'Экспорт эскизов': return 'Export Sketches';
           case 'Показать чертеж': return 'Show Drawing';
           case 'Получить спецификацию': return 'Get Spec';
+          case 'Очистить всё': return 'Clear files';
+          case 'Загрузка файлов': return 'Uploading files';
+          case 'Корректировка': return 'Correction';
+          case 'Уведомить': return 'Notify';
+          case '': return '';
+          case '': return '';
+          case '': return '';
+          case '': return '';
+          case '': return '';
           case '': return '';
           case '': return '';
           default: return input;

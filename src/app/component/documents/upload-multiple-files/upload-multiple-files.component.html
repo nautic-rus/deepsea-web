@@ -1,32 +1,40 @@
 <div class="upload-multiple-files">
-  <div class="cx mb-2 title">Загрузка файлов</div>
-  <div class="df">
-    <div class="file-groups">
-      <div class="mb-15" *ngFor="let fileGroup of fileGroups">
-        <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name).length == 0 || fileGroup.collapsed">
-          <div>
-            <div class="df">
-              <div class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name)">
-                <div class="cxy">
-                  <img src="assets/icons/plus1.svg" height="16">
-                </div>
-                <div class="cy ml-1">Add files</div>
+  <div class="header-upload">
+    <div class="cx title">{{t.tr('Загрузка файлов')}}</div>
+    <div class="upload-button-close cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+
+  <div class="file-groups">
+    <div class="mb-15" *ngFor="let fileGroup of fileGroups">
+      <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name).length == 0 || fileGroup.collapsed">
+        <div>
+          <div class="df">
+            <div class="button-details df cursor-pointer mb-15 mr-10" (click)="addFilesToGroup(fileGroup.name)">
+              <div class="cxy">
+                <img src="assets/icons/plus1.svg" height="16">
               </div>
-              <div class="button-details df cursor-pointer mb-15" (click)="clearFilesOfGroup(fileGroup.name)">
-                <div class="cxy">
-                  <img src="assets/icons/trash-3.svg" height="16">
-                </div>
-                <div class="cy ml-1">Clear files</div>
-              </div>
+              <div class="cy ml-1">{{t.tr('Добавить файлы')}}</div>
             </div>
-            <div *ngIf="getRevisionFilesOfGroup(fileGroup.name).length != 0">
-              <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name)">
-                <div  class="attachment-files df mb-6 cursor-pointer">
+            <div class="button-details df cursor-pointer mb-15" (click)="clearFilesOfGroup(fileGroup.name)">
+              <div class="cxy">
+                <img src="assets/icons/trash-3.svg" height="16">
+              </div>
+              <div class="cy ml-1">{{t.tr('Очистить всё')}}</div>
+            </div>
+          </div>
+          <div *ngIf="getRevisionFilesOfGroup(fileGroup.name).length != 0">
+            <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name)">
+              <div class="attachment-files df mb-6 cursor-pointer space-between">
+                <div class="df">
                   <div class="cxy">
                     <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                   </div>
                   <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
                   <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+                </div>
+                <div class="df">
                   <div class="cxy" (click)="openFile(file)">
                     <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                       <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
@@ -41,46 +49,42 @@
               </div>
             </div>
           </div>
-        </p-fieldset>
-      </div>
+        </div>
+      </p-fieldset>
     </div>
+  </div>
+  <div class="df comment-footer">
     <div class="options">
       <div class="mr-10 cy my-5">
         <label class="container margin-bottom-none">
-          <span class="text-checkbox">Корректировка</span>
+          <span class="text-checkbox">{{t.tr('Корректировка')}}</span>
           <input type="checkbox" [(ngModel)]="isCorrection">
           <span class="checkmark"></span>
         </label>
       </div>
       <div class="mr-10 cy my-5">
         <label class="container margin-bottom-none">
-          <span class="text-checkbox">Уведомить</span>
+          <span class="text-checkbox">{{t.tr('Уведомить')}}</span>
           <input type="checkbox" [(ngModel)]="isSendNotification">
           <span class="checkmark"></span>
         </label>
       </div>
       <div class="my-5">
-        <div class="pb-5">
-          Комментарий
-        </div>
+        <div class="pb-5">{{t.tr('Комментарий')}}</div>
         <div class="">
           <textarea [(ngModel)]="comment" rows="3" cols="35" pInputTextarea [autoResize]="true"></textarea>
         </div>
       </div>
-      <div class="mb-2">
-        <div class="w-45">
-          Ревизия
+        <div class="">{{t.tr('Ревизия')}}
           <p-dropdown [disabled]="changeRev" appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
           </p-dropdown>
         </div>
-      </div>
-
-      <div class="df">
-        <div class="mr-1 cx">
-          <div tabindex="10" (click)="commit()" pButton [label]="'Отправить'" class="button-ok"></div>
-        </div>
-        <div tabindex="11" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>
-      </div>
     </div>
+  </div>
+  <div class="df footer">
+    <div class="mr-1 cx">
+      <div tabindex="10" (click)="commit()" pButton [label]="t.tr('Отправить')" class="button-ok"></div>
+    </div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>
 </div>

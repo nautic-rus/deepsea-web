@@ -8,6 +8,7 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {UploadRevisionFilesComponent} from "../hull-esp/upload-revision-files/upload-revision-files.component";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-upload-multiple-files',
@@ -82,7 +83,7 @@ export class UploadMultipleFilesComponent implements OnInit {
   comment = '';
   loaded: FileAttachment[] = [];
 
-  constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef) {
+  constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService) {
     this.issue = conf.data[0];
     this.rev = this.issue.revision;
     this.changeRev = this.issue.issue_type != 'PDSP';
