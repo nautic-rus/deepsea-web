@@ -666,7 +666,7 @@
 <!--           <i class="pi pi-refresh" style="font-size: 2.5rem"></i>-->
 <!--        </div>-->
 <!--      </div>-->
-      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()">
+      <div class="mr-10" [pTooltip]="l.tr('Получить спецификацию')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <svg class="icon-top-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
             <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
@@ -677,7 +677,7 @@
 <!--        <button pButton [pTooltip]="l.tr('Get Revision Spec')" tooltipPosition="top" class="border normal-button p-button-outlined" icon="pi pi-replay" (click)="createEsp()"></button>-->
 <!--      </div>-->
       <div class="mr-10">
-        <div [pTooltip]="l.tr('Show Drawing')" (click)="showDxf()" [class.disabled-button]="isDisabledDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
+        <div [pTooltip]="l.tr('Показать чертеж')" (click)="showDxf()" [class.disabled-button]="isDisabledDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
           <svg class="icon-top-button" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
             <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
@@ -685,41 +685,36 @@
         </div>
       </div>
       <div class="mr-10">
-        <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" (click)="exportSketches()" class="materials-button green-button cxy">
+        <div [pTooltip]="l.tr('Экспорт эскизов')" tooltipPosition="top" (click)="exportSketches()" class="materials-button green-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div class="mr-10">
-        <div *ngIf="!cloudLoading" [pTooltip]="'Open Cloud'" tooltipPosition="top" (click)="openCloud()" class="materials-button violet-button cxy">
+        <div *ngIf="!cloudLoading" [pTooltip]="l.tr('Открыть облако')" tooltipPosition="top" (click)="openCloud()" class="materials-button violet-button cxy">
           <img src="assets/icons/cloud01.svg" height="18">
         </div>
-        <div *ngIf="cloudLoading" [pTooltip]="'Open Cloud'" tooltipPosition="top" class="materials-button green-button cxy">
+        <div *ngIf="cloudLoading" [pTooltip]="l.tr('Открыть облако')" tooltipPosition="top" class="materials-button green-button cxy">
           <p-progressSpinner [style]="{width: '35px', height: '35px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
         </div>
       </div>
       <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
-        <div [pTooltip]="'Show help'" tooltipPosition="top" (click)="showHelp()" class="materials-button gray-button cxy">
+        <div [pTooltip]="l.tr('Помощь')" tooltipPosition="top" (click)="showHelp()" class="materials-button gray-button cxy">
           <img src="assets/icons/question1.svg" height="24">
         </div>
       </div>
-      <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
-        <div [pTooltip]="'Add multiple files'" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button green-button cxy">
-          <img src="assets/icons/upload.svg" height="24">
-        </div>
-      </div>
+
       <div class="p-ml-auto df mr-12">
-<!--        <div class="cy">-->
-<!--          <div class="text-view-files">View files of revision</div>-->
-<!--        </div>-->
-<!--        <div class="ml-1">-->
-<!--          <p-dropdown appendTo="body" [(ngModel)]="selectedRevision" [options]="issueRevisions" (ngModelChange)="viewRevisionChanged()" styleClass="w-100 h-32 cxy">-->
-<!--          </p-dropdown>-->
-<!--        </div>-->
-      </div>
-      <span class="p-input-icon-left">
+        <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
+          <div [pTooltip]="l.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button yellow-button cxy">
+            <img src="assets/icons/download-file.svg" height="24">
+          </div>
+        </div>
+        <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
       </span>
+      </div>
+
     </div>
     <div class="w-100 df">
       <div class="card-sp mr-20">
@@ -870,12 +865,12 @@
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
-                  <div *ngIf="fileGroup.name == 'Other' || fileGroup.name == 'Correction' || this.nc && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
-                    <div class="cxy">
-                      <img src="assets/icons/plus1.svg" height="16">
-                    </div>
-                    <div class="cy ml-1">Add files</div>
-                  </div>
+<!--                  <div *ngIf="fileGroup.name == 'Other' || fileGroup.name == 'Correction' || this.nc && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">-->
+<!--                    <div class="cxy">-->
+<!--                      <img src="assets/icons/plus1.svg" height="16">-->
+<!--                    </div>-->
+<!--                    <div class="cy ml-1">Add files</div>-->
+<!--                  </div>-->
                   <div *ngIf="fileGroup.name != 'Cutting Map'" class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/download-arrow.png">
