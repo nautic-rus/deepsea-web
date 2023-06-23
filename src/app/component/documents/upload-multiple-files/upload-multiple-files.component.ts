@@ -165,9 +165,12 @@ export class UploadMultipleFilesComponent implements OnInit {
     this.issueManager.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
       if (this.isSendNotification){
         this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment).subscribe(res => {
+          this.ref.close();
         });
       }
-      this.ref.close();
+      else {
+        this.ref.close();
+      }
     });
   }
 
