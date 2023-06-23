@@ -162,9 +162,11 @@ export class UploadMultipleFilesComponent implements OnInit {
       this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {});
     }
     this.issueManager.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
-      this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment).subscribe(res => {
-        this.ref.close();
-      });
+      if (this.isSendNotification){
+        this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment).subscribe(res => {
+          this.ref.close();
+        });
+      }
     });
   }
 
