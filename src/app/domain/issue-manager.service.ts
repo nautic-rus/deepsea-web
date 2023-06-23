@@ -52,8 +52,8 @@ export class IssueManagerService {
   getDepartments() {
     return this.http.get<any[]>(props.http + '/departments');
   }
-  notifyDocUpload(taskId: number, kind: string = 'common', comment: string = '') {
-    return this.http.get<any[]>(props.http + '/notifyDocUpload', {params: {taskId, kind, comment}});
+  notifyDocUpload(taskId: number, kind: string = 'common', comment: string = '', count = 0) {
+    return this.http.get<any[]>(props.http + '/notifyDocUpload', {params: {taskId, kind, comment, count}});
   }
   async getIssueProjects() {
     return await this.http.get<any[]>(props.http + '/issueProjects').toPromise();
