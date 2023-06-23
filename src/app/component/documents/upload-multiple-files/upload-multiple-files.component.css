@@ -1,12 +1,42 @@
+/deep/.p-dialog .p-dialog-content{
+  border-radius: 5px!important;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th {
+  border-width: 1px 0 1px 0;
+}
+.upload-button-close{
+  color: #605e5c;
+  width: 2rem;
+  height: 2rem;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.upload-button-close:hover {
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.header-upload{
+  border-bottom: 0 none;
+  background: #ffffff;
+  color: #323130;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+}
 .upload-multiple-files{
   width: 40vw;
   height: 80vh;
   padding: 10px;
 }
 .file-groups{
-  width: 350px;
-  height: 65vh;
+  max-height: 44vh;
   overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   padding: 10px;
 }
 .title{
@@ -95,4 +125,14 @@
 }
 .button-cancel:hover{
   background-color: #ECEDF0;
+}
+.footer{
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+.comment-footer{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
 }

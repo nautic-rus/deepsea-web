@@ -26,12 +26,20 @@
           <div class="cxy">{{l.tr('Cables')}}</div>
         </div>
       </div>
-      <span class="p-ml-auto p-input-icon-left">
+      <div class="p-ml-auto df">
+        <div class="mr-10" *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))">
+          <div [pTooltip]="l.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button-files yellow-button cxy">
+            <img src="assets/icons/download-file.svg" height="24">
+          </div>
+        </div>
+        <span class="p-ml-auto p-input-icon-left">
         <i class="pi pi-search"></i>
          <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
 
-        <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+          <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
       </span>
+      </div>
+
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20">

@@ -22,6 +22,7 @@ import {
 } from "../accommodation-esp/accommodations-esp-generation-wait/accommodations-esp-generation-wait.component";
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
+import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 
 @Component({
   selector: 'app-general-esp',
@@ -68,6 +69,8 @@ export class GeneralEspComponent implements OnInit {
   selectedHeadTab: string = 'Files';
   nestContent: any[] = [];
   nestContentRead = false;
+  kindEsp = '';
+  revEspNoDate = '';
   quillModules =
     {
       imageResize: {},
@@ -794,5 +797,15 @@ export class GeneralEspComponent implements OnInit {
   }
   openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
+  }
+
+  addFilesCommon() {
+    this.dialogService.open(UploadMultipleFilesComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
   }
 }

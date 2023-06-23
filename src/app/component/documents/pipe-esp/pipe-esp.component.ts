@@ -30,6 +30,7 @@ import {PipeEspGenerationWaitComponent} from "./pipe-esp-generation-wait/pipe-es
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {RemoveDeviceFromSystemComponent} from "../device-esp/device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component";
 import {GenerateEspComponent} from "../hull-esp/generate-esp/generate-esp.component";
+import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 
 @Component({
   selector: 'app-pipe-esp',
@@ -943,6 +944,16 @@ export class PipeEspComponent implements OnInit {
   }
   refreshEsp() {
     this.dialogService.open(GenerateEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
+    }).onClose.subscribe(() => {
+      this.fillRevisions();
+    });
+  }
+
+  addFilesCommon() {
+    this.dialogService.open(UploadMultipleFilesComponent, {
       showHeader: false,
       modal: true,
       data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
