@@ -1,0 +1,19 @@
+<div style="height: 264px; width: 350px;">
+  <div class="task-header-assign mt-40">
+    <div class=" question cxy">
+      <div class="question-icon">?</div>
+    </div>
+  </div>
+  <div>
+    <div class="confirm-text">{{t.tr('Подтверждение')}}</div>
+  </div>
+  <div class="mt-1 cxy">
+    <div class="delete-text">{{t.tr('Вы собираетесь удалить право и все её данные.')}}</div>
+  </div>
+  <div class="footer-delete mt-2">
+    <div class="mr-10 cx">
+      <div tabindex="10" (click)="commit()" pButton [label]="t.tr ('Удалить')" class="button-ok"></div>
+    </div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr ('Отменить')" class="button-cancel ml-1"></div>
+  </div>
+</div>

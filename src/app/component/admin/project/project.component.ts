@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 import {ProjectService} from "./project.service";
 import {Projects} from "../../../domain/interfaces/project";
@@ -7,6 +7,8 @@ import {Users} from "../../../domain/interfaces/users";
 import _, {groupBy} from "underscore";
 import {UserService} from "../user/user.service";
 import {MessageService} from "primeng/api";
+import {DeleteUserComponent} from "../user/delete-user/delete-user.component";
+import {DeleteProjectComponent} from "./delete-project/delete-project.component";
 
 @Component({
   selector: 'app-project',
@@ -23,7 +25,7 @@ export class ProjectComponent implements OnInit {
   loading = false;
   managers: string[] = []
 
-  constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
+  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
 
   ngOnInit(): void {
     console.log(this.conf.data)
@@ -54,28 +56,21 @@ export class ProjectComponent implements OnInit {
   }
 
   deleteProject() {
-    this.loading = true;
-    this.projectService.deleteProject(this.project.id).subscribe({
-      next: res => {
-        console.log(res);
-        this.userService.deleteUsersProject(this.project.id).subscribe({
-          next: res => {
-            console.log(res);
-          },
-          error: err => {
-            console.log(err);
+      this.loading = true;
+      this.dialogService.open(DeleteProjectComponent, {
+        showHeader: false,
+        modal: true,
+        data: this.project.id
+      }).onClose.subscribe(res => {
+        if (res == 'success'){
+          this.ref.close(res);
+          this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Проект удалён')});
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Не удалось удалить проект')});
           }
-        })
-        this.loading = false;
-        this.ref.close(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Проект удалён')});
-      },
-      error: err => {
-        console.log(err);
-        this.loading = false;
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Не удалось удалить проект')});
-      }
-    });
+      });
   }
 
   saveProject() {

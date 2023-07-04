@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Users} from "../../../domain/interfaces/users";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 import {Projects} from "../../../domain/interfaces/project";
 import {ProjectService} from "../project/project.service";
@@ -14,6 +14,8 @@ import {Rights} from "../../../domain/interfaces/rights";
 import {RightService} from "../right/right.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {MessageService} from "primeng/api";
+import {DeleteComponent} from "../../task/delete/delete.component";
+import {DeleteUserComponent} from "./delete-user/delete-user.component";
 
 @Component({
   selector: 'app-user',
@@ -33,7 +35,7 @@ export class UserComponent implements OnInit {
   birthday: Date;
   loading = false;
 
-  constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public auth: AuthManagerService, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
+  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public auth: AuthManagerService, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -100,16 +102,18 @@ export class UserComponent implements OnInit {
 
   deleteUser() {
     this.loading = true;
-    this.userService.deleteUser(this.user.id).subscribe({
-      next: res => {
-        this.loading = false;
-        console.log(res);
+    this.dialogService.open(DeleteUserComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.user.id
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
         this.ref.close(res);
         this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление пользователя'), detail: this.lang.tr('Пользователь удалён')});
-      },
-      error: err => {
         this.loading = false;
-        console.log(err);
+      } else {
+        this.loading = false;
+        console.log(res);
         this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление пользователя'), detail: this.lang.tr('Не удалось удалить пользователя')});
       }
     });

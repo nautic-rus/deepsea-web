@@ -179,6 +179,10 @@ import { MasterComponent } from './component/master/master.component';
 import { ConsumedDetailsComponent } from './component/task/consumed-details/consumed-details.component';
 import { GeneralEspComponent } from './component/documents/general-esp/general-esp.component';
 import { UploadMultipleFilesComponent } from './component/documents/upload-multiple-files/upload-multiple-files.component';
+import { DeleteUserComponent } from './component/admin/user/delete-user/delete-user.component';
+import { DeleteProjectComponent } from './component/admin/project/delete-project/delete-project.component';
+import { DeleteRightComponent } from './component/admin/right/delete-right/delete-right.component';
+import { DeleteRoleComponent } from './component/admin/role/delete-role/delete-role.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -307,7 +311,11 @@ Quill.register('modules/imageResize', ImageResize);
     MasterComponent,
     ConsumedDetailsComponent,
     GeneralEspComponent,
-    UploadMultipleFilesComponent
+    UploadMultipleFilesComponent,
+    DeleteUserComponent,
+    DeleteProjectComponent,
+    DeleteRightComponent,
+    DeleteRoleComponent
   ],
     imports: [
         BrowserModule,

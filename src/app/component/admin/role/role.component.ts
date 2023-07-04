@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Roles} from "../../../domain/interfaces/roles";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {LanguageService} from "../../../domain/language.service";
 import {RoleService} from "./role.service";
 import {PageService} from "./page.service";
@@ -8,6 +8,8 @@ import {Rights} from "../../../domain/interfaces/rights";
 import {RightService} from "../right/right.service";
 import {MessageService} from "primeng/api";
 import {Page} from "../../../domain/interfaces/page";
+import {DeleteProjectComponent} from "../project/delete-project/delete-project.component";
+import {DeleteRoleComponent} from "./delete-role/delete-role.component";
 
 @Component({
   selector: 'app-role',
@@ -21,7 +23,7 @@ export class RoleComponent implements OnInit {
   name: any;
   checkBox = false;
   loading = false;
-  constructor(private pageService: PageService, private messageService: MessageService, public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
+  constructor(private dialogService: DialogService, private pageService: PageService, private messageService: MessageService, public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
     this.fillRights();
@@ -51,17 +53,19 @@ export class RoleComponent implements OnInit {
   }
 
   deleteRole() {
+
     this.loading = true;
-    this.roleService.deleteRole(this.role.name).subscribe({
-      next: res => {
-        console.log(res);
-        this.loading = false;
+    this.dialogService.open(DeleteRoleComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.role.name
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
         this.ref.close(res);
         this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление роли'), detail: this.lang.tr('Роль удалена')});
-      },
-      error: err => {
         this.loading = false;
-        console.log(err);
+      } else {
+        this.loading = false;
         this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление роли'), detail: this.lang.tr('Не удалось удалить роль')});
       }
     });
