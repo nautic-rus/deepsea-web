@@ -8,6 +8,7 @@ import {Pages} from "../../../../domain/interfaces/pages";
 import {Rights} from "../../../../domain/interfaces/rights";
 import {RightService} from "../../right/right.service";
 import {MessageService} from "primeng/api";
+import {Page} from "../../../../domain/interfaces/page";
 
 @Component({
   selector: 'app-create-role',
@@ -16,16 +17,18 @@ import {MessageService} from "primeng/api";
 })
 export class CreateRoleComponent implements OnInit {
   rights: Rights[] = [];
+  pages: Page[] = []
   selectedRights: string[] = [];
   selectedPages: string[] = [];
   name: string = "";
   description: string = "";
   loading = false;
 
-  constructor(private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
+  constructor(private pageService: PageService, private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
     this.fillRights();
+    this.fillPages();
   }
 
   close() {
@@ -38,6 +41,14 @@ export class CreateRoleComponent implements OnInit {
         console.log(rights);
         this.rights = rights;
       });
+  }
+
+  fillPages(): void {
+    this.pageService.getPages()
+      .subscribe(pages => {
+        console.log(pages);
+        this.pages = pages;
+      })
   }
 
   createRole() {

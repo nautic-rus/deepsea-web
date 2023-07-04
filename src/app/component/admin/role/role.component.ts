@@ -53,7 +53,6 @@ export class RoleComponent implements OnInit {
   }
 
   deleteRole() {
-
     this.loading = true;
     this.dialogService.open(DeleteRoleComponent, {
       showHeader: false,
