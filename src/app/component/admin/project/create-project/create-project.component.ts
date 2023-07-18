@@ -29,7 +29,7 @@ export class CreateProjectComponent implements OnInit {
   colsUsers: any[] = [];
   loading = false;
 
-  constructor(private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public projectService: ProjectService, public auth: AuthManagerService) { }
+  constructor(public l: LanguageService, private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public projectService: ProjectService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;

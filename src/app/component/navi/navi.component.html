@@ -31,14 +31,10 @@
   <div class="cxy">
     <div>
       <div *ngIf="isOnline()" class="image-online cursor-pointer" pTooltip="{{auth.getUser().login}} {{auth.getUser().groups}}" tooltipPosition="bottom">
-        <a routerLink="/time-control">
-          <img class="image__src"  src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
-        </a>
+          <img class="image__src" (click)="viewNotifications()" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
       </div>
       <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
-        <a routerLink="/time-control">
-          <img class="image__src" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
-        </a>
+          <img class="image__src" (click)="viewNotifications()" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
       </div>
     </div>
 <!--    <div>-->

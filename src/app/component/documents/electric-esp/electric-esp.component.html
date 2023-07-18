@@ -69,12 +69,12 @@
             <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0 || fileGroup.collapsed">
               <div>
                 <div class="df">
-                  <div *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">
-                    <div class="cxy">
-                      <img src="assets/icons/plus1.svg" height="16">
-                    </div>
-                    <div class="cy ml-1">Add files</div>
-                  </div>
+<!--                  <div *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))" class="button-details df cursor-pointer mb-15" (click)="addFilesToGroup(fileGroup.name, selectedRevision)">-->
+<!--                    <div class="cxy">-->
+<!--                      <img src="assets/icons/plus1.svg" height="16">-->
+<!--                    </div>-->
+<!--                    <div class="cy ml-1">Add files</div>-->
+<!--                  </div>-->
                   <div class="ml-1 button-details df cursor-pointer mb-15" (click)="downloadFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy">
                       <img src="assets/icons/download-arrow.png">
