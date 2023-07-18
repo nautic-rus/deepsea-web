@@ -178,7 +178,7 @@ export class DoclistComponent implements OnInit {
     this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
     this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
 
-    this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department));
+    this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department) || this.selectedDepartments.includes(x.assistant));
     this.issues = this.issues.filter(x => this.selectedTaskTypes.includes(x.issue_type));
     this.issues = this.issues.filter(x => this.selectedTaskStages.includes(x.period));
     this.issues = _.sortBy(this.issues, x => x.doc_number);
