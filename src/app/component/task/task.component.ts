@@ -928,7 +928,7 @@ export class TaskComponent implements OnInit {
                       _.forEach(_.groupBy(plannedHours.filter(x => x.task_id != this.issue.id), x => x.task_id), group => {
                         assign.push({task: group[0].task_id, hours: group.length, min: _.sortBy(group, y => y.id)[0].id});
                       });
-                      assign = _.sortBy(assign, x => x.min);
+                      assign = _.sortBy(assign, x => x.min).filter(x => x > 0);
                       console.log(assign);
                       forkJoin(assign.map(x => this.auth.deleteUserTask(findUser!.id, x.task, latestConsumed))).subscribe({
                         next: value => {

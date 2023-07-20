@@ -14,6 +14,7 @@ import {LanguageService} from "../../domain/language.service";
 import {LV} from "../../domain/classes/lv";
 import {PrimeNGConfig} from "primeng/api";
 import {lab} from "d3";
+import _ from "underscore";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -70,7 +71,7 @@ export class CreateTaskComponent implements OnInit {
   modificationDescription = '';
   reasonsOfChange: any[] = [];
   yesNo: any[] = [new LV(this.changeLang('Yes'), 'Yes'), new LV(this.changeLang('No'), 'No')];
-
+  checkIssues: string[] = [];
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -139,6 +140,9 @@ export class CreateTaskComponent implements OnInit {
       dayNamesMin: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
       weekHeader: "№",
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+    });
+    this.issues.getIssues('op').then(res => {
+      this.checkIssues = _.uniq(res.map(x => x.doc_number)).filter(x => x != '');
     });
     //this.users = this.auth.users;
     this.users = this.getUsers();
@@ -445,11 +449,12 @@ export class CreateTaskComponent implements OnInit {
   }
 
   isCreateTaskDisabled() {
+    let taskExists = this.checkIssues.find(x => x == this.taskDocNumber);
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
-      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '';
-      case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '';
-      case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '';
+      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
+      case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || taskExists;
+      case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '' || taskExists;
       case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '';
       default: return false;
     }

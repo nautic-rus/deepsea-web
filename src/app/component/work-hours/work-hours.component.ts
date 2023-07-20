@@ -734,7 +734,7 @@ export class WorkHoursComponent implements OnInit {
     this.cd.reattach();
   }
 
-  foldTaskLeft() {
+  foldTaskLeftAux() {
     if (this.taskOfDay.planHours.length > 0){
       this.loading = true;
       let user = this.taskOfDay.planHours[0].user;
@@ -779,8 +779,8 @@ export class WorkHoursComponent implements OnInit {
       freeHour = this.pHours.filter(x => x.user == freeHour.user && x.task_id == freeHour.task_id)[0];
     }
     this.auth.getUsersPlanHours(user, 0, 1).subscribe(userPlanHours => {
-      let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= freeHour.id).filter(x => x.task_id > 0), x => x.id);
-      let tasks = _.uniq(plannedHours.map(x => x.task_id), x => x);
+      let plannedHours = _.sortBy(userPlanHours.filter((x: any) => x.id >= freeHour.id && x.task_id > 0), x => x.id);
+      let tasks = _.uniq(plannedHours.map(x => x.task_id).filter(x => x > 0), x => x);
       let assign: any[] = [];
       _.forEach(_.groupBy(plannedHours, x => x.task_id), group => {
         assign.push({task: group[0].task_id, hours: group.length, min: _.sortBy(group, y => y.id)[0].id});
