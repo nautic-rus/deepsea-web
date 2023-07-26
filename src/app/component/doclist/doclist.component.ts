@@ -151,6 +151,9 @@ export class DoclistComponent implements OnInit {
     if (hullTasks.includes(docNumber)){
       department = 'Hull';
     }
+    if (this.selectedDepartments.includes(assistant)){
+      department = assistant;
+    }
 
     switch (department) {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
