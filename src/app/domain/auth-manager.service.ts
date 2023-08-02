@@ -262,8 +262,8 @@ export class AuthManagerService {
   planUserTask(userId: number, taskId: number, fromHour: number, amountOfHours: number, allowMove: number){
     return this.http.get<any>(props.http + '/planUserTask', {params: {userId, taskId, fromHour, amountOfHours, allowMove}});
   }
-  deleteUserTask(userId: number, taskId: number, fromHour: number){
-    return this.http.get<any>(props.http + '/deleteUserTask', {params: {userId, taskId, fromHour}});
+  deleteUserTask(userId: number, taskId: number, fromHour: number, fromUser = this.getUser().login){
+    return this.http.get<any>(props.http + '/deleteUserTask', {params: {userId, taskId, fromHour, fromUser}});
   }
   getPlannedHours(){
     return this.http.get<any>(props.http + '/plannedHours');
