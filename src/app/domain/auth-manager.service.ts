@@ -263,6 +263,9 @@ export class AuthManagerService {
     return this.http.get<any>(props.http + '/planUserTask', {params: {userId, taskId, fromHour, amountOfHours, allowMove}});
   }
   deleteUserTask(userId: number, taskId: number, fromHour: number, fromUser = this.getUser().login){
+    if (taskId < 0 && fromUser != 'dolik'){
+      alert('У вас нет прав удалять особые задачи (отпуск, больничный, ...)');
+    }
     return this.http.get<any>(props.http + '/deleteUserTask', {params: {userId, taskId, fromHour, fromUser}});
   }
   getPlannedHours(){
