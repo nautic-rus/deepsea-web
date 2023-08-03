@@ -1,19 +1,86 @@
-<div style="height: 264px; width: 350px;">
-  <div class="task-header-assign mt-40">
-    <div class=" question cxy">
-<!--      <div class="question-icon">?</div>-->
+<div class="notification-card">
+  <p-toast></p-toast>
+  <div class="header-notification-card">
+    <div class="header-notification-text">{{l.tr('Настройка уведомлений')}}</div>
+    <div class="task-button-notification cxy" (click)="close()">
+      <i class="pi pi-times"></i>
     </div>
   </div>
-  <div>
-    <div class="confirm-text">{{t.tr('Notifications')}}</div>
+
+  <div class="df space-between mb-1r">
+    <button pButton pRipple label="{{l.tr('Удалить выбранные')}}" icon="pi pi-trash" class="p-button-danger"
+            (click)="deleteSelectedNotifications()"
+            [disabled]="!selectedNotifications || !selectedNotifications.length"></button>
+
+    <button pButton pRipple label="{{l.tr('Новое уведомление')}}" icon="pi pi-plus" class="mr-2 blue-button"
+            (click)="createNotification()"></button>
   </div>
-  <div class="mt-1 cxy">
-    <div class="delete-text">{{t.tr('Тут вы сможете настроить уведомления')}}</div>
-  </div>
-  <div class="footer-delete mt-2">
-    <div class="mr-10 cx">
-      <div tabindex="10" (click)="commit()" pButton [label]="t.tr ('Сохранить')" class="button-ok"></div>
-    </div>
-    <div tabindex="11" (click)="close()" pButton [label]="t.tr ('Отменить')" class="button-cancel ml-1"></div>
-  </div>
+  <p-table
+    #dt
+    [value]="userNotifications"
+    [scrollable]="true"
+    [virtualScroll]="true"
+    [scrollHeight]="'35vh'"
+    [virtualRowHeight]="40"
+    [reorderableColumns]="false"
+    [resizableColumns]="false"
+    responsiveLayout="scroll"
+    [globalFilterFields]="['project', 'department', 'type', 'method']"
+    [(selection)]="selectedNotifications"
+    [rowHover]="true"
+  >
+    <!--    <ng-template pTemplate="caption">-->
+    <!--      <div class="flex align-items-center justify-content-between">-->
+    <!--        <span class="p-input-icon-left">-->
+    <!--                    <i class="pi pi-search"></i>-->
+    <!--                    <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />-->
+    <!--                </span>-->
+    <!--      </div>-->
+    <!--    </ng-template>-->
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:20%">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="project" style="width:20%">Project
+          <p-sortIcon field="project"></p-sortIcon>
+        </th>
+        <th pSortableColumn="department" style="width:20%">Department
+          <p-sortIcon field="department"></p-sortIcon>
+        </th>
+        <th pSortableColumn="type" style="width:20%">Type
+          <p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="method" style="width:20%">Method
+          <p-sortIcon field="method"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-notification let-ri="rowIndex">
+      <tr>
+        <td style="width:20%">
+          <p-tableCheckbox [value]="notification"></p-tableCheckbox>
+        </td>
+        <td style="width:20%">
+          {{notification.project}}
+        </td>
+        <td style="width:20%">
+          {{notification.department}}
+        </td>
+        <td style="width:20%">
+          {{notification.kind}}
+        </td>
+        <td style="width:20%">
+          {{notification.method}}
+        </td>
+        <td>
+          <div class="delete-notification cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить уведомление')"  (click)="deleteNotification(notification)">
+            <img src="assets/icons/trash.svg" height="20">
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
+

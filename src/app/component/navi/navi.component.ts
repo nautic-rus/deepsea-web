@@ -12,6 +12,7 @@ import {DeviceDetectorService} from "ngx-device-detector";
 import {DailyTasksComponent} from "./daily-tasks/daily-tasks.component";
 import {RoleComponent} from "../admin/role/role.component";
 import {NotificationsComponent} from "./notifications/notifications.component";
+import {UserComponent} from "../admin/user/user.component";
 
 @Component({
   selector: 'app-navi',
@@ -173,8 +174,6 @@ export class NaviComponent implements OnInit {
       showHeader: false,
       modal: true,
       data: this.auth.getUser()
-    }).onClose.subscribe(res => {
-
     })
   }
 

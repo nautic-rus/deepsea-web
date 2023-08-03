@@ -7,6 +7,7 @@ import * as props from "../../../props";
 import {User} from "../../../domain/classes/user";
 import {Users} from "../../../domain/interfaces/users";
 import {Projects} from "../../../domain/interfaces/project";
+import {UserNotification} from "../../../domain/classes/user-notification";
 
 @Injectable({
   providedIn: 'root'
@@ -62,5 +63,17 @@ export class UserService {
   getUserVisibleProjects(id: number) {
     console.log(id)
     return this.http.get<any>(props.http + '/userVisibleProjects', {params: {id}});
+  }
+
+  getUsersNotifications(id: number) {
+    return this.http.get<any>(props.http + '/userNotifications', {params: {id}})
+  }
+
+  updateNotification(notification: UserNotification[], userId: number) {
+    return this.http.post<string>(props.http + '/updateNotification', JSON.stringify(notification), {params: {userId}})
+  }
+
+  createNotification(notification: UserNotification) {
+    return this.http.post<string>(props.http + '/createNotification', JSON.stringify(notification))
   }
 }

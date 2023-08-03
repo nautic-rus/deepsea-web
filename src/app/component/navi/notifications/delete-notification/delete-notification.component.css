@@ -1,0 +1,75 @@
+/deep/.p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1rem 1.5rem;
+}
+.question{
+  position: relative;
+  box-sizing: content-box;
+  justify-content: center;
+  width: 5em;
+  height: 5em;
+  margin: 1.25em auto 1.875em;
+  border: .25em solid transparent;
+  border-radius: 50%;
+  border-color: #000;
+  font-family: inherit;
+  line-height: 5em;
+  cursor: default;
+  border-color: #c9dae1;
+  color: #87adbd;
+}
+.question-icon{
+  display: flex;
+  align-items: center;
+  font-size: 3.75em;
+}
+.confirm-text{
+  position: relative;
+  max-width: 100%;
+  margin: 0 0 .4em;
+  padding: 0;
+  color: #595959;
+  font-size: 1.875em;
+  font-weight: 600;
+  text-align: center;
+  text-transform: none;
+  word-wrap: break-word;
+}
+.delete-text{
+  font-size: 14px;
+  line-height: 1.7;
+}
+.footer-delete{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.button-ok{
+  border: none;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
+}
+.button-cancel{
+  margin-right: 4px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #2E3E4E;
+  background: #fff;
+  transition: background .1s;
+  border: none;
+}
+.button-cancel:hover{
+  background-color: #ECEDF0;
+}
+.p-dialog .p-dialog-content {
+  border-radius: 5px!important;
+}

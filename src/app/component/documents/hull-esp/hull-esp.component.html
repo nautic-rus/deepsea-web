@@ -902,7 +902,7 @@
                   </div>
 
 
-                  <div *ngIf="project != 'N004' && auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
+                  <div *ngIf="false && auth.hasPerms('esp-files')" [class.disabled-button]="getRevisionFilesOfGroup(fileGroup.name, selectedRevision).length == 0" class="ml-1 button-details df cursor-pointer mb-15" (click)="clearFiles(fileGroup.name, selectedRevision)">
                     <div class="cxy icon-rotate">
                       <img src="assets/icons/broom.png">
                     </div>

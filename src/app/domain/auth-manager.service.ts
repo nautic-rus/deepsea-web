@@ -65,15 +65,6 @@ export class AuthManagerService {
     }
     return this.user.groups.includes(role) || find != null && find.groups.includes(role);
   }
-  userVisibleProjects(userId: number) {
-    let visible_projects: string[] = [];
-    this.userService.getUserVisibleProjects(userId)
-      .subscribe(project => {
-        visible_projects = project;
-        console.log("meow  " + project)
-      })
-    return visible_projects;
-  }
   exit(){
     this.setUser(new User(), true);
     this.authenticated = false;
