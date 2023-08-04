@@ -449,7 +449,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   isCreateTaskDisabled() {
-    let taskExists = this.checkIssues.find(x => x == this.taskDocNumber);
+    let taskExists = this.checkIssues.find(x => x == this.taskDocNumber) != null;
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;

@@ -536,13 +536,39 @@ export class LanguageService {
           case 'Загрузка файлов': return 'Uploading files';
           case 'Оперативное решение': return 'Correction';
           case 'Отправить уведомление на e-mail': return 'Send email notification';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
-          case '': return '';
+          case 'Удалить выбранные': return 'Delete selected';
+          case 'Настройка уведомлений': return 'Notifications settings';
+          case 'Новое уведомление': return 'New notification';
+          case 'Удалить уведомление': return 'Delete notification';
+          case 'Метод': return 'Method';
+          case 'Создание уведомления': return 'Create notification';
+          case 'Новое уведомление создано': return 'Notification has been created';
+          case 'Не удалось создать новое уведомление': return 'Failed to create notification'
+          case 'Удаление уведомления': return 'Removing a notification'
+          case 'Уведомление удалено': return 'Notification removed'
+          case 'Не удалось удалить уведомление': return 'Failed to delete notification'
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
+          case '': return ''
           default: return input;
         }
       }

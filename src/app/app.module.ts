@@ -185,6 +185,8 @@ import { DeleteRightComponent } from './component/admin/right/delete-right/delet
 import { DeleteRoleComponent } from './component/admin/role/delete-role/delete-role.component';
 import { NotificationsComponent } from './component/navi/notifications/notifications.component';
 import { PlanComponent } from './component/plan/plan.component';
+import { DeleteNotificationComponent } from './component/navi/notifications/delete-notification/delete-notification.component';
+import { CreateNotificationComponent } from './component/navi/notifications/create-notification/create-notification.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -319,7 +321,10 @@ Quill.register('modules/imageResize', ImageResize);
     DeleteRightComponent,
     DeleteRoleComponent,
     NotificationsComponent,
-    PlanComponent
+    PlanComponent,
+    NotificationsComponent,
+    DeleteNotificationComponent,
+    CreateNotificationComponent
   ],
     imports: [
         BrowserModule,

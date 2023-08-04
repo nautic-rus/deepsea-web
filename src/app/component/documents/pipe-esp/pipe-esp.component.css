@@ -158,6 +158,7 @@
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr 0.5fr 0.5fr 0.5fr;
   font-size: 13px;
+  color: #343a40;
 }
 .attachment-files-archive{
   display: grid;

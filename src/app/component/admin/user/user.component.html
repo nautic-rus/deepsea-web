@@ -8,7 +8,8 @@
   <div class="df space-between">
     <div>
       <div class="big-text-user mb-1">{{lang.tr('Гендер')}}</div>
-      <p-dropdown styleClass="width-211" appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender" optionLabel="name" optionValue="name"></p-dropdown>
+      <p-dropdown styleClass="width-211" appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender"
+                  optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
       <div class="big-text-user mb-1">{{lang.tr('Фамилия')}}</div>
@@ -34,13 +35,14 @@
     </div>
   </div>
   <div class="df space-between">
-<!--    <div>-->
-<!--      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>-->
-<!--      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="this.department.name">-->
-<!--    </div>-->
+    <!--    <div>-->
+    <!--      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>-->
+    <!--      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="this.department.name">-->
+    <!--    </div>-->
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>
-      <p-dropdown styleClass="width-211" appendTo="body" id="department" [options]="departments" [(ngModel)]="this.department" optionLabel="name" optionValue="name"></p-dropdown>
+      <p-dropdown styleClass="width-211" appendTo="body" id="department" [options]="departments"
+                  [(ngModel)]="this.department" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Должность')}}</div>
@@ -68,33 +70,39 @@
   <div class="df space-between">
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>
-      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups" (ngModelChange)="roleChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups"
+                     (ngModelChange)="roleChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
-<!--    <div>-->
-<!--      <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>-->
-<!--      <p-dropdown styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups" optionLabel="name" optionValue="name"></p-dropdown>-->
-<!--    </div>-->
+    <!--    <div>-->
+    <!--      <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>-->
+    <!--      <p-dropdown styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups" optionLabel="name" optionValue="name"></p-dropdown>-->
+    <!--    </div>-->
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
       <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="user.visibility">
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
-      <p-multiSelect styleClass="width-211" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="user.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
+      <p-multiSelect styleClass="width-211" appendTo="body" id="visible_projects" [options]="projects"
+                     [(ngModel)]="user.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
   </div>
 </div>
 
 <div class="form-footer-user">
   <div class="mr-5 cx">
-    <div *ngIf="!loading" tabindex="11" (click)="sendLogPass()" pButton [label]="lang.tr('Отправить данные для входа')" class="button-cancel ml-1"></div>
+    <div *ngIf="!loading" tabindex="11" (click)="sendLogPass()" pButton [label]="lang.tr('Отправить данные для входа')"
+         class="button-cancel ml-1"></div>
   </div>
   <div class="mr-5 cx">
-    <div *ngIf="!loading" tabindex="11" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+    <div *ngIf="!loading" tabindex="11" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')"
+         class="button-cancel ml-1"></div>
   </div>
-  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="saveUser()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="saveUser()" pButton
+       [label]="lang.tr('Сохранить')" class="button-ok"></div>
   <div class="cxy height-spinner" *ngIf="loading">
-    <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff" animationDuration="1s" ></p-progressSpinner>
+    <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff"
+                       animationDuration="1s"></p-progressSpinner>
   </div>
 </div>
 
