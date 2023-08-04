@@ -86,6 +86,16 @@
               <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
               {{l.tr('(Всего:')}} {{dt.value.length}})
             </div>
+
+            <div class="df c p-ml-auto">
+              <div class="df c y cursor-pointer" (click)="saveFilters(dt)">
+                SAVE
+              </div>
+              <div class="mx-10">
+                <p-dropdown [options]="savedFilters" [(ngModel)]="selectedFilter" (ngModelChange)="loadFilter(dt)" [editable]="true"></p-dropdown>
+              </div>
+            </div>
+
             <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
             <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />

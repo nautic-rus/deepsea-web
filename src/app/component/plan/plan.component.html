@@ -1,0 +1,245 @@
+<div class="all-page">
+  <div class="card-work">
+    <div class="calendar-header">
+      <div class="cy width-200">
+        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (onChange)="saveSelectedDepartments()" optionLabel="name" optionValue="name"></p-multiSelect>
+      </div>
+      <div class="df ml-20 w-80">
+        <div class="cxy cursor-pointer prev-month blue-button" (click)="fillPrevDays()">
+          <img src="assets/icons/arrow-l.svg" height="16">
+        </div>
+        <div class="cxy cursor-pointer next-month blue-button" (click)="fillNextDays()">
+          <img src="assets/icons/arrow-r2.svg" height="16">
+        </div>
+        <div class="w-100 cxy">
+          <div class="cxy">{{currentMonth + ' ' + currentYear}}</div>
+        </div>
+        <div class="mr-10">
+          <div class="materials-button-w blue-button cxy space-between" [pTooltip]="t.tr('Учёба')" tooltipPosition="top">
+            <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('STUDIES'), studies)" (dragend)="dragEnd($event)">
+              <img src="assets/icons/book1.svg" height="20">
+            </div>
+            <div class="cursor-pointer">
+              <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="studies"></p-inputNumber>
+            </div>
+          </div>
+        </div>
+        <div class="mr-10">
+          <div class="materials-button-w gray-button cxy space-between" [pTooltip]="t.tr('Отгул')" tooltipPosition="top">
+            <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('TIME OFF'), timeOff * 8)" (dragend)="dragEnd($event)">
+              <img src="assets/icons/off.svg" height="21">
+            </div>
+            <div class="cursor-pointer">
+              <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="timeOff"></p-inputNumber>
+            </div>
+          </div>
+        </div>
+        <div class="mr-10">
+          <div class="materials-button-w red-button cxy space-between" [pTooltip]="t.tr('Больничный')" tooltipPosition="top">
+            <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('SICK'), medical * 8)" (dragend)="dragEnd($event)">
+              <img src="assets/icons/hospital.svg" height="18">
+            </div>
+            <div class="cursor-pointer">
+              <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="medical"></p-inputNumber>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <div class="materials-button-w light-green-button cxy space-between" [pTooltip]="t.tr('Отпуск')" tooltipPosition="top">
+            <div class="pr-10 cxy" pDraggable="issue" (dragstart)="drag($event, getIssue('VACATION'), vacation * 8)" (dragend)="dragEnd($event)">
+              <img src="assets/icons/summer.svg" height="18">
+            </div>
+            <div class="cursor-pointer">
+              <p-inputNumber inputStyleClass="width-50 padding-none" [placeholder]="t.tr('дни')" [(ngModel)]="vacation"></p-inputNumber>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="width-425 pl-25 cy">
+        <div class="w-100 df space-between">
+          <div class="mr-10">
+            <div class="materials-button gray-button cxy" (click)="clearFilters()" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+              <img src="assets/icons/filter-no.svg" height="18">
+            </div>
+          </div>
+          <div class="mr-1 cy mt-10">
+            <div class="mr-10">
+              <label class="container margin-bottom-none">
+                <span class="text-checkbox">{{t.tr('Показать незапланированные')}}</span>
+                <input (change)="showWithoutPlanChanged()" type="checkbox" [(ngModel)]="showWithoutPlan">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div>
+              <label class="container margin-bottom-none">
+                <span class="text-checkbox">{{t.tr('Показать назначенные')}}</span>
+                <input (change)="showAssignedChanged()" type="checkbox" [(ngModel)]="showAssigned">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="df space-between">
+      <div class="users-days w-100">
+        <div class="df sticky">
+          <div class="w-10 min-width-150 users header-users">
+            <span>{{t.tr('Сотрудники')}}</span>
+          </div>
+          <div class="w-90 back-white">
+            <div class="calendar w-100">
+              <div class="month-date">
+                <div *ngFor="let d of monthDays"
+                     [class.off-day]="d.kind == 1"
+                     [class.today-day]="isCurrentDay(d)"
+                     class="day-number-header cxy position-relative">
+                  <div class="plan-day-day mt-5">{{d.day}}<span *ngIf="d.kind == 2">*</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="df hover-user" *ngFor="let user of users">
+          <div class="w-10 min-width-150 users">
+            <span>{{user.userName}}</span>
+          </div>
+          <div class="w-90">
+            <div class="calendar w-100">
+              <div class="month-date">
+                <div *ngFor="let d of monthDays"
+                  pDroppable="issue"
+                  (onDrop)="onDayDrop(user, d, $event)"
+                  [class.off-day]="d.kind == 1"
+                  class="day-number cxy">
+                  <div class="plan-hours-common" *ngIf="usersPlan[user.id] != null && usersPlan[user.id][d.ms] != null">
+                    <div *ngFor="let int of usersPlan[user.id][d.ms]">
+                      <div (contextmenu)="openIntervalMenu(contextMenu, $event, int)" class="plan-hours" [ngStyle]="drawTaskInterval(int)">{{int.hours}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p-contextMenu #contextMenu [model]="items" appendTo="body"></p-contextMenu>
+          </div>
+        </div>
+
+        <div *ngIf="loading">
+          <div class="cxy loading">
+            <div class="cxy flex-column">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="width-340 background-gray" *ngIf="stages.length > 0">
+        <div class="df space-between mt-5">
+          <div class="ml-10">
+            <div class="big-text-user mb-5">{{t.tr('Проект')}}</div>
+            <p-dropdown appendTo="body" placeholder="Project" [(ngModel)]="project" optionValue="name" [options]="projects" styleClass="width-130" (onChange)="projectChanged()"></p-dropdown>
+          </div>
+          <div>
+            <div class="big-text-user mb-5">{{t.tr('Отдел')}}</div>
+            <p-dropdown appendTo="body" placeholder="Department" [(ngModel)]="taskDepartment" [options]="taskDepartments" (onChange)="departmentChanged()" styleClass="width-130"></p-dropdown>
+          </div>
+        </div>
+        <div class="df space-between ">
+          <div class="ml-10">
+            <div class="big-text-user mb-5 mt-4px">{{t.tr('Этап')}}</div>
+            <p-dropdown appendTo="body" placeholder="Stage" [(ngModel)]="stage" [options]="stages" (onChange)="stageChanged()" styleClass="width-130"></p-dropdown>
+          </div>
+          <div>
+            <div class="big-text-user mb-5 mt-4px">{{t.tr('Тип')}}</div>
+            <p-dropdown appendTo="body" placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (onChange)="taskTypeChanged()" styleClass="width-130"></p-dropdown>
+          </div>
+        </div>
+
+        <div class="df space-between mb-10">
+          <div class="ml-10">
+            <div class="big-text-user mb-5 mt-4px">{{t.tr('Статус')}}</div>
+            <p-dropdown appendTo = "body" placeholder="Status" [(ngModel)]="status" [options]="statuses" (onChange)="statusChanged()" styleClass="width-130"></p-dropdown>
+          </div>
+          <div>
+            <div class="big-text-user mb-5 mt-24"></div>
+            <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input (mouseenter)="cd.detach()" (mouseleave)="cd.reattach()" [(ngModel)]="searchValue" (ngModelChange)="filterIssues();" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-130" />
+          </span>
+          </div>
+        </div>
+
+        <cdk-virtual-scroll-viewport class="background-gray" autosize style="height: calc(100vh - 390px)" [itemSize]="123">
+          <div (mouseenter)="cd.detach()" (mouseleave)="cd.reattach()" class="h-100 issues-all" *cdkVirtualFor="let issue of issues">
+            <div class="cursor-pointer" (click)="selectIssue(issue);">
+              <div pDraggable="issue" (dragstart)="drag($event, issue, issue.available)" (dragend)="dragEnd($event)">
+                <div class="one-row-w df space-between" (click)="openTask(issue.id)">
+                  <div class="title-bold-w">{{issue.doc_number}}</div>
+                  <div [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></div>
+                </div>
+                <div class="text-mini-gray">
+                  <div>{{issue.name}}</div>
+                </div>
+                <div class="df mm-text space-between mt-2px">
+                  <div class="mm-text df">
+                    <div>{{t.tr('Исполнитель:') + ' ' + ''}}</div>
+                    <div class="pl-2px">{{auth.getUserTrimName(issue.assigned_to)}}</div>
+                  </div>
+                  <div class="df">
+                    <img src="assets/icons/flag-finish.svg" height="20">
+                    <div>{{getDateOnly(issue.stage_date)}}</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="df space-between">
+                  <div class="width-30"></div>
+                  <div>
+                    <div class="width-50 mm-text">{{t.tr('назначить')}}</div>
+                  </div>
+                  <div class="df mm-text">
+                    <div class="cxy width-50">{{t.tr('план')}}</div>
+                    <div class="mx-10 cy mm-text">/</div>
+                    <div class="cxy width-50">{{t.tr('исп.')}}</div>
+                  </div>
+                </div>
+                <div class="df space-between mt-2px">
+                  <div (click)="searchIssue(issue)" class="width-30">
+                    <svg class="icon-dfx ml-5" width="20px" height="20px" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
+                      <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="cursor-pointer width-50">
+                      <p-inputNumber inputStyleClass="width-50 padding-none" [disabled]="issue.plan == 0" [(ngModel)]="issue.available" [max]="issue.available_limit" mode="decimal"></p-inputNumber>
+                    </div>
+                  </div>
+                  <div class="df">
+                    <div class="cxy width-50">
+                      <div class="text-black-mini position-relative">
+                        {{issue.plan}}
+                        <div class="text-black-mini-plan">{{issue.inPlan}}</div>
+                      </div>
+
+                    </div>
+                    <div class="mx-10 cy text-black-mini">/</div>
+                    <div class="cxy width-50">
+                      <div class="text-black-mini">{{issue.consumed}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </cdk-virtual-scroll-viewport>
+      </div>
+    </div>
+  </div>
+</div>
+

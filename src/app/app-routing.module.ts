@@ -52,6 +52,7 @@ import {DoclistComponent} from "./component/doclist/doclist.component";
 import {DesignEspComponent} from "./component/documents/design-esp/design-esp.component";
 import {MasterComponent} from "./component/master/master.component";
 import {GeneralEspComponent} from "./component/documents/general-esp/general-esp.component";
+import {PlanComponent} from "./component/plan/plan.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -106,6 +107,7 @@ const routes: Routes = [
   { path: 'doclist', component: DoclistComponent, canActivate: [AuthGuard], data: {animation: 'DoclistComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
   { path: 'master', component: MasterComponent, data: {animation: 'MasterComponent'} },
+  { path: 'plan', component: PlanComponent, data: {animation: 'PlanComponent'}, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/' },
 ];
 

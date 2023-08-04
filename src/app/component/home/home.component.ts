@@ -27,6 +27,7 @@ import {concatAll, concatMap, map, retry, toArray} from "rxjs/operators";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {forkJoin, merge, zip} from "rxjs";
+import {Table} from "primeng/table";
 
 @Component({
   selector: 'app-home',
@@ -45,6 +46,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showAssigned: boolean = false;
   showResponsible: boolean = false;
   showStartedBy: boolean = false;
+  savedFilters: any[] = [];
+  selectedFilter = '';
 
   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
   }
@@ -70,6 +73,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   ngOnInit() {
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
       this.router.navigate([this.auth.getUser().visible_pages[0]]);
+    }
+    if (localStorage.getItem('states') != null){
+      this.savedFilters = JSON.parse(localStorage.getItem('states')!);
     }
     this.setCols();
     this.fillIssues();
@@ -829,6 +835,26 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
     else{
       return '#00ACAC';
+    }
+  }
+
+  saveFilters(dt: Table) {
+    this.dt.stateKey = this.selectedFilter;
+    this.dt.saveState();
+    this.savedFilters.push(this.selectedFilter);
+    localStorage.setItem('states', JSON.stringify(this.savedFilters))
+    alert('Состояние таблицы сохранено');
+  }
+  loadFilter(dt: Table) {
+    if (this.selectedFilter == 'NORMAL'){
+      this.dt.stateKey = 'state';
+      this.dt.restoreState();
+      this.dt._filter();
+    }
+    else{
+      this.dt.stateKey = this.selectedFilter;
+      this.dt.restoreState();
+      this.dt._filter();
     }
   }
 }

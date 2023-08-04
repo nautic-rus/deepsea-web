@@ -295,4 +295,26 @@ export class AuthManagerService {
   restartAcad(){
     return this.http.get<any>(props.restMaster + '/restart-acad');
   }
+
+  getPlan(){
+    return this.http.get<any>(props.http + '/plan');
+  }
+  getPlanIssues(){
+    return this.http.get<Issue[]>(props.http + '/planIssues');
+  }
+  getPlanByDays(date: number){
+    return this.http.get<any>(props.http + '/planByDays',{params: {date}});
+  }
+  getUserPlan(user: number, from: number){
+    return this.http.get<any>(props.http + '/plan', {params: {user, from}});
+  }
+  addPlanInterval(taskId: number, userId: number, from: number, hoursAmount: number, taskType: number){
+    return this.http.get<any>(props.http + '/planAddInterval', {params: {taskId, userId, from, hoursAmount, taskType}});
+  }
+  insertPlanInterval(taskId: number, userId: number, from: number, hoursAmount: number, taskType: number){
+    return this.http.get<any>(props.http + '/planInsertInterval', {params: {taskId, userId, from, hoursAmount, taskType}});
+  }
+  deleteInterval(id: number){
+    return this.http.get<any>(props.http + '/planDeleteInterval', {params: {id}});
+  }
 }

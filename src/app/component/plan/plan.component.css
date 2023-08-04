@@ -1,0 +1,315 @@
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+}
+.card-work{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0 10px 20px 15px;
+  border-radius: 8px;
+  height: calc(100vh - 106px);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.calendar-header{
+  height: 65px;
+  color: #323130;
+  border: 1px solid #f3f2f1;
+  border-width: 1px 0 1px 0;
+  padding: 0.75rem 0 0.75rem;
+  font-weight: 600;
+  display: flex;
+}
+.day-number-header{
+  border-left: 1px solid #f3f2f1;
+  color: #333;
+  background-color: white;
+  width: 40px;
+}
+.off-day{
+  background-color: #f7f7f8;
+}
+.icon-dfx{
+  fill: #3B82F6;
+}
+.icon-dfx:hover{
+  fill: #2563EA;
+}
+.today-day{
+  background-color: #f5f7ff;
+  border-top: 3px solid #0553CC;
+}
+.users-days{
+  height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+.users{
+  font-size: 14px;
+  color: #323130;
+  border-bottom: 1px solid #f3f2f1;
+  display: flex;
+  align-items: center;
+}
+.header-users{
+  background-color: white;
+  font-weight: 600;
+}
+.hours-font{
+  font-size: 17px;
+  font-weight: 500;
+}
+.month-date{
+  display: grid;
+  grid-template-columns: repeat(31, 40px);
+  height: 45px;
+  border-bottom: 1px solid #f3f2f1;
+}
+.hover-user:hover{
+  background-color: hsla(220, 11%, 97%, 1);
+}
+.day-number{
+  border-left: 1px solid #f3f2f1;
+  color: #333;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 40px;
+  z-index: 1;
+}
+.border-none{
+  border: none;
+}
+/*.day-number:hover{*/
+/*  border: 2px solid #FFB240;*/
+/*}*/
+.day-border{
+  border: 2px solid #FFB240;
+}
+.plan-hours{
+  color: white;
+  font-size: 11px;
+  padding-left: 1px;
+  font-weight: 700;
+  z-index: 2;
+  cursor: pointer;
+}
+.plan-hours-consumed{
+  cursor: pointer;
+  color: black;
+  font-weight: bold;
+  font-size: 11px;
+  padding-left: 2px;
+  z-index: 5;
+  opacity: 0.25;
+  /*background: repeating-linear-gradient(-45deg, #de9dd4, #de9dd4 5px, white 5px, white 10px);*/
+}
+.spinner{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 15;
+}
+.plan-day-day{
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  transform: translate(-50%, -50%);
+  color: #9b9b9b;
+  font-weight: 500;
+  font-size: 14px;
+}
+.plan-day-month{
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  color: #9b9b9b;
+  font-weight: 600;
+  font-size: 13px;
+}
+.task-row{
+  padding: 8px 5px;
+}
+.task-row:hover{
+  background-color: #EEF5FA !important;
+}
+.select-row{
+  background-color: #EEF5FA !important;
+}
+.prev-month{
+  width: 40px;
+  height: 35px;
+  cursor: pointer;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding: 0 10px;
+  color: white;
+}
+.next-month{
+  width: 40px;
+  height: 35px;
+  cursor: pointer;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 0 10px;
+  color: white;
+}
+.big-text-user{
+  color: #5e6c84;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.issues-all{
+  font-size: 14px;
+  margin: 10px 5px 10px 10px;
+  border-radius: 10px;
+  background-color: white;
+  padding: 8px;
+  cursor: pointer;
+  width: 250px;
+  height: auto;
+}
+.issues-all:hover{
+  box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.2);
+  transition: box-shadow .5s;
+}
+.container{
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: #3a3a3a;
+  min-height: 16px;
+  margin-left: 2px;
+}
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  background-color: #fff;
+  border-radius: 3px;
+  border: 1px solid #00000042;
+}
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #69B7FF;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 2px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.text-checkbox{
+  display: flex;
+  align-items: flex-start;
+  font-size: 13px;
+}
+.loading{
+  position: absolute;;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: large;
+  font-weight: bold;
+  z-index: 1;
+}
+.loading-text{
+  color: #323130a8;
+  font-weight: 500;
+  font-size: 14px;
+}
+.materials-button{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.background-gray{
+  background-color: #F9FAFB;
+}
+.one-row-w{
+  height: 24px;
+}
+.title-bold-w{
+  font-weight: 500;
+  font-size: 13px;
+  color: #3a3a3a;
+}
+.mm-text{
+  color: #7575759e;
+  font-size: 10px;
+}
+.text-mini-gray{
+  color: rgba(58, 58, 58, 0.75);
+  font-weight: 500;
+  font-size: 12px;
+}
+.text-black-mini{
+  font-weight: 700;
+  color: #3a3a3a;
+  font-size: 12px;
+}
+.materials-button-w{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+  font-size: 14px;
+  width: 100px;
+}
+.plan-hours-common{
+  height: 100%;
+  display: flex;
+}
+.text-black-mini-plan{
+  font-size: 8px;
+  position: absolute;
+  right: -10px;
+  top: 0;
+}
