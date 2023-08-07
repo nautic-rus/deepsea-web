@@ -100,6 +100,7 @@ export class PlanComponent implements OnInit {
   userPDays: any = Object();
   headerPDays: PlanDay[] = [];
   loading = false;
+  loadingIssues = false;
   currentDate = new Date();
   stages: string[] = [];
   stage = '';
@@ -165,8 +166,8 @@ export class PlanComponent implements OnInit {
     });
   }
   fillIssues(){
+    this.loadingIssues = true;
     this.auth.getPlanIssues().subscribe(res => {
-      console.log(res);
       this.issuesSrc = res;
       this.issues = res.filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP'].includes(x.issue_type));
       this.issues = _.sortBy(this.issues, x => x.doc_number);
@@ -424,12 +425,17 @@ export class PlanComponent implements OnInit {
 
   deleteInterval() {
     this.auth.deleteInterval(this.cmMenuInt.id).subscribe(res => {
-      let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
-      if (findIssue != null){
-        findIssue.inPlan = findIssue.inPlan - this.cmMenuInt.hours_total;
-        findIssue.available = findIssue.available + this.cmMenuInt.hours_total;
-      }
+      // let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
+      // if (findIssue != null){
+      //   findIssue.inPlan = findIssue.inPlan - this.cmMenuInt.hours_total;
+      //   findIssue.available = findIssue.available + this.cmMenuInt.hours_total;
+      // }
       this.fillPlan();
+      setTimeout(() => {
+        this.fillIssues();
+      }, 100);
+
+
     });
   }
   fillNextDays() {
@@ -498,6 +504,7 @@ export class PlanComponent implements OnInit {
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
       this.taskId = 0;
     }
+    this.loadingIssues = false;
   }
   close() {
     this.ref.close();
