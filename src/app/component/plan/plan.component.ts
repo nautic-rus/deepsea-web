@@ -424,17 +424,16 @@ export class PlanComponent implements OnInit {
 
   deleteInterval() {
     this.auth.deleteInterval(this.cmMenuInt.id).subscribe(res => {
-      // let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
-      // if (findIssue != null){
-      //   findIssue.inPlan = findIssue.inPlan - this.cmMenuInt.hours_total;
-      //   findIssue.available = findIssue.available + this.cmMenuInt.hours_total;
-      // }
+      let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
+      if (findIssue != null){
+        this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
+          let updIssue = upd[0];
+          findIssue.inPlan = updIssue.inPlan;
+          findIssue.available = updIssue.available;
+          findIssue.available_limit = updIssue.available_limit;
+        });
+      }
       this.fillPlan();
-      setTimeout(() => {
-        this.fillIssues();
-      }, 100);
-
-
     });
   }
   fillNextDays() {
@@ -649,25 +648,36 @@ export class PlanComponent implements OnInit {
       case -3: taskType = 3; break;
       default: taskType = 0; break;
     }
-    // let findIssue = this.issues.find(x => x.id == this.draggableIssue.id);
-    // if (findIssue != null){
-    //   findIssue.inPlan = findIssue.inPlan + findIssue.available;
-    //   findIssue.available = findIssue.available_limit - findIssue.available;
-    // }
     if (event.ctrlKey){
       this.auth.insertPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
         this.fillPlan();
-        setTimeout(() => {
-          this.fillIssues();
-        }, 100);
+
+        let findIssue = this.issues.find(x => x.id == id);
+        if (findIssue != null){
+          this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
+            console.log(upd);
+            let updIssue = upd[0];
+            findIssue.inPlan = updIssue.inPlan;
+            findIssue.available = updIssue.available;
+            findIssue.available_limit = updIssue.available_limit;
+          });
+        }
       });
     }
     else{
       this.auth.addPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
         this.fillPlan();
-        setTimeout(() => {
-          this.fillIssues();
-        }, 100);
+
+        let findIssue = this.issues.find(x => x.id == id);
+        if (findIssue != null){
+          this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
+            console.log(upd);
+            let updIssue = upd[0];
+            findIssue.inPlan = updIssue.inPlan;
+            findIssue.available = updIssue.available;
+            findIssue.available_limit = updIssue.available_limit;
+          });
+        }
       });
     }
   }

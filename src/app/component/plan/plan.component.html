@@ -216,12 +216,12 @@
                     </svg>
                   </div>
                   <div>
-                    <div class="cursor-pointer width-50" *ngIf="this.cmMenuInt == null || !(loadingIssues && (issue.id == this.cmMenuInt.taskId || issue.id == this.draggableIssue.id))">
+                    <div class="cursor-pointer width-50">
                       <p-inputNumber inputStyleClass="width-50 padding-none" [disabled]="issue.plan == 0" [(ngModel)]="issue.available" [max]="issue.available_limit" mode="decimal"></p-inputNumber>
                     </div>
-                    <div class="cursor-pointer width-50 df" *ngIf="loadingIssues && (issue.id == this.cmMenuInt.taskId || issue.id == this.draggableIssue.id)">
-                      <p-skeleton width="3rem" height="1rem"></p-skeleton>
-                    </div>
+<!--                    <div class="cursor-pointer width-50 df" *ngIf="loadingIssues && (issue.id == this.cmMenuInt.taskId || issue.id == this.draggableIssue.id)">-->
+<!--                      <p-skeleton width="3rem" height="1rem"></p-skeleton>-->
+<!--                    </div>-->
                   </div>
                   <div class="df">
                     <div class="cxy width-50">
