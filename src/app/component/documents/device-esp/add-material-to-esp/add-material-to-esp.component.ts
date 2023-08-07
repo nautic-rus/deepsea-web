@@ -123,7 +123,8 @@ export class AddMaterialToEspComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
-    if (this.label.includes('#')){
+    console.log(this.label);
+    if (this.label.toString().includes('#')){
       this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
       return;
     }

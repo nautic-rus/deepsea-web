@@ -178,7 +178,6 @@ export class PlanComponent implements OnInit {
       this.issuesSrc.forEach(issue => issue.labor = issue.plan_hours == 0 ? 0 : Math.round(this.getConsumedLabor(issue.id, issue.doc_number) / issue.plan_hours * 100));
       this.statuses = ['-'].concat(this.statuses);
       this.taskTypes = ['-'].concat(this.taskTypes);
-      this.issuesSrc.forEach(x => this.dragValues[x.id] = (x.plan_hours - this.getPlanned(x)));
       this.filterIssues();
     });
     this.issueManagerService.getIssueProjects().then(projects => {
@@ -500,7 +499,6 @@ export class PlanComponent implements OnInit {
       this.issues = this.issues.filter(x => (x.name + x.doc_number).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
     }
     if (this.taskId != 0){
-      console.log(this.taskId);
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
       this.taskId = 0;
     }
@@ -573,74 +571,6 @@ export class PlanComponent implements OnInit {
     event.stopPropagation();
   }
 
-  dragDrop(event: DragEvent, pDay: PlanDay, user: User) {
-    event.preventDefault();
-    this.cd.reattach();
-    console.log(pDay);
-    console.log(this.draggableIssue);
-    let date = new Date(pDay.year, pDay.month, pDay.day);
-    let current = new Date();
-    let compare = new Date(current.getFullYear(), current.getMonth(), current.getDate());
-    if (date.getTime() < compare.getTime()){
-      alert('Планирование на прошлые дни невозможно');
-      return;
-    }
-
-
-    let planHours = pDay.planHours;
-    let freeHour = _.sortBy(planHours, x => x.hour_type).find(x => x.hour_type == 1 && (x.task_id == 0 || this.draggableEvent.ctrlKey || this.draggableIssue.id < 0) && !this.consumedIds.includes(x.id));
-    if (freeHour == null){
-      freeHour = planHours[0];
-    }
-
-    if (this.draggableIssue.id < 0 || this.dragValue <= this.draggableIssue.plan_hours - this.getPlanned(this.draggableIssue)){
-      this.loading = true;
-      this.auth.planUserTask(user.id, this.draggableIssue.id, freeHour.id, this.dragValue, (this.draggableEvent.ctrlKey || this.draggableIssue.id < 0) ? 1 : 0).subscribe({
-        next: () => {
-          this.auth.getUsersPlanHours(0, this.currentDate.getTime(), 0).subscribe(planHours => {
-            this.auth.getPlannedHours().subscribe(plannedHoursAlready => {
-              this.plannedHours = plannedHoursAlready;
-              this.pHours = planHours;
-              this.fillDays();
-              this.filterIssues();
-              this.loading = false;
-
-              if (this.draggableIssue.id > 0){
-                this.auth.getUsersPlanHours(user.id, 0, 1).subscribe(userPlanHours => {
-                  let plannedHours = _.sortBy(userPlanHours.filter(x => x.task_id == this.draggableIssue.id && x.user == user.id && x.id >= freeHour!.id), x => x.id);
-
-                  if (plannedHours.length > 0){
-                    let first = plannedHours[0];
-                    let last = plannedHours[plannedHours.length - 1];
-                    let dateStart = new Date(first.year, first.month, first.day);
-                    let dateDue = new Date(last.year, last.month, last.day);
-                    this.issueManager.assignUser(this.draggableIssue.id, user.login, dateStart.getTime().toString(), dateDue.getTime().toString(), 'Нет', this.draggableIssue.action, this.auth.getUser().login)
-                    this.draggableIssue.status = 'AssignedTo';
-                    this.draggableIssue.action = this.draggableIssue.status;
-                    this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.draggableIssue);
-                  }
-                });
-              }
-
-            });
-
-          });
-        }
-      });
-    }
-    else{
-      alert('no hours left to assign');
-    }
-
-  }
-
-  getConsumed(issue: Issue) {
-    return this.consumed.filter(x => x.task_id == issue.id).length;
-  }
-  getPlanned(issue: Issue) {
-    let planned = this.plannedHours.find(x => x.taskId == issue.id);
-    return planned != null ? planned.hours : 0;
-  }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + "-" + date.getFullYear();
@@ -719,19 +649,25 @@ export class PlanComponent implements OnInit {
       case -3: taskType = 3; break;
       default: taskType = 0; break;
     }
-    let findIssue = this.issues.find(x => x.id == this.draggableIssue.id);
-    if (findIssue != null){
-      findIssue.inPlan = findIssue.inPlan + findIssue.available;
-      findIssue.available = findIssue.available_limit - findIssue.available;
-    }
+    // let findIssue = this.issues.find(x => x.id == this.draggableIssue.id);
+    // if (findIssue != null){
+    //   findIssue.inPlan = findIssue.inPlan + findIssue.available;
+    //   findIssue.available = findIssue.available_limit - findIssue.available;
+    // }
     if (event.ctrlKey){
       this.auth.insertPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
         this.fillPlan();
+        setTimeout(() => {
+          this.fillIssues();
+        }, 100);
       });
     }
     else{
       this.auth.addPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
         this.fillPlan();
+        setTimeout(() => {
+          this.fillIssues();
+        }, 100);
       });
     }
   }
