@@ -699,4 +699,12 @@ export class PlanComponent implements OnInit {
     this.cmMenuInt = int;
     cm.show(event);
   }
+
+  trimText(input: string, length = 53){
+    let res = input;
+    if (res.length > length){
+      res = res.substr(0, length) + '..';
+    }
+    return res;
+  }
 }
