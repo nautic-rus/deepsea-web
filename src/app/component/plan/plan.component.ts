@@ -61,7 +61,7 @@ export class PlanComponent implements OnInit {
   currentMonth = '';
   currentYear = this.today.getFullYear();
   issues: any[] = [];
-  issuesSrc: Issue[] = [];
+  issuesSrc: any[] = [];
   draggableIssue: any;
   draggableEvent: DragEvent;
   dragValue = 0;
@@ -501,6 +501,7 @@ export class PlanComponent implements OnInit {
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
       this.taskId = 0;
     }
+    console.log(this.issues);
     this.loadingIssues = false;
   }
   close() {
@@ -617,6 +618,7 @@ export class PlanComponent implements OnInit {
 
   saveSelectedDepartments() {
     localStorage.setItem('selectedDepartments', JSON.stringify(this.selectedDepartments));
+    this.fill();
   }
 
   private fillPlan() {
