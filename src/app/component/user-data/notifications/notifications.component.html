@@ -19,8 +19,7 @@
     [value]="userNotifications"
     [scrollable]="true"
     [virtualScroll]="true"
-    [scrollHeight]="'34vh'"
-    [virtualRowHeight]="40"
+    [scrollHeight]="'80vh'"
     [reorderableColumns]="false"
     [resizableColumns]="false"
     responsiveLayout="scroll"
@@ -58,22 +57,22 @@
     </ng-template>
     <ng-template pTemplate="body" let-notification let-ri="rowIndex">
       <tr>
-        <td style="width:20%">
+        <td style="height:30px">
           <p-tableCheckbox [value]="notification"></p-tableCheckbox>
         </td>
-        <td style="width:20%">
+        <td style="height:30px">
           {{notification.project}}
         </td>
-        <td style="width:20%">
+        <td style="height:30px">
           {{notification.department}}
         </td>
-        <td style="width:20%">
+        <td style="height:30px">
           {{notification.kind}}
         </td>
-        <td style="width:20%">
+        <td style="height:30px">
           {{notification.method}}
         </td>
-        <td>
+        <td style="height:30px">
           <div class="delete-notification cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить уведомление')"
                (click)="deleteNotification(notification)">
             <img src="../../../../assets/icons/trash.svg" height="20">

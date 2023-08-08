@@ -1,28 +1,27 @@
-.up-data {
-  width: 100%;
-  height: 50%;
+.first-column {
+  width: 60%;
+  height: 100%;
 }
 
-.down-data {
-  width: 100%;
-  height: 50%;
+.second-column {
+  width: 40%;
+  height: 100%;
 }
 
 .user-profile {
-  width: 60%;
+  width: 100%;
   background: rgba(255, 255, 255, 0.9);
   padding: 10px;
   border-radius: 8px;
-  height: calc(54vh - 106px);
+  height: calc(55.4vh - 106px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 
 .notifications {
-  width: 40%;
   background: rgba(255, 255, 255, 0.9);
   padding: 10px;
   border-radius: 8px;
-  height: calc(54vh - 106px);
+  height: calc(97.9vh - 106px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 
@@ -31,7 +30,7 @@
   background: rgba(255, 255, 255, 0.9);
   padding: 0 15px 20px 15px;
   border-radius: 8px;
-  height: calc(53.4vh - 106px);
+  height: calc(54vh - 106px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 
