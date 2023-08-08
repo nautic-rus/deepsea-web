@@ -32,12 +32,12 @@ export class NotificationsComponent implements OnInit {
   methods: string[] = ['mail']
   types: string[] = ['documents']
 
-  constructor(public departmentService: DepartmentService, private dialogService: DialogService, private messageService: MessageService, public l: LanguageService, public auth: AuthManagerService, public issueManager: IssueManagerService, private router: Router, public t: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public userService: UserService) {
+  constructor(public departmentService: DepartmentService, private dialogService: DialogService, private messageService: MessageService, public l: LanguageService, public auth: AuthManagerService, public issueManager: IssueManagerService, private router: Router, public t: LanguageService, public userService: UserService) {
 
   }
 
   ngOnInit(): void {
-    this.user = this.conf.data as User
+    this.user = this.auth.getUser()
     this.fillNotifications()
     this.fillVisibleProjects()
     this.fillDepartments()
@@ -63,10 +63,6 @@ export class NotificationsComponent implements OnInit {
         this.userNotifications = data
         console.log(this.userNotifications)
       })
-  }
-
-  close() {
-    this.ref.close('exit');
   }
 
   commit() {
@@ -107,6 +103,8 @@ export class NotificationsComponent implements OnInit {
           summary: this.l.tr('Удаление уведомления'),
           detail: this.l.tr('Уведомление удалено')
         });
+        this.deletingNotifications = []
+        this.selectedNotifications = []
         this.fillNotifications()
       } else {
         console.log(res);
@@ -116,9 +114,10 @@ export class NotificationsComponent implements OnInit {
           summary: this.l.tr('Удаление уведомления'),
           detail: this.l.tr('Не удалось удалить уведомление')
         });
+        this.deletingNotifications = []
+        this.selectedNotifications = []
       }
     });
   }
-
 
 }

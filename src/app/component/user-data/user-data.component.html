@@ -1,0 +1,118 @@
+<div class="all-page">
+  <div>
+    <div class="up-data df">
+      <div class="user-profile">
+        <div class="header-user-card">
+          <div class="header-user-text">{{l.tr('Карточка пользователя')}}</div>
+          <div *ngIf="!loading && this.user != undefined" class="save-user cxy">
+            <button pButton pRipple label="{{l.tr('Сохранить изменения')}}" class="mr-2 save-user"
+                    (click)="saveUser()" [class.disabled-button]="isUserTaskDisabled()"></button>
+          </div>
+          <div class="cxy height-spinner" *ngIf="loading">
+            <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff"
+                               animationDuration="1s"></p-progressSpinner>
+          </div>
+        </div>
+        <div class="df" *ngIf="this.user != undefined">
+          <div>
+            <span [innerHTML]="setAvatar(oldUser.avatar) | safeHtml"></span>
+          </div>
+          <div class="df space-around mt-1 w-100">
+            <div>
+              <div>
+                <div class="big-text-user mb-1">{{l.tr('Имя')}}</div>
+                <input class="width-211" type="text" id="name" pInputText [(ngModel)]="user.name">
+              </div>
+              <div>
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Логин')}}</div>
+                <input class="width-211" type="text" id="login" pInputText [(ngModel)]="user.login">
+              </div>
+              <div pTooltip="Для изменения данных обратитесь к администратору" tooltipPosition="top">
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Доступные проекты')}}</div>
+                <div>
+                  <p-table
+                    #dt
+                    [value]="user.visible_projects"
+                    [scrollable]="true"
+                    [virtualScroll]="true"
+                    [scrollHeight]="'14vh'"
+                    [reorderableColumns]="false"
+                    [resizableColumns]="false"
+                    responsiveLayout="scroll"
+                    [globalFilterFields]="['project']"
+                  >
+                    <!--    <ng-template pTemplate="caption">-->
+                    <!--      <div class="flex align-items-center justify-content-between">-->
+                    <!--        <span class="p-input-icon-left">-->
+                    <!--                    <i class="pi pi-search"></i>-->
+                    <!--                    <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />-->
+                    <!--                </span>-->
+                    <!--      </div>-->
+                    <!--    </ng-template>-->
+                    <ng-template pTemplate="body" let-project let-ri="rowIndex">
+                      <tr>
+                        <td style="height:30px">
+                          {{project}}
+                        </td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+
+
+            </div>
+            <div>
+              <div>
+                <div class="big-text-user mb-1">{{l.tr('Фамилия')}}</div>
+                <input class="width-211" type="text" id="surname" pInputText [(ngModel)]="user.surname">
+              </div>
+              <div>
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Пароль')}}</div>
+                <input class="width-211" type="text" id="password" pInputText [(ngModel)]="user.password">
+              </div>
+              <div pTooltip="Для изменения данных обратитесь к администратору" tooltipPosition="top">
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Отдел')}}</div>
+                <input class="width-211" type="text" id="department" pInputText [(ngModel)]="user.department" [disabled]="true" >
+              </div>
+              <div pTooltip="Для изменения данных обратитесь к администратору" tooltipPosition="top">
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Должность')}}</div>
+                <input class="width-211" type="text" id="profession" pInputText [(ngModel)]="user.profession" [disabled]="true" >
+              </div>
+            </div>
+            <div>
+              <div>
+                <div class="big-text-user mb-1">{{l.tr('Гендер')}}</div>
+                <p-dropdown styleClass="width-211" appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender"
+                            optionLabel="name" optionValue="name"></p-dropdown>
+              </div>
+              <div>
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Телефон')}}</div>
+                <input class="width-211" type="text" id="phone" pInputText [(ngModel)]="user.phone">
+              </div>
+              <div>
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Почта')}}</div>
+                <input class="width-211" type="text" id="email" pInputText [(ngModel)]="user.email">
+              </div>
+              <div>
+                <div class="big-text-user mb-1 mt-1">{{l.tr('Логин RocketChat')}}</div>
+                <input class="width-211" type="text" id="rocketLogin" pInputText [(ngModel)]="user.rocket_login">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="ml-1 notifications">
+        <app-notifications></app-notifications>
+      </div>
+    </div>
+    <div class="down-data card mt-1">
+      <div class="time-data">
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast position="bottom-center" key="admin"></p-toast>
+

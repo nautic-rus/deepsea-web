@@ -547,7 +547,7 @@ export class LanguageService {
           case 'Удаление уведомления': return 'Removing a notification'
           case 'Уведомление удалено': return 'Notification removed'
           case 'Не удалось удалить уведомление': return 'Failed to delete notification'
-          case '': return ''
+          case 'Сохранить изменения': return 'Save changes'
           case '': return ''
           case '': return ''
           case '': return ''

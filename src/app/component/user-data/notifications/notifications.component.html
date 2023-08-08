@@ -1,26 +1,25 @@
 <div class="notification-card">
   <p-toast></p-toast>
-  <div class="header-notification-card">
+  <div class="header-notification-card mb-1r df space-between">
     <div class="header-notification-text">{{l.tr('Настройка уведомлений')}}</div>
-    <div class="task-button-notification cxy" (click)="close()">
-      <i class="pi pi-times"></i>
-    </div>
-  </div>
-
-  <div class="df space-between mb-1r">
-    <button pButton pRipple label="{{l.tr('Удалить выбранные')}}" icon="pi pi-trash" class="p-button-danger"
+    <!--    <div class="task-button-notification cxy" (click)="close()">-->
+    <!--      <i class="pi pi-times"></i>-->
+    <!--    </div>-->
+    <button pButton pRipple label="{{l.tr('Удалить выбранные')}}" icon="pi pi-trash" class="del-not"
             (click)="deleteSelectedNotifications()"
             [disabled]="!selectedNotifications || !selectedNotifications.length"></button>
 
-    <button pButton pRipple label="{{l.tr('Новое уведомление')}}" icon="pi pi-plus" class="mr-2 blue-button"
+    <button pButton pRipple label="{{l.tr('Новое уведомление')}}" icon="pi pi-plus" class="mr-2 new-not"
             (click)="createNotification()"></button>
   </div>
+
+
   <p-table
     #dt
     [value]="userNotifications"
     [scrollable]="true"
     [virtualScroll]="true"
-    [scrollHeight]="'35vh'"
+    [scrollHeight]="'34vh'"
     [virtualRowHeight]="40"
     [reorderableColumns]="false"
     [resizableColumns]="false"
@@ -75,8 +74,9 @@
           {{notification.method}}
         </td>
         <td>
-          <div class="delete-notification cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить уведомление')"  (click)="deleteNotification(notification)">
-            <img src="assets/icons/trash.svg" height="20">
+          <div class="delete-notification cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить уведомление')"
+               (click)="deleteNotification(notification)">
+            <img src="../../../../assets/icons/trash.svg" height="20">
           </div>
         </td>
       </tr>

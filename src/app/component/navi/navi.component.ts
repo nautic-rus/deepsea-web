@@ -11,7 +11,6 @@ import {Weather} from "../../domain/classes/weather";
 import {DeviceDetectorService} from "ngx-device-detector";
 import {DailyTasksComponent} from "./daily-tasks/daily-tasks.component";
 import {RoleComponent} from "../admin/role/role.component";
-import {NotificationsComponent} from "./notifications/notifications.component";
 import {UserComponent} from "../admin/user/user.component";
 
 @Component({
@@ -167,14 +166,6 @@ export class NaviComponent implements OnInit {
       showHeader: false,
       modal: true,
     });
-  }
-
-  viewNotifications() {
-    this.dialogService.open(NotificationsComponent, {
-      showHeader: false,
-      modal: true,
-      data: this.auth.getUser()
-    })
   }
 
   translate(label: string) {

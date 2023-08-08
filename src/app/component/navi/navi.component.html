@@ -30,12 +30,16 @@
   </div>
   <div class="cxy">
     <div>
-      <div *ngIf="isOnline()" class="image-online cursor-pointer" pTooltip="{{auth.getUser().login}} {{auth.getUser().groups}}" tooltipPosition="bottom">
-          <img class="image__src" (click)="viewNotifications()" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
-      </div>
-      <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
-          <img class="image__src" (click)="viewNotifications()" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
-      </div>
+      <a routerLink="/user-data">
+        <div *ngIf="isOnline()" class="image-online cursor-pointer" pTooltip="{{auth.getUser().login}} {{auth.getUser().groups}}" tooltipPosition="bottom">
+          <img class="image__src" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+        </div>
+      </a>
+      <a routerLink="/user-data">
+        <div *ngIf="!isOnline()" class="image-offline cursor-pointer">
+          <img class="image__src" src="{{auth.getUserAvatar(auth.getUser().login)}}" height="32" width="32" style="border-radius: 16px">
+        </div>
+      </a>
     </div>
 <!--    <div>-->
 <!--      <div *ngIf="isOnline()" class="image-online cursor-pointer">-->
