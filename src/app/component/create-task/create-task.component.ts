@@ -13,7 +13,7 @@ import {User} from "../../domain/classes/user";
 import {LanguageService} from "../../domain/language.service";
 import {LV} from "../../domain/classes/lv";
 import {PrimeNGConfig} from "primeng/api";
-import {lab} from "d3";
+import {lab, nice} from "d3";
 import _ from "underscore";
 
 Quill.register('modules/imageResize', ImageResize);
@@ -498,6 +498,13 @@ export class CreateTaskComponent implements OnInit {
     }
     else {
       return label;
+    }
+  }
+
+  userDepartment() {
+    let findUser = this.users.find(x => x.login == this.selectedUsers[0]);
+    if (findUser != null){
+      this.taskDepartment = findUser.department;
     }
   }
 }

@@ -642,6 +642,7 @@ export class PlanComponent implements OnInit {
   }
 
   onDayDrop(user: User, d: MonthDay, event: MouseEvent) {
+    console.log(this.draggableIssue.id);
     let id = this.draggableIssue.id;
     let taskType = 0;
     switch (id){
@@ -652,6 +653,9 @@ export class PlanComponent implements OnInit {
     }
     if (event.ctrlKey){
       this.auth.insertPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
+        if (res != 'success'){
+          alert(res);
+        }
         this.fillPlan();
 
         let findIssue = this.issues.find(x => x.id == id);
@@ -668,6 +672,9 @@ export class PlanComponent implements OnInit {
     }
     else{
       this.auth.addPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
+        if (res != 'success'){
+          alert(res);
+        }
         this.fillPlan();
 
         let findIssue = this.issues.find(x => x.id == id);
