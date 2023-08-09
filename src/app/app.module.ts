@@ -193,6 +193,7 @@ import {
 import {
   DeleteNotificationComponent
 } from "./component/user-data/notifications/delete-notification/delete-notification.component";
+import {InputMaskModule} from "primeng/inputmask";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -388,6 +389,7 @@ Quill.register('modules/imageResize', ImageResize);
     ScrollingModule,
     DragDropModule,
     SkeletonModule,
+    InputMaskModule,
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

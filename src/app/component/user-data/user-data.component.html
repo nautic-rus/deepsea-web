@@ -88,7 +88,7 @@
               </div>
               <div>
                 <div class="big-text-user mb-1 mt-1">{{l.tr('Телефон')}}</div>
-                <input class="width-211" type="text" id="phone" pInputText [(ngModel)]="user.phone">
+                <p-inputMask styleClass="width-211" mask="+7 (999) 999-9999" placeholder="+7 (999) 999-9999" id="phone" [(ngModel)]="user.phone"></p-inputMask>
               </div>
               <div>
                 <div class="big-text-user mb-1 mt-1">{{l.tr('Почта')}}</div>
