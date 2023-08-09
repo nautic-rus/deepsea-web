@@ -174,8 +174,8 @@
           </div>
         </div>
 
-        <cdk-virtual-scroll-viewport class="background-gray" style="height: 540px" [itemSize]="135">
-          <div class="issues-all" *cdkVirtualFor="let issue of issues">
+        <cdk-virtual-scroll-viewport class="background-gray" style="height: 540px" [itemSize]="150">
+          <div [style.height]="150 + 'px'" class="issues-all" *cdkVirtualFor="let issue of issues">
             <div class="cursor-pointer" (click)="selectIssue(issue);">
               <div pDraggable="issue" (dragstart)="drag($event, issue, issue.available)" (dragend)="dragEnd($event)">
                 <div class="issue-info-id position-relative">
@@ -185,7 +185,7 @@
                   </div>
                 </div>
                 <div class="pt-2 title-bold-w">{{issue.docNumber}}</div>
-                <div class="pt-2 text-mini-gray">{{issue.name}}</div>
+                <div class="pt-2 text-mini-gray height-50">{{trimText(issue.name)}}</div>
                 <div class="pt-3 dg-2c mm-text">
                   <div class="df">
                     <div>{{t.tr('Исполнитель:') + ' ' + ''}}</div>
