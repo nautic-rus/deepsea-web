@@ -707,7 +707,7 @@ export class PlanComponent implements OnInit {
     cm.show(event);
   }
 
-  trimText(input: string, length = 53){
+  trimText(input: string, length = 90){
     let res = input;
     if (res.length > length){
       res = res.substr(0, length) + '..';
