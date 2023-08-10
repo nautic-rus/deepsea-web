@@ -493,9 +493,9 @@ export class PlanComponent implements OnInit {
     this.issues = this.issues.filter(x => this.issueManagerService.localeStatus(x.status, false) == this.issueManagerService.localeStatus(this.status, false) || this.status == '' || this.status == '-' || this.status == null);
     // this.issues = this.issues.filter(x => x.plan_hours > 0 || this.showWithoutPlan);
     // this.issues = this.issues.filter(x => (this.dragValues[x.id] != 0 || x.plan_hours == 0) || this.showAssigned);
-    this.issues = _.sortBy(this.issues, x => x.doc_number);
+    this.issues = _.sortBy(this.issues, x => x.docNumber);
     if (this.searchValue.trim() != ''){
-      this.issues = this.issues.filter(x => (x.name + x.doc_number).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
+      this.issues = this.issues.filter(x => (x.name + x.docNumber).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
     }
     if (this.taskId != 0){
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
@@ -642,15 +642,8 @@ export class PlanComponent implements OnInit {
   }
 
   onDayDrop(user: User, d: MonthDay, event: MouseEvent) {
-    console.log(this.draggableIssue.id);
     let id = this.draggableIssue.id;
-    let taskType = 0;
-    switch (id){
-      case -1: taskType = 1; break;
-      case -2: taskType = 2; break;
-      case -3: taskType = 3; break;
-      default: taskType = 0; break;
-    }
+    let taskType = id < 0 ? id * -1 : 0;
     if (event.ctrlKey){
       this.auth.insertPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
         if (res != 'success'){

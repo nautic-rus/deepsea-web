@@ -169,7 +169,7 @@
             <div class="big-text-user mb-5 mt-24"></div>
             <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input (mouseenter)="cd.detach()" (mouseleave)="cd.reattach()" [(ngModel)]="searchValue" (ngModelChange)="filterIssues();" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-130" />
+            <input [(ngModel)]="searchValue" (ngModelChange)="filterIssues();" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-130" />
           </span>
           </div>
         </div>
