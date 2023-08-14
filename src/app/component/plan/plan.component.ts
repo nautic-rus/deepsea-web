@@ -247,7 +247,7 @@ export class PlanComponent implements OnInit {
     let year = this.today.getFullYear();
     this.currentMonth = this.formatMonth(month, true).toString();
     let monthDays: MonthDay[] = [];
-    let daysInMonth = this.daysInMonth(month, this.today.getFullYear());
+    let daysInMonth = this.daysInMonth(month + 1, this.today.getFullYear());
     for (let x = 1; x <= daysInMonth; x ++){
       monthDays.push({
         day: x,
