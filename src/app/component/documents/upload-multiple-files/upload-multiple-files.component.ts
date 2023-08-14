@@ -151,7 +151,11 @@ export class UploadMultipleFilesComponent implements OnInit {
     this.issue = conf.data[0];
     this.rev = this.issue.revision;
     this.changeRev = this.issue.issue_type != 'PDSP';
-    switch (this.issue.department) {
+    let dep = this.issue.department;
+    if (this.issue.assistant != '' && this.issue.assistant != dep){
+      dep = this.issue.assistant;
+    }
+    switch (dep) {
       case 'System': this.fileGroups = this.pipeFileGroups; break;
       case 'Electric': this.fileGroups = this.elecFileGroups; break;
       default: this.fileGroups = this.hullFileGroups; break;
