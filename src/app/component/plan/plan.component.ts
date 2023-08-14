@@ -423,6 +423,7 @@ export class PlanComponent implements OnInit {
   }
 
   deleteInterval() {
+    this.loading = true;
     this.auth.deleteInterval(this.cmMenuInt.id).subscribe(res => {
       let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
       if (findIssue != null){
@@ -638,16 +639,19 @@ export class PlanComponent implements OnInit {
         }
       });
       console.log(this.usersPlan);
+      this.loading = false;
     });
   }
 
   onDayDrop(user: User, d: MonthDay, event: MouseEvent) {
+    this.loading = true;
     let id = this.draggableIssue.id;
     let taskType = id < 0 ? id * -1 : 0;
     if (event.ctrlKey){
       this.auth.insertPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
         if (res != 'success'){
           alert(res);
+          this.loading = false;
         }
         this.fillPlan();
 
@@ -667,6 +671,7 @@ export class PlanComponent implements OnInit {
       this.auth.addPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
         if (res != 'success'){
           alert(res);
+          this.loading = false;
         }
         this.fillPlan();
 
@@ -706,5 +711,15 @@ export class PlanComponent implements OnInit {
       res = res.substr(0, length) + '..';
     }
     return res;
+  }
+  getTooltip(id: number){
+    let issue = this.issuesSrc.find(x => x.id == id);
+    console.log(issue);
+    if (issue != null){
+      return issue.docNumber + " " + issue.name;
+    }
+    else{
+      return "";
+    }
   }
 }
