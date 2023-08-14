@@ -1,3 +1,11 @@
+/deep/.p-checkbox .p-checkbox-box {
+  border: 1px solid #ced4da;
+  width: 18px;
+  height: 18px;
+}
+/deep/.p-checkbox .p-checkbox-box .p-checkbox-icon {
+  font-size: 12px;
+}
 .notification-card{
   height: fit-content;
   overflow-y: auto;
@@ -6,31 +14,34 @@
   border-radius: 8px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol
 }
-
+.save-user{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
+}
 .header-notification-card{
   color: #323130;
   display: flex;
-  justify-content: space-between;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
-
 .header-notification-text{
   font-weight: 600;
   font-size: 1.5rem;
 }
-
 .new-not {
   background-color: #3B82F6;
   height: 40px;
   border-color: #3B82F6;
 }
-
 .del-not {
   background-color: #EF4444;
   height: 40px;
   border-color: #EF4444;
 }
-
 .task-button-notification{
   color: #605e5c;
   width: 2rem;
@@ -41,20 +52,17 @@
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-
 .task-button-notification:hover{
   color: #605e5c;
   border-color: transparent;
   background: #f3f2f1;
 }
-
 .materials-button-home{
   height: 35px;
   cursor: pointer;
   border-radius: 6px;
   color: white;
 }
-
 .delete-notification {
   color: #605e5c;
   border: 0 none;
@@ -63,9 +71,14 @@
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   cursor: pointer;
 }
-
 .delete-notification:hover{
   color: #605e5c;
   border-color: transparent;
   background: #f3f2f1;
+}
+.icon-nest{
+  fill: #E1E1E1;
+}
+.icon-nest:hover{
+  fill: #5e6c84;
 }

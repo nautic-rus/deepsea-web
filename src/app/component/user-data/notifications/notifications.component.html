@@ -1,16 +1,29 @@
 <div class="notification-card">
   <p-toast></p-toast>
-  <div class="header-notification-card mb-1r df space-between">
+  <div class="header-notification-card mb-1r df">
     <div class="header-notification-text">{{l.tr('Настройка уведомлений')}}</div>
     <!--    <div class="task-button-notification cxy" (click)="close()">-->
     <!--      <i class="pi pi-times"></i>-->
     <!--    </div>-->
-    <button pButton pRipple label="{{l.tr('Удалить выбранные')}}" icon="pi pi-trash" class="del-not"
-            (click)="deleteSelectedNotifications()"
-            [disabled]="!selectedNotifications || !selectedNotifications.length"></button>
 
-    <button pButton pRipple label="{{l.tr('Новое уведомление')}}" icon="pi pi-plus" class="mr-2 new-not"
-            (click)="createNotification()"></button>
+
+    <div class="p-ml-auto df">
+      <div class="mr-10">
+        <div (click)="deleteSelectedNotifications()" [class.disabled-button]="!selectedNotifications || !selectedNotifications.length" class="save-user red-button cxy">
+          <div class="pr-10 cxy">
+            <img src="assets/icons/trash-white.svg" height="16">
+          </div>
+          <div class="cxy">{{l.tr('Удалить выбранные')}}</div>
+        </div>
+      </div>
+      <div class="save-user blue-button cxy" (click)="createNotification()">
+        <div class="pr-10 cxy">
+          <img src="assets/icons/plus3.svg" height="18">
+        </div>
+        <div class="cxy">{{l.tr('Новое уведомление')}}</div>
+      </div>
+    </div>
+
   </div>
 
 
@@ -37,7 +50,7 @@
     <!--    </ng-template>-->
     <ng-template pTemplate="header">
       <tr>
-        <th style="width:20%">
+        <th style="width:20%" class="cy">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
         <th pSortableColumn="project" style="width:20%">Project
@@ -57,7 +70,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-notification let-ri="rowIndex">
       <tr>
-        <td style="height:30px">
+        <td class="cy" style="height:30px">
           <p-tableCheckbox [value]="notification"></p-tableCheckbox>
         </td>
         <td style="height:30px">
@@ -75,7 +88,9 @@
         <td style="height:30px">
           <div class="delete-notification cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить уведомление')"
                (click)="deleteNotification(notification)">
-            <img src="../../../../assets/icons/trash.svg" height="20">
+            <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
           </div>
         </td>
       </tr>
