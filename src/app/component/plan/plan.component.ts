@@ -370,7 +370,7 @@ export class PlanComponent implements OnInit {
 
   deleteInterval() {
     this.loading = true;
-    this.auth.deleteInterval(this.cmMenuInt.id).subscribe(res => {
+    this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
       let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
       if (findIssue != null){
         this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
@@ -592,7 +592,7 @@ export class PlanComponent implements OnInit {
     let id = this.draggableIssue.id;
     let taskType = id < 0 ? id * -1 : 0;
     if (event.ctrlKey){
-      this.auth.insertPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
+      this.auth.insertPlanInterval(id, user.id, d.ms, this.dragValue, taskType, this.auth.getUser().login).subscribe(res => {
         if (res != 'success'){
           alert(res);
           this.loading = false;
@@ -613,13 +613,12 @@ export class PlanComponent implements OnInit {
       });
     }
     else{
-      this.auth.addPlanInterval(id, user.id, d.ms, this.dragValue, taskType).subscribe(res => {
+      this.auth.addPlanInterval(id, user.id, d.ms, this.dragValue, taskType, this.auth.getUser().login).subscribe(res => {
         if (res != 'success'){
           alert(res);
           this.loading = false;
         }
         this.fillPlan();
-
         let findIssue = this.issues.find(x => x.id == id);
         if (findIssue != null){
           this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
