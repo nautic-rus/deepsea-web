@@ -1,13 +1,21 @@
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.pi {
+  font-size: 13px;
+}
 .first-column {
-  width: 60%;
+  width: 50%;
   height: 100%;
 }
-
 .second-column {
-  width: 40%;
+  width: 50%;
   height: 100%;
 }
-
 .user-profile {
   width: 100%;
   background: rgba(255, 255, 255, 0.9);
@@ -16,7 +24,6 @@
   height: calc(55.4vh - 106px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
-
 .notifications {
   background: rgba(255, 255, 255, 0.9);
   padding: 10px;
@@ -24,7 +31,6 @@
   height: calc(97.9vh - 106px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
-
 .time-data {
   width: 100%;
   background: rgba(255, 255, 255, 0.9);
@@ -33,7 +39,6 @@
   height: calc(54vh - 106px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
-
 .header-user-card{
   color: #323130;
   height: 40px;
@@ -41,22 +46,22 @@
   justify-content: space-between;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 }
-
 .header-user-text{
   font-weight: 600;
   font-size: 1.5rem;
 }
-
 .big-text-user{
   color: #5e6c84;
   font-size: 12px;
   font-family: inherit;
   font-weight: 600;
 }
-
 .save-user{
-  background-color: #3B82F6;
-  height: 40px;
-  border-color: #3B82F6;
-  border-radius: 8px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 13px;
 }

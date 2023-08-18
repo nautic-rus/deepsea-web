@@ -21,8 +21,6 @@
         </div>
       </div>
       <div class="mr-10">
-
-
         <div [pTooltip]="l.tr('Show In Viewer')" [class.disabled-button]="isDisabledDxf()" (click)="showDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
           <svg class="icon-top-button" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
@@ -711,7 +709,7 @@
               <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 20) + ' '}}</span>
               <span class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by)}}</span>
               <span class="cy">{{' ' + getDate(file.removed_date)}}</span>
-              <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >
+              <div class="cxy ml-10 load-cloud">
                 <div class="cxy ml-10" (click)="openFile(file)">
                   <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
