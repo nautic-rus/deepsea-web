@@ -194,6 +194,7 @@ import {
   DeleteNotificationComponent
 } from "./component/user-data/notifications/delete-notification/delete-notification.component";
 import {InputMaskModule} from "primeng/inputmask";
+import { TaskAddPlanComponent } from './component/task/task-add-plan/task-add-plan.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -331,7 +332,8 @@ Quill.register('modules/imageResize', ImageResize);
     UserDataComponent,
     NotificationsComponent,
     CreateNotificationComponent,
-    DeleteNotificationComponent
+    DeleteNotificationComponent,
+    TaskAddPlanComponent
   ],
   imports: [
     BrowserModule,

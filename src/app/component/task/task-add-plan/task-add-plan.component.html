@@ -1,0 +1,52 @@
+<div class="center-viewer">
+  <div class="header-user-card-lb">
+    <div class="header-text">{{t.tr('Трудоемкость')}}</div>
+    <span class="task-button-user cxy" (click)="close()">
+      <i class="pi pi-times"></i>
+    </span>
+  </div>
+  <div class="cx mt-1 space-between">
+    <span class="">
+      <div>{{t.tr('Количество часов')}}</div>
+      <p-inputNumber [(ngModel)]="hoursAmount" placeholder="Количество часов"></p-inputNumber>
+    </span>
+    <span class="p-float-label">
+      <div>{{t.tr('Дата')}}</div>
+      <p-calendar [disabled]="true" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
+    </span>
+  </div>
+  <div class="cxy mt-25">
+    <span class="p-float-label w-100">
+      <textarea id="textarea" rows="4" style="resize: none;" cols="60" [(ngModel)]="comment" pInputTextarea></textarea>
+      <label for="textarea">{{t.tr('Комментарий')}}</label>
+    </span>
+  </div>
+  <div class="mt-5">
+<!--    Свободных часов на сегодня: {{hoursLeft}}-->
+  </div>
+  <!--  <div class="">-->
+  <!--    Количество часов задачи по плану на сегодня: {{hoursLeftByTaskToday}}-->
+  <!--  </div>-->
+  <!--  <div class="">-->
+  <!--    Количество несписанных из плана часов на задачу: {{hoursLeftByTask}}-->
+  <!--  </div>-->
+  <div class="mt-5" *ngIf="plannedTodayWarning">
+    Текущей задачи нет в плане на сегодня!
+    <!--    Согласно плану вы должны сегодня списать часы на:-->
+    <!--    <div *ngFor="let plan of planTasks">-->
+    <!--      <div class="df" (click)="openTask(plan.taskId)">-->
+    <!--        <div>{{plan.name}}</div>-->
+    <!--        <div class="ml-3">(план: {{plan.planned}}/</div>-->
+    <!--        <div class="ml-3">исп: {{plan.consumed}})</div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+  </div>
+</div>
+<div class="form-footer-labor">
+  <div class="mr-5 cx">
+    <div (click)="commit()" tabindex="10" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
+  </div>
+  <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
+</div>
+
+

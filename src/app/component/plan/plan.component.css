@@ -102,13 +102,7 @@
   cursor: pointer;
 }
 .plan-hours-consumed{
-  cursor: pointer;
-  color: black;
-  font-weight: bold;
-  font-size: 11px;
-  padding-left: 2px;
-  z-index: 5;
-  opacity: 0.25;
+  opacity: 0.35;
   /*background: repeating-linear-gradient(-45deg, #de9dd4, #de9dd4 5px, white 5px, white 10px);*/
 }
 .spinner{

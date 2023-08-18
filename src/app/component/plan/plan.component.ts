@@ -258,7 +258,6 @@ export class PlanComponent implements OnInit {
       });
     }
     this.monthDays = monthDays;
-    this.loading = false;
     this.fillPlan();
   }
   intervalSameDay(d1: number, d2: number, int1: number, int2: number){
@@ -289,67 +288,7 @@ export class PlanComponent implements OnInit {
     return res;
   }
 
-  getDayStyle(day: TaskOfDay) {
-    let oneHourLength = 40 / 8;
-    let width = day.planHours.length - day.consumedAmount;
-    return {
-      height: '100%',
-      width: (width * oneHourLength) + 'px',
-      'background-color': width == 0 ? 'transparent' : this.getTaskColor(day.taskId),
-      'background': width == 0 ? 'transparent' : this.getTaskExtraColor(day.taskId),
-      'border': this.getSearchingBorder(day),
-      'padding-left': width == 0 ? '0' : '2px',
-    };
-  }
-  getConsumedDayStyle(day: TaskOfDay) {
-    let oneHourLength = 40 / 8;
-    return {
-      height: '100%',
-      width: (day.consumedAmount * oneHourLength) + 'px',
-      'background-color': this.getTaskColor(day.taskId),
-      'background': this.getTaskExtraColor(day.taskId),
-    };
-  }
-  // showBusyHoursCount(day: PlanDay){
-  //   let busyHours = day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0);
-  //   console.log(busyHours);
-  // }
-  getSearchingBorder(day: TaskOfDay){
-    if (this.searchingIssue != null && this.searchingIssue.id == day.taskId){
-      return '2px solid #FFB240';
-    }
-    else{
-      return 'none';
-    }
-  }
-  getTasksOfDay(day: PlanDay) {
-    let res: TaskOfDay[] = [];
-    let busyHours = _.sortBy(day.planHours.filter(x => x.hour_type == 1 && x.task_id != 0), x => x.id);
-    _.forEach(_.groupBy(busyHours, x => x.task_id),group => {
-      let consumedHours = 0;
-      group.forEach(ph => {
-        if (this.consumedIds.includes(ph.id)){
-          consumedHours += 1;
-        }
-      });
-      res.push({taskId: group[0].task_id, planHours: group, tooltip: this.getIssueDesc(group[0].task_id), consumedAmount: consumedHours});
-    });
-    return _.sortBy(res, x => _.min(x.planHours.map(y => y.id)));
-  }
-  getTaskColor(taskId: number){
-    switch (taskId){
-      default:{
-        let eq1 = Math.pow(taskId, 1);
-        let eq2 = Math.pow(taskId, 2);
-        let eq3 = Math.pow(taskId, 3);
-        let r = eq1 % 255;
-        let g = eq2 % 255;
-        let b = eq3 % 255;
-        return `rgba(${r}, ${g}, ${b}, 0.6)`;
-      }
-    }
-  }
-  getTaskExtraColor(taskId: number){
+  getTaskExtraColor(taskId: number, consumed: Boolean){
     switch (taskId){
       case -5:{ //УЧЁБА
         return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #8DB6FA 2px, #8DB6FA 4px)';
@@ -373,7 +312,8 @@ export class PlanComponent implements OnInit {
         let r = eq1 % 255;
         let g = eq2 % 255;
         let b = eq3 % 255;
-        return `rgba(${r}, ${g}, ${b}, 0.6)`;
+        let tr = consumed ? 0.35 : 0.6
+        return `rgba(${r}, ${g}, ${b}, ${tr})`;
       }
     }
   }
@@ -404,20 +344,26 @@ export class PlanComponent implements OnInit {
     if (taskId < 0){
       return;
     }
-    this.cd.detach();
+    //this.cd.detach();
     this.issueManagerService.getIssueDetails(taskId).then(res => {
       this.dialogService.open(TaskComponent, {
         showHeader: false,
         modal: true,
         data: res
       }).onClose.subscribe(res => {
-        setTimeout(() => {
-          if (res == 'updated'){
-            this.loading = true;
-            this.fill();
-          }
-          this.cd.reattach();
-        }, 100);
+        //this.cd.reattach();
+        this.loading = true;
+        let findIssue = this.issues.find(x => x.id == taskId);
+        if (findIssue != null){
+          this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
+            let updIssue = upd[0];
+            findIssue.inPlan = updIssue.inPlan;
+            findIssue.available = updIssue.available;
+            findIssue.consumed = updIssue.consumed;
+            findIssue.available_limit = updIssue.available_limit;
+          });
+        }
+        this.fillPlan();
       });
     });
   }
@@ -431,6 +377,7 @@ export class PlanComponent implements OnInit {
           let updIssue = upd[0];
           findIssue.inPlan = updIssue.inPlan;
           findIssue.available = updIssue.available;
+          findIssue.consumed = updIssue.consumed;
           findIssue.available_limit = updIssue.available_limit;
         });
       }
@@ -502,8 +449,6 @@ export class PlanComponent implements OnInit {
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
       this.taskId = 0;
     }
-    console.log(this.issues);
-    this.loadingIssues = false;
   }
   close() {
     this.ref.close();
@@ -638,7 +583,6 @@ export class PlanComponent implements OnInit {
           this.usersPlan[user.id] = userPlan;
         }
       });
-      console.log(this.usersPlan);
       this.loading = false;
     });
   }
@@ -662,6 +606,7 @@ export class PlanComponent implements OnInit {
             let updIssue = upd[0];
             findIssue.inPlan = updIssue.inPlan;
             findIssue.available = updIssue.available;
+            findIssue.consumed = updIssue.consumed;
             findIssue.available_limit = updIssue.available_limit;
           });
         }
@@ -682,6 +627,7 @@ export class PlanComponent implements OnInit {
             let updIssue = upd[0];
             findIssue.inPlan = updIssue.inPlan;
             findIssue.available = updIssue.available;
+            findIssue.consumed = updIssue.consumed;
             findIssue.available_limit = updIssue.available_limit;
           });
         }
@@ -695,7 +641,7 @@ export class PlanComponent implements OnInit {
     return {
       height: '100%',
       width: (width * oneHourLength) + 'px',
-      'background': width == 0 ? 'transparent' : this.getTaskExtraColor(int.taskId),
+      'background': width == 0 ? 'transparent' : this.getTaskExtraColor(int.taskId, int.consumed == 1),
       'padding-left': width == 0 ? '0' : '2px',
     };
   }
@@ -714,7 +660,6 @@ export class PlanComponent implements OnInit {
   }
   getTooltip(id: number){
     let issue = this.issuesSrc.find(x => x.id == id);
-    console.log(issue);
     if (issue != null){
       return issue.docNumber + " " + issue.name;
     }
