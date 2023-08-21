@@ -341,3 +341,11 @@
   right: -15px;
   top: 0;
 }
+.id-hover{
+  border-radius: 4px;
+  padding: 0 4px;
+  width: fit-content;
+}
+.id-hover:hover{
+  background-color: #f0f0f1;
+}
