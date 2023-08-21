@@ -56,8 +56,6 @@
                scrollHeight="calc(100vh - 220px)"
                [virtualScroll]="true"
                [virtualRowHeight]="40"
-               [reorderableColumns]="false"
-               [resizableColumns]="false"
                styleClass="p-datatable-striped"
                responsiveLayout="scroll"
                [globalFilterFields]="['id','doc_number','name','status']">
@@ -66,7 +64,7 @@
             <th pSortableColumn="doc_number" class="lxy w-100">{{l.tr('Номер чертежа')}}
               <p-sortIcon field="doc_number"></p-sortIcon>
             </th>
-            <th pSortableColumn="name" class="lxy w-100">{{l.tr('Название')}}
+            <th style="width: 200px"  pSortableColumn="name" class="lxy">{{l.tr('Название')}}
               <p-sortIcon field="name"></p-sortIcon>
             </th>
             <th pSortableColumn="doc_number" class="lxy w-100">{{l.tr('Тип')}}
