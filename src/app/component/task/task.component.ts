@@ -37,6 +37,7 @@ import {Router} from "@angular/router";
 import {concat, forkJoin} from "rxjs";
 import {ConsumedHour} from "../work-hours/work-hours.component";
 import {ConsumedDetailsComponent} from "./consumed-details/consumed-details.component";
+import {TaskAddPlanComponent} from "./task-add-plan/task-add-plan.component";
 
 @Component({
   selector: 'app-task',
@@ -773,7 +774,8 @@ export class TaskComponent implements OnInit {
     });
   }
   openLaboriousness(){
-    this.dialogService.open(LaboriousnessComponent, {
+    //this.dialogService.open(LaboriousnessComponent, {
+    this.dialogService.open(TaskAddPlanComponent, {
       showHeader: false,
       modal: true,
       data: this.issue
