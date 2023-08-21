@@ -861,7 +861,15 @@
                 <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.new_value)) | safeHtml"></div>
               </div>
             </div>
-
+            <div *ngIf="msg.name_value == 'man_hours'">
+              <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr px-5">списал часы с задачи</span>
+              <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+              <div class="df pt-5">
+                <span class="pr-3">Количество: </span>
+                <div class="text-bold" [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
+              </div>
+            </div>
             <div *ngIf="msg.update_message.includes('edit')">
               <div *ngIf="msg.name_value == 'priority'">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>

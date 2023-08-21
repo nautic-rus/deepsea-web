@@ -41,6 +41,7 @@ export interface DayInterval{
   hours: number;
   hours_total: number;
   id: number;
+  consumed: number;
 }
 export interface UserPlan{
   userId: number;
@@ -647,7 +648,13 @@ export class PlanComponent implements OnInit {
 
   openIntervalMenu(cm: ContextMenu, event: MouseEvent, int: DayInterval) {
     this.cmMenuInt = int;
-    cm.show(event);
+    if (int.consumed == 0){
+      cm.show(event);
+    }
+    else{
+      event.preventDefault();
+      event.stopPropagation();
+    }
   }
 
   trimText(input: string, length = 90){
