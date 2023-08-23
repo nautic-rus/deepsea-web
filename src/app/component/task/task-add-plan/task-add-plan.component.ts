@@ -41,10 +41,12 @@ export class TaskAddPlanComponent implements OnInit {
   userPlan: PlanByDays[] = [];
   planToday: PlanByDays;
   plannedTodayWarning = false;
+  minDate = new Date();
 
   constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
+    this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000 * 2);
     this.issue = this.conf.data as Issue;
     this.fillByDate();
   }
