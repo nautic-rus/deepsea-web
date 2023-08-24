@@ -277,8 +277,9 @@ export class PipeEspComponent implements OnInit {
   }
   fillPipes(){
     this.s.getPipeSegs(this.docNumber).then(res => {
-      console.log(res);
+      console.log(res.elements.find((x: any) => x.type != "EQUIP"));
       if (res != null && res != '' && res.elements.length != 0){
+        console.log('enter');
         this.issue.revision = res.rev;
         let segs = res.elements;
         this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';

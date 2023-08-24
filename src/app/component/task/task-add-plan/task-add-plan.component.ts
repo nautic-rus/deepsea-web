@@ -6,7 +6,7 @@ import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dyna
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {MessageService} from "primeng/api";
-import _, {any} from "underscore";
+import _, {any, where} from "underscore";
 import {DailyTask} from "../../../domain/interfaces/daily-task";
 import {TaskComponent} from "../task.component";
 import {DayInterval, PlanByDays, PlanInterval} from "../../plan/plan.component";
@@ -46,7 +46,10 @@ export class TaskAddPlanComponent implements OnInit {
   constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000 * 2);
+    this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000);
+    while (this.minDate.getDay() == 0 || this.minDate.getDay() == 0){
+      this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000);
+    }
     this.issue = this.conf.data as Issue;
     this.fillByDate();
   }
@@ -74,7 +77,7 @@ export class TaskAddPlanComponent implements OnInit {
   commit(){
     this.auth.insertConsumedPlanInterval(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, 0).subscribe(res => {
       if (res.includes('success')){
-        this.close();
+        this.ref.close('success');
       }
       else{
         alert(res);

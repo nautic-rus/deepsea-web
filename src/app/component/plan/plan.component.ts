@@ -444,8 +444,9 @@ export class PlanComponent implements OnInit {
     // this.issues = this.issues.filter(x => (this.dragValues[x.id] != 0 || x.plan_hours == 0) || this.showAssigned);
     this.issues = _.sortBy(this.issues, x => x.docNumber);
     if (this.searchValue.trim() != ''){
-      this.issues = this.issues.filter(x => (x.name + x.docNumber).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
+      this.issues = this.issues.filter(x => (x.id + x.name + x.docNumber).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
     }
+    console.log(this.issues);
     if (this.taskId != 0){
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
       this.taskId = 0;

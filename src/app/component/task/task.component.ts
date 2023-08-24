@@ -786,7 +786,9 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.messageService.add({key:'task', severity:'success', summary:'Set Man Hours', detail:'You have successfully updated issue man hours.'});
+      if (res == 'success'){
+        this.messageService.add({key:'task', severity:'success', summary:'Set Man Hours', detail:'You have successfully updated issue man hours.'});
+      }
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
         this.availableActions = this.getAvailableActions(issue);
