@@ -1031,13 +1031,10 @@ export class TaskComponent implements OnInit {
         this.cancelIssueEdit();
         return;
       }
-      let find = this.planned.find(x => x.taskId == this.issue.id);
-      if (find != null){
-        if (find.hours > this.issue.plan_hours){
-          this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is less then amount of you entered'});
-          this.cancelIssueEdit();
-          return;
-        }
+      if (this.actualManHours > this.issue.plan_hours){
+        this.messageService.add({key:'task', severity:'error', summary:'Update', detail:'The amount of planned hours is less then amount of you entered'});
+        this.cancelIssueEdit();
+        return;
       }
     }
     console.log(this.issue.modification_of_existing);
