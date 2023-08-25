@@ -313,7 +313,7 @@ export class PlanComponent implements OnInit {
         let r = eq1 % 255;
         let g = eq2 % 255;
         let b = eq3 % 255;
-        let tr = consumed ? 0.35 : 0.8
+        let tr = consumed ? 0.35 : 0.6
         return `rgba(${r}, ${g}, ${b}, ${tr})`;
       }
     }
@@ -643,7 +643,7 @@ export class PlanComponent implements OnInit {
       height: '100%',
       width: (width * oneHourLength) + 'px',
       'background': width == 0 ? 'transparent' : this.getTaskExtraColor(int.taskId, int.consumed == 1),
-      'padding-left': width == 0 ? '0' : '2px',
+      // 'padding-left': width == 0 ? '0' : '2px',
     };
   }
 

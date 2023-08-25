@@ -344,5 +344,7 @@
   background-color: #f0f0f1;
 }
 .consumed{
-  color: #9b9b9b;
+  color: black;
+  z-index: 5;
+  opacity: 0.35;
 }
