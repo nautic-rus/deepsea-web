@@ -312,7 +312,7 @@ export class PlanComponent implements OnInit {
         let r = eq1 % 255;
         let g = eq2 % 255;
         let b = eq3 % 255;
-        let tr = consumed ? 0.35 : 0.6
+        let tr = consumed ? 0.35 : 0.8
         return `rgba(${r}, ${g}, ${b}, ${tr})`;
       }
     }
