@@ -101,7 +101,7 @@ const routes: Routes = [
   { path: 'cable-explorer', component: CableExplorerComponent, canActivate: [AuthGuard], data: {animation: 'CableExplorerComponent'} },
   { path: 'spy-watch', component: SpyWatchComponent, canActivate: [AuthGuard], data: {animation: 'SpyWatchComponent'} },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: {animation: 'AdminComponent'} },
-  { path: 'work-hours', component: WorkHoursComponent, canActivate: [AuthGuard], data: {animation: 'WorkHoursComponent'} },
+  { path: 'work-hours', component: PlanComponent, canActivate: [AuthGuard], data: {animation: 'PlanComponent'} },
   { path: 'trays', component: TraysComponent, canActivate: [AuthGuard], data: {animation: 'TraysComponent'} },
   { path: 'cables', component: CablesComponent, canActivate: [AuthGuard], data: {animation: 'CablesComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },

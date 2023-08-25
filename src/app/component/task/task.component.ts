@@ -310,6 +310,7 @@ export class TaskComponent implements OnInit {
   ready = Object({model: 0, drawing: 0, nesting: 0});
   issueProjects: any[] = [];
   consumed: ConsumedHour[] = [];
+  actualManHours = 0;
 
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, public router: Router) { }
 
@@ -354,11 +355,15 @@ export class TaskComponent implements OnInit {
       console.log(this.answerMessage);
     }
 
-    this.auth.getPlannedHours().subscribe(res => {
-      this.planned = res;
-    });
-    this.auth.getConsumedPlanHours(0).subscribe(consumed => {
-      this.consumed = consumed;
+    // this.auth.getPlannedHours().subscribe(res => {
+    //   this.planned = res;
+    // });
+    // this.auth.getConsumedPlanHours(0).subscribe(consumed => {
+    //   this.consumed = consumed;
+    // });
+    this.auth.getPlanIssue(this.issue.id).subscribe(planIssue => {
+      console.log(planIssue);
+      this.actualManHours = planIssue[0].consumed;
     });
     this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
 
@@ -464,6 +469,7 @@ export class TaskComponent implements OnInit {
     let res: any[] = [];
     issue.messages.filter(x => x.prefix != 'answer').forEach(x => res.push(x));
     issue.history.forEach(x => res.push(x));
+    console.log(issue.history);
     // @ts-ignore
     return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
   }
@@ -782,12 +788,11 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.messageService.add({key:'task', severity:'success', summary:'Set Man Hours', detail:'You have successfully updated issue man hours.'});
-        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-          this.issue = issue;
-          this.availableActions = this.getAvailableActions(issue);
-        });
       }
-      this.updated = true;
+      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        this.issue = issue;
+        this.availableActions = this.getAvailableActions(issue);
+      });
     });
   }
   editorInit(event: any) {
@@ -895,8 +900,9 @@ export class TaskComponent implements OnInit {
         else if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
           this.updated = true;
           let findUser = this.auth.users.find(x => x.login == assignedTo);
-          if (findUser != null){
-            this.auth.getConsumedPlanHours(findUser.id).subscribe(consumed => {
+          //if (findUser != null){
+          if (false){
+            this.auth.getConsumedPlanHours(findUser!.id).subscribe(consumed => {
               this.auth.getUsersPlanHours(findUser!.id, 0, 1).subscribe(userPlanHours => {
                 let userPlanHoursToday = _.sortBy(userPlanHours.filter(x => x.day == this.today.getDate() && x.month == this.today.getMonth() && x.year == this.today.getFullYear() && x.hour_type == 1), x => x.id);
                 if (userPlanHoursToday.length > 0){
@@ -1401,10 +1407,12 @@ export class TaskComponent implements OnInit {
   }
 
   getConsumedHours() {
+    return this.actualManHours;
     return this.consumed.filter(x => x.task_id == this.issue.id).length;
   }
 
   openConsumedDetails() {
+    return;
     this.dialogService.open(ConsumedDetailsComponent, {
       showHeader: false,
       modal: true,

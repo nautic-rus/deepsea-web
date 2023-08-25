@@ -76,7 +76,9 @@
         </div>
       </div>
         <div class="">{{t.tr('Ревизия')}}
-          <p-dropdown [disabled]="changeRev" appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
+<!--          <p-dropdown [disabled]="changeRev" appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">-->
+<!--          </p-dropdown> -->
+          <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
           </p-dropdown>
         </div>
     </div>
