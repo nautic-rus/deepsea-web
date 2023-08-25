@@ -343,3 +343,6 @@
 .id-hover:hover{
   background-color: #f0f0f1;
 }
+.consumed{
+  color: #9b9b9b;
+}
