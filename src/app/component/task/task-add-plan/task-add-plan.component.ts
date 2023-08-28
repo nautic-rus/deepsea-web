@@ -23,6 +23,7 @@ export class TaskAddPlanComponent implements OnInit {
   calendarDay: Date = new Date();
   comment = '';
   today: Date = new Date();
+  disabledDates: Date[] = [];
   infoText = '';
   hoursLeft = 0;
   hoursLeftByTask = 0;
@@ -50,6 +51,7 @@ export class TaskAddPlanComponent implements OnInit {
     while (this.minDate.getDay() == 0 || this.minDate.getDay() == 6){
       this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000);
     }
+    this.disabledDates = this.getDisabledDates(this.minDate, this.calendarDay);
     this.issue = this.conf.data as Issue;
     this.fillByDate();
   }
