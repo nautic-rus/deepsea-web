@@ -47,7 +47,7 @@ export class TaskAddPlanComponent implements OnInit {
 
   ngOnInit(): void {
     this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000);
-    while (this.minDate.getDay() == 0 || this.minDate.getDay() == 0){
+    while (this.minDate.getDay() == 0 || this.minDate.getDay() == 6){
       this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000);
     }
     this.issue = this.conf.data as Issue;
@@ -115,5 +115,17 @@ export class TaskAddPlanComponent implements OnInit {
     let d1 = new Date(date1);
     let d2 = new Date(date2);
     return d1.getFullYear() == d2.getFullYear() && d1.getMonth() == d2.getMonth() && d1.getDate() == d2.getDate();
+  }
+
+  getDisabledDates(minDate: Date, calendarDay: Date) {
+    let disabled = [];
+    let start = minDate;
+    while (start < calendarDay){
+      if (start.getDay() == 0 || start.getDay() == 6){
+        disabled.push(start);
+      }
+      start = new Date(start.getTime() + 24 * 60 * 60 * 1000);
+    }
+    return disabled;
   }
 }
