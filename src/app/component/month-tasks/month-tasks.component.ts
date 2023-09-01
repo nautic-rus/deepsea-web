@@ -12,6 +12,7 @@ import {ShowTaskComponent} from "../navi/daily-tasks/show-task/show-task.compone
 import {User} from "../../domain/classes/user";
 import {MenuItem} from "primeng/api";
 import {ConsumedHour, PlanHour, PlannedHours} from "../work-hours/work-hours.component";
+import {UserPlan} from "../plan/plan.component";
 export class SpecialDay{
   day: number;
   month: number;
@@ -60,6 +61,7 @@ export class MonthTasksComponent implements OnInit {
   consumed: ConsumedHour[] = [];
   consumedIds: number[] = [];
   planned: PlanHour[] = [];
+  planByDays: UserPlan[] = [];
 
 
   calendar: CalendarDay[] = [];
@@ -231,22 +233,90 @@ export class MonthTasksComponent implements OnInit {
     }, 500);
   }
   fillTasks(){
-    this.auth.getConsumedPlanHours(this.selectedUser.id).subscribe(consumedValue => {
-      this.consumed = consumedValue;
-      this.consumedIds = consumedValue.map(x => x.hour_id);
-      this.auth.getUsersPlanHours(this.selectedUser.id, 0, 1).subscribe(planned => {
-        this.planned = planned;
-        this.issueManager.getIssues('op').then(resIssues => {
-          this.issues = resIssues;
-          this.calendar = this.getCalendar();
-        });
-      })
+    let today = new Date();
+    this.auth.getPlanByDays(today.getTime()).subscribe(res => {
+      this.planByDays = res;
+      this.issueManager.getIssues('op').then(resIssues => {
+        this.issues = resIssues;
+        this.calendar = this.getCalendar();
+      });
     });
+    // this.auth.getConsumedPlanHours(this.selectedUser.id).subscribe(consumedValue => {
+    //   this.consumed = consumedValue;
+    //   this.consumedIds = consumedValue.map(x => x.hour_id);
+    //   this.auth.getUsersPlanHours(this.selectedUser.id, 0, 1).subscribe(planned => {
+    //     this.planned = planned;
+
+    //   })
+    // });
   }
   changeUser(){
     this.fillTasks();
   }
   getTasksOfDay(day: number){
+    let res: DailyTask[] = [];
+
+    let userPlan = this.planByDays.find(x => x.userId == this.selectedUser.id);
+    if (userPlan != null){
+      let tasks = userPlan.plan.find(x => x.day == day && x.month == this.getMonth() && x.year == this.getYear());
+      if (tasks != null){
+        let ints = tasks.ints.filter(x => x.consumed == 1);
+        ints.forEach(t => {
+          let id = t.taskId;
+          let issue = this.issues.find(x => x.id == id);
+          if (issue != null) {
+            res.push(new DailyTask(
+              id,
+              this.date,
+              this.date,
+              this.selectedUser.login,
+              issue.project,
+              issue.name,
+              t.hours,
+              0,
+              issue.assigned_to,
+              issue.doc_number,
+              issue.action,
+              0,
+              0,
+              issue.action,
+              issue.project,
+              issue.doc_number,
+              false
+            ));
+          }
+        });
+      }
+
+    }
+    // _.forEach(_.groupBy(userPlanHoursToday, x => x.task_id), gr => {
+    //   let id = gr[0].task_id;
+    //   let issue = this.issues.find(x => x.id == id);
+    //   if (issue != null){
+    //     res.push(new DailyTask(
+    //       id,
+    //       this.date,
+    //       this.date,
+    //       this.selectedUser.login,
+    //       issue.project,
+    //       issue.name,
+    //       gr.length,
+    //       0,
+    //       issue.assigned_to,
+    //       issue.doc_number,
+    //       issue.action,
+    //       0,
+    //       0,
+    //       issue.action,
+    //       issue.project,
+    //       issue.doc_number,
+    //       false
+    //     ));
+    //   }
+    // });
+    return res;
+  }
+  getTasksOfDayAux(day: number){
     let res: DailyTask[] = [];
     let userPlanHours = this.planned.filter(x => x.user == this.selectedUser.id && x.task_id != 0).filter(x => this.consumedIds.includes(x.id));
     let userPlanHoursToday = userPlanHours.filter(x => x.day == day && x.month == this.date.getMonth() && x.year == this.date.getFullYear() && x.hour_type == 1);

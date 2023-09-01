@@ -12,7 +12,7 @@
     </span>
     <span class="p-float-label">
       <div>{{t.tr('Дата')}}</div>
-      <p-calendar [minDate]="minDate" [maxDate]="calendarDay" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
+      <p-calendar [disabledDates]="disabledDates" [minDate]="minDate" [maxDate]="today" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
     </span>
   </div>
   <div class="cxy mt-25">
