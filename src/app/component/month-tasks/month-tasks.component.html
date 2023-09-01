@@ -24,7 +24,7 @@
       </div>
       <div class="df flex-end" *ngIf="auth.filled && auth.hasPerms('change-daily-user')">
         <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" (ngModelChange)="changeUser()" [filter]="true" filterBy="userName"
-                    [showClear]="true" class="p-dropdown-150" styleClass="width-220">
+                    class="p-dropdown-150" styleClass="width-240">
           <ng-template let-user pTemplate="item">
             <div class="df">
               <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
@@ -34,7 +34,7 @@
           <ng-template pTemplate="selectedItem">
             <div class="df">
               <img src="{{selectedUser.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-              <div>{{selectedUser.surname}} {{selectedUser.name}}</div>
+              <div class="cxy ml-5">{{selectedUser.surname}} {{selectedUser.name}}</div>
             </div>
           </ng-template>
         </p-dropdown>
