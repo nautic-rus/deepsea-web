@@ -3,16 +3,16 @@
     <div class="empty-card"></div>
     <div class="card-head df sticky-card" *ngIf="projects.length > 0">
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+        <p-multiSelect styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+        <p-multiSelect styleClass="width-180" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="taskTypes" [(ngModel)]="selectedTaskTypes" (ngModelChange)="taskTypeChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+        <p-multiSelect styleClass="width-180" [options]="taskTypes" [(ngModel)]="selectedTaskTypes" (ngModelChange)="taskTypeChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="taskStages" [(ngModel)]="selectedTaskStages" (ngModelChange)="taskStagesChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+        <p-multiSelect styleClass="width-180" [options]="taskStages" [(ngModel)]="selectedTaskStages" (ngModelChange)="taskStagesChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
 <!--      <div class="mr-10">-->
 <!--        <p-dropdown placeholder="Type" [(ngModel)]="taskType" [options]="taskTypes" (ngModelChange)="taskTypeChanged()" styleClass="width-170 border">-->
@@ -30,13 +30,16 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
+      <div class="mr-10">
+        <div (click)="downloadAllDocs()" class="materials-button yellow-button cxy" [pTooltip]="l.tr('Скачать все')" tooltipPosition="top">
+          <img src="assets/icons/download-file.svg" height="26">
+        </div>
+      </div>
       <div>
         <span class="mr-5">Number of tasks {{issues.length}}</span>
         <span>(Всего: {{issuesSrc.length}})</span>
       </div>
-      <div class="pl-5" (click)="downloadAllDocs()">
-        СКАЧАТЬ ВСЕ ФАЙЛЫ
-      </div>
+
       <div class="p-ml-auto mr-10 df">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>

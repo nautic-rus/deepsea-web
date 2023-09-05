@@ -550,7 +550,7 @@ export class LanguageService {
           case 'Сохранить изменения': return 'Save changes'
           case 'трудоёмкость': return 'man-hours'
           case 'Списано часов': return 'Actual man-hours'
-          case '': return ''
+          case 'Скачать все': return 'Download all'
           case '': return ''
           case '': return ''
           case '': return ''
