@@ -490,6 +490,7 @@ export class HullEspComponent implements OnInit {
         this.nestContent.splice(0, this.nestContent.length);
         text.split(';').filter(x => x.trim() != '').forEach(row => {
           let splitRow = row.split(':');
+          console.log(splitRow);
           this.nestContent.push({
             file: splitRow[0].trim(),
             parts: splitRow[1].trim().split(',')

@@ -38,6 +38,7 @@ export class DoclistComponent implements OnInit {
   showWithFilesOnly = true;
   loading = false;
   revisionFiles: any[] = [];
+  zipDocsUrl = '';
   constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
 
 
@@ -219,5 +220,20 @@ export class DoclistComponent implements OnInit {
 
   hasFiles(issue: Issue) {
     return this.revisionFiles.filter(x => x.issue_id == issue.id).length;
+  }
+
+  downloadAllDocs() {
+    this.loading = true;
+    this.zipDocsUrl = '';
+    this.issueManager.downloadAllDocs(this.issues.map(x => x.id)).subscribe(res => {
+      this.loading = false;
+      this.zipDocsUrl = res;
+    });
+  }
+
+  protected readonly open = open;
+
+  openUrl(url: string) {
+    window.open(url);
   }
 }

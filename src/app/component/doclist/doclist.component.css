@@ -31,6 +31,7 @@
   transform: translate(-50%, -50%);
   font-size: large;
   font-weight: bold;
+  z-index: 10;
 }
 .loading-text{
   color: #323130a8;
@@ -260,4 +261,10 @@
 }
 .copy-link:hover{
   background-color: #e0effd;
+}
+.download-zip{
+  background-color: #0E364A;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
 }
