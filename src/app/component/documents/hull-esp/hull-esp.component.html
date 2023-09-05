@@ -689,7 +689,7 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <div class="mr-10">
+      <div class="mr-10" *ngIf="project == 'N004'">
         <div *ngIf="!cloudLoading" [pTooltip]="l.tr('Открыть облако')" tooltipPosition="top" (click)="openCloud()" class="materials-button violet-button cxy">
           <img src="assets/icons/cloud01.svg" height="18">
         </div>
@@ -697,7 +697,7 @@
           <p-progressSpinner [style]="{width: '35px', height: '35px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
         </div>
       </div>
-      <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
+      <div class="mr-10" *ngIf="auth.hasPerms('esp-files') && project == 'N004'">
         <div [pTooltip]="l.tr('Помощь')" tooltipPosition="top" (click)="showHelp()" class="materials-button gray-button cxy">
           <img src="assets/icons/question1.svg" height="24">
         </div>
