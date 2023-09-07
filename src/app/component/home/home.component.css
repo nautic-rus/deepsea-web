@@ -156,15 +156,15 @@ element.style {
 /*  display: none!important;*/
 /*}*/
 .new-task{
-  height: 8px;
+  height: 6px;
   width: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: rgba(1, 177, 105, 0.71);
 }
 .update-task{
-  height: 8px;
+  height: 6px;
   width: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: #af79c4;
 }
 .task-update{

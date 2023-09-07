@@ -469,6 +469,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         return this.auth.getUserName(field);
       case 'assigned_to':
         return this.auth.getUserName(field);
+      case 'responsible':
+        return this.auth.getUserName(field);
       case 'priority':
         return this.issueManager.localeTaskPriority(field);
       case 'status':
