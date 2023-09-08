@@ -39,7 +39,7 @@
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Перейти к плану')" (click)="goToPlan(this.issue.id)">
         <img class="rotate-90" src="assets/icons/planner.svg" height="20">
       </div>
-      <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by) || issue.labor > 0">
+      <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by) || issue.labor > 0 || actualManHours > 0">
         <img src="assets/icons/trash.svg" height="20">
       </div>
       <div class="task-button-close cxy" (click)="close()">
