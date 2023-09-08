@@ -337,10 +337,14 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
+  planIssue: any;
   ngOnInit(): void {
     this.config.setTranslation({
       dayNamesMin: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
@@ -371,7 +375,10 @@ export class TaskComponent implements OnInit {
       this.issueProjects = projects;
       this.issueManager.getDepartments().subscribe(userDepartments => {
         this.userDepartments = userDepartments;
-        this.availableActions = this.getAvailableActions(this.issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
 
@@ -492,7 +499,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('f') ? issue.first_send_date != 0 && allow : allow;
       allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != x.closing_status).length == 0 && allow : allow;
-      allow = action.rule.includes('t') ? issue.labor != 0 && allow : allow;
+      allow = action.rule.includes('t') ? this.planIssue.consumed != 0 && allow : allow;
       allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
 
 
@@ -511,8 +518,11 @@ export class TaskComponent implements OnInit {
     this.issueManager.updateIssue(this.auth.getUser().login, "status", this.issue).then(issue => {
       if (issue.id != null){
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
-        this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+          this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
+        });
       }
       else{
         this.availableActions = [];
@@ -791,7 +801,10 @@ export class TaskComponent implements OnInit {
       }
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1007,7 +1020,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1132,7 +1148,10 @@ export class TaskComponent implements OnInit {
     this.issueManager.deleteFile(url).then(() => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1177,7 +1196,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(() => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1192,8 +1214,11 @@ export class TaskComponent implements OnInit {
         this.issueManager.setIssueChecks(this.issue.id, this.issue.checks).then(() => {
           this.issueManager.getIssueDetails(this.issue.id).then(issue => {
             this.issue = issue;
-            this.availableActions = this.getAvailableActions(issue);
-            this.fillGroupedChecks();
+            this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+              this.planIssue = resPlan[0];
+              this.availableActions = this.getAvailableActions(this.issue);
+              this.fillGroupedChecks();
+            });
           });
         });
       }
@@ -1316,7 +1341,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1329,7 +1357,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1353,7 +1384,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1366,7 +1400,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
@@ -1379,7 +1416,10 @@ export class TaskComponent implements OnInit {
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
-        this.availableActions = this.getAvailableActions(issue);
+        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+          this.planIssue = resPlan[0];
+          this.availableActions = this.getAvailableActions(this.issue);
+        });
       });
     });
   }
