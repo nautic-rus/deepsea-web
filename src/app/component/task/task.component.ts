@@ -1455,7 +1455,6 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-
     });
   }
 }

@@ -13,6 +13,7 @@ import {User} from "../../domain/classes/user";
 import {MenuItem} from "primeng/api";
 import {ConsumedHour, PlanHour, PlannedHours} from "../work-hours/work-hours.component";
 import {UserPlan} from "../plan/plan.component";
+import {LanguageService} from "../../domain/language.service";
 export class SpecialDay{
   day: number;
   month: number;
@@ -88,9 +89,33 @@ export class MonthTasksComponent implements OnInit {
     new SpecialDay(12, 6, 2023, "weekend"),
     new SpecialDay(3, 11, 2023, "short"),
     new SpecialDay(6, 11, 2023, "weekend"),
+    new SpecialDay(1, 1, 2024, "weekend"),
+    new SpecialDay(2, 1, 2024, "weekend"),
+    new SpecialDay(3, 1, 2024, "weekend"),
+    new SpecialDay(4, 1, 2024, "weekend"),
+    new SpecialDay(5, 1, 2024, "weekend"),
+    new SpecialDay(8, 1, 2024, "weekend"),
+    new SpecialDay(22, 2, 2023, "short"),
+    new SpecialDay(23, 2, 2024, "weekend"),
+    new SpecialDay(7, 3, 2023, "short"),
+    new SpecialDay(8, 3, 2024, "weekend"),
+    new SpecialDay(29, 4, 2024, "weekend"),
+    new SpecialDay(30, 4, 2024, "weekend"),
+    new SpecialDay(1, 5, 2024, "weekend"),
+    new SpecialDay(8, 5, 2023, "short"),
+    new SpecialDay(9, 5, 2024, "weekend"),
+    new SpecialDay(10, 5, 2024, "weekend"),
+    new SpecialDay(11, 6, 2023, "short"),
+    new SpecialDay(12, 6, 2024, "weekend"),
+    new SpecialDay(2, 11, 2023, "short"),
+    new SpecialDay(4, 11, 2024, "weekend"),
+    new SpecialDay(30, 12, 2024, "weekend"),
+    new SpecialDay(31, 12, 2024, "weekend"),
+
+
   ];
 
-  constructor(public issueManager: IssueManagerService, public dialogService: DialogService, public auth: AuthManagerService, public ref: DynamicDialogRef) { }
+  constructor(public issueManager: IssueManagerService, public dialogService: DialogService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService) { }
 
   getDay(): number{
     return this.date.getDate();
