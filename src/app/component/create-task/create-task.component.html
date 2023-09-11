@@ -10,17 +10,17 @@
   <div class="df space-between">
     <div>
       <div class="big-text-create mb-1">{{lang.tr('Тип задачи')}}</div>
-      <p-dropdown styleClass="dark-panel width-220" [(ngModel)]="taskType" [options]="taskTypes" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
+      <p-dropdown styleClass="dark-panel width-220" [(ngModel)]="taskType" [options]="taskTypes" appendTo = "body" optionLabel="label" optionValue="value" (ngModelChange)="taskTypeChanged()">
       </p-dropdown>
     </div>
     <div>
       <div class="big-text-create mb-1">{{lang.tr('Проект')}}</div>
-      <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" styleClass="width-220 font-14" (ngModelChange)="taskProjectChanged()">
+      <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" appendTo = "body" styleClass="width-220 font-14" (ngModelChange)="taskProjectChanged()">
       </p-dropdown>
     </div>
     <div>
       <div class="big-text-create mb-1 ">{{lang.tr('Приоритет')}}</div>
-      <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-220" [(ngModel)]="taskPriority" [options]="taskPriorities">
+      <p-dropdown optionLabel="label" optionValue="value" class="select" appendTo = "body" styleClass="width-220" [(ngModel)]="taskPriority" [options]="taskPriorities">
       </p-dropdown>
     </div>
   </div>
@@ -231,10 +231,10 @@
         <p-dropdown class="select" styleClass="width-220" [(ngModel)]="taskDepartment" [options]="taskDepartments">
         </p-dropdown>
       </div>
-      <div>
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>
-        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-220"></p-calendar>
-      </div>
+<!--      <div>-->
+<!--        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>-->
+<!--        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-220"></p-calendar>-->
+<!--      </div>-->
     </div>
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
@@ -377,10 +377,10 @@
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Отдел')}}</div>
         <p-dropdown class="select" styleClass="width-220" [(ngModel)]="taskDepartment" [options]="taskDepartments"></p-dropdown>
       </div>
-      <div>
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>
-        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-220"></p-calendar>
-      </div>
+<!--      <div>-->
+<!--        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>-->
+<!--        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-220"></p-calendar>-->
+<!--      </div>-->
     </div>
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
@@ -455,10 +455,10 @@
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Отдел')}}</div>
         <p-dropdown class="select" styleClass="width-220" [(ngModel)]="taskDepartment" [options]="taskDepartments"></p-dropdown>
       </div>
-      <div>
-        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>
-        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-220"></p-calendar>
-      </div>
+<!--      <div>-->
+<!--        <div class="big-text-create mb-1 mt-1">{{lang.tr('Срок завершения')}}</div>-->
+<!--        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" [(ngModel)]="dueDate" appendTo = "body" dateFormat="dd.mm.yy" styleClass="width-220"></p-calendar>-->
+<!--      </div>-->
     </div>
     <div class="big-text-create mb-1 mt-1">{{lang.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">

@@ -1329,7 +1329,7 @@
 <!--          </div>-->
           <div (click)="openConsumedDetails()" class="df mt-3px" *ngIf="isVisible('labor') && auth.hasPerms('visible_plan_actual_hours')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Трудозатраты')}}</div>
-            <div class="pl-3 df text-y height-30 cursor-pointer description-task button-hover">{{getConsumedHours()}}</div>
+            <div class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getConsumedHours()}}</div>
           </div>
           <div class="df mt-3px" *ngIf="isVisible('id')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('ID задачи')}}</div>
