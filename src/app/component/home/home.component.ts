@@ -398,16 +398,22 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         issue.due_date = new Date(issue.due_date);
         issue.related_issues = [];
         let related: Issue[] = [];
-        issue.combined_issues.forEach(x => {
-          if (related.find(x => x.id == x.id) == null){
-            related.push(x);
+        issue.combined_issues.forEach(y => {
+          if (related.find(x => x.id == y.id) == null){
+            related.push(y);
           }
         });
-        issue.child_issues.forEach(x => {
-          if (related.find(x => x.id == x.id) == null){
-            related.push(x);
+        issue.child_issues.forEach(y => {
+          if (related.find(x => x.id == y.id) == null){
+            related.push(y);
           }
         });
+        if (issue.parent_id != 0){
+          this.issueManager.getIssueDetails(issue.parent_id).then(res => {
+            related.push(res);
+            issue.related_issues = related;
+          });
+        }
         issue.related_issues = related;
         // issue.ready = this.defineReadyState(issue);
       });
