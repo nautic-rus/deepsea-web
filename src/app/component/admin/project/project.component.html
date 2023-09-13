@@ -40,7 +40,7 @@
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Пользователи')}}</div>
       <p-multiSelect styleClass="width-648" appendTo="body" id="users" [options]="users" [(ngModel)]="selectedUsers"
-                     [filter]="true" filterBy="name,login,surname,department" optionValue="id" optionLabel="id" [scrollHeight]="scrollHeight">
+                     [filter]="true" filterBy="name,login,surname,department" optionValue="id" optionLabel="login" [scrollHeight]="scrollHeight">
 
         <ng-template pTemplate="header">
           <div class="df">

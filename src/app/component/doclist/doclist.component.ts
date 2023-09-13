@@ -39,6 +39,7 @@ export class DoclistComponent implements OnInit {
   loading = false;
   revisionFiles: any[] = [];
   zipDocsUrl = '';
+  searchValue = '';
   constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
 
 
@@ -185,7 +186,9 @@ export class DoclistComponent implements OnInit {
     this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department) || this.selectedDepartments.includes(x.assistant));
     this.issues = this.issues.filter(x => this.selectedTaskTypes.includes(x.issue_type));
     this.issues = this.issues.filter(x => this.selectedTaskStages.includes(x.period));
+    this.issues = this.issues.filter(x => (x.id + x.doc_number + x.name))
     this.issues = _.sortBy(this.issues, x => x.doc_number);
+
 
   }
 

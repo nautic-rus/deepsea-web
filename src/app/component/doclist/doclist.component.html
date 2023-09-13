@@ -43,7 +43,7 @@
       <div class="p-ml-auto mr-10 df">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+          <input [(ngModel)]="searchValue" (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
         </span>
       </div>
     </div>
