@@ -127,7 +127,7 @@
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
             <td style="width:148px" class="cursor-pointer" *ngFor="let col of columns">
-              <div *ngIf="col.skip == false && col.field != 'ready'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
+              <div *ngIf="col.skip == false && col.field != 'ready' && col.field != 'related_issues'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
 <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
               <div *ngIf="col.field == 'ready'">
                 <div *ngFor="let r of defineReadyState(issue); let i = index">
@@ -149,6 +149,11 @@
                       <div class="nesting-progress" [ngStyle]="getWidth(r)"></div>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div *ngIf="col.field == 'related_issues'">
+                <div *ngFor="let ch of this.issue[col.field]" (click)="openIssue(ch.id)">
+                  {{ch.id}}
                 </div>
               </div>
             </td>
