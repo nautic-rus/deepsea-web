@@ -3,7 +3,8 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
+      <div class="mr-2" *ngIf="revEsp != '' || issue.issue_type == 'PDSP'">{{'rev' + revEsp}}</div>
+      <div class="mr-2" *ngIf="issue.issue_type == 'PDSP'">{{'rev' + issue.revision}}</div>
       <div class="mr-2">{{revUser}}</div>
 <!--      <div class="mr-10" [pTooltip]="l.tr('Refresh Spec')" tooltipPosition="top" *ngIf="auth.hasPerms('esp-revision')" (click)="refreshEsp()">-->
 <!--        <div class="materials-button pink-button cxy">-->
