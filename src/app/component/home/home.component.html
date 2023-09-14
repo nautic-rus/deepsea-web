@@ -152,8 +152,8 @@
                 </div>
               </div>
               <div *ngIf="col.field == 'related_issues'">
-                <div *ngFor="let ch of this.issue[col.field]" (click)="openIssue(ch.id)">
-                  {{ch.id}}
+                <div *ngFor="let ch of this.issue[col.field]" (click)="openIssue(ch)">
+                  #{{ch}}
                 </div>
               </div>
             </td>
