@@ -356,7 +356,7 @@ export class TaskComponent implements OnInit {
     if (findAnswer.length > 0){
       this.answerMessage = findAnswer[findAnswer.length - 1].content;
       this.answerFiles = findAnswer[findAnswer.length - 1].file_attachments;
-      console.log(this.answerMessage);
+      //console.log(this.answerMessage);
     }
 
     // this.auth.getPlannedHours().subscribe(res => {
@@ -366,7 +366,7 @@ export class TaskComponent implements OnInit {
     //   this.consumed = consumed;
     // });
     this.auth.getPlanIssue(this.issue.id).subscribe(planIssue => {
-      console.log(planIssue);
+      //console.log(planIssue);
       this.actualManHours = planIssue[0].consumed;
     });
     this.selectedChecks = this.issue.checks.filter(x => x.check_status != 0).map(x => x.check_description);
@@ -476,7 +476,7 @@ export class TaskComponent implements OnInit {
     let res: any[] = [];
     issue.messages.filter(x => x.prefix != 'answer').forEach(x => res.push(x));
     issue.history.forEach(x => res.push(x));
-    console.log(issue.history);
+    //console.log(issue.history);
     // @ts-ignore
     return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
   }
@@ -939,7 +939,7 @@ export class TaskComponent implements OnInit {
                     let consumed = this.consumed.filter(x => x.task_id == issue.id).length;
                     if (consumed < plan){
                       this.auth.savePlanHours(findUser!.id, issue.id, consumed - plan, plan).subscribe(res => {
-                        console.log(res);
+                        //console.log(res);
                       });
                     }
                   }
@@ -950,7 +950,7 @@ export class TaskComponent implements OnInit {
                         assign.push({task: group[0].task_id, hours: group.length, min: _.sortBy(group, y => y.id)[0].id});
                       });
                       assign = _.sortBy(assign, x => x.min).filter(x => x > 0);
-                      console.log(assign);
+                      //console.log(assign);
                       forkJoin(assign.map(x => this.auth.deleteUserTask(findUser!.id, x.task, latestConsumed))).subscribe({
                         next: value => {
                           concat(assign.reverse().map((x: any) => this.auth.planUserTask(findUser!.id, x.task, latestConsumed, x.hours, 0).subscribe())).subscribe();
@@ -1053,7 +1053,7 @@ export class TaskComponent implements OnInit {
         return;
       }
     }
-    console.log(this.issue.modification_of_existing);
+    //console.log(this.issue.modification_of_existing);
     if (this.edit == 'startDate'){
       this.issue.start_date = this.startDate.getTime();
     }

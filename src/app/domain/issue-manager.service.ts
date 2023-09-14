@@ -80,7 +80,7 @@ export class IssueManagerService {
     return await this.http.get<ViewedIssue[]>(props.http + '/issuesViewed', {params: {user: login}}).toPromise();
   }
   async getIssueDetails(id: number): Promise<Issue> {
-    return await this.http.get<Issue>(props.http + '/issueDetails', {params: {id}}).toPromise();
+    return await this.http.get<any>(props.http + '/issueDetails', {params: {id}}).toPromise();
   }
   async getIssueDetailsByDocNumber(docNumber: string): Promise<Issue> {
     return await this.http.get<Issue>(props.http + '/issueDetails', {params: {docNumber}}).toPromise();
