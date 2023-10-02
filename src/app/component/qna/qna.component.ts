@@ -88,7 +88,7 @@ export class QnaComponent implements OnInit {
         this.questions = _.sortBy(res, x => x.started_date).reverse();
         console.log(this.questions);
 
-        this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(this.getProject(x), x));
+        this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x)).map(x => new LV(this.getProject(x), x));
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
         console.log(this.departments);
 
