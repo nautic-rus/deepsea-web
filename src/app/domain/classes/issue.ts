@@ -56,6 +56,7 @@ export class Issue {
   reason_of_changes = '';
   modification_of_existing = 0;
   modification_description = '';
+  contract = '';
   recommended_response_date: Date;
   started_date_as_date: Date;
 }

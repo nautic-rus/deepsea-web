@@ -55,6 +55,9 @@ export class IssueManagerService {
   notifyDocUpload(taskId: number, kind: string = 'common', comment: string = '', count = 0) {
     return this.http.get<any[]>(props.http + '/notifyDocUpload', {params: {taskId, kind, comment, count}});
   }
+  getProjectContracts(project: string) {
+    return this.http.get<string[]>(props.http + '/projectContracts', {params: {project}});
+  }
   async getIssueProjects() {
     return await this.http.get<any[]>(props.http + '/issueProjects').toPromise();
   }

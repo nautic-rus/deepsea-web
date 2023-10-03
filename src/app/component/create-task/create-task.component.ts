@@ -38,6 +38,8 @@ export class CreateTaskComponent implements OnInit {
   contractDueDate: Date = new Date(this.startDate.getTime() + 259200000);
   today: Date = new Date();
   taskProjects: string[] = [];
+  taskContracts: string[] = [];
+  taskContract: string = '';
   sfiCodes: LV[] = [];
   taskDepartments: string[] = [];
   taskPeriods: LV[] = [new LV('-'), new LV('Stage 1'), new LV('Stage 2'), new LV('Stage 3'), new LV('Stage 4'), new LV('Stage 5'), new LV('Stage 6'), new LV('Stage 7'), new LV('Stage 8')];
@@ -49,7 +51,7 @@ export class CreateTaskComponent implements OnInit {
   planLabor = 0;
   selectedUsers: string[] = [];
   awaitForLoad: string[] = [];
-  taskProject = '';
+  taskProject = '-';
   sfiCode = '';
   taskType = 'IT';
   taskPriority = '';
@@ -184,6 +186,10 @@ export class CreateTaskComponent implements OnInit {
       if (this.taskProjects.length > 0 && this.taskProject == '-') {
         this.taskProject = this.taskProjects[0];
       }
+      this.issues.getProjectContracts(this.taskProject).subscribe(taskContracts => {
+        console.log(taskContracts);
+        this.taskContracts = taskContracts;
+      });
     });
     // this.taskPeriods.splice(0, this.taskPeriods.length);
     // this.issues.getIssuePeriods().then(periods => {
@@ -308,6 +314,7 @@ export class CreateTaskComponent implements OnInit {
     issue.reason_of_changes = this.reasonOfModification;
     issue.modification_of_existing = this.modificationOfExisting ? 1 : 0;
     issue.modification_description = this.modificationDescription;
+    issue.contract = this.taskContract;
     if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
       issue.doc_number = '';
     }
@@ -486,6 +493,10 @@ export class CreateTaskComponent implements OnInit {
     //     this.taskPeriod = this.taskPeriods[0].value;
     //   }
     // });
+    this.issues.getProjectContracts(this.taskProject).subscribe(taskContracts => {
+      console.log(taskContracts);
+      this.taskContracts = taskContracts;
+    });
     this.sfiCodeChanged();
   }
   sfiCodeChanged(){
