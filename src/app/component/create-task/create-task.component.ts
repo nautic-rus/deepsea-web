@@ -323,7 +323,7 @@ export class CreateTaskComponent implements OnInit {
     issue.modification_of_existing = this.modificationOfExisting ? 1 : 0;
     issue.modification_description = this.modificationDescription;
     issue.contract = this.taskContract;
-    if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('PDSP') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
+    if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('ED') && !issue.issue_type.includes('PDSP') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
       issue.doc_number = '';
     }
     if (issue.issue_type == 'IT'){
