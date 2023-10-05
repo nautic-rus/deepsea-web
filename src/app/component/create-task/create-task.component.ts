@@ -188,7 +188,7 @@ export class CreateTaskComponent implements OnInit {
       }
       this.issues.getProjectContracts(this.taskProject).subscribe(taskContracts => {
         console.log(taskContracts);
-        this.taskContracts = taskContracts;
+        this.taskContracts = ['-'].concat(taskContracts);
       });
     });
     // this.taskPeriods.splice(0, this.taskPeriods.length);
@@ -495,8 +495,7 @@ export class CreateTaskComponent implements OnInit {
     //   }
     // });
     this.issues.getProjectContracts(this.taskProject).subscribe(taskContracts => {
-      console.log(taskContracts);
-      this.taskContracts = taskContracts;
+      this.taskContracts = ['-'].concat(taskContracts);
     });
     this.sfiCodeChanged();
   }
