@@ -15,6 +15,14 @@ import {LV} from "../../domain/classes/lv";
 import {PrimeNGConfig} from "primeng/api";
 import {lab, nice} from "d3";
 import _ from "underscore";
+export class CheckIssue{
+  docNumber: string;
+  issueType: string;
+  constructor(docNumber: string, issueType: string) {
+    this.docNumber = docNumber;
+    this.issueType = issueType;
+  }
+}
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -73,7 +81,7 @@ export class CreateTaskComponent implements OnInit {
   modificationDescription = '';
   reasonsOfChange: any[] = [];
   yesNo: any[] = [new LV(this.changeLang('Yes'), 'Yes'), new LV(this.changeLang('No'), 'No')];
-  checkIssues: string[] = [];
+  checkIssues: CheckIssue[] = [];
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -144,7 +152,7 @@ export class CreateTaskComponent implements OnInit {
       monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
     });
     this.issues.getIssues('op').then(res => {
-      this.checkIssues = _.uniq(res.map(x => x.doc_number)).filter(x => x != '');
+      this.checkIssues = _.uniq(res.map(x => new CheckIssue(x.doc_number, x.issue_type))).filter(x => x.docNumber != '');
     });
     //this.users = this.auth.users;
     this.users = this.getUsers();
@@ -456,7 +464,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   isCreateTaskDisabled() {
-    let taskExists = this.checkIssues.find(x => x == this.taskDocNumber) != null;
+    let taskExists = this.checkIssues.find(x => x.docNumber == this.taskDocNumber && x.issueType == this.taskType) != null;
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
