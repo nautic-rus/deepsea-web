@@ -345,6 +345,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         date: true,
       },
       {
+        field: 'contract',
+        header: 'Contract',
+        headerLocale: 'Contract',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'contract'),
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
+      {
         field: 'related_issues',
         header: 'Related Tasks',
         headerLocale: 'Related Tasks',

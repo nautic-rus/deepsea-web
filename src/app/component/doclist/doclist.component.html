@@ -80,6 +80,9 @@
             <th pSortableColumn="project" class="lxy w-100">{{l.tr('Проект')}}
               <p-sortIcon field="project"></p-sortIcon>
             </th>
+            <th pSortableColumn="contract" class="lxy w-100">{{l.tr('Договор')}}
+              <p-sortIcon field="contract"></p-sortIcon>
+            </th>
             <th pSortableColumn="department" class="cxy w-100">{{l.tr('Отдел')}}
               <p-sortIcon field="department"></p-sortIcon>
 <!--              <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
@@ -120,6 +123,7 @@
             <td style="min-width: 280px" class="text-14 width-425 break-word">{{issue.name}}</td>
             <td style="min-width: 100px; max-width: 100px" class="text-14 w-100">{{issue.issue_type}}</td>
             <td class="text-14 w-100">{{issue.project}}</td>
+            <td class="text-14 w-100">{{issue.contract}}</td>
             <td class="text-14 w-100">{{issue.department}}</td>
             <td *ngIf="auth.getUser().permissions.includes('visible_doc_status')" class="text-14">
               <span [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></span>
