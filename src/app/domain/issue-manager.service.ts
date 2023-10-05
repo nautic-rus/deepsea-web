@@ -431,6 +431,7 @@ export class IssueManagerService {
           case 'IZ': return 'ИЗ';
           case 'CHANGES': return 'Корректировка';
           case 'DEVELOPMENT': return 'Задание на разработку';
+          case 'ED': return 'ЕД';
           default: return input;
         }
       }
