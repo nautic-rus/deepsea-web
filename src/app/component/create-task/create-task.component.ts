@@ -460,6 +460,7 @@ export class CreateTaskComponent implements OnInit {
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
+      case 'ED': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
       case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || taskExists;
       case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDetails != null && this.taskDetails.trim() == '';
       case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '';
