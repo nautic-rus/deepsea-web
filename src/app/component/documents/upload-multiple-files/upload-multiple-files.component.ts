@@ -139,6 +139,32 @@ export class UploadMultipleFilesComponent implements OnInit {
       need_rights: false
     }
   ];
+  generalFileGroups = [
+    {
+      name: 'Drawings',
+      icon: 'assets/icons/drawings.svg',
+      collapsed: false,
+      need_rights: false
+    },
+    {
+      name: 'Part List',
+      icon: 'assets/icons/files.svg',
+      collapsed: false,
+      need_rights: false
+    },
+    {
+      name: 'Other',
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true,
+      need_rights: false
+    },
+    {
+      name: 'Correction',
+      icon: 'assets/icons/cutting.svg',
+      collapsed: true,
+      need_rights: false
+    }
+  ];
   isCorrection = false;
   isSendNotification = true;
   revs = ['-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11','12','13','14','15','16','17','18','19','20', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
@@ -158,7 +184,8 @@ export class UploadMultipleFilesComponent implements OnInit {
     switch (dep) {
       case 'System': this.fileGroups = this.pipeFileGroups; break;
       case 'Electric': this.fileGroups = this.elecFileGroups; break;
-      default: this.fileGroups = this.hullFileGroups; break;
+      case 'General': this.fileGroups = this.generalFileGroups; break;
+      default: this.fileGroups = this.generalFileGroups; break;
     }
   }
   getRevisionFilesOfGroup(fileGroup: string): FileAttachment[] {
