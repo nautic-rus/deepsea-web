@@ -18,7 +18,7 @@
 <!--        <div class="mr-10" *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status))">-->
         <div class="mr-10" *ngIf="auth.hasPerms('esp-files')">
           <div [pTooltip]="l.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button yellow-button cxy">
-            <img src="assets/icons/download-file.svg" height="24">
+            <img src="assets/icons/plus2.svg" height="24">
           </div>
         </div>
         <span class="p-ml-auto p-input-icon-left">
