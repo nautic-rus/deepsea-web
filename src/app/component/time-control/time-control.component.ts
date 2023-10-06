@@ -23,9 +23,6 @@ export class TimeControlComponent implements OnInit {
   constructor(public auth: AuthManagerService, public issueManager: IssueManagerService, private router: Router) { }
 
   ngOnInit(): void {
-    if (!this.auth.hasRole('Nautic_Rus')) {
-      this.router.navigate([this.auth.getUser().visible_pages[0]]);
-    }
     this.basicData = {
       labels: [],
       datasets: [
