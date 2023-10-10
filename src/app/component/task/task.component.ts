@@ -311,6 +311,7 @@ export class TaskComponent implements OnInit {
   issueProjects: any[] = [];
   consumed: ConsumedHour[] = [];
   actualManHours = 0;
+  taskContracts: string[] = [];
 
   constructor(public t: LanguageService, private config: PrimeNGConfig, public ref: DynamicDialogRef, private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef, public router: Router) { }
 
@@ -358,7 +359,9 @@ export class TaskComponent implements OnInit {
       this.answerFiles = findAnswer[findAnswer.length - 1].file_attachments;
       //console.log(this.answerMessage);
     }
-
+    this.issueManager.getProjectContracts(this.issue.project).subscribe(taskContracts => {
+      this.taskContracts = ['-'].concat(taskContracts);
+    });
     // this.auth.getPlannedHours().subscribe(res => {
     //   this.planned = res;
     // });
