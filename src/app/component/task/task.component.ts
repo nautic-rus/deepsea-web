@@ -506,7 +506,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
 
 
-      if (issue.issue_type == 'QNA' && this.auth.getUser().login == 'stropilov'){
+      if (issue.issue_type == 'QNA' && (this.auth.getUser().login == 'stropilov' || this.auth.getUser().login == 'voronin')){
         allow = true;
       }
       if (allow){
