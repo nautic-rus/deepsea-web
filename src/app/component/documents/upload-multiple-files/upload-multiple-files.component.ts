@@ -182,6 +182,7 @@ export class UploadMultipleFilesComponent implements OnInit {
       dep = this.issue.assistant;
     }
     switch (dep) {
+      case 'Hull': this.fileGroups = this.hullFileGroups; break;
       case 'System': this.fileGroups = this.pipeFileGroups; break;
       case 'Electric': this.fileGroups = this.elecFileGroups; break;
       case 'General': this.fileGroups = this.generalFileGroups; break;
