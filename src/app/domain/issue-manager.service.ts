@@ -208,8 +208,8 @@ export class IssueManagerService {
   async lockPlanHours(issue_id: number, state: number) {
     return await this.http.get(props.http + '/lockPlanHours', {params: {issue_id, state}}).toPromise();
   }
-  downloadAllDocs(docs: number[]) {
-    return this.http.post<string>(props.http + '/issuesFiles', docs);
+  downloadAllDocs(docs: number[], user: string, email: string) {
+    return this.http.post<string>(props.http + '/issuesFiles', docs, {params: {user, email}});
   }
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {

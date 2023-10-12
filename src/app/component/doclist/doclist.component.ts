@@ -9,6 +9,9 @@ import _ from "underscore";
 import {Table} from "primeng/table";
 import * as XLSX from "xlsx";
 import {LV} from "../../domain/classes/lv";
+import {UntieComponent} from "../task/untie/untie.component";
+import {DownloadAllDocsComponent} from "./download-all-docs/download-all-docs.component";
+import {DialogService} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-doclist',
@@ -40,7 +43,7 @@ export class DoclistComponent implements OnInit {
   revisionFiles: any[] = [];
   zipDocsUrl = '';
   searchValue = '';
-  constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService) { }
+  constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService) { }
 
 
   @ViewChild('table') table: Table;
@@ -197,7 +200,7 @@ export class DoclistComponent implements OnInit {
   copyUrl(issueId: number, project: string, docNumber: string, department: string){
     let foranProject = project.replace('NR', 'N');
     navigator.clipboard.writeText(location.origin + `/esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`);
-    this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied document url.'});
+    this.messageService.add({key:'doclist', severity:'success', summary:'Copied', detail:'You have copied document url.'});
   }
 
   departmentChanged() {
@@ -227,16 +230,26 @@ export class DoclistComponent implements OnInit {
     return this.revisionFiles.filter(x => x.issue_id == issue.id).length;
   }
 
+  // downloadAllDocsOld() {
+  //   this.loading = true;
+  //   this.zipDocsUrl = '';
+  //   this.issueManager.downloadAllDocs(this.issues.map(x => x.id)).subscribe(res => {
+  //     this.loading = false;
+  //     this.zipDocsUrl = res;
+  //   });
+  // }
+
   downloadAllDocs() {
-    this.loading = true;
-    this.zipDocsUrl = '';
-    this.issueManager.downloadAllDocs(this.issues.map(x => x.id)).subscribe(res => {
-      this.loading = false;
-      this.zipDocsUrl = res;
+    this.dialogService.open(DownloadAllDocsComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.issues.map(x => x.id)]
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.messageService.add({key:'doclist', severity:'success', summary:'Please wait.', detail:'Your operation is being processed, please wait for email.'});
+      }
     });
   }
-
-  protected readonly open = open;
 
   openUrl(url: string) {
     window.open(url);

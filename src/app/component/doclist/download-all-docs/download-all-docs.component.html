@@ -1,0 +1,14 @@
+<div style="height: 165px; width: 300px;">
+  <div class="mt-35">
+    <div class="confirm-text">Скачать документы</div>
+  </div>
+  <div class="mt-2">
+    EMAIL: <input type="text" pInputText [(ngModel)]="email" />
+  </div>
+  <div class="footer-delete mt-25">
+    <div class="mr-10 cx">
+      <div [class.disabled-button]="email.trim() == ''" (click)="download()" tabindex="10" pButton [label]="t.tr ('Скачать')" class="button-ok"></div>
+    </div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr ('Отменить')" class="button-cancel ml-1"></div>
+  </div>
+</div>
