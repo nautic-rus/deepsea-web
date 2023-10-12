@@ -27,4 +27,5 @@ export class User {
   visible_pages: string[] = [];
   shared_access: string = '';
   props: any = Object();
+  removed: number = 0;
 }
