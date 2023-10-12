@@ -793,14 +793,16 @@ export class TaskComponent implements OnInit {
       }
     });
   }
-  untieIssue() {
+  untieIssue(idFirst: number, idSecond: number) {
     this.dialogService.open(UntieComponent, {
       showHeader: false,
       modal: true,
-      data: this.issue
+      data: [idFirst, idSecond]
     }).onClose.subscribe(res => {
       if (res == 'success'){
-        this.ref.close();
+        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+          this.issue = issue;
+        });
       }
     });
   }

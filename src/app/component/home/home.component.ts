@@ -501,7 +501,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         value: x[field]
       })
     });
-    return _.sortBy(res, x => x.label);
+    return _.sortBy(res, x => x.label.toString().replace('Не назначен', '0').replace('Not assigned', '0'));
   }
 
   localeFilter(column: string, field: string): string {
