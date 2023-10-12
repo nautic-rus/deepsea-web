@@ -1,0 +1,11 @@
+<div style="height: 115px; width: 300px;">
+  <div class="mt-35">
+    <div class="confirm-text">{{t.tr('Удалить связь?')}}</div>
+  </div>
+  <div class="footer-delete pt-50">
+    <div class="mr-10 cx">
+      <div tabindex="10" pButton [label]="t.tr ('Удалить')" class="button-ok"></div>
+    </div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr ('Отменить')" class="button-cancel ml-1"></div>
+  </div>
+</div>

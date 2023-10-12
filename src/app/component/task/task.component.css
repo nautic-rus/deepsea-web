@@ -1254,3 +1254,10 @@
 .button-add-l:hover{
   background-color: #42c58e;
 }
+.untie{
+  width: 20px;
+  height: 20px;
+}
+.untie:hover {
+  background: rgba(237, 47, 0, 0.21);
+}

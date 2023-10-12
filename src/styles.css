@@ -926,6 +926,9 @@ body,p{
 .padding-none{
    padding: 0 5px !important;
 }
+.padding-3{
+  padding: 3px;
+}
 .padding-5{
   padding: 5px 0;
 }
@@ -1298,6 +1301,9 @@ cdk-virtual-scroll-viewport{
 }
 .rotate-90{
   transform: rotate(90deg);
+}
+.rotate-45{
+  transform: rotate(45deg);
 }
 .word-break{
   word-break: break-all;

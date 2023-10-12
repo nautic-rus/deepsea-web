@@ -195,6 +195,7 @@ import {
 } from "./component/user-data/notifications/delete-notification/delete-notification.component";
 import {InputMaskModule} from "primeng/inputmask";
 import { TaskAddPlanComponent } from './component/task/task-add-plan/task-add-plan.component';
+import { UntieComponent } from './component/task/untie/untie.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -333,7 +334,8 @@ Quill.register('modules/imageResize', ImageResize);
     NotificationsComponent,
     CreateNotificationComponent,
     DeleteNotificationComponent,
-    TaskAddPlanComponent
+    TaskAddPlanComponent,
+    UntieComponent
   ],
   imports: [
     BrowserModule,
