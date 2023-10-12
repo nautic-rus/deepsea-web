@@ -38,6 +38,7 @@ import {concat, forkJoin} from "rxjs";
 import {ConsumedHour} from "../work-hours/work-hours.component";
 import {ConsumedDetailsComponent} from "./consumed-details/consumed-details.component";
 import {TaskAddPlanComponent} from "./task-add-plan/task-add-plan.component";
+import {UntieComponent} from "./untie/untie.component";
 
 @Component({
   selector: 'app-task',
@@ -783,6 +784,17 @@ export class TaskComponent implements OnInit {
 
   removeIssue() {
     this.dialogService.open(DeleteComponent, {
+      showHeader: false,
+      modal: true,
+      data: this.issue
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.ref.close();
+      }
+    });
+  }
+  untieIssue() {
+    this.dialogService.open(UntieComponent, {
       showHeader: false,
       modal: true,
       data: this.issue

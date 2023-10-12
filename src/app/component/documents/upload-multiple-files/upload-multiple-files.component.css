@@ -37,7 +37,7 @@
   overflow: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 10px;
+  padding-top: 20px;
 }
 .title{
   font-size: 26px;
@@ -95,9 +95,6 @@
   width: fit-content;
   background-color: #F5F6F8;
   border-radius: 6px;
-}
-.options{
-  padding: 20px;
 }
 .button-ok{
   border: none;
