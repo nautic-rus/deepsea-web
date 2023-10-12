@@ -5,6 +5,12 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
+  <div class="">{{t.tr('Ревизия')}}
+    <!--          <p-dropdown [disabled]="changeRev" appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">-->
+    <!--          </p-dropdown> -->
+    <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="width-220 h-32 cxy">
+    </p-dropdown>
+  </div>
 
   <div class="file-groups">
     <div class="mb-15" *ngFor="let fileGroup of fileGroups">
@@ -54,7 +60,7 @@
     </div>
   </div>
   <div class="df comment-footer">
-    <div class="options">
+    <div>
       <div class="mr-10 cy my-5">
         <label class="container margin-bottom-none">
           <span class="text-checkbox">{{t.tr('Оперативное решение')}}</span>
@@ -75,12 +81,6 @@
           <textarea [(ngModel)]="comment" rows="3" cols="35" pInputTextarea [autoResize]="true"></textarea>
         </div>
       </div>
-        <div class="">{{t.tr('Ревизия')}}
-<!--          <p-dropdown [disabled]="changeRev" appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">-->
-<!--          </p-dropdown> -->
-          <p-dropdown appendTo = "body" [(ngModel)]="rev" [options]="revs" styleClass="w-100 h-32 cxy">
-          </p-dropdown>
-        </div>
     </div>
   </div>
   <div class="df footer">
