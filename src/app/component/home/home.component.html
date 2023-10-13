@@ -153,7 +153,7 @@
               </div>
               <div *ngIf="col.field == 'related_issues'">
                 <div *ngFor="let ch of this.issue[col.field]" (click)="openIssue(ch)">
-                  #{{ch}}
+                  <a [href]="'https://deep-sea.ru/?taskId=' + ch">{{ch}}</a>
                 </div>
               </div>
             </td>
