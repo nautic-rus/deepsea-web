@@ -558,7 +558,7 @@ export class LanguageService {
           case 'ПТ': return 'Fri'
           case 'СБ': return 'Sat'
           case 'ВС': return 'Sun'
-          case '': return ''
+          case 'Договор': return 'Contract'
           case '': return ''
           case '': return ''
           case '': return ''

@@ -132,7 +132,11 @@ export class QnaComponent implements OnInit {
     }
   }
   getUserName(login: string){
-    return '<div class="df"><img src="' + this.auth.getUserAvatar(login) + '" width="32px" height="32px" style="border-radius: 16px"/><div class="ml-1 cy">' + this.auth.getUserName(login) + '</div></div>';
+    if (login == '' || login == 'nautic-rus') {
+      return '';
+    } else {
+      return '<div class="df"><img src="' + this.auth.getUserAvatar(login) + '" width="32px" height="32px" style="border-radius: 16px; border: none"/><div class="ml-1 cy">' + this.auth.getUserName(login) + '</div></div>';
+    }
   }
   createQuestion() {
     this.dialogService.open(CreateQuestionComponent, {

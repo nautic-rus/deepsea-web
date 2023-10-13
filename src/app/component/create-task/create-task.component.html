@@ -18,7 +18,8 @@
       <p-dropdown class="select" [(ngModel)]="taskProject" [options]="taskProjects" appendTo = "body" styleClass="width-220 font-14" (ngModelChange)="taskProjectChanged()">
       </p-dropdown>
     </div>
-    <div class="mr-1" *ngIf="taskType.includes('RKD') || taskType == 'PDSP' || taskType == 'ED'">
+<!--    <div class="mr-1" *ngIf="taskType.includes('RKD') || taskType == 'PDSP' || taskType == 'ED'">-->
+    <div class="mr-1">
       <div class="big-text-create mb-1">{{lang.tr('Договор')}}</div>
       <p-dropdown class="select" [(ngModel)]="taskContract" [options]="taskContracts" appendTo = "body" styleClass="width-220 font-14">
       </p-dropdown>
