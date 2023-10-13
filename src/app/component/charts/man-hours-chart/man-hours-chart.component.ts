@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {User} from "../../../domain/classes/user";
 
 @Component({
   selector: 'app-man-hours-chart',
@@ -7,9 +9,60 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManHoursChartComponent implements OnInit {
 
-  constructor() { }
+  constructor(public auth: AuthManagerService) { }
 
+  users: User[] = [];
+  data = {};
+  usersHeight: string = '0px';
+
+  options = {
+    indexAxis: 'y',
+    plugins: {
+      legend: {
+        display: false
+      }
+    }
+  };
   ngOnInit(): void {
+    this.users = this.auth.users.filter(x => x.visibility.includes('k'));
+    this.fillChartData();
+    if (!this.auth.filled){
+      this.auth.usersFilled.subscribe(res => {
+        this.users = this.auth.users.filter(x => x.visibility.includes('k'));
+        this.fillChartData();
+      });
+    }
+  }
+  fillChartData(){
+    let labels = this.users.map(x => this.auth.getUserTrimName(x.login));
+    let planData = labels.map(x => 168);
+    let officeData = labels.map(x => 150);
+    let tasksData = labels.map(x => 160);
+
+    this.usersHeight = this.users.length * 40 + 'px';
+    this.data = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Plan',
+          backgroundColor: 'rgba(113,141,250,0.6)',
+          borderColor: '#718dfa',
+          data: planData
+        },
+        {
+          label: 'Office',
+          backgroundColor: 'rgba(253,210,31,0.6)',
+          borderColor: '#fdd21f',
+          data: officeData
+        },
+        {
+          label: 'Tasks',
+          backgroundColor: 'rgba(38,119,29,0.6)',
+          borderColor: '#26771d',
+          data: tasksData
+        }
+      ]
+    };
   }
 
 }

@@ -14,3 +14,11 @@
 .h-sp2-c{
   height: calc(50% - 10px);
 }
+.user-chart{
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+}
+.time-chart{
+  height: 85vh;
+  overflow: auto;
+}
