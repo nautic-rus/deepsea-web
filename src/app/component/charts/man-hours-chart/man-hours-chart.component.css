@@ -1,3 +1,34 @@
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-datepicker table td > span{
+  width: 35px;
+  height: 35px;
+}
+/deep/.p-datepicker table td{
+  padding: 5px;
+}
+/deep/.p-inputtext{
+  font-size: 14px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+}
+/deep/.pi{
+  font-size: 14px;
+}
+/deep/.p-button.p-button-icon-only {
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-button.p-button-icon-only {
+  width: 38px;
+}
+/deep/.p-button {
+  color: #ffffff;
+  background: #3B82F6;
+  border: 1px solid #3B82F6;
+}
 .page{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
@@ -30,12 +61,24 @@
 .head-text{
   color: #323130;
   font-size: 1.5rem;
+}
+.buttons-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+.materials-button{
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #EBECF0;
+}
+.current-button{
+  border: 1px solid #ced4da;
+  font-size: 14px;
   font-weight: 600;
 }
-::ng-deep .p-datepicker table td > span{
-  width: 30px;
-  height: 30px;
-}
-::ng-deep .p-datepicker table td{
-  padding: 5px;
+.materials-button:hover{
+  background-color: #dcdce1;
 }
