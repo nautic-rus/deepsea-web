@@ -402,7 +402,7 @@
               </div>
               <div class="" [innerHTML]="issueManager.localeStatus(childIssue.status) | safeHtml"></div>
             </div>
-            <div (click)="untieIssue(issue.id, childIssue.id)" class="mt-3px position-relative">
+            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="untieIssue(issue.id, childIssue.id)" class="mt-3px position-relative">
               <div class="untie padding-3 cxy">
                 <img src="assets/icons/cancel-red.svg" height="12">
               </div>
