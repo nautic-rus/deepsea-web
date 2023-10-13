@@ -1,0 +1,16 @@
+.col-3{
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  padding: 10px;
+}
+.mx-cols{
+  margin: 0 10px 0 10px;
+}
+.h-sp2{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.h-sp2-c{
+  height: calc(50% - 10px);
+}
