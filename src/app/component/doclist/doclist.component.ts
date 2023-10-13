@@ -184,7 +184,6 @@ export class DoclistComponent implements OnInit {
 
 
     this.issues = [...this.issuesSrc];
-    console.log(this.issues.length);
     this.issues = this.issues.filter(issue => !this.showWithFilesOnly || this.revisionFiles.find((x: any) => issue.id == x.issue_id) != null);
     this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
 
@@ -194,7 +193,9 @@ export class DoclistComponent implements OnInit {
     this.issues = this.issues.filter(x => (x.id + x.doc_number + x.name))
     this.issues = _.sortBy(this.issues, x => x.doc_number);
 
-
+    setTimeout(() => {
+      this.table.filterGlobal(this.searchValue, 'contains');
+    }, 100);
   }
 
   copyUrl(issueId: number, project: string, docNumber: string, department: string){

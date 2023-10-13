@@ -197,6 +197,7 @@ import {InputMaskModule} from "primeng/inputmask";
 import { TaskAddPlanComponent } from './component/task/task-add-plan/task-add-plan.component';
 import { UntieComponent } from './component/task/untie/untie.component';
 import { DownloadAllDocsComponent } from './component/doclist/download-all-docs/download-all-docs.component';
+import { ManHoursChartComponent } from './component/charts/man-hours-chart/man-hours-chart.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -337,7 +338,8 @@ Quill.register('modules/imageResize', ImageResize);
     DeleteNotificationComponent,
     TaskAddPlanComponent,
     UntieComponent,
-    DownloadAllDocsComponent
+    DownloadAllDocsComponent,
+    ManHoursChartComponent
   ],
   imports: [
     BrowserModule,
