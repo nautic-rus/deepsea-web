@@ -1,15 +1,22 @@
-<div class="col-3 h-100">
+<div class="col-3 h-100 page">
   <div class="mx-cols h-sp2">
-    <div class="periods h-sp2-c border">PERIODS</div>
-    <div class="choose-user h-sp2-c border">CHOOSE THE USER</div>
+    <div class="padding-10 h-sp2-c border head-text">{{t.tr('Выберите период')}}
+      <div>
+        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [showIcon]="true" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
+        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [showIcon]="true" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-300"></p-calendar>
+
+
+      </div>
+    </div>
+    <div class="padding-10 h-sp2-c border">CHOOSE THE USER</div>
   </div>
-  <div class="time-charts border mx-cols">
+  <div class="padding-15 border mx-cols">
     TIME CHARTS
     <div class="time-chart">
       <p-chart type="bar" [data]="data" [options]="options" [height]="usersHeight"></p-chart>
     </div>
   </div>
-  <div class="user-report border mx-cols">
+  <div class="padding-15 border mx-cols">
     USER REPORT
   </div>
 </div>

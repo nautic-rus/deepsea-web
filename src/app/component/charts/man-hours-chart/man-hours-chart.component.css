@@ -1,3 +1,6 @@
+.page{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
 .col-3{
   display: grid;
   grid-template-columns: 1fr 1fr 2fr;
@@ -21,4 +24,18 @@
 .time-chart{
   height: 85vh;
   overflow: auto;
+}
+.period{
+}
+.head-text{
+  color: #323130;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+::ng-deep .p-datepicker table td > span{
+  width: 30px;
+  height: 30px;
+}
+::ng-deep .p-datepicker table td{
+  padding: 5px;
 }

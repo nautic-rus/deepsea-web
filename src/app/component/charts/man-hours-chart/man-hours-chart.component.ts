@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {User} from "../../../domain/classes/user";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-man-hours-chart',
@@ -9,11 +10,14 @@ import {User} from "../../../domain/classes/user";
 })
 export class ManHoursChartComponent implements OnInit {
 
-  constructor(public auth: AuthManagerService) { }
+  constructor(public auth: AuthManagerService, public t: LanguageService) { }
 
   users: User[] = [];
   data = {};
   usersHeight: string = '0px';
+  startDate: Date = new Date();
+  dueDate: Date = new Date();
+  today: Date = new Date();
 
   options = {
     indexAxis: 'y',
