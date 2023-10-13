@@ -54,7 +54,8 @@
 }
 .time-chart{
   height: 85vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .period{
 }

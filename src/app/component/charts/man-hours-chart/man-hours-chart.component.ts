@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {User} from "../../../domain/classes/user";
 import {LanguageService} from "../../../domain/language.service";
-
+import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'app-man-hours-chart',
   templateUrl: './man-hours-chart.component.html',
@@ -18,12 +18,26 @@ export class ManHoursChartComponent implements OnInit {
   startDate: Date = new Date();
   dueDate: Date = new Date();
   today: Date = new Date();
+  chartPlugins = [DataLabelsPlugin];
 
   options = {
     indexAxis: 'y',
     plugins: {
+      tooltip: {
+        enabled: false
+      },
       legend: {
         display: false
+      },
+      datalabels: {
+        display: true,
+        color: 'black',
+        font: {
+          size: 10
+        },
+        anchor: 'end',
+        align: 'left',
+        offset: 0
       }
     }
   };
@@ -43,7 +57,7 @@ export class ManHoursChartComponent implements OnInit {
     let officeData = labels.map(x => 150);
     let tasksData = labels.map(x => 160);
 
-    this.usersHeight = this.users.length * 40 + 'px';
+    this.usersHeight = this.users.length * 60 + 'px';
     this.data = {
       labels: labels,
       datasets: [
