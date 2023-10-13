@@ -181,6 +181,11 @@
   font-size: 0.9em;
   white-space: nowrap;
 }
+.text-date-max{
+  color: rgba(59, 72, 94, 0.82);
+  font-size: 1em;
+  white-space: nowrap;
+}
 .py-10{
   padding-top: 10px;
   padding-bottom: 10px;
@@ -1136,8 +1141,13 @@
 .attachment-answer{
   padding: 3px;
   border-radius: 3px;
-  width: 350px;
+  width: 290px;
+  background-color: #f8f9fa;
 }
+.attachment-answer:hover{
+  background-color: #EBECF0;
+}
+
 .attachment-issues-files:hover{
   background-color: #dadada;
 }
@@ -1147,7 +1157,7 @@
   background-color: #F4F5F7;
 }
 .attachment-issues:hover{
-  background-color: #dadada;
+  background-color: #EBECF0;
 }
 .attachment-footer-issue{
   display: flex;
@@ -1155,8 +1165,14 @@
   width: 100%;
   font-size: calc(0.73rem + 0.1vw);
 }
+.attach{
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  font-size: calc(0.73rem + 0.1vw);
+}
 .cloud-download{
-  color: #ffff;
+  color: #afafaf;
 }
 .cloud-download:hover{
   color: rgb(69, 69, 69);

@@ -559,7 +559,7 @@ export class LanguageService {
           case 'СБ': return 'Sat'
           case 'ВС': return 'Sun'
           case 'Договор': return 'Contract'
-          case '': return ''
+          case 'Удалить связь': return 'Untie a task'
           case '': return ''
           case '': return ''
           case '': return ''
