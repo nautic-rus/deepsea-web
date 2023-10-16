@@ -82,3 +82,20 @@
 .materials-button:hover{
   background-color: #dcdce1;
 }
+.legend-time{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.square{
+  width: 20px;
+  height: 10px;
+}
+.gray-square{
+  background-color: #CCCAD4;
+}
+.pink-square{
+  background-color: #E5C0C4;
+}
+.blue-square{
+   background-color: #83ABD7;
+ }
