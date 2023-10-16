@@ -85,6 +85,7 @@
 .legend-time{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  font-size: 13px;
 }
 .square{
   width: 20px;
