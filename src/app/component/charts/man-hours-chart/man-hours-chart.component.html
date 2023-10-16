@@ -6,7 +6,7 @@
         <p-calendar class="mr-10" [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [showIcon]="true" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
         <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [showIcon]="true" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
       </div>
-      <div class="buttons-grid">
+      <div class="buttons-grid mb-20">
         <div class="materials-button mr-10 mb-10 current-button cxy">{{t.tr('Сегодня')}}</div>
         <div class="materials-button mr-10 mb-10 current-button cxy">{{t.tr('Текущая неделя')}}</div>
         <div class="materials-button mb-10 current-button cxy">{{t.tr('Текущий месяц')}}</div>
@@ -14,7 +14,8 @@
         <div class="materials-button mr-10 current-button cxy">{{t.tr('Прошлая неделя')}}</div>
         <div class="materials-button current-button cxy">{{t.tr('Прошлый месяц')}}</div>
       </div>
-
+      <div class="head-text mb-20">{{t.tr('Выберите отделы')}}</div>
+<!--      <p-multiSelect styleClass="w-100" appendTo="body" id="rights" [options]="departments" [(ngModel)]="selectedDepartments" optionLabel="department" optionValue="department"></p-multiSelect>-->
     </div>
     <div class="padding-10 h-sp2-c border">CHOOSE THE USER</div>
   </div>
