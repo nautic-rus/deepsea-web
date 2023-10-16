@@ -1179,7 +1179,6 @@ cdk-virtual-scroll-viewport{
   display: block;
   position: relative;
   padding-left: 25px;
-  margin-bottom: 8px;
   cursor: pointer;
   font-size: 15px;
   -webkit-user-select: none;

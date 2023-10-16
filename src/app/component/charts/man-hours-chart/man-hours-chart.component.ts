@@ -13,12 +13,17 @@ export class ManHoursChartComponent implements OnInit {
   constructor(public auth: AuthManagerService, public t: LanguageService) { }
 
   users: User[] = [];
+  usersSrc: User[] = [];
   data = {};
   usersHeight: string = '0px';
   startDate: Date = new Date();
   dueDate: Date = new Date();
   today: Date = new Date();
   chartPlugins = [DataLabelsPlugin];
+  showOnlyEngineers = true;
+  departments: string[] = [];
+  selectedDepartments: string[] = [];
+
 
   options = {
     indexAxis: 'y',
@@ -42,14 +47,30 @@ export class ManHoursChartComponent implements OnInit {
     }
   };
   ngOnInit(): void {
-    this.users = this.auth.users.filter(x => x.visibility.includes('k'));
+    this.fillUsers();
+    this.filterUsers();
     this.fillChartData();
     if (!this.auth.filled){
       this.auth.usersFilled.subscribe(res => {
-        this.users = this.auth.users.filter(x => x.visibility.includes('k'));
+        this.fillUsers();
+        this.filterUsers();
         this.fillChartData();
       });
     }
+    this.auth.getDepartments().subscribe(res => {
+      this.departments = res.map(x => x.name);
+      this.selectedDepartments = res.map(x => x.name);
+      this.filterUsers();
+      this.fillChartData();
+    });
+  }
+  fillUsers(){
+    this.usersSrc = this.auth.users.filter(x => x.visibility.includes('k'));
+  }
+  filterUsers(){
+    this.users = this.usersSrc
+      .filter(x => this.selectedDepartments.includes(x.department))
+      .filter(x => !this.showOnlyEngineers || x.groups.find(x => x.includes('Engineers')) != null);
   }
   fillChartData(){
     let labels = this.users.map(x => this.auth.getUserTrimName(x.login));
@@ -58,29 +79,34 @@ export class ManHoursChartComponent implements OnInit {
     let tasksData = labels.map(x => 160);
 
     this.usersHeight = this.users.length * 60 + 'px';
-    this.data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Plan',
-          backgroundColor: 'rgba(113,141,250,0.6)',
-          borderColor: '#718dfa',
-          data: planData
-        },
-        {
-          label: 'Office',
-          backgroundColor: 'rgba(253,210,31,0.6)',
-          borderColor: '#fdd21f',
-          data: officeData
-        },
-        {
-          label: 'Tasks',
-          backgroundColor: 'rgba(38,119,29,0.6)',
-          borderColor: '#26771d',
-          data: tasksData
-        }
-      ]
-    };
+    setTimeout(() => {
+     this.data = {
+       labels: labels,
+       datasets: [
+         {
+           label: 'Plan',
+           backgroundColor: '#CCCAD4',
+           borderColor: '#718dfa',
+           data: planData
+         },
+         {
+           label: 'Office',
+           backgroundColor: '#E5C0C4',
+           borderColor: '#fdd21f',
+           data: officeData
+         },
+         {
+           label: 'Tasks',
+           backgroundColor: '#83ABD7',
+           borderColor: '#26771d',
+           data: tasksData
+         }
+       ]
+     };
+   }, 100);
   }
-
+  filterChanged() {
+    this.filterUsers();
+    this.fillChartData();
+  }
 }

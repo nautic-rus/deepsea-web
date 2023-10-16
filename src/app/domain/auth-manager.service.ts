@@ -314,4 +314,7 @@ export class AuthManagerService {
   deleteInterval(id: number, fromUser: string){
     return this.http.get<any>(props.http + '/planDeleteInterval', {params: {id, fromUser}});
   }
+  getDepartments(){
+    return this.http.get<any[]>(props.http + '/departments');
+  }
 }
