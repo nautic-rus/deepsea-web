@@ -6,7 +6,7 @@
         <p-calendar class="mr-10" [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [showIcon]="true" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
         <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [showIcon]="true" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
       </div>
-      <div class="buttons-grid mb-20">
+      <div class="buttons-grid mb-15">
         <div class="materials-button mr-10 mb-10 current-button cxy">{{t.tr('Сегодня')}}</div>
         <div class="materials-button mr-10 mb-10 current-button cxy">{{t.tr('Текущая неделя')}}</div>
         <div class="materials-button mb-10 current-button cxy">{{t.tr('Текущий месяц')}}</div>
@@ -19,14 +19,45 @@
         <p-multiSelect styleClass="width-220" appendTo="body" id="rights" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="filterChanged()"></p-multiSelect>
         <div class="align-end df ml-20">
           <label class="container mb-5">
-            <span class="text-checkbox">Only engineers</span>
+            <span class="text-checkbox">{{t.tr('Только инженеры')}}</span>
             <input (change)="filterChanged()" type="checkbox" [(ngModel)]="showOnlyEngineers">
             <span class="checkmark"></span>
           </label>
         </div>
       </div>
     </div>
-    <div class="padding-10 h-sp2-c border">CHOOSE THE USER</div>
+    <div class="padding-10 h-sp2-c border">
+      <div class="head-text mb-10">{{t.tr('Выберите сотрудника')}}</div>
+      <p-table *ngIf="users.length != 0" #table [value]="users"
+               [scrollable]="true"
+               scrollHeight="calc(70vh - 240px)"
+               [virtualScroll]="true"
+               [virtualRowHeight]="40"
+               styleClass="p-datatable-striped"
+               responsiveLayout="scroll"
+               [globalFilterFields]="['id','doc_number','name','status']">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="min-width: 30px; max-width: 30px"></th>
+            <th pSortableColumn="userName" class="">{{t.tr('Сотрудник')}}
+              <p-sortIcon field="userName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="userDepartment" class="">{{t.tr('Отдел')}}
+              <p-sortIcon field="userDepartment"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr class="cursor-pointer row-table-user-hover">
+            <td style="min-width: 30px; max-width: 30px">
+              <img  src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+            </td>
+            <td class="text-14 break-word">{{user.userName}}</td>
+            <td class="text-14 break-word">{{user.department}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
   <div class="padding-15 border">
     <div class="head-text mb-10">{{t.tr('Временные графики')}}</div>

@@ -42,17 +42,18 @@
   flex-direction: column;
 }
 .h-sp2-c{
-  height: calc(60% - 30px);
+  height: 60%;
 }
 .h-top{
   height: calc(40% - 20px);
+  min-height: 300px;
 }
 .user-chart{
   display: grid;
   grid-template-columns: 1fr 10fr;
 }
 .time-chart{
-  height: 85vh;
+  height: calc(100vh - 250px);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -100,3 +101,6 @@
 .blue-square{
    background-color: #83ABD7;
  }
+.row-table-user-hover:hover{
+  background-color: #EEF5FA!important;
+}
