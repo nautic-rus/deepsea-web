@@ -48,7 +48,7 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-user>
-          <tr class="cursor-pointer row-table-user-hover">
+          <tr class="cursor-pointer row-table-user-hover" (click)="selectUser(user)">
             <td style="min-width: 30px; max-width: 30px">
               <img  src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
             </td>
@@ -59,7 +59,7 @@
       </p-table>
     </div>
   </div>
-  <div class="padding-15 border">
+  <div class="padding-15 border mr-20">
     <div class="head-text mb-10">{{t.tr('Временные графики')}}</div>
     <div class="mb-10 legend-time">
       <div class="df align-center">
@@ -80,6 +80,15 @@
     </div>
   </div>
   <div class="padding-15 border">
-    USER REPORT
+    <div class="head-text mb-10">{{t.tr('Отчет пользователя')}}</div>
+    <div *ngIf="selectedUser != null">
+      <div class="df">
+        <img src="{{selectedUser.avatar_full}}" width="100px" height="100px" style="border-radius: 16px"/>
+        <div>{{selectedUser.userName}}</div>
+      </div>
+
+    </div>
+
+
   </div>
 </div>

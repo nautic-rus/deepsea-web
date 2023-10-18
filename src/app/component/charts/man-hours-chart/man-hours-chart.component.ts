@@ -24,6 +24,7 @@ export class ManHoursChartComponent implements OnInit {
   selectedDepartments: string[] = [];
   usersStats: any[] = [];
   selectedPeriod: string = 'today';
+  selectedUser: User;
 
   options = {
     indexAxis: 'y',
@@ -222,5 +223,8 @@ export class ManHoursChartComponent implements OnInit {
       }
     }
     this.filterUsers();
+  }
+  selectUser(user: any){
+    this.selectedUser = user;
   }
 }
