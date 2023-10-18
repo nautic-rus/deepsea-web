@@ -26,6 +26,7 @@ export class ManHoursChartComponent implements OnInit {
   usersStats: any[] = [];
   selectedPeriod: string = 'today';
   selectedUser: User;
+  userStats: any;
 
   options = {
     indexAxis: 'y',
@@ -230,9 +231,11 @@ export class ManHoursChartComponent implements OnInit {
   }
   selectUser(user: any){
     this.selectedUser = user;
+    this.userStats = this.usersStats.find(x => x.id == this.selectedUser.id);
+    console.log(this.userStats);
   }
 
   chartClick(event: MouseEvent) {
-    this.selectedUser = this.users[Math.floor(event.offsetY / this.userRowHeight)];
+    this.selectUser(this.users[Math.floor(event.offsetY / this.userRowHeight)]);
   }
 }

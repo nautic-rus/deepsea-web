@@ -94,7 +94,21 @@
         </div>
 
       </div>
-
+      <div *ngIf="userStats != null">
+        <div class="df" *ngFor="let statDay of userStats.details">
+          <div class="mx-5">{{statDay.dateString}}</div>
+          <div class="mx-5">{{statDay.officeTimeStr}}</div>
+          <div class="mx-5 df">
+            <div *ngFor="let task of statDay.tasks">
+              <div class="mx-5">{{task.id}}</div>
+              <div class="mx-5">{{task.issueType}}</div>
+              <div class="mx-5">{{task.name}}</div>
+              <div class="mx-5">{{task.docNumber}}</div>
+              <div class="mx-5">{{task.hours}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
