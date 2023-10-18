@@ -317,4 +317,7 @@ export class AuthManagerService {
   getDepartments(){
     return this.http.get<any[]>(props.http + '/departments');
   }
+  getStatsUserDetails(dateFrom: number, dateTo: number, users: number[]){
+    return this.http.post<any[]>(props.http + '/statsUsersDetails', users, {params: {dateFrom, dateTo}});
+  }
 }

@@ -83,6 +83,9 @@
 .materials-button:hover{
   background-color: #dcdce1;
 }
+.materials-button-selected{
+  background-color: #00A2D3 !important;
+}
 .legend-time{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

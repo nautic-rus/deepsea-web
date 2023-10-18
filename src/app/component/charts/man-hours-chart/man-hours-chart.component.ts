@@ -16,14 +16,14 @@ export class ManHoursChartComponent implements OnInit {
   usersSrc: User[] = [];
   data = {};
   usersHeight: string = '0px';
-  startDate: Date = new Date();
-  dueDate: Date = new Date();
-  today: Date = new Date();
+  dateFrom: Date = new Date();
+  dateTo: Date = new Date();
   chartPlugins = [DataLabelsPlugin];
   showOnlyEngineers = true;
   departments: string[] = [];
   selectedDepartments: string[] = [];
-
+  usersStats: any[] = [];
+  selectedPeriod: string = 'today';
 
   options = {
     indexAxis: 'y',
@@ -49,19 +49,16 @@ export class ManHoursChartComponent implements OnInit {
   ngOnInit(): void {
     this.fillUsers();
     this.filterUsers();
-    this.fillChartData();
     if (!this.auth.filled){
       this.auth.usersFilled.subscribe(res => {
         this.fillUsers();
         this.filterUsers();
-        this.fillChartData();
       });
     }
     this.auth.getDepartments().subscribe(res => {
       this.departments = res.map(x => x.name);
       this.selectedDepartments = res.map(x => x.name);
       this.filterUsers();
-      this.fillChartData();
     });
   }
   fillUsers(){
@@ -71,42 +68,159 @@ export class ManHoursChartComponent implements OnInit {
     this.users = this.usersSrc
       .filter(x => this.selectedDepartments.includes(x.department))
       .filter(x => !this.showOnlyEngineers || x.groups.find(x => x.includes('Engineers')) != null);
+    if (this.users.length > 0){
+      this.auth.getStatsUserDetails(this.dateFrom.getTime(), this.dateTo.getTime(), this.users.map(x => x.id)).subscribe(res => {
+        console.log(res);
+        this.usersStats = res;
+        this.fillChartData();
+      });
+    }
   }
   fillChartData(){
-    let labels = this.users.map(x => this.auth.getUserTrimName(x.login));
-    let planData = labels.map(x => 168);
-    let officeData = labels.map(x => 150);
-    let tasksData = labels.map(x => 160);
+    if (this.users.length > 0){
+      let labels = this.users.map(x => this.auth.getUserTrimName(x.login));
+      let planData = this.users.map(u => {
+        let findUserStat = this.usersStats.find(x => x.id == u.id);
+        if (findUserStat != null){
+          return findUserStat.plan;
+        }
+        else{
+          return 0;
+        }
+      });
+      let officeData = this.users.map(u => {
+        let findUserStat = this.usersStats.find(x => x.id == u.id);
+        if (findUserStat != null){
+          return findUserStat.office;
+        }
+        else{
+          return 0;
+        }
+      });
+      let tasksData = this.users.map(u => {
+        let findUserStat = this.usersStats.find(x => x.id == u.id);
+        if (findUserStat != null){
+          return findUserStat.tasks;
+        }
+        else{
+          return 0;
+        }
+      });
 
-    this.usersHeight = this.users.length * 60 + 'px';
-    setTimeout(() => {
-     this.data = {
-       labels: labels,
-       datasets: [
-         {
-           label: 'Plan',
-           backgroundColor: '#CCCAD4',
-           borderColor: '#718dfa',
-           data: planData
-         },
-         {
-           label: 'Office',
-           backgroundColor: '#E5C0C4',
-           borderColor: '#fdd21f',
-           data: officeData
-         },
-         {
-           label: 'Tasks',
-           backgroundColor: '#83ABD7',
-           borderColor: '#26771d',
-           data: tasksData
-         }
-       ]
-     };
-   }, 100);
+      this.usersHeight = this.users.length * 60 + 'px';
+      setTimeout(() => {
+        this.data = {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Plan',
+              backgroundColor: '#CCCAD4',
+              borderColor: '#718dfa',
+              data: planData
+            },
+            {
+              label: 'Office',
+              backgroundColor: '#E5C0C4',
+              borderColor: '#fdd21f',
+              data: officeData
+            },
+            {
+              label: 'Tasks',
+              backgroundColor: '#83ABD7',
+              borderColor: '#26771d',
+              data: tasksData
+            }
+          ]
+        };
+      }, 100);
+    }
+    else{
+      this.data = {};
+    }
   }
   filterChanged() {
     this.filterUsers();
-    this.fillChartData();
+  }
+
+  setPeriod(period: string) {
+    this.selectedPeriod = period;
+    switch (this.selectedPeriod){
+      case 'today': {
+        this.dateFrom = new Date();
+        this.dateTo = new Date();
+        break;
+      }
+      case 'curWeek': {
+        let dateFrom = new Date();
+        while (dateFrom.getDay() != 1){
+          dateFrom.setDate(dateFrom.getDate() - 1);
+        }
+        let dateTo = new Date();
+        // while (dateTo.getDay() != 0){
+        //   dateTo.setDate(dateTo.getDate() + 1);
+        // }
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        break;
+      }
+      case 'curMonth': {
+        let dateFrom = new Date();
+        let daysInMonth = new Date(dateFrom.getFullYear(), dateFrom.getMonth() + 1, 0).getDate();
+        while (dateFrom.getDate() != 1){
+          dateFrom.setDate(dateFrom.getDate() - 1);
+        }
+        let dateTo = new Date();
+        while (dateTo.getDate() != daysInMonth){
+          dateTo.setDate(dateTo.getDate() + 1);
+        }
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        break;
+      }
+      case 'yesterday': {
+        let dateFrom = new Date();
+        dateFrom.setDate(dateFrom.getDate() - 1);
+        let dateTo = new Date();
+        dateTo.setDate(dateTo.getDate() - 1);
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        break;
+      }
+      case 'prevWeek': {
+        let dateFrom = new Date();
+        dateFrom.setDate(dateFrom.getDate() - 7);
+        while (dateFrom.getDay() != 1){
+          dateFrom.setDate(dateFrom.getDate() -1);
+        }
+        let dateTo = new Date();
+        dateTo.setDate(dateTo.getDate() - 7);
+        while (dateTo.getDay() != 0){
+          dateTo.setDate(dateTo.getDate() + 1);
+        }
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        break;
+      }
+      case 'prevMonth': {
+        let dateFrom = new Date();
+        dateFrom.setDate(dateFrom.getDate() - dateFrom.getDate() - 1);
+        let daysInMonth = new Date(dateFrom.getFullYear(), dateFrom.getMonth() + 1, 0).getDate();
+        while (dateFrom.getDate() != 1){
+          dateFrom.setDate(dateFrom.getDate() - 1);
+        }
+        let dateTo = new Date();
+        dateTo.setDate(dateTo.getDate() - dateTo.getDate() - 1);
+        while (dateTo.getDate() != daysInMonth){
+          dateTo.setDate(dateTo.getDate() + 1);
+        }
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        break;
+      }
+      default:{
+        break;
+      }
+    }
+    this.filterUsers();
   }
 }
