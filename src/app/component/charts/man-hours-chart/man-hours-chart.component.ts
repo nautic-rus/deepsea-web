@@ -16,6 +16,7 @@ export class ManHoursChartComponent implements OnInit {
   usersSrc: User[] = [];
   data = {};
   usersHeight: string = '0px';
+  userRowHeight = 60;
   dateFrom: Date = new Date();
   dateTo: Date = new Date();
   chartPlugins = [DataLabelsPlugin];
@@ -33,7 +34,7 @@ export class ManHoursChartComponent implements OnInit {
         enabled: false
       },
       legend: {
-        display: false
+        display: false,
       },
       datalabels: {
         display: true,
@@ -43,7 +44,10 @@ export class ManHoursChartComponent implements OnInit {
         },
         anchor: 'end',
         align: 'left',
-        offset: 0
+        offset: 0,
+        formatter: function (value: any, index: any, values: any[]) {
+          return value > 0 ? value : '';
+        },
       }
     }
   };
@@ -108,7 +112,7 @@ export class ManHoursChartComponent implements OnInit {
         }
       });
 
-      this.usersHeight = this.users.length * 60 + 'px';
+      this.usersHeight = this.users.length * this.userRowHeight + 'px';
       setTimeout(() => {
         this.data = {
           labels: labels,
@@ -226,5 +230,9 @@ export class ManHoursChartComponent implements OnInit {
   }
   selectUser(user: any){
     this.selectedUser = user;
+  }
+
+  chartClick(event: MouseEvent) {
+    this.selectedUser = this.users[Math.floor(event.offsetY / this.userRowHeight)];
   }
 }
