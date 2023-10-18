@@ -35,6 +35,7 @@ export class AddMaterialToEspComponent implements OnInit {
   units: string = "796";
   count: number = 1;
   label: string = '';
+  addText: string = '';
   unitsAvailable = [
     new LV('796 - штуки', '796'),
     new LV('006 - метры', '006'),
@@ -128,7 +129,7 @@ export class AddMaterialToEspComponent implements OnInit {
       this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
       return;
     }
-    this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel).then(res => {
+    this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel, this.addText).then(res => {
       this.ref.close('success');
     });
     // console.log(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel)

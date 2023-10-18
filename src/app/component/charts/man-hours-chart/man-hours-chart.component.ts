@@ -3,6 +3,8 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {User} from "../../../domain/classes/user";
 import {LanguageService} from "../../../domain/language.service";
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import {ActivatedRoute, Router} from "@angular/router";
+import {faIR} from "date-fns/locale";
 @Component({
   selector: 'app-man-hours-chart',
   templateUrl: './man-hours-chart.component.html',
@@ -10,7 +12,7 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 })
 export class ManHoursChartComponent implements OnInit {
 
-  constructor(public auth: AuthManagerService, public t: LanguageService) { }
+  constructor(public auth: AuthManagerService, public t: LanguageService, public route: ActivatedRoute, public router: Router) { }
 
   users: User[] = [];
   usersSrc: User[] = [];
@@ -25,7 +27,8 @@ export class ManHoursChartComponent implements OnInit {
   selectedDepartments: string[] = [];
   usersStats: any[] = [];
   selectedPeriod: string = 'curWeek';
-  selectedUser: User;
+  selectedUser: User | undefined;
+  userParam: string = '';
   userStats: any;
   loading = false;
 
@@ -54,16 +57,24 @@ export class ManHoursChartComponent implements OnInit {
     }
   };
   ngOnInit(): void {
+    this.loading = true;
+    this.fillUsers();
     if (!this.auth.filled){
-      this.auth.usersFilled.subscribe(res => {
-        this.fillUsers();
-        this.setPeriod('curWeek');
-      });
+      this.auth.usersFilled.subscribe(() => this.fillUsers());
     }
-    else{
-      this.fillUsers();
-      this.setPeriod('curWeek');
-    }
+    this.route.queryParams.subscribe(params => {
+      let userParam = params.user != null ? params.user : '';
+      let period = params.period != null ? params.period : this.selectedPeriod;
+      if (this.userParam != userParam){
+        this.userParam = userParam;
+        this.selectedUser = this.usersSrc.find(x => x.login == this.userParam);
+        this.userStats = this.usersStats.find(x => x.id == this.selectedUser?.id);
+      }
+      else{
+        this.userParam = userParam;
+      }
+      this.setPeriod(period, this.selectedPeriod == period);
+    });
     this.auth.getDepartments().subscribe(res => {
       this.departments = res.map(x => x.name);
       this.selectedDepartments = res.map(x => x.name);
@@ -72,12 +83,14 @@ export class ManHoursChartComponent implements OnInit {
   }
   fillUsers(){
     this.usersSrc = this.auth.users.filter(x => x.visibility.includes('k'));
+    this.filterUsers();
   }
   filterUsers(){
     this.users = this.usersSrc
       .filter(x => this.selectedDepartments.includes(x.department))
       .filter(x => !this.showOnlyEngineers || x.groups.find(x => x.includes('Engineers')) != null);
     if (this.users.length > 0){
+      this.selectedUser = this.usersSrc.find(x => x.login == this.userParam);
       this.auth.getStatsUserDetails(this.dateFrom.getTime(), this.dateTo.getTime(), this.users.map(x => x.id)).subscribe(res => {
         this.usersStats = res;
         this.fillChartData();
@@ -144,6 +157,9 @@ export class ManHoursChartComponent implements OnInit {
         if (this.selectedUser == null){
           this.selectUser(this.users[0]);
         }
+        else{
+          this.selectUser(this.selectedUser);
+        }
       }, 100);
     }
     else{
@@ -154,8 +170,7 @@ export class ManHoursChartComponent implements OnInit {
     this.filterUsers();
   }
 
-  setPeriod(period: string) {
-    this.loading = true;
+  setPeriod(period: string, onInit: Boolean = false) {
     this.selectedPeriod = period;
     switch (this.selectedPeriod){
       case 'today': {
@@ -183,9 +198,9 @@ export class ManHoursChartComponent implements OnInit {
           dateFrom.setDate(dateFrom.getDate() - 1);
         }
         let dateTo = new Date();
-        while (dateTo.getDate() != daysInMonth){
-          dateTo.setDate(dateTo.getDate() + 1);
-        }
+        // while (dateTo.getDate() != daysInMonth){
+        //   dateTo.setDate(dateTo.getDate() + 1);
+        // }
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         break;
@@ -234,12 +249,20 @@ export class ManHoursChartComponent implements OnInit {
         break;
       }
     }
-    this.filterUsers();
+    if (!onInit){
+      this.loading = true;
+      this.router.navigate([], {queryParams: {period: period}, queryParamsHandling: 'merge'}).then(() => {
+        this.filterUsers();
+      });
+    }
+  }
+  selectPeriod(period: string){
+    this.router.navigate([], {queryParams: {period: period}, queryParamsHandling: 'merge'});
   }
   selectUser(user: any){
     this.selectedUser = user;
-    this.userStats = this.usersStats.find(x => x.id == this.selectedUser.id);
-    console.log(this.userStats);
+    this.userStats = this.usersStats.find(x => x.id == this.selectedUser?.id);
+    this.router.navigate([], {queryParams: {user: this.selectedUser?.login}, queryParamsHandling: 'merge'});
   }
 
   chartClick(event: MouseEvent) {

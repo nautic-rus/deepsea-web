@@ -83,6 +83,7 @@
         </div>
       </div>
 <!--      <p-skeleton width="100%" height="calc(100vh - 200px)" borderRadius="16px"></p-skeleton>-->
+
     </div>
     <div class="time-chart" *ngIf="users.length > 0 && !loading">
       <p-chart type="bar" [data]="data" [options]="options" [height]="usersHeight" [plugins]="chartPlugins" (click)="chartClick($event)"></p-chart>
@@ -90,7 +91,7 @@
   </div>
   <div class="padding-15 border">
     <div class="head-text mb-10">{{t.tr('Отчет пользователя')}}</div>
-    <div class="time-chart" *ngIf="loading && selectedUser == null">
+    <div class="time-chart" *ngIf="loading">
       <div class="df">
         <p-skeleton width="120px" height="120px" borderRadius="16px"></p-skeleton>
         <div class="ml-20">
@@ -109,7 +110,7 @@
         <p-skeleton width="80%" height="120px" borderRadius="16px"></p-skeleton>
       </div>
     </div>
-    <div *ngIf="selectedUser != null">
+    <div *ngIf="selectedUser != null && !loading">
       <div class="df">
         <img src="{{selectedUser.avatar_full}}" width="120px" height="120px" style="border-radius: 16px"/>
         <div class="ml-20">
