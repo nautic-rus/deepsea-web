@@ -75,7 +75,15 @@
         <div class="ml-10">{{t.tr('Задачи')}}</div>
       </div>
     </div>
-    <div class="time-chart" *ngIf="users.length > 0">
+    <div class="time-chart" *ngIf="loading">
+      <div class="cxy loading">
+        <div class="cxy flex-column">
+          <img src="assets/whale.gif" height="120">
+          <div class="cx loading-text">PLEASE WAIT...</div>
+        </div>
+      </div>
+    </div>
+    <div class="time-chart" *ngIf="users.length > 0 && !loading">
       <p-chart type="bar" [data]="data" [options]="options" [height]="usersHeight" [plugins]="chartPlugins" (click)="chartClick($event)"></p-chart>
     </div>
   </div>

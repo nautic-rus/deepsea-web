@@ -24,9 +24,10 @@ export class ManHoursChartComponent implements OnInit {
   departments: string[] = [];
   selectedDepartments: string[] = [];
   usersStats: any[] = [];
-  selectedPeriod: string = 'today';
+  selectedPeriod: string = 'curWeek';
   selectedUser: User;
   userStats: any;
+  loading = false;
 
   options = {
     indexAxis: 'y',
@@ -53,13 +54,15 @@ export class ManHoursChartComponent implements OnInit {
     }
   };
   ngOnInit(): void {
-    this.fillUsers();
-    this.filterUsers();
     if (!this.auth.filled){
       this.auth.usersFilled.subscribe(res => {
         this.fillUsers();
-        this.filterUsers();
+        this.setPeriod('curWeek');
       });
+    }
+    else{
+      this.fillUsers();
+      this.setPeriod('curWeek');
     }
     this.auth.getDepartments().subscribe(res => {
       this.departments = res.map(x => x.name);
@@ -138,6 +141,7 @@ export class ManHoursChartComponent implements OnInit {
             }
           ]
         };
+        this.loading = false;
       }, 100);
     }
     else{
@@ -149,6 +153,7 @@ export class ManHoursChartComponent implements OnInit {
   }
 
   setPeriod(period: string) {
+    this.loading = true;
     this.selectedPeriod = period;
     switch (this.selectedPeriod){
       case 'today': {
