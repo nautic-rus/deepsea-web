@@ -82,6 +82,7 @@
           <div class="cx loading-text">PLEASE WAIT...</div>
         </div>
       </div>
+<!--      <p-skeleton width="100%" height="calc(100vh - 200px)" borderRadius="16px"></p-skeleton>-->
     </div>
     <div class="time-chart" *ngIf="users.length > 0 && !loading">
       <p-chart type="bar" [data]="data" [options]="options" [height]="usersHeight" [plugins]="chartPlugins" (click)="chartClick($event)"></p-chart>
@@ -103,6 +104,9 @@
             <p-skeleton width="250px" height="20px"></p-skeleton>
           </div>
         </div>
+      </div>
+      <div class="pt-8">
+        <p-skeleton width="80%" height="120px" borderRadius="16px"></p-skeleton>
       </div>
     </div>
     <div *ngIf="selectedUser != null">
