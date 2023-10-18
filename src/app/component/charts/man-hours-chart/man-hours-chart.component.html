@@ -42,8 +42,8 @@
             <th pSortableColumn="userName" class="">{{t.tr('Сотрудник')}}
               <p-sortIcon field="userName"></p-sortIcon>
             </th>
-            <th pSortableColumn="userDepartment" class="">{{t.tr('Отдел')}}
-              <p-sortIcon field="userDepartment"></p-sortIcon>
+            <th pSortableColumn="department" class="">{{t.tr('Отдел')}}
+              <p-sortIcon field="department"></p-sortIcon>
             </th>
           </tr>
         </ng-template>
@@ -89,25 +89,42 @@
   </div>
   <div class="padding-15 border">
     <div class="head-text mb-10">{{t.tr('Отчет пользователя')}}</div>
-    <div *ngIf="selectedUser != null">
+    <div class="time-chart" *ngIf="loading && selectedUser == null">
       <div class="df">
-        <img src="{{selectedUser.avatar_full}}" width="100px" height="100px" style="border-radius: 16px"/>
+        <p-skeleton width="120px" height="120px" borderRadius="16px"></p-skeleton>
         <div class="ml-20">
-          <div class="big-text-username">{{selectedUser.userName}}</div>
-          <div>{{selectedUser.profession}}</div>
-          <div class="df">
-            <div>{{t.tr('Отдел')}}:</div>
-            <div>{{selectedUser.department}}</div>
+          <div class="big-text-username mb-10">
+            <p-skeleton width="320px" height="35px"></p-skeleton>
+          </div>
+          <div class="mt-5 n-text-username">
+            <p-skeleton width="250px" height="20px"></p-skeleton>
+          </div>
+          <div class="mt-5 df n-text-username">
+            <p-skeleton width="250px" height="20px"></p-skeleton>
           </div>
         </div>
-
       </div>
+    </div>
+    <div *ngIf="selectedUser != null">
+      <div class="df">
+        <img src="{{selectedUser.avatar_full}}" width="120px" height="120px" style="border-radius: 16px"/>
+        <div class="ml-20">
+          <div class="big-text-username mb-10">{{selectedUser.userName}}</div>
+          <div class="n-text-username">{{selectedUser.profession}}</div>
+          <div class="df n-text-username">
+            <div class="mr-10">{{t.tr('Отдел')}}:</div>
+            <div>{{selectedUser.department}}</div>
+          </div>
+          <div>Написать</div>
+        </div>
+      </div>
+
       <div *ngIf="userStats != null">
         <div class="df" *ngFor="let statDay of userStats.details">
           <div class="mx-5">{{statDay.dateString}}</div>
           <div class="mx-5">{{statDay.officeTimeStr}}</div>
-          <div class="mx-5 df">
-            <div *ngFor="let task of statDay.tasks">
+          <div class="mx-5">
+            <div class="df" *ngFor="let task of statDay.tasks">
               <div class="mx-5">{{task.id}}</div>
               <div class="mx-5">{{task.issueType}}</div>
               <div class="mx-5">{{task.name}}</div>

@@ -79,7 +79,6 @@ export class ManHoursChartComponent implements OnInit {
       .filter(x => !this.showOnlyEngineers || x.groups.find(x => x.includes('Engineers')) != null);
     if (this.users.length > 0){
       this.auth.getStatsUserDetails(this.dateFrom.getTime(), this.dateTo.getTime(), this.users.map(x => x.id)).subscribe(res => {
-        console.log(res);
         this.usersStats = res;
         this.fillChartData();
       });
@@ -142,6 +141,9 @@ export class ManHoursChartComponent implements OnInit {
           ]
         };
         this.loading = false;
+        if (this.selectedUser == null){
+          this.selectUser(this.users[0]);
+        }
       }, 100);
     }
     else{

@@ -573,7 +573,7 @@ export class LanguageService {
           case 'Только инженеры': return 'Only engineers'
           case 'Выберите сотрудника': return 'Choose the user'
           case 'Отчет пользователя': return 'User report'
-          case '': return ''
+          case 'Сотрудник': return 'User'
           case '': return ''
           case '': return ''
           case '': return ''
