@@ -154,7 +154,7 @@ export class DoclistComponent implements OnInit {
     }
     console.log(department);
     console.log(project);
-    let hullTasks = ['03070-532-0001'];
+    let hullTasks = ['03070-532-0001', '200101-525-007'];
     if (hullTasks.includes(docNumber)){
       department = 'Hull';
     }

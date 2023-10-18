@@ -84,7 +84,15 @@
     <div *ngIf="selectedUser != null">
       <div class="df">
         <img src="{{selectedUser.avatar_full}}" width="100px" height="100px" style="border-radius: 16px"/>
-        <div>{{selectedUser.userName}}</div>
+        <div class="ml-20">
+          <div class="big-text-username">{{selectedUser.userName}}</div>
+          <div>{{selectedUser.profession}}</div>
+          <div class="df">
+            <div>{{t.tr('Отдел')}}:</div>
+            <div>{{selectedUser.department}}</div>
+          </div>
+        </div>
+
       </div>
 
     </div>
