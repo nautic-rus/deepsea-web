@@ -112,7 +112,7 @@
     </div>
     <div *ngIf="selectedUser != null && !loading">
       <div class="df">
-        <div class="df w-55">
+        <div class="df w-50">
           <img src="{{selectedUser.avatar_full}}" width="126px" height="126px" style="border-radius: 16px"/>
           <div class="ml-20">
             <div class="big-text-username mb-10">{{selectedUser.userName}}</div>
@@ -124,18 +124,18 @@
             <a [href]="sanitize('rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + selectedUser.rocket_login)" class="materials-button mt-10 current-button cxy width-150">{{t.tr('Написать')}}</a>
           </div>
         </div>
-        <div class="w-45 df flex-column flex-end">
+        <div class="w-50 df flex-column flex-end">
           <div class="text-end n-text-username mr-20 mb-10">{{t.tr('За выбранный период')}}:</div>
           <div class="text-end grid-three mr-20 mb-10 font-14">
-            <div>Plan:</div>
-            <div>Office:</div>
-            <div>Task:</div>
+            <div>{{t.tr('План')}}:{{' '+ userStats.plan}}</div>
+            <div>{{t.tr('Офис')}}:{{' '+ userStats.office}}</div>
+            <div>{{t.tr('Задачи')}}:{{' '+ userStats.tasks}}</div>
           </div>
           <div class="text-end grid-four mr-20 mb-10 font-14">
-            <div>Vacation:</div>
-            <div>Medical:</div>
-            <div>Day Off:</div>
-            <div>Study:</div>
+            <div>{{t.tr('Отпуск')}}:{{' '+ userStats.vacation}}</div>
+            <div>{{t.tr('Больничный')}}:{{' '+ userStats.medical}}</div>
+            <div>{{t.tr('Отгул')}}:{{' '+ userStats.dayOff}}</div>
+            <div>{{t.tr('Учёба')}}:{{' '+ userStats.study}}</div>
           </div>
         </div>
       </div>

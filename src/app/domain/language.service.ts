@@ -581,6 +581,8 @@ export class LanguageService {
           case 'Document': return 'Документ'
           case 'Hours': return 'Часы'
           case 'Написать': return 'Message'
+          case 'Выходной': return 'Day off'
+          case 'За выбранный период': return 'In chosen period'
           case '': return ''
           case '': return ''
           case '': return ''

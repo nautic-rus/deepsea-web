@@ -94,6 +94,7 @@ export class ManHoursChartComponent implements OnInit {
       this.selectedUser = this.usersSrc.find(x => x.login == this.userParam);
       this.auth.getStatsUserDetails(this.dateFrom.getTime(), this.dateTo.getTime(), this.users.map(x => x.id)).subscribe(res => {
         this.usersStats = res;
+        console.log(this.userStats);
         this.fillChartData();
       });
     }
