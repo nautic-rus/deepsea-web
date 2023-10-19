@@ -577,6 +577,9 @@ body,p{
   display: flex;
   align-items: flex-end;
 }
+.text-end{
+  text-align: end;
+}
 .align-end{
   align-items: flex-end;
 }

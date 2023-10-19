@@ -112,35 +112,59 @@
     </div>
     <div *ngIf="selectedUser != null && !loading">
       <div class="df">
-        <img src="{{selectedUser.avatar_full}}" width="120px" height="120px" style="border-radius: 16px"/>
-        <div class="ml-20">
-          <div class="big-text-username mb-10">{{selectedUser.userName}}</div>
-          <div class="n-text-username">{{selectedUser.profession}}</div>
-          <div class="df n-text-username">
-            <div class="mr-10">{{t.tr('Отдел')}}:</div>
-            <div>{{selectedUser.department}}</div>
+        <div class="df w-55">
+          <img src="{{selectedUser.avatar_full}}" width="126px" height="126px" style="border-radius: 16px"/>
+          <div class="ml-20">
+            <div class="big-text-username mb-10">{{selectedUser.userName}}</div>
+            <div class="n-text-username">{{selectedUser.profession}}</div>
+            <div class="df n-text-username">
+              <div class="mr-10">{{t.tr('Отдел')}}:</div>
+              <div>{{selectedUser.department}}</div>
+            </div>
+            <a [href]="sanitize('rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + selectedUser.rocket_login)" class="materials-button mt-10 current-button cxy width-150">{{t.tr('Написать')}}</a>
           </div>
-          <div>Написать</div>
+        </div>
+        <div class="w-45 df flex-column flex-end">
+          <div class="text-end n-text-username mr-20 mb-10">{{t.tr('За выбранный период')}}:</div>
+          <div class="text-end grid-three mr-20 mb-10 font-14">
+            <div>Plan:</div>
+            <div>Office:</div>
+            <div>Task:</div>
+          </div>
+          <div class="text-end grid-four mr-20 mb-10 font-14">
+            <div>Vacation:</div>
+            <div>Medical:</div>
+            <div>Day Off:</div>
+            <div>Study:</div>
+          </div>
         </div>
       </div>
-
-      <div *ngIf="userStats != null">
-        <div class="df" *ngFor="let statDay of userStats.details">
-          <div class="mx-5">{{statDay.dateString}}</div>
-          <div class="mx-5">{{statDay.officeTimeStr}}</div>
-          <div class="mx-5">
-            <div class="df" *ngFor="let task of statDay.tasks">
-              <div class="mx-5">{{task.id}}</div>
-              <div class="mx-5">{{task.issueType}}</div>
-              <div class="mx-5">{{task.name}}</div>
-              <div class="mx-5">{{task.docNumber}}</div>
-              <div class="mx-5">{{task.hours}}</div>
+      <div class="table-all ovf-auto mt-20 cursor-pointer" *ngIf="userStats != null">
+        <div class="df table-all-head">
+          <div class="mx-5 w-10 padding-10">{{t.tr('Date')}}</div>
+          <div class="mx-5 w-10 padding-10">{{t.tr('Time')}}</div>
+          <div class="mx-5 w-80 df">
+            <div class="mx-5 w-10 padding-10">{{t.tr('ID')}}</div>
+            <div class="mx-5 w-10 padding-10">{{t.tr('Type')}}</div>
+            <div class="mx-5 w-40 padding-10">{{t.tr('Name')}}</div>
+            <div class="mx-5 w-30 padding-10">{{t.tr('Document')}}</div>
+            <div class="mx-5 w-10 padding-10">{{t.tr('Hours')}}</div>
+          </div>
+        </div>
+        <div class="df border-bottom-t row-table-user-hover" *ngFor="let statDay of userStats.details">
+          <div class="mx-5 w-10 padding-10">{{getDate(statDay.dateLong)}}</div>
+          <div class="mx-5 w-10 padding-10">{{statDay.officeTimeStr}}</div>
+          <div class="mx-5 w-80">
+            <div class="df row-table-user-hover" *ngFor="let task of statDay.tasks">
+              <div class="mx-5 w-10 padding-10">{{task.id}}</div>
+              <div class="mx-5 w-10 padding-10">{{task.issueType}}</div>
+              <div class="mx-5 w-40 padding-10">{{task.name}}</div>
+              <div class="mx-5 w-30 padding-10">{{task.docNumber}}</div>
+              <div class="mx-5 w-10 padding-10">{{task.hours}}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-
   </div>
 </div>

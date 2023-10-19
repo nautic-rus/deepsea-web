@@ -4,7 +4,8 @@ import {User} from "../../../domain/classes/user";
 import {LanguageService} from "../../../domain/language.service";
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import {ActivatedRoute, Router} from "@angular/router";
-import {faIR} from "date-fns/locale";
+import {DomSanitizer} from "@angular/platform-browser";
+
 @Component({
   selector: 'app-man-hours-chart',
   templateUrl: './man-hours-chart.component.html',
@@ -12,7 +13,7 @@ import {faIR} from "date-fns/locale";
 })
 export class ManHoursChartComponent implements OnInit {
 
-  constructor(public auth: AuthManagerService, public t: LanguageService, public route: ActivatedRoute, public router: Router) { }
+  constructor(public auth: AuthManagerService, public t: LanguageService, public route: ActivatedRoute, public router: Router, private sanitizer: DomSanitizer) { }
 
   users: User[] = [];
   usersSrc: User[] = [];
@@ -267,5 +268,12 @@ export class ManHoursChartComponent implements OnInit {
 
   chartClick(event: MouseEvent) {
     this.selectUser(this.users[Math.floor(event.offsetY / this.userRowHeight)]);
+  }
+  getDate(dateLong: number): string {
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+  sanitize(url:string){
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 }
