@@ -101,7 +101,7 @@
   font-size: 13px;
 }
 .square{
-  width: 20px;
+  width: 18px;
   height: 10px;
 }
 .gray-square{
@@ -135,6 +135,7 @@
   font-weight: 700;
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 .border-bottom-t{
   border-bottom: 1px solid #dee2e6;
@@ -146,4 +147,22 @@
 .grid-four{
   display: grid;
   grid-template-columns: 1fr 1.2fr 1fr 1fr;
+}
+.special{
+  height: 100%;
+  width: 10px;
+  position: absolute;
+  left: 0;
+}
+.vacation-square{
+  background-color: rgb(134, 222, 94);
+}
+.sick-square{
+  background-color: rgb(243, 120, 120);
+}
+.off-square{
+  background-color: rgb(150, 161, 176);
+}
+.study-square{
+  background-color: rgb(141, 182, 250);
 }

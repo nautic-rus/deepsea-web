@@ -582,7 +582,7 @@ export class HullEspComponent implements OnInit {
       this.issue = res;
       this.miscIssues.splice(0, this.miscIssues.length);
       this.issueManager.getIssues('op').then(issues => {
-        //issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+        issues.filter(x => x.started_date == this.issue.started_date).forEach(x => this.miscIssues.push(x));
         this.miscIssues.push(this.issue);
         issues.filter(x => this.issue.combined_issues.map(y => y.id).includes(x.id)).forEach(x => {
           if (this.miscIssues.find(y => y.id == x.id) == null){

@@ -287,7 +287,22 @@ export class ManHoursChartComponent implements OnInit {
   getSpecial(special: string) {
     if (special.includes('1')){
       return {
-        'background-color': 'red'
+        'background-color' : 'rgb(243, 120, 120)'
+      }
+    }
+    else if (special.includes('2')){
+      return {
+        'background-color': 'rgb(134, 222, 94)'
+      }
+    }
+    if (special.includes('4')){
+      return {
+        'background-color': 'rgb(150, 161, 176)'
+      }
+    }
+    if (special.includes('5')){
+      return {
+        'background-color': 'rgb(141, 182, 250)'
       }
     }
     else{

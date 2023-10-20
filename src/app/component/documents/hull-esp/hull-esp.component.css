@@ -52,7 +52,8 @@
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   padding: 12px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: calc(100vh - 245px);
   margin-left: 2px;
 }
@@ -890,7 +891,7 @@
 }
 .subtask-grid-misc{
   display: grid;
-  grid-template-columns: 17% 25% 19% 19% 20%;
+  grid-template-columns: 17% 25% 19% 19% 19%;
   width: 100%;
   font-size: 14px;
 }
