@@ -70,6 +70,7 @@ export class ManHoursChartComponent implements OnInit {
         this.userParam = userParam;
         this.selectedUser = this.usersSrc.find(x => x.login == this.userParam);
         this.userStats = this.usersStats.find(x => x.id == this.selectedUser?.id);
+        console.log(this.userStats);
       }
       else{
         this.userParam = userParam;
@@ -264,6 +265,7 @@ export class ManHoursChartComponent implements OnInit {
   selectUser(user: any){
     this.selectedUser = user;
     this.userStats = this.usersStats.find(x => x.id == this.selectedUser?.id);
+    console.log(this.userStats);
     this.router.navigate([], {queryParams: {user: this.selectedUser?.login}, queryParamsHandling: 'merge'});
   }
 
@@ -276,5 +278,20 @@ export class ManHoursChartComponent implements OnInit {
   }
   sanitize(url:string){
     return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  openIssue(id: number) {
+    window.open('/taskId?=' + id, '_blank');
+  }
+
+  getSpecial(special: string) {
+    if (special.includes('1')){
+      return {
+        'background-color': 'red'
+      }
+    }
+    else{
+      return {};
+    }
   }
 }

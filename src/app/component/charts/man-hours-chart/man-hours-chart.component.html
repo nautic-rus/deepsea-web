@@ -85,7 +85,7 @@
 <!--      <p-skeleton width="100%" height="calc(100vh - 200px)" borderRadius="16px"></p-skeleton>-->
 
     </div>
-    <div class="time-chart" *ngIf="users.length > 0 && !loading">
+    <div class="time-chart cursor-pointer" *ngIf="users.length > 0 && !loading">
       <p-chart type="bar" [data]="data" [options]="options" [height]="usersHeight" [plugins]="chartPlugins" (click)="chartClick($event)"></p-chart>
     </div>
   </div>
@@ -151,12 +151,12 @@
             <div class="mx-5 w-10 padding-10">{{t.tr('Hours')}}</div>
           </div>
         </div>
-        <div class="df border-bottom-t row-table-user-hover" *ngFor="let statDay of userStats.details">
+        <div class="df border-bottom-t row-table-user-hover" *ngFor="let statDay of userStats.details" [ngStyle]="getSpecial(statDay.special)">
           <div class="mx-5 w-10 padding-10">{{getDate(statDay.dateLong)}}</div>
           <div class="mx-5 w-10 padding-10">{{statDay.officeTimeStr}}</div>
           <div class="mx-5 w-80">
             <div class="df row-table-user-hover" *ngFor="let task of statDay.tasks">
-              <div class="mx-5 w-10 padding-10">{{task.id}}</div>
+              <div class="mx-5 w-10 padding-10"><a [href]="'/?taskId=' + task.id" target="_blank">{{task.id}}</a></div>
               <div class="mx-5 w-10 padding-10">{{task.issueType}}</div>
               <div class="mx-5 w-40 padding-10">{{task.name}}</div>
               <div class="mx-5 w-30 padding-10">{{task.docNumber}}</div>
