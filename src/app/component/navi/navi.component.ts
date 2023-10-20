@@ -62,6 +62,9 @@ export class NaviComponent implements OnInit {
     {id: 'diary', label: 'Calendar', url: 'diary', icon: 'assets/icons/calendar.svg', height: 14, child: [], params: {}},
     {id: 'employees', label: 'Daily Reports', url: 'employees', icon: 'assets/icons/clock1.svg', height: 14, child: [], params: {}},
     {id: 'work-hours', label: 'Planer', url: 'work-hours', icon: 'assets/icons/planner1.svg', height: 12, child: [], params: {}},
+    {id: 'reports', label: 'Reports', url: '', icon: 'assets/icons/stats.svg', height: 14, child: [
+        {id: 'reports', label: 'User Reports', url: 'man-hours-chart', icon: '', height: 1, params: {}},
+      ], params: {}},
     {id: 'qna', label: 'Q & A', url: 'qna', icon: 'assets/icons/book.svg', height: 17, child: [], params: {}},
   ].filter(x => this.auth.getUser().visible_pages.includes(x.id));
 
