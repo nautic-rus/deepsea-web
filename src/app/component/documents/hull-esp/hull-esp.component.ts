@@ -602,6 +602,8 @@ export class HullEspComponent implements OnInit {
             }
           })
         });
+
+        this.miscIssues = _.sortBy(this.miscIssues, x => x.started_date).reverse();
       });
       // this.issueRevisions.push(this.issue.revision);
       // this.issue.revision_files.map(x => x.revision).forEach(gr => {
