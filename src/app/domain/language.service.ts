@@ -584,6 +584,9 @@ export class LanguageService {
           case 'Выходной': return 'Day off'
           case 'За выбранный период': return 'In chosen period'
           case 'Больнич.': return 'Sick'
+          case 'д.': return 'd'
+          case 'ч.': return 'h'
+          case '': return ''
           case '': return ''
           case '': return ''
           default: return input;

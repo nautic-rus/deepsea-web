@@ -112,7 +112,7 @@
     </div>
     <div *ngIf="selectedUser != null && !loading">
       <div class="df">
-        <div class="df w-50">
+        <div class="df w-48">
           <img src="{{selectedUser.avatar_full}}" width="126px" height="126px" style="border-radius: 16px"/>
           <div class="ml-20">
             <div class="big-text-username mb-10">{{selectedUser.userName}}</div>
@@ -124,33 +124,33 @@
             <a [href]="sanitize('rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + selectedUser.rocket_login)" class="materials-button mt-10 current-button cxy width-150">{{t.tr('Написать')}}</a>
           </div>
         </div>
-        <div class="w-50 df flex-column flex-end">
+        <div class="w-52 df flex-column flex-end">
           <div class="text-end n-text-username mr-20 mb-10">{{t.tr('За выбранный период')}}:</div>
           <div class="text-end grid-three mr-20 mb-10 font-14">
-            <div>{{t.tr('План')}}:{{' '+ userStats.plan}}</div>
-            <div>{{t.tr('Офис')}}:{{' '+ userStats.office}}</div>
-            <div>{{t.tr('Задачи')}}:{{' '+ userStats.tasks}}</div>
+            <div>{{t.tr('План')}}:{{' '+ userStats.plan}}{{t.tr('ч.')}}</div>
+            <div>{{t.tr('Офис')}}:{{' '+ userStats.office}}{{t.tr('ч.')}}</div>
+            <div>{{t.tr('Задачи')}}:{{' '+ userStats.tasks}}{{t.tr('ч.')}}</div>
           </div>
           <div class="text-end grid-four mb-10 mr-20 font-14">
-            <div class="df align-center mr-20">
+            <div class="df align-center mr-15">
               <div class="square vacation-square mr-5"></div>
               <div>{{t.tr('Отпуск')}}:</div>
-              <div class="ml-5">{{userStats.vacation}}</div>
+              <div class="ml-5">{{userStats.vacation}}{{t.tr('д.')}}</div>
             </div>
-            <div class="df align-center mr-20">
+            <div class="df align-center mr-15">
               <div class="square sick-square mr-5"></div>
               <div>{{t.tr('Больнич.')}}:</div>
-              <div class="ml-5">{{userStats.medical}}</div>
+              <div class="ml-5">{{userStats.medical}}{{t.tr('д.')}}</div>
             </div>
-            <div class="df align-center mr-20">
+            <div class="df align-center mr-15">
               <div class="square off-square mr-5"></div>
               <div>{{t.tr('Отгул')}}:</div>
-              <div class="ml-5">{{userStats.dayOff}}</div>
+              <div class="ml-5">{{userStats.dayOff}}{{t.tr('д.')}}</div>
             </div>
             <div class="df align-center">
               <div class="square study-square mr-5"></div>
               <div>{{t.tr('Учёба')}}:</div>
-              <div class="ml-5">{{userStats.study}}</div>
+              <div class="ml-5">{{userStats.study}}{{t.tr('ч.')}}</div>
             </div>
           </div>
         </div>
