@@ -3,8 +3,8 @@
     <div class="padding-10 h-top border mb-20">
       <div class="head-text mb-10">{{t.tr('Выберите период')}}</div>
       <div class="df mb-20">
-        <p-calendar class="mr-10" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" [showIcon]="true" [(ngModel)]="dateFrom" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
-        <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="dateFrom" appendTo = "body" [showIcon]="true" [(ngModel)]="dateTo" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
+        <p-calendar (ngModelChange)="dateChanged()"  class="mr-10" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" [showIcon]="true" [(ngModel)]="dateFrom" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
+        <p-calendar (ngModelChange)="dateChanged()" [showWeek]="true" [firstDayOfWeek]="1" [minDate]="dateFrom" appendTo = "body" [showIcon]="true" [(ngModel)]="dateTo" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
       </div>
       <div class="buttons-grid mb-15">
         <div [class.materials-button-selected]="selectedPeriod == 'today'" (click)="setPeriod('today')" class="materials-button mr-10 mb-10 current-button cxy">{{t.tr('Сегодня')}}</div>

@@ -309,4 +309,12 @@ export class ManHoursChartComponent implements OnInit {
       return {};
     }
   }
+
+  dateChanged() {
+    console.log('date changed');
+    this.loading = true;
+    setTimeout(() => {
+      this.filterUsers();
+    }, 100);
+  }
 }
