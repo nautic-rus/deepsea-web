@@ -117,11 +117,11 @@ export class DocumentsComponent implements OnInit {
     if (findProject != null){
       foranProject = findProject.foran;
     }
-    let hullTasks = ['03070-532-0001', '200101-525-007'];
+    // let hullTasks = ['03070-532-0001', '200101-525-007'];
     let department = departmentInput;
-    if (hullTasks.includes(docNumber)){
-      department = 'Hull';
-    }
+    // if (hullTasks.includes(docNumber)){
+    //   department = 'Hull';
+    // }
     switch (this.department) {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
       case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}`, '_blank'); break;
