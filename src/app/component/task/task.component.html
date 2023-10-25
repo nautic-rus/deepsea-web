@@ -50,8 +50,8 @@
   <div class="center">
     <div class="left-content">
       <div class="pb-10">
-        <span *ngIf="issue.issue_type != 'APPROVAL'" [class.no-edit]="!isEditable()" class="task-name hover-task cursor-pointer pr-10" [hidden]="edit == 'doc_number'" (click)="edit = 'doc_number'">{{issue.doc_number}}</span>
-        <span [class.no-edit]="!isEditable()" class="task-name hover-task cursor-pointer" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.name}}</span>
+        <span *ngIf="issue.issue_type != 'APPROVAL'" [class.no-edit]="!isEditableDesc()" class="task-name hover-task cursor-pointer pr-10" [hidden]="edit == 'doc_number'" (click)="edit = 'doc_number'">{{issue.doc_number}}</span>
+        <span [class.no-edit]="!isEditableDesc()" class="task-name hover-task cursor-pointer" [hidden]="edit == 'name'" (click)="edit = 'name'">{{issue.name}}</span>
         <div class="task-name" [hidden]="edit != 'name'">
           <textarea *ngIf="edit == 'name'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.name" class="w-100 task-name-change font"></textarea>
           <div class="content-end">
@@ -84,10 +84,10 @@
         <div class="big-text mb-1 mt-2">{{t.tr('Описание задачи')}}</div>
       </div>
       <div class="text description descr-task">
-        <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClicked($event)"></quill-view>
+        <quill-view [hidden]="edit == 'description'" [content]="issue.details" (click)="editorClickedDesc($event)"></quill-view>
       </div>
       <div class="" [hidden]="edit != 'description'">
-        <quill-editor (onEditorCreated)="quillCreatedDescription($event)" [modules]="quillModulesDescription" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.details">
+        <quill-editor (onEditorCreated)="quillCreatedDescription($event)" [modules]="quillModulesDescription" (contextmenu)="editorClickedDesc($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="issue.details">
           <div quill-editor-toolbar>
             <p-header>
             <span class="ql-formats">

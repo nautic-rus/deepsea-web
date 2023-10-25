@@ -743,6 +743,20 @@ export class TaskComponent implements OnInit {
       this.edit = 'description';
     }
   }
+  editorClickedDesc(event: any, allowEdit = true) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.target.localName == 'img'){
+      this.showImage(event.target.currentSrc);
+      //window.open(event.target.currentSrc);
+    }
+    else if (event.target.localName == 'a'){
+      window.open(event.target.href, '_blank');
+    }
+    else if (this.isEditableDesc() && allowEdit){
+      this.edit = 'description';
+    }
+  }
   editorModificationClicked(event: any){
     event.preventDefault();
     event.stopPropagation();
@@ -1148,6 +1162,14 @@ export class TaskComponent implements OnInit {
       isManager = issueDep.manager.includes(this.auth.getUser().login);
     }
     return this.auth.getUser().login == this.issue.started_by || this.auth.getUser().login == this.issue.responsible || isManager;
+  }
+  isEditableDesc() {
+    let isManager = false;
+    let issueDep = this.userDepartments.find(x => x.name == this.issue.department);
+    if (issueDep != null){
+      isManager = issueDep.manager.includes(this.auth.getUser().login);
+    }
+    return this.auth.getUser().login == this.issue.started_by || isManager;
   }
 
   openUserInfo(author: string) {
