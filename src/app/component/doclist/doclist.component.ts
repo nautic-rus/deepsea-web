@@ -61,7 +61,7 @@ export class DoclistComponent implements OnInit {
     // });
     this.loading = true;
     this.issueManager.getIssues('op').then(res => {
-      this.issuesSrc = res.filter(x => x.issue_type == 'RKD' || x.issue_type == 'PDSP' || x.issue_type == 'ED');
+      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
       this.issues = this.issuesSrc;
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
@@ -188,7 +188,7 @@ export class DoclistComponent implements OnInit {
     this.issues = this.issues.filter(x => this.selectedProjects.includes(x.project));
 
     this.issues = this.issues.filter(x => this.selectedDepartments.includes(x.department) || this.selectedDepartments.includes(x.assistant));
-    this.issues = this.issues.filter(x => this.selectedTaskTypes.includes(x.issue_type));
+    this.issues = this.issues.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
     this.issues = this.issues.filter(x => this.selectedTaskStages.includes(x.period));
     this.issues = this.issues.filter(x => (x.id + x.doc_number + x.name))
     this.issues = _.sortBy(this.issues, x => x.doc_number);
