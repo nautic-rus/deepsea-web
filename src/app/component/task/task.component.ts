@@ -505,7 +505,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => x.status != x.closing_status).length == 0 && allow : allow;
       allow = action.rule.includes('t') ? this.planIssue.consumed != 0 && allow : allow;
       allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
-
+      allow = this.auth.hasPerms('moderation-qna') ? true : allow;
 
       if (issue.issue_type == 'QNA' && (this.auth.getUser().login == 'stropilov' || this.auth.getUser().login == 'voronin')){
         allow = true;
