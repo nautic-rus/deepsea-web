@@ -1342,7 +1342,7 @@ export class TaskComponent implements OnInit {
   }
 
   isVisible(value: string) {
-    return this.issueTypes.find(x => x.type_name == this.issue.issue_type && x.visible_row.includes(value));
+    return this.issueTypes.find(x => this.issue.issue_type.includes(x.type_name) && x.visible_row.includes(value));
   }
   changePreparedness(){
     return this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to;
@@ -1495,5 +1495,15 @@ export class TaskComponent implements OnInit {
       data: this.issue
     }).onClose.subscribe(res => {
     });
+  }
+
+  getIssueType(issue: Issue) {
+    let issueType = issue.issue_type;
+    if (issueType.includes(',')){
+      return issueType.split(',').map(x => this.issueManager.localeTaskType(x)).join(', ');
+    }
+    else{
+      return this.issueManager.localeTaskType(issueType);
+    }
   }
 }

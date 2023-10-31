@@ -1,7 +1,7 @@
 <div class="w75">
   <div class="task-header">
     <div class="df">
-      <div class="text-head text-bottom">{{issueManager.localeTaskType(issue.issue_type)}}</div>
+      <div class="text-head text-bottom">{{getIssueType(issue)}}</div>
       <div *ngIf="issue.parent_id != 0" (click)="openIssue(issue.parent_id)" class="df text-head text-bottom">
         <div class="cursor-pointer">{{'(' + t.tr('Родительская задача')}}</div>
         <div class="parent-task cursor-pointer ml-5">{{issue.parent_id + ')'}}</div>
