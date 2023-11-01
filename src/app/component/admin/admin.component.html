@@ -90,6 +90,15 @@
               </th>
               <th pSortableColumn="removed" class="lxy">{{l.tr('Удален')}}
                 <p-sortIcon field="removed"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'removed'" matchMode="in" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.removed"
+                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
               </th>
             </tr>
           </ng-template>
