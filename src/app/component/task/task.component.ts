@@ -601,6 +601,12 @@ export class TaskComponent implements OnInit {
     this.issueManager.setIssueMessage(this.issue.id, message).then(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
+        let findAnswer = this.issue.messages.filter(x => x.prefix == 'answer');
+        if (findAnswer.length > 0){
+          this.answerMessage = findAnswer[findAnswer.length - 1].content;
+          this.answerFiles = findAnswer[findAnswer.length - 1].file_attachments;
+          //console.log(this.answerMessage);
+        }
       });
     });
     this.answer = false;
