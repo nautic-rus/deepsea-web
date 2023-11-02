@@ -88,6 +88,18 @@
               <th pSortableColumn="groups" class="lxy">{{l.tr('Роль')}}
                 <p-sortIcon field="groups"></p-sortIcon>
               </th>
+              <th pSortableColumn="removed" class="lxy">{{l.tr('Удален')}}
+                <p-sortIcon field="removed"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'removed'" matchMode="in" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.removed"
+                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
             </tr>
           </ng-template>
 
@@ -118,7 +130,7 @@
           <!--            </ng-template>-->
 
           <ng-template pTemplate="body" let-user>
-            <tr class="cursor-pointer row-table-doc-hover user-row" (click)="viewUser(user.id)">
+            <tr class="cursor-pointer row-table-doc-hover user-row" [class.removed]="user.removed == 1" (click)="viewUser(user.id)">
               <td class="text-14 width-10">{{user.id}}</td>
               <td class="text-14 width-10">
                 <span [innerHTML]="setAvatar(user.avatar) | safeHtml"></span>
@@ -128,6 +140,8 @@
               <td class="text-14">{{user.profession}}</td>
               <td class="text-14">{{this.getDepartmentName(user.id_department)}}</td>
               <td class="text-14">{{user.groups}}</td>
+              <td *ngIf="user.removed == 0" class="text-14">{{l.tr('Нет')}}</td>
+              <td *ngIf="user.removed == 1" class="text-14">{{l.tr('Да')}}</td>
             </tr>
           </ng-template>
 

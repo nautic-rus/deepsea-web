@@ -586,7 +586,7 @@ export class LanguageService {
           case 'Больнич.': return 'Sick'
           case 'д.': return 'd'
           case 'ч.': return 'h'
-          case '': return ''
+          case 'Удален': return 'Removed'
           case '': return ''
           case '': return ''
           default: return input;

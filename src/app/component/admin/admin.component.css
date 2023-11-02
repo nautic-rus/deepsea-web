@@ -271,3 +271,9 @@ element.style {
   font-size: 11px;
   width: 40px;
 }
+.removed{
+  background-color: #ff00000d!important;
+}
+.removed:hover{
+  background-color: rgba(255, 0, 0, 0.08) !important;
+}

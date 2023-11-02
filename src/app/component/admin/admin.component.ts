@@ -30,7 +30,7 @@ import {RightComponent} from "./right/right.component";
 import {Departments} from "../../domain/interfaces/departments";
 import {DepartmentService} from "./department.service";
 import _ from "underscore";
-import {LV} from "../../domain/classes/lv";
+import {LV, LVn} from "../../domain/classes/lv";
 
 @Component({
   selector: 'app-admin',
@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
   colsRoles: any[] = [];
   colsProjects: any[] = [];
   colsRights: any[] = [];
-  filters:  { profession: any[],  department: any[], groups: any[]} = { profession: [], department: [], groups: [] };
+  filters:  { profession: any[],  department: any[], groups: any[],  removed: any[]} = { profession: [], department: [], groups: [], removed: [] };
   // @ts-ignore
   @ViewChild('search') search;
   // @ts-ignore
@@ -71,9 +71,9 @@ export class AdminComponent implements OnInit {
   fillUsers(): void {
     this.userService.getUsers()
       .subscribe(users => {
-        console.log(users);
         this.users = users;
         this.filters.profession = _.sortBy(_.uniq(users.map((x: any) => x.profession)), x => x).map(x => new LV(x));
+        this.filters.removed = _.sortBy(_.uniq(users.map((x: any) => x.removed)), x => x).map(x => new LVn((x == 0 ? this.l.tr('Нет') : this.l.tr('Да')), x));
       });
   }
 
