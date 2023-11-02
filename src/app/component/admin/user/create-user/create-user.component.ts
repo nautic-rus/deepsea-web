@@ -131,6 +131,7 @@ export class CreateUserComponent implements OnInit {
       groups: this.groups,
       permissions: this.permissions,
       token: this.token,
+      removed: 0
     };
     this.userService.startUser(user).subscribe({
       next: res => {

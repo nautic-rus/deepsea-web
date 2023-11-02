@@ -22,4 +22,5 @@ export interface Users {
   permissions: string[];
   token: string;
   id_department: number;
+  removed: number;
 }
