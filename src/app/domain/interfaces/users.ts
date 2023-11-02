@@ -19,6 +19,7 @@ export interface Users {
   visible_pages: string[];
   shared_access: string[];
   groups: string[];
+  groupNames: string;
   permissions: string[];
   token: string;
   id_department: number;

@@ -129,6 +129,7 @@ export class CreateUserComponent implements OnInit {
       visible_pages: ["-"],
       shared_access: this.shared_access,
       groups: this.groups,
+      groupNames: '',
       permissions: this.permissions,
       token: this.token,
     };

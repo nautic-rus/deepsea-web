@@ -85,8 +85,17 @@
 <!--                  </ng-template>-->
 <!--                </p-columnFilter>-->
 <!--              </th>-->
-              <th pSortableColumn="groups" class="lxy">{{l.tr('Роль')}}
-                <p-sortIcon field="groups"></p-sortIcon>
+              <th pSortableColumn="groupNames" class="lxy">{{l.tr('Роль')}}
+                <p-sortIcon field="groupNames"></p-sortIcon>
+                <p-columnFilter class="filter" [field]="'groupNames'" matchMode="in" display="menu"
+                                [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.groups"
+                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   (onChange)="filter($event.value);">
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
               </th>
               <th pSortableColumn="removed" class="lxy">{{l.tr('Удален')}}
                 <p-sortIcon field="removed"></p-sortIcon>

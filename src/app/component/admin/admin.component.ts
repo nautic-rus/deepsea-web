@@ -74,6 +74,8 @@ export class AdminComponent implements OnInit {
         this.users = users;
         this.filters.profession = _.sortBy(_.uniq(users.map((x: any) => x.profession)), x => x).map(x => new LV(x));
         this.filters.removed = _.sortBy(_.uniq(users.map((x: any) => x.removed)), x => x).map(x => new LVn((x == 0 ? this.l.tr('Нет') : this.l.tr('Да')), x));
+        this.users.forEach(u => u.groupNames = u.groups.join(','));
+        console.log(this.users);
       });
   }
 
