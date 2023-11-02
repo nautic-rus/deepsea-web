@@ -605,6 +605,7 @@ export class TaskComponent implements OnInit {
         if (findAnswer.length > 0){
           this.answerMessage = findAnswer[findAnswer.length - 1].content;
           this.answerFiles = findAnswer[findAnswer.length - 1].file_attachments;
+          this.loaded.slice(0, this.loaded.length);
           //console.log(this.answerMessage);
         }
       });
