@@ -137,27 +137,30 @@
 
       <div *ngIf="issue.issue_type == 'QNA'">
         <div class="mb-1 mt-1">
-          <div class="big-text mb-1 mt-5">{{t.tr('Ответ к задаче')}}</div>
-          <div *ngIf="answerMessage != '' && !answer" (click)="showAnswer()">
+          <div class="big-text mb-1">{{t.tr('Ответ к задаче')}}</div>
+          <div class="mb-5" *ngIf="answerMessage != '' && !answer" (click)="showAnswer()">
             <quill-view class="db text-light" [content]="answerMessage"></quill-view>
           </div>
-          <div  *ngFor="let file of answerFiles">
-            <div (click)="openFile(file.url)" class="attachment-answer df mb-1 mt-1 cursor-pointer">
-              <div class="cxy">
-                <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
-              </div>
-              <div class="attach">
-                <span class="mr-5 text-date-max" tooltipPosition="top" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
-                <div class="text-date p-ml-auto">{{getDateOnly(+file.upload_date)}}</div>
-                <div class="p-ml-auto">
-                  <div class="upload-file cxy">
-                    <svg fill="currentColor" class="cloud-download" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
+          <div class="file-grid">
+            <div *ngFor="let file of answerFiles">
+              <div (click)="openFile(file.url)" class="attachment-answer df mb-1 cursor-pointer">
+                <div class="cxy">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="20"/>
+                </div>
+                <div class="attach">
+                  <span class="mr-5 text-date-max" tooltipPosition="top" [pTooltip]="file.name">{{trimFileName(file.name) + ' '}}</span>
+                  <div class="text-date p-ml-auto">{{getDateOnly(+file.upload_date)}}</div>
+                  <div class="p-ml-auto">
+                    <div class="upload-file cxy">
+                      <svg fill="currentColor" class="cloud-download" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div class="big-text" *ngIf="(auth.getUser().login == issue.assigned_to || auth.getUser().login == issue.responsible || auth.getUser().login == 'stropilov' || auth.getUser().login == 'isaev') && answerMessage == ''">
             <input [style]="{'width':'100%'}" [hidden]="answer" (click)="showAnswer()" type="text" pInputText [placeholder]="t.tr('Добавить ответ...')" />
           </div>

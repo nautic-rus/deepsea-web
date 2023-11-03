@@ -1166,10 +1166,11 @@
   font-size: calc(0.73rem + 0.1vw);
 }
 .attach{
-  display: flex;
+  display: grid;
+  grid-template-columns: 160px 60px 35px;
   align-items: flex-end;
   width: 100%;
-  font-size: calc(0.73rem + 0.1vw);
+  font-size: calc(0.68rem + 0.1vw);
 }
 .cloud-download{
   color: #afafaf;
@@ -1276,4 +1277,8 @@
 }
 .untie:hover {
   background: rgba(237, 47, 0, 0.21);
+}
+.file-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
