@@ -587,6 +587,10 @@ export class LanguageService {
           case 'д.': return 'd'
           case 'ч.': return 'h'
           case 'Удален': return 'Removed'
+          case 'договор': return 'contract'
+          case '': return ''
+          case '': return ''
+          case '': return ''
           case '': return ''
           case '': return ''
           default: return input;

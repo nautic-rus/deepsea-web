@@ -851,6 +851,21 @@
                 <div [innerHTML]="getNoneZeroResult(auth.getUserName(msg.new_value)) | safeHtml"></div>
               </div>
             </div>
+
+            <div *ngIf="msg.name_value == 'contract'">
+              <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
+              <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
+              <span class="bold-text">{{t.tr('договор')}}</span>
+              <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
+              <div class="df pt-5">
+                <div [innerHTML]="getNoneZeroInput(msg.prev_value) | safeHtml"></div>
+                <span class="px-10">
+                  <img src="assets/icons/right-arrow.svg" height="13">
+                </span>
+                <div [innerHTML]="getNoneZeroInput(msg.new_value) | safeHtml"></div>
+              </div>
+            </div>
+
             <div *ngIf="msg.name_value == 'due_date'">
               <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
               <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
