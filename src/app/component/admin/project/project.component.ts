@@ -9,6 +9,7 @@ import {UserService} from "../user/user.service";
 import {MessageService} from "primeng/api";
 import {DeleteUserComponent} from "../user/delete-user/delete-user.component";
 import {DeleteProjectComponent} from "./delete-project/delete-project.component";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-project',
@@ -25,7 +26,7 @@ export class ProjectComponent implements OnInit {
   loading = false;
   managers: string[] = []
 
-  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService) { }
+  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     console.log(this.conf.data)

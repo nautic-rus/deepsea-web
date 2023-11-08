@@ -35,7 +35,7 @@ export class CreateProjectComponent implements OnInit {
   ngOnInit(): void {
     this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;
     this.colsUsers = this.conf.data[2];
-    this.managers = this.auth.getUser().login;
+    this.managers = [this.auth.getUser().login];
   }
 
   close() {

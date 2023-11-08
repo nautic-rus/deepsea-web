@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="df mt-1">
-    <div class="mr-1" *ngIf="taskType.includes('RKD') || taskType == 'PDSP' || taskType == 'ED'">
+    <div class="mr-1" *ngIf="taskType.includes('RKD') || taskType == 'PDSP' || taskType == 'ED' || taskType == 'PSD'">
       <div class="big-text-create mb-1">{{lang.tr('Этап')}}</div>
       <p-dropdown class="select" styleClass="width-220" [(ngModel)]="taskPeriod" [options]="taskPeriods" optionLabel="label" optionValue="value">
       </p-dropdown>
@@ -46,7 +46,7 @@
 <!--      </p-dropdown>-->
 <!--    </div>-->
   </div>
-  <div *ngIf="taskType == 'RKD' || taskType == 'ED'">
+  <div *ngIf="taskType == 'RKD' || taskType == 'ED' || taskType == 'PSD'">
     <div class="df">
       <div class="mr-1">
         <div class="big-text-create mb-1 mt-1">{{lang.tr('Номер документа')}}</div>

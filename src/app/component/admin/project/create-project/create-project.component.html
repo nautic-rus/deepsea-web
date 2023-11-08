@@ -43,30 +43,24 @@
   <div class="df space-between">
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Менеджеры')}}</div>
-      <p-dropdown styleClass="width-211" appendTo="body" id="managers" [options]="users" [(ngModel)]="this.managers"
-                  optionLabel="login" optionValue="login"></p-dropdown>
+      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="managers" [filter]="true" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="l.tr('{0} выбрано')"
+                     [placeholder]="'Managers'" class="p-dropdown-150" [virtualScroll]="true" [itemSize]="60" styleClass="width-211">
+        <ng-template let-user pTemplate="item">
+          <div class="df">
+            <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+            <div class="cx cy pl-10">{{auth.getUserName(user.login)}}</div>
+          </div>
+        </ng-template>
+      </p-multiSelect>
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{lang.tr('Пользователи')}}</div>
-      <p-multiSelect styleClass="width-211" appendTo="body" id="users" [options]="users" [(ngModel)]="selectedUsers"
-                     [filter]="true" filterBy="name,login,surname,department" optionValue="id" optionLabel="login">
-        <ng-template pTemplate="header">
+      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="selectedUsers" [filter]="true" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="l.tr('{0} выбрано')"
+                     [placeholder]="'Users'" class="p-dropdown-150" [virtualScroll]="true" [itemSize]="60" styleClass="width-211">
+        <ng-template let-user pTemplate="item">
           <div class="df">
-            <div class="table-body cy width-70">{{l.tr('Аватар')}}</div>
-            <div class="table-body cy width-150">{{l.tr('Имя')}}</div>
-            <div class="table-body cy width-150">{{l.tr('Фамилия')}}</div>
-            <div class="table-body cy width-430">{{l.tr('Должность')}}</div>
-            <div class="table-body cy width-150">{{l.tr('Группа')}}</div>
-          </div>
-        </ng-template>
-
-        <ng-template let-users pTemplate="item">
-          <div class="df">
-            <div class="table-body cy width-40" [innerHTML]="setAvatar(users.avatar) | safeHtml"></div>
-            <div class="table-body cy width-150">{{users.name}}</div>
-            <div class="table-body cy width-150">{{users.surname}}</div>
-            <div class="table-body cy width-430">{{users.profession}}</div>
-            <div class="table-body cy width-150">{{users.department}}</div>
+            <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+            <div class="cx cy pl-10">{{auth.getUserName(user.login)}}</div>
           </div>
         </ng-template>
       </p-multiSelect>

@@ -841,9 +841,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     if (this.showStartedBy && issue.started_by != this.auth.getUser().login){
       show = false;
     }
-    if (!this.showCompleted && issue.closing_status.includes(issue.status)){
-      show = false;
+    if (issue.status.includes(',')){
+      let statuses = issue.status.split(',');
+      if (!this.showCompleted){
+        show = statuses.find(x => issue.closing_status.includes(x)) != null;
+      }
     }
+    else{
+      if (!this.showCompleted && issue.closing_status.includes(issue.status)){
+        show = false;
+      }
+    }
+
     return show;
   }
 

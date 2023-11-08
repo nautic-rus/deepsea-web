@@ -53,6 +53,9 @@ export class AuthManagerService {
     if (this.user.login == 'isaev'){
       return true;
     }
+    if (this.user.login == 'isaeva'){
+      return true;
+    }
     if (this.user.shared_access != '' && this.user.shared_access != this.user.login){
       find = this.users.find(x => x.login == this.user.shared_access);
     }
