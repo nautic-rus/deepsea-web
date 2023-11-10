@@ -87,4 +87,6 @@
   border-bottom: 1px solid #f3f2f1;
   display: flex;
 }
-
+/deep/body > div > div.p-multiselect-items-wrapper.ng-tns-c73-8 > ul > cdk-virtual-scroll-viewport{
+  width: 510px !important;
+}
