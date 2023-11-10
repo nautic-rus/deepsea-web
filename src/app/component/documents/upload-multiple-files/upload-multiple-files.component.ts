@@ -258,18 +258,31 @@ export class UploadMultipleFilesComponent implements OnInit {
   commit() {
     if (this.issue.revision != this.rev){
       this.issue.revision = this.rev;
-      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {});
-    }
-    this.issueManager.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
-      if (this.isSendNotification){
-        this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment, this.loaded.length).subscribe(res => {
-          this.ref.close();
+      this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
+        this.issueManager.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
+          if (this.isSendNotification){
+            this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment, this.loaded.length).subscribe(res => {
+              this.ref.close();
+            });
+          }
+          else {
+            this.ref.close();
+          }
         });
-      }
-      else {
-        this.ref.close();
-      }
-    });
+      });
+    }
+    else {
+      this.issueManager.setRevisionFiles(this.issue.id, 'PROD', JSON.stringify(this.loaded)).then(() => {
+        if (this.isSendNotification){
+          this.issueManager.notifyDocUpload(this.issue.id, this.isCorrection ? 'correction' : 'common', this.comment, this.loaded.length).subscribe(res => {
+            this.ref.close();
+          });
+        }
+        else {
+          this.ref.close();
+        }
+      });
+    }
   }
 
   clearFilesOfGroup(name: string) {

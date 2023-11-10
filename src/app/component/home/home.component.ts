@@ -399,6 +399,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
     zip(this.issueManager.getIssues(this.auth.getUser().login), this.issueManager.getIssues(this.auth.getUser().shared_access)).pipe(map((value) => value[0].concat(value[1]))).subscribe(data => {
       this.issues = data.filter(x => x.id > 0);
+      console.log(this.issues);
       if (this.auth.getUser().shared_access != ''){
         this.issueManager.getIssues(this.auth.getUser().shared_access).then(resShared => {
           resShared.forEach(x => this.issues.push(x));
