@@ -76,3 +76,14 @@
   opacity: 0.5;
   pointer-events: none;
 }
+.task{
+  display: grid;
+  grid-template-columns: 50px 80px 120px auto;
+}
+.issue-name{
+  width: 380px;
+  text-wrap: wrap;
+}
+/deep/.cdk-virtual-scroll-viewport{
+  height: 310px !important;
+}

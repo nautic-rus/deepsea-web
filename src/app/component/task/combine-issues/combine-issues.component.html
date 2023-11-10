@@ -1,4 +1,4 @@
-<div style="height: 300px; width: 370px;">
+<div style="height: 310px; width: 470px;">
   <div class="task-header-assign">
     <div class="task-name">{{t.tr('Связать задачи')}}</div>
     <div class="task-button cxy" (click)="close()">
@@ -7,18 +7,25 @@
   </div>
   <div class="big-text mb-1 mt-1">{{t.tr('Выбрать задачи')}}</div>
 
-  <p-multiSelect appendTo="body" class="mr-10" filterBy="name,doc_number" optionLabel="doc_number" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
-                 styleClass="w-100 new-task-button p-info" [virtualScroll]="true" [itemSize]="60" optionValue="id">
-    <ng-template let-issue pTemplate="item">
-      <div class="country-item df">
-        <div>
-          <div class="min-text">{{issue.issue_type}}</div>
-          <div>{{issue.doc_number}}</div>
-          <div>{{issue.name}}</div>
+  <div class="combine-task">
+    <p-multiSelect appendTo="body" class="mr-10" filterBy="id,name,doc_number" optionLabel="id" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
+                   styleClass="w-100 task-select p-info" [virtualScroll]="true" [itemSize]="60" optionValue="id" [maxSelectedLabels]="9">
+      <ng-template let-issue pTemplate="item">
+        <div class="df">
+          <div>
+            <div class="task">
+              <div class="min-text">{{issue.id}}</div>
+              <div class="min-text">{{issue.issue_type}}</div>
+              <div class="min-text">{{issue.project}}</div>
+              <div class="min-text">{{issue.doc_number}}</div>
+            </div>
+            <div class="issue-name">{{issue.name}}</div>
+          </div>
         </div>
-      </div>
-    </ng-template>
-  </p-multiSelect>
+      </ng-template>
+    </p-multiSelect>
+  </div>
+
 
   <div class="form-footer">
     <div class="mr-5 cx">
