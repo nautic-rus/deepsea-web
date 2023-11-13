@@ -127,8 +127,11 @@
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
             <td style="width:148px" class="cursor-pointer" *ngFor="let col of columns">
-              <div *ngIf="col.skip == false && col.field != 'ready' && col.field != 'related_issues'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
+              <div *ngIf="col.skip == false && col.field != 'ready' && col.field != 'related_issues' && col.field != 'id'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
 <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
+              <div *ngIf="col.field == 'id'" (click)="$event.stopPropagation()">
+                <a [href]="'/?taskId=' + issue[col.field]" target="_blank">{{issue[col.field]}}</a>
+              </div>
               <div *ngIf="col.field == 'ready'">
                 <div *ngFor="let r of defineReadyState(issue); let i = index">
                   <div class="df cy" *ngIf="i == 0">
