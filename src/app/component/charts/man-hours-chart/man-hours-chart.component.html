@@ -7,12 +7,12 @@
         <p-calendar (ngModelChange)="dateChanged()" [showWeek]="true" [firstDayOfWeek]="1" [minDate]="dateFrom" appendTo = "body" [showIcon]="true" [(ngModel)]="dateTo" dateFormat="dd.mm.yy" styleClass="width-200"></p-calendar>
       </div>
       <div class="buttons-grid mb-15">
-        <div [class.materials-button-selected]="selectedPeriod == 'today'" (click)="setPeriod('today')" class="materials-button mr-10 mb-10 current-button cxy">{{t.tr('Сегодня')}}</div>
-        <div [class.materials-button-selected]="selectedPeriod == 'curWeek'" (click)="setPeriod('curWeek')" class="materials-button mr-10 mb-10 current-button cxy">{{t.tr('Текущая неделя')}}</div>
-        <div [class.materials-button-selected]="selectedPeriod == 'curMonth'" (click)="setPeriod('curMonth')" class="materials-button mb-10 current-button cxy">{{t.tr('Текущий месяц')}}</div>
-        <div [class.materials-button-selected]="selectedPeriod == 'yesterday'" (click)="setPeriod('yesterday')" class="materials-button mr-10 current-button cxy">{{t.tr('Вчера')}}</div>
-        <div [class.materials-button-selected]="selectedPeriod == 'prevWeek'" (click)="setPeriod('prevWeek')" class="materials-button mr-10 current-button cxy">{{t.tr('Прошлая неделя')}}</div>
-        <div [class.materials-button-selected]="selectedPeriod == 'prevMonth'" (click)="setPeriod('prevMonth')" class="materials-button current-button cxy">{{t.tr('Прошлый месяц')}}</div>
+        <div [class.materials-button-selected]="selectedPeriod == 'today'" (click)="setPeriod('today')" class="materials-button-chart mr-10 mb-10 current-button cxy">{{t.tr('Сегодня')}}</div>
+        <div [class.materials-button-selected]="selectedPeriod == 'curWeek'" (click)="setPeriod('curWeek')" class="materials-button-chart mr-10 mb-10 current-button cxy">{{t.tr('Текущая неделя')}}</div>
+        <div [class.materials-button-selected]="selectedPeriod == 'curMonth'" (click)="setPeriod('curMonth')" class="materials-button-chart mb-10 current-button cxy">{{t.tr('Текущий месяц')}}</div>
+        <div [class.materials-button-selected]="selectedPeriod == 'yesterday'" (click)="setPeriod('yesterday')" class="materials-button-chart mr-10 current-button cxy">{{t.tr('Вчера')}}</div>
+        <div [class.materials-button-selected]="selectedPeriod == 'prevWeek'" (click)="setPeriod('prevWeek')" class="materials-button-chart mr-10 current-button cxy">{{t.tr('Прошлая неделя')}}</div>
+        <div [class.materials-button-selected]="selectedPeriod == 'prevMonth'" (click)="setPeriod('prevMonth')" class="materials-button-chart current-button cxy">{{t.tr('Прошлый месяц')}}</div>
       </div>
       <div class="head-text mb-10">{{t.tr('Выберите отделы')}}</div>
       <div class="df">
@@ -121,7 +121,7 @@
               <div class="mr-10">{{t.tr('Отдел')}}:</div>
               <div>{{selectedUser.department}}</div>
             </div>
-            <a [href]="sanitize('rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + selectedUser.rocket_login)" class="materials-button mt-10 current-button cxy width-150">{{t.tr('Написать')}}</a>
+            <a [href]="sanitize('rocketchat://room?host=rocket.nautic-rus.ru&path=direct/' + selectedUser.rocket_login)" class="materials-button-chart mt-10 current-button cxy width-150">{{t.tr('Написать')}}</a>
           </div>
         </div>
         <div class="w-52 df flex-column flex-end">

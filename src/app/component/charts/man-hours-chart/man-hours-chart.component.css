@@ -75,7 +75,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
-.materials-button{
+.materials-button-chart{
   height: 35px;
   cursor: pointer;
   border-radius: 6px;
