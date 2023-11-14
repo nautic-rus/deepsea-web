@@ -158,8 +158,7 @@ export class CreateTaskComponent implements OnInit {
     this.users = this.getUsers();
     this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueTypes().then(types => {
-      console.log(types);
-      types.forEach(type => {
+      types.filter(x => this.action == '' ? x.visibility_main_form == 1 : x.visibility_subtask == 1).forEach(type => {
         let allow = true;
         if (type.type_name == 'RKD' && !this.auth.hasPerms('create_rkd_task')){
           allow = false;
