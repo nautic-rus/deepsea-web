@@ -221,8 +221,9 @@ export class CreateTaskComponent implements OnInit {
       }
     });
 
-    this.issues.getIssueDepartments().then(departments => {
-      this.taskDepartments = departments;
+    this.issues.getDepartments().subscribe(departments => {
+      console.log(departments);
+      this.taskDepartments = departments.filter(x => x.visible_task == 1).map(x => x.name);
       this.taskDepartment = '-';
     });
 

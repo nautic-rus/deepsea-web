@@ -390,8 +390,8 @@ export class TaskComponent implements OnInit {
       this.reasonsOfChange = reasons;
     });
 
-    this.issueManager.getIssueDepartments().then(departments => {
-      this.taskDepartments = departments;
+    this.issueManager.getDepartments().subscribe(departments => {
+      this.taskDepartments = departments.filter(x => x.visible_task == 1).map(x => x.name);
     });
 
     // this.issueManager.getIssueProjects().then(projects => {

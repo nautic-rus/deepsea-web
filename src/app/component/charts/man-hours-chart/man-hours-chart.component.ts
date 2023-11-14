@@ -78,8 +78,8 @@ export class ManHoursChartComponent implements OnInit {
       this.setPeriod(period, this.selectedPeriod == period);
     });
     this.auth.getDepartments().subscribe(res => {
-      this.departments = res.map(x => x.name);
-      this.selectedDepartments = res.map(x => x.name);
+      this.departments = res.filter(x => x.visible_man_hours == 1).map(x => x.name);
+      this.selectedDepartments = [...this.departments];
       this.filterUsers();
     });
   }

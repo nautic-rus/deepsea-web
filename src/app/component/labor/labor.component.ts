@@ -76,8 +76,8 @@ export class LaborComponent implements OnInit {
       this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
       this.selectedProjects = [...this.projects.map(x => x.name)];
     });
-    this.issueManagerService.getIssueDepartments().then(departments => {
-      this.departments = departments.map(x => new LV(x));
+    this.issueManagerService.getDepartments().subscribe(departments => {
+      this.departments = departments.filter(x => x.visible_task == 1).map(x => new LV(x.name));
       this.selectedDepartments = [...this.departments.map(x => x.value)];
     });
   }
