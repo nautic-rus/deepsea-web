@@ -4,4 +4,6 @@ export class IssueType {
   yard_approval: string = '';
   sort: number = 0;
   visible_row: string = '';
+  visibility_main_form: number = 0;
+  visibility_subtask: number = 0;
 }

@@ -55,6 +55,7 @@ import {GeneralEspComponent} from "./component/documents/general-esp/general-esp
 import {PlanComponent} from "./component/plan/plan.component";
 import {UserDataComponent} from "./component/user-data/user-data.component";
 import {ManHoursChartComponent} from "./component/charts/man-hours-chart/man-hours-chart.component";
+import {ComplectManagerComponent} from "./component/tools/complect-manager/complect-manager.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -112,6 +113,7 @@ const routes: Routes = [
   { path: 'plan', component: PlanComponent, data: {animation: 'PlanComponent'}, canActivate: [AuthGuard] },
   { path: 'user-data', component: UserDataComponent, data: {animation: 'UserDataComponent'}, canActivate: [AuthGuard] },
   { path: 'man-hours-chart', component: ManHoursChartComponent, data: {animation: 'ManHoursChartComponent'}, canActivate: [AuthGuard] },
+  { path: 'complect-manager', component: ComplectManagerComponent, data: {animation: 'ComplectManagerComponent'}, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/' },
 ];
 
