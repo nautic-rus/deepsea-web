@@ -37,6 +37,8 @@ export class ToolsComponent implements OnInit {
   projectsBsDesign: string[] = ['P701'];
   projectBsDesign = this.projectsBsDesign[0];
 
+  complectProjects: string[] = [];
+  complectProject: string = '';
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService, private router: Router, private messageService: MessageService) { }
@@ -48,6 +50,9 @@ export class ToolsComponent implements OnInit {
       }
     });
     this.trayBundleProjectChanged();
+    this.s.getProjects().subscribe(res => {
+      this.complectProjects = res;
+    });
   }
   isDesktop() {
     return this.device.isDesktop() && window.innerWidth > 1296;
@@ -89,5 +94,9 @@ export class ToolsComponent implements OnInit {
       showHeader: false,
       modal: true,
     });
+  }
+
+  openComplectManager() {
+    this.router.navigate(['complect-manager'], {queryParams: {project: this.complectProject}});
   }
 }

@@ -149,4 +149,25 @@ export class SpecManagerService {
   createDeviceEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createDeviceEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
+  getZones(project: string){
+    return this.http.get<any[]>(props.httpSpec + '/zones', {params: {project}});
+  }
+  getSystems(project: string){
+    return this.http.get<any[]>(props.httpSpec + '/systems', {params: {project}});
+  }
+  getProjects(){
+    return this.http.get<string[]>(props.httpSpec + '/projects');
+  }
+  getEleComplects(project: string){
+    return this.http.get<any[]>(props.httpSpec + '/complects', {params: {project}});
+  }
+  addEleComplect(complect: any){
+    return this.http.post<string>(props.httpSpec + '/addEleComplect', JSON.stringify(complect));
+  }
+  deleteEleComplect(drawing: string){
+    return this.http.get<string>(props.httpSpec + '/deleteEleComplect', {params: {drawing}});
+  }
+  updateEleComplect(complect: any){
+    return this.http.post<string>(props.httpSpec + '/updateEleComplect', JSON.stringify(complect));
+  }
 }

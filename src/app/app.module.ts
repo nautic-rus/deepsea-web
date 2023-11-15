@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './component/login/login.component';
 import { HomeComponent } from './component/home/home.component';
 import { NaviComponent } from './component/navi/navi.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
@@ -198,6 +198,8 @@ import { TaskAddPlanComponent } from './component/task/task-add-plan/task-add-pl
 import { UntieComponent } from './component/task/untie/untie.component';
 import { DownloadAllDocsComponent } from './component/doclist/download-all-docs/download-all-docs.component';
 import { ManHoursChartComponent } from './component/charts/man-hours-chart/man-hours-chart.component';
+import { ComplectManagerComponent } from './component/tools/complect-manager/complect-manager.component';
+import { AddComplectComponent } from './component/tools/complect-manager/add-complect/add-complect.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -339,7 +341,9 @@ Quill.register('modules/imageResize', ImageResize);
     TaskAddPlanComponent,
     UntieComponent,
     DownloadAllDocsComponent,
-    ManHoursChartComponent
+    ManHoursChartComponent,
+    ComplectManagerComponent,
+    AddComplectComponent
   ],
   imports: [
     BrowserModule,
@@ -398,6 +402,7 @@ Quill.register('modules/imageResize', ImageResize);
     DragDropModule,
     SkeletonModule,
     InputMaskModule,
+    ReactiveFormsModule
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
