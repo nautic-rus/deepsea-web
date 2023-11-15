@@ -19,7 +19,7 @@
         </div>
         <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />
+        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
       </span>
       </div>
     </div>
@@ -41,15 +41,15 @@
       </div>
       <div class="table-header cursor-pointer" *ngIf="trays.length > 0">
         <div class="w-3 table-header-col-tablet cy"></div>
-        <div class="w-5 table-header-col-tablet cy">{{l.tr('Label')}}</div>
-        <div class="w-5 table-header-col-tablet cy">{{l.tr('Zone')}}</div>
-        <div class="w-15 table-header-col-tablet cy">{{l.tr('TRM')}}</div>
-        <div class="w-8 table-header-col-tablet cy">{{l.tr('FSQ Index')}}</div>
-        <div class="w-27 table-header-col-tablet cy">{{l.tr('Name/description')}}</div>
-        <div class="w-7 table-header-col-tablet cy">{{l.tr('Weight')}}</div>
-        <div class="w-10 table-header-col-tablet cy">{{l.tr('Coordinates')}}</div>
-        <div class="w-13 table-header-col-tablet cy">{{l.tr('Length')}}</div>
-        <div class="w-7 table-header-col-tablet cy word-wrap">{{l.tr('Surface/margin')}}</div>
+        <div class="w-5 table-header-col-tablet cy">{{t.tr('Label')}}</div>
+        <div class="w-5 table-header-col-tablet cy">{{t.tr('Zone')}}</div>
+        <div class="w-15 table-header-col-tablet cy">{{t.tr('TRM')}}</div>
+        <div class="w-8 table-header-col-tablet cy">{{t.tr('FSQ Index')}}</div>
+        <div class="w-27 table-header-col-tablet cy">{{t.tr('Name/description')}}</div>
+        <div class="w-7 table-header-col-tablet cy">{{t.tr('Weight')}}</div>
+        <div class="w-10 table-header-col-tablet cy">{{t.tr('Coordinates')}}</div>
+        <div class="w-13 table-header-col-tablet cy">{{t.tr('Length')}}</div>
+        <div class="w-7 table-header-col-tablet cy word-wrap">{{t.tr('Surface/margin')}}</div>
       </div>
       <div *ngFor="let group of grouped; let i = index">
         <div [class.red-row]="containsZeroSurface(group)" class="df table-row cursor-pointer" *ngIf="group.length > 1" [collapse]="groupSupportsMultiple" (click)="contentClick('group' + i)">
@@ -69,10 +69,10 @@
           <div class="w-7 table-body-tablet cy"></div>
         </div>
         <div class="group" collapseContent #groupSupportsMultiple="collapseContent" [hidden]="group[0].supports.length == 0">
-          <div *ngFor="let tray of group; let t = index">
-            <div [class.sub-red-row]="tray.foranTray.marign == 0 && tray.foranTray.SURFACE != 'F0'" class="df sub-row cursor-pointer" [collapse]="traySupports" (click)="contentClick('subgroup' + i + '-' + t)">
+          <div *ngFor="let tray of group; let r = index">
+            <div [class.sub-red-row]="tray.foranTray.marign == 0 && tray.foranTray.SURFACE != 'F0'" class="df sub-row cursor-pointer" [collapse]="traySupports" (click)="contentClick('subgroup' + i + '-' + r)">
               <div class="w-3 table-body-tablet cxy">
-                <div class="cy" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + t)" >
+                <div class="cy" [class.arrow-down]="collapsed.includes('subgroup' + i + '-' + r)" >
                   <img src="assets/icons/arrow-r.svg" height="12">
                 </div>
               </div>
@@ -97,12 +97,12 @@
             </div>
             <div collapseContent class="subgroup" #traySupports="collapseContent">
               <div class="table-header-support cursor-pointer">
-                <div class="w-5 table-header-col-tablet cy">{{l.tr('Label')}}</div>
-                <div class="w-15 table-header-col-tablet cy">{{l.tr('TRM')}}</div>
-                <div class="w-35 table-header-col-tablet cy">{{l.tr('Name/description')}}</div>
-                <div class="w-7 table-header-col-tablet cy">{{l.tr('КЕИ')}}</div>
-                <div class="w-15 table-header-col-tablet cy">{{l.tr('QTY')}}</div>
-                <div class="w-10 table-header-col-tablet cy">{{l.tr('Position ')}}</div>
+                <div class="w-5 table-header-col-tablet cy">{{t.tr('Label')}}</div>
+                <div class="w-15 table-header-col-tablet cy">{{t.tr('TRM')}}</div>
+                <div class="w-35 table-header-col-tablet cy">{{t.tr('Name/description')}}</div>
+                <div class="w-7 table-header-col-tablet cy">{{t.tr('КЕИ')}}</div>
+                <div class="w-15 table-header-col-tablet cy">{{t.tr('QTY')}}</div>
+                <div class="w-10 table-header-col-tablet cy">{{t.tr('Position ')}}</div>
               </div>
               <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">
                 <div class="w-5 table-body-support cy">{{sup.label}}</div>
@@ -143,12 +143,12 @@
         </div>
         <div class="subgroup" collapseContent #groupSupportsSingle="collapseContent" [hidden]="group[0].supports.length == 0">
           <div class="table-header-support cursor-pointer">
-            <div class="w-5 table-header-col-tablet cy">{{l.tr('Label')}}</div>
-            <div class="w-15 table-header-col-tablet cy">{{l.tr('TRM')}}</div>
-            <div class="w-35 table-header-col-tablet cy">{{l.tr('Name/description')}}</div>
-            <div class="w-7 table-header-col-tablet cy">{{l.tr('КЕИ')}}</div>
-            <div class="w-15 table-header-col-tablet cy">{{l.tr('QTY')}}</div>
-            <div class="w-10 table-header-col-tablet cy">{{l.tr('Position')}}</div>
+            <div class="w-5 table-header-col-tablet cy">{{t.tr('Label')}}</div>
+            <div class="w-15 table-header-col-tablet cy">{{t.tr('TRM')}}</div>
+            <div class="w-35 table-header-col-tablet cy">{{t.tr('Name/description')}}</div>
+            <div class="w-7 table-header-col-tablet cy">{{t.tr('КЕИ')}}</div>
+            <div class="w-15 table-header-col-tablet cy">{{t.tr('QTY')}}</div>
+            <div class="w-10 table-header-col-tablet cy">{{t.tr('Position')}}</div>
           </div>
           <div *ngFor="let sup of group[0].supports" class="df cursor-pointer row-support">
             <div class="w-5 table-body-support cy">{{sup.label}}</div>
@@ -165,12 +165,12 @@
 
         <!--      <div collapseContent #traySupports="collapseContent">-->
         <!--        <div class="table-header-support cursor-pointer">-->
-        <!--          <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>-->
-        <!--          <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>-->
+        <!--          <div class="w-5 table-header-col cy">{{t.tr('Label')}}</div>-->
+        <!--          <div class="w-15 table-header-col cy">{{t.tr('TRM')}}</div>-->
         <!--          <div class="w-35 table-header-col cy">Название, описание</div>-->
-        <!--          <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>-->
-        <!--          <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>-->
-        <!--          <div class="w-10 table-header-col cy">{{l.tr('Поз. на чертеже')}}</div>-->
+        <!--          <div class="w-7 table-header-col cy">{{t.tr('КЕИ')}}</div>-->
+        <!--          <div class="w-15 table-header-col cy">{{t.tr('QTY')}}</div>-->
+        <!--          <div class="w-10 table-header-col cy">{{t.tr('Поз. на чертеже')}}</div>-->
         <!--        </div>-->
         <!--        <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">-->
         <!--          <div class="w-5 table-body-support cy">{{sup.label}}</div>-->
@@ -204,12 +204,12 @@
       <!--      </div>-->
       <!--      <div collapseContent #traySupports="collapseContent">-->
       <!--        <div class="table-header-support cursor-pointer">-->
-      <!--          <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>-->
-      <!--          <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>-->
+      <!--          <div class="w-5 table-header-col cy">{{t.tr('Label')}}</div>-->
+      <!--          <div class="w-15 table-header-col cy">{{t.tr('TRM')}}</div>-->
       <!--          <div class="w-35 table-header-col cy">Название, описание</div>-->
-      <!--          <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>-->
-      <!--          <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>-->
-      <!--          <div class="w-10 table-header-col cy">{{l.tr('Поз. на чертеже')}}</div>-->
+      <!--          <div class="w-7 table-header-col cy">{{t.tr('КЕИ')}}</div>-->
+      <!--          <div class="w-15 table-header-col cy">{{t.tr('QTY')}}</div>-->
+      <!--          <div class="w-10 table-header-col cy">{{t.tr('Поз. на чертеже')}}</div>-->
       <!--        </div>-->
       <!--        <div *ngFor="let sup of tray.supports" class="df cursor-pointer row-support">-->
       <!--          <div class="w-5 table-body-support cy">{{sup.label}}</div>-->
@@ -237,20 +237,20 @@
     <div *ngIf="selectedTab == 'Equipment'" class="card-tray card-page">
       <div class="table-header cursor-pointer">
         <div class="w-3 table-header-col cy"></div>
-        <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
-        <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{l.tr('User id')}}
+        <div class="w-5 table-header-col cy">{{t.tr('Label')}}</div>
+        <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{t.tr('User id')}}
           <i *ngIf="sortValue != 'USERID'" class="ml-10 pi pi-sort-alt icon-color"></i>
           <i *ngIf="sortValue == 'USERID' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>
           <i *ngIf="sortValue == 'USERID' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>
         </div>
-        <div class="w-5 table-header-col cy">{{l.tr('System')}}</div>
-        <div class="w-5 table-header-col cy">{{l.tr('Zone')}}</div>
-        <div class="w-10 table-header-col cy">{{l.tr('Stock code')}}</div>
-        <div class="w-27 table-header-col cy">{{l.tr('Name/description')}}</div>
-        <div class="w-7 table-header-col cy">{{l.tr('Weight')}}</div>
-        <div class="w-10 table-header-col cy">{{l.tr('Coordinates')}}</div>
-        <div class="w-12 table-header-col cy">{{l.tr('Provider')}}</div>
-        <div class="w-9 table-header-col cy">{{l.tr('Units')}}</div>
+        <div class="w-5 table-header-col cy">{{t.tr('System')}}</div>
+        <div class="w-5 table-header-col cy">{{t.tr('Zone')}}</div>
+        <div class="w-10 table-header-col cy">{{t.tr('Stock code')}}</div>
+        <div class="w-27 table-header-col cy">{{t.tr('Name/description')}}</div>
+        <div class="w-7 table-header-col cy">{{t.tr('Weight')}}</div>
+        <div class="w-10 table-header-col cy">{{t.tr('Coordinates')}}</div>
+        <div class="w-12 table-header-col cy">{{t.tr('Provider')}}</div>
+        <div class="w-9 table-header-col cy">{{t.tr('Units')}}</div>
       </div>
       <div *ngFor="let eqip of equipment; let i = index">
         <div class="df table-row cursor-pointer" [collapse]="eqSupports" (click)="contentClick('group-eq' + i)">
@@ -280,12 +280,12 @@
         </div>
         <div collapseContent class="subgroup" #eqSupports="collapseContent" [hidden]="eqip.SUPPORTS.length == 0">
           <div class="table-header-support cursor-pointer">
-            <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>
-            <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>
-            <div class="w-35 table-header-col cy">{{l.tr('Name/description')}}</div>
-            <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>
-            <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>
-            <div class="w-10 table-header-col cy">{{l.tr('Position')}}</div>
+            <div class="w-5 table-header-col cy">{{t.tr('Label')}}</div>
+            <div class="w-15 table-header-col cy">{{t.tr('TRM')}}</div>
+            <div class="w-35 table-header-col cy">{{t.tr('Name/description')}}</div>
+            <div class="w-7 table-header-col cy">{{t.tr('КЕИ')}}</div>
+            <div class="w-15 table-header-col cy">{{t.tr('QTY')}}</div>
+            <div class="w-10 table-header-col cy">{{t.tr('Position')}}</div>
           </div>
           <div *ngFor="let sup of eqip.SUPPORTS" class="df cursor-pointer row-support">
             <div class="w-5 table-body-support cy">{{sup.label}}</div>
@@ -334,7 +334,7 @@
         </div>
         <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+        <input [(ngModel)]="search" (ngModelChange)="searchChanged()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
       </span>
       </div>
     </div>
@@ -398,12 +398,12 @@
 
                 </div>
               </div>
-              <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>
-              <div class="w-20 table-header-column cy">{{l.tr('FSQ')}}</div>
-              <div class="w-10 table-header-column cy">{{l.tr('WEIGHT')}}</div>
-              <div class="w-35 table-header-column cy">{{l.tr('COORDINATES')}}</div>
-              <div class="w-10 table-header-column cy">{{l.tr('LENGTH')}}</div>
-              <div class="w-10 table-header-column cy">{{l.tr('S/M ')}}</div>
+              <div class="w-10 table-header-column cy">{{t.tr('ZONE')}}</div>
+              <div class="w-20 table-header-column cy">{{t.tr('FSQ')}}</div>
+              <div class="w-10 table-header-column cy">{{t.tr('WEIGHT')}}</div>
+              <div class="w-35 table-header-column cy">{{t.tr('COORDINATES')}}</div>
+              <div class="w-10 table-header-column cy">{{t.tr('LENGTH')}}</div>
+              <div class="w-10 table-header-column cy">{{t.tr('S/M ')}}</div>
             </div>
             <div *ngFor="let tray of group; let t = index" class="text-center-y info-row cursor-pointer" (click)="selectedGroup[i] = t" [class.selected-row-group]="selectedGroup[i] == t">
               <div class="w-5 cxy">
@@ -450,12 +450,12 @@
           </div>
           <div class="bottom-card ovf-auto pl-10 pr-10">
             <div class="df sticky cursor-pointer">
-              <div class="w-9 table-header-column cy">{{l.tr('Label')}}</div>
-              <div class="w-39 table-header-column cy">{{l.tr('Name/description')}}</div>
-              <div class="w-9 table-header-column cy">{{l.tr('КЕИ')}}</div>
-              <div class="w-9 table-header-column cy">{{l.tr('QTY')}}</div>
-              <div class="w-9 table-header-column cy">{{l.tr('Pos.')}}</div>
-              <div class="w-25 table-header-column cy">{{l.tr('TRM')}}</div>
+              <div class="w-9 table-header-column cy">{{t.tr('Label')}}</div>
+              <div class="w-39 table-header-column cy">{{t.tr('Name/description')}}</div>
+              <div class="w-9 table-header-column cy">{{t.tr('КЕИ')}}</div>
+              <div class="w-9 table-header-column cy">{{t.tr('QTY')}}</div>
+              <div class="w-9 table-header-column cy">{{t.tr('Pos.')}}</div>
+              <div class="w-25 table-header-column cy">{{t.tr('TRM')}}</div>
             </div>
             <div *ngFor="let sup of group[selectedGroup[i]].supports; let s = index" class="df cursor-pointer info-row">
               <div class="w-9 table-body cy">{{sup.label}}</div>
@@ -494,44 +494,44 @@
   <div *ngIf="selectedTab == 'Equipment'" class="card-tray card-page">
 <!--      <div class="table-header cursor-pointer">-->
 <!--        <div class="w-3 table-header-col cy"></div>-->
-<!--        <div (click)="sort('LABEL')" class="w-5 table-header-col dfc">{{l.tr('Label')}}-->
+<!--        <div (click)="sort('LABEL')" class="w-5 table-header-col dfc">{{t.tr('Label')}}-->
 <!--          <i *ngIf="sortValue != 'LABEL'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'LABEL' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'LABEL' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--        </div>-->
-<!--        <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{l.tr('User id')}}-->
+<!--        <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{t.tr('User id')}}-->
 <!--          <i *ngIf="sortValue != 'USERID'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'USERID' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'USERID' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--        </div>-->
-<!--        <div (click)="sort('SYSTEM_NAME')" class="w-5 table-header-col dfc">{{l.tr('System')}}-->
+<!--        <div (click)="sort('SYSTEM_NAME')" class="w-5 table-header-col dfc">{{t.tr('System')}}-->
 <!--          <i *ngIf="sortValue != 'SYSTEM_NAME'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'SYSTEM_NAME' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'SYSTEM_NAME' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--        </div>-->
-<!--        <div (click)="sort('ZONE_NAME')" class="w-5 table-header-col dfc">{{l.tr('Zone')}}-->
+<!--        <div (click)="sort('ZONE_NAME')" class="w-5 table-header-col dfc">{{t.tr('Zone')}}-->
 <!--          <i *ngIf="sortValue != 'ZONE_NAME'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'ZONE_NAME' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'ZONE_NAME' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--        </div>-->
-<!--        <div (click)="sort('STOCK_CODE')" class="w-10 table-header-col dfc">{{l.tr('Stock code')}}-->
+<!--        <div (click)="sort('STOCK_CODE')" class="w-10 table-header-col dfc">{{t.tr('Stock code')}}-->
 <!--          <i *ngIf="sortValue != 'STOCK_CODE'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'STOCK_CODE' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'STOCK_CODE' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--        </div>-->
-<!--        <div (click)="sort('workShopMaterialName')" class="w-27 table-header-col dfc">{{l.tr('Name/description')}}-->
+<!--        <div (click)="sort('workShopMaterialName')" class="w-27 table-header-col dfc">{{t.tr('Name/description')}}-->
 <!--          <i *ngIf="sortValue != 'workShopMaterialName'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'workShopMaterialName' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'workShopMaterialName' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--        </div>-->
-<!--        <div (click)="sort('WEIGHT')" class="w-7 table-header-col dfc">{{l.tr('Weight')}}-->
+<!--        <div (click)="sort('WEIGHT')" class="w-7 table-header-col dfc">{{t.tr('Weight')}}-->
 <!--          <i *ngIf="sortValue != 'WEIGHT'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'WEIGHT' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--          <i *ngIf="sortValue == 'WEIGHT' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--        </div>-->
-<!--        <div class="w-10 table-header-col cy">{{l.tr('Coordinates')}}</div>-->
-<!--        <div class="w-12 table-header-col cy">{{l.tr('Provider')}}</div>-->
-<!--        <div class="w-9 table-header-col cy">{{l.tr('Units')}}</div>-->
+<!--        <div class="w-10 table-header-col cy">{{t.tr('Coordinates')}}</div>-->
+<!--        <div class="w-12 table-header-col cy">{{t.tr('Provider')}}</div>-->
+<!--        <div class="w-9 table-header-col cy">{{t.tr('Units')}}</div>-->
 <!--      </div>-->
     <div [class.dash-card-expanded]="expanded.includes('expanded-eq-' + i)" class="dash-card" *ngFor="let eqip of equipment; let i = index">
       <div class="top-row-equip">
@@ -575,12 +575,12 @@
       <div class="bottom-row">
         <div class="border-right ovf-auto pl-10">
           <div class="df cursor-pointer sticky">
-            <div class="w-10 table-header-column cy">{{l.tr('USER ID')}}</div>
-            <div class="w-15 table-header-column cy">{{l.tr('SYSTEM')}}</div>
-            <div class="w-10 table-header-column cy">{{l.tr('WEIGHT')}}</div>
-            <div class="w-20 table-header-column cy">{{l.tr('COORDINATES')}}</div>
-            <div class="w-15 table-header-column cy">{{l.tr('UNITS')}}</div>
-            <div class="w-30 table-header-column cy">{{l.tr('PROVIDER')}}</div>
+            <div class="w-10 table-header-column cy">{{t.tr('USER ID')}}</div>
+            <div class="w-15 table-header-column cy">{{t.tr('SYSTEM')}}</div>
+            <div class="w-10 table-header-column cy">{{t.tr('WEIGHT')}}</div>
+            <div class="w-20 table-header-column cy">{{t.tr('COORDINATES')}}</div>
+            <div class="w-15 table-header-column cy">{{t.tr('UNITS')}}</div>
+            <div class="w-30 table-header-column cy">{{t.tr('PROVIDER')}}</div>
           </div>
           <div class="text-center-y df cursor-pointer">
             <div class="w-10 table-body-equip cy">{{eqip.USERID}}</div>
@@ -608,12 +608,12 @@
         </div>
         <div class="ovf-auto">
           <div class="df cursor-pointer sticky">
-            <div class="w-10 table-header-column cy">{{l.tr('LABEL')}}</div>
-            <div class="w-35 table-header-column cy">{{l.tr('NAME')}}</div>
-            <div class="w-10 table-header-column cy">{{l.tr('UNITS')}}</div>
-            <div class="w-10 table-header-column cy">{{l.tr('QTY')}}</div>
-            <div class="w-10 table-header-column cy">{{l.tr('POS.')}}</div>
-            <div class="w-25 table-header-column cy">{{l.tr('TRM')}}</div>
+            <div class="w-10 table-header-column cy">{{t.tr('LABEL')}}</div>
+            <div class="w-35 table-header-column cy">{{t.tr('NAME')}}</div>
+            <div class="w-10 table-header-column cy">{{t.tr('UNITS')}}</div>
+            <div class="w-10 table-header-column cy">{{t.tr('QTY')}}</div>
+            <div class="w-10 table-header-column cy">{{t.tr('POS.')}}</div>
+            <div class="w-25 table-header-column cy">{{t.tr('TRM')}}</div>
           </div>
           <div *ngFor="let sup of eqip.SUPPORTS; let s = index" class="text-center-y info-row cursor-pointer">
             <div class="w-10 table-body cy">{{sup.label}}</div>
@@ -674,12 +674,12 @@
 <!--        </div>-->
 <!--        <div collapseContent class="subgroup" #eqSupports="collapseContent" [hidden]="eqip.SUPPORTS.length == 0">-->
 <!--          <div class="table-header-support cursor-pointer">-->
-<!--            <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>-->
-<!--            <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>-->
-<!--            <div class="w-35 table-header-col cy">{{l.tr('Name/description')}}</div>-->
-<!--            <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>-->
-<!--            <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>-->
-<!--            <div class="w-10 table-header-col cy">{{l.tr('Position')}}</div>-->
+<!--            <div class="w-5 table-header-col cy">{{t.tr('Label')}}</div>-->
+<!--            <div class="w-15 table-header-col cy">{{t.tr('TRM')}}</div>-->
+<!--            <div class="w-35 table-header-col cy">{{t.tr('Name/description')}}</div>-->
+<!--            <div class="w-7 table-header-col cy">{{t.tr('КЕИ')}}</div>-->
+<!--            <div class="w-15 table-header-col cy">{{t.tr('QTY')}}</div>-->
+<!--            <div class="w-10 table-header-col cy">{{t.tr('Position')}}</div>-->
 <!--          </div>-->
 <!--          <div *ngFor="let sup of eqip.SUPPORTS" class="df cursor-pointer row-support">-->
 <!--            <div class="w-5 table-body-support cy">{{sup.label}}</div>-->
@@ -701,44 +701,44 @@
 <!--  <div *ngIf="selectedTab == 'Equipment'" class="card-tray card-page">-->
 <!--    <div class="table-header cursor-pointer">-->
 <!--      <div class="w-3 table-header-col cy"></div>-->
-<!--      <div (click)="sort('LABEL')" class="w-5 table-header-col dfc">{{l.tr('Label')}}-->
+<!--      <div (click)="sort('LABEL')" class="w-5 table-header-col dfc">{{t.tr('Label')}}-->
 <!--        <i *ngIf="sortValue != 'LABEL'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'LABEL' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'LABEL' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--      </div>-->
-<!--      <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{l.tr('User id')}}-->
+<!--      <div (click)="sort('USERID')" class="w-7 table-header-col dfc">{{t.tr('User id')}}-->
 <!--        <i *ngIf="sortValue != 'USERID'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'USERID' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'USERID' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--      </div>-->
-<!--      <div (click)="sort('SYSTEM_NAME')" class="w-5 table-header-col dfc">{{l.tr('System')}}-->
+<!--      <div (click)="sort('SYSTEM_NAME')" class="w-5 table-header-col dfc">{{t.tr('System')}}-->
 <!--        <i *ngIf="sortValue != 'SYSTEM_NAME'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'SYSTEM_NAME' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'SYSTEM_NAME' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--      </div>-->
-<!--      <div (click)="sort('ZONE_NAME')" class="w-5 table-header-col dfc">{{l.tr('Zone')}}-->
+<!--      <div (click)="sort('ZONE_NAME')" class="w-5 table-header-col dfc">{{t.tr('Zone')}}-->
 <!--        <i *ngIf="sortValue != 'ZONE_NAME'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'ZONE_NAME' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'ZONE_NAME' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--      </div>-->
-<!--      <div (click)="sort('STOCK_CODE')" class="w-10 table-header-col dfc">{{l.tr('Stock code')}}-->
+<!--      <div (click)="sort('STOCK_CODE')" class="w-10 table-header-col dfc">{{t.tr('Stock code')}}-->
 <!--        <i *ngIf="sortValue != 'STOCK_CODE'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'STOCK_CODE' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'STOCK_CODE' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--      </div>-->
-<!--      <div (click)="sort('workShopMaterialName')" class="w-27 table-header-col dfc">{{l.tr('Name/description')}}-->
+<!--      <div (click)="sort('workShopMaterialName')" class="w-27 table-header-col dfc">{{t.tr('Name/description')}}-->
 <!--        <i *ngIf="sortValue != 'workShopMaterialName'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'workShopMaterialName' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'workShopMaterialName' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--      </div>-->
-<!--      <div (click)="sort('WEIGHT')" class="w-7 table-header-col dfc">{{l.tr('Weight')}}-->
+<!--      <div (click)="sort('WEIGHT')" class="w-7 table-header-col dfc">{{t.tr('Weight')}}-->
 <!--        <i *ngIf="sortValue != 'WEIGHT'" class="ml-10 pi pi-sort-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'WEIGHT' && !sortReverse" class="ml-10 pi pi-sort-amount-up-alt icon-color"></i>-->
 <!--        <i *ngIf="sortValue == 'WEIGHT' && sortReverse" class="ml-10 pi pi-sort-amount-down icon-color"></i>-->
 <!--      </div>-->
-<!--      <div class="w-10 table-header-col cy">{{l.tr('Coordinates')}}</div>-->
-<!--      <div class="w-12 table-header-col cy">{{l.tr('Provider')}}</div>-->
-<!--      <div class="w-9 table-header-col cy">{{l.tr('Units')}}</div>-->
+<!--      <div class="w-10 table-header-col cy">{{t.tr('Coordinates')}}</div>-->
+<!--      <div class="w-12 table-header-col cy">{{t.tr('Provider')}}</div>-->
+<!--      <div class="w-9 table-header-col cy">{{t.tr('Units')}}</div>-->
 <!--    </div>-->
 <!--    <div *ngFor="let eqip of equipment.ts; let i = index">-->
 <!--      <div class="df table-row cursor-pointer" [collapse]="eqSupports" (click)="contentClick('group-eq' + i)">-->
@@ -768,12 +768,12 @@
 <!--      </div>-->
 <!--      <div collapseContent class="subgroup" #eqSupports="collapseContent" [hidden]="eqip.SUPPORTS.length == 0">-->
 <!--        <div class="table-header-support cursor-pointer">-->
-<!--          <div class="w-5 table-header-col cy">{{l.tr('Label')}}</div>-->
-<!--          <div class="w-15 table-header-col cy">{{l.tr('TRM')}}</div>-->
-<!--          <div class="w-35 table-header-col cy">{{l.tr('Name/description')}}</div>-->
-<!--          <div class="w-7 table-header-col cy">{{l.tr('КЕИ')}}</div>-->
-<!--          <div class="w-15 table-header-col cy">{{l.tr('QTY')}}</div>-->
-<!--          <div class="w-10 table-header-col cy">{{l.tr('Position')}}</div>-->
+<!--          <div class="w-5 table-header-col cy">{{t.tr('Label')}}</div>-->
+<!--          <div class="w-15 table-header-col cy">{{t.tr('TRM')}}</div>-->
+<!--          <div class="w-35 table-header-col cy">{{t.tr('Name/description')}}</div>-->
+<!--          <div class="w-7 table-header-col cy">{{t.tr('КЕИ')}}</div>-->
+<!--          <div class="w-15 table-header-col cy">{{t.tr('QTY')}}</div>-->
+<!--          <div class="w-10 table-header-col cy">{{t.tr('Position')}}</div>-->
 <!--        </div>-->
 <!--        <div *ngFor="let sup of eqip.SUPPORTS" class="df cursor-pointer row-support">-->
 <!--          <div class="w-5 table-body-support cy">{{sup.label}}</div>-->

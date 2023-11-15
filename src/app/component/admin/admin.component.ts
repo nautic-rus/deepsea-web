@@ -54,7 +54,7 @@ export class AdminComponent implements OnInit {
   @ViewChild('users') usr: Table;
   @ViewChild('roles') rls: Table;
   @ViewChild('projects') prcts: Table;
-  constructor(public roleService: RoleService, public departmentService: DepartmentService, public projectService: ProjectService, public rightService: RightService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) { }
+  constructor(public roleService: RoleService, public departmentService: DepartmentService, public projectService: ProjectService, public rightService: RightService, public device: DeviceDetectorService, private http: HttpClient, private router: Router, private messageService: MessageService, private userService: UserService, public auth: AuthManagerService, private dialogService: DialogService, public t: LanguageService) { }
 
   ngOnInit(): void {
     if (!this.auth.hasRole('Admin') && this.auth.getUser().login != 'isaev') {
@@ -73,7 +73,7 @@ export class AdminComponent implements OnInit {
       .subscribe(users => {
         this.users = users;
         this.filters.profession = _.sortBy(_.uniq(users.map((x: any) => x.profession)), x => x).map(x => new LV(x));
-        this.filters.removed = _.sortBy(_.uniq(users.map((x: any) => x.removed)), x => x).map(x => new LVn((x == 0 ? this.l.tr('Нет') : this.l.tr('Да')), x));
+        this.filters.removed = _.sortBy(_.uniq(users.map((x: any) => x.removed)), x => x).map(x => new LVn((x == 0 ? this.t.tr('Нет') : this.t.tr('Да')), x));
         this.users.forEach(u => u.groupNames = u.groups.join(','));
         console.log(this.users);
       });

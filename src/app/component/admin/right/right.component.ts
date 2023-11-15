@@ -17,7 +17,7 @@ export class RightComponent implements OnInit {
   right: Rights;
   name: string = '';
 
-  constructor(private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public rightService: RightService) { }
+  constructor(private messageService: MessageService, private dialogService: DialogService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef, public rightService: RightService) { }
 
   ngOnInit(): void {
     this.right = this.conf.data as Rights;
@@ -31,11 +31,11 @@ export class RightComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.ref.close(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление доступа'), detail: this.lang.tr('Доступ удалён')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Удаление доступа'), detail: this.t.tr('Доступ удалён')});
         // this.loading = false;
       } else {
         // this.loading = false;
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление доступа'), detail: this.lang.tr('Не удалось удалить доступ')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Удаление доступа'), detail: this.t.tr('Не удалось удалить доступ')});
       }
     })
   }

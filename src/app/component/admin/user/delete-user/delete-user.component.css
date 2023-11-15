@@ -43,19 +43,6 @@
   justify-content: flex-end;
   align-items: flex-end;
 }
-.button-ok{
-  border: none;
-  min-width: 24px;
-  border-radius: 3px;
-  text-shadow: none;
-  padding: 8px 10px;
-  color: #fff;
-  background: #3B94D6;
-  transition: background .1s
-}
-.button-ok:hover{
-  background-color: #2C7BB6;
-}
 .button-cancel{
   margin-right: 4px;
   min-width: 24px;

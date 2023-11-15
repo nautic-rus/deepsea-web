@@ -89,7 +89,7 @@ export class CablesComponent implements OnInit {
   selectedRevision = 'PROD';
 
 
-  constructor(private s: SpecManagerService, private dialogService: DialogService, public auth: AuthManagerService, private scrollService: ScrollService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public l: LanguageService) {
+  constructor(private s: SpecManagerService, private dialogService: DialogService, public auth: AuthManagerService, private scrollService: ScrollService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService, public cableService: CableService, public t: LanguageService) {
   }
 
   ngOnInit(): void {

@@ -30,7 +30,7 @@ export class AuthManagerService {
   usersFilled = new Subject();
   filled = false;
 
-  constructor(private cookie: CookieService, private http: HttpClient, private userService: UserService, private router: Router, private messageService: MessageService, private l: LanguageService) {
+  constructor(private cookie: CookieService, private http: HttpClient, private userService: UserService, private router: Router, private messageService: MessageService, private t: LanguageService) {
     //console.log('init auth');
     if (!this.filled){
       this.fillUsers();
@@ -87,11 +87,11 @@ export class AuthManagerService {
   }
   getUserName(login: string){
     if (login == 'nautic-rus' || login == ''){
-      return this.l.language == 'ru' ? '' : '';
+      return this.t.language == 'ru' ? '' : '';
     }
     let find = this.users.find(x => x.login == login);
     if (find != null){
-      if (this.l.language == 'ru'){
+      if (this.t.language == 'ru'){
         return find.surname + ' ' + find.name;
       }
       else{
@@ -105,7 +105,7 @@ export class AuthManagerService {
   getUserNameById(id: number){
     let find = this.users.find(x => x.id == id);
     if (find != null){
-      if (this.l.language == 'ru'){
+      if (this.t.language == 'ru'){
         return find.surname + ' ' + find.name;
       }
       else{
@@ -119,7 +119,7 @@ export class AuthManagerService {
   getUserTrimName(login: string){
     let find = this.users.find(x => x.login == login);
     if (find != null){
-      if (this.l.language == 'ru'){
+      if (this.t.language == 'ru'){
         return find.surname + ' ' + find.name.substr(0,1) + '.';
       }
       else{

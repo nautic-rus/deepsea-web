@@ -31,7 +31,7 @@
 <!--  </div>-->
   <div class="df">
     <div class="mr-1 cx">
-      <div tabindex="10" [class.disabled-button]="isDisabled()" (click)="commit()" pButton [label]="t.tr('Отправить')" class="button-ok"></div>
+      <div tabindex="10" [class.disabled-button]="isDisabled()" (click)="commit()" class="button-ok cxy">{{t.tr('Отправить')}}</div>
     </div>
     <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>

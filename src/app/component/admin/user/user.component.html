@@ -1,88 +1,88 @@
 <div class="center-user">
   <div class="header-user-card">
-    <div class="header-user-text">{{lang.tr('Карточка пользователя')}}</div>
+    <div class="header-user-text">{{t.tr('Карточка пользователя')}}</div>
     <div class="task-button-user cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Гендер')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Гендер')}}</div>
       <p-dropdown styleClass="width-211" appendTo="body" id="gender" [options]="genders" [(ngModel)]="user.gender"
                   optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Фамилия')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Фамилия')}}</div>
       <input class="width-211" type="text" id="surname" pInputText [(ngModel)]="user.surname">
     </div>
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Имя')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Имя')}}</div>
       <input class="width-211" type="text" id="name" pInputText [(ngModel)]="user.name">
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Логин')}}</div>
       <input class="width-211" type="text" id="login" pInputText [(ngModel)]="user.login">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Пароль')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Пароль')}}</div>
       <input class="width-211" type="text" id="password" pInputText [(ngModel)]="user.password">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин RocketChat')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Логин RocketChat')}}</div>
       <input class="width-211" type="text" id="rocketLogin" pInputText [(ngModel)]="user.rocket_login">
     </div>
   </div>
   <div class="df space-between">
     <!--    <div>-->
-    <!--      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>-->
+    <!--      <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>-->
     <!--      <input class="width-211" type="text" id="department" pInputText [(ngModel)]="this.department.name">-->
     <!--    </div>-->
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
       <p-dropdown styleClass="width-211" appendTo="body" id="department" [options]="departments"
                   [(ngModel)]="this.department" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Должность')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Должность')}}</div>
       <input class="width-211" type="text" id="profession" pInputText [(ngModel)]="user.profession">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Аватар')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Аватар')}}</div>
       <input class="width-211" type="text" id="avatar" pInputText [(ngModel)]="user.avatar">
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Почта')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Почта')}}</div>
       <input class="width-211" type="text" id="email" pInputText [(ngModel)]="user.email">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Телефон')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Телефон')}}</div>
       <input class="width-211" type="text" id="phone" pInputText [(ngModel)]="user.phone">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Time Control ID')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Time Control ID')}}</div>
       <p-inputNumber inputStyleClass="width-211" inputId="tcid" [(ngModel)]="user.tcid"></p-inputNumber>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Роль')}}</div>
       <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups"
                      (ngModelChange)="roleChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <!--    <div>-->
-    <!--      <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>-->
+    <!--      <div class="big-text-user mb-1 mt-1">{{t.tr('Роль')}}</div>-->
     <!--      <p-dropdown styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="user.groups" optionLabel="name" optionValue="name"></p-dropdown>-->
     <!--    </div>-->
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Видимость')}}</div>
       <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="user.visibility">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Доступные проекты')}}</div>
       <p-multiSelect styleClass="width-211" appendTo="body" id="visible_projects" [options]="projects"
                      [(ngModel)]="user.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
@@ -91,15 +91,14 @@
 
 <div class="form-footer-user">
   <div class="mr-5 cx">
-    <div *ngIf="!loading" tabindex="11" (click)="sendLogPass()" pButton [label]="lang.tr('Отправить данные для входа')"
+    <div *ngIf="!loading" tabindex="11" (click)="sendLogPass()" pButton [label]="t.tr('Отправить данные для входа')"
          class="button-cancel ml-1"></div>
   </div>
   <div class="mr-5 cx">
-    <div *ngIf="!loading" tabindex="11" (click)="deleteUser()" pButton [label]="lang.tr('Удалить')"
+    <div *ngIf="!loading" tabindex="11" (click)="deleteUser()" pButton [label]="t.tr('Удалить')"
          class="button-cancel ml-1"></div>
   </div>
-  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="saveUser()" pButton
-       [label]="lang.tr('Сохранить')" class="button-ok"></div>
+  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="saveUser()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
   <div class="cxy height-spinner" *ngIf="loading">
     <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff"
                        animationDuration="1s"></p-progressSpinner>

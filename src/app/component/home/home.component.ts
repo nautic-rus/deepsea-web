@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   savedFilters: any[] = [];
   selectedFilter = '';
 
-  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public l: LanguageService) {
+  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public t: LanguageService) {
   }
 
   // @ts-ignore
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         this.viewTask(taskId, '');
       }
     });
-    if (this.l.language == 'ru'){
+    if (this.t.language == 'ru'){
       this.config.setTranslation({
         clear: "Очистить",
         apply: "Принять",

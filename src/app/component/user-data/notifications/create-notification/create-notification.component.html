@@ -1,31 +1,31 @@
 <div class="center-right">
   <div class="header-user-card">
-    <div class="header-user-text">{{l.tr('Новое уведомление')}}</div>
+    <div class="header-user-text">{{t.tr('Новое уведомление')}}</div>
     <div class="task-button-user cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
   <div>
-    <div class="big-text-user mb-1 mt-1">{{l.tr('Проект')}}</div>
+    <div class="big-text-user mb-1 mt-1">{{t.tr('Проект')}}</div>
     <p-dropdown styleClass="w-100" appendTo="body" id="project" [options]="visibleProjects" [(ngModel)]="project"
                 optionLabel="projectName" optionValue="projectName"></p-dropdown>
   </div>
   <div>
-    <div class="big-text-user mb-1 mt-1">{{l.tr('Тип')}}</div>
+    <div class="big-text-user mb-1 mt-1">{{t.tr('Тип')}}</div>
     <p-dropdown styleClass="w-100" appendTo="body" id="type" [options]="types" [(ngModel)]="type"
                 ></p-dropdown>
   </div>
   <div>
-    <div class="big-text-user mb-1 mt-1">{{l.tr('Отдел')}}</div>
+    <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
     <p-dropdown styleClass="w-100" appendTo="body" id="department" [options]="departments" [(ngModel)]="department"
                 optionLabel="name" optionValue="name"></p-dropdown>
   <div>
-    <div class="big-text-user mb-1 mt-1">{{l.tr('Метод')}}</div>
+    <div class="big-text-user mb-1 mt-1">{{t.tr('Метод')}}</div>
     <p-dropdown styleClass="w-100" appendTo="body" id="method" [options]="methods" [(ngModel)]="method"
                 ></p-dropdown>
   </div>
 </div>
 
 <div class="form-footer-user">
-  <div tabindex="10" (click)="createRole()" pButton [label]="l.tr('Сохранить')" class="button-ok"></div>
+  <div tabindex="10" (click)="createRole()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
 </div>

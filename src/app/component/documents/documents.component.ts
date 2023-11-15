@@ -34,7 +34,7 @@ export class DocumentsComponent implements OnInit {
   projectNames: any[] = [];
 
 
-  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public l: LanguageService, private dialogService: DialogService, public auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
+  constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, public issueManager: IssueManagerService, public t: LanguageService, private dialogService: DialogService, public auth: AuthManagerService, private router: Router, private messageService: MessageService, public route: ActivatedRoute) { }
 
   // @ts-ignore
   @ViewChild('table') table: Table;
@@ -60,7 +60,7 @@ export class DocumentsComponent implements OnInit {
       }
       this.fillIssues();
     });
-    if (this.l.language == 'ru'){
+    if (this.t.language == 'ru'){
       this.config.setTranslation({
         clear: "Очистить",
         apply: "Принять",
@@ -143,7 +143,7 @@ export class DocumentsComponent implements OnInit {
     }
   }
   localeStatus(status: string){
-    if (this.l.language == 'ru'){
+    if (this.t.language == 'ru'){
       switch (status) {
         case 'Completed' : return 'Завершён';
         case 'In Work': return 'В работе';

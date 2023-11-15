@@ -15,7 +15,7 @@ import {Rights} from "../../../../domain/interfaces/rights";
 export class CreateRightComponent implements OnInit {
   name: string = '';
 
-  constructor( public lang: LanguageService, public ref: DynamicDialogRef, public rightService: RightService) { }
+  constructor( public t: LanguageService, public ref: DynamicDialogRef, public rightService: RightService) { }
 
   ngOnInit(): void {
   }

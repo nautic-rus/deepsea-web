@@ -27,7 +27,7 @@ export class UserDataComponent implements OnInit {
 
   loading = false;
 
-  constructor(private dialogService: DialogService, private messageService: MessageService, public auth: AuthManagerService, public rightService: RightService, public l: LanguageService,  public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) { }
+  constructor(private dialogService: DialogService, private messageService: MessageService, public auth: AuthManagerService, public rightService: RightService, public t: LanguageService,  public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) { }
 
   ngOnInit(): void {
     this.fillUser()
@@ -58,12 +58,12 @@ export class UserDataComponent implements OnInit {
       next: res => {
         this.loading = false;
         console.log(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.l.tr('Сохранение пользователя'), detail: this.l.tr('Данные пользователя сохранены')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Сохранение пользователя'), detail: this.t.tr('Данные пользователя сохранены')});
       },
       error: err => {
         this.loading = false;
         console.log(err);
-        this.messageService.add({key:'admin', severity:'error', summary: this.l.tr('Сохранение пользователя'), detail: this.l.tr('Не удалось сохранить данные пользователя')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Сохранение пользователя'), detail: this.t.tr('Не удалось сохранить данные пользователя')});
       }
     });
   }

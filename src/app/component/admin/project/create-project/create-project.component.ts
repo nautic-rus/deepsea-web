@@ -30,7 +30,7 @@ export class CreateProjectComponent implements OnInit {
   colsUsers: any[] = [];
   loading = false;
 
-  constructor(public l: LanguageService, private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public projectService: ProjectService, public auth: AuthManagerService, public userService: UserService) { }
+  constructor(public t: LanguageService, private messageService: MessageService, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public projectService: ProjectService, public auth: AuthManagerService, public userService: UserService) { }
 
   ngOnInit(): void {
     this.users = _.sortBy(this.conf.data[1] as Users[], x => x.name) ;
@@ -52,7 +52,7 @@ export class CreateProjectComponent implements OnInit {
           next: res => {
             this.loading = false;
             this.close();
-            this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание проекта'), detail: this.lang.tr('Новый проект создан')});
+            this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Создание проекта'), detail: this.t.tr('Новый проект создан')});
           },
           error: err => {
             console.log(err);
@@ -62,7 +62,7 @@ export class CreateProjectComponent implements OnInit {
       error: err => {
         console.log(err);
         this.loading = false;
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Создание проекта'), detail: this.lang.tr('Не удалось создать новый проект')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Создание проекта'), detail: this.t.tr('Не удалось создать новый проект')});
       }
     });
   }

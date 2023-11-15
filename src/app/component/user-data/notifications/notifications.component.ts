@@ -32,7 +32,7 @@ export class NotificationsComponent implements OnInit {
   methods: string[] = ['mail']
   types: string[] = ['documents']
 
-  constructor(public departmentService: DepartmentService, private dialogService: DialogService, private messageService: MessageService, public l: LanguageService, public auth: AuthManagerService, public issueManager: IssueManagerService, private router: Router, public t: LanguageService, public userService: UserService) {
+  constructor(public departmentService: DepartmentService, private dialogService: DialogService, private messageService: MessageService, public t: LanguageService, public auth: AuthManagerService, public issueManager: IssueManagerService, private router: Router, public userService: UserService) {
 
   }
 
@@ -100,8 +100,8 @@ export class NotificationsComponent implements OnInit {
         this.messageService.add({
           key: 'home',
           severity: 'success',
-          summary: this.l.tr('Удаление уведомления'),
-          detail: this.l.tr('Уведомление удалено')
+          summary: this.t.tr('Удаление уведомления'),
+          detail: this.t.tr('Уведомление удалено')
         });
         this.deletingNotifications = []
         this.selectedNotifications = []
@@ -111,8 +111,8 @@ export class NotificationsComponent implements OnInit {
         this.messageService.add({
           key: 'home',
           severity: 'error',
-          summary: this.l.tr('Удаление уведомления'),
-          detail: this.l.tr('Не удалось удалить уведомление')
+          summary: this.t.tr('Удаление уведомления'),
+          detail: this.t.tr('Не удалось удалить уведомление')
         });
         this.deletingNotifications = []
         this.selectedNotifications = []

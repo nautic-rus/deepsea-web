@@ -18,7 +18,7 @@ export class NestingPipeComponent implements OnInit {
   systems: any[] = [];
   zones: any[] = [];
 
-  constructor(public l: LanguageService, public s: SpecManagerService) { }
+  constructor(public t: LanguageService, public s: SpecManagerService) { }
 
   ngOnInit(): void {
     this.s.getPipeSegsByProject(this.project).then(res => {

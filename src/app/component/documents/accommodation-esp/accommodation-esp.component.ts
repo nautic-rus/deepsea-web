@@ -162,7 +162,7 @@ export class AccommodationEspComponent implements OnInit {
   spoolsArchiveContent: any[] = [];
 
 
-  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
+  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -328,7 +328,7 @@ export class AccommodationEspComponent implements OnInit {
 
   localeGender(userId: string){
     let find = this.auth.users.find(x => x.login == userId);
-    return find != null && find.gender == 'female' && this.l.language == 'ru' ? 'а' : '';
+    return find != null && find.gender == 'female' && this.t.language == 'ru' ? 'а' : '';
   }
   getMessages(issue: Issue) {
     let res: any[] = [];
@@ -471,7 +471,7 @@ export class AccommodationEspComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   localeStatus(status: string){
-    if (this.l.language == 'ru'){
+    if (this.t.language == 'ru'){
       switch (status) {
         case 'Completed' : return 'Завершён';
         case 'In Work': return 'В работе';

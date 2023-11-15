@@ -27,7 +27,7 @@ export class CreateNotificationComponent implements OnInit {
   type: string = ""
   method: string = ""
 
-  constructor(public l: LanguageService, private messageService: MessageService, public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public userService: UserService) {
+  constructor(public t: LanguageService, private messageService: MessageService, public conf: DynamicDialogConfig, public ref: DynamicDialogRef, public userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -60,13 +60,13 @@ export class CreateNotificationComponent implements OnInit {
     this.userService.createNotification(notification).subscribe({
       next: res => {
         console.log(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание уведомления'), detail: this.lang.tr('Новое уведомление создано')})
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Создание уведомления'), detail: this.t.tr('Новое уведомление создано')})
         this.ref.close(res);
       },
       error: err => {
         console.log(err);
         this.ref.close(err);
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Создание уведомления'), detail: this.lang.tr('Не удалось создать новое уведомление')})
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Создание уведомления'), detail: this.t.tr('Не удалось создать новое уведомление')})
       }
     });
   }

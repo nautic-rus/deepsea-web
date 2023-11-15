@@ -29,62 +29,62 @@
                 <div class="pr-10 cxy">
                   <img src="assets/icons/plus3.svg" height="18">
                 </div>
-                <div class="cxy">{{l.tr('Новая задача')}}</div>
+                <div class="cxy">{{t.tr('Новая задача')}}</div>
               </div>
             </div>
             <p-multiSelect class="mr-10" [options]="colHeaders" [(ngModel)]="selectedCols" (ngModelChange)="saveSelectedCols()"
-                           [selectedItemsLabel]="l.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="l.tr('Выберите колонки')">
+                           [selectedItemsLabel]="t.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="t.tr('Выберите колонки')">
             </p-multiSelect>
             <div class="mr-10">
-              <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset(); showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="l.tr('Очистить фильтры')" tooltipPosition="top">
+              <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset(); showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
                 <img src="assets/icons/filter-no.svg" height="18">
               </div>
             </div>
             <div class="mr-10">
-              <div (click)="importXls()" [pTooltip]="l.tr('Импорт')" tooltipPosition="top" class="materials-button yellow-button cxy">
+              <div (click)="importXls()" [pTooltip]="t.tr('Импорт')" tooltipPosition="top" class="materials-button yellow-button cxy">
                 <img src="assets/icons/import1.svg" height="18">
               </div>
             </div>
             <div class="mr-10">
-              <div (click)="exportXls()" [pTooltip]="l.tr('Экспорт XLS')" tooltipPosition="top" class="materials-button green-button cxy">
+              <div (click)="exportXls()" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" class="materials-button green-button cxy">
                 <img src="assets/icons/xls2.svg" height="26">
               </div>
             </div>
             <div class="mr-10">
-              <div (click)="exportPDF()" [pTooltip]="l.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+              <div (click)="exportPDF()" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
                 <img src="assets/icons/pdf2.svg" height="26">
               </div>
             </div>
             <div class="mr-10">
-              <div class="materials-button transparent-button cxy" [class.clicked]="showAssigned" (click)="showAssigned = !showAssigned" [pTooltip]="l.tr('Исполнитель')" tooltipPosition="top">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showAssigned" (click)="showAssigned = !showAssigned" [pTooltip]="t.tr('Исполнитель')" tooltipPosition="top">
                 <img *ngIf="showAssigned" src="assets/icons/user-assigned-white.svg" height="18">
                 <img *ngIf="!showAssigned" src="assets/icons/user-assigned-gray.svg" height="18">
               </div>
             </div>
             <div class="mr-10">
-              <div class="materials-button transparent-button cxy" [class.clicked]="showResponsible" (click)="showResponsible = !showResponsible" [pTooltip]="l.tr('Ответственный')" tooltipPosition="top">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showResponsible" (click)="showResponsible = !showResponsible" [pTooltip]="t.tr('Ответственный')" tooltipPosition="top">
                 <img *ngIf="showResponsible" src="assets/icons/user-responsible-white.svg" height="18">
                 <img *ngIf="!showResponsible" src="assets/icons/user-responsible-gray.svg" height="18">
               </div>
             </div>
             <div class="mr-10">
-              <div class="materials-button transparent-button cxy" [class.clicked]="showStartedBy" (click)="showStartedBy = !showStartedBy" [pTooltip]="l.tr('Автор')" tooltipPosition="top">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showStartedBy" (click)="showStartedBy = !showStartedBy" [pTooltip]="t.tr('Автор')" tooltipPosition="top">
                 <img *ngIf="showStartedBy" src="assets/icons/user-author-white.svg" height="18">
                 <img *ngIf="!showStartedBy" src="assets/icons/user-author-gray.svg" height="18">
               </div>
             </div>
             <div class="mr-10">
-              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted" [pTooltip]="l.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
+              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted" [pTooltip]="t.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">
                 <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">
                 <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">
               </div>
             </div>
 
             <div class="mr-10 cxy">
-              {{l.tr('Количество задач:')}}
+              {{t.tr('Количество задач:')}}
               <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
               <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
-              {{l.tr('(Всего:')}} {{dt.value.length}})
+              {{t.tr('(Всего:')}} {{dt.value.length}})
             </div>
 
             <div class="df c p-ml-auto">
@@ -98,7 +98,7 @@
 
             <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="l.tr('Поиск...')" class="border" />
+            <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="t.tr('Поиск...')" class="border" />
           </span>
           </div>
         </ng-template>
@@ -107,12 +107,12 @@
             <th style="width:26px"></th>
             <th style="width:148px"  *ngFor="let col of columns" [pSortableColumn]="col.field">
               <div class="header">
-                {{l.tr(col.header)}}
+                {{t.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
                 <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
                 <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" display="chip" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                    <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" display="chip" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
