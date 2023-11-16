@@ -16,18 +16,23 @@
     </ng-template>
   </p-dropdown>
   <div>
+    <div class="big-text mb-1 mt-1">Поставить задачу в конец плана</div>
+  </div>
+  <p-inputSwitch [(ngModel)]="toPlan"></p-inputSwitch>
+  <div [class.disabled-button]="toPlan">
     <div class="big-text mb-1 mt-1">{{t.tr('Дата начала')}}</div>
     <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="startDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
-    <div class="big-text mb-1 mt-1">{{t.tr('Срок завершения')}}</div>
-    <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+<!--    <div class="big-text mb-1 mt-1">{{t.tr('Срок завершения')}}</div>-->
+<!--    <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>-->
   </div>
-  <div>
-    <div class="big-text mb-1 mt-1">{{t.tr('Сделать задачу сверхурочной')}}</div>
-  </div>
-  <p-inputSwitch [(ngModel)]="overtime"></p-inputSwitch>
+
+<!--  <div>-->
+<!--    <div class="big-text mb-1 mt-1">{{t.tr('Сделать задачу сверхурочной')}}</div>-->
+<!--  </div>-->
+<!--  <p-inputSwitch [(ngModel)]="overtime"></p-inputSwitch>-->
   <div class="form-footer pt-10">
     <div class="mr-5 cx">
-      <div [class.disabled-button]="selectedUser == '' || dueDate.getTime() == 0" tabindex="10" (click)="commit()" class="button-ok cxy">{{t.tr('Назначить')}}</div>
+      <div [class.disabled-button]="selectedUser == ''" tabindex="10" (click)="commit()" class="button-ok cxy">{{t.tr('Назначить')}}</div>
     </div>
     <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>

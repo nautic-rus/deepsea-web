@@ -20,6 +20,7 @@ export class AssignComponent implements OnInit {
   dueDate: Date = new Date();
   today: Date = new Date();
   overtime = false;
+  toPlan = true;
   users: User[] = [];
 
   constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef,public t: LanguageService) { }
@@ -38,13 +39,46 @@ export class AssignComponent implements OnInit {
   }
 
   commit() {
-    this.issueManager.assignUser(this.issue.id, this.selectedUser, this.startDate.getTime().toString(), this.dueDate.getTime().toString(), this.overtime ? 'Да' : 'Нет', this.issue.action, this.auth.getUser().login).then(res => {
-      this.issue.status = 'AssignedTo';
-      this.issue.action = this.issue.status;
-      this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
-        this.ref.close();
-      });
+    this.auth.getPlanIssue(this.issue.id).subscribe(planIssue => {
+      let actualManHours = planIssue[0].consumed;
+      let amount = this.issue.plan_hours - actualManHours;
+      if (amount <= 0){
+        alert('Не хватает плановых часов для назначения задачи');
+        return;
+      }
+      let user = this.auth.users.find(x => x.userName == this.selectedUser);
+      if (user == null){
+        return;
+      }
+      if (this.toPlan){
+        this.auth.addPlanInterval(this.issue.id, user.id, new Date().getTime(), amount, 0, this.auth.getUser().login).subscribe((res) => {
+          if (res == 'success'){
+            this.ref.close();
+          }
+          else{
+            alert(res);
+          }
+        })
+      }
+      else {
+        this.auth.insertPlanInterval(this.issue.id, user.id, this.startDate.getTime(), amount, 0, this.auth.getUser().login).subscribe((res) => {
+          if (res == 'success'){
+            this.ref.close();
+          }
+          else{
+            alert(res);
+          }
+        })
+      }
     });
+
+    // this.issueManager.assignUser(this.issue.id, this.selectedUser, this.startDate.getTime().toString(), this.dueDate.getTime().toString(), this.overtime ? 'Да' : 'Нет', this.issue.action, this.auth.getUser().login).then(res => {
+    //   this.issue.status = 'AssignedTo';
+    //   this.issue.action = this.issue.status;
+    //   this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+    //     this.ref.close();
+    //   });
+    // });
   }
   getUsers() {
     return this.auth.users.filter(x => x.visibility.includes('c'));
