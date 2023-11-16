@@ -51,7 +51,7 @@ export class CreateUserComponent implements OnInit {
   rights: Rights[] = [];
   loading = false;
 
-  constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public lang: LanguageService, public rightService: RightService, public ref: DynamicDialogRef, public userService: UserService, public projectService: ProjectService, public auth: AuthManagerService, public roleService: RoleService) {
+  constructor(private messageService: MessageService, public conf: DynamicDialogConfig, public t: LanguageService, public rightService: RightService, public ref: DynamicDialogRef, public userService: UserService, public projectService: ProjectService, public auth: AuthManagerService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -138,12 +138,12 @@ export class CreateUserComponent implements OnInit {
       next: res => {
         this.loading = false;
         console.log(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание пользователя'), detail: this.lang.tr('Новый пользователь создан')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Создание пользователя'), detail: this.t.tr('Новый пользователь создан')});
       },
       error: err => {
         this.loading = false;
         console.log(err);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание пользователя'), detail: this.lang.tr('Не удалось создать нового пользователя')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Создание пользователя'), detail: this.t.tr('Не удалось создать нового пользователя')});
       }
     });
   }

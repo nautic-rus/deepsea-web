@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
   birthday: Date;
   loading = false;
 
-  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public auth: AuthManagerService, public rightService: RightService, public lang: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
+  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public auth: AuthManagerService, public rightService: RightService, public t: LanguageService,  public ref: DynamicDialogRef, public departmentService: DepartmentService, public projectService: ProjectService, public userService: UserService, public roleService: RoleService) {
     this.genders = [
       {name: 'male'},
       {name: 'female'}
@@ -109,12 +109,12 @@ export class UserComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.ref.close(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление пользователя'), detail: this.lang.tr('Пользователь удалён')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Удаление пользователя'), detail: this.t.tr('Пользователь удалён')});
         this.loading = false;
       } else {
         this.loading = false;
         console.log(res);
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление пользователя'), detail: this.lang.tr('Не удалось удалить пользователя')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Удаление пользователя'), detail: this.t.tr('Не удалось удалить пользователя')});
       }
     });
   }
@@ -124,12 +124,12 @@ export class UserComponent implements OnInit {
     this.userService.sendLogPass(this.user.id).subscribe({
       next: res => {
         this.loading = false;
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Данные для входа'), detail: this.lang.tr('Данные для входа доставлены')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Данные для входа'), detail: this.t.tr('Данные для входа доставлены')});
         console.log(res);
       },
       error: err => {
         this.loading = false;
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Данные для входа'), detail: this.lang.tr('Не удалось доставить данные для входа')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Данные для входа'), detail: this.t.tr('Не удалось доставить данные для входа')});
         console.log(err);
       }
     });
@@ -144,12 +144,12 @@ export class UserComponent implements OnInit {
       next: res => {
         this.loading = false;
         console.log(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Сохранение пользователя'), detail: this.lang.tr('Данные пользователя сохранены')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Сохранение пользователя'), detail: this.t.tr('Данные пользователя сохранены')});
       },
       error: err => {
         this.loading = false;
         console.log(err);
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Сохранение пользователя'), detail: this.lang.tr('Не удалось сохранить данные пользователя')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Сохранение пользователя'), detail: this.t.tr('Не удалось сохранить данные пользователя')});
       }
     });
   }

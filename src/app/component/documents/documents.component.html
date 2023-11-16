@@ -24,7 +24,7 @@
         </div>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+          <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
         </span>
       </div>
     </div>
@@ -77,34 +77,34 @@
                [globalFilterFields]="['id','doc_number','name','status']">
         <ng-template pTemplate="header">
           <tr class="">
-            <th pSortableColumn="doc_number" class="lxy w-100">{{l.tr('Номер чертежа')}}
+            <th pSortableColumn="doc_number" class="lxy w-100">{{t.tr('Номер чертежа')}}
               <p-sortIcon field="doc_number"></p-sortIcon>
             </th>
-            <th pSortableColumn="name" class="lxy w-100">{{l.tr('Название')}}
+            <th pSortableColumn="name" class="lxy w-100">{{t.tr('Название')}}
               <p-sortIcon field="name"></p-sortIcon>
             </th>
-            <th pSortableColumn="department" class="cxy w-100">{{l.tr('Отдел')}}
+            <th pSortableColumn="department" class="cxy w-100">{{t.tr('Отдел')}}
               <p-sortIcon field="department"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                   </p-multiSelect>
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th *ngIf="auth.getUser().groups.includes('Nautic_Rus')" pSortableColumn="status" class="cxy w-100">{{l.tr('Статус')}}
+            <th *ngIf="auth.getUser().groups.includes('Nautic_Rus')" pSortableColumn="status" class="cxy w-100">{{t.tr('Статус')}}
               <p-sortIcon field="status"></p-sortIcon>
               <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">
+                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                   </p-multiSelect>
                 </ng-template>
               </p-columnFilter>
             </th>
-            <th pSortableColumn="stage" class="lxy w-100">{{l.tr('Этап')}}
+            <th pSortableColumn="stage" class="lxy w-100">{{t.tr('Этап')}}
               <p-sortIcon field="stage"></p-sortIcon>
             </th>
-            <th class="w-5">{{l.tr('Ссылка')}}</th>
+            <th class="w-5">{{t.tr('Ссылка')}}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-issue>

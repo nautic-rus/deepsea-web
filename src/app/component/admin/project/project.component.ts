@@ -26,7 +26,7 @@ export class ProjectComponent implements OnInit {
   loading = false;
   managers: string[] = []
 
-  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public lang: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public l: LanguageService, public auth: AuthManagerService) { }
+  constructor(private dialogService: DialogService, private messageService: MessageService, public conf: DynamicDialogConfig, public userService: UserService, public t: LanguageService, public ref: DynamicDialogRef, public projectService: ProjectService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     console.log(this.conf.data)
@@ -65,11 +65,11 @@ export class ProjectComponent implements OnInit {
       }).onClose.subscribe(res => {
         if (res == 'success'){
           this.ref.close(res);
-          this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Проект удалён')});
+          this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Удаление проекта'), detail: this.t.tr('Проект удалён')});
           this.loading = false;
         } else {
           this.loading = false;
-          this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление проекта'), detail: this.lang.tr('Не удалось удалить проект')});
+          this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Удаление проекта'), detail: this.t.tr('Не удалось удалить проект')});
           }
       });
   }
@@ -89,12 +89,12 @@ export class ProjectComponent implements OnInit {
           }
         })
         this.loading = false;
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Сохранение проекта'), detail: this.lang.tr('Проект сохранён')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Сохранение проекта'), detail: this.t.tr('Проект сохранён')});
       },
       error: err => {
         console.log(err);
         this.loading = false;
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Сохранение проекта'), detail: this.lang.tr('Не удалось сохранить проект')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Сохранение проекта'), detail: this.t.tr('Не удалось сохранить проект')});
       }
     });
 

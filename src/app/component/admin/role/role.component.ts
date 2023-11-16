@@ -23,7 +23,7 @@ export class RoleComponent implements OnInit {
   name: any;
   checkBox = false;
   loading = false;
-  constructor(private dialogService: DialogService, private pageService: PageService, private messageService: MessageService, public conf: DynamicDialogConfig, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
+  constructor(private dialogService: DialogService, private pageService: PageService, private messageService: MessageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
     this.fillRights();
@@ -61,11 +61,11 @@ export class RoleComponent implements OnInit {
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.ref.close(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Удаление роли'), detail: this.lang.tr('Роль удалена')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Удаление роли'), detail: this.t.tr('Роль удалена')});
         this.loading = false;
       } else {
         this.loading = false;
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Удаление роли'), detail: this.lang.tr('Не удалось удалить роль')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Удаление роли'), detail: this.t.tr('Не удалось удалить роль')});
       }
     });
   }
@@ -79,17 +79,17 @@ export class RoleComponent implements OnInit {
         if (this.checkBox) {
           this.loading = false;
           this.roleService.setRoleForAll(this.role.name);
-          this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Сохранение роли'), detail: this.lang.tr('Данные роли сохранены и применены ко всем пользователям')});
+          this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Сохранение роли'), detail: this.t.tr('Данные роли сохранены и применены ко всем пользователям')});
         }
         else{
           this.loading = false;
-          this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Сохранение роли'), detail: this.lang.tr('Данные роли сохранены')});
+          this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Сохранение роли'), detail: this.t.tr('Данные роли сохранены')});
         }
       },
       error: err => {
         this.loading = false;
         console.log(err);
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Сохранение роли'), detail: this.lang.tr('Не удалось сохранить данные роли')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Сохранение роли'), detail: this.t.tr('Не удалось сохранить данные роли')});
       }
     });
   }

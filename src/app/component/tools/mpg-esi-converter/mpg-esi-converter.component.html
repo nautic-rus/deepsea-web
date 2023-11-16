@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="mb-15">
-    <div tabindex="10" (click)="inputFiles.click()" pButton [label]="t.tr ('Открыть файлы')" class="button-ok"></div>
+    <div tabindex="10" (click)="inputFiles.click()" class="button-ok cxy">{{t.tr('Открыть файлы')}}</div>
     <input #inputFiles hidden type="file" name="name" accept=".txt" (change)="handleFileInput(inputFiles.files)" multiple/>
   </div>
   <div class="mb-15">
@@ -23,7 +23,7 @@
   </div>
   <div class="footer-delete df content-end mt-2">
     <div class="mr-20 cx">
-      <div tabindex="10" (click)="download()" pButton [label]="t.tr ('Загрузить')" class="button-ok"></div>
+      <div tabindex="10" (click)="download()" class="button-ok cxy">{{t.tr('Загрузить')}}</div>
     </div>
   </div>
 </div>

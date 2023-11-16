@@ -4,7 +4,7 @@
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
       <div class="mr-2">rev{{issue.revision}}</div>
-      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top"
+      <div class="mr-10" [pTooltip]="t.tr('Get Spec')" tooltipPosition="top"
            *ngIf="'Electric' == auth.getUser().department" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <svg class="icon-top-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -14,13 +14,13 @@
         </div>
       </div>
       <div class="mr-10">
-        <div [pTooltip]="l.tr('Export Sketches')" tooltipPosition="top" *ngIf="'Electric' == auth.getUser().department"
+        <div [pTooltip]="t.tr('Export Sketches')" tooltipPosition="top" *ngIf="'Electric' == auth.getUser().department"
              (click)="exportSketches()" class="materials-button green-button cxy">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')"
+        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')"
              *ngIf="'Electric' == auth.getUser().department" tooltipPosition="top" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="20">
         </div>
@@ -43,7 +43,7 @@
         <div *ngIf="selectedView == 'tiles'">
           <div class="tile">
             <div *ngIf="trays.length != 0" class="card-tile-t title-bold px-10">
-              {{l.tr('Сводные данные')}}
+              {{t.tr('Сводные данные')}}
             </div>
             <div class="w-100" *ngIf="trays.length != 0">
               <div *ngFor="let tray of traysByCode; let a = index" class="card-tile-t card-grid"
@@ -133,17 +133,17 @@
               </div>
             </div>
             <div *ngIf="cableBoxes.length != 0" class="card-tile-t title-bold px-10">
-              {{l.tr('Кабельные коробки')}}
+              {{t.tr('Кабельные коробки')}}
             </div>
             <div *ngIf="cableBoxes.length != 0" class="bottom-card ovf-auto pl-10 pr-10 card-tile-t">
               <div class="df sticky">
-                <div class="w-10 table-header-column cy">{{l.tr('USER ID')}}</div>
-                <div class="w-30 table-header-column cy">{{l.tr('DESCRIPTION')}}</div>
-                <!--                <div class="w-10 table-header-column cy">{{l.tr('ZONE')}}</div>-->
-                <!--                <div class="w-20 table-header-column cy">{{l.tr('FSQ')}}</div>-->
-                <div class="w-10 table-header-column cy">{{l.tr('WEIGHT')}}</div>
-                <div class="w-30 table-header-column cy">{{l.tr('COORDINATES')}}</div>
-                <div class="w-20 table-header-column cy">{{l.tr('STOCK CODE')}}</div>
+                <div class="w-10 table-header-column cy">{{t.tr('USER ID')}}</div>
+                <div class="w-30 table-header-column cy">{{t.tr('DESCRIPTION')}}</div>
+                <!--                <div class="w-10 table-header-column cy">{{t.tr('ZONE')}}</div>-->
+                <!--                <div class="w-20 table-header-column cy">{{t.tr('FSQ')}}</div>-->
+                <div class="w-10 table-header-column cy">{{t.tr('WEIGHT')}}</div>
+                <div class="w-30 table-header-column cy">{{t.tr('COORDINATES')}}</div>
+                <div class="w-20 table-header-column cy">{{t.tr('STOCK CODE')}}</div>
               </div>
               <div *ngFor="let cableBox of cableBoxes; let c = index" class="df cursor-pointer info-row">
                 <div class="w-10 table-body cy">{{cableBox.userId}}</div>
@@ -185,11 +185,11 @@
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'"
-               [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
+               [class.selectedTab]="selectedHeadTab ==  'Files'">{{t.tr('Файлы')}}</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'"
-               [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
+               [class.selectedTab]="selectedHeadTab ==  'Misc'">{{t.tr('Задачи')}}</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'"
-               [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
+               [class.selectedTab]="selectedHeadTab ==  'Archive'">{{t.tr('Архив')}}</div>
         </div>
 
         <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
@@ -278,7 +278,7 @@
 
 
                       <div class="cxy" *ngIf="file.name.includes('.dxf')">
-                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
+                        <div [pTooltip]="t.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
                              (click)="showDxfInViewer(file.url); $event.stopPropagation()">
                           <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
                                xmlns="http://www.w3.org/2000/svg">
@@ -289,7 +289,7 @@
                           </svg>
                         </div>
                       </div>
-                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')"
+                      <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="t.tr('Show Cutting Map')"
                            (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
                         <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
@@ -352,11 +352,11 @@
         </div>
         <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
           <div class="subtask-grid-misc py-10">
-            <div class="head-subtask">{{l.tr('Тип')}}</div>
-            <div class="head-subtask">{{l.tr('Название')}}</div>
-            <div class="head-subtask">{{l.tr('Отв.')}}</div>
-            <div class="head-subtask">{{l.tr('Исп.')}}</div>
-            <div class="head-subtask">{{l.tr('Статус')}}</div>
+            <div class="head-subtask">{{t.tr('Тип')}}</div>
+            <div class="head-subtask">{{t.tr('Название')}}</div>
+            <div class="head-subtask">{{t.tr('Отв.')}}</div>
+            <div class="head-subtask">{{t.tr('Исп.')}}</div>
+            <div class="head-subtask">{{t.tr('Статус')}}</div>
           </div>
           <div class="">
             <div class="subtask" *ngFor="let childIssue of miscIssues">
@@ -386,7 +386,7 @@
               <span
                 class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
               <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')">
-                <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=""
+                <div [pTooltip]="t.tr('Show In Viewer')" tooltipPosition="top" class=""
                      (click)="showDxfInViewer(file.url); $event.stopPropagation()">
                   <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
                        xmlns="http://www.w3.org/2000/svg">

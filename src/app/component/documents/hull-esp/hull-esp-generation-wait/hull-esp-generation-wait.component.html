@@ -56,7 +56,7 @@
   </div>
   <div class="form-footer-create" *ngIf="selectRevision">
     <div class="mr-1 cx">
-      <div tabindex="10" (click)="getEsp()" pButton [label]="t.tr('Создать')" class="button-ok"></div>
+      <div tabindex="10" (click)="getEsp()" class="button-ok cxy">{{t.tr('Создать')}}</div>
     </div>
     <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>

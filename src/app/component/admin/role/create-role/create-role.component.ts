@@ -24,7 +24,7 @@ export class CreateRoleComponent implements OnInit {
   description: string = "";
   loading = false;
 
-  constructor(private pageService: PageService, private messageService: MessageService, public lang: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
+  constructor(private pageService: PageService, private messageService: MessageService, public t: LanguageService, public ref: DynamicDialogRef, public roleService: RoleService, public rightService: RightService) { }
 
   ngOnInit(): void {
     this.fillRights();
@@ -58,12 +58,12 @@ export class CreateRoleComponent implements OnInit {
       next: res => {
         this.loading = false;
         console.log(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.lang.tr('Создание роли'), detail: this.lang.tr('Роль создана')});
+        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Создание роли'), detail: this.t.tr('Роль создана')});
       },
       error: err => {
         this.loading = false;
         console.log(err);
-        this.messageService.add({key:'admin', severity:'error', summary: this.lang.tr('Создание роли'), detail: this.lang.tr('Не удалось создать роль')});
+        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Создание роли'), detail: this.t.tr('Не удалось создать роль')});
       }
     });
   }

@@ -1,40 +1,40 @@
 <div class="center-role">
   <div class="header-user-card">
-    <div class="header-user-text">{{lang.tr('Роли')}}</div>
+    <div class="header-user-text">{{t.tr('Роли')}}</div>
     <div class="task-button-user cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Роль')}}</div>
       <input class="width-211" type="text" id="name" pInputText [(ngModel)]="role.name">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Описание')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Описание')}}</div>
       <input class="width-211" type="text" id="description" pInputText [(ngModel)]="role.description">
     </div>
   </div>
   <div>
-    <div class="big-text-user mb-1 mt-1">{{lang.tr('Права')}}</div>
+    <div class="big-text-user mb-1 mt-1">{{t.tr('Права')}}</div>
     <p-multiSelect styleClass="w-100" appendTo="body" id="rights" [options]="rights" [(ngModel)]="role.rights"
                    optionLabel="name" optionValue="name"></p-multiSelect>
   </div>
   <div>
-    <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные страницы')}}</div>
+    <div class="big-text-user mb-1 mt-1">{{t.tr('Доступные страницы')}}</div>
     <p-multiSelect styleClass="w-100" appendTo="body" id="pages" [options]="pages" [(ngModel)]="role.pages"
                    optionLabel="name" optionValue="name"></p-multiSelect>
   </div>
 <!--  <div class="mb-1 mt-1">-->
-<!--    <p-checkbox name="all" [binary]="true" [(ngModel)]="checkBox" label="{{lang.tr('Применить ко всем')}}"></p-checkbox>-->
+<!--    <p-checkbox name="all" [binary]="true" [(ngModel)]="checkBox" label="{{t.tr('Применить ко всем')}}"></p-checkbox>-->
 <!--  </div>-->
 </div>
 
 <div class="form-footer-user">
   <div class="mr-5 cx" *ngIf="!loading">
-    <div *ngIf="!loading" tabindex="11" (click)="deleteRole()" pButton [label]="lang.tr('Удалить')" class="button-cancel ml-1"></div>
+    <div *ngIf="!loading" tabindex="11" (click)="deleteRole()" pButton [label]="t.tr('Удалить')" class="button-cancel ml-1"></div>
   </div>
-  <div *ngIf="!loading" tabindex="10" (click)="saveRole()" pButton [label]="lang.tr('Сохранить')" class="button-ok"></div>
+  <div *ngIf="!loading" tabindex="10" (click)="saveRole()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
   <div class="cxy height-spinner" *ngIf="loading">
     <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff" animationDuration="1s" ></p-progressSpinner>
   </div>

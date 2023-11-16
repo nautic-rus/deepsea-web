@@ -125,15 +125,13 @@
         </quill-editor>
         <div class="df mt-5">
           <div class="mr-5 pb-20">
-            <div (click)="commitIssueEdit($event)" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
+            <div (click)="commitIssueEdit($event)" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
           </div>
           <div>
             <div (click)="cancelIssueEdit()" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
           </div>
         </div>
       </div>
-
-
 
       <div *ngIf="issue.issue_type == 'QNA'">
         <div class="mb-1 mt-1">
@@ -220,18 +218,11 @@
               <div class="mr-5 cx">
                 <div tabindex="11" (click)="answer = false; answerMessage = answerMessageBeforeEdit" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
               </div>
-              <div tabindex="10" (click)="sendAnswer()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
+              <div tabindex="10" (click)="sendAnswer()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
             </div>
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
 
       <div class="big-text mt-1">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
       <div class="attachments-issue">
@@ -289,7 +280,7 @@
             <div [class.disabled]="changePreparedness()" class="minus-plus cxy cursor-pointer" (click)="ready.nesting = limitPreparedness(ready.nesting + 10)">+</div>
           </div>
           <div class="mt-10 flex-end">
-            <div tabindex="10" (click)="updatePreparedness()" pButton [label]="t.tr('Обновить готовность')" class="button-ok"></div>
+            <div tabindex="10" (click)="updatePreparedness()" class="button-ok cxy">{{t.tr('Обновить готовность')}}</div>
 
           </div>
 
@@ -366,7 +357,7 @@
           </quill-editor>
           <div class="df mt-5">
             <div class="mr-5 pb-20">
-              <div (click)="commitIssueEdit($event)" pRipple pButton [label]="t.tr('Сохранить')" class="button"></div>
+              <div (click)="commitIssueEdit($event)" pRipple class="button-ok cxy">{{t.tr('Сохранить')}}</div>
             </div>
             <div>
               <div (click)="cancelIssueEdit()" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
@@ -377,7 +368,7 @@
 
       <div class="df space-between mt-1 mb-5">
         <div class="big-text">{{t.tr('Связанные задачи')}}</div>
-        <div (click)="addCombinedIssue()" class="button-add-l cxy cursor-pointer">{{t.tr('Привязать задачу')}}</div>
+        <div (click)="addCombinedIssue()" class="button-ok cxy">{{t.tr('Привязать задачу')}}</div>
       </div>
 
       <div [collapse]="contentCombined" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="issue.combined_issues.length > 0 && auth.hasPerms('visible_related_task')" (click)="contentClick('combined_issues')">
@@ -774,7 +765,7 @@
           <div class="mr-5 cx">
             <div tabindex="11" (click)="comment = false" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
           </div>
-          <div tabindex="10" (click)="sendMessage()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
+          <div tabindex="10" (click)="sendMessage()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
         </div>
 
       </div>

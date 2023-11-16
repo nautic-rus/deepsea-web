@@ -142,7 +142,7 @@ export class CreateTaskComponent implements OnInit {
         }
       }
     }
-  constructor(private config: PrimeNGConfig, public lang: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, public l: LanguageService) { }
+  constructor(private config: PrimeNGConfig, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
     this.issue = this.conf.data[0] as Issue;
     this.action = this.conf.data[1];
@@ -212,7 +212,7 @@ export class CreateTaskComponent implements OnInit {
     this.sfiCodes.splice(0, this.sfiCodes.length);
     this.issues.getSfiCodes().then(sfiCodes => {
       console.log(sfiCodes);
-      sfiCodes.map(x => new LV(this.l.language == 'ru' ? (x.code + ' - ' + x.ru) : (x.code + ' - ' + x.en), x.code)).forEach(sfiCode => {
+      sfiCodes.map(x => new LV(this.t.language == 'ru' ? (x.code + ' - ' + x.ru) : (x.code + ' - ' + x.en), x.code)).forEach(sfiCode => {
         this.sfiCodes.push(sfiCode);
       });
       if (this.sfiCodes.length > 0) {
@@ -514,7 +514,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   changeLang(label: string) {
-    if (this.lang.language == 'ru'){
+    if (this.t.language == 'ru'){
       return label.replace('Yes', 'Да').replace('No', 'Нет');
     }
     else {

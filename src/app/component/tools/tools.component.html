@@ -20,8 +20,8 @@
             </div>
           </div>
           <div class="body-button-card my-15 cx">
-            <div tabindex="10" (click)="getBillOfMaterials()" pButton [label]="t.tr ('Сгенерировать')" class="button-ok" *ngIf="billOfMaterials == ''" [class.button-generate]="wait.includes('bill-of-materials')"></div>
-            <div tabindex="10" (click)="download(billOfMaterials)" pButton [label]="t.tr ('Скачать')" class="button-ok" *ngIf="billOfMaterials != ''"></div>
+            <div tabindex="10" (click)="getBillOfMaterials()" *ngIf="billOfMaterials == ''" [class.button-generate]="wait.includes('bill-of-materials')" class="button-ok cxy">{{t.tr('Сгенерировать')}}</div>
+            <div tabindex="10" (click)="download(billOfMaterials)" *ngIf="billOfMaterials != ''" class="button-ok cxy">{{t.tr('Скачать')}}</div>
           </div>
           <div class="footer-card pt-5">
             <div class="px-10">
@@ -55,9 +55,9 @@
 
           </div>
           <div class="body-button-card my-15 cx">
-            <div tabindex="10" (click)="getTraysByZonesAndSystems()" pButton [label]="t.tr ('Открыть')" class="button-ok"></div>
+            <div tabindex="10" (click)="getTraysByZonesAndSystems()" class="button-ok cxy">{{t.tr('Открыть')}}</div>
             <div class="pl-10">
-              <div tabindex="10" (click)="fixTrayBundle()" pButton [label]="t.tr ('Fix Bundle')" class="button-ok"></div>
+              <div tabindex="10" (click)="fixTrayBundle()" class="button-ok cxy">{{t.tr('Fix Bundle')}}</div>
             </div>
           </div>
           <div class="footer-card pt-5">
@@ -95,8 +95,8 @@
               </div>
             </div>
             <div class="body-button-card my-15 cx">
-              <div tabindex="10" (click)="getBillOfMaterials()" pButton [label]="t.tr ('Сгенерировать')" class="button-ok" *ngIf="billOfMaterials == ''" [class.button-generate]="wait.includes('bill-of-materials')"></div>
-              <div tabindex="10" (click)="download(billOfMaterials)" pButton [label]="t.tr ('Скачать')" class="button-ok" *ngIf="billOfMaterials != ''"></div>
+              <div tabindex="10" (click)="getBillOfMaterials()" *ngIf="billOfMaterials == ''" [class.button-generate]="wait.includes('bill-of-materials')" class="button-ok cxy">{{t.tr('Сгенерировать')}}</div>
+              <div tabindex="10" (click)="download(billOfMaterials)" *ngIf="billOfMaterials != ''" class="button-ok cxy">{{t.tr('Скачать')}}</div>
             </div>
             <div class="footer-card pt-5">
               <div class="px-10">
@@ -119,7 +119,7 @@
               </div>
               <div class="body-button-card height-100 my-15 cx">
                 <div class="cxy">
-                  <div tabindex="10" (click)="mpgEsiConverter()" pButton [label]="t.tr ('Конвертировать')" class="button-ok"></div>
+                  <div tabindex="10" (click)="mpgEsiConverter()" class="button-ok cxy">{{t.tr('Конвертировать')}}</div>
                 </div>
               </div>
             </div>

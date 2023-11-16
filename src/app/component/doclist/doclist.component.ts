@@ -34,7 +34,7 @@ export class DoclistComponent implements OnInit {
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
   taskType = '';
-  taskTypes: LV[] = ['-', 'RKD', 'PDSP', 'ED', 'PSD'].map(x => new LV(x));
+  taskTypes: LV[] = ['-', 'RKD', 'PDSP', 'ED', 'PSD', 'ITT'].map(x => new LV(x));
   taskStages: LV[] = [];
   statuses: string[] = [];
   status = '';
@@ -43,7 +43,7 @@ export class DoclistComponent implements OnInit {
   revisionFiles: any[] = [];
   zipDocsUrl = '';
   searchValue = '';
-  constructor(private router: Router, public l: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService) { }
+  constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService) { }
 
 
   @ViewChild('table') table: Table;

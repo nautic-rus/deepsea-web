@@ -34,7 +34,7 @@ export class TraysByZonesAndSystemsComponent implements OnInit {
   trayBundlesProject = 'P701';
   selectedTrayBundle: any;
   selectedGroup: any = Object();
-  constructor(public device: DeviceDetectorService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, private dialogService: DialogService, private messageService: MessageService) { }
+  constructor(public device: DeviceDetectorService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, private dialogService: DialogService, private messageService: MessageService) { }
 
 
   ngOnInit(): void {

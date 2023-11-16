@@ -1336,3 +1336,18 @@ app-materials-summary .p-virtualscroller-item{
 app-materials-summary .p-virtualscroller .p-virtualscroller-content{
   background: none;
 }
+.button-ok{
+  border: none;
+  min-width: 70px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s;
+  font-weight: 500;
+  cursor: pointer;
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
+}

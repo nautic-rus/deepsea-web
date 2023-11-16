@@ -16,7 +16,7 @@
         <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
             <input [(ngModel)]="searchPlates" (ngModelChange)="searchChanged()" pInputText type="text"
-                   [placeholder]="l.tr('Поиск...')" class="border width-170"/>
+                   [placeholder]="t.tr('Поиск...')" class="border width-170"/>
           </span>
       </div>
     </div>
@@ -52,14 +52,14 @@
                          [class.hidden-card]="cable == null">
                       <div class="top-row df">
                         <div [ngSwitch]="cable.f_rout" class="cxy mr-1">
-                          <div *ngSwitchCase="0" class="point red-point" pTooltip="{{l.tr('Не проложен')}}"
+                          <div *ngSwitchCase="0" class="point red-point" pTooltip="{{t.tr('Не проложен')}}"
                                tooltipPosition="top"></div>
-                          <div *ngSwitchCase="1" class="point green-point" pTooltip="{{l.tr('Проложен')}}"
+                          <div *ngSwitchCase="1" class="point green-point" pTooltip="{{t.tr('Проложен')}}"
                                tooltipPosition="top"></div>
-                          <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{l.tr('Проложен частично')}}"
+                          <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{t.tr('Проложен частично')}}"
                                tooltipPosition="top"></div>
                         </div>
-                        <div class="cxy mr-1" *ngIf="cable.bunch != ''" pTooltip="{{l.tr('Пучковая прокладка')}}"
+                        <div class="cxy mr-1" *ngIf="cable.bunch != ''" pTooltip="{{t.tr('Пучковая прокладка')}}"
                              tooltipPosition="top">
                           <img src="assets/icons/hub.png" height="18">
                         </div>
@@ -85,7 +85,7 @@
                           <div class="text-center-y attribute mr-10 title-name">L:</div>
                           <div class="title-name">{{round(cable.length) + 'm'}}</div>
                           <div
-                            class="text-center-y attribute mr-10 title-name" pTooltip="{{l.tr('Поправка длины')}}"
+                            class="text-center-y attribute mr-10 title-name" pTooltip="{{t.tr('Поправка длины')}}"
                             tooltipPosition="right">
                             {{' (' + cable.ext_len_1 + '-' + cable.ext_len_2 + ')'}}</div>
                         </div>
@@ -197,11 +197,11 @@
         <div class="w-32 right-content-card mt-20">
           <div class="df tabs-header">
             <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'"
-                 [class.selectedTab]="selectedHeadTab ==  'Files'">{{l.tr('Файлы')}}</div>
+                 [class.selectedTab]="selectedHeadTab ==  'Files'">{{t.tr('Файлы')}}</div>
             <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'"
-                 [class.selectedTab]="selectedHeadTab ==  'Misc'">{{l.tr('Задачи')}}</div>
+                 [class.selectedTab]="selectedHeadTab ==  'Misc'">{{t.tr('Задачи')}}</div>
             <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'"
-                 [class.selectedTab]="selectedHeadTab ==  'Archive'">{{l.tr('Архив')}}</div>
+                 [class.selectedTab]="selectedHeadTab ==  'Archive'">{{t.tr('Архив')}}</div>
           </div>
 
           <div *ngIf="selectedHeadTab == 'Files'" class="card-tabs">
@@ -290,7 +290,7 @@
 
 
                         <div class="cxy" *ngIf="file.name.includes('.dxf')">
-                          <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
+                          <div [pTooltip]="t.tr('Show In Viewer')" tooltipPosition="top" class=" cxy"
                                (click)="showDxfInViewer(file.url); $event.stopPropagation()">
                             <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -301,7 +301,7 @@
                             </svg>
                           </div>
                         </div>
-                        <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="l.tr('Show Cutting Map')"
+                        <div *ngIf="file.group == 'Cutting Map'" [pTooltip]="t.tr('Show Cutting Map')"
                              (click)="showCuttingFile(file)" tooltipPosition="top" class="cxy">
                           <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
                                xmlns="http://www.w3.org/2000/svg">
@@ -364,11 +364,11 @@
           </div>
           <div *ngIf="selectedHeadTab == 'Misc'" class="card-tabs">
             <div class="subtask-grid-misc py-10">
-              <div class="head-subtask">{{l.tr('Тип')}}</div>
-              <div class="head-subtask">{{l.tr('Название')}}</div>
-              <div class="head-subtask">{{l.tr('Отв.')}}</div>
-              <div class="head-subtask">{{l.tr('Исп.')}}</div>
-              <div class="head-subtask">{{l.tr('Статус')}}</div>
+              <div class="head-subtask">{{t.tr('Тип')}}</div>
+              <div class="head-subtask">{{t.tr('Название')}}</div>
+              <div class="head-subtask">{{t.tr('Отв.')}}</div>
+              <div class="head-subtask">{{t.tr('Исп.')}}</div>
+              <div class="head-subtask">{{t.tr('Статус')}}</div>
             </div>
             <div class="">
               <div class="subtask" *ngFor="let childIssue of miscIssues">
@@ -398,7 +398,7 @@
                 <span
                   class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
                 <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')">
-                  <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=""
+                  <div [pTooltip]="t.tr('Show In Viewer')" tooltipPosition="top" class=""
                        (click)="showDxfInViewer(file.url); $event.stopPropagation()">
                     <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -493,11 +493,11 @@
         <div class="w-75 right-content-card mt-20">
           <div class="df tabs-header">
             <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = 'Info'"
-                 [class.selectedTab]="equipmentHeadTab ==  'Info'">{{l.tr('Информация')}}</div>
+                 [class.selectedTab]="equipmentHeadTab ==  'Info'">{{t.tr('Информация')}}</div>
             <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = 'Cables'"
-                 [class.selectedTab]="equipmentHeadTab ==  'Cables'">{{l.tr('Кабели')}}</div>
+                 [class.selectedTab]="equipmentHeadTab ==  'Cables'">{{t.tr('Кабели')}}</div>
             <div class="all-tabs cursor-pointer" (click)="equipmentHeadTab = '3D'"
-                 [class.selectedTab]="equipmentHeadTab ==  '3D'">{{l.tr('3D')}}</div>
+                 [class.selectedTab]="equipmentHeadTab ==  '3D'">{{t.tr('3D')}}</div>
           </div>
           <div [hidden]="equipmentHeadTab != 'Info'" class="card-tabs">
             <div *ngIf="selectedEq == null">
@@ -527,14 +527,14 @@
                          [class.hidden-card]="cable == null">
                       <div class="top-row df">
                         <div [ngSwitch]="cable.f_rout" class="cxy mr-1">
-                          <div *ngSwitchCase="0" class="point red-point" pTooltip="{{l.tr('Не проложен')}}"
+                          <div *ngSwitchCase="0" class="point red-point" pTooltip="{{t.tr('Не проложен')}}"
                                tooltipPosition="top"></div>
-                          <div *ngSwitchCase="1" class="point green-point" pTooltip="{{l.tr('Проложен')}}"
+                          <div *ngSwitchCase="1" class="point green-point" pTooltip="{{t.tr('Проложен')}}"
                                tooltipPosition="top"></div>
-                          <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{l.tr('Проложен частично')}}"
+                          <div *ngSwitchCase="2" class="point yellow-point" pTooltip="{{t.tr('Проложен частично')}}"
                                tooltipPosition="top"></div>
                         </div>
-                        <div class="cxy mr-1" *ngIf="cable.bunch != ''" pTooltip="{{l.tr('Пучковая прокладка')}}"
+                        <div class="cxy mr-1" *ngIf="cable.bunch != ''" pTooltip="{{t.tr('Пучковая прокладка')}}"
                              tooltipPosition="top">
                           <img src="assets/icons/hub.png" height="18">
                         </div>
@@ -560,7 +560,7 @@
                           <div class="text-center-y attribute mr-10 title-name">L:</div>
                           <div class="title-name">{{round(cable.length) + 'm'}}</div>
                           <div
-                            class="text-center-y attribute mr-10 title-name" pTooltip="{{l.tr('Поправка длины')}}"
+                            class="text-center-y attribute mr-10 title-name" pTooltip="{{t.tr('Поправка длины')}}"
                             tooltipPosition="right">
                             {{' (' + cable.ext_len_1 + '-' + cable.ext_len_2 + ')'}}</div>
                         </div>

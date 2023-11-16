@@ -174,7 +174,7 @@ export class DeviceEspComponent implements OnInit {
   revEspNoDate = '';
   revUser = '';
 
-  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
+  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -430,7 +430,7 @@ export class DeviceEspComponent implements OnInit {
 
   localeGender(userId: string){
     let find = this.auth.users.find(x => x.login == userId);
-    return find != null && find.gender == 'female' && this.l.language == 'ru' ? 'а' : '';
+    return find != null && find.gender == 'female' && this.t.language == 'ru' ? 'а' : '';
   }
   getMessages(issue: Issue) {
     let res: any[] = [];
@@ -585,7 +585,7 @@ export class DeviceEspComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
   localeStatus(status: string){
-    if (this.l.language == 'ru'){
+    if (this.t.language == 'ru'){
       switch (status) {
         case 'Completed' : return 'Завершён';
         case 'In Work': return 'В работе';
@@ -987,7 +987,7 @@ export class DeviceEspComponent implements OnInit {
   }
   getDeviceName(material: Material){
     let res = material.name;
-    let findName = material.translations.find(x => x.lang == this.l.language);
+    let findName = material.translations.find(x => x.lang == this.t.language);
     if (findName != null){
       res = findName.name;
     }

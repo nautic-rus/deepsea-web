@@ -25,85 +25,85 @@
                   <div class="pr-10 cxy">
                     <img src="assets/icons/plus3.svg" height="18">
                   </div>
-                  <div class="cxy">{{l.tr('Новый пользователь')}}</div>
+                  <div class="cxy">{{t.tr('Новый пользователь')}}</div>
                 </div>
               </div>
               <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
             <input #search pInputText type="text" (input)="usr.filterGlobal(search.value, 'contains')"
-                   [placeholder]="l.tr('Поиск...')" class="border"/>
+                   [placeholder]="t.tr('Поиск...')" class="border"/>
           </span>
             </div>
           </ng-template>
 
           <ng-template pTemplate="header">
             <tr class="df">
-              <th pSortableColumn="id" class="lxy">{{l.tr('ID')}}
+              <th pSortableColumn="id" class="lxy">{{t.tr('ID')}}
                 <p-sortIcon field="id"></p-sortIcon>
               </th>
-              <th pSortableColumn="avatar" class="lxy">{{l.tr('Аватар')}}
+              <th pSortableColumn="avatar" class="lxy">{{t.tr('Аватар')}}
               </th>
-              <th pSortableColumn="name" class="lxy">{{l.tr('Имя')}}
+              <th pSortableColumn="name" class="lxy">{{t.tr('Имя')}}
                 <p-sortIcon field="name"></p-sortIcon>
               </th>
-              <th pSortableColumn="surname" class="lxy">{{l.tr('Фамилия')}}
+              <th pSortableColumn="surname" class="lxy">{{t.tr('Фамилия')}}
                 <p-sortIcon field="surname"></p-sortIcon>
               </th>
-              <th pSortableColumn="profession" class="lxy">{{l.tr('Должность')}}
+              <th pSortableColumn="profession" class="lxy">{{t.tr('Должность')}}
                 <p-sortIcon field="profession"></p-sortIcon>
                 <p-columnFilter class="filter" [field]="'profession'" matchMode="in" display="menu"
                                 [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                     <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.profession"
-                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')"
                                    (onChange)="filter($event.value);">
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
               </th>
-              <th pSortableColumn="department" class="lxy">{{l.tr('Отдел')}}
+              <th pSortableColumn="department" class="lxy">{{t.tr('Отдел')}}
                 <p-sortIcon field="department"></p-sortIcon>
                 <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu"
                                 [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                     <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department"
-                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')"
                                    (onChange)="filter($event.value);">
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
               </th>
-<!--              <th pSortableColumn="groups" class="lxy w-18">{{l.tr('Группа')}}-->
+<!--              <th pSortableColumn="groups" class="lxy w-18">{{t.tr('Группа')}}-->
 <!--                <p-sortIcon field="groups"></p-sortIcon>-->
 <!--                <p-columnFilter class="filter" [field]="'groups'" matchMode="contains" display="menu" [showMatchModes]="false"-->
 <!--                                [showOperator]="false" [showAddButton]="false">-->
 <!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
 <!--                    <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.groups"-->
-<!--                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"-->
+<!--                                   optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')"-->
 <!--                                   (onChange)="filter($event.value);">-->
 <!--                    </p-multiSelect>-->
 <!--                  </ng-template>-->
 <!--                </p-columnFilter>-->
 <!--              </th>-->
-              <th pSortableColumn="groupNames" class="lxy">{{l.tr('Роль')}}
+              <th pSortableColumn="groupNames" class="lxy">{{t.tr('Роль')}}
                 <p-sortIcon field="groupNames"></p-sortIcon>
                 <p-columnFilter class="filter" [field]="'groupNames'" matchMode="in" display="menu"
                                 [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                     <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.groups"
-                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')"
                                    (onChange)="filter($event.value);">
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
               </th>
-              <th pSortableColumn="removed" class="lxy">{{l.tr('Удален')}}
+              <th pSortableColumn="removed" class="lxy">{{t.tr('Удален')}}
                 <p-sortIcon field="removed"></p-sortIcon>
                 <p-columnFilter class="filter" [field]="'removed'" matchMode="in" display="menu"
                                 [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                     <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.removed"
-                                   optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')"
+                                   optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')"
                                    (onChange)="filter($event.value);">
                     </p-multiSelect>
                   </ng-template>
@@ -116,12 +116,12 @@
           <!--              <tr>-->
           <!--                <th style="width:134px" pResizableColumn pReorderableColumn  *ngFor="let col of columns" [pSortableColumn]="col.field">-->
           <!--                  <div class="header">-->
-          <!--                    {{l.tr(col.header)}}-->
+          <!--                    {{t.tr(col.header)}}-->
           <!--                    <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>-->
           <!--&lt;!&ndash;                    <p-columnFilter class="filter" type="profession" [field]="col.field" display="menu" *ngIf="col.profession == true"></p-columnFilter>&ndash;&gt;-->
           <!--                    <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
           <!--                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-          <!--                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="l.tr('Все')" (onChange)="filter($event.value);">-->
+          <!--                        <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="col.filters" optionValue="value" optionLabel="label" [placeholder]="t('Все')" (onChange)="filter($event.value);">-->
           <!--                        </p-multiSelect>-->
           <!--                      </ng-template>-->
           <!--                    </p-columnFilter>-->
@@ -149,8 +149,8 @@
               <td class="text-14">{{user.profession}}</td>
               <td class="text-14">{{this.getDepartmentName(user.id_department)}}</td>
               <td class="text-14">{{user.groups}}</td>
-              <td *ngIf="user.removed == 0" class="text-14">{{l.tr('Нет')}}</td>
-              <td *ngIf="user.removed == 1" class="text-14">{{l.tr('Да')}}</td>
+              <td *ngIf="user.removed == 0" class="text-14">{{t.tr('Нет')}}</td>
+              <td *ngIf="user.removed == 1" class="text-14">{{t.tr('Да')}}</td>
             </tr>
           </ng-template>
 
@@ -180,13 +180,13 @@
                     <div class="pr-10 cxy">
                       <img src="assets/icons/plus3.svg" height="18">
                     </div>
-                    <div class="cxy">{{l.tr('Новая роль')}}</div>
+                    <div class="cxy">{{t.tr('Новая роль')}}</div>
                   </div>
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
                 <i class="pi pi-search"></i>
                 <input #search pInputText type="text" (input)="rls.filterGlobal(search.value, 'contains')"
-                       [placeholder]="l.tr('Поиск...')" class="border"/>
+                       [placeholder]="t.tr('Поиск...')" class="border"/>
               </span>
               </div>
             </ng-template>
@@ -195,7 +195,7 @@
                 <th style="width: 33%" pResizableColumn pReorderableColumn *ngFor="let col of columns"
                     [pSortableColumn]="col.field">
                   <div class="header">
-                    {{l.tr(col.header)}}
+                    {{t.tr(col.header)}}
                   </div>
                 </th>
               </tr>
@@ -233,7 +233,7 @@
                     <div class="pr-10 cxy">
                       <img src="assets/icons/plus3.svg" height="18">
                     </div>
-                    <div class="cxy">{{l.tr('Новое право')}}</div>
+                    <div class="cxy">{{t.tr('Новое право')}}</div>
                   </div>
                 </div>
                 <span class="p-input-icon-left p-ml-auto">
@@ -245,7 +245,7 @@
                 <th style="width: 100%" pResizableColumn pReorderableColumn *ngFor="let col of columns"
                     [pSortableColumn]="col.field">
                   <div class="header">
-                    {{l.tr(col.header)}}
+                    {{t.tr(col.header)}}
                   </div>
                 </th>
               </tr>
@@ -284,13 +284,13 @@
                   <div class="pr-10 cxy">
                     <img src="assets/icons/plus3.svg" height="18">
                   </div>
-                  <div class="cxy">{{l.tr('Новый проект')}}</div>
+                  <div class="cxy">{{t.tr('Новый проект')}}</div>
                 </div>
               </div>
               <span class="p-input-icon-left p-ml-auto">
                   <i class="pi pi-search"></i>
                   <input #search pInputText type="text" (input)="prcts.filterGlobal(search.value, 'contains')"
-                         [placeholder]="l.tr('Поиск...')" class="border"/>
+                         [placeholder]="t.tr('Поиск...')" class="border"/>
                 </span>
             </div>
           </ng-template>
@@ -299,7 +299,7 @@
               <th style="width:156px" pResizableColumn pReorderableColumn *ngFor="let col of columns"
                   [pSortableColumn]="col.field">
                 <div class="header">
-                  {{l.tr(col.header)}}
+                  {{t.tr(col.header)}}
                 </div>
               </th>
             </tr>

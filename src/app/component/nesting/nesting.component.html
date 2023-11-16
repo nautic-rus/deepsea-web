@@ -11,19 +11,19 @@
         </div>
       </div>
       <div class="mr-10">
-        <div [pTooltip]="l.tr('Download selected')" tooltipPosition="top" (click)="downloadFiles()" class="materials-button add-button cxy">
+        <div [pTooltip]="t.tr('Download selected')" tooltipPosition="top" (click)="downloadFiles()" class="materials-button add-button cxy">
           <img src="assets/icons/download-file.svg" height="22">
         </div>
       </div>
       <div class="mr-10">
-        <div (click)="showVacantWastages()" [pTooltip]="l.tr('Vacant wastage')" tooltipPosition="top"  class="materials-button blue-button cxy position-relative">
+        <div (click)="showVacantWastages()" [pTooltip]="t.tr('Vacant wastage')" tooltipPosition="top"  class="materials-button blue-button cxy position-relative">
           <img src="assets/icons/rest-white.svg" height="22">
           <div class="count cursor-pointer">{{getWastageCount()}}</div>
         </div>
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
+        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
       </span>
     </div>
     <div class="w-100 df">
@@ -308,15 +308,15 @@
         </div>
       </div>
       <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
-        <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedDxf()"></button>
-        <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
-        <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
         <app-dxf-view></app-dxf-view>
       </div>
       <div class="pt-5 dxf-view" *ngIf="cutEnabled">
-        <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
-        <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
-        <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
+        <button pButton [pTooltip]="t.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
+        <button pButton [pTooltip]="t.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
         <app-g-code></app-g-code>
       </div>
     </div>
@@ -340,14 +340,14 @@
         </div>
       </div>
       <div class="mr-10">
-        <div (click)="showVacantWastages()" [pTooltip]="l.tr('Vacant wastage')" tooltipPosition="top"  class="materials-button blue-button cxy position-relative">
+        <div (click)="showVacantWastages()" [pTooltip]="t.tr('Vacant wastage')" tooltipPosition="top"  class="materials-button blue-button cxy position-relative">
           <img src="assets/icons/rest-white.svg" height="22">
           <div class="count cursor-pointer">{{getWastageCount()}}</div>
         </div>
       </div>
       <span class="p-input-icon-left p-ml-auto">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" [placeholder]="l.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
+        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChanged()" class="border" />
       </span>
     </div>
     <div class="w-100 df">
@@ -591,15 +591,15 @@
         </div>
       </div>
       <div class="pt-5 dxf-view-tablet" *ngIf="dxfEnabled">
-        <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedDxf()"></button>
-        <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
-        <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
         <app-dxf-view></app-dxf-view>
       </div>
       <div class="pt-5 dxf-view-tablet" *ngIf="cutEnabled">
-        <button pButton [pTooltip]="l.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
-        <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
-        <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+        <button pButton [pTooltip]="t.tr('Download')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-download-window" icon="pi pi-download" (click)="downloadOpenedCMAP()"></button>
+        <button pButton [pTooltip]="t.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openCMAP()"></button>
+        <button pButton [pTooltip]="t.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
         <app-g-code></app-g-code>
       </div>
     </div>

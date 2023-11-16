@@ -5,27 +5,27 @@
       <div class="mr-2">{{issue.doc_number}}</div>
       <div class="mr-2">{{issue.revision}}</div>
 <!--      <div class="mr-10">-->
-<!--        <div class="materials-button blue-button cxy" [pTooltip]="l.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addMaterial()">-->
+<!--        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" [class.disabled-button]="!auth.hasPerms('add-material-device')" (click)="addMaterial()">-->
 <!--          <img src="assets/icons/plus3.svg" height="18">-->
 <!--        </div>-->
 <!--      </div>-->
-      <div class="mr-10" [pTooltip]="l.tr('Get Spec')" tooltipPosition="top" (click)="createEsp()">
+      <div class="mr-10" [pTooltip]="t.tr('Get Spec')" tooltipPosition="top" (click)="createEsp()">
         <div class="materials-button pink-button cxy">
           <img src="assets/icons/list.svg" height="22">
         </div>
       </div>
-      <!--      <div class="mr-10" [pTooltip]="l.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">-->
+      <!--      <div class="mr-10" [pTooltip]="t.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">-->
       <!--        <div class="materials-button pink-button cxy">-->
       <!--          <img src="assets/icons/list.svg" height="22">-->
       <!--        </div>-->
       <!--      </div>-->
-      <!--      <div class="mr-10" [pTooltip]="l.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">-->
+      <!--      <div class="mr-10" [pTooltip]="ttr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">-->
       <!--        <div class="materials-button violet-button cxy">-->
       <!--          <img src="assets/icons/lists.svg" height="24">-->
       <!--        </div>-->
       <!--      </div>-->
       <div class="mr-10">
-        <div [pTooltip]="l.tr('Show In Viewer')" [class.disabled-button]="isDisabledDxf()" (click)="showDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
+        <div [pTooltip]="t.tr('Show In Viewer')" [class.disabled-button]="isDisabledDxf()" (click)="showDxf()" tooltipPosition="top" class="materials-button blue-button cxy">
           <svg class="icon-top-button" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
             <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
@@ -39,7 +39,7 @@
       </div>
       <div class="p-ml-auto df mr-10">
         <div class="mr-10" *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status)) || auth.getUser().login == 'voronin'">
-          <div [pTooltip]="l.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button yellow-button cxy">
+          <div [pTooltip]="t.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button yellow-button cxy">
             <img src="assets/icons/download-file.svg" height="24">
           </div>
         </div>
@@ -54,9 +54,9 @@
       </div>
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
-         <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border width-170" />
+         <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
 
-        <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="l.tr('Поиск...')" class="border" />-->
+        <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />-->
       </span>
     </div>
     <div class="w-100 df">
@@ -200,7 +200,7 @@
                       <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
 
                       <div class="cxy" *ngIf="file.name.includes('.dxf')" >
-                        <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
+                        <div [pTooltip]="t.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewer(file.url); $event.stopPropagation()">
                           <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
                             <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
@@ -230,7 +230,7 @@
                         <span class="cy">{{' ' + getDate(spoolsArchive.upload_date)}}</span>
 
                         <div class="cxy" *ngIf="file.includes('.dxf')" >
-                          <div [pTooltip]="l.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewerZip(spoolsArchive, file); $event.stopPropagation()">
+                          <div [pTooltip]="t.tr('Show In Viewer')" tooltipPosition="top" class=" cxy" (click)="showDxfInViewerZip(spoolsArchive, file); $event.stopPropagation()">
                             <svg class="icon-nest" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M3.25909 11.6021C3.94254 8.32689 6.79437 6 10 6C13.2057 6 16.0574 8.32688 16.7409 11.6021C16.7974 11.8725 17.0622 12.0459 17.3325 11.9895C17.6029 11.933 17.7763 11.6682 17.7199 11.3979C16.9425 7.67312 13.6934 5 10 5C6.3066 5 3.05742 7.67311 2.28017 11.3979C2.22377 11.6682 2.39718 11.933 2.6675 11.9895C2.93782 12.0459 3.20268 11.8725 3.25909 11.6021Z"/>
                               <path d="M9.98953 8C11.9225 8 13.4895 9.567 13.4895 11.5C13.4895 13.433 11.9225 15 9.98953 15C8.05653 15 6.48953 13.433 6.48953 11.5C6.48953 9.567 8.05653 8 9.98953 8Z"/>
@@ -325,7 +325,7 @@
                   </div>
                   <div>
                     <span class="bold-text cursor-pointer" (click)="openUserInfo(msg.author)">{{auth.getUserName(msg.author)}}</span>
-                    <span class="text-descr"> {{l.tr('создал')}}{{localeGender(msg.author)}} {{l.tr('сообщение')}} </span>
+                    <span class="text-descr"> {{t.tr('создал')}}{{localeGender(msg.author)}} {{t.tr('сообщение')}} </span>
                     <span class="text-date"> {{getDate(+msg.date)}} </span>
                     <quill-view (click)="editorClicked($event)" class="db" *ngIf="msg.content != ''" [content]="msg.content"></quill-view>
                     <div *ngFor="let file of msg.file_attachments">
@@ -357,7 +357,7 @@
                   </div>
                   <div *ngIf="msg.name_value == 'status'">
                     <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                    <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                    <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
                     <span class="bold-text">{{issueManager.localeHistory(msg.name_value)}} </span>
                     <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                     <div class="df pt-5">
@@ -370,8 +370,8 @@
                   </div>
                   <div *ngIf="msg.name_value == 'assign'">
                     <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                    <span class="text-descr px-5">{{l.tr('назначил')}}{{localeGender(msg.author)}} </span>
-                    <span class="bold-text">{{l.tr('исполнителя')}} </span>
+                    <span class="text-descr px-5">{{t.tr('назначил')}}{{localeGender(msg.author)}} </span>
+                    <span class="bold-text">{{t.tr('исполнителя')}} </span>
                     <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                     <div class="df pt-5">
                       <div [innerHTML]="getNoneZeroResult(auth.getUserName(msg.prev_value)) | safeHtml"></div>
@@ -384,8 +384,8 @@
                   <div *ngIf="msg.update_message.includes('edit')">
                     <div *ngIf="msg.name_value == 'priority'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('приоритет')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('приоритет')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPriority(msg.prev_value)) | safeHtml"></div>
@@ -397,8 +397,8 @@
                     </div>
                     <div *ngIf="msg.name_value == 'issue_comment'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('примечание')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('примечание')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroInput(msg.prev_value) | safeHtml"></div>
@@ -410,8 +410,8 @@
                     </div>
                     <div *ngIf="msg.name_value == 'department'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('отдел')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('отдел')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskDepartment(msg.prev_value)) | safeHtml"></div>
@@ -423,8 +423,8 @@
                     </div>
                     <div *ngIf="msg.name_value == 'project'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('проект')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('проект')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
@@ -436,8 +436,8 @@
                     </div>
                     <div *ngIf="msg.name_value == 'start_date'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('дату начала')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('дату начала')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
@@ -449,8 +449,8 @@
                     </div>
                     <div *ngIf="msg.name_value == 'due_date'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('срок исполнения')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('срок исполнения')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroInput(getDateNoTime(+msg.prev_value)) | safeHtml"></div>
@@ -462,8 +462,8 @@
                     </div>
                     <div *ngIf="msg.name_value == 'responsible'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('ответственного')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('ответственного')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
@@ -475,8 +475,8 @@
                     </div>
                     <div *ngIf="msg.name_value == 'period'">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('этап')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('этап')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5">
                         <div [innerHTML]="getNoneZeroResult(issueManager.localeTaskPeriod(msg.prev_value)) | safeHtml"></div>
@@ -488,8 +488,8 @@
                     </div>
                     <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor'].includes(msg.name_value)">
                       <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}} </span>
-                      <span class="text-descr px-5">{{l.tr('изменил')}}{{localeGender(msg.author)}} </span>
-                      <span class="bold-text">{{l.tr('информацию')}} </span>
+                      <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}} </span>
+                      <span class="bold-text">{{t.tr('информацию')}} </span>
                       <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                       <div class="df pt-5" *ngIf="!msg.name_value.includes('details')">
                         <div [innerHTML]="getNoneZeroResult(msg.prev_value) | safeHtml"></div>
@@ -499,7 +499,7 @@
                         <div [innerHTML]="getNoneZeroResult(msg.new_value) | safeHtml"></div>
                       </div>
                       <div class="df pt-5" *ngIf="msg.name_value.includes('details')">
-                        {{l.tr('Изменилось описание к задаче')}}
+                        {{t.tr('Изменилось описание к задаче')}}
                       </div>
                     </div>
                   </div>
@@ -554,8 +554,8 @@
 </div>
 
 <div class="pt-5 dxf-view" *ngIf="dxfEnabled">
-  <button pButton [pTooltip]="l.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
-  <button pButton [pTooltip]="l.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
+  <button pButton [pTooltip]="t.tr('Open in new window')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-open-new-window" icon="pi pi-external-link" (click)="openDxf()"></button>
+  <button pButton [pTooltip]="t.tr('Exit viewer')" tooltipPosition="top" class="border normal-button p-button-outlined dxf-open-button dxf-exit" icon="pi pi-sign-out" (click)="exitDxf()"></button>
   <app-dxf-view></app-dxf-view>
 </div>
 

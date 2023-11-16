@@ -1,6 +1,6 @@
 <div class="center-create-project">
   <div class="header-user-card">
-    <div class="header-user-text">{{lang.tr('Проекты')}}</div>
+    <div class="header-user-text">{{t.tr('Проекты')}}</div>
     <div class="task-button-user cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
@@ -8,22 +8,22 @@
 
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Проект*')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Проект*')}}</div>
       <input class="width-211" type="text" id="name" pInputText [(ngModel)]="name">
     </div>
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Foran*')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Foran*')}}</div>
       <input class="width-211" type="text" id="foran" pInputText [(ngModel)]="foran">
     </div>
   </div>
 
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('РКД*')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('РКД*')}}</div>
       <input class="width-211" type="text" id="RKD" pInputText [(ngModel)]="rkd">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('ПДСП*')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('ПДСП*')}}</div>
       <input class="width-211" type="text" id="PDSP" pInputText [(ngModel)]="pdsp">
     </div>
 
@@ -31,19 +31,19 @@
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Завод*')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Завод*')}}</div>
       <input class="width-211" type="text" id="factory" pInputText [(ngModel)]="factory">
     </div>
 
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Статус')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Статус')}}</div>
       <input class="width-211" type="text" id="status" pInputText [(ngModel)]="status">
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Менеджеры')}}</div>
-      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="managers" [filter]="true" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="l.tr('{0} выбрано')"
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Менеджеры')}}</div>
+      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="managers" [filter]="true" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="t.tr('{0} выбрано')"
                      [placeholder]="'Managers'" class="p-dropdown-150" [virtualScroll]="true" [itemSize]="60" styleClass="width-211">
         <ng-template let-user pTemplate="item">
           <div class="df">
@@ -54,8 +54,8 @@
       </p-multiSelect>
     </div>
     <div class="user-select">
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Пользователи')}}</div>
-      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="selectedUsers" [filter]="true" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="l.tr('{0} выбрано')"
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Пользователи')}}</div>
+      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="selectedUsers" [filter]="true" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="t.tr('{0} выбрано')"
                      [placeholder]="'Users'" class="p-dropdown-150" [virtualScroll]="true" [itemSize]="60" styleClass="width-211">
         <ng-template let-user pTemplate="item">
           <div class="df user-select">
@@ -73,10 +73,9 @@
 
 <div class="form-footer-user">
   <div class="mr-5 cx">
-    <div tabindex="11" (click)="close()" pButton [label]="lang.tr('Отмена')" class="button-cancel ml-1"></div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>
-  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isProjectDisabled()" (click)="createProject()" pButton
-       [label]="lang.tr('Создать')" class="button-ok"></div>
+  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isProjectDisabled()" (click)="createProject()" class="button-ok cxy">{{t.tr('Создать')}}</div>
   <div class="cxy height-spinner" *ngIf="loading">
     <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff" animationDuration="1s" ></p-progressSpinner>
   </div>

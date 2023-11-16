@@ -12,19 +12,19 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="user" class="w-15">{{l.tr('Пользователь')}}
+          <th pSortableColumn="user" class="w-15">{{t.tr('Пользователь')}}
             <p-sortIcon field="user"></p-sortIcon>
           </th>
-          <th pSortableColumn="date" class="w-10">{{l.tr('Дата')}}
+          <th pSortableColumn="date" class="w-10">{{t.tr('Дата')}}
             <p-sortIcon field="date"></p-sortIcon>
           </th>
-          <th pSortableColumn="id" class="w-45">{{l.tr('Задача')}}
+          <th pSortableColumn="id" class="w-45">{{t.tr('Задача')}}
             <p-sortIcon field="id"></p-sortIcon>
           </th>
-          <th pSortableColumn="laboriousness" class="w-10">{{l.tr('час(а, ов)')}}
+          <th pSortableColumn="laboriousness" class="w-10">{{t.tr('час(а, ов)')}}
             <p-columnFilter type="laboriousness" [field]="'delivered_date'" display="menu"></p-columnFilter>
           </th>
-          <th pSortableColumn="comment" class="w-20">{{l.tr('Комментарий')}}
+          <th pSortableColumn="comment" class="w-20">{{t.tr('Комментарий')}}
             <p-sortIcon field="comment"></p-sortIcon>
           </th>
         </tr>

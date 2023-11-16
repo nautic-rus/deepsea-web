@@ -1,77 +1,77 @@
 <div class="center-user">
   <div class="header-user-card">
-    <div class="header-user-text">{{lang.tr('Создание пользователя')}}</div>
+    <div class="header-user-text">{{t.tr('Создание пользователя')}}</div>
     <div class="task-button-user cxy" (click)="close()">
       <i class="pi pi-times"></i>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Гендер')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Гендер')}}</div>
       <p-dropdown styleClass="width-211" appendTo="body" id="gender" [options]="genders" [(ngModel)]="gender" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Фамилия*')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Фамилия*')}}</div>
       <input class="width-211" type="text" id="surname" pInputText [(ngModel)]="surname">
     </div>
     <div>
-      <div class="big-text-user mb-1">{{lang.tr('Имя')}}</div>
+      <div class="big-text-user mb-1">{{t.tr('Имя')}}</div>
       <input class="width-211" type="text" id="name" pInputText [(ngModel)]="name">
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин*')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Логин*')}}</div>
       <input class="width-211" type="text" id="login" pInputText [(ngModel)]="login">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Пароль')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Пароль')}}</div>
       <input class="width-211" type="text" id="password" pInputText [(ngModel)]="password">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Логин RocketChat')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Логин RocketChat')}}</div>
       <input class="width-211" type="text" id="rocketLogin" pInputText [(ngModel)]="rocket_login">
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Отдел')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
       <p-dropdown styleClass="width-211" appendTo="body" id="department" [options]="departments" [(ngModel)]="this.department" optionLabel="name" optionValue="name"></p-dropdown>
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Должность')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Должность')}}</div>
       <input class="width-211" type="text" id="profession" pInputText [(ngModel)]="profession">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Аватар')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Аватар')}}</div>
       <input class="width-211" type="text" id="avatar" pInputText [(ngModel)]="avatar">
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Почта')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Почта')}}</div>
       <input class="width-211" type="text" id="email" pInputText [(ngModel)]="email">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Телефон')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Телефон')}}</div>
       <input class="width-211" type="text" id="phone" pInputText [(ngModel)]="phone">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Time Control ID')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Time Control ID')}}</div>
       <p-inputNumber inputStyleClass="width-211" inputId="tcid" [(ngModel)]="tcid"></p-inputNumber>
     </div>
   </div>
   <div class="df space-between">
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Роль')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Роль')}}</div>
       <p-multiSelect styleClass="width-211" appendTo="body" id="permissions" [options]="roles" [(ngModel)]="this.groups" (ngModelChange)="roleChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Видимость')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Видимость')}}</div>
       <input class="width-211" type="text" id="visibility" pInputText [(ngModel)]="this.visibility">
     </div>
     <div>
-      <div class="big-text-user mb-1 mt-1">{{lang.tr('Доступные проекты')}}</div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Доступные проекты')}}</div>
       <p-multiSelect styleClass="width-211" appendTo="body" id="visible_projects" [options]="projects" [(ngModel)]="this.visible_projects" optionLabel="name" optionValue="name"></p-multiSelect>
     </div>
   </div>
@@ -80,9 +80,9 @@
 
 <div class="form-footer-user">
   <div class="mr-5 cx">
-    <div tabindex="11" (click)="close()" pButton [label]="lang.tr('Отмена')" class="button-cancel ml-1"></div>
+    <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
   </div>
-  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="createUser()" pButton [label]="lang.tr('Создать')" class="button-ok"></div>
+  <div *ngIf="!loading" tabindex="10" [class.disabled-button]="isUserTaskDisabled()" (click)="createUser()" class="button-ok cxy">{{t.tr('Создать')}}</div>
   <div class="cxy height-spinner" *ngIf="loading">
     <p-progressSpinner [style]="{width: '25px', height: '25px'}" styleClass="custom-spinner" strokeWidth="6" fill="#fff" animationDuration="1s" ></p-progressSpinner>
   </div>
