@@ -588,7 +588,7 @@ export class LanguageService {
           case 'ч.': return 'h'
           case 'Удален': return 'Removed'
           case 'договор': return 'contract'
-          case '': return ''
+          case 'Закрыть задачу (установить статус "Поставлен")': return 'Close the task (set the status to "Delivered")'
           case '': return ''
           case '': return ''
           case '': return ''
