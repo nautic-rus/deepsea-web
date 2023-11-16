@@ -75,6 +75,13 @@
           <span class="checkmark"></span>
         </label>
       </div>
+      <div class="mr-10 cy my-5">
+        <label class="container margin-bottom-none">
+          <span class="text-checkbox">{{t.tr('Закрыть задачу (установить статус "Поставлен")')}}</span>
+          <input type="checkbox" [(ngModel)]="closeTask">
+          <span class="checkmark"></span>
+        </label>
+      </div>
       <div class="my-5">
         <div class="pb-5">{{t.tr('Комментарий')}}</div>
         <div class="">

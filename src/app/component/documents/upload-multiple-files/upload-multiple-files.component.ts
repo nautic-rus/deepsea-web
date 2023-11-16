@@ -167,6 +167,7 @@ export class UploadMultipleFilesComponent implements OnInit {
   ];
   isCorrection = false;
   isSendNotification = true;
+  closeTask = true;
   revs = ['-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11','12','13','14','15','16','17','18','19','20', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
   rev = '-';
   changeRev = true;
@@ -256,6 +257,13 @@ export class UploadMultipleFilesComponent implements OnInit {
   }
 
   commit() {
+    if (this.closeTask){
+      this.issue.status = 'Delivered';
+      this.issue.action = this.issue.status;
+      this.issueManager.updateIssue(this.auth.getUser().login, 'status', this.issue).then(() => {
+        this.ref.close();
+      });
+    }
     if (this.issue.revision != this.rev){
       this.issue.revision = this.rev;
       this.issueManager.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {
