@@ -497,7 +497,8 @@ export class HullEspComponent implements OnInit {
           });
         });
         this.parts.forEach((part: any) => {
-          if (part.PART_CODE != null && part.SYMMETRY != null && part.ELEM_TYPE != 'PL'){
+          //if (part.PART_CODE != null && part.SYMMETRY != null && part.ELEM_TYPE != 'PL'){
+          if (part.PART_CODE != null && part.SYMMETRY != null){
             let search = part.PART_CODE + '-' + part.SYMMETRY;
             let findNest = _.sortBy(this.nestContent.filter((x: any) => x.parts.includes(search)), x => x.date).reverse();
             if (findNest.length > 0){
