@@ -32,12 +32,15 @@
     </div>
     <div>
       <div class="big-text-user mb-1 mt-1">{{t.tr('Менеджеры')}}</div>
-      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="managers" [filter]="true" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="t.tr('{0} выбрано')"
-                     [placeholder]="'Managers'" class="p-dropdown-150" [virtualScroll]="true" [itemSize]="60" styleClass="width-211">
+      <p-multiSelect appendTo = "body" [options]="users" [(ngModel)]="managers" [filter]="true"  filterBy="login,profession,department,role" optionValue="login" optionLabel="login" [maxSelectedLabels]="2" [selectedItemsLabel]="t.tr('{0} выбрано')"
+                     [placeholder]="'Users'" class="p-dropdown-150" [virtualScroll]="true" [itemSize]="35" styleClass="width-211">
         <ng-template let-user pTemplate="item">
-          <div class="df">
+          <div class="df user-select">
             <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-            <div class="cx cy pl-10">{{auth.getUserName(user.login)}}</div>
+            <div class="cx cy pl-10 width-200">{{auth.getUserName(user.login)}}</div>
+            <div class="cx cy pl-10 width-200">{{user.profession}}</div>
+            <div class="cx cy pl-10 width-150">{{user.department}}</div>
+            <div class="cx cy pl-10 width-80">{{user.role}}</div>
           </div>
         </ng-template>
       </p-multiSelect>

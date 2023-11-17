@@ -417,7 +417,7 @@
         <div class="ovf-auto" *ngIf="issue.child_issues.length > 0">
           <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'APPROVAL')">
             <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
-              <div class="pr-10">{{t.tr('Согласование')}}</div>
+              <div class="pr-10">{{t.tr('Согласование').toUpperCase()}}</div>
               <div class="pr-10 min-width-220">
                 <span>{{childIssue.doc_number}}</span>
                 <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
@@ -445,7 +445,7 @@
       <div collapseContent #contentOther="collapseContent" class="collapse-body">
         <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OTHER')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
-            <div class="pr-10">{{t.tr('Прочее')}}</div>
+            <div class="pr-10">{{t.tr('Прочее').toUpperCase()}}</div>
             <div class="pr-10 min-width-220">
               <span>{{childIssue.doc_number}}</span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
@@ -474,7 +474,7 @@
       <div collapseContent #contentOrIz="collapseContent" class="collapse-body ovf-auto">
         <div class="subtask" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'OR')">
           <div class="subtask-grid-or" (click)="openIssue(childIssue.id)">
-            <div class="pr-10">{{t.tr('ОР')}}</div>
+            <div class="pr-10">{{t.tr('ОР').toUpperCase()}}</div>
             <div class="word-wrap px-10">
               <span [innerHTML]="issueManager.trim(childIssue.doc_number)"></span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
@@ -531,7 +531,7 @@
       <div collapseContent #contentIt="collapseContent" class="collapse-body ovf-auto">
         <div class="subtask" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'IT')">
           <div class="subtask-grid-or" (click)="openIssue(childIssue.id)">
-            <div class="pr-10">{{t.tr('IT')}}</div>
+            <div class="pr-10">{{t.tr('IT').toUpperCase()}}</div>
             <div class="word-wrap px-10">
               <span [innerHTML]="issueManager.trim(childIssue.doc_number)"></span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
@@ -564,7 +564,7 @@
       <div collapseContent #contentCorrection="collapseContent" class="collapse-body">
         <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'CORRECTION')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
-            <div class="pr-10">{{t.tr('Корректировки')}}</div>
+            <div class="pr-10">{{t.tr('Корректировки').toUpperCase()}}</div>
             <div class="pr-10 min-width-220">
               <span>{{childIssue.doc_number}}</span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
@@ -593,7 +593,7 @@
       <div collapseContent #contentDevelopment="collapseContent" class="collapse-body">
         <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'DEVELOPMENT')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
-            <div class="pr-10">{{t.tr('Разработка')}}</div>
+            <div class="pr-10">{{t.tr('Разработка').toUpperCase()}}</div>
             <div class="pr-10 min-width-220">
               <span>{{childIssue.doc_number}}</span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
@@ -622,7 +622,7 @@
       <div collapseContent #contentPdsp="collapseContent" class="collapse-body">
         <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'PDSP')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
-            <div class="pr-10">{{t.tr('ПДСП')}}</div>
+            <div class="pr-10">{{t.tr('ПДСП').toUpperCase()}}</div>
             <div class="pr-10 min-width-220">
               <span>{{childIssue.doc_number}}</span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
@@ -651,7 +651,7 @@
       <div collapseContent #contentRkd="collapseContent" class="collapse-body">
         <div class="subtask cy" *ngFor="let childIssue of getIssuesOfType(issue.child_issues, 'RKD')">
           <div class="subtask-grid" (click)="openIssue(childIssue.id)">
-            <div class="pr-10">{{t.tr('РКД')}}</div>
+            <div class="pr-10">{{t.tr('РКД').toUpperCase()}}</div>
             <div class="pr-10 min-width-220">
               <span>{{childIssue.doc_number}}</span>
               <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
