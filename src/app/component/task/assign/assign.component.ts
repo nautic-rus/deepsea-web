@@ -46,7 +46,7 @@ export class AssignComponent implements OnInit {
         alert('Не хватает плановых часов для назначения задачи');
         return;
       }
-      let user = this.auth.users.find(x => x.userName == this.selectedUser);
+      let user = this.auth.users.find(x => x.login == this.selectedUser);
       if (user == null){
         return;
       }
@@ -58,7 +58,7 @@ export class AssignComponent implements OnInit {
           else{
             alert(res);
           }
-        })
+        });
       }
       else {
         this.auth.insertPlanInterval(this.issue.id, user.id, this.startDate.getTime(), amount, 0, this.auth.getUser().login).subscribe((res) => {
@@ -68,7 +68,7 @@ export class AssignComponent implements OnInit {
           else{
             alert(res);
           }
-        })
+        });
       }
     });
 
