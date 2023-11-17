@@ -87,6 +87,8 @@
   border-bottom: 1px solid #f3f2f1;
   display: flex;
 }
-/deep/body > div > div.p-multiselect-items-wrapper.ng-tns-c73-8 > ul > cdk-virtual-scroll-viewport{
-  width: 510px !important;
+/deep/body > div > div.p-multiselect-items-wrapper > ul > cdk-virtual-scroll-viewport{
+  width: 620px !important;
+  height: 400px !important;
+  overflow-x: hidden;
 }
