@@ -21,6 +21,7 @@ export class AssignComponent implements OnInit {
   today: Date = new Date();
   overtime = false;
   toPlan = true;
+  toMe = false;
   users: User[] = [];
 
   constructor(private config: PrimeNGConfig, public ref: DynamicDialogRef, public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, private confirmationService: ConfirmationService, private appRef: ApplicationRef,public t: LanguageService) { }

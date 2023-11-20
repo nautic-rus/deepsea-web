@@ -169,6 +169,15 @@ export class CreateTaskComponent implements OnInit {
         if (type.type_name == 'ORIZ' && !this.auth.hasPerms('create_oriz_task')){
           allow = false;
         }
+        if (type.type_name == 'PSD' && !this.auth.hasPerms('create_psd_task')){
+          allow = false;
+        }
+        if (type.type_name == 'ED' && !this.auth.hasPerms('create_ed_task')){
+          allow = false;
+        }
+        if (type.type_name == 'ITT' && !this.auth.hasPerms('create_itt_task')){
+          allow = false;
+        }
         if (allow){
           this.taskTypes.push({label: this.issues.localeTaskType(type.type_name), value: type.type_name});
         }

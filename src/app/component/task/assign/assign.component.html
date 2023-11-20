@@ -5,18 +5,28 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="big-text mb-1 mt-1">{{t.tr('Исполнитель')}}</div>
-  <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
-              [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-270">
-    <ng-template let-user pTemplate="item">
-      <div class="df">
-        <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-        <div class="cx cy pl-10">{{user.userName}}</div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text mb-1 mt-1">{{t.tr('Исполнитель')}}</div>
+      <div class="cx">
+        <p-dropdown [class.disabled-button]="toMe" appendTo = "body" [options]="users" [(ngModel)]="selectedUser" [filter]="true" filterBy="userName" optionValue="login" optionLabel="userName"
+                    [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-270">
+          <ng-template let-user pTemplate="item">
+            <div class="df">
+              <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+              <div class="cx cy pl-10">{{user.userName}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
       </div>
-    </ng-template>
-  </p-dropdown>
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">{{t.tr('Назначить себе')}}</div>
+      <p-inputSwitch [(ngModel)]="toMe"></p-inputSwitch>
+    </div>
+  </div>
   <div>
-    <div class="big-text mb-1 mt-1">Поставить задачу в конец плана</div>
+    <div class="big-text mb-1 mt-1">{{t.tr('Поставить задачу в конец плана')}}</div>
   </div>
   <p-inputSwitch [(ngModel)]="toPlan"></p-inputSwitch>
   <div [class.disabled-button]="toPlan">
