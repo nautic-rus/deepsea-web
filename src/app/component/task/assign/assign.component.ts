@@ -84,4 +84,13 @@ export class AssignComponent implements OnInit {
   getUsers() {
     return this.auth.users.filter(x => x.visibility.includes('c'));
   }
+
+  toMeAssign() {
+    if (this.toMe){
+      this.selectedUser = this.auth.getUser().login;
+    }
+    else{
+      this.selectedUser = '';
+    }
+  }
 }

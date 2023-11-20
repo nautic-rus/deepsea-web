@@ -22,7 +22,7 @@
     </div>
     <div>
       <div class="big-text mb-1 mt-1">{{t.tr('Назначить себе')}}</div>
-      <p-inputSwitch [(ngModel)]="toMe"></p-inputSwitch>
+      <p-inputSwitch [(ngModel)]="toMe" (onChange)="toMeAssign()"></p-inputSwitch>
     </div>
   </div>
   <div>
