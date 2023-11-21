@@ -1,0 +1,13 @@
+<div style="height: 220px; width: 350px;">
+  <form [formGroup]="complect">
+    <div class="mt-2">
+      Название комплекта <input type="text" pInputText [formControlName]="'name'" />
+    </div>
+    <div class="df mt-2">
+      <div class="mr-10 cx">
+        <div [class.disabled-button]="complect.invalid" tabindex="10" (click)="save()" pButton [label]="'Добавить'" class="button-ok"></div>
+      </div>
+      <div tabindex="11" (click)="close()" pButton [label]="'Отменить'" class="button-cancel ml-1"></div>
+    </div>
+  </form>
+</div>

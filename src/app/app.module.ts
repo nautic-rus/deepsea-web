@@ -201,6 +201,7 @@ import { ManHoursChartComponent } from './component/charts/man-hours-chart/man-h
 import { ComplectManagerComponent } from './component/tools/complect-manager/complect-manager.component';
 import { AddComplectComponent } from './component/tools/complect-manager/add-complect/add-complect.component';
 import { MaterialComplectManagerComponent } from './component/tools/material-complect-manager/material-complect-manager.component';
+import { AddMaterialComplectComponent } from './component/tools/material-complect-manager/add-material-complect/add-material-complect.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -345,7 +346,8 @@ Quill.register('modules/imageResize', ImageResize);
     ManHoursChartComponent,
     ComplectManagerComponent,
     AddComplectComponent,
-    MaterialComplectManagerComponent
+    MaterialComplectManagerComponent,
+    AddMaterialComplectComponent
   ],
   imports: [
     BrowserModule,
