@@ -179,7 +179,7 @@
             </div>
             <div class="height-160">
               <div class="body-card">
-                <div class="head-text-card">Complect Manager</div>
+                <div class="head-text-card">Drawing Complect Manager</div>
                 <div class="df">
                   <div>
                     <div class="big-text-card mb-1">{{t.tr('Проект')}}</div>
@@ -190,6 +190,37 @@
               </div>
               <div class="body-button-card my-15 cx">
                 <div tabindex="10" (click)="openComplectManager()" pButton [label]="t.tr ('Открыть')" class="button-ok"></div>
+              </div>
+            </div>
+            <div class="footer-card pt-5">
+              <div class="px-10">
+                <img src="assets/blue_whale.svg" height="25">
+              </div>
+              <div class="mini-text-card cy">{{t.tr('Создать спецификацию')}}</div>
+            </div>
+
+          </div>
+        </div>
+        <div class="cxy">
+          <div class="tools-card cursor-pointer">
+            <div class="header-card">
+              <div class="content-end">
+                <div class="name-card electric cxy">ELECTRICAL</div>
+              </div>
+            </div>
+            <div class="height-160">
+              <div class="body-card">
+                <div class="head-text-card">Material Complect Manager</div>
+                <div class="df">
+                  <div>
+                    <div class="big-text-card mb-1">{{t.tr('Проект')}}</div>
+                    <p-dropdown class="select" [(ngModel)]="materialComplectProject" [options]="complectProjects" (ngModelChange)="trayBundleProjectChanged()" styleClass="width-156 font-14">
+                    </p-dropdown>
+                  </div>
+                </div>
+              </div>
+              <div class="body-button-card my-15 cx">
+                <div tabindex="10" (click)="openMaterialComplectManager()" pButton [label]="t.tr ('Открыть')" class="button-ok"></div>
               </div>
             </div>
             <div class="footer-card pt-5">

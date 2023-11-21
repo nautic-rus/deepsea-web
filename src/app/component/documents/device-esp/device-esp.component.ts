@@ -623,6 +623,7 @@ export class DeviceEspComponent implements OnInit {
         while (zipped.includes(name)){
           name = name.split('.').reverse().pop() + '$.' + name.split('.').pop();
         }
+        name = decodeURI(name);
         zipped.push(name);
         zip.file(name, blob.blob());
       });

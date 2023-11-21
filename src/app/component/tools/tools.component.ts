@@ -39,6 +39,7 @@ export class ToolsComponent implements OnInit {
 
   complectProjects: string[] = [];
   complectProject: string = '';
+  materialComplectProject: string = '';
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, public issues: IssueManagerService, public t: LanguageService, private s: SpecManagerService, private dialogService: DialogService, private router: Router, private messageService: MessageService) { }
@@ -98,5 +99,8 @@ export class ToolsComponent implements OnInit {
 
   openComplectManager() {
     this.router.navigate(['complect-manager'], {queryParams: {project: this.complectProject}});
+  }
+  openMaterialComplectManager() {
+    this.router.navigate(['material-complect-manager'], {queryParams: {project: this.materialComplectProject}});
   }
 }
