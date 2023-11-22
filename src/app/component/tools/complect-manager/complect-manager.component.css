@@ -11,10 +11,10 @@
 /deep/.p-multiselect .p-multiselect-label {
   padding: 8px 10px 8px 10px;
 }
-.page{
+.page-c{
   display: grid;
-  grid-template-columns: 430px auto;
-  padding: 20px;
+  grid-template-columns: 400px auto;
+  padding: 15px;
 }
 .card-complect{
   background: rgba(255, 255, 255, 0.9);
@@ -46,7 +46,7 @@
   padding-bottom: 20px;
 }
 .complect{
-  height: 105px;
+  height: 110px;
 }
 .complect-header{
   display: flex;
@@ -55,7 +55,7 @@
   font-weight: bold;
 }
 .complect-content{
-  font-size: 12px;
+  font-size: 13px;
   color: gray;
 }
 .complect-footer{
@@ -65,25 +65,23 @@
 .footer-zones{
   word-break: break-word;
   overflow: auto;
-  height: 50px;
+  height: 35px;
 }
 .complect-footer.systems{
   color: cadetblue;
 }
 .selected-complect{
-  background-color: rgba(14, 54, 74, 0.25);
+  background-color: #EEF5FA;
 }
 .systems-table{
   width: 620px;
-  height: 500px;
+  height: 680px;
   overflow: auto;
-  padding: 0 10px 0 20px;
 }
 .zones-table{
   width: 620px;
-  height: 500px;
+  height: 680px;
   overflow: auto;
-  padding: 0 0 0 20px;
 }
 .title-bold-c{
   font-weight: 500;
@@ -95,4 +93,13 @@
 }
 .icon-с:hover{
   fill: #5e6c84;
+}
+.head-text-c{
+  color: #323130;
+  font-weight: 600;
+}
+.mic-text{
+  font-weight: 500;
+  color: #3a3a3a;
+  font-size: 11px;
 }

@@ -388,6 +388,9 @@ body,p{
 .width-600{
   width: 600px;
 }
+.width-620{
+  width: 620px;
+}
 .width-648{
   width: 648px;
 }
@@ -1350,6 +1353,7 @@ app-materials-summary .p-virtualscroller .p-virtualscroller-content{
   transition: background .1s;
   font-weight: 500;
   cursor: pointer;
+  font-size: 13px;
 }
 .button-ok:hover{
   background-color: #2C7BB6;
