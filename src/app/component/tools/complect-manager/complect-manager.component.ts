@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import _, {any} from "underscore";
 import {DialogService} from "primeng/dynamicdialog";
 import {AddComplectComponent} from "./add-complect/add-complect.component";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-complect-manager',
@@ -20,7 +21,7 @@ export class ComplectManagerComponent implements OnInit {
   selectedSystems: any[] = [];
   zones: any[] = [];
   selectedZones: any[] = [];
-  constructor(public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService) { }
+  constructor(public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
