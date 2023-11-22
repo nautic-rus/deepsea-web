@@ -64,4 +64,16 @@ export class MaterialManagerService {
   getMaterialsSummaryPdf(project: string, code: string, user: string) {
     return this.http.get<any>(props.httpSpec + '/materialsSummaryPdf', {params: {project, code, user}});
   }
+  getMaterialComplects(project: string){
+    return this.http.get<any[]>(props.http + '/materialComplects', {params: {project}});
+  }
+  addMaterialComplect(project: string, name: string){
+    return this.http.get<any>(props.http + '/addMaterialComplect', {params: {project, name}});
+  }
+  deleteMaterialComplect(id: string){
+    return this.http.get<any>(props.http + '/removeMaterialComplect', {params: {id}});
+  }
+  updateMaterialComplect(complect: string){
+    return this.http.post<any>(props.http + '/updateMaterialComplect', JSON.stringify(complect));
+  }
 }
