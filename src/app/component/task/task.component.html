@@ -21,7 +21,7 @@
       <div [class.button-disabled]="issue.responsible != auth.getUser().login && issue.started_by != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
         <img src="assets/icons/checklist.png" height="20">
       </div>
-      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать связанную задачу')" (click)="createCombined()">
+      <div [class.button-disabled]="!issue.closing_status.includes(issue.status)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать связанную задачу')" (click)="createCombined()">
         <img class="rotate-90" src="assets/icons/linktask.svg" height="20">
       </div>
       <div [class.button-disabled]="issue.closing_status.includes(issue.status)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
