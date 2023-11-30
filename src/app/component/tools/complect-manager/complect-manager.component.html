@@ -1,103 +1,119 @@
-<div class="page">
-  <div class="complects">
-    <div class="select-project df cx">
-      <div class="big-text-card mb-1 cxy mx-10">Проект</div>
-      <div class="mx-10">
-        <p-dropdown class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-156 font-14">
-        </p-dropdown>
-      </div>
-      <button (click)="addComplect()">ДОБАВИТЬ КОМПЛЕКТ</button>
-    </div>
-    <cdk-virtual-scroll-viewport class="background-gray" style="height: 81vh" [itemSize]="95">
-      <div [style.height]="95 + 'px'" class="issues-all" *cdkVirtualFor="let compl of complects">
-        <div class="complect cursor-pointer" [class.selected-complect]="selectedComplect == compl" (click)="selectComplect(compl)">
-          <div class="complect-header">
-            <div>{{compl.drawingId}}</div>
-            <div class="complect-project">{{compl.project}}</div>
-            <div (click)="deleteComplect(compl)">
-              DEL
+<div class="all-page">
+  <div class="card-complect">
+    <div class="page-c">
+      <div class="complects">
+        <div class="df mb-10">
+          <div class="mr-10">
+            <p-dropdown class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-156 font-14">
+            </p-dropdown>
+          </div>
+          <div class="materials-button-complect blue-button cxy" (click)="addComplect()">
+            <div class="pr-10 cxy">
+              <img src="assets/icons/plus3.svg" height="18">
             </div>
-          </div>
-          <div class="complect-content">
-            {{compl.drawingDescr}}
-          </div>
-          <div class="complect-footer systems">
-            {{compl.systemNames}}
-          </div>
-          <div class="complect-footer zones">
-            {{compl.zoneNames}}
+            <div class="cxy">{{t.tr('Добавить комплект')}}</div>
           </div>
         </div>
+        <div class="background-gray ml-minus15">
+          <cdk-virtual-scroll-viewport  style="height: 81vh" [itemSize]="110">
+            <div [class.selected-complect]="selectedComplect == compl" (click)="selectComplect(compl)" [style.height]="120 + 'px'" class="issues-all" *cdkVirtualFor="let compl of complects">
+              <div class="complect cursor-pointer">
+                <div class="complect-header pb-5">
+                  <div class="title-bold-c">{{compl.drawingId}}</div>
+                  <div class="df">
+                    <div class="title-bold-c mr-20">{{compl.project}}</div>
+                    <div class="cxy" [pTooltip]="t.tr('Удалить комплект')" tooltipPosition="top" (click)="deleteComplect(compl)">
+                      <svg class="icon-с" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="pb-5 mic-text">
+                  {{compl.drawingDescr}}
+                </div>
+                <div class="complect-footer systems pb-5">
+                  {{compl.systemNames}}
+                </div>
+                <div class="footer-zones complect-content">
+                  {{compl.zoneNames}}
+                </div>
+              </div>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </div>
       </div>
-    </cdk-virtual-scroll-viewport>
-  </div>
-  <div>
-    <div class="df cx pt-20">
-      <div class="mb-1 cx width-150">Системы</div>
-      <div class="mb-1 cx width-150">Помещения</div>
-    </div>
-    <div class="df cx pt-20">
-      <div class="systems-table">
-        <p-table [class.disabled-button]="selectedComplect == null" [globalFilterFields]="['code', 'name']" [value]="systems" [(selection)]="selectedSystems" dataKey="code" styleClass="p-datatable-sm" #systemsTable>
-          <ng-template pTemplate="caption">
-            <div class="flex">
+      <div>
+        <div class="df">
+          <div class="width-620 pl-20 head-text-c">Системы</div>
+          <div class="cx width-150 pl-20 head-text-c">Помещения</div>
+        </div>
+        <div class="df cx pt-20">
+          <div class="systems-table">
+            <p-table [class.disabled-button]="selectedComplect == null" [globalFilterFields]="['code', 'name']" [value]="systems" [(selection)]="selectedSystems" dataKey="code" styleClass="p-datatable-sm" #systemsTable>
+              <ng-template pTemplate="caption">
+                <div class="flex">
               <span class="p-input-icon-left ml-auto">
                 <i class="pi pi-search"></i>
                 <input #searchSystems pInputText type="text" (input)="systemsTable.filterGlobal(searchSystems.value, 'contains')" placeholder="Поиск" />
             </span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width: 20px">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
-              <th style="width: 40px">Code</th>
-              <th style="width: 120px">Name</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-syst>
-            <tr>
-              <td>
-                <p-tableCheckbox [value]="syst"></p-tableCheckbox>
-              </td>
-              <td>{{syst.code}}</td>
-              <td>{{syst.name}}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-      <div class="zones-table">
-        <p-table [class.disabled-button]="selectedComplect == null" [globalFilterFields]="['code', 'name']" [value]="zones" [(selection)]="selectedZones" dataKey="code" styleClass="p-datatable-sm" #zonesTable>
-          <ng-template pTemplate="caption">
-            <div class="flex">
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width: 20px">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                  </th>
+                  <th style="width: 40px">Code</th>
+                  <th style="width: 120px">Name</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-syst>
+                <tr>
+                  <td>
+                    <p-tableCheckbox [value]="syst"></p-tableCheckbox>
+                  </td>
+                  <td>{{syst.code}}</td>
+                  <td>{{syst.name}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+          <div class="zones-table pl-20">
+            <p-table [class.disabled-button]="selectedComplect == null" [globalFilterFields]="['code', 'name']" [value]="zones" [(selection)]="selectedZones" dataKey="code" styleClass="p-datatable-sm" #zonesTable>
+              <ng-template pTemplate="caption">
+                <div class="flex">
               <span class="p-input-icon-left ml-auto">
                 <i class="pi pi-search"></i>
                 <input #searchZones pInputText type="text" (input)="zonesTable.filterGlobal(searchZones.value, 'contains')" placeholder="Поиск" />
             </span>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th style="width: 20px">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
-              <th style="width: 40px">Код</th>
-              <th style="width: 120px">Название</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-zone>
-            <tr>
-              <td>
-                <p-tableCheckbox [value]="zone"></p-tableCheckbox>
-              </td>
-              <td>{{zone.code}}</td>
-              <td>{{zone.name}}</td>
-            </tr>
-          </ng-template>
-        </p-table>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width: 20px">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                  </th>
+                  <th style="width: 40px">Код</th>
+                  <th style="width: 120px">Название</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-zone>
+                <tr>
+                  <td>
+                    <p-tableCheckbox [value]="zone"></p-tableCheckbox>
+                  </td>
+                  <td>{{zone.code}}</td>
+                  <td>{{zone.name}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+        <div class="df justify-content-end mt-20 mr-20">
+          <div tabindex="10" (click)="save()" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
+        </div>
       </div>
     </div>
-    <button (click)="save()">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
   </div>
 </div>
