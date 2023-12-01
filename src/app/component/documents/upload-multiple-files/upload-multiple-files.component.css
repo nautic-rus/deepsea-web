@@ -28,15 +28,13 @@
   justify-content: space-between;
 }
 .upload-multiple-files{
-  width: 40vw;
   height: fit-content;
   padding: 10px;
 }
 .file-groups{
-  max-height: 44vh;
   overflow: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   padding-top: 20px;
 }
 .title{
@@ -131,4 +129,26 @@
 .comment-footer{
   bottom: 20px;
   left: 20px;
+}
+.add-clear-buttons{
+  position: absolute;
+  right: 10px;
+  top: -60px;
+}
+.file-drag{
+  opacity: 0.4;
+  border: 2px dashed #ff6600;
+}
+.upload-download{
+  min-height: 80px;
+  position: absolute;
+  left: 10%;
+  top: 15px;
+  width: 80%;
+  opacity: 0.6;
+}
+.attachment-files{
+  height: 72px;
+  overflow: auto;
+  margin-top: 15px;
 }

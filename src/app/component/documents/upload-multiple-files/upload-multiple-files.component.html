@@ -13,45 +13,52 @@
   </div>
 
   <div class="file-groups">
-    <div class="mb-15" *ngFor="let fileGroup of fileGroups">
-      <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="getRevisionFilesOfGroup(fileGroup.name).length == 0 || fileGroup.collapsed">
-        <div>
-          <div class="df">
+    <div class="mb-15 width-400 position-relative" *ngFor="let fileGroup of fileGroups">
+      <p-fieldset legend="{{fileGroup.name}}" [toggleable]="true" [collapsed]="fileGroup.collapsed">
+        <div class="position-relative">
+          <div class="df add-clear-buttons">
             <div class="button-details df cursor-pointer mb-15 mr-10" (click)="addFilesToGroup(fileGroup.name)">
               <div class="cxy">
                 <img src="assets/icons/plus1.svg" height="16">
               </div>
-              <div class="cy ml-1">{{t.tr('Добавить файлы')}}</div>
+              <div class="cy ml-1">{{t.tr('Добавить')}}</div>
             </div>
             <div class="button-details df cursor-pointer mb-15" (click)="clearFilesOfGroup(fileGroup.name)">
               <div class="cxy">
                 <img src="assets/icons/trash-3.svg" height="16">
               </div>
-              <div class="cy ml-1">{{t.tr('Очистить всё')}}</div>
+              <div class="cy ml-1">{{t.tr('Очистить')}}</div>
             </div>
           </div>
-          <div *ngIf="getRevisionFilesOfGroup(fileGroup.name).length != 0">
-            <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name)">
-              <div class="attachment-files df mb-6 cursor-pointer space-between">
-                <div class="df">
-                  <div class="cxy">
-                    <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
-                  </div>
-                  <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
-                  <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+        </div>
+        <div class="upload-download cx cy">
+          <div [class.file-drag]="dragFileGroup == fileGroup.name" class="cxy w-100" (dragenter)="dragEnter($event, fileGroup.name)" (dragleave)="dragLeave($event, fileGroup.name)" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event, fileGroup.name); dragFileGroup = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+            <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="20">
+            <span class="normal-text no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+          </div>
+        </div>
+        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files, fileGroup.name)" multiple>
+        <div class="attachment-files">
+          <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name)">
+            <div class="df mb-6 cursor-pointer space-between">
+              <div class="df">
+                <div class="cxy">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="25"/>
                 </div>
-                <div class="df">
-                  <div class="cxy" (click)="openFile(file)">
-                    <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                  </div>
-                  <div class="cxy" (click)="deleteFile(file)">
-                    <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
-                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                    </svg>
-                  </div>
-                </div>
+                <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
+                <span class="cy">{{' ' + getDate(file.upload_date)}}</span>
+              </div>
+              <div class="df">
+<!--                <div class="cxy" (click)="openFile(file)">-->
+<!--                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+<!--                  </svg>-->
+<!--                </div>-->
+<!--                <div class="cxy" (click)="deleteFile(file)">-->
+<!--                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">-->
+<!--                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>-->
+<!--                  </svg>-->
+<!--                </div>-->
               </div>
             </div>
           </div>
@@ -61,27 +68,32 @@
   </div>
   <div class="df comment-footer">
     <div>
-      <div class="mr-10 cy my-5">
-        <label class="container margin-bottom-none">
-          <span class="text-checkbox">{{t.tr('Оперативное решение')}}</span>
-          <input type="checkbox" [(ngModel)]="isCorrection">
-          <span class="checkmark"></span>
-        </label>
+      <div class="my-5">
+        <div class="pb-5">{{t.tr('Установки')}}</div>
+        <div class="mr-10 cy my-5">
+          <label class="container margin-bottom-none">
+            <span class="text-checkbox">{{t.tr('Оперативное решение')}}</span>
+            <input type="checkbox" [(ngModel)]="isCorrection">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="mr-10 cy my-5">
+          <label class="container margin-bottom-none">
+            <span class="text-checkbox">{{t.tr('Отправить уведомление на e-mail')}}</span>
+            <input type="checkbox" [(ngModel)]="isSendNotification">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="mr-10 cy my-5">
+          <label class="container margin-bottom-none">
+            <span class="text-checkbox">{{t.tr('Закрыть задачу (установить статус "Поставлен")')}}</span>
+            <input type="checkbox" [(ngModel)]="closeTask">
+            <span class="checkmark"></span>
+          </label>
+        </div>
       </div>
-      <div class="mr-10 cy my-5">
-        <label class="container margin-bottom-none">
-          <span class="text-checkbox">{{t.tr('Отправить уведомление на e-mail')}}</span>
-          <input type="checkbox" [(ngModel)]="isSendNotification">
-          <span class="checkmark"></span>
-        </label>
-      </div>
-      <div class="mr-10 cy my-5">
-        <label class="container margin-bottom-none">
-          <span class="text-checkbox">{{t.tr('Закрыть задачу (установить статус "Поставлен")')}}</span>
-          <input type="checkbox" [(ngModel)]="closeTask">
-          <span class="checkmark"></span>
-        </label>
-      </div>
+    </div>
+    <div class="ml-2">
       <div class="my-5">
         <div class="pb-5">{{t.tr('Комментарий')}}</div>
         <div class="">

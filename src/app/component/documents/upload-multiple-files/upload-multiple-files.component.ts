@@ -35,43 +35,43 @@ export class UploadMultipleFilesComponent implements OnInit {
     {
       name: 'Cutting Map',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Nesting Plates',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Nesting Profiles',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Profile Sketches',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Bending Templates',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Other',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Correction',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     }
   ];
@@ -91,25 +91,25 @@ export class UploadMultipleFilesComponent implements OnInit {
     {
       name: 'Pipe Spools',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Spool Models',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Other',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Correction',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     }
   ];
@@ -129,13 +129,13 @@ export class UploadMultipleFilesComponent implements OnInit {
     {
       name: 'Other',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Correction',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     }
   ];
@@ -155,24 +155,26 @@ export class UploadMultipleFilesComponent implements OnInit {
     {
       name: 'Other',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     },
     {
       name: 'Correction',
       icon: 'assets/icons/cutting.svg',
-      collapsed: true,
+      collapsed: false,
       need_rights: false
     }
   ];
   isCorrection = false;
   isSendNotification = true;
-  closeTask = true;
+  closeTask = false;
   revs = ['-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10','11','12','13','14','15','16','17','18','19','20', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
   rev = '-';
   changeRev = true;
   comment = '';
   loaded: FileAttachment[] = [];
+  awaitForLoad: any[] = [];
+  dragFileGroup: string = '';
 
   constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService) {
     this.issue = conf.data[0];
@@ -196,7 +198,70 @@ export class UploadMultipleFilesComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-
+  reformatFileName(name: string, fileGroup: string){
+    let result = name;
+    if (fileGroup == 'Drawings'){
+      //result = this.issue.doc_number + name.split('.').pop();
+    }
+    if (fileGroup == 'Nesting Plates'){
+      result = 'N-' + name.replace('_0_', '_').split('_').join('-');
+    }
+    if (fileGroup == 'Nesting Profiles'){
+      if (name.includes('.pdf')){
+        //result = 'Nesting Profiles' + '.pdf';
+      }
+      else{
+        result = 'P-' + name.split('_').join('-');
+      }
+    }
+    if (fileGroup == 'Profile Sketches' && !name.includes('.txt')){
+      if (name.includes('.pdf')){
+        //result = 'Profile Sketches' + '.pdf';
+      }
+      else{
+        result = name.split('_').join('-');
+      }
+    }
+    if (fileGroup == 'Cutting Map' && !name.includes('C-')){
+      result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.split('_')[0] + '-' + name.split('_')[1] + '.txt';
+      if (name.includes('rev')){
+        result = 'C-' + this.issue.project.replace('NR', 'N') + '-' + name.split('_')[0] + '-' + name.split('_')[1]  + '-' + name.split('_')[3];
+      }
+    }
+    return result.replace('-rev', '_rev');
+  }
+  handleFileInput(files: FileList | null, fileGroup: string) {
+    if (files != null){
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          let fileName = this.reformatFileName(file.name, fileGroup);
+          // @ts-ignore
+          const find = this.loaded.find(x => x.name == fileName);
+          if (find != null){
+            this.loaded.splice(this.loaded.indexOf(find), 1);
+          }
+          this.awaitForLoad.push(fileName);
+        }
+      }
+      for (let x = 0; x < files.length; x++){
+        let file = files.item(x);
+        if (file != null){
+          let fileName = this.reformatFileName(file.name, fileGroup);
+          this.issueManager.uploadFile(file, this.auth.getUser().login, fileName).then(res => {
+            res.group = fileGroup;
+            this.loaded.push(res);
+            console.log(this.loaded);
+          });
+        }
+      }
+    }
+  }
+  onFilesDrop(event: DragEvent, fileGroup: string) {
+    event.preventDefault();
+    // @ts-ignore
+    this.handleFileInput(event.dataTransfer.files, fileGroup);
+  }
   addFilesToGroup(name: string) {
     this.dialogService.open(UploadRevisionFilesComponent, {
       showHeader: false,
@@ -295,5 +360,13 @@ export class UploadMultipleFilesComponent implements OnInit {
 
   clearFilesOfGroup(name: string) {
     this.loaded = this.loaded.filter(x => x.group != name);
+  }
+
+  dragEnter(event: DragEvent, name: string) {
+    this.dragFileGroup = name;
+  }
+
+  dragLeave(event: DragEvent, name: string) {
+    this.dragFileGroup = '';
   }
 }

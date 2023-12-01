@@ -593,7 +593,7 @@ export class LanguageService {
           case 'Поставить задачу в конец плана': return 'Place the task at the end of the plan'
           case 'Добавить комплект': return 'Add a set'
           case 'Удалить комплект': return 'Delete set'
-          case '': return ''
+          case 'Установки': return 'Features'
           case '': return ''
           case '': return ''
           case '': return ''
