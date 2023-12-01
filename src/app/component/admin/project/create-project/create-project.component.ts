@@ -44,7 +44,7 @@ export class CreateProjectComponent implements OnInit {
 
   createProject() {
     this.loading = true;
-    let projects: Projects = { id: 0, name: this.name, foran: this.foran, rkd: this.rkd, pdsp: this.pdsp, factory: this.factory, managers: this.managers, status: this.status };
+    let projects: Projects = { id: 0, name: this.name, foran: this.foran, rkd: this.rkd, pdsp: this.pdsp, factory: this.factory, managers: this.managers.join(','), status: this.status };
     this.projectService.startProject(projects).subscribe({
       next: res => {
         console.log(res);

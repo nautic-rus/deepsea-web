@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {LanguageService} from "../../../../domain/language.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {RightService} from "../../../admin/right/right.service";
-import {Rights} from "../../../../domain/interfaces/rights";
 import {UserService} from "../../../admin/user/user.service";
 import {ProjectUser} from "../../../../domain/classes/project-user";
 import {Departments} from "../../../../domain/interfaces/departments";
 import {UserNotification} from "../../../../domain/classes/user-notification";
 import {MessageService} from "primeng/api";
+import {Observable, zip} from "rxjs";
 
 @Component({
   selector: 'app-create-notification',
@@ -16,16 +15,16 @@ import {MessageService} from "primeng/api";
 })
 export class CreateNotificationComponent implements OnInit {
   name: string = '';
-  visibleProjects: ProjectUser[]
-  departments: Departments[]
-  methods: string[]
-  types: string[]
-  userId: number
+  visibleProjects: ProjectUser[];
+  departments: Departments[];
+  methods: string[];
+  types: string[];
+  userId: number;
 
-  project: string = ""
-  department: string = ""
-  type: string = ""
-  method: string = ""
+  project: string[];
+  department: string[];
+  type: string[];
+  method: string[];
 
   constructor(public t: LanguageService, private messageService: MessageService, public conf: DynamicDialogConfig, public ref: DynamicDialogRef, public userService: UserService) {
   }
@@ -43,31 +42,32 @@ export class CreateNotificationComponent implements OnInit {
   }
 
   createRole() {
-    let projectId = this.visibleProjects.filter(x => x.projectName == this.project).map(x => x.projectId)[0]
-    let departmentId = this.departments.filter(x => x.name == this.department).map(x => x.id)[0]
-    let notification: UserNotification = {
-      userId: this.userId,
-      kind: this.type,
-      method: this.method,
-      project: this.project,
-      projectId: projectId,
-      department: this.department,
-      departmentId: departmentId,
-    }
+    let observers: Observable<string>[] = [];
+    this.project.forEach(project => {
+      let projectId = this.visibleProjects.filter(x => x.projectName == project).map(x => x.projectId)[0];
+      this.department.forEach(department => {
+        let departmentId = this.departments.filter(x => x.name == department).map(x => x.id)[0];
+        this.types.forEach(type => {
+          this.method.forEach(method => {
+            let notification: UserNotification = {
+              userId: this.userId,
+              kind: type,
+              method: method,
+              project: project,
+              projectId: projectId,
+              department: department,
+              departmentId: departmentId,
+            };
+            let obs = this.userService.createNotification(notification);
+            observers.push(obs);
+          });
+        });
+      });
+    });
 
-    console.log(notification)
-
-    this.userService.createNotification(notification).subscribe({
-      next: res => {
-        console.log(res);
-        this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Создание уведомления'), detail: this.t.tr('Новое уведомление создано')})
-        this.ref.close(res);
-      },
-      error: err => {
-        console.log(err);
-        this.ref.close(err);
-        this.messageService.add({key:'admin', severity:'error', summary: this.t.tr('Создание уведомления'), detail: this.t.tr('Не удалось создать новое уведомление')})
-      }
+    zip(...observers).subscribe(res => {
+      this.messageService.add({key:'admin', severity:'success', summary: this.t.tr('Создание уведомления'), detail: this.t.tr('Новое уведомление создано')});
+      this.ref.close();
     });
   }
 

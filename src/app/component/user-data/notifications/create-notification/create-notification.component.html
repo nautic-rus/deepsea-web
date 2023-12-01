@@ -7,25 +7,25 @@
   </div>
   <div>
     <div class="big-text-user mb-1 mt-1">{{t.tr('Проект')}}</div>
-    <p-dropdown styleClass="w-100" appendTo="body" id="project" [options]="visibleProjects" [(ngModel)]="project"
-                optionLabel="projectName" optionValue="projectName"></p-dropdown>
+      <p-multiSelect styleClass="w-100" appendTo="body" id="project" [options]="visibleProjects" [(ngModel)]="project"
+                  optionLabel="projectName" optionValue="projectName"></p-multiSelect>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Тип')}}</div>
+      <p-multiSelect styleClass="w-100" appendTo="body" id="type" [options]="types" [(ngModel)]="type"
+                  ></p-multiSelect>
+    </div>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
+      <p-multiSelect styleClass="w-100" appendTo="body" id="department" [options]="departments" [(ngModel)]="department"
+                  optionLabel="name" optionValue="name"></p-multiSelect>
+    <div>
+      <div class="big-text-user mb-1 mt-1">{{t.tr('Метод')}}</div>
+      <p-multiSelect styleClass="w-100" appendTo="body" id="method" [options]="methods" [(ngModel)]="method"
+                  ></p-multiSelect>
+    </div>
   </div>
-  <div>
-    <div class="big-text-user mb-1 mt-1">{{t.tr('Тип')}}</div>
-    <p-dropdown styleClass="w-100" appendTo="body" id="type" [options]="types" [(ngModel)]="type"
-                ></p-dropdown>
+  <div class="form-footer-user">
+    <div tabindex="10" (click)="createRole()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
   </div>
-  <div>
-    <div class="big-text-user mb-1 mt-1">{{t.tr('Отдел')}}</div>
-    <p-dropdown styleClass="w-100" appendTo="body" id="department" [options]="departments" [(ngModel)]="department"
-                optionLabel="name" optionValue="name"></p-dropdown>
-  <div>
-    <div class="big-text-user mb-1 mt-1">{{t.tr('Метод')}}</div>
-    <p-dropdown styleClass="w-100" appendTo="body" id="method" [options]="methods" [(ngModel)]="method"
-                ></p-dropdown>
-  </div>
-</div>
-
-<div class="form-footer-user">
-  <div tabindex="10" (click)="createRole()" pButton [label]="t.tr('Сохранить')" class="button-ok"></div>
 </div>
