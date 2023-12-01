@@ -7,6 +7,7 @@ import {Departments} from "../../../../domain/interfaces/departments";
 import {UserNotification} from "../../../../domain/classes/user-notification";
 import {MessageService} from "primeng/api";
 import {Observable, zip} from "rxjs";
+import {IssueManagerService} from "../../../../domain/issue-manager.service";
 
 @Component({
   selector: 'app-create-notification',
@@ -26,15 +27,21 @@ export class CreateNotificationComponent implements OnInit {
   type: string[];
   method: string[];
 
-  constructor(public t: LanguageService, private messageService: MessageService, public conf: DynamicDialogConfig, public ref: DynamicDialogRef, public userService: UserService) {
+  constructor(public issueManager: IssueManagerService, public t: LanguageService, private messageService: MessageService, public conf: DynamicDialogConfig, public ref: DynamicDialogRef, public userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.visibleProjects = this.conf.data[0]
-    this.departments = this.conf.data[1]
-    this.methods = this.conf.data[2]
-    this.types = this.conf.data[3]
-    this.userId = this.conf.data[4]
+    this.issueManager.getDepartments().subscribe(departments => {
+      this.visibleProjects = this.conf.data[0];
+      this.departments = departments.filter(x => x.visible_documents == 1).map(x => Object({
+        id: x.id,
+        name: x.name,
+        manager: x.manager
+      }));
+      this.methods = this.conf.data[2];
+      this.types = this.conf.data[3];
+      this.userId = this.conf.data[4];
+    });
   }
 
   close() {
