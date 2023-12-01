@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="task-buttons">
-      <div *ngIf="issue.issue_type != 'IT'" class="task-button cxy mr-10 p-mr-auto" tooltipPosition="top" [pTooltip]="t.tr('Документация')" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
+      <div *ngIf="issue.issue_type == 'RKD' || issue.issue_type == 'PDSP' || issue.issue_type == 'PSD' || issue.issue_type == 'ITT' || issue.issue_type == 'ED'" class="task-button cxy mr-10 p-mr-auto" tooltipPosition="top" [pTooltip]="t.tr('Документация')" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
         <img src="assets/icons/tasks-doc.svg" height="20">
       </div>
 <!--      <div>-->
