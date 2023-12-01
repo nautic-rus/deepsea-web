@@ -8,7 +8,6 @@ import {UserNotification} from "../../../../domain/classes/user-notification";
 import {MessageService} from "primeng/api";
 import {Observable, zip} from "rxjs";
 import {IssueManagerService} from "../../../../domain/issue-manager.service";
-import {LV} from "../../../../domain/classes/lv";
 
 @Component({
   selector: 'app-create-notification',
