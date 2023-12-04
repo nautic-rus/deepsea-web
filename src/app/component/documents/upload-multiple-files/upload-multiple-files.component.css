@@ -138,25 +138,18 @@
   right: 10px;
   top: -60px;
 }
-.file-drag{
-  opacity: 0.4;
-  border: 2px dashed #ff6600;
-}
-.file-drag-attach:hover{
-  border: 2px dashed rgba(255, 102, 0, 0.65);
-}
 .upload-download{
-  min-height: 30px;
+  min-height: 48px;
   position: absolute;
-  left: 10%;
+  left: 3%;
   top: 40px;
-  width: 80%;
-  opacity: 0.6;
+  width: 94%;
+  border: 1px dashed #E5E9F0;
 }
 .attachment-files{
   max-height: 72px;
   overflow: auto;
-  margin-top: 15px;
+  margin-top: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
