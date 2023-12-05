@@ -4,6 +4,9 @@
 /deep/.p-datatable .p-datatable-thead > tr > th {
   border-width: 1px 0 1px 0;
 }
+/deep/.p-fieldset .p-fieldset-legend {
+  padding: 10px;
+}
 .upload-button-close{
   color: #605e5c;
   width: 2rem;
@@ -135,20 +138,24 @@
   right: 10px;
   top: -60px;
 }
-.file-drag{
-  opacity: 0.4;
-  border: 2px dashed #ff6600;
-}
 .upload-download{
-  min-height: 80px;
+  min-height: 48px;
   position: absolute;
-  left: 10%;
-  top: 15px;
-  width: 80%;
-  opacity: 0.6;
+  left: 3%;
+  top: 40px;
+  width: 94%;
+  border: 1px dashed #E5E9F0;
 }
 .attachment-files{
-  height: 72px;
+  max-height: 72px;
   overflow: auto;
-  margin-top: 15px;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.icon-nest{
+  fill: #E1E1E1;
+}
+.icon-nest:hover{
+  fill: #5e6c84;
 }
