@@ -479,7 +479,7 @@ export class TaskComponent implements OnInit {
   getMessages(issue: Issue) {
     let res: any[] = [];
     issue.messages.filter(x => x.prefix != 'answer').forEach(x => res.push(x));
-    issue.history.forEach(x => res.push(x));
+    issue.history.filter(x => this.auth.hasPerms('visible_plan_actual_hours') || (x.name_value != 'man_hours' && x.name_value != 'plan_hours')).forEach(x => res.push(x));
     //console.log(issue.history);
     // @ts-ignore
     return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
