@@ -314,6 +314,9 @@ export class AuthManagerService {
   insertConsumedPlanInterval(taskId: number, userId: number, from: number, hoursAmount: number, taskType: number){
     return this.http.get<string>(props.http + '/planInsertConsumedInterval', {params: {taskId, userId, from, hoursAmount, taskType}});
   }
+  addManHours(taskId: number, userId: number, dateConsumed: number, hoursAmount: number, message: string){
+    return this.http.get<string>(props.http + '/addManHours', {params: {taskId, userId, dateConsumed, hoursAmount, message}});
+  }
   deleteInterval(id: number, fromUser: string){
     return this.http.get<any>(props.http + '/planDeleteInterval', {params: {id, fromUser}});
   }
