@@ -66,4 +66,7 @@ export class CombineIssuesComponent implements OnInit {
   getUsers() {
     return this.auth.users.filter(x => x.visibility.includes('c'));
   }
+  trimName(name: string, length: number = 85) {
+    return name.substr(0, length) + (name.length > length ? '...' : '');
+  }
 }
