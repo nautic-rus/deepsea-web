@@ -337,13 +337,15 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
-          this.planIssue = resPlan[0];
-          this.availableActions = this.getAvailableActions(this.issue);
+      setTimeout(() => {
+        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+          this.issue = issue;
+          this.availableActions = this.getAvailableActions(issue);
+          this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
+            this.planIssue = resPlan[0];
+          });
         });
-      });
+      }, 100);
     });
   }
   planIssue: any;
