@@ -317,7 +317,8 @@ export class CreateTaskComponent implements OnInit {
     issue.assigned_to = this.assignedToUser;
     issue.priority = this.taskPriority;
     issue.start_date = this.startDate.getTime();
-    issue.due_date = this.dueDate.getTime();
+    issue.due_date = 0;
+    //issue.due_date = this.dueDate.getTime();
     issue.department = this.taskDepartment;
     issue.doc_number = this.taskDocNumber;
     issue.responsible = this.responsibleUser;
