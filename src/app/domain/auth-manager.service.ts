@@ -326,4 +326,11 @@ export class AuthManagerService {
   getStatsUserDetails(dateFrom: number, dateTo: number, users: number[]){
     return this.http.post<any[]>(props.http + '/statsUsersDetails', users, {params: {dateFrom, dateTo}});
   }
+  getUserDiary(userId: number){
+    return this.http.get<any[]>(props.http + '/userDiary', {params: {userId}});
+  }
+
+  deleteFromDiary(id: number) {
+    return this.http.get<any[]>(props.http + '/deleteFromDiary', {params: {id}});
+  }
 }

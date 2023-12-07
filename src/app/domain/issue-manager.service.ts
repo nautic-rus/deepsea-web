@@ -76,6 +76,9 @@ export class IssueManagerService {
   async getIssues(login: string): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/issues', {params: {user: login}}).toPromise();
   }
+  getIssuesAll() {
+    return this.http.get<any[]>(props.http + '/issuesAll');
+  }
   async getQuestions(): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/questions').toPromise();
   }

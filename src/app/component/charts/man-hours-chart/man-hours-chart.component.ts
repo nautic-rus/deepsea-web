@@ -281,7 +281,7 @@ export class ManHoursChartComponent implements OnInit {
   }
 
   openIssue(id: number) {
-    window.open('/taskId?=' + id, '_blank');
+    window.open('/?taskId=' + id, '_blank');
   }
 
   getSpecial(special: string) {

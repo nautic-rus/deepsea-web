@@ -251,29 +251,28 @@ export class MonthTasksComponent implements OnInit {
         command: (event: any) => this.deleteDailyTask()
       }
     ];
-    setTimeout(() => {
-      this.users = this.auth.users.filter(x => x.visibility.includes('c') && x.groups.includes('Engineers') || x.groups.includes('Hull Engineers') || x.groups.includes('Chief of Department') || x.groups.includes('Managers') || x.groups.includes('Admin'));
-      this.selectedUser = this.auth.getUser();
+    this.calendar = this.getCalendar();
+    this.auth.getUsers().then(res => {
+      let users = res.filter(x => x.visibility.includes('c') && x.groups.includes('Engineers') || x.groups.includes('Hull Engineers') || x.groups.includes('Chief of Department') || x.groups.includes('Managers') || x.groups.includes('Admin'));
+      users.forEach(u => u.userName = this.auth.getUserName(u.login));
+      this.users = users;
+      this.selectedUser = this.users.find(x => x.id == this.auth.getUser().id)!;
       this.fillTasks();
-    }, 500);
+    });
   }
   fillTasks(){
     let today = new Date();
-    this.auth.getPlanByDays(today.getTime()).subscribe(res => {
-      this.planByDays = res;
-      this.issueManager.getIssues('op').then(resIssues => {
-        this.issues = resIssues;
-        this.calendar = this.getCalendar();
+    this.auth.getUserDiary(this.selectedUser.id).subscribe(userDiary => {
+      this.calendar.forEach(cl => {
+        if (!isNaN(cl.number)){
+          let date = new Date(today.getFullYear(), today.getMonth() + cl.monthChange, cl.number);
+          cl.tasks = userDiary.filter(x => this.sameDay(x.interval.date_consumed, date.getTime()));
+          if (cl.tasks.length > 0){
+            console.log(cl.tasks);
+          }
+        }
       });
     });
-    // this.auth.getConsumedPlanHours(this.selectedUser.id).subscribe(consumedValue => {
-    //   this.consumed = consumedValue;
-    //   this.consumedIds = consumedValue.map(x => x.hour_id);
-    //   this.auth.getUsersPlanHours(this.selectedUser.id, 0, 1).subscribe(planned => {
-    //     this.planned = planned;
-
-    //   })
-    // });
   }
   changeUser(){
     this.fillTasks();
@@ -314,62 +313,6 @@ export class MonthTasksComponent implements OnInit {
       }
 
     }
-    // _.forEach(_.groupBy(userPlanHoursToday, x => x.task_id), gr => {
-    //   let id = gr[0].task_id;
-    //   let issue = this.issues.find(x => x.id == id);
-    //   if (issue != null){
-    //     res.push(new DailyTask(
-    //       id,
-    //       this.date,
-    //       this.date,
-    //       this.selectedUser.login,
-    //       issue.project,
-    //       issue.name,
-    //       gr.length,
-    //       0,
-    //       issue.assigned_to,
-    //       issue.doc_number,
-    //       issue.action,
-    //       0,
-    //       0,
-    //       issue.action,
-    //       issue.project,
-    //       issue.doc_number,
-    //       false
-    //     ));
-    //   }
-    // });
-    return res;
-  }
-  getTasksOfDayAux(day: number){
-    let res: DailyTask[] = [];
-    let userPlanHours = this.planned.filter(x => x.user == this.selectedUser.id && x.task_id != 0).filter(x => this.consumedIds.includes(x.id));
-    let userPlanHoursToday = userPlanHours.filter(x => x.day == day && x.month == this.date.getMonth() && x.year == this.date.getFullYear() && x.hour_type == 1);
-    _.forEach(_.groupBy(userPlanHoursToday, x => x.task_id), gr => {
-      let id = gr[0].task_id;
-      let issue = this.issues.find(x => x.id == id);
-      if (issue != null){
-        res.push(new DailyTask(
-          id,
-          this.date,
-          this.date,
-          this.selectedUser.login,
-          issue.project,
-          issue.name,
-          gr.length,
-          0,
-          issue.assigned_to,
-          issue.doc_number,
-          issue.action,
-          0,
-          0,
-          issue.action,
-          issue.project,
-          issue.doc_number,
-          false
-        ));
-      }
-    });
     return res;
   }
   sameDay(dLong1: number, dLong2: number) {
@@ -389,20 +332,9 @@ export class MonthTasksComponent implements OnInit {
     }
     return res;
   }
-  addDayTask(day: any) {
-    this.dialogService.open(DailyTasksComponent, {
-      showHeader: false,
-      modal: true,
-      data: [day.number == -1 ? new Date() : new Date(this.date.getFullYear(), this.date.getMonth(), day.number), day.sum]
-    }).onClose.subscribe(res => {
-      setTimeout(() => {
-        this.fillTasks();
-      }, 100);
-    });
-  }
   openTask(task: any){
     if (task.issueId != 0){
-      window.open('/?taskId=' + task.issueId, '_blank');
+      window.open('/?taskId=' + task.issue.id, '_blank');
       return;
     }
     this.dialogService.open(ShowTaskComponent, {
@@ -411,18 +343,16 @@ export class MonthTasksComponent implements OnInit {
       data: task,
     }).onClose.subscribe(res => {
       if (res == 'delete'){
-        setTimeout(() => {
-          this.fillTasks();
-        }, 100);
+        this.fillTasks();
       }
     });
   }
 
   deleteDailyTask() {
-    this.issueManager.deleteDailyTask(this.selectedTask.id).then(() => {
+    this.auth.deleteFromDiary(this.selectedTask.interval.id).subscribe(res => {
+      this.calendar = this.getCalendar();
+      this.fillTasks();
     });
-    this.tasks = this.tasks.filter(x => x.id != this.selectedTask.id);
-    this.calendar = this.getCalendar();
   }
 
   changeMonth(value: number) {
@@ -451,5 +381,11 @@ export class MonthTasksComponent implements OnInit {
 
   selectTask(task: any) {
     this.selectedTask = task;
+  }
+
+  getTaskInfo(task: any) {
+    let dNum = task.issue.docNumber;
+    let dName = task.issue.name;
+    return [dNum, dName].filter(x => x != '').join(' ');
   }
 }

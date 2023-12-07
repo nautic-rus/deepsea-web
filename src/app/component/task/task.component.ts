@@ -843,6 +843,10 @@ export class TaskComponent implements OnInit {
         this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
           this.planIssue = resPlan[0];
           this.availableActions = this.getAvailableActions(this.issue);
+          this.auth.getPlanIssue(this.issue.id).subscribe(planIssue => {
+            //console.log(planIssue);
+            this.actualManHours = planIssue[0].consumed;
+          });
         });
       });
     });
@@ -951,9 +955,8 @@ export class TaskComponent implements OnInit {
         }
         else if (value == 'Check' || value == 'Paused' || this.issue.closing_status.includes(value)){
           this.updated = true;
-          let findUser = this.auth.users.find(x => x.login == assignedTo);
-          //if (findUser != null){
           if (false){
+            let findUser = this.auth.users.find(x => x.login == assignedTo);
             this.auth.getConsumedPlanHours(findUser!.id).subscribe(consumed => {
               this.auth.getUsersPlanHours(findUser!.id, 0, 1).subscribe(userPlanHours => {
                 let userPlanHoursToday = _.sortBy(userPlanHours.filter(x => x.day == this.today.getDate() && x.month == this.today.getMonth() && x.year == this.today.getFullYear() && x.hour_type == 1), x => x.id);

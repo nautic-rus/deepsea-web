@@ -240,3 +240,11 @@
 .no-margin{
   margin-right: 0;
 }
+.loading{
+  position: absolute;
+  left: 53%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: large;
+  font-weight: bold;
+}

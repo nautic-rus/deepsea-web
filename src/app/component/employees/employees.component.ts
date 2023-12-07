@@ -10,6 +10,7 @@ import _ from "underscore";
 import {LanguageService} from "../../domain/language.service";
 import {DailyTask} from "../../domain/interfaces/daily-task";
 import {UserTasksComponent} from "./user-tasks/user-tasks.component";
+import {Issue} from "../../domain/classes/issue";
 
 @Component({
   selector: 'app-employees',
@@ -18,17 +19,19 @@ import {UserTasksComponent} from "./user-tasks/user-tasks.component";
 })
 export class EmployeesComponent implements OnInit {
 
-  departments: string[] = [];
+  departments: any[] = [];
   department = '';
   today = new Date();
   todayStatic = new Date();
   currentMonth = this.today.getMonth();
   currentYear = this.today.getFullYear();
   selectedDepartments: string[] = [];
+  usersSrc: User[] = [];
   users: User[] = [];
-  dailyTasks: DailyTask[] = [];
+  userDiary: any[] = [];
   userStats: any = Object();
   selectedView: string = 'month';
+  issuesSrc: Issue[] = [];
   specialDays = [
     Object({day: 3, month: 11, year: 2022, hours: 7}),
     Object({day: 4, month: 11, year: 2022, hours: 0}),
@@ -48,8 +51,34 @@ export class EmployeesComponent implements OnInit {
     Object({day: 12, month: 6, year: 2023, hours: 0}),
     Object({day: 3, month: 11, year: 2023, hours: 7}),
     Object({day: 6, month: 11, year: 2023, hours: 0}),
+
+    Object({day: 1, month: 1, year: 2024, hours: 0}),
+    Object({day: 2, month: 1, year: 2024, hours: 0}),
+    Object({day: 3, month: 1, year: 2024, hours: 0}),
+    Object({day: 4, month: 1, year: 2024, hours: 0}),
+    Object({day: 5, month: 1, year: 2024, hours: 0}),
+    Object({day: 8, month: 1, year: 2024, hours: 0}),
+    Object({day: 22, month: 2, year: 2024, hours: 7}),
+    Object({day: 23, month: 2, year: 2024, hours: 0}),
+    Object({day: 7, month: 3, year: 2024, hours: 7}),
+    Object({day: 8, month: 3, year: 2024, hours: 0}),
+    Object({day: 27, month: 4, year: 2024, hours: 8}),
+    Object({day: 29, month: 4, year: 2024, hours: 0}),
+    Object({day: 30, month: 4, year: 2024, hours: 0}),
+    Object({day: 1, month: 5, year: 2024, hours: 0}),
+    Object({day: 8, month: 5, year: 2024, hours: 7}),
+    Object({day: 9, month: 5, year: 2024, hours: 0}),
+    Object({day: 10, month: 5, year: 2024, hours: 0}),
+    Object({day: 11, month: 6, year: 2024, hours: 7}),
+    Object({day: 12, month: 6, year: 2024, hours: 0}),
+    Object({day: 2, month: 11, year: 2024, hours: 7}),
+    Object({day: 4, month: 11, year: 2024, hours: 0}),
+    Object({day: 28, month: 12, year: 2024, hours: 8}),
+    Object({day: 30, month: 12, year: 2024, hours: 0}),
+    Object({day: 31, month: 12, year: 2024, hours: 0}),
   ];
   workingHours = 0;
+  loading = true;
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
@@ -57,80 +86,62 @@ export class EmployeesComponent implements OnInit {
     this.fill();
   }
   fill(){
-    let days = this.getDaysInMonth();
-    this.issues.getDailyTasks().then(res => {
-      this.dailyTasks = res;
+    this.auth.getUsers().then(resUsers => {
+      this.usersSrc = resUsers;
+      this.usersSrc.forEach(u => u.userName = this.auth.getUserName(u.login));
+      this.issues.getDepartments().subscribe(departments => {
+        this.departments = departments.filter(x => x.visible_man_hours == 1);
+        this.selectedDepartments = this.departments.map(x => x.name);
+        this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
 
-      this.auth.getUsers().then(res =>{
-        this.users = res.filter(x => x.visibility.includes('k') && !x.login.includes('isaev') && !x.login.includes('kokovin') );
-        this.users.forEach(user => user.userName = this.auth.getUserName(user.login));
-        this.users.forEach(user => user.props = Object({department: (user.visibility.includes('r') ? '6' : '')}));
-        // this.users.forEach(d => d.department = this.issues.localeUserDepartment(d.department))
-        this.users = _.sortBy(this.users.filter(x => x.surname != 'surname'), x => x.userName);
+        let days = this.getDaysInMonth();
+        this.auth.getConsumedPlanHours(0).subscribe(consumed => {
+          this.issues.getIssuesAll().subscribe(resIssues => {
+            this.issuesSrc = resIssues;
+            this.users.forEach(user => {
+              let tasks = consumed.filter(x => x.user_id == user.id);
+              let tasksByDay = Object({});
 
-        if (this.departments.length == 0){
-          this.departments = _.uniq(this.users.map(x => x.department).filter(x => x != null && x != '6' && x != '0'));
-          this.departments = _.sortBy(this.departments, x => x);
-          // this.departments.push('6');
-          this.departments = this.departments.filter(x => ['Hull', 'System', 'Electric', 'Devices', 'Accommodation', 'Design'].includes(x));
-          this.selectedDepartments = [...this.departments];
-          this.departments = _.sortBy(this.departments, x => this.getOrder(x));
-
-        }
-
-
-        this.users.forEach(user => {
-          let tasks = this.dailyTasks.filter(x => x.userLogin == user.login);
-          let daysSum = Object({});
-          let tasksByDay = Object({});
-          let tasksOperationsGroupCount = Object({});
-          let tasksEnglishCount = Object({});
-
-          let tasksThisMonth: any[] = [];
-          days.forEach(d => {
-            let date = new Date(this.currentYear, this.currentMonth, d).getTime();
-            tasks.filter(t => this.sameDay(date, t.date)).forEach(t => tasksThisMonth.push(t));
-          });
-
-          let totalSum = 0;
-          let totalSumEnglish = 0;
-          days.forEach(d => {
-            let sum = 0;
-            let date = new Date(this.currentYear, this.currentMonth, d).getTime();
-            tasks.filter(t => this.sameDay(date, t.date)).forEach(x => sum += x.time);
-            tasksByDay[d] = tasks.filter(t => this.sameDay(date, t.date));
-            tasksOperationsGroupCount[d] = tasks.filter(t => this.sameDay(date, t.date) && t.project == 'Operations group').length;
-
-            tasksEnglishCount[d] = 0;
-            tasks.filter(t => this.sameDay(date, t.date) && t.project == 'English' && t.details == 'English Lesson').forEach(x => tasksEnglishCount[d] += x.time);
-            if (tasksEnglishCount[d] > 0) {
-              tasksEnglishCount[d] = Object({
-                hours: this.getHours(sum, this.getMinutes(sum)),
-                minutes: this.getMinutes(sum)
+              let tasksThisMonth: any[] = [];
+              days.forEach(d => {
+                let date = new Date(this.currentYear, this.currentMonth, d).getTime();
+                tasks.filter(t => this.sameDay(date, t.date_consumed)).forEach(t => tasksThisMonth.push(t));
               });
-            }
-            totalSumEnglish += tasksEnglishCount[d];
 
-            daysSum[d] = Object({hours: this.getHours(sum, this.getMinutes(sum)), minutes: this.getMinutes(sum)});
-            totalSum += sum;
+              let totalSum = 0;
+              days.forEach(d => {
+                let sum = 0;
+                let date = new Date(this.currentYear, this.currentMonth, d).getTime();
+                let tasksOfDay = tasks.filter(t => this.sameDay(date, t.date_consumed));
+                tasksOfDay.forEach(t => {
+                  sum += t.amount;
+                  t.task = this.issuesSrc.find(x => x.id == t.task_id);
+                });
+                tasksByDay[d] = Object({
+                  tasks: tasksOfDay,
+                  sum: sum
+                });
+
+                totalSum += sum;
+              });
+
+              this.userStats[user.login] = Object({
+                tasks: tasks,
+                tasksThisMonth: tasksThisMonth,
+                tasksByDay: tasksByDay,
+                totalSum: totalSum
+              });
+            });
+
           });
-
-
-          this.userStats[user.login] = Object({
-            tasks: tasks, tasksThisMonth: tasksThisMonth, tasksByDay: tasksByDay,
-            tasksOperationsGroupCount: tasksOperationsGroupCount, tasksEnglishCount: tasksEnglishCount,
-            days: daysSum,
-            totalSum: Object({hours: this.getHours(totalSum, this.getMinutes(totalSum)), minutes: this.getMinutes(totalSum)}),
-            totalSumEnglish: Object({hours: this.getHours(totalSumEnglish, this.getMinutes(totalSumEnglish)), minutes: this.getMinutes(totalSumEnglish)})
-          });
-
-
+          this.workingHours = this.getMonthWorkingHours();
+          this.loading = false;
         });
-
-
       });
     });
-    this.workingHours = this.getMonthWorkingHours();
+  }
+  filterUsers(){
+    this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
   }
   getMonthWorkingHours(){
     let hours = 0;
@@ -176,7 +187,7 @@ export class EmployeesComponent implements OnInit {
     return array;
   }
   getUsers(){
-    return this.users.filter(x => x.visibility.includes('k')).filter(x => this.selectedDepartments.includes(x.department) && (x.props?.department == '' || this.selectedDepartments.includes(x.props?.department)));
+    return this.users.filter(x => x.visibility.includes('k')).filter(x => this.selectedDepartments.includes(x.department));
   }
   isWeekend(day: number) {
     let date = new Date(this.currentYear, this.currentMonth, day).getDay();
@@ -357,5 +368,56 @@ export class EmployeesComponent implements OnInit {
     }).onClose.subscribe(res => {
 
     });
+  }
+  getTaskExtraColor(taskId: number){
+    switch (taskId){
+      case -5:{ //УЧЁБА
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #8DB6FA 2px, #8DB6FA 4px)';
+      }
+      case -4:{ //ОТГУЛ
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #96A1B0 2px, #96A1B0 4px)';
+      }
+      case -3:{ //ОПЕРГРУППА
+        return 'rgb(53,50,54)';
+      }
+      case -2:{ //ОТПУСК
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #86DE5E 2px, #86DE5E 4px)';
+      }
+      case -1:{ //БОЛЬНИЧНЫЙ
+        return 'repeating-linear-gradient(0deg, #F7F7F8, #F7F7F8 2px, #F37878 2px, #F37878 4px)';
+      }
+      default:{
+        let eq1 = Math.pow(taskId, 1);
+        let eq2 = Math.pow(taskId, 2);
+        let eq3 = Math.pow(taskId, 3);
+        let r = eq1 % 255;
+        let g = eq2 % 255;
+        let b = eq3 % 255;
+        let tr = 0.68
+        return `rgba(${r}, ${g}, ${b}, ${tr})`;
+      }
+    }
+  }
+  getTaskStyle(task: any, sum: any) {
+    let widthFull = 44;
+    let width = widthFull / sum * task.amount;
+    return {
+      height: '44px',
+      width: width + 'px',
+      'background': width == 0 ? 'transparent' : this.getTaskExtraColor(task.task_id),
+    };
+  }
+
+  protected readonly open = open;
+
+  openTask(task: any) {
+    window.open('/?taskId=' + task.task_id, '_blank');
+  }
+
+  getTaskTooltip(task: any) {
+    let hours = task.amount;
+    let docNumber = task.task.docNumber;
+    let docName = task.task.issue_name;
+    return hours + 'h ' + [docNumber, docName].filter(x => x != null && x != '').join(' ');
   }
 }

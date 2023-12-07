@@ -40,8 +40,9 @@ export class LaborComponent implements OnInit {
   laborUpdates: any = Object();
   lockedByPlan: any = Object();
   search: string = '';
-  consumed: ConsumedHour[] = [];
+  consumed: any[] = [];
   consumedIds: number[] = [];
+  loading = true;
 
   constructor(public issueManagerService: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, public t: LanguageService) { }
 
@@ -68,17 +69,18 @@ export class LaborComponent implements OnInit {
             this.lockedByPlan[issue.id] = planned.find((x: any) => x.task_id == issue.id) != null;
           });
         });
+        this.loading = false;
       });
     });
     this.issueManagerService.getIssueProjects().then(projects => {
       this.projects = projects;
       this.projects.forEach((x: any) => x.label = this.getProjectName(x));
       this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
-      this.selectedProjects = [...this.projects.map(x => x.name)];
+      this.selectedProjects = ['NR002'];
     });
     this.issueManagerService.getDepartments().subscribe(departments => {
       this.departments = departments.filter(x => x.visible_task == 1).map(x => new LV(x.name));
-      this.selectedDepartments = [...this.departments.map(x => x.value)];
+      this.selectedDepartments = ['Hull'];
     });
   }
   getProjectName(project: any){
@@ -116,7 +118,9 @@ export class LaborComponent implements OnInit {
   }
 
   getConsumedLabor(id: number, doc_number: string) {
-    return this.consumedIds.filter(x => x == id).length;
+    let sum = 0;
+    this.consumed.filter(x => x.task_id == id).forEach(x => sum += x.amount);
+    return sum;
   }
 
   saveLabor() {
@@ -163,6 +167,7 @@ export class LaborComponent implements OnInit {
   }
 
   getSumConsumed() {
+    return 0;
     let sum = 0;
     this.issues.forEach(x => sum += this.getConsumedLabor(x.id, x.doc_number));
     return sum;

@@ -22,7 +22,7 @@
       <div class="cx">
         <div class="cxy month-name mx-10 width-200">{{monthName + ' '}}{{' ' + date.getFullYear()}}</div>
       </div>
-      <div class="df flex-end" *ngIf="auth.filled && auth.hasPerms('change-daily-user')">
+      <div class="df flex-end" *ngIf="users.length > 0 && auth.hasPerms('change-daily-user')">
         <p-dropdown appendTo = "body" [options]="users" [(ngModel)]="selectedUser" (ngModelChange)="changeUser()" [filter]="true" filterBy="userName"
                     class="p-dropdown-150" styleClass="width-240">
           <ng-template let-user pTemplate="item">
@@ -72,7 +72,8 @@
           <div *ngIf="cDay.tasks.length > 0" class="">
             <div #taskInfo class="task-one cursor-pointer" (click)="openTask(task)" *ngFor="let task of cDay.tasks" (contextmenu)="selectTask(task)">
               <div class="df">
-                <div class="cx task-text pr-5 line-text">{{trimText(task.docNumber, 20)}}{{task.docNumber == '' ? '' : ' '}}{{task.details}}</div>
+                <div>{{task.interval.amount}}h</div>
+                <div [pTooltip]="getTaskInfo(task)" class="pl-5 task-text">{{trimText(getTaskInfo(task), 20)}}</div>
                 <p-contextMenu [target]="taskInfo" appendTo="body" [model]="items"></p-contextMenu>
               </div>
             </div>

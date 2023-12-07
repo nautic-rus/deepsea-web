@@ -119,7 +119,7 @@
                   [class.off-day]="d.kind == 1"
                   class="day-number cxy">
                   <div class="plan-hours-common" *ngIf="usersPlan[user.id] != null && usersPlan[user.id][d.ms] != null">
-                    <div *ngFor="let int of usersPlan[user.id][d.ms]" [pTooltip]="getTooltip(int.taskId)" (click)="openTask(int.taskId)">
+                    <div *ngFor="let int of usersPlan[user.id][d.ms]" [pTooltip]="getTooltip(int.taskId)" (click)="show(int); openTask(int.taskId)">
                       <div (contextmenu)="openIntervalMenu(contextMenu, $event, int)" class="plan-hours" [class.consumed]="int.consumed > 0" [ngStyle]="drawTaskInterval(int)">{{int.hours}}</div>
                     </div>
                   </div>

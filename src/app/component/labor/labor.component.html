@@ -35,9 +35,9 @@
         </div>
       </div>
       <div class="df text-black-mini">
-        <span class="cxy width-35">{{round(getSumConsumed())}}</span>
-        <span class="mx-10 cy">/</span>
-        <span class="cxy width-35">{{round(getSumPlan())}}</span>
+<!--        <span class="cxy width-35">{{round(getSumConsumed())}}</span>-->
+<!--        <span class="mx-10 cy">/</span>-->
+<!--        <span class="cxy width-35">{{round(getSumPlan())}}</span>-->
       </div>
       <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
@@ -45,7 +45,14 @@
         </span>
     </div>
     <div class="empty-card-bottom"></div>
-
+    <div *ngIf="loading">
+      <div class="cxy loading">
+        <div class="cxy flex-column">
+          <img src="assets/whale.gif" height="120">
+          <div class="cx loading-text">PLEASE WAIT...</div>
+        </div>
+      </div>
+    </div>
 
     <cdk-virtual-scroll-viewport autosize style="height: 79vh">
       <div class="dash-card" *cdkVirtualFor="let issue of issues">
@@ -90,12 +97,12 @@
 
           <div class="cy">
             <div class="cx text-black-mini mb-5">
-              <span class="cy width-20">
-                <div>{{round(getConsumedLabor(issue.id, issue.doc_number))}}</div>
-              </span>
-              <span class="mx-10 cy">/</span>
               <span class="cursor-pointer width-50 mr-15" *ngIf="laborUpdates[issue.id] != null">
                 <p-inputNumber [disabled]="laborUpdates[issue.id].locked == 1 || !auth.hasPerms('laboriousness') || (lockedByPlan[issue.id] == true)" [(ngModel)]="laborUpdates[issue.id].planHours" mode="decimal"></p-inputNumber>
+              </span>
+              <span class="mx-10 cy">/</span>
+              <span class="cy width-20">
+                <div>{{round(getConsumedLabor(issue.id, issue.doc_number))}}</div>
               </span>
               <div class="cxy unlock cursor-pointer" *ngIf="laborUpdates[issue.id].locked == 0" (click)="lockLabor(issue.id, 1)" [class.disabled-button]="!auth.hasPerms('lock-labor')">
                 <img src="assets/icons/unlock.svg" height="22">

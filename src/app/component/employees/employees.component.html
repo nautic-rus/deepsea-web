@@ -3,11 +3,13 @@
 
     <div class="calendar-header">
       <div class="cy w-20 min-width-265">
-        <div class="mr-5" *ngFor="let dep of departments">
-          <div class="dept gray-b cxy" [pTooltip]="getDep(dep)" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">
-            <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="20">
-          </div>
-        </div>
+        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (onChange)="filterUsers()" optionLabel="name" optionValue="name"></p-multiSelect>
+
+        <!--        <div class="mr-5" *ngFor="let dep of departments">-->
+<!--          <div class="dept gray-b cxy" [pTooltip]="getDep(dep)" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">-->
+<!--            <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="20">-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
       <div class="df" *ngIf="selectedView == 'month'">
         <div class="cxy pr-10" >
@@ -61,7 +63,7 @@
     </div>
     <div class="users-days" *ngIf="selectedView == 'month'">
       <div class="df sticky">
-        <div class="w-20 min-width-265 users pl-10 header-users">
+        <div class="w-20 min-width-200 users pl-10 header-users">
           <span>{{t.tr('Сотрудники')}}</span>
           <span class="p-ml-auto hours-font mr-10">{{workingHours}}</span>
         </div>
@@ -73,12 +75,11 @@
           </div>
         </div>
       </div>
-      <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of getUsers()">
-        <div class="w-20 min-width-265 users pl-10 cursor-pointer">
+      <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of users">
+        <div class="w-20 min-width-200 users pl-10 cursor-pointer">
           <span>{{user.userName}}</span>
-          <span (click)="showUserTasks(user.login, userStats[user.login].tasksThisMonth, userStats[user.login].totalSum, userStats[user.login].totalSumEnglish, user.tcid)" *ngIf="userStats[user.login]?.totalSum?.hours != '-'" class="p-ml-auto green-button hours-button cxy mr-10">
-            <span class="hours-font">{{userStats[user.login]?.totalSum?.hours}}</span>
-            <span class="minute-font" *ngIf="userStats[user.login]?.totalSum?.minutes != ''">{{userStats[user.login]?.totalSum?.minutes}}</span>
+          <span  *ngIf="userStats[user.login]?.totalSum != null" class="p-ml-auto green-button hours-button cxy mr-10">
+            <span class="hours-font">{{userStats[user.login]?.totalSum}}h</span>
           </span>
 
         </div>
@@ -86,17 +87,11 @@
           <div class="calendar w-100">
             <div class="month-date">
               <div *ngFor="let day of getDaysInMonth()" [class.management]="user.visibility.includes('r')" [class.off-day]="isWeekend(day)" [class.today-days]="isCurrentDay(day)" class="day-number cxy">
-                <span class="hours-font">{{userStats[user.login]?.days[day]?.hours}}</span>
-                <span class="minute-font">{{userStats[user.login]?.days[day]?.minutes}}</span>
-                <span *ngIf="userStats[user.login]?.tasksOperationsGroupCount[day] > 0" class="triangle" [pTooltip]="t.tr('Опергруппа')"></span>
-                <span class="right-hours cursor-default">
-                  <span class="english df" pTooltip="English">
-                    <span class="english-hours">{{userStats[user.login]?.tasksEnglishCount[day].hours}}</span>
-                    <span class="english-minute" *ngIf="userStats[user.login]?.tasksEnglishCount[day].minutes > 0">{{userStats[user.login]?.tasksEnglishCount[day].minutes}}</span>
-                  </span>
-<!--                  <span class="door" pTooltip="Door">2</span>-->
+                <span class="hours-font df" *ngFor="let task of userStats[user.login]?.tasksByDay[day]?.tasks">
+                  <div class="hours-sum-of-day">{{userStats[user.login]?.tasksByDay[day]?.sum}}</div>
+                  <div [pTooltip]="getTaskTooltip(task)" class="cursor-pointer" (click)="openTask(task)" [ngStyle]="getTaskStyle(task, userStats[user.login]?.tasksByDay[day]?.sum)">
+                  </div>
                 </span>
-
               </div>
             </div>
           </div>
@@ -105,7 +100,7 @@
     </div>
     <div class="users-days" *ngIf="selectedView == 'day'">
       <div class="df sticky">
-        <div class="w-20 min-width-265 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
+        <div class="w-20 min-width-200 users pl-10 header-users">{{t.tr('Сотрудники')}}</div>
         <div class="w-80">
           <div class="calendar w-100">
             <div class="day-task cxy header-users">{{t.tr('Задачи')}}</div>

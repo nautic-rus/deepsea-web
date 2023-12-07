@@ -34,8 +34,12 @@ export interface ConsumedHour{
   hour_id: number;
   user_id: number;
   date_inserted: number;
+  date_consumed: number;
+  date_created: number;
   task_id: number;
   comment: string;
+  amount: number;
+  task: any;
 }
 export interface PlannedHours{
   taskId: number;

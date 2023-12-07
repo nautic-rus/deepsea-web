@@ -78,14 +78,6 @@ export class TaskAddPlanComponent implements OnInit {
   }
   commit(){
     this.auth.addManHours(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, this.comment).subscribe(res => {
-      // if (res.includes('success')){
-      //   this.ref.close('success');
-      // }
-      // else{
-      //   alert(res);
-      // }
-    });
-    this.auth.insertConsumedPlanInterval(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, 0).subscribe(res => {
       if (res.includes('success')){
         this.ref.close('success');
       }
@@ -93,6 +85,14 @@ export class TaskAddPlanComponent implements OnInit {
         alert(res);
       }
     });
+    // this.auth.insertConsumedPlanInterval(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, 0).subscribe(res => {
+    //   if (res.includes('success')){
+    //     this.ref.close('success');
+    //   }
+    //   else{
+    //     alert(res);
+    //   }
+    // });
   }
   generateId(length: number): string {
     let result = '';

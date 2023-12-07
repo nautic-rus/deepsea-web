@@ -12,7 +12,7 @@
     </span>
     <span class="p-float-label">
       <div>{{t.tr('Дата')}}</div>
-      <p-calendar [disabledDates]="disabledDates" [minDate]="minDate" [maxDate]="today" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
+      <p-calendar [disabledDates]="disabledDates" [maxDate]="today" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
     </span>
   </div>
   <div class="cxy mt-25">
@@ -21,26 +21,26 @@
       <label for="textarea">{{t.tr('Комментарий')}}</label>
     </span>
   </div>
-  <div class="mt-5">
-<!--    Свободных часов на сегодня: {{hoursLeft}}-->
-  </div>
+<!--  <div class="mt-5">-->
+<!--&lt;!&ndash;    Свободных часов на сегодня: {{hoursLeft}}&ndash;&gt;-->
+<!--  </div>-->
   <!--  <div class="">-->
   <!--    Количество часов задачи по плану на сегодня: {{hoursLeftByTaskToday}}-->
   <!--  </div>-->
   <!--  <div class="">-->
   <!--    Количество несписанных из плана часов на задачу: {{hoursLeftByTask}}-->
   <!--  </div>-->
-  <div class="mt-5" *ngIf="plannedTodayWarning">
-    Текущей задачи нет в плане на сегодня!
-    <!--    Согласно плану вы должны сегодня списать часы на:-->
-    <!--    <div *ngFor="let plan of planTasks">-->
-    <!--      <div class="df" (click)="openTask(plan.taskId)">-->
-    <!--        <div>{{plan.name}}</div>-->
-    <!--        <div class="ml-3">(план: {{plan.planned}}/</div>-->
-    <!--        <div class="ml-3">исп: {{plan.consumed}})</div>-->
-    <!--      </div>-->
-    <!--    </div>-->
-  </div>
+<!--  <div class="mt-5" *ngIf="plannedTodayWarning">-->
+<!--    Текущей задачи нет в плане на сегодня!-->
+<!--    &lt;!&ndash;    Согласно плану вы должны сегодня списать часы на:&ndash;&gt;-->
+<!--    &lt;!&ndash;    <div *ngFor="let plan of planTasks">&ndash;&gt;-->
+<!--    &lt;!&ndash;      <div class="df" (click)="openTask(plan.taskId)">&ndash;&gt;-->
+<!--    &lt;!&ndash;        <div>{{plan.name}}</div>&ndash;&gt;-->
+<!--    &lt;!&ndash;        <div class="ml-3">(план: {{plan.planned}}/</div>&ndash;&gt;-->
+<!--    &lt;!&ndash;        <div class="ml-3">исп: {{plan.consumed}})</div>&ndash;&gt;-->
+<!--    &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </div>-->
 </div>
 <div class="form-footer-labor">
   <div class="mr-5 cx">
