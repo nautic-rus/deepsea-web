@@ -615,12 +615,12 @@ export class TaskComponent implements OnInit {
     });
     this.answer = false;
   }
-  trimFileName(input: string, length: number = 17): string{
+  trimFileName(input: string, length: number = 18): string{
     let split = input.split('.');
-    let name = split[0];
+    let name = input;
     let extension = split[split.length - 1];
     if (name.length > length){
-      return name.substr(0, length - 2) + '..' + name.substr(name.length - 2, 2) + '.' + extension;
+      return name.substr(0, length - 2) + '..' + '.' + extension;
     }
     else{
       return input;
