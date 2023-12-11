@@ -87,7 +87,7 @@ export class EmployeesComponent implements OnInit {
   }
   fill(){
     this.auth.getUsers().then(resUsers => {
-      this.usersSrc = resUsers;
+      this.usersSrc = resUsers.filter(x => x.removed == 0);
       this.usersSrc.forEach(u => u.userName = this.auth.getUserName(u.login));
       this.issues.getDepartments().subscribe(departments => {
         this.departments = departments.filter(x => x.visible_man_hours == 1);
