@@ -94,6 +94,13 @@ export class EmployeesComponent implements OnInit {
       this.issues.getDepartments().subscribe(departments => {
         this.departments = departments.filter(x => x.visible_man_hours == 1);
         this.selectedDepartments = this.departments.map(x => x.name);
+
+        let selectedDepartmentsStorage = localStorage.getItem('employees-departments');
+        if (selectedDepartmentsStorage != null){
+          this.selectedDepartments = JSON.parse(localStorage.getItem('employees-departments')!)
+        }
+
+
         this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
 
         let days = this.getDaysInMonth();
@@ -143,7 +150,9 @@ export class EmployeesComponent implements OnInit {
     });
   }
   filterUsers(){
+    localStorage.setItem('employees-departments', JSON.stringify(this.selectedDepartments));
     this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
+    this.fill();
   }
   getTodaysPlan(){
     let res = 0;
