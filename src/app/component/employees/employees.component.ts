@@ -79,6 +79,7 @@ export class EmployeesComponent implements OnInit {
   ];
   workingHours = 0;
   loading = true;
+  todaysPlan = 0;
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
@@ -86,6 +87,7 @@ export class EmployeesComponent implements OnInit {
     this.fill();
   }
   fill(){
+    this.todaysPlan = this.getTodaysPlan();
     this.auth.getUsers().then(resUsers => {
       this.usersSrc = resUsers.filter(x => x.removed == 0);
       this.usersSrc.forEach(u => u.userName = this.auth.getUserName(u.login));
@@ -142,6 +144,21 @@ export class EmployeesComponent implements OnInit {
   }
   filterUsers(){
     this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
+  }
+  getTodaysPlan(){
+    let res = 0;
+    let day = new Date(this.currentYear, this.currentMonth, 1);
+    while (!this.sameDay(day.getTime(), this.today.getTime()) || day.getTime() > this.today.getTime()){
+      let special = this.specialDays.find(x => x.day == day.getDate() && (x.month - 1) == day.getMonth() && x.year == day.getFullYear());
+      if (special != null){
+        res += special.hours;
+      }
+      else{
+        res += (day.getDay() == 0 || day.getDay() == 6) ? 0 : 8;
+      }
+      day = new Date(day.getTime() + 24 * 60 * 60 * 1000);
+    }
+    return res;
   }
   getMonthWorkingHours(){
     let hours = 0;
@@ -202,6 +219,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   prevMonth() {
+    this.userStats = [];
     this.today = new Date(this.currentYear, this.currentMonth - 1, this.today.getDate());
     this.currentMonth = this.today.getMonth();
     this.currentYear = this.today.getFullYear();
@@ -209,6 +227,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   nextMonth() {
+    this.userStats = [];
     this.today = new Date(this.currentYear, this.currentMonth + 1, this.today.getDate());
     this.currentMonth = this.today.getMonth();
     this.currentYear = this.today.getFullYear();
@@ -419,5 +438,9 @@ export class EmployeesComponent implements OnInit {
     let docNumber = task.task.docNumber;
     let docName = task.task.issue_name;
     return hours + 'h ' + [docNumber, docName].filter(x => x != null && x != '').join(' ');
+  }
+
+  openChart(user: User) {
+    window.open('/man-hours-chart?user=' + user.login + '&period=curMonth', '_blank');
   }
 }
