@@ -14,6 +14,7 @@ import {MenuItem} from "primeng/api";
 import {ConsumedHour, PlanHour, PlannedHours} from "../work-hours/work-hours.component";
 import {UserPlan} from "../plan/plan.component";
 import {LanguageService} from "../../domain/language.service";
+import {da} from "date-fns/locale";
 export class SpecialDay{
   day: number;
   month: number;
@@ -261,14 +262,13 @@ export class MonthTasksComponent implements OnInit {
     });
   }
   fillTasks(){
-    let today = new Date();
     this.auth.getUserDiary(this.selectedUser.id).subscribe(userDiary => {
       this.calendar.forEach(cl => {
         if (!isNaN(cl.number)){
-          let date = new Date(today.getFullYear(), today.getMonth() + cl.monthChange, cl.number);
+          let date = new Date(this.date.getFullYear(), this.date.getMonth(), cl.number);
           cl.tasks = userDiary.filter(x => this.sameDay(x.interval.date_consumed, date.getTime()));
           if (cl.tasks.length > 0){
-            console.log(cl.tasks);
+            //console.log(cl.tasks);
           }
         }
       });
@@ -358,6 +358,8 @@ export class MonthTasksComponent implements OnInit {
   changeMonth(value: number) {
     this.showError = false;
     this.date = new Date(this.date.getFullYear(), this.date.getMonth() + value, 1);
+    this.calendar = this.getCalendar();
+    //console.log(this.date);
     this.fillTasks();
   }
 

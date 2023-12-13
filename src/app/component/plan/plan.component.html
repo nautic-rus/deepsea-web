@@ -5,10 +5,10 @@
         <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (onChange)="saveSelectedDepartments()" optionLabel="name" optionValue="name"></p-multiSelect>
       </div>
       <div class="df ml-20 w-80">
-        <div class="cxy cursor-pointer prev-month blue-button" (click)="fillPrevDays()">
+        <div [class.disabled-button]="loading" class="cxy cursor-pointer prev-month blue-button" (click)="fillPrevDays()">
           <img src="assets/icons/arrow-l.svg" height="16">
         </div>
-        <div class="cxy cursor-pointer next-month blue-button" (click)="fillNextDays()">
+        <div [class.disabled-button]="loading" class="cxy cursor-pointer next-month blue-button" (click)="fillNextDays()">
           <img src="assets/icons/arrow-r2.svg" height="16">
         </div>
         <div class="w-100 cxy">
