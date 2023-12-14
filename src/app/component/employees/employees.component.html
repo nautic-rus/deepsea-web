@@ -4,20 +4,7 @@
     <div class="calendar-header">
       <div class="cy w-20 min-width-265">
         <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (onChange)="filterUsers()" optionLabel="name" optionValue="name"></p-multiSelect>
-
-        <!--        <div class="mr-5" *ngFor="let dep of departments">-->
-<!--          <div class="dept gray-b cxy" [pTooltip]="getDep(dep)" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">-->
-<!--            <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="20">-->
-<!--          </div>-->
-<!--        </div>-->
-      </div>
-      <div class="df" *ngIf="selectedView == 'month'">
-        <div class="cxy pr-10" >
-          <button class="today" (click)="setToday()">
-            <span>{{t.tr('Сегодня')}}</span>
-          </button>
-        </div>
-        <div class="cxy pr-10">
+        <div class="cxy ml-20">
           <button class="today cxy" (click)="prevMonth()">
             <img src="assets/icons/left-arrow.png" height="12">
           </button>
@@ -25,10 +12,22 @@
             <img src="assets/icons/right-arrow.png" height="12">
           </button>
         </div>
-        <div class="df width-200">
-          <div class="violet-button color-white button-change cxy cursor-pointer mr-10">{{t.tr('Месяц')}}</div>
-          <div (click)="changeView()" class="gray-b button-change cxy cursor-pointer">{{t.tr('День')}}</div>
-        </div>
+        <!--        <div class="mr-5" *ngFor="let dep of departments">-->
+<!--          <div class="dept gray-b cxy" [pTooltip]="getDep(dep)" [class.dep-selected]="selectedDepartments.includes(dep)" (click)="selectDepartment(dep)" tooltipPosition="top">-->
+<!--            <img [src]="'assets/icons/' + getPic(dep, selectedDepartments.includes(dep)) + '.svg'" height="20">-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
+      <div class="df cx w-75" *ngIf="selectedView == 'month'">
+<!--        <div class="cxy pr-10" >-->
+<!--          <button class="today" (click)="setToday()">-->
+<!--            <span>{{t.tr('Сегодня')}}</span>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--        <div class="df width-200">-->
+<!--          <div class="violet-button color-white button-change cxy cursor-pointer mr-10">{{t.tr('Месяц')}}</div>-->
+<!--          <div (click)="changeView()" class="gray-b button-change cxy cursor-pointer">{{t.tr('День')}}</div>-->
+<!--        </div>-->
         <div class="month-name cxy width-250">{{getMonth() + ' ' + this.currentYear}}</div>
 
       </div>
@@ -76,12 +75,11 @@
         </div>
       </div>
       <div class="df hover-user" [class.management]="user.visibility.includes('r')" *ngFor="let user of users">
-        <div class="w-20 min-width-200 users pl-10 cursor-pointer">
+        <div class="w-20 min-width-200 users pl-10 cursor-pointer" (click)="openChart(user)">
           <span>{{user.userName}}</span>
-<!--          <span  *ngIf="userStats[user.login]?.totalSum != null" class="p-ml-auto green-button hours-button cxy mr-10">-->
-<!--            <span class="hours-font">{{userStats[user.login]?.totalSum}}h</span>-->
-<!--          </span>-->
-
+          <span *ngIf="userStats[user.login]?.totalSum != null" class="p-ml-auto green-button hours-button cxy mr-10" [class.red-button]="userStats[user.login]?.totalSum < todaysPlan[user.id]">
+            <span class="hours-font">{{todaysPlan[user.id]}}/{{userStats[user.login]?.totalSum}}</span>
+          </span>
         </div>
         <div class="w-80">
           <div class="calendar w-100">

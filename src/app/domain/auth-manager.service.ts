@@ -329,6 +329,9 @@ export class AuthManagerService {
   getUserDiary(userId: number){
     return this.http.get<any[]>(props.http + '/userDiary', {params: {userId}});
   }
+  getPlanNotOrdinary(from: number){
+    return this.http.get<any[]>(props.http + '/planNotOrdinary', {params: {from}});
+  }
 
   deleteFromDiary(id: number) {
     return this.http.get<any[]>(props.http + '/deleteFromDiary', {params: {id}});
