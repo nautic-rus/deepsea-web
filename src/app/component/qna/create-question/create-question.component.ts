@@ -134,9 +134,9 @@ export class CreateQuestionComponent implements OnInit {
     this.users = this.getUsers();
     this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueProjects().then(projects => {
-      this.taskProjects = projects.filter(x => x.factory != '' && this.auth.getUser().visible_projects.includes(x.name));
+      this.taskProjects = projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
-      this.taskProject = 'No project';
+      this.taskProject = '-';
     });
     this.issues.getIssues('op').then(res => {
       this.rkdIssues = res;
@@ -154,14 +154,14 @@ export class CreateQuestionComponent implements OnInit {
     });
   }
   getProjectName(project: any){
-    return project.factory;
-    if (project.name == '-'){
-      return '-';
-    }
+    // return project.factory;
+    // if (project.name == '-'){
+    //   return '-';
+    // }
     let res = project.name;
-    if (project.rkd != ''){
-      res += ' (' + project.rkd + ')';
-    }
+    // if (project.rkd != ''){
+    //   res += ' (' + project.rkd + ')';
+    // }
     return res;
   }
   handleFileInput(files: FileList | null) {
