@@ -78,9 +78,8 @@
         <div class="w-20 min-width-200 users pl-10 cursor-pointer" (click)="openChart(user)">
           <span>{{user.userName}}</span>
           <span *ngIf="userStats[user.login]?.totalSum != null" class="p-ml-auto green-button hours-button cxy mr-10" [class.red-button]="userStats[user.login]?.totalSum < todaysPlan">
-            <span class="hours-font">{{userStats[user.login]?.totalSum}}/{{todaysPlan}}</span>
+            <span class="hours-font">{{todaysPlan[user.id]}}/{{userStats[user.login]?.totalSum}}</span>
           </span>
-
         </div>
         <div class="w-80">
           <div class="calendar w-100">

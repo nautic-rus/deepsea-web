@@ -11,6 +11,7 @@ import {LanguageService} from "../../domain/language.service";
 import {DailyTask} from "../../domain/interfaces/daily-task";
 import {UserTasksComponent} from "./user-tasks/user-tasks.component";
 import {Issue} from "../../domain/classes/issue";
+import {Observable, Subject} from "rxjs";
 
 @Component({
   selector: 'app-employees',
@@ -79,7 +80,7 @@ export class EmployeesComponent implements OnInit {
   ];
   workingHours = 0;
   loading = true;
-  todaysPlan = 0;
+  todaysPlan: any;
 
   constructor(public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, public issues: IssueManagerService) { }
 
@@ -87,7 +88,6 @@ export class EmployeesComponent implements OnInit {
     this.fill();
   }
   fill(){
-    this.todaysPlan = this.getTodaysPlan();
     this.auth.getUsers().then(resUsers => {
       this.usersSrc = resUsers.filter(x => x.removed == 0);
       this.usersSrc.forEach(u => u.userName = this.auth.getUserName(u.login));
@@ -102,6 +102,11 @@ export class EmployeesComponent implements OnInit {
 
 
         this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
+
+        this.getTodaysPlan().subscribe(todaysPlan => {
+          console.log(todaysPlan);
+          this.todaysPlan = todaysPlan;
+        });
 
         let days = this.getDaysInMonth();
         this.auth.getConsumedPlanHours(0).subscribe(consumed => {
@@ -131,7 +136,9 @@ export class EmployeesComponent implements OnInit {
                   sum: sum
                 });
 
-                totalSum += sum;
+                if (!this.sameDay(this.today.getTime(), date)){
+                  totalSum += sum;
+                }
               });
 
               this.userStats[user.login] = Object({
@@ -154,20 +161,40 @@ export class EmployeesComponent implements OnInit {
     this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
     this.fill();
   }
-  getTodaysPlan(){
-    let res = 0;
-    let day = new Date(this.currentYear, this.currentMonth, 1);
-    while (!this.sameDay(day.getTime(), this.today.getTime()) || day.getTime() > this.today.getTime()){
-      let special = this.specialDays.find(x => x.day == day.getDate() && (x.month - 1) == day.getMonth() && x.year == day.getFullYear());
-      if (special != null){
-        res += special.hours;
-      }
-      else{
-        res += (day.getDay() == 0 || day.getDay() == 6) ? 0 : 8;
-      }
-      day = new Date(day.getTime() + 24 * 60 * 60 * 1000);
-    }
-    return res;
+  getTodaysPlan(): Observable<any>{
+    return new Observable((subscriber) => {
+      let day = new Date(this.currentYear, this.currentMonth, 1, 1, 0, 0);
+      this.auth.getPlanNotOrdinary(day.getTime()).subscribe(planNotOrdinary => {
+        console.log(planNotOrdinary);
+        let usersPlan = Object();
+        this.users.forEach(u => {
+          let findPlan = planNotOrdinary.find(x => x.userId == u.id);
+          if (findPlan != 0){
+            usersPlan[u.id] = findPlan.plan;
+          }
+          else{
+            usersPlan[u.id] = 0;
+          }
+          // let sum = 0;
+          // let day = new Date(this.currentYear, this.currentMonth, 1, 1, 0, 0);
+          // let now = new Date().getTime();
+          // while (!this.sameDay(day.getTime(), this.today.getTime()) && day.getTime() <= now){
+          //   let special = this.specialDays.find(x => x.day == day.getDate() && (x.month - 1) == day.getMonth() && x.year == day.getFullYear());
+          //   if (special != null){
+          //     sum += special.hours;
+          //   }
+          //   else{
+          //     sum += (day.getDay() == 0 || day.getDay() == 6) ? 0 : 8;
+          //   }
+          //   day = new Date(day.getTime() + 24 * 60 * 60 * 1000);
+          // }
+          // let planExclude = 0;
+          // planNotOrdinary.filter(x => x.userId == u.id).map(x => x.hours_amount).forEach(x => planExclude += x);
+          // usersPlan[u.id] = sum - planExclude;
+        });
+        subscriber.next(usersPlan);
+      });
+    });
   }
   getMonthWorkingHours(){
     let hours = 0;
