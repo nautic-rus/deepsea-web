@@ -48,6 +48,7 @@
   background: #fff;
   transition: background .1s;
   border: 1px solid #00000014;
+  cursor: pointer;
 }
 .button-cancel:hover{
   background-color: #ECEDF0;
