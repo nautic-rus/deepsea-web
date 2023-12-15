@@ -34,7 +34,7 @@ export class DoclistComponent implements OnInit {
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
   taskType = '';
-  taskTypes: LV[] = ['-', 'RKD', 'PDSP', 'ED', 'PSD', 'ITT'].map(x => new LV(x));
+  taskTypes: LV[] = ['RKD', 'PDSP', 'ED', 'PSD', 'ITT'].map(x => new LV(x));
   taskStages: LV[] = [];
   statuses: string[] = [];
   status = '';
@@ -61,7 +61,7 @@ export class DoclistComponent implements OnInit {
     // });
     this.loading = true;
     this.issueManager.getIssues('op').then(res => {
-      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
+      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type == y) != null);
       this.issues = this.issuesSrc;
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
@@ -194,7 +194,9 @@ export class DoclistComponent implements OnInit {
     this.issues = _.sortBy(this.issues, x => x.doc_number);
 
     setTimeout(() => {
-      this.table.filterGlobal(this.searchValue, 'contains');
+      if (this.searchValue != ''){
+        this.table.filterGlobal(this.searchValue, 'contains');
+      }
     }, 100);
   }
 
