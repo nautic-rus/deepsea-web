@@ -1,22 +1,20 @@
-<div style="height: 270px; width: 450px;">
+<div style="height: 180px; width: 450px;">
   <div class="task-button-approval cxy" (click)="close()">
     <i class="pi pi-times"></i>
   </div>
-  <div class="task-header-assign mt-40">
-    <div class=" question cxy">
-      <div class="question-icon">!</div>
-    </div>
-  </div>
   <div>
-    <div class="confirm-text">{{t.tr('Внимание')}}</div>
+    <div class="confirm-text">{{t.tr('На согласование')}}</div>
   </div>
-  <div class="mt-1 cxy">
-    <div class="delete-text">{{t.tr('Задача уже была в статусе "На согласовании". Выберете дальнейшее действие:')}}</div>
+  <div class="mt-30 mb-30">
+    <div class="delete-text">{{t.tr('Выберете дальнейшее действие:')}}</div>
   </div>
   <div class="footer-delete mt-1">
-    <div class="mr-1 cx">
-      <div (click)="yes()" tabindex="10" class="button-ok cxy">{{t.tr('Продолжить без создания задачи на согласование')}}</div>
+
+    <div class="cxy mr-1">
+      <div (click)="no()" tabindex="11" class="button-ok text-center-x cxy">{{t.tr('Создать задачи "Согласование"')}}</div>
     </div>
-    <div (click)="no()" tabindex="11" pButton [label]="t.tr ('Создать новую задачу на согласование')" class="button-cancel ml-1"></div>
+    <div class="cxy">
+      <div (click)="yes()" tabindex="10" class="button-cancel text-center-x">{{t.tr('Продолжить не создавая задач "Согласование"')}}</div>
+    </div>
   </div>
 </div>

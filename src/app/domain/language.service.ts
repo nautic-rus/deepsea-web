@@ -156,7 +156,7 @@ export class LanguageService {
           case 'Продолжить без создания задачи на согласование': return 'Continue without creating a task for approval';
           case 'Создать новую задачу на согласование': return 'Create new task for approval';
           case 'Задача уже была в статусе "Отправлен на верфь", выберете дальнейшее действие:': return 'Task was already in status "Sent to shipyard", choose the next action:';
-          case 'Задача уже была в статусе "На согласовании", выберете дальнейшее действие:': return 'Task was already in status "To approval", choose the next action:';
+          case 'Выберете дальнейшее действие:': return 'Select the next action:';
           case 'Назначен': return 'Assigned';
           case 'Приостановлено': return 'Paused';
           case 'На проверке': return 'On check';
@@ -594,9 +594,9 @@ export class LanguageService {
           case 'Добавить комплект': return 'Add a set'
           case 'Удалить комплект': return 'Delete set'
           case 'Установки': return 'Features'
-          case '': return ''
-          case '': return ''
-          case '': return ''
+          case 'На согласование': return 'To approval'
+          case 'Создать задачи "Согласование"': return 'Create new "Approval" tasks'
+          case 'Продолжить не создавая задач "Согласование"': return 'Continue without creating new "Approval" tasks'
           case '': return ''
           case '': return ''
           case '': return ''

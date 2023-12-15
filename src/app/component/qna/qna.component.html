@@ -26,17 +26,18 @@
           </ng-template>
         </p-dropdown>
       </div>
-      <div class="mr-10" (click)="clearFilters(); table.clear();">
-        <div class="materials-button gray-button cxy" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
-          <img src="assets/icons/filter-no.svg" height="18">
-        </div>
-      </div>
+
 
       <div class="p-ml-auto mr-10 df">
-        <div class="mr-10">
-          <div class="count-status all cursor-pointer">
+        <div class="mr-10 cxy">
+          <div class="">
             <span class="pr-5">{{t.tr('Всего - ')}}</span>
             <span>{{statusesCount('Resolved') + statusesCount('Closed') + statusesCount('New') + statusesCount('AssignedTo') + statusesCount('In Work') + statusesCount('In Rework') + statusesCount('Assign responsible') + statusesCount('Paused') + statusesCount('Rejected')}}</span>
+          </div>
+        </div>
+        <div class="mr-10" (click)="clearFilters(); table.clear();">
+          <div class="materials-button gray-button cxy" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+            <img src="assets/icons/filter-no.svg" height="18">
           </div>
         </div>
         <div class="mr-10">

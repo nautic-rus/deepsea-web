@@ -22,13 +22,13 @@
 .confirm-text{
   position: relative;
   max-width: 100%;
-  padding: 0;
+  padding-top: 20px;
   color: #595959;
   font-size: 1.875em;
   font-weight: 600;
-  text-align: center;
   text-transform: none;
   word-wrap: break-word;
+  width: fit-content;
 }
 .delete-text{
   font-size: 14px;
@@ -47,7 +47,7 @@
   color: #2E3E4E;
   background: #fff;
   transition: background .1s;
-  border: none;
+  border: 1px solid #00000014;
 }
 .button-cancel:hover{
   background-color: #ECEDF0;
