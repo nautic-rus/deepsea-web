@@ -9,6 +9,7 @@ import {Issue} from "../../../domain/classes/issue";
 import {User} from "../../../domain/classes/user";
 import {LanguageService} from "../../../domain/language.service";
 import {ConfirmAlreadyExistComponent} from "../confirm-already-exist/confirm-already-exist.component";
+import _ from "underscore";
 
 @Component({
   selector: 'app-send-to-approval',
@@ -30,11 +31,13 @@ export class SendToApprovalComponent implements OnInit {
       var findType = res.find(x => x.type_name == this.issue.issue_type);
       if (findType != null){
         this.selectedUsers = findType.local_approval.split(',').filter(x => x != '');
+        this.sortUsers();
       }
     });
   }
   ngOnInit(): void {
     this.users = this.getUsersApproval();
+    this.sortUsers();
   }
   getUsersApproval() {
     return this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
@@ -310,5 +313,16 @@ export class SendToApprovalComponent implements OnInit {
 
   isDisabled() {
     return this.selectedUsers.length == 0;
+  }
+
+  sortUsers() {
+    this.users = _.sortBy(this.users, x => {
+      if (this.selectedUsers.includes(x.login)){
+        return '0' + x.userName;
+      }
+      else{
+        return '1' + x.userName;
+      }
+    });
   }
 }
