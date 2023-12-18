@@ -104,7 +104,6 @@ export class EmployeesComponent implements OnInit {
         this.users = this.usersSrc.filter(x => this.selectedDepartments.includes(x.department));
 
         this.getTodaysPlan().subscribe(todaysPlan => {
-          console.log(todaysPlan);
           this.todaysPlan = todaysPlan;
         });
 
@@ -136,7 +135,7 @@ export class EmployeesComponent implements OnInit {
                   sum: sum
                 });
 
-                if (!this.sameDay(this.today.getTime(), date)){
+                if (!this.sameDay(new Date().getTime(), date)){
                   totalSum += sum;
                 }
               });
