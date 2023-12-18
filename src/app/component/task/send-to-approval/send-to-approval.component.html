@@ -61,7 +61,7 @@
 
   </div>
   <div class="big-text mb-1 mt-1">{{t.tr('На согласование:')}}</div>
-  <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-480 border max-height-150" [maxSelectedLabels]="4" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers" (onChange)="sortUsers()"></p-multiSelect>
+  <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-480 border" [maxSelectedLabels]="4" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers" (onChange)="sortUsers()"></p-multiSelect>
   <div class="form-footer pt-50">
     <div class="mr-5 cx">
       <div [class.button-disabled]="isDisabled()" tabindex="10" (click)="commit()" class="button-ok cxy">{{t.tr('Отправить')}}</div>
