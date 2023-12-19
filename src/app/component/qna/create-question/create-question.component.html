@@ -4,30 +4,46 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
-  <div class="df space-between">
-    <div>
-      <div class="big-text-create mb-1">{{t.tr('Проект')}}</div>
-      <p-dropdown optionLabel="label" class="select" optionValue="name" [(ngModel)]="taskProject" [options]="taskProjects" (ngModelChange)="projectChanged()" styleClass="width-220 font-14" >
-      </p-dropdown>
-    </div>
-    <div>
-      <div class="big-text-create mb-1 ">{{t.tr('Приоритет')}}</div>
-      <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-220" [(ngModel)]="taskPriority" [options]="taskPriorities">
-      </p-dropdown>
-    </div>
-    <div>
-      <div class="big-text-create mb-1">{{t.tr('Отдел')}}</div>
-      <p-dropdown class="select" styleClass="width-220" [(ngModel)]="taskDepartment" [options]="taskDepartments">
-      </p-dropdown>
-    </div>
+  <div>
+    <div class="big-text-create mb-1 mt-1">{{t.tr('Документ')}}</div>
+    <p-multiSelect appendTo="body" class="mr-10" filterBy="id,issue_name,doc_number" optionLabel="id" [options]="issuesSrc" [(ngModel)]="selectedIssues" (ngModelChange)="issueSelected()" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
+                   styleClass="w-100" [virtualScroll]="true" [itemSize]="50" optionValue="id" [maxSelectedLabels]="9">
+      <ng-template let-issue pTemplate="item">
+        <div class="df">
+          <div>
+            <div class="task">
+              <div class="min-text">{{issue.id}}</div>
+              <div class="min-text">{{issue.issue_type}}</div>
+              <div class="min-text">{{issue.project}}</div>
+              <div class="min-text">{{issue.doc_number}}</div>
+            </div>
+            <div class="issue-name">{{trimName(issue.issue_name)}}</div>
+          </div>
+        </div>
+      </ng-template>
+    </p-multiSelect>
+<!--    <p-autoComplete [(ngModel)]="taskDocNumber" [suggestions]="docNumbers" (completeMethod)="filterDocNumbers($event)" (ngModelChange)="setDepartmentOnDocNumberSelect()"></p-autoComplete>-->
   </div>
+<!--  <div class="df space-between">-->
+<!--    <div>-->
+<!--      <div class="big-text-create mb-1">{{t.tr('Проект')}}</div>-->
+<!--      <p-dropdown optionLabel="label" class="select" optionValue="name" [(ngModel)]="taskProject" [options]="taskProjects" (ngModelChange)="projectChanged()" styleClass="width-220 font-14" >-->
+<!--      </p-dropdown>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <div class="big-text-create mb-1 ">{{t.tr('Приоритет')}}</div>-->
+<!--      <p-dropdown optionLabel="label" optionValue="value" class="select" styleClass="width-220" [(ngModel)]="taskPriority" [options]="taskPriorities">-->
+<!--      </p-dropdown>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <div class="big-text-create mb-1">{{t.tr('Отдел')}}</div>-->
+<!--      <p-dropdown class="select" styleClass="width-220" [(ngModel)]="taskDepartment" [options]="taskDepartments">-->
+<!--      </p-dropdown>-->
+<!--    </div>-->
+<!--  </div>-->
   <div>
     <div class="df space-between">
-      <div style="width: 220px">
-        <div class="big-text-create mb-1 mt-1">{{t.tr('Документ')}}</div>
-        <p-autoComplete [(ngModel)]="taskDocNumber" [suggestions]="docNumbers" (completeMethod)="filterDocNumbers($event)" (ngModelChange)="setDepartmentOnDocNumberSelect()"></p-autoComplete>
-      </div>
-      <div style="width: 454px">
+      <div style="width: 700px">
         <div class="big-text-create mb-1 mt-1">{{t.tr('Тема вопроса (обязательно для заполнения*)')}}</div>
         <input type="text" pInputText [(ngModel)]="taskSummary">
       </div>

@@ -895,12 +895,13 @@ export class TaskComponent implements OnInit {
       }
       else{
         if (value == 'AssignedTo'){
-          if (this.issue.issue_type == 'QNA'){
-            this.assignQNATask();
-          }
-          else{
-            this.assignTask();
-          }
+          this.assignTask();
+          // if (this.issue.issue_type == 'QNA'){
+          //   this.assignQNATask();
+          // }
+          // else{
+          //   this.assignTask();
+          // }
         }
         else if (value == 'Assign responsible'){
           this.assignQNAResponsible();

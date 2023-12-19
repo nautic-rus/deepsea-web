@@ -21,7 +21,7 @@ import {ActivatedRoute} from "@angular/router";
 export class CreateQuestionComponent implements OnInit {
 
   issue: Issue = new Issue();
-  taskSummary = '-';
+  taskSummary = '';
   taskDetails = '';
   taskDocNumber = '-';
   taskDepartment = '';
@@ -62,7 +62,9 @@ export class CreateQuestionComponent implements OnInit {
   docNumbersSrc: string[] = [];
   docNumbers: string[] = [];
   rkdIssues: Issue[] = [];
-
+  issuesSrc: any[] = [];
+  selectedIssues: any[] = [];
+  issueTypes: string[] = ['ED', 'ITT', 'PSD', 'RKD', 'PDSP'];
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -138,9 +140,13 @@ export class CreateQuestionComponent implements OnInit {
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
       this.taskProject = '-';
     });
-    this.issues.getIssues('op').then(res => {
-      this.rkdIssues = res;
+    this.issues.getIssuesAll().subscribe(res => {
+      console.log(res);
+      this.issuesSrc = res.filter(x => this.issueTypes.includes(x.issue_type));
     });
+    // this.issues.getIssues('op').then(res => {
+    //   this.rkdIssues = res;
+    // });
     // this.issues.getTaskPriorities().then(priorities => {
     //   this.taskPriorities = priorities.map(x => new LV(x));
     //   if (this.taskPriorities.length > 0 && this.taskPriority == '-') {
@@ -214,6 +220,18 @@ export class CreateQuestionComponent implements OnInit {
     }
   }
   createTask() {
+    if (this.selectedIssues.length > 5){
+      alert('Запрещено выбирать более 5 связанных задач');
+      return;
+    }
+
+    let findIssue = this.issuesSrc.find(x => this.selectedIssues.includes(x.id));
+    if (findIssue != null){
+      this.taskProject = findIssue.project;
+      this.taskDepartment = findIssue.department;
+      this.taskDocNumber = findIssue.doc_number;
+    }
+
     const issue = new Issue();
     issue.name = this.taskSummary;
     issue.details = this.taskDetails;
@@ -229,8 +247,12 @@ export class CreateQuestionComponent implements OnInit {
     issue.status = 'New';
     issue.action = 'New';
     issue.file_attachments = this.loaded;
-    console.log(issue);
+
+
     this.issues.startIssue(issue).then(res => {
+      this.selectedIssues.forEach(selected => {
+        this.issues.combineIssues(selected, +res, this.auth.getUser().login).then(() => {});
+      });
       this.issues.setIssueViewed(+res, this.auth.getUser().login).then(() => {
         this.ref.close(res);
       });
@@ -342,7 +364,7 @@ export class CreateQuestionComponent implements OnInit {
   }
 
   isCreateTaskDisabled() {
-    return this.taskDocNumber.replace('-', '').trim() == '' && this.taskSummary.replace('-', '').trim() == '';
+    return this.selectedIssues.length == 0 || this.taskDetails.replace('-', '').trim() == '' || this.taskSummary.replace('-', '').trim() == '';
   }
   quillCreated(event: any) {
     this.editor = event;
@@ -376,5 +398,22 @@ export class CreateQuestionComponent implements OnInit {
       case 'No summary': return 'Без темы';
       default: return input;
     }
+  }
+  trimName(name: string, length: number = 85) {
+    if (name == null){
+      return '';
+    }
+    return name.substr(0, length) + (name.length > length ? '...' : '');
+  }
+
+  issueSelected() {
+    this.issuesSrc = _.sortBy(this.issuesSrc, x => {
+      if (this.selectedIssues.includes(x.id)){
+        return '0' + x.issue_name;
+      }
+      else{
+        return '1' + x.issue_name;
+      }
+    });
   }
 }
