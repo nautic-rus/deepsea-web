@@ -67,5 +67,5 @@
   pointer-events: none;
 }
 /deep/.p-multiselect-items-wrapper {
-  max-height: 150px !IMPORTANT;
+  max-height: 250px !IMPORTANT;
 }
