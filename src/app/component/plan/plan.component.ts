@@ -175,7 +175,7 @@ export class PlanComponent implements OnInit {
   fill(){
     this.fillIssues();
     this.auth.getUsers().then(res => {
-      this.usersSrc = res.filter(x => x.visibility.includes('k'));
+      this.usersSrc = res.filter(x => x.removed == 0).filter(x => x.visibility.includes('k'));
       this.usersSrc.forEach(user => user.userName = this.auth.getUserName(user.login));
       this.usersSrc = _.sortBy(this.usersSrc.filter(x => x.surname != 'surname'), x => x.userName);
       this.issueManager.getDepartments().subscribe(departments => {

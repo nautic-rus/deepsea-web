@@ -57,6 +57,7 @@ import {UserDataComponent} from "./component/user-data/user-data.component";
 import {ManHoursChartComponent} from "./component/charts/man-hours-chart/man-hours-chart.component";
 import {ComplectManagerComponent} from "./component/tools/complect-manager/complect-manager.component";
 import {MaterialComplectManagerComponent} from "./component/tools/material-complect-manager/material-complect-manager.component";
+import {ProjectProgressChartComponent} from "./component/charts/project-progress-chart/project-progress-chart.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -114,6 +115,7 @@ const routes: Routes = [
   { path: 'plan', component: PlanComponent, data: {animation: 'PlanComponent'}, canActivate: [AuthGuard] },
   { path: 'user-data', component: UserDataComponent, data: {animation: 'UserDataComponent'}, canActivate: [AuthGuard] },
   { path: 'man-hours-chart', component: ManHoursChartComponent, data: {animation: 'ManHoursChartComponent'}, canActivate: [AuthGuard] },
+  { path: 'project-progress-chart', component: ProjectProgressChartComponent, data: {animation: 'ProjectProgressChartComponent'}, canActivate: [AuthGuard] },
   { path: 'complect-manager', component: ComplectManagerComponent, data: {animation: 'ComplectManagerComponent'}, canActivate: [AuthGuard] },
   { path: 'material-complect-manager', component: MaterialComplectManagerComponent, data: {animation: 'MaterialComplectManagerComponent'}, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/' },

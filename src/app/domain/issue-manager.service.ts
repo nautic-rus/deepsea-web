@@ -377,7 +377,6 @@ export class IssueManagerService {
     }
   }
 
-
   // localeStatusAsButton(input: string, styled = true): string {
   //   switch (input) {
   //     case 'In Work': return (this.lang.language == 'ru' ? (styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">В работу</span></div>' : 'В работу') : (styled ? ' <div class="buttons-pick-work"><span class="icon-work cxy"><img src="assets/icons/work.svg"></span><span class="cxy button-text">In Work</span></div>' : 'In Work'));
@@ -558,5 +557,7 @@ export class IssueManagerService {
     // let da = new Intl.DateTimeFormat('ru', { day: '2-digit' }).format(date);
     // return da + '.' + mo + '.' + ye;
   }
-
+  getProjectStats(project: string, docType: string){
+    return this.http.get(props.http + '/projectStats', {params: {project, docType}});
+  }
 }
