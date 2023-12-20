@@ -6,7 +6,8 @@
   </div>
   <div>
     <div class="big-text-create mb-1 mt-1">{{t.tr('Документ')}}</div>
-    <p-multiSelect appendTo="body" class="mr-10" filterBy="id,issue_name,doc_number" optionLabel="id" [options]="issuesSrc" [(ngModel)]="selectedIssues" (ngModelChange)="issueSelected()" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
+    <p-skeleton *ngIf="issuesSrc.length == 0" width="694px" height="40px"></p-skeleton>
+    <p-multiSelect *ngIf="issuesSrc.length > 0" appendTo="body" class="mr-10" filterBy="id,issue_name,doc_number" optionLabel="id" [options]="issuesSrc" [(ngModel)]="selectedIssues" (ngModelChange)="issueSelected()" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
                    styleClass="w-100" [virtualScroll]="true" [itemSize]="50" optionValue="id" [maxSelectedLabels]="9">
       <ng-template let-issue pTemplate="item">
         <div class="df">

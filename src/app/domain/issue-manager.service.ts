@@ -79,6 +79,9 @@ export class IssueManagerService {
   getIssuesAll() {
     return this.http.get<any[]>(props.http + '/issuesAll');
   }
+  getIssuesAllShort() {
+    return this.http.get<any[]>(props.http + '/issuesAllShort');
+  }
   async getQuestions(): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/questions').toPromise();
   }

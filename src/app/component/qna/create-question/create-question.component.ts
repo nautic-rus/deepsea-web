@@ -140,9 +140,9 @@ export class CreateQuestionComponent implements OnInit {
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
       this.taskProject = '-';
     });
-    this.issues.getIssuesAll().subscribe(res => {
-      console.log(res);
+    this.issues.getIssuesAllShort().subscribe(res => {
       this.issuesSrc = res.filter(x => this.issueTypes.includes(x.issue_type));
+      this.issueSelected();
     });
     // this.issues.getIssues('op').then(res => {
     //   this.rkdIssues = res;
@@ -242,7 +242,8 @@ export class CreateQuestionComponent implements OnInit {
     issue.priority = this.taskPriority;
     issue.start_date = new Date().getTime();
     issue.department = this.taskDepartment;
-    issue.doc_number = this.taskDocNumber;
+    //issue.doc_number = this.taskDocNumber;
+    issue.doc_number = '';
     issue.started_by = this.auth.getUser().login;
     issue.status = 'New';
     issue.action = 'New';

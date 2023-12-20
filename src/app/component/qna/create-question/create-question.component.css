@@ -207,4 +207,5 @@ select:focus {
 }
 /deep/body > div > div.p-multiselect-items-wrapper > ul > cdk-virtual-scroll-viewport{
   height: 400px !important;
+  z-index: 100;
 }
