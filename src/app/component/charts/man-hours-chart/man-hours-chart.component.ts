@@ -66,11 +66,12 @@ export class ManHoursChartComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       let userParam = params.user != null ? params.user : '';
       let period = params.period != null ? params.period : this.selectedPeriod;
+      this.dateFrom = params.ds != null ? params.ds : this.dateFrom;
+      this.dateTo = params.df != null ? params.df : this.dateTo;
       if (this.userParam != userParam){
         this.userParam = userParam;
         this.selectedUser = this.usersSrc.find(x => x.login == this.userParam);
         this.userStats = this.usersStats.find(x => x.id == this.selectedUser?.id);
-        console.log(this.userStats);
       }
       else{
         this.userParam = userParam;
@@ -311,7 +312,7 @@ export class ManHoursChartComponent implements OnInit {
   }
 
   dateChanged() {
-    console.log('date changed');
+    this.setPeriod('custom');
     this.loading = true;
     setTimeout(() => {
       this.filterUsers();
