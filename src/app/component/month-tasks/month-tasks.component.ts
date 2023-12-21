@@ -254,7 +254,7 @@ export class MonthTasksComponent implements OnInit {
     ];
     this.calendar = this.getCalendar();
     this.auth.getUsers().then(res => {
-      let users = res.filter(x => x.visibility.includes('c') && x.groups.includes('Engineers') || x.groups.includes('Hull Engineers') || x.groups.includes('Chief of Department') || x.groups.includes('Managers') || x.groups.includes('Admin'));
+      let users = res.filter(x => x.visibility.includes('d'));
       users.forEach(u => u.userName = this.auth.getUserName(u.login));
       this.users = users;
       this.selectedUser = this.users.find(x => x.id == this.auth.getUser().id)!;
