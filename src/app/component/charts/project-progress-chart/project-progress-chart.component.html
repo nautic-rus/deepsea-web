@@ -19,6 +19,21 @@
           <div class="cx">{{getPercantageHoursForDepartment(projectStats.manHoursProgress, dep)}}%</div>
         </div>
       </div>
+      <div class="mt-10 documents-progress">
+        <div class="documents-progress-row df">
+          <div class="cxy documents-progress-column">Department</div>
+          <div class="cxy documents-progress-column" *ngFor="let status of projectStats.statuses">{{status}}</div>
+          <div class="cxy documents-progress-column">%</div>
+        </div>
+        <div class="documents-progress-row df" *ngFor="let dep of projectStats.departments">
+          <div class="cxy documents-progress-column">{{dep}}</div>
+          <div class="cxy documents-progress-column" *ngFor="let status of projectStats.statuses">
+            {{getDocsWithStatus(projectStats.documentProgress, dep, status)}}
+          </div>
+          <div class="cxy documents-progress-column">{{getDocsWithStatusPercantage(projectStats.documentProgress, dep)}}%</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

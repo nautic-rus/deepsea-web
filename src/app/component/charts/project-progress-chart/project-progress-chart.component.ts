@@ -50,4 +50,15 @@ export class ProjectProgressChartComponent implements OnInit {
   getPercantageHoursForDepartment(manHoursProgress: any[], dep: any) {
     return manHoursProgress.find(x => x.department == dep).percentage;
   }
+
+  getDocsWithStatus(documentProgress: any[], dep: any, status: any) {
+    return documentProgress.find(x => x.department == dep).docProgressStatus.find((x: any) => x.status == status).value;
+  }
+
+  getDocsWithStatusPercantage(documentProgress: any, dep: any) {
+    let del = this.getDocsWithStatus(documentProgress, dep, 'Delivered');
+    let all = this.getDocsWithStatus(documentProgress, dep, 'All');
+    let res = Math.round(del / all * 100);
+    return res;
+  }
 }
