@@ -158,11 +158,11 @@
       <div class="table-all ovf-auto mt-20 cursor-pointer" *ngIf="userStats != null">
         <div class="df table-all-head">
           <div class="mx-5 w-10 padding-10">{{t.tr('Date')}}</div>
-          <div class="mx-5 w-10 padding-10">{{t.tr('Time')}}</div>
+          <div class="mx-5 w-7 padding-10">{{t.tr('Time')}}</div>
           <div class="mx-5 w-80 df">
             <div class="mx-5 w-10 padding-10">{{t.tr('ID')}}</div>
-            <div class="mx-5 w-10 padding-10">{{t.tr('Type')}}</div>
-            <div class="mx-5 w-40 padding-10">{{t.tr('Name')}}</div>
+            <div class="mx-5 w-17 padding-10">{{t.tr('Type')}}</div>
+            <div class="mx-5 w-36 padding-10">{{t.tr('Name')}}</div>
             <div class="mx-5 w-30 padding-10">{{t.tr('Document')}}</div>
             <div class="mx-5 w-10 padding-10">{{t.tr('Hours')}}</div>
           </div>
@@ -172,12 +172,12 @@
             <div *ngIf="statDay.special != ''" [ngStyle]="getSpecial(statDay.special)" class="special"></div>
             <div class="mx-5 w-10 padding-10 ">{{getDate(statDay.dateLong)}}</div>
           </div>
-          <div class="mx-5 w-10 padding-10">{{statDay.officeTimeStr}}</div>
+          <div class="mx-5 w-7 padding-10">{{statDay.officeTimeStr}}</div>
           <div class="mx-5 w-80">
             <div class="df row-table-user-hover" *ngFor="let task of statDay.tasks">
               <div class="mx-5 w-10 padding-10"><a [href]="'/?taskId=' + task.id" target="_blank">{{task.id}}</a></div>
-              <div class="mx-5 w-10 padding-10">{{task.issueType}}</div>
-              <div class="mx-5 w-40 padding-10">{{task.name}}</div>
+              <div class="mx-5 w-17 padding-10">{{task.issueType}}</div>
+              <div class="mx-5 w-36 padding-10">{{task.name}}</div>
               <div class="mx-5 w-30 padding-10">{{task.docNumber}}</div>
               <div class="mx-5 w-10 padding-10">{{task.hours}}</div>
             </div>
