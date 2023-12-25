@@ -47,10 +47,7 @@ export class TaskAddPlanComponent implements OnInit {
   constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000);
-    while (this.minDate.getDay() == 0 || this.minDate.getDay() == 6){
-      this.minDate = new Date(this.minDate.getTime() - 24 * 60 * 60 * 1000);
-    }
+    this.minDate = new Date(this.minDate.getTime() - 35 * 24 * 60 * 60 * 1000);
     this.disabledDates = this.getDisabledDates(this.minDate, this.calendarDay);
     this.issue = this.conf.data as Issue;
     this.fillByDate();

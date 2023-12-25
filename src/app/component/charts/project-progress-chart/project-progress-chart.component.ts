@@ -61,4 +61,8 @@ export class ProjectProgressChartComponent implements OnInit {
     let res = Math.round(del / all * 100);
     return res;
   }
+
+  getDocsWithStage(stageProgress: any[], dep: any, stage: string) {
+    return stageProgress.find(x => x.department == dep).stages.find((x: any) => x.stage == stage);
+  }
 }

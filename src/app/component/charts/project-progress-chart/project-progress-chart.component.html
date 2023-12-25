@@ -33,6 +33,26 @@
           <div class="cxy documents-progress-column">{{getDocsWithStatusPercantage(projectStats.documentProgress, dep)}}%</div>
         </div>
       </div>
+      <div class="mt-10 stage-progress">
+        <div class="df">
+          <div class="cxy stage-progress-column-first">Department</div>
+          <div class="cxy stage-progress-column" *ngFor="let stage of projectStats.periods">{{stage}}</div>
+        </div>
+        <div class="df">
+          <div class="cxy stage-progress-column-first"></div>
+          <div class="stage-progress-column-all-delivered" *ngFor="let stage of projectStats.periods">
+            <div class="">All</div>
+            <div class="">Delivered</div>
+          </div>
+        </div>
+        <div class="stage-progress-row df" *ngFor="let dep of projectStats.departments">
+          <div class="cxy stage-progress-column-first">{{dep}}</div>
+          <div class="stage-progress-column-all-delivered" *ngFor="let stage of projectStats.periods">
+            <div class="">{{getDocsWithStage(projectStats.stageProgress, dep, stage).all}}</div>
+            <div class="">{{getDocsWithStage(projectStats.stageProgress, dep, stage).delivered}}</div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
