@@ -5,20 +5,34 @@
       <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="docType" (ngModelChange)="changedProject()" [options]="docTypes" styleClass="width-170" [placeholder]="t.tr('Тип документа')"></p-dropdown>
     </div>
     <div class="mt-10" *ngIf="!loading">
-      <div class="man-hours-progress">
-        <div class="man-hours-progress-row">
-          <div class="cx">Department</div>
-          <div class="cx">Plan</div>
-          <div class="cx">Actual</div>
-          <div class="cx">%</div>
+
+      <div class="df">
+        <div class="man-hours-progress">
+          <div class="man-hours-progress-row">
+            <div class="cx">Department</div>
+            <div class="cx">Plan</div>
+            <div class="cx">Actual</div>
+            <div class="cx">%</div>
+          </div>
+          <div class="man-hours-progress-row df" *ngFor="let dep of projectStats.departments">
+            <div>{{dep}}</div>
+            <div class="cx">{{getPlanHoursForDepartment(projectStats.manHoursProgress, dep)}}</div>
+            <div class="cx">{{getActualHoursForDepartment(projectStats.manHoursProgress, dep)}}</div>
+            <div class="cx">{{getPercantageHoursForDepartment(projectStats.manHoursProgress, dep)}}%</div>
+          </div>
         </div>
-        <div class="man-hours-progress-row df" *ngFor="let dep of projectStats.departments">
-          <div>{{dep}}</div>
-          <div class="cx">{{getPlanHoursForDepartment(projectStats.manHoursProgress, dep)}}</div>
-          <div class="cx">{{getActualHoursForDepartment(projectStats.manHoursProgress, dep)}}</div>
-          <div class="cx">{{getPercantageHoursForDepartment(projectStats.manHoursProgress, dep)}}%</div>
+        <div class="general-progress-chart df">
+          <p-chart type="pie" [data]="generalProgressChartDataDocs" [options]="generalProgressChartOptionsDocs" [plugins]="chartPlugins"></p-chart>
+          <p-chart type="pie" [data]="generalProgressChartDataManHours" [options]="generalProgressChartOptionsManHours" [plugins]="chartPlugins"></p-chart>
+        </div>
+        <div class="progress-by-department-chart df">
+          <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="progressByDepartmentChartDataDocuments" [options]="progressByDepartmentChartOptionsDocuments" [plugins]="chartPlugins"></p-chart>
         </div>
       </div>
+
+
+
+
       <div class="mt-10 documents-progress">
         <div class="documents-progress-row df">
           <div class="cxy documents-progress-column">Department</div>
@@ -55,6 +69,12 @@
       </div>
 
     </div>
+  </div>
+  <div class="progress-by-department-chart df">
+    <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="progressByDepartmentChartDataManHours" [options]="progressByDepartmentChartOptionsManHours" [plugins]="chartPlugins"></p-chart>
+  </div>
+  <div class="progress-by-department-chart df">
+    <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="stageProgressChartData" [options]="stageProgressChartOptions" [plugins]="chartPlugins"></p-chart>
   </div>
 </div>
 <div *ngIf="loading">
