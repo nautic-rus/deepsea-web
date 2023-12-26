@@ -1,8 +1,8 @@
 <div class="all-page">
   <div class="card">
     <div class="selectors" *ngIf="projects.length > 0">
-      <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-170" [placeholder]="t.tr('Проект')"></p-dropdown>
-      <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="docType" (ngModelChange)="changedProject()" [options]="docTypes" styleClass="width-170" [placeholder]="t.tr('Тип документа')"></p-dropdown>
+      <p-dropdown [disabled]="true" optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-170" [placeholder]="t.tr('Проект')"></p-dropdown>
+      <p-dropdown [disabled]="true" optionLabel="label" class="select" optionValue="value" [(ngModel)]="docType" (ngModelChange)="changedProject()" [options]="docTypes" styleClass="width-170" [placeholder]="t.tr('Тип документа')"></p-dropdown>
     </div>
     <div class="mt-10" *ngIf="!loading">
 

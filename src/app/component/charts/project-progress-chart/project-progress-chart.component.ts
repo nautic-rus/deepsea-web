@@ -200,7 +200,8 @@ export class ProjectProgressChartComponent implements OnInit {
     });
   }
   changedProject() {
-
+    this.loading = true;
+    this.getProjectStats();
   }
 
   getPlanHoursForDepartment(manHoursProgress: any[], dep: any) {
