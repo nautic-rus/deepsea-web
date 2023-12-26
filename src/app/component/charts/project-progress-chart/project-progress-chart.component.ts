@@ -179,6 +179,7 @@ export class ProjectProgressChartComponent implements OnInit {
     responsive: false,
     maintainAspectRatio: false,
   };
+  unSortedStageProgress = 0;
   ngOnInit(): void {
     this.issueManager.getIssueProjects().then(res => {
       this.projects = res.filter(x => x.name != '-').map(x => new LV(x.name));
@@ -257,7 +258,7 @@ export class ProjectProgressChartComponent implements OnInit {
     let manHoursActualPercentage = Math.round(manHoursActual / manHoursPlan * 100);
     let manHoursPlanPercentage = 100 - manHoursActualPercentage;
     this.generalProgressChartDataManHours = {
-      labels: ['Plan','Actual'],
+      labels: ['Not used','Used'],
       datasets: [
         {
           data: [manHoursPlanPercentage, manHoursActualPercentage],
@@ -276,7 +277,7 @@ export class ProjectProgressChartComponent implements OnInit {
 
 
     let projectByDepartmentDocs: any[] = [];
-    projectStats.departments.forEach((dep: any) => {
+    projectStats.departments.filter((x: any) => x != 'Total').forEach((dep: any) => {
       let docDelivered = projectStats.documentProgress.find((x: any) => x.department == dep).docProgressStatus.find((x: any) => x.status == 'Delivered').value;
       let docAll = projectStats.documentProgress.find((x: any) => x.department == dep).docProgressStatus.find((x: any) => x.status == 'All').value;
       projectByDepartmentDocs.push(Object({
@@ -296,7 +297,7 @@ export class ProjectProgressChartComponent implements OnInit {
       backgroundColor: '#66BB6A'
     }));
     this.progressByDepartmentChartDataDocuments = {
-      labels: projectStats.departments,
+      labels: projectStats.departments.filter((x: any) => x != 'Total'),
       datasets: projectByDepartmentDocsDataSets,
     };
 
@@ -328,7 +329,7 @@ export class ProjectProgressChartComponent implements OnInit {
 
 
     let stageProgress: any[] = [];
-    projectStats.periods.forEach((period: any) => {
+    projectStats.periods.filter((x: any) => x != '-').forEach((period: any) => {
       let all = 0;
       let delivered = 0;
       projectStats.stageProgress.filter((x: any) => x.department != 'Total').forEach((sP: any) => {
@@ -355,8 +356,19 @@ export class ProjectProgressChartComponent implements OnInit {
       backgroundColor: '#66BB6A'
     }));
     this.stageProgressChartData = {
-      labels: projectStats.periods,
+      labels: projectStats.periods.filter((x: any) => x != '-'),
       datasets: stageProgressDataSets,
     };
+
+
+    this.unSortedStageProgress = 0;
+    projectStats.periods.filter((x: any) => x == '-').forEach((period: any) => {
+      projectStats.stageProgress.filter((x: any) => x.department != 'Total').forEach((sP: any) => {
+        let findStage = sP.stages.find((x: any) => x.stage == period);
+        if (findStage != null){
+          this.unSortedStageProgress += findStage.all;
+        }
+      });
+    });
   }
 }

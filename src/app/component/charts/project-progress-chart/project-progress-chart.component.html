@@ -76,6 +76,9 @@
   <div class="progress-by-department-chart df">
     <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="stageProgressChartData" [options]="stageProgressChartOptions" [plugins]="chartPlugins"></p-chart>
   </div>
+  <div>
+    Внимание! Неотсортированные по этапам документы не отображены на диаграмме: {{unSortedStageProgress}}
+  </div>
 </div>
 <div *ngIf="loading">
   <div class="cxy loading">
