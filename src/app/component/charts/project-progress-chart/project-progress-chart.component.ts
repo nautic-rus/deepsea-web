@@ -29,6 +29,7 @@ export class ProjectProgressChartComponent implements OnInit {
     plugins: {
       legend: {
         position: 'top',
+        onClick: (e: any) => e.stopPropagation(),
       },
       title: {
         display: true,
@@ -50,6 +51,7 @@ export class ProjectProgressChartComponent implements OnInit {
     plugins: {
       legend: {
         position: 'top',
+        onClick: (e: any) => e.stopPropagation(),
       },
       title: {
         display: true,
@@ -93,6 +95,7 @@ export class ProjectProgressChartComponent implements OnInit {
     plugins: {
       legend: {
         position: 'top',
+        onClick: (e: any) => e.stopPropagation(),
       },
       title: {
         display: true,
@@ -135,6 +138,7 @@ export class ProjectProgressChartComponent implements OnInit {
     plugins: {
       legend: {
         position: 'top',
+        onClick: (e: any) => e.stopPropagation(),
       },
       title: {
         display: true,
@@ -160,6 +164,7 @@ export class ProjectProgressChartComponent implements OnInit {
     plugins: {
       legend: {
         position: 'top',
+        onClick: (e: any) => e.stopPropagation(),
       },
       title: {
         display: true,
