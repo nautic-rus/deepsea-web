@@ -1,14 +1,15 @@
 <div class="all-page">
-  <div class="card">
-    <div class="selectors" *ngIf="projects.length > 0">
-      <p-dropdown [disabled]="true" optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-170" [placeholder]="t.tr('Проект')"></p-dropdown>
+  <div class="card-progress">
+    <div class="progress-header mb-10 cy" *ngIf="projects.length > 0">
+      <p-dropdown [disabled]="true" optionLabel="label" class="select mr-10" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-170" [placeholder]="t.tr('Проект')"></p-dropdown>
       <p-dropdown [disabled]="true" optionLabel="label" class="select" optionValue="value" [(ngModel)]="docType" (ngModelChange)="changedProject()" [options]="docTypes" styleClass="width-170" [placeholder]="t.tr('Тип документа')"></p-dropdown>
     </div>
-    <div class="mt-10" *ngIf="!loading">
+    <div class="all-rows" *ngIf="!loading">
 
-      <div class="df">
-        <div class="man-hours-progress">
-          <div class="man-hours-progress-row">
+      <div class="one-row-progress mb-10">
+        <div class="man-hours-progress border-progress mr-10">
+          <div class="head-text mb-10">{{t.tr('Трудoёмкость')}}</div>
+          <div class="progress-row-header">
             <div class="cx">Department</div>
             <div class="cx">Plan</div>
             <div class="cx">Actual</div>
@@ -21,64 +22,76 @@
             <div class="cx">{{getPercantageHoursForDepartment(projectStats.manHoursProgress, dep)}}%</div>
           </div>
         </div>
-        <div class="general-progress-chart df">
-          <p-chart type="pie" [data]="generalProgressChartDataDocs" [options]="generalProgressChartOptionsDocs" [plugins]="chartPlugins"></p-chart>
-          <p-chart type="pie" [data]="generalProgressChartDataManHours" [options]="generalProgressChartOptionsManHours" [plugins]="chartPlugins"></p-chart>
-        </div>
-        <div class="progress-by-department-chart df">
-          <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="progressByDepartmentChartDataDocuments" [options]="progressByDepartmentChartOptionsDocuments" [plugins]="chartPlugins"></p-chart>
-        </div>
-      </div>
-
-
-
-
-      <div class="mt-10 documents-progress">
-        <div class="documents-progress-row df">
-          <div class="cxy documents-progress-column">Department</div>
-          <div class="cxy documents-progress-column" *ngFor="let status of projectStats.statuses">{{status}}</div>
-          <div class="cxy documents-progress-column">%</div>
-        </div>
-        <div class="documents-progress-row df" *ngFor="let dep of projectStats.departments">
-          <div class="cxy documents-progress-column">{{dep}}</div>
-          <div class="cxy documents-progress-column" *ngFor="let status of projectStats.statuses">
-            {{getDocsWithStatus(projectStats.documentProgress, dep, status)}}
+        <div class="general-progress-chart border-progress mr-10">
+          <div class="head-text">{{t.tr('Общий прогресс')}}</div>
+          <div class="df">
+            <p-chart type="pie" width="210px" height="210px" [data]="generalProgressChartDataDocs" [options]="generalProgressChartOptionsDocs" [plugins]="chartPlugins"></p-chart>
+            <p-chart type="pie" width="210px" height="210px" [data]="generalProgressChartDataManHours" [options]="generalProgressChartOptionsManHours" [plugins]="chartPlugins"></p-chart>
           </div>
-          <div class="cxy documents-progress-column">{{getDocsWithStatusPercantage(projectStats.documentProgress, dep)}}%</div>
+        </div>
+        <div class="progress-by-department-chart border-progress">
+          <div class="head-text">{{t.tr('Прогресс по отделам')}}</div>
+          <div class="df">
+            <p-chart [height]="'210px'" [width]="'400px'" type="bar" [data]="progressByDepartmentChartDataDocuments" [options]="progressByDepartmentChartOptionsDocuments" [plugins]="chartPlugins"></p-chart>
+            <p-chart [height]="'210px'" [width]="'400px'" type="bar" [data]="progressByDepartmentChartDataManHours" [options]="progressByDepartmentChartOptionsManHours" [plugins]="chartPlugins"></p-chart>
+          </div>
         </div>
       </div>
-      <div class="mt-10 stage-progress">
+      <div class="border-progress stage-doc-progress">
+        <div class="head-text mb-5">{{t.tr('Прогресс по чертежам')}}</div>
         <div class="df">
-          <div class="cxy stage-progress-column-first">Department</div>
-          <div class="cxy stage-progress-column" *ngFor="let stage of projectStats.periods">{{stage}}</div>
-        </div>
-        <div class="df">
-          <div class="cxy stage-progress-column-first"></div>
-          <div class="stage-progress-column-all-delivered" *ngFor="let stage of projectStats.periods">
-            <div class="">All</div>
-            <div class="">Delivered</div>
+          <div class="documents-progress">
+            <div class="progress-row-header-docs df">
+              <div class="cxy documents-progress-column">Department</div>
+              <div class="cxy documents-progress-column" *ngFor="let status of projectStats.statuses">{{status}}</div>
+              <div class="cxy documents-progress-column">%</div>
+            </div>
+            <div class="docs-progress-row df" *ngFor="let dep of projectStats.departments">
+              <div class="cxy documents-progress-column">{{dep}}</div>
+              <div class="cxy documents-progress-column" *ngFor="let status of projectStats.statuses">
+                {{getDocsWithStatus(projectStats.documentProgress, dep, status)}}
+              </div>
+              <div class="cxy documents-progress-column">{{getDocsWithStatusPercantage(projectStats.documentProgress, dep)}}%</div>
+            </div>
+          </div>
+          <div class="mt-minus35 df">
+            <p-chart [height]="'250px'" [width]="'650px'" type="bar" [data]="stageProgressChartData" [options]="stageProgressChartOptions" [plugins]="chartPlugins"></p-chart>
           </div>
         </div>
-        <div class="stage-progress-row df" *ngFor="let dep of projectStats.departments">
-          <div class="cxy stage-progress-column-first">{{dep}}</div>
-          <div class="stage-progress-column-all-delivered" *ngFor="let stage of projectStats.periods">
-            <div class="">{{getDocsWithStage(projectStats.stageProgress, dep, stage).all}}</div>
-            <div class="">{{getDocsWithStage(projectStats.stageProgress, dep, stage).delivered}}</div>
+        <div class="head-text mb-5">{{t.tr('Прогресс по этапам')}}</div>
+        <div class="width-fit">
+          <div class="df">
+            <div class="cxy stage-progress-column-first"></div>
+            <div class="cxy stage-progress-column" *ngFor="let stage of projectStats.periods">{{stage}}</div>
+          </div>
+          <div class="df">
+            <div class="cxy stage-progress-column-first">Department</div>
+            <div class="stage-progress-column-all-delivered" *ngFor="let stage of projectStats.periods">
+              <div class="">All</div>
+              <div class="">Delivered</div>
+            </div>
+          </div>
+          <div class="docs-progress-row df" *ngFor="let dep of projectStats.departments">
+            <div class="cxy stage-progress-column-first">{{dep}}</div>
+            <div class="stage-progress-column-all-delivered" *ngFor="let stage of projectStats.periods">
+              <div class="">{{getDocsWithStage(projectStats.stageProgress, dep, stage).all}}</div>
+              <div class="">{{getDocsWithStage(projectStats.stageProgress, dep, stage).delivered}}</div>
+            </div>
           </div>
         </div>
       </div>
+
+
 
     </div>
   </div>
-  <div class="progress-by-department-chart df">
-    <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="progressByDepartmentChartDataManHours" [options]="progressByDepartmentChartOptionsManHours" [plugins]="chartPlugins"></p-chart>
-  </div>
-  <div class="progress-by-department-chart df">
-    <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="stageProgressChartData" [options]="stageProgressChartOptions" [plugins]="chartPlugins"></p-chart>
-  </div>
-  <div>
-    Внимание! Неотсортированные по этапам документы не отображены на диаграмме: {{unSortedStageProgress}}
-  </div>
+<!--  <div class="progress-by-department-chart df">-->
+<!--    <p-chart [height]="'350px'" [width]="'500px'" type="bar" [data]="progressByDepartmentChartDataManHours" [options]="progressByDepartmentChartOptionsManHours" [plugins]="chartPlugins"></p-chart>-->
+<!--  </div>-->
+
+<!--  <div>-->
+<!--    Внимание! Неотсортированные по этапам документы не отображены на диаграмме: {{unSortedStageProgress}}-->
+<!--  </div>-->
 </div>
 <div *ngIf="loading">
   <div class="cxy loading">
