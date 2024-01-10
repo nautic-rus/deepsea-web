@@ -61,10 +61,10 @@
         <div class="head-text mb-5">{{t.tr('Прогресс по этапам')}}</div>
         <div class="width-fit">
           <div class="df">
-            <div class="cxy stage-progress-column-first"></div>
+            <div class="cxy stage-progress-column"></div>
             <div class="cxy stage-progress-column" *ngFor="let stage of projectStats.periods">{{stage}}</div>
           </div>
-          <div class="df">
+          <div class="df under-head">
             <div class="cxy stage-progress-column-first">Department</div>
             <div class="stage-progress-column-all-delivered" *ngFor="let stage of projectStats.periods">
               <div class="">All</div>
