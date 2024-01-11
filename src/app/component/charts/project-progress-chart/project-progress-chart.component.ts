@@ -28,6 +28,9 @@ export class ProjectProgressChartComponent implements OnInit {
     responsive: false,
     plugins: {
       legend: {
+        labels: {
+          usePointStyle: true,
+        },
         position: 'top',
         onClick: (e: any) => e.stopPropagation(),
       },
@@ -50,6 +53,9 @@ export class ProjectProgressChartComponent implements OnInit {
     responsive: false,
     plugins: {
       legend: {
+        labels: {
+          usePointStyle: true,
+        },
         position: 'top',
         onClick: (e: any) => e.stopPropagation(),
       },
@@ -94,6 +100,9 @@ export class ProjectProgressChartComponent implements OnInit {
     },
     plugins: {
       legend: {
+        labels: {
+          usePointStyle: true,
+        },
         position: 'top',
         onClick: (e: any) => e.stopPropagation(),
       },
@@ -137,6 +146,9 @@ export class ProjectProgressChartComponent implements OnInit {
     },
     plugins: {
       legend: {
+        labels: {
+          usePointStyle: true,
+        },
         position: 'top',
         onClick: (e: any) => e.stopPropagation(),
       },
@@ -163,6 +175,9 @@ export class ProjectProgressChartComponent implements OnInit {
   stageProgressChartOptions =  {
     plugins: {
       legend: {
+        labels: {
+          usePointStyle: true,
+        },
         position: 'top',
         onClick: (e: any) => e.stopPropagation(),
       },
