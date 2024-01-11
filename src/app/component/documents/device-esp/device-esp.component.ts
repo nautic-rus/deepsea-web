@@ -344,9 +344,13 @@ export class DeviceEspComponent implements OnInit {
             d.label = find.userId;
           }
         });
-        this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
 
+        this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
         this.devicesGrouped = _.sortBy(this.devicesGrouped, x => this.addLeftZeros(x.label.includes('.') ? x.label.split('.')[0] : x.label, 5));
+
+        this.devicesGrouped.forEach((dg: any) => {
+          dg.devices = _.sortBy(dg.devices, x => (x.userId.includes(',') ? this.addLeftZeros(x.userId.split[1]) : x.userId));
+        })
 
         this.devices.forEach((d: any) => d.userId = this.removeLeftZeros(d.userId));
         this.devicesSrc = [...this.devices];
