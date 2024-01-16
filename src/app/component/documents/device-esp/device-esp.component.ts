@@ -166,8 +166,9 @@ export class DeviceEspComponent implements OnInit {
   pipesSrc: any[] = [];
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
-  editing = 0;
+  editing: number = 0;
   newLabel = '';
+  prevLabel: string = '';
   revEsp = '';
   kindEsp = '';
   foranProject = '';
@@ -982,13 +983,26 @@ export class DeviceEspComponent implements OnInit {
   }
 
 
+  // saveEditing() {
+  //   this.s.setAccommodationLabel(this.docNumber, this.addLeftZeros(this.newLabel, 8), this.editing).then(res => {
+  //     this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+  //       this.issue = issue;
+  //       this.fillRevisions();
+  //     });
+  //   });
+  // }
   saveEditing() {
-    this.s.setAccommodationLabel(this.docNumber, this.addLeftZeros(this.newLabel, 8), this.editing).then(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
-      });
+    this.s.updateAccommodataionUserId(this.docNumber, this.prevLabel, this.newLabel).subscribe(res => {
+      if (res.includes('error')){
+        alert(res);
+      }
+      else{
+        this.s.createDeviceEsp(this.project.replace('NT02', "N002"), this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+          this.fillDevices();
+        });
+      }
     });
+    this.editing = 0;
   }
   getDeviceName(material: Material){
     let res = material.name;

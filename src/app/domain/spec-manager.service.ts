@@ -170,4 +170,7 @@ export class SpecManagerService {
   updateEleComplect(complect: any){
     return this.http.post<string>(props.httpSpec + '/updateEleComplect', JSON.stringify(complect));
   }
+  updateAccommodataionUserId(docNumber: string, prev: string, next: string){
+    return this.http.get<string>(props.httpSpec + '/updateAccommodataionUserId', {params: {docNumber, prev, next}});
+  }
 }
