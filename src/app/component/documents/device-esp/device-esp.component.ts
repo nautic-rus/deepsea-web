@@ -174,6 +174,7 @@ export class DeviceEspComponent implements OnInit {
   foranProject = '';
   revEspNoDate = '';
   revUser = '';
+  userIdsReplace: any[] = [];
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
@@ -360,6 +361,11 @@ export class DeviceEspComponent implements OnInit {
       else{
         this.noResult = true;
       }
+
+      this.s.getAccomUserIds(this.docNumber).subscribe(res => {
+        console.log(res);
+        this.userIdsReplace = res;
+      });
     });
   }
   getDateModify(dateLong: number){
@@ -993,14 +999,9 @@ export class DeviceEspComponent implements OnInit {
   // }
   saveEditing() {
     this.s.updateAccommodataionUserId(this.docNumber, this.prevLabel, this.newLabel).subscribe(res => {
-      if (res.includes('error')){
-        alert(res);
-      }
-      else{
-        this.s.createDeviceEsp(this.project.replace('NT02', "N002"), this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
-          this.fillDevices();
-        });
-      }
+      this.s.createDeviceEsp(this.project.replace('NT02', "N002"), this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+        this.fillDevices();
+      });
     });
     this.editing = 0;
   }
@@ -1030,6 +1031,23 @@ export class DeviceEspComponent implements OnInit {
       data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
     }).onClose.subscribe(() => {
       this.fillRevisions();
+    });
+  }
+
+  isEdited(userId: any) {
+    return this.userIdsReplace.find(x => x.userIdNew == userId);
+  }
+
+  getPrevId(userId: any) {
+    return this.userIdsReplace.find(x => x.userIdNew == userId).userId;
+  }
+
+  toPrevUserId(userId: any) {
+    let prevId = this.userIdsReplace.find(x => x.userIdNew == userId);
+    this.s.updateAccommodataionUserId(this.docNumber, prevId.userId, '0').subscribe(res => {
+      this.s.createDeviceEsp(this.project.replace('NT02', "N002"), this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+        this.fillDevices();
+      });
     });
   }
 }

@@ -173,4 +173,7 @@ export class SpecManagerService {
   updateAccommodataionUserId(docNumber: string, prev: string, next: string){
     return this.http.get<string>(props.httpSpec + '/updateAccommodataionUserId', {params: {docNumber, prev, next}});
   }
+  getAccomUserIds(docNumber: string){
+    return this.http.get<any[]>(props.httpSpec + '/accomUserIdReplace', {params: {docNumber}});
+  }
 }
