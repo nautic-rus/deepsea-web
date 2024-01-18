@@ -351,8 +351,16 @@ export class DeviceEspComponent implements OnInit {
         this.devicesGrouped = _.sortBy(this.devicesGrouped, x => this.addLeftZeros(x.label.includes('.') ? x.label.split('.')[0] : x.label, 5));
 
         this.devicesGrouped.forEach((dg: any) => {
-          dg.devices = _.sortBy(dg.devices, x => (x.userId.includes(',') ? this.addLeftZeros(x.userId.split[1]) : x.userId));
+          dg.devices = _.sortBy(dg.devices, x => {
+            let numDots = x.userId.split('.').length;
+            let order = '';
+            if (numDots > 0){
+              order = x.userId.split('.').pop();
+            }
+            return numDots + '-' + this.addLeftZeros(order);
+          });
         })
+        //x.userId.filter((y: string) => y == '.').length
 
         this.devices.forEach((d: any) => d.userId = this.removeLeftZeros(d.userId));
         this.devicesSrc = [...this.devices];
@@ -363,7 +371,6 @@ export class DeviceEspComponent implements OnInit {
       }
 
       this.s.getAccomUserIds(this.docNumber).subscribe(res => {
-        console.log(res);
         this.userIdsReplace = res;
       });
     });
@@ -1005,18 +1012,34 @@ export class DeviceEspComponent implements OnInit {
     });
     this.editing = 0;
   }
+  // getDeviceName(material: Material){
+  //   let res = material.name;
+  //   let findName = material.translations.find(x => x.lang == this.t.language);
+  //   if (findName != null){
+  //     res = findName.name;
+  //   }
+  //   let desc = material.description;
+  //   if (findName != null){
+  //     desc = findName.description;
+  //   }
+  //   if (desc != ''){
+  //     res = res + ', ' + desc;
+  //   }
+  //   return res;
+  // }
   getDeviceName(material: Material){
     let res = material.name;
     let findName = material.translations.find(x => x.lang == this.t.language);
     if (findName != null){
       res = findName.name;
     }
-    let desc = material.description;
+    return res;
+  }
+  getDeviceDescr(material: Material){
+    let res = material.description;
+    let findName = material.translations.find(x => x.lang == this.t.language);
     if (findName != null){
-      desc = findName.description;
-    }
-    if (desc != ''){
-      res = res + ', ' + desc;
+      res = findName.description;
     }
     return res;
   }
