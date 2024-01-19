@@ -1,0 +1,129 @@
+<div class="dialog df">
+  <div class="w-100 df">
+    <div class="">
+      <div class="menu-card">
+        <p-tree class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">
+          <ng-template let-node pTemplate="default">
+            <div class="df">
+              <div>{{node.label}}</div>
+              <div class="mini-notes cxy">{{node.count}}</div>
+            </div>
+          </ng-template>
+        </p-tree>
+      </div>
+    </div>
+    <div class="w-80">
+      <div class="search-right">
+        <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (input)="table.filterGlobal(search, 'contains')"  class="border" />
+        </span>
+      </div>
+
+      <div class="cards">
+        <p-table #table [value]="materials"
+                 [scrollable]="true"
+                 scrollHeight="calc(100vh - 226px)"
+                 [virtualScroll]="true"
+                 [virtualRowHeight]="40"
+                 [reorderableColumns]="false"
+                 [resizableColumns]="false"
+                 styleClass="p-datatable-striped"
+                 [globalFilterFields]="['name','description','singleWeight','provider','note','code']">
+          <ng-template pTemplate="header">
+            <tr class="df">
+              <th pSortableColumn="name" class="cy min-width-220 w-27">{{t.tr('Наименование')}}
+                <p-sortIcon field="name"></p-sortIcon>
+              </th>
+              <th pSortableColumn="description" class="cy min-width-150 w-15">{{t.tr('Обозначение')}}
+                <p-sortIcon field="description"></p-sortIcon>
+              </th>
+              <th pSortableColumn="category" class="cy min-width-70 w-7">{{t.tr('КВЗ')}}
+                <p-sortIcon field="category"></p-sortIcon>
+              </th>
+              <th pSortableColumn="coefficient" class="cy min-width-70 w-7">{{t.tr('Коэф.')}}
+                <p-sortIcon field="coefficient"></p-sortIcon>
+              </th>
+              <th pSortableColumn="singleWeight" class="cy min-width-75 w-9">{{t.tr('Вес')}}
+                <p-sortIcon field="singleWeight"></p-sortIcon>
+              </th>
+              <th pSortableColumn="units" class="cy min-width-70 w-7">{{t.tr('КЕИ')}}
+                <p-sortIcon field="units"></p-sortIcon>
+              </th>
+              <th pSortableColumn="provider" class="cy min-width-100 w-8">{{t.tr('Поставщик')}}
+                <p-sortIcon field="provider"></p-sortIcon>
+              </th>
+              <th pSortableColumn="note" class="cy min-width-100 w-8">{{t.tr('Примечания')}}
+                <p-sortIcon field="note"></p-sortIcon>
+              </th>
+              <th pSortableColumn="code" class="cy min-width-160 w-9">{{t.tr('TRM')}}
+                <p-sortIcon field="code"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-material let-i="rowIndex">
+            <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
+              <td class="min-width-220 w-27 text-12">{{material.name}}</td>
+              <td class="min-width-150 w-15 text-12">{{material.description}}</td>
+              <td class="min-width-70 w-7 text-12">{{material.category}}</td>
+              <td class="min-width-70 w-7 text-12">{{material.coefficient}}</td>
+              <td class="min-width-75 w-9 text-12">{{material.singleWeight}}</td>
+              <td class="min-width-70 w-7 text-12">{{material.units}}</td>
+              <td class="min-width-100 w-8 text-12">{{material.provider}}</td>
+              <td class="min-width-100 w-8 text-12">{{material.note}}</td>
+              <td class="min-width-160 w-9 text-12">
+                <div class="df">
+                  <div class="trm-materials">
+                    <span>{{material.code}}</span>
+                  </div>
+                  <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
+                    <img src="assets/icons/trm-sup.svg" height="14">
+                    <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <div class="w-20">
+      <div class="close-button">
+        <div class="task-button-close cxy" (click)="close()">
+          <i class="pi pi-times"></i>
+        </div>
+      </div>
+      <div class="height-60 title-bold">
+        <div *ngIf="selectedMaterial.name == ''">Select material</div>
+        <div>{{selectedMaterial.name}}</div>
+      </div>
+      <div class="pt-20 pb-20">
+        <div class="df mb-10">
+          <div class="width-50 mr-10 cy">Label</div>
+          <input type="text" pInputText class="width-200" [(ngModel)]="label"/>
+        </div>
+<!--        <div class="df mb-10">-->
+<!--          <div class="width-50 mr-10 cy">AddText</div>-->
+<!--          <input type="text" pInputText class="width-200" [(ngModel)]="addText"/>-->
+<!--        </div>-->
+        <div class="df mb-10">
+          <div class="width-50 mr-10 cy">Units</div>
+          <p-dropdown [(ngModel)]="units" [options]="unitsAvailable" placeholder="" class="select" styleClass="width-200 border-material"></p-dropdown>
+        </div>
+        <div class="df mb-10">
+          <div class="width-50 mr-10 cy">Count</div>
+          <p-inputNumber [(ngModel)]="count" mode="decimal" [minFractionDigits]="2" styleClass="width-200" locale="en-US"></p-inputNumber>
+        </div>
+      </div>
+      <div class="df justify-content-end">
+        <div class="mr-10">
+          <div tabindex="10" (click)="addMaterial()" class="button-ok cxy">{{t.tr('Добавить')}}</div>
+        </div>
+        <div>
+          <div tabindex="11" pButton [label]="t.tr('Отмена')" (click)="close()" class="button-cancel"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
