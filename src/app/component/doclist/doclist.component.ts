@@ -34,7 +34,7 @@ export class DoclistComponent implements OnInit {
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
   taskType = '';
-  taskTypes: LV[] = ['RKD', 'PDSP', 'ED', 'PSD', 'ITT'].map(x => new LV(x));
+  taskTypes: LV[] = ['RKD', 'PDSP', 'ED', 'PSD', 'ITT', 'MSH'].map(x => new LV(x));
   taskStages: LV[] = [];
   statuses: string[] = [];
   status = '';
