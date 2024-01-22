@@ -919,7 +919,7 @@ export class DeviceEspComponent implements OnInit {
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label, 'NEW']
+      data: [this.docNumber, label, 'NEW', '']
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
@@ -935,7 +935,25 @@ export class DeviceEspComponent implements OnInit {
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label, userId]
+      data: [this.docNumber, label, userId, '']
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+          this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+            this.issue = issue;
+            this.fillRevisions();
+          });
+        });
+      }
+    });
+  }
+  addMaterialForZone(label: string, devices: any[]) {
+    let findZone = devices.find(x => x.zone != '');
+    let zone = findZone != null ? findZone.zone : '';
+    this.dialogService.open(AddMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, label, '', zone]
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {

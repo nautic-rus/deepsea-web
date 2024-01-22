@@ -98,7 +98,7 @@
                   <div *ngIf="!deviceGroup.accommodation && auth.hasPerms('add-material-device')" class="materials-button-mini blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label, deviceGroup.label)">
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
-                  <div *ngIf="deviceGroup.accommodation && auth.hasPerms('add-material-device')" class="materials-button-mini blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial(deviceGroup.label)">
+                  <div *ngIf="deviceGroup.accommodation && auth.hasPerms('add-material-device')" class="materials-button-mini blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterialForZone(deviceGroup.label, deviceGroup.devices)">
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
                   <div *ngIf="deviceGroup.accommodation" class="kpl-flag cxy mt-5">
