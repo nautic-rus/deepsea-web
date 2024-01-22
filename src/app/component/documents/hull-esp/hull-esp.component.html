@@ -6,6 +6,11 @@
       <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
       <div class="mr-2" *ngIf="revEsp == ''">{{'rev' + issue.revision}}</div>
       <div class="mr-2">{{revUser}}</div>
+      <div class="mr-10">
+        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addNextMaterial()">
+          <img src="assets/icons/plus3.svg" height="18">
+        </div>
+      </div>
 <!--      <div class="mr-2" [innerHTML]="getDeliveredStatus(issue.status) | safeHtml"></div>-->
 <!--      <div class="mr-1">Revision:</div>-->
 <!--      <div class="mr-2">-->
@@ -107,7 +112,7 @@
                   </ng-template>
                 </p-columnFilter>
               </th>
-              <th pSortableColumn="THICKNESS" class="lxy w-15">{{'Thickness'}}
+              <th pSortableColumn="THICKNESS" class="lxy w-15">{{'Thickness/Name'}}
                 <p-sortIcon field="THICKNESS"></p-sortIcon>
               </th>
               <th pSortableColumn="MATERIAL" class="cxy w-15">{{'Material'}}
@@ -128,6 +133,9 @@
                   </ng-template>
                 </p-columnFilter>
               </th>
+              <th pSortableColumn="COUNT" class="lxy w-15">{{'Count'}}
+                <p-sortIcon field="COUNT"></p-sortIcon>
+              </th>
               <th pSortableColumn="WEIGHT_UNIT" class="lxy w-15">{{'Weight'}}
                 <p-sortIcon field="WEIGHT_UNIT"></p-sortIcon>
               </th>
@@ -144,12 +152,22 @@
           <ng-template pTemplate="body" let-part>
             <tr [class.select-row]="selectedPart == part" class="cursor-pointer task-row" (click)="selectPart(part)">
               <td class="w-15 text-14">{{part.PART_CODE}}</td>
-              <td class="w-15 text-14">{{part.ELEM_TYPE}}</td>
+              <td class="w-15 text-14">{{part.ELEM_TYPE.replace('MANUAL', 'M')}}</td>
+
+              <td *ngIf="part.ELEM_TYPE == 'MANUAL'" class="w-45 min-width-32pc text-14">{{part.DESCRIPTION}}</td>
               <td *ngIf="part.ELEM_TYPE == 'PL'" class="w-15 text-14">{{part.THICKNESS}}</td>
-              <td *ngIf="part.ELEM_TYPE != 'PL'" class="w-15 text-14">{{part.WIDTH + 'x' + part.THICKNESS}}</td>
-              <td class="w-15 text-14">{{part.MATERIAL}}</td>
-              <td class="w-15 text-14">{{part.SYMMETRY}}</td>
-              <td class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
+              <td *ngIf="part.ELEM_TYPE != 'PL' && part.ELEM_TYPE != 'MANUAL'" class="w-15 text-14">{{part.WIDTH + 'x' + part.THICKNESS}}</td>
+
+              <td *ngIf="part.ELEM_TYPE != 'MANUAL'" class="w-15 text-14">{{part.MATERIAL}}</td>
+
+              <td *ngIf="part.ELEM_TYPE != 'MANUAL'" class="w-15 text-14">{{part.SYMMETRY}}</td>
+
+              <td *ngIf="part.ELEM_TYPE != 'MANUAL'" class="w-15 text-14">1</td>
+              <td *ngIf="part.ELEM_TYPE == 'MANUAL'" class="w-15 text-14">{{part.QTY}}</td>
+
+              <td *ngIf="part.ELEM_TYPE != 'MANUAL'" class="w-15 text-14">{{round(part.WEIGHT_UNIT)}}</td>
+              <td *ngIf="part.ELEM_TYPE == 'MANUAL'" class="w-15 text-14">{{round(part.TOTAL_WEIGHT)}}</td>
+
               <td [ngStyle]="mw(14)" class="w-15 text-14 space-between">
                 <span>
                   {{part.NESTING}}

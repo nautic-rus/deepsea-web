@@ -16,19 +16,16 @@ import {IssueMessage} from "../../../domain/classes/issue-message";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
 import {UserCardComponent} from "../../employees/user-card/user-card.component";
-import {GenerationWaitComponent} from "../../tools/trays-by-zones-and-systems/generation-wait/generation-wait.component";
 import {HullEspGenerationWaitComponent} from "./hull-esp-generation-wait/hull-esp-generation-wait.component";
 import {DeviceDetectorService} from "ngx-device-detector";
-import {group} from "@angular/animations";
 import * as XLSX from "xlsx";
-import {DeleteComponent} from "../../task/delete/delete.component";
 import {ClearFilesComponent} from "./clear-files/clear-files.component";
 import {File} from "@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system";
-import {forkJoin, from, merge, of, zip} from "rxjs";
-import {map} from "rxjs/operators";
+import {forkJoin} from "rxjs";
 import {GroupedParts} from "./interfaces/grouped-parts";
 import {GenerateEspComponent} from "./generate-esp/generate-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
+import {AddHullMaterialToEspComponent} from "./add-hull-material-to-esp/add-hull-material-to-esp.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -490,7 +487,6 @@ export class HullEspComponent implements OnInit {
         this.nestContent.splice(0, this.nestContent.length);
         text.split(';').filter(x => x.trim() != '').forEach(row => {
           let splitRow = row.split(':');
-          console.log(splitRow);
           this.nestContent.push({
             file: splitRow[0].trim(),
             parts: splitRow[1].trim().split(',')
@@ -579,7 +575,6 @@ export class HullEspComponent implements OnInit {
   fillRevisions(){
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
-      console.log(res);
       this.issue = res;
       this.miscIssues.splice(0, this.miscIssues.length);
       this.issueManager.getIssues('op').then(issues => {
@@ -1207,14 +1202,12 @@ export class HullEspComponent implements OnInit {
     return _.sortBy(this.issue.archive_revision_files, x => x.removed_date).reverse();
   }
   showCuttingFile(file: FileAttachment) {
-    console.log(file);
     this.cmap = file.url;
     this.dxfEnabled = false;
     this.cutEnabled = false;
     this.router.navigate([], {queryParams: {cmap: null, cmapuser: null, cmapdate: null}, queryParamsHandling: 'merge'}).then(() => {
       setTimeout(() => {
         this.cutEnabled = true;
-        console.log(this.cutEnabled);
         // @ts-ignore
         this.router.navigate([], {queryParams: {cmap: file.url, cmapuser: this.auth.getUserName(file.author), cmapdate: file.upload_date}, queryParamsHandling: 'merge'});
         const style = document.createElement('style');
@@ -1363,6 +1356,26 @@ export class HullEspComponent implements OnInit {
       data: [this.issue, this.project, this.kindEsp, this.revEspNoDate]
     }).onClose.subscribe(() => {
       this.fillRevisions();
+    });
+  }
+
+  addNextMaterial() {
+    let sorted = _.sortBy(this.parts, (x: any) => x.PART_CODE);
+    let label = sorted.length > 0 ? (+sorted.reverse()[0].PART_CODE + 1) : 1;
+
+    this.dialogService.open(AddHullMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, this.issue.id, label]
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        // this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
+        //   this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+        //     this.issue = issue;
+        //     this.fillRevisions();
+        //   });
+        // });
+      }
     });
   }
 }
