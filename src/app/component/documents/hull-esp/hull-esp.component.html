@@ -151,7 +151,12 @@
           </ng-template>
           <ng-template pTemplate="body" let-part>
             <tr [class.select-row]="selectedPart == part" class="cursor-pointer task-row" (click)="selectPart(part)">
-              <td class="w-15 text-14">{{part.PART_CODE}}</td>
+              <td class="w-15 text-14">
+                {{part.PART_CODE}}
+                <div class="ml-15 pt-2 cxy" *ngIf="part.ELEM_TYPE == 'MANUAL'" (click)="deleteMaterial(part.PART_CODE)">
+                  <img src="assets/icons/trash-3.svg" height="12">
+                </div>
+              </td>
               <td class="w-15 text-14">{{part.ELEM_TYPE.replace('MANUAL', 'M')}}</td>
 
               <td *ngIf="part.ELEM_TYPE == 'MANUAL'" class="w-45 min-width-32pc text-14">{{part.DESCRIPTION}}</td>

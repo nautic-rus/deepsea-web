@@ -179,4 +179,7 @@ export class SpecManagerService {
   addIssueMaterial(pos: string, units: string, weight: number, count: number, stock: string, userId: number, docNumber: string, issueId: number, department: string){
     return this.http.get<any>(props.httpSpec + '/addIssueMaterial', {params: {pos, units, weight, count, stock, userId, docNumber, issueId, department}});
   }
+  deleteIssueMaterial(pos: string, docNumber: string, department: string){
+    return this.http.get<any>(props.httpSpec + '/deleteIssueMaterial', {params: {pos, docNumber, department}});
+  }
 }

@@ -1369,13 +1369,19 @@ export class HullEspComponent implements OnInit {
       data: [this.docNumber, this.issue.id, label]
     }).onClose.subscribe(res => {
       if (res == 'success'){
-        // this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
-        //   this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        //     this.issue = issue;
-        //     this.fillRevisions();
-        //   });
-        // });
+        this.s.createHullEsp(this.project, this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
+          this.fillParts();
+        });
       }
+    });
+  }
+
+  deleteMaterial(pos: string) {
+    this.parts = [];
+    this.s.deleteIssueMaterial(pos, this.issue.doc_number, 'hull').subscribe(res => {
+      this.s.createHullEsp(this.project, this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
+        this.fillParts();
+      });
     });
   }
 }

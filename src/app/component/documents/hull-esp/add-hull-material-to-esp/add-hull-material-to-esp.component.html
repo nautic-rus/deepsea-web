@@ -117,7 +117,7 @@
       </div>
       <div class="df justify-content-end">
         <div class="mr-10">
-          <div tabindex="10" (click)="addMaterial()" class="button-ok cxy">{{t.tr('Добавить')}}</div>
+          <div [class.disabled-button]="selectedMaterial.name == ''" tabindex="10" (click)="addMaterial()" class="button-ok cxy">{{t.tr('Добавить')}}</div>
         </div>
         <div>
           <div tabindex="11" pButton [label]="t.tr('Отмена')" (click)="close()" class="button-cancel"></div>
