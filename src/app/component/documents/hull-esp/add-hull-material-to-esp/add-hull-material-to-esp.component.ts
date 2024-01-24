@@ -122,7 +122,7 @@ export class AddHullMaterialToEspComponent implements OnInit {
       this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
       return;
     }
-    this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, 'hull').subscribe(res => {
+    this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, 'hull').subscribe(res => {
       this.ref.close('success');
     });
     // console.log(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel)
