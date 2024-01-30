@@ -348,8 +348,16 @@ export class DeviceEspComponent implements OnInit {
         });
 
         this.devicesGrouped = _.map(_.groupBy(this.devices, x => x.label), (x: any) => Object({label: x[0].label, devices: x, accommodation: x.find((y: any) => y.elemType == 'accommodation') != null}));
-        this.devicesGrouped = _.sortBy(this.devicesGrouped, x => this.addLeftZeros(x.label.includes('.') ? x.label.split('.')[0] : x.label, 5));
+        this.devicesGrouped = _.sortBy(this.devicesGrouped, x => {
+          let numDots = x.label.split('.').length;
+          let order = '';
+          if (numDots > 0){
+            order = x.label.split('.').pop();
+          }
+          return numDots + '-' + this.addLeftZeros(order);
+        });
 
+        console.log(this.devicesGrouped);
         this.devicesGrouped.forEach((dg: any) => {
           dg.devices = _.sortBy(dg.devices, x => {
             let numDots = x.userId.split('.').length;
