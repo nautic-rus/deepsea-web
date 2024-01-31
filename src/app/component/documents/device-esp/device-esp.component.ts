@@ -1032,8 +1032,9 @@ export class DeviceEspComponent implements OnInit {
   //     });
   //   });
   // }
-  saveEditing() {
-    this.s.updateAccommodataionUserId(this.docNumber, this.prevLabel, this.newLabel).subscribe(res => {
+  saveEditing(userId: string) {
+    let edited = this.isEdited(userId) ? '#' : '';
+    this.s.updateAccommodataionUserId(this.docNumber, this.prevLabel, this.newLabel + edited).subscribe(res => {
       this.s.createDeviceEsp(this.project.replace('NT02', "N002"), this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
         this.fillDevices();
       });

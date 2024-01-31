@@ -119,8 +119,8 @@ export class SpecManagerService {
   async getAccommodations(docNumber: string) {
     return await this.http.get<any[]>(props.httpSpec + '/accommodations', {params: {docNumber}}).toPromise();
   }
-  async addDeviceToSystem(docNumber: string, stock: string, units: string, count: string, label: string, forLabel: string, addText: string) {
-    return await this.http.get<any[]>(props.httpSpec + '/addDeviceToSystem', {params: {docNumber, stock, units, count, label, forLabel, addText}}).toPromise();
+  async addDeviceToSystem(docNumber: string, stock: string, units: string, count: string, label: string, forLabel: string, addText: string, zone: string) {
+    return await this.http.get<any[]>(props.httpSpec + '/addDeviceToSystem', {params: {docNumber, stock, units, count, label, forLabel, addText, zone}}).toPromise();
   }
   async removeDeviceFromSystem(docNumber: string, stock: string, units: string, count: string, label: string, forLabel: string, addText: string) {
     return await this.http.get<any[]>(props.httpSpec + '/removeDeviceFromSystem', {params: {docNumber, stock, units, count, label, forLabel, addText}}).toPromise();

@@ -382,7 +382,7 @@ export class TraysComponent implements OnInit {
     //console.log("ADD ANGLEEEEE")
     this.angles.forEach(angle => {
       this.specService.removeDeviceFromSystem(this.docNumber, angle.stockCode, angle.material.units, this.round(angle.length).toString(), this.label, this.forLabel, '').then(res => {
-        this.specService.addDeviceToSystem(this.docNumber, angle.stockCode, angle.material.units, this.round(angle.length).toString(), this.label, this.forLabel, '');
+        this.specService.addDeviceToSystem(this.docNumber, angle.stockCode, angle.material.units, this.round(angle.length).toString(), this.label, this.forLabel, '', '');
       });
     });
   }
