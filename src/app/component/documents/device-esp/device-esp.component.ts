@@ -352,7 +352,9 @@ export class DeviceEspComponent implements OnInit {
           let numDots = x.label.split('.').length;
           let order = '';
           if (numDots > 0){
-            order = x.label.split('.').pop();
+            x.label.split('.').forEach((s: string) => {
+              order = order + this.addLeftZeros(s);
+            });
           }
           return numDots + '-' + this.addLeftZeros(order);
         });

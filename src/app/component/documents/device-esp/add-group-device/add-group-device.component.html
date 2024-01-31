@@ -17,35 +17,35 @@
                  [reorderableColumns]="false"
                  [resizableColumns]="false"
                  styleClass="p-datatable-striped"
-                 [globalFilterFields]="['name','description','singleWeight','provider','note','code']">
+                 [globalFilterFields]="['m.name','m.description','m.singleWeight','m.provider','m.note','m.code']">
           <ng-template pTemplate="header">
             <tr class="df">
-              <th pSortableColumn="name" class="cy min-width-220 w-27">{{t.tr('Наименование')}}
-                <p-sortIcon field="name"></p-sortIcon>
+              <th pSortableColumn="m.name" class="cy min-width-220 w-27">{{t.tr('Наименование')}}
+                <p-sortIcon field="m.name"></p-sortIcon>
               </th>
-              <th pSortableColumn="description" class="cy min-width-150 w-15">{{t.tr('Обозначение')}}
-                <p-sortIcon field="description"></p-sortIcon>
+              <th pSortableColumn="m.description" class="cy min-width-150 w-15">{{t.tr('Обозначение')}}
+                <p-sortIcon field="m.description"></p-sortIcon>
               </th>
-              <th pSortableColumn="category" class="cy min-width-70 w-7">{{t.tr('КВЗ')}}
-                <p-sortIcon field="category"></p-sortIcon>
+              <th pSortableColumn="m.category" class="cy min-width-70 w-7">{{t.tr('КВЗ')}}
+                <p-sortIcon field="m.category"></p-sortIcon>
               </th>
-              <th pSortableColumn="coefficient" class="cy min-width-70 w-7">{{t.tr('Коэф.')}}
-                <p-sortIcon field="coefficient"></p-sortIcon>
+              <th pSortableColumn="m.coefficient" class="cy min-width-70 w-7">{{t.tr('Коэф.')}}
+                <p-sortIcon field="m.coefficient"></p-sortIcon>
               </th>
-              <th pSortableColumn="singleWeight" class="cy min-width-75 w-9">{{t.tr('Вес')}}
-                <p-sortIcon field="singleWeight"></p-sortIcon>
+              <th pSortableColumn="m.singleWeight" class="cy min-width-75 w-9">{{t.tr('Вес')}}
+                <p-sortIcon field="m.singleWeight"></p-sortIcon>
               </th>
-              <th pSortableColumn="units" class="cy min-width-70 w-7">{{t.tr('КЕИ')}}
-                <p-sortIcon field="units"></p-sortIcon>
+              <th pSortableColumn="m.units" class="cy min-width-70 w-7">{{t.tr('КЕИ')}}
+                <p-sortIcon field="m.units"></p-sortIcon>
               </th>
-              <th pSortableColumn="provider" class="cy min-width-100 w-8">{{t.tr('Поставщик')}}
-                <p-sortIcon field="provider"></p-sortIcon>
+              <th pSortableColumn="m.provider" class="cy min-width-100 w-8">{{t.tr('Поставщик')}}
+                <p-sortIcon field="m.provider"></p-sortIcon>
               </th>
-              <th pSortableColumn="note" class="cy min-width-100 w-8">{{t.tr('Примечания')}}
-                <p-sortIcon field="note"></p-sortIcon>
+              <th pSortableColumn="m.note" class="cy min-width-100 w-8">{{t.tr('Примечания')}}
+                <p-sortIcon field="m.note"></p-sortIcon>
               </th>
-              <th pSortableColumn="code" class="cy min-width-160 w-9">{{t.tr('TRM')}}
-                <p-sortIcon field="code"></p-sortIcon>
+              <th pSortableColumn="m.code" class="cy min-width-160 w-9">{{t.tr('TRM')}}
+                <p-sortIcon field="m.code"></p-sortIcon>
               </th>
             </tr>
           </ng-template>
