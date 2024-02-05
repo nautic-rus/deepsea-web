@@ -416,15 +416,15 @@ export class HomeComponent implements OnInit, AfterContentChecked {
             related.push(y.id);
           }
         });
-        // issue.child_issues.forEach(y => {
-        //   if (related.find(x => x == y.id) == null){
-        //     related.push(y.id);
-        //   }
-        // });
+        issue.child_issues.forEach(y => {
+          if (related.find(x => x == y.id) == null){
+            related.push(y.id);
+          }
+        });
         if (issue.parent_id != 0){
           if (related.find(x => x == issue.parent_id) == null){
             related.push(issue.parent_id);
-            issue.related_issues = related;
+            //issue.related_issues = related;
           }
         }
         issue.related_issues = related;
