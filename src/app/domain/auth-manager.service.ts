@@ -32,11 +32,27 @@ export class AuthManagerService {
 
   constructor(private cookie: CookieService, private http: HttpClient, private userService: UserService, private router: Router, private messageService: MessageService, private t: LanguageService) {
     //console.log('init auth');
-    if (!this.filled){
+    // if (!this.filled){
+    //   this.fillUsers();
+    // }
+    // if (this.isAuth()){
+    //   this.fillUsers();
+    // }
+    // else{
+    //
+    // }
+    this.waitAuth();
+    //this.checkConnection();
+  }
+  waitAuth(){
+    if (this.isAuth()){
       this.fillUsers();
     }
-
-    //this.checkConnection();
+    else{
+      setTimeout(() => {
+        this.waitAuth();
+      }, 100);
+    }
   }
   checkConnection(){
     // this.http.get(props.http + '/time').toPromise().then(res => {
@@ -152,15 +168,15 @@ export class AuthManagerService {
             this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
           }
         }
-        console.log(data);
+        //console.log(data);
       },
       error: error => {
-        console.log(error);
+        //console.log(error);
       }
     });
   }
   setUser(user: User, save = true){
-    console.log(user);
+    //console.log(user);
     this.token = user.token;
     this.authenticated = true;
     let now = new Date(),
