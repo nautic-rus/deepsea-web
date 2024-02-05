@@ -459,7 +459,7 @@ export class PlanComponent implements OnInit {
     this.showWithoutPlan = localStorage.getItem('showWithoutPlan') != null ? (+localStorage.getItem('showWithoutPlan')! == 1) : this.showWithoutPlan;
     this.showAssigned = localStorage.getItem('showAssigned') != null ? (+localStorage.getItem('showAssigned')! == 1) : this.showAssigned;
 
-    this.issues = [...this.issuesSrc];
+    this.issues = [...this.issuesSrc.filter(x => x.removed == 0)];
     this.issues = this.issues.filter(x => !x.closing_status.includes(x.status));
     this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
     this.issues = this.issues.filter(x => x.department == this.taskDepartment || this.taskDepartment == '' || this.taskDepartment == '-' || this.taskDepartment == null);
