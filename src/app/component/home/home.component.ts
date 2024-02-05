@@ -427,6 +427,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
             //issue.related_issues = related;
           }
         }
+        this.issues.forEach(otherIssue => {
+          if (otherIssue.parent_id == issue.id){
+            related.push(otherIssue.id);
+          }
+        });
         issue.related_issues = related;
         // issue.ready = this.defineReadyState(issue);
       });
