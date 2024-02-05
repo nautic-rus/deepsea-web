@@ -154,7 +154,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="col.field == 'related_issues'">
+              <div *ngIf="col.field == 'related_issues'" (click)="$event.stopPropagation()">
                 <div *ngFor="let ch of this.issue[col.field]">
                   <a [href]="'https://deep-sea.ru/?taskId=' + ch" target="_blank">{{ch}}</a>
                 </div>
