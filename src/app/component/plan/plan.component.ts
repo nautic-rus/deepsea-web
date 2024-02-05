@@ -195,7 +195,7 @@ export class PlanComponent implements OnInit {
     this.loadingIssues = true;
     this.auth.getPlanIssues().subscribe(res => {
       this.issuesSrc = res;
-      this.issues = res.filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP', 'PSD', 'ED'].includes(x.issue_type));
+      this.issues = res.filter(x => x.removed == 0).filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP', 'PSD', 'ED'].includes(x.issue_type));
       this.issues = _.sortBy(this.issues, x => x.doc_number);
       this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => this.sortStage(x));
       this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
