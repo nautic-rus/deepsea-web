@@ -1000,7 +1000,7 @@
               <div *ngIf="msg.name_value == 'modification_of_existing'">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
-                <span class="bold-text">{{t.tr('"Изменение существующего"')}}</span>
+                <span class="bold-text">"{{t.tr('Доработка задела')}}"</span>
                 <span class="text-date pl-5">{{getDate(+msg.update_date)}} </span>
                 <div class="df pt-5">
                   <div [innerHTML]="getNoneZeroResult(issueManager.localeModificationOfExisting(+msg.prev_value)) | safeHtml"></div>
