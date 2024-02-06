@@ -65,6 +65,9 @@ export class CreateQuestionComponent implements OnInit {
   issuesSrc: any[] = [];
   selectedIssues: any[] = [];
   issueTypes: string[] = ['ED', 'ITT', 'PSD', 'RKD', 'PDSP'];
+  projects: string[] = [];
+  projectDefs: any[] = [];
+
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -140,10 +143,15 @@ export class CreateQuestionComponent implements OnInit {
       this.taskProjects.forEach((x: any) => x.label = this.getProjectName(x));
       this.taskProject = '-';
     });
-    this.issues.getIssuesAllShort().subscribe(res => {
-      this.issuesSrc = res.filter(x => x.removed == 0).filter(x => this.issueTypes.includes(x.issue_type));
-      this.issueSelected();
+    this.projects = this.conf.data;
+    this.issues.getIssueProjects().then(projects => {
+      this.projectDefs = projects;
+      this.issues.getIssuesAllShort().subscribe(res => {
+        this.issuesSrc = res.filter(x => x.removed == 0).filter(x => this.issueTypes.includes(x.issue_type)).filter(x => this.projects.includes(this.getProject(x.project)));
+        this.issueSelected();
+      });
     });
+
     // this.issues.getIssues('op').then(res => {
     //   this.rkdIssues = res;
     // });
@@ -153,7 +161,6 @@ export class CreateQuestionComponent implements OnInit {
     //     this.taskPriority = this.taskPriorities[0];
     //   }
     // });
-
     this.issues.getDepartments().subscribe(departments => {
       this.taskDepartments = departments.filter(x => x.visible_qna == 1).map(x => x.name);
       this.taskDepartment = '-';
@@ -168,6 +175,26 @@ export class CreateQuestionComponent implements OnInit {
     // if (project.rkd != ''){
     //   res += ' (' + project.rkd + ')';
     // }
+    return res;
+  }
+  getProject(project: string){
+    let find = this.projectDefs.find(x => x.name == project);
+    if (find != null){
+      return this.getProjectNameQnA(find);
+    }
+    else{
+      return project;
+    }
+  }
+  getProjectNameQnA(project: any){
+    return project.factory;
+    let res = project.pdsp;
+    if (res == ''){
+      res = project.name;
+    }
+    if (project.rkd != ''){
+      res += ' (' + project.rkd + ')';
+    }
     return res;
   }
   handleFileInput(files: FileList | null) {

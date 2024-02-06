@@ -86,12 +86,9 @@ export class QnaComponent implements OnInit {
 
         this.questionsSrc = _.sortBy(res, x => x.started_date).reverse();
         this.questions = _.sortBy(res, x => x.started_date).reverse();
-        console.log(this.questions);
 
         this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x)).map(x => new LV(this.getProject(x), x));
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
-        console.log(this.departments);
-
         this.filters.status = _.sortBy(_.uniq(res.map(x => x.status)), x => x).map(x => new LV(x));
         this.filters.project = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(x));
         this.filters.department = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
@@ -142,6 +139,7 @@ export class QnaComponent implements OnInit {
     this.dialogService.open(CreateQuestionComponent, {
       showHeader: false,
       modal: true,
+      data: this.projects.map(x => x.label)
     }).onClose.subscribe(res => {
       this.fillQNA();
     });
@@ -189,7 +187,7 @@ export class QnaComponent implements OnInit {
     });
   }
   applyFilters(){
-    this.questions = this.questionsSrc;
+    this.questions = this.questionsSrc.filter(x => this.projects.map(x => x.label).includes(this.getProject(x.project)) || x.project == '' || x.project == '-');
     this.questions = this.questions.filter(x => x.project == this.project || this.project == null || this.project == '' || this.project == '-');
     this.questions = this.questions.filter(x => x.department == this.department || this.department == null || this.department == '' || this.department == '-');
     //this.questions = this.questions.filter(x => !x.closing_status.includes(x.status) || this.showCompleted);
