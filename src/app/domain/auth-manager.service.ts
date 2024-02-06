@@ -118,6 +118,23 @@ export class AuthManagerService {
       return login;
     }
   }
+  getUserDetails(login: string, users: User[]){
+    if (login == 'nautic-rus' || login == ''){
+      return this.t.language == 'ru' ? '' : '';
+    }
+    let find = users.find(x => x.login == login);
+    if (find != null){
+      if (this.t.language == 'ru'){
+        return find.surname + ' ' + find.name;
+      }
+      else{
+        return tr(find.surname + ' ' + find.name);
+      }
+    }
+    else{
+      return login;
+    }
+  }
   getUserNameById(id: number){
     let find = this.users.find(x => x.id == id);
     if (find != null){

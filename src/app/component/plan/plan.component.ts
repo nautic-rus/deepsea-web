@@ -176,7 +176,7 @@ export class PlanComponent implements OnInit {
     this.fillIssues();
     this.auth.getUsers().then(res => {
       this.usersSrc = res.filter(x => x.removed == 0).filter(x => x.visibility.includes('k'));
-      this.usersSrc.forEach(user => user.userName = this.auth.getUserName(user.login));
+      this.usersSrc.forEach(user => user.userName = this.auth.getUserDetails(user.login, this.usersSrc));
       this.usersSrc = _.sortBy(this.usersSrc.filter(x => x.surname != 'surname'), x => x.userName);
       this.issueManager.getDepartments().subscribe(departments => {
         this.departments = departments.filter(x => x.visible_man_hours == 1);
@@ -472,7 +472,6 @@ export class PlanComponent implements OnInit {
     if (this.searchValue.trim() != ''){
       this.issues = this.issues.filter(x => (x.id + x.name + x.docNumber).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
     }
-    console.log(this.issues);
     if (this.taskId != 0){
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
       this.taskId = 0;
@@ -630,7 +629,6 @@ export class PlanComponent implements OnInit {
         let findIssue = this.issues.find(x => x.id == id);
         if (findIssue != null){
           this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
-            console.log(upd);
             let updIssue = upd[0];
             findIssue.inPlan = updIssue.inPlan;
             findIssue.available = updIssue.available;
@@ -650,7 +648,6 @@ export class PlanComponent implements OnInit {
         let findIssue = this.issues.find(x => x.id == id);
         if (findIssue != null){
           this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
-            console.log(upd);
             let updIssue = upd[0];
             findIssue.inPlan = updIssue.inPlan;
             findIssue.available = updIssue.available;
