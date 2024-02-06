@@ -61,7 +61,7 @@ export class DoclistComponent implements OnInit {
     // });
     this.loading = true;
     this.issueManager.getIssues('op').then(res => {
-      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type == y) != null);
+      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
       this.issues = this.issuesSrc;
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;

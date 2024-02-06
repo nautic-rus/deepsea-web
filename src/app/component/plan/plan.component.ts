@@ -176,7 +176,7 @@ export class PlanComponent implements OnInit {
     this.fillIssues();
     this.auth.getUsers().then(res => {
       this.usersSrc = res.filter(x => x.removed == 0).filter(x => x.visibility.includes('k'));
-      this.usersSrc.forEach(user => user.userName = this.auth.getUserName(user.login));
+      this.usersSrc.forEach(user => user.userName = this.auth.getUserDetails(user.login, this.usersSrc));
       this.usersSrc = _.sortBy(this.usersSrc.filter(x => x.surname != 'surname'), x => x.userName);
       this.issueManager.getDepartments().subscribe(departments => {
         this.departments = departments.filter(x => x.visible_man_hours == 1);
@@ -195,7 +195,7 @@ export class PlanComponent implements OnInit {
     this.loadingIssues = true;
     this.auth.getPlanIssues().subscribe(res => {
       this.issuesSrc = res;
-      this.issues = res.filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP', 'PSD', 'ED'].includes(x.issue_type));
+      this.issues = res.filter(x => x.removed == 0).filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP', 'PSD', 'ED'].includes(x.issue_type));
       this.issues = _.sortBy(this.issues, x => x.doc_number);
       this.stages = _.sortBy(_.uniq(this.issues.map(x => x.period)).filter(x => x != ''), x => this.sortStage(x));
       this.statuses = _.sortBy(_.uniq(this.issues.map(x => this.issueManagerService.localeStatus(x.status, false))).filter(x => x != ''), x => x);
@@ -459,7 +459,7 @@ export class PlanComponent implements OnInit {
     this.showWithoutPlan = localStorage.getItem('showWithoutPlan') != null ? (+localStorage.getItem('showWithoutPlan')! == 1) : this.showWithoutPlan;
     this.showAssigned = localStorage.getItem('showAssigned') != null ? (+localStorage.getItem('showAssigned')! == 1) : this.showAssigned;
 
-    this.issues = [...this.issuesSrc];
+    this.issues = [...this.issuesSrc.filter(x => x.removed == 0)];
     this.issues = this.issues.filter(x => !x.closing_status.includes(x.status));
     this.issues = this.issues.filter(x => x.project == this.project || this.project == '' || this.project == '-' || this.project == null);
     this.issues = this.issues.filter(x => x.department == this.taskDepartment || this.taskDepartment == '' || this.taskDepartment == '-' || this.taskDepartment == null);
@@ -472,7 +472,6 @@ export class PlanComponent implements OnInit {
     if (this.searchValue.trim() != ''){
       this.issues = this.issues.filter(x => (x.id + x.name + x.docNumber).trim().toLowerCase().includes(this.searchValue.trim().toLowerCase()));
     }
-    console.log(this.issues);
     if (this.taskId != 0){
       this.issues = this.issuesSrc.filter(x => x.id == this.taskId);
       this.taskId = 0;
@@ -630,7 +629,6 @@ export class PlanComponent implements OnInit {
         let findIssue = this.issues.find(x => x.id == id);
         if (findIssue != null){
           this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
-            console.log(upd);
             let updIssue = upd[0];
             findIssue.inPlan = updIssue.inPlan;
             findIssue.available = updIssue.available;
@@ -650,7 +648,6 @@ export class PlanComponent implements OnInit {
         let findIssue = this.issues.find(x => x.id == id);
         if (findIssue != null){
           this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
-            console.log(upd);
             let updIssue = upd[0];
             findIssue.inPlan = updIssue.inPlan;
             findIssue.available = updIssue.available;

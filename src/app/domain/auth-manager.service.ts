@@ -32,11 +32,27 @@ export class AuthManagerService {
 
   constructor(private cookie: CookieService, private http: HttpClient, private userService: UserService, private router: Router, private messageService: MessageService, private t: LanguageService) {
     //console.log('init auth');
-    if (!this.filled){
+    // if (!this.filled){
+    //   this.fillUsers();
+    // }
+    // if (this.isAuth()){
+    //   this.fillUsers();
+    // }
+    // else{
+    //
+    // }
+    this.waitAuth();
+    //this.checkConnection();
+  }
+  waitAuth(){
+    if (this.isAuth()){
       this.fillUsers();
     }
-
-    //this.checkConnection();
+    else{
+      setTimeout(() => {
+        this.waitAuth();
+      }, 100);
+    }
   }
   checkConnection(){
     // this.http.get(props.http + '/time').toPromise().then(res => {
@@ -102,6 +118,23 @@ export class AuthManagerService {
       return login;
     }
   }
+  getUserDetails(login: string, users: User[]){
+    if (login == 'nautic-rus' || login == ''){
+      return this.t.language == 'ru' ? '' : '';
+    }
+    let find = users.find(x => x.login == login);
+    if (find != null){
+      if (this.t.language == 'ru'){
+        return find.surname + ' ' + find.name;
+      }
+      else{
+        return tr(find.surname + ' ' + find.name);
+      }
+    }
+    else{
+      return login;
+    }
+  }
   getUserNameById(id: number){
     let find = this.users.find(x => x.id == id);
     if (find != null){
@@ -152,15 +185,15 @@ export class AuthManagerService {
             this.router.navigate([redirectUrl], {queryParams: {redirect: null, guard: null}, queryParamsHandling: 'merge'});
           }
         }
-        console.log(data);
+        //console.log(data);
       },
       error: error => {
-        console.log(error);
+        //console.log(error);
       }
     });
   }
   setUser(user: User, save = true){
-    console.log(user);
+    //console.log(user);
     this.token = user.token;
     this.authenticated = true;
     let now = new Date(),

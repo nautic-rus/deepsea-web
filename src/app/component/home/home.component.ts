@@ -399,7 +399,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
     zip(this.issueManager.getIssues(this.auth.getUser().login), this.issueManager.getIssues(this.auth.getUser().shared_access)).pipe(map((value) => value[0].concat(value[1]))).subscribe(data => {
       this.issues = data.filter(x => x.id > 0);
-      console.log(this.issues);
+      //console.log(this.issues);
       if (this.auth.getUser().shared_access != ''){
         this.issueManager.getIssues(this.auth.getUser().shared_access).then(resShared => {
           resShared.forEach(x => this.issues.push(x));
@@ -416,17 +416,22 @@ export class HomeComponent implements OnInit, AfterContentChecked {
             related.push(y.id);
           }
         });
-        // issue.child_issues.forEach(y => {
-        //   if (related.find(x => x == y.id) == null){
-        //     related.push(y.id);
-        //   }
-        // });
+        issue.child_issues.forEach(y => {
+          if (related.find(x => x == y.id) == null){
+            related.push(y.id);
+          }
+        });
         if (issue.parent_id != 0){
           if (related.find(x => x == issue.parent_id) == null){
             related.push(issue.parent_id);
-            issue.related_issues = related;
+            //issue.related_issues = related;
           }
         }
+        this.issues.forEach(otherIssue => {
+          if (otherIssue.parent_id == issue.id){
+            related.push(otherIssue.id);
+          }
+        });
         issue.related_issues = related;
         // issue.ready = this.defineReadyState(issue);
       });
