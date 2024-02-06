@@ -8,7 +8,8 @@
   <div class="big-text mb-1 mt-1">{{t.tr('Выбрать задачи')}}</div>
 
   <div class="combine-task">
-    <p-multiSelect appendTo="body" class="mr-10" filterBy="id,name,doc_number" optionLabel="id" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
+    <p-skeleton *ngIf="issues.length == 0" width="100%" height="40px"></p-skeleton>
+    <p-multiSelect *ngIf="issues.length > 0" appendTo="body" class="mr-10" filterBy="id,name,doc_number" optionLabel="id" [options]="issues" [(ngModel)]="selectedIssues" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
                    styleClass="w-100 task-select p-info" [virtualScroll]="true" [itemSize]="60" optionValue="id" [maxSelectedLabels]="9">
       <ng-template let-issue pTemplate="item">
         <div class="df">
