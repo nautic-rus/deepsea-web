@@ -36,7 +36,7 @@
                            [selectedItemsLabel]="t.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="t.tr('Выберите колонки')">
             </p-multiSelect>
             <div class="mr-10">
-              <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset(); showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+              <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset(); dt.clearState(); showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
                 <img src="assets/icons/filter-no.svg" height="18">
               </div>
             </div>
