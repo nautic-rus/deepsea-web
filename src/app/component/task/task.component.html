@@ -1267,7 +1267,7 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('modification_of_existing')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Доработка задела')}}</div>
-            <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" class="pl-3 cy df cursor-pointer description-task hover-task">
+            <div (click)="edit = 'modification_of_existing'" *ngIf="edit != 'modification_of_existing'" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">
               <div *ngIf="+issue.modification_of_existing == 1">
                 Yes
               </div>
@@ -1315,7 +1315,7 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('reason_of_changes')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Причина изменения')}}</div>
-            <div (click)="edit = 'reason_of_changes'" *ngIf="edit != 'reason_of_changes'" pTooltip="{{issue.reason_of_changes}}" class="pl-3 cy df cursor-pointer description-task hover-task">{{formatChanges(issue.reason_of_changes)}}</div>
+            <div (click)="edit = 'reason_of_changes'" *ngIf="edit != 'reason_of_changes'" pTooltip="{{issue.reason_of_changes}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{formatChanges(issue.reason_of_changes)}}</div>
             <div class="mr-5" [hidden]="edit != 'reason_of_changes'">
               <p-dropdown appendTo="body" class="select" [(ngModel)]="issue.reason_of_changes" [options]="reasonsOfChange" optionValue="value" optionLabel="label" styleClass="width-180"></p-dropdown>
             </div>
