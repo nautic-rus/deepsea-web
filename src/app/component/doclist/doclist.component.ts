@@ -75,6 +75,11 @@ export class DoclistComponent implements OnInit {
       this.selectedProjects = localStorage.getItem('selectedProjects') != null ? JSON.parse(localStorage.getItem('selectedProjects')!) : this.selectedProjects;
       this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
 
+      if (this.selectedProjects.length > this.projects.length){
+        this.selectedProjects = this.projects.map(x => x.value);
+        localStorage.setItem('selectedProjects', '');
+      }
+
       this.departments = _.sortBy(_.uniq(this.issues.map(x => x.department)), x => x).map(x => new LV(x));
       this.selectedDepartments = [...this.departments.map(x => x.name)];
       this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;

@@ -88,6 +88,7 @@ export class QnaComponent implements OnInit {
         this.questions = _.sortBy(res, x => x.started_date).reverse();
 
         this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x)).map(x => new LV(this.getProject(x), x));
+        //this.projects = _.sortBy(_.uniq(projects.map(x => x.project.name)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x)).map(x => new LV(this.getProject(x), x));
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
         this.filters.status = _.sortBy(_.uniq(res.map(x => x.status)), x => x).map(x => new LV(x));
         this.filters.project = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(x));
@@ -136,10 +137,11 @@ export class QnaComponent implements OnInit {
     }
   }
   createQuestion() {
+    let projects = _.sortBy(_.uniq(this.projectDefs.map(x => x.name)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x));
     this.dialogService.open(CreateQuestionComponent, {
       showHeader: false,
       modal: true,
-      data: this.projects.map(x => x.label)
+      data: projects
     }).onClose.subscribe(res => {
       this.fillQNA();
     });
