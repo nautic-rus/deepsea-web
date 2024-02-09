@@ -84,7 +84,7 @@
               {{t.tr('Количество задач:')}}
               <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
               <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
-              {{t.tr('(Всего:')}} {{issues.length}})
+              {{t.tr('(Всего:')}} {{dt.value.length}})
             </div>
 
             <div class="df c p-ml-auto">
