@@ -41,26 +41,26 @@
           </div>
         </div>
         <div class="mr-10">
-          <div class="count-status new cursor-pointer" [class.clicked]="showNew" (click)="switchNew()">
+          <div class="count-status  cursor-pointer" [class.clicked]="showNew" (click)="switchNew()">
             <span class="pr-5">{{t.tr('Новый - ')}}</span>
             <span>{{statusesCount('New')}}</span>
           </div>
         </div>
         <div class="mr-10">
-          <div class="count-status reject cursor-pointer" [class.clicked]="showReject" (click)="switchReject()">
+          <div class="count-status  cursor-pointer" [class.clicked]="showReject" (click)="switchReject()">
             <span class="pr-5">{{t.tr('Отклонено - ')}}</span>
             <span>{{statusesCount('Rejected')}}</span>
           </div>
         </div>
         <div class="mr-10">
-          <div class="count-status work cursor-pointer" [class.clicked]="showWork" (click)="switchWork()">
+          <div class="count-status  cursor-pointer" [class.clicked]="showWork" (click)="switchWork()">
             <span class="pr-5">{{t.tr('В работе - ')}}</span>
             <span>{{statusesCount('AssignedTo') + statusesCount('In Work') + statusesCount('In Rework') + statusesCount('Assign responsible') + statusesCount('Paused')}}({{getIssuesDueDateLength()}})</span>
           </div>
         </div>
 
         <div class="mr-10">
-          <div class="count-status close cursor-pointer" [class.clicked]="showClose" (click)="switchClose()">
+          <div class="count-status  cursor-pointer" [class.clicked]="showClose" (click)="switchClose()">
             <span class="pr-5">{{t.tr('Закрыто - ')}}</span>
             <span>{{statusesCount('Closed')}}</span>
           </div>
