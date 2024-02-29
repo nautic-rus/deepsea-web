@@ -885,7 +885,7 @@ export class PipeEspComponent implements OnInit {
       let name = material.name;
       let desc = material.description;
       let findName = material.translations.find(x => x.lang == this.t.language);
-      if (findName != null){
+      if (findName != null && findName.name != ''){
         name = findName.name;
         desc = material.description;
       }
