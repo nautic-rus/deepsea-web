@@ -29,6 +29,7 @@ export class NaviComponent implements OnInit {
   issuesImportantCount = 0;
   menus = [
     {id: 'home', label: 'Home', url: '', icon: 'assets/icons/home1.svg', height: 14, child: [], params: {}},
+    {id: 'equipments', label: 'Equipments', url: 'equipments', icon: 'assets/icons/home1.svg', height: 14, child: [], params: {}}, //equipments
     {id: 'sections', label: 'Sections', url: 'sections', icon: 'assets/icons/sections1.svg', height: 13, child: [], params: {}},
     {id: 'materials', label: 'Materials', url: 'materials', icon: 'assets/icons/cube.svg', height: 17, child: [], params: {}},
     {id: 'materials-summary', label: 'Statement', url: 'materials-summary', icon: 'assets/icons/stats1.svg', height: 17, child: [], params: {}},
@@ -77,6 +78,7 @@ export class NaviComponent implements OnInit {
     this.issueManager.getIssues(this.auth.getUser().login).then(res => {
       this.issuesImportantCount = res.filter(x => x.assigned_to == this.auth.getUser().login || x.responsible == this.auth.getUser().login).filter(x => x.priority == 'High').filter(x => !x.closing_status.includes(x.status)).length;
     });
+    //console.log(this.menus);
     // this.issueManager.getTimeAndWeather().then(res => {
     //   this.weather = res;
     //   this.timeTick();
@@ -179,6 +181,7 @@ export class NaviComponent implements OnInit {
     else{
       switch (label){
         case 'Home': return 'Главная';
+        case 'Equipments': return 'Оборудование';  //добавила блок с оборудованием
         case 'Sections': return 'Секции';
         case 'Materials': return 'Материалы';
         case 'Statement': return 'Ведомости';
@@ -204,5 +207,9 @@ export class NaviComponent implements OnInit {
         default: return label;
       }
     }
+
   }
+
 }
+
+
