@@ -4,6 +4,8 @@ import {ActivatedRoute, Router, RouterOutlet} from "@angular/router";
 import {animate, animateChild, group, query, style, transition, trigger} from '@angular/animations';
 import {PrimeNGConfig} from "primeng/api";
 import {DeviceDetectorService} from "ngx-device-detector";
+import {EquipmentsService} from "./domain/equipments.service";
+import {ProjectsManagerService} from "./domain/projects-manager.service";
 
 @Component({
   selector: 'app-root',
@@ -242,7 +244,7 @@ export class AppComponent {
   title = 'deepsea';
   naviDisabled = false;
 
-  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private primengConfig: PrimeNGConfig, private route: ActivatedRoute) {
+  constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private primengConfig: PrimeNGConfig, private route: ActivatedRoute, public prService: ProjectsManagerService) {
     this.primengConfig.ripple = true;
     this.route.queryParams.subscribe(params => {
       this.naviDisabled = params.navi == 0;
@@ -254,5 +256,10 @@ export class AppComponent {
   }
   isDesktop() {
     return this.device.isDesktop() && window.innerWidth > 1296;
+  }
+
+  ngOnInit(): void {
+    this.prService.getProjects();
+    this.prService.getDepartments();
   }
 }

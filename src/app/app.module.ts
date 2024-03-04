@@ -205,6 +205,7 @@ import { AddMaterialComplectComponent } from './component/tools/material-complec
 import { ProjectProgressChartComponent } from './component/charts/project-progress-chart/project-progress-chart.component';
 import { AddHullMaterialToEspComponent } from './component/documents/hull-esp/add-hull-material-to-esp/add-hull-material-to-esp.component';
 import { EquipmentsComponent } from './component/equipments/equipments.component';
+import { CreateEquipmentComponent } from './component/equipments/create-equipment/create-equipment.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -353,7 +354,8 @@ Quill.register('modules/imageResize', ImageResize);
     AddMaterialComplectComponent,
     ProjectProgressChartComponent,
     AddHullMaterialToEspComponent,
-    EquipmentsComponent
+    EquipmentsComponent,
+    CreateEquipmentComponent
   ],
   imports: [
     BrowserModule,

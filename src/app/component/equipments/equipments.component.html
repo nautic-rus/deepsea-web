@@ -1,77 +1,86 @@
 <div class="equipments-component">  <!--Row Expand https://primeng.org/table-->
   <div class="card-head df sticky-card container">
-    <div class="df">
+    <div class="df container-buttons">
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" optionLabel="name" optionValue="name"></p-multiSelect>
+        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
       </div>
       <div class="mr-10">
         <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
+      <div class="mr-10">
+        <div class="materials-button-home blue-button cxy" (click)="newEquipment()">
+          <div class="pr-10 cxy">
+            <img src="assets/icons/plus3.svg" height="18">
+          </div>
+          <div class="cxy">Добавить оборудование</div>
+        </div>
+      </div>
     </div>
-    <div>
 
-      <p-table class="equipments-table" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem'}" pRowToggler >
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="width: 5rem"></th>
-            <th>ID</th>
-            <th>Group</th>
-            <th>Status</th>
-            <th>Department</th>
-            <th>Comment</th>
-            <th>Responsible</th>
-            <th>ITT</th>
-            <th style="width: 5rem"></th>
-            <th style="width: 5rem"></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-eq let-expanded="expanded">
-          <tr >
-            <td>
-              <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-            </td>
-            <td>{{ eq.id }}</td>
-            <td>SFI {{ eq.sfi }}-{{ eq.name }}</td>
-            <td>STATUS</td>
-            <td>{{ eq.department }}</td>
-            <td>COMMENT</td>
-            <td>{{ eq.respons_name }} {{ eq.respons_surname }}</td>
-            <td>{{ eq.itt ===1? 'YES' : 'NO' }}</td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="rowexpansion" let-eq>
-          <tr>
-            <td colspan="7">
-              <div class="p-3">
-                <p-table [value]="eq.suppliers" dataKey="equipm_id">
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <th pSortableColumn="equipm_id">equipm_id <p-sortIcon field="equipm_id"></p-sortIcon></th>
-                      <th pSortableColumn="suppliers_id">suppliers_id <p-sortIcon field="suppliers_id"></p-sortIcon></th>
-                      <th pSortableColumn="description">description/NAME <p-sortIcon field="description"></p-sortIcon></th>
-                      <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
-<!--                      <th style="width: 4rem"></th>-->
-                    </tr>
-                  </ng-template>
-                  <ng-template class="addTable" pTemplate="body" let-supplier>
-                    <tr>
-                      <td>{{ supplier.equipm_id }}</td>
-                      <td>{{ supplier.suppliers_id }}</td>
-                      <td>{{ supplier.description }}</td>
-                      <td>{{ supplier.status }}</td>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="emptymessage">
-                    <tr>
-                      <td colspan="6">There are no order for this product yet.</td>
-                    </tr>
-                  </ng-template>
-                </p-table>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+    <p-table class="equipments-table" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem'}" pRowToggler >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 5rem"></th>
+          <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="sfi">Group <p-sortIcon field="sfi"></p-sortIcon></th>
+          <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon></th>
+          <th>Department</th>
+          <th>Comment</th>
+          <th>Responsible</th>
+          <th pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>
+          <th style="width: 5rem"></th>
+          <th style="width: 5rem"></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-eq let-expanded="expanded">
+        <tr >
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
+          <td>{{ eq.id }}</td>
+          <td>SFI {{ eq.sfi }}-{{ eq.name }}</td>
+          <td>{{ eq.status }}</td>
+          <td>{{ eq.department }}</td>
+          <td>{{ eq.comment }}</td>
+          <td>{{ eq.respons_name }} {{ eq.respons_surname }}</td>
+          <td>{{ eq.itt ===1? 'YES' : 'NO' }}</td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="rowexpansion" let-eq>
+        <tr>
+          <td colspan="7">
+            <div class="p-3">
+              <p-table [value]="eq.suppliers" dataKey="equipm_id">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="equipm_id">equipm_id <p-sortIcon field="equipm_id"></p-sortIcon></th>
+                    <th pSortableColumn="suppliers_id">suppliers_id <p-sortIcon field="suppliers_id"></p-sortIcon></th>
+                    <th pSortableColumn="description">description/NAME <p-sortIcon field="description"></p-sortIcon></th>
+                    <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                    <!--                      <th style="width: 4rem"></th>-->
+                  </tr>
+                </ng-template>
+                <ng-template class="addTable" pTemplate="body" let-supplier>
+                  <tr>
+                    <td>{{ supplier.equipm_id }}</td>
+                    <td>{{ supplier.suppliers_id }}</td>
+                    <td>{{ supplier.description }}</td>
+                    <td>{{ supplier.status }}</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="6">There are no order for this product yet.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
     </div>
   </div>
-</div>
+

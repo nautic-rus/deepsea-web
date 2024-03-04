@@ -3,10 +3,13 @@ export interface IEquipment {
   sfi: number;
   name: string;
   department: string;
+  comment: string;
   respons_name: string;
   respons_surname: string;
   itt: number;
-  suppliers?: ISuppliersInEq[]; // Опциональный массив комментариев
+  project_name: string;
+  suppliers?: ISuppliersInEq[]; // Опциональный массив поставщиков
+  status: string;
 }
 
 export interface ISuppliersInEq{
