@@ -5,8 +5,6 @@ import {EquipmentsService} from "../../domain/equipments.service";
 import {IEquipment} from "../../domain/interfaces/equipments";
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import {CreateEquipmentComponent} from "./create-equipment/create-equipment.component";
-import {dataApp} from "../../domain/classes/dataApp";
-import {Project} from "../../domain/classes/project";
 import {ProjectsManagerService} from "../../domain/projects-manager.service";
 
 
