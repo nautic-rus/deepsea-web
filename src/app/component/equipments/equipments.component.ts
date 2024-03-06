@@ -39,29 +39,6 @@ export class EquipmentsComponent implements OnInit {
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
       this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
     });
-    // this.data = new dataApp();
-    // const Projects =  this.eqService.getEquipmentsProjects().then(projects => {
-    //     this.data.setProjects(projects);
-    //     console.log(this.data);
-    // })
-    // const Departments =  this.eqService.getEquipmentsDepartments().subscribe(departments => {
-    //   this.data.setDepartments(departments)
-    //   console.log(this.data);
-    // })
-    // this.eqService.getEquipmentsProjects().then(projects => {
-    //   this.projects = projects;
-    //   this.projects.forEach((x: any) => x.label = this.getProjectName(x));
-    //   this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name));
-    //   this.selectedProjects = ['NR002'];
-    // });
-    // this.eqService.getEquipmentsDepartments().subscribe(departments => {
-    //   this.departments = departments.filter(x => x.visible_task == 1).map(x => new LV(x.name));
-    //   this.selectedDepartments = ['System'];
-    // });
-    // this.eqService.getEquipments().subscribe(equipments => {
-    //   this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
-    //   this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-    // });
   }
 
   getProjectName(project: any) {

@@ -18,25 +18,9 @@ export class ProjectsManagerService{
     });
   }
 
-  // getEquipments() {
-  //    this.http.get<IEquipment[]>(props.http + '/equipments').subscribe(projects => {
-  //        this.projects = projects;
-  //        console.log(this.projects)
-  //    });
-  // }
-  // getEquipments() {
-  //   this.http.get<IEquipment[]>(props.http + '/equipments').subscribe(projects => {
-  //       this.projects = projects;
-  //       console.log(this.projects)
-  //   });
-  // }
-  //
   getDepartments() {
     this.http.get<any[]>(props.http + '/departments').subscribe(departments => {
       this.departments = departments;
     });
   }
-  // getProjects(): Promise<any[]> {
-  //   return this.http.get<any[]>(props.http + '/issueProjects').toPromise();
-  // }
 }

@@ -206,6 +206,8 @@ import { ProjectProgressChartComponent } from './component/charts/project-progre
 import { AddHullMaterialToEspComponent } from './component/documents/hull-esp/add-hull-material-to-esp/add-hull-material-to-esp.component';
 import { EquipmentsComponent } from './component/equipments/equipments.component';
 import { CreateEquipmentComponent } from './component/equipments/create-equipment/create-equipment.component';
+import {TreeSelectModule} from "primeng/treeselect";
+import {ScrollPanelModule} from "primeng/scrollpanel";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -355,7 +357,8 @@ Quill.register('modules/imageResize', ImageResize);
     ProjectProgressChartComponent,
     AddHullMaterialToEspComponent,
     EquipmentsComponent,
-    CreateEquipmentComponent
+    CreateEquipmentComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -414,7 +417,9 @@ Quill.register('modules/imageResize', ImageResize);
     DragDropModule,
     SkeletonModule,
     InputMaskModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TreeSelectModule,
+    ScrollPanelModule
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

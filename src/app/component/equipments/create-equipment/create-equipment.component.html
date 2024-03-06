@@ -2,40 +2,50 @@
 
 </div>
 
-<form [formGroup]="equipmentForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="equipmentForm" class="form-container">
   <div class="big-text-create mb-1">{{'Проект'}}</div>
   <p-dropdown formControlName="project" class="select" [options]="equipmentProjects" appendTo = "body" styleClass="width-220 font-14"></p-dropdown>
   <p-dropdown formControlName="department" class="select" [options]="equipmentDepartments" appendTo = "body" styleClass="width-220 font-14"></p-dropdown>
-
-  <label for="sfi">SFI: </label>
-  <input id="sfi" type="text" formControlName="sfi">
+  <p-dropdown formControlName="sfi" class="select" optionLabel="code" optionValue="code" placeholder="SFI number" [options]="sfis" appendTo = "body" styleClass="width-220 font-14" [filter]="true" filterBy="code,ru,en">
+    <ng-template let-sfi pTemplate="item">
+      <div class="df user-select">
+        <div >{{sfi.code}}</div>
+        <div >{{sfi.ru}}</div>
+        <div >{{sfi.en}}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
 
   <label for="name">Name: </label>
   <input id="name" type="text" formControlName="name">
 
+
   <label for="description">description </label>
   <input id="description" type="text" formControlName="description">
 
+  <label for="commentText">comment </label>
+  <input id="commentText" type="text" formControlName="commentText">
+
+  <div class="big-text-create mb-1 mt-1">{{'Вложение'}}</div>
   <div [class.file-drag]="dragOver" class="upload cx cy">
-    <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false"  (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+    <div class="cxy w-100" (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
       <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
-      <span class="normal-text no-actions">{{('Перетащите файлы для загрузки')}}</span>
+      <span class="normal-text no-actions">{{'Перетащите файлы или нажмите для загрузки'}}</span>
     </div>
   </div>
-
-<!--  <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>-->
-<!--  <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">-->
-<!--    <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>-->
-<!--    <div class="cy">{{file}}</div>-->
-<!--    <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>-->
-<!--    <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>-->
-<!--  </div>-->
-<!--  </div>-->
+  <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+  <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+    <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+    <div class="cy">{{file}}</div>
+    <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+    <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+  </div>
 
 
-
-  <p>Complete the form to enable button.</p>
-  <button type="submit" [disabled]="!equipmentForm.valid">Submit</button>
+  <div class="mr-5 cx">
+    <div tabindex="10" [class.disabled-button]="!equipmentForm.valid" (click)="createEquipment()" class="button-ok cxy">{{'Создать'}}</div>
+    <div tabindex="11" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>
+  </div>
 </form>
 
 <hr>
@@ -43,5 +53,3 @@
 <p>Form Value: {{ equipmentForm.value | json }}</p>
 
 <p>Form Status: {{ equipmentForm.status }}</p>
-
-<!--<button type="button" (click)="updateProfile()">Update Profile</button>-->
