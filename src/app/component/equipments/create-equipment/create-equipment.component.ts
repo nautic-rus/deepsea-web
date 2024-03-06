@@ -144,6 +144,16 @@ export class CreateEquipmentComponent implements OnInit {
     eqToDB.comment = eqFormValue.commentText;
     console.warn(this.equipmentForm.value);
     console.log(JSON.stringify(eqToDB));
+
+    this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
+      if (res.includes('error')){
+        alert(res);
+      }
+      else{
+        this.ref.close(res);
+      }
+    });
+
     this.equipmentForm.reset();
   }
 }

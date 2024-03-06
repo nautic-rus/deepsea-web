@@ -80,6 +80,12 @@ export class EquipmentsComponent implements OnInit {
     console.log('newEquipment')
     this.dialogService.open(CreateEquipmentComponent, {
       modal: true,
-    })
+    }).onClose.subscribe(closed => {
+      if (closed == 'success'){
+        this.eqService.getEquipments().subscribe(equips => {
+          this.equipments = equips;
+        });
+      }
+    });
   }
 }

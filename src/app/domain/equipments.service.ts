@@ -22,6 +22,10 @@ export class EquipmentsService {
     return this.http.get<Isfi[]>(props.http + '/sfis');
   }
 
+
+  addEquipment(jsonValue: string) :  Observable<string> {
+    return this.http.post<string>(props.http + '/equipment', jsonValue);
+  }
   // postEquipment(): {
   //
   // }
