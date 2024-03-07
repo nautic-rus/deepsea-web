@@ -1,4 +1,5 @@
 export class EquipmentToDB {
+  id: number = 0;
   name: string;
   description: string;
   sfi: number;
