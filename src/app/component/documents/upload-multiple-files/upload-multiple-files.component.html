@@ -37,7 +37,7 @@
             <span class="normal-text no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
           </div>
         </div>
-        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files, fileGroup.name)" multiple>
+        <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files, fileGroup.name)" (click)="releaseFiles($event)" multiple>
         <div class="attachment-files">
           <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup.name)">
             <div class="df mb-6 cursor-pointer">

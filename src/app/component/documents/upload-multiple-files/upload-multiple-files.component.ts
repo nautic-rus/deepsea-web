@@ -231,6 +231,7 @@ export class UploadMultipleFilesComponent implements OnInit {
     return result.replace('-rev', '_rev');
   }
   handleFileInput(files: FileList | null, fileGroup: string) {
+    console.log(files);
     if (files != null){
       for (let x = 0; x < files.length; x++){
         let file = files.item(x);
@@ -251,7 +252,7 @@ export class UploadMultipleFilesComponent implements OnInit {
           this.issueManager.uploadFile(file, this.auth.getUser().login, fileName).then(res => {
             res.group = fileGroup;
             this.loaded.push(res);
-            console.log(this.loaded);
+            file = null;
           });
         }
       }
@@ -368,5 +369,11 @@ export class UploadMultipleFilesComponent implements OnInit {
 
   dragLeave(event: DragEvent, name: string) {
     this.dragFileGroup = '';
+  }
+
+  protected readonly Event = Event;
+
+  releaseFiles(event: any) {
+    event.target.value = null;
   }
 }
