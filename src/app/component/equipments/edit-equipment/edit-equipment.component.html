@@ -1,0 +1,43 @@
+<div>ID: {{this.equipmentForm.value.id}}</div>
+<div (click)="deleteEquipment(this.equipmentForm.value.id)">
+  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+  </svg>
+</div>
+<form [formGroup]="equipmentForm" class="form-container">
+  <div class="big-text-create mb-1 " >{{'Добавить поставщика'}}</div>
+
+  <p-dropdown formControlName="project" class="select" [options]="equipmentProjects" appendTo = "body" styleClass="width-220 font-14"></p-dropdown>
+  <p-dropdown formControlName="department" class="select" [options]="equipmentDepartments" appendTo = "body" styleClass="width-220 font-14"></p-dropdown>
+  <p-dropdown formControlName="sfi" class="select" optionLabel="code" optionValue="code" placeholder="SFI number" [options]="sfis" appendTo = "body" styleClass="width-220 font-14" [filter]="true" filterBy="code,ru,en">
+    <ng-template let-sfi pTemplate="item">
+      <div class="df user-select">
+        <div >{{sfi.code}}</div>
+        <div >{{sfi.ru}}</div>
+        <div >{{sfi.eng}}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
+
+  <label for="description">description </label>
+  <input id="description" type="text" formControlName="description">
+
+  <label for="comment">Comment: </label>
+  <input id="comment" type="text" formControlName="comment">
+
+  <label for="name">Name: </label>
+  <input id="name" type="text" formControlName="name">
+
+  <div class="mr-5 cx">
+    <div tabindex="10" (click)="editEquipment()" class="button-ok cxy">{{'Сохранить изменения'}}</div>
+    <div tabindex="10" (click)="close()" class="button-cancel ml-1">{{'Отмена'}}</div>
+  </div>
+
+<!--  <div tabindex="10" (click)="addFiles()" pButton [label]="'Add files'" class="button ml-1"></div>-->
+</form>
+
+<hr>
+
+<p>Form Value: {{ equipmentForm.value | json }}</p>
+
+<p>Form Status: {{ equipmentForm.status }}</p>

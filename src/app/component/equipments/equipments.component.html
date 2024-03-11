@@ -1,22 +1,26 @@
-<div class="equipments-component">  <!--Row Expand https://primeng.org/table-->
-  <div class="card-head df sticky-card container">
-    <div class="df container-buttons">
+<div class="equipments-component">
+
+  <div class="card-head df sticky-card ng-star-inserted">
+    <div class="container-buttons">
       <div class="mr-10">
         <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
       </div>
       <div class="mr-10">
         <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
       </div>
-      <div class="mr-10">
-        <div class="materials-button-home blue-button cxy" (click)="newEquipment()">
-          <div class="pr-10 cxy">
-            <img src="assets/icons/plus3.svg" height="18">
-          </div>
-          <div class="cxy">Добавить оборудование</div>
-        </div>
-      </div>
+      <div tabindex="10" (click)="newEquipment()" class="button-ok cxy">{{'Добавить оборудование'}}</div>
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button-home blue-button cxy" (click)="newEquipment()">-->
+<!--          <div class="pr-10 cxy">-->
+<!--            <img src="assets/icons/plus3.svg" height="18">-->
+<!--          </div>-->
+<!--          <div class="cxy">Добавить оборудование</div>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
+  </div>
 
+<!--  заголовок таблицы с оборудование-->
     <p-table class="equipments-table" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem'}" pRowToggler >
       <ng-template pTemplate="header">
         <tr>
@@ -33,8 +37,9 @@
         </tr>
       </ng-template>
 
+<!--      заполняем таблицу с оборудованием-->
       <ng-template pTemplate="body" let-eq let-expanded="expanded">
-        <tr >
+        <tr>
           <td>
             <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
@@ -45,9 +50,16 @@
           <td>{{ eq.comment }}</td>
           <td>{{ eq.respons_name }} {{ eq.respons_surname }}</td>
           <td>{{ eq.itt ===1? 'YES' : 'NO' }}</td>
+          <td><div tabindex="10" (click)="addSupplier(eq)" class="button-ok cxy">{{'Добавить поставщика'}}</div></td>
+          <td>
+            <div class="edit-button" (click)="editEquipment(eq)">
+              <img src="assets/icons/edit.svg">
+            </div>
+          </td>
         </tr>
       </ng-template>
 
+<!--     выпадающий список suppliers-->
       <ng-template pTemplate="rowexpansion" let-eq>
         <tr>
           <td colspan="7">
@@ -81,6 +93,6 @@
         </tr>
       </ng-template>
     </p-table>
-    </div>
   </div>
+
 

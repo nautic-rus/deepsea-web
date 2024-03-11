@@ -3,6 +3,14 @@
   flex-direction: column;
 }
 
-.container-buttons {
+/deep/ .container-buttons {
   display: flex;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.edit-button{
+  background-color: #9a6362;
+  width: 25px;
+  height: 25px;
 }

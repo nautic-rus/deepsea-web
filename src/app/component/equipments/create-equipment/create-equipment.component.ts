@@ -6,10 +6,11 @@ import {ProjectsManagerService} from "../../../domain/projects-manager.service";
 import {FileAttachment} from "../../../domain/classes/file-attachment";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
-import { TreeSelectModule } from 'primeng/treeselect';
-import { DropdownModule } from 'primeng/dropdown';
 import {EquipmentToDB} from "../../../domain/classes/equipment-to-db";
 import {Isfi} from "../../../domain/interfaces/sfi";
+import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
+import {AddEquipmentFilesComponent} from "../add-equipment-files/add-equipment-files.component";
+import {AddFilesDataService} from "../../../domain/add-files-data.service";
 
 @Component({
   selector: 'app-create-equipment',
@@ -19,9 +20,9 @@ import {Isfi} from "../../../domain/interfaces/sfi";
 export class CreateEquipmentComponent implements OnInit {
   equipmentForm = this.formBuilder.group({
     sfi: [''],
-    project: ['', Validators.required],
+    project: [''],
     department: [''],
-    name: [''],
+    name: ['', Validators.required],
     description: [''],
     commentText: [''],
   });
@@ -29,17 +30,14 @@ export class CreateEquipmentComponent implements OnInit {
   equipmentProject = '-';
   equipmentDepartments: string[] = [];
 
-  sfis: Isfi[] = [];
+  equipmentFiles: EquipmentsFiles[] = [];
 
-  //для работы с файлами
-  dragOver = false;
-  loaded: FileAttachment[] = [];
-  awaitForLoad: string[] = [];
+  sfis: Isfi[] = [];
 
 
 
   constructor( public prService: ProjectsManagerService, public auth: AuthManagerService, private formBuilder: FormBuilder, public issues: IssueManagerService,
-               public ref: DynamicDialogRef, public eqService: EquipmentsService) {
+               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService, private filesData: AddFilesDataService) {
   }
 
   ngOnInit(): void {
@@ -54,71 +52,78 @@ export class CreateEquipmentComponent implements OnInit {
   }
 
 
-  onFilesDrop(event: DragEvent) {
-    event.preventDefault();
-    // @ts-ignore
-    this.handleFileInput(event.dataTransfer.files);
-  }
-
-  handleFileInput(files: FileList | null) {
-    if (files != null){
-      for (let x = 0; x < files.length; x++){
-        let file = files.item(x);
-        if (file != null){
-          // @ts-ignore
-          const find = this.loaded.find(x => x.name == file.name);
-          if (find != null){
-            this.loaded.splice(this.loaded.indexOf(find), 1);
-          }
-          this.awaitForLoad.push(file.name);
-        }
-      }
-      for (let x = 0; x < files.length; x++){
-        let file = files.item(x);
-        if (file != null){
-          this.issues.uploadFile(file, this.auth.getUser().login).then(res => {
-            console.log(res);
-            this.loaded.push(res);
-          });
-        }
-      }
-    }
-  }
-
-  getFileExtensionIcon(file: string) {
-    switch (file.toLowerCase().split('.').pop()){
-      case 'pdf': return 'pdf.svg';
-      case 'dwg': return 'dwg.svg';
-      case 'xls': return 'xls.svg';
-      case 'xlsx': return 'xls.svg';
-      case 'doc': return 'doc.svg';
-      case 'docx': return 'doc.svg';
-      case 'png': return 'png.svg';
-      case 'jpg': return 'jpg.svg';
-      case 'txt': return 'txt.svg';
-      case 'zip': return 'zip.svg';
-      default: return 'file.svg';
-    }
-  }
-
-  isLoaded(file: string) {
-    return this.loaded.find(x => x.name == file);
-  }
-
-  remove(file: string) {
-    let find = this.loaded.find(x => x.name == file);
-    if (find != null){
-      this.loaded.splice(this.loaded.indexOf(find), 1);
-    }
-    let findAwait = this.awaitForLoad.find(x => x == file);
-    if (findAwait != null){
-      this.awaitForLoad.splice(this.awaitForLoad.indexOf(findAwait), 1);
-    }
-  }
-
   close() {
+    this.eqService.setWaitingCreateEqFiles([]);
     this.equipmentForm.reset();
     this.ref.close();
+  }
+
+  addFiles() {
+    const dialog = this.dialogService.open(AddEquipmentFilesComponent, {
+      header: 'Uploading files',
+      modal: true,
+    })
+    dialog.onClose.subscribe(() => {
+      this.eqService.getCreateEqFiles().forEach(file => {
+        this.equipmentFiles.push(file);
+      })
+      this.eqService.setCreateEqFiles([]);
+      //this.equipmentFiles = this.eqService.getCreateEqFiles();
+      console.log('closed uploadin files');
+      console.log(this.equipmentFiles);
+    })
+  }
+
+  getFileExtensionIcon(fileUrl: string) {
+    const fileName = this.extractFileName(fileUrl);
+    switch (fileName.toLowerCase().split('.').pop()) {
+      case 'pdf':
+        return 'pdf.svg';
+      case 'dwg':
+        return 'dwg.svg';
+      case 'xls':
+        return 'xls.svg';
+      case 'xlsx':
+        return 'xls.svg';
+      case 'doc':
+        return 'doc.svg';
+      case 'docx':
+        return 'doc.svg';
+      case 'png':
+        return 'png.svg';
+      case 'jpg':
+        return 'jpg.svg';
+      case 'txt':
+        return 'txt.svg';
+      case 'zip':
+        return 'zip.svg';
+      case 'mp4':
+        return 'mp4.svg';
+      default:
+        return 'file.svg';
+    }
+  }
+
+  trimFileName(fileUrl: string, length: number = 10): string {
+    const fileName = this.extractFileName(fileUrl);
+    let split = fileName.split('.');
+    let name = split[0];
+    let extension = split[1];
+    if (name.length > length) {
+      return name.substr(0, length - 2) + '..' + name.substr(name.length - 2, 2) + '.' + extension;
+    } else {
+      return fileName;
+    }
+  }
+
+  extractFileName(fileUrl: string): string {
+    const parts = fileUrl.split('/');
+    return parts[parts.length - 1];
+  }
+
+  deleteFile(file: EquipmentsFiles) {
+    this.equipmentFiles.splice(this.equipmentFiles.indexOf(file), 1);
+    console.log(this.equipmentFiles);
   }
 
   findProjectId(project_name: string) {
@@ -132,8 +137,8 @@ export class CreateEquipmentComponent implements OnInit {
   }
 
   createEquipment() {
+    //добавить equipment
     const eqFormValue = this.equipmentForm.value;
-
     const eqToDB = new EquipmentToDB();
     eqToDB.name = eqFormValue.name;
     eqToDB.description = eqFormValue.description;
@@ -146,6 +151,9 @@ export class CreateEquipmentComponent implements OnInit {
     console.log(JSON.stringify(eqToDB));
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
+      console.log('res');
+      console.log(res);
+      //this.eqService.setEqID(res.)
       if (res.includes('error')){
         alert(res);
       }

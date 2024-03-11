@@ -19,6 +19,7 @@ import {SfiCode} from "./classes/sfi-code";
 import {Weather} from "./classes/weather";
 import {IssueCheck} from "./classes/issue-check";
 import {DailyTask} from "./interfaces/daily-task";
+import {EquipmentsFiles} from "./classes/equipments-files";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,13 @@ export class IssueManagerService {
     formData.append('file', file, fileName);
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData, {params: {user}}).toPromise();
   }
+
+  async uploadEquipmentFile(file: File, user: string, fileName: string = file.name) {
+    const formData: FormData = new FormData();
+    formData.append('file', file, fileName);
+    return await this.http.post<EquipmentsFiles>(props.http + '/createFileUrl', formData, {params: {user}}).toPromise();
+  }
+
   async uploadFileToCloud(file: File, filePath: string, login: string, password: string) {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
