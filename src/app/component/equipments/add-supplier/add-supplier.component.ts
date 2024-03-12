@@ -30,27 +30,7 @@ export class AddSupplierComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  createSupplier() {
-    const supplierToDB = new SupplierToDB();
-    supplierToDB.equ_id = this.dialogConfig.data;  //принимаем из equipment компонент
-    supplierToDB.user_id = this.auth.getUser().id;
-    supplierToDB.name = this.suppliersForm.value.name;
-    supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
-    supplierToDB.description = this.suppliersForm.value.description;
-    console.log('createSupplier()');
-    console.log(JSON.stringify(supplierToDB));
 
-    this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {
-      console.log('res');
-      console.log(res);
-      if (res.includes('error')){
-        alert(res);
-      }
-      else{
-        this.ref.close(res);
-      }
-    });
-  }
 
   addFiles() {
     const dialog = this.dialogService.open(AddEquipmentFilesComponent, {
@@ -64,10 +44,6 @@ export class AddSupplierComponent implements OnInit {
       this.supplierService.getCreateFiles().forEach(file => {
         this.supplierFiles.push(file);
       })
-      this.supplierService.setCreateFiles([]);
-      //this.equipmentFiles = this.eqService.getCreateEqFiles();
-      console.log('closed uploading files: add-supplier');
-      console.log(this.supplierFiles);
     })
   }
 
@@ -120,6 +96,36 @@ export class AddSupplierComponent implements OnInit {
 
   deleteFile(file: SupplierFiles) {
     this.supplierFiles.splice(this.supplierFiles.indexOf(file), 1);
+    console.log(this.supplierFiles);
+  }
+
+  createSupplier() {
+    const supplierToDB = new SupplierToDB();
+    supplierToDB.equ_id = this.dialogConfig.data;  //принимаем из equipment компонент
+    supplierToDB.user_id = this.auth.getUser().id;
+    supplierToDB.name = this.suppliersForm.value.name;
+    supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
+    supplierToDB.description = this.suppliersForm.value.description;
+    console.log('createSupplier()');
+    console.log(JSON.stringify(supplierToDB));
+
+    this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {
+      console.log('res');
+      console.log(res);
+      if (res.includes('error')){
+        alert(res);
+      }
+      else{
+        this.ref.close(res);
+      }
+    });
+
+    this.supplierFiles.forEach(file => {
+      this.supplierService.addSupplierFiles(JSON.stringify(file));
+    })
+    this.supplierService.setCreateFiles([]);
+    //this.equipmentFiles = this.eqService.getCreateEqFiles();
+    console.log('closed uploading files: add-supplier');
     console.log(this.supplierFiles);
   }
 

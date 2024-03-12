@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {EquipmentsFiles} from "./classes/equipments-files";
 import {HttpClient} from "@angular/common/http";
 import {SupplierFiles} from "./classes/supplier-files";
+import {Observable} from "rxjs";
+import * as props from "../props";
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +29,9 @@ export class SupplierService {
 
   getCreateFiles() {
     return(this.createFiles);
+  }
+
+  addSupplierFiles(jsonValue: string) :  Observable<string> {
+    return this.http.post<string>(props.http + '/addEquipFile', jsonValue);
   }
 }

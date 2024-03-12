@@ -40,6 +40,7 @@ export class EquipmentsComponent implements OnInit {
     this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name) && x.status == 0);
     this.selectedProjects = ['NR002'];
 
+    //this.departments = this.prService.departments.map(x => new LV(x.name));
     this.departments = this.prService.departments.filter(x => x.visible_documents == 1 ).map(x => new LV(x.name));
     this.selectedDepartments = ['System'];
 
@@ -83,13 +84,11 @@ export class EquipmentsComponent implements OnInit {
     return false;
   }
 
-  editEquipmentButtonIsDisabled(eq:IEquipment) { //Редактировать карточку может автор +добавить условие на user_rights.rights = "edit_equ"
-
-    return false;
-    // if (eq.responsible_id === this.auth.getUser().id) {
-    //   return false;
-    // }
-    // return true;
+  editEquipmentButtonIsDisabled(eq:IEquipment) { //Редактировать карточку может автор или user_rights.rights = "edit_equ"
+    if (eq.responsible_id === this.auth.getUser().id || this.auth.getUser().permissions.includes('edit_equ')) {
+      return false;
+    }
+    return true;
   };
 
   addSupplier(eq:IEquipment) {
@@ -113,6 +112,8 @@ export class EquipmentsComponent implements OnInit {
       data: eq
     }).onClose.subscribe(()=> { //сразу выводить на страницу
          this.eqService.getEquipments().subscribe(equips => {
+           console.log(equips);
+           console.log(equips);
            this.equipmentsSrc = equips;
            this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
         });

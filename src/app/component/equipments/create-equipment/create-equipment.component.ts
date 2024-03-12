@@ -30,7 +30,7 @@ export class CreateEquipmentComponent implements OnInit {
   equipmentProject = '-';
   equipmentDepartments: string[] = [];
 
-  equipmentFiles: EquipmentsFiles[] = [];  //отправляем в БД
+  equipmentFiles: EquipmentsFiles[] = [];  //
 
   sfis: Isfi[] = [];
 
@@ -168,6 +168,19 @@ export class CreateEquipmentComponent implements OnInit {
         this.ref.close(res);
       }
     });
+
+    this.equipmentFiles.forEach(file => {
+      console.log(JSON.stringify(file));
+      this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
+        if (res.includes('error')){
+          alert(res);
+        }
+        else{
+          this.ref.close(res);
+        }
+      })
+    })
+
 
     this.equipmentForm.reset();
   }
