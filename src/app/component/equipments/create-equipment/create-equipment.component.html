@@ -26,31 +26,32 @@
   <label for="commentText">comment </label>
   <input id="commentText" type="text" formControlName="commentText">
 
-  <div class="mb-15 width-400 position-relative" *ngFor="let file of equipmentFiles">
-    <div class="df mb-6 cursor-pointer">
-      <div class="df w-90 space-between">
-        <div class="df">
-          <div class="cxy">
-            <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
-          </div>
-          <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
-        </div>
-        <div (click)="deleteFile(file)">
-          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-          </svg>
-        </div>
+<!--  добавление файла в момент создания нового оборудования-->
+<!--  <div class="mb-15 width-400 position-relative" *ngFor="let file of equipmentFiles">-->
+<!--    <div class="df mb-6 cursor-pointer">-->
+<!--      <div class="df w-90 space-between">-->
+<!--        <div class="df">-->
+<!--          <div class="cxy">-->
+<!--            <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>-->
+<!--          </div>-->
+<!--          <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>-->
+<!--        </div>-->
 <!--        <div (click)="deleteFile(file)">-->
 <!--          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
 <!--            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>-->
 <!--          </svg>-->
 <!--        </div>-->
-      </div>
-    </div>
-  </div>
-  <div class="mr-5 mt-20 cx">
-    <div tabindex="10"  [class.disabled-button]="!equipmentForm.valid" (click)="addFiles()" class="button-ok ml-1">{{'Добавить файлы'}}</div>
-  </div>
+<!--&lt;!&ndash;        <div (click)="deleteFile(file)">&ndash;&gt;-->
+<!--&lt;!&ndash;          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">&ndash;&gt;-->
+<!--&lt;!&ndash;            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>&ndash;&gt;-->
+<!--&lt;!&ndash;          </svg>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="mr-5 mt-20 cx">-->
+<!--    <div tabindex="10"  [class.disabled-button]="!equipmentForm.valid" (click)="addFiles()" class="button-ok ml-1">{{'Добавить файлы'}}</div>-->
+<!--  </div>-->
   <div class="mr-5 mt-20 cx">
     <div tabindex="10" [class.disabled-button]="!equipmentForm.valid" (click)="createEquipment()" class="button-ok cxy">{{'Создать'}}</div>
     <div tabindex="10" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>

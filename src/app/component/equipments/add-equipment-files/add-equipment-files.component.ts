@@ -201,7 +201,7 @@ export class AddEquipmentFilesComponent implements OnInit {
   refactorFile(fromFile: FileAttachment) {
     if (this.isEqService) {
       const resultEqFile = new EquipmentsFiles();
-      resultEqFile.equ_id = 0;
+      resultEqFile.equ_id = this.conf.data.equ_id;
       resultEqFile.url = fromFile.url;
       resultEqFile.rev = this.rev;
       resultEqFile.type_name = fromFile.group;

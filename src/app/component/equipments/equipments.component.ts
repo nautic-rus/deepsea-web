@@ -112,8 +112,6 @@ export class EquipmentsComponent implements OnInit {
       data: eq
     }).onClose.subscribe(()=> { //сразу выводить на страницу
          this.eqService.getEquipments().subscribe(equips => {
-           console.log(equips);
-           console.log(equips);
            this.equipmentsSrc = equips;
            this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
         });

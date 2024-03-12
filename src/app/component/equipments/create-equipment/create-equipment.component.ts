@@ -30,7 +30,7 @@ export class CreateEquipmentComponent implements OnInit {
   equipmentProject = '-';
   equipmentDepartments: string[] = [];
 
-  equipmentFiles: EquipmentsFiles[] = [];  //
+  equipmentFiles: EquipmentsFiles[] = [];  //хранит файлы для отправки на БД
 
   sfis: Isfi[] = [];
 
@@ -64,6 +64,7 @@ export class CreateEquipmentComponent implements OnInit {
       modal: true,
       data: {
         service: this.eqService,
+        equ_id: 0,
         //getCreateEqFilesFunction: this.eqService.getCreateEqFiles(),
         //setCreateEqFilesFunction: this.eqService.setCreateEqFiles(),
       }
@@ -169,7 +170,7 @@ export class CreateEquipmentComponent implements OnInit {
       }
     });
 
-    this.equipmentFiles.forEach(file => {
+    this.equipmentFiles.forEach(file => { //добавляем файлы в БД
       console.log(JSON.stringify(file));
       this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
         if (res.includes('error')){

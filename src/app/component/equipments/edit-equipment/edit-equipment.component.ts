@@ -27,21 +27,6 @@ export class EditEquipmentComponent implements OnInit {
     comment: this.dialogConfig.data.comment,
   });
 
-  // equipment: IEquipment = {
-  //   id: 0,
-  //   sfi: 0,
-  //   name: '',
-  //   description: '',
-  //   department: '',
-  //   comment: '',
-  //   responsible_id: 0,
-  //   respons_name: '',
-  //   respons_surname: '',
-  //   itt: 0,
-  //   project_name: '',
-  //   status: '',
-  // };
-
   equipmentProjects: string[] = [];
   equipmentProject = '-';
   equipmentDepartments: string[] = [];
@@ -71,8 +56,7 @@ export class EditEquipmentComponent implements OnInit {
       modal: true,
       data: {
         service: this.eqService,
-        //getCreateEqFilesFunction: this.eqService.getCreateEqFiles(),
-        //setCreateEqFilesFunction: this.eqService.setCreateEqFiles(),
+        equ_id: this.equipmentForm.value.id,
       }
     })
     dialog.onClose.subscribe(() => {
@@ -110,7 +94,7 @@ export class EditEquipmentComponent implements OnInit {
     console.warn(this.equipmentForm.value);
     console.log(JSON.stringify(eqToDB));
 
-    this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
+    this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {  //добавить изменения оборудования в бд
       console.log('res');
       console.log(res);
       //this.eqService.setEqID(res.)
@@ -122,6 +106,21 @@ export class EditEquipmentComponent implements OnInit {
         this.ref.close(res);
       }
     });
+    console.log('edit eq + this.equipmentFiles');
+    console.log(this.equipmentFiles);
+
+    //добавляем файлы в БД
+    this.equipmentFiles.forEach(file => { //добавляем файлы в БД
+      console.log(JSON.stringify(file));
+      this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
+        if (res.includes('error')){
+          alert(res);
+        }
+        else{
+          this.ref.close(res);
+        }
+      })
+    })
   }
 
 

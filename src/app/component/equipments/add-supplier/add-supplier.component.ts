@@ -120,7 +120,7 @@ export class AddSupplierComponent implements OnInit {
       }
     });
 
-    this.supplierFiles.forEach(file => {
+    this.supplierFiles.forEach(file => { //добавляем файлы в БД
       this.supplierService.addSupplierFiles(JSON.stringify(file));
     })
     this.supplierService.setCreateFiles([]);
