@@ -166,7 +166,7 @@ export class CreateEquipmentComponent implements OnInit {
         alert(res);
       }
       else{
-        this.ref.close(res);
+        this.ref.close('success');
       }
     });
 
