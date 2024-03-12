@@ -1,5 +1,5 @@
-export class EquipmentsFiles {
-  equ_id: number;
+export class SupplierFiles {
+  supplier_id: number;
   user_id: number;
   url: string;
   rev: string;

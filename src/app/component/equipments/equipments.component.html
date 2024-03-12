@@ -52,8 +52,11 @@
           <td>{{ eq.itt ===1? 'YES' : 'NO' }}</td>
           <td><div tabindex="10" (click)="addSupplier(eq)" class="button-ok cxy">{{'Добавить поставщика'}}</div></td>
           <td>
-            <div class="edit-button" (click)="editEquipment(eq)">
-              <img src="assets/icons/edit.svg">
+            <button type="button" pButton pRipple  class="p-button-text p-button-rounded p-button-plain" [disabled]="editEquipmentButtonIsDisabled(eq)"></button>
+          </td>
+          <td>
+            <div [class.button-disabled]="editEquipmentButtonIsDisabled(eq)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="('Редактировать')" (click)="editEquipment(eq)">
+              <img src="assets/icons/edit1.svg" height="20">
             </div>
           </td>
         </tr>

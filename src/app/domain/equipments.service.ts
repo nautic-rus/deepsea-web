@@ -12,30 +12,43 @@ import {EquipmentsFiles} from "./classes/equipments-files";
 })
 export class EquipmentsService {
 
-  eqId: string;
-  waitingCreateEqFiles: any = [];
-  createEqFiles: EquipmentsFiles[] = [];
+
+  waitingCreateFiles: any = [];
+  createFiles: EquipmentsFiles[] = [];
   constructor(private http: HttpClient) {
   }
 
-  setEqID(eqId: string) {
-    this.eqId = eqId;
+
+  // setWaitingCreateSupplierFiles(waitingCreateEqFiles:any[]) {
+  //   this.waitingCreateFiles = waitingCreateEqFiles;
+  // }
+  //
+  // getWaitingCreateSupplierFiles() {
+  //   return(this.waitingCreateFiles);
+  // }
+  //
+  // setCreateSupplierFiles(createEqFiles:any[]) {
+  //   this.createFiles = createEqFiles;
+  // }
+  //
+  // getCreateSupplierFiles() {
+  //   return(this.createFiles);
+  // }
+
+  setWaitingCreateFiles(waitingCreateFiles:any[]) {
+    this.waitingCreateFiles = waitingCreateFiles;
   }
 
-  setWaitingCreateEqFiles(waitingCreateEqFiles:any[]) {
-    this.waitingCreateEqFiles = waitingCreateEqFiles;
+  getWaitingCreateFiles() {
+    return(this.waitingCreateFiles);
   }
 
-  getWaitingCreateEqFiles() {
-    return(this.waitingCreateEqFiles);
+  setCreateFiles(createFiles:any[]) {
+    this.createFiles = createFiles;
   }
 
-  setCreateEqFiles(createEqFiles:any[]) {
-    this.createEqFiles = createEqFiles;
-  }
-
-  getCreateEqFiles() {
-    return(this.createEqFiles);
+  getCreateFiles() {
+    return(this.createFiles);
   }
 
   getEquipments(): Observable<IEquipment[]> {
@@ -56,7 +69,7 @@ export class EquipmentsService {
   }
 
   addEquipmentFiles(jsonValue: string) :  Observable<string> {
-    return this.http.post<string>(props.http + '', jsonValue);
+    return this.http.post<string>(props.http + '/addEquipFile', jsonValue);
   }
 
   addSupplier(jsonValue: string) :  Observable<string> {

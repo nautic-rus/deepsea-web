@@ -10,7 +10,16 @@
 }
 
 .edit-button{
-  background-color: #9a6362;
   width: 25px;
   height: 25px;
+}
+
+.edit-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.button-disabled{
+  pointer-events: none;
+  opacity: 0.5;
 }

@@ -5,6 +5,7 @@ export interface IEquipment {
   description: string;
   department: string;
   comment: string;
+  responsible_id: number;
   respons_name: string;
   respons_surname: string;
   itt: number;

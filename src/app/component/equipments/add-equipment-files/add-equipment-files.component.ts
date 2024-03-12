@@ -14,6 +14,8 @@ import {LanguageService} from "../../../domain/language.service";
 import {
   UploadRevisionFilesComponent
 } from "../../documents/hull-esp/upload-revision-files/upload-revision-files.component";
+import {SupplierService} from "../../../domain/supplier.service";
+import {SupplierFiles} from "../../../domain/classes/supplier-files";
 
 @Component({
   selector: 'app-add-files',
@@ -35,12 +37,25 @@ export class AddEquipmentFilesComponent implements OnInit {
   awaitForLoad: any[] = [];
   dragFileGroup: string = '';
 
+  isEqService: boolean = true;
+
+
   equipmentFilesToDB: EquipmentsFiles[] = [];
 
-  constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService, public eqService: EquipmentsService) {
-    console.log('eqService.getWaitingCreateEqFiles()');
-    console.log(eqService.getWaitingCreateEqFiles());
-    this.loaded = eqService.getWaitingCreateEqFiles();
+  constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService, public eqService: EquipmentsService,
+              private supplierService: SupplierService) {
+    //console.log('eqService.getWaitingCreateEqFiles()');
+    //console.log(eqService.getWaitingCreateEqFiles());
+    this.loaded = this.conf.data.service.getWaitingCreateFiles();
+    //то что ниже можно удалить
+    if (this.conf.data.service === this.eqService) {
+      this.isEqService = true;
+      console.log('EEEEEEEQQQQQQQ')
+    } else if (this.conf.data.service === this.supplierService) {
+      this.isEqService = false;
+      console.log('SSSSSSSSSSSSuUUUUUUPPPPPPPP')
+    }
+    console.log(this.conf.data.service);
   }
 
   getRevisionFilesOfGroup(fileGroup: string): FileAttachment[] {
@@ -103,7 +118,7 @@ export class AddEquipmentFilesComponent implements OnInit {
           this.issueManager.uploadFile(file, this.auth.getUser().login, fileName).then(res => {
             res.group = fileGroup;
             this.loaded.push(res);
-            this.eqService.setWaitingCreateEqFiles(this.loaded);
+            this.conf.data.service.setWaitingCreateFiles(this.loaded);
             console.log(this.loaded);
           });
         }
@@ -163,35 +178,16 @@ export class AddEquipmentFilesComponent implements OnInit {
 
   deleteFile(file: FileAttachment) {
     this.loaded.splice(this.loaded.indexOf(file), 1);
-    this.eqService.setWaitingCreateEqFiles(this.loaded);
+    this.conf.data.service.setWaitingCreateFiles(this.loaded);
   }
 
   close() {
     this.ref.close();
   }
 
-  //submit(fileGroup: string) {
-  // console.log(fileGroup);
-  // const eqFilesByGroupToDB: EquipmentsFiles[] = [];
-  // this.loaded.filter(x => x.group == fileGroup).forEach(file => {
-  //   console.log(file);
-  //   console.log(this.refactorFile(file));
-  //   eqFilesByGroupToDB.push(this.refactorFile(file));
-  // });
-  // this.clearFilesOfGroup(fileGroup);
-  // console.log('submit');
-  // console.log('this.loaded before' );
-  // console.log(this.loaded);
-  // console.log('eqFilesByGroupToDB');
-  // console.log(eqFilesByGroupToDB);
-  // console.log('this.loaded after' );
-  // console.log(this.loaded);
-
-  //}
-
   clearFilesOfGroup(name: string) {
     this.loaded = this.loaded.filter(x => x.group != name);
-    this.eqService.setWaitingCreateEqFiles(this.loaded);
+    this.conf.data.service.setWaitingCreateFiles(this.loaded);
   }
 
   dragEnter(event: DragEvent, name: string) {
@@ -203,13 +199,24 @@ export class AddEquipmentFilesComponent implements OnInit {
   }
 
   refactorFile(fromFile: FileAttachment) {
-    const resultEqFile = new EquipmentsFiles();
-    resultEqFile.equ_id = 0;
-    resultEqFile.url = fromFile.url;
-    resultEqFile.rev = this.rev;
-    resultEqFile.type = fromFile.group;
-    resultEqFile.user_id = this.auth.getUser().id;
-    return resultEqFile;
+    if (this.isEqService) {
+      const resultEqFile = new EquipmentsFiles();
+      resultEqFile.equ_id = 0;
+      resultEqFile.url = fromFile.url;
+      resultEqFile.rev = this.rev;
+      resultEqFile.type_name = fromFile.group;
+      resultEqFile.user_id = this.auth.getUser().id;
+      return resultEqFile;
+    } else {
+      const resultSupFile = new SupplierFiles();
+      resultSupFile.supplier_id = 0;
+      resultSupFile.url = fromFile.url;
+      resultSupFile.rev = this.rev;
+      resultSupFile.type_name = fromFile.group;
+      resultSupFile.user_id = this.auth.getUser().id;
+      return resultSupFile;
+    }
+
   }
 
   releaseFiles(event: any) {
@@ -217,14 +224,25 @@ export class AddEquipmentFilesComponent implements OnInit {
   }
 
   commit() {
-    const eqFilesByGroupToDB: EquipmentsFiles[] = [];
-    this.loaded.forEach(file => {
-      console.log(file);
-      console.log(this.refactorFile(file));
-      eqFilesByGroupToDB.push(this.refactorFile(file));
-    });
-    this.eqService.setCreateEqFiles(eqFilesByGroupToDB);
+    if (this.isEqService) {
+      const eqFilesByGroupToDB: EquipmentsFiles[] = [];
+      this.loaded.forEach(file => {
+        console.log(file);
+        console.log(this.refactorFile(file));
+        eqFilesByGroupToDB.push(<EquipmentsFiles>this.refactorFile(file));
+        this.conf.data.service.setCreateFiles(eqFilesByGroupToDB);
+      })
+    } else {
+      const supplierFilesToDB: SupplierFiles[] = [];
+      this.loaded.forEach(file => {
+        console.log(file);
+        console.log(this.refactorFile(file));
+        supplierFilesToDB.push(<SupplierFiles>this.refactorFile(file));
+        this.conf.data.service.setCreateFiles(supplierFilesToDB);
+      })
+    }
+
     this.close();
-    this.eqService.setWaitingCreateEqFiles([]);
+    this.conf.data.service.setWaitingCreateFiles([]);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Equipment} from "../../../domain/classes/equipment";
 import {IEquipment, ISuppliersInEq} from "../../../domain/interfaces/equipments";
 import {FormBuilder, Validators} from "@angular/forms";
@@ -9,6 +9,7 @@ import {ProjectsManagerService} from "../../../domain/projects-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {EquipmentsService} from "../../../domain/equipments.service";
 import {EquipmentToDB} from "../../../domain/classes/equipment-to-db";
+import {AddEquipmentFilesComponent} from "../add-equipment-files/add-equipment-files.component";
 
 @Component({
   selector: 'app-edit-equipment',
@@ -26,19 +27,20 @@ export class EditEquipmentComponent implements OnInit {
     comment: this.dialogConfig.data.comment,
   });
 
-  equipment: IEquipment = {
-    id: 0,
-    sfi: 0,
-    name: '',
-    description: '',
-    department: '',
-    comment: '',
-    respons_name: '',
-    respons_surname: '',
-    itt: 0,
-    project_name: '',
-    status: '',
-  };
+  // equipment: IEquipment = {
+  //   id: 0,
+  //   sfi: 0,
+  //   name: '',
+  //   description: '',
+  //   department: '',
+  //   comment: '',
+  //   responsible_id: 0,
+  //   respons_name: '',
+  //   respons_surname: '',
+  //   itt: 0,
+  //   project_name: '',
+  //   status: '',
+  // };
 
   equipmentProjects: string[] = [];
   equipmentProject = '-';
@@ -48,7 +50,7 @@ export class EditEquipmentComponent implements OnInit {
 
   sfis: Isfi[] = [];
   constructor(protected dialogConfig: DynamicDialogConfig, private formBuilder: FormBuilder, public prService: ProjectsManagerService, public auth: AuthManagerService,
-              public eqService: EquipmentsService, public ref: DynamicDialogRef) {
+              public eqService: EquipmentsService, public ref: DynamicDialogRef,  private dialogService: DialogService) {
     console.log(this.dialogConfig.data.sfi);
   }
 
@@ -61,6 +63,27 @@ export class EditEquipmentComponent implements OnInit {
       this.equipmentProject = this.equipmentProjects[0];
     }
     this.equipmentDepartments = this.prService.departments.map((x: any) => x.name);
+  }
+
+  addFiles() {
+    const dialog = this.dialogService.open(AddEquipmentFilesComponent, {
+      header: 'Uploading files',
+      modal: true,
+      data: {
+        service: this.eqService,
+        //getCreateEqFilesFunction: this.eqService.getCreateEqFiles(),
+        //setCreateEqFilesFunction: this.eqService.setCreateEqFiles(),
+      }
+    })
+    dialog.onClose.subscribe(() => {
+      this.eqService.getCreateFiles().forEach(file => {
+        this.equipmentFiles.push(file);
+      })
+      this.eqService.setCreateFiles([]);
+      //this.equipmentFiles = this.eqService.getCreateEqFiles();
+      console.log('closed uploadin files');
+      console.log(this.equipmentFiles);
+    })
   }
 
   findProjectId(project_name: string) {
@@ -95,42 +118,12 @@ export class EditEquipmentComponent implements OnInit {
         alert(res);
       }
       else{
+        this.equipmentForm.reset();
         this.ref.close(res);
       }
     });
-
-    this.equipmentForm.reset();
-    // console.log(this.dialogConfig.data)
-    // const editEq = new EquipmentToDB();
-    // editEq.id = this.dialogConfig.data.id;
-    // editEq.name = this.equipmentForm.value.name;
-    // if (this.equipmentForm.value.description === null) {
-    //   editEq.description = '';
-    // }
-    // editEq.sfi = parseInt(this.equipmentForm.value.sfi);
-    // //editEq.project_id = this.equipmentForm.value.project;
-    // editEq.responsible_id = this.auth.getUser().id;
-    // //editEq.department_id = this.equipmentForm.value.department_id;
-    // editEq.comment = this.equipmentForm.value.comment;
-    //
-    //
-    // editEq.project_id = this.findProjectId(this.equipmentForm.value.project);
-    // editEq.department_id = this.findDepartmentId(this.equipmentForm.value.department);
-    // //console.log(this.equipmentForm.value.department_id);
-    //
-    // this.eqService.addEquipment(JSON.stringify(editEq)).subscribe(res => {
-    //   console.log('res');
-    //   console.log(res);
-    //   if (res.includes('error')){
-    //     alert(res);
-    //   }
-    //   else{
-    //     this.ref.close(res);
-    //   }
-    // });
-    //
-    // console.log(editEq);
   }
+
 
   deleteEquipment(eqId: number) {
     console.log('delete eq with id = ' + eqId);
@@ -138,6 +131,7 @@ export class EditEquipmentComponent implements OnInit {
       .subscribe(
         () => {
           console.log('Оборудование удалено успешно');
+          this.close();
         },
         error => {
           console.error('Ошибка при удалении оборудования');

@@ -8,6 +8,7 @@ import {CreateEquipmentComponent} from "./create-equipment/create-equipment.comp
 import {ProjectsManagerService} from "../../domain/projects-manager.service";
 import {AddSupplierComponent} from "./add-supplier/add-supplier.component";
 import {EditEquipmentComponent} from "./edit-equipment/edit-equipment.component";
+import {RightService} from "../admin/right/right.service";
 
 
 @Component({
@@ -26,7 +27,10 @@ export class EquipmentsComponent implements OnInit {
 
   equipmentsSrc: IEquipment[] = []; //массив, который пришел с сервера
   selectedEquipment: any[] = []; // equipment по котору кликнули
-  constructor( public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService) {
+
+
+  constructor( public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService,
+               public rightService: RightService) {
   }
 
   ngOnInit(): void {
@@ -43,6 +47,7 @@ export class EquipmentsComponent implements OnInit {
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
       this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
     });
+
   }
 
   getProjectName(project: any) {
@@ -78,12 +83,26 @@ export class EquipmentsComponent implements OnInit {
     return false;
   }
 
+  editEquipmentButtonIsDisabled(eq:IEquipment) { //Редактировать карточку может автор +добавить условие на user_rights.rights = "edit_equ"
+
+    return false;
+    // if (eq.responsible_id === this.auth.getUser().id) {
+    //   return false;
+    // }
+    // return true;
+  };
+
   addSupplier(eq:IEquipment) {
     //console.log('addSupplier');
     console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
       modal: true,
       data: eq.id
+    }).onClose.subscribe(()=> {  //сразу выводить на страницу
+      this.eqService.getEquipments().subscribe(equips => {
+        this.equipmentsSrc = equips;
+        this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+      });
     })
   }
 
@@ -92,6 +111,11 @@ export class EquipmentsComponent implements OnInit {
     this.dialogService.open(EditEquipmentComponent, {
       modal: true,
       data: eq
+    }).onClose.subscribe(()=> { //сразу выводить на страницу
+         this.eqService.getEquipments().subscribe(equips => {
+           this.equipmentsSrc = equips;
+           this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+        });
     })
 
   }
@@ -100,8 +124,8 @@ export class EquipmentsComponent implements OnInit {
     console.log('newEquipment')
     this.dialogService.open(CreateEquipmentComponent, {
       modal: true,
-    }).onClose.subscribe(closed => {
-      this.eqService.setWaitingCreateEqFiles([]);
+    }).onClose.subscribe(closed => { //сразу выводить на страницу
+      this.eqService.setWaitingCreateFiles([]);
       if (closed == 'success'){
         this.eqService.getEquipments().subscribe(equips => {
           this.equipmentsSrc = equips;

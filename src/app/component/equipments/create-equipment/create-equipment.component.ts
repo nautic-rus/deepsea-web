@@ -30,14 +30,14 @@ export class CreateEquipmentComponent implements OnInit {
   equipmentProject = '-';
   equipmentDepartments: string[] = [];
 
-  equipmentFiles: EquipmentsFiles[] = [];
+  equipmentFiles: EquipmentsFiles[] = [];  //отправляем в БД
 
   sfis: Isfi[] = [];
 
 
 
   constructor( public prService: ProjectsManagerService, public auth: AuthManagerService, private formBuilder: FormBuilder, public issues: IssueManagerService,
-               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService, private filesData: AddFilesDataService) {
+               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -53,7 +53,7 @@ export class CreateEquipmentComponent implements OnInit {
 
 
   close() {
-    this.eqService.setWaitingCreateEqFiles([]);
+    this.eqService.setWaitingCreateFiles([]);
     this.equipmentForm.reset();
     this.ref.close();
   }
@@ -62,12 +62,17 @@ export class CreateEquipmentComponent implements OnInit {
     const dialog = this.dialogService.open(AddEquipmentFilesComponent, {
       header: 'Uploading files',
       modal: true,
+      data: {
+        service: this.eqService,
+        //getCreateEqFilesFunction: this.eqService.getCreateEqFiles(),
+        //setCreateEqFilesFunction: this.eqService.setCreateEqFiles(),
+      }
     })
     dialog.onClose.subscribe(() => {
-      this.eqService.getCreateEqFiles().forEach(file => {
+      this.eqService.getCreateFiles().forEach(file => {
         this.equipmentFiles.push(file);
       })
-      this.eqService.setCreateEqFiles([]);
+      this.eqService.setCreateFiles([]);
       //this.equipmentFiles = this.eqService.getCreateEqFiles();
       console.log('closed uploadin files');
       console.log(this.equipmentFiles);
@@ -149,6 +154,8 @@ export class CreateEquipmentComponent implements OnInit {
     eqToDB.comment = eqFormValue.commentText;
     console.warn(this.equipmentForm.value);
     console.log(JSON.stringify(eqToDB));
+
+
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
       console.log('res');
