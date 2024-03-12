@@ -30,6 +30,7 @@ export class EditEquipmentComponent implements OnInit {
     id: 0,
     sfi: 0,
     name: '',
+    description: '',
     department: '',
     comment: '',
     respons_name: '',
@@ -77,9 +78,7 @@ export class EditEquipmentComponent implements OnInit {
     const eqToDB = new EquipmentToDB();
     eqToDB.id = eqFormValue.id;
     eqToDB.name = eqFormValue.name;
-    if (this.equipmentForm.value.description === null) {
-      eqToDB.description = '';
-    }
+    eqToDB.description = eqFormValue.description;
     eqToDB.sfi = eqFormValue.sfi;
     eqToDB.project_id = this.findProjectId(eqFormValue.project);
     eqToDB.responsible_id = this.auth.getUser().id;

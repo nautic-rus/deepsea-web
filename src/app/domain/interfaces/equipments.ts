@@ -2,6 +2,7 @@ export interface IEquipment {
   id: number;
   sfi: number;
   name: string;
+  description: string;
   department: string;
   comment: string;
   respons_name: string;

@@ -1,6 +1,7 @@
 import {ISupplier} from "../interfaces/supplier";
 
 export class SupplierToDB {
+  id: number = 0;
   approvement: number = 0;
   comment: string = '';
   description: string;

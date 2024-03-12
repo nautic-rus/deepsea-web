@@ -52,8 +52,7 @@ export class EquipmentsService {
   }
 
   deleteEquipment(id: number) :  Observable<string> {
-    // @ts-ignore
-    return this.http.delete(`${props.http} + '/equipment}/${id}`)
+    return this.http.get<string>(props.http + '/deleteEquipment', {params: {id}});
   }
 
   addEquipmentFiles(jsonValue: string) :  Observable<string> {
