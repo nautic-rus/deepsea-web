@@ -1,3 +1,6 @@
+import {ISupplier} from "./supplier";
+
+
 export interface IEquipment {
   id: number;
   sfi: number;
@@ -10,13 +13,13 @@ export interface IEquipment {
   respons_surname: string;
   itt: number;
   project_name: string;
-  suppliers?: ISuppliersInEq[]; // Опциональный массив поставщиков
+  suppliers?: ISupplier[]; // Опциональный массив поставщиков
   status: string;
 }
 
-export interface ISuppliersInEq{
-  suppliers_id: number;
-  equipm_id: number;
-  description: string;
-  status: string
-}
+// export interface ISuppliersInEq{
+//   suppliers_id: number;
+//   equipm_id: number;
+//   description: string;
+//   status: string
+// }

@@ -7,4 +7,5 @@ export class EquipmentsFiles {
   create_date: number;
   type_name: string;
   archived_date: number;
+  id: number;
 }

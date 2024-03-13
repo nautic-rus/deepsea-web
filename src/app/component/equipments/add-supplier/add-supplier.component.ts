@@ -101,7 +101,7 @@ export class AddSupplierComponent implements OnInit {
 
   createSupplier() {
     const supplierToDB = new SupplierToDB();
-    supplierToDB.equ_id = this.dialogConfig.data;  //принимаем из equipment компонент
+    supplierToDB.equip_id= this.dialogConfig.data;  //принимаем из equipment компонент
     supplierToDB.user_id = this.auth.getUser().id;
     supplierToDB.name = this.suppliersForm.value.name;
     supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;

@@ -35,22 +35,6 @@ export class EquipmentsService {
   //   return(this.createFiles);
   // }
 
-  setWaitingCreateFiles(waitingCreateFiles:any[]) {
-    this.waitingCreateFiles = waitingCreateFiles;
-  }
-
-  getWaitingCreateFiles() {
-    return(this.waitingCreateFiles);
-  }
-
-  setCreateFiles(createFiles:any[]) {
-    this.createFiles = createFiles;
-  }
-
-  getCreateFiles() {
-    return(this.createFiles);
-  }
-
   getEquipments(): Observable<IEquipment[]> {
     return this.http.get<IEquipment[]>(props.http + '/equipments');
   }
@@ -75,5 +59,31 @@ export class EquipmentsService {
   addSupplier(jsonValue: string) :  Observable<string> {
     return this.http.post<string>(props.http + '/supplier', jsonValue);
   }
+
+  getEquipmentFiles(id: number): Observable<any> {  //получаем файлы оборудования по id
+    return this.http.get<string>(props.http + '/equipFiles', {params: {id}});
+  }
+
+  deleteEquipmentFile(id: number) :  Observable<string> {
+    return this.http.get<string>(props.http + '/delEquipFile', {params: {id}});
+  }
+
+  setWaitingCreateFiles(waitingCreateFiles:any[]) {
+    this.waitingCreateFiles = waitingCreateFiles;
+  }
+
+  getWaitingCreateFiles() {
+    return(this.waitingCreateFiles);
+  }
+
+  setCreateFiles(createFiles:any[]) {
+    this.createFiles = createFiles;
+  }
+
+  getCreateFiles() {
+    return(this.createFiles);
+  }
+
+
 
 }

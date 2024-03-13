@@ -9,6 +9,7 @@ import {ProjectsManagerService} from "../../domain/projects-manager.service";
 import {AddSupplierComponent} from "./add-supplier/add-supplier.component";
 import {EditEquipmentComponent} from "./edit-equipment/edit-equipment.component";
 import {RightService} from "../admin/right/right.service";
+import {ISupplier} from "../../domain/interfaces/supplier";
 
 
 @Component({
@@ -64,6 +65,7 @@ export class EquipmentsComponent implements OnInit {
     this.equipments = this.equipments.filter(x => this.selectedProjects.includes(x.project_name));
     this.equipments = this.equipments.filter(x => this.selectedDepartments.includes(x.department));
     this.equipments.forEach((eq) => {
+      //eq.suppliers?.some
       const hasApprovedSupplier = eq.suppliers?.some((supplier) =>
         supplier.status === 'Approved');
         eq.status = hasApprovedSupplier? 'Approved' : '-';
@@ -110,13 +112,18 @@ export class EquipmentsComponent implements OnInit {
     this.dialogService.open(EditEquipmentComponent, {
       modal: true,
       data: eq
-    }).onClose.subscribe(()=> { //сразу выводить на страницу
+    }).onClose.subscribe(closed => { //сразу выводить на страницу
+      console.log('closed + editEquipment');
+      console.log(closed);
          this.eqService.getEquipments().subscribe(equips => {
            this.equipmentsSrc = equips;
            this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
         });
     })
+  }
 
+  editSupplier(eq: IEquipment, supplier: ISupplier) {
+    console.log(supplier, eq);
   }
 
   newEquipment() {
@@ -124,13 +131,29 @@ export class EquipmentsComponent implements OnInit {
     this.dialogService.open(CreateEquipmentComponent, {
       modal: true,
     }).onClose.subscribe(closed => { //сразу выводить на страницу
+      console.log('closed + newEquipment');
+      console.log(closed);
       this.eqService.setWaitingCreateFiles([]);
-      if (closed == 'success'){
+      if (closed != 'error'){
         this.eqService.getEquipments().subscribe(equips => {
+          console.log('newEq');
+          console.log(equips);
           this.equipmentsSrc = equips;
           this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
         });
+      } else {
+        console.log('newEq error');
       }
+      // if (closed == 'success'){
+      //   this.eqService.getEquipments().subscribe(equips => {
+      //     console.log('newEq');
+      //     console.log(equips);
+      //     this.equipmentsSrc = equips;
+      //     this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+      //   });
+      // } else {
+      //   console.log('newEq error');
+      // }
     });
   }
 }

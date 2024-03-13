@@ -212,6 +212,7 @@ import { AddEquipmentFilesComponent } from './component/equipments/add-equipment
 import { AddSupplierComponent } from './component/equipments/add-supplier/add-supplier.component';
 import { EditEquipmentComponent } from './component/equipments/edit-equipment/edit-equipment.component';
 import { AgreeModalComponent } from './component/equipments/agree-modal/agree-modal.component';
+import { EditSupplierComponent } from './component/equipments/edit-supplier/edit-supplier.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -366,6 +367,7 @@ Quill.register('modules/imageResize', ImageResize);
     AddSupplierComponent,
     EditEquipmentComponent,
     AgreeModalComponent,
+    EditSupplierComponent,
 
   ],
   imports: [
