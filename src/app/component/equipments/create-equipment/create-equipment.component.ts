@@ -159,6 +159,7 @@ export class CreateEquipmentComponent implements OnInit {
 
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
+      console.log(eqToDB);
       console.log('res');
       console.log(res);
       //this.eqService.setEqID(res.)
@@ -166,21 +167,33 @@ export class CreateEquipmentComponent implements OnInit {
         alert(res);
       }
       else{
+        this.equipmentFiles.forEach(file => { //добавляем файлы в БД
+          file.equ_id = parseInt(res);
+          console.log(JSON.stringify(file));
+          this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
+            if (res.includes('error')){
+              alert(res);
+            }
+            else{
+              this.ref.close(res);
+            }
+          })
+        })
         this.ref.close('success');
       }
     });
 
-    this.equipmentFiles.forEach(file => { //добавляем файлы в БД
-      console.log(JSON.stringify(file));
-      this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
-        if (res.includes('error')){
-          alert(res);
-        }
-        else{
-          this.ref.close(res);
-        }
-      })
-    })
+    // this.equipmentFiles.forEach(file => { //добавляем файлы в БД
+    //   console.log(JSON.stringify(file));
+    //   this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
+    //     if (res.includes('error')){
+    //       alert(res);
+    //     }
+    //     else{
+    //       this.ref.close(res);
+    //     }
+    //   })
+    // })
 
 
     this.equipmentForm.reset();

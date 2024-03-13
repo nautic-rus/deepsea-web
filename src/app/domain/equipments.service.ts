@@ -15,25 +15,7 @@ export class EquipmentsService {
 
   waitingCreateFiles: any = [];
   createFiles: EquipmentsFiles[] = [];
-  constructor(private http: HttpClient) {
-  }
-
-
-  // setWaitingCreateSupplierFiles(waitingCreateEqFiles:any[]) {
-  //   this.waitingCreateFiles = waitingCreateEqFiles;
-  // }
-  //
-  // getWaitingCreateSupplierFiles() {
-  //   return(this.waitingCreateFiles);
-  // }
-  //
-  // setCreateSupplierFiles(createEqFiles:any[]) {
-  //   this.createFiles = createEqFiles;
-  // }
-  //
-  // getCreateSupplierFiles() {
-  //   return(this.createFiles);
-  // }
+  constructor(private http: HttpClient) {}
 
   getEquipments(): Observable<IEquipment[]> {
     return this.http.get<IEquipment[]>(props.http + '/equipments');
@@ -83,7 +65,4 @@ export class EquipmentsService {
   getCreateFiles() {
     return(this.createFiles);
   }
-
-
-
 }

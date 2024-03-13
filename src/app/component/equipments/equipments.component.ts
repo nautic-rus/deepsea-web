@@ -10,6 +10,7 @@ import {AddSupplierComponent} from "./add-supplier/add-supplier.component";
 import {EditEquipmentComponent} from "./edit-equipment/edit-equipment.component";
 import {RightService} from "../admin/right/right.service";
 import {ISupplier} from "../../domain/interfaces/supplier";
+import {EditSupplierComponent} from "./edit-supplier/edit-supplier.component";
 
 
 @Component({
@@ -124,6 +125,13 @@ export class EquipmentsComponent implements OnInit {
 
   editSupplier(eq: IEquipment, supplier: ISupplier) {
     console.log(supplier, eq);
+    this.dialogService.open(EditSupplierComponent, {
+      modal: true,
+      data: {
+        eq: eq,
+        supplier: supplier
+      }
+    })
   }
 
   newEquipment() {

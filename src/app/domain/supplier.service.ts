@@ -32,6 +32,6 @@ export class SupplierService {
   }
 
   addSupplierFiles(jsonValue: string) :  Observable<string> {
-    return this.http.post<string>(props.http + '/addEquipFile', jsonValue);
+    return this.http.post<string>(props.http + '/addSupFile', jsonValue);
   }
 }

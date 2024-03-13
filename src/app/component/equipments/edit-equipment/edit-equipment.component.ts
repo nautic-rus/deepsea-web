@@ -20,7 +20,7 @@ import {Observable} from "rxjs";
 export class EditEquipmentComponent implements OnInit {
   equipmentForm = this.formBuilder.group({
     id: this.dialogConfig.data.id,
-    sfi: this.dialogConfig.data.sfi.toString(),
+    sfi: this.dialogConfig.data.sfi,
     project: this.dialogConfig.data.project_name,
     department: this.dialogConfig.data.department,
     name: this.dialogConfig.data.name,
@@ -81,6 +81,7 @@ export class EditEquipmentComponent implements OnInit {
     dialog.onClose.subscribe(() => {
       this.eqService.getCreateFiles().forEach(file => {
         this.equipmentFiles.push(file);
+        this.equipmentFilesSrc.push(file);
       })
       this.eqService.setCreateFiles([]);
       //this.equipmentFiles = this.eqService.getCreateEqFiles();
@@ -178,6 +179,7 @@ export class EditEquipmentComponent implements OnInit {
     console.log(JSON.stringify(eqToDB));
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {  //добавить изменения оборудования в бд
+      console.log(eqToDB);
       console.log('res');
       console.log(res);
       //this.eqService.setEqID(res.)

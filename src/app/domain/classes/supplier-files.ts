@@ -7,4 +7,5 @@ export class SupplierFiles {
   create_date: number;
   type_name: string;
   archived_date: number;
+  id: number;
 }

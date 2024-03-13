@@ -109,24 +109,28 @@ export class AddSupplierComponent implements OnInit {
     console.log('createSupplier()');
     console.log(JSON.stringify(supplierToDB));
 
-    this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {
+    this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {  //Добавляем постащика в БД, в результате получаем его id
       console.log('res');
       console.log(res);
       if (res.includes('error')){
         alert(res);
       }
       else{
+        this.supplierFiles.forEach(file => { //добавляем файлы в БД
+          file.supplier_id = parseInt(res);  //кладем id добавленного постащика в supplier_id файла
+          console.log('createSupplier() + file');
+          console.log(file);
+          this.supplierService.addSupplierFiles(JSON.stringify(file));
+        })
+        this.supplierService.setCreateFiles([]);
+        //this.equipmentFiles = this.eqService.getCreateEqFiles();
+        console.log('closed uploading files: add-supplier');
+        console.log(this.supplierFiles);
         this.ref.close(res);
       }
     });
 
-    this.supplierFiles.forEach(file => { //добавляем файлы в БД
-      this.supplierService.addSupplierFiles(JSON.stringify(file));
-    })
-    this.supplierService.setCreateFiles([]);
-    //this.equipmentFiles = this.eqService.getCreateEqFiles();
-    console.log('closed uploading files: add-supplier');
-    console.log(this.supplierFiles);
+
   }
 
   close() {
