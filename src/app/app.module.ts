@@ -204,6 +204,15 @@ import { MaterialComplectManagerComponent } from './component/tools/material-com
 import { AddMaterialComplectComponent } from './component/tools/material-complect-manager/add-material-complect/add-material-complect.component';
 import { ProjectProgressChartComponent } from './component/charts/project-progress-chart/project-progress-chart.component';
 import { AddHullMaterialToEspComponent } from './component/documents/hull-esp/add-hull-material-to-esp/add-hull-material-to-esp.component';
+import { EquipmentsComponent } from './component/equipments/equipments.component';
+import { CreateEquipmentComponent } from './component/equipments/create-equipment/create-equipment.component';
+import {TreeSelectModule} from "primeng/treeselect";
+import {ScrollPanelModule} from "primeng/scrollpanel";
+import { AddEquipmentFilesComponent } from './component/equipments/add-equipment-files/add-equipment-files.component';
+import { AddSupplierComponent } from './component/equipments/add-supplier/add-supplier.component';
+import { EditEquipmentComponent } from './component/equipments/edit-equipment/edit-equipment.component';
+import { AgreeModalComponent } from './component/equipments/agree-modal/agree-modal.component';
+import { EditSupplierComponent } from './component/equipments/edit-supplier/edit-supplier.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -351,7 +360,15 @@ Quill.register('modules/imageResize', ImageResize);
     MaterialComplectManagerComponent,
     AddMaterialComplectComponent,
     ProjectProgressChartComponent,
-    AddHullMaterialToEspComponent
+    AddHullMaterialToEspComponent,
+    EquipmentsComponent,
+    CreateEquipmentComponent,
+    AddEquipmentFilesComponent,
+    AddSupplierComponent,
+    EditEquipmentComponent,
+    AgreeModalComponent,
+    EditSupplierComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -410,7 +427,9 @@ Quill.register('modules/imageResize', ImageResize);
     DragDropModule,
     SkeletonModule,
     InputMaskModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TreeSelectModule,
+    ScrollPanelModule
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

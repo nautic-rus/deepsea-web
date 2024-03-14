@@ -31,6 +31,7 @@ export class QnaComponent implements OnInit {
   projectDefs: any[] = [];
   department = '';
   questionsSrc: Issue[] = [];
+  questionsStatus: Issue[] = [];
   questions: Issue[] = [];
   showCompleted: boolean = false;
   showNew: boolean = false;
@@ -190,6 +191,7 @@ export class QnaComponent implements OnInit {
   }
   applyFilters(){
     this.questions = this.questionsSrc.filter(x => this.projects.map(x => x.label).includes(this.getProject(x.project)) || x.project == '' || x.project == '-');
+    this.questionsStatus = [...this.questionsSrc];
     this.questions = this.questions.filter(x => x.project == this.project || this.project == null || this.project == '' || this.project == '-');
     this.questions = this.questions.filter(x => x.department == this.department || this.department == null || this.department == '' || this.department == '-');
     //this.questions = this.questions.filter(x => !x.closing_status.includes(x.status) || this.showCompleted);
@@ -285,7 +287,8 @@ export class QnaComponent implements OnInit {
   }
 
   statusesCount(status: string) {
-    return this.questionsSrc.filter(x => x.status == status).length;
+    return this.questionsStatus.filter(x => x.status == status).length;
+    //return this.questionsSrc.filter(x => x.status == status).length;
   }
   resetStatusFilters(){
     this.showNew = false;

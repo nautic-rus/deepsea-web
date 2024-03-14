@@ -1,5 +1,4 @@
 import {Material} from "./material";
-
 export class Equipment {
  id: string = '';
  name: string = '';

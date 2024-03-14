@@ -80,7 +80,7 @@
   <div></div>
 </div>
 
-<div class="left-panel left-panel-collapse ovf-auto">
+<div class="left-panel left-panel-collapse ovf-auto">  <!-- блок с меню левое-->
   <div [class.position-relative]="menu.id == 'home'" *ngFor="let menu of menus; let i = index">
 <!--    <div class="cursor-pointer" *ngIf="menu.id == 'home'">-->
 <!--      <div *ngIf="issuesImportantCount != 0" class="high cxy" pTooltip="High priority">{{issuesImportantCount}}</div>-->
@@ -90,7 +90,7 @@
         <div class="cxy">
           <img [src]="menu.icon" [height]="menu.height">
         </div>
-        <div class="cy">{{translate(menu.label)}}</div>
+        <div class="cy">{{translate(menu.label)}}</div>   <!-- добавить лейбл меню-->
       </div>
     </div>
     <div *ngIf="menu.child.length != 0" class="menu menu-row cy" [collapse]="content" (click)="addCollapse(menu.label + '-' + i)">
@@ -104,6 +104,7 @@
         </div>
       </div>
     </div>
+<!--    <div *ngFor="let menu of menus; let i = index">{{translate(menu.label)}}</div>-->
     <div collapseContent #content="collapseContent" [class.child-menu-collapsed]="collapsed" [class.child-menu]="!collapsed">
       <div *ngFor="let childMenu of menu.child" class="menu menu-row-child cy" [class.child-menu-collapsed-margin-left]="collapsed" [queryParams]="childMenu.params" [routerLink]="childMenu.url" routerLinkActive="selected-menu" [routerLinkActiveOptions]= "{exact: true}" queryParamsHandling="merge">
         <div (auxclick)="onMiddleClick($event, childMenu.url)" class="df menu-grid-child">

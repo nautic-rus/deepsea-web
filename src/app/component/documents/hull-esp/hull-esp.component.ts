@@ -216,6 +216,7 @@ export class HullEspComponent implements OnInit {
         if (findProject != null) {
           this.project = findProject.foran;
         }
+        console.log(this.project);
         if (this.issue.id == 0){
           this.fillRevisions();
           setTimeout(() => {

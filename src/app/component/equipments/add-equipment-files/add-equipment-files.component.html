@@ -1,0 +1,53 @@
+<div class="">Upload files</div>
+<p-dropdown class="select" [options]="revs" appendTo = "body" styleClass="width-220 font-14" [(ngModel)]="rev"></p-dropdown>
+<div class="mb-15 width-400 position-relative" *ngFor="let fileGroup of fileGroups">
+
+  <p-fieldset legend="{{fileGroup}}">
+    <div class="position-relative">
+      <div class="df add-clear-buttons">
+        <div class="button-details df cursor-pointer mb-15" (click)="clearFilesOfGroup(fileGroup)">
+          <div class="cxy">
+            <img src="../../../../assets/icons/trash-3.svg" height="16">
+          </div>
+          <div class="cy ml-1">{{'Очистить'}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="upload-download cx cy">
+      <div [class.file-drag]="dragFileGroup == fileGroup" class="cxy w-100 file-drag-attach" (dragenter)="dragEnter($event, fileGroup)" (dragleave)="dragLeave($event, fileGroup)" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event, fileGroup); dragFileGroup = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+        <img class="mr-1 image no-actions" src="../../../../assets/icons/upload.svg" height="20">
+        <span class="normal-text no-actions">{{'Перетащите файлы или нажмите для загрузки'}}</span>
+      </div>
+    </div>
+    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files, fileGroup)" (click)="releaseFiles($event)" multiple>
+    <div class="attachment-files">
+      <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup)">
+        <div class="df mb-6 cursor-pointer">
+          <div class="df w-90 space-between">
+            <div class="df">
+              <div class="cxy">
+                <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="16"/>
+              </div>
+              <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
+            </div>
+            <div (click)="deleteFile(file)">
+              <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="df footer">
+<!--      <div class="mr-1 cx">-->
+<!--        <div tabindex="10" (click)="submit(fileGroup)" [class.disabled-button]="loaded.length == 0" class="button-ok cxy">{{'Отправить'}}</div>-->
+<!--      </div>-->
+<!--      <div tabindex="11" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>-->
+    </div>
+  </p-fieldset>
+</div>
+
+<div class="mr-1 cx">
+  <div tabindex="10" (click)="commit()" [class.disabled-button]="loaded.length == 0" class="button-ok cxy">{{'OK'}}</div>
+</div>

@@ -147,7 +147,7 @@ export class CreateQuestionComponent implements OnInit {
     this.issues.getIssueProjects().then(projects => {
       this.projectDefs = projects;
       this.issues.getIssuesAllShort().subscribe(res => {
-        this.issuesSrc = res.filter(x => x.removed == 0).filter(x => this.issueTypes.includes(x.issue_type)).filter(x => this.projects.includes(this.getProject(x.project)));
+        this.issuesSrc = res.filter(x => x.removed == 0).filter(x => this.issueTypes.includes(x.issue_type)).filter(x => this.projects.includes(x.project));
         this.issueSelected();
       });
     });

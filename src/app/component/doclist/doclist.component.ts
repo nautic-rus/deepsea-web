@@ -62,6 +62,8 @@ export class DoclistComponent implements OnInit {
     this.loading = true;
     this.issueManager.getIssues('op').then(res => {
       this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
+      this.issuesSrc = this.issuesSrc.filter(x => this.auth.getUser().visible_projects.includes(x.project));
+
       this.issues = this.issuesSrc;
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
@@ -72,12 +74,19 @@ export class DoclistComponent implements OnInit {
       this.projects = _.sortBy(_.uniq(this.issues.map(x => x.project)), x => x).map(x => new LV(x));
       this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.label));
 
+
       this.selectedProjects = localStorage.getItem('selectedProjects') != null ? JSON.parse(localStorage.getItem('selectedProjects')!) : this.selectedProjects;
       this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
 
       if (this.selectedProjects.length > this.projects.length){
         this.selectedProjects = this.projects.map(x => x.value);
-        localStorage.setItem('selectedProjects', '');
+        localStorage.setItem('selectedProjects', JSON.stringify(this.projects.map(x => x.value)));
+      }
+      if (this.selectedProjects.length == 0){
+        localStorage.setItem('selectedProjects', JSON.stringify(this.projects.map(x => x.value)));
+      }
+      if (this.selectedProjects.find(x => !this.auth.getUser().visible_projects.includes(x)) != null){
+        localStorage.setItem('selectedProjects', JSON.stringify(this.projects.map(x => x.value)));
       }
 
       this.departments = _.sortBy(_.uniq(this.issues.map(x => x.department)), x => x).map(x => new LV(x));
