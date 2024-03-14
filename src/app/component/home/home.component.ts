@@ -289,7 +289,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         header: 'Last update',
         headerLocale: 'Last update',
         sort: true,
-        filter: true,
+        filter: false,
         skip: false,
         filters: this.getFilters(this.issues, 'last_update'),
         defaultValue: '',
@@ -337,7 +337,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         header: 'Stage Due Date',
         headerLocale: 'Stage Due Date',
         sort: true,
-        filter: true,
+        filter: false,
         skip: false,
         filters: this.getFilters(this.issues, 'contract_due_date'),
         defaultValue: '',
@@ -409,6 +409,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         issue.started_date = new Date(issue.started_date);
         issue.start_date = new Date(issue.start_date);
         issue.due_date = new Date(issue.due_date);
+        issue.last_update = new Date(issue.last_update);
+        issue.contract_due_date = new Date(issue.contract_due_date);
         issue.related_issues = [];
         let related: number[] = [];
         issue.combined_issues.forEach(y => {

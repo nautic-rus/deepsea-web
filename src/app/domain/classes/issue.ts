@@ -29,7 +29,7 @@ export class Issue {
   related_issues: number[] = [];
   action: string = '';
   actions: IssueAction[] = [];
-  last_update: number = 0;
+  last_update: any = 0;
   closing_status: string = '';
   parent_id: number = 0;
   delivered_date: any = 0;
@@ -42,7 +42,7 @@ export class Issue {
   cloud_files: FileAttachment[] = [];
   archive_revision_files: FileAttachment[] = [];
   labor: number = 0;
-  contract_due_date: number = 0;
+  contract_due_date: any = 0;
   checks: IssueCheck[] = [];
   ready: string = '000';
   readyM: boolean = false;
