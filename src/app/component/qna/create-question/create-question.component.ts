@@ -427,7 +427,7 @@ export class CreateQuestionComponent implements OnInit {
       default: return input;
     }
   }
-  trimName(name: string, length: number = 85) {
+  trimName(name: string, length: number = 75) {
     if (name == null){
       return '';
     }
