@@ -755,11 +755,18 @@
     </div>
   </div>
   <div *ngIf="taskType == 'CORRECTION'">
-    <div class="df space-between">
-      <div>
-        <div class="big-text-create mb-1 mt-1">{{t.tr('Номер документа *')}}</div>
+    <div class="df">
+      <div class="mr-1">
+        <div class="big-text-create mb-1 mt-1">{{t.tr('Номер документа*')}}</div>
         <input class="width-220" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskDocNumber">
       </div>
+      <div>
+        <div class="big-text-create mb-1 mt-1">{{t.tr('Название документа*')}}</div>
+        <input type="text" class="width-457" pInputText [(ngModel)]="taskSummary">
+      </div>
+    </div>
+
+    <div class="df space-between">
       <div>
         <div class="big-text-create mb-1 mt-1">{{t.tr('Назначить ответственного *')}}</div>
         <p-dropdown [options]="users" [(ngModel)]="responsibleUser" [filter]="true" [filterBy]="t.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="t.language == 'ru' ? 'userName' : 'userNameEn'"
@@ -777,6 +784,10 @@
         <div class="big-text-create mb-1 mt-1">{{t.tr('Отдел *')}}</div>
         <p-dropdown class="select" styleClass="width-220" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" [(ngModel)]="taskDepartment" [options]="taskDepartments"></p-dropdown>
       </div>
+      <div>
+        <div class="big-text-create mb-1 mt-1">{{t.tr('Причина изменения')}}</div>
+        <p-dropdown appendTo = "body" class="select" styleClass="width-220" [(ngModel)]="reasonOfModification" [options]="reasonsOfChange" optionLabel="label" optionValue="value"></p-dropdown>
+      </div>
     </div>
 <!--      <div style="width: 450px">-->
 <!--        <div class="big-text-create mb-1 mt-1">{{lang.tr('Название документа')}}</div>-->
@@ -784,21 +795,19 @@
 <!--      </div>-->
 
     <div class="df space-between">
-      <div>
-        <div class="big-text-create mb-1 mt-1">{{t.tr('Причина изменения')}}</div>
-        <p-dropdown class="select" styleClass="width-340" [(ngModel)]="reasonOfModification" [options]="reasonsOfChange" optionLabel="label" optionValue="value"></p-dropdown>
-      </div>
+
       <div>
         <div class="big-text-create mb-1 mt-1">{{t.tr('Изменение существующего')}}</div>
-        <p-dropdown class="select" styleClass="width-340" [(ngModel)]="modificationOfExisting" [options]="yesNo" optionLabel="label" optionValue="value"></p-dropdown>
+        <p-dropdown class="select" styleClass="width-220" [(ngModel)]="modificationOfExisting" [options]="yesNo" optionLabel="label" optionValue="value"></p-dropdown>
       </div>
-    </div>
-    <div class="df space-between">
-      <div class="w-100">
+      <div class="">
         <div class="big-text-create mb-1 mt-1">{{t.tr('Описание изменения *')}}</div>
-        <input class="w-100" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="modificationDescription">
+        <input class="width-457" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="modificationDescription">
       </div>
     </div>
+
+
+
 
     <div class="big-text-create mb-1 mt-1">{{t.tr('Описание задачи')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">
