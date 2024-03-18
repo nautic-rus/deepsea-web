@@ -46,7 +46,8 @@ export class LanguageService {
           case 'Отправлен заказчику': return 'Send To ShipYard';
           case 'Поставлен': return 'Delivered';
           case 'СЕКЦИИ': return 'SECTIONS';
-          case 'Описание задачи': return 'Task Description';
+          case 'Описание задачи': return 'Task description';
+          case 'Описание задачи*': return 'Task description*';
           case 'Вложения': return 'File Attachments';
           case 'Сведения': return 'Details';
           case 'Статус': return 'Status';
@@ -83,13 +84,17 @@ export class LanguageService {
           case '(Всего:': return '(Total:';
           case 'Создать задачу': return 'Create task';
           case 'Номер документа': return 'Document number';
+          case 'Номер документа*': return 'Document number*';
           case 'Название документа': return 'Document name';
+          case 'Название документа*': return 'Document name*';
           case 'Назначить ответственного': return 'Assign responsible';
+          case 'Назначить ответственного*': return 'Assign responsible*';
           case 'Назначить': return 'Assign';
           case 'Вложение': return 'File attachments';
           case 'Создать': return 'Create';
           case 'Отмена': return 'Cancel';
           case 'Название задачи': return 'Task name';
+          case 'Название задачи*': return 'Task name*';
           case 'Срок завершения': return 'Date due';
           case 'МОЯ СТРАНИЦА': return 'HOME';
           case 'МАТЕРИАЛЫ': return 'MATERIALS';
