@@ -40,6 +40,8 @@ export class CreateTaskComponent implements OnInit {
   taskDepartment = '';
   for_revision = '';
   users: User[] = [];
+  onlyManagers: User[] = [];
+  hideUsers = true;
   itUsers: User[] = [];
   startDate: Date = new Date();
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
@@ -156,6 +158,12 @@ export class CreateTaskComponent implements OnInit {
     });
     //this.users = this.auth.users;
     this.users = this.getUsers();
+    if (this.auth.getUser().groups.includes('Chief of Department')){
+      this.onlyManagers = this.users.filter(x => x.groups.includes('Managers'));
+    }
+    else{
+      this.onlyManagers = this.users.filter(x => x.groups.includes('Chief of Department'));
+    }
     this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueTypes().then(types => {
       types.filter(x => this.action == '' ? x.visibility_main_form == 1 : x.visibility_subtask == 1).forEach(type => {
