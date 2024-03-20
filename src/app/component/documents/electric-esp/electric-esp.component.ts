@@ -74,6 +74,8 @@ export class ElectricEspComponent implements OnInit {
   kindEsp = '';
   nestContent: any[] = [];
   nestContentRead = false;
+  foranProject: string = '';
+  revUser: string = '';
   quillModules =
     {
       imageResize: {},
@@ -162,6 +164,7 @@ export class ElectricEspComponent implements OnInit {
   pipesSrc: any[] = [];
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
+  eleGroups: any[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -258,22 +261,57 @@ export class ElectricEspComponent implements OnInit {
       }
     }
   }
-  getDateModify(dateLong: number){
-    let date = new Date(dateLong);
-    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
-  }
-  fillAccommodations(){
-    this.s.getAccommodations(this.docNumber).then(res => {
+  fillEle(){
+    this.s.getEleEsp(this.project, 'ele', this.docNumber, '').then(res => {
       console.log(res);
-      if (res.length > 0){
-        this.accommodations = res;
-        this.accommodationsSrc = [...this.accommodations];
+      if (res != null){
+        this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
+        this.revEspNoDate = res.rev;
+        this.kindEsp = res.kind;
+        this.foranProject = res.foranProject;
+        this.revUser = this.auth.getUserName(res.user);
+      }
+      if (res != null && res.elements.length > 0){
+        let eles = res.elements;
+        let groupedEles: any[] = [];
+        _.forEach(_.groupBy(eles, x => x.userId), gr => {
+          let iter = 0;
+          let grEles: any[] = [];
+          gr.forEach(ele => {
+            grEles.push({
+              pos: iter++,
+              kind: ele.typeName,
+              materialName: ele.material.name,
+              units: ele.units,
+              count: ele.weight,
+              code: ele.material.code
+            });
+          });
+          groupedEles.push({
+            pos: this.rlz(gr[0].userId),
+            eles: grEles,
+          });
+        });
+        this.eleGroups = groupedEles;
       }
       else{
         this.noResult = true;
       }
     });
   }
+
+  rlz(input: any){
+    let res = input.toString();
+    while (res.length > 0 && res[0] == '0'){
+      res = res.substring(1);
+    }
+    return res;
+  }
+  getDateModify(dateLong: number){
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
   removeLeftZeros(input: string){
     let res = input;
     while (res.length > 0 && res[0] == '0'){
@@ -425,7 +463,7 @@ export class ElectricEspComponent implements OnInit {
       });
       this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
 
-      this.fillAccommodations();
+      this.fillEle();
     });
   }
   editorClicked(event: any) {

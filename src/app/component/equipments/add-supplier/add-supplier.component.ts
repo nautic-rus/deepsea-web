@@ -120,7 +120,7 @@ export class AddSupplierComponent implements OnInit {
           file.supplier_id = parseInt(res);  //кладем id добавленного постащика в supplier_id файла
           console.log('createSupplier() + file');
           console.log(file);
-          this.supplierService.addSupplierFiles(JSON.stringify(file));
+          this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {});
         })
         this.supplierService.setCreateFiles([]);
         //this.equipmentFiles = this.eqService.getCreateEqFiles();

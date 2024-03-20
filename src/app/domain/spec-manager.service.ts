@@ -182,4 +182,7 @@ export class SpecManagerService {
   deleteIssueMaterial(pos: string, docNumber: string, department: string){
     return this.http.get<any>(props.httpSpec + '/deleteIssueMaterial', {params: {pos, docNumber, department}});
   }
+  getEleEsp(foranProject: string, kind: string, docNumber: string, rev: string) {
+    return this.http.get<any>(props.httpSpec + '/eleEsp', {params: {foranProject, kind, docNumber, rev}}).toPromise();
+  }
 }

@@ -277,7 +277,10 @@ export class SendToApprovalComponent implements OnInit {
     console.log(this.selectedUsers);
     this.selectedUsers.forEach(user => {
       const issue = new Issue();
-      issue.name = 'Согласование ' + this.issue.doc_number;
+      issue.name = this.issue.doc_number != '' ? (this.issue.doc_number) : (this.issue.doc_number + ' ' + this.issue.name);
+      if (this.issue.revision != ''){
+        issue.name = issue.name + ' rev' + this.issue.revision;
+      }
       issue.details = this.taskDetails;
       issue.issue_type = 'APPROVAL';
       issue.started_by = this.auth.getUser().login;
