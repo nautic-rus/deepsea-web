@@ -40,6 +40,8 @@ export class CreateTaskComponent implements OnInit {
   taskDepartment = '';
   for_revision = '';
   users: User[] = [];
+  onlyManagers: User[] = [];
+  hideUsers = true;
   itUsers: User[] = [];
   startDate: Date = new Date();
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
@@ -156,6 +158,12 @@ export class CreateTaskComponent implements OnInit {
     });
     //this.users = this.auth.users;
     this.users = this.getUsers();
+    if (this.auth.getUser().groups.includes('Chief of Department')){
+      this.onlyManagers = this.users.filter(x => x.groups.includes('Managers'));
+    }
+    else{
+      this.onlyManagers = this.users.filter(x => x.groups.includes('Chief of Department'));
+    }
     this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueTypes().then(types => {
       types.filter(x => this.action == '' ? x.visibility_main_form == 1 : x.visibility_subtask == 1).forEach(type => {
@@ -475,14 +483,21 @@ export class CreateTaskComponent implements OnInit {
   }
 
   isCreateTaskDisabled() {
+    let desc = this.taskDetails == null ? '' : this.taskDetails;
+    console.log(desc);
     let taskExists = this.checkIssues.find(x => x.docNumber == this.taskDocNumber && x.issueType == this.taskType) != null;
     switch (this.taskType) {
-      case 'IT': return this.taskSummary.trim() == '' || this.taskDetails != null && this.taskDetails.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
-      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
-      case 'ED': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
-      case 'PSD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
+      case 'IT': return this.taskSummary.trim() == '' || desc.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
+      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
+      case 'PDSP': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
+      case 'ED': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
+      case 'PSD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
+      case 'ITT': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
       case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || taskExists;
-      case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '' || this.taskDetails != null && this.taskDetails.trim() == '';
+      case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '' || desc.trim() == '';
+      case 'DEVELOPMENT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
+      case 'NON-PROJECT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
+      case 'APPROVAL': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
       case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '';
       default: return false;
     }

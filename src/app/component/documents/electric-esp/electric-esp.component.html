@@ -3,19 +3,9 @@
     <div class="card-head df">
       <div class="mr-2">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
-      <div class="mr-2">rev{{issue.revision}}</div>
-<!--      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>-->
-
-<!--      <div class="p-ml-auto df mr-10">-->
-<!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
-<!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
-<!--          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">-->
-<!--        </div>-->
-<!--        <div (click)="selectedView = 'list'" class="cxy cursor-pointer">-->
-<!--          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">-->
-<!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
-<!--        </div>-->
-<!--      </div>-->
+      <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
+      <div class="mr-2" *ngIf="revEsp == ''">{{'rev' + issue.revision}}</div>
+      <div class="mr-2">{{revUser}}</div>
       <div class="mr-10" *ngIf="auth.getUser().department == 'Electric'" (click)="clickOnTrays()">
         <div class="materials-button blue-button cxy">
           <div class="cxy">{{t.tr('Trays')}}</div>
@@ -35,21 +25,50 @@
         <span class="p-ml-auto p-input-icon-left">
         <i class="pi pi-search"></i>
          <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
-
-          <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />-->
       </span>
       </div>
 
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20">
-        <div class="loading-text"></div>
-        <div class="cxy loading">
-          <div class="cxy flex-column">
-            <div class="cx loading-text">For this kind of drawings there are no specification provided.</div>
+        <div *ngIf="noResult && eleGroups.length == 0">
+          <div class="loading-text">
+            No result for drawing {{docNumber}} of project {{project}}.
+          </div>
+          <div>
+            1. You need to add document number {{docNumber}} to the system description using FORAN app in {{project}} project.
+          </div>
+          <div>
+            2. You need to create specification using pink button at the top panel of this page.
+          </div>
+        </div>
+        <div *ngIf="eleGroups.length == 0 && !noResult">
+          <div class="cxy loading">
+            <div class="cxy card-height">
+              <img src="assets/whale.gif" height="120">
+              <div class="cx loading-text">PLEASE WAIT...</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="tile">
+            <div *ngFor="let ele of eleGroups; let i = index" class="card-tile">
+              <div class="card-spool">
+                {{ele.pos}}
+                <div class="df" *ngFor="let e of ele.eles">
+                  <div class="mx-10">{{e.pos}}</div>
+                  <div class="mx-10">{{e.kind}}</div>
+                  <div class="mx-10">{{e.materialName}}</div>
+                  <div class="mx-10">{{e.units}}</div>
+                  <div class="mx-10">{{e.count}}</div>
+                  <div class="mx-10">{{e.code}}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
 
 
 

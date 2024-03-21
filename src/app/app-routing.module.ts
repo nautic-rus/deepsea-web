@@ -109,7 +109,6 @@ const routes: Routes = [
   { path: 'work-hours', component: PlanComponent, canActivate: [AuthGuard], data: {animation: 'PlanComponent'} },
   { path: 'trays', component: TraysComponent, canActivate: [AuthGuard], data: {animation: 'TraysComponent'} },
   { path: 'cables', component: CablesComponent, canActivate: [AuthGuard], data: {animation: 'CablesComponent'} },
-  { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
   { path: 'doclist', component: DoclistComponent, canActivate: [AuthGuard], data: {animation: 'DoclistComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
   { path: 'master', component: MasterComponent, data: {animation: 'MasterComponent'}, canActivate: [AuthGuard]  },
