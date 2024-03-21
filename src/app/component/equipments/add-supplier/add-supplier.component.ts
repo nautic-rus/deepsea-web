@@ -10,6 +10,7 @@ import {SupplierService} from "../../../domain/supplier.service";
 import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
 import {SupplierFiles} from "../../../domain/classes/supplier-files";
 import {LanguageService} from "../../../domain/language.service";
+import {SupplierHistory} from "../../../domain/classes/supplier-history";
 
 @Component({
   selector: 'app-add-supplier',
@@ -132,6 +133,11 @@ export class AddSupplierComponent implements OnInit {
         console.log(this.supplierFiles);
         this.ref.close(res);
       }
+
+      const history = new SupplierHistory(this.auth.getUser().id, 'created', '', '', parseInt(res))  //добавляем в supp_history Информацию о том, что поставщик был добавлен
+      this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
+      })
+
     });
 
 

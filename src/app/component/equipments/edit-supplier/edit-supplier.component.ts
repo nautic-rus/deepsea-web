@@ -37,7 +37,7 @@ export class EditSupplierComponent implements OnInit {
     status: this.sup_data.status,
   });
 
-  historyArray: any[];
+  historyArray: any[] = [];
 
   supplier_id: number;
   sfi: number;
@@ -49,9 +49,12 @@ export class EditSupplierComponent implements OnInit {
   supplierFilesSrc: SupplierFiles[] = []; //файлы, с сервера которые (они отображаются на странице. все - если нажата кнопка showMore (showMoreFilesButtonIsDisabled = true), 5шт если не нажата )
   supplierFiles: SupplierFiles[] = [];  //файлы, которые я добавляю в момент редактирования
 
+
   miscIssues: Issue[] = [];
 
   showMoreFilesButtonIsDisabled: boolean = false;
+
+  edit: string = '';
 
 
 
@@ -63,20 +66,31 @@ export class EditSupplierComponent implements OnInit {
     this.supplier_id = this.sup_data.id;
     this.sfi = this.eq_data.sfi;
     this.sfi_name = this.eq_data.name;
-     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-       this.supplierFilesSrc = res.slice(0,5);
-       this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
-       // console.log(this.supplierFilesSrc);
-     })
+    this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+      this.supplierFilesSrc = res.slice(0,5);
+      this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
+      // console.log(this.supplierFilesSrc);
+    })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
-      this.relatedTasks = res;
+       this.relatedTasks = res;
     })
 
      this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
       this.historyArray = res;
-      console.log(res)
+      // console.log(res)
     })
 
+  }
+
+  showEditBlock(blockName: string) {  //отображаем блок редактирования для blockName (если '', то все скрыты)
+    this.edit = blockName;
+    this.supplierForm.patchValue({ name: this.prev_sup_data.name,  //если ввести и отменить, чтоб отображалось то, что должно быть (сохранено)
+      description: this.prev_sup_data.description,
+      comment: this.prev_sup_data.comment,
+      status: this.prev_sup_data.status,
+      manufacturer: this.prev_sup_data.manufacturer
+    });
+    //this.supplierForm.patchValue({ description: this.prev_sup_data.description});
   }
 
   setStatusId(status: string): number {  //вообще надо из таблицы supplier_status, но пока так
@@ -98,6 +112,17 @@ export class EditSupplierComponent implements OnInit {
     }
   }
 
+  refactorHistoryTitle(title: string): string {
+    switch (title) {
+      case 'changed manufacturer': return 'изменил(а) производителя'
+      case 'changed comment': return 'изменил(а) комментарий'
+      case 'changed name': return 'изменил(а) наименование'
+      case 'changed description': return 'изменил(а) описание'
+      case 'changed status': return 'изменил(а) статус'
+      default: return title;
+    }
+  }
+
   addFiles() {
     const dialog = this.dialogService.open(AddFilesComponent, {
       header: 'Uploading files',
@@ -109,11 +134,8 @@ export class EditSupplierComponent implements OnInit {
     dialog.onClose.subscribe(() => {
       this.supplierService.getCreateFiles().forEach(file => {
         this.supplierFiles.push(file);
-        //this.supplierFilesSrc.push(file);
       })
       this.eqService.setCreateFiles([]);
-      // console.log('closed uploading files');
-      // console.log(this.supplierFiles);
     })
   }
 
@@ -216,6 +238,16 @@ export class EditSupplierComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 
+  getDate(dateLong: number): string {
+    let date = new Date(dateLong);
+    let ye = new Intl.DateTimeFormat('ru', {year: 'numeric'}).format(date);
+    let mo = new Intl.DateTimeFormat('ru', {month: 'short'}).format(date);
+    let da = new Intl.DateTimeFormat('ru', {day: '2-digit'}).format(date);
+    let hours = new Intl.DateTimeFormat('ru', {hour: '2-digit'}).format(date);
+    let minutes = new Intl.DateTimeFormat('ru', {minute: '2-digit'}).format(date);
+    return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+  }
+
   deleteRelatedTask(taskId: number) {  //удаляем из таблицы sup_task_relations строку по айди
     // console.log(taskId);
     this.eqService.deleteRelatedTask(taskId).subscribe(() => {
@@ -273,8 +305,21 @@ export class EditSupplierComponent implements OnInit {
   addFiles2(addedFiles: SupplierFiles[]) {
     addedFiles.forEach(file => {
       const history = new SupplierHistory(this.auth.getUser().id,'added file', '', file.url, this.supplier_id)
+      this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
+        this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+          this.historyArray = res;
+          console.log(res)
+        })
+      })
       console.log(history);
     })
+
+
+    // this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+    //   this.supplierFilesSrc = res.slice(0,5);
+    //   this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
+    //   console.log(this.supplierFilesSrc);
+    // })
     this.editSupplier('', '', '')
   }
 
@@ -282,20 +327,12 @@ export class EditSupplierComponent implements OnInit {
     if (name_value) {
       const history = new SupplierHistory(this.auth.getUser().id, name_value, prev_data, new_data, this.supplier_id)
       this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
-        console.log(res)
-        // if (res.includes('error')){
-        //   alert(res);
-        // }
-        // else{
-        //   this.ref.close(res);
-        // }
+        this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+          this.historyArray = res;
+          console.log(res)
+        })
       })
-
-
-        console.log("history editSupplier");
-        console.log(history);
-        //console.log(history.toString());
-      }
+    }
 
 
     const supplierToDB = new SupplierToDB();
@@ -324,7 +361,13 @@ export class EditSupplierComponent implements OnInit {
           file.supplier_id = parseInt(res);  //кладем id добавленного поставщика в supplier_id файла
           console.log('createSupplier() + file');
           console.log(file);
-          this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {});
+          this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {
+            this.supplierFiles.forEach(file => {
+              this.supplierFilesSrc.push(file); //перенесем в отображаемый массив
+            })
+
+            this.supplierFiles = [];
+          });
         })
         this.supplierService.setCreateFiles([]);
         console.log('closed uploading files: add-supplier');
@@ -332,5 +375,10 @@ export class EditSupplierComponent implements OnInit {
         //this.ref.close(new CloseCode(0));
       }
     });
+
+    this.prev_sup_data = this.supplierForm.value;
+
+    this.edit = '';  //скроем все блоки, в которых можно редактировать данные поставщика
   }
+
 }
