@@ -9,8 +9,9 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EquipmentToDB} from "../../../domain/classes/equipment-to-db";
 import {Isfi} from "../../../domain/interfaces/sfi";
 import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
-import {AddEquipmentFilesComponent} from "../add-equipment-files/add-equipment-files.component";
+import {AddFilesComponent} from "../add-files/add-files.component";
 import {AddFilesDataService} from "../../../domain/add-files-data.service";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-create-equipment',
@@ -19,9 +20,9 @@ import {AddFilesDataService} from "../../../domain/add-files-data.service";
 })
 export class CreateEquipmentComponent implements OnInit {
   equipmentForm = this.formBuilder.group({
-    sfi: [''],
-    project: [''],
-    department: [''],
+    sfi: ['', Validators.required],
+    project: ['', Validators.required],
+    department: ['', Validators.required],
     name: ['', Validators.required],
     description: [''],
     commentText: [''],
@@ -37,7 +38,7 @@ export class CreateEquipmentComponent implements OnInit {
 
 
   constructor( public prService: ProjectsManagerService, public auth: AuthManagerService, private formBuilder: FormBuilder, public issues: IssueManagerService,
-               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService) {
+               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService, public t: LanguageService) {
   }
 
   ngOnInit(): void {
@@ -59,7 +60,7 @@ export class CreateEquipmentComponent implements OnInit {
   }
 
   addFiles() {
-    const dialog = this.dialogService.open(AddEquipmentFilesComponent, {
+    const dialog = this.dialogService.open(AddFilesComponent, {
       header: 'Uploading files',
       modal: true,
       data: {
@@ -127,6 +128,24 @@ export class CreateEquipmentComponent implements OnInit {
     return parts[parts.length - 1];
   }
 
+  downloadFile(url: string) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = url;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  getDateOnly(dateLong: number): string {  //преобразовать поле create_date в человеческий вид
+    if (dateLong == 0){
+      return '--/--/--';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
   deleteFile(file: EquipmentsFiles) {
     this.equipmentFiles.splice(this.equipmentFiles.indexOf(file), 1);
     console.log(this.equipmentFiles);
@@ -157,7 +176,6 @@ export class CreateEquipmentComponent implements OnInit {
     console.log(JSON.stringify(eqToDB));
 
 
-
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
       console.log(eqToDB);
       console.log('res');
@@ -182,20 +200,6 @@ export class CreateEquipmentComponent implements OnInit {
         this.ref.close('success');
       }
     });
-
-    // this.equipmentFiles.forEach(file => { //добавляем файлы в БД
-    //   console.log(JSON.stringify(file));
-    //   this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
-    //     if (res.includes('error')){
-    //       alert(res);
-    //     }
-    //     else{
-    //       this.ref.close(res);
-    //     }
-    //   })
-    // })
-
-
     this.equipmentForm.reset();
   }
 }

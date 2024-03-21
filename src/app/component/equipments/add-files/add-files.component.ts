@@ -19,11 +19,11 @@ import {SupplierFiles} from "../../../domain/classes/supplier-files";
 
 @Component({
   selector: 'app-add-files',
-  templateUrl: './add-equipment-files.component.html',
-  styleUrls: ['./add-equipment-files.component.css']
+  templateUrl: './add-files.component.html',
+  styleUrls: ['./add-files.component.css']
 })
 
-export class AddEquipmentFilesComponent implements OnInit {
+export class AddFilesComponent implements OnInit {
   issue: Issue;
   fileGroups: any[] = ['ITT', 'Specification', 'Documentation', 'Approvement'];
   isCorrection = false;
@@ -42,10 +42,9 @@ export class AddEquipmentFilesComponent implements OnInit {
 
   equipmentFilesToDB: EquipmentsFiles[] = [];
 
-  constructor(public conf: DynamicDialogConfig, private dialogService: DialogService, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService, public eqService: EquipmentsService,
+  constructor(public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService, public eqService: EquipmentsService,
               private supplierService: SupplierService) {
-    //console.log('eqService.getWaitingCreateEqFiles()');
-    //console.log(eqService.getWaitingCreateEqFiles());
+
     this.loaded = this.conf.data.service.getWaitingCreateFiles();
     //то что ниже можно удалить
     if (this.conf.data.service === this.eqService) {

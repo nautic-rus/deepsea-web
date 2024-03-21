@@ -1365,3 +1365,20 @@ app-materials-summary .p-virtualscroller .p-virtualscroller-content{
 .button-ok:hover{
   background-color: #2C7BB6;
 }
+
+.button-cancel{
+  margin-right: 4px;
+  min-width: 70px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #2E3E4E;
+  background: #fff;
+  transition: background .1s;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+.button-cancel:hover{
+  background-color: #ECEDF0;
+}

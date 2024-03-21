@@ -5,10 +5,11 @@ import {ISupplier} from "../../../domain/interfaces/supplier";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {SupplierToDB} from "../../../domain/classes/supplier-to-db";
 import {EquipmentsService} from "../../../domain/equipments.service";
-import {AddEquipmentFilesComponent} from "../add-equipment-files/add-equipment-files.component";
+import {AddFilesComponent} from "../add-files/add-files.component";
 import {SupplierService} from "../../../domain/supplier.service";
 import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
 import {SupplierFiles} from "../../../domain/classes/supplier-files";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-add-supplier',
@@ -23,18 +24,17 @@ export class AddSupplierComponent implements OnInit {
   });
 
   supplierFiles: SupplierFiles[] = [];
+  dragOver = false;
 
   constructor(private formBuilder: FormBuilder, public ref: DynamicDialogRef, private dialogConfig: DynamicDialogConfig, public auth: AuthManagerService, public eqService: EquipmentsService,
-              private dialogService: DialogService, private supplierService: SupplierService) {}
+              private dialogService: DialogService, private supplierService: SupplierService, public t: LanguageService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
 
   addFiles() {
-    const dialog = this.dialogService.open(AddEquipmentFilesComponent, {
-      header: 'Uploading files',
+    const dialog = this.dialogService.open(AddFilesComponent, {
+      header: this.t.tr('Добавить файлы'),
       modal: true,
       data: {
         service: this.supplierService,
@@ -44,6 +44,7 @@ export class AddSupplierComponent implements OnInit {
       this.supplierService.getCreateFiles().forEach(file => {
         this.supplierFiles.push(file);
       })
+      this.supplierService.setCreateFiles([]);
     })
   }
 
@@ -94,6 +95,9 @@ export class AddSupplierComponent implements OnInit {
     return parts[parts.length - 1];
   }
 
+  openFile(url: string) {
+    window.open(url);
+  }
   deleteFile(file: SupplierFiles) {
     this.supplierFiles.splice(this.supplierFiles.indexOf(file), 1);
     console.log(this.supplierFiles);
@@ -120,7 +124,7 @@ export class AddSupplierComponent implements OnInit {
           file.supplier_id = parseInt(res);  //кладем id добавленного постащика в supplier_id файла
           console.log('createSupplier() + file');
           console.log(file);
-          this.supplierService.addSupplierFiles(JSON.stringify(file));
+          this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {});
         })
         this.supplierService.setCreateFiles([]);
         //this.equipmentFiles = this.eqService.getCreateEqFiles();
@@ -134,6 +138,7 @@ export class AddSupplierComponent implements OnInit {
   }
 
   close() {
+    this.supplierService.setWaitingCreateFiles([]);
     this.suppliersForm.reset();
     this.ref.close();
   }

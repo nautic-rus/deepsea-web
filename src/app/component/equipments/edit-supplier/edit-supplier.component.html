@@ -1,3 +1,155 @@
-<p>edit-supplier works!</p>
-<div>{{supplier_id}} | SFI {{sfi}} - {{sfi_name}}</div>
-<div>{{sup_name}}</div>
+<div class="header">
+  <h1>{{t.tr('Редактировать оборудование')}}</h1>
+  <div (click)="close()">X</div>
+</div>
+
+<form [formGroup]="supplierForm" class="form-container">
+  <div class="header-info">
+    <div class="header-info_sfi">
+      <div class="info_sfi" >ID {{supplier_id}} | SFI {{sfi}} - {{sfi_name}}</div>
+      <label for="name"></label>
+      <input class="info-name mt-16 p-inputtext" id="name" type="text" formControlName="name">
+      <div tabindex="10" (click)="editSupplier('changed name', this.prev_sup_data.name, this.supplierForm.value.name)" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
+    </div>
+    <div tooltipPosition="top" [pTooltip]="(t.tr('Удалить поставщика'))" (click)="deleteSupplier(supplier_id)">
+      <svg  class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+      </svg>
+    </div>
+  </div>
+  <hr>
+
+  <div class="main-body">
+    <div class="main-info">
+      <div class="main-info_description mb-5">
+        <label class="mb-1" for="description">{{t.tr('Описание')}}</label>
+        <!--      <input pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />-->
+        <input pInputText id="description" type="text" formControlName="description"  placeholder="{{t.tr('Описание')}}">
+        <div tabindex="10" (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
+      </div>
+<!--      таблица с файлами-->
+      <div class="mt-1" *ngIf="supplierFilesSrc.length != 0">{{t.tr('Вложения')}}</div>
+      <p-table class="files_table table" [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="body" let-file>
+          <tr>
+            <td>
+              <div class="cxy">
+                <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
+                <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
+              </div>
+            </td>
+            <td>REV{{file.rev}}</td>
+            <td>{{this.auth.getUserNameById(file.user_id)}}</td>
+            <td>{{this.getDateOnly(file.create_date)}}</td>
+            <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>
+            <td>
+              <div (click)="deleteFile(file)">
+                <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <button *ngIf="supplierFilesSrc.length != 0" tabindex="10" [disabled]="showMoreFilesButtonIsDisabled" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" (click)="showMore()" class="button-ok mt-1 ">{{t.tr('Показать еще')}}</button>
+
+      <div class="mr-5 mt-20 cy">
+        <div tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+      </div>
+
+
+
+
+      <div class="mt-1" *ngIf="supplierFiles.length != 0">{{t.tr('Вложения')}}</div>
+      <p-table class="files_table table" [value]="supplierFiles" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="body" let-file>
+          <tr>
+            <td>
+              <div class="cxy">
+                <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
+                <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
+              </div>
+            </td>
+            <td>REV{{file.rev}}</td>
+            <td>{{this.auth.getUserNameById(file.user_id)}}</td>
+            <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>
+            <td>
+              <div (click)="deleteFile(file)">
+                <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <div *ngIf="supplierFiles.length != 0" class="mr-5 mt-20 cy">
+        <div tabindex="10"  (click)="addFiles2(supplierFiles)" class="button-ok ml-1">{{t.tr('Сохранить изменения')}}</div>
+      </div>
+
+<!--      <div class="mr-5 mt-20 cy">-->
+<!--        <div tabindex="10"  (click)="editSupplier('added file', '', file.url)" class="button-ok ml-1">{{t.tr('Сохранить изменения)}}</div>-->
+<!--      </div>-->
+
+
+
+      <!--      таблица со связными задачами-->
+      <p-table *ngIf="relatedTasks.length != 0" class="tasks_table table" [value]="relatedTasks" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="status">{{t.tr('Статус')}} <p-sortIcon field="status"></p-sortIcon></th>
+            <th pSortableColumn="issue_name">{{t.tr('Наименование')}} <p-sortIcon field="issue_name"></p-sortIcon></th>
+            <th pSortableColumn="started_by">{{t.tr('Автор')}} <p-sortIcon field="started_by"></p-sortIcon></th>
+            <th pSortableColumn="responsible">{{t.tr('Ответственный')}} <p-sortIcon field="task.responsible"></p-sortIcon></th>
+            <th pSortableColumn="assigned_to">{{t.tr('Исполнитель')}} <p-sortIcon field="assigned_to"></p-sortIcon></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+          <tr>
+            <td>{{task.status}}</td>
+            <td>{{task.issue_name}}</td>
+            <td>{{this.auth.getUserName(task.started_by)}}</td>
+            <td>{{this.auth.getUserName(task.responsible)}}</td>
+            <td *ngIf="!task.assigned_to">{{this.auth.getUserName(task.assigned_to)}}</td>
+            <td>
+              <div (click)="deleteRelatedTask(task.id)">
+                <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+    <div class="main-right">
+      <label class="mb-1" for="status">{{t.tr('Статус')}} </label>
+      <p-dropdown formControlName="status" class="select" id="status" [options]="status" appendTo = "body" styleClass="width-220 font-14"></p-dropdown>
+      <div tabindex="10" (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
+
+
+      <label class="mb-1 mt-1" for="comment">{{t.tr('Комментарий')}} </label>
+      <input pInputText id="comment" type="text" formControlName="comment">
+      <div tabindex="10" (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
+
+      <label class="mb-1 mt-1" for="manufacturer">{{t.tr('Производитель')}} </label>
+      <input pInputText id="manufacturer" type="text" formControlName="manufacturer">
+      <div tabindex="10" (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
+
+    </div>
+  </div>
+
+</form>
+
+
+<!--<div class="mt-40 flex-end">-->
+<!--  <div tabindex="10" (click)="close()" class="button-cancel ml-1">{{t.tr('Отмена')}}</div>-->
+<!--&lt;!&ndash;  <div tabindex="10" (click)="editSupplier()" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>&ndash;&gt;-->
+<!--</div>-->
+
+<!--<p>Form Value: {{ supplierForm.value | json }}</p>-->
+
+<!--<p>Form Status: {{ supplierForm.status }}</p>-->

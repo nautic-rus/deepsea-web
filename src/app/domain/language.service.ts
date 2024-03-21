@@ -60,6 +60,7 @@ export class LanguageService {
           case 'ID задачи': return 'Task ID';
           case 'Активность': return 'Activity';
           case 'Показать': return 'Show';
+          case 'Показать еще': return 'Show more';
           case 'Все': return 'All';
           case 'Комментарии': return 'Messages';
           case 'История': return 'History';
@@ -604,6 +605,18 @@ export class LanguageService {
           case 'Прогресс по отделам': return 'Progress by department'
           case 'Прогресс по чертежам': return 'Documents progress'
           case 'Прогресс по этапам': return 'Stage progress'
+          case 'Создать оборудование': return 'Create equipment'
+          case 'Редактировать оборудование': return 'Edit equipment'
+          case 'Добавить оборудование': return 'Add equipment'
+          case 'Добавить поставщика': return 'Add supplier'
+          case 'Создать поставщика': return 'Create supplier'
+          case 'Редактировать поставщика': return 'Edit supplier'
+          case 'Удалить поставщика': return 'Delete a supplier'
+          case 'Производитель': return 'Manufacturer'
+          case 'Удалить оборудование?': return 'Delete a equipment?'
+          case 'Удалить поставщика?': return 'Delete a supplier?'
+          case 'Удалить файл оборудования?': return 'Delete equipment file?'
+          case 'Удалить файл поставщика?': return 'Delete supplier file?'
           case '': return ''
           case '': return ''
           case '': return ''

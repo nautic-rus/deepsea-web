@@ -1,0 +1,9 @@
+.agree_container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 25px 25px;
+}
+
+/deep/ .p-dialog .p-dialog-content {
+  border-radius: 0 0 6px 6px;
+}

@@ -1,27 +1,49 @@
-<div class="equipments-component">
-
-  <div class="card-head df sticky-card ng-star-inserted">
-    <div class="container-buttons">
-      <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+<div class="all-page">
+  <div class="equipments-component pt-10">
+    <div class="head sticky-card ng-star-inserted pt-10">
+      <div class="head-filter">
+        <div class="eq-button blue-button cxy mr-10" (click)="newEquipment()">
+          <div class="pr-10 cxy">
+            <img src="assets/icons/plus3.svg" height="18">
+          </div>
+          <div class="cxy">{{t.tr('Добавить оборудование')}}</div>
+        </div>
+        <div class="mr-10">
+          <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+        </div>
+        <div class="mr-10">
+          <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+        </div>
       </div>
-      <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+      <div class="head-search">
+        <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />
       </div>
-      <div tabindex="10" (click)="newEquipment()" class="button-ok cxy">{{'Добавить оборудование'}}</div>
-<!--      <div class="mr-10">-->
-<!--        <div class="materials-button-home blue-button cxy" (click)="newEquipment()">-->
-<!--          <div class="pr-10 cxy">-->
-<!--            <img src="assets/icons/plus3.svg" height="18">-->
-<!--          </div>-->
-<!--          <div class="cxy">Добавить оборудование</div>-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
-  </div>
 
-<!--  заголовок таблицы с оборудование-->
-    <p-table class="equipments-table" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem'}" pRowToggler >
+    <!--  <div class="card-head df sticky-card ng-star-inserted">-->
+    <!--    <div class="container-buttons">-->
+    <!--      <div class="mr-10">-->
+    <!--        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>-->
+    <!--      </div>-->
+    <!--      <div class="mr-10">-->
+    <!--        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>-->
+    <!--      </div>-->
+    <!--      <div class="eq-button blue-button cxy mr-10" (click)="newEquipment()">-->
+    <!--        <div class="pr-10 cxy">-->
+    <!--          <img src="assets/icons/plus3.svg" height="18">-->
+    <!--        </div>-->
+    <!--        <div class="cxy">{{'Добавить оборудование'}}</div>-->
+    <!--      </div>-->
+    <!--&lt;!&ndash;      <div tabindex="10" (click)="newEquipment()" class="button-ok cxy">{{'Добавить оборудование'}}</div>&ndash;&gt;-->
+    <!--      <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск...'" class="border" />-->
+    <!--    </div>-->
+    <!--  </div>-->
+
+    <!--  заголовок таблицы с оборудование-->
+    <p-table #dt
+             id="dt"
+             [globalFilterFields]="['sfi','name']"
+             class="equipments-table" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem' }" pRowToggler >
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 5rem"></th>
@@ -37,7 +59,7 @@
         </tr>
       </ng-template>
 
-<!--      заполняем таблицу с оборудованием-->
+      <!--      заполняем таблицу с оборудованием-->
       <ng-template pTemplate="body" let-eq let-expanded="expanded">
         <tr>
           <td>
@@ -50,38 +72,39 @@
           <td>{{ eq.comment }}</td>
           <td>{{ eq.respons_name }} {{ eq.respons_surname }}</td>
           <td>{{ eq.itt ===1? 'YES' : 'NO' }}</td>
-          <td><div tabindex="10" (click)="addSupplier(eq)" class="button-ok cxy">{{'Добавить поставщика'}}</div></td>
+          <td><div tabindex="10" (click)="addSupplier(eq)" class="button-ok ml-1">{{t.tr('Добавить поставщика')}}</div></td>
           <td>
-            <div [class.button-disabled]="editEquipmentButtonIsDisabled(eq)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="('Редактировать')" (click)="editEquipment(eq)">
+            <div [class.button-disabled]="editEquipmentButtonIsDisabled(eq)" class="cxy mr-10 edit-button" tooltipPosition="top" [pTooltip]="(t.tr('Редактировать'))" (click)="editEquipment(eq)">
               <img src="assets/icons/edit1.svg" height="20">
             </div>
           </td>
         </tr>
       </ng-template>
 
-<!--     выпадающий список suppliers-->
+      <!--     выпадающий список suppliers-->
       <ng-template pTemplate="rowexpansion" let-eq>
-        <tr>
+        <tr *ngIf="!showSuppliersButtonIsDisabled(eq)">
           <td colspan="7">
             <div class="p-3">
               <p-table [value]="eq.suppliers" dataKey="equipm_id">
                 <ng-template pTemplate="header">
                   <tr>
-                    <th pSortableColumn="equipm_id">equipm_id <p-sortIcon field="equipm_id"></p-sortIcon></th>
-                    <th pSortableColumn="suppliers_id">suppliers_id <p-sortIcon field="suppliers_id"></p-sortIcon></th>
-                    <th pSortableColumn="description">name <p-sortIcon field="description"></p-sortIcon></th>
-                    <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                    <th pSortableColumn="suppliers_id">ID<p-sortIcon field="suppliers_id"></p-sortIcon></th>
+                    <th pSortableColumn="description">Supplier<p-sortIcon field="description"></p-sortIcon></th>
+                    <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                    <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>
+                    <th style="width: 5rem"></th>
                     <!--                      <th style="width: 4rem"></th>-->
                   </tr>
                 </ng-template>
                 <ng-template class="addTable" pTemplate="body" let-supplier>
                   <tr>
-                    <td>{{ supplier.equip_id}}</td>
                     <td>{{ supplier.id }}</td>
                     <td>{{ supplier.name }}</td>
                     <td>{{ supplier.status }}</td>
+                    <td>{{getDateOnly(supplier.last_update)}}</td>
                     <td>
-                      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="('Редактировать')" (click)="editSupplier(eq, supplier)">
+                      <div class="task-button cxy mr-10 edit-button" tooltipPosition="top" [pTooltip]="(t.tr('Редактировать'))" (click)="editSupplier(eq, supplier)">
                         <img src="assets/icons/edit1.svg" height="20">
                       </div>
                     </td>
@@ -89,7 +112,7 @@
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                   <tr>
-                    <td colspan="6">There are no order for this product yet.</td>
+                    <td colspan="6">There are no suppliers for this equipment yet.</td>
                   </tr>
                 </ng-template>
               </p-table>
@@ -99,5 +122,4 @@
       </ng-template>
     </p-table>
   </div>
-
-
+</div>

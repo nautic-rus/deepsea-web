@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEquipmentFilesComponent } from './add-equipment-files.component';
+import { AddFilesComponent } from './add-files.component';
 
 describe('AddFilesComponent', () => {
-  let component: AddEquipmentFilesComponent;
-  let fixture: ComponentFixture<AddEquipmentFilesComponent>;
+  let component: AddFilesComponent;
+  let fixture: ComponentFixture<AddFilesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddEquipmentFilesComponent ]
+      declarations: [ AddFilesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddEquipmentFilesComponent);
+    fixture = TestBed.createComponent(AddFilesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

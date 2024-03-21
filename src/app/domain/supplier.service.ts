@@ -34,4 +34,12 @@ export class SupplierService {
   addSupplierFiles(jsonValue: string) :  Observable<string> {
     return this.http.post<string>(props.http + '/addSupFile', jsonValue);
   }
+
+  deleteSupplierFile(id: number) :  Observable<string> {
+    return this.http.get<string>(props.http + '/delSupFile', {params: {id}});
+  }
+
+  getEquipmentFiles(id: number): Observable<any> {  //получаем файлы оборудования по id
+    return this.http.get<string>(props.http + '/supFiles', {params: {id}});
+  }
 }

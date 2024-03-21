@@ -10,6 +10,7 @@ export class SupplierToDB {
   name: string;
   status_id: number = 1;
   user_id: number;
+  // last_update:
 }
 
 

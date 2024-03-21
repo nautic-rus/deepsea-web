@@ -11,6 +11,10 @@ import {EditEquipmentComponent} from "./edit-equipment/edit-equipment.component"
 import {RightService} from "../admin/right/right.service";
 import {ISupplier} from "../../domain/interfaces/supplier";
 import {EditSupplierComponent} from "./edit-supplier/edit-supplier.component";
+import {CloseCode} from "../../domain/classes/close-code";
+import {SupplierService} from "../../domain/supplier.service";
+import {Isfi} from "../../domain/interfaces/sfi";
+import {LanguageService} from "../../domain/language.service";
 
 
 @Component({
@@ -28,11 +32,12 @@ export class EquipmentsComponent implements OnInit {
   equipments: IEquipment[] = [];  //массив после филтрации
 
   equipmentsSrc: IEquipment[] = []; //массив, который пришел с сервера
-  selectedEquipment: any[] = []; // equipment по котору кликнули
+
+  sfis: Isfi[] = [];
 
 
   constructor( public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService,
-               public rightService: RightService) {
+               private supplierService: SupplierService, public t: LanguageService) {
   }
 
   ngOnInit(): void {
@@ -51,6 +56,9 @@ export class EquipmentsComponent implements OnInit {
       this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
     });
 
+    this.eqService.getSfis().subscribe(sfis=>{
+      this.sfis = sfis;
+    });
   }
 
   getProjectName(project: any) {
@@ -94,11 +102,22 @@ export class EquipmentsComponent implements OnInit {
     return true;
   };
 
+  getDateOnly(dateLong: number): string {  //преобразовать поле last_update у поставщика в человеческий вид
+    if (dateLong == 0){
+      return '--/--/--';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
+
   addSupplier(eq:IEquipment) {
     //console.log('addSupplier');
     console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
+      header: this.t.tr('Создать поставщика'),
       modal: true,
+      width: '50%',
       data: eq.id
     }).onClose.subscribe(()=> {  //сразу выводить на страницу
       this.eqService.getEquipments().subscribe(equips => {
@@ -109,59 +128,83 @@ export class EquipmentsComponent implements OnInit {
   }
 
   editEquipment(eq:IEquipment) {
+    console.log(eq);
     console.log('edit equipment');
     this.dialogService.open(EditEquipmentComponent, {
+      header: this.t.tr('Редактировать оборудование'),
       modal: true,
+      width: '50%',
       data: eq
     }).onClose.subscribe(closed => { //сразу выводить на страницу
-      console.log('closed + editEquipment');
-      console.log(closed);
-         this.eqService.getEquipments().subscribe(equips => {
-           this.equipmentsSrc = equips;
-           this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+      console.log("this.eqService.setWaitingCreateFiles([])")
+      this.eqService.setWaitingCreateFiles([]);
+      // console.log(this.supplierService.getWaitingCreateFiles())
+      // console.log(closed.code);
+      if (closed.code === 1) {  // значит, что пользователь удалил оборудование в форме редактирования оборудования
+        //this.filterEquipments();
+        this.equipments = this.equipments.filter(eq => {
+          return eq.id !== closed.data
+        })
+      }
+      else {
+        this.eqService.getEquipments().subscribe(equips => {
+          this.equipmentsSrc = equips;
+          this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
         });
+      }
+
     })
   }
 
   editSupplier(eq: IEquipment, supplier: ISupplier) {
     console.log(supplier, eq);
     this.dialogService.open(EditSupplierComponent, {
+      header: this.t.tr('Редактировать поставщика'),
+      showHeader: false,
       modal: true,
+      width: '70%',
       data: {
         eq: eq,
         supplier: supplier
+      },
+    }).onClose.subscribe(closed => { //сразу выводить на страницу изменения после редактирования supplier
+      console.log(" this.supplierService.setWaitingCreateFiles([])")
+      this.supplierService.setWaitingCreateFiles([]);
+      // console.log(this.supplierService.getWaitingCreateFiles())
+      // console.log('closed + editSupplier');
+      // console.log(closed);
+      if (closed.code === 1 ) {   // значит, что пользователь удалил поставщика в форме редактирования поставщика
+        eq.suppliers = eq.suppliers?.filter(sup => { return sup.id != closed.data})
       }
+      else {
+        this.eqService.getEquipments().subscribe(equips => {
+          this.equipmentsSrc = equips;
+          this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+        });
+      }
+      this.supplierService.setWaitingCreateFiles([]);
     })
   }
 
   newEquipment() {
     console.log('newEquipment')
     this.dialogService.open(CreateEquipmentComponent, {
+      header: this.t.tr('Создать оборудование'),
       modal: true,
     }).onClose.subscribe(closed => { //сразу выводить на страницу
       console.log('closed + newEquipment');
       console.log(closed);
       this.eqService.setWaitingCreateFiles([]);
       if (closed != 'error'){
+
         this.eqService.getEquipments().subscribe(equips => {
           console.log('newEq');
-          console.log(equips);
           this.equipmentsSrc = equips;
           this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
         });
       } else {
         console.log('newEq error');
       }
-      // if (closed == 'success'){
-      //   this.eqService.getEquipments().subscribe(equips => {
-      //     console.log('newEq');
-      //     console.log(equips);
-      //     this.equipmentsSrc = equips;
-      //     this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-      //   });
-      // } else {
-      //   console.log('newEq error');
-      // }
     });
   }
 }

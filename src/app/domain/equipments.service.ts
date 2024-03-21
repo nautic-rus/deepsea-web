@@ -34,13 +34,34 @@ export class EquipmentsService {
     return this.http.get<string>(props.http + '/deleteEquipment', {params: {id}});
   }
 
+  addSupplier(jsonValue: string) :  Observable<string> {
+    return this.http.post<string>(props.http + '/supplier', jsonValue);
+  }
+
+  deleteSupplier(id: number) : Observable<any> {
+    return this.http.get<string>(props.http + '/deleteSupplier', {params: {id}});
+  }
+
+  getRelatedTasks(id: number): Observable<any> {
+    return this.http.get<string>(props.http + '/relatedTasks', {params: {id}});
+  }
+
+  deleteRelatedTask(id: number) :  Observable<any> {
+    return this.http.get<string>(props.http + '/delRelatedTask', {params: {id}});
+  }
+
+  getSupplierHistory(id: number): Observable<any> {
+    return this.http.get<string>(props.http + '/supHistory', {params: {id}});
+  }
+
+  addSupplierHistory(jsonValue: string) :  Observable<string> {
+    return this.http.post<string>(props.http + '/addSupHistory', jsonValue);
+  }
+
   addEquipmentFiles(jsonValue: string) :  Observable<string> {
     return this.http.post<string>(props.http + '/addEquipFile', jsonValue);
   }
 
-  addSupplier(jsonValue: string) :  Observable<string> {
-    return this.http.post<string>(props.http + '/supplier', jsonValue);
-  }
 
   getEquipmentFiles(id: number): Observable<any> {  //получаем файлы оборудования по id
     return this.http.get<string>(props.http + '/equipFiles', {params: {id}});

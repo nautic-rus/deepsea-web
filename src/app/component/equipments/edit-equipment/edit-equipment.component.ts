@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Equipment} from "../../../domain/classes/equipment";
 import {IEquipment} from "../../../domain/interfaces/equipments";
@@ -9,8 +9,11 @@ import {ProjectsManagerService} from "../../../domain/projects-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {EquipmentsService} from "../../../domain/equipments.service";
 import {EquipmentToDB} from "../../../domain/classes/equipment-to-db";
-import {AddEquipmentFilesComponent} from "../add-equipment-files/add-equipment-files.component";
+import {AddFilesComponent} from "../add-files/add-files.component";
 import {Observable} from "rxjs";
+import {AgreeModalComponent} from "../agree-modal/agree-modal.component";
+import {CloseCode} from "../../../domain/classes/close-code";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-edit-equipment',
@@ -18,9 +21,11 @@ import {Observable} from "rxjs";
   styleUrls: ['./edit-equipment.component.css']
 })
 export class EditEquipmentComponent implements OnInit {
+  //@Output() isDeleted = false;
+
   equipmentForm = this.formBuilder.group({
     id: this.dialogConfig.data.id,
-    sfi: this.dialogConfig.data.sfi,
+    sfi: this.dialogConfig.data.sfi.toString(),
     project: this.dialogConfig.data.project_name,
     department: this.dialogConfig.data.department,
     name: this.dialogConfig.data.name,
@@ -38,14 +43,7 @@ export class EditEquipmentComponent implements OnInit {
 
   sfis: Isfi[] = [];
   constructor(protected dialogConfig: DynamicDialogConfig, private formBuilder: FormBuilder, public prService: ProjectsManagerService, public auth: AuthManagerService,
-              public eqService: EquipmentsService, public ref: DynamicDialogRef,  private dialogService: DialogService) {
-    this.eqService.deleteEquipmentFile(25);
-    // this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe(file => {
-    //   this.equipmentFiles.push(file);
-    //   console.log('this.equipmentFiles');
-    //   console.log(this.equipmentFiles);
-    // });
-    //console.log(eqService.getEquipmentFiles(this.equipmentForm.value.id));
+              public eqService: EquipmentsService, public ref: DynamicDialogRef,  private dialogService: DialogService, public t: LanguageService) {
   }
 
   ngOnInit(): void {
@@ -60,17 +58,12 @@ export class EditEquipmentComponent implements OnInit {
 
     this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe(res => {
       this.equipmentFilesSrc = res;
-      //console.log(file);
-      // this.equipmentFiles.push(file);
-      // console.log('this.equipmentFiles');
-      // console.log(this.equipmentFiles[0]);
-      //this.fileArray = this.equipmentFiles[0];
     });
 
   }
 
   addFiles() {
-    const dialog = this.dialogService.open(AddEquipmentFilesComponent, {
+    const dialog = this.dialogService.open(AddFilesComponent, {
       header: 'Uploading files',
       modal: true,
       data: {
@@ -137,21 +130,57 @@ export class EditEquipmentComponent implements OnInit {
     return parts[parts.length - 1];
   }
 
+  downloadFile(url: string) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = url;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  getDateOnly(dateLong: number): string {  //преобразовать поле create_date в человеческий вид
+    if (dateLong == 0){
+      return '--/--/--';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
   deleteFile(file: EquipmentsFiles) {
-    console.log('deleteFile');
-    console.log(file);
-    this.equipmentFiles.splice(this.equipmentFiles.indexOf(file), 1);
-    this.eqService.deleteEquipmentFile(file.id)
-      .subscribe(
-        () => {
-          console.log('Файд оборудования  удален успешно');
-          this.close();
-        },
-        error => {
-          console.error('Ошибка при удалении файла оборудования');
-        }
-      );
-    //console.log(file.id);
+    const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+      modal: true,
+      header: this.t.tr('Удалить файлы оборудования?'),
+      data: {
+        //title: 'Удалить файлы оборудования?',
+        file: file
+      }
+    })
+      dialog.onClose.subscribe((res) => {
+      if (res) { // User clicked OK
+        console.log('User confirmed deleteFile');
+        console.log(file);
+        this.equipmentFiles.splice(this.equipmentFiles.indexOf(file), 1);
+        this.eqService.deleteEquipmentFile(file.id)
+          .subscribe(
+            () => {
+              console.log('Файд оборудования  удален успешно');
+              this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
+                this.equipmentFilesSrc = res;
+              });
+              //this.close();
+            },
+            error => {
+              console.error('Ошибка при удалении файла оборудования');
+            }
+          );
+
+      }
+      else {
+        console.log('User canceled'); // User clicked Cancel
+      }
+    })
   }
 
   findProjectId(project_name: string) {
@@ -188,7 +217,8 @@ export class EditEquipmentComponent implements OnInit {
       }
       else{
         this.equipmentForm.reset();
-        this.ref.close(res);
+        this.close();
+        //this.ref.close(res);
       }
     });
     console.log('edit eq + this.equipmentFiles');
@@ -202,7 +232,8 @@ export class EditEquipmentComponent implements OnInit {
           alert(res);
         }
         else{
-          this.ref.close(res);
+          this.close();
+          //this.ref.close(res);
         }
       })
     })
@@ -211,21 +242,44 @@ export class EditEquipmentComponent implements OnInit {
 
   deleteEquipment(eqId: number) {
     console.log('delete eq with id = ' + eqId);
-    this.eqService.deleteEquipment(eqId)
-      .subscribe(
-        () => {
-          console.log('Оборудование удалено успешно');
-          this.close();
-        },
-        error => {
-          console.error('Ошибка при удалении оборудования');
-        }
-      );
+    const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+      modal: true,
+      header: this.t.tr('Удалить оборудование?'),
+      data: {
+        //title: 'Удалить оборудование?',
+        eq_id: eqId
+      }
+    })
+    dialog.onClose.subscribe((res) => {
+
+      if (res) { // User clicked OK
+        console.log('User confirmed deleteFile');
+        this.eqService.deleteEquipment(eqId)
+          .subscribe(
+            () => {
+              console.log('Оборудование удалено успешно');
+              this.ref.close(new CloseCode(1, eqId));
+            },
+            error => {
+              console.error('Ошибка при удалении оборудования');
+            }
+          );
+        this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
+        })
+      }
+      else {
+        console.log('User canceled'); // User clicked Cancel
+        this.close();
+      }
+    })
   }
 
   close() {
     this.equipmentForm.reset();
-    this.ref.close();
+    this.ref.close(new CloseCode(0));
+    //this.ref.close();
   }
+
+
 
 }

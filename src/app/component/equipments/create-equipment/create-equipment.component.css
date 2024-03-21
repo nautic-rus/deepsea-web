@@ -4,9 +4,6 @@
   border: 1px black;
 }
 
-/deep/.p-dialog .p-dialog-content {
-  border-radius: 5px!important;
-}
 .header-user-card{
   border-bottom: 0 none;
   background: #ffffff;
@@ -104,3 +101,7 @@
   flex-direction: column;
 }
 
+/deep/.p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+}

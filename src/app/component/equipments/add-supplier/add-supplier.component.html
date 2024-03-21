@@ -1,14 +1,21 @@
-<form [formGroup]="suppliersForm" class="form-container">
-  <div class="big-text-create mb-1 " >{{'Добавить поставщика'}}</div>
+<form [formGroup]="suppliersForm" class="form-container ng-star-inserted">
+  <div class="big-text-create mb-1 mt-1">{{t.tr('Наименование')}}</div>
+  <input id="name" type="text" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" formControlName="name">
+  <div class="big-text-create mb-1 mt-1">{{t.tr('Производитель')}}</div>
+  <input id="manufacturer" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="manufacturer">
+  <div class="big-text-create mb-1 mt-1">{{t.tr('Описание')}}</div>
+  <input id="description" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="description">
 
-  <label for="name">Name: </label>
-  <input id="name" type="text" formControlName="name">
+<!--  <div class="big-text-create mb-1 mt-1">{{t.tr('Название задачи')}}</div>-->
+<!--  <input class="w-100" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">-->
+<!--  <label for="name">Name: </label>-->
+<!--  <input id="name" type="text" formControlName="name">-->
 
-  <label for="manufacturer">manufacturer </label>
-  <input id="manufacturer" type="text" formControlName="manufacturer">
+<!--  <label for="manufacturer">manufacturer </label>-->
+<!--  <input id="manufacturer" type="text" formControlName="manufacturer">-->
 
-  <label for="description">description </label>
-  <input id="description" type="text" formControlName="description">
+<!--  <label for="description">description </label>-->
+<!--  <input id="description" type="text" formControlName="description">-->
 
 
 <!--  <div class="mr-5 cx">-->
@@ -18,14 +25,32 @@
 
 <!--  <div tabindex="10" (click)="addFiles()" pButton [label]="'Add files'" class="button ml-1"></div>-->
 
-  <div class="mr-5 mt-20 cx">
-    <div tabindex="10" (click)="addFiles()" class="button-ok ml-1">{{'Добавить файлы'}}</div>
-  </div>
-  <div class="mr-5 mt-20 cx">
-    <div tabindex="10" [class.disabled-button]="!suppliersForm.valid" (click)="createSupplier()" class="button-ok cxy">{{'Создать'}}</div>
-    <div tabindex="10" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>
-  </div>
+<!--  <div *ngIf="supplierFiles.length != 0" class="big-text mt-1">{{'Вложения'}}</div>-->
+<!--  <div class="attachments-issue">-->
+<!--    <div class="mr-10" *ngFor="let file of supplierFiles">-->
+<!--      <div (click)="openFile(file.url)" class="attachment-issues df mb-5 cursor-pointer">-->
+<!--        <div class="cxy">-->
+<!--          <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="25"/>-->
+<!--        </div>-->
+<!--        <div class="attachment-footer-issue">-->
+<!--          <span class="mr-5 text-date-max" [pTooltip]="file.url" tooltipPosition="bottom">{{trimFileName(file.url) + ' '}}</span>-->
+<!--          <div class="p-ml-auto df h-100 cxy">-->
+<!--            <a class="upload-file cxy" [href]="file.url" [download]="file.url" (click)="$event.stopPropagation()">-->
+<!--              <svg fill="currentColor" class="cloud-download" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+<!--              </svg>-->
+<!--            </a>-->
+<!--            <div class="upload-file cxy" (click)="deleteFile(file); $event.stopPropagation();">-->
+<!--              <svg fill="currentColor" class="cloud-download" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
+  <div *ngIf="supplierFiles.length != 0" class="big-text mt-1">{{t.tr('Вложения')}}</div>
   <div class="mb-15 width-400 position-relative" *ngFor="let file of supplierFiles">
     <div class="df mb-6 cursor-pointer">
       <div class="df w-90 space-between">
@@ -40,18 +65,27 @@
             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
           </svg>
         </div>
-        <!--        <div (click)="deleteFile(file)">-->
-        <!--          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
-        <!--            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>-->
-        <!--          </svg>-->
-        <!--        </div>-->
       </div>
     </div>
   </div>
+
+  <div class="mt-20 cx">
+    <div tabindex="10" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+  </div>
+
+  <div class="form-footer-create df justify-content-end">
+    <div class="mr-5 cx">
+      <div tabindex="10" (click)="close()" class="button-cancel ml-1">{{t.tr('Отмена')}}</div>
+    </div>
+    <div tabindex="10" [class.disabled-button]="!suppliersForm.valid"  (click)="createSupplier()" class="button-ok">{{t.tr('Создать')}}</div>
+  </div>
+
+<!--  <div class="mr-5 mt-20 cx">-->
+<!--    <div tabindex="10" [class.disabled-button]="!suppliersForm.valid" (click)="createSupplier()" class="button-ok cxy">{{'Создать'}}</div>-->
+<!--    <div tabindex="10" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>-->
+<!--  </div>-->
 </form>
 
-<hr>
+<!--<p>Form Value: {{ suppliersForm.value | json }}</p>-->
 
-<p>Form Value: {{ suppliersForm.value | json }}</p>
-
-<p>Form Status: {{ suppliersForm.status }}</p>
+<!--<p>Form Status: {{ suppliersForm.status }}</p>-->

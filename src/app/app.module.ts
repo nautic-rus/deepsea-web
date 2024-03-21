@@ -208,7 +208,7 @@ import { EquipmentsComponent } from './component/equipments/equipments.component
 import { CreateEquipmentComponent } from './component/equipments/create-equipment/create-equipment.component';
 import {TreeSelectModule} from "primeng/treeselect";
 import {ScrollPanelModule} from "primeng/scrollpanel";
-import { AddEquipmentFilesComponent } from './component/equipments/add-equipment-files/add-equipment-files.component';
+import { AddFilesComponent } from './component/equipments/add-files/add-files.component';
 import { AddSupplierComponent } from './component/equipments/add-supplier/add-supplier.component';
 import { EditEquipmentComponent } from './component/equipments/edit-equipment/edit-equipment.component';
 import { AgreeModalComponent } from './component/equipments/agree-modal/agree-modal.component';
@@ -363,7 +363,7 @@ Quill.register('modules/imageResize', ImageResize);
     AddHullMaterialToEspComponent,
     EquipmentsComponent,
     CreateEquipmentComponent,
-    AddEquipmentFilesComponent,
+    AddFilesComponent,
     AddSupplierComponent,
     EditEquipmentComponent,
     AgreeModalComponent,

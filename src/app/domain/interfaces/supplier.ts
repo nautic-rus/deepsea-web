@@ -7,5 +7,6 @@ export interface ISupplier {
   comment: string,
   manufacturer: string,
   status: string,
-  approvement: number
+  approvement: number,
+  last_update: number
 }
