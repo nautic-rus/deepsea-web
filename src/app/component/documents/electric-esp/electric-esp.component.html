@@ -6,14 +6,9 @@
       <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
       <div class="mr-2" *ngIf="revEsp == ''">{{'rev' + issue.revision}}</div>
       <div class="mr-2">{{revUser}}</div>
-      <div class="mr-10" *ngIf="auth.getUser().department == 'Electric'" (click)="clickOnTrays()">
-        <div class="materials-button blue-button cxy">
-          <div class="cxy">{{t.tr('Trays')}}</div>
-        </div>
-      </div>
-      <div class="mr-10" *ngIf="auth.getUser().department == 'Electric'" (click)="clickOnCables()">
-        <div class="materials-button blue-button cxy">
-          <div class="cxy">{{t.tr('Cables')}}</div>
+      <div class="mr-10" [pTooltip]="t.tr('Get Spec')" tooltipPosition="top" (click)="createEsp()">
+        <div class="materials-button pink-button cxy">
+          <img src="assets/icons/list.svg" height="22">
         </div>
       </div>
       <div class="p-ml-auto df">
@@ -27,7 +22,6 @@
          <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
       </span>
       </div>
-
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20">

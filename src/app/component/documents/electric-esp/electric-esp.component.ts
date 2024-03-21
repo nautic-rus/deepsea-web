@@ -23,6 +23,7 @@ import {
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
+import {EleEspGenerationWaitComponent} from "./ele-esp-generation-wait/ele-esp-generation-wait.component";
 
 @Component({
   selector: 'app-electric-esp',
@@ -262,7 +263,7 @@ export class ElectricEspComponent implements OnInit {
     }
   }
   fillEle(){
-    this.s.getEleEsp(this.project, 'ele', this.docNumber, '').then(res => {
+    this.s.getEleEspCurrent(this.project, this.docNumber, this.issue.revision, this.auth.getUser().login, this.issue.id).then(res => {
       console.log(res);
       if (res != null){
         this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
@@ -615,7 +616,7 @@ export class ElectricEspComponent implements OnInit {
   }
 
   createEsp(value: string = '1') {
-    this.dialogService.open(AccommodationsEspGenerationWaitComponent, {
+    this.dialogService.open(EleEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
       data: {issue: this.issue, spools: value}

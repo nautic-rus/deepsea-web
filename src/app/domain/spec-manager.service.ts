@@ -40,6 +40,9 @@ export class SpecManagerService {
   async getDevicesEspFiles(docNumber: string, revision: string, lang: string) {
     return await this.http.get<any>(props.httpSpec + '/devicesEspFiles', {params: {docNumber, revision, lang}}).toPromise();
   }
+  getEleEspFiles(docNumber: string, revision: string, lang: string) {
+    return this.http.get<any>(props.httpSpec + '/eleEspFiles', {params: {docNumber, revision, lang}}).toPromise();
+  }
   async getAccommodationsEspFiles(docNumber: string, revision: string, lang: string) {
     return await this.http.get<any>(props.httpSpec + '/accommodationsEspFiles', {params: {docNumber, revision, lang}}).toPromise();
   }
@@ -149,6 +152,12 @@ export class SpecManagerService {
   createDeviceEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createDeviceEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
+  createEleEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
+    return this.http.get<string>(props.httpSpec + '/createEleEsp', {params: {project, docNumber, rev, user, kind, taskId}});
+  }
+  createEleEspWithFiles(foranProject: string, docNumber: string, rev: string, user: string, taskId: number){
+    return this.http.get<string>(props.httpSpec + '/createEleEspWithFiles', {params: {foranProject, docNumber, rev, user, taskId}});
+  }
   getZones(project: string){
     return this.http.get<any[]>(props.httpSpec + '/zones', {params: {project}});
   }
@@ -184,5 +193,8 @@ export class SpecManagerService {
   }
   getEleEsp(foranProject: string, kind: string, docNumber: string, rev: string) {
     return this.http.get<any>(props.httpSpec + '/eleEsp', {params: {foranProject, kind, docNumber, rev}}).toPromise();
+  }
+  getEleEspCurrent(foranProject: string, docNumber: string, rev: string, user: string, taskId: number) {
+    return this.http.get<any>(props.httpSpec + '/eleEspCurrent', {params: {foranProject, docNumber, rev, user, taskId}}).toPromise();
   }
 }

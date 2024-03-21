@@ -213,6 +213,7 @@ import { AddSupplierComponent } from './component/equipments/add-supplier/add-su
 import { EditEquipmentComponent } from './component/equipments/edit-equipment/edit-equipment.component';
 import { AgreeModalComponent } from './component/equipments/agree-modal/agree-modal.component';
 import { EditSupplierComponent } from './component/equipments/edit-supplier/edit-supplier.component';
+import { EleEspGenerationWaitComponent } from './component/documents/electric-esp/ele-esp-generation-wait/ele-esp-generation-wait.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -368,6 +369,7 @@ Quill.register('modules/imageResize', ImageResize);
     EditEquipmentComponent,
     AgreeModalComponent,
     EditSupplierComponent,
+    EleEspGenerationWaitComponent,
 
   ],
   imports: [
