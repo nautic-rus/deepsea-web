@@ -21,7 +21,6 @@ import {LanguageService} from "../../../domain/language.service";
   styleUrls: ['./edit-equipment.component.css']
 })
 export class EditEquipmentComponent implements OnInit {
-  //@Output() isDeleted = false;
 
   equipmentForm = this.formBuilder.group({
     id: this.dialogConfig.data.id,
@@ -42,9 +41,13 @@ export class EditEquipmentComponent implements OnInit {
   fileArray: any[] =[];
 
   sfis: Isfi[] = [];
+
+  buttonsAreHidden: boolean = true;  //для просмотра формы без возможности редактирования
+
   constructor(protected dialogConfig: DynamicDialogConfig, private formBuilder: FormBuilder, public prService: ProjectsManagerService, public auth: AuthManagerService,
               public eqService: EquipmentsService, public ref: DynamicDialogRef,  private dialogService: DialogService, public t: LanguageService) {
   }
+
 
   ngOnInit(): void {
     this.eqService.getSfis().subscribe(sfis=>{
@@ -60,6 +63,9 @@ export class EditEquipmentComponent implements OnInit {
       this.equipmentFilesSrc = res;
     });
 
+    if (this.dialogConfig.data.responsible_id == this.auth.getUser().id || this.auth.hasPerms('create_edit_equ')) {
+      this.buttonsAreHidden = false;
+    }
   }
 
   addFiles() {
@@ -138,6 +144,10 @@ export class EditEquipmentComponent implements OnInit {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  }
+
+  openFile(url: string) {
+    window.open(url);
   }
 
   getDateOnly(dateLong: number): string {  //преобразовать поле create_date в человеческий вид

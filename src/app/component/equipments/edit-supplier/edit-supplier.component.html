@@ -8,7 +8,7 @@
     <div class="header-info_sfi">
       <div  class="info_sfi" >ID {{supplier_id}} | SFI {{sfi}} - {{sfi_name}}</div>
 
-      <p [hidden]="edit =='name'" class="edit_container info-name mt-16 p-inputtext" (click)="showEditBlock('name')">{{supplierForm.value.name}} </p>
+      <button [hidden]="edit =='name'" [disabled]="buttonsAreHidden" class="edit_container info-name mt-16 p-inputtext" (click)="showEditBlock('name')">{{supplierForm.value.name}} </button>
       <div *ngIf="edit =='name'">
         <label for="name"></label>
         <input class="info-name mt-16 p-inputtext" id="name" type="text" formControlName="name">
@@ -31,7 +31,7 @@
 
 
     </div>
-    <div tooltipPosition="top" [pTooltip]="(t.tr('Удалить поставщика'))" (click)="deleteSupplier(supplier_id)">
+    <div [hidden]="buttonsAreHidden" tooltipPosition="top" [pTooltip]="(t.tr('Удалить поставщика'))" (click)="deleteSupplier(supplier_id)">
       <svg  class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
       </svg>
@@ -44,10 +44,9 @@
       <div class="main-info_description mb-5">
 
         <label class="mb-1" for="description">{{t.tr('Описание')}}</label>
-        <p [hidden]="edit =='description'" class="edit_container info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>
+        <button [disabled]="buttonsAreHidden" [hidden]="edit =='description'" class="edit_container info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </button>
         <div *ngIf="edit =='description'">
           <input pInputText id="description" type="text" formControlName="description"  placeholder="{{t.tr('Описание')}}">
-
           <div class="fx cxy">
             <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">
               <div  class="task-name-button cxy mr-10">
@@ -87,7 +86,7 @@
             <td>{{this.getDateOnly(file.create_date)}}</td>
             <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>
             <td>
-              <div (click)="deleteFile(file)">
+              <div [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
                 <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                   <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
@@ -98,8 +97,8 @@
       </p-table>
       <button *ngIf="supplierFilesSrc.length != 0" tabindex="10" [disabled]="showMoreFilesButtonIsDisabled" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" (click)="showMore()" class="button-ok mt-1 ">{{t.tr('Показать еще')}}</button>
 
-      <div class="mr-5 mt-20 cy">
-        <div tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+      <div  class="mr-5 mt-20 cy">
+        <div [hidden]="buttonsAreHidden" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
       </div>
 
 
@@ -119,7 +118,7 @@
             <td>{{this.auth.getUserNameById(file.user_id)}}</td>
             <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>
             <td>
-              <div (click)="deleteFile(file)">
+              <div [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
                 <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                   <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
@@ -142,22 +141,24 @@
       <p-table *ngIf="relatedTasks.length != 0" class="tasks_table table" [value]="relatedTasks" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="header">
           <tr>
-            <th pSortableColumn="status">{{t.tr('Статус')}} <p-sortIcon field="status"></p-sortIcon></th>
+            <th pSortableColumn="issue_name"> <p-sortIcon field="issue_name"></p-sortIcon></th>
             <th pSortableColumn="issue_name">{{t.tr('Наименование')}} <p-sortIcon field="issue_name"></p-sortIcon></th>
             <th pSortableColumn="started_by">{{t.tr('Автор')}} <p-sortIcon field="started_by"></p-sortIcon></th>
             <th pSortableColumn="responsible">{{t.tr('Ответственный')}} <p-sortIcon field="task.responsible"></p-sortIcon></th>
             <th pSortableColumn="assigned_to">{{t.tr('Исполнитель')}} <p-sortIcon field="assigned_to"></p-sortIcon></th>
+            <th pSortableColumn="status">{{t.tr('Статус')}} <p-sortIcon field="status"></p-sortIcon></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-task>
           <tr>
-            <td>{{task.status}}</td>
+            <td>{{task.issue_typ}}</td>
             <td>{{task.issue_name}}</td>
             <td>{{this.auth.getUserName(task.started_by)}}</td>
             <td>{{this.auth.getUserName(task.responsible)}}</td>
             <td *ngIf="!task.assigned_to">{{this.auth.getUserName(task.assigned_to)}}</td>
+            <td>{{task.status}}</td>
             <td>
-              <div (click)="deleteRelatedTask(task.id)">
+              <div [hidden]="buttonsAreHidden" (click)="deleteRelatedTask(task.id)">
                 <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                   <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                 </svg>
@@ -171,7 +172,7 @@
     <div class="main-right">  <!--блок справа со статусом, комментарием и производителем-->
       <label class="mb-1" for="status">{{t.tr('Статус')}} </label>
 
-      <p [hidden]="edit =='status'" class="edit_container info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </p>
+      <button [disabled]="buttonsAreHidden" [hidden]="edit =='status'" class="edit_container info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </button>
       <div *ngIf="edit =='status'">
         <p-dropdown formControlName="status" class="select" id="status" [options]="status" appendTo = "body" styleClass="width-220 font-14"></p-dropdown>
         <div class="df cxy">
@@ -198,7 +199,7 @@
 
 
       <label class="mb-1 mt-1" for="comment">{{t.tr('Комментарий')}} </label>
-      <p [hidden]="edit =='comment'" class="edit_container info-comment mt-16 p-inputtext" (click)="showEditBlock('comment')">{{supplierForm.value.comment}} </p>
+      <button [disabled]="buttonsAreHidden" [hidden]="edit =='comment'" class="edit_container info-comment mt-16 p-inputtext" (click)="showEditBlock('comment')">{{supplierForm.value.comment}} </button>
       <div *ngIf="edit =='comment'">
         <input class="info-comment mt-16 p-inputtext" id="comment" type="text" formControlName="comment">
 
@@ -218,7 +219,7 @@
 
 
       <label class="mb-1 mt-1" for="manufacturer">{{t.tr('Производитель')}} </label>
-      <p [hidden]="edit =='manufacturer'" class="edit_container info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </p>
+      <button [disabled]="buttonsAreHidden" [hidden]="edit =='manufacturer'" class="edit_container info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </button>
       <div *ngIf="edit =='manufacturer'">
         <input class="info-manufacturer mt-16 p-inputtext" id="manufacturer" type="text" formControlName="manufacturer">
 

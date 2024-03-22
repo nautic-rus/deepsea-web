@@ -73,3 +73,21 @@
 /deep/ .p-inputtext {
   padding: 8px 10px;
 }
+
+/*/deep/ .p-datatable .p-datatable-tbody > tr:hover {*/
+/*  background-color: #f3f2f1;*/
+/*}*/
+
+.equipment-tr:hover {
+  background-color: #f3f2f1;
+  cursor: pointer;
+}
+
+.supplier-tr:hover {
+  background-color: #f3f2f1;
+  cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.5;
+}

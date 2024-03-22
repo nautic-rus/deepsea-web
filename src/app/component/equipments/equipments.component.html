@@ -2,11 +2,11 @@
   <div class="equipments-component pt-10">
     <div class="head sticky-card ng-star-inserted pt-10">
       <div class="head-filter">
-        <div class="eq-button blue-button cxy mr-10" (click)="newEquipment()">
+        <div [class.button-disabled]="createEqButtonAreHidden" class="eq-button blue-button cxy mr-10" (click)="newEquipment()">
           <div class="pr-10 cxy">
             <img src="assets/icons/plus3.svg" height="18">
           </div>
-          <div class="cxy">{{t.tr('Добавить оборудование')}}</div>
+          <div   class="cxy">{{t.tr('Добавить оборудование')}}</div>
         </div>
         <div class="mr-10">
           <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
@@ -61,23 +61,23 @@
 
       <!--      заполняем таблицу с оборудованием-->
       <ng-template pTemplate="body" let-eq let-expanded="expanded">
-        <tr>
+        <tr class="equipment-tr">
           <td>
             <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
           </td>
-          <td>{{ eq.id }}</td>
-          <td>SFI {{ eq.sfi }}-{{ eq.name }}</td>
-          <td>{{ eq.status }}</td>
-          <td>{{ eq.department }}</td>
-          <td>{{ eq.comment }}</td>
-          <td>{{ eq.respons_name }} {{ eq.respons_surname }}</td>
-          <td>{{ eq.itt ===1? 'YES' : 'NO' }}</td>
-          <td><div tabindex="10" (click)="addSupplier(eq)" class="button-ok ml-1">{{t.tr('Добавить поставщика')}}</div></td>
-          <td>
-            <div [class.button-disabled]="editEquipmentButtonIsDisabled(eq)" class="cxy mr-10 edit-button" tooltipPosition="top" [pTooltip]="(t.tr('Редактировать'))" (click)="editEquipment(eq)">
-              <img src="assets/icons/edit1.svg" height="20">
-            </div>
-          </td>
+          <td (click)="editEquipment(eq)">{{ eq.id }}</td>
+          <td (click)="editEquipment(eq)">SFI {{ eq.sfi }}-{{ eq.name }}</td>
+          <td (click)="editEquipment(eq)">{{ eq.status }}</td>
+          <td (click)="editEquipment(eq)" >{{ eq.department }}</td>
+          <td (click)="editEquipment(eq)">{{ eq.comment }}</td>
+          <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>
+          <td (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
+          <td><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-ok ml-1">{{t.tr('Добавить поставщика')}}</div></td>
+<!--          <td>-->
+<!--            <div [class.button-disabled]="editEquipmentButtonIsDisabled(eq)" class="cxy mr-10 edit-button" tooltipPosition="top" [pTooltip]="(t.tr('Редактировать'))" (click)="editEquipment(eq)">-->
+<!--              <img src="assets/icons/edit1.svg" height="20">-->
+<!--            </div>-->
+<!--          </td>-->
         </tr>
       </ng-template>
 
@@ -98,16 +98,16 @@
                   </tr>
                 </ng-template>
                 <ng-template class="addTable" pTemplate="body" let-supplier>
-                  <tr>
-                    <td>{{ supplier.id }}</td>
-                    <td>{{ supplier.name }}</td>
-                    <td>{{ supplier.status }}</td>
-                    <td>{{getDateOnly(supplier.last_update)}}</td>
-                    <td>
-                      <div class="task-button cxy mr-10 edit-button" tooltipPosition="top" [pTooltip]="(t.tr('Редактировать'))" (click)="editSupplier(eq, supplier)">
-                        <img src="assets/icons/edit1.svg" height="20">
-                      </div>
-                    </td>
+                  <tr class="supplier-tr">
+                    <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>
+                    <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>
+                    <td (click)="editSupplier(eq, supplier)">{{ supplier.status }}</td>
+                    <td (click)="editSupplier(eq, supplier)">{{getDateOnly(supplier.last_update)}}</td>
+<!--                    <td>-->
+<!--                      <div class="task-button cxy mr-10 edit-button" tooltipPosition="top" [pTooltip]="(t.tr('Редактировать'))" (click)="editSupplier(eq, supplier)">-->
+<!--                        <img src="assets/icons/edit1.svg" height="20">-->
+<!--                      </div>-->
+<!--                    </td>-->
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">

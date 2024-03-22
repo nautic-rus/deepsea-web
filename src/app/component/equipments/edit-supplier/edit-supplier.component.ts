@@ -54,9 +54,9 @@ export class EditSupplierComponent implements OnInit {
 
   showMoreFilesButtonIsDisabled: boolean = false;
 
-  edit: string = '';
+  edit: string = '';  //для отображения
 
-
+  buttonsAreHidden: boolean = true;
 
   constructor(private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService,
               private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService) {
@@ -73,6 +73,7 @@ export class EditSupplierComponent implements OnInit {
     })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
        this.relatedTasks = res;
+       console.log(res)
     })
 
      this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
@@ -80,6 +81,10 @@ export class EditSupplierComponent implements OnInit {
       // console.log(res)
     })
 
+     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
+       this.buttonsAreHidden = false;
+     }
+  //
   }
 
   showEditBlock(blockName: string) {  //отображаем блок редактирования для blockName (если '', то все скрыты)

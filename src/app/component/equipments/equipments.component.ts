@@ -35,6 +35,9 @@ export class EquipmentsComponent implements OnInit {
 
   sfis: Isfi[] = [];
 
+  createEqButtonAreHidden = true;
+  createSuppButtonAreHidden = true;
+
 
   constructor( public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService,
                private supplierService: SupplierService, public t: LanguageService) {
@@ -59,6 +62,14 @@ export class EquipmentsComponent implements OnInit {
     this.eqService.getSfis().subscribe(sfis=>{
       this.sfis = sfis;
     });
+
+    if (this.auth.hasPerms('create_edit_equ')) {
+      this.createEqButtonAreHidden = false;
+    }
+
+    if (this.auth.hasPerms('create_edit_sup')) {
+      this.createSuppButtonAreHidden = false;
+    }
   }
 
   getProjectName(project: any) {
