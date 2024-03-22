@@ -1,7 +1,7 @@
 <div class="all-page h-100">
   <div class="all-card">
     <div class="card-head df">
-      <div class="mr-2">{{issue.name}}</div>
+      <div class="mr-2 width-600">{{issue.name}}</div>
       <div class="mr-2">{{issue.doc_number}}</div>
       <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
       <div class="mr-2" *ngIf="revEsp == ''">{{'rev' + issue.revision}}</div>
@@ -48,14 +48,21 @@
           <div class="tile">
             <div *ngFor="let ele of eleGroups; let i = index" class="card-tile">
               <div class="card-spool">
-                {{ele.pos}}
-                <div class="df" *ngFor="let e of ele.eles">
-                  <div class="mx-10">{{e.pos}}</div>
-                  <div class="mx-10">{{e.kind}}</div>
-                  <div class="mx-10">{{e.materialName}}</div>
-                  <div class="mx-10">{{e.units}}</div>
-                  <div class="mx-10">{{e.count}}</div>
-                  <div class="mx-10">{{e.code}}</div>
+                <div>
+                  <div>{{ele.pos}}</div>
+                  <div class="materials-button-mini blue-button cxy mt-10" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
+                    <img src="assets/icons/plus3.svg" height="15">
+                  </div>
+                </div>
+                <div class="mt-10">
+                  <div class="df" *ngFor="let e of ele.eles">
+                    <div class="mx-10">{{e.pos}}</div>
+                    <div class="mx-10">{{e.kind}}</div>
+                    <div class="mx-10">{{e.materialName}}</div>
+                    <div class="mx-10">{{e.units}}</div>
+                    <div class="mx-10">{{e.count}}</div>
+                    <div class="mx-10">{{e.code}}</div>
+                  </div>
                 </div>
               </div>
             </div>
