@@ -921,7 +921,8 @@
 .card-spool{
   position: relative;
   width: 100%;
-  height: 100%;
+  display: grid;
+  grid-template-columns: 70px 1fr;
 }
 .title-bold{
   font-weight: 500;
@@ -1192,4 +1193,10 @@
 .subtask-text{
   color: #343a40;
   font-size: 13px;
+}
+.materials-button-mini{
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  border-radius: 6px;
 }
