@@ -1,3 +1,24 @@
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-name-button {
+  padding: 0px 10px;
+  background-color: rgba(9, 30, 66, 0.04);
+  height: 32px;
+  border-radius: 2px;
+  box-shadow: 2px 2px 6px 0px rgba(34, 60, 80, 0.2);
+  border: 1px solid #dedede69;
+}
+
+.task-name-button:hover{
+  background-color: rgba(9, 30, 66, 0.08);
+}
+
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -20,4 +41,81 @@
 .delete-button {
   cursor: pointer;
 }
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-info_sfi {}
+
+.delete-button {
+  cursor: pointer;
+}
+
+.main-body {
+  display: grid;
+  gap: 25px;
+  grid-template-columns: 2fr 1fr;
+}
+
+.main-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.info_sfi {
+  font-weight: 600;
+  font-size: 14px;
+  color: grey;
+}
+
+.info-name {
+  font-weight: 600;
+  font-size: x-large;
+  margin-top: 16px;
+}
+
+.main-info_description {
+  display: flex;
+  flex-direction: column;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/deep/.p-datatable {
+  margin-top: 25px;
+}
+
+/deep/.p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+/deep/ .p-inputtext {
+  padding: 8px 10px;
+}
+
+/deep/ .p-inputtext:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+}
+
+.files_table {
+  margin-top: 5px;
+}
+
+/deep/.p-datatable .p-datatable-tbody > tr {
+  background: #ffffff;
+  color: #495057;
+  transition: box-shadow 0.2s;
+}
+
 

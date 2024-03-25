@@ -48,11 +48,17 @@ export class EquipmentsComponent implements OnInit {
     this.projects.forEach((x: any) => x.label = this.getProjectName(x));
 
     this.projects = this.projects.filter(x => this.auth.getUser().visible_projects.includes(x.name) && x.status == 0);
-    this.selectedProjects = ['NR002'];
+    this.projects.forEach(project => {
+      this.selectedProjects.push(project.name);
+    })
+    //this.selectedProjects = this.projects;
 
     //this.departments = this.prService.departments.map(x => new LV(x.name));
     this.departments = this.prService.departments.filter(x => x.visible_documents == 1 ).map(x => new LV(x.name));
-    this.selectedDepartments = ['System'];
+    this.departments.forEach(department => {
+      this.selectedDepartments.push(department.value)
+    })
+    //this.selectedDepartments = ['System'];
 
     this.eqService.getEquipments().subscribe(equipments => {
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
@@ -143,6 +149,7 @@ export class EquipmentsComponent implements OnInit {
     console.log('edit equipment');
     this.dialogService.open(EditEquipmentComponent, {
       header: this.t.tr('Редактировать оборудование'),
+      showHeader: false,
       modal: true,
       width: '50%',
       data: eq

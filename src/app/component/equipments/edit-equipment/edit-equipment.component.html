@@ -1,3 +1,8 @@
+<div class="header">
+  <h1>{{t.tr('Редактировать оборудование')}}</h1>
+  <div (click)="close()">X</div>
+</div>
+
 <div class="header-info">
   <div class="header-info_id">
     <div class="info_id" >ID {{this.equipmentForm.value.id}}</div>
@@ -50,15 +55,17 @@
 
   <div class="mt-1" *ngIf="equipmentFilesSrc.length != 0">{{t.tr('Вложения')}}</div>
   <p-table class="files_table table" [value]="equipmentFilesSrc" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+
     <ng-template pTemplate="body" let-file>
-      <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
+<!--      <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
         <tr>
           <td>
-            <div class="cxy">
+            <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
               <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
               <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
             </div>
           </td>
+          <td>{{file.type_name}}</td>
           <td>REV{{file.rev}}</td>
           <td>{{this.auth.getUserNameById(file.user_id)}}</td>
           <td>{{this.getDateOnly(file.create_date)}}</td>
@@ -71,7 +78,7 @@
             </div>
           </td>
         </tr>
-      </div>
+<!--      </div>-->
     </ng-template>
   </p-table>
 

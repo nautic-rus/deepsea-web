@@ -1,4 +1,4 @@
-<div class="">Upload files</div>
+<div class="">REV</div>
 <p-dropdown class="select" [options]="revs" appendTo = "body" styleClass="width-220 font-14" [(ngModel)]="rev"></p-dropdown>
 <div class="mb-15 width-400 position-relative" *ngFor="let fileGroup of fileGroups">
 
@@ -40,14 +40,13 @@
       </div>
     </div>
     <div class="df footer">
-<!--      <div class="mr-1 cx">-->
-<!--        <div tabindex="10" (click)="submit(fileGroup)" [class.disabled-button]="loaded.length == 0" class="button-ok cxy">{{'Отправить'}}</div>-->
-<!--      </div>-->
-<!--      <div tabindex="11" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>-->
     </div>
   </p-fieldset>
 </div>
 
-<div class="mr-1 cx">
-  <div tabindex="10" (click)="commit()" [class.disabled-button]="loaded.length == 0" class="button-ok cxy">{{'OK'}}</div>
+<div class="cx">
+  <div tabindex="10" (click)="commit()" [class.disabled-button]="rev =='-' || loaded.length == 0" class="button-ok cxy">{{'OK'}}</div>
+</div>
+<div class="cx error" *ngIf="rev =='-' && loaded.length!=0">
+  Укажите REV
 </div>

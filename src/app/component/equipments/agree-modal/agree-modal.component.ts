@@ -8,8 +8,8 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 })
 export class AgreeModalComponent implements OnInit {
 
-  title: string = this.conf.data.title;
-  filesArray = this.conf.data.filesArray
+  //title: string = this.conf.data.title;
+  //filesArray = this.conf.data.filesArray
   constructor(public conf: DynamicDialogConfig, public ref: DynamicDialogRef) { }
 
   ngOnInit(): void {

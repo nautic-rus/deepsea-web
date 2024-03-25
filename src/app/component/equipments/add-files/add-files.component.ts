@@ -29,8 +29,8 @@ export class AddFilesComponent implements OnInit {
   isCorrection = false;
   isSendNotification = true;
   closeTask = false;
-  revs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
-  rev = '1';
+  revs = ['-','0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+  rev = '';
   changeRev = true;
   comment = '';
   loaded: FileAttachment[] = [];
@@ -39,6 +39,8 @@ export class AddFilesComponent implements OnInit {
 
   isEqService: boolean = true;
 
+  addFilesButtonIsDisabled: boolean = true;
+
 
   equipmentFilesToDB: EquipmentsFiles[] = [];
 
@@ -46,15 +48,6 @@ export class AddFilesComponent implements OnInit {
               private supplierService: SupplierService) {
 
     this.loaded = this.conf.data.service.getWaitingCreateFiles();
-    //то что ниже можно удалить
-    if (this.conf.data.service === this.eqService) {
-      this.isEqService = true;
-      console.log('EEEEEEEQQQQQQQ')
-    } else if (this.conf.data.service === this.supplierService) {
-      this.isEqService = false;
-      console.log('SSSSSSSSSSSSuUUUUUUPPPPPPPP')
-    }
-    console.log(this.conf.data.service);
   }
 
   getRevisionFilesOfGroup(fileGroup: string): FileAttachment[] {

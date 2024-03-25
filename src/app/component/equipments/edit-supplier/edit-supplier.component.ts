@@ -42,7 +42,7 @@ export class EditSupplierComponent implements OnInit {
   supplier_id: number;
   sfi: number;
   sfi_name: string;  //расшифровка номера sfi
-  status: string[] = ['New','ITT sent', 'On approval', 'Approved', 'Not approved', 'Accepted']
+  status: string[] = ['New', 'ITT sent', 'On approval', 'Approved', 'Not approved', 'Accepted']
 
   relatedTasks: any[] = [] //написать интерфейс для тасков
 
@@ -67,29 +67,31 @@ export class EditSupplierComponent implements OnInit {
     this.sfi = this.eq_data.sfi;
     this.sfi_name = this.eq_data.name;
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-      this.supplierFilesSrc = res.slice(0,5);
+      // this.supplierFilesSrc = res;
+      this.supplierFilesSrc = res.slice(0, 5);
       this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
-      // console.log(this.supplierFilesSrc);
+       console.log(this.supplierFilesSrc);
     })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
-       this.relatedTasks = res;
-       console.log(res)
+      this.relatedTasks = res;
+      console.log(res)
     })
 
-     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+    this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
       this.historyArray = res;
       // console.log(res)
     })
 
-     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
-       this.buttonsAreHidden = false;
-     }
-  //
+    if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
+      this.buttonsAreHidden = false;
+    }
+    //
   }
 
   showEditBlock(blockName: string) {  //отображаем блок редактирования для blockName (если '', то все скрыты)
     this.edit = blockName;
-    this.supplierForm.patchValue({ name: this.prev_sup_data.name,  //если ввести и отменить, чтоб отображалось то, что должно быть (сохранено)
+    this.supplierForm.patchValue({
+      name: this.prev_sup_data.name,  //если ввести и отменить, чтоб отображалось то, что должно быть (сохранено)
       description: this.prev_sup_data.description,
       comment: this.prev_sup_data.comment,
       status: this.prev_sup_data.status,
@@ -119,16 +121,22 @@ export class EditSupplierComponent implements OnInit {
 
   refactorHistoryTitle(title: string): string {
     switch (title) {
-      case 'changed manufacturer': return 'изменил(а) производителя'
-      case 'changed comment': return 'изменил(а) комментарий'
-      case 'changed name': return 'изменил(а) наименование'
-      case 'changed description': return 'изменил(а) описание'
-      case 'changed status': return 'изменил(а) статус'
-      default: return title;
+      case 'changed manufacturer':
+        return 'изменил(а) производителя'
+      case 'changed comment':
+        return 'изменил(а) комментарий'
+      case 'changed name':
+        return 'изменил(а) наименование'
+      case 'changed description':
+        return 'изменил(а) описание'
+      case 'changed status':
+        return 'изменил(а) статус'
+      default:
+        return title;
     }
   }
 
-  addFiles() {
+  addFiles() {  //просто добавляем файлы в this.supplierFiles чтобы отобразить в блоке с файлами (которые планируем отправлять в БД)
     const dialog = this.dialogService.open(AddFilesComponent, {
       header: 'Uploading files',
       modal: true,
@@ -142,6 +150,20 @@ export class EditSupplierComponent implements OnInit {
       })
       this.eqService.setCreateFiles([]);
     })
+  }
+
+  addFiles2(addedFiles: SupplierFiles[]) {
+    addedFiles.forEach(file => {
+      const history = new SupplierHistory(this.auth.getUser().id, 'added file', '', file.url, this.supplier_id)
+      this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
+        this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+          this.historyArray = res;
+          console.log(res)
+        })
+      })
+      console.log(history);
+    })
+    this.editSupplier('', '', '')  //а здесь отправляем файлы () в БД
   }
 
   getFileExtensionIcon(fileUrl: string) {
@@ -218,8 +240,7 @@ export class EditSupplierComponent implements OnInit {
               console.error('Ошибка при удалении файла поставщика');
             }
           );
-      }
-      else {
+      } else {
         console.log('User canceled'); // User clicked Cancel
       }
     })
@@ -236,7 +257,7 @@ export class EditSupplierComponent implements OnInit {
   }
 
   getDateOnly(dateLong: number): string {  //преобразовать поле create_date в человеческий вид
-    if (dateLong == 0){
+    if (dateLong == 0) {
       return '--/--/--';
     }
     let date = new Date(dateLong);
@@ -254,15 +275,31 @@ export class EditSupplierComponent implements OnInit {
   }
 
   deleteRelatedTask(taskId: number) {  //удаляем из таблицы sup_task_relations строку по айди
-    // console.log(taskId);
-    this.eqService.deleteRelatedTask(taskId).subscribe(() => {
-      // console.log("delete Related Task with id = " + taskId);
-      this.relatedTasks = this.relatedTasks.filter((task) => {
-        // console.log(task)
-        return task.id !== taskId
-      })
-      // console.log(this.relatedTasks);
+    const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+      modal: true,
+      header: this.t.tr('Удалить связанную задачу?'),
+      data: {
+        //title: 'Удалить поставщика?',
+        supplier_id: this.supplier_id
+      }
     })
+    dialog.onClose.subscribe((res) => {
+      if (res) { // User clicked OK
+        console.log('User confirmed delete related task');
+        this.eqService.deleteRelatedTask(taskId).subscribe(() => {
+          // console.log("delete Related Task with id = " + taskId);
+          this.relatedTasks = this.relatedTasks.filter((task) => {
+            // console.log(task)
+            return task.id !== taskId
+          })
+          // console.log(this.relatedTasks);
+        })
+      } else {
+        console.log('User canceled'); // User clicked Cancel
+      }
+    })
+    // console.log(taskId);
+
   }
 
   showMore() {  //показать все файлы (изначально 5)
@@ -270,6 +307,10 @@ export class EditSupplierComponent implements OnInit {
       this.supplierFilesSrc = res;
     })
     this.showMoreFilesButtonIsDisabled = true;
+  }
+
+  openFile(url: string) {
+    window.open(url);
   }
 
   deleteSupplier(id:number) {
@@ -307,26 +348,12 @@ export class EditSupplierComponent implements OnInit {
   }
 
 
-  addFiles2(addedFiles: SupplierFiles[]) {
-    addedFiles.forEach(file => {
-      const history = new SupplierHistory(this.auth.getUser().id,'added file', '', file.url, this.supplier_id)
-      this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
-        this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
-          this.historyArray = res;
-          console.log(res)
-        })
-      })
-      console.log(history);
-    })
-
-
     // this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
     //   this.supplierFilesSrc = res.slice(0,5);
     //   this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
     //   console.log(this.supplierFilesSrc);
     // })
-    this.editSupplier('', '', '')
-  }
+
 
   editSupplier(name_value: string, prev_data: string, new_data: string) {
     if (name_value) {
