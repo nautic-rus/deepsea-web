@@ -96,7 +96,12 @@
           </tr>
         </ng-template>
       </p-table>
-      <button *ngIf="supplierFilesSrc.length != 0" tabindex="10" [disabled]="showMoreFilesButtonIsDisabled" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" (click)="showMore()" class="button-ok mt-1 ">{{t.tr('Показать еще')}}</button>
+<!--      <button *ngIf="supplierFilesSrc.length != 0" tabindex="10" [disabled]="showMoreFilesButtonIsDisabled" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" (click)="showMore()" class="button-ok mt-1 ">{{t.tr('Показать еще')}}</button>-->
+
+      <button *ngIf="supplierFilesSrc.length != 0" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" tabindex="10" (click)="showmore ? showMore() : showLess()" class="button-ok mt-1">
+        {{showmore ? t.tr('Показать еще') : t.tr('Скрыть')}}
+      </button>
+
 
       <div  class="mr-5 mt-20 cy">
         <div [hidden]="buttonsAreHidden" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>

@@ -62,6 +62,7 @@ export class LanguageService {
           case 'Активность': return 'Activity';
           case 'Показать': return 'Show';
           case 'Показать еще': return 'Show more';
+          case 'Скрыть': return 'Show less';
           case 'Все': return 'All';
           case 'Комментарии': return 'Messages';
           case 'История': return 'History';

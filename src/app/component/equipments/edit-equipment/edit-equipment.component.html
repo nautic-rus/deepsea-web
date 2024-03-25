@@ -44,14 +44,15 @@
     </ng-template>
   </p-dropdown>
 
+  <label for="name">{{t.tr('Наименование')}} </label>
+  <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
+
   <label for="description">{{t.tr('Описание')}} </label>
   <input [readOnly]="buttonsAreHidden" pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}">
 
   <label for="comment">{{t.tr('Комментарий')}} </label>
   <input [readOnly]="buttonsAreHidden" pInputText id="comment" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}">
 
-  <label for="name">{{t.tr('Наименование')}} </label>
-  <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
 
   <div class="mt-1" *ngIf="equipmentFilesSrc.length != 0">{{t.tr('Вложения')}}</div>
   <p-table class="files_table table" [value]="equipmentFilesSrc" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">

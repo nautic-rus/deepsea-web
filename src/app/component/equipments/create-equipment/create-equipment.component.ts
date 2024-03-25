@@ -19,6 +19,7 @@ import {LanguageService} from "../../../domain/language.service";
   styleUrls: ['./create-equipment.component.css']
 })
 export class CreateEquipmentComponent implements OnInit {
+  // @ts-ignore
   equipmentForm = this.formBuilder.group({
     sfi: ['', Validators.required],
     project: ['', Validators.required],
@@ -46,19 +47,19 @@ export class CreateEquipmentComponent implements OnInit {
       this.sfis = sfis;
     });
     this.equipmentProjects = this.prService.projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
+    console.log(this.equipmentProjects);
     if (this.equipmentProjects.length > 0 && this.equipmentProject == '-') {
       this.equipmentProject = this.equipmentProjects[0];
+      console.log(this.equipmentProject);
     }
+    console.log(this.equipmentProject);
     this.equipmentDepartments = this.prService.departments.map((x: any) => x.name);
-
-    console.log("this.auth.hasPerms('visible_plan_actual_hours')")
-    console.log(this.auth.hasPerms('create_edit_equ'))
-    console.log("this.auth.getUser().permissions")
-    console.log(this.auth.getUser().permissions)
+    console.log(this.equipmentForm.value)
   }
 
 
   close() {
+    console.log(this.equipmentForm.value)
     this.eqService.setWaitingCreateFiles([]);
     this.equipmentForm.reset();
     this.ref.close();

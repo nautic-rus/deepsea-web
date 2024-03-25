@@ -58,6 +58,8 @@ export class EditSupplierComponent implements OnInit {
 
   buttonsAreHidden: boolean = true;
 
+  showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов
+
   constructor(private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService,
               private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService) {
   }
@@ -70,7 +72,7 @@ export class EditSupplierComponent implements OnInit {
       // this.supplierFilesSrc = res;
       this.supplierFilesSrc = res.slice(0, 5);
       this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
-       console.log(this.supplierFilesSrc);
+       // console.log(this.supplierFilesSrc);
     })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
       this.relatedTasks = res;
@@ -85,6 +87,7 @@ export class EditSupplierComponent implements OnInit {
     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
       this.buttonsAreHidden = false;
     }
+
     //
   }
 
@@ -303,10 +306,24 @@ export class EditSupplierComponent implements OnInit {
   }
 
   showMore() {  //показать все файлы (изначально 5)
+    console.log("showMore")
+
+    this.showmore = false;
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
       this.supplierFilesSrc = res;
+      console.log(this.supplierFilesSrc)
     })
-    this.showMoreFilesButtonIsDisabled = true;
+    //this.showMoreFilesButtonIsDisabled = true;
+    console.log(this.showmore)
+
+  }
+
+  showLess() {
+    console.log("showLess")
+    this.showmore = true;
+    this.supplierFilesSrc = this.supplierFilesSrc.slice(0, 5);
+    console.log(this.showmore)
+    console.log(this.supplierFilesSrc)
   }
 
   openFile(url: string) {
@@ -396,9 +413,15 @@ export class EditSupplierComponent implements OnInit {
           this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {
             this.supplierFiles.forEach(file => {
               this.supplierFilesSrc.push(file); //перенесем в отображаемый массив
+              console.log(this.supplierFilesSrc);
+              if (this.supplierFilesSrc.length > 5) {
+                this.showmore = false;
+                this.showMoreFilesButtonIsDisabled = false;
+              }
             })
 
             this.supplierFiles = [];
+
           });
         })
         this.supplierService.setCreateFiles([]);

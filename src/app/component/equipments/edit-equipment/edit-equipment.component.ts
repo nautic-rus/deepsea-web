@@ -211,7 +211,7 @@ export class EditEquipmentComponent implements OnInit {
     eqToDB.description = eqFormValue.description;
     eqToDB.sfi = eqFormValue.sfi;
     eqToDB.project_id = this.findProjectId(eqFormValue.project);
-    eqToDB.responsible_id = this.auth.getUser().id;
+    eqToDB.responsible_id = this.dialogConfig.data.responsible_id;
     eqToDB.department_id = this.findDepartmentId(eqFormValue.department);
     eqToDB.comment = eqFormValue.comment;
     console.warn(this.equipmentForm.value);
