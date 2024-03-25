@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {FormBuilder, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
 import {EquipmentsService} from "../../../domain/equipments.service";
 import {ProjectsManagerService} from "../../../domain/projects-manager.service";
 import {FileAttachment} from "../../../domain/classes/file-attachment";
@@ -22,14 +22,14 @@ export class CreateEquipmentComponent implements OnInit {
   // @ts-ignore
   equipmentForm = this.formBuilder.group({
     sfi: ['', Validators.required],
-    project: ['', Validators.required],
-    department: ['', Validators.required],
+    project: ['', [Validators.required, this.customProjectValidator]],
+    department: ['', [Validators.required, this.customProjectValidator]],
     name: ['', Validators.required],
     description: [''],
     commentText: [''],
   });
   equipmentProjects: string[] = [];
-  equipmentProject = '-';
+   // equipmentProject = '-';
   equipmentDepartments: string[] = [];
 
   equipmentFiles: EquipmentsFiles[] = [];  //хранит файлы для отправки на БД
@@ -47,14 +47,19 @@ export class CreateEquipmentComponent implements OnInit {
       this.sfis = sfis;
     });
     this.equipmentProjects = this.prService.projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
-    console.log(this.equipmentProjects);
-    if (this.equipmentProjects.length > 0 && this.equipmentProject == '-') {
-      this.equipmentProject = this.equipmentProjects[0];
-      console.log(this.equipmentProject);
-    }
-    console.log(this.equipmentProject);
+
+    this.equipmentForm.get('project')?.setValue(this.equipmentProjects[0]); //изначально установим значение первого пришедшего проекта (если там '-' то не даст отправить форму из-за кастом валидатор, )
+
+
     this.equipmentDepartments = this.prService.departments.map((x: any) => x.name);
     console.log(this.equipmentForm.value)
+  }
+
+  customProjectValidator(control: AbstractControl) {
+    if (control.value === '-') {
+      return { projectInvalid: true };
+    }
+    return null;
   }
 
 

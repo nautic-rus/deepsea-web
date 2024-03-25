@@ -1,7 +1,7 @@
 
 <form [formGroup]="equipmentForm" class="form-container">
   <div class="big-text-create mb-1">{{t.tr('Проект')}}</div>
-  <p-dropdown formControlName="project" class="select" [options]="equipmentProjects" appendTo = "body" styleClass="width-300 font-13"></p-dropdown>
+  <p-dropdown formControlName="project" class="select"  [options]="equipmentProjects" appendTo = "body" styleClass="width-300 font-13"></p-dropdown>
   <div class="big-text-create mb-1">{{t.tr('Отдел')}}</div>
   <p-dropdown formControlName="department" class="select" [options]="equipmentDepartments" appendTo = "body" styleClass="width-300 font-13"></p-dropdown>
   <div class="big-text-create mb-1">{{'SFI'}}</div>
@@ -9,7 +9,6 @@
     <ng-template let-sfi pTemplate="item">
       <div class="df user-select">
         <div >{{sfi.code}}</div>
-        <div >{{sfi.ru}}</div>
         <div >{{sfi.eng}}</div>
       </div>
     </ng-template>
@@ -77,15 +76,21 @@
 <!--    </div>-->
 <!--  </div>-->
 
-  <div class="mr-5 mt-20 cx">
-    <div tabindex="10"  [class.disabled-button]="!equipmentForm.valid" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
-  </div>
-  <div class="mr-5 mt-20 cx">
-    <div tabindex="10" [class.disabled-button]="!equipmentForm.valid" (click)="createEquipment()" class="button-ok cxy">{{t.tr('Создать')}}</div>
-    <div tabindex="10" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
-  </div>
+
 </form>
 
+<div class="mr-5 mt-20 cx">
+  <div tabindex="10"  [class.disabled-button]="!equipmentForm.valid" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+</div>
+<div class="mr-5 mt-20 cx">
+<!--  <div tabindex="10" [class.disabled-button]="!equipmentForm.valid  && (equipmentForm.get('project')?.value == '-')" (click)="createEquipment()" class="button-ok cxy">{{t.tr('Создать')}}</div>-->
+<!--  <div tabindex="10" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>-->
+
+  <button tabindex="10" [class.disabled-button]="!equipmentForm.valid" (click)="createEquipment()" class="button-ok cxy">{{t.tr('Создать')}}</button>
+  <div tabindex="10" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
+<!--      <div tabindex="10" [class.disabled-button]="!equipmentForm.valid && !equipmentForm.get('project')?.touched && (equipmentForm.get('project')?.value == '-')" (click)="createEquipment()" class="button-ok cxy">{{t.tr('Создать')}}</div>-->
+<!--      <div tabindex="10" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>-->
+</div>
 <!--<hr>-->
 
 <!--<p>Form Value: {{ equipmentForm.value | json }}</p>-->
