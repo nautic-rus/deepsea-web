@@ -15,6 +15,13 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {CloseCode} from "../../../domain/classes/close-code";
 import {LanguageService} from "../../../domain/language.service";
 import {SupplierHistory} from "../../../domain/classes/supplier-history";
+import {ActivatedRoute} from "@angular/router";
+import {MessageService} from "primeng/api";
+import {CreateTaskComponent} from "../../create-task/create-task.component";
+import {zip} from "rxjs";
+import {map} from "rxjs/operators";
+import {RelatedTask} from "../../../domain/classes/related-task";
+import {IssueManagerService} from "../../../domain/issue-manager.service";
 
 @Component({
   selector: 'app-edit-supplier',
@@ -40,13 +47,14 @@ export class EditSupplierComponent implements OnInit {
   historyArray: any[] = [];
 
   supplier_id: number;
+  equipment_id: number = this.eq_data.id;
   sfi: number;
   sfi_name: string;  //расшифровка номера sfi
   status: string[] = ['New', 'ITT sent', 'On approval', 'Approved', 'Not approved', 'Accepted']
 
-  relatedTasks: any[] = [] //написать интерфейс для тасков
+  relatedTasks: RelatedTask[] = []
 
-  supplierFilesSrc: SupplierFiles[] = []; //файлы, с сервера которые (они отображаются на странице. все - если нажата кнопка showMore (showMoreFilesButtonIsDisabled = true), 5шт если не нажата )
+  supplierFilesSrc: SupplierFiles[] = []; //Файлы, с сервера которые (они отображаются на странице. все - если нажата кнопка showMore (showMoreFilesButtonIsDisabled = true), 5шт если не нажата )
   supplierFiles: SupplierFiles[] = [];  //файлы, которые я добавляю в момент редактирования
 
 
@@ -60,8 +68,12 @@ export class EditSupplierComponent implements OnInit {
 
   showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов
 
-  constructor(private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService,
-              private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService) {
+  constructor(private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService, private messageService: MessageService,
+              private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService, private route: ActivatedRoute, public issueManager: IssueManagerService) {
+
+    route.queryParams.subscribe(params => {
+      console.log(params)
+    });
   }
 
   ngOnInit(): void {
@@ -90,6 +102,30 @@ export class EditSupplierComponent implements OnInit {
 
     //
   }
+
+  copySupplierUrl() {
+    navigator.clipboard.writeText(location.origin + '/equipments' + '?equipmentId=' + this.equipment_id + '&supplierId=' + this.supplier_id);
+    this.messageService.add({key:'supplierUrl', severity:'success', summary:'Copied', detail:'You have copied supplier url.'});
+  }
+
+
+  createCombined(issue: object | null) {
+      this.dialogService.open(CreateTaskComponent, {
+        showHeader: false,
+        modal: true,
+        data: [issue, '']
+      }).onClose.subscribe(res => {  //приходит айди созданной задачи в issue
+        let issueId = res;
+        let relTask = {id: 0, suppliers_id: this.supplier_id, task_id: issueId}  //заполняю для добавления в таблицу supp_task_relation
+        this.eqService.addRelatedSupplierTasks(JSON.stringify(relTask)).subscribe((res) => {  //приходит айди для таблицы supp_task_relation
+          this.issueManager.getIssueDetails(issueId).then(issue => {
+            //добавляю в таблицу this.relatedTasks для отображения на странице
+            this.relatedTasks.push({id: res, issue_id: issueId, issue_typ: issue.issue_type, issue_name: issue.name, started_by: issue.started_by, responsible: issue.responsible, assigned_to: issue.assigned_to, status: issue.status})
+          });
+        })
+      });
+  }
+
 
   showEditBlock(blockName: string) {  //отображаем блок редактирования для blockName (если '', то все скрыты)
     this.edit = blockName;
@@ -306,15 +342,12 @@ export class EditSupplierComponent implements OnInit {
   }
 
   showMore() {  //показать все файлы (изначально 5)
-    console.log("showMore")
-
     this.showmore = false;
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
       this.supplierFilesSrc = res;
       console.log(this.supplierFilesSrc)
     })
-    //this.showMoreFilesButtonIsDisabled = true;
-    console.log(this.showmore)
+
 
   }
 
@@ -329,6 +362,7 @@ export class EditSupplierComponent implements OnInit {
   openFile(url: string) {
     window.open(url);
   }
+
 
   deleteSupplier(id:number) {
     console.log("deleteSupplier");

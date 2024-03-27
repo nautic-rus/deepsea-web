@@ -103,6 +103,7 @@ export class LanguageService {
           case 'СОТРУДНИКИ': return 'EMPLOYEES';
           case 'Выйти': return 'Exit';
           case 'Копировать ссылку задачи': return 'Copy link to task';
+          case 'Копировать ссылку поставщика': return 'Copy link to supplier';
           case 'Копировать задачу': return 'Copy task';
           case 'Удалить задачу': return 'Remove task';
           case 'Полужирный Ctrl+B': return 'Bold Ctrl+B';

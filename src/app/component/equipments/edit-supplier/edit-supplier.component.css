@@ -85,3 +85,9 @@
 .task-name-button:hover{
   background-color: rgba(9, 30, 66, 0.08);
 }
+
+.task-buttons {
+  height: 32px;
+  display: flex;
+  justify-content: flex-end;
+}
