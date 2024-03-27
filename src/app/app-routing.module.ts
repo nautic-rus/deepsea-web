@@ -59,6 +59,7 @@ import {ComplectManagerComponent} from "./component/tools/complect-manager/compl
 import {MaterialComplectManagerComponent} from "./component/tools/material-complect-manager/material-complect-manager.component";
 import {ProjectProgressChartComponent} from "./component/charts/project-progress-chart/project-progress-chart.component";
 import  {EquipmentsComponent} from "./component/equipments/equipments.component";
+import {SpecMaterialsComponent} from "./component/spec-materials/spec-materials.component";
 import {EditSupplierComponent} from "./component/equipments/edit-supplier/edit-supplier.component";
 
 const routes: Routes = [
@@ -67,6 +68,7 @@ const routes: Routes = [
   { path: 'create-task', component: CreateTaskComponent, canActivate: [AuthGuard], data: {animation: 'CreateTaskComponent'} },
   { path: 'task', component: TaskComponent, canActivate: [AuthGuard], data: {animation: 'TaskComponent'} },
   { path: 'materials', component: MaterialsComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsComponent'} },
+  { path: 'spec-materials', component: SpecMaterialsComponent, canActivate: [AuthGuard], data: {animation: 'SpecMaterialsComponent'} },
   { path: 'gantt', component: GanttComponent, canActivate: [AuthGuard], data: {animation: 'GanttComponent'} },
   { path: 'sections', component: SectionsComponent, canActivate: [AuthGuard], data: {animation: 'SectionsComponent'} },
   { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard], data: {animation: 'DocumentsComponent'} },

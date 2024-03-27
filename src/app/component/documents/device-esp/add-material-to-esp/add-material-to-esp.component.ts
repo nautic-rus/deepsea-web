@@ -56,7 +56,8 @@ export class AddMaterialToEspComponent implements OnInit {
   newNode: any = {};
   docNumber: string = '';
   forLabel = '';
-
+  kind = '';
+  issueId = 0;
   constructor(public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
@@ -71,6 +72,10 @@ export class AddMaterialToEspComponent implements OnInit {
     if (this.forLabel == 'NEW'){
       this.forLabel = '';
       this.label = this.dialog.data[1];
+    }
+    else{
+      this.kind = this.dialog.data[2];
+      this.issueId = this.dialog.data[3];
     }
     this.zone = this.dialog.data[3];
     this.materialManager.getMaterials(this.project).then(res => {
@@ -126,14 +131,28 @@ export class AddMaterialToEspComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
-    console.log(this.label);
-    if (this.label.toString().includes('#')){
-      this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
-      return;
+    if (this.kind == 'ele'){
+      if (this.label.includes('#')){
+        alert('Вы не указали номер позиции');
+        return;
+      }
+      else{
+        this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind).subscribe(res => {
+          this.ref.close('success');
+        });
+      }
     }
-    this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel, this.addText, this.zone).then(res => {
-      this.ref.close('success');
-    });
+    else{
+      console.log(this.label);
+      if (this.label.toString().includes('#')){
+        this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
+        return;
+      }
+      this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel, this.addText, this.zone).then(res => {
+        this.ref.close('success');
+      });
+    }
+
     // console.log(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel)
   }
 
