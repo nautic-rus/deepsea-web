@@ -7,6 +7,7 @@ import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import JSZip from "jszip";
 import {forkJoin} from "rxjs";
+import {group} from "@angular/animations";
 
 @Component({
   selector: 'app-obj-view-public',
@@ -36,9 +37,12 @@ export class ObjViewPublicComponent implements OnInit {
   windowMode = 0;
   isom = 0;
 
+
   loading = true;
   selectedSegment = '';
 
+  matColor = '#00ff00';
+  backgroundColor = '#a8c3ed';
 
   raycaster = new THREE.Raycaster();
   pointer = new THREE.Vector2();
@@ -48,6 +52,8 @@ export class ObjViewPublicComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.url = params.url ? params.url : '';
+      this.matColor = params.mcol ? ('#' + params.mcol) : this.matColor;
+      this.backgroundColor = params.bcol ? ('#' + params.bcol) : this.backgroundColor;
       if (this.url == ''){
         this.errorMessage = 'There is no document number or spool specified';
       }
@@ -75,23 +81,33 @@ export class ObjViewPublicComponent implements OnInit {
     this.camera.position.set(0, 0, 1000);
     this.scene.add(this.camera);
 
-    this.scene.background = new THREE.Color( 0x808080 );
+    this.scene.background = new THREE.Color( this.backgroundColor );
 
     // soft white light
-    this.light = new THREE.AmbientLight(0x404040);
-    this.light.intensity = 3;
-    this.scene.add(this.light);
+    // this.light = new THREE.AmbientLight(0x404040, 3);
+    // this.scene.add(this.light);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3);
-    this.scene.add( directionalLight );
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    // this.scene.add( directionalLight );
+
 
     this.controls = new OrbitControls( this.camera, this.renderer.domElement );
     this.controls.addEventListener( 'change', () => this.render()) ; // use if there is no animation loop
     this.controls.minDistance = 10;
     this.controls.maxDistance = 30000;
 
+    const light = new THREE.PointLight( 0xffffff, 0.6);
+    this.camera.add( light );
+    const material = new THREE.MeshStandardMaterial( {color: this.matColor} );
+
+
     objLoader.load(this.url, (object) => {
       this.model = object;
+      this.model.children.forEach((x: any) => {
+        x.material = material;
+        // @ts-ignore
+        //x.children[0].map = 'bricks';
+      });
       this.scene.add(this.model);
       this.setView(this.model);
       this.render();
