@@ -189,7 +189,7 @@ export class CreateEquipmentComponent implements OnInit {
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
       console.log(eqToDB);
-      console.log('res');
+      console.log('res .addEquipment');
       console.log(res);
       //this.eqService.setEqID(res.)
       if (res.includes('error')){

@@ -15,6 +15,7 @@ import {CloseCode} from "../../domain/classes/close-code";
 import {SupplierService} from "../../domain/supplier.service";
 import {Isfi} from "../../domain/interfaces/sfi";
 import {LanguageService} from "../../domain/language.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -38,9 +39,19 @@ export class EquipmentsComponent implements OnInit {
   createEqButtonAreHidden = true;
   createSuppButtonAreHidden = true;
 
+  equipmentId:number = 0;
+  supplierId: number = 0;
+
 
   constructor( public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService,
-               private supplierService: SupplierService, public t: LanguageService) {
+               private supplierService: SupplierService, public t: LanguageService, private route: ActivatedRoute, private router: Router) {
+
+    route.queryParams.subscribe(params => {
+      if (params['equipmentId'] && params['supplierId']) {
+        this.equipmentId = params.equipmentId
+        this.supplierId = params.supplierId
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -61,7 +72,22 @@ export class EquipmentsComponent implements OnInit {
     //this.selectedDepartments = ['System'];
 
     this.eqService.getEquipments().subscribe(equipments => {
+
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
+
+      if (this.equipmentId !=0 && this.supplierId != 0) {  //чтобы открыть editSupplier выполняем поиск по айдишникам
+        console.log('this.equipmentId !=0 && this.supplierId != 0)')
+        console.log(this.equipmentsSrc);
+
+        let equipmentById = this.equipmentsSrc.find(eq => eq.id == this.equipmentId);
+        let supplierById = equipmentById?.suppliers?.find(sup => sup.id == this.supplierId);
+
+        console.log(equipmentById);
+        console.log(supplierById);
+
+        this.editSupplier(equipmentById!, supplierById!);
+      }
+
       this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
     });
 
@@ -186,11 +212,7 @@ export class EquipmentsComponent implements OnInit {
         supplier: supplier
       },
     }).onClose.subscribe(closed => { //сразу выводить на страницу изменения после редактирования supplier
-      console.log(" this.supplierService.setWaitingCreateFiles([])")
       this.supplierService.setWaitingCreateFiles([]);
-      // console.log(this.supplierService.getWaitingCreateFiles())
-      // console.log('closed + editSupplier');
-      // console.log(closed);
       if (closed.code === 1 ) {   // значит, что пользователь удалил поставщика в форме редактирования поставщика
         eq.suppliers = eq.suppliers?.filter(sup => { return sup.id != closed.data})
       }
@@ -201,6 +223,7 @@ export class EquipmentsComponent implements OnInit {
         });
       }
       this.supplierService.setWaitingCreateFiles([]);
+      this.router.navigate(['.'], { relativeTo: this.route });
     })
   }
 

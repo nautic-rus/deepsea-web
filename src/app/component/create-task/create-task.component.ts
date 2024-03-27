@@ -354,6 +354,8 @@ export class CreateTaskComponent implements OnInit {
         issue.file_attachments = this.loaded;
         issue.responsible = user;
         this.issues.startIssue(issue).then(res => {
+          console.log('this.issues.startIssue(issue)')
+          console.log(res);
           if (this.action == 'combine'){
             this.issues.combineIssues(this.parent_id, +res, this.auth.getUser().login);
           }
@@ -367,6 +369,8 @@ export class CreateTaskComponent implements OnInit {
       // @ts-ignore
       issue.file_attachments = this.loaded;
       this.issues.startIssue(issue).then(res => {
+        console.log('this.issues.startIssue(issue)')
+        console.log(res);
         if (this.action == 'combine'){
           this.issues.combineIssues(this.parent_id, +res, this.auth.getUser().login);
         }

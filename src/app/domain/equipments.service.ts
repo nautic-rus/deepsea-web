@@ -42,11 +42,15 @@ export class EquipmentsService {
     return this.http.get<string>(props.http + '/deleteSupplier', {params: {id}});
   }
 
-  getRelatedTasks(id: number): Observable<any> {
+  getRelatedTasks(id: number): Observable<any> {  //передаем индекс поставщика
     return this.http.get<string>(props.http + '/relatedTasks', {params: {id}});
   }
 
-  deleteRelatedTask(id: number) :  Observable<any> {
+  addRelatedSupplierTasks(jsonValue: string): Observable<any> {
+    return this.http.post<string>(props.http + '/supTaskAdd', jsonValue);
+  }
+
+  deleteRelatedTask(id: number) :  Observable<any> {  //передаем уникальный айди и удаляем связь из таблицы sup_task_relation
     return this.http.get<string>(props.http + '/delRelatedTask', {params: {id}});
   }
 
