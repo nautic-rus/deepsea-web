@@ -90,6 +90,7 @@ export class ManHoursChartComponent implements OnInit {
   }
   filterUsers(){
     this.users = this.usersSrc
+      .filter(x => x.removed != 1)
       .filter(x => this.selectedDepartments.includes(x.department))
       .filter(x => !this.showOnlyEngineers || x.groups.find(x => x.includes('Engineers')) != null);
     if (this.users.length > 0){
@@ -133,6 +134,7 @@ export class ManHoursChartComponent implements OnInit {
       });
 
       this.usersHeight = this.users.length * this.userRowHeight + 'px';
+
       setTimeout(() => {
         this.data = {
           labels: labels,
@@ -164,6 +166,9 @@ export class ManHoursChartComponent implements OnInit {
         else{
           this.selectUser(this.selectedUser);
         }
+
+        console.log(this.users);
+        console.log(this.data)
       }, 100);
     }
     else{
