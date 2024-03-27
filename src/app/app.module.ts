@@ -215,6 +215,7 @@ import { AgreeModalComponent } from './component/equipments/agree-modal/agree-mo
 import { EditSupplierComponent } from './component/equipments/edit-supplier/edit-supplier.component';
 import { EleEspGenerationWaitComponent } from './component/documents/electric-esp/ele-esp-generation-wait/ele-esp-generation-wait.component';
 import { SpecMaterialsComponent } from './component/spec-materials/spec-materials.component';
+import { ObjViewPublicComponent } from './component/obj-view-public/obj-view-public.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -372,6 +373,7 @@ Quill.register('modules/imageResize', ImageResize);
     EditSupplierComponent,
     EleEspGenerationWaitComponent,
     SpecMaterialsComponent,
+    ObjViewPublicComponent,
 
   ],
   imports: [

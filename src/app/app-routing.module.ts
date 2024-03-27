@@ -61,6 +61,7 @@ import {ProjectProgressChartComponent} from "./component/charts/project-progress
 import  {EquipmentsComponent} from "./component/equipments/equipments.component";
 import {SpecMaterialsComponent} from "./component/spec-materials/spec-materials.component";
 import {EditSupplierComponent} from "./component/equipments/edit-supplier/edit-supplier.component";
+import {ObjViewPublicComponent} from "./component/obj-view-public/obj-view-public.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -122,6 +123,7 @@ const routes: Routes = [
   { path: 'complect-manager', component: ComplectManagerComponent, data: {animation: 'ComplectManagerComponent'}, canActivate: [AuthGuard] },
   { path: 'material-complect-manager', component: MaterialComplectManagerComponent, data: {animation: 'MaterialComplectManagerComponent'}, canActivate: [AuthGuard] },
   { path: 'equipments', component: EquipmentsComponent, data: {animation: 'EquipmentsComponent'}, canActivate: [AuthGuard] },
+  { path: '3d', component: ObjViewPublicComponent, data: {animation: 'ObjViewPublicComponent'} },
   // { path: 'equipments/supplier/:id', component: EditSupplierComponent },
   { path: '**', redirectTo: '/' },
 ];
