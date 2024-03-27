@@ -845,7 +845,7 @@ export class ElectricEspComponent implements OnInit {
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label]
+      data: [this.docNumber, label, 'ele', this.issue.id]
     }).onClose.subscribe(res => {
       this.issueManager.getIssueDetails(this.issue.id).then(issue => {
         this.issue = issue;
