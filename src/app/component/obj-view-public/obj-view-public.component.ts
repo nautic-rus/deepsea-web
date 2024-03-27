@@ -41,7 +41,7 @@ export class ObjViewPublicComponent implements OnInit {
   loading = true;
   selectedSegment = '';
 
-  matColor = '#00ff00';
+  materialColor = '#00ff00';
   backgroundColor = '#a8c3ed';
 
   raycaster = new THREE.Raycaster();
@@ -52,7 +52,7 @@ export class ObjViewPublicComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.url = params.url ? params.url : '';
-      this.matColor = params.mcol ? ('#' + params.mcol) : this.matColor;
+      this.materialColor = params.mcol ? ('#' + params.mcol) : this.materialColor;
       this.backgroundColor = params.bcol ? ('#' + params.bcol) : this.backgroundColor;
       if (this.url == ''){
         this.errorMessage = 'There is no document number or spool specified';
@@ -98,7 +98,7 @@ export class ObjViewPublicComponent implements OnInit {
 
     const light = new THREE.PointLight( 0xffffff, 0.6);
     this.camera.add( light );
-    const material = new THREE.MeshStandardMaterial( {color: this.matColor} );
+    const material = new THREE.MeshStandardMaterial( {color: this.materialColor} );
 
 
     objLoader.load(this.url, (object) => {

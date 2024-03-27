@@ -216,6 +216,8 @@ import { EditSupplierComponent } from './component/equipments/edit-supplier/edit
 import { EleEspGenerationWaitComponent } from './component/documents/electric-esp/ele-esp-generation-wait/ele-esp-generation-wait.component';
 import { SpecMaterialsComponent } from './component/spec-materials/spec-materials.component';
 import { ObjViewPublicComponent } from './component/obj-view-public/obj-view-public.component';
+import { ObjViewUrlCreateComponent } from './component/tools/obj-view-url-create/obj-view-url-create.component';
+import {ColorPickerModule} from "primeng/colorpicker";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -374,6 +376,7 @@ Quill.register('modules/imageResize', ImageResize);
     EleEspGenerationWaitComponent,
     SpecMaterialsComponent,
     ObjViewPublicComponent,
+    ObjViewUrlCreateComponent,
 
   ],
   imports: [
@@ -435,7 +438,8 @@ Quill.register('modules/imageResize', ImageResize);
     InputMaskModule,
     ReactiveFormsModule,
     TreeSelectModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    ColorPickerModule
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]
