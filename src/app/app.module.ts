@@ -218,6 +218,8 @@ import { SpecMaterialsComponent } from './component/spec-materials/spec-material
 import { ObjViewPublicComponent } from './component/obj-view-public/obj-view-public.component';
 import { ObjViewUrlCreateComponent } from './component/tools/obj-view-url-create/obj-view-url-create.component';
 import {ColorPickerModule} from "primeng/colorpicker";
+import { ObjViewPublicDeviceComponent } from './component/obj-view-public-device/obj-view-public-device.component';
+import { ObjViewUrlCreateDeviceComponent } from './component/tools/obj-view-url-create-device/obj-view-url-create-device.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -377,6 +379,8 @@ Quill.register('modules/imageResize', ImageResize);
     SpecMaterialsComponent,
     ObjViewPublicComponent,
     ObjViewUrlCreateComponent,
+    ObjViewPublicDeviceComponent,
+    ObjViewUrlCreateDeviceComponent,
 
   ],
   imports: [

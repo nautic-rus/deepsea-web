@@ -63,6 +63,8 @@ import {SpecMaterialsComponent} from "./component/spec-materials/spec-materials.
 import {EditSupplierComponent} from "./component/equipments/edit-supplier/edit-supplier.component";
 import {ObjViewPublicComponent} from "./component/obj-view-public/obj-view-public.component";
 import {ObjViewUrlCreateComponent} from "./component/tools/obj-view-url-create/obj-view-url-create.component";
+import {ObjViewPublicDeviceComponent} from "./component/obj-view-public-device/obj-view-public-device.component";
+import {ObjViewUrlCreateDeviceComponent} from "./component/tools/obj-view-url-create-device/obj-view-url-create-device.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -125,7 +127,9 @@ const routes: Routes = [
   { path: 'material-complect-manager', component: MaterialComplectManagerComponent, data: {animation: 'MaterialComplectManagerComponent'}, canActivate: [AuthGuard] },
   { path: 'equipments', component: EquipmentsComponent, data: {animation: 'EquipmentsComponent'}, canActivate: [AuthGuard] },
   { path: '3d', component: ObjViewPublicComponent, data: {animation: 'ObjViewPublicComponent'} },
+  { path: '3d-device', component: ObjViewPublicDeviceComponent, data: {animation: 'ObjViewPublicDeviceComponent'} },
   { path: '3d-url-create', component: ObjViewUrlCreateComponent, data: {animation: 'ObjViewUrlCreateComponent'}, canActivate: [AuthGuard] },
+  { path: '3d-url-create-device', component: ObjViewUrlCreateDeviceComponent, data: {animation: 'ObjViewUrlCreateDeviceComponent'}, canActivate: [AuthGuard] },
   // { path: 'equipments/supplier/:id', component: EditSupplierComponent },
   { path: '**', redirectTo: '/' },
 ];

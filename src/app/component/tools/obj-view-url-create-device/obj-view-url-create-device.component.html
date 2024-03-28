@@ -1,0 +1,47 @@
+<div class="mt-5">
+  <div class="upload cx cy">
+    <div class="cxy w-100" (click)="selEquip.click()" (drop)="$event.preventDefault(); onFilesDrop($event);" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+      Equipment {{eqUrl}}
+    </div>
+  </div>
+  <input hidden #selEquip type="file" (change)="handleFileInput(selEquip.files, 'eq')" accept=".obj">
+  <div class="upload cx cy">
+    <div class="cxy w-100" (click)="selHull.click()" (drop)="$event.preventDefault(); onFilesDrop($event);" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+      Hull {{hullUrl}}
+    </div>
+  </div>
+  <input hidden #selHull type="file" (change)="handleFileInput(selHull.files, 'hull')" accept=".obj">
+  <div class="upload cx cy">
+    <div class="cxy w-100" (click)="selStruct.click()" (drop)="$event.preventDefault(); onFilesDrop($event);" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+      Structure {{structureUrl}}
+    </div>
+  </div>
+  <input hidden #selStruct type="file" (change)="handleFileInput(selStruct.files, 'structure')" accept=".obj">
+</div>
+<div>
+  <div class="cx">
+    <div class="ml-5">
+      Background color:
+      <p-colorPicker [(ngModel)]="backgroundColor"></p-colorPicker>
+    </div>
+    <div class="ml-5">
+      Hull color:
+      <p-colorPicker [(ngModel)]="hcol"></p-colorPicker>
+    </div>
+    <div class="ml-5">
+      Equipment color:
+      <p-colorPicker [(ngModel)]="ecol"></p-colorPicker>
+    </div>
+    <div class="ml-5">
+      Structure color:
+      <p-colorPicker [(ngModel)]="scol"></p-colorPicker>
+    </div>
+  </div>
+  <div class="mt-5 cx">{{getQrCodeValue()}}</div>
+  <div class="cx">
+    <qr-code [value]="getQrCodeValue()"></qr-code>
+  </div>
+  <div class="cx">
+    <button (click)="openPreview()">PREVIEW</button>
+  </div>
+</div>
