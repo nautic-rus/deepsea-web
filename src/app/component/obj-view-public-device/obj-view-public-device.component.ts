@@ -72,7 +72,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       this.scol = params.scol ? ('#' + params.scol) : this.scol;
 
       if (this.hurl == '' && this.eurl == '' && this.surl == ''){
-        this.errorMessage = 'There is no document number or spool specified';
+        this.errorMessage = 'There is no model url';
       }
       if (this.errorMessage == ''){
         this.loadModel();
