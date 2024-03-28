@@ -12,8 +12,8 @@ export class ObjViewUrlCreateDeviceComponent implements OnInit {
   eqUrl = '';
   hullUrl = '';
   structureUrl = '';
-  url1 = 'https://deep-sea.ru/3d-device?';
-  url = 'http://localhost:4200/3d-device?';
+  url = 'https://deep-sea.ru/3d-device?';
+  url1 = 'http://localhost:4200/3d-device?';
   hcol = '#00ff00';
   scol = '#0077ff';
   ecol = '#c55e13';
