@@ -35,3 +35,8 @@
   top: 0;
   left: 0;
 }
+.visible{
+  position: absolute;
+  left: 10px;
+  top: 5px;
+}

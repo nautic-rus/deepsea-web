@@ -53,6 +53,10 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   raycaster = new THREE.Raycaster();
   pointer = new THREE.Vector2();
 
+  hullVisible = true;
+  equipmentVisible = true;
+  structureVisible = true;
+
   public constructor(public route: ActivatedRoute, public issues: IssueManagerService, public s: SpecManagerService) {
   }
   ngOnInit(): void {
@@ -119,6 +123,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
         hull.children.forEach((x: any) => {
           x.material = hm;
         });
+        hull.name = 'hull';
         group.add(hull);
         this.groupAdded(group);
       }, (xhr ) => {
@@ -133,6 +138,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
         equip.children.forEach((x: any) => {
           x.material = em;
         });
+        equip.name = 'equip';
         group.add(equip);
         this.groupAdded(group);
       }, (xhr ) => {
@@ -147,6 +153,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
         structure.children.forEach((x: any) => {
           x.material = sm;
         });
+        structure.name = 'structure';
         group.add(structure);
         this.groupAdded(group);
       }, (xhr ) => {
@@ -203,4 +210,18 @@ export class ObjViewPublicDeviceComponent implements OnInit {
     this.renderer.render( this.scene, this.camera );
   }
 
+  changeVisible() {
+    (this.model as THREE.Group).children.forEach(ch => {
+      if (ch.name == 'hull'){
+        ch.visible = this.hullVisible;
+      }
+      if (ch.name == 'equip'){
+        ch.visible = this.equipmentVisible;
+      }
+      if (ch.name == 'structure'){
+        ch.visible = this.structureVisible;
+      }
+    });
+    this.render();
+  }
 }
