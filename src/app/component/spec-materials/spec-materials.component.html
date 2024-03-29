@@ -2,14 +2,6 @@
   <div class="">
     <div class="card-head mb-20 df">
       <div class="mr-10">
-        <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
-        </p-dropdown>
-      </div>
-      <div class="mr-10" >
-        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">
-        </p-dropdown>
-      </div>
-      <div class="mr-10">
         <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" [class.disabled-button]="selectedNode == null" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>

@@ -134,9 +134,6 @@ export class SpecMaterialsComponent implements OnInit {
   getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
     let res: any[] = [];
     rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
-      if (n.name == 'БИМЕТАЛ'){
-        console.log(n);
-      }
       let nodes = this.getNodes(rootNodes, materials, n.id);
       let nodeMaterials = materials.filter(x => x != null && x.dir_id == n.id);
       nodes.forEach(n => {
