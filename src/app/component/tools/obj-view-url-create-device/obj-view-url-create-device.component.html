@@ -17,6 +17,18 @@
     </div>
   </div>
   <input hidden #selStruct type="file" (change)="handleFileInput(selStruct.files, 'structure')" accept=".obj">
+  <div class="upload cx cy">
+    <div class="cxy w-100" (click)="selEle.click()" (drop)="$event.preventDefault(); onFilesDrop($event);" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+      Ele trays {{curl}}
+    </div>
+  </div>
+  <input hidden #selEle type="file" (change)="handleFileInput(selEle.files, 'ele')" accept=".obj">
+  <div class="upload cx cy">
+    <div class="cxy w-100" (click)="selPipe.click()" (drop)="$event.preventDefault(); onFilesDrop($event);" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+      Pipes {{purl}}
+    </div>
+  </div>
+  <input hidden #selPipe type="file" (change)="handleFileInput(selPipe.files, 'pipe')" accept=".obj">
 </div>
 <div>
   <div class="cx">
@@ -35,6 +47,14 @@
     <div class="ml-5">
       Structure color:
       <p-colorPicker [(ngModel)]="scol"></p-colorPicker>
+    </div>
+    <div class="ml-5">
+      Ele trays:
+      <p-colorPicker [(ngModel)]="ccol"></p-colorPicker>
+    </div>
+    <div class="ml-5">
+      Pipes:
+      <p-colorPicker [(ngModel)]="pcol"></p-colorPicker>
     </div>
   </div>
   <div class="mt-5 cx">{{getQrCodeValue()}}</div>
