@@ -21,6 +21,7 @@ import {LV} from "../../domain/classes/lv";
 import {AddMaterialComponent} from "../materials/add-material/add-material.component";
 import {RemoveConfirmationComponent} from "../materials/remove-confirmation/remove-confirmation.component";
 import {SpecMaterialComponent} from "./spec-material/spec-material.component";
+import {IssueManagerService} from "../../domain/issue-manager.service";
 
 @Component({
   selector: 'app-spec-materials',
@@ -40,8 +41,6 @@ export class SpecMaterialsComponent implements OnInit {
   selectedRootNode: string = '';
   rootNodes: any[] = [];
   tooltips: string[] = [];
-  projects: string[] = ['200101', '210101', '000000'];
-  project = '';
   selectedMaterial: Material = new Material();
   items = [
     {
@@ -65,27 +64,26 @@ export class SpecMaterialsComponent implements OnInit {
   onResize(event: any) {
     this.innerWidth = window.innerWidth;
   }
+  projects: any[] = [];
+  project = 0;
+  specStatements: any[] = [];
 
-  constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
+  constructor(public t: LanguageService, public issues: IssueManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
     setTimeout(() => {
       this.selectedView = 'tiles';
     }, 1000);
-    this.materialManager.getSpecMaterials().subscribe(resMaterials => {
-      console.log(resMaterials);
-      resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
-      this.materials = resMaterials;
-      this.materialsSrc = resMaterials;
-      this.materialManager.getSpecDirectories().subscribe(specDirectories => {
-        this.nodesSrc = this.getNodes(specDirectories, this.materials, 0);
-        this.nodes = [...this.nodesSrc];
+    this.issues.getSpecProjects().subscribe(projects => {
+      this.materialManager.getSpecStatements().subscribe(specStatements => {
+        this.specStatements = specStatements;
+        this.projects = projects.filter(x => specStatements.find((y: any) => y.project_id == x.id) != null);
+        if (this.projects.length > 0){
+          this.project = this.projects[0].id;
+        }
+        this.projectChanged();
       });
-      for (let x = 0; x < 10; x ++){
-        this.materials.push(null);
-      }
-      this.materialsFilled = true;
     });
   }
   setPath(code: string, length = 3){
@@ -101,26 +99,14 @@ export class SpecMaterialsComponent implements OnInit {
     return path.split('/').filter(x => x != '');
   }
   createNode(node: any){
-    if (this.project == '000000'){
-      this.addNew = true;
-      this.newNode = {};
-      this.newNodeSuffix = '##';
-      this.newNode.data = node.data;
-      this.newNode.label = '';
-      // this.newNode.label = node.label;
-      this.newNode.checkChildren = node.children.map((x: any) => x.data);
-    }
-    else{
-      this.addNew = true;
-      this.newNode = {};
-      this.forNode = node;
-      this.newNodeSuffix = '###';
-      this.newNode.data = node.data;
-      this.newNode.label = '';
-      // this.newNode.label = node.label;
-      this.newNode.checkChildren = node.children.map((x: any) => x.data);
-    }
-    console.log(this.newNode);
+    this.addNew = true;
+    this.newNode = {};
+    this.forNode = node;
+    this.newNodeSuffix = '###';
+    this.newNode.data = node.data;
+    this.newNode.label = '';
+    // this.newNode.label = node.label;
+    this.newNode.checkChildren = node.children.map((x: any) => x.data);
   }
   editNode(node: any){
     this.addNew = true;
@@ -321,7 +307,7 @@ export class SpecMaterialsComponent implements OnInit {
   }
   contextMenuOut(event: any, contextMenu: ContextMenu) {
     event.stopPropagation();
-    if (this.project != ''){
+    if (this.project != 0){
       this.items = [
         {
           label: 'New Folder',
@@ -360,7 +346,7 @@ export class SpecMaterialsComponent implements OnInit {
 
   save() {
     this.newNode.data += this.newNodeSuffix;
-    this.materialManager.updateMaterialNode(this.project, this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
+    this.materialManager.updateMaterialNode(this.project.toString(), this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
       if (!this.editing){
         this.newNode.children = [];
         this.forNode.children.push(this.newNode);
@@ -392,12 +378,12 @@ export class SpecMaterialsComponent implements OnInit {
   }
 
   removeNode(node: any) {
-    this.materialManager.updateMaterialNode(this.project, node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
+    this.materialManager.updateMaterialNode(this.project.toString(), node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
       if (node.parent != null){
         node.parent.children.splice(node.parent.children.indexOf(node), 1);
       }
       else{
-        this.materialManager.getMaterialNodes(this.project).then(res => {
+        this.materialManager.getMaterialNodes(this.project.toString()).then(res => {
           this.nodesSrc = res;
           this.nodes = this.getNodes(res, this.materialsSrc, 0);
           this.setParents(this.nodes, '');
@@ -479,7 +465,7 @@ export class SpecMaterialsComponent implements OnInit {
   }
   createMaterialCloudDirectory(material: any){
     material.materialCloudDirectory = 'LOADING';
-    this.materialManager.createMaterialCloudDirectory(this.project, material.code).then(res => {
+    this.materialManager.createMaterialCloudDirectory(this.project.toString(), material.code).then(res => {
       console.log(res);
       material.materialCloudDirectory = res;
     });
@@ -580,5 +566,22 @@ export class SpecMaterialsComponent implements OnInit {
       x.path = this.setPath(x.code);
     });
     this.materials = this.materialsSrc.filter(x => x.code.startsWith(this.selectedRootNode) || this.selectedRootNode == '-');
+  }
+
+  projectChanged() {
+    this.materialManager.getSpecMaterials().subscribe(resMaterials => {
+      console.log(resMaterials);
+      resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
+      this.materials = resMaterials;
+      this.materialsSrc = resMaterials;
+      this.materialManager.getSpecDirectories().subscribe(specDirectories => {
+        this.nodesSrc = this.getNodes(specDirectories, this.materials, 0);
+        this.nodes = [...this.nodesSrc];
+      });
+      for (let x = 0; x < 10; x ++){
+        this.materials.push(null);
+      }
+      this.materialsFilled = true;
+    });
   }
 }

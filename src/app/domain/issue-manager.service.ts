@@ -69,6 +69,9 @@ export class IssueManagerService {
   async getIssueProjects() {
     return await this.http.get<any[]>(props.http + '/issueProjects').toPromise();
   }
+  getSpecProjects() {
+    return this.http.get<any[]>(props.http + '/issueProjects');
+  }
   async getIssuePeriods() {
     return await this.http.get<IssuePeriod[]>(props.http + '/issuePeriods').toPromise();
   }

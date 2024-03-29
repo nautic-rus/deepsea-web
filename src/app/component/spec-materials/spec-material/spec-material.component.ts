@@ -7,6 +7,8 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {MessageService} from "primeng/api";
+import {SpecMaterial} from "../../../domain/classes/spec-material";
+import {EquipmentsService} from "../../../domain/equipments.service";
 
 @Component({
   selector: 'app-spec-material',
@@ -28,29 +30,19 @@ export class SpecMaterialComponent implements OnInit {
   ];
   category = this.categories[0];
   material: Material = new Material();
-  approved = false;
-  itt = false;
-  tp620 = false;
-  certRS = false;
   action = '';
   materialPrefix = '';
   materials: Material[] = [];
-  layer1: any[] = [];
-  layer2: any[] = [];
-  layer3: any[] = [];
-  layer4: any[] = [];
-  selectedCode1: any;
-  selectedCode2: any;
-  selectedCode3: any;
-  selectedCode4: any;
   codeSelectors: any[] = [];
   noneCode = {
     data: 'NON',
     label: 'No specified type',
   };
   materialTranslationRu: MaterialTranslation = {lang: 'ru', name: '', description: ''};
+  label = '';
+  suppliers: any[] = [];
 
-  constructor(public t: LanguageService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
+  constructor(public t: LanguageService, public eqManager: EquipmentsService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
     this.project = dialog.data[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
     this.action = dialog.data[2];
@@ -62,8 +54,10 @@ export class SpecMaterialComponent implements OnInit {
     }
 
     if ((this.action == 'add' || this.action == 'clone') && this.materialPrefix != ''){
-      this.material.code = Material.generateCode(this.materialPrefix, this.materials);
+      this.material.code = 'NRxxxxxxxxxxxxxx'
     }
+
+
 
     let ru = this.material.translations.find(x => x.lang == 'ru');
     if (ru != null){
@@ -79,35 +73,8 @@ export class SpecMaterialComponent implements OnInit {
   }
 
   createMaterial() {
-    this.material.approved = this.approved ? 1 : 0;
-    this.material.itt = this.itt ? 1 : 0;
-    this.material.tp620 = this.tp620 ? 1 : 0;
-    this.material.certRS = this.certRS ? 1 : 0;
-    if (this.material.code.substring(0, 12) != Material.generateCode(this.materialPrefix, this.materials).substring(0, 12)){
-      this.messageService.add({severity:'error', summary:'Code Error', detail:'You cannot modify base first 12 length symbols of code. Please create another block with code you wish.', life: 8000});
-      return;
-    }
-    if (this.material.code.length != 16){
-      this.messageService.add({severity:'error', summary:'Code Error', detail:'You cannot set length of code different from 16.', life: 8000});
-      return;
-    }
-    let r = new RegExp('^[A-Z]{12}\\d{4}');
-    if (!r.test(this.material.code)){
-      this.messageService.add({severity:'error', summary:'Code Error', detail:'You can only use latin uppercase symbols and numbers in code. Code pattern: 12 uppercase latin symbols and 4 digits.', life: 8000});
-      return;
-    }
-    if (this.action != 'edit' && this.materials.find(x => x.code == this.material.code)){
-      this.messageService.add({severity:'error', summary:'Code Error', detail:'Material with the same code already exists.', life: 8000});
-      return;
-    }
-    if (this.material.name == 'New Material' || this.material.name.trim() == ''){
-      this.messageService.add({severity:'error', summary:'Code Error', detail:'You need to specify material name.', life: 8000});
-      return;
-    }
-    if (this.material.singleWeight == 0 || this.material.singleWeight == null){
-      this.messageService.add({severity:'error', summary:'Code Error', detail:'You need to specify material weight.', life: 8000});
-      return;
-    }
+    let m = new SpecMaterial();
+    m.fromMaterial(this.material, 0, 0, this.auth.getUser().id, '');
     this.material.project = this.project;
     this.materialManager.updateMaterial(this.material, this.auth.getUser().login, 0).then(res => {
       this.ref.close(this.material);

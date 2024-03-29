@@ -1,6 +1,14 @@
 <div class="all-page">
   <div class="">
     <div class="card-head mb-20 df">
+      <div class="mr-10" *ngIf="projects.length > 0">
+        <p-dropdown optionLabel="name" optionValue="id" placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+<!--      <div class="mr-10" >-->
+<!--        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">-->
+<!--        </p-dropdown>-->
+<!--      </div>-->
       <div class="mr-10">
         <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" [class.disabled-button]="selectedNode == null" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
@@ -60,6 +68,21 @@
           </div>
         </div>
         <div class="w-83">
+          <div *ngIf="project == 0">
+            <div class="cxy loading">
+              <div class="cxy flex-column">
+                <div class="cx loading-text">Select a project to view the materials</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="project != 0 && !materialsFilled">
+            <div class="cxy loading">
+              <div class="cxy flex-column">
+                <img src="assets/whale.gif" height="120">
+                <div class="cx loading-text">PLEASE WAIT...</div>
+              </div>
+            </div>
+          </div>
           <div *ngIf="!materialsFilled">
             <div class="cxy loading">
               <div class="cxy flex-column">
