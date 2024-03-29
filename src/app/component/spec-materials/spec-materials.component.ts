@@ -20,6 +20,7 @@ import {VirtualScroller} from "primeng/virtualscroller";
 import {LV} from "../../domain/classes/lv";
 import {AddMaterialComponent} from "../materials/add-material/add-material.component";
 import {RemoveConfirmationComponent} from "../materials/remove-confirmation/remove-confirmation.component";
+import {SpecMaterialComponent} from "./spec-material/spec-material.component";
 
 @Component({
   selector: 'app-spec-materials',
@@ -139,8 +140,8 @@ export class SpecMaterialsComponent implements OnInit {
       nodes.forEach(n => {
         n.materials.forEach((m: any) => nodeMaterials.push(m));
       });
-      let count = 0;
-      nodes.map(x => x.materials.length).forEach(x => count += x);
+      let count = nodeMaterials.length;
+      //nodes.map(x => x.materials.length).forEach(x => count += x);
       res.push({
         data: n.id,
         children: nodes,
@@ -198,7 +199,7 @@ export class SpecMaterialsComponent implements OnInit {
     }
   }
   addMaterial(action: string = 'add', material: Material = new Material()) {
-    this.dialogService.open(AddMaterialComponent, {
+    this.dialogService.open(SpecMaterialComponent, {
       showHeader: true,
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
       modal: true,
