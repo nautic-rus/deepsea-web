@@ -73,6 +73,7 @@ export class SpecMaterialsComponent implements OnInit {
       this.selectedView = 'tiles';
     }, 1000);
     this.materialManager.getSpecMaterials().subscribe(resMaterials => {
+      console.log(resMaterials);
       resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
       this.materials = resMaterials;
       this.materialsSrc = resMaterials;
@@ -133,13 +134,22 @@ export class SpecMaterialsComponent implements OnInit {
   getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
     let res: any[] = [];
     rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+      if (n.name == 'БИМЕТАЛ'){
+        console.log(n);
+      }
       let nodes = this.getNodes(rootNodes, materials, n.id);
+      let nodeMaterials = materials.filter(x => x != null && x.dir_id == n.id);
+      nodes.forEach(n => {
+        n.materials.forEach((m: any) => nodeMaterials.push(m));
+      });
+      let count = 0;
+      nodes.map(x => x.materials.length).forEach(x => count += x);
       res.push({
         data: n.id,
         children: nodes,
         label: n.name,
-        materialsCount: materials.filter(x => x != null && x.dir_id == n.id).length,
-        count: nodes.map(x => x.materialsCount).reduce((s, v) => { return s + v }, 0)
+        materials: nodeMaterials,
+        count: count
       });
     });
     return res;
@@ -219,7 +229,7 @@ export class SpecMaterialsComponent implements OnInit {
       this.selectedNodePath = this.getNodePath(this.selectedNode);
       //this.selectedNodeCode = this.getNodeCode(this.selectedNode);
       this.selectedNodeCode = this.selectedNode.data;
-      this.materials = this.materialsSrc.filter(x => x.code.startsWith(this.selectedNodeCode));
+      this.materials = this.selectedNode.materials;
     }
   }
 
