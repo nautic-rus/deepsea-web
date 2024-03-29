@@ -39,5 +39,10 @@
   position: absolute;
   left: 10px;
   top: 5px;
-  font-size: 36px;
+  font-size: 12px;
+}
+.center{
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }

@@ -5,6 +5,7 @@ import {IssueManagerService} from "../../domain/issue-manager.service";
 import {SpecManagerService} from "../../domain/spec-manager.service";
 import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {Vector3} from "three";
 
 @Component({
   selector: 'app-obj-view-public-device',
@@ -28,6 +29,8 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   hurl = '';
   eurl = '';
   surl = '';
+  curl = '';
+  purl = '';
 
   errorMessage = '';
   objZip = '';
@@ -46,6 +49,8 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   hcol = '#00ff00';
   ecol = '#c55e13';
   scol = '#0077ff';
+  ccol = '#e4ff06';
+  pcol = '#ff00d5';
 
   groupsCount = 0;
   groupsAdded = 0;
@@ -56,6 +61,8 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   hullVisible = true;
   equipmentVisible = true;
   structureVisible = true;
+  traysVisible = true;
+  pipesVisible = true;
 
   public constructor(public route: ActivatedRoute, public issues: IssueManagerService, public s: SpecManagerService) {
   }
@@ -65,11 +72,15 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       this.hurl = params.hurl ? params.hurl : '';
       this.eurl = params.eurl ? params.eurl : '';
       this.surl = params.surl ? params.surl : '';
+      this.curl = params.surl ? params.surl : '';
+      this.purl = params.surl ? params.surl : '';
 
       this.bcol = params.bcol ? ('#' + params.bcol) : this.bcol;
       this.hcol = params.hcol ? ('#' + params.hcol) : this.hcol;
       this.ecol = params.ecol ? ('#' + params.ecol) : this.ecol;
       this.scol = params.scol ? ('#' + params.scol) : this.scol;
+      this.ccol = params.ccol ? ('#' + params.ccol) : this.ccol;
+      this.pcol = params.pcol ? ('#' + params.pcol) : this.pcol;
 
       if (this.hurl == '' && this.eurl == '' && this.surl == ''){
         this.errorMessage = 'There is no model url';
@@ -100,7 +111,6 @@ export class ObjViewPublicDeviceComponent implements OnInit {
 
     this.scene.background = new THREE.Color( this.bcol );
 
-
     this.controls = new OrbitControls( this.camera, this.renderer.domElement );
     this.controls.addEventListener( 'change', () => this.render()) ; // use if there is no animation loop
     this.controls.minDistance = 10;
@@ -112,6 +122,8 @@ export class ObjViewPublicDeviceComponent implements OnInit {
     const hm = new THREE.MeshStandardMaterial( {color: this.hcol} );
     const em = new THREE.MeshStandardMaterial( {color: this.ecol} );
     const sm = new THREE.MeshStandardMaterial( {color: this.scol} );
+    const cm = new THREE.MeshStandardMaterial( {color: this.ccol} );
+    const pm = new THREE.MeshStandardMaterial( {color: this.pcol} );
 
 
     let group = new THREE.Group();
@@ -119,12 +131,12 @@ export class ObjViewPublicDeviceComponent implements OnInit {
 
     if (this.hurl != ''){
       objLoader.load(this.hurl, (object) => {
-        let hull = object;
-        hull.children.forEach((x: any) => {
+        let model = object;
+        model.children.forEach((x: any) => {
           x.material = hm;
         });
-        hull.name = 'hull';
-        group.add(hull);
+        model.name = 'hull';
+        group.add(model);
         this.groupAdded(group);
       }, (xhr ) => {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -134,12 +146,12 @@ export class ObjViewPublicDeviceComponent implements OnInit {
     }
     if (this.eurl != ''){
       objLoader.load(this.eurl, (object) => {
-        let equip = object;
-        equip.children.forEach((x: any) => {
+        let model = object;
+        model.children.forEach((x: any) => {
           x.material = em;
         });
-        equip.name = 'equip';
-        group.add(equip);
+        model.name = 'equip';
+        group.add(model);
         this.groupAdded(group);
       }, (xhr ) => {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -149,12 +161,12 @@ export class ObjViewPublicDeviceComponent implements OnInit {
     }
     if (this.surl != ''){
       objLoader.load(this.surl, (object) => {
-        let structure = object;
-        structure.children.forEach((x: any) => {
+        let model = object;
+        model.children.forEach((x: any) => {
           x.material = sm;
         });
-        structure.name = 'structure';
-        group.add(structure);
+        model.name = 'structure';
+        group.add(model);
         this.groupAdded(group);
       }, (xhr ) => {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -162,7 +174,36 @@ export class ObjViewPublicDeviceComponent implements OnInit {
         console.log(error);
       });
     }
-
+    if (this.curl != ''){
+      objLoader.load(this.curl, (object) => {
+        let model = object;
+        model.children.forEach((x: any) => {
+          x.material = cm;
+        });
+        model.name = 'ele';
+        group.add(model);
+        this.groupAdded(group);
+      }, (xhr ) => {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      }, (error) => {
+        console.log(error);
+      });
+    }
+    if (this.purl != ''){
+      objLoader.load(this.purl, (object) => {
+        let model = object;
+        model.children.forEach((x: any) => {
+          x.material = pm;
+        });
+        model.name = 'pipe';
+        group.add(model);
+        this.groupAdded(group);
+      }, (xhr ) => {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      }, (error) => {
+        console.log(error);
+      });
+    }
   }
 
   groupAdded(group: THREE.Group){
@@ -220,6 +261,12 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       }
       if (ch.name == 'structure'){
         ch.visible = this.structureVisible;
+      }
+      if (ch.name == 'ele'){
+        ch.visible = this.traysVisible;
+      }
+      if (ch.name == 'pipe'){
+        ch.visible = this.pipesVisible;
       }
     });
     this.render();

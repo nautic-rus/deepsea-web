@@ -16,6 +16,14 @@
         <div class="mr-5">Structure</div>
         <p-checkbox [binary]="true" [(ngModel)]="structureVisible" (ngModelChange)="changeVisible()"></p-checkbox>
       </div>
+      <div class="df mt-5">
+        <div class="mr-5">Ele Trays</div>
+        <p-checkbox [binary]="true" [(ngModel)]="traysVisible" (ngModelChange)="changeVisible()"></p-checkbox>
+      </div>
+      <div class="df mt-5">
+        <div class="mr-5">Pipes</div>
+        <p-checkbox [binary]="true" [(ngModel)]="pipesVisible" (ngModelChange)="changeVisible()"></p-checkbox>
+      </div>
     </div>
     <div class="loading" *ngIf="loading">LOADING... PLEASE WAIT...</div>
     <canvas #model id="model"></canvas>

@@ -2,7 +2,7 @@
   <div class="">
     <div class="card-head mb-20 df">
       <div class="mr-10">
-        <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
+        <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" styleClass="width-170 border">
         </p-dropdown>
       </div>
       <div class="mr-10" >
@@ -57,7 +57,7 @@
       <div class="w-100 df">
         <div class="w-17">
           <div class="menu-card" (contextmenu)="contextMenuOut($event, nodeMenu)">
-            <p-tree class="tree" *ngIf="project != ''" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">
+            <p-tree class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>
@@ -65,29 +65,10 @@
                 </div>
               </ng-template>
             </p-tree>
-
-
-
-
-            <!--            <p-tree class="tree" *ngIf="project != ''" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu)" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" (selectionChange)="selectNode()">-->
-            <!--              <ng-template let-node pTemplate="default">-->
-            <!--                <div class="df">-->
-            <!--                  <div>{{node.label}}</div>-->
-            <!--                  <div class="mini-notes cxy">{{node.count}}</div>-->
-            <!--                </div>-->
-            <!--              </ng-template>-->
-            <!--            </p-tree>-->
           </div>
         </div>
         <div class="w-83">
-          <div *ngIf="project == ''">
-            <div class="cxy loading">
-              <div class="cxy flex-column">
-                <div class="cx loading-text">Select a project to view the materials</div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="project != '' && !materialsFilled">
+          <div *ngIf="!materialsFilled">
             <div class="cxy loading">
               <div class="cxy flex-column">
                 <img src="assets/whale.gif" height="120">
@@ -96,12 +77,12 @@
             </div>
           </div>
           <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
-            <p-virtualScroller class="w-100" [value]="chunkMaterials()" scrollHeight="78.7vh" [itemSize]="200">
+            <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
                 <div class="dash-card" *ngFor="let material of chunk; let j = index">
                   <div *ngIf="material != null" class="dash-card-tile cursor-pointer" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
                     <div class="top-row-doc">
-                      <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(getMaterialName(material), 50)}}</div>
+                      <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(material.name, 50)}}</div>
                       <div class="p-ml-auto">
                         <div *ngIf="material.category != ''" class="kpl-flag cxy">
                           <div class="text-center-x">
@@ -115,7 +96,7 @@
                       </div>
                     </div>
                     <div class="two-row mt-5 mb-5">
-                      <div *ngIf="material.description != ''" class="text-medium">{{trimText(getMaterialDescription(material), 20)}}</div>
+                      <div *ngIf="material.description != ''" class="text-medium">{{trimText(material.descr, 20)}}</div>
                       <div *ngIf="material.description == ''" class="text-medium">/description/</div>
                       <div class="df position-relative content-end pr-10">
                         <div class="trm">
@@ -132,7 +113,7 @@
                         <div class="text-table-col pr-10">{{material.units}}</div>
                         <div class="df">
                           <img class="pr-5" src="assets/icons/weight3.svg" height="16">
-                          <div class="text-table-col">{{material.singleWeight}}</div>
+                          <div class="text-table-col">{{material.weight}}</div>
                         </div>
                       </div>
                       <div class="df ">
@@ -178,13 +159,13 @@
                     </div>
                     <div class="four-row mt-5 mb-5">
                       <div>
-                        <div *ngIf="material.provider == ''" class="df">
+                        <div *ngIf="material.supplier == ''" class="df">
                           <img class="pr-5" src="assets/icons/delivery.svg" height="30">
                           <div class="thick-text mt-4px">unknown</div>
                         </div>
-                        <div *ngIf="material.provider != ''" class="df">
+                        <div *ngIf="material.supplier != ''" class="df">
                           <img class="pr-5" src="assets/icons/delivery.svg" height="30">
-                          <div class="thick-text mt-4px">{{material.provider}}</div>
+                          <div class="thick-text mt-4px">{{material.supplier}}</div>
                         </div>
                       </div>
                       <div>
@@ -207,6 +188,125 @@
                 </div>
               </ng-template>
             </p-virtualScroller>
+          </div>
+
+
+          <div *ngIf="selectedView == 'list'" class="cards">
+            <p-table #table [value]="materials"
+                     [scrollable]="true"
+                     scrollHeight="calc(100vh - 226px)"
+                     [virtualScroll]="true"
+                     [virtualRowHeight]="30"
+                     [reorderableColumns]="false"
+                     [resizableColumns]="false"
+                     styleClass="p-datatable-striped"
+                     [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">
+              <ng-template pTemplate="header">
+                <tr class="df">
+                  <th pSortableColumn="cloud" class="max-width-50 cxy">{{t.tr(' ')}}
+                  </th>
+                  <th pSortableColumn="name" class="cxy min-width-220 w-27">{{t.tr('Наименование')}}
+                    <p-sortIcon field="name"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="descr" class="cxy min-width-150 w-15">{{t.tr('Обозначение')}}
+                    <p-sortIcon field="descr"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="category" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}
+                    <p-sortIcon field="category"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="coefficient" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}
+                    <p-sortIcon field="coefficient"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес кг')}}
+                    <p-sortIcon field="weight"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="units" class="cxy min-width-75 w-7">{{t.tr('КЕИ')}}
+                    <p-sortIcon field="units"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="supplier" class="cxy min-width-190 w-9">{{t.tr('Поставщик')}}
+                    <p-sortIcon field="supplier"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="note" class="cxy min-width-190 w-9">{{t.tr('Примечания')}}
+                    <p-sortIcon field="note"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="code" class="cxy min-width-190 w-9">{{t.tr('TRM')}}
+                    <p-sortIcon field="code"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-material let-i="rowIndex">
+                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
+                  <td class="max-width-50 text-14">
+                    <svg *ngIf="material.materialCloudDirectory == ''" (click)="createMaterialCloudDirectory(material)" class="cloud cursor-pointer" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="26px"
+                         viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
+                <path style="fill:#ffffff;" d="M430.751,223.448c0.067-1.356,0.204-2.693,0.204-4.066c0-44.942-36.433-81.374-81.374-81.374 c-8.933,0-17.505,1.493-25.547,4.152c-23.713-32.081-61.696-52.976-104.653-52.976c-71.907,0-130.199,58.293-130.199,130.199	                      c0,0.684,0.093,1.345,0.103,2.028c-46.478,9.387-81.477,50.446-81.477,99.691c0,56.178,45.54,101.718,101.718,101.718h292.949	c56.178,0,101.718-45.541,101.718-101.718C504.192,274.746,473.155,235.709,430.751,223.448z"/>
+                      <path style="fill:#ffffff;" d="M324.035,142.159c-23.713-32.081-61.696-52.976-104.653-52.976	c-71.907,0-130.199,58.293-130.199,130.199c0,0.684,0.093,1.345,0.103,2.028c-46.479,9.387-81.478,50.446-81.478,99.691	c0,56.178,45.54,101.718,101.718,101.718"/>
+                      <path style="fill:#1D1D1B;" d="M402.474,430.626H109.526C49.133,430.626,0,381.493,0,321.101c0-49.761,33.878-93.29,81.437-105.875	c2.202-74.185,63.237-133.851,137.945-133.851c22.248,0,43.489,5.158,63.134,15.332c17.069,8.839,32.332,21.374,44.434,36.445	c7.431-1.961,15.02-2.952,22.633-2.952c48.652,0,88.331,39.16,89.168,87.616c20.006,7.049,37.887,20.002,50.827,36.932	c14.67,19.193,22.424,42.137,22.424,66.352C512,381.493,462.867,430.626,402.474,430.626z M219.381,96.99	c-67.487,0-122.392,54.904-122.392,122.392c0,0.174,0.02,0.345,0.031,0.515c0.033,0.459,0.062,0.918,0.07,1.385l0.107,6.495	l-6.368,1.286c-43.582,8.803-75.215,47.51-75.215,92.039c0,51.782,42.128,93.91,93.91,93.91h292.949	c51.782,0,93.91-42.128,93.91-93.91c0-20.759-6.645-40.424-19.215-56.87c-12.168-15.921-29.425-27.741-48.587-33.281l-5.93-1.716	l0.3-6.165c0.025-0.514,0.059-1.024,0.094-1.537c0.052-0.777,0.102-1.511,0.102-2.15c0-40.565-33.001-73.567-73.567-73.567	c-7.787,0-15.557,1.264-23.096,3.757l-5.369,1.776l-3.361-4.547C294.357,115.144,258.501,96.99,219.381,96.99z"/>
+                      <path style="fill:#FFFFFF;" d="M151.219,193.408h-15.615c0-35.251,28.679-63.929,63.929-63.929v15.615	C172.892,145.095,151.219,166.768,151.219,193.408z"/>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+          </svg>
+                    <div *ngIf="material.materialCloudDirectory == 'LOADING'">
+                      <img src="assets/icons/cloud.gif" height="26">
+                    </div>
+                    <svg *ngIf="material.materialCloudDirectory != '' && material.materialCloudDirectory != 'LOADING'" (click)="openMaterialCloudDirectory(material)" class="cloud cursor-pointer" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="26px"
+                         viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
+                  <path style="fill:#36A9E1;" d="M430.751,223.448c0.067-1.356,0.204-2.693,0.204-4.066c0-44.942-36.433-81.374-81.374-81.374 c-8.933,0-17.505,1.493-25.547,4.152c-23.713-32.081-61.696-52.976-104.653-52.976c-71.907,0-130.199,58.293-130.199,130.199	                      c0,0.684,0.093,1.345,0.103,2.028c-46.478,9.387-81.477,50.446-81.477,99.691c0,56.178,45.54,101.718,101.718,101.718h292.949	c56.178,0,101.718-45.541,101.718-101.718C504.192,274.746,473.155,235.709,430.751,223.448z"/>
+                      <path style="fill:#5EBAE7;" d="M324.035,142.159c-23.713-32.081-61.696-52.976-104.653-52.976	c-71.907,0-130.199,58.293-130.199,130.199c0,0.684,0.093,1.345,0.103,2.028c-46.479,9.387-81.478,50.446-81.478,99.691	c0,56.178,45.54,101.718,101.718,101.718"/>
+                      <path style="fill:#1D1D1B;" d="M402.474,430.626H109.526C49.133,430.626,0,381.493,0,321.101c0-49.761,33.878-93.29,81.437-105.875	c2.202-74.185,63.237-133.851,137.945-133.851c22.248,0,43.489,5.158,63.134,15.332c17.069,8.839,32.332,21.374,44.434,36.445	c7.431-1.961,15.02-2.952,22.633-2.952c48.652,0,88.331,39.16,89.168,87.616c20.006,7.049,37.887,20.002,50.827,36.932	c14.67,19.193,22.424,42.137,22.424,66.352C512,381.493,462.867,430.626,402.474,430.626z M219.381,96.99	c-67.487,0-122.392,54.904-122.392,122.392c0,0.174,0.02,0.345,0.031,0.515c0.033,0.459,0.062,0.918,0.07,1.385l0.107,6.495	l-6.368,1.286c-43.582,8.803-75.215,47.51-75.215,92.039c0,51.782,42.128,93.91,93.91,93.91h292.949	c51.782,0,93.91-42.128,93.91-93.91c0-20.759-6.645-40.424-19.215-56.87c-12.168-15.921-29.425-27.741-48.587-33.281l-5.93-1.716	l0.3-6.165c0.025-0.514,0.059-1.024,0.094-1.537c0.052-0.777,0.102-1.511,0.102-2.15c0-40.565-33.001-73.567-73.567-73.567	c-7.787,0-15.557,1.264-23.096,3.757l-5.369,1.776l-3.361-4.547C294.357,115.144,258.501,96.99,219.381,96.99z"/>
+                      <path style="fill:#FFFFFF;" d="M151.219,193.408h-15.615c0-35.251,28.679-63.929,63.929-63.929v15.615	C172.892,145.095,151.219,166.768,151.219,193.408z"/>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+            </svg>
+                  </td>
+                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>
+                  <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.category}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.coefficient}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.singleWeight}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.units}}</td>
+                  <td class="min-width-190 w-9 text-14">{{material.provider}}</td>
+                  <td class="min-width-190 w-9 text-14">{{material.note}}</td>
+                  <td class="min-width-190 w-9 text-14">
+                    <div class="df">
+                      <div class="trm-materials">
+                        <span>{{material.code}}</span>
+                      </div>
+                      <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">
+                        <img src="assets/icons/trm-sup.svg" height="14">
+                        <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
           </div>
         </div>
       </div>

@@ -27,7 +27,6 @@ import {RemoveConfirmationComponent} from "../materials/remove-confirmation/remo
   styleUrls: ['./spec-materials.component.css']
 })
 export class SpecMaterialsComponent implements OnInit {
-
   search: string = '';
   nodes: any = [];
   nodesSrc: any = [];
@@ -60,21 +59,26 @@ export class SpecMaterialsComponent implements OnInit {
   @ViewChild('table') table: Table;
   noResult = false;
   materialsFilled = false;
-
+  public innerWidth: any;
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.innerWidth = window.innerWidth;
+  }
 
   constructor(public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
     setTimeout(() => {
       this.selectedView = 'tiles';
     }, 1000);
-    this.project = '';
     this.materialManager.getSpecMaterials().subscribe(resMaterials => {
-      console.log(resMaterials);
+      resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
       this.materials = resMaterials;
       this.materialsSrc = resMaterials;
-      this.materialManager.getSpecDirectories().subscribe(resDirectories => {
-        this.nodesSrc = resDirectories;
+      this.materialManager.getSpecDirectories().subscribe(specDirectories => {
+        this.nodesSrc = this.getNodes(specDirectories, this.materials, 0);
+        this.nodes = [...this.nodesSrc];
       });
       for (let x = 0; x < 10; x ++){
         this.materials.push(null);
@@ -126,26 +130,16 @@ export class SpecMaterialsComponent implements OnInit {
     this.newNode.checkChildren = node.children.map((x: any) => x.data);
     this.editing = true;
   }
-  getNodes2(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
+  getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
     let res: any[] = [];
-    rootNodes.filter(x => x.data.length == parent.length + 2 && x.data.startsWith(parent)).forEach(n => {
+    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+      let nodes = this.getNodes(rootNodes, materials, n.id);
       res.push({
-        data: n.data,
-        children: _.sortBy(this.getNodes2(rootNodes, materials, n.data), x => x.label),
-        label: n.label,
-        count: materials.filter(x => x.code.startsWith(n.data)).length
-      });
-    });
-    return res;
-  }
-  getNodes(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
-    let res: any[] = [];
-    rootNodes.filter(x => x.data.length == parent.length + 3 && x.data.startsWith(parent)).forEach(n => {
-      res.push({
-        data: n.data,
-        children: this.getNodes(rootNodes, materials, n.data),
-        label: '(' + n.data.substr(parent.length) + ') ' + n.label,
-        count: materials.filter(x => x.code.startsWith(n.data)).length
+        data: n.id,
+        children: nodes,
+        label: n.name,
+        materialsCount: materials.filter(x => x != null && x.dir_id == n.id).length,
+        count: nodes.map(x => x.materialsCount).reduce((s, v) => { return s + v }, 0)
       });
     });
     return res;
@@ -252,6 +246,11 @@ export class SpecMaterialsComponent implements OnInit {
           this.materials = [...this.materialsSrc];
           this.refreshNodes(this.nodes, this.materials, '');
           this.selectNode();
+          // this.materialManager.getMaterialNodes().then(res => {
+          //   this.nodes = this.getNodes(res, this.materialsSrc);
+          //   this.setParents(this.nodes, '');
+          //   this.selectPathNode(selected, this.nodes);
+          // });
         });
       }
     });
@@ -364,6 +363,23 @@ export class SpecMaterialsComponent implements OnInit {
       }
       this.editing = false;
       this.hide();
+      // this.materialManager.getMaterialNodes(this.project).then(res => {
+      //   if (this.project == '000000'){
+      //     this.nodes = this.getNodes2(res, this.materialsSrc, '');
+      //     this.setParents(this.nodes, '');
+      //     this.materials.filter(x => x != null).forEach((x: any) => {
+      //       x.path = this.setPath(x.code, 2);
+      //     });
+      //   }
+      //   else{
+      //     this.nodes = this.getNodes(res, this.materialsSrc, '');
+      //     this.setParents(this.nodes, '');
+      //     this.materials.filter(x => x != null).forEach((x: any) => {
+      //       x.path = this.setPath(x.code);
+      //     });
+      //   }
+      //   this.hide();
+      // });
     });
   }
 
@@ -375,7 +391,7 @@ export class SpecMaterialsComponent implements OnInit {
       else{
         this.materialManager.getMaterialNodes(this.project).then(res => {
           this.nodesSrc = res;
-          this.nodes = this.getNodes(res, this.materialsSrc, '');
+          this.nodes = this.getNodes(res, this.materialsSrc, 0);
           this.setParents(this.nodes, '');
           this.materials.filter(x => x != null).forEach((x: any) => {
             x.path = this.setPath(x.code);
@@ -510,45 +526,6 @@ export class SpecMaterialsComponent implements OnInit {
     }
   }
 
-  projectChanged() {
-    this.materials.splice(0, this.materials.length);
-    this.nodes.splice(0, this.nodes.length);
-    this.materialsFilled = false;
-    this.materialManager.getMaterials(this.project).then(res => {
-      res.forEach((m => m.materialCloudDirectory = ''));
-      this.materials = res;
-      this.materialsSrc = res;
-      console.log(res);
-      this.materialManager.getMaterialNodes(this.project).then(res => {
-        this.nodesSrc = res;
-        this.nodes = this.getNodes(res, this.materialsSrc, '');
-        if (this.project == '000000'){
-          this.nodes = this.getNodes2(res, this.materialsSrc, '');
-          this.setParents(this.nodes, '');
-          this.materials.filter(x => x != null).forEach((x: any) => {
-            x.path = this.setPath(x.code, 2);
-          });
-        }
-        else{
-          this.nodes = this.getNodes(res, this.materialsSrc, '');
-          this.setParents(this.nodes, '');
-          this.materials.filter(x => x != null).forEach((x: any) => {
-            x.path = this.setPath(x.code);
-          });
-          this.rootNodes = this.nodes.filter((x: any) => x.data.length == 3).map((x: any) => new LV(x.label + ' (' + x.count + ')', x.data));
-          this.rootNodes = [new LV('Ведомость', '-')].concat(this.rootNodes);
-          this.selectedRootNode = this.rootNodes[0].value;
-          this.rootNodes = [...this.rootNodes];
-          this.rootNodeChanged();
-        }
-      });
-      this.materialsSrc = [...this.materials];
-      for (let x = 0; x < 10; x ++){
-        this.materials.push(null);
-      }
-      this.materialsFilled = true;
-    });
-  }
 
   getMaterialName(material: any) {
     let res = material.name;
@@ -576,9 +553,20 @@ export class SpecMaterialsComponent implements OnInit {
     }
     return res;
   }
+
+  defineChunkSize() {
+    let res = 2;
+    if (this.innerWidth > 1600){
+      res = 3;
+    }
+    if (this.innerWidth > 1800){
+      res = 4;
+    }
+    return res;
+  }
   rootNodeChanged() {
     this.selectedNodePath = '';
-    this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.startsWith(this.selectedRootNode)), this.materialsSrc, this.selectedRootNode);
+    this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.startsWith(this.selectedRootNode)), this.materialsSrc, 0);
     this.setParents(this.nodes, '');
     this.materials.filter(x => x != null).forEach((x: any) => {
       x.path = this.setPath(x.code);

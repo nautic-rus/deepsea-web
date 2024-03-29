@@ -12,11 +12,15 @@ export class ObjViewUrlCreateDeviceComponent implements OnInit {
   eqUrl = '';
   hullUrl = '';
   structureUrl = '';
+  curl = '';
+  purl = '';
   url = 'https://deep-sea.ru/3d-device?';
   url1 = 'http://localhost:4200/3d-device?';
   hcol = '#00ff00';
   scol = '#0077ff';
   ecol = '#c55e13';
+  ccol = '#e4ff06';
+  pcol = '#ff00d5';
   backgroundColor = '#a8c3ed';
   constructor(public issues: IssueManagerService, public auth: AuthManagerService) { }
 
@@ -42,6 +46,12 @@ export class ObjViewUrlCreateDeviceComponent implements OnInit {
             else if (kind == 'structure'){
               this.structureUrl = res.url;
             }
+            else if (kind == 'ele'){
+              this.curl = res.url;
+            }
+            else if (kind == 'pipe'){
+              this.purl = res.url;
+            }
           });
         }
       }
@@ -49,7 +59,12 @@ export class ObjViewUrlCreateDeviceComponent implements OnInit {
   }
 
   getQrCodeValue() {
-    let colors = 'bcol=' + this.backgroundColor.replace('#', '') + '&hcol=' + this.hcol.replace('#', '') + '&ecol=' + this.ecol.replace('#', '') + '&scol=' + this.scol.replace('#', '');
+    let colors = 'bcol=' + this.backgroundColor.replace('#', '') +
+      '&hcol=' + this.hcol.replace('#', '') +
+      '&ecol=' + this.ecol.replace('#', '') +
+      '&scol=' + this.scol.replace('#', '') +
+      '&ccol=' + this.scol.replace('#', '') +
+      '&pcol=' + this.scol.replace('#', '');
     let files = '';
     if (this.hullUrl != ''){
       files += 'hurl=' + this.hullUrl + '&';
@@ -59,6 +74,12 @@ export class ObjViewUrlCreateDeviceComponent implements OnInit {
     }
     if (this.structureUrl != ''){
       files += 'surl=' + this.structureUrl + '&';
+    }
+    if (this.curl != ''){
+      files += 'curl=' + this.curl + '&';
+    }
+    if (this.purl != ''){
+      files += 'purl=' + this.purl + '&';
     }
     return this.url + files + colors;
   }
