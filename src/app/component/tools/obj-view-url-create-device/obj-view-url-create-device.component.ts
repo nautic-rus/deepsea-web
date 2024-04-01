@@ -63,8 +63,8 @@ export class ObjViewUrlCreateDeviceComponent implements OnInit {
       '&hcol=' + this.hcol.replace('#', '') +
       '&ecol=' + this.ecol.replace('#', '') +
       '&scol=' + this.scol.replace('#', '') +
-      '&ccol=' + this.scol.replace('#', '') +
-      '&pcol=' + this.scol.replace('#', '');
+      '&ccol=' + this.ccol.replace('#', '') +
+      '&pcol=' + this.pcol.replace('#', '');
     let files = '';
     if (this.hullUrl != ''){
       files += 'hurl=' + this.hullUrl + '&';

@@ -1,0 +1,78 @@
+/deep/.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 8px 12px;
+}
+/deep/.p-tabview .p-tabview-panels {
+  padding: 10px 0;
+}
+.dialog{
+  width: 595px;
+  height: fit-content;
+}
+.double-row{
+  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.quad-row{
+  width: 600px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.left-text{
+  width: 80px;
+}
+.right-text{
+  width: 80px;
+}
+.left-text-one-row{
+  width: 125px;
+}
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
+  padding: 0.5rem 0.5rem;
+}
+.form-footer{
+  height: 35px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+.button{
+  border: none;
+  margin-right: 4px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #17a2b8;
+  transition: background .1s;
+  width: 100px;
+}
+.button-ok{
+  border: none;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #fff;
+  background: #3B94D6;
+  transition: background .1s
+}
+.button-ok:hover{
+  background-color: #2C7BB6;
+}
+.button-cancel{
+  margin-right: 4px;
+  min-width: 24px;
+  border-radius: 3px;
+  text-shadow: none;
+  padding: 8px 10px;
+  color: #2E3E4E;
+  background: #fff;
+  transition: background .1s;
+  border: none;
+}
+.button-cancel:hover{
+  background-color: #ECEDF0;
+}

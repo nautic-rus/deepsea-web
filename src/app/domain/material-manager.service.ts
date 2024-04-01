@@ -82,4 +82,7 @@ export class MaterialManagerService {
   getSpecDirectories(){
     return this.http.get<any>(props.http + '/specDirectories');
   }
+  getSpecStatements(){
+    return this.http.get<any>(props.http + '/specStatements');
+  }
 }
