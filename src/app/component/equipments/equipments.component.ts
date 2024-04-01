@@ -16,6 +16,7 @@ import {SupplierService} from "../../domain/supplier.service";
 import {Isfi} from "../../domain/interfaces/sfi";
 import {LanguageService} from "../../domain/language.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {IssueManagerService} from "../../domain/issue-manager.service";
 
 
 @Component({
@@ -44,7 +45,7 @@ export class EquipmentsComponent implements OnInit {
 
 
   constructor( public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService,
-               private supplierService: SupplierService, public t: LanguageService, private route: ActivatedRoute, private router: Router) {
+               private supplierService: SupplierService, public t: LanguageService, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService) {
 
     route.queryParams.subscribe(params => {
       if (params['equipmentId'] && params['supplierId']) {
@@ -158,9 +159,7 @@ export class EquipmentsComponent implements OnInit {
     //console.log('addSupplier');
     console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
-      header: this.t.tr('Создать поставщика'),
       modal: true,
-      width: '50%',
       data: eq.id
     }).onClose.subscribe(()=> {  //сразу выводить на страницу
       this.eqService.getEquipments().subscribe(equips => {
@@ -177,7 +176,6 @@ export class EquipmentsComponent implements OnInit {
       header: this.t.tr('Редактировать оборудование'),
       showHeader: false,
       modal: true,
-      width: '50%',
       data: eq
     }).onClose.subscribe(closed => { //сразу выводить на страницу
       console.log("this.eqService.setWaitingCreateFiles([])")
@@ -230,8 +228,8 @@ export class EquipmentsComponent implements OnInit {
   newEquipment() {
     console.log('newEquipment')
     this.dialogService.open(CreateEquipmentComponent, {
-      header: this.t.tr('Создать оборудование'),
       modal: true,
+      showHeader: false
     }).onClose.subscribe(closed => { //сразу выводить на страницу
       console.log('closed + newEquipment');
       console.log(closed);
