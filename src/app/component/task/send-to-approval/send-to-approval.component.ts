@@ -31,9 +31,9 @@ export class SendToApprovalComponent implements OnInit {
   constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig,  private dialogService: DialogService) {
     this.issue = conf.data;
     this.issueName = this.issue.doc_number == '' ? (this.issue.name) : (this.issue.doc_number + ' ' + this.issue.name);
-    if (this.issue.revision != ''){
-      this.issueName = this.issueName + ' rev' + this.issue.revision;
-    }
+    // if (this.issue.revision != ''){
+    //   this.issueName = this.issueName + ' rev' + this.issue.revision;
+    // }
 
     this.issues.getIssueTypes().then(res => {
       var findType = res.find(x => x.type_name == this.issue.issue_type);
