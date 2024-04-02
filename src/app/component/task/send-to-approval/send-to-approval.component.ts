@@ -24,9 +24,17 @@ export class SendToApprovalComponent implements OnInit {
   selectedUsers: string[] = [];
   issue: Issue = new Issue();
   users: User[] = [];
+  onlyManagers: User[] = [];
+  hideUsers = true;
+  issueName = '';
 
   constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig,  private dialogService: DialogService) {
     this.issue = conf.data;
+    this.issueName = this.issue.doc_number == '' ? (this.issue.name) : (this.issue.doc_number + ' ' + this.issue.name);
+    if (this.issue.revision != ''){
+      this.issueName = this.issueName + ' rev' + this.issue.revision;
+    }
+
     this.issues.getIssueTypes().then(res => {
       var findType = res.find(x => x.type_name == this.issue.issue_type);
       if (findType != null){
@@ -36,11 +44,20 @@ export class SendToApprovalComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.users = this.getUsersApproval();
+    this.users = this.getUsers();
+    if (this.auth.getUser().groups.includes('Chief of Department')){
+      this.onlyManagers = this.users.filter(x => x.groups.includes('Managers'));
+    }
+    else{
+      this.onlyManagers = this.users.filter(x => x.groups.includes('Chief of Department'));
+    }
     this.sortUsers();
   }
   getUsersApproval() {
     return this.auth.users.filter(x => x.visibility.includes('a') || x.visibility.includes('c'));
+  }
+  getUsers() {
+    return this.auth.users.filter(x => x.visibility.includes('c'));
   }
   handleFileInput(files: FileList | null) {
     if (files != null){
@@ -277,10 +294,7 @@ export class SendToApprovalComponent implements OnInit {
     console.log(this.selectedUsers);
     this.selectedUsers.forEach(user => {
       const issue = new Issue();
-      issue.name = this.issue.doc_number != '' ? (this.issue.doc_number) : (this.issue.doc_number + ' ' + this.issue.name);
-      if (this.issue.revision != ''){
-        issue.name = issue.name + ' rev' + this.issue.revision;
-      }
+      issue.name = this.issueName;
       issue.details = this.taskDetails;
       issue.issue_type = 'APPROVAL';
       issue.started_by = this.auth.getUser().login;

@@ -5,6 +5,8 @@
       <i class="pi pi-times"></i>
     </div>
   </div>
+  <div class="big-text-create mb-1 mt-1">{{t.tr('Название задачи*')}}</div>
+  <input class="w-100" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="issueName">
 
   <div class="body-approval">
     <div class="big-text mb-1 mt-1">{{t.tr('Описание')}}</div>
@@ -60,9 +62,16 @@
     </div>
 
   </div>
-  <div class="big-text mb-1 mt-1">{{t.tr('На согласование:')}}</div>
-  <p-multiSelect appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-480 border" [maxSelectedLabels]="4" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers" (onChange)="sortUsers()"></p-multiSelect>
-  <div class="form-footer pt-50">
+
+  <div class="big-text-create mb-1 mt-1">{{t.tr('Назначить ответственного')}}</div>
+  <p-multiSelect *ngIf="!hideUsers" appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-220 border max-height-150" [maxSelectedLabels]="5" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
+  <p-multiSelect *ngIf="hideUsers" appendTo = "body" optionValue="login" optionLabel="userName" [options]="onlyManagers" styleClass="width-220 border max-height-150" [maxSelectedLabels]="5" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
+  <div class="df">
+    <div class="mr-5">*только руководители</div>
+    <p-checkbox [binary]="true" [(ngModel)]="hideUsers"></p-checkbox>
+  </div>
+
+   <div class="form-footer pt-50">
     <div class="mr-5 cx">
       <div [class.button-disabled]="isDisabled()" tabindex="10" (click)="commit()" class="button-ok cxy">{{t.tr('Отправить')}}</div>
     </div>
