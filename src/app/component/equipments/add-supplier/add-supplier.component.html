@@ -2,12 +2,13 @@
 
 
 
-<p-checkbox  [(ngModel)]="addedNewSupp"  [binary]="true"  label="Другой поставщик"></p-checkbox>
+<!--<p-checkbox  [(ngModel)]="addedNewSupp"  [binary]="true"  label="Другой поставщик"></p-checkbox>-->
+<p-checkbox  (onChange)="toggleCheckbox()" [binary]="true"  label="Другой поставщик"></p-checkbox>
 
 <form [formGroup]="suppliersForm" class="form-container ng-star-inserted">
   <input *ngIf="addedNewSupp" id="name" type="text" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" formControlName="name">
 
-  <p-dropdown *ngIf="!addedNewSupp" class="select" optionLabel="name" optionValue="id"  placeholder="Выберите поставщика" [options]="supplierNames" appendTo = "body" styleClass="width-300 font-13" [filter]="true" formControlName="supp_id" filterBy="name">
+  <p-dropdown *ngIf="!addedNewSupp" class="select" optionLabel="name" optionValue="id"  placeholder="Выберите поставщика" [options]="supplierNames" appendTo = "body" styleClass="width-300 font-13" [filter]="true" formControlName="supp_id" filterBy="name" (onChange)="onSupplierSelect($event.value)">
 <!--  <p-dropdown *ngIf="!addedNewSupp" class="select" optionLabel="name" optionValue="id" placeholder="Выберите поставщика" [options]="supplierNames" appendTo = "body" styleClass="width-300 font-13" [filter]="true" formControlName="supp_id" filterBy="name" [ngModel]="" (onChange)="onSupplierSelect($event.value)">-->
     <ng-template  let-supplierName pTemplate="item">
       <div class="df user-select">
