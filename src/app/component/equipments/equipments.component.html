@@ -1,128 +1,122 @@
-<!--<a [routerLink]="['/equipments']" [queryParams]="{id: 51}">Редактировать поставщика</a>-->
-
-<!--<a-->
-<!--  [routerLink]="['/equipments', 51]">Редактировать поставщика-->
-<!--</a>-->
-
-<!--<a [routerLink]="['/equipments/supplier', 51]">{{ 51 }}</a>-->
-
-<div class="all-page">
-  <div class="equipments-component pt-10">
-    <div class="head sticky-card ng-star-inserted pt-10">
-      <div class="head-filter">
-        <div [class.button-disabled]="createEqButtonAreHidden" class="eq-button blue-button cxy mr-10" (click)="newEquipment()">
-          <div class="pr-10 cxy">
-            <img src="assets/icons/plus3.svg" height="18">
-          </div>
-          <div   class="cxy">{{t.tr('Добавить оборудование')}}</div>
+<div class="all-page-equip">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head df sticky-card">
+      <div [class.button-disabled]="createEqButtonAreHidden" class="eq-button blue-button cxy mr-10" (click)="newEquipment()">
+        <div class="pr-10 cxy">
+          <img src="assets/icons/plus3.svg" height="18">
         </div>
-        <div class="mr-10">
-          <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
-        </div>
-        <div class="mr-10">
-          <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
-        </div>
+        <div   class="cxy">{{t.tr('Добавить оборудование')}}</div>
       </div>
-      <div class="head-search">
+      <div class="mr-10">
+        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+      </div>
+      <div class="mr-10">
+        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+      </div>
+      <div class="p-ml-auto mr-10 df">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
         <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />
+      </span>
       </div>
     </div>
 
-    <!--  <div class="card-head df sticky-card ng-star-inserted">-->
-    <!--    <div class="container-buttons">-->
-    <!--      <div class="mr-10">-->
-    <!--        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>-->
-    <!--      </div>-->
-    <!--      <div class="mr-10">-->
-    <!--        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>-->
-    <!--      </div>-->
-    <!--      <div class="eq-button blue-button cxy mr-10" (click)="newEquipment()">-->
-    <!--        <div class="pr-10 cxy">-->
-    <!--          <img src="assets/icons/plus3.svg" height="18">-->
-    <!--        </div>-->
-    <!--        <div class="cxy">{{'Добавить оборудование'}}</div>-->
-    <!--      </div>-->
-    <!--&lt;!&ndash;      <div tabindex="10" (click)="newEquipment()" class="button-ok cxy">{{'Добавить оборудование'}}</div>&ndash;&gt;-->
-    <!--      <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск...'" class="border" />-->
-    <!--    </div>-->
-    <!--  </div>-->
+    <div class="empty-card-bottom"></div>
+    <div class="card-overflow ovf-auto">
+      <p-table #dt
+               id="dt"
+               styleClass="p-datatable-striped"
+               [globalFilterFields]="['sfi','name']"
+               scrollHeight="calc(100vh - 220px)"
+               class="" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem' }" pRowToggler >
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 5rem"></th>
+            <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="sfi">Group <p-sortIcon field="sfi"></p-sortIcon></th>
+            <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+            <th class="df" pSortableColumn="department">Department<p-sortIcon field="department"></p-sortIcon></th>
+            <th pSortableColumn="comment">Comment<p-sortIcon field="comment"></p-sortIcon></th>
+            <th pSortableColumn="respons_surname">Responsible<p-sortIcon field="respons_surname"></p-sortIcon></th>
+            <th pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>
+            <th style="width: 5rem"></th>
+          </tr>
+        </ng-template>
 
-    <!--  заголовок таблицы с оборудование-->
-    <p-table #dt
-             id="dt"
-             [globalFilterFields]="['sfi','name']"
-             class="equipments-table" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem' }" pRowToggler >
-      <ng-template pTemplate="header">
-        <tr>
-          <th style="width: 5rem"></th>
-          <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
-          <th pSortableColumn="sfi">Group <p-sortIcon field="sfi"></p-sortIcon></th>
-          <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
-          <th pSortableColumn="department">Department<p-sortIcon field="department"></p-sortIcon></th>
-          <th pSortableColumn="comment">Comment<p-sortIcon field="comment"></p-sortIcon></th>
-          <th pSortableColumn="respons_surname">Responsible<p-sortIcon field="respons_surname"></p-sortIcon></th>
-          <th pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>
-          <th style="width: 5rem"></th>
-          <th style="width: 5rem"></th>
-        </tr>
-      </ng-template>
+        <!--      заполняем таблицу с оборудованием-->
+        <ng-template pTemplate="body" let-eq let-expanded="expanded">
+          <tr class="equipment-tr">
+            <td>
+              <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td (click)="editEquipment(eq)">{{ eq.id }}</td>
+            <td (click)="editEquipment(eq)">SFI {{ eq.sfi }}-{{ eq.name }}</td>
+            <td (click)="editEquipment(eq)">{{ eq.status }}</td>
+            <td (click)="editEquipment(eq)" >{{ eq.department }}</td>
+            <td (click)="editEquipment(eq)">{{ eq.comment }}</td>
+            <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>
+            <td (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
+            <td><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup cxy green-button">{{t.tr('Добавить поставщика')}}</div></td>
+          </tr>
+        </ng-template>
 
-      <!--      заполняем таблицу с оборудованием-->
-      <ng-template pTemplate="body" let-eq let-expanded="expanded">
-        <tr class="equipment-tr">
-          <td>
-            <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-          </td>
-          <td (click)="editEquipment(eq)">{{ eq.id }}</td>
-          <td (click)="editEquipment(eq)">SFI {{ eq.sfi }}-{{ eq.name }}</td>
-          <td (click)="editEquipment(eq)">{{ eq.status }}</td>
-          <td (click)="editEquipment(eq)" >{{ eq.department }}</td>
-          <td (click)="editEquipment(eq)">{{ eq.comment }}</td>
-          <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>
-          <td (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
-          <td><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-ok ml-1">{{t.tr('Добавить поставщика')}}</div></td>
-<!--          <td>-->
-<!--            <div [class.button-disabled]="editEquipmentButtonIsDisabled(eq)" class="cxy mr-10 edit-button" tooltipPosition="top" [pTooltip]="(t.tr('Редактировать'))" (click)="editEquipment(eq)">-->
-<!--              <img src="assets/icons/edit1.svg" height="20">-->
-<!--            </div>-->
-<!--          </td>-->
-        </tr>
-      </ng-template>
-
-      <!--     выпадающий список suppliers-->
-      <ng-template pTemplate="rowexpansion" let-eq>
-        <tr *ngIf="!showSuppliersButtonIsDisabled(eq)">
-          <td colspan="7">
-            <div class="p-3">
-              <p-table [value]="eq.suppliers" dataKey="equipm_id">
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
-                    <th pSortableColumn="name">Supplier<p-sortIcon field="name"></p-sortIcon></th>
-                    <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
-                    <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>
-                    <th style="width: 5rem"></th>
-                    <!--                      <th style="width: 4rem"></th>-->
-                  </tr>
-                </ng-template>
-                <ng-template class="addTable" pTemplate="body" let-supplier>
-                  <tr class="supplier-tr">
-                    <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>
-                    <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>
-                    <td (click)="editSupplier(eq, supplier)">{{ supplier.status }}</td>
-                    <td (click)="editSupplier(eq, supplier)">{{getDateOnly(supplier.last_update)}}</td>
-                  </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                  <tr>
-                    <td colspan="6">There are no suppliers for this equipment yet.</td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+        <!--     выпадающий список suppliers-->
+        <ng-template pTemplate="rowexpansion" let-eq>
+          <tr *ngIf="!showSuppliersButtonIsDisabled(eq)">
+            <td colspan="9">
+              <div class="p-3">
+                <p-table [value]="eq.suppliers" dataKey="equipm_id">
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+                      <th pSortableColumn="name">Supplier<p-sortIcon field="name"></p-sortIcon></th>
+                      <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                      <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>
+                      <th style="width: 5rem"></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template class="addTable" pTemplate="body" let-supplier>
+                    <tr class="supplier-tr">
+                      <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>
+                      <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>
+                      <td (click)="editSupplier(eq, supplier)" class="text-14">
+                        <span [innerHTML]="issueManager.localeStatus(supplier.status) | safeHtml"></span>
+                      </td>
+                      <td (click)="editSupplier(eq, supplier)">{{getDateOnly(supplier.last_update)}}</td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="6">There are no suppliers for this equipment yet</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

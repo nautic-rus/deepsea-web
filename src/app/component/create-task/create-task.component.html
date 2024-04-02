@@ -222,8 +222,8 @@
 <!--    </div>-->
 <!--  </div>-->
   <div *ngIf="taskType == 'APPROVAL'">
-<!--    <div class="big-text-create mb-1 mt-1">{{t.tr('Название задачи*')}}</div>-->
-<!--    <input class="w-100" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">-->
+    <div class="big-text-create mb-1 mt-1">{{t.tr('Название задачи*')}}</div>
+    <input class="w-100" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
     <div class="df space-between">
       <div>
         <div class="big-text-create mb-1 mt-1">{{t.tr('Назначить ответственного')}}</div>
@@ -767,7 +767,7 @@
 <!--      </div>-->
       <div>
         <div class="big-text-create mb-1 mt-1">{{t.tr('Название')}}*</div>
-        <input type="text" class="width-457" pInputText [(ngModel)]="taskSummary" [disabled]="true">
+        <input type="text" class="width-457" pInputText [(ngModel)]="taskSummary" [disabled]="false">
       </div>
     </div>
 

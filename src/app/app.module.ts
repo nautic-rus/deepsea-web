@@ -215,6 +215,12 @@ import { AgreeModalComponent } from './component/equipments/agree-modal/agree-mo
 import { EditSupplierComponent } from './component/equipments/edit-supplier/edit-supplier.component';
 import { EleEspGenerationWaitComponent } from './component/documents/electric-esp/ele-esp-generation-wait/ele-esp-generation-wait.component';
 import { SpecMaterialsComponent } from './component/spec-materials/spec-materials.component';
+import { ObjViewPublicComponent } from './component/obj-view-public/obj-view-public.component';
+import { ObjViewUrlCreateComponent } from './component/tools/obj-view-url-create/obj-view-url-create.component';
+import {ColorPickerModule} from "primeng/colorpicker";
+import { ObjViewPublicDeviceComponent } from './component/obj-view-public-device/obj-view-public-device.component';
+import { ObjViewUrlCreateDeviceComponent } from './component/tools/obj-view-url-create-device/obj-view-url-create-device.component';
+import { SpecMaterialComponent } from './component/spec-materials/spec-material/spec-material.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -372,6 +378,11 @@ Quill.register('modules/imageResize', ImageResize);
     EditSupplierComponent,
     EleEspGenerationWaitComponent,
     SpecMaterialsComponent,
+    ObjViewPublicComponent,
+    ObjViewUrlCreateComponent,
+    ObjViewPublicDeviceComponent,
+    ObjViewUrlCreateDeviceComponent,
+    SpecMaterialComponent,
 
   ],
   imports: [
@@ -433,7 +444,8 @@ Quill.register('modules/imageResize', ImageResize);
     InputMaskModule,
     ReactiveFormsModule,
     TreeSelectModule,
-    ScrollPanelModule
+    ScrollPanelModule,
+    ColorPickerModule
   ],
   providers: [MessageService, DialogService, DynamicDialogRef, ConfirmationService],
   bootstrap: [AppComponent]

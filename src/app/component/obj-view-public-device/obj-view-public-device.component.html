@@ -1,0 +1,34 @@
+<div class="page" [class.window-mode]="windowMode == 1">
+  <div class="selected-segment" *ngIf="selectedSegment != ''">
+    {{selectedSegment}}
+  </div>
+  <div [hidden]="errorMessage != ''">
+    <div class="visible">
+      <div class="df mt-5">
+        <div class="mr-5">Hull</div>
+        <p-checkbox [binary]="true" [(ngModel)]="hullVisible" (ngModelChange)="changeVisible()"></p-checkbox>
+      </div>
+      <div class="df mt-5">
+        <div class="mr-5">Equipment</div>
+        <p-checkbox [binary]="true" [(ngModel)]="equipmentVisible" (ngModelChange)="changeVisible()"></p-checkbox>
+      </div>
+      <div class="df mt-5">
+        <div class="mr-5">Structure</div>
+        <p-checkbox [binary]="true" [(ngModel)]="structureVisible" (ngModelChange)="changeVisible()"></p-checkbox>
+      </div>
+      <div class="df mt-5">
+        <div class="mr-5">Ele Trays</div>
+        <p-checkbox [binary]="true" [(ngModel)]="traysVisible" (ngModelChange)="changeVisible()"></p-checkbox>
+      </div>
+      <div class="df mt-5">
+        <div class="mr-5">Pipes</div>
+        <p-checkbox [binary]="true" [(ngModel)]="pipesVisible" (ngModelChange)="changeVisible()"></p-checkbox>
+      </div>
+    </div>
+    <div class="loading" *ngIf="loading">LOADING... PLEASE WAIT...</div>
+    <canvas #model id="model"></canvas>
+  </div>
+  <div *ngIf="errorMessage != ''" class="cxy h-100">
+    {{errorMessage}}
+  </div>
+</div>

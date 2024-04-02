@@ -1,0 +1,48 @@
+.loading{
+  position: absolute;;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: large;
+  font-weight: bold;
+}
+.page{
+  height: 100%;
+  width: 100%;
+}
+.window-mode{
+  height: 100vh;
+}
+.card-view{
+  border: 1px solid red;
+  position: relative;
+  height: 720px;
+  width: 1080px;
+}
+.loading-status{
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: xxx-large;
+}
+.selected-segment{
+  background-color: white;
+  height: 40px;
+  width: 420px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.visible{
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  font-size: 12px;
+}
+.center{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}

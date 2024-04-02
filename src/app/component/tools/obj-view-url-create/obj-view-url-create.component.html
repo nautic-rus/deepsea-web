@@ -1,0 +1,28 @@
+<div class="mt-5">
+  <div class="upload cx cy">
+    <div class="cxy w-100" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event);" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+      <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+      <span class="normal-text no-actions">Перетащите файлы или нажмите для загрузки</span>
+    </div>
+  </div>
+  <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" accept=".obj">
+</div>
+<div [hidden]="loaded == null">
+  <div class="cx">
+    <div class="ml-5">
+      Background color:
+      <p-colorPicker [(ngModel)]="backgroundColor"></p-colorPicker>
+    </div>
+    <div class="ml-5">
+      Material color:
+      <p-colorPicker [(ngModel)]="materialColor"></p-colorPicker>
+    </div>
+  </div>
+  <div class="mt-5 cx">{{getQrCodeValue()}}</div>
+  <div class="cx">
+    <qr-code [value]="getQrCodeValue()"></qr-code>
+  </div>
+  <div class="cx">
+    <button (click)="openPreview()">PREVIEW</button>
+  </div>
+</div>

@@ -76,4 +76,13 @@ export class MaterialManagerService {
   updateMaterialComplect(complect: string){
     return this.http.post<any>(props.http + '/updateMaterialComplect', JSON.stringify(complect));
   }
+  getSpecMaterials(){
+    return this.http.get<any>(props.http + '/specMaterials');
+  }
+  getSpecDirectories(){
+    return this.http.get<any>(props.http + '/specDirectories');
+  }
+  getSpecStatements(){
+    return this.http.get<any>(props.http + '/specStatements');
+  }
 }

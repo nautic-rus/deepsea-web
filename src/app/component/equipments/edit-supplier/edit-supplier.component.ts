@@ -50,7 +50,7 @@ export class EditSupplierComponent implements OnInit {
   equipment_id: number = this.eq_data.id;
   sfi: number;
   sfi_name: string;  //расшифровка номера sfi
-  status: string[] = ['New', 'ITT sent', 'On approval', 'Approved', 'Not approved', 'Accepted']
+  status: string[] = ['New', 'ITT sent', 'On Approval', 'Approved', 'Not Approved', 'Accepted']
 
   relatedTasks: RelatedTask[] = []
 

@@ -1,10 +1,98 @@
+/deep/.p-datatable .p-datatable-tbody > tr {
+  background: #ffffff;
+  color: #495057;
+  transition: box-shadow 0.2s;
+}
+/deep/.p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+/deep/.p-datatable {
+  margin-top: 25px;
+}
+/deep/.p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+/deep/ .p-inputtext {
+  padding: 8px 10px;
+}
+/deep/ .p-inputtext:hover {
+  background-color: rgba(9, 30, 66, 0.08);
+}
+.header-parts{
+  border-bottom: 0 none;
+  background: #ffffff;
+  color: #323130;
+  padding-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.filter{
+  margin-left: auto;
+}
+.parts-button-close{
+  color: #605e5c;
+  width: 2rem;
+  height: 2rem;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.parts-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.header-parts-text{
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.task-button{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 5px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+.info-id{
+  color: rgb(137, 147, 164);
+}
+.big-text-create{
+  color: #5e6c84;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
+.icon-nest{
+  fill: #E1E1E1;
+}
+.icon-nest:hover{
+  fill: #5e6c84;
+}
+
+
+
+
+
+
 
 
 .header {
   display: flex;
   justify-content: space-between;
 }
-
 .task-name-button {
   padding: 0px 10px;
   background-color: rgba(9, 30, 66, 0.04);
@@ -13,110 +101,66 @@
   box-shadow: 2px 2px 6px 0px rgba(34, 60, 80, 0.2);
   border: 1px solid #dedede69;
 }
-
 .task-name-button:hover{
   background-color: rgba(9, 30, 66, 0.08);
 }
-
-
 .form-container {
   display: flex;
   flex-direction: column;
 }
-
 .header-info {
   display: flex;
   justify-content: space-between;
 }
-
 .disabled {
   opacity: 0.5;
 }
-
-/deep/.p-dialog .p-dialog-header .p-dialog-title {
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-
 .delete-button {
   cursor: pointer;
 }
-
 .edit-container {
   display: flex;
   flex-direction: column;
 }
-
 .header-info {
   display: flex;
   justify-content: space-between;
 }
-
-.header-info_sfi {}
-
 .delete-button {
   cursor: pointer;
 }
-
 .main-body {
   display: grid;
   gap: 25px;
   grid-template-columns: 2fr 1fr;
 }
-
 .main-right {
   display: flex;
   flex-direction: column;
 }
-
 .info_sfi {
   font-weight: 600;
   font-size: 14px;
   color: grey;
 }
-
 .info-name {
   font-weight: 600;
   font-size: x-large;
   margin-top: 16px;
 }
-
 .main-info_description {
   display: flex;
   flex-direction: column;
 }
-
 .disabled {
   opacity: 0.5;
   pointer-events: none;
 }
-
-/deep/.p-datatable {
-  margin-top: 25px;
-}
-
-/deep/.p-dialog .p-dialog-header .p-dialog-title {
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-
-/deep/ .p-inputtext {
-  padding: 8px 10px;
-}
-
-/deep/ .p-inputtext:hover {
-  background-color: rgba(9, 30, 66, 0.08);
-}
-
 .files_table {
   margin-top: 5px;
 }
 
-/deep/.p-datatable .p-datatable-tbody > tr {
-  background: #ffffff;
-  color: #495057;
-  transition: box-shadow 0.2s;
-}
+
 
 .test {
   margin-left: 15px;

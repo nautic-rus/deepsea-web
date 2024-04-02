@@ -1,0 +1,69 @@
+<div class="dialog pt-5">
+  <div class="df width-600">
+    <div class="cy left-text-one-row mr-20">Код материала:</div>
+    <div class="cx pt-5">
+      <input [disabled]="true" [(ngModel)]="material.code" type="text" pInputText class="width-440 border-material">
+    </div>
+  </div>
+  <div class="double-row mt-1">
+    <div class="df">
+      <div class="cy left-text">КЕИ:</div>
+      <div class="ml-1">
+        <p-dropdown styleClass="width-190 border-material" (onChange)="unitsChanged()" [(ngModel)]="material.units" [options]="units" optionLabel="label" optionValue="value" placeholder="">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy right-text">Коэф. доп.:</div>
+      <div class="ml-1">
+        <p-inputNumber [(ngModel)]="material.coefficient" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="double-row mt-1">
+    <div class="df">
+      <div class="cy right-text">{{getUnitsText()}}</div>
+      <div class="ml-1">
+        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
+      </div>
+    </div>
+    <div class="df">
+      <div class="cy right-text">Примечание:</div>
+      <div class="ml-1">
+        <input [(ngModel)]="material.note" type="text" pInputText class="border-material width-190">
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="df w-100 mt-1 mb-1">
+    <div class="cy left-text-one-row mr-20">Наименование:</div>
+    <div class="cx pt-5">
+      <input [(ngModel)]="material.name" type="text" pInputText class="width-440 border-material">
+    </div>
+  </div>
+  <div class="df w-100 mt-1 mb-1">
+    <div class="cy left-text-one-row mr-20">Описание:</div>
+    <div class="cx pt-5">
+      <input [(ngModel)]="material.description" type="text" pInputText class="width-440 border-material">
+    </div>
+  </div>
+  <div class="df w-100 mt-1 mb-1">
+    <div class="cy left-text-one-row mr-20">Номер позиции:</div>
+    <div class="cx pt-5">
+      <input [(ngModel)]="label" type="text" pInputText class="width-440 border-material">
+    </div>
+  </div>
+
+
+
+  <div class="form-footer cxy mt-20">
+    <div class="mr-1 cx">
+      <div tabindex="10" pButton [label]="getLabel(action)" class="button-ok" (click)="createMaterial()"></div>
+    </div>
+    <div tabindex="11" pButton [label]="t.tr('Отмена')" (click)="ref.close()" class="button-cancel ml-1"></div>
+  </div>
+</div>
