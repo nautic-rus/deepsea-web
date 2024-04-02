@@ -1,4 +1,19 @@
 <div class="dialog pt-5">
+
+  <div class="df width-600">
+    <div class="cy left-text-one-row mr-20">Ведомость материала:</div>
+    <div class="cx pt-5">
+      <p-treeSelect appendTo="body" class="width-440" [(ngModel)]="selectedStatementNode" [options]="statementNodes" placeholder="Выберите ведомость">
+      </p-treeSelect>
+    </div>
+  </div>
+  <div class="df width-600">
+    <div class="cy left-text-one-row mr-20">Выберите директорию:</div>
+    <div class="cx pt-5">
+      <p-treeSelect appendTo="body" class="width-440" [(ngModel)]="selectedSpecDirectory" [options]="specDirectories" placeholder="Выберите директорию">
+      </p-treeSelect>
+    </div>
+  </div>
   <div class="df width-600">
     <div class="cy left-text-one-row mr-20">Код материала:</div>
     <div class="cx pt-5">
@@ -20,8 +35,6 @@
       </div>
     </div>
   </div>
-
-
   <div class="double-row mt-1">
     <div class="df">
       <div class="cy right-text">{{getUnitsText()}}</div>
