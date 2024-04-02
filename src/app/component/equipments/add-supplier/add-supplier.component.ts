@@ -20,18 +20,36 @@ import {SupplierHistory} from "../../../domain/classes/supplier-history";
 export class AddSupplierComponent implements OnInit {
   suppliersForm = this.formBuilder.group({
     name: ['', Validators.required],
+    supp_id: [''],
     description: [''],
     manufacturer: ['', Validators.required],
   });
 
+  //для добавления нового или выбора поставщика из списка
+  addedNewSupp: boolean = false; // показывает кликнут чекбокс длдя добавления нового поставщика или нет
+  supplierNames: any[] = [];
+
+
   supplierFiles: SupplierFiles[] = [];
   dragOver = false;
+  b : string = '';
 
   constructor(private formBuilder: FormBuilder, public ref: DynamicDialogRef, private dialogConfig: DynamicDialogConfig, public auth: AuthManagerService, public eqService: EquipmentsService,
               private dialogService: DialogService, private supplierService: SupplierService, public t: LanguageService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.eqService.getSupplierNames().subscribe((res) => {
+      this.supplierNames = res;
+    })
 
+  }
+
+
+  onSupplierSelect(selectedSupplier: any) {
+  //   this.suppliersForm.get('name')?.setValue(selectedSupplier.name);
+  //   this.suppliersForm.get('supp_id')?.setValue(selectedSupplier.id);
+  //   console.log(selectedSupplier);
+  }
 
   addFiles() {
     const dialog = this.dialogService.open(AddFilesComponent, {
@@ -105,10 +123,17 @@ export class AddSupplierComponent implements OnInit {
   }
 
   createSupplier() {
+    if (this.addedNewSupp ) { //тут еще отправка в таблицу suppliers_name
+      this.suppliersForm.get('supp_id')?.setValue(0);
+    } else {
+      this.suppliersForm.get('name')?.setValue('');
+    }
+    console.log(this.suppliersForm.value)
+
     const supplierToDB = new SupplierToDB();
     supplierToDB.equip_id= this.dialogConfig.data;  //принимаем из equipment компонент
     supplierToDB.user_id = this.auth.getUser().id;
-    supplierToDB.name = this.suppliersForm.value.name;
+    supplierToDB.sup_id = this.suppliersForm.value.supp_id;
     supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
     supplierToDB.description = this.suppliersForm.value.description;
     console.log('createSupplier()');
@@ -144,9 +169,11 @@ export class AddSupplierComponent implements OnInit {
   }
 
   close() {
+    console.log(this.suppliersForm.value)
     this.supplierService.setWaitingCreateFiles([]);
     this.suppliersForm.reset();
     this.ref.close();
   }
 
+  protected readonly console = console;
 }

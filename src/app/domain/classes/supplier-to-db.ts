@@ -7,7 +7,7 @@ export class SupplierToDB {
   description: string;
   equip_id: number;
   manufacturer: string;
-  name: string;
+  sup_id: number;
   status_id: number = 1;
   user_id: number;
   // last_update:

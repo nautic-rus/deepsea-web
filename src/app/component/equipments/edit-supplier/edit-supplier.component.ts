@@ -423,7 +423,8 @@ export class EditSupplierComponent implements OnInit {
     supplierToDB.user_id = this.eq_data.responsible_id; //или уже id поменявшего?
     supplierToDB.id = this.dialogConfig.data.supplier.id;
     supplierToDB.comment= this.supplierForm.value.comment;
-    supplierToDB.name = this.supplierForm.value.name;
+    supplierToDB.sup_id = this.supplierForm.value.sup_data.sup_id //тут надо полученное снова ставить на это место
+    // supplierToDB.name = this.supplierForm.value.name;
     supplierToDB.manufacturer = this.supplierForm.value.manufacturer;
     supplierToDB.description = this.supplierForm.value.description;
     supplierToDB.status_id = this.setStatusId(this.supplierForm.value.status)

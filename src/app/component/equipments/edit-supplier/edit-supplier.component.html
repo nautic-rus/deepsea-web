@@ -10,26 +10,27 @@
     <div class="header-info_sfi">
       <div  class="info_sfi" >ID {{supplier_id}} | SFI {{sfi}} - {{sfi_name}}</div>
 
-      <button [hidden]="edit =='name'" [disabled]="buttonsAreHidden" class="edit_container info-name mt-16 p-inputtext" (click)="showEditBlock('name')">{{supplierForm.value.name}} </button>
-      <div *ngIf="edit =='name'">
-        <label for="name"></label>
-        <input class="info-name mt-16 p-inputtext" id="name" type="text" formControlName="name">
+      <button class="edit_container info-name mt-16 p-inputtext">{{supplierForm.value.name}} </button>
+<!--      <button [hidden]="edit =='name'" [disabled]="buttonsAreHidden" class="edit_container info-name mt-16 p-inputtext" (click)="showEditBlock('name')">{{supplierForm.value.name}} </button>-->
+<!--      <div *ngIf="edit =='name'">-->
+<!--        <label for="name"></label>-->
+<!--        <input class="info-name mt-16 p-inputtext" id="name" type="text" formControlName="name">-->
 
-        <div class="df cxy">
-          <div (click)="editSupplier('changed name', this.prev_sup_data.name, this.supplierForm.value.name)">
-            <div  class="task-name-button cxy mr-10">
-              <img src="assets/icons/tick.svg">
-            </div>
-          </div>
-          <div (click)="showEditBlock('')">
-            <div  class="task-name-button cxy">
-              <img src="assets/icons/cancel.svg">
-            </div>
-          </div>
-        </div>
-<!--        <div tabindex="10" (click)="editSupplier('changed name', this.prev_sup_data.name, this.supplierForm.value.name)" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>-->
-<!--        <div tabindex="10" (click)="showEditBlock('')" class="button-cancel ml-1">{{t.tr('Отмена')}}</div>-->
-      </div>
+<!--        <div class="df cxy">-->
+<!--          <div (click)="editSupplier('changed name', this.prev_sup_data.name, this.supplierForm.value.name)">-->
+<!--            <div  class="task-name-button cxy mr-10">-->
+<!--              <img src="assets/icons/tick.svg">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div (click)="showEditBlock('')">-->
+<!--            <div  class="task-name-button cxy">-->
+<!--              <img src="assets/icons/cancel.svg">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--&lt;!&ndash;        <div tabindex="10" (click)="editSupplier('changed name', this.prev_sup_data.name, this.supplierForm.value.name)" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div tabindex="10" (click)="showEditBlock('')" class="button-cancel ml-1">{{t.tr('Отмена')}}</div>&ndash;&gt;-->
+<!--      </div>-->
     </div>
 
     <div class="df task-buttons">
