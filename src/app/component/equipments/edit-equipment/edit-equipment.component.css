@@ -7,18 +7,14 @@
   font-weight: 600;
   font-size: 1.5rem;
 }
-/deep/.p-datatable {
-  margin-top: 25px;
-}
-/deep/.p-dialog .p-dialog-header .p-dialog-title {
-  font-weight: 600;
-  font-size: 1.5rem;
-}
 /deep/ .p-inputtext {
   padding: 8px 10px;
 }
 /deep/ .p-inputtext:hover {
   background-color: rgba(9, 30, 66, 0.08);
+}
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 5px;
 }
 .header-parts{
   border-bottom: 0 none;
@@ -81,7 +77,9 @@
 .icon-nest:hover{
   fill: #5e6c84;
 }
-
+.text-gray{
+  color: #A8A7A6;
+}
 
 
 

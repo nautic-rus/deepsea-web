@@ -47,10 +47,6 @@
   pointer-events: none;
 }
 
-/deep/.p-datatable {
-  margin-top: 25px;
-}
-
 /deep/.p-dialog .p-dialog-header .p-dialog-title {
   font-weight: 600;
   font-size: 1.5rem;

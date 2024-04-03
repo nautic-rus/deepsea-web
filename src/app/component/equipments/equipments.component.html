@@ -29,10 +29,11 @@
                styleClass="p-datatable-striped"
                [globalFilterFields]="['sfi','name']"
                scrollHeight="calc(100vh - 220px)"
-               class="" [value]="equipments" dataKey="name" [tableStyle]="{ 'min-width': '50rem' }" pRowToggler >
+               [scrollable]="true"
+               class="" [value]="equipments" dataKey="name" pRowToggler >
         <ng-template pTemplate="header">
           <tr>
-            <th style="width: 5rem"></th>
+            <th></th>
             <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
             <th pSortableColumn="sfi">Group <p-sortIcon field="sfi"></p-sortIcon></th>
             <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
@@ -40,7 +41,7 @@
             <th pSortableColumn="comment">Comment<p-sortIcon field="comment"></p-sortIcon></th>
             <th pSortableColumn="respons_surname">Responsible<p-sortIcon field="respons_surname"></p-sortIcon></th>
             <th pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>
-            <th style="width: 5rem"></th>
+            <th></th>
           </tr>
         </ng-template>
 
@@ -64,37 +65,33 @@
         <!--     выпадающий список suppliers-->
         <ng-template pTemplate="rowexpansion" let-eq>
           <tr *ngIf="!showSuppliersButtonIsDisabled(eq)">
-            <td colspan="9">
-              <div class="p-3">
-                <p-table [value]="eq.suppliers" dataKey="equipm_id">
-                  <ng-template pTemplate="header">
-                    <tr>
-                      <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
-                      <th pSortableColumn="name">Supplier<p-sortIcon field="name"></p-sortIcon></th>
-                      <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
-                      <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>
-                      <th style="width: 5rem"></th>
-                    </tr>
-                  </ng-template>
-                  <ng-template class="addTable" pTemplate="body" let-supplier>
-                    <tr class="supplier-tr">
-                      <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>
-                      <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>
-                      <td (click)="editSupplier(eq, supplier)" class="text-14">
-                        <span [innerHTML]="issueManager.localeStatus(supplier.status) | safeHtml"></span>
-                      </td>
-                      <td (click)="editSupplier(eq, supplier)">{{getDateOnly(supplier.last_update)}}</td>
-                    </tr>
-                  </ng-template>
-                  <ng-template pTemplate="emptymessage">
-                    <tr>
-                      <td colspan="6">There are no suppliers for this equipment yet</td>
-                    </tr>
-                  </ng-template>
-                </p-table>
-              </div>
-            </td>
-          </tr>
+            <p-table class="w-100 padding-20" [value]="eq.suppliers" dataKey="equipm_id">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+                  <th pSortableColumn="name">Supplier<p-sortIcon field="name"></p-sortIcon></th>
+                  <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                  <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>
+                  <th></th>
+                </tr>
+              </ng-template>
+              <ng-template class="addTable" pTemplate="body" let-supplier>
+                <tr>
+                  <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>
+                  <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>
+                  <td (click)="editSupplier(eq, supplier)" class="text-14">
+                    <span [innerHTML]="issueManager.localeStatus(supplier.status) | safeHtml"></span>
+                  </td>
+                  <td (click)="editSupplier(eq, supplier)">{{getDateOnly(supplier.last_update)}}</td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td>There are no suppliers for this equipment yet</td>
+                </tr>
+              </ng-template>
+            </p-table>
+            </tr>
         </ng-template>
       </p-table>
     </div>
