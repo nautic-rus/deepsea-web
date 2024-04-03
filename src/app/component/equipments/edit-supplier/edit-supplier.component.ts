@@ -50,7 +50,8 @@ export class EditSupplierComponent implements OnInit {
   equipment_id: number = this.eq_data.id;
   sfi: number;
   sfi_name: string;  //расшифровка номера sfi
-  status: string[] = ['New', 'ITT sent', 'On Approval', 'Approved', 'Not Approved', 'Accepted']
+  // status: string[] = ['New', 'ITT sent', 'On Approval', 'Approved', 'Not Approved', 'Accepted']
+  status: string[] = [];
 
   relatedTasks: RelatedTask[] = []
 
@@ -88,7 +89,6 @@ export class EditSupplierComponent implements OnInit {
     })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
       this.relatedTasks = res;
-      console.log(res)
     })
 
     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
@@ -100,7 +100,9 @@ export class EditSupplierComponent implements OnInit {
       this.buttonsAreHidden = false;
     }
 
-    //
+    this.eqService.getSupplierStatuses().subscribe((res) => {
+      this.status = res.map((i: any) => {return i.name});
+    })
   }
 
   copySupplierUrl() {
@@ -423,19 +425,13 @@ export class EditSupplierComponent implements OnInit {
     supplierToDB.user_id = this.eq_data.responsible_id; //или уже id поменявшего?
     supplierToDB.id = this.dialogConfig.data.supplier.id;
     supplierToDB.comment= this.supplierForm.value.comment;
-    supplierToDB.sup_id = this.supplierForm.value.sup_data.sup_id //тут надо полученное снова ставить на это место
-    // supplierToDB.name = this.supplierForm.value.name;
+    supplierToDB.sup_id = this.supplier_id; //тут надо полученное снова ставить на это место
     supplierToDB.manufacturer = this.supplierForm.value.manufacturer;
     supplierToDB.description = this.supplierForm.value.description;
     supplierToDB.status_id = this.setStatusId(this.supplierForm.value.status)
-    // console.log('this.setStatusId(this.supplierForm.value.status)');
-    // console.log(this.supplierForm.value.status);
-    // console.log('editSupplier()');
-     console.log(JSON.stringify(supplierToDB));
+    console.log(JSON.stringify(supplierToDB));
 
     this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {  //Добавляем постащика в БД, в результате получаем его id
-      // console.log('res');
-      // console.log(res);
       if (res.includes('error')){
         alert(res);
       }

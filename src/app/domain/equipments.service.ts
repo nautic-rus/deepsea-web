@@ -61,6 +61,10 @@ export class EquipmentsService {
     return this.http.get<string>(props.http + '/delRelatedTask', {params: {id}});
   }
 
+  getSupplierStatuses(): Observable<any> {
+    return this.http.get<string>(props.http + '/supStatuses');
+  }
+
   getSupplierHistory(id: number): Observable<any> {
     return this.http.get<string>(props.http + '/supHistory', {params: {id}});
   }

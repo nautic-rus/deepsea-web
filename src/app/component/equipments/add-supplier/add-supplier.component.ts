@@ -47,9 +47,6 @@ export class AddSupplierComponent implements OnInit {
   toggleCheckbox() { //если галочка снята, то чистим поле с name (в ином случае будет проходить валидацию без галочки и без выбранного из списка )
     this.addedNewSupp = !this.addedNewSupp
     this.suppliersForm.get('name')?.setValue('');
-    // if (!this.addedNewSupp) {
-    //   this.suppliersForm.get('name')?.setValue('');
-    // }
   }
 
   onSupplierSelect(id: any) {
