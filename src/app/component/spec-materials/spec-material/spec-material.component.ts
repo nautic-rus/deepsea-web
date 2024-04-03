@@ -9,6 +9,8 @@ import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {MessageService} from "primeng/api";
 import {SpecMaterial} from "../../../domain/classes/spec-material";
 import {EquipmentsService} from "../../../domain/equipments.service";
+import {MaterialNode} from "../../../domain/classes/material-node";
+import _ from "underscore";
 
 @Component({
   selector: 'app-spec-material',
@@ -31,7 +33,6 @@ export class SpecMaterialComponent implements OnInit {
   category = this.categories[0];
   material: Material = new Material();
   action = '';
-  materialPrefix = '';
   materials: Material[] = [];
   codeSelectors: any[] = [];
   noneCode = {
@@ -41,40 +42,97 @@ export class SpecMaterialComponent implements OnInit {
   materialTranslationRu: MaterialTranslation = {lang: 'ru', name: '', description: ''};
   label = '';
   suppliers: any[] = [];
+  statements: any[] = [];
+  statementId: number = 0;
+  statementNodes: any[] = [];
+  selectedStatementNode: any;
+  specDirectories: any[] = [];
+  selectedSpecDirectory: any;
+  selectedSpecDirectoryId: any;
 
   constructor(public t: LanguageService, public eqManager: EquipmentsService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
     this.project = dialog.data[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
     this.action = dialog.data[2];
     this.materials = dialog.data[3];
-    this.materialPrefix = dialog.data[4];
+    this.selectedSpecDirectoryId = dialog.data[4];
+    this.specDirectories = _.sortBy(this.getDirNodes(dialog.data[5]), x => x.label);
+    console.log(this.selectedSpecDirectoryId);
+
 
     if (this.action == 'clone' || this.action == 'edit'){
-      this.materialPrefix = this.material.code.substring(0, 12);
-    }
 
-    if ((this.action == 'add' || this.action == 'clone') && this.materialPrefix != ''){
+    }
+    if ((this.action == 'add' || this.action == 'clone')){
       this.material.code = 'NRxxxxxxxxxxxxxx'
     }
 
+    this.materialManager.getSpecStatements().subscribe(stmts => {
+      console.log(stmts);
+      this.statements = stmts.filter((x: any) => x.project_id == this.project);
+      this.statementNodes = _.sortBy(this.getNodes(this.statements, 0), x => this.sortDot(x.index));
+    });
 
-
-    let ru = this.material.translations.find(x => x.lang == 'ru');
-    if (ru != null){
-      this.materialTranslationRu = ru;
-    }
-    else{
-      this.material.translations.push(this.materialTranslationRu);
-    }
   }
 
+  getDirNodes(rootNodes: any[], parent_id: number = 0){
+    let res: any[] = [];
+    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+      let nodes = this.getDirNodes(rootNodes, n.id);
+      res.push({
+        data: n.id,
+        children: _.sortBy(nodes, x => x.label),
+        label: n.name,
+      });
+      if (n.id == this.selectedSpecDirectoryId){
+        this.selectedSpecDirectory = res[res.length - 1];
+      }
+    });
+    return res;
+  }
   ngOnInit(): void {
 
+  }
+  sortDot(input: string, numDots = 3, length = 5){
+    let res = '';
+    let split = input.split('.');
+    for (let d = 0; d < numDots; d++){
+      if (split.length > d){
+        res += this.alz(split[d], length);
+      }
+    }
+    return res;
+  }
+  alz(input: string, length = 5){
+    let res = input;
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
+  }
+  getNodes(rootNodes: any[], parent_id = 0){
+    let res: any[] = [];
+    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+      res.push({
+        data: n.id,
+        children: _.sortBy(this.getNodes(rootNodes, n.id), x => this.sortDot(x.index)),
+        label: this.getNodeLabel(n.code, n.name),
+        index: n.code
+      });
+    });
+    return res;
+  }
+  getNodeLabel(code: string, name: string){
+    let res = name;
+    if (code != '-' && code != ''){
+      res = code + ' - ' + name;
+    }
+    return res;
   }
 
   createMaterial() {
     let m = new SpecMaterial();
-    m.fromMaterial(this.material, 0, 0, this.auth.getUser().id, '');
+    m.fromMaterial(this.material, this.statementId, 0, this.auth.getUser().id, '');
     this.material.project = this.project;
     this.materialManager.updateMaterial(this.material, this.auth.getUser().login, 0).then(res => {
       this.ref.close(this.material);
