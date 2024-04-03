@@ -349,6 +349,9 @@ export class CreateTaskComponent implements OnInit {
       issue.department = 'IT';
     }
     if (issue.issue_type == 'APPROVAL'){
+      issue.doc_number = '';
+    }
+    if (issue.issue_type == 'APPROVAL'){
       // @ts-ignore
       this.selectedUsers.forEach(user => {
         issue.file_attachments = this.loaded;

@@ -419,7 +419,7 @@
             <div class="subtask-grid" (click)="openIssue(childIssue.id)" >
               <div class="pr-10">{{t.tr('Согласование').toUpperCase()}}</div>
               <div class="pr-10 min-width-220">
-                <span>{{childIssue.doc_number}}</span>
+<!--                <span>{{childIssue.doc_number}}</span>-->
                 <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
               </div>
               <div class="df min-width-180">

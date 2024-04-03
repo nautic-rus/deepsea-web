@@ -38,6 +38,7 @@ export class SpecMaterialsComponent implements OnInit {
   selectedNode: any;
   selectedNodePath = '';
   selectedNodeCode = '';
+  selectedNodeId = '';
   selectedRootNode: string = '';
   rootNodes: any[] = [];
   tooltips: string[] = [];
@@ -130,7 +131,7 @@ export class SpecMaterialsComponent implements OnInit {
       //nodes.map(x => x.materials.length).forEach(x => count += x);
       res.push({
         data: n.id,
-        children: nodes,
+        children: _.sortBy(nodes, x => x.label),
         label: n.name,
         materials: nodeMaterials,
         count: count
@@ -190,7 +191,7 @@ export class SpecMaterialsComponent implements OnInit {
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
       modal: true,
       closable: true,
-      data: [this.project, material, action, this.materialsSrc, this.selectedNodeCode]
+      data: [this.project, material, action, this.materialsSrc, this.selectedNode.data, this.nodesSrc]
     }).onClose.subscribe(res => {
       if (res != null && res.code != ''){
         let findMaterial = this.materials.find(x => x.id == res.id);
@@ -211,8 +212,7 @@ export class SpecMaterialsComponent implements OnInit {
   selectNode() {
     if (this.selectedNode != null){
       this.selectedNodePath = this.getNodePath(this.selectedNode);
-      //this.selectedNodeCode = this.getNodeCode(this.selectedNode);
-      this.selectedNodeCode = this.selectedNode.data;
+      this.selectedNodeId = this.selectedNode.id;
       this.materials = this.selectedNode.materials;
     }
   }
@@ -263,47 +263,27 @@ export class SpecMaterialsComponent implements OnInit {
 
   contextMenu(event: any, contextMenu: ContextMenu) {
     event.originalEvent.stopPropagation();
-    if (event.node.data.length >= 12){
-      this.items = [
-        {
-          label: 'Edit Folder',
-          icon: 'pi pi-fw pi-pencil',
-          command: () => this.editNode(event.node)
-        },
-        this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
-          label: 'Remove',
-          icon: 'pi pi-fw pi-trash',
-          command: () => this.alertNodeContains()
-        } : {
-          label: 'Remove',
-          icon: 'pi pi-fw pi-trash',
-          command: () => this.removeNode(event.node)
-        }
-      ];
-    }
-    else{
-      this.items = [
-        {
-          label: 'New Folder',
-          icon: 'pi pi-fw pi-plus',
-          command: () => this.createNode(event.node)
-        },
-        {
-          label: 'Edit Folder',
-          icon: 'pi pi-fw pi-pencil',
-          command: () => this.editNode(event.node)
-        },
-        this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
-          label: 'Remove',
-          icon: 'pi pi-fw pi-trash',
-          command: (event: any) => this.alertNodeContains()
-        } : {
-          label: 'Remove',
-          icon: 'pi pi-fw pi-trash',
-          command: () => this.removeNode(event.node)
-        }
-      ];
-    }
+    this.items = [
+      {
+        label: 'New Folder',
+        icon: 'pi pi-fw pi-plus',
+        command: () => this.createNode(event.node)
+      },
+      {
+        label: 'Edit Folder',
+        icon: 'pi pi-fw pi-pencil',
+        command: () => this.editNode(event.node)
+      },
+      event.node.materials.length > 0 ? {
+        label: 'Remove',
+        icon: 'pi pi-fw pi-trash',
+        command: (event: any) => this.alertNodeContains()
+      } : {
+        label: 'Remove',
+        icon: 'pi pi-fw pi-trash',
+        command: () => this.removeNode(event.node)
+      }
+    ];
   }
   contextMenuOut(event: any, contextMenu: ContextMenu) {
     event.stopPropagation();
@@ -575,8 +555,8 @@ export class SpecMaterialsComponent implements OnInit {
       this.materials = resMaterials;
       this.materialsSrc = resMaterials;
       this.materialManager.getSpecDirectories().subscribe(specDirectories => {
-        this.nodesSrc = this.getNodes(specDirectories, this.materials, 0);
-        this.nodes = [...this.nodesSrc];
+        this.nodesSrc = specDirectories;
+        this.nodes = _.sortBy(this.getNodes(specDirectories, this.materials, 0), x => x.label);
       });
       for (let x = 0; x < 10; x ++){
         this.materials.push(null);

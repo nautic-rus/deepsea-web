@@ -50,7 +50,9 @@ export class EditSupplierComponent implements OnInit {
   equipment_id: number = this.eq_data.id;
   sfi: number;
   sfi_name: string;  //расшифровка номера sfi
-  status: string[] = ['New', 'ITT sent', 'On Approval', 'Approved', 'Not Approved', 'Accepted']
+
+  statusSrc: any[] = []; //весь массив ствтусов, который приходит с сервера из таблицы suppliers_status
+  statusTitle: string[] = [];  //это name из таблицы suppliers_status
 
   relatedTasks: RelatedTask[] = []
 
@@ -88,7 +90,6 @@ export class EditSupplierComponent implements OnInit {
     })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
       this.relatedTasks = res;
-      console.log(res)
     })
 
     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
@@ -100,7 +101,12 @@ export class EditSupplierComponent implements OnInit {
       this.buttonsAreHidden = false;
     }
 
-    //
+    this.eqService.getSupplierStatuses().subscribe((res) => {
+      this.statusSrc = res;
+      this.statusTitle = res.map((i: any) => {return i.name});
+      console.log(this.statusSrc);
+      console.log(this.statusTitle)
+    })
   }
 
   copySupplierUrl() {
@@ -136,26 +142,11 @@ export class EditSupplierComponent implements OnInit {
       status: this.prev_sup_data.status,
       manufacturer: this.prev_sup_data.manufacturer
     });
-    //this.supplierForm.patchValue({ description: this.prev_sup_data.description});
   }
 
-  setStatusId(status: string): number {  //вообще надо из таблицы supplier_status, но пока так
-    switch (status) {
-      case 'New' :
-        return (1)
-      case 'Approved':
-        return 2
-      case 'Not approved':
-        return 3
-      case 'On approval':
-        return 4
-      case 'ITT sent':
-        return 5
-      case 'Accepted':
-        return 6
-      default:
-        return 1
-    }
+  setStatusId(statusTitle: string): number {  //ищем id статуса по name из таблицы suppliers_status
+    let i: any = this.statusSrc.filter((item) => item.name == statusTitle)
+    return i[0].id
   }
 
   refactorHistoryTitle(title: string): string {
@@ -423,18 +414,13 @@ export class EditSupplierComponent implements OnInit {
     supplierToDB.user_id = this.eq_data.responsible_id; //или уже id поменявшего?
     supplierToDB.id = this.dialogConfig.data.supplier.id;
     supplierToDB.comment= this.supplierForm.value.comment;
-    supplierToDB.name = this.supplierForm.value.name;
+    supplierToDB.sup_id = this.supplier_id; //тут надо полученное снова ставить на это место
     supplierToDB.manufacturer = this.supplierForm.value.manufacturer;
     supplierToDB.description = this.supplierForm.value.description;
     supplierToDB.status_id = this.setStatusId(this.supplierForm.value.status)
-    // console.log('this.setStatusId(this.supplierForm.value.status)');
-    // console.log(this.supplierForm.value.status);
-    // console.log('editSupplier()');
-     console.log(JSON.stringify(supplierToDB));
+    console.log(JSON.stringify(supplierToDB));
 
     this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {  //Добавляем постащика в БД, в результате получаем его id
-      // console.log('res');
-      // console.log(res);
       if (res.includes('error')){
         alert(res);
       }

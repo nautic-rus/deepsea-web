@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ISupplier} from "../../../domain/interfaces/supplier";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
@@ -11,6 +11,7 @@ import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
 import {SupplierFiles} from "../../../domain/classes/supplier-files";
 import {LanguageService} from "../../../domain/language.service";
 import {SupplierHistory} from "../../../domain/classes/supplier-history";
+import {reject} from "underscore";
 
 @Component({
   selector: 'app-add-supplier',
@@ -19,19 +20,63 @@ import {SupplierHistory} from "../../../domain/classes/supplier-history";
 })
 export class AddSupplierComponent implements OnInit {
   suppliersForm = this.formBuilder.group({
-    name: ['', Validators.required],
+    name: ['', [Validators.required, this.customNameValidator()]],
+    supp_id: [''],
     description: [''],
     manufacturer: ['', Validators.required],
   });
 
+  //для добавления нового или выбора поставщика из списка
+  addedNewSupp: boolean = false; // показывает кликнут чекбокс длдя добавления нового поставщика или нет
+  supplierNames: any[] = [];
+
+
   supplierFiles: SupplierFiles[] = [];
   dragOver = false;
+  b : string = '';
 
   constructor(private formBuilder: FormBuilder, public ref: DynamicDialogRef, private dialogConfig: DynamicDialogConfig, public auth: AuthManagerService, public eqService: EquipmentsService,
               private dialogService: DialogService, private supplierService: SupplierService, public t: LanguageService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.eqService.getSupplierNames().subscribe((res) => {
+      this.supplierNames = res;
+    })
+  }
 
+  toggleCheckbox() { //если галочка снята, то чистим поле с name (в ином случае будет проходить валидацию без галочки и без выбранного из списка )
+    this.addedNewSupp = !this.addedNewSupp
+    this.suppliersForm.get('name')?.setValue('');
+  }
+
+  onSupplierSelect(id: any) {
+    console.log(id);
+    let supName: any[] = this.supplierNames.filter(name => id === name.id)
+    this.suppliersForm.get('name')?.setValue(supName[0].name);
+  }
+
+  customNameValidator(): ValidatorFn {
+    // @ts-ignore
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!this.suppliersForm) {
+        return null;
+      }
+      if (this.addedNewSupp) {
+        if (control.value !== '') {
+          return null
+        } else
+          return {customNameInvalid: true}
+      }
+      else {
+        if (this.suppliersForm.get('supp_id')?.value !== '') {
+          console.log("this.suppliersForm.get('supp_id')?.value != ''")
+          return null
+        } else
+          console.log("customNameInvalid: true")
+          return {customNameInvalid: true}
+      }
+    }
+  }
 
   addFiles() {
     const dialog = this.dialogService.open(AddFilesComponent, {
@@ -105,48 +150,159 @@ export class AddSupplierComponent implements OnInit {
   }
 
   createSupplier() {
-    const supplierToDB = new SupplierToDB();
-    supplierToDB.equip_id= this.dialogConfig.data;  //принимаем из equipment компонент
-    supplierToDB.user_id = this.auth.getUser().id;
-    supplierToDB.name = this.suppliersForm.value.name;
-    supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
-    supplierToDB.description = this.suppliersForm.value.description;
-    console.log('createSupplier()');
-    console.log(JSON.stringify(supplierToDB));
-
-    this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {  //Добавляем постащика в БД, в результате получаем его id
-      console.log('res');
-      console.log(res);
-      if (res.includes('error')){
-        alert(res);
-      }
-      else{
-        this.supplierFiles.forEach(file => { //добавляем файлы в БД
-          file.supplier_id = parseInt(res);  //кладем id добавленного постащика в supplier_id файла
-          console.log('createSupplier() + file');
-          console.log(file);
-          this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {});
-        })
-        this.supplierService.setCreateFiles([]);
-        //this.equipmentFiles = this.eqService.getCreateEqFiles();
-        console.log('closed uploading files: add-supplier');
-        console.log(this.supplierFiles);
-        this.ref.close(res);
-      }
-
-      const history = new SupplierHistory(this.auth.getUser().id, 'created', '', '', parseInt(res))  //добавляем в supp_history Информацию о том, что поставщик был добавлен
-      this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
-      })
-
-    });
-
-
+    if (this.addedNewSupp) {
+      console.log("if (this.addedNewSupp)")
+      this.addNewSupplierName().then((res) => {  //тут промис вернул индекс добавленного имени в suppliers_name
+        console.log(res)
+        this.processSupplier(res);
+      });
+    } else {
+      this.processSupplier(this.suppliersForm.value.supp_id);
+    }
   }
 
+  addNewSupplierName(): Promise<any> {  //добавляем в suppliers_name и промис возвращает индекс из этой же таблицы
+    return new Promise((resolve, reject) => {
+      //this.suppliersForm.get('supp_id')?.setValue(0);
+      this.eqService.addSupplierName(JSON.stringify({id: 0, name: this.suppliersForm.get('name')?.value})).subscribe((res) => {
+        console.log(res)
+        resolve(parseInt(res));
+      });
+      // reject("error: add new supp name ")
+    });
+  }
+
+  processSupplier(supplierId: number) {  //добавляем в таблицу suppliers, history, suppliers files
+    const supplierToDB = new SupplierToDB();
+    supplierToDB.sup_id = supplierId;
+    supplierToDB.equip_id = this.dialogConfig.data;
+    supplierToDB.user_id = this.auth.getUser().id;
+    supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
+    supplierToDB.description = this.suppliersForm.value.description;
+
+    this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe((res) => {
+      if (res.includes('error')) {
+        alert(res);
+      } else {
+        this.supplierFiles.forEach(file => {
+          file.supplier_id = parseInt(res);
+          this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {});
+        });
+        this.supplierService.setCreateFiles([]);
+        this.ref.close(res);
+
+        const history = new SupplierHistory(this.auth.getUser().id, 'created', '', '', parseInt(res));
+        this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe(() => {});
+      }
+    });
+  }
+
+  // createSupplier() {
+  //   if (this.addedNewSupp ) {
+  //     this.suppliersForm.get('supp_id')?.setValue(0);
+  //     console.log(JSON.stringify(this.suppliersForm.get('name')?.value));
+  //     this.eqService.addSupplierName(JSON.stringify({id: 0, name: this.suppliersForm.get('name')?.value})).subscribe((res) => {
+  //       console.log("  this.eqService.addSupplierName")
+  //       console.log(res)
+  //       this.suppId = parseInt(res);
+  //
+  //       const supplierToDB = new SupplierToDB();
+  //       supplierToDB.sup_id = this.suppId;
+  //       supplierToDB.equip_id= this.dialogConfig.data;  //принимаем из equipment компонент
+  //       supplierToDB.user_id = this.auth.getUser().id;
+  //
+  //       supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
+  //       supplierToDB.description = this.suppliersForm.value.description;
+  //       console.log('createSupplier()');
+  //       console.log(JSON.stringify(supplierToDB));
+  //
+  //       this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {  //Добавляем постащика в БД, в результате получаем его id
+  //         console.log('res');
+  //         console.log(res);
+  //         if (res.includes('error')){
+  //           alert(res);
+  //         }
+  //         else{
+  //           this.supplierFiles.forEach(file => { //добавляем файлы в БД
+  //             file.supplier_id = parseInt(res);  //кладем id добавленного постащика в supplier_id файла
+  //             console.log('createSupplier() + file');
+  //             console.log(file);
+  //             this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {});
+  //           })
+  //           this.supplierService.setCreateFiles([]);
+  //           //this.equipmentFiles = this.eqService.getCreateEqFiles();
+  //           console.log('closed uploading files: add-supplier');
+  //           console.log(this.supplierFiles);
+  //           this.ref.close(res);
+  //         }
+  //
+  //         const history = new SupplierHistory(this.auth.getUser().id, 'created', '', '', parseInt(res))  //добавляем в supp_history Информацию о том, что поставщик был добавлен
+  //         this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
+  //         })
+  //
+  //       });
+  //
+  //     })
+  //   } else {
+  //     this.suppliersForm.get('name')?.setValue('');
+  //     this.suppId = this.suppliersForm.value.supp_id;
+  //
+  //     const supplierToDB = new SupplierToDB();
+  //     supplierToDB.sup_id = this.suppId;
+  //     supplierToDB.equip_id= this.dialogConfig.data;  //принимаем из equipment компонент
+  //     supplierToDB.user_id = this.auth.getUser().id;
+  //
+  //     supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
+  //     supplierToDB.description = this.suppliersForm.value.description;
+  //     console.log('createSupplier()');
+  //     console.log(JSON.stringify(supplierToDB));
+  //
+  //     this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe(res => {  //Добавляем постащика в БД, в результате получаем его id
+  //       console.log('res');
+  //       console.log(res);
+  //       if (res.includes('error')){
+  //         alert(res);
+  //       }
+  //       else{
+  //         this.supplierFiles.forEach(file => { //добавляем файлы в БД
+  //           file.supplier_id = parseInt(res);  //кладем id добавленного постащика в supplier_id файла
+  //           console.log('createSupplier() + file');
+  //           console.log(file);
+  //           this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {});
+  //         })
+  //         this.supplierService.setCreateFiles([]);
+  //         //this.equipmentFiles = this.eqService.getCreateEqFiles();
+  //         console.log('closed uploading files: add-supplier');
+  //         console.log(this.supplierFiles);
+  //         this.ref.close(res);
+  //       }
+  //
+  //       const history = new SupplierHistory(this.auth.getUser().id, 'created', '', '', parseInt(res))  //добавляем в supp_history Информацию о том, что поставщик был добавлен
+  //       this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
+  //       })
+  //
+  //     });
+  //   }
+  //   console.log(this.suppliersForm.value)
+  //   console.log(this.suppId);
+  // }
+
   close() {
+    // if (this.addedNewSupp ) { //тут еще отправка в таблицу suppliers_name
+    //   this.suppliersForm.get('supp_id')?.setValue(0);
+    //   console.log(JSON.stringify(this.suppliersForm.get('name')?.value));
+    //   this.eqService.addSupplierName(JSON.stringify({id: 0, name: this.suppliersForm.get('name')?.value})).subscribe((res) => {
+    //     console.log("  this.eqService.addSupplierName")
+    //     console.log(res)
+    //   })
+    // } else {
+    //   this.suppliersForm.get('name')?.setValue('');
+    // }
+    // console.log(this.suppliersForm.value)
     this.supplierService.setWaitingCreateFiles([]);
     this.suppliersForm.reset();
     this.ref.close();
   }
 
+  protected readonly console = console;
 }

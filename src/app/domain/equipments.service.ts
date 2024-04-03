@@ -25,13 +25,20 @@ export class EquipmentsService {
     return this.http.get<Isfi[]>(props.http + '/sfis');
   }
 
-
   addEquipment(jsonValue: string) :  Observable<string> {
     return this.http.post<string>(props.http + '/equipment', jsonValue);
   }
 
   deleteEquipment(id: number) :  Observable<string> {
     return this.http.get<string>(props.http + '/deleteEquipment', {params: {id}});
+  }
+
+  getSupplierNames() : Observable<any> {
+    return  this.http.get<string>(props.http + '/supNames');
+  }
+
+  addSupplierName(jsonValue: string) :  Observable<string> {  //добавление в таблицу suppliers_name
+    return this.http.post<string>(props.http + '/addSupName', jsonValue);
   }
 
   addSupplier(jsonValue: string) :  Observable<string> {
@@ -52,6 +59,10 @@ export class EquipmentsService {
 
   deleteRelatedTask(id: number) :  Observable<any> {  //передаем уникальный айди и удаляем связь из таблицы sup_task_relation
     return this.http.get<string>(props.http + '/delRelatedTask', {params: {id}});
+  }
+
+  getSupplierStatuses(): Observable<any> {
+    return this.http.get<string>(props.http + '/supStatuses');
   }
 
   getSupplierHistory(id: number): Observable<any> {

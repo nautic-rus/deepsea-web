@@ -27,9 +27,9 @@
 .left-text-one-row{
   width: 125px;
 }
-:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item{
-  padding: 0.5rem 0.5rem;
-}
+/*:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item{*/
+/*  padding: 0.5rem 0.5rem;*/
+/*}*/
 .form-footer{
   height: 35px;
   display: flex;
@@ -75,4 +75,7 @@
 }
 .button-cancel:hover{
   background-color: #ECEDF0;
+}
+/deep/ body > p-dynamicdialog > div > div > div.p-dialog-content > app-spec-material > div > div > div.cx.pt-5 > p-treeselect > div{
+  width: 440px;
 }
