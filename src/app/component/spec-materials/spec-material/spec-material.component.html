@@ -31,7 +31,7 @@
     <div class="df">
       <div class="cy right-text">Коэф. доп.:</div>
       <div class="ml-1">
-        <p-inputNumber [(ngModel)]="material.coefficient" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
+        <p-inputNumber [(ngModel)]="material.coef" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@
     <div class="df">
       <div class="cy right-text">{{getUnitsText()}}</div>
       <div class="ml-1">
-        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.singleWeight" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
+        <p-inputNumber [disabled]="material.units == '166'" [(ngModel)]="material.weight" mode="decimal" [minFractionDigits]="2" inputStyleClass="width-190" locale="en-US"></p-inputNumber>
       </div>
     </div>
     <div class="df">
@@ -61,13 +61,13 @@
   <div class="df w-100 mt-1 mb-1">
     <div class="cy left-text-one-row mr-20">Описание:</div>
     <div class="cx pt-5">
-      <input [(ngModel)]="material.description" type="text" pInputText class="width-440 border-material">
+      <input [(ngModel)]="material.descr" type="text" pInputText class="width-440 border-material">
     </div>
   </div>
   <div class="df w-100 mt-1 mb-1">
     <div class="cy left-text-one-row mr-20">Номер позиции:</div>
     <div class="cx pt-5">
-      <input [(ngModel)]="label" type="text" pInputText class="width-440 border-material">
+      <input [(ngModel)]="material.label" type="text" pInputText class="width-440 border-material">
     </div>
   </div>
 

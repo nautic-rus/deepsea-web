@@ -45,12 +45,12 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   loading = true;
   selectedSegment = '';
 
-  bcol = '#a8c3ed';
-  hcol = '#00ff00';
-  ecol = '#c55e13';
-  scol = '#0077ff';
-  ccol = '#e4ff06';
-  pcol = '#ff00d5';
+  bcol = '#b9d2fa';
+  hcol = '#ed2d2d';
+  ecol = '#d1c7c0';
+  scol = '#c9d156';
+  ccol = '#ff06a8';
+  pcol = '#9900ff';
 
   groupsCount = 0;
   groupsAdded = 0;

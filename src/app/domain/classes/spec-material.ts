@@ -1,20 +1,22 @@
 import {Material} from "./material";
 
 export class SpecMaterial {
-  code: string;
-  name: string;
-  descr: string;
-  units: string;
-  weight: number;
-  supplier: string;
-  statem_id: number;
-  dir_id: number;
-  user_id:number;
-  label: string;
-  last_upd: number;
-  note: string;
-  manufacturer: string;
-  coef: number;
+  code: string = 'NRxxxxxxxxxxxxxx';
+  name: string = '';
+  descr: string = '';
+  units: string = '';
+  weight: number = 0;
+  supplier: string = '';
+  statem_id: number = 0;
+  dir_id: number = 0;
+  user_id: number = 0;
+  label: string = '';
+  last_upd: number = 0;
+  note: string = '';
+  manufacturer: string = '';
+  coef: number = 0;
+  id: number = 0;
+  removed: number = 0;
 
   fromMaterial(m: Material, stmt_id: number, dir_id: number, user_id: number, label: string){
     this.code = m.code;
