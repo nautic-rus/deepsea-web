@@ -461,8 +461,9 @@ export class SpecMaterialsComponent implements OnInit {
     this.materialManager.getSpecMaterials().subscribe(resMaterials => {
       resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
       resMaterials.forEach((m: any) => m.path = []);
-      this.materials = resMaterials;
-      this.materialsSrc = resMaterials;
+      let projectStatements = this.specStatements.filter(x => x.project_id == this.project).map(x => x.id);
+      this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
+      this.materialsSrc = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
       this.materialManager.getSpecDirectories().subscribe(specDirectories => {
         this.nodesSrc = specDirectories;
         this.nodes = _.sortBy(this.getNodes(specDirectories, this.materials, 0), x => x.label);
