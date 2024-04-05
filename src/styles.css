@@ -40,6 +40,9 @@ body,p{
 .w60{
   width: 60vw;
 }
+.w65{
+  width: 65vw;
+}
 .w70{
   width: 70vw;
 }
@@ -952,10 +955,10 @@ body,p{
    padding: 0 5px !important;
 }
 .padding-3{
-  padding: 3px;
+  padding: 3px !important;
 }
 .padding-5{
-  padding: 5px 0;
+  padding: 5px 0 !important;
 }
 .padding-10{
   padding: 10px;

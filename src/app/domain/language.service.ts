@@ -631,7 +631,7 @@ export class LanguageService {
           case 'изменил(а) комментарий': return 'changed comment'
           case 'изменил(а) наименование': return 'changed name'
           case 'изменил(а) описание': return 'changed description'
-          case 'изменил(а) описание': return 'changed status'
+          case 'изменил(а) статус': return 'changed status'
           case '': return ''
           case '': return ''
           case '': return ''

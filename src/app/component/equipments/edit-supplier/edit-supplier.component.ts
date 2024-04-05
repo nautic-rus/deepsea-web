@@ -32,10 +32,7 @@ export class EditSupplierComponent implements OnInit {
 
   eq_data: IEquipment = this.dialogConfig.data.eq;
   sup_data: ISupplier = this.dialogConfig.data.supplier;
-
   prev_sup_data: ISupplier = this.dialogConfig.data.supplier;
-
-
   supplierForm = this.formBuilder.group({
     name: this.sup_data.name,  //название компании поставщика
     manufacturer: this.sup_data.manufacturer,
@@ -43,32 +40,23 @@ export class EditSupplierComponent implements OnInit {
     comment: this.sup_data.comment,
     status: this.sup_data.status,
   });
-
   historyArray: any[] = [];
-
   supplier_id: number;
   equipment_id: number = this.eq_data.id;
   sfi: number;
   sfi_name: string;  //расшифровка номера sfi
-
   statusSrc: any[] = []; //весь массив ствтусов, который приходит с сервера из таблицы suppliers_status
   statusTitle: string[] = [];  //это name из таблицы suppliers_status
-
   relatedTasks: RelatedTask[] = []
-
   supplierFilesSrc: SupplierFiles[] = []; //Файлы, с сервера которые (они отображаются на странице. все - если нажата кнопка showMore (showMoreFilesButtonIsDisabled = true), 5шт если не нажата )
   supplierFiles: SupplierFiles[] = [];  //файлы, которые я добавляю в момент редактирования
-
-
   miscIssues: Issue[] = [];
-
   showMoreFilesButtonIsDisabled: boolean = false;
-
   edit: string = '';  //для отображения
-
   buttonsAreHidden: boolean = true;
-
   showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов
+  collapsed: string[] = [];
+  stories: string[] = [];
 
   constructor(private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService, private messageService: MessageService,
               private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService, private route: ActivatedRoute, public issueManager: IssueManagerService) {
@@ -454,6 +442,31 @@ export class EditSupplierComponent implements OnInit {
     this.prev_sup_data = this.supplierForm.value;
 
     this.edit = '';  //скроем все блоки, в которых можно редактировать данные поставщика
+  }
+
+  contentClick(content: string): void{
+    this.collapsed.includes(content) ? this.collapsed.splice(this.collapsed.indexOf(content), 1) : this.collapsed.push(content);
+  }
+
+  openIssue(id: number) {
+    window.open('/?taskId=' + id, '_blank');
+  }
+
+  localeGender(userId: string){
+    let find = this.auth.users.find(x => x.login == userId);
+    return find != null && find.gender == 'female' && this.t.language == 'ru' ? 'а' : '';
+  }
+
+  getNoneZeroInput(input: string) {
+    return input == '-' ? '<div class="text-none">Нет</div>' : input;
+  }
+
+  trimMin(input: string, length: number = 35): string {
+    if (input.length <= length) {
+      return input;
+    } else {
+      return input.substr(0, length) + '...';
+    }
   }
 
 }

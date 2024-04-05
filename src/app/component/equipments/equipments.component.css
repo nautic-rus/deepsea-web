@@ -12,9 +12,7 @@
   padding: 0 10px;
   color: white;
 }
-/deep/.p-datatable .p-datatable-tbody > tr > td {
-  padding: 10px;
-}
+
 /deep/ .p-datatable .p-datatable-thead > tr > th
 {
   padding: 10px;
@@ -40,9 +38,6 @@
 }
 /deep/.pi{
   font-size: 13px;
-}
-/deep/.p-datatable .p-datatable-tbody > tr > td{
-  padding: 10px!important;
 }
 /deep/.p-datatable .p-datatable-thead > tr > th{
   padding: 15px;
