@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {IEquipment} from "../../../domain/interfaces/equipments";
@@ -26,7 +26,8 @@ import {IssueManagerService} from "../../../domain/issue-manager.service";
 @Component({
   selector: 'app-edit-supplier',
   templateUrl: './edit-supplier.component.html',
-  styleUrls: ['./edit-supplier.component.css']
+  styleUrls: ['./edit-supplier.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EditSupplierComponent implements OnInit {
 
@@ -295,14 +296,18 @@ export class EditSupplierComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 
-  getDate(dateLong: number): string {
+  // getDate(dateLong: number): string {
+  //   let date = new Date(dateLong);
+  //   let ye = new Intl.DateTimeFormat('ru', {year: 'numeric'}).format(date);
+  //   let mo = new Intl.DateTimeFormat('ru', {month: 'short'}).format(date);
+  //   let da = new Intl.DateTimeFormat('ru', {day: '2-digit'}).format(date);
+  //   let hours = new Intl.DateTimeFormat('ru', {hour: '2-digit'}).format(date);
+  //   let minutes = new Intl.DateTimeFormat('ru', {minute: '2-digit'}).format(date);
+  //   return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+  // }
+  getDate(dateLong: number): string{
     let date = new Date(dateLong);
-    let ye = new Intl.DateTimeFormat('ru', {year: 'numeric'}).format(date);
-    let mo = new Intl.DateTimeFormat('ru', {month: 'short'}).format(date);
-    let da = new Intl.DateTimeFormat('ru', {day: '2-digit'}).format(date);
-    let hours = new Intl.DateTimeFormat('ru', {hour: '2-digit'}).format(date);
-    let minutes = new Intl.DateTimeFormat('ru', {minute: '2-digit'}).format(date);
-    return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear() + ' ' + date.getHours() + ':' + ('0' + (date.getMinutes())).slice(-2);
   }
 
   deleteRelatedTask(taskId: number) {  //удаляем из таблицы sup_task_relations строку по айди
@@ -500,4 +505,15 @@ export class EditSupplierComponent implements OnInit {
     }
   }
 
+  formatValue(name: any, value: any) {
+    if (value == ''){
+      return 'Нет';
+    }
+    else{
+      switch (name){
+        case 'changed status': return this.issueManager.localeStatus(value, true);
+        default: return value;
+      }
+    }
+  }
 }
