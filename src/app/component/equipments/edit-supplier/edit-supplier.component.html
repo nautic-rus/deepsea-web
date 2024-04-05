@@ -330,9 +330,27 @@
           <div (click)="showEditBlock('')" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
         </div>
       </div>
-      <div *ngIf="supplierFilesSrc.length != 0">
-        <div class="big-text mt-1">{{t.tr('Вложения')}}</div>
-        <p-table [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+
+      <div class="df">
+        <button [ngClass]="{checkButton: showAttachmentButton}" class="big-text mt-1 mr-10 button-new" (click)="showAttachmentFiles()">{{t.tr('Вложения')}}</button>
+        <button [ngClass]="{checkButton: !showAttachmentButton}" class="big-text mt-1 button-new" (click)="showArchivedFiles()">{{t.tr('Архив')}}</button>
+      </div>
+
+<!--      это блок с вложенными файлами-->
+      <div *ngIf="showAttachmentButton">
+        <div *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>
+        <p-table *ngIf="supplierFilesSrc.length != 0" [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Наименование</th>
+              <th>Тип</th>
+              <th>Rev</th>
+              <th>Пользователь</th>
+              <th>Загружен</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </ng-template>
           <ng-template pTemplate="body" let-file>
             <tr>
               <td class="padding-3">
@@ -346,11 +364,16 @@
               <td class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>
               <td class="padding-3">{{this.getDateOnly(file.create_date)}}</td>
               <td class="padding-3">
-                <div class="cursor-pointer" (click)="downloadFile(file.url)">
+                <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
                   <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                   </svg>
-                </div>
+                </a>
+<!--                <div class="cursor-pointer" (click)="downloadFile(file.url)">-->
+<!--                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+<!--                  </svg>-->
+<!--                </div>-->
               <td class="padding-3">
                 <div class="cursor-pointer" [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
                   <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -365,6 +388,105 @@
           {{showmore ? t.tr('Показать еще') : t.tr('Скрыть')}}
         </button>
       </div>
+
+      <!--здесь я добавляю новые файлы и отображаю их-->
+      <div  class="mr-5 mt-20 cy">
+        <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+      </div>
+
+<!--      это все еще для отображения добавляемых файлов-->
+      <p-table *ngIf="supplierFiles.length != 0" class="files_table table" [value]="supplierFiles" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Наименование</th>
+            <th>Тип</th>
+            <th>Rev</th>
+            <th>Пользователь</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-file>
+          <tr>
+            <td>
+              <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
+                <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
+                <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
+              </div>
+            </td>
+            <td>{{file.type_name}}</td>
+            <td>REV{{file.rev}}</td>
+            <td>{{this.auth.getUserNameById(file.user_id)}}</td>
+            <td>
+              <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
+                <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+              </a>
+            </td>
+<!--            <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>-->
+            <td>
+              <div [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
+                <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+              </div>
+            </td>
+          </tr>
+
+        </ng-template>
+      </p-table>
+      <div *ngIf="supplierFiles.length != 0" class="mr-5 mt-20 cy">
+        <div tabindex="10"  (click)="addFiles2(supplierFiles)" class="button-ok ml-1">{{t.tr('Сохранить изменения')}}</div>
+      </div>
+
+
+
+<!--      здесь я показываю заархивированные файлы -->
+      <div *ngIf="!showAttachmentButton">
+        <div *ngIf="archivedSupplierFiles.length == 0">Здесь пока нет заархивированных файлов</div>
+        <p-table *ngIf="archivedSupplierFiles.length != 0" [value]="archivedSupplierFiles" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Наименование</th>
+              <th>Тип</th>
+              <th>Rev</th>
+              <th>Пользователь</th>
+              <th>Загружен</th>
+              <th>Удален</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-file>
+            <tr>
+
+              <td class="padding-3">
+                <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
+                  <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
+                </div>
+              </td>
+              <td class="padding-3">{{file.type_name}}</td>
+              <td class="padding-3">REV{{file.rev}}</td>
+              <td class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>
+              <td class="padding-3">{{this.getDateOnly(file.create_date)}}</td>
+              <td class="padding-3">{{this.getDateOnly(file.archived_date)}}</td>
+              <td class="padding-3">
+                <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
+                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                  </svg>
+                </a>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <button *ngIf="archivedSupplierFiles.length != 0" [ngClass]="{disabled: showMoreArchivedFilesButtonIsDisabled}" tabindex="10" (click)="showmoreArchived ? showMoreArchived() : showLessArchived()" class="button-ok mt-1">
+          {{showmoreArchived ? t.tr('Показать еще') : t.tr('Скрыть')}}
+        </button>
+      </div>
+
+
       <div class="mt-1 mb-5">
         <div class="big-text">{{t.tr('Связанные задачи')}}</div>
       </div>
@@ -417,7 +539,15 @@
                     <span class="file-name-esp mx-10 cy">{{trimFileName(history.new_value, 22) + ' '}}</span>
                   </div>
                 </td>
-                <td><a class="p-link" (click)="downloadFile(history.new_value)" target="_blank">{{t.tr('Скачать')}}</a></td>
+                <td>
+                  <a [href]="history.new_value" [download]="history.new_value" (click)="$event.stopPropagation()">
+                    <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    </svg>
+                  </a>
+
+                </td>
+<!--                <td><a class="p-link" (click)="downloadFile(history.new_value)" target="_blank">{{t.tr('Скачать')}}</a></td>-->
                 <td>
                 </td>
               </tr>

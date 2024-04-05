@@ -48,13 +48,22 @@ export class EditSupplierComponent implements OnInit {
   statusSrc: any[] = []; //весь массив ствтусов, который приходит с сервера из таблицы suppliers_status
   statusTitle: string[] = [];  //это name из таблицы suppliers_status
   relatedTasks: RelatedTask[] = []
+
   supplierFilesSrc: SupplierFiles[] = []; //Файлы, с сервера которые (они отображаются на странице. все - если нажата кнопка showMore (showMoreFilesButtonIsDisabled = true), 5шт если не нажата )
   supplierFiles: SupplierFiles[] = [];  //файлы, которые я добавляю в момент редактирования
+  archivedSupplierFiles: SupplierFiles[] = []; //удаленные файлы (archived == 1)
+  // showAttachmentFiles: boolean = true;
+  // showArchivedFiles: boolean = false
+
+  showAttachmentButton: boolean = true; // переключение между вложениями (если true) и заархивированными файлами (если false)
+
   miscIssues: Issue[] = [];
   showMoreFilesButtonIsDisabled: boolean = false;
+  showMoreArchivedFilesButtonIsDisabled: boolean = false;
   edit: string = '';  //для отображения
   buttonsAreHidden: boolean = true;
-  showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов
+  showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов вложения
+  showmoreArchived: boolean = true; //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у заархивированных файлов
   collapsed: string[] = [];
   stories: string[] = [];
 
@@ -71,10 +80,14 @@ export class EditSupplierComponent implements OnInit {
     this.sfi = this.eq_data.sfi;
     this.sfi_name = this.eq_data.name;
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-      // this.supplierFilesSrc = res;
-      this.supplierFilesSrc = res.slice(0, 5);
-      this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
-       // console.log(this.supplierFilesSrc);
+      this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1).slice(0, 5)
+      this.showMoreArchivedFilesButtonIsDisabled =  res.filter((f:any) => f.archived == 1).length > 5 ? false : true;
+      console.log("this.archivedSupplierFiles");
+      console.log(this.archivedSupplierFiles);
+      this.supplierFilesSrc = res.filter((f:any) => f.archived == 0).slice(0, 5);
+      this.showMoreFilesButtonIsDisabled = res.filter((f:any) => f.archived == 0).length > 5 ? false : true;
+      console.log("this.supplierFilesSrc");
+      console.log(this.supplierFilesSrc);
     })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
       this.relatedTasks = res;
@@ -82,7 +95,6 @@ export class EditSupplierComponent implements OnInit {
 
     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
       this.historyArray = res;
-      // console.log(res)
     })
 
     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
@@ -92,14 +104,24 @@ export class EditSupplierComponent implements OnInit {
     this.eqService.getSupplierStatuses().subscribe((res) => {
       this.statusSrc = res;
       this.statusTitle = res.map((i: any) => {return i.name});
-      console.log(this.statusSrc);
-      console.log(this.statusTitle)
     })
   }
 
   copySupplierUrl() {
     navigator.clipboard.writeText(location.origin + '/equipments' + '?equipmentId=' + this.equipment_id + '&supplierId=' + this.supplier_id);
     this.messageService.add({key:'supplierUrl', severity:'success', summary:'Copied', detail:'You have copied supplier url.'});
+  }
+
+  showAttachmentFiles() {
+    this.showAttachmentButton = true
+  }
+
+  showArchivedFiles() {
+    this.showAttachmentButton = false
+  }
+
+  toggleAttachmentButton() {
+    this.showAttachmentButton = !this.showAttachmentButton
   }
 
 
@@ -250,7 +272,8 @@ export class EditSupplierComponent implements OnInit {
             () => {
               console.log('Файл поставщика удален успешно');
               this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {  //обновим поле с файлами после удаления
-                this.supplierFilesSrc = res;
+                this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
+                this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1)
               })
               //this.close();
             },
@@ -262,16 +285,6 @@ export class EditSupplierComponent implements OnInit {
         console.log('User canceled'); // User clicked Cancel
       }
     })
-  }
-
-  downloadFile(url: string) {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = url;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
   }
 
   getDateOnly(dateLong: number): string {  //преобразовать поле create_date в человеческий вид
@@ -323,7 +336,7 @@ export class EditSupplierComponent implements OnInit {
   showMore() {  //показать все файлы (изначально 5)
     this.showmore = false;
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-      this.supplierFilesSrc = res;
+      this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
       console.log(this.supplierFilesSrc)
     })
 
@@ -336,6 +349,24 @@ export class EditSupplierComponent implements OnInit {
     this.supplierFilesSrc = this.supplierFilesSrc.slice(0, 5);
     console.log(this.showmore)
     console.log(this.supplierFilesSrc)
+  }
+
+  showMoreArchived() {  //показать все файлы (изначально 5)
+    this.showmoreArchived = false;
+    this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+      this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1);
+      // console.log(this.supplierFilesSrc)
+    })
+
+
+  }
+
+  showLessArchived() {
+    console.log("showLess")
+    this.showmoreArchived = true;
+    this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+      this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1).slice(0, 5);
+    })
   }
 
   openFile(url: string) {
