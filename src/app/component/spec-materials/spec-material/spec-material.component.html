@@ -15,6 +15,29 @@
     </div>
   </div>
   <div class="df width-600">
+    <div class="cy left-text-one-row mr-20">Выберите поставку:</div>
+    <div class="cx pt-5">
+      <p-dropdown [options]="supplies" [(ngModel)]="supply" [filter]="true" filterBy="id,sfi,name,manufacturer"
+                  [showClear]="true" [placeholder]="t.tr('Выбрать')" class="p-dropdown-150" styleClass="width-440">
+        <ng-template pTemplate="selectedItem">
+          <div class="df">
+            <div class="cx cy">{{supply.sfi}}</div>
+            <div class="cx cy pl-10">{{supply.name}}</div>
+            <div class="cx cy pl-10">{{supply.manufacturer}}</div>
+          </div>
+        </ng-template>
+        <ng-template let-supp pTemplate="item">
+          <div class="df">
+            <div class="cx cy pl-10">{{supp.id}}</div>
+            <div class="cx cy pl-10">{{supp.sfi}}</div>
+            <div class="cx cy pl-10">{{supp.name}}</div>
+            <div class="cx cy pl-10">{{supp.manufacturer}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="df width-600">
     <div class="cy left-text-one-row mr-20">Код материала:</div>
     <div class="cx pt-5">
       <input [disabled]="true" [(ngModel)]="material.code" type="text" pInputText class="width-440 border-material">

@@ -105,11 +105,13 @@ export class SpecMaterialsComponent implements OnInit {
     this.newNode = new SpecDirectory();
     this.newNode.parent_id = node.data;
     this.newNode.user_id = this.auth.getUser().id;
+    this.onlyProject = false;
   }
   editNode(node: any){
     this.addNew = true;
     this.newNode = this.nodesSrc.find((x: any) => x.id == node.data)!;
     this.editing = true;
+    this.onlyProject = node.project != 0;
   }
   getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
     let res: any[] = [];
@@ -383,7 +385,7 @@ export class SpecMaterialsComponent implements OnInit {
     if (this.selectedView == 'tiles'){
       this.materials = this.materialsSrc.filter(x => {
         let notNull = x != null;
-        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
+        let findInName = ((x.name.toLowerCase() + x.descr.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
         let findInTranslate = false;
         if (x.translations != null){
           x.translations.forEach((y: any) => {

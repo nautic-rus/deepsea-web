@@ -93,4 +93,10 @@ export class MaterialManagerService {
   updateSpecDirectory(specDirectory: SpecDirectory){
     return this.http.post<any>(props.http + '/specDirectory', JSON.stringify(specDirectory));
   }
+  getSupMatRelations(){
+    return this.http.get<any>(props.http + '/supMatRelations');
+  }
+  addSupMatRelations(supMatRelation: any){
+    return this.http.post<any>(props.http + '/addSupMatRelations', JSON.stringify(supMatRelation));
+  }
 }
