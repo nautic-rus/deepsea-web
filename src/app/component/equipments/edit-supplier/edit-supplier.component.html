@@ -526,36 +526,67 @@
       <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
           <ng-template pTemplate="body" let-history>
             <div *ngIf="history.name_value == 'created'">
-              <div>{{auth.getUserNameById(history.author)}} {{t.tr('добавил(а) поставщика')}} {{getDate(history.update_date)}}</div>
+              <div>
+                <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
+                <span class="text-descr px-5">{{t.tr('добавил(а) поставщика')}}</span>
+                <span class="text-date">{{getDate(history.update_date)}}</span>
+              </div>
             </div>
 
 
-            <div *ngIf="history.name_value == 'added file'">
-              <div>{{auth.getUserNameById(history.author)}} {{t.tr('добавил(а) файл')}}</div>
-              <tr>
-                <td>
-                  <div (click)="openFile(history.new_value)"  tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
-                    <img [src]="'assets/task/' + getFileExtensionIcon(history.new_value)" height="16"/>
-                    <span class="file-name-esp mx-10 cy">{{trimFileName(history.new_value, 22) + ' '}}</span>
+            <div class="pb-20" *ngIf="history.name_value == 'added file'">
+              <div class="df">
+                <div class="pt-5 mr-10">
+                  <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+                </div>
+                <div>
+                  <div>
+                    <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
+                    <span class="text-descr px-5">{{t.tr('добавил(а) файл')}}</span>
+                    <span class="text-date">{{getDate(history.update_date)}}</span>
                   </div>
-                </td>
-                <td>
-                  <a [href]="history.new_value" [download]="history.new_value" (click)="$event.stopPropagation()">
-                    <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                      <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                  </a>
+                  <div class="pt-5">
+                    <div class="df">
+                      <div (click)="openFile(history.new_value)" class="df cursor-pointer">
+                        <img [src]="'assets/task/' + getFileExtensionIcon(history.new_value)" height="16"/>
+                        <span class="file-name-esp mx-10 cy">{{trimFileName(history.new_value, 22) + ' '}}</span>
+                      </div>
+                      <div>
+                        <a [href]="history.new_value" [download]="history.new_value" (click)="$event.stopPropagation()">
+                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                          </svg>
+                        </a>
 
-                </td>
-<!--                <td><a class="p-link" (click)="downloadFile(history.new_value)" target="_blank">{{t.tr('Скачать')}}</a></td>-->
-                <td>
-                </td>
-              </tr>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-            <div *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
-              <div>{{auth.getUserNameById(history.author)}}  {{refactorHistoryTitle(history.name_value)}} {{getDate(history.update_date)}}</div>
-              <div>{{history.prev_value != '' ? history.prev_value : 'Нет' }} -> {{history.new_value != ''? history.new_value : 'Нет'}}</div>
+            <div class="pb-20" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
+              <div class="df">
+                <div class="pt-5 mr-10">
+                  <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+                </div>
+                <div>
+                  <div>
+                    <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
+                    <span class="text-descr px-5">{{refactorHistoryTitle(history.name_value)}}</span>
+                    <span class="text-date">{{getDate(history.update_date)}}</span>
+                  </div>
+                  <div class="pt-5">
+                    <span [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>
+                    <span class="px-10">
+                      <img src="assets/icons/right-arrow.svg" height="13">
+                    </span>
+                    <span [innerHTML]="formatValue(history.name_value, history.new_value) | safeHtml"></span>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </ng-template>
         </p-table>
@@ -583,8 +614,6 @@
               </div>
             </div>
           </div>
-
-
           <div class="df mt-3px">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Примечение')}}</div>
             <div (click)="edit = 'comment'" *ngIf="edit != 'comment'" pTooltip="{{supplierForm.value.comment}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{trimMin(supplierForm.value.comment)}}</div>
@@ -602,7 +631,6 @@
               </div>
             </div>
           </div>
-
           <div class="df mt-3px">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Производитель')}}</div>
             <div (click)="edit = 'manufacturer'" *ngIf="edit != 'manufacturer'" pTooltip="{{supplierForm.value.manufacturer}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{supplierForm.value.manufacturer}}</div>
@@ -620,21 +648,8 @@
               </div>
             </div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
       </div>
-
     </div>
   </div>
 </div>
