@@ -16,12 +16,11 @@ import {ClearFilesComponent} from "../documents/hull-esp/clear-files/clear-files
 import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import {Table} from "primeng/table";
-import {VirtualScroller} from "primeng/virtualscroller";
-import {LV} from "../../domain/classes/lv";
-import {AddMaterialComponent} from "../materials/add-material/add-material.component";
 import {RemoveConfirmationComponent} from "../materials/remove-confirmation/remove-confirmation.component";
 import {SpecMaterialComponent} from "./spec-material/spec-material.component";
 import {IssueManagerService} from "../../domain/issue-manager.service";
+import {SpecMaterial} from "../../domain/classes/spec-material";
+import {SpecDirectory} from "../../domain/classes/spec-directory";
 
 @Component({
   selector: 'app-spec-materials',
@@ -42,7 +41,7 @@ export class SpecMaterialsComponent implements OnInit {
   selectedRootNode: string = '';
   rootNodes: any[] = [];
   tooltips: string[] = [];
-  selectedMaterial: Material = new Material();
+  selectedMaterial: SpecMaterial = new SpecMaterial();
   items = [
     {
       label: 'New Folder',
@@ -52,8 +51,7 @@ export class SpecMaterialsComponent implements OnInit {
   ];
   addNew = false;
   editing = false;
-  forNode: any;
-  newNode: any = {};
+  newNode: SpecDirectory = new SpecDirectory();
   newNodeSuffix = '';
   selectedView: string = '';
   // @ts-ignore
@@ -68,6 +66,9 @@ export class SpecMaterialsComponent implements OnInit {
   projects: any[] = [];
   project = 0;
   specStatements: any[] = [];
+  materialPath: any = Object();
+  expandedNodes: any[] = [];
+  onlyProject = false;
 
   constructor(public t: LanguageService, public issues: IssueManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -101,22 +102,13 @@ export class SpecMaterialsComponent implements OnInit {
   }
   createNode(node: any){
     this.addNew = true;
-    this.newNode = {};
-    this.forNode = node;
-    this.newNodeSuffix = '###';
-    this.newNode.data = node.data;
-    this.newNode.label = '';
-    // this.newNode.label = node.label;
-    this.newNode.checkChildren = node.children.map((x: any) => x.data);
+    this.newNode = new SpecDirectory();
+    this.newNode.parent_id = node.data;
+    this.newNode.user_id = this.auth.getUser().id;
   }
   editNode(node: any){
     this.addNew = true;
-    this.forNode = node;
-    this.newNode = {};
-    this.newNodeSuffix = '';
-    this.newNode.data = node.data;
-    this.newNode.label = node.label.replace(' (' + node.data.slice(-3) + ')', '');
-    this.newNode.checkChildren = node.children.map((x: any) => x.data);
+    this.newNode = this.nodesSrc.find((x: any) => x.id == node.data)!;
     this.editing = true;
   }
   getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
@@ -128,40 +120,31 @@ export class SpecMaterialsComponent implements OnInit {
         n.materials.forEach((m: any) => nodeMaterials.push(m));
       });
       let count = nodeMaterials.length;
-      //nodes.map(x => x.materials.length).forEach(x => count += x);
       res.push({
         data: n.id,
         children: _.sortBy(nodes, x => x.label),
-        label: n.name,
+        label: n.name + (n.project_id == 0 ? '' : (' (' + this.getProjectName(n.project_id)) + ')'),
         materials: nodeMaterials,
-        count: count
+        count: count,
+        project: n.project_id
       });
     });
     return res;
   }
-  setParents(nodes: any[], parent: any){
-    nodes.forEach(node => {
-      node.parent = parent;
-      node.expandedIcon = 'pi pi-folder-open';
-      node.collapsedIcon = 'pi pi-folder';
-      node.icon = (node.children.length == 0) ? 'pi pi-tag' : '';
-      this.setParents(node.children, node);
-    });
+  getProjectName(id: number){
+    let project = this.projects.find(x => x.id == id);
+    if (project != null){
+      return project.name;
+    }
+    else{
+      return '';
+    }
   }
   getNodePath(node: any){
     let parent = node.parent;
     let res = node.label != null ? node.label : '';
     while (parent != null){
       res = parent.label + "/" + res;
-      parent = parent.parent;
-    }
-    return res;
-  }
-  getNodeCode(node: any){
-    let parent = node.parent;
-    let res = node.data;
-    while (parent != null){
-      res = parent.data + res;
       parent = parent.parent;
     }
     return res;
@@ -185,31 +168,20 @@ export class SpecMaterialsComponent implements OnInit {
       parent = parent.parent;
     }
   }
-  addMaterial(action: string = 'add', material: Material = new Material()) {
+  addMaterial(action: string = 'add', material: SpecMaterial = new SpecMaterial()) {
     this.dialogService.open(SpecMaterialComponent, {
       showHeader: true,
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
       modal: true,
       closable: true,
-      data: [this.project, material, action, this.materialsSrc, this.selectedNode.data, this.nodesSrc]
+      data: [this.project, material, action, this.materialsSrc, this.selectedNode != null ? this.selectedNode.data : '', this.nodesSrc]
     }).onClose.subscribe(res => {
-      if (res != null && res.code != ''){
-        let findMaterial = this.materials.find(x => x.id == res.id);
-        if (findMaterial != null){
-          this.materialsSrc[this.materialsSrc.indexOf(findMaterial)] = res;
-          this.materials = [...this.materialsSrc];
-        }
-        else{
-          this.materialsSrc.push(res);
-          this.materials = [...this.materialsSrc];
-          this.addCountToNode(this.selectedNode);
-        }
-      }
-      this.selectNode();
+      this.projectChanged();
     });
   }
 
   selectNode() {
+    this.selectedMaterial = new SpecMaterial();
     if (this.selectedNode != null){
       this.selectedNodePath = this.getNodePath(this.selectedNode);
       this.selectedNodeId = this.selectedNode.id;
@@ -225,39 +197,28 @@ export class SpecMaterialsComponent implements OnInit {
     this.selectedMaterial = material;
   }
 
-  deleteMaterial(selectedMaterial: Material) {
-    let selected = this.selectedNode.data;
+  deleteMaterial(selectedMaterial: SpecMaterial) {
     this.dialogService.open(RemoveConfirmationComponent, {
       showHeader: false,
       modal: true,
     }).onClose.subscribe(res => {
       if (res == 'success'){
-        this.materialManager.updateMaterial(selectedMaterial, this.auth.getUser().login, 1).then(res => {
-          let findMaterial = this.materialsSrc.find(x => x == selectedMaterial);
-          if (findMaterial != null){
-            this.materialsSrc.splice(this.materialsSrc.indexOf(findMaterial), 1);
-          }
-          this.materials = [...this.materialsSrc];
-          this.refreshNodes(this.nodes, this.materials, '');
-          this.selectNode();
-          // this.materialManager.getMaterialNodes().then(res => {
-          //   this.nodes = this.getNodes(res, this.materialsSrc);
-          //   this.setParents(this.nodes, '');
-          //   this.selectPathNode(selected, this.nodes);
-          // });
+        selectedMaterial.removed = 1;
+        this.materialManager.updateSpecMaterial(selectedMaterial).subscribe(res => {
+          this.projectChanged();
         });
       }
     });
   }
-  refreshNodes(rootNodes: any[], materials: Material[], parent: string = ''){
+  refreshNodes(rootNodes: any[], materials: SpecMaterial[], parent: string = ''){
     rootNodes.filter(x => x.data.length == parent.length + 3 && x.data.startsWith(parent)).forEach(n => {
       n.count = materials.filter(x => x.code.startsWith(n.data)).length;
       this.refreshNodes(n.children, materials, n.data);
     });
   }
-  cloneMaterial(material: Material) {
+  cloneMaterial(material: SpecMaterial) {
     let newMaterial = JSON.parse(JSON.stringify(material));
-    newMaterial.id = Material.generateId();
+    newMaterial.id = 0;
     this.addMaterial('clone', newMaterial);
   }
 
@@ -293,14 +254,9 @@ export class SpecMaterialsComponent implements OnInit {
           label: 'New Folder',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.newNode = {};
-            this.forNode = this.nodesSrc.find((x: any) => x.data == this.selectedRootNode);
-            this.newNodeSuffix = '###';
-            this.newNode.data = this.selectedRootNode;
-            this.newNode.label = '';
-            // this.newNode.label = node.label;
-            this.newNode.checkChildren = this.nodes.map((x: any) => x.data);
-            this.forNode.children = this.nodes;
+            this.newNode = new SpecDirectory();
+            this.newNode.parent_id = 0;
+            this.newNode.user_id = this.auth.getUser().id;
             this.addNew = true;
           }
         }
@@ -310,69 +266,30 @@ export class SpecMaterialsComponent implements OnInit {
   }
 
   hide() {
-    this.newNode = {};
     this.addNew = false;
     this.editing = false;
   }
 
   isSaveDisabled() {
-    if (this.editing){
-      return this.newNode.label.trim().length == 0;
-    }
-    else{
-      return (this.newNodeSuffix.length != 2 && this.newNodeSuffix.length != 3) || this.newNode.checkChildren.includes(this.newNode.data + this.newNodeSuffix) || this.newNode.label == '' || !(new RegExp('^[A-Z]+$').test(this.newNodeSuffix)) || this.newNodeSuffix.includes('#');
-    }
+    return this.newNode.name.trim().length == 0;
   }
 
   save() {
-    this.newNode.data += this.newNodeSuffix;
-    this.materialManager.updateMaterialNode(this.project.toString(), this.newNode.data, this.newNode.label, this.auth.getUser().login, 0).then(resStatus => {
-      if (!this.editing){
-        this.newNode.children = [];
-        this.forNode.children.push(this.newNode);
-        this.setParents(this.nodes, '');
-      }
-      else{
-        this.forNode.label = this.newNode.label + ' (' + this.newNode.data + ')';
-      }
+    this.newNode.project_id = this.onlyProject ? this.project : 0;
+    this.materialManager.updateSpecDirectory(this.newNode).subscribe(resStatus => {
       this.editing = false;
       this.hide();
-      // this.materialManager.getMaterialNodes(this.project).then(res => {
-      //   if (this.project == '000000'){
-      //     this.nodes = this.getNodes2(res, this.materialsSrc, '');
-      //     this.setParents(this.nodes, '');
-      //     this.materials.filter(x => x != null).forEach((x: any) => {
-      //       x.path = this.setPath(x.code, 2);
-      //     });
-      //   }
-      //   else{
-      //     this.nodes = this.getNodes(res, this.materialsSrc, '');
-      //     this.setParents(this.nodes, '');
-      //     this.materials.filter(x => x != null).forEach((x: any) => {
-      //       x.path = this.setPath(x.code);
-      //     });
-      //   }
-      //   this.hide();
-      // });
+      this.projectChanged();
     });
   }
 
   removeNode(node: any) {
-    this.materialManager.updateMaterialNode(this.project.toString(), node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
-      if (node.parent != null){
-        node.parent.children.splice(node.parent.children.indexOf(node), 1);
-      }
-      else{
-        this.materialManager.getMaterialNodes(this.project.toString()).then(res => {
-          this.nodesSrc = res;
-          this.nodes = this.getNodes(res, this.materialsSrc, 0);
-          this.setParents(this.nodes, '');
-          this.materials.filter(x => x != null).forEach((x: any) => {
-            x.path = this.setPath(x.code);
-          });
-          this.rootNodeChanged();
-        });
-      }
+    this.newNode = this.nodesSrc.find((x: any) => x.id == node.data)!;
+    this.newNode.removed = 1;
+    this.materialManager.updateSpecDirectory(this.newNode).subscribe(resStatus => {
+      this.editing = false;
+      this.hide();
+      this.projectChanged();
     });
   }
 
@@ -541,7 +458,6 @@ export class SpecMaterialsComponent implements OnInit {
   rootNodeChanged() {
     this.selectedNodePath = '';
     this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.startsWith(this.selectedRootNode)), this.materialsSrc, 0);
-    this.setParents(this.nodes, '');
     this.materials.filter(x => x != null).forEach((x: any) => {
       x.path = this.setPath(x.code);
     });
@@ -549,19 +465,81 @@ export class SpecMaterialsComponent implements OnInit {
   }
 
   projectChanged() {
+    this.materialsFilled = false;
+    this.materials = [];
     this.materialManager.getSpecMaterials().subscribe(resMaterials => {
-      console.log(resMaterials);
       resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
-      this.materials = resMaterials;
-      this.materialsSrc = resMaterials;
+      resMaterials.forEach((m: any) => m.path = []);
+      let projectStatements = this.specStatements.filter(x => x.project_id == this.project).map(x => x.id);
+      this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
+      this.materialsSrc = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
       this.materialManager.getSpecDirectories().subscribe(specDirectories => {
-        this.nodesSrc = specDirectories;
-        this.nodes = _.sortBy(this.getNodes(specDirectories, this.materials, 0), x => x.label);
+        this.nodesSrc = specDirectories.filter((x: any) => x.project_id == this.project || x.project_id == 0);
+        this.nodes = _.sortBy(this.getNodes(this.nodesSrc, this.materials, 0), x => x.label);
+        this.materials.filter(x => x != null).forEach(m => m.path = this.getMaterialPath(this.nodes, m.dir_id));
+        this.setExpandedNodes(this.nodes);
+        this.setSelectedNode(this.nodes);
+        this.materialsFilled = true;
       });
       for (let x = 0; x < 10; x ++){
         this.materials.push(null);
       }
-      this.materialsFilled = true;
     });
+  }
+  getMaterialPath(nodes: any[], dir_id: number){
+    let res = [];
+    let find = nodes.find(x => x.data == dir_id);
+    if (find == null){
+      nodes.forEach(n => {
+        let findChild = this.getMaterialPath(n.children, dir_id);
+        if (findChild.length > 0){
+          res.push(n.label);
+          findChild.forEach(x => {
+            res.push(x);
+          });
+        }
+      });
+    }
+    else{
+      res.push(find.label);
+    }
+    return res;
+  }
+
+  getStatement(stat_id: any) {
+    let find = this.specStatements.find(x => x.id == stat_id);
+    return find != null ? find.code : '';
+  }
+
+  nodeExpanded(event: any, tree: any) {
+    this.expandedNodes.push(event.node);
+  }
+
+  nodeCollapsed(event: any) {
+    this.expandedNodes.splice(this.expandedNodes.indexOf(event.node), 1);
+  }
+
+  setExpandedNodes(rootNodes: any[]){
+    if (rootNodes.length == 0){
+      return;
+    }
+    rootNodes.forEach(node => {
+      if (this.expandedNodes.map(x => x.data).includes(node.data)){
+        node.expanded = true;
+      }
+    });
+    this.setExpandedNodes(rootNodes.flatMap(x => x.children));
+  }
+  setSelectedNode(rootNodes: any[]){
+    if (this.selectedNode == null || rootNodes.length == 0){
+      return;
+    }
+    rootNodes.forEach(node => {
+      if (this.selectedNode.data == node.data){
+        this.selectedNode = node;
+        this.selectNode();
+      }
+    });
+    this.setSelectedNode(rootNodes.flatMap(x => x.children));
   }
 }

@@ -16,12 +16,12 @@ export class ObjViewUrlCreateDeviceComponent implements OnInit {
   purl = '';
   url = 'https://deep-sea.ru/3d-device?';
   url1 = 'http://localhost:4200/3d-device?';
-  hcol = '#00ff00';
-  scol = '#0077ff';
-  ecol = '#c55e13';
-  ccol = '#e4ff06';
-  pcol = '#ff00d5';
-  backgroundColor = '#a8c3ed';
+  hcol = '#ed2d2d';
+  scol = '#c9d156';
+  ecol = '#d1c7c0';
+  ccol = '#ff06a8';
+  pcol = '#9900ff';
+  backgroundColor = '#b9d2fa';
   constructor(public issues: IssueManagerService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {

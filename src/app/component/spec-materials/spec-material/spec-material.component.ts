@@ -27,23 +27,21 @@ export class SpecMaterialComponent implements OnInit {
     new LV('006 - метры', '006'),
     new LV('055 - кв.м.', '055'),
     new LV('166 - кг', '166'),
-    new LV('112 - литр', '122'),
+    new LV('112 - литр', '112'),
     new LV('113 - куб.м.', '113'),
   ];
   category = this.categories[0];
-  material: Material = new Material();
+  material: SpecMaterial = new SpecMaterial();
   action = '';
-  materials: Material[] = [];
+  materials: SpecMaterial[] = [];
   codeSelectors: any[] = [];
   noneCode = {
     data: 'NON',
     label: 'No specified type',
   };
   materialTranslationRu: MaterialTranslation = {lang: 'ru', name: '', description: ''};
-  label = '';
   suppliers: any[] = [];
   statements: any[] = [];
-  statementId: number = 0;
   statementNodes: any[] = [];
   selectedStatementNode: any;
   specDirectories: any[] = [];
@@ -57,24 +55,40 @@ export class SpecMaterialComponent implements OnInit {
     this.materials = dialog.data[3];
     this.selectedSpecDirectoryId = dialog.data[4];
     this.specDirectories = _.sortBy(this.getDirNodes(dialog.data[5]), x => x.label);
-    console.log(this.selectedSpecDirectoryId);
 
-
-    if (this.action == 'clone' || this.action == 'edit'){
-
-    }
     if ((this.action == 'add' || this.action == 'clone')){
       this.material.code = 'NRxxxxxxxxxxxxxx'
     }
 
     this.materialManager.getSpecStatements().subscribe(stmts => {
-      console.log(stmts);
       this.statements = stmts.filter((x: any) => x.project_id == this.project);
       this.statementNodes = _.sortBy(this.getNodes(this.statements, 0), x => this.sortDot(x.index));
-    });
 
+      if (this.action == 'clone' || this.action == 'edit'){
+        this.selectStatement(this.statementNodes, this.material.statem_id);
+        this.selectDirectory(this.specDirectories, this.material.dir_id);
+      }
+    });
   }
 
+  selectDirectory(directories: any[], id: number){
+    let find = directories.find(x => x.data == id);
+    if (find != null){
+      this.selectedSpecDirectory = find;
+    }
+    else{
+      this.selectDirectory(directories.flatMap(x => x.children), id);
+    }
+  }
+  selectStatement(statements: any[], id: number){
+    let find = statements.find(x => x.data == id);
+    if (find != null){
+      this.selectedStatementNode = find;
+    }
+    else{
+      this.selectDirectory(statements.flatMap(x => x.children), id);
+    }
+  }
   getDirNodes(rootNodes: any[], parent_id: number = 0){
     let res: any[] = [];
     rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
@@ -131,26 +145,14 @@ export class SpecMaterialComponent implements OnInit {
   }
 
   createMaterial() {
-    let m = new SpecMaterial();
-    m.fromMaterial(this.material, this.statementId, 0, this.auth.getUser().id, '');
-    this.material.project = this.project;
-    this.materialManager.updateMaterial(this.material, this.auth.getUser().login, 0).then(res => {
+    this.material.statem_id = this.selectedStatementNode.data;
+    this.material.dir_id = this.selectedSpecDirectory.data;
+    this.material.user_id = this.auth.getUser().id;
+    this.materialManager.updateSpecMaterial(this.material).subscribe(res => {
       this.ref.close(this.material);
     });
   }
 
-  selectorChanged() {
-    let prefix = '';
-    for (let x = 0; x < 4; x ++){
-      if (this.codeSelectors[x].code == null){
-        prefix += 'NON';
-      }
-      else{
-        prefix += this.codeSelectors[x].code.data;
-      }
-    }
-    this.material.code = Material.generateCode(prefix, this.materials);
-  }
 
   getLabel(action: string) {
     return action.replace('add', 'Create').replace('edit', 'Update').replace('clone', 'Clone');
@@ -158,7 +160,7 @@ export class SpecMaterialComponent implements OnInit {
 
   unitsChanged() {
     if (this.material.units == '166'){
-      this.material.singleWeight = 1;
+      this.material.weight = 1;
     }
   }
 

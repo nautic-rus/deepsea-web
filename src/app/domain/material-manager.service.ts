@@ -7,6 +7,8 @@ import {MessageService} from "primeng/api";
 import {Material} from "./classes/material";
 import {Project} from "./classes/project";
 import {MaterialNode} from "./classes/material-node";
+import {SpecMaterial} from "./classes/spec-material";
+import {SpecDirectory} from "./classes/spec-directory";
 
 @Injectable({
   providedIn: 'root'
@@ -79,10 +81,16 @@ export class MaterialManagerService {
   getSpecMaterials(){
     return this.http.get<any>(props.http + '/specMaterials');
   }
+  updateSpecMaterial(specMaterial: SpecMaterial){
+    return this.http.post<any>(props.http + '/specMaterial', JSON.stringify(specMaterial));
+  }
   getSpecDirectories(){
     return this.http.get<any>(props.http + '/specDirectories');
   }
   getSpecStatements(){
     return this.http.get<any>(props.http + '/specStatements');
+  }
+  updateSpecDirectory(specDirectory: SpecDirectory){
+    return this.http.post<any>(props.http + '/specDirectory', JSON.stringify(specDirectory));
   }
 }

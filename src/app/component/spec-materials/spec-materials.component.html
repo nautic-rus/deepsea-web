@@ -10,17 +10,17 @@
 <!--        </p-dropdown>-->
 <!--      </div>-->
       <div class="mr-10">
-        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" [class.disabled-button]="selectedNode == null" (click)="addMaterial()">
+        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" [class.disabled-button]="selectedNode == null || !this.auth.hasPerms('create_material')" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="cloneMaterial(selectedMaterial)">
+        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="cloneMaterial(selectedMaterial)">
           <img src="assets/icons/copy3.svg" height="18">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial('edit', selectedMaterial)">
+        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="addMaterial('edit', selectedMaterial)">
           <img src="assets/icons/edit.svg" height="18">
         </div>
       </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="deleteMaterial(selectedMaterial)">
+        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="deleteMaterial(selectedMaterial)">
           <img src="assets/icons/trash-white.svg" height="22">
         </div>
       </div>
@@ -57,7 +57,7 @@
       <div class="w-100 df">
         <div class="w-17">
           <div class="menu-card" (contextmenu)="contextMenuOut($event, nodeMenu)">
-            <p-tree class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">
+            <p-tree #tree (onNodeExpand)="nodeExpanded($event, tree)" (onNodeCollapse)="nodeCollapsed($event)" class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">
               <ng-template let-node pTemplate="default">
                 <div class="df">
                   <div>{{node.label}}</div>
@@ -68,21 +68,6 @@
           </div>
         </div>
         <div class="w-83">
-          <div *ngIf="project == 0">
-            <div class="cxy loading">
-              <div class="cxy flex-column">
-                <div class="cx loading-text">Select a project to view the materials</div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="project != 0 && !materialsFilled">
-            <div class="cxy loading">
-              <div class="cxy flex-column">
-                <img src="assets/whale.gif" height="120">
-                <div class="cx loading-text">PLEASE WAIT...</div>
-              </div>
-            </div>
-          </div>
           <div *ngIf="!materialsFilled">
             <div class="cxy loading">
               <div class="cxy flex-column">
@@ -91,7 +76,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
+          <div *ngIf="materialsFilled && selectedView == 'tiles'" class="tile height-tiles ovf-auto">
             <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
                 <div class="dash-card" *ngFor="let material of chunk; let j = index">
@@ -99,20 +84,20 @@
                     <div class="top-row-doc">
                       <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(material.name, 50)}}</div>
                       <div class="p-ml-auto">
-                        <div *ngIf="material.category != ''" class="kpl-flag cxy">
+                        <div *ngIf="getStatement(material.statem_id) != ''" class="kpl-flag cxy">
                           <div class="text-center-x">
-                            <span [innerHTML]="(material.category) | highLight: search"></span>
+                            <span [innerHTML]="(getStatement(material.statem_id)) | highLight: search"></span>
                           </div>
                         </div>
                         <div class="coef p-ml-auto mt-5">
                           <span class="pr-2">coef.</span>
-                          <span>{{material.coefficient}}</span>
+                          <span>{{material.coef}}</span>
                         </div>
                       </div>
                     </div>
                     <div class="two-row mt-5 mb-5">
-                      <div *ngIf="material.description != ''" class="text-medium">{{trimText(material.descr, 20)}}</div>
-                      <div *ngIf="material.description == ''" class="text-medium">/description/</div>
+                      <div *ngIf="material.descr != ''" class="text-medium">{{trimText(material.descr, 20)}}</div>
+                      <div *ngIf="material.descr == ''" class="text-medium">/description/</div>
                       <div class="df position-relative content-end pr-10">
                         <div class="trm">
                           <span [innerHTML]="material.code | highLight: search"></span>
@@ -206,7 +191,7 @@
           </div>
 
 
-          <div *ngIf="selectedView == 'list'" class="cards">
+          <div *ngIf="materialsFilled && selectedView == 'list'" class="cards">
             <p-table #table [value]="materials"
                      [scrollable]="true"
                      scrollHeight="calc(100vh - 226px)"
@@ -229,8 +214,8 @@
                   <th pSortableColumn="category" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}
                     <p-sortIcon field="category"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="coefficient" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}
-                    <p-sortIcon field="coefficient"></p-sortIcon>
+                  <th pSortableColumn="coef" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}
+                    <p-sortIcon field="coef"></p-sortIcon>
                   </th>
                   <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес кг')}}
                     <p-sortIcon field="weight"></p-sortIcon>
@@ -302,9 +287,9 @@
                   </td>
                   <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>
                   <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>
-                  <td class="min-width-75 w-7 text-14">{{material.category}}</td>
-                  <td class="min-width-75 w-7 text-14">{{material.coefficient}}</td>
-                  <td class="min-width-75 w-7 text-14">{{material.singleWeight}}</td>
+                  <td class="min-width-75 w-7 text-14">{{getStatement(material.stat_id)}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.coef}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.weight}}</td>
                   <td class="min-width-75 w-7 text-14">{{material.units}}</td>
                   <td class="min-width-190 w-9 text-14">{{material.provider}}</td>
                   <td class="min-width-190 w-9 text-14">{{material.note}}</td>
@@ -330,30 +315,22 @@
 </div>
 <p-toast position="bottom-center"></p-toast>
 <p-contextMenu #nodeMenu [model]="items"></p-contextMenu>
-<p-dialog [(visible)]="addNew" [header]="editing ? 'Редактировать название' : t.tr('Добавить новую папку')" [modal]="true" styleClass="p-fluid width-300">
+<p-dialog [(visible)]="addNew" [header]="editing ? 'Редактировать' : t.tr('Добавить')" [modal]="true" styleClass="p-fluid width-300">
   <ng-template pTemplate="content">
-    <div class="mb-10" *ngIf="!editing">
-      <div class="big-text-create mb-1">{{t.tr('Код (вставьте код вместо ###)')}}</div>
-      <div class="cx">
-        <div class="cxy mr-1">
-          {{newNode.data}}
-        </div>
-        <input type="text" pInputText [(ngModel)]="newNodeSuffix"/>
-      </div>
-      <small class="p-error" *ngIf="!newNode.data"></small>
-    </div>
     <div class="">
       <div class="big-text-create mb-1">{{t.tr('Название папки')}}</div>
-      <input [placeholder]="t.tr('Введите название новой папки')" type="text" pInputText [(ngModel)]="newNode.label"/>
-      <small class="p-error" *ngIf="!newNode.label"></small>
+      <input [placeholder]="t.tr('Введите название новой папки')" type="text" pInputText [(ngModel)]="newNode.name"/>
+      <small class="p-error" *ngIf="!newNode.name"></small>
+      <div class="df mt-5">
+        <div class="mr-5">*только для проекта {{getProjectName(this.project)}}</div>
+        <p-checkbox [binary]="true" [(ngModel)]="onlyProject"></p-checkbox>
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <div class="cx">
+    <div class="add-edit-directory-footer cx">
       <div tabindex="11" (click)="hide()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>
       <div tabindex="10" [class.disabled-button]="isSaveDisabled()" (click)="save()" pButton [label]="editing ? 'Изменить' : t.tr('Создать')" class="button-ok"></div>
     </div>
-    <!--    <button pButton pRipple label="ОТМЕНА" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>-->
-    <!--    <button [disabled]="isSaveDisabled()" pButton pRipple label="СОХРАНИТЬ" icon="pi pi-check" class="p-button-text" (click)="save()"></button>-->
   </ng-template>
 </p-dialog>
