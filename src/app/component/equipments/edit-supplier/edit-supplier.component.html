@@ -596,7 +596,7 @@
         <div class="header-information text-head">{{t.tr('Сведения')}}</div>
         <div class="table table-overflow">
           <div class="df mt-3px">
-            <div class="df text-y line-text normal-text w-35">{{t.tr('Статус')}}</div>
+            <div class="df text-y line-text normal-text w-30">{{t.tr('Статус')}}</div>
             <div [hidden]="edit == 'status'" (click)="edit = 'status'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{supplierForm.value.status}}</div>
             <div [hidden]="edit != 'status'" class="mr-5">
               <p-dropdown class="select" appendTo = "body" [(ngModel)]="supplierForm.value.status" [options]="statusTitle" styleClass="width-180"></p-dropdown>
@@ -615,7 +615,7 @@
             </div>
           </div>
           <div class="df mt-3px">
-            <div class="df text-y height-30 normal-text w-35">{{t.tr('Примечение')}}</div>
+            <div class="df text-y height-30 normal-text w-30">{{t.tr('Примечение')}}</div>
             <div (click)="edit = 'comment'" *ngIf="edit != 'comment'" pTooltip="{{supplierForm.value.comment}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{trimMin(supplierForm.value.comment)}}</div>
             <textarea *ngIf="edit == 'comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="supplierForm.value.comment" class="width-180 cy task-name-change-commit"></textarea>
             <div class="w-15 df">
@@ -624,7 +624,7 @@
                   <img src="assets/icons/tick.svg">
                 </div>
               </div>
-              <div [hidden]="edit != 'issue_comment'" (click)="showEditBlock('')">
+              <div [hidden]="edit != 'comment'" (click)="showEditBlock('')">
                 <div class="task-name-button cxy">
                   <img src="assets/icons/cancel.svg">
                 </div>
@@ -632,7 +632,7 @@
             </div>
           </div>
           <div class="df mt-3px">
-            <div class="df text-y height-30 normal-text w-35">{{t.tr('Производитель')}}</div>
+            <div class="df text-y height-30 normal-text w-30">{{t.tr('Производитель')}}</div>
             <div (click)="edit = 'manufacturer'" *ngIf="edit != 'manufacturer'" pTooltip="{{supplierForm.value.manufacturer}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{supplierForm.value.manufacturer}}</div>
             <textarea *ngIf="edit == 'manufacturer'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="supplierForm.value.manufacturer" class="width-180 cy task-name-change-commit"></textarea>
             <div class="w-15 df">
