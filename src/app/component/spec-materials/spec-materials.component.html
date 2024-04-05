@@ -15,12 +15,12 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="cloneMaterial(selectedMaterial)">
+        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0" (click)="cloneMaterial(selectedMaterial)">
           <img src="assets/icons/copy3.svg" height="18">
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="addMaterial('edit', selectedMaterial)">
+        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0" (click)="addMaterial('edit', selectedMaterial)">
           <img src="assets/icons/edit.svg" height="18">
         </div>
       </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="mr-10">
-        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.code == ''" (click)="deleteMaterial(selectedMaterial)">
+        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0" (click)="deleteMaterial(selectedMaterial)">
           <img src="assets/icons/trash-white.svg" height="22">
         </div>
       </div>
@@ -68,21 +68,6 @@
           </div>
         </div>
         <div class="w-83">
-          <div *ngIf="project == 0">
-            <div class="cxy loading">
-              <div class="cxy flex-column">
-                <div class="cx loading-text">Select a project to view the materials</div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="project != 0 && !materialsFilled">
-            <div class="cxy loading">
-              <div class="cxy flex-column">
-                <img src="assets/whale.gif" height="120">
-                <div class="cx loading-text">PLEASE WAIT...</div>
-              </div>
-            </div>
-          </div>
           <div *ngIf="!materialsFilled">
             <div class="cxy loading">
               <div class="cxy flex-column">
@@ -91,7 +76,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="selectedView == 'tiles'" class="tile height-tiles ovf-auto">
+          <div *ngIf="materialsFilled && selectedView == 'tiles'" class="tile height-tiles ovf-auto">
             <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
               <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
                 <div class="dash-card" *ngFor="let material of chunk; let j = index">
@@ -206,7 +191,7 @@
           </div>
 
 
-          <div *ngIf="selectedView == 'list'" class="cards">
+          <div *ngIf="materialsFilled && selectedView == 'list'" class="cards">
             <p-table #table [value]="materials"
                      [scrollable]="true"
                      scrollHeight="calc(100vh - 226px)"
@@ -336,6 +321,10 @@
       <div class="big-text-create mb-1">{{t.tr('Название папки')}}</div>
       <input [placeholder]="t.tr('Введите название новой папки')" type="text" pInputText [(ngModel)]="newNode.name"/>
       <small class="p-error" *ngIf="!newNode.name"></small>
+      <div class="df mt-5">
+        <div class="mr-5">*только для проекта {{getProjectName(this.project)}}</div>
+        <p-checkbox [binary]="true" [(ngModel)]="onlyProject"></p-checkbox>
+      </div>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
