@@ -1351,3 +1351,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
+.icon-nest{
+  fill: #E1E1E1;
+}
+.icon-nest:hover{
+  fill: #5e6c84;
+}

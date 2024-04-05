@@ -315,6 +315,7 @@
     <div class="left-content">
       <div class="pb-10">
         <span class="task-name hover-task cursor-pointer">{{supplierForm.value.name}}</span>
+      </div>
       <div class="df">
         <div class="big-text mb-1 mt-2">{{t.tr('Описание')}}</div>
       </div>
@@ -344,9 +345,14 @@
               <td class="padding-3">REV{{file.rev}}</td>
               <td class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>
               <td class="padding-3">{{this.getDateOnly(file.create_date)}}</td>
-              <td class="padding-3"><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>
               <td class="padding-3">
-                <div [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
+                <div class="cursor-pointer" (click)="downloadFile(file.url)">
+                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                  </svg>
+                </div>
+              <td class="padding-3">
+                <div class="cursor-pointer" [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
                   <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                   </svg>
@@ -355,19 +361,13 @@
             </tr>
           </ng-template>
         </p-table>
-
         <button *ngIf="supplierFilesSrc.length != 0" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" tabindex="10" (click)="showmore ? showMore() : showLess()" class="button-ok mt-1">
           {{showmore ? t.tr('Показать еще') : t.tr('Скрыть')}}
         </button>
       </div>
-
-
-
-
       <div class="mt-1 mb-5">
         <div class="big-text">{{t.tr('Связанные задачи')}}</div>
       </div>
-
       <div [collapse]="contentRelated" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedTasks')">
           <img src="assets/icons/arrow-right.png">
@@ -400,9 +400,8 @@
           </div>
         </div>
       </div>
-
-
-        <p-table class="files_table table" [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+      <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>
+      <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
           <ng-template pTemplate="body" let-history>
             <div *ngIf="history.name_value == 'created'">
               <div>{{auth.getUserNameById(history.author)}} {{t.tr('добавил(а) поставщика')}} {{getDate(history.update_date)}}</div>
@@ -430,34 +429,7 @@
             </div>
           </ng-template>
         </p-table>
-
-
-
-
-
-      <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>
-
     </div>
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-
-
-
-
-
-
-
-
     <div class="right-content">
       <div class="information">
         <div class="header-information text-head">{{t.tr('Сведения')}}</div>
