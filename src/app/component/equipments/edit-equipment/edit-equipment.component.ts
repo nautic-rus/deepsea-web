@@ -38,9 +38,10 @@ export class EditEquipmentComponent implements OnInit {
 
   equipmentFilesSrc: EquipmentsFiles[] = [];
   equipmentFiles: EquipmentsFiles[] = [];
-  fileArray: any[] =[];
 
   sfis: Isfi[] = [];
+
+  sfiAndName: string = '';
 
   buttonsAreHidden: boolean = true;  //для просмотра формы без возможности редактирования
 
@@ -50,8 +51,10 @@ export class EditEquipmentComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.t.language)
     this.eqService.getSfis().subscribe(sfis=>{
       this.sfis = sfis;
+      this.changeSFI()  //изначально отрисуем значение для sfi
     });
     this.equipmentProjects = this.prService.projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
     if (this.equipmentProjects.length > 0 && this.equipmentProject == '-') {
@@ -65,6 +68,17 @@ export class EditEquipmentComponent implements OnInit {
 
     if (this.dialogConfig.data.responsible_id == this.auth.getUser().id || this.auth.hasPerms('create_edit_equ')) {
       this.buttonsAreHidden = false;
+    }
+  }
+
+  changeSFI() {
+    let res = this.sfis.filter(item => item.code == this.equipmentForm.get('sfi')?.value);
+    if (this.t.language == 'ru') {
+      this.sfiAndName = res[0].code + ' ' + res[0].ru
+    } else if (this.t.language == 'en') {
+      console.log("res")
+      console.log(res)
+      this.sfiAndName = res[0].code + ' ' + res[0].eng
     }
   }
 

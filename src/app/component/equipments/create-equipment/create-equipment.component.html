@@ -8,7 +8,13 @@
     </div>
   </div>
   <div class="big-text-create mb-1">{{'SFI'}}</div>
-  <p-dropdown formControlName="sfi" class="select" optionLabel="code" optionValue="code" placeholder="SFI number" [options]="sfis" appendTo = "body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en">
+  <p-dropdown formControlName="sfi" class="select" optionLabel="code" optionValue="code" [options]="sfis" (onChange)="changeSFI()"
+              placeholder="SFI number" appendTo = "body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en">
+    <ng-template pTemplate="selectedItem">
+      <div class="flex align-items-center gap-2">
+        {{sfiAndName}}
+      </div>
+    </ng-template>
     <ng-template let-sfi pTemplate="item">
       <div class="df user-select">
         <div >{{sfi.code}}</div>
