@@ -88,24 +88,7 @@ export class SpecMaterialsComponent implements OnInit {
         if (this.projects.length > 0){
           this.project = this.projects[0].id;
         }
-        this.eqManager.getEquipments().subscribe(eq => {
-          console.log(eq);
-          eq.forEach(e => {
-            e.suppliers?.forEach(s => {
-              this.supplies.push({
-                id: e.id,
-                sfi: e.sfi,
-                name: e.name,
-                manufacturer: s.name,
-                supplier_id: s.id
-              });
-            });
-          });
-          this.materialManager.getSupMatRelations().subscribe(res => {
-            this.supMatRelations = res;
-            this.projectChanged();
-          });
-        });
+        this.projectChanged();
       });
     });
   }
@@ -490,26 +473,42 @@ export class SpecMaterialsComponent implements OnInit {
   }
 
   projectChanged() {
-    this.materialsFilled = false;
-    this.materials = [];
-    this.materialManager.getSpecMaterials().subscribe(resMaterials => {
-      resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
-      resMaterials.forEach((m: any) => m.path = []);
-      let projectStatements = this.specStatements.filter(x => x.project_id == this.project).map(x => x.id);
-      this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
-      this.materialsSrc = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
-      this.materialManager.getSpecDirectories().subscribe(specDirectories => {
-        this.nodesSrc = specDirectories.filter((x: any) => x.project_id == this.project || x.project_id == 0);
-        this.nodes = _.sortBy(this.getNodes(this.nodesSrc, this.materials, 0), x => x.label);
-        this.materials.filter(x => x != null).forEach(m => m.path = this.getMaterialPath(this.nodes, m.dir_id));
-        this.setExpandedNodes(this.nodes);
-        this.setSelectedNode(this.nodes);
-        this.setMaterialsProviders();
-        this.materialsFilled = true;
+    this.eqManager.getEquipments().subscribe(eq => {
+      eq.forEach(e => {
+        e.suppliers?.forEach(s => {
+          this.supplies.push({
+            id: e.id,
+            sfi: e.sfi,
+            name: e.name,
+            manufacturer: s.name,
+            supplier_id: s.id
+          });
+        });
       });
-      for (let x = 0; x < 10; x ++){
-        this.materials.push(null);
-      }
+      this.materialManager.getSupMatRelations().subscribe(res => {
+        this.supMatRelations = res;
+        this.materialsFilled = false;
+        this.materials = [];
+        this.materialManager.getSpecMaterials().subscribe(resMaterials => {
+          resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
+          resMaterials.forEach((m: any) => m.path = []);
+          let projectStatements = this.specStatements.filter(x => x.project_id == this.project).map(x => x.id);
+          this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
+          this.materialsSrc = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
+          this.materialManager.getSpecDirectories().subscribe(specDirectories => {
+            this.nodesSrc = specDirectories.filter((x: any) => x.project_id == this.project || x.project_id == 0);
+            this.nodes = _.sortBy(this.getNodes(this.nodesSrc, this.materials, 0), x => x.label);
+            this.materials.filter(x => x != null).forEach(m => m.path = this.getMaterialPath(this.nodes, m.dir_id));
+            this.setExpandedNodes(this.nodes);
+            this.setSelectedNode(this.nodes);
+            this.setMaterialsProviders();
+            this.materialsFilled = true;
+          });
+          for (let x = 0; x < 10; x ++){
+            this.materials.push(null);
+          }
+        });
+      });
     });
   }
   getMaterialPath(nodes: any[], dir_id: number){

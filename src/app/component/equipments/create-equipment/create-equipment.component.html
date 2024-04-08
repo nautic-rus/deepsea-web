@@ -17,9 +17,11 @@
     </ng-template>
     <ng-template let-sfi pTemplate="item">
       <div class="df user-select">
-        <div >{{sfi.code}}</div>
-        <div >{{sfi.ru}}</div>
-        <div >{{sfi.eng}}</div>
+        <div class="pr-10">{{sfi.code}}</div>
+        <div>
+          <div class="">{{sfi.ru}}</div>
+          <div class="text-gray">{{sfi.eng}}</div>
+        </div>
       </div>
     </ng-template>
   </p-dropdown>

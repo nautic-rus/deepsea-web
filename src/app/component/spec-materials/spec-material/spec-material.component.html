@@ -21,9 +21,13 @@
                   [showClear]="true" [placeholder]="t.tr('Выбрать')" class="p-dropdown-150" styleClass="width-440" appendTo="body">
         <ng-template pTemplate="selectedItem">
           <div class="df">
-            <div class="cx cy">{{supply.sfi}}</div>
-            <div class="cx cy pl-10">{{supply.name}}</div>
-            <div class="cx cy pl-10">{{supply.manufacturer}}</div>
+            <div class="cx cy">ID {{supply.id}}</div>
+            <div class="pl-5">-</div>
+            <div class="cx cy pl-5">SFI {{supply. sfi}}</div>
+            <div class="pl-5">-</div>
+            <div class="cx cy pl-5">{{supply.name}}</div>
+            <div class="pl-5">-</div>
+            <div class="cx cy pl-5">{{supply.manufacturer}}</div>
           </div>
         </ng-template>
         <ng-template let-supp pTemplate="item">
