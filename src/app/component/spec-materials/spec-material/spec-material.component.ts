@@ -47,6 +47,11 @@ export class SpecMaterialComponent implements OnInit {
   specDirectories: any[] = [];
   selectedSpecDirectory: any;
   selectedSpecDirectoryId: any;
+  supplies: any[] = [];
+  supply: any;
+  supMatRelations: any[] [];
+  supMatRelationsId = 0;
+
 
   constructor(public t: LanguageService, public eqManager: EquipmentsService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
     this.project = dialog.data[0];
@@ -59,6 +64,28 @@ export class SpecMaterialComponent implements OnInit {
     if ((this.action == 'add' || this.action == 'clone')){
       this.material.code = 'NRxxxxxxxxxxxxxx'
     }
+    this.eqManager.getEquipments().subscribe(eq => {
+      console.log(eq);
+      eq.forEach(e => {
+        e.suppliers?.forEach(s => {
+          this.supplies.push({
+            id: e.id,
+            sfi: e.sfi,
+            name: e.name,
+            manufacturer: s.name,
+            supplier_id: s.id
+          });
+        });
+      });
+      this.materialManager.getSupMatRelations().subscribe(res => {
+        this.supMatRelations = res;
+        let find: any = this.supMatRelations.find((x: any) => x.materials_id == this.material.id);
+        if (find != null){
+          this.supply = this.supplies.find(x => x.supplier_id == find.supplier_id);
+          this.supMatRelationsId = this.supply.id;
+        }
+      });
+    });
 
     this.materialManager.getSpecStatements().subscribe(stmts => {
       this.statements = stmts.filter((x: any) => x.project_id == this.project);
@@ -86,7 +113,7 @@ export class SpecMaterialComponent implements OnInit {
       this.selectedStatementNode = find;
     }
     else{
-      this.selectDirectory(statements.flatMap(x => x.children), id);
+      this.selectStatement(statements.flatMap(x => x.children), id);
     }
   }
   getDirNodes(rootNodes: any[], parent_id: number = 0){
@@ -149,6 +176,14 @@ export class SpecMaterialComponent implements OnInit {
     this.material.dir_id = this.selectedSpecDirectory.data;
     this.material.user_id = this.auth.getUser().id;
     this.materialManager.updateSpecMaterial(this.material).subscribe(res => {
+      if (this.supply != null){
+        this.materialManager.addSupMatRelations({
+          id: this.supMatRelationsId,
+          supplier_id: this.supply.supplier_id,
+          materials_id: this.material.id
+        }).subscribe(() => {});
+      }
+
       this.ref.close(this.material);
     });
   }
