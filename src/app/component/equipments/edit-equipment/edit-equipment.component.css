@@ -147,15 +147,14 @@
   opacity: 0.5;
   pointer-events: none;
 }
-.files_table {
-  margin-top: 5px;
+.border-top{
+  border-top: 1px solid #dee2e6;
 }
-
-
-
 .test {
   margin-left: 15px;
   color: #0EA97D;
 }
-
+.task-row:hover {
+  background-color: #EEF5FA !important;
+}
 

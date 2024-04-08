@@ -49,35 +49,35 @@
     <label class="big-text-create mb-1 mt-10" for="name">{{t.tr('Наименование')}} </label>
     <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
 
-    <label class="big-text-create mb-1 mt-10" for="description">{{t.tr('Описание')}} </label>
+    <label class="big-text-create mb-1 mt-10" for="description">{{t.tr('Описание')}}</label>
     <input [readOnly]="buttonsAreHidden" pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}">
 
-    <label class="big-text-create mb-1 mt-10" for="comment">{{t.tr('Комментарий')}} </label>
-    <input [readOnly]="buttonsAreHidden" pInputText id="comment" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}">
+    <label class="big-text-create mb-1 mt-10" for="comment">{{t.tr('Комментарий')}}</label>
+    <textarea [readOnly]="buttonsAreHidden" pInputText id="comment" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}"></textarea>
 
-    <div *ngIf="equipmentFilesSrc.length != 0" class="height-160 ovf-auto">
-      <p-table class="files_table table" [value]="equipmentFilesSrc" styleClass="p-datatable-striped">
+    <div *ngIf="equipmentFilesSrc.length != 0" class="mt-20 height-160 ovf-auto">
+      <p-table [value]="equipmentFilesSrc" styleClass="p-datatable-striped">
 
         <ng-template pTemplate="body" let-file>
           <!--      <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
-          <tr>
-            <td>
+          <tr class="border-top task-row cursor-pointer">
+            <td class="padding-5">
               <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
                 <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
                 <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 10) + ' '}}</span>
               </div>
             </td>
-            <td>{{file.type_name}}</td>
-            <td>REV{{file.rev}}</td>
-            <td>{{this.auth.getUserNameById(file.user_id)}}</td>
+            <td class="padding-5">{{file.type_name}}</td>
+            <td class="padding-5">REV{{file.rev}}</td>
+            <td class="padding-5">{{this.auth.getUserNameById(file.user_id)}}</td>
             <td>{{this.getDateOnly(file.create_date)}}</td>
-            <td>
+            <td class="padding-5">
               <div (click)="downloadFile(file.url)">
                 <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                   <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                 </svg>
               </div>
-            <td [hidden]="buttonsAreHidden">
+            <td class="padding-5" [hidden]="buttonsAreHidden">
               <div (click)="deleteFile(file)">
                 <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                   <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>

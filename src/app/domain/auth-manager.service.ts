@@ -15,6 +15,7 @@ import {TimeControlInterval} from "./classes/time-control-interval";
 import EventEmitter from "events";
 import {ConsumedHour, PlanHour} from "../component/work-hours/work-hours.component";
 import {UserService} from "../component/admin/user/user.service";
+import {id} from "date-fns/locale";
 
 @Injectable({
   providedIn: 'root'
@@ -172,6 +173,16 @@ export class AuthManagerService {
       return 'assets/employees/unknown.jpg';
     }
   }
+  getUserAvatarId(id: number){
+    let find = this.users.find(x => x.id == id);
+    if (find != null){
+      return find.avatar;
+    }
+    else{
+      return 'assets/employees/unknown.jpg';
+    }
+  }
+
   login(login: string, password: string, redirectUrl = '', redirect = true, save = true){
     this.http.get(props.http + '/login', {params: {login: login, password: password}}).subscribe({
       next: data => {

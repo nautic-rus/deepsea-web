@@ -45,7 +45,7 @@
   <input pInputText id="description" type="text" formControlName="description">
 
   <label class="big-text-create mb-1 mt-1" for="commentText">{{t.tr('Комментарий')}} </label>
-  <input pInputText id="commentText" type="text" formControlName="commentText">
+  <textarea class="" pInputText id="commentText" type="text" formControlName="commentText"></textarea>
 
 <!--  добавление файла в момент создания нового оборудования-->
   <div class="mt-1" *ngIf="equipmentFiles.length != 0">Вложения</div>

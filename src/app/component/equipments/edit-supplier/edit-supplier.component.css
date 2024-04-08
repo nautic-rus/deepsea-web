@@ -154,7 +154,7 @@
   position: relative;
   text-align: center;
   cursor: pointer;
-  padding: 12px;
+  padding: 6px 8px;
   color: #42526e !important;
   transition: background .1s ease-out 0s, box-shadow .15s cubic-bezier(.47,.03,.49,1.38) 0s;
   display: flex;
@@ -1364,6 +1364,12 @@
 .icon-nest:hover{
   fill: #5e6c84;
 }
-
-
-
+.archive-no{
+  padding: 10px;
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #FCFCFC;
+}
+.min-height-80{
+  min-height: 80px;
+}

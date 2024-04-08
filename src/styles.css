@@ -652,6 +652,9 @@ body,p{
   font-size: 12px!important;
   padding: 6px 8px!important;
 }
+.margin-10{
+  margin: 10px;
+}
 .mr-minus5{
   margin-right: -5px;
 }

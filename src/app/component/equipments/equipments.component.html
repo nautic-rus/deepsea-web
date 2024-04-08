@@ -47,15 +47,15 @@
 
         <!--      заполняем таблицу с оборудованием-->
         <ng-template pTemplate="body" let-eq let-expanded="expanded">
-          <tr class="equipment-tr">
+          <tr class="equipment-tr task-row cursor-pointer">
             <td>
               <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
             <td (click)="editEquipment(eq)">{{ eq.id }}</td>
             <td (click)="editEquipment(eq)">SFI {{ eq.sfi }}-{{ eq.name }}</td>
-            <td (click)="editEquipment(eq)">{{ eq.status }}</td>
+            <td [innerHTML]="issueManager.localeStatus(eq.status) | safeHtml" (click)="editEquipment(eq)">{{ eq.status }}</td>
             <td (click)="editEquipment(eq)" >{{ eq.department }}</td>
-            <td (click)="editEquipment(eq)">{{ eq.comment }}</td>
+            <td (click)="editEquipment(eq)" [innerHTML]="issueManager.trim(eq.comment)"></td>
             <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>
             <td (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
             <td><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup cxy green-button">{{t.tr('Добавить поставщика')}}</div></td>
@@ -65,18 +65,17 @@
         <!--     выпадающий список suppliers-->
         <ng-template pTemplate="rowexpansion" let-eq>
           <tr *ngIf="!showSuppliersButtonIsDisabled(eq)">
-            <p-table class="w-100 padding-20" [value]="eq.suppliers" dataKey="equipm_id">
+            <p-table class="w-100 padding-10 border margin-10"  [value]="eq.suppliers" dataKey="equipm_id">
               <ng-template pTemplate="header">
                 <tr>
                   <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
                   <th pSortableColumn="name">Supplier<p-sortIcon field="name"></p-sortIcon></th>
                   <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
                   <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>
-                  <th></th>
                 </tr>
               </ng-template>
               <ng-template class="addTable" pTemplate="body" let-supplier>
-                <tr>
+                <tr class="task-row cursor-pointer">
                   <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>
                   <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>
                   <td (click)="editSupplier(eq, supplier)" class="text-14">
