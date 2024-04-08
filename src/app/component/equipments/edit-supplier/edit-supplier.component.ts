@@ -416,17 +416,8 @@ export class EditSupplierComponent implements OnInit {
   }
 
 
-    // this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-    //   this.supplierFilesSrc = res.slice(0,5);
-    //   this.showMoreFilesButtonIsDisabled = res.length > 5 ? false : true;
-    //   console.log(this.supplierFilesSrc);
-    // })
-
 
   editSupplier(name_value: string, prev_data: string, new_data: string) {
-    console.log(name_value)
-    console.log(prev_data)
-    console.log(new_data)
     if (name_value) {
       const history = new SupplierHistory(this.auth.getUser().id, name_value, prev_data, new_data, this.supplier_id)
       this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
@@ -436,7 +427,6 @@ export class EditSupplierComponent implements OnInit {
         })
       })
     }
-
 
     const supplierToDB = new SupplierToDB();
     supplierToDB.equip_id= this.eq_data.id;
@@ -490,8 +480,14 @@ export class EditSupplierComponent implements OnInit {
   }
 
   openIssue(id: number) {
+    console.log(id)
     window.open('/?taskId=' + id, '_blank');
   }
+
+  // openIssue(id: any) {
+  //   console.log(id)
+  //   window.open('/?taskId=' + id, '_blank');
+  // }
 
   localeGender(userId: string){
     let find = this.auth.users.find(x => x.login == userId);

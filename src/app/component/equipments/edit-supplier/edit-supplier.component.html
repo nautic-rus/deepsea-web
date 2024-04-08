@@ -196,7 +196,7 @@
       <div collapseContent #contentRelated="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="relatedTasks.length != 0">
           <div class="subtask df" *ngFor="let task of relatedTasks">
-            <div class="subtask-grid" (click)="openIssue(task.id)" >
+            <div class="subtask-grid" (click)="openIssue(task.issue_id)">
               <div class="pr-10">{{task.issue_typ}}</div>
               <div class="pr-10 min-width-220">
                 <span [innerHTML]="issueManager.trim(task.issue_name)"></span>
