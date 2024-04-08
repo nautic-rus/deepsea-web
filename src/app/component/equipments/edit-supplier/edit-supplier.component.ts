@@ -96,6 +96,8 @@ export class EditSupplierComponent implements OnInit {
 
     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
       this.historyArray = res;
+      console.log('initial history')
+      console.log(res)
     })
 
     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
@@ -422,6 +424,9 @@ export class EditSupplierComponent implements OnInit {
 
 
   editSupplier(name_value: string, prev_data: string, new_data: string) {
+    console.log(name_value)
+    console.log(prev_data)
+    console.log(new_data)
     if (name_value) {
       const history = new SupplierHistory(this.auth.getUser().id, name_value, prev_data, new_data, this.supplier_id)
       this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {

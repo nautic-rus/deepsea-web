@@ -1,3 +1,372 @@
+<!--<div class="w65">-->
+<!--  <div class="task-header">-->
+<!--    <div class="df">-->
+<!--      <div class="text-head text-bottom">ID {{supplier_id}} | SFI {{sfi}} - {{sfi_name}}</div>-->
+<!--    </div>-->
+<!--    <div class="task-buttons">-->
+<!--      <div routerLink="/equipments" [queryParams]="{equipmentId: equipment_id, supplierId: supplier_id}" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку поставщика')" (click)="copySupplierUrl()">-->
+<!--        <img src="assets/icons/link.svg" height="20">-->
+<!--      </div>-->
+<!--      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать связанную задачу')" (click)="createCombined(null)">-->
+<!--        <img class="rotate-90" src="assets/icons/linktask.svg" height="20">-->
+<!--      </div>-->
+<!--      <div class="task-button cxy mr-2" [hidden]="buttonsAreHidden" tooltipPosition="top" [pTooltip]="(t.tr('Удалить поставщика'))" (click)="deleteSupplier(supplier_id)">-->
+<!--        <img src="assets/icons/trash.svg" height="20">-->
+<!--      </div>-->
+<!--      <div class="task-button-close cxy" (click)="close()">-->
+<!--        <i class="pi pi-times"></i>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="center">-->
+<!--    <div class="left-content">-->
+<!--      <div class="pb-10">-->
+<!--        <span class="task-name hover-task cursor-pointer">{{supplierForm.value.name}}</span>-->
+<!--      </div>-->
+<!--      <div class="df">-->
+<!--        <div class="big-text mb-1 mt-2">{{t.tr('Описание')}}</div>-->
+<!--      </div>-->
+<!--      <div class="text description descr-task">-->
+<!--        <quill-view [hidden]="edit == 'description'" [content]="supplierForm.value.description" (click)="edit = 'description'"></quill-view>-->
+<!--      </div>-->
+<!--      <div [hidden]="edit != 'description'" class="df mt-5">-->
+<!--        <div class="mr-5 pb-20">-->
+<!--          <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)" class="button-ok cxy">{{t.tr('Сохранить')}}</div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div (click)="showEditBlock('')" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="df space-between">-->
+<!--        <div class="df">-->
+<!--          <div [ngClass]="{checkButton: showAttachmentButton}" class="big-text mt-1 mr-10 button-new" (click)="showAttachmentFiles()">{{t.tr('Вложения')}}</div>-->
+<!--          <div [ngClass]="{checkButton: !showAttachmentButton}" class="big-text mt-1 button-new" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>-->
+<!--        </div>-->
+<!--        <div  class="mr-5 cy">-->
+<!--          <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--&lt;!&ndash;      это блок с вложенными файлами&ndash;&gt;-->
+<!--      <div *ngIf="showAttachmentButton">-->
+<!--        <div *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>-->
+<!--        <p-table *ngIf="supplierFilesSrc.length != 0" [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">-->
+<!--          <ng-template pTemplate="header">-->
+<!--            <tr>-->
+<!--              <th>Наименование</th>-->
+<!--              <th>Тип</th>-->
+<!--              <th>Rev</th>-->
+<!--              <th>Пользователь</th>-->
+<!--              <th>Загружен</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--          <ng-template pTemplate="body" let-file>-->
+<!--            <tr>-->
+<!--              <td class="padding-3">-->
+<!--                <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
+<!--                  <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>-->
+<!--                  <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>-->
+<!--                </div>-->
+<!--              </td>-->
+<!--              <td class="padding-3">{{file.type_name}}</td>-->
+<!--              <td class="padding-3">REV{{file.rev}}</td>-->
+<!--              <td class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>-->
+<!--              <td class="padding-3">{{this.getDateOnly(file.create_date)}}</td>-->
+<!--              <td class="padding-3">-->
+<!--                <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">-->
+<!--                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+<!--                  </svg>-->
+<!--                </a>-->
+<!--&lt;!&ndash;                <div class="cursor-pointer" (click)="downloadFile(file.url)">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </svg>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--              <td class="padding-3">-->
+<!--                <div class="cursor-pointer" [hidden]="buttonsAreHidden" (click)="deleteFile(file)">-->
+<!--                  <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>-->
+<!--                  </svg>-->
+<!--                </div>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--        </p-table>-->
+<!--        <button *ngIf="supplierFilesSrc.length != 0" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" tabindex="10" (click)="showmore ? showMore() : showLess()" class="button-ok mt-1">-->
+<!--          {{showmore ? t.tr('Показать еще') : t.tr('Скрыть')}}-->
+<!--        </button>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash;здесь я добавляю новые файлы и отображаю их&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;      это все еще для отображения добавляемых файлов&ndash;&gt;-->
+<!--      <p-table *ngIf="supplierFiles.length != 0" class="files_table table" [value]="supplierFiles" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">-->
+<!--        <ng-template pTemplate="header">-->
+<!--          <tr>-->
+<!--            <th>Наименование</th>-->
+<!--            <th>Тип</th>-->
+<!--            <th>Rev</th>-->
+<!--            <th>Пользователь</th>-->
+<!--            <th></th>-->
+<!--            <th></th>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="body" let-file>-->
+<!--          <tr>-->
+<!--            <td>-->
+<!--              <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
+<!--                <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>-->
+<!--                <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--            <td>{{file.type_name}}</td>-->
+<!--            <td>REV{{file.rev}}</td>-->
+<!--            <td>{{this.auth.getUserNameById(file.user_id)}}</td>-->
+<!--            <td>-->
+<!--              <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">-->
+<!--                <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+<!--                </svg>-->
+<!--              </a>-->
+<!--            </td>-->
+<!--&lt;!&ndash;            <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>&ndash;&gt;-->
+<!--            <td>-->
+<!--              <div [hidden]="buttonsAreHidden" (click)="deleteFile(file)">-->
+<!--                <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>-->
+<!--                </svg>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--          </tr>-->
+
+<!--        </ng-template>-->
+<!--      </p-table>-->
+<!--      <div *ngIf="supplierFiles.length != 0" class="mr-5 mt-20 cy">-->
+<!--        <div tabindex="10"  (click)="addFiles2(supplierFiles)" class="button-ok ml-1">{{t.tr('Сохранить изменения')}}</div>-->
+<!--      </div>-->
+
+
+
+<!--&lt;!&ndash;      здесь я показываю заархивированные файлы &ndash;&gt;-->
+<!--      <div *ngIf="!showAttachmentButton">-->
+<!--        <div *ngIf="archivedSupplierFiles.length == 0">Здесь пока нет заархивированных файлов</div>-->
+<!--        <p-table *ngIf="archivedSupplierFiles.length != 0" [value]="archivedSupplierFiles" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">-->
+<!--          <ng-template pTemplate="header">-->
+<!--            <tr>-->
+<!--              <th>Наименование</th>-->
+<!--              <th>Тип</th>-->
+<!--              <th>Rev</th>-->
+<!--              <th>Пользователь</th>-->
+<!--              <th>Загружен</th>-->
+<!--              <th>Удален</th>-->
+<!--              <th></th>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--          <ng-template pTemplate="body" let-file>-->
+<!--            <tr>-->
+
+<!--              <td class="padding-3">-->
+<!--                <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
+<!--                  <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>-->
+<!--                  <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>-->
+<!--                </div>-->
+<!--              </td>-->
+<!--              <td class="padding-3">{{file.type_name}}</td>-->
+<!--              <td class="padding-3">REV{{file.rev}}</td>-->
+<!--              <td class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>-->
+<!--              <td class="padding-3">{{this.getDateOnly(file.create_date)}}</td>-->
+<!--              <td class="padding-3">{{this.getDateOnly(file.archived_date)}}</td>-->
+<!--              <td class="padding-3">-->
+<!--                <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">-->
+<!--                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+<!--                  </svg>-->
+<!--                </a>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--        </p-table>-->
+<!--        <button *ngIf="archivedSupplierFiles.length != 0" [ngClass]="{disabled: showMoreArchivedFilesButtonIsDisabled}" tabindex="10" (click)="showmoreArchived ? showMoreArchived() : showLessArchived()" class="button-ok mt-1">-->
+<!--          {{showmoreArchived ? t.tr('Показать еще') : t.tr('Скрыть')}}-->
+<!--        </button>-->
+<!--      </div>-->
+
+
+<!--      <div class="mt-1 mb-5">-->
+<!--        <div class="big-text">{{t.tr('Связанные задачи')}}</div>-->
+<!--      </div>-->
+<!--      <div [collapse]="contentRelated" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">-->
+<!--        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedTasks')">-->
+<!--          <img src="assets/icons/arrow-right.png">-->
+<!--        </div>-->
+<!--        <div>{{t.tr('Связанные задачи')}}</div>-->
+<!--      </div>-->
+<!--      <div collapseContent #contentRelated="collapseContent" class="collapse-body">-->
+<!--        <div class="ovf-auto" *ngIf="relatedTasks.length != 0">-->
+<!--          <div class="subtask df" *ngFor="let task of relatedTasks">-->
+<!--            <div class="subtask-grid" (click)="openIssue(task.id)" >-->
+<!--              <div class="pr-10">{{task.issue_typ}}</div>-->
+<!--              <div class="pr-10 min-width-220">-->
+<!--                <span [innerHTML]="issueManager.trim(task.issue_name)"></span>-->
+<!--              </div>-->
+<!--              <div class="df min-width-180">-->
+<!--                <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>-->
+<!--                <div [innerHTML]="issueManager.getAssignedToTrim(task.assigned_to)"></div>-->
+<!--              </div>-->
+<!--              <div class="df min-width-180">-->
+<!--                <div class="min-text mt-2px">{{t.tr('Ответственный - ')}}</div>-->
+<!--                <div [innerHTML]="issueManager.getAssignedToTrim(task.responsible)"></div>-->
+<!--              </div>-->
+<!--              <div class="" [innerHTML]="issueManager.localeStatus(task.status) | safeHtml"></div>-->
+<!--            </div>-->
+<!--            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="deleteRelatedTask(task.id)" class="mt-3px position-relative">-->
+<!--              <div class="untie padding-3 cxy">-->
+<!--                <img src="assets/icons/cancel-red.svg" height="12">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>-->
+<!--      <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">-->
+<!--          <ng-template pTemplate="body" let-history>-->
+<!--            <div *ngIf="history.name_value == 'created'">-->
+<!--              <div>-->
+<!--                <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>-->
+<!--                <span class="text-descr px-5">{{t.tr('добавил(а) поставщика')}}</span>-->
+<!--                <span class="text-date">{{getDate(history.update_date)}}</span>-->
+<!--              </div>-->
+<!--            </div>-->
+
+
+<!--            <div class="pb-20" *ngIf="history.name_value == 'added file'">-->
+<!--              <div class="df">-->
+<!--                <div class="pt-5 mr-10">-->
+<!--                  <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <div>-->
+<!--                    <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>-->
+<!--                    <span class="text-descr px-5">{{t.tr('добавил(а) файл')}}</span>-->
+<!--                    <span class="text-date">{{getDate(history.update_date)}}</span>-->
+<!--                  </div>-->
+<!--                  <div class="pt-5">-->
+<!--                    <div class="df">-->
+<!--                      <div (click)="openFile(history.new_value)" class="df cursor-pointer">-->
+<!--                        <img [src]="'assets/task/' + getFileExtensionIcon(history.new_value)" height="16"/>-->
+<!--                        <span class="file-name-esp mx-10 cy">{{trimFileName(history.new_value, 22) + ' '}}</span>-->
+<!--                      </div>-->
+<!--                      <div>-->
+<!--                        <a [href]="history.new_value" [download]="history.new_value" (click)="$event.stopPropagation()">-->
+<!--                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+<!--                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+<!--                          </svg>-->
+<!--                        </a>-->
+
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="pb-20" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">-->
+<!--              <div class="df">-->
+<!--                <div class="pt-5 mr-10">-->
+<!--                  <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                  <div>-->
+<!--                    <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>-->
+<!--                    <span class="text-descr px-5">{{refactorHistoryTitle(history.name_value)}}</span>-->
+<!--                    <span class="text-date">{{getDate(history.update_date)}}</span>-->
+<!--                  </div>-->
+<!--                  <div class="pt-5">-->
+<!--                    <span [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>-->
+<!--                    <span class="px-10">-->
+<!--                      <img src="assets/icons/right-arrow.svg" height="13">-->
+<!--                    </span>-->
+<!--                    <span [innerHTML]="formatValue(history.name_value, history.new_value) | safeHtml"></span>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--        </p-table>-->
+<!--    </div>-->
+<!--    <div class="right-content">-->
+<!--      <div class="information">-->
+<!--        <div class="header-information text-head">{{t.tr('Сведения')}}</div>-->
+<!--        <div class="table table-overflow">-->
+<!--          <div class="df mt-3px">-->
+<!--            <div class="df text-y line-text normal-text w-30">{{t.tr('Статус')}}</div>-->
+<!--            <div [hidden]="edit == 'status'" (click)="edit = 'status'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{supplierForm.value.status}}</div>-->
+<!--            <div [hidden]="edit != 'status'" class="mr-5">-->
+<!--              <p-dropdown class="select" appendTo = "body" [(ngModel)]="supplierForm.value.status" [options]="statusTitle" styleClass="width-180"></p-dropdown>-->
+<!--            </div>-->
+<!--            <div class="w-15 df">-->
+<!--              <div [hidden]="edit != 'status'" (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)">-->
+<!--                <div  class="task-name-button cxy mr-5">-->
+<!--                  <img src="assets/icons/tick.svg">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div [hidden]="edit != 'status'" (click)="showEditBlock('')">-->
+<!--                <div  class="task-name-button cxy">-->
+<!--                  <img src="assets/icons/cancel.svg">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="df mt-3px">-->
+<!--            <div class="df text-y height-30 normal-text w-30">{{t.tr('Примечение')}}</div>-->
+<!--            <div (click)="edit = 'comment'" *ngIf="edit != 'comment'" pTooltip="{{supplierForm.value.comment}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{trimMin(supplierForm.value.comment)}}</div>-->
+<!--            <textarea *ngIf="edit == 'comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="supplierForm.value.comment" class="width-180 cy task-name-change-commit"></textarea>-->
+<!--            <div class="w-15 df">-->
+<!--              <div [hidden]="edit != 'comment'" (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">-->
+<!--                <div class="task-name-button cxy ml-5 mr-5" >-->
+<!--                  <img src="assets/icons/tick.svg">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div [hidden]="edit != 'comment'" (click)="showEditBlock('')">-->
+<!--                <div class="task-name-button cxy">-->
+<!--                  <img src="assets/icons/cancel.svg">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="df mt-3px">-->
+<!--            <div class="df text-y height-30 normal-text w-30">{{t.tr('Производитель')}}</div>-->
+<!--            <div (click)="edit = 'manufacturer'" *ngIf="edit != 'manufacturer'" pTooltip="{{supplierForm.value.manufacturer}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{supplierForm.value.manufacturer}}</div>-->
+<!--            <textarea *ngIf="edit == 'manufacturer'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="supplierForm.value.manufacturer" class="width-180 cy task-name-change-commit"></textarea>-->
+<!--            <div class="w-15 df">-->
+<!--              <div [hidden]="edit != 'manufacturer'" (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">-->
+<!--                <div class="task-name-button cxy ml-5 mr-5" >-->
+<!--                  <img src="assets/icons/tick.svg">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div [hidden]="edit != 'manufacturer'" (click)="showEditBlock('')">-->
+<!--                <div class="task-name-button cxy">-->
+<!--                  <img src="assets/icons/cancel.svg">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<p-toast key="supplierUrl" position="bottom-center"></p-toast>-->
+
+
+<form [formGroup]="supplierForm" class="form-container">
 <div class="w65">
   <div class="task-header">
     <div class="df">
@@ -18,25 +387,51 @@
       </div>
     </div>
   </div>
+
   <div class="center">
     <div class="left-content">
       <div class="pb-10">
         <span class="task-name hover-task cursor-pointer">{{supplierForm.value.name}}</span>
       </div>
-      <div class="df">
-        <div class="big-text mb-1 mt-2">{{t.tr('Описание')}}</div>
-      </div>
-      <div class="text description descr-task">
-        <quill-view [hidden]="edit == 'description'" [content]="supplierForm.value.description" (click)="edit = 'description'"></quill-view>
-      </div>
-      <div [hidden]="edit != 'description'" class="df mt-5">
-        <div class="mr-5 pb-20">
-          <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
+
+      <div class="df mt-3px">
+        <div class="df text-y height-30 normal-text w-30">{{t.tr('Описание')}}</div>
+        <p [hidden]="edit =='description'" class="edit_container info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>
+        <div *ngIf="edit =='description'">
+          <input class="info-description mt-16 p-inputtext" id="description" type="text" formControlName="description">
+
+          <div class="df cxy">
+            <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">
+              <div  class="task-name-button cxy mr-10">
+                <img src="assets/icons/tick.svg">
+              </div>
+            </div>
+            <div (click)="showEditBlock('')">
+              <div  class="task-name-button cxy">
+                <img src="assets/icons/cancel.svg">
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <div (click)="showEditBlock('')" pRipple pButton [label]="t.tr('Отменить')" class="button-cancel"></div>
-        </div>
       </div>
+
+<!--      <label class="mb-1" for="description">{{t.tr('Описание')}}</label>-->
+<!--      <p [hidden]="edit =='description'" class="edit_container info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>-->
+<!--      <div *ngIf="edit =='description'">-->
+<!--        <input pInputText id="description" type="text" formControlName="description"  placeholder="{{t.tr('Описание')}}">-->
+<!--        <div class="fx cxy">-->
+<!--          <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">-->
+<!--            <div  class="task-name-button cxy mr-10">-->
+<!--              <img src="assets/icons/tick.svg">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div (click)="showEditBlock('')">-->
+<!--            <div  class="task-name-button cxy">-->
+<!--              <img src="assets/icons/cancel.svg">-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="df space-between">
         <div class="df">
@@ -48,7 +443,7 @@
         </div>
       </div>
 
-<!--      это блок с вложенными файлами-->
+      <!--      это блок с вложенными файлами-->
       <div *ngIf="showAttachmentButton">
         <div *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>
         <p-table *ngIf="supplierFilesSrc.length != 0" [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
@@ -81,11 +476,11 @@
                     <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                   </svg>
                 </a>
-<!--                <div class="cursor-pointer" (click)="downloadFile(file.url)">-->
-<!--                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
-<!--                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
-<!--                  </svg>-->
-<!--                </div>-->
+                <!--                <div class="cursor-pointer" (click)="downloadFile(file.url)">-->
+                <!--                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+                <!--                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+                <!--                  </svg>-->
+                <!--                </div>-->
               <td class="padding-3">
                 <div class="cursor-pointer" [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
                   <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -104,7 +499,7 @@
       <!--здесь я добавляю новые файлы и отображаю их-->
 
 
-<!--      это все еще для отображения добавляемых файлов-->
+      <!--      это все еще для отображения добавляемых файлов-->
       <p-table *ngIf="supplierFiles.length != 0" class="files_table table" [value]="supplierFiles" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="header">
           <tr>
@@ -134,7 +529,7 @@
                 </svg>
               </a>
             </td>
-<!--            <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>-->
+            <!--            <td><a class="p-link" (click)="downloadFile(file.url)" target="_blank">{{t.tr('Скачать')}}</a></td>-->
             <td>
               <div [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
                 <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -152,7 +547,7 @@
 
 
 
-<!--      здесь я показываю заархивированные файлы -->
+      <!--      здесь я показываю заархивированные файлы -->
       <div *ngIf="!showAttachmentButton">
         <div *ngIf="archivedSupplierFiles.length == 0">Здесь пока нет заархивированных файлов</div>
         <p-table *ngIf="archivedSupplierFiles.length != 0" [value]="archivedSupplierFiles" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
@@ -234,126 +629,141 @@
       </div>
       <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>
       <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
-          <ng-template pTemplate="body" let-history>
-            <div *ngIf="history.name_value == 'created'">
-              <div>
-                <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
-                <span class="text-descr px-5">{{t.tr('добавил(а) поставщика')}}</span>
-                <span class="text-date">{{getDate(history.update_date)}}</span>
-              </div>
+        <ng-template pTemplate="body" let-history>
+          <div *ngIf="history.name_value == 'created'">
+            <div>
+              <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
+              <span class="text-descr px-5">{{t.tr('добавил(а) поставщика')}}</span>
+              <span class="text-date">{{getDate(history.update_date)}}</span>
             </div>
+          </div>
 
 
-            <div class="pb-20" *ngIf="history.name_value == 'added file'">
-              <div class="df">
-                <div class="pt-5 mr-10">
-                  <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
-                </div>
+          <div class="pb-20" *ngIf="history.name_value == 'added file'">
+            <div class="df">
+              <div class="pt-5 mr-10">
+                <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+              </div>
+              <div>
                 <div>
-                  <div>
-                    <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
-                    <span class="text-descr px-5">{{t.tr('добавил(а) файл')}}</span>
-                    <span class="text-date">{{getDate(history.update_date)}}</span>
-                  </div>
-                  <div class="pt-5">
-                    <div class="df">
-                      <div (click)="openFile(history.new_value)" class="df cursor-pointer">
-                        <img [src]="'assets/task/' + getFileExtensionIcon(history.new_value)" height="16"/>
-                        <span class="file-name-esp mx-10 cy">{{trimFileName(history.new_value, 22) + ' '}}</span>
-                      </div>
-                      <div>
-                        <a [href]="history.new_value" [download]="history.new_value" (click)="$event.stopPropagation()">
-                          <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                          </svg>
-                        </a>
+                  <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
+                  <span class="text-descr px-5">{{t.tr('добавил(а) файл')}}</span>
+                  <span class="text-date">{{getDate(history.update_date)}}</span>
+                </div>
+                <div class="pt-5">
+                  <div class="df">
+                    <div (click)="openFile(history.new_value)" class="df cursor-pointer">
+                      <img [src]="'assets/task/' + getFileExtensionIcon(history.new_value)" height="16"/>
+                      <span class="file-name-esp mx-10 cy">{{trimFileName(history.new_value, 22) + ' '}}</span>
+                    </div>
+                    <div>
+                      <a [href]="history.new_value" [download]="history.new_value" (click)="$event.stopPropagation()">
+                        <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                        </svg>
+                      </a>
 
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
 
-            <div class="pb-20" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
-              <div class="df">
-                <div class="pt-5 mr-10">
-                  <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
-                </div>
+          </div>
+
+          <div class="pb-20" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
+            <div class="df">
+              <div class="pt-5 mr-10">
+                <img src="{{auth.getUserAvatar(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
+              </div>
+              <div>
                 <div>
-                  <div>
-                    <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
-                    <span class="text-descr px-5">{{refactorHistoryTitle(history.name_value)}}</span>
-                    <span class="text-date">{{getDate(history.update_date)}}</span>
-                  </div>
-                  <div class="pt-5">
-                    <span [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>
-                    <span class="px-10">
+                  <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
+                  <span class="text-descr px-5">{{refactorHistoryTitle(history.name_value)}}</span>
+                  <span class="text-date">{{getDate(history.update_date)}}</span>
+                </div>
+                <div class="pt-5">
+                  <span [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>
+                  <span class="px-10">
                       <img src="assets/icons/right-arrow.svg" height="13">
                     </span>
-                    <span [innerHTML]="formatValue(history.name_value, history.new_value) | safeHtml"></span>
-                  </div>
+                  <span [innerHTML]="formatValue(history.name_value, history.new_value) | safeHtml"></span>
                 </div>
               </div>
-
             </div>
-          </ng-template>
-        </p-table>
+
+          </div>
+        </ng-template>
+      </p-table>
     </div>
+
+
+
     <div class="right-content">
       <div class="information">
         <div class="header-information text-head">{{t.tr('Сведения')}}</div>
         <div class="table table-overflow">
           <div class="df mt-3px">
+
+
             <div class="df text-y line-text normal-text w-30">{{t.tr('Статус')}}</div>
-            <div [hidden]="edit == 'status'" (click)="edit = 'status'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{supplierForm.value.status}}</div>
-            <div [hidden]="edit != 'status'" class="mr-5">
-              <p-dropdown class="select" appendTo = "body" [(ngModel)]="supplierForm.value.status" [options]="statusTitle" styleClass="width-180"></p-dropdown>
-            </div>
-            <div class="w-15 df">
-              <div [hidden]="edit != 'status'" (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)">
-                <div  class="task-name-button cxy mr-5">
-                  <img src="assets/icons/tick.svg">
+            <p [hidden]="edit =='status'" class="edit_container info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </p>
+            <div *ngIf="edit =='status'">
+              <p-dropdown formControlName="status" class="select" id="status" [options]="statusTitle" appendTo = "body" styleClass="width-220 font-14"></p-dropdown>
+              <div class="df cxy">
+                <div (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)">
+                  <div  class="task-name-button cxy mr-10">
+                    <img src="assets/icons/tick.svg">
+                  </div>
                 </div>
-              </div>
-              <div [hidden]="edit != 'status'" (click)="showEditBlock('')">
-                <div  class="task-name-button cxy">
-                  <img src="assets/icons/cancel.svg">
+                <div (click)="showEditBlock('')">
+                  <div  class="task-name-button cxy">
+                    <img src="assets/icons/cancel.svg">
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+
           <div class="df mt-3px">
             <div class="df text-y height-30 normal-text w-30">{{t.tr('Примечение')}}</div>
-            <div (click)="edit = 'comment'" *ngIf="edit != 'comment'" pTooltip="{{supplierForm.value.comment}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{trimMin(supplierForm.value.comment)}}</div>
-            <textarea *ngIf="edit == 'comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="supplierForm.value.comment" class="width-180 cy task-name-change-commit"></textarea>
-            <div class="w-15 df">
-              <div [hidden]="edit != 'comment'" (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">
-                <div class="task-name-button cxy ml-5 mr-5" >
-                  <img src="assets/icons/tick.svg">
+            <p [hidden]="edit =='comment'" class="edit_container info-comment mt-16 p-inputtext" (click)="showEditBlock('comment')">{{supplierForm.value.comment}} </p>
+            <div *ngIf="edit =='comment'">
+              <input class="info-comment mt-16 p-inputtext" id="comment" type="text" formControlName="comment">
+
+              <div class="df cxy">
+                <div (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">
+                  <div  class="task-name-button cxy mr-10">
+                    <img src="assets/icons/tick.svg">
+                  </div>
                 </div>
-              </div>
-              <div [hidden]="edit != 'comment'" (click)="showEditBlock('')">
-                <div class="task-name-button cxy">
-                  <img src="assets/icons/cancel.svg">
+                <div (click)="showEditBlock('')">
+                  <div  class="task-name-button cxy">
+                    <img src="assets/icons/cancel.svg">
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+
           <div class="df mt-3px">
             <div class="df text-y height-30 normal-text w-30">{{t.tr('Производитель')}}</div>
-            <div (click)="edit = 'manufacturer'" *ngIf="edit != 'manufacturer'" pTooltip="{{supplierForm.value.manufacturer}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{supplierForm.value.manufacturer}}</div>
-            <textarea *ngIf="edit == 'manufacturer'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="supplierForm.value.manufacturer" class="width-180 cy task-name-change-commit"></textarea>
-            <div class="w-15 df">
-              <div [hidden]="edit != 'manufacturer'" (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
-                <div class="task-name-button cxy ml-5 mr-5" >
-                  <img src="assets/icons/tick.svg">
+            <p [hidden]="edit =='manufacturer'" class="edit_container info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </p>
+            <div *ngIf="edit =='manufacturer'">
+              <input class="info-manufacturer mt-16 p-inputtext" id="manufacturer" type="text" formControlName="manufacturer">
+
+              <div class="df cxy">
+                <div (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
+                  <div  class="task-name-button cxy mr-10">
+                    <img src="assets/icons/tick.svg">
+                  </div>
                 </div>
-              </div>
-              <div [hidden]="edit != 'manufacturer'" (click)="showEditBlock('')">
-                <div class="task-name-button cxy">
-                  <img src="assets/icons/cancel.svg">
+                <div (click)="showEditBlock('')">
+                  <div  class="task-name-button cxy">
+                    <img src="assets/icons/cancel.svg">
+                  </div>
                 </div>
               </div>
             </div>
@@ -362,7 +772,20 @@
       </div>
     </div>
   </div>
+
 </div>
+</form>
 <p-toast key="supplierUrl" position="bottom-center"></p-toast>
+
+
+
+
+
+
+
+
+
+
+
 
 
