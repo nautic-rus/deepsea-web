@@ -60,7 +60,11 @@ export class EditEquipmentComponent implements OnInit {
     if (this.equipmentProjects.length > 0 && this.equipmentProject == '-') {
       this.equipmentProject = this.equipmentProjects[0];
     }
-    this.equipmentDepartments = this.prService.departments.map((x: any) => x.name);
+    // this.equipmentDepartments = this.prService.departments.map((x: any) => x.name);
+    this.equipmentDepartments = this.prService.departments.filter(x => x.visible_documents == 1).map((x: any) => x.name)
+    this.equipmentDepartments.unshift('-')
+    console.log("this.equipmentDepartments")
+    console.log(this.equipmentDepartments)
 
     this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe(res => {
       this.equipmentFilesSrc = res;
