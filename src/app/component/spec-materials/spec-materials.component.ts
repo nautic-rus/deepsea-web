@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {MaterialManagerService} from "../../domain/material-manager.service";
 import {MessageService, TreeNode} from "primeng/api";
 import {DialogService} from "primeng/dynamicdialog";
@@ -21,6 +21,7 @@ import {SpecMaterialComponent} from "./spec-material/spec-material.component";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {SpecMaterial} from "../../domain/classes/spec-material";
 import {SpecDirectory} from "../../domain/classes/spec-directory";
+import {EquipmentsService} from "../../domain/equipments.service";
 
 @Component({
   selector: 'app-spec-materials',
@@ -69,8 +70,11 @@ export class SpecMaterialsComponent implements OnInit {
   materialPath: any = Object();
   expandedNodes: any[] = [];
   onlyProject = false;
+  supplies: any[] = [];
+  supMatRelations: any[] = [];
+  matSupplies: any = Object();
 
-  constructor(public t: LanguageService, public issues: IssueManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
+  constructor(public t: LanguageService, public cd: ChangeDetectorRef, public eqManager: EquipmentsService, public issues: IssueManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
@@ -84,7 +88,24 @@ export class SpecMaterialsComponent implements OnInit {
         if (this.projects.length > 0){
           this.project = this.projects[0].id;
         }
-        this.projectChanged();
+        this.eqManager.getEquipments().subscribe(eq => {
+          console.log(eq);
+          eq.forEach(e => {
+            e.suppliers?.forEach(s => {
+              this.supplies.push({
+                id: e.id,
+                sfi: e.sfi,
+                name: e.name,
+                manufacturer: s.name,
+                supplier_id: s.id
+              });
+            });
+          });
+          this.materialManager.getSupMatRelations().subscribe(res => {
+            this.supMatRelations = res;
+            this.projectChanged();
+          });
+        });
       });
     });
   }
@@ -171,6 +192,7 @@ export class SpecMaterialsComponent implements OnInit {
     }
   }
   addMaterial(action: string = 'add', material: SpecMaterial = new SpecMaterial()) {
+    this.cd.detach();
     this.dialogService.open(SpecMaterialComponent, {
       showHeader: true,
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
@@ -179,6 +201,7 @@ export class SpecMaterialsComponent implements OnInit {
       data: [this.project, material, action, this.materialsSrc, this.selectedNode != null ? this.selectedNode.data : '', this.nodesSrc]
     }).onClose.subscribe(res => {
       this.projectChanged();
+      this.cd.reattach();
     });
   }
 
@@ -481,6 +504,7 @@ export class SpecMaterialsComponent implements OnInit {
         this.materials.filter(x => x != null).forEach(m => m.path = this.getMaterialPath(this.nodes, m.dir_id));
         this.setExpandedNodes(this.nodes);
         this.setSelectedNode(this.nodes);
+        this.setMaterialsProviders();
         this.materialsFilled = true;
       });
       for (let x = 0; x < 10; x ++){
@@ -543,5 +567,19 @@ export class SpecMaterialsComponent implements OnInit {
       }
     });
     this.setSelectedNode(rootNodes.flatMap(x => x.children));
+  }
+
+  setMaterialsProviders() {
+    this.materials.filter(x => x != null).forEach(m => {
+      let supplier = 'unknown';
+      let find: any = this.supMatRelations.find((x: any) => x.materials_id == m.id);
+      if (find != null){
+        let supply = this.supplies.find(x => x.supplier_id == find.supplier_id);
+        if (supply != null){
+          supplier = supply.manufacturer;
+        }
+      }
+      this.matSupplies[m.id] = supplier;
+    });
   }
 }

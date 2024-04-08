@@ -65,13 +65,14 @@ export class SpecMaterialComponent implements OnInit {
       this.material.code = 'NRxxxxxxxxxxxxxx'
     }
     this.eqManager.getEquipments().subscribe(eq => {
+      console.log(eq);
       eq.forEach(e => {
         e.suppliers?.forEach(s => {
           this.supplies.push({
             id: e.id,
             sfi: e.sfi,
             name: e.name,
-            manufacturer: s.manufacturer,
+            manufacturer: s.name,
             supplier_id: s.id
           });
         });
