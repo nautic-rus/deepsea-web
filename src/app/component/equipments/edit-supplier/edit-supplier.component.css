@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
 }
-
 .header-info {
   display: flex;
   justify-content: space-between;
@@ -41,11 +40,9 @@
   font-weight: 600;
   font-size: 1.5rem;
 }
-
 /deep/ .p-inputtext {
   padding: 8px 10px;
 }
-
 /deep/ .p-inputtext:hover {
   background-color: rgba(9, 30, 66, 0.08);
 }
@@ -142,7 +139,6 @@
   width: 32%;
   padding-left: 15px;
 }
-
 .button-new:hover {
   background-color: rgb(235, 236, 240);
 }

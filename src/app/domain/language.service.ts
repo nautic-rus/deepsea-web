@@ -643,7 +643,6 @@ export class LanguageService {
           case '': return ''
           case '': return ''
           case '': return ''
-          case '': return ''
           default: return input;
         }
       }
