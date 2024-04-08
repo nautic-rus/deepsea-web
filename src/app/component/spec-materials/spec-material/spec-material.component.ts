@@ -65,7 +65,6 @@ export class SpecMaterialComponent implements OnInit {
       this.material.code = 'NRxxxxxxxxxxxxxx'
     }
     this.eqManager.getEquipments().subscribe(eq => {
-      console.log(eq);
       eq.forEach(e => {
         e.suppliers?.forEach(s => {
           this.supplies.push({
@@ -82,7 +81,7 @@ export class SpecMaterialComponent implements OnInit {
         let find: any = this.supMatRelations.find((x: any) => x.materials_id == this.material.id);
         if (find != null){
           this.supply = this.supplies.find(x => x.supplier_id == find.supplier_id);
-          this.supMatRelationsId = this.supply.id;
+          this.supMatRelationsId = find.id;
         }
       });
     });
@@ -183,7 +182,6 @@ export class SpecMaterialComponent implements OnInit {
           materials_id: this.material.id
         }).subscribe(() => {});
       }
-
       this.ref.close(this.material);
     });
   }
