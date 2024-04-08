@@ -160,6 +160,7 @@ export class EquipmentsComponent implements OnInit {
     console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
       modal: true,
+      showHeader: false,
       data: eq.id
     }).onClose.subscribe(()=> {  //сразу выводить на страницу
       this.eqService.getEquipments().subscribe(equips => {

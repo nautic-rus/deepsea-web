@@ -8,38 +8,37 @@
   font-size: 1.5rem;
 }
 
-/deep/ .p-dialog .p-dialog-content {
-  border-radius: 0 0 6px 6px;
+/deep/.p-dialog .p-dialog-content {
+  border-radius: 5px !important;
 }
-
-
-.button-cancel{
-  margin-right: 4px;
-  min-width: 70px;
-  border-radius: 3px;
-  text-shadow: none;
-  padding: 8px 10px;
-  color: #2E3E4E;
-  background: #fff;
-  transition: background .1s;
-  border: none;
-  font-weight: 500;
-}
-.button-cancel:hover{
-  background-color: #ECEDF0;
-}
-
 /deep/ .p-inputtext {
   font-size: 13px;
   padding: 8px 10px;
 }
-
-.cx {
-  justify-content: flex-start;
+.header-parts{
+  border-bottom: 0 none;
+  background: #ffffff;
+  color: #323130;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
 }
-
-/*.form-footer-create {*/
-/*  display: flex;*/
-/*}*/
-
-
+.header-parts-text{
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.parts-button-close{
+  color: #605e5c;
+  width: 2rem;
+  height: 2rem;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.parts-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
