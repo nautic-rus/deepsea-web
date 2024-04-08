@@ -36,6 +36,7 @@ export class AddFilesComponent implements OnInit {
   loaded: FileAttachment[] = [];
   awaitForLoad: any[] = [];
   dragFileGroup: string = '';
+  dragOver = false;
 
   isEqService: boolean = true;
 
@@ -183,11 +184,15 @@ export class AddFilesComponent implements OnInit {
   }
 
   dragEnter(event: DragEvent, name: string) {
+    console.log(this.dragOver)
     this.dragFileGroup = name;
+    this.dragOver = true
   }
 
   dragLeave(event: DragEvent, name: string) {
+    console.log(this.dragOver)
     this.dragFileGroup = '';
+    this.dragOver = false
   }
 
   refactorFile(fromFile: FileAttachment) {

@@ -35,6 +35,7 @@ export class CreateEquipmentComponent implements OnInit {
   equipmentFiles: EquipmentsFiles[] = [];  //хранит файлы для отправки на БД
 
   sfis: Isfi[] = [];
+  sfiAndName: string = '';
 
 
 
@@ -51,8 +52,12 @@ export class CreateEquipmentComponent implements OnInit {
     this.equipmentForm.get('project')?.setValue(this.equipmentProjects[0]); //изначально установим значение первого пришедшего проекта (если там '-' то не даст отправить форму из-за кастом валидатор, )
 
 
-    this.equipmentDepartments = this.prService.departments.map((x: any) => x.name);
-    console.log(this.equipmentForm.value)
+    // this.equipmentDepartments = this.prService.departments.map((x: any) => x.name)
+    this.equipmentDepartments = this.prService.departments.filter(x => x.visible_documents == 1).map((x: any) => x.name)
+    this.equipmentDepartments.unshift('-')
+    console.log("this.equipmentDepartments")
+    console.log(this.equipmentDepartments)
+    // console.log(this.equipmentForm.value)
   }
 
   customProjectValidator(control: AbstractControl) {
@@ -60,6 +65,17 @@ export class CreateEquipmentComponent implements OnInit {
       return { projectInvalid: true };
     }
     return null;
+  }
+
+  changeSFI() {
+    let res = this.sfis.filter(item => item.code == this.equipmentForm.get('sfi')?.value);
+    if (this.t.language == 'ru') {
+      this.sfiAndName = res[0].code + ' ' + res[0].ru
+    } else if (this.t.language == 'en') {
+      console.log("res")
+      console.log(res)
+      this.sfiAndName = res[0].code + ' ' + res[0].eng
+    }
   }
 
 

@@ -13,8 +13,8 @@
         </div>
       </div>
     </div>
-    <div class="upload-download cx cy">
-      <div [class.file-drag]="dragFileGroup == fileGroup" class="cxy w-100 file-drag-attach" (dragenter)="dragEnter($event, fileGroup)" (dragleave)="dragLeave($event, fileGroup)" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event, fileGroup); dragFileGroup = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+    <div [class.file-drag]="dragOver === fileGroup" class="upload-download cx cy">
+      <div [class.file-drag]="dragFileGroup == fileGroup"  class="cxy w-100 file-drag-attach" (drop)="dragOver = false" (dragenter)="dragEnter($event, fileGroup)" (dragleave)="dragLeave($event, fileGroup)" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event, fileGroup); dragFileGroup = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
         <img class="mr-1 image no-actions" src="../../../../assets/icons/upload.svg" height="20">
         <span class="normal-text no-actions">{{'Перетащите файлы или нажмите для загрузки'}}</span>
       </div>
