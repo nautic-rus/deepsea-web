@@ -58,10 +58,11 @@
 }
 /deep/.p-dropdown-items-wrapper {
   max-height: 200px;
-  width: 500px;
   overflow: auto;
 }
-
+.text-gray{
+  color: #A8A7A6;
+}
 .form-container {
   display: flex;
   flex-direction: column;
