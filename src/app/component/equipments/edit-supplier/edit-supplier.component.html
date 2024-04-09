@@ -142,14 +142,13 @@
           {{showmoreArchived ? t.tr('Показать еще') : t.tr('Скрыть')}}
         </button>
       </div>
-      <div class="mt-1 mb-5">
-        <div class="big-text">{{t.tr('Связанные задачи')}}</div>
-      </div>
-      <div [collapse]="contentRelated" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
+
+
+      <div [collapse]="contentRelated" class="big-text mb-1 mt-10 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedTasks')">
           <img src="assets/icons/arrow-right.png">
         </div>
-        <div>{{t.tr('Связанные задачи')}}</div>
+        <div *ngIf="relatedTasks.length != 0">{{t.tr('Связанные задачи')}}</div>
       </div>
       <div collapseContent #contentRelated="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="relatedTasks.length != 0">
@@ -184,10 +183,7 @@
 
 
 <!--      связанные материалы-->
-      <div class="mt-1 mb-5">
-        <div class="big-text">{{t.tr('Связанные материалы')}}</div>
-      </div>
-      <div [collapse]="contentRelatedMaterials" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="relatedMaterials.length != 0" (click)="contentClick('relatedMaterials')">
+      <div [collapse]="contentRelatedMaterials" class="big-text mb-1 mt-10 collapse-header cursor-pointer" *ngIf="relatedMaterials.length != 0" (click)="contentClick('relatedMaterials')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedMaterials')">
           <img src="assets/icons/arrow-right.png">
         </div>

@@ -88,11 +88,11 @@ export class EditSupplierComponent implements OnInit {
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
       this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1).slice(0, 5)
       this.showMoreArchivedFilesButtonIsDisabled =  res.filter((f:any) => f.archived == 1).length > 5 ? false : true;
-      console.log("this.archivedSupplierFiles");
-      console.log(this.archivedSupplierFiles);
+      // console.log("this.archivedSupplierFiles");
+      // console.log(this.archivedSupplierFiles);
       this.supplierFilesSrc = res.filter((f:any) => f.archived == 0).slice(0, 5);
       this.showMoreFilesButtonIsDisabled = res.filter((f:any) => f.archived == 0).length > 5 ? false : true;
-      console.log("this.supplierFilesSrc");
+      console.log("this.supplierFilesSrc initial");
       console.log(this.supplierFilesSrc);
     })
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
@@ -200,10 +200,12 @@ export class EditSupplierComponent implements OnInit {
       this.supplierService.getCreateFiles().forEach(file => {
         this.supplierFiles.push(file);
         this.supplierFilesSrc.push(file);
-        this.addFiles2(this.supplierFiles);
       })
       this.eqService.setCreateFiles([]);
+      console.log('addFiles')
+      this.addFiles2(this.supplierFiles);
     })
+
   }
 
   addFiles2(addedFiles: SupplierFiles[]) {
@@ -212,10 +214,10 @@ export class EditSupplierComponent implements OnInit {
       this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
         this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
           this.historyArray = res;
-          console.log(res)
+          // console.log(res)
         })
       })
-      console.log(history);
+      // console.log(history);
     })
     this.editSupplier('', '', '')  //а здесь отправляем файлы () в БД
   }
@@ -387,33 +389,27 @@ export class EditSupplierComponent implements OnInit {
   }
 
   viewTask(issueId: number, project: string, docNumber: string, department: string) {
-    let foranProject = project
-    let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
-    if (findProject != null){
-      foranProject = findProject.foran;
-    }
-    console.log(department);
-    console.log(project);
-    // let hullTasks = ['03070-532-0001', '200101-525-007'];
-    // if (hullTasks.includes(docNumber)){
-    //   department = 'Hull';
-    // }
-    // if (this.selectedDepartments.includes(assistant)){
-    //   department = assistant;
-    // }
+    if (docNumber != '') {
+      let foranProject = project
+      let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
+      if (findProject != null){
+        foranProject = findProject.foran;
+      }
 
-    switch (department) {
-      case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'Trays': window.open(`/trays?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'Cables': window.open(`/cables?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'Electric': window.open(`/electric-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'Accommodation': window.open(`/accommodation-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'Design': window.open(`/design-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      case 'General': window.open(`/general-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
-      default: break;
+      switch (department) {
+        case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'Trays': window.open(`/trays?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'Cables': window.open(`/cables?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'Electric': window.open(`/electric-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'Accommodation': window.open(`/accommodation-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'Design': window.open(`/design-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        case 'General': window.open(`/general-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+        default: break;
+      }
     }
+
   }
 
 
@@ -488,7 +484,7 @@ export class EditSupplierComponent implements OnInit {
           this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {
             this.supplierFiles.forEach(file => {
               // this.supplierFilesSrc.push(file); //перенесем в отображаемый массив
-              console.log(this.supplierFilesSrc);
+              // console.log(this.supplierFilesSrc);
               if (this.supplierFilesSrc.length > 5) {
                 this.showmore = false;
                 this.showMoreFilesButtonIsDisabled = false;
@@ -500,8 +496,8 @@ export class EditSupplierComponent implements OnInit {
           });
         })
         this.supplierService.setCreateFiles([]);
-        console.log('closed uploading files: add-supplier');
-        console.log(this.supplierFiles);
+        // console.log('closed uploading files: add-supplier');
+        // console.log(this.supplierFiles);
         //this.ref.close(new CloseCode(0));
       }
     });
@@ -516,7 +512,7 @@ export class EditSupplierComponent implements OnInit {
   }
 
   openIssue(id: number) {
-    console.log(id)
+    // console.log(id)
     window.open('/?taskId=' + id, '_blank');
   }
 
