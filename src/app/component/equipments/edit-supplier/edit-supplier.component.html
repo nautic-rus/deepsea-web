@@ -104,17 +104,17 @@
       <div *ngIf="!showAttachmentButton">
         <div class="archive-no" *ngIf="archivedSupplierFiles.length == 0">{{t.tr('Здесь пока нет заархивированных файлов')}}</div>
         <p-table *ngIf="archivedSupplierFiles.length != 0" [value]="archivedSupplierFiles" styleClass="p-datatable-striped" [tableStyle]="">
-          <ng-template pTemplate="header">
-            <tr>
-              <th>{{t.tr('Наименование')}}</th>
-              <th>{{t.tr('Тип')}}</th>
-              <th>{{t.tr('Рев.')}}</th>
-              <th>{{t.tr('Пользователь')}}</th>
-              <th>{{t.tr('Загружен')}}</th>
-              <th>{{t.tr('Удален')}}</th>
-              <th></th>
-            </tr>
-          </ng-template>
+<!--          <ng-template pTemplate="header">-->
+<!--            <tr>-->
+<!--              <th>{{t.tr('Наименование')}}</th>-->
+<!--              <th>{{t.tr('Тип')}}</th>-->
+<!--              <th>{{t.tr('Рев.')}}</th>-->
+<!--              <th>{{t.tr('Пользователь')}}</th>-->
+<!--              <th>{{t.tr('Загружен')}}</th>-->
+<!--              <th>{{t.tr('Удален')}}</th>-->
+<!--              <th></th>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
           <ng-template pTemplate="body" let-file>
             <tr>
               <td class="padding-3">
@@ -153,7 +153,7 @@
       <div collapseContent #contentRelated="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="relatedTasks.length != 0">
           <div class="subtask df" *ngFor="let task of relatedTasks">
-            <div class="subtask-grid" (click)="openIssue(task.issue_id)">
+            <div class="subtask-grid align-center" (click)="openIssue(task.issue_id)">
               <div class="pr-10">{{task.issue_typ}}</div>
               <div class="pr-10 min-width-75">
                 <span [innerHTML]="issueManager.trim(task.issue_name)"></span>
@@ -172,7 +172,7 @@
               </div>
               <div class="" [innerHTML]="issueManager.localeStatus(task.status) | safeHtml"></div>
             </div>
-            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="deleteRelatedTask(task.id)" class="pl-10 position-relative">
+            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="deleteRelatedTask(task.id)" class="pt-10 pl-10 position-relative">
               <div class="untie padding-3 cxy">
                 <img src="assets/icons/cancel-red.svg" height="12">
               </div>
