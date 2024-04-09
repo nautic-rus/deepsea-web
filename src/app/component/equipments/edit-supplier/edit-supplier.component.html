@@ -101,48 +101,6 @@
           {{showmore ? t.tr('Показать еще') : t.tr('Скрыть')}}
         </button>
       </div>
-      <p-table *ngIf="supplierFiles.length != 0" class="files_table table" [value]="supplierFiles" styleClass="p-datatable-striped" [tableStyle]="">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>{{t.tr('Наименование')}}</th>
-            <th>{{t.tr('Тип')}}</th>
-            <th>{{t.tr('Рев.')}}</th>
-            <th>{{t.tr('Пользователь')}}</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-file>
-          <tr>
-            <td>
-              <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
-                <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
-                <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
-              </div>
-            </td>
-            <td>{{file.type_name}}</td>
-            <td>REV{{file.rev}}</td>
-            <td>{{this.auth.getUserNameById(file.user_id)}}</td>
-            <td>
-              <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
-                <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
-              </a>
-            </td>
-            <td>
-              <div [hidden]="buttonsAreHidden" (click)="deleteFile(file)">
-                <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                </svg>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-      <div *ngIf="supplierFiles.length != 0" class="mr-5 mt-20 cy">
-        <div tabindex="10"  (click)="addFiles2(supplierFiles)" class="button-ok ml-1">{{t.tr('Сохранить изменения')}}</div>
-      </div>
       <div *ngIf="!showAttachmentButton">
         <div class="archive-no" *ngIf="archivedSupplierFiles.length == 0">{{t.tr('Здесь пока нет заархивированных файлов')}}</div>
         <p-table *ngIf="archivedSupplierFiles.length != 0" [value]="archivedSupplierFiles" styleClass="p-datatable-striped" [tableStyle]="">

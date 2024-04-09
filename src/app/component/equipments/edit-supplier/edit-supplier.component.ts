@@ -199,6 +199,8 @@ export class EditSupplierComponent implements OnInit {
     dialog.onClose.subscribe(() => {
       this.supplierService.getCreateFiles().forEach(file => {
         this.supplierFiles.push(file);
+        this.supplierFilesSrc.push(file);
+        this.addFiles2(this.supplierFiles);
       })
       this.eqService.setCreateFiles([]);
     })
@@ -485,7 +487,7 @@ export class EditSupplierComponent implements OnInit {
           console.log(file);
           this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {
             this.supplierFiles.forEach(file => {
-              this.supplierFilesSrc.push(file); //перенесем в отображаемый массив
+              // this.supplierFilesSrc.push(file); //перенесем в отображаемый массив
               console.log(this.supplierFilesSrc);
               if (this.supplierFilesSrc.length > 5) {
                 this.showmore = false;
