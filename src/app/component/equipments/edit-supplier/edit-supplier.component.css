@@ -1188,8 +1188,8 @@
   padding: 0px 6px 6px 6px;
 }
 .subtask-grid{
-  display: grid;
-  grid-template-columns: 1fr 3fr 2fr 2fr 100px;
+  display: flex;
+  justify-content: space-between;
   font-size: 13px;
   width: 100%;
 }

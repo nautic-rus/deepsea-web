@@ -158,21 +158,21 @@
               <div class="pr-10 min-width-75">
                 <span [innerHTML]="issueManager.trim(task.issue_name)"></span>
               </div>
-              <div class="df min-width-180">
+              <div class="df min-width-100">
                 <div class="min-text mt-2px">{{t.tr('Автор - ')}}</div>
                 <div [innerHTML]="issueManager.getAssignedToTrim(task.started_by)"></div>
               </div>
-              <div class="df min-width-180">
+              <div class="df min-width-100">
                 <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>
                 <div [innerHTML]="issueManager.getAssignedToTrim(task.assigned_to)"></div>
               </div>
-              <div class="df min-width-180">
+              <div class="df min-width-100">
                 <div class="min-text mt-2px">{{t.tr('Ответственный - ')}}</div>
                 <div [innerHTML]="issueManager.getAssignedToTrim(task.responsible)"></div>
               </div>
               <div class="" [innerHTML]="issueManager.localeStatus(task.status) | safeHtml"></div>
             </div>
-            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="deleteRelatedTask(task.id)" class="mt-3px position-relative">
+            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="deleteRelatedTask(task.id)" class="pl-10 position-relative">
               <div class="untie padding-3 cxy">
                 <img src="assets/icons/cancel-red.svg" height="12">
               </div>
