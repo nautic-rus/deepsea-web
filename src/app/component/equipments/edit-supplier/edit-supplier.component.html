@@ -58,17 +58,17 @@
       <div *ngIf="showAttachmentButton">
         <div class="archive-no" *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>
         <p-table *ngIf="supplierFilesSrc.length != 0" [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="">
-          <ng-template pTemplate="header">
-            <tr>
-              <th>{{t.tr('Наименование')}}</th>
-              <th>{{t.tr('Тип')}}</th>
-              <th>{{t.tr('Рев.')}}</th>
-              <th>{{t.tr('Пользователь')}}</th>
-              <th>{{t.tr('Загружен')}}</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </ng-template>
+<!--          <ng-template pTemplate="header">-->
+<!--            <tr>-->
+<!--              <th>{{t.tr('Наименование')}}</th>-->
+<!--              <th>{{t.tr('Тип')}}</th>-->
+<!--              <th>{{t.tr('Рев.')}}</th>-->
+<!--              <th>{{t.tr('Пользователь')}}</th>-->
+<!--              <th>{{t.tr('Загружен')}}</th>-->
+<!--              <th></th>-->
+<!--              <th></th>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
           <ng-template pTemplate="body" let-file>
             <tr>
               <td class="padding-3">
