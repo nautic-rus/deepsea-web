@@ -617,6 +617,7 @@ export class LanguageService {
           case 'Редактировать оборудование': return 'Edit equipment'
           case 'Добавить оборудование': return 'Add equipment'
           case 'Добавить поставщика': return 'Add supplier'
+          case 'Добавить поставку': return 'Add supply'
           case 'Создать поставщика': return 'Create supplier'
           case 'Редактировать поставщика': return 'Edit supplier'
           case 'Удалить поставщика': return 'Delete a supplier'

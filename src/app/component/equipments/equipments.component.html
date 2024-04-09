@@ -58,7 +58,7 @@
             <td (click)="editEquipment(eq)" [innerHTML]="issueManager.trim(eq.comment)"></td>
             <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>
             <td style="min-width: 70px; max-width: 70px" (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
-            <td style="min-width: 130px; max-width: 130px"><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup cxy green-button">{{t.tr('Добавить поставщика')}}</div></td>
+            <td style="min-width: 130px; max-width: 130px"><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup cxy green-button">{{t.tr('Добавить поставку')}}</div></td>
           </tr>
         </ng-template>
 

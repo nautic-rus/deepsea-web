@@ -295,9 +295,9 @@
           </div>
           <div class="df mt-3px">
             <div class="df text-y height-30 normal-text w-30">{{t.tr('Примечение')}}</div>
-            <p [hidden]="edit =='comment'" class="width-160 info-comment mt-16 p-inputtext" (click)="showEditBlock('comment')">{{supplierForm.value.comment}} </p>
+            <textarea [hidden]="edit =='comment'" class="width-160 info-comment mt-16 p-inputtext" (click)="showEditBlock('comment')">{{supplierForm.value.comment}} </textarea>
             <div class="df" *ngIf="edit =='comment'">
-              <input class="width-160 info-comment mt-16 p-inputtext" id="comment" type="text" formControlName="comment">
+              <textarea class="width-160 info-comment mt-16 p-inputtext" id="comment" type="text" formControlName="comment"></textarea>
               <div class="df cxy ml-5">
                 <div (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">
                   <div  class="task-name-button cxy mr-10">
@@ -314,9 +314,9 @@
           </div>
           <div class="df mt-3px">
             <div class="df text-y height-30 normal-text w-30">{{t.tr('Производитель')}}</div>
-            <p [hidden]="edit =='manufacturer'" class="width-160 info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </p>
+            <textarea [hidden]="edit =='manufacturer'" class="width-160 info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </textarea>
             <div class="df" *ngIf="edit =='manufacturer'">
-              <input class="info-manufacturer width-160 mt-16 p-inputtext" id="manufacturer" type="text" formControlName="manufacturer">
+              <textarea class="info-manufacturer width-160 mt-16 p-inputtext" id="manufacturer" type="text" formControlName="manufacturer"></textarea>
               <div class="df cxy ml-5">
                 <div (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
                   <div  class="task-name-button cxy mr-10">
