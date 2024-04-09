@@ -33,39 +33,39 @@
                class="" [value]="equipments" dataKey="name" pRowToggler >
         <ng-template pTemplate="header">
           <tr>
-            <th></th>
-            <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+            <th style="min-width: 70px; max-width: 70px" class="width-50"></th>
+            <th style="min-width: 100px; max-width: 100px" pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
             <th pSortableColumn="sfi">Group <p-sortIcon field="sfi"></p-sortIcon></th>
             <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
             <th class="df" pSortableColumn="department">Department<p-sortIcon field="department"></p-sortIcon></th>
             <th pSortableColumn="comment">Comment<p-sortIcon field="comment"></p-sortIcon></th>
             <th pSortableColumn="respons_surname">Responsible<p-sortIcon field="respons_surname"></p-sortIcon></th>
-            <th pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>
-            <th></th>
+            <th style="min-width: 70px; max-width: 70px" pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>
+            <th style="min-width: 130px; max-width: 130px"></th>
           </tr>
         </ng-template>
 
         <!--      заполняем таблицу с оборудованием-->
         <ng-template pTemplate="body" let-eq let-expanded="expanded">
           <tr class="equipment-tr task-row cursor-pointer">
-            <td>
+            <td style="min-width: 70px; max-width: 70px">
               <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
             </td>
-            <td (click)="editEquipment(eq)">{{ eq.id }}</td>
+            <td style="min-width: 100px; max-width: 100px" (click)="editEquipment(eq)">{{ eq.id }}</td>
             <td (click)="editEquipment(eq)">SFI {{ eq.sfi }}-{{ eq.name }}</td>
             <td [innerHTML]="issueManager.localeStatus(eq.status) | safeHtml" (click)="editEquipment(eq)">{{ eq.status }}</td>
             <td (click)="editEquipment(eq)" >{{ eq.department }}</td>
             <td (click)="editEquipment(eq)" [innerHTML]="issueManager.trim(eq.comment)"></td>
             <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>
-            <td (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
-            <td><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup cxy green-button">{{t.tr('Добавить поставщика')}}</div></td>
+            <td style="min-width: 70px; max-width: 70px" (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
+            <td style="min-width: 130px; max-width: 130px"><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup cxy green-button">{{t.tr('Добавить поставщика')}}</div></td>
           </tr>
         </ng-template>
 
         <!--     выпадающий список suppliers-->
         <ng-template pTemplate="rowexpansion" let-eq>
-          <tr *ngIf="!showSuppliersButtonIsDisabled(eq)">
-            <p-table class="w-100 padding-10 border margin-10"  [value]="eq.suppliers" dataKey="equipm_id">
+          <tr class="back-gray" *ngIf="!showSuppliersButtonIsDisabled(eq)">
+            <p-table class="w-100 padding-10 margin-10"  [value]="eq.suppliers" dataKey="equipm_id">
               <ng-template pTemplate="header">
                 <tr>
                   <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>

@@ -1,52 +1,62 @@
-<div class="">REV</div>
-<p-dropdown class="select" [options]="revs" appendTo = "body" styleClass="width-220 font-14" [(ngModel)]="rev"></p-dropdown>
-<div class="mb-15 width-400 position-relative" *ngFor="let fileGroup of fileGroups">
+<div style="width: 460px;">
+  <div class="header-parts">
+    <div class="header-parts-text">{{t.tr('Добавить файлы')}}</div>
+    <div class="df">
+      <div class="parts-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+  </div>
 
-  <p-fieldset legend="{{fileGroup}}">
-    <div class="position-relative">
-      <div class="df add-clear-buttons">
-        <div class="button-details df cursor-pointer mb-15" (click)="clearFilesOfGroup(fileGroup)">
+  <div class="df pb-15">
+    <p-dropdown class="select" [options]="revs" appendTo = "body" styleClass="width-220 font-14" [(ngModel)]="rev"></p-dropdown>
+    <div class="cy ml-10">Rev</div>
+  </div>
+  <div class="mb-15 width-400 position-relative" *ngFor="let fileGroup of fileGroups">
+
+    <p-fieldset legend="{{fileGroup}}">
+      <div class="position-relative">
+        <div [pTooltip]="t.tr('Очистить')" tooltipPosition="top" class="button-clear materials-button back-white border df cursor-pointer cxy" (click)="clearFilesOfGroup(fileGroup)">
           <div class="cxy">
-            <img src="../../../../assets/icons/trash-3.svg" height="16">
+            <img src="assets/icons/trash-3.svg" height="18">
           </div>
-          <div class="cy ml-1">{{'Очистить'}}</div>
         </div>
       </div>
-    </div>
-    <div [class.file-drag]="dragOver === fileGroup" class="upload-download cx cy">
-      <div [class.file-drag]="dragFileGroup == fileGroup"  class="cxy w-100 file-drag-attach" (drop)="dragOver = false" (dragenter)="dragEnter($event, fileGroup)" (dragleave)="dragLeave($event, fileGroup)" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event, fileGroup); dragFileGroup = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
-        <img class="mr-1 image no-actions" src="../../../../assets/icons/upload.svg" height="20">
-        <span class="normal-text no-actions">{{'Перетащите файлы или нажмите для загрузки'}}</span>
+      <div [class.file-drag]="dragOver === fileGroup" class="upload-download cx cy">
+        <div [class.file-drag]="dragFileGroup == fileGroup"  class="cxy w-100 file-drag-attach" (drop)="dragOver = false" (dragenter)="dragEnter($event, fileGroup)" (dragleave)="dragLeave($event, fileGroup)" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onFilesDrop($event, fileGroup); dragFileGroup = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+          <img class="mr-1 image no-actions" src="../../../../assets/icons/upload.svg" height="20">
+          <span class="normal-text no-actions">{{'Перетащите файлы или нажмите для загрузки'}}</span>
+        </div>
       </div>
-    </div>
-    <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files, fileGroup)" (click)="releaseFiles($event)" multiple>
-    <div class="attachment-files">
-      <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup)">
-        <div class="df mb-6 cursor-pointer">
-          <div class="df w-90 space-between">
-            <div class="df">
-              <div class="cxy">
-                <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="16"/>
+      <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files, fileGroup)" (click)="releaseFiles($event)" multiple>
+      <div class="attachment-files">
+        <div *ngFor="let file of getRevisionFilesOfGroup(fileGroup)">
+          <div class="df mb-6 cursor-pointer">
+            <div class="df w-90 space-between">
+              <div class="df">
+                <div class="cxy">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="16"/>
+                </div>
+                <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
               </div>
-              <span class="file-name-esp mx-10 cy">{{trimFileName(file.name, 22) + ' '}}</span>
-            </div>
-            <div (click)="deleteFile(file)">
-              <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-              </svg>
+              <div (click)="deleteFile(file)">
+                <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="df footer">
-    </div>
-  </p-fieldset>
-</div>
+      <div class="df footer">
+      </div>
+    </p-fieldset>
+  </div>
 
-<div class="cx">
-  <div tabindex="10" (click)="commit()" [class.disabled-button]="rev =='-' || loaded.length == 0" class="button-ok cxy">{{'OK'}}</div>
-</div>
-<div class="cx error" *ngIf="rev =='-' && loaded.length!=0">
-  Укажите REV
+  <div class="cx">
+    <div tabindex="10" (click)="commit()" [class.disabled-button]="rev =='-' || loaded.length == 0" class="button-ok cxy">{{'OK'}}</div>
+  </div>
+  <div class="cx error" *ngIf="rev =='-' && loaded.length!=0">
+    Укажите REV
+  </div>
 </div>

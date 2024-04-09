@@ -82,6 +82,7 @@ export class AddSupplierComponent implements OnInit {
     const dialog = this.dialogService.open(AddFilesComponent, {
       header: this.t.tr('Добавить файлы'),
       modal: true,
+      showHeader: false,
       data: {
         service: this.supplierService,
       }
