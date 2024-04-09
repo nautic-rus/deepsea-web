@@ -61,6 +61,10 @@ export class EquipmentsService {
     return this.http.get<string>(props.http + '/delRelatedTask', {params: {id}});
   }
 
+  getRelatedMaterials(supId: number): Observable<any> {  //передаем индекс поставщика
+    return this.http.get<string>(props.http + '/eqSupMatRelations', {params: {supId}});
+  }
+
   getSupplierStatuses(): Observable<any> {
     return this.http.get<string>(props.http + '/supStatuses');
   }

@@ -198,8 +198,12 @@
           <div class="subtask df" *ngFor="let task of relatedTasks">
             <div class="subtask-grid" (click)="openIssue(task.issue_id)">
               <div class="pr-10">{{task.issue_typ}}</div>
-              <div class="pr-10 min-width-220">
+              <div class="pr-10 min-width-75">
                 <span [innerHTML]="issueManager.trim(task.issue_name)"></span>
+              </div>
+              <div class="df min-width-180">
+                <div class="min-text mt-2px">{{t.tr('Автор - ')}}</div>
+                <div [innerHTML]="issueManager.getAssignedToTrim(task.started_by)"></div>
               </div>
               <div class="df min-width-180">
                 <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>
@@ -219,6 +223,33 @@
           </div>
         </div>
       </div>
+
+
+<!--      связанные материалы-->
+      <div class="mt-1 mb-5">
+        <div class="big-text">{{t.tr('Связанные материалы')}}</div>
+      </div>
+      <div [collapse]="contentRelatedMaterials" class="big-text mb-1 collapse-header cursor-pointer" *ngIf="relatedMaterials.length != 0" (click)="contentClick('relatedMaterials')">
+        <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedMaterials')">
+          <img src="assets/icons/arrow-right.png">
+        </div>
+        <div>{{t.tr('Связанные материалы')}}</div>
+      </div>
+      <div collapseContent #contentRelatedMaterials="collapseContent" class="collapse-body">
+        <div class="ovf-auto" *ngIf="relatedMaterials.length != 0">
+          <div class="subtask df" *ngFor="let material of relatedMaterials">
+            <div class="subtask-grid" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">
+              <div class="pr-10">{{material.stock_code}}</div>
+              <div class="pl-2px pr-10">{{material.name}}</div>
+              <div class="pr-10"></div>
+              <div class="pr-10">{{material.doc_number}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
       <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>
       <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="body" let-history>

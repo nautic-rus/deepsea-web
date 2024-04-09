@@ -22,6 +22,7 @@ import {zip} from "rxjs";
 import {map} from "rxjs/operators";
 import {RelatedTask} from "../../../domain/classes/related-task";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
+import {IEqSupRelatedMaterials} from "../../../domain/interfaces/eqSupRelatedMaterials";
 
 @Component({
   selector: 'app-edit-supplier',
@@ -48,7 +49,9 @@ export class EditSupplierComponent implements OnInit {
   sfi_name: string;  //расшифровка номера sfi
   statusSrc: any[] = []; //весь массив ствтусов, который приходит с сервера из таблицы suppliers_status
   statusTitle: string[] = [];  //это name из таблицы suppliers_status
-  relatedTasks: RelatedTask[] = []
+  relatedTasks: RelatedTask[] = [];
+
+  relatedMaterials: IEqSupRelatedMaterials[] = [];
 
   supplierFilesSrc: SupplierFiles[] = []; //Файлы, с сервера которые (они отображаются на странице. все - если нажата кнопка showMore (showMoreFilesButtonIsDisabled = true), 5шт если не нажата )
   supplierFiles: SupplierFiles[] = [];  //файлы, которые я добавляю в момент редактирования
@@ -67,6 +70,8 @@ export class EditSupplierComponent implements OnInit {
   showmoreArchived: boolean = true; //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у заархивированных файлов
   collapsed: string[] = [];
   stories: string[] = [];
+
+  projectNames: any[] = [];
 
   constructor(private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService, private messageService: MessageService,
               private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService, private route: ActivatedRoute, public issueManager: IssueManagerService) {
@@ -96,8 +101,6 @@ export class EditSupplierComponent implements OnInit {
 
     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
       this.historyArray = res;
-      console.log('initial history')
-      console.log(res)
     })
 
     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
@@ -107,6 +110,12 @@ export class EditSupplierComponent implements OnInit {
     this.eqService.getSupplierStatuses().subscribe((res) => {
       this.statusSrc = res;
       this.statusTitle = res.map((i: any) => {return i.name});
+    })
+
+    this.eqService.getRelatedMaterials(this.supplier_id).subscribe((res) => {
+      console.log('RelatedMaterials')
+      this.relatedMaterials = res;
+      console.log(this.relatedMaterials);
     })
   }
 
@@ -298,15 +307,6 @@ export class EditSupplierComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 
-  // getDate(dateLong: number): string {
-  //   let date = new Date(dateLong);
-  //   let ye = new Intl.DateTimeFormat('ru', {year: 'numeric'}).format(date);
-  //   let mo = new Intl.DateTimeFormat('ru', {month: 'short'}).format(date);
-  //   let da = new Intl.DateTimeFormat('ru', {day: '2-digit'}).format(date);
-  //   let hours = new Intl.DateTimeFormat('ru', {hour: '2-digit'}).format(date);
-  //   let minutes = new Intl.DateTimeFormat('ru', {minute: '2-digit'}).format(date);
-  //   return da + ' ' + mo + ' ' + ye + ' ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
-  // }
   getDate(dateLong: number): string{
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear() + ' ' + date.getHours() + ':' + ('0' + (date.getMinutes())).slice(-2);
@@ -380,6 +380,40 @@ export class EditSupplierComponent implements OnInit {
     window.open(url);
   }
 
+  openMaterial(material: IEqSupRelatedMaterials) {
+    console.log(material)
+  }
+
+  viewTask(issueId: number, project: string, docNumber: string, department: string) {
+    let foranProject = project
+    let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
+    if (findProject != null){
+      foranProject = findProject.foran;
+    }
+    console.log(department);
+    console.log(project);
+    // let hullTasks = ['03070-532-0001', '200101-525-007'];
+    // if (hullTasks.includes(docNumber)){
+    //   department = 'Hull';
+    // }
+    // if (this.selectedDepartments.includes(assistant)){
+    //   department = assistant;
+    // }
+
+    switch (department) {
+      case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'System': window.open(`/pipe-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Devices': window.open(`/device-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Trays': window.open(`/trays?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Cables': window.open(`/cables?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Electric': window.open(`/electric-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Accommodation': window.open(`/accommodation-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'Design': window.open(`/design-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      case 'General': window.open(`/general-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;
+      default: break;
+    }
+  }
+
 
   deleteSupplier(id:number) {
     console.log("deleteSupplier");
@@ -418,7 +452,7 @@ export class EditSupplierComponent implements OnInit {
 
 
   editSupplier(name_value: string, prev_data: string, new_data: string) {
-    if (name_value) {
+    if (name_value && prev_data !== new_data) {
       const history = new SupplierHistory(this.auth.getUser().id, name_value, prev_data, new_data, this.supplier_id)
       this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
         this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
@@ -483,11 +517,6 @@ export class EditSupplierComponent implements OnInit {
     console.log(id)
     window.open('/?taskId=' + id, '_blank');
   }
-
-  // openIssue(id: any) {
-  //   console.log(id)
-  //   window.open('/?taskId=' + id, '_blank');
-  // }
 
   localeGender(userId: string){
     let find = this.auth.users.find(x => x.login == userId);

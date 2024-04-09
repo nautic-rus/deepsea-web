@@ -626,7 +626,7 @@ export class LanguageService {
           case 'Удалить файл оборудования?': return 'Delete equipment file?'
           case 'Удалить файл поставщика?': return 'Delete supplier file?'
           case 'добавил(а) поставщика': return 'created a supplier'
-          case 'добавил(а) файл': return 'created a supplier'
+          case 'добавил(а) файл': return 'added file'
           case 'изменил(а) производителя': return 'changed manufacturer'
           case 'изменил(а) комментарий': return 'changed comment'
           case 'изменил(а) наименование': return 'changed name'
