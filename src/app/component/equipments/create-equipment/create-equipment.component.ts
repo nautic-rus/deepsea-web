@@ -90,9 +90,11 @@ export class CreateEquipmentComponent implements OnInit {
     const dialog = this.dialogService.open(AddFilesComponent, {
       header: 'Uploading files',
       modal: true,
+      showHeader: false,
       data: {
         service: this.eqService,
         equ_id: 0,
+        isEqService: true,
         //getCreateEqFilesFunction: this.eqService.getCreateEqFiles(),
         //setCreateEqFilesFunction: this.eqService.setCreateEqFiles(),
       }
@@ -103,8 +105,6 @@ export class CreateEquipmentComponent implements OnInit {
       })
       this.eqService.setCreateFiles([]);
       //this.equipmentFiles = this.eqService.getCreateEqFiles();
-      console.log('closed uploadin files');
-      console.log(this.equipmentFiles);
     })
   }
 
@@ -174,6 +174,8 @@ export class CreateEquipmentComponent implements OnInit {
   }
 
   deleteFile(file: EquipmentsFiles) {
+    console.log("deleteFile file")
+    console.log(file)
     this.equipmentFiles.splice(this.equipmentFiles.indexOf(file), 1);
     console.log(this.equipmentFiles);
   }
