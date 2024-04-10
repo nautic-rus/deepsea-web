@@ -16,8 +16,6 @@
   <form [formGroup]="equipmentForm" class="form-container">
     <div class="big-text-create mb-1">{{'SFI'}}</div>
 <!--    <p-dropdown [disabled]="buttonsAreHidden" formControlName="sfi" class="select" optionLabel="code + ' - ' + ru" optionValue="code" placeholder="SFI" [options]="sfis" appendTo="body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en"> </p-dropdown>-->
-
-
     <p-dropdown [options]="sfis" [disabled]="buttonsAreHidden" formControlName="sfi" class="select" optionValue="code" (onChange)="changeSFI()"
                 placeholder="SFI"  appendTo = "body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en">
       <ng-template pTemplate="selectedItem">
@@ -26,7 +24,7 @@
         </div>
       </ng-template>
       <ng-template let-sfi pTemplate="item">
-        <div class="df width-250">
+        <div class="df">
           <div class="pr-10">{{sfi.code}}</div>
           <div>
             <div class="text-gray">{{sfi.ru}}</div>

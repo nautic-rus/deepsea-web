@@ -77,14 +77,14 @@ export class EquipmentsComponent implements OnInit {
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
 
       if (this.equipmentId !=0 && this.supplierId != 0) {  //чтобы открыть editSupplier выполняем поиск по айдишникам
-        console.log('this.equipmentId !=0 && this.supplierId != 0)')
-        console.log(this.equipmentsSrc);
+        // console.log('this.equipmentId !=0 && this.supplierId != 0)')
+        // console.log(this.equipmentsSrc);
 
         let equipmentById = this.equipmentsSrc.find(eq => eq.id == this.equipmentId);
         let supplierById = equipmentById?.suppliers?.find(sup => sup.id == this.supplierId);
 
-        console.log(equipmentById);
-        console.log(supplierById);
+        // console.log(equipmentById);
+        // console.log(supplierById);
 
         this.editSupplier(equipmentById!, supplierById!);
       }
@@ -157,7 +157,7 @@ export class EquipmentsComponent implements OnInit {
 
   addSupplier(eq:IEquipment) {
     //console.log('addSupplier');
-    console.log(eq)
+    // console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
       modal: true,
       showHeader: false,
@@ -171,15 +171,15 @@ export class EquipmentsComponent implements OnInit {
   }
 
   editEquipment(eq:IEquipment) {
-    console.log(eq);
-    console.log('edit equipment');
+    // console.log(eq);
+    // console.log('edit equipment');
     this.dialogService.open(EditEquipmentComponent, {
       header: this.t.tr('Редактировать оборудование'),
       showHeader: false,
       modal: true,
       data: eq
     }).onClose.subscribe(closed => { //сразу выводить на страницу
-      console.log("this.eqService.setWaitingCreateFiles([])")
+      // console.log("this.eqService.setWaitingCreateFiles([])")
       this.eqService.setWaitingCreateFiles([]);
       // console.log(this.supplierService.getWaitingCreateFiles())
       // console.log(closed.code);
@@ -200,7 +200,7 @@ export class EquipmentsComponent implements OnInit {
   }
 
   editSupplier(eq: IEquipment, supplier: ISupplier) {
-    console.log(supplier, eq);
+    // console.log(supplier, eq);
     this.dialogService.open(EditSupplierComponent, {
       header: this.t.tr('Редактировать поставщика'),
       showHeader: false,
@@ -231,13 +231,10 @@ export class EquipmentsComponent implements OnInit {
       modal: true,
       showHeader: false
     }).onClose.subscribe(closed => { //сразу выводить на страницу
-      console.log('closed + newEquipment');
-      console.log(closed);
       this.eqService.setWaitingCreateFiles([]);
       if (closed != 'error'){
 
         this.eqService.getEquipments().subscribe(equips => {
-          console.log('newEq');
           this.equipmentsSrc = equips;
           this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
         });

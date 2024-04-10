@@ -26,19 +26,15 @@ import {SupplierFiles} from "../../../domain/classes/supplier-files";
 export class AddFilesComponent implements OnInit {
   issue: Issue;
   fileGroups: any[] = ['ITT', 'Specification', 'Documentation', 'Approvement'];
-  isCorrection = false;
-  isSendNotification = true;
-  closeTask = false;
   revs = ['-','0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
   rev = '';
-  changeRev = true;
   comment = '';
   loaded: FileAttachment[] = [];
   awaitForLoad: any[] = [];
   dragFileGroup: string = '';
   dragOver = false;
 
-  isEqService: boolean = true;
+  isEqService: boolean;
 
   addFilesButtonIsDisabled: boolean = true;
 
@@ -48,6 +44,7 @@ export class AddFilesComponent implements OnInit {
   constructor(public conf: DynamicDialogConfig, public issueManager: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public t: LanguageService, public eqService: EquipmentsService,
               private supplierService: SupplierService) {
 
+    this.isEqService = this.conf.data.isEqService
     this.loaded = this.conf.data.service.getWaitingCreateFiles();
   }
 
