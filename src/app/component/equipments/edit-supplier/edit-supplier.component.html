@@ -58,7 +58,7 @@
             <!--      это блок с вложенными файлами-->
       <div *ngIf="showAttachmentButton">
         <div class="archive-no" *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>
-        <p-table *ngIf="supplierFilesSrc.length != 0" [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="">
+        <p-table *ngIf="supplierFilesSrc.length != 0" [value]="getSupFiles(supplierFilesSrc)" styleClass="p-datatable-striped" [tableStyle]="">
           <ng-template pTemplate="body" let-file>
             <tr>
               <td class="padding-3">
@@ -91,7 +91,7 @@
 
       <div *ngIf="!showAttachmentButton">
         <div class="archive-no" *ngIf="archivedSupplierFilesSrc.length == 0">{{t.tr('Здесь пока нет заархивированных файлов')}}</div>
-        <p-table *ngIf="archivedSupplierFilesSrc.length != 0" [value]="archivedSupplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="">
+        <p-table *ngIf="archivedSupplierFilesSrc.length != 0" [value]="getSupFiles(archivedSupplierFilesSrc)" styleClass="p-datatable-striped" [tableStyle]="">
           <ng-template pTemplate="body" let-file>
             <tr>
               <td class="padding-3">
@@ -115,6 +115,8 @@
           </ng-template>
         </p-table>
       </div>
+
+      <button *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-ok mt-1">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
 
 
 

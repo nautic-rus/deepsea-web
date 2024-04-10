@@ -58,14 +58,17 @@ export class EditSupplierComponent implements OnInit {
   archivedSupplierFilesSrc: SupplierFiles[] = []; //удаленные файлы (archived == 1)
   // showAttachmentFiles: boolean = true;
   // showArchivedFiles: boolean = false
+  suppFilesLenght: number = 5;
 
   showAttachmentButton: boolean = true; // переключение между вложениями (если true) и заархивированными файлами (если false)
-
+  showMoreButtonClicked: boolean = false;
   // miscIssues: Issue[] = [];
   // showMoreFilesButtonIsDisabled: boolean = false;
   // showMoreArchivedFilesButtonIsDisabled: boolean = false;
   edit: string = '';  //для отображения
   buttonsAreHidden: boolean = true;
+  showMoreButton: boolean;
+
   // showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов вложения
   // showmoreArchived: boolean = true; //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у заархивированных файлов
   collapsed: string[] = [];
@@ -90,10 +93,10 @@ export class EditSupplierComponent implements OnInit {
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
       this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
       this.archivedSupplierFilesSrc = res.filter((f:any) => f.archived == 1)
-      console.log("initial this.supplierFilesSrc")
-      console.log(this.supplierFilesSrc)
-      console.log("initial this.archivedSupplierFiles")
-      console.log(this.archivedSupplierFilesSrc)
+      // console.log("initial this.supplierFilesSrc")
+      // console.log(this.supplierFilesSrc)
+      // console.log("initial this.archivedSupplierFiles")
+      // console.log(this.archivedSupplierFilesSrc)
     })
 
 
@@ -141,8 +144,8 @@ export class EditSupplierComponent implements OnInit {
       }
     })
     dialog.onClose.subscribe(() => {
-      console.log("this.supplierService.getCreateFiles()")
-      console.log(this.supplierService.getCreateFiles())
+    //   console.log("this.supplierService.getCreateFiles()")
+    //   console.log(this.supplierService.getCreateFiles())
       this.supplierService.getCreateFiles().forEach(file => {  //добавляем файлы в БД
         file.supplier_id = this.supplier_id
         this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(res => {
@@ -161,13 +164,12 @@ export class EditSupplierComponent implements OnInit {
 
       this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {  //отображаем файлы на странице
         this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
-        console.log(this.supplierFilesSrc)
+        // console.log(this.supplierFilesSrc)
       })
 
       this.supplierService.setCreateFiles([])  //чистим loaded
 
     })
-
   }
 
 
@@ -204,16 +206,16 @@ export class EditSupplierComponent implements OnInit {
     this.messageService.add({key:'supplierUrl', severity:'success', summary:'Copied', detail:'You have copied supplier url.'});
   }
 
-  showAttachmentFiles() {
-    this.showAttachmentButton = true
+  showAttachmentFiles() {  //переключение на вкладку с вложенными файлами
+    this.suppFilesLenght = 5    //при переключении сворачиваем файлы (отображаем только 5 файлов)
+    this.showAttachmentButton = true;  //показываем, что на вкладке с вложенными файлами
+    this.showMoreButtonClicked = false  //как будто не кликали на кнопку "Показать еще"
   }
 
-  showArchivedFiles() {
-    this.showAttachmentButton = false
-  }
-
-  toggleAttachmentButton() {
-    this.showAttachmentButton = !this.showAttachmentButton
+  showArchivedFiles() {  //переключение на вкладку с удаленными файлами
+    this.suppFilesLenght = 5  //при переключении отображаем только 5 файлов
+    this.showAttachmentButton = false  //показываем, что на вкладке не с вложенными файлами
+    this.showMoreButtonClicked = false  //как будто не кликали на кнопку "Показать еще"
   }
 
 
@@ -614,5 +616,29 @@ export class EditSupplierComponent implements OnInit {
         default: return value;
       }
     }
+  }
+
+  toggleShowMoreButton() {
+    let array: SupplierFiles[];
+    if (this.showAttachmentButton === true) {  //если раскрыт массив с файлами вложения
+      array = this.supplierFilesSrc
+    } else if (this.showAttachmentButton === false) {  //если раскрыт массив с удаленными файлами
+      array = this.archivedSupplierFilesSrc
+    }
+
+    this.showMoreButtonClicked = !this.showMoreButtonClicked
+    if (this.showMoreButtonClicked) {
+      // @ts-ignore
+      this.suppFilesLenght = array.length;
+    } else {
+      this.suppFilesLenght = 5;
+    }
+    // @ts-ignore
+    this.getSupFiles(array)
+
+  }
+
+  getSupFiles( array: SupplierFiles[] ) {
+    return array.slice(0, this.suppFilesLenght);
   }
 }
