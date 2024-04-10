@@ -65,6 +65,7 @@ import {ObjViewPublicComponent} from "./component/obj-view-public/obj-view-publi
 import {ObjViewUrlCreateComponent} from "./component/tools/obj-view-url-create/obj-view-url-create.component";
 import {ObjViewPublicDeviceComponent} from "./component/obj-view-public-device/obj-view-public-device.component";
 import {ObjViewUrlCreateDeviceComponent} from "./component/tools/obj-view-url-create-device/obj-view-url-create-device.component";
+import {MaterialsSummarySpecComponent} from "./component/materials-summary/materials-summary-spec/materials-summary-spec.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -118,6 +119,7 @@ const routes: Routes = [
   { path: 'cables', component: CablesComponent, canActivate: [AuthGuard], data: {animation: 'CablesComponent'} },
   { path: 'doclist', component: DoclistComponent, canActivate: [AuthGuard], data: {animation: 'DoclistComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
+  { path: 'statements', component: MaterialsSummarySpecComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummarySpecComponent'} },
   { path: 'master', component: MasterComponent, data: {animation: 'MasterComponent'}, canActivate: [AuthGuard]  },
   { path: 'plan', component: PlanComponent, data: {animation: 'PlanComponent'}, canActivate: [AuthGuard] },
   { path: 'user-data', component: UserDataComponent, data: {animation: 'UserDataComponent'}, canActivate: [AuthGuard] },
