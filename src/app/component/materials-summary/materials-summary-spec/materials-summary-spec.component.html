@@ -1,0 +1,199 @@
+<div class="all-page">
+  <div class="">
+    <div class="card-head mb-10 df">
+      <div class="mr-10" *ngIf="projects.length > 0">
+        <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="id" styleClass="width-170 border">
+        </p-dropdown>
+      </div>
+      <div class="mr-10" >
+        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">
+        </p-dropdown>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button green-button cxy" [class.disabled-button]="loading || selectedRootNode == ''" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div (click)="exportPDF()" [class.disabled-button]="loading || selectedRootNode == ''" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+          <img src="assets/icons/pdf2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
+        {{selectedNodePath}}
+      </div>
+      <div class="p-ml-auto mr-10 df">
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
+          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        </div>
+        <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">
+          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
+          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
+        </div>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChange()" class="border" />
+        </span>
+      </div>
+    </div>
+    <div #dt class="w-100 df">
+      <div class="w-100 df">
+        <div class="w-100 tiles-card ">
+          <div *ngIf="project == 0">
+            <div class="cxy loading">
+              <div class="cxy flex-column">
+                <div class="cx loading-text">Select a project to view the materials</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="loading">
+            <div class="cxy loading">
+              <div class="cxy flex-column">
+                <img src="assets/whale.gif" height="120">
+                <div class="cx loading-text">PLEASE WAIT...</div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="selectedView == 'list'">
+            <div class="mb-10 cursor-pointer dash-card-list" *ngFor="let material of materialsSummary; let j = index; let i= index">
+              <div class="dash-card-tile-list">
+                <div class="one-cols cxy">
+                  <div class="cxy" (click)="showDrawings(material); $event.stopPropagation();">
+                    <img class="cxy" src="assets/icons/eye-show.svg" height="30">
+                  </div>
+                </div>
+                <div class="px-10 two-cols">
+                  <div *ngIf="material.name != ''" class="title-bold cursor-default">{{material.name}}</div>
+                  <div *ngIf="material.name == ''" class="title-bold">{{material.desc}}</div>
+                  <div>
+                    <div class="line"></div>
+                    <div class="mm-text mt-2px">
+                      <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">Purchased</div>
+                  <div class="cxy">
+                    <div class="materials-button-purchased blue-button cxy mb-5" (click)="addStock(material.code, material.units)">
+                      <div class="mr-5 text-bold">{{getPurchasedCount(material.code)}}</div>
+                      <div class="">+</div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">{{material.unitsValue}}</div>
+                  <div class="cxy">
+                    <div class="text-table-col">{{material.qty + ' ' + material.units}}</div>
+                  </div>
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">Unit Weight</div>
+                  <div class="cxy">
+                    <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                    <div class="text-table-col">{{material.weight + ' ' + 'kg'}}</div>
+                  </div>
+                </div>
+                <div class="three-cols">
+                  <div class="mm-text text-center-x">Total Weight</div>
+                  <div class="cxy">
+                    <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                    <div class="text-table-col">{{material.weightTotal + ' ' + 'kg'}}</div>
+                  </div>
+                </div>
+                <div class="cxy">
+                  <div class="df position-relative content-end pr-10">
+                    <div class="trm">
+                      <span [innerHTML]="material.code | highLight: search"></span>
+                    </div>
+                    <div (click)="copyTrmCode(material.code, 't' + i + '-' + j)" class="trm-copy cursor-pointer cxy">
+                      <img src="assets/icons/trm.svg" height="12">
+                      <div class="copy-tooltip" [hidden]="!showTooltip('t' + i + '-' + j)">Copied!</div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+            <div class="empty-card-list"></div>
+
+
+
+          </div>
+
+          <div *ngIf="selectedView == 'tiles'" class="tile height-tiles">
+            <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
+              <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
+                <div class="dash-card-s" *ngFor="let material of chunk; let j = index">
+                  <div *ngIf="material != null" class="dash-card-tile cursor-pointer" (click)="selectMaterial(material)">
+                    <div class="top-row-doc">
+                      <div *ngIf="material.name != ''" class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(material.name, 90)}}</div>
+                      <div *ngIf="material.name == ''" class="title-bold" pTooltip="{{material.desc}}" tooltipPosition="top">{{trimText(material.desc, 90)}}</div>
+                      <div class="p-ml-auto">
+                        <div pTooltip="Purchased" tooltipPosition="top" class="materials-button-purchased light-green-button cxy" (click)="addStock(material.code, material.units)">
+                          <div class="mr-5 text-bold">{{getPurchasedCount(material.code)}}</div>
+                          <div class="">+</div>
+                          <div class="ml-5">Add</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="two-row mt-5 mb-5">
+                      <div class="coef cxy">
+                        <div class="text-center-x">
+                          <span>{{material.qty + ' ' + material.units}}</span>
+                        </div>
+                      </div>
+                      <div class="text-medium"></div>
+                      <div class="df position-relative content-end pr-10">
+                        <div class="trm">
+                          <span [innerHTML]="material.code | highLight: search"></span>
+                        </div>
+                        <div (click)="copyTrmCode(material.code, 't' + i + '-' + j)" class="trm-copy cursor-pointer cxy">
+                          <img src="assets/icons/trm.svg" height="12">
+                          <div class="copy-tooltip" [hidden]="!showTooltip('t' + i + '-' + j)">Copied!</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="three-row df align-end mb-5">
+                      <div class="df">
+                        <div class="df">
+                          <div class="mm-text mr-5">Unit</div>
+                          <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                          <div class="text-table-col">{{material.weight + 'kg'}}</div>
+                        </div>
+                      </div>
+                      <div class="df">
+                        <div class="df">
+                          <div class="mm-text mr-5">Total</div>
+                          <img class="pr-5 mt-minus2" src="assets/icons/weight3.svg" height="16">
+                          <div class="text-table-col">{{material.weightTotal + 'kg'}}</div>
+                        </div>
+                      </div>
+                      <div class="df p-ml-auto">
+                        <div (click)="showDrawings(material); $event.stopPropagation();" class="df" pTooltip="{{''}}" tooltipPosition="top">
+                          <div class="mm-text mr-5">Drawings</div>
+                          <img class="pr-5 mb-minus3" src="assets/icons/eye-show.svg" height="20">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="line"></div>
+                    <div class="mm-text mt-5">
+                      <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-virtualScroller>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast position="bottom-center"></p-toast>

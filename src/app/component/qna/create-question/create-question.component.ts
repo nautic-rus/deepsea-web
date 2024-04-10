@@ -266,7 +266,7 @@ export class CreateQuestionComponent implements OnInit {
     issue.started_by = this.auth.getUser().login;
     issue.project = this.taskProject;
     issue.assigned_to = 'nautic-rus';
-    issue.priority = this.taskPriority;
+    issue.priority = 'Medium';
     issue.start_date = new Date().getTime();
     issue.department = this.taskDepartment;
     //issue.doc_number = this.taskDocNumber;
