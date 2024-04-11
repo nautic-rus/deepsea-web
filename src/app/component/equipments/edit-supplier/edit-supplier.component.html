@@ -145,9 +145,6 @@
           <div [ngClass]="{checkButton: showAttachmentButton}" class="mt-1 pb-1 mr-10 mr-5 cursor-pointer" (click)="showAttachmentFiles()">{{t.tr('Вложения')}}</div>
           <div [ngClass]="{checkButton: !showAttachmentButton}" class="mt-1 pb-1 cursor-pointer" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
         </div>
-        <div  class="mr-5 cy">
-          <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
-        </div>
       </div>
       <div style="border-top: solid 1px #dedede69"></div>
 
@@ -212,8 +209,14 @@
         </p-table>
       </div>
 
+      <div class="df files-buttons">
+        <button type="button" *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-show-more">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
 
-      <button type="button" *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-show-more mt-20">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
+        <div  class="mr-5 cy">
+          <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+        </div>
+      </div>
+
 
       <div [collapse]="contentRelated" class="big-text mb-1 mt-20 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedTasks')">
