@@ -1427,3 +1427,10 @@
   align-items: center;
   margin-top: 20px;
 }
+
+.related-sup-mat {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  height: 30px;
+  align-items: center;
+}

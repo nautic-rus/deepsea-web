@@ -142,11 +142,11 @@
     <div>
       <div class="df space-between">
         <div class="df">
-          <div [ngClass]="{checkButton: showAttachmentButton}" class="mt-1 pb-1 mr-10 mr-5 cursor-pointer" (click)="showAttachmentFiles()">{{t.tr('Вложения')}}</div>
-          <div [ngClass]="{checkButton: !showAttachmentButton}" class="mt-1 pb-1 cursor-pointer" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
+          <div [ngClass]="{checkButton: showAttachmentButton}" class="mt-1 pb-5 mr-10 mr-5 cursor-pointer" (click)="showAttachmentFiles()">{{t.tr('Файлы')}}</div>
+          <div [ngClass]="{checkButton: !showAttachmentButton}" class="mt-1 pb-5 cursor-pointer" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
         </div>
       </div>
-      <div style="border-top: solid 1px #dedede69"></div>
+      <div class="pb-10" style="border-top: solid 1px #dedede69"></div>
 
             <!--      это блок с вложенными файлами-->
       <div  *ngIf="showAttachmentButton">
@@ -265,16 +265,30 @@
       </div>
       <div collapseContent #contentRelatedMaterials="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="relatedMaterials.length != 0">
-          <div class="subtask df" *ngFor="let material of relatedMaterials">
-            <div class="subtask-grid" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">
-              <div class="pr-10">{{material.stock_code}}</div>
-              <div class="pl-2px pr-10">{{material.name}}</div>
-              <div class="pr-10"></div>
-              <div class="pr-10">{{material.doc_number}}</div>
+          <div class="" *ngFor="let material of relatedMaterials">
+            <div class="related-sup-mat" [ngClass]="{ 'cursor-pointer': material.doc_number}" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">
+              <div class="pl-10">{{material.stock_code}}</div>
+              <div class="pl-2px">{{material.name}}</div>
+              <!--              <div class="pr-10"></div>-->
+              <div class="pr-10" style="text-align: end">{{material.doc_number}}</div>
             </div>
           </div>
         </div>
       </div>
+
+
+<!--      <div collapseContent #contentRelatedMaterials="collapseContent" class="collapse-body">-->
+<!--        <div class="ovf-auto" *ngIf="relatedMaterials.length != 0">-->
+<!--          <div class="subtask df" *ngFor="let material of relatedMaterials">-->
+<!--            <div class="subtask-grid" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">-->
+<!--              <div class="pr-10">{{material.stock_code}}</div>-->
+<!--              <div class="pl-2px pr-10">{{material.name}}</div>-->
+<!--&lt;!&ndash;              <div class="pr-10"></div>&ndash;&gt;-->
+<!--              <div class="pr-10">{{material.doc_number}}</div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
 
       <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>

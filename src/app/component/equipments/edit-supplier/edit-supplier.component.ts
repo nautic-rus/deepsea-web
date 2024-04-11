@@ -138,6 +138,7 @@ export class EditSupplierComponent implements OnInit {
   addFiles() {  //записать в историю еще надо
     const dialog = this.dialogService.open(AddFilesComponent, {
       header: 'Uploading files',
+      showHeader: false,
       modal: true,
       data: {
         isEqService: false,
