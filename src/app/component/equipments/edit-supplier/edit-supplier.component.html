@@ -25,35 +25,35 @@
       <span class="task-name hover-task cursor-pointer">{{supplierForm.value.name}}</span>
     </div>
 
-    <div class="status-manufacturer df">
-      <div>
-        <div class="text-y line-text normal-text w-30">{{t.tr('Статус')}}</div>
-        <p [hidden]="edit =='status'" class="width-160 info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </p>
-        <div class="df" *ngIf="edit =='status'">
-          <p-dropdown formControlName="status" class="select" id="status" [options]="statusTitle" appendTo = "body" styleClass="width-160 font-14"></p-dropdown>
-          <div class="df cxy ml-5">
-            <div (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)">
-              <div  class="task-name-button cxy mr-10">
-                <img src="assets/icons/tick.svg">
-              </div>
-            </div>
-            <div (click)="showEditBlock('')">
-              <div  class="task-name-button cxy">
-                <img src="assets/icons/cancel.svg">
-              </div>
-            </div>
-          </div>
+    <div class="status-manufacturer">
+      <div class="status-container">
+        <div class="text-y line-text normal-text">{{t.tr('Статус')}}</div>
+<!--        <p [hidden]="edit =='status'" class="info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </p>-->
+        <div class="">
+          <p-dropdown formControlName="status" class="select" id="status" [options]="statusTitle" (onChange)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)" appendTo = "body" styleClass="font-14 w-100"></p-dropdown>
+<!--          <div class="df cxy ml-5">-->
+<!--            <div (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)">-->
+<!--              <div  class="task-name-button cxy mr-10">-->
+<!--                <img src="assets/icons/tick.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div (click)="showEditBlock('')">-->
+<!--              <div  class="task-name-button cxy">-->
+<!--                <img src="assets/icons/cancel.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </div>
 
-      <div class="df mt-3px">
-        <div class="df text-y height-30 normal-text w-30">{{t.tr('Производитель')}}</div>
-        <p [hidden]="edit =='manufacturer'" class="width-160 info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </p>
-        <div class="df" *ngIf="edit =='manufacturer'">
-          <input class="info-manufacturer width-160 mt-16 p-inputtext" id="manufacturer" type="text" formControlName="manufacturer">
-          <div class="df cxy ml-5">
+      <div class="pl-15 manufacturer-container">
+        <div class="text-y normal-text">{{t.tr('Производитель')}}</div>
+<!--        <p [hidden]="edit =='manufacturer'" class="width-160 info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </p>-->
+        <div class="df input-botton">
+          <input class="info-manufacturer inputtext w-10 min-width-160" id="manufacturer" type="text" formControlName="manufacturer">
+          <div class="df">
             <div (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
-              <div  class="task-name-button cxy mr-10">
+              <div  class="task-name-button cxy">
                 <img src="assets/icons/tick.svg">
               </div>
             </div>
@@ -68,8 +68,8 @@
     </div>
 
     <div class="mt-3px">
-      <div class="df text-y height-30 normal-text w-30">{{t.tr('Комментарий')}}</div>
-      <div class="min-height-80 min-width-160">
+      <div class=" text-y height-30 normal-text w-30">{{t.tr('Комментарий')}}</div>
+      <div class="min-width-160">
 <!--        <p  class="width-160 info-comment mt-16 p-inputtext">{{supplierForm.value.comment}} </p>-->
         <div class="df input-botton">
           <input class="info-comment inputtext w-10 min-width-160" id="comment" type="text" formControlName="comment" (click)="showEditBlock('comment')">
@@ -92,12 +92,12 @@
     <div class="mt-3px">
       <div class="df text-y height-30 normal-text w-30">{{t.tr('Описание')}}</div>
       <div class="min-height-80">
-        <p [hidden]="edit =='description'" class="width-160 info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>
-        <div class="df" *ngIf="edit =='description'">
-          <input class="info-description mt-16 p-inputtext w-100" id="description" type="text" formControlName="description">
-          <div class="df mt-10">
+        <!--        <p [hidden]="edit =='description'" class="width-160 info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>-->
+        <div class="df input-botton description-container">
+          <textarea class="info-description  inputtext w-10 description-textarea min-width-160" id="description" type="text" formControlName="description"></textarea>
+          <div class="df">
             <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">
-              <div  class="task-name-button cxy mr-10">
+              <div  class="task-name-button cxy">
                 <img src="assets/icons/tick.svg">
               </div>
             </div>
@@ -111,6 +111,30 @@
       </div>
     </div>
   </div>
+
+
+      <!--    <div class="mt-3px">-->
+<!--      <div class="df text-y height-30 normal-text w-30">{{t.tr('Описание')}}</div>-->
+<!--      <div class="min-height-80">-->
+<!--&lt;!&ndash;        <p [hidden]="edit =='description'" class="width-160 info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>&ndash;&gt;-->
+<!--        <div class="df" *ngIf="edit =='description'">-->
+<!--          <input class="info-description mt-16 p-inputtext w-100" id="description" type="text" formControlName="description">-->
+<!--          <div class="df mt-10">-->
+<!--            <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">-->
+<!--              <div  class="task-name-button cxy mr-10">-->
+<!--                <img src="assets/icons/tick.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div (click)="showEditBlock('')">-->
+<!--              <div  class="task-name-button cxy">-->
+<!--                <img src="assets/icons/cancel.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
 
   <div>
@@ -248,25 +272,25 @@
 
 
       <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>
-      <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+      <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped"  [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="body" let-history>
-          <div class="df" *ngIf="history.name_value == 'created'">
+          <div class="df history-text" *ngIf="history.name_value == 'created'">
             <div class="pt-5 mr-10">
               <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
             </div>
-            <div>
+            <div class="history-text">
               <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
               <span class="text-descr px-5">{{t.tr('добавил(а) поставщика')}}</span>
               <span class="text-date">{{getDate(history.update_date)}}</span>
             </div>
           </div>
-          <div class="pb-20" *ngIf="history.name_value == 'added file'">
+          <div class="pb-20 history-text"  *ngIf="history.name_value == 'added file'">
             <div class="df">
               <div class="pt-5 mr-10">
                 <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
               </div>
               <div>
-                <div>
+                <div class="history-text">>
                   <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
                   <span class="text-descr px-5">{{t.tr('добавил(а) файл')}}</span>
                   <span class="text-date">{{getDate(history.update_date)}}</span>
@@ -289,7 +313,7 @@
               </div>
             </div>
           </div>
-          <div class="pb-20" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
+          <div class="pb-20 history-text" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
             <div class="df">
               <div class="pt-5 mr-10">
                 <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
@@ -301,7 +325,7 @@
                   <span class="text-date">{{getDate(history.update_date)}}</span>
                 </div>
                 <div class="pt-5">
-                  <span [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>
+                  <span class="history-text" [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>
                   <span class="px-10">
                       <img src="assets/icons/right-arrow.svg" height="13">
                     </span>
@@ -312,14 +336,6 @@
           </div>
         </ng-template>
       </p-table>
-    </div>
-    <div class="right-content">
-      <div class="information">
-        <div class="header-information text-head">{{t.tr('Сведения')}}</div>
-        <div class="table table-overflow">
-
-        </div>
-      </div>
     </div>
   </div>
 </div>

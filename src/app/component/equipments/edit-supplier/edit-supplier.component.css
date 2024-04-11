@@ -82,6 +82,26 @@
   border-radius: 6px;
 }
 
+.description-container {
+  height: 60px;
+  align-items: flex-end;
+}
+
+.description-textarea {
+  height: 58px;
+}
+
+.history-text {
+  word-break: break-all;
+}
+
+.status-manufacturer {
+  display: grid;
+  grid-template-columns: 25% 75%;
+}
+
+
+
 
 
 
@@ -125,8 +145,13 @@
   width: 200px!important;
 }
 /deep/.p-dropdown .p-dropdown-label {
-  width: 120px;
+  width: 100%;
 }
+
+/deep/.p-dropdown-items .p-dropdown-items {
+  width: 100%;
+}
+
 .custom-progress .p-progressbar {
   background-color: #F5F6F8 !important;
 }
