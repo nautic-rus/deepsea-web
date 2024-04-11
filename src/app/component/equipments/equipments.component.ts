@@ -204,6 +204,7 @@ export class EquipmentsComponent implements OnInit {
     this.dialogService.open(EditSupplierComponent, {
       header: this.t.tr('Редактировать поставщика'),
       showHeader: false,
+      width: '100vh',
       modal: true,
       data: {
         eq: eq,

@@ -1,4 +1,4 @@
-<div style="height: 430px; width: 460px;">
+<div style="width: 460px;">
   <div class="header-parts">
     <div class="header-parts-text">{{t.tr('Создать новое оборудование')}}</div>
     <div class="df">
@@ -48,7 +48,7 @@
   <input pInputText id="description" type="text" formControlName="description">
 
   <label class="big-text-create mb-1 mt-1" for="commentText">{{t.tr('Комментарий')}} </label>
-  <textarea class="" pInputText id="commentText" type="text" formControlName="commentText"></textarea>
+  <input class="" pInputText id="commentText" type="text" formControlName="commentText">
 
 <!--  добавление файла в момент создания нового оборудования-->
 <!--  <div class="mt-1" *ngIf="equipmentFiles.length != 0">Вложения</div>-->
@@ -107,7 +107,7 @@
 <!--</div>-->
 
 
-<div class="mr-5 mt-20 df justify-content-end">
+<div class="mr-5 mt-20 mb-50 df justify-content-end">
 <!--  <div tabindex="10" [class.disabled-button]="!equipmentForm.valid  && (equipmentForm.get('project')?.value == '-')" (click)="createEquipment()" class="button-ok cxy">{{t.tr('Создать')}}</div>-->
 <!--  <div tabindex="10" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>-->
 

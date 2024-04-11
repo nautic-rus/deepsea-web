@@ -1,6 +1,6 @@
 <form [formGroup]="supplierForm" class="form-container">
-  <div class="w65">
-  <div class="task-header">
+  <div >
+  <div class="task-header sticky">
     <div class="df">
       <div class="text-head text-bottom">ID {{supplier_id}} | SFI {{sfi}} - {{sfi_name}}</div>
     </div>
@@ -18,12 +18,13 @@
         <i class="pi pi-times"></i>
       </div>
     </div>
-  </div>
-
-  <div>
-    <div class="pb-10">
+    <div class="pt-10 pb-10">
       <span class="task-name hover-task cursor-pointer">{{supplierForm.value.name}}</span>
     </div>
+  </div>
+
+
+  <div>
 
     <div class="status-manufacturer">
       <div class="status-container">
@@ -52,12 +53,12 @@
         <div class="df input-botton">
           <input class="info-manufacturer inputtext w-10 min-width-160" id="manufacturer" type="text" formControlName="manufacturer">
           <div class="df">
-            <div (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
+            <div class="cursor-pointer" (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
               <div  class="task-name-button cxy">
                 <img src="assets/icons/tick.svg">
               </div>
             </div>
-            <div (click)="showEditBlock('')">
+            <div class="cursor-pointer" (click)="showEditBlock('')">
               <div  class="task-name-button cxy">
                 <img src="assets/icons/cancel.svg">
               </div>
@@ -74,12 +75,12 @@
         <div class="df input-botton">
           <input class="info-comment inputtext w-10 min-width-160" id="comment" type="text" formControlName="comment" (click)="showEditBlock('comment')">
           <div class="df">
-            <div (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">
+            <div class="cursor-pointer" (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">
               <div  class="task-name-button cxy">
                 <img src="assets/icons/tick.svg">
               </div>
             </div>
-            <div (click)="showEditBlock('')">
+            <div class="cursor-pointer" (click)="showEditBlock('')">
               <div  class="task-name-button cxy">
                 <img src="assets/icons/cancel.svg">
               </div>
@@ -96,12 +97,12 @@
         <div class="df input-botton description-container">
           <textarea class="info-description  inputtext w-10 description-textarea min-width-160" id="description" type="text" formControlName="description"></textarea>
           <div class="df">
-            <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">
+            <div class="cursor-pointer" (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">
               <div  class="task-name-button cxy">
                 <img src="assets/icons/tick.svg">
               </div>
             </div>
-            <div (click)="showEditBlock('')">
+            <div class="cursor-pointer" (click)="showEditBlock('')">
               <div  class="task-name-button cxy">
                 <img src="assets/icons/cancel.svg">
               </div>
@@ -141,16 +142,17 @@
     <div>
       <div class="df space-between">
         <div class="df">
-          <div [ngClass]="{checkButton: showAttachmentButton}" class="big-text mt-1 mr-10 button-new" (click)="showAttachmentFiles()">{{t.tr('Вложения')}}</div>
-          <div [ngClass]="{checkButton: !showAttachmentButton}" class="big-text mt-1 button-new" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
+          <div [ngClass]="{checkButton: showAttachmentButton}" class="mt-1 pb-1 mr-10 mr-5 cursor-pointer" (click)="showAttachmentFiles()">{{t.tr('Вложения')}}</div>
+          <div [ngClass]="{checkButton: !showAttachmentButton}" class="mt-1 pb-1 cursor-pointer" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
         </div>
         <div  class="mr-5 cy">
           <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
         </div>
       </div>
+      <div style="border-top: solid 1px #dedede69"></div>
 
             <!--      это блок с вложенными файлами-->
-      <div *ngIf="showAttachmentButton">
+      <div  *ngIf="showAttachmentButton">
         <div class="archive-no" *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>
         <p-table *ngIf="supplierFilesSrc.length != 0" [value]="getSupFiles(supplierFilesSrc)" styleClass="p-datatable-striped" [tableStyle]="">
           <ng-template pTemplate="body" let-file>
@@ -210,9 +212,10 @@
         </p-table>
       </div>
 
-      <button *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-ok mt-1">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
 
-      <div [collapse]="contentRelated" class="big-text mb-1 mt-10 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
+      <button type="button" *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-show-more mt-20">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
+
+      <div [collapse]="contentRelated" class="big-text mb-1 mt-20 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedTasks')">
           <img src="assets/icons/arrow-right.png">
         </div>
