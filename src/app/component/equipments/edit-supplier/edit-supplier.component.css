@@ -46,6 +46,7 @@
 /deep/ .p-inputtext:hover {
   background-color: rgba(9, 30, 66, 0.08);
 }
+
 .files_table {
   margin-top: 5px;
 }
@@ -89,6 +90,7 @@
 
 .description-textarea {
   height: 58px;
+  resize: none;
 }
 
 .history-text {
@@ -99,6 +101,19 @@
   display: grid;
   grid-template-columns: 25% 75%;
 }
+
+.button-show-more {
+  border-style: none;
+  outline: none;
+  color: #326fd1;
+  background-color: transparent;
+}
+
+.button-show-more:hover {
+  cursor: pointer;
+}
+
+
 
 
 
@@ -194,10 +209,11 @@
   align-items: center;
 }
 .checkButton {
-  color: #495057 !important;
   border: 1px solid #dee2e6;
-  border-width: 1px 1px 0 1px;
-  background-color: #f8f9fa;
+  border-width: 0px 0px 1px 0px;
+  border-bottom-color: #326fd1;
+  color: #326fd1;
+  cursor: pointer;
 }
 .button-status{
   cursor: pointer;
@@ -422,6 +438,7 @@
   grid-template-columns: 66% auto;
   padding-top: 1rem;
   margin-bottom: 1rem;
+  background-color: white;
 }
 .task-name{
   font-size: x-large;
@@ -1403,4 +1420,17 @@
 }
 .min-height-80{
   min-height: 80px;
+}
+
+.files-buttons {
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.related-sup-mat {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  height: 30px;
+  align-items: center;
 }

@@ -78,6 +78,7 @@ export class EditEquipmentComponent implements OnInit {
   addFiles() {
     const dialog = this.dialogService.open(AddFilesComponent, {
       header: 'Uploading files',
+      showHeader: false,
       modal: true,
       data: {
         isEqService: true,
