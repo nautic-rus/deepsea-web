@@ -1,3 +1,7 @@
+.height-85 {
+  height: 85%;
+}
+
 .edit-container {
   display: flex;
   flex-direction: column;

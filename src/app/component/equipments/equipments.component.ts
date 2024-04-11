@@ -205,6 +205,7 @@ export class EquipmentsComponent implements OnInit {
       header: this.t.tr('Редактировать поставщика'),
       showHeader: false,
       width: '100vh',
+      // height: '100wh',
       modal: true,
       data: {
         eq: eq,

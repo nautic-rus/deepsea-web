@@ -6,11 +6,9 @@ import {ISupplier} from "../../../domain/interfaces/supplier";
 import {SupplierToDB} from "../../../domain/classes/supplier-to-db";
 import {SupplierService} from "../../../domain/supplier.service";
 import {EquipmentsService} from "../../../domain/equipments.service";
-import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
 import {AddFilesComponent} from "../add-files/add-files.component";
 import {SupplierFiles} from "../../../domain/classes/supplier-files";
 import {AgreeModalComponent} from "../agree-modal/agree-modal.component";
-import {Issue} from "../../../domain/classes/issue";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {CloseCode} from "../../../domain/classes/close-code";
 import {LanguageService} from "../../../domain/language.service";
@@ -18,8 +16,6 @@ import {SupplierHistory} from "../../../domain/classes/supplier-history";
 import {ActivatedRoute} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {CreateTaskComponent} from "../../create-task/create-task.component";
-import {zip} from "rxjs";
-import {map} from "rxjs/operators";
 import {RelatedTask} from "../../../domain/classes/related-task";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {IEqSupRelatedMaterials} from "../../../domain/interfaces/eqSupRelatedMaterials";
@@ -94,23 +90,7 @@ export class EditSupplierComponent implements OnInit {
       console.log(res)
       this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
       this.archivedSupplierFilesSrc = res.filter((f:any) => f.archived == 1)
-      console.log("initial this.supplierFilesSrc")
-      console.log(this.supplierFilesSrc)
-      console.log("initial this.archivedSupplierFiles")
-      console.log(this.archivedSupplierFilesSrc)
     })
-
-
-    // this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-    //   this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1).slice(0, 5)
-    //   this.showMoreArchivedFilesButtonIsDisabled =  res.filter((f:any) => f.archived == 1).length > 5 ? false : true;
-    //   // console.log("this.archivedSupplierFiles");
-    //   // console.log(this.archivedSupplierFiles);
-    //   this.supplierFilesSrc = res.filter((f:any) => f.archived == 0).slice(0, 5);
-    //   this.showMoreFilesButtonIsDisabled = res.filter((f:any) => f.archived == 0).length > 5 ? false : true;
-    //   console.log("this.supplierFilesSrc initial");
-    //   console.log(this.supplierFilesSrc);
-    // })
 
 
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
@@ -118,7 +98,10 @@ export class EditSupplierComponent implements OnInit {
     })
 
     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+      res.sort((a:any, b:any) => a.update_date - b.update_date)  //отсортируем по дате добавления
       this.historyArray = res;
+      console.log("this.historyArray")
+      console.log(this.historyArray)
     })
 
     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
@@ -155,10 +138,19 @@ export class EditSupplierComponent implements OnInit {
             alert(res);
           }
         })
+        // const history = new SupplierHistory(this.auth.getUser().id, 'added file', '', file.url, this.supplier_id)
+        // this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
+        //   this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+        //     this.historyArray = res;
+        //   })
+        // })
+      })
 
+      this.supplierService.getCreateFiles().forEach(file => {  //добавляем файлы в историю
         const history = new SupplierHistory(this.auth.getUser().id, 'added file', '', file.url, this.supplier_id)
         this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
           this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+            res.sort((a:any, b:any) => a.update_date - b.update_date)  //отсортируем по дате добавления
             this.historyArray = res;
           })
         })
@@ -539,8 +531,8 @@ export class EditSupplierComponent implements OnInit {
       const history = new SupplierHistory(this.auth.getUser().id, name_value, prev_data, new_data, this.supplier_id)
       this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
         this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+          res.sort((a:any, b:any) => a.update_date - b.update_date)  //отсортируем по дате добавления
           this.historyArray = res;
-          console.log(res)
         })
       })
     }

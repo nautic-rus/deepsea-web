@@ -1,4 +1,4 @@
-<form [formGroup]="supplierForm" class="form-container">
+<form style="height: 750px;" [formGroup]="supplierForm" class="form-container">
   <div >
   <div class="task-header sticky">
     <div class="df">
@@ -209,11 +209,11 @@
         </p-table>
       </div>
 
-      <div class="df files-buttons">
+      <div [ngClass]=" (showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5) ? 'df files-buttons': 'df justify-content-end'">
         <button type="button" *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-show-more">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
 
         <div  class="mr-5 cy">
-          <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+          <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1" >{{t.tr('Добавить файлы')}}</div>
         </div>
       </div>
 
@@ -310,7 +310,7 @@
                 <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
               </div>
               <div>
-                <div class="history-text">>
+                <div class="history-text">
                   <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
                   <span class="text-descr px-5">{{t.tr('добавил(а) файл')}}</span>
                   <span class="text-date">{{getDate(history.update_date)}}</span>
