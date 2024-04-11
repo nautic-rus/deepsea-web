@@ -102,4 +102,7 @@ export class MaterialManagerService {
   getMaterialsSummarySpec(projectId: number){
     return this.http.get<any>(props.httpSpec + '/materialsSummarySpec', {params: {projectId}});
   }
+  materialsSummaryPdfSpec(projectId: number, statemId: number){
+    return this.http.get<any>(props.httpSpec + '/materialsSummaryPdfSpec', {params: {projectId, statemId}});
+  }
 }
