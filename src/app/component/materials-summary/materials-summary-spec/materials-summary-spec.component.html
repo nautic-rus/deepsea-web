@@ -2,20 +2,30 @@
   <div class="">
     <div class="card-head mb-10 df">
       <div class="mr-10" *ngIf="projects.length > 0">
-        <p-dropdown placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="id" styleClass="width-170 border">
+        <p-dropdown placeholder="ПРОЕКТ" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="id" styleClass="width-170 border">
         </p-dropdown>
       </div>
-      <div class="mr-10" >
-        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">
+      <div class="mr-10 df" *ngIf="statementNodes.length > 0">
+        <p-dropdown placeholder="ВЕДОМОСТЬ" class="select" [(ngModel)]="selectedStatementNode" [options]="statementNodes" (ngModelChange)="statementChanged()" styleClass="width-400 border">
+          <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2">
+              <div>{{selectedStatementNode.label}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-stmt pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{stmt.label}}</div>
+            </div>
+          </ng-template>
         </p-dropdown>
       </div>
       <div class="mr-10">
-        <div class="materials-button green-button cxy" [class.disabled-button]="loading || selectedRootNode == ''" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
+        <div class="materials-button green-button cxy" [class.disabled-button]="loading || materialsSummary.length == 0" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
       <div class="mr-10">
-        <div (click)="exportPDF()" [class.disabled-button]="loading || selectedRootNode == ''" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+        <div (click)="exportPDF()" [class.disabled-button]="loading || materialsSummary.length == 0" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
           <img src="assets/icons/pdf2.svg" height="26">
         </div>
       </div>

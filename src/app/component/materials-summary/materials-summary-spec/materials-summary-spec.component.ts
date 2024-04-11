@@ -59,8 +59,10 @@ export class MaterialsSummarySpecComponent implements OnInit {
   }
   loading = true;
   url = '';
-  summary: any[] = [];
+  //summary: any[] = [];
   statements: any[] = [];
+  statementNodes: any[] = [];
+  selectedStatementNode: any;
 
   constructor(public ref: DynamicDialogRef, public issueManager: IssueManagerService, public t: LanguageService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService, private http: HttpClient) { }
 
@@ -137,26 +139,41 @@ export class MaterialsSummarySpecComponent implements OnInit {
     });
     return res;
   }
-  getNodes(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
+  getNodes(rootNodes: any[], parent_id = 0){
     let res: any[] = [];
-    rootNodes.filter(x => x.data.length == parent.length + 3 && x.data.startsWith(parent)).forEach(n => {
+    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
       res.push({
-        data: n.data,
-        children: this.getNodes(rootNodes, materials, n.data),
-        label: n.label + ' (' + n.data.substr(parent.length) + ')',
-        count: this.materialsSummarySrc.filter(x => x.code.startsWith(n.data)).length
+        data: n.id,
+        children: [],
+        label: this.getNodeLabel(n.code, n.name),
+        index: n.code
       });
     });
     return res;
   }
-  setParents(nodes: any[], parent: any){
-    nodes.forEach(node => {
-      node.parent = parent;
-      node.expandedIcon = 'pi pi-folder-open';
-      node.collapsedIcon = 'pi pi-folder';
-      node.icon = (node.children.length == 0) ? 'pi pi-tag' : '';
-      this.setParents(node.children, node);
-    });
+  getNodeLabel(code: string, name: string){
+    let res = name;
+    if (code != '-' && code != ''){
+      res = code + ' - ' + name;
+    }
+    return res;
+  }
+  sortDot(input: string, numDots = 3, length = 5){
+    let res = '';
+    let split = input.split('.');
+    for (let d = 0; d < numDots; d++){
+      if (split.length > d){
+        res += this.alz(split[d], length);
+      }
+    }
+    return res;
+  }
+  alz(input: string, length = 5){
+    let res = input;
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
   }
   getNodePath(node: any){
     let parent = node.parent;
@@ -260,15 +277,32 @@ export class MaterialsSummarySpecComponent implements OnInit {
 
   projectChanged() {
     this.materialManager.getSpecStatements().subscribe(stmts => {
+      console.log(stmts);
       this.statements = stmts.filter((x: any) => x.project_id == this.project);
+      this.statementNodes = _.sortBy(this.getNodes(this.statements, 0), x => this.sortDot(x.index));
+      if (this.statementNodes != null){
+        this.selectedStatementNode = this.statementNodes[0];
+      }
       this.materialManager.getMaterialsSummarySpec(this.project).subscribe(summarySpec => {
-        console.log(summarySpec);
-        this.summary = summarySpec;
+        this.materialsSummarySrc = summarySpec;
+        let stmtIds = this.getStatements(this.selectedStatementNode.data).map(x => x.id);
+        console.log(stmtIds);
+        this.materialsSummary = this.materialsSummarySrc.filter(x => stmtIds.includes(x.material.statem_id));
+        console.log(this.materialsSummarySrc);
         this.loading = false;
       });
     });
   }
-
+  getStatements(parentId: number): any[]{
+    let res: number[] = [];
+    this.statements.filter(x => x.parent_id == parentId).forEach(stmt => {
+      res.push(stmt);
+      this.getStatements(stmt.id).forEach(chStmt => {
+        res.push(chStmt);
+      });
+    });
+    return res;
+  }
   getMaterialName(material: any) {
     let res = material.name;
     if (this.t.language == 'ru'){
@@ -392,24 +426,21 @@ export class MaterialsSummarySpecComponent implements OnInit {
     });
   }
   exportPDF(){
-    let find = this.projects.find(x => x.name == this.project);
-    if (find != null){
-      this.loading = true;
-      this.materialManager.getMaterialsSummaryPdf(find.rkd, this.selectedRootNode, this.auth.getUser().login).subscribe(pdfUrl => {
-        this.loading = false;
-        this.url = pdfUrl;
-        window.open(this.url, '_blank');
-      });
-    }
-  }
-  rootNodeChanged() {
-    this.selectedNodePath = '';
-    this.nodes = this.getNodes(this.nodesSrc.filter((x: any) => x.data.startsWith(this.selectedRootNode)), this.materialsSrc, this.selectedRootNode);
-    this.setParents(this.nodes, '');
-    this.materials.filter(x => x != null).forEach((x: any) => {
-      x.path = this.setPath(x.code);
+    this.loading = true;
+    this.materialManager.materialsSummaryPdfSpec(this.project, this.selectedStatementNode.data).subscribe(pdfUrl => {
+      this.loading = false;
+      this.url = pdfUrl;
+      window.open(this.url, '_blank');
     });
-    this.materialsSummary = this.materialsSummarySrc.filter(x => x.code.startsWith(this.selectedRootNode));
-    this.materialsSummary.forEach(x => x.path = this.setPath(x.code));
+  }
+
+  protected readonly JSON = JSON;
+
+  statementChanged() {
+    let stmtIds = this.getStatements(this.selectedStatementNode.data).map(x => x.id);
+    console.log(stmtIds);
+    this.materialsSummary = this.materialsSummarySrc.filter(x => stmtIds.includes(x.material.statem_id));
+    console.log(this.materialsSummarySrc);
+    this.loading = false;
   }
 }

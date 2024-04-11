@@ -22,12 +22,6 @@
 /deep/.pi {
   font-size: 13px;
 }
-/deep/.p-tree{
-  height: calc(100vh - 237px);
-  overflow: auto;
-  padding: 10px;
-  border: none;
-}
 /deep/.p-dialog .p-dialog-content {
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
