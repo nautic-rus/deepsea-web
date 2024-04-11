@@ -91,12 +91,13 @@ export class EditSupplierComponent implements OnInit {
 
 
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+      console.log(res)
       this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
       this.archivedSupplierFilesSrc = res.filter((f:any) => f.archived == 1)
-      // console.log("initial this.supplierFilesSrc")
-      // console.log(this.supplierFilesSrc)
-      // console.log("initial this.archivedSupplierFiles")
-      // console.log(this.archivedSupplierFilesSrc)
+      console.log("initial this.supplierFilesSrc")
+      console.log(this.supplierFilesSrc)
+      console.log("initial this.archivedSupplierFiles")
+      console.log(this.archivedSupplierFilesSrc)
     })
 
 
@@ -629,12 +630,12 @@ export class EditSupplierComponent implements OnInit {
     this.showMoreButtonClicked = !this.showMoreButtonClicked
     if (this.showMoreButtonClicked) {
       // @ts-ignore
-      this.suppFilesLenght = array.length;
+      this.suppFilesLenght = array.length;  //если мы кликнули на кнопку показать еще, то показываем весь массив
     } else {
-      this.suppFilesLenght = 5;
+      this.suppFilesLenght = 5;  ////если мы не кликнули на кнопку показать еще, то показываем часть массива
     }
     // @ts-ignore
-    this.getSupFiles(array)
+    this.getSupFiles(array)  //а тут устанавливаем отображаемый массив с нужно длинной уже  this.suppFilesLenght
 
   }
 

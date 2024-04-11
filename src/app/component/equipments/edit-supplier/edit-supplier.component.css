@@ -70,6 +70,21 @@
   justify-content: flex-end;
 }
 
+.inputtext {
+  border-style: none;
+  outline: none;
+  width: 96%;
+  height: 30px;
+  border-right: 1px solid #ced4da;
+}
+
+.input-botton {
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+}
+
 
 
 
