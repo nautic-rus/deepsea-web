@@ -27,7 +27,7 @@
 
     <div class="status-manufacturer">
       <div class="status-container">
-        <div class="text-y line-text normal-text">{{t.tr('Статус')}}</div>
+        <div class="text-y line-text normal-text mb-5">{{t.tr('Статус')}}</div>
 <!--        <p [hidden]="edit =='status'" class="info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </p>-->
         <div class="">
           <p-dropdown formControlName="status" class="select" id="status" [options]="statusTitle" (onChange)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)" appendTo = "body" styleClass="font-14 w-100"></p-dropdown>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="pl-15 manufacturer-container">
-        <div class="text-y normal-text">{{t.tr('Производитель')}}</div>
+        <div class="text-y normal-text mb-5">{{t.tr('Производитель')}}</div>
 <!--        <p [hidden]="edit =='manufacturer'" class="width-160 info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </p>-->
         <div class="df input-botton">
           <input class="info-manufacturer inputtext w-10 min-width-160" id="manufacturer" type="text" formControlName="manufacturer">
@@ -67,8 +67,8 @@
       </div>
     </div>
 
-    <div class="mt-3px">
-      <div class=" text-y height-30 normal-text w-30">{{t.tr('Комментарий')}}</div>
+    <div class="mt-5">
+      <div class=" text-y mb-5 normal-text w-30">{{t.tr('Комментарий')}}</div>
       <div class="min-width-160">
 <!--        <p  class="width-160 info-comment mt-16 p-inputtext">{{supplierForm.value.comment}} </p>-->
         <div class="df input-botton">
@@ -89,8 +89,8 @@
       </div>
     </div>
 
-    <div class="mt-3px">
-      <div class="df text-y height-30 normal-text w-30">{{t.tr('Описание')}}</div>
+    <div class="mt-5">
+      <div class="df text-y mb-5 normal-text w-30">{{t.tr('Описание')}}</div>
       <div class="min-height-80">
         <!--        <p [hidden]="edit =='description'" class="width-160 info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>-->
         <div class="df input-botton description-container">
