@@ -57,8 +57,6 @@
   padding: 0px 10px;
   background-color: rgba(9, 30, 66, 0.04);
   height: 32px;
-  border-radius: 2px;
-  box-shadow: 2px 2px 6px 0px rgba(34, 60, 80, 0.2);
   border: 1px solid #dedede69;
 }
 .task-name-button:hover{
@@ -75,7 +73,6 @@
   outline: none;
   width: 96%;
   height: 30px;
-  border-right: 1px solid #ced4da;
 }
 
 .input-botton {
@@ -1155,8 +1152,6 @@
   padding: 0px 10px;
   background-color: rgba(9, 30, 66, 0.04);
   height: 32px;
-  border-radius: 2px;
-  box-shadow: 2px 2px 6px 0px rgba(34, 60, 80, 0.2);
   border: 1px solid #dedede69;
 }
 .task-name-button:hover{
