@@ -1400,3 +1400,8 @@ app-materials-summary .p-virtualscroller .p-virtualscroller-content{
 .button-cancel:hover{
   background-color: #c0c1c4;
 }
+
+.fs-12 {
+  font-size: 12px;
+  font-weight: bold;
+}

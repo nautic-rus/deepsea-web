@@ -142,8 +142,8 @@
     <div>
       <div class="df space-between">
         <div class="df">
-          <div [ngClass]="{checkButton: showAttachmentButton}" class="mt-1 pb-5 mr-10 mr-5 cursor-pointer" (click)="showAttachmentFiles()">{{t.tr('Файлы')}}</div>
-          <div [ngClass]="{checkButton: !showAttachmentButton}" class="mt-1 pb-5 cursor-pointer" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
+          <div [ngClass]="{checkButton: showAttachmentButton}" class="mt-1 pb-5 mr-10 mr-5 cursor-pointer fs-12" (click)="showAttachmentFiles()">{{t.tr('Файлы')}}</div>
+          <div [ngClass]="{checkButton: !showAttachmentButton}" class="mt-1 pb-5 cursor-pointer fs-12" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
         </div>
       </div>
       <div class="pb-10" style="border-top: solid 1px #dedede69"></div>
@@ -209,7 +209,7 @@
         </p-table>
       </div>
 
-      <div [ngClass]=" (showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5) ? 'df files-buttons': 'df justify-content-end'">
+      <div [ngClass]=" (showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5) ? 'df files-buttons': 'df justify-content-end mt-20'">
         <button type="button" *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-show-more">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
 
         <div  class="mr-5 cy">
@@ -226,7 +226,7 @@
       </div>
       <div collapseContent #contentRelated="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="relatedTasks.length != 0">
-          <div class="subtask df" *ngFor="let task of relatedTasks">
+          <div class="subtask df align-center" *ngFor="let task of relatedTasks">
             <div class="subtask-grid" (click)="openIssue(task.issue_id)">
               <div class="pr-10">{{task.issue_typ}}</div>
               <div class="pr-10 min-width-75">
