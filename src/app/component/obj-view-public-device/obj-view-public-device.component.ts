@@ -210,6 +210,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
     if (++this.groupsAdded == this.groupsCount){
       this.model = group;
       this.loading = false;
+      (this.model as THREE.Group).rotateOnWorldAxis(new Vector3(1, 0, 0), Math.PI * 1.5);
       this.scene.add(this.model);
       this.setView(this.model);
       this.render();
