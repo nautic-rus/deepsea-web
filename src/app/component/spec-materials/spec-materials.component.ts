@@ -428,20 +428,10 @@ export class SpecMaterialsComponent implements OnInit {
 
   getMaterialName(material: any) {
     let res = material.name;
-    if (this.t.language == 'ru'){
-      if (material.translations.length > 0){
-        res = material.translations[0].name;
-      }
-    }
     return res;
   }
   getMaterialDescription(material: any) {
     let res = material.description;
-    if (this.t.language == 'ru'){
-      if (material.translations.length > 0){
-        res = material.translations[0].description;
-      }
-    }
     return res;
   }
   chunkMaterials(chunkSize = 3){

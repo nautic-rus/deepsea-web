@@ -76,11 +76,11 @@
       <div class="w-32 right-content-card mt-20">
         <div class="df tabs-header">
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Files'" [class.selectedTab]="selectedHeadTab ==  'Files'">{{t.tr('Файлы')}}</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">{{t.tr('Активность')}}
+          <div class="all-tabs cursor-pointer hidden" (click)="selectedHeadTab = 'Activity'" [class.selectedTab]="selectedHeadTab ==  'Activity'">{{t.tr('Активность')}}
             <div *ngIf="newImportantMessage() > 0" >! {{newImportantMessage()}}</div>
           </div>
           <div *ngIf="auth.hasPerms('visible_doc_task')" class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Misc'" [class.selectedTab]="selectedHeadTab ==  'Misc'">{{t.tr('Задачи')}}</div>
-          <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">{{t.tr('Инфо')}}</div>
+          <div class="all-tabs cursor-pointer hidden" (click)="selectedHeadTab = 'Info'" [class.selectedTab]="selectedHeadTab ==  'Info'">{{t.tr('Инфо')}}</div>
           <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Archive'" [class.selectedTab]="selectedHeadTab ==  'Archive'">{{t.tr('Архив')}}</div>
         </div>
 

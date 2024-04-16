@@ -1405,3 +1405,6 @@ app-materials-summary .p-virtualscroller .p-virtualscroller-content{
   font-size: 12px;
   font-weight: bold;
 }
+.hidden{
+  display: none;
+}
