@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="mr-10">
-        <div (click)="showSpoolModel('full')" class="materials-button yellow-button cxy">
+        <div [class.disabled-button]="getRevisionFilesOfGroup('Spool Models', selectedRevision).length == 0" (click)="showSpoolModel('full')" class="materials-button yellow-button cxy">
           <img src="assets/icons/rotation.svg" height="26">
         </div>
       </div>
@@ -109,7 +109,7 @@
                     </div>
                   </div>
 
-                  <div *ngIf="!pipeSpool.aux" class="cursor-pointer show-model mb-20" (click)="showSpoolModel(pipeSpool.spool)">
+                  <div [class.disabled-button]="getRevisionFilesOfGroup('Spool Models', selectedRevision).length == 0"  *ngIf="!pipeSpool.aux" class="cursor-pointer show-model mb-20" (click)="showSpoolModel(pipeSpool.spool)">
                     <div class="three-d-model cxy">3D</div>
                   </div>
 
