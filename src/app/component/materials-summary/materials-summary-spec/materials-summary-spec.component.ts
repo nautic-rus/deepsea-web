@@ -285,8 +285,8 @@ export class MaterialsSummarySpecComponent implements OnInit {
       }
       this.materialManager.getMaterialsSummarySpec(this.project).subscribe(summarySpec => {
         this.materialsSummarySrc = summarySpec;
-        let stmtIds = this.getStatements(this.selectedStatementNode.data).map(x => x.id);
-        console.log(stmtIds);
+        console.log(this.selectedStatementNode.data);
+        let stmtIds = this.getStatements(this.selectedStatementNode.data).map(x => x.id).concat(this.selectedStatementNode.data);
         this.materialsSummary = this.materialsSummarySrc.filter(x => stmtIds.includes(x.material.statem_id));
         console.log(this.materialsSummarySrc);
         this.loading = false;
@@ -294,7 +294,7 @@ export class MaterialsSummarySpecComponent implements OnInit {
     });
   }
   getStatements(parentId: number): any[]{
-    let res: number[] = [];
+    let res: any[] = [];
     this.statements.filter(x => x.parent_id == parentId).forEach(stmt => {
       res.push(stmt);
       this.getStatements(stmt.id).forEach(chStmt => {
@@ -437,7 +437,7 @@ export class MaterialsSummarySpecComponent implements OnInit {
   protected readonly JSON = JSON;
 
   statementChanged() {
-    let stmtIds = this.getStatements(this.selectedStatementNode.data).map(x => x.id);
+    let stmtIds = this.getStatements(this.selectedStatementNode.data).map(x => x.id).concat(this.selectedStatementNode.data);
     console.log(stmtIds);
     this.materialsSummary = this.materialsSummarySrc.filter(x => stmtIds.includes(x.material.statem_id));
     console.log(this.materialsSummarySrc);

@@ -619,7 +619,7 @@ export class ElectricEspComponent implements OnInit {
     this.dialogService.open(EleEspGenerationWaitComponent, {
       showHeader: false,
       modal: true,
-      data: {issue: this.issue, spools: value}
+      data: {issue: this.issue, project: this.foranProject }
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });
