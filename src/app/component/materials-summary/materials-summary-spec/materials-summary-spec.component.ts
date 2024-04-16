@@ -29,7 +29,8 @@ export class MaterialsSummarySpecComponent implements OnInit {
   nodes: any = [];
   rootNodes: any[] = [];
   selectedRootNode: string = '';
-  nodesSrc: any = [];
+  directoriesSrc: any = [];
+  directories: any = [];
   layers: any = [];
   materials: any [] = [];
   materialsSrc: any [] = [];
@@ -75,19 +76,11 @@ export class MaterialsSummarySpecComponent implements OnInit {
       this.selectedView = 'list';
     }, 1000);
     this.project = 1;
+    this.materialManager.getSpecDirectories().subscribe(specDirectories => {
+      this.directoriesSrc = specDirectories;
+      this.directories = this.getDirectories(this.directoriesSrc);
+    });
     this.projectChanged();
-  }
-  setPath(code: string, length = 3){
-    let count = 1;
-    let path = '';
-    let root = code.substr(0, length * count);
-    let findNode = this.nodesSrc.find((x: any) => x.data == root);
-    while (findNode != null){
-      path = path + '/' + findNode.label;
-      count += 1;
-      findNode = this.nodesSrc.find((x: any) => x.data == code.substr(0, length * count));
-    }
-    return path.split('/').filter(x => x != '');
   }
   searchChange() {
     if (this.selectedView == 'tiles'){
@@ -135,6 +128,18 @@ export class MaterialsSummarySpecComponent implements OnInit {
         children: _.sortBy(this.getNodes2(rootNodes, materials, n.data), x => x.label),
         label: n.label,
         count: materials.filter(x => x.code.startsWith(n.data)).length
+      });
+    });
+    return res;
+  }
+  getDirectories(rootNodes: any[], parent_id = 0){
+    let res: any[] = [];
+    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+      res.push({
+        data: n.id,
+        children: this.getDirectories(rootNodes, n.id),
+        label: n.name,
+        index: n.code
       });
     });
     return res;
@@ -288,6 +293,8 @@ export class MaterialsSummarySpecComponent implements OnInit {
         console.log(this.selectedStatementNode.data);
         let stmtIds = this.getStatements(this.selectedStatementNode.data).map(x => x.id).concat(this.selectedStatementNode.data);
         this.materialsSummary = this.materialsSummarySrc.filter(x => stmtIds.includes(x.material.statem_id));
+        console.log(this.directories);
+        this.materialsSummary.filter(x => x != null).forEach(m => m.path = this.getMaterialPath(this.directories, m.material.dir_id));
         console.log(this.materialsSummarySrc);
         this.loading = false;
       });
@@ -442,5 +449,24 @@ export class MaterialsSummarySpecComponent implements OnInit {
     this.materialsSummary = this.materialsSummarySrc.filter(x => stmtIds.includes(x.material.statem_id));
     console.log(this.materialsSummarySrc);
     this.loading = false;
+  }
+  getMaterialPath(nodes: any[], dir_id: number){
+    let res = [];
+    let find = nodes.find(x => x.data == dir_id);
+    if (find == null){
+      nodes.forEach(n => {
+        let findChild = this.getMaterialPath(n.children, dir_id);
+        if (findChild.length > 0){
+          res.push(n.label);
+          findChild.forEach(x => {
+            res.push(x);
+          });
+        }
+      });
+    }
+    else{
+      res.push(find.label);
+    }
+    return res;
   }
 }

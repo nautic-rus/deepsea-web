@@ -33,7 +33,7 @@
         {{selectedNodePath}}
       </div>
       <div class="p-ml-auto mr-10 df">
-        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer disabled-button">
           <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
           <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
         </div>
