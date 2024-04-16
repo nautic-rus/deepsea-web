@@ -120,7 +120,7 @@ const routes: Routes = [
   { path: 'doclist', component: DoclistComponent, canActivate: [AuthGuard], data: {animation: 'DoclistComponent'} },
   { path: 'materials-summary', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummaryComponent'} },
   { path: 'statements', component: MaterialsSummarySpecComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummarySpecComponent'} },
-  { path: 'statements-s', component: MaterialsSummaryComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummarySpecComponent'} },
+  { path: 'statements-s', component: MaterialsSummarySpecComponent, canActivate: [AuthGuard], data: {animation: 'MaterialsSummarySpecComponent'} },
   { path: 'master', component: MasterComponent, data: {animation: 'MasterComponent'}, canActivate: [AuthGuard]  },
   { path: 'plan', component: PlanComponent, data: {animation: 'PlanComponent'}, canActivate: [AuthGuard] },
   { path: 'user-data', component: UserDataComponent, data: {animation: 'UserDataComponent'}, canActivate: [AuthGuard] },
