@@ -1,0 +1,18 @@
+<div class="mt-20">
+  <div class="cxy">
+    <div (click)="selectFiles.click()" class="button-ok button-upload cxy">UPLOAD PHOTO</div>
+  </div>
+  <div class="cxy mt-5">
+    <div (click)="capturePhoto.click()" class="button-ok button-upload cxy">CAPTURE PHOTO</div>
+  </div>
+  <input hidden #selectFiles type="file" accept="image/*" (change)="handleFileInput(selectFiles.files)" multiple>
+  <input hidden #capturePhoto type="file" accept="image/*" (change)="handleFileInput(capturePhoto.files)" multiple="multiple" capture="environment">
+  <div class="cx">
+    <div class="images mt-20">
+      <div class="cxy my-10 position-relative" *ngFor="let img of imgs.reverse()">
+        <div class="image-delete" (click)="deleteImage(img)">DEL</div>
+        <img width="95%" [src]="img">
+      </div>
+    </div>
+  </div>
+</div>

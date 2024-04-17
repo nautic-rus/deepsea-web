@@ -1,0 +1,21 @@
+.button-upload{
+  width: 220px;
+  height: 60px;
+  font-size: 14px;
+}
+.images{
+  height: 70vh;
+  width: 80%;
+  overflow: auto;
+}
+.image{
+  width: 95%;
+}
+.image-delete{
+  background-color: red;
+  height: 20px;
+  width: 35px;
+  position: absolute;
+  right: 6%;
+  top: 3%;
+}

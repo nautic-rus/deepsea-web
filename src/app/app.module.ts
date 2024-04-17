@@ -224,6 +224,7 @@ import { SpecMaterialComponent } from './component/spec-materials/spec-material/
 import { WarehouseComponent } from './component/warehouse/warehouse.component';
 import { MaterialsSummarySpecComponent } from './component/materials-summary/materials-summary-spec/materials-summary-spec.component';
 import { ActControlComponent } from './component/warehouse/act-control/act-control.component';
+import { StorageUploadPhotoComponent } from './component/warehouse/storage-upload-photo/storage-upload-photo.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -389,6 +390,7 @@ Quill.register('modules/imageResize', ImageResize);
     WarehouseComponent,
     MaterialsSummarySpecComponent,
     ActControlComponent,
+    StorageUploadPhotoComponent,
 
   ],
   imports: [
