@@ -221,6 +221,7 @@ import {ColorPickerModule} from "primeng/colorpicker";
 import { ObjViewPublicDeviceComponent } from './component/obj-view-public-device/obj-view-public-device.component';
 import { ObjViewUrlCreateDeviceComponent } from './component/tools/obj-view-url-create-device/obj-view-url-create-device.component';
 import { SpecMaterialComponent } from './component/spec-materials/spec-material/spec-material.component';
+import { WarehouseComponent } from './component/warehouse/warehouse.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -383,6 +384,7 @@ Quill.register('modules/imageResize', ImageResize);
     ObjViewPublicDeviceComponent,
     ObjViewUrlCreateDeviceComponent,
     SpecMaterialComponent,
+    WarehouseComponent,
 
   ],
   imports: [
