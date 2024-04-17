@@ -222,6 +222,7 @@ import { ObjViewPublicDeviceComponent } from './component/obj-view-public-device
 import { ObjViewUrlCreateDeviceComponent } from './component/tools/obj-view-url-create-device/obj-view-url-create-device.component';
 import { SpecMaterialComponent } from './component/spec-materials/spec-material/spec-material.component';
 import { WarehouseComponent } from './component/warehouse/warehouse.component';
+import { MaterialsSummarySpecComponent } from './component/materials-summary/materials-summary-spec/materials-summary-spec.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -385,6 +386,7 @@ Quill.register('modules/imageResize', ImageResize);
     ObjViewUrlCreateDeviceComponent,
     SpecMaterialComponent,
     WarehouseComponent,
+    MaterialsSummarySpecComponent,
 
   ],
   imports: [

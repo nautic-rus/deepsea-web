@@ -1,6 +1,6 @@
-<form [formGroup]="supplierForm" class="form-container">
-  <div class="w65">
-  <div class="task-header">
+<form style="height: 750px;" [formGroup]="supplierForm" class="form-container">
+  <div >
+  <div class="task-header sticky">
     <div class="df">
       <div class="text-head text-bottom">ID {{supplier_id}} | SFI {{sfi}} - {{sfi_name}}</div>
     </div>
@@ -18,57 +18,140 @@
         <i class="pi pi-times"></i>
       </div>
     </div>
+    <div class="pt-10 pb-10">
+      <span class="task-name hover-task cursor-pointer">{{supplierForm.value.name}}</span>
+    </div>
   </div>
-  <div class="center">
-    <div class="left-content">
-      <div class="pb-10">
-        <span class="task-name hover-task cursor-pointer">{{supplierForm.value.name}}</span>
+
+
+  <div>
+
+    <div class="status-manufacturer">
+      <div class="status-container">
+        <div class="text-y line-text normal-text mb-5">{{t.tr('Статус')}}</div>
+<!--        <p [hidden]="edit =='status'" class="info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </p>-->
+        <div class="">
+          <p-dropdown formControlName="status" class="select" id="status" [options]="statusTitle" (onChange)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)" appendTo = "body" styleClass="font-14 w-100"></p-dropdown>
+<!--          <div class="df cxy ml-5">-->
+<!--            <div (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)">-->
+<!--              <div  class="task-name-button cxy mr-10">-->
+<!--                <img src="assets/icons/tick.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div (click)="showEditBlock('')">-->
+<!--              <div  class="task-name-button cxy">-->
+<!--                <img src="assets/icons/cancel.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+        </div>
       </div>
-      <div class="mt-3px">
-        <div class="df text-y height-30 normal-text w-30">{{t.tr('Описание')}}</div>
-        <div class="min-height-80">
-          <p [hidden]="edit =='description'" class="edit_container info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>
-          <div *ngIf="edit =='description'">
-            <input class="info-description mt-16 p-inputtext w-100" id="description" type="text" formControlName="description">
-            <div class="df mt-10">
-              <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">
-                <div  class="task-name-button cxy mr-10">
-                  <img src="assets/icons/tick.svg">
-                </div>
+
+      <div class="pl-15 manufacturer-container">
+        <div class="text-y normal-text mb-5">{{t.tr('Производитель')}}</div>
+<!--        <p [hidden]="edit =='manufacturer'" class="width-160 info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </p>-->
+        <div class="df input-botton">
+          <input class="info-manufacturer inputtext w-10 min-width-160" id="manufacturer" type="text" formControlName="manufacturer">
+          <div class="df">
+            <div class="cursor-pointer" (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
+              <div  class="task-name-button cxy">
+                <img src="assets/icons/tick.svg">
               </div>
-              <div (click)="showEditBlock('')">
-                <div  class="task-name-button cxy">
-                  <img src="assets/icons/cancel.svg">
-                </div>
+            </div>
+            <div class="cursor-pointer" (click)="showEditBlock('')">
+              <div  class="task-name-button cxy">
+                <img src="assets/icons/cancel.svg">
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="df space-between">
-        <div class="df">
-          <div [ngClass]="{checkButton: showAttachmentButton}" class="big-text mt-1 mr-10 button-new" (click)="showAttachmentFiles()">{{t.tr('Вложения')}}</div>
-          <div [ngClass]="{checkButton: !showAttachmentButton}" class="big-text mt-1 button-new" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
-        </div>
-        <div  class="mr-5 cy">
-          <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+    </div>
+
+    <div class="mt-5">
+      <div class=" text-y mb-5 normal-text w-30">{{t.tr('Комментарий')}}</div>
+      <div class="min-width-160">
+<!--        <p  class="width-160 info-comment mt-16 p-inputtext">{{supplierForm.value.comment}} </p>-->
+        <div class="df input-botton">
+          <input class="info-comment inputtext w-10 min-width-160" id="comment" type="text" formControlName="comment" (click)="showEditBlock('comment')">
+          <div class="df">
+            <div class="cursor-pointer" (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">
+              <div  class="task-name-button cxy">
+                <img src="assets/icons/tick.svg">
+              </div>
+            </div>
+            <div class="cursor-pointer" (click)="showEditBlock('')">
+              <div  class="task-name-button cxy">
+                <img src="assets/icons/cancel.svg">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <!--      это блок с вложенными файлами-->
-      <div *ngIf="showAttachmentButton">
+    </div>
+
+    <div class="mt-5">
+      <div class="df text-y mb-5 normal-text w-30">{{t.tr('Описание')}}</div>
+      <div class="min-height-80">
+        <!--        <p [hidden]="edit =='description'" class="width-160 info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>-->
+        <div class="df input-botton description-container">
+          <textarea class="info-description  inputtext w-10 description-textarea min-width-160" id="description" type="text" formControlName="description"></textarea>
+          <div class="df">
+            <div class="cursor-pointer" (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">
+              <div  class="task-name-button cxy">
+                <img src="assets/icons/tick.svg">
+              </div>
+            </div>
+            <div class="cursor-pointer" (click)="showEditBlock('')">
+              <div  class="task-name-button cxy">
+                <img src="assets/icons/cancel.svg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      <!--    <div class="mt-3px">-->
+<!--      <div class="df text-y height-30 normal-text w-30">{{t.tr('Описание')}}</div>-->
+<!--      <div class="min-height-80">-->
+<!--&lt;!&ndash;        <p [hidden]="edit =='description'" class="width-160 info-description mt-16 p-inputtext" (click)="showEditBlock('description')">{{supplierForm.value.description}} </p>&ndash;&gt;-->
+<!--        <div class="df" *ngIf="edit =='description'">-->
+<!--          <input class="info-description mt-16 p-inputtext w-100" id="description" type="text" formControlName="description">-->
+<!--          <div class="df mt-10">-->
+<!--            <div (click)="editSupplier('changed description', this.prev_sup_data.description, this.supplierForm.value.description)">-->
+<!--              <div  class="task-name-button cxy mr-10">-->
+<!--                <img src="assets/icons/tick.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div (click)="showEditBlock('')">-->
+<!--              <div  class="task-name-button cxy">-->
+<!--                <img src="assets/icons/cancel.svg">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+  <div>
+    <div>
+      <div class="df space-between">
+        <div class="df">
+          <div [ngClass]="{checkButton: showAttachmentButton}" class="mt-1 pb-5 mr-10 mr-5 cursor-pointer fs-12" (click)="showAttachmentFiles()">{{t.tr('Файлы')}}</div>
+          <div [ngClass]="{checkButton: !showAttachmentButton}" class="mt-1 pb-5 cursor-pointer fs-12" (click)="showArchivedFiles()">{{t.tr('Архив')}}</div>
+        </div>
+      </div>
+      <div class="pb-10" style="border-top: solid 1px #dedede69"></div>
+
+            <!--      это блок с вложенными файлами-->
+      <div  *ngIf="showAttachmentButton">
         <div class="archive-no" *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>
-        <p-table *ngIf="supplierFilesSrc.length != 0" [value]="supplierFilesSrc" styleClass="p-datatable-striped" [tableStyle]="">
-<!--          <ng-template pTemplate="header">-->
-<!--            <tr>-->
-<!--              <th>{{t.tr('Наименование')}}</th>-->
-<!--              <th>{{t.tr('Тип')}}</th>-->
-<!--              <th>{{t.tr('Рев.')}}</th>-->
-<!--              <th>{{t.tr('Пользователь')}}</th>-->
-<!--              <th>{{t.tr('Загружен')}}</th>-->
-<!--              <th></th>-->
-<!--              <th></th>-->
-<!--            </tr>-->
-<!--          </ng-template>-->
+        <p-table *ngIf="supplierFilesSrc.length != 0" [value]="getSupFiles(supplierFilesSrc)" styleClass="p-datatable-striped" [tableStyle]="">
           <ng-template pTemplate="body" let-file>
             <tr>
               <td class="padding-3">
@@ -97,24 +180,11 @@
             </tr>
           </ng-template>
         </p-table>
-        <button *ngIf="supplierFilesSrc.length != 0" [ngClass]="{disabled: showMoreFilesButtonIsDisabled}" tabindex="10" (click)="showmore ? showMore() : showLess()" class="button-ok mt-1">
-          {{showmore ? t.tr('Показать еще') : t.tr('Скрыть')}}
-        </button>
       </div>
+
       <div *ngIf="!showAttachmentButton">
-        <div class="archive-no" *ngIf="archivedSupplierFiles.length == 0">{{t.tr('Здесь пока нет заархивированных файлов')}}</div>
-        <p-table *ngIf="archivedSupplierFiles.length != 0" [value]="archivedSupplierFiles" styleClass="p-datatable-striped" [tableStyle]="">
-<!--          <ng-template pTemplate="header">-->
-<!--            <tr>-->
-<!--              <th>{{t.tr('Наименование')}}</th>-->
-<!--              <th>{{t.tr('Тип')}}</th>-->
-<!--              <th>{{t.tr('Рев.')}}</th>-->
-<!--              <th>{{t.tr('Пользователь')}}</th>-->
-<!--              <th>{{t.tr('Загружен')}}</th>-->
-<!--              <th>{{t.tr('Удален')}}</th>-->
-<!--              <th></th>-->
-<!--            </tr>-->
-<!--          </ng-template>-->
+        <div class="archive-no" *ngIf="archivedSupplierFilesSrc.length == 0">{{t.tr('Здесь пока нет заархивированных файлов')}}</div>
+        <p-table *ngIf="archivedSupplierFilesSrc.length != 0" [value]="getSupFiles(archivedSupplierFilesSrc)" styleClass="p-datatable-striped" [tableStyle]="">
           <ng-template pTemplate="body" let-file>
             <tr>
               <td class="padding-3">
@@ -126,7 +196,6 @@
               <td class="padding-3">{{file.type_name}}</td>
               <td class="padding-3">REV{{file.rev}}</td>
               <td class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>
-              <td class="padding-3">{{this.getDateOnly(file.create_date)}}</td>
               <td class="padding-3">{{this.getDateOnly(file.archived_date)}}</td>
               <td class="padding-3">
                 <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
@@ -138,13 +207,18 @@
             </tr>
           </ng-template>
         </p-table>
-        <button *ngIf="archivedSupplierFiles.length != 0" [ngClass]="{disabled: showMoreArchivedFilesButtonIsDisabled}" tabindex="10" (click)="showmoreArchived ? showMoreArchived() : showLessArchived()" class="button-ok mt-1">
-          {{showmoreArchived ? t.tr('Показать еще') : t.tr('Скрыть')}}
-        </button>
+      </div>
+
+      <div [ngClass]=" (showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5) ? 'df files-buttons': 'df justify-content-end mt-20'">
+        <button type="button" *ngIf="(showAttachmentButton && supplierFilesSrc.length > 5) || (!showAttachmentButton && archivedSupplierFilesSrc.length > 5)" tabindex="10" (click)="toggleShowMoreButton()" class="button-show-more">{{showMoreButtonClicked ? t.tr('Скрыть') : t.tr('Показать еще')}}</button>
+
+        <div  class="mr-5 cy">
+          <div [hidden]="buttonsAreHidden" *ngIf="showAttachmentButton" tabindex="10"  (click)="addFiles()" class="button-ok ml-1" >{{t.tr('Добавить файлы')}}</div>
+        </div>
       </div>
 
 
-      <div [collapse]="contentRelated" class="big-text mb-1 mt-10 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
+      <div [collapse]="contentRelated" class="big-text mb-1 mt-20 collapse-header cursor-pointer" *ngIf="relatedTasks.length != 0" (click)="contentClick('relatedTasks')">
         <div class="cy mr-10 arrow-up" [class.arrow-down]="collapsed.includes('relatedTasks')">
           <img src="assets/icons/arrow-right.png">
         </div>
@@ -152,27 +226,27 @@
       </div>
       <div collapseContent #contentRelated="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="relatedTasks.length != 0">
-          <div class="subtask df" *ngFor="let task of relatedTasks">
-            <div class="subtask-grid align-center" (click)="openIssue(task.issue_id)">
+          <div class="subtask df align-center" *ngFor="let task of relatedTasks">
+            <div class="subtask-grid" (click)="openIssue(task.issue_id)">
               <div class="pr-10">{{task.issue_typ}}</div>
               <div class="pr-10 min-width-75">
                 <span [innerHTML]="issueManager.trim(task.issue_name)"></span>
               </div>
-              <div class="df min-width-100">
+              <div class="df min-width-180">
                 <div class="min-text mt-2px">{{t.tr('Автор - ')}}</div>
                 <div [innerHTML]="issueManager.getAssignedToTrim(task.started_by)"></div>
               </div>
-              <div class="df min-width-100">
+              <div class="df min-width-180">
                 <div class="min-text mt-2px">{{t.tr('Исполнитель - ')}}</div>
                 <div [innerHTML]="issueManager.getAssignedToTrim(task.assigned_to)"></div>
               </div>
-              <div class="df min-width-100">
+              <div class="df min-width-180">
                 <div class="min-text mt-2px">{{t.tr('Ответственный - ')}}</div>
                 <div [innerHTML]="issueManager.getAssignedToTrim(task.responsible)"></div>
               </div>
               <div class="" [innerHTML]="issueManager.localeStatus(task.status) | safeHtml"></div>
             </div>
-            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="deleteRelatedTask(task.id)" class="pt-10 pl-10 position-relative">
+            <div [pTooltip]="t.tr('Удалить связь')" tooltipPosition="top" (click)="deleteRelatedTask(task.id)" class="mt-3px position-relative">
               <div class="untie padding-3 cxy">
                 <img src="assets/icons/cancel-red.svg" height="12">
               </div>
@@ -191,39 +265,52 @@
       </div>
       <div collapseContent #contentRelatedMaterials="collapseContent" class="collapse-body">
         <div class="ovf-auto" *ngIf="relatedMaterials.length != 0">
-          <div class="subtask df" *ngFor="let material of relatedMaterials">
-            <div class="subtask-grid" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">
-              <div class="pr-10">{{material.stock_code}}</div>
-              <div class="pl-2px pr-10">{{material.name}}</div>
-              <div class="pr-10"></div>
-              <div class="pr-10">{{material.doc_number}}</div>
+          <div class="" *ngFor="let material of relatedMaterials">
+            <div class="related-sup-mat" [ngClass]="{ 'cursor-pointer': material.doc_number}" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">
+              <div class="pl-10">{{material.stock_code}}</div>
+              <div class="pl-2px">{{material.name}}</div>
+              <!--              <div class="pr-10"></div>-->
+              <div class="pr-10" style="text-align: end">{{material.doc_number}}</div>
             </div>
           </div>
         </div>
       </div>
 
 
+<!--      <div collapseContent #contentRelatedMaterials="collapseContent" class="collapse-body">-->
+<!--        <div class="ovf-auto" *ngIf="relatedMaterials.length != 0">-->
+<!--          <div class="subtask df" *ngFor="let material of relatedMaterials">-->
+<!--            <div class="subtask-grid" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">-->
+<!--              <div class="pr-10">{{material.stock_code}}</div>-->
+<!--              <div class="pl-2px pr-10">{{material.name}}</div>-->
+<!--&lt;!&ndash;              <div class="pr-10"></div>&ndash;&gt;-->
+<!--              <div class="pr-10">{{material.doc_number}}</div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
 
       <div class="big-text mt-1 mb-1">{{t.tr('История')}}</div>
-      <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+      <p-table [value]="historyArray.reverse()" styleClass="p-datatable-striped"  [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="body" let-history>
-          <div class="df" *ngIf="history.name_value == 'created'">
+          <div class="df history-text" *ngIf="history.name_value == 'created'">
             <div class="pt-5 mr-10">
               <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
             </div>
-            <div>
+            <div class="history-text">
               <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
               <span class="text-descr px-5">{{t.tr('добавил(а) поставщика')}}</span>
               <span class="text-date">{{getDate(history.update_date)}}</span>
             </div>
           </div>
-          <div class="pb-20" *ngIf="history.name_value == 'added file'">
+          <div class="pb-20 history-text"  *ngIf="history.name_value == 'added file'">
             <div class="df">
               <div class="pt-5 mr-10">
                 <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
               </div>
               <div>
-                <div>
+                <div class="history-text">
                   <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
                   <span class="text-descr px-5">{{t.tr('добавил(а) файл')}}</span>
                   <span class="text-date">{{getDate(history.update_date)}}</span>
@@ -246,7 +333,7 @@
               </div>
             </div>
           </div>
-          <div class="pb-20" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
+          <div class="pb-20 history-text" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
             <div class="df">
               <div class="pt-5 mr-10">
                 <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
@@ -254,11 +341,11 @@
               <div>
                 <div>
                   <span class="bold-text">{{auth.getUserNameById(history.author)}}</span>
-                  <span class="text-descr px-5">{{refactorHistoryTitle(history.name_value)}}</span>
+                  <span class="text-descr px-5">{{t.tr(refactorHistoryTitle(history.name_value))}}</span>
                   <span class="text-date">{{getDate(history.update_date)}}</span>
                 </div>
                 <div class="pt-5">
-                  <span [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>
+                  <span class="history-text" [innerHTML]="formatValue(history.name_value, history.prev_value) | safeHtml"></span>
                   <span class="px-10">
                       <img src="assets/icons/right-arrow.svg" height="13">
                     </span>
@@ -269,70 +356,6 @@
           </div>
         </ng-template>
       </p-table>
-    </div>
-    <div class="right-content">
-      <div class="information">
-        <div class="header-information text-head">{{t.tr('Сведения')}}</div>
-        <div class="table table-overflow">
-          <div class="df mt-3px">
-            <div class="df text-y line-text normal-text w-30">{{t.tr('Статус')}}</div>
-            <p [hidden]="edit =='status'" class="width-160 info-status mt-16 p-inputtext" (click)="showEditBlock('status')">{{supplierForm.value.status}} </p>
-            <div class="df" *ngIf="edit =='status'">
-              <p-dropdown formControlName="status" class="select" id="status" [options]="statusTitle" appendTo = "body" styleClass="width-160 font-14"></p-dropdown>
-              <div class="df cxy ml-5">
-                <div (click)="editSupplier('changed status', this.prev_sup_data.status, this.supplierForm.value.status)">
-                  <div  class="task-name-button cxy mr-10">
-                    <img src="assets/icons/tick.svg">
-                  </div>
-                </div>
-                <div (click)="showEditBlock('')">
-                  <div  class="task-name-button cxy">
-                    <img src="assets/icons/cancel.svg">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="df mt-3px">
-            <div class="df text-y height-30 normal-text w-30">{{t.tr('Примечение')}}</div>
-            <textarea [hidden]="edit =='comment'" class="width-160 info-comment mt-16 p-inputtext" (click)="showEditBlock('comment')">{{supplierForm.value.comment}} </textarea>
-            <div class="df" *ngIf="edit =='comment'">
-              <textarea class="width-160 info-comment mt-16 p-inputtext" id="comment" type="text" formControlName="comment"></textarea>
-              <div class="df cxy ml-5">
-                <div (click)="editSupplier('changed comment', this.prev_sup_data.comment, this.supplierForm.value.comment)">
-                  <div  class="task-name-button cxy mr-10">
-                    <img src="assets/icons/tick.svg">
-                  </div>
-                </div>
-                <div (click)="showEditBlock('')">
-                  <div  class="task-name-button cxy">
-                    <img src="assets/icons/cancel.svg">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="df mt-3px">
-            <div class="df text-y height-30 normal-text w-30">{{t.tr('Производитель')}}</div>
-            <textarea [hidden]="edit =='manufacturer'" class="width-160 info-manufacturer mt-16 p-inputtext" (click)="showEditBlock('manufacturer')">{{supplierForm.value.manufacturer}} </textarea>
-            <div class="df" *ngIf="edit =='manufacturer'">
-              <textarea class="info-manufacturer width-160 mt-16 p-inputtext" id="manufacturer" type="text" formControlName="manufacturer"></textarea>
-              <div class="df cxy ml-5">
-                <div (click)="editSupplier('changed manufacturer', this.prev_sup_data.manufacturer, this.supplierForm.value.manufacturer)">
-                  <div  class="task-name-button cxy mr-10">
-                    <img src="assets/icons/tick.svg">
-                  </div>
-                </div>
-                <div (click)="showEditBlock('')">
-                  <div  class="task-name-button cxy">
-                    <img src="assets/icons/cancel.svg">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

@@ -225,11 +225,11 @@ export class ProjectProgressChartComponent implements OnInit {
   }
 
   getPlanHoursForDepartment(manHoursProgress: any[], dep: any) {
-    return manHoursProgress.find(x => x.department == dep).plan;
+    return Math.round(manHoursProgress.find(x => x.department == dep).plan);
   }
 
   getActualHoursForDepartment(manHoursProgress: any[], dep: any) {
-    return manHoursProgress.find(x => x.department == dep).actual;
+    return Math.round(manHoursProgress.find(x => x.department == dep).actual);
   }
   getPercantageHoursForDepartment(manHoursProgress: any[], dep: any) {
     return manHoursProgress.find(x => x.department == dep).percentage;

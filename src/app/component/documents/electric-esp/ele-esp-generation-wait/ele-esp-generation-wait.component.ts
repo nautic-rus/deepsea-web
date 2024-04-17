@@ -45,33 +45,22 @@ export class EleEspGenerationWaitComponent implements OnInit {
   getEsp() {
     this.selectRevision = false;
     this.generationWait = true;
-
-    this.s.createDeviceEsp(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, 'ele', this.issue.id).subscribe(res => {
-      this.issue.revision = this.rev;
-      this.issues.updateIssue(this.auth.getUser().login, 'hidden', this.issue).then(() => {});
-      if (!this.generateFiles){
-        this.generationWait = false;
-        this.close();
-      }
-    });
-    if (this.generateFiles){
-      this.s.createEleEspWithFiles(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, this.issue.id).subscribe(res => {
-        this.generationWait = false;
-        this.resUrls.splice(0, this.resUrls.length);
-        this.resUrls.push(res);
-        let files: FileAttachment[] = [];
-        this.resUrls.forEach(fileUrl => {
-          let file = new FileAttachment();
-          file.url = fileUrl;
-          file.revision = this.rev;
-          file.author = this.auth.getUser().login;
-          file.group = 'Part List';
-          file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
-          file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
-          files.push(file);
-        });
+    this.s.createEleEspWithFiles(this.project, this.issue.doc_number, this.rev, this.auth.getUser().login, this.issue.id).subscribe(res => {
+      this.generationWait = false;
+      this.resUrls.splice(0, this.resUrls.length);
+      this.resUrls.push(res);
+      let files: FileAttachment[] = [];
+      this.resUrls.forEach(fileUrl => {
+        let file = new FileAttachment();
+        file.url = fileUrl;
+        file.revision = this.rev;
+        file.author = this.auth.getUser().login;
+        file.group = 'Part List';
+        file.name = this.issue.doc_number + '.' + fileUrl.split('.').pop();
+        file.name = this.issue.doc_number + '_rev' + this.rev + '.' + fileUrl.split('.').pop();
+        files.push(file);
       });
-    }
+    });
 
   }
 

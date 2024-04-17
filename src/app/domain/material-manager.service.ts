@@ -99,4 +99,10 @@ export class MaterialManagerService {
   addSupMatRelations(supMatRelation: any){
     return this.http.post<any>(props.http + '/addSupMatRelations', JSON.stringify(supMatRelation));
   }
+  getMaterialsSummarySpec(projectId: number){
+    return this.http.get<any>(props.httpSpec + '/materialsSummarySpec', {params: {projectId}});
+  }
+  materialsSummaryPdfSpec(projectId: number, statemId: number){
+    return this.http.get<any>(props.httpSpec + '/materialsSummaryPdfSpec', {params: {projectId, statemId}});
+  }
 }

@@ -84,6 +84,7 @@ export class AddSupplierComponent implements OnInit {
       modal: true,
       showHeader: false,
       data: {
+        isEqServise: true,
         service: this.supplierService,
       }
     })

@@ -205,7 +205,7 @@ export class LanguageService {
           case '': return 'Create list of tray bundles';
           case 'Открыть': return 'Open';
           case 'Название, описание': return 'Name/description';
-          case 'Поставщик': return 'Provider';
+          case 'Поставщик': return 'Supplier';
           case 'КЕИ': return 'Units';
           case 'Маркировка': return 'Label';
           case 'Вес': return 'Weight';

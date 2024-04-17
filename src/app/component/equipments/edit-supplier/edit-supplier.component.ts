@@ -6,11 +6,9 @@ import {ISupplier} from "../../../domain/interfaces/supplier";
 import {SupplierToDB} from "../../../domain/classes/supplier-to-db";
 import {SupplierService} from "../../../domain/supplier.service";
 import {EquipmentsService} from "../../../domain/equipments.service";
-import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
 import {AddFilesComponent} from "../add-files/add-files.component";
 import {SupplierFiles} from "../../../domain/classes/supplier-files";
 import {AgreeModalComponent} from "../agree-modal/agree-modal.component";
-import {Issue} from "../../../domain/classes/issue";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
 import {CloseCode} from "../../../domain/classes/close-code";
 import {LanguageService} from "../../../domain/language.service";
@@ -18,8 +16,6 @@ import {SupplierHistory} from "../../../domain/classes/supplier-history";
 import {ActivatedRoute} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {CreateTaskComponent} from "../../create-task/create-task.component";
-import {zip} from "rxjs";
-import {map} from "rxjs/operators";
 import {RelatedTask} from "../../../domain/classes/related-task";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {IEqSupRelatedMaterials} from "../../../domain/interfaces/eqSupRelatedMaterials";
@@ -54,20 +50,23 @@ export class EditSupplierComponent implements OnInit {
   relatedMaterials: IEqSupRelatedMaterials[] = [];
 
   supplierFilesSrc: SupplierFiles[] = []; //Файлы, с сервера которые (они отображаются на странице. все - если нажата кнопка showMore (showMoreFilesButtonIsDisabled = true), 5шт если не нажата )
-  supplierFiles: SupplierFiles[] = [];  //файлы, которые я добавляю в момент редактирования
-  archivedSupplierFiles: SupplierFiles[] = []; //удаленные файлы (archived == 1)
+  // supplierFiles: SupplierFiles[] = [];  //файлы, которые я добавляю в момент редактирования
+  archivedSupplierFilesSrc: SupplierFiles[] = []; //удаленные файлы (archived == 1)
   // showAttachmentFiles: boolean = true;
   // showArchivedFiles: boolean = false
+  suppFilesLenght: number = 5;
 
   showAttachmentButton: boolean = true; // переключение между вложениями (если true) и заархивированными файлами (если false)
-
-  miscIssues: Issue[] = [];
-  showMoreFilesButtonIsDisabled: boolean = false;
-  showMoreArchivedFilesButtonIsDisabled: boolean = false;
+  showMoreButtonClicked: boolean = false;
+  // miscIssues: Issue[] = [];
+  // showMoreFilesButtonIsDisabled: boolean = false;
+  // showMoreArchivedFilesButtonIsDisabled: boolean = false;
   edit: string = '';  //для отображения
   buttonsAreHidden: boolean = true;
-  showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов вложения
-  showmoreArchived: boolean = true; //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у заархивированных файлов
+  showMoreButton: boolean;
+
+  // showmore: boolean = true;  //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у файлов вложения
+  // showmoreArchived: boolean = true; //переменная, чтобы менять состояние кнопки "Показать еще" на "Скрыть" у заархивированных файлов
   collapsed: string[] = [];
   stories: string[] = [];
 
@@ -77,7 +76,7 @@ export class EditSupplierComponent implements OnInit {
               private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService, private route: ActivatedRoute, public issueManager: IssueManagerService) {
 
     route.queryParams.subscribe(params => {
-      console.log(params)
+      // console.log(params)
     });
   }
 
@@ -85,22 +84,24 @@ export class EditSupplierComponent implements OnInit {
     this.supplier_id = this.sup_data.id;
     this.sfi = this.eq_data.sfi;
     this.sfi_name = this.eq_data.name;
+
+
     this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-      this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1).slice(0, 5)
-      this.showMoreArchivedFilesButtonIsDisabled =  res.filter((f:any) => f.archived == 1).length > 5 ? false : true;
-      // console.log("this.archivedSupplierFiles");
-      // console.log(this.archivedSupplierFiles);
-      this.supplierFilesSrc = res.filter((f:any) => f.archived == 0).slice(0, 5);
-      this.showMoreFilesButtonIsDisabled = res.filter((f:any) => f.archived == 0).length > 5 ? false : true;
-      console.log("this.supplierFilesSrc initial");
-      console.log(this.supplierFilesSrc);
+      console.log(res)
+      this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
+      this.archivedSupplierFilesSrc = res.filter((f:any) => f.archived == 1)
     })
+
+
     this.eqService.getRelatedTasks(this.supplier_id).subscribe((res) => {
       this.relatedTasks = res;
     })
 
     this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+      res.sort((a:any, b:any) => a.update_date - b.update_date)  //отсортируем по дате добавления
       this.historyArray = res;
+      console.log("this.historyArray")
+      console.log(this.historyArray)
     })
 
     if (this.auth.getUser().id === this.sup_data.user_id || this.auth.hasPerms('create_edit_sup')) {
@@ -113,9 +114,84 @@ export class EditSupplierComponent implements OnInit {
     })
 
     this.eqService.getRelatedMaterials(this.supplier_id).subscribe((res) => {
-      console.log('RelatedMaterials')
       this.relatedMaterials = res;
-      console.log(this.relatedMaterials);
+    })
+  }
+
+  addFiles() {  //записать в историю еще надо
+    const dialog = this.dialogService.open(AddFilesComponent, {
+      header: 'Uploading files',
+      showHeader: false,
+      modal: true,
+      data: {
+        isEqService: false,
+        service: this.supplierService,
+      }
+    })
+    dialog.onClose.subscribe(() => {
+    //   console.log("this.supplierService.getCreateFiles()")
+    //   console.log(this.supplierService.getCreateFiles())
+      this.supplierService.getCreateFiles().forEach(file => {  //добавляем файлы в БД
+        file.supplier_id = this.supplier_id
+        this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(res => {
+          if (res.includes('error')) {
+            alert(res);
+          }
+        })
+        // const history = new SupplierHistory(this.auth.getUser().id, 'added file', '', file.url, this.supplier_id)
+        // this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
+        //   this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+        //     this.historyArray = res;
+        //   })
+        // })
+      })
+
+      this.supplierService.getCreateFiles().forEach(file => {  //добавляем файлы в историю
+        const history = new SupplierHistory(this.auth.getUser().id, 'added file', '', file.url, this.supplier_id)
+        this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
+          this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+            res.sort((a:any, b:any) => a.update_date - b.update_date)  //отсортируем по дате добавления
+            this.historyArray = res;
+          })
+        })
+      })
+
+      this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {  //отображаем файлы на странице
+        this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
+        // console.log(this.supplierFilesSrc)
+      })
+
+      this.supplierService.setCreateFiles([])  //чистим loaded
+
+    })
+  }
+
+
+  deleteFile(file: SupplierFiles ) {
+    const dialog = this.dialogService.open(AgreeModalComponent, {
+      modal: true,
+      header: this.t.tr('Удалить файл поставщика?'),
+      data: {
+        file: file
+      }
+    })
+    dialog.onClose.subscribe(res => {
+      if (res) {
+        console.log('deleteFile');
+        this.supplierFilesSrc.splice(this.supplierFilesSrc.indexOf(file), 1); //удаляем из отображения
+        this.archivedSupplierFilesSrc.push(file)  //добавляем удаленный файл в archived
+        this.supplierService.deleteSupplierFile(file.id)  //удаляем из БД
+          .subscribe(
+            () => {
+              console.log('Файл поставщика удален успешно');
+            },
+            error => {
+              console.error('Ошибка при удалении файла поставщика');
+            }
+          );
+      } else {
+        console.log('User canceled'); // User clicked Cancel
+      }
     })
   }
 
@@ -124,16 +200,16 @@ export class EditSupplierComponent implements OnInit {
     this.messageService.add({key:'supplierUrl', severity:'success', summary:'Copied', detail:'You have copied supplier url.'});
   }
 
-  showAttachmentFiles() {
-    this.showAttachmentButton = true
+  showAttachmentFiles() {  //переключение на вкладку с вложенными файлами
+    this.suppFilesLenght = 5    //при переключении сворачиваем файлы (отображаем только 5 файлов)
+    this.showAttachmentButton = true;  //показываем, что на вкладке с вложенными файлами
+    this.showMoreButtonClicked = false  //как будто не кликали на кнопку "Показать еще"
   }
 
-  showArchivedFiles() {
-    this.showAttachmentButton = false
-  }
-
-  toggleAttachmentButton() {
-    this.showAttachmentButton = !this.showAttachmentButton
+  showArchivedFiles() {  //переключение на вкладку с удаленными файлами
+    this.suppFilesLenght = 5  //при переключении отображаем только 5 файлов
+    this.showAttachmentButton = false  //показываем, что на вкладке не с вложенными файлами
+    this.showMoreButtonClicked = false  //как будто не кликали на кнопку "Показать еще"
   }
 
 
@@ -188,39 +264,37 @@ export class EditSupplierComponent implements OnInit {
     }
   }
 
-  addFiles() {  //просто добавляем файлы в this.supplierFiles чтобы отобразить в блоке с файлами (которые планируем отправлять в БД)
-    const dialog = this.dialogService.open(AddFilesComponent, {
-      header: 'Uploading files',
-      modal: true,
-      data: {
-        service: this.supplierService,
-      }
-    })
-    dialog.onClose.subscribe(() => {
-      this.supplierService.getCreateFiles().forEach(file => {
-        this.supplierFiles.push(file);
-        this.supplierFilesSrc.push(file);
-      })
-      this.eqService.setCreateFiles([]);
-      console.log('addFiles')
-      this.addFiles2(this.supplierFiles);
-    })
 
-  }
-
-  addFiles2(addedFiles: SupplierFiles[]) {
-    addedFiles.forEach(file => {
-      const history = new SupplierHistory(this.auth.getUser().id, 'added file', '', file.url, this.supplier_id)
-      this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
-        this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
-          this.historyArray = res;
-          // console.log(res)
-        })
-      })
-      // console.log(history);
-    })
-    this.editSupplier('', '', '')  //а здесь отправляем файлы () в БД
-  }
+  // addFiles() {  //просто добавляем файлы в this.supplierFiles чтобы отобразить в блоке с файлами (которые планируем отправлять в БД)
+  //   const dialog = this.dialogService.open(AddFilesComponent, {
+  //     header: 'Uploading files',
+  //     modal: true,
+  //     data: {
+  //       isEqService: false,
+  //       service: this.supplierService,
+  //     }
+  //   })
+  //   dialog.onClose.subscribe(() => {
+  //     this.supplierService.getCreateFiles().forEach(file => {
+  //       this.supplierFiles.push(file);
+  //     })
+  //     this.eqService.setCreateFiles([]);
+  //     this.addFiles2(this.supplierFiles);
+  //   })
+  //
+  // }
+  //
+  // addFiles2(addedFiles: SupplierFiles[]) {
+  //   addedFiles.forEach(file => {
+  //     const history = new SupplierHistory(this.auth.getUser().id, 'added file', '', file.url, this.supplier_id)
+  //     this.eqService.addSupplierHistory(JSON.stringify(history)).subscribe((res) => {
+  //       this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+  //         this.historyArray = res;
+  //       })
+  //     })
+  //   })
+  //   this.editSupplier('', '', '')  //а здесь отправляем файлы () в БД
+  // }
 
   getFileExtensionIcon(fileUrl: string) {
     const fileName = this.extractFileName(fileUrl);
@@ -269,43 +343,46 @@ export class EditSupplierComponent implements OnInit {
     return parts[parts.length - 1];
   }
 
-  deleteFile(file: SupplierFiles) {
-    const dialog = this.dialogService.open(AgreeModalComponent, {
-      modal: true,
-      header: this.t.tr('Удалить файл поставщика?'),
-      data: {
-        //title: 'Удалить файл поставщика?',
-        file: file
-      }
-    })
-    dialog.onClose.subscribe(res => {
-      if (res) {
-        console.log('deleteFile');
-        console.log(file);
-        this.supplierFiles.splice(this.supplierFiles.indexOf(file), 1);
-        this.supplierService.deleteSupplierFile(file.id)
-          .subscribe(
-            () => {
-              console.log('Файл поставщика удален успешно');
-              this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {  //обновим поле с файлами после удаления
-                this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
-                this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1)
-              })
-              //this.close();
-            },
-            error => {
-              console.error('Ошибка при удалении файла поставщика');
-            }
-          );
-      } else {
-        console.log('User canceled'); // User clicked Cancel
-      }
-    })
-  }
+  // deleteFile(file: SupplierFiles) {
+  //   const dialog = this.dialogService.open(AgreeModalComponent, {
+  //     modal: true,
+  //     header: this.t.tr('Удалить файл поставщика?'),
+  //     data: {
+  //       //title: 'Удалить файл поставщика?',
+  //       file: file
+  //     }
+  //   })
+  //   dialog.onClose.subscribe(res => {
+  //     if (res) {
+  //       console.log('deleteFile');
+  //       console.log(file);
+  //       this.supplierFilesSrc.splice(this.supplierFiles.indexOf(file), 1);
+  //       this.supplierService.deleteSupplierFile(file.id)
+  //         .subscribe(
+  //           () => {
+  //             console.log('Файл поставщика удален успешно');
+  //             console.log(file.id)
+  //             this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {  //обновим поле с файлами после удаления
+  //               this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
+  //               console.log(this.supplierFilesSrc);
+  //               this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1)
+  //             })
+  //             //this.close();
+  //           },
+  //           error => {
+  //             console.error('Ошибка при удалении файла поставщика');
+  //           }
+  //         );
+  //     } else {
+  //       console.log('User canceled'); // User clicked Cancel
+  //     }
+  //   })
+  // }
 
   getDateOnly(dateLong: number): string {  //преобразовать поле create_date в человеческий вид
-    if (dateLong == 0) {
-      return '--/--/--';
+    if (dateLong == 0){
+      let date = new Date()
+      return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
@@ -344,41 +421,41 @@ export class EditSupplierComponent implements OnInit {
 
   }
 
-  showMore() {  //показать все файлы (изначально 5)
-    this.showmore = false;
-    this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-      this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
-      console.log(this.supplierFilesSrc)
-    })
-
-
-  }
-
-  showLess() {
-    console.log("showLess")
-    this.showmore = true;
-    this.supplierFilesSrc = this.supplierFilesSrc.slice(0, 5);
-    console.log(this.showmore)
-    console.log(this.supplierFilesSrc)
-  }
-
-  showMoreArchived() {  //показать все файлы (изначально 5)
-    this.showmoreArchived = false;
-    this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-      this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1);
-      // console.log(this.supplierFilesSrc)
-    })
-
-
-  }
-
-  showLessArchived() {
-    console.log("showLess")
-    this.showmoreArchived = true;
-    this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
-      this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1).slice(0, 5);
-    })
-  }
+  // showMore() {  //показать все файлы (изначально 5)
+  //   this.showmore = false;
+  //   this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+  //     this.supplierFilesSrc = res.filter((f:any) => f.archived == 0);
+  //     console.log(this.supplierFilesSrc)
+  //   })
+  //
+  //
+  // }
+  //
+  // showLess() {
+  //   console.log("showLess")
+  //   this.showmore = true;
+  //   this.supplierFilesSrc = this.supplierFilesSrc.slice(0, 5);
+  //   console.log(this.showmore)
+  //   console.log(this.supplierFilesSrc)
+  // }
+  //
+  // showMoreArchived() {  //показать все файлы (изначально 5)
+  //   this.showmoreArchived = false;
+  //   this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+  //     this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1);
+  //     // console.log(this.supplierFilesSrc)
+  //   })
+  //
+  //
+  // }
+  //
+  // showLessArchived() {
+  //   console.log("showLess")
+  //   this.showmoreArchived = true;
+  //   this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+  //     this.archivedSupplierFiles = res.filter((f:any) => f.archived == 1).slice(0, 5);
+  //   })
+  // }
 
   openFile(url: string) {
     window.open(url);
@@ -454,8 +531,8 @@ export class EditSupplierComponent implements OnInit {
       const history = new SupplierHistory(this.auth.getUser().id, name_value, prev_data, new_data, this.supplier_id)
       this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
         this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {
+          res.sort((a:any, b:any) => a.update_date - b.update_date)  //отсортируем по дате добавления
           this.historyArray = res;
-          console.log(res)
         })
       })
     }
@@ -476,26 +553,32 @@ export class EditSupplierComponent implements OnInit {
         alert(res);
       }
       else{
-        console.log('supplier with id = '+supplierToDB.id +'changed');
-        this.supplierFiles.forEach(file => { //добавляем файлы в БД
-          file.supplier_id = parseInt(res);  //кладем id добавленного поставщика в supplier_id файла
-          console.log('createSupplier() + file');
-          console.log(file);
-          this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {
-            this.supplierFiles.forEach(file => {
-              // this.supplierFilesSrc.push(file); //перенесем в отображаемый массив
-              // console.log(this.supplierFilesSrc);
-              if (this.supplierFilesSrc.length > 5) {
-                this.showmore = false;
-                this.showMoreFilesButtonIsDisabled = false;
-              }
-            })
-
-            this.supplierFiles = [];
-
-          });
-        })
-        this.supplierService.setCreateFiles([]);
+        // console.log('supplier with id = '+supplierToDB.id +'changed');
+        // console.log("Это то, что я хочу добавть то есть this.supplierFiles")
+        // console.log(this.supplierFiles)
+        // this.supplierFiles.forEach(file => { //добавляем файлы в БД
+        //   file.supplier_id = parseInt(res);  //кладем id добавленного поставщика в supplier_id файла
+        //   console.log('createSupplier() + file');
+        //   console.log(file);
+        //   this.supplierService.addSupplierFiles(JSON.stringify(file)).subscribe(() => {
+        //     this.supplierFiles.forEach(file => {
+        //
+        //       if (this.supplierFilesSrc.length > 5) {
+        //         this.showmore = false;
+        //         this.showMoreFilesButtonIsDisabled = false;
+        //       }
+        //     })
+        //
+        //     this.supplierFiles = [];
+        //   });
+        //   this.supplierService.getEquipmentFiles(this.sup_data.id).subscribe((res) => {
+        //    // this.showMoreArchivedFilesButtonIsDisabled =  res.filter((f:any) => f.archived == 1).length > 5 ? false : true;
+        //     this.supplierFilesSrc = res.filter((f:any) => f.archived == 0).slice(0, 5);
+        //     //this.showMoreFilesButtonIsDisabled = res.filter((f:any) => f.archived == 0).length > 5 ? false : true;
+        //   })
+        //
+        // })
+        // this.supplierService.setCreateFiles([]);
         // console.log('closed uploading files: add-supplier');
         // console.log(this.supplierFiles);
         //this.ref.close(new CloseCode(0));
@@ -516,22 +599,6 @@ export class EditSupplierComponent implements OnInit {
     window.open('/?taskId=' + id, '_blank');
   }
 
-  localeGender(userId: string){
-    let find = this.auth.users.find(x => x.login == userId);
-    return find != null && find.gender == 'female' && this.t.language == 'ru' ? 'а' : '';
-  }
-
-  getNoneZeroInput(input: string) {
-    return input == '-' ? '<div class="text-none">Нет</div>' : input;
-  }
-
-  trimMin(input: string, length: number = 35): string {
-    if (input.length <= length) {
-      return input;
-    } else {
-      return input.substr(0, length) + '...';
-    }
-  }
 
   formatValue(name: any, value: any) {
     if (value == ''){
@@ -543,5 +610,29 @@ export class EditSupplierComponent implements OnInit {
         default: return value;
       }
     }
+  }
+
+  toggleShowMoreButton() {
+    let array: SupplierFiles[];
+    if (this.showAttachmentButton === true) {  //если раскрыт массив с файлами вложения
+      array = this.supplierFilesSrc
+    } else if (this.showAttachmentButton === false) {  //если раскрыт массив с удаленными файлами
+      array = this.archivedSupplierFilesSrc
+    }
+
+    this.showMoreButtonClicked = !this.showMoreButtonClicked
+    if (this.showMoreButtonClicked) {
+      // @ts-ignore
+      this.suppFilesLenght = array.length;  //если мы кликнули на кнопку показать еще, то показываем весь массив
+    } else {
+      this.suppFilesLenght = 5;  ////если мы не кликнули на кнопку показать еще, то показываем часть массива
+    }
+    // @ts-ignore
+    this.getSupFiles(array)  //а тут устанавливаем отображаемый массив с нужно длинной уже  this.suppFilesLenght
+
+  }
+
+  getSupFiles( array: SupplierFiles[] ) {
+    return array.slice(0, this.suppFilesLenght);
   }
 }
