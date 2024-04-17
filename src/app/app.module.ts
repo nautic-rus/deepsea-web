@@ -223,6 +223,7 @@ import { ObjViewUrlCreateDeviceComponent } from './component/tools/obj-view-url-
 import { SpecMaterialComponent } from './component/spec-materials/spec-material/spec-material.component';
 import { WarehouseComponent } from './component/warehouse/warehouse.component';
 import { MaterialsSummarySpecComponent } from './component/materials-summary/materials-summary-spec/materials-summary-spec.component';
+import { ActControlComponent } from './component/warehouse/act-control/act-control.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -387,6 +388,7 @@ Quill.register('modules/imageResize', ImageResize);
     SpecMaterialComponent,
     WarehouseComponent,
     MaterialsSummarySpecComponent,
+    ActControlComponent,
 
   ],
   imports: [
