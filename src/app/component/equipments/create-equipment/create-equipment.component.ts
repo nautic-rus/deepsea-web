@@ -201,15 +201,17 @@ export class CreateEquipmentComponent implements OnInit {
     eqToDB.responsible_id = this.auth.getUser().id;
     eqToDB.department_id = this.findDepartmentId(eqFormValue.department);
     eqToDB.comment = eqFormValue.commentText;
+    eqToDB.parent_id = 0;
+    eqToDB.sfi_unit = '-';
+    // eqToDB.status_id = '-';
     console.warn(this.equipmentForm.value);
-    console.log(JSON.stringify(eqToDB));
+    console.log(eqToDB);
 
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {
       console.log(eqToDB);
       console.log('res .addEquipment');
       console.log(res);
-      //this.eqService.setEqID(res.)
       if (res.includes('error')){
         alert(res);
       }

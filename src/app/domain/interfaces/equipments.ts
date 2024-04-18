@@ -15,6 +15,8 @@ export interface IEquipment {
   project_name: string;
   suppliers?: ISupplier[]; // Опциональный массив поставщиков
   status: string;
+  parent_id: number;
+  sfi_unit: string;
 }
 
 // export interface ISuppliersInEq{

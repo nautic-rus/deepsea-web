@@ -20,6 +20,7 @@ import {RelatedTask} from "../../../domain/classes/related-task";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {IEqSupRelatedMaterials} from "../../../domain/interfaces/eqSupRelatedMaterials";
 
+
 @Component({
   selector: 'app-edit-supplier',
   templateUrl: './edit-supplier.component.html',
@@ -27,6 +28,7 @@ import {IEqSupRelatedMaterials} from "../../../domain/interfaces/eqSupRelatedMat
   encapsulation: ViewEncapsulation.None,
 })
 export class EditSupplierComponent implements OnInit {
+
 
   eq_data: IEquipment = this.dialogConfig.data.eq;
   sup_data: ISupplier = this.dialogConfig.data.supplier;
