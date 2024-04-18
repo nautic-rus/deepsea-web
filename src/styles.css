@@ -490,6 +490,9 @@ body,p{
 .max-width-50{
   max-width: 50px;
 }
+.max-width-100{
+  max-width: 100px;
+}
 .max-width-150{
   max-width: 150px;
 }

@@ -18,6 +18,8 @@
   width: 100%;
   padding: 10px;
   border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .min-text {
   font-size: 12px;
@@ -45,7 +47,7 @@
   color: #172b4d;
 }
 .border-right{
-  border-right: 1px solid rgba(193, 193, 193, 0.85);
+  border-right: 1px solid #D1D1D1;
 }
 .materials-button-warehouse{
   height: 35px;
@@ -58,15 +60,15 @@
   font-size: 13px;
 }
 .empty-file{
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
   background-color: white;
   cursor: pointer;
 }
 .full-file-drawing{
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
   cursor: pointer;
   background-color: #14b8a6d1;
@@ -77,8 +79,8 @@
   font-weight: bold;
 }
 .file{
-  height: 150px;
-  width: 150px;
+  height: 60px;
+  width: 60px;
   margin: 5px;
   cursor: pointer;
 }
@@ -86,7 +88,7 @@
   font-size: 12px;
 }
 .drag-over{
-  background-color: #0e364a;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 .no-events{
   pointer-events: none;
@@ -96,4 +98,13 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+.files-cont{
+  height: 230px;
+  overflow: auto;
+}
+.left-menu-text{
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #495057;
 }

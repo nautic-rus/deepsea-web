@@ -13,9 +13,11 @@ import {StorageManagerService} from "../../domain/storage-manager.service";
 export class WarehouseComponent implements OnInit {
 
   fileGroups: string[] = [
+    'Договоры',
     'Сертификаты',
     'Паспорт',
     'Чертежи',
+    'Ведомости',
     'Упаковочный лист (ЗИП)',
     'Руководства по эксплуатации',
     '3D модели',

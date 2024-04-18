@@ -1,11 +1,11 @@
 <div class="all-page">
   <div class="df">
     <div class="card-warehouse w-15 mr-15">
-      <div [class.text-bold]="selectedFileGroup == 'Недавно загруженные'" (click)="selectFileGroup('Недавно загруженные')">
+      <div class="left-menu-text" [class.text-bold]="selectedFileGroup == 'Недавно загруженные'" (click)="selectFileGroup('Недавно загруженные')">
         Все файлы({{getFilesOfGroup('Недавно загруженные').length}})
       </div>
-      <div *ngFor="let fileGroup of fileGroups">
-        <div [class.text-bold]="selectedFileGroup == fileGroup" (click)="selectFileGroup(fileGroup)">{{fileGroup}} - ({{getFilesOfGroup(fileGroup).length}})</div>
+      <div class="left-menu-text" *ngFor="let fileGroup of fileGroups">
+        <div class="" [class.text-bold]="selectedFileGroup == fileGroup" (click)="selectFileGroup(fileGroup)">{{fileGroup}} - ({{getFilesOfGroup(fileGroup).length}})</div>
       </div>
     </div>
     <div class="card-warehouse w-85">
@@ -59,7 +59,7 @@
           <img src="assets/barcode.png" height="60">
         </div>
       </div>
-      <div class="my-20" [hidden]="true">
+      <div class="my-20">
         <div class="materials-button-warehouse blue-button cxy" (click)="actControlOpen('')">
           <div class="cxy">Акт входного контроля</div>
         </div>
@@ -67,20 +67,22 @@
       <div class="mt-5">
          <div class="pb-10 text-head hidden">Файлы</div>
          <div class="pb-15 norm-text hidden">Загрузите отсканированные документы</div>
-         <div class="files df cx">
+         <div class="files">
            <div class="max-width-150" *ngFor="let fileGroup of fileGroups">
              <div class="cx mx-20">
                <div [class.drag-over]="dragOver == fileGroup" (dragleave)="dragOver = ''" class="empty-file mb-5 cxy" (dragenter)="dragOver = fileGroup" (mouseenter)="dragOver = fileGroup" (mouseleave)="dragOver = ''" (click)="selectFileGroup(fileGroup); selectFiles.click()" (drop)="selectFileGroup(fileGroup); $event.preventDefault(); onFilesDrop($event); dragOver = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
-                 <img class="no-events" src="assets/icons/plus-grey.svg" height="80">
+                 <div class="no-events" *ngIf="fileGroup == 'Фото'">
+                   <qr-code size="60"  [value]="getQrCode()"></qr-code>
+                 </div>
+                 <div class="no-events" *ngIf="fileGroup != 'Фото'">
+                   <img src="assets/icons/plus-grey.svg" height="50">
+                 </div>
                  <input hidden #selectFiles type="file" multiple (change)="handleFileInput(selectFiles.files)">
                </div>
              </div>
              <div class="text-center-x min-text cx" [class.text-bold]="selectedFileGroup == fileGroup">
-               <div>{{fileGroup}}</div>
-               <div *ngIf="fileGroup == 'Фото'">
-                 <qr-code [value]="getQrCode()"></qr-code>
-               </div>
-               <div *ngIf="getFilesOfGroup(fileGroup).length != 0" class="text-center-x">({{getFilesOfGroup(fileGroup).length}})</div>
+               <div class="width-fit max-width-100">{{fileGroup}}</div>
+               <div *ngIf="getFilesOfGroup(fileGroup).length != 0" class="pl-5">({{getFilesOfGroup(fileGroup).length}})</div>
              </div>
            </div>
          </div>
@@ -90,11 +92,11 @@
         <div class="norm-text" *ngIf="storageFiles.length == 0">Здесь будут недавно загруженные файлы</div>
         <div class="norm-text">{{selectedFileGroup}}</div>
       </div>
-      <div class="mt-10 df fw">
+      <div class="mt-10 df fw files-cont">
         <div *ngFor="let file of awaitForLoad" class="file">
           <div class="disabled-button position-relative">
             <div class="cx">
-              <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="100"/>
+              <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="50"/>
             </div>
             <div class="file-spinner">
               <p-progressSpinner [style]="{width: '45px', height: '45px'}"></p-progressSpinner>
@@ -106,11 +108,11 @@
         </div>
         <div *ngFor="let file of getFilesOfGroup(selectedFileGroup)" class="file">
           <div *ngIf="file.kind == 'Фото'" (click)="openFile(file.url)">
-            <img [src]="file.url" height="120px" width="150px">
+            <img [src]="file.url" height="50px" width="50">
           </div>
           <div *ngIf="file.kind != 'Фото'" (click)="openFile(file.url)">
             <div class="cx">
-              <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="100"/>
+              <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="50"/>
             </div>
             <div class="cx text-center-x text-small word-break">
               <div>{{file.name}}</div>
