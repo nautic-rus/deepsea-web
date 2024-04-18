@@ -12,10 +12,9 @@
   width: 95%;
 }
 .image-delete{
-  background-color: red;
   height: 20px;
   width: 35px;
   position: absolute;
-  right: 6%;
+  right: 11%;
   top: 3%;
 }
