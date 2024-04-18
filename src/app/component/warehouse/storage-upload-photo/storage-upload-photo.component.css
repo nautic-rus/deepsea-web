@@ -4,9 +4,7 @@
   font-size: 14px;
 }
 .images{
-  height: 70vh;
   width: 80%;
-  overflow: auto;
 }
 .image{
   width: 95%;

@@ -23,7 +23,7 @@ export class StorageUploadPhotoComponent implements OnInit {
         this.s.getStorageFiles().subscribe(res => {
           console.log(res);
           this.storageFiles = res.filter((x: any) => x.removed == 0 && x.kind == 'Фото');
-          this.imgs = this.storageFiles.filter((x: any) => x.unit_id == this.storageId).map((x: any) => x.url);
+          this.imgs = this.storageFiles.filter((x: any) => x.unit_id == this.storageId).map((x: any) => x.url).reverse();
         });
       }
     });
