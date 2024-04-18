@@ -1,0 +1,78 @@
+.card-warehouse{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  border-radius: 8px;
+  height: calc(100vh - 106px);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.delivery{
+  background-color: #F0F0F2;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.5fr 1.5fr 1fr;
+  padding: 30px;
+  border-radius: 8px;
+}
+.files{
+  background-color: #F0F0F2;
+  width: 100%;
+  padding: 30px;
+  border-radius: 8px;
+}
+.min-text {
+  font-size: 12px;
+  padding-right: 4px;
+  color: #6b778c;
+}
+.normal-text {
+  color: #172b4d;
+  font-size: 12px;
+  font-weight: bold;
+}
+.parameter{
+  width: 40%;
+}
+.value{
+  width: 60%;
+}
+.text-head {
+  color: #172b4d;
+  font-size: 14px;
+  font-weight: 600;
+}
+.norm-text {
+  font-size: 13px;
+  color: #172b4d;
+}
+.border-right{
+  border-right: 1px solid rgba(193, 193, 193, 0.85);
+}
+.materials-button-warehouse{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+  width: fit-content;
+  font-weight: 700;
+  font-size: 13px;
+}
+.empty-file{
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+}
+.full-file-drawing{
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #14b8a6d1;
+}
+.white-text{
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}

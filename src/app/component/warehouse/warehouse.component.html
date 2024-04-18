@@ -1,7 +1,88 @@
 <div class="all-page">
-  <div class="card">
+  <div class="df">
+    <div class="card-warehouse w-15 mr-15">
+
+    </div>
+    <div class="card-warehouse w-85">
+      <div class="pb-15 text-head">Информация о поставке</div>
+      <div class="delivery">
+        <div class="border-right">
+          <div class="df pb-15">
+            <div class="parameter min-text">Наименование</div>
+            <div class="value normal-text">Опреснительная установка  FWG-8 HANSUN</div>
+          </div>
+          <div class="df pb-15">
+            <div class="parameter min-text">Номер</div>
+            <div class="value normal-text">404-405</div>
+          </div>
+          <div class="df pb-15">
+            <div class="parameter min-text">Кол-во товаров</div>
+            <div class="value normal-text">1 шт.</div>
+          </div>
+          <div class="df pb-15">
+            <div class="parameter min-text">Заказ</div>
+            <div class="value normal-text">2220-2223</div>
+          </div>
+          <div class="df pb-15">
+            <div class="parameter min-text">Поставщик</div>
+            <div class="value normal-text">ООО "МБТ"</div>
+          </div>
+          <div class="df">
+            <div class="parameter min-text">Дата создания</div>
+            <div class="value normal-text">15.04.2024</div>
+          </div>
+        </div>
+        <div class="border-right pl-30">
+          <div class="df pb-15">
+            <div class="parameter min-text">Дата поставки</div>
+            <div class="value normal-text">30.03.2024</div>
+          </div>
+          <div class="df pb-15">
+            <div class="parameter min-text">Статус</div>
+            <div class="value normal-text">Создан</div>
+          </div>
+          <div class="df pb-15">
+            <div class="parameter min-text">Упаковочный лист №</div>
+            <div class="value normal-text">003139</div>
+          </div>
+          <div class="df pb-15">
+            <div class="parameter min-text">Ошибки</div>
+            <div class="value normal-text">Не хватает заглушек и гаек</div>
+          </div>
+        </div>
+        <div class="pl-30">
+          <img src="assets/barcode.png" height="60">
+        </div>
+      </div>
+      <div class="my-20" [hidden]="true">
+        <div class="materials-button-warehouse blue-button cxy" (click)="actControlOpen('')">
+          <div class="cxy">Акт входного контроля</div>
+        </div>
+      </div>
+      <div class="mt-5">
+         <div class="pb-10 text-head hidden">Файлы</div>
+         <div class="pb-15 norm-text hidden">Загрузите отсканированные документы</div>
+         <div class="files df space-between">
+           <div class="max-width-150" *ngFor="let fileGroup of fileGroups">
+             <div *ngIf="getFilesOfGroup(fileGroup).length == 0" class="empty-file mb-5 cxy" (click)="selectFiles.click()">
+               <img src="assets/icons/plus-grey.svg" height="80">
+               <input hidden #selectFiles type="file" multiple>
+             </div>
+             <div *ngIf="getFilesOfGroup(fileGroup).length != 0" class="full-file-drawing mb-5 padding-10">
+               <div class="df justify-content-end">
+                 <img src="assets/icons/file.svg" height="30">
+               </div>
+               <div class="mt-10 text-center-x white-text">Файлы загружены</div>
+               <div class="text-center-x white-text">(5)</div>
+             </div>
+             <div class="text-center-x min-text">{{fileGroup}}</div>
+           </div>
+         </div>
+      </div>
+    </div>
 
   </div>
+
 <!--  <div class="">-->
 <!--    <div class="card-head mb-10 df">-->
 <!--      <div class="mr-10">-->

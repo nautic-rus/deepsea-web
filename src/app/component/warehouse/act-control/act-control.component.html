@@ -1,0 +1,76 @@
+<div class="center-role">
+  <div class="header-user-card">
+    <div class="header-user-text">Акт (входного контроля)</div>
+    <div class="df">
+      <div class="mr-30">
+        <div class="materials-button red-button cxy">
+          <img src="assets/icons/pdf2.svg" height="26">
+        </div>
+      </div>
+      <div class="task-button-user cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text mb-1 mt-1">Заказ</div>
+      <p-multiSelect styleClass="width-220" appendTo="body" id="orders" [options]="orders" [(ngModel)]="selectedOrders" optionLabel="name" optionValue="name"></p-multiSelect>
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Акт №</div>
+      <input class="width-220" type="text" id="act" pInputText [(ngModel)]="this.act">
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Документ</div>
+      <input class="width-220" type="text" id="document" pInputText [(ngModel)]="this.document">
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text mb-1 mt-1">Поставщик</div>
+      <input class="width-457" type="text" id="supplier" pInputText [(ngModel)]="this.supplier">
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Дата поставки</div>
+      <p-calendar styleClass="width-220" [disabled]="false" [showWeek]="true" [firstDayOfWeek]="1" appendTo = "body" dateFormat="dd.mm.yy" [(ngModel)]="calendarDay"></p-calendar>
+    </div>
+  </div>
+  <div>
+    <div class="big-text mb-1 mt-1">Наименование оборудования</div>
+    <input class="w-100" type="text" id="name" pInputText [(ngModel)]="this.name">
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text mb-1 mt-1">Количество</div>
+      <input class="width-220" type="text" id="count" pInputText [(ngModel)]="this.count">
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Сертификат РМРС/DNV</div>
+      <input class="width-220" type="text" id="certificate" pInputText [(ngModel)]="this.certificate">
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Зав. №</div>
+      <input class="width-220" type="text" id="doc" pInputText [(ngModel)]="this.doc">
+    </div>
+  </div>
+  <div class="df space-between">
+    <div>
+      <div class="big-text mb-1 mt-1">Замечания</div>
+      <textarea class="width-340" type="text" id="remark" pInputText [(ngModel)]="this.remark"></textarea>
+    </div>
+    <div>
+      <div class="big-text mb-1 mt-1">Примечания</div>
+      <textarea class="width-340" type="text" id="notes" pInputText [(ngModel)]="this.notes"></textarea>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="form-footer-user">
+  <div class="mr-5 cx">
+    <div tabindex="11" (click)="close()" pButton [label]="'Отмена'" class="button-cancel ml-1"></div>
+  </div>
+  <div tabindex="10" class="button-ok cxy">Создать</div>
+</div>

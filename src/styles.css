@@ -490,6 +490,9 @@ body,p{
 .max-width-50{
   max-width: 50px;
 }
+.max-width-150{
+  max-width: 150px;
+}
 .max-width-420{
   max-width: 420px;
 }
@@ -1055,6 +1058,9 @@ body,p{
 }
 .pl-25{
   padding-left: 25px;
+}
+.pl-30{
+  padding-left: 30px;
 }
 .pr-2{
   padding-right: 2px;
