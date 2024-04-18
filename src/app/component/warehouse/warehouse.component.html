@@ -1,7 +1,12 @@
 <div class="all-page">
   <div class="df">
     <div class="card-warehouse w-15 mr-15">
-
+      <div [class.text-bold]="selectedFileGroup == 'Недавно загруженные'" (click)="selectFileGroup('Недавно загруженные')">
+        Все файлы({{getFilesOfGroup('Недавно загруженные').length}})
+      </div>
+      <div *ngFor="let fileGroup of fileGroups">
+        <div [class.text-bold]="selectedFileGroup == fileGroup" (click)="selectFileGroup(fileGroup)">{{fileGroup}} - ({{getFilesOfGroup(fileGroup).length}})</div>
+      </div>
     </div>
     <div class="card-warehouse w-85">
       <div class="pb-15 text-head">Информация о поставке</div>
@@ -62,25 +67,58 @@
       <div class="mt-5">
          <div class="pb-10 text-head hidden">Файлы</div>
          <div class="pb-15 norm-text hidden">Загрузите отсканированные документы</div>
-         <div class="files df space-between">
+         <div class="files df cx">
            <div class="max-width-150" *ngFor="let fileGroup of fileGroups">
-             <div *ngIf="getFilesOfGroup(fileGroup).length == 0" class="empty-file mb-5 cxy" (click)="selectFiles.click()">
-               <img src="assets/icons/plus-grey.svg" height="80">
-               <input hidden #selectFiles type="file" multiple>
-             </div>
-             <div *ngIf="getFilesOfGroup(fileGroup).length != 0" class="full-file-drawing mb-5 padding-10">
-               <div class="df justify-content-end">
-                 <img src="assets/icons/file.svg" height="30">
+             <div class="cx mx-20">
+               <div [class.drag-over]="dragOver == fileGroup" (dragleave)="dragOver = ''" class="empty-file mb-5 cxy" (dragenter)="dragOver = fileGroup" (mouseenter)="dragOver = fileGroup" (mouseleave)="dragOver = ''" (click)="selectFileGroup(fileGroup); selectFiles.click()" (drop)="selectFileGroup(fileGroup); $event.preventDefault(); onFilesDrop($event); dragOver = ''" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+                 <img class="no-events" src="assets/icons/plus-grey.svg" height="80">
+                 <input hidden #selectFiles type="file" multiple (change)="handleFileInput(selectFiles.files)">
                </div>
-               <div class="mt-10 text-center-x white-text">Файлы загружены</div>
-               <div class="text-center-x white-text">(5)</div>
              </div>
-             <div class="text-center-x min-text">{{fileGroup}}</div>
+             <div class="text-center-x min-text cx" [class.text-bold]="selectedFileGroup == fileGroup">
+               <div>{{fileGroup}}</div>
+               <div *ngIf="fileGroup == 'Фото'">
+                 <qr-code [value]="getQrCode()"></qr-code>
+               </div>
+               <div *ngIf="getFilesOfGroup(fileGroup).length != 0" class="text-center-x">({{getFilesOfGroup(fileGroup).length}})</div>
+             </div>
            </div>
          </div>
       </div>
+      <div class="mt-10">
+        <div class="text-head pb-10">Файлы</div>
+        <div class="norm-text" *ngIf="storageFiles.length == 0">Здесь будут недавно загруженные файлы</div>
+        <div class="norm-text">{{selectedFileGroup}}</div>
+      </div>
+      <div class="mt-10 df fw">
+        <div *ngFor="let file of awaitForLoad" class="file">
+          <div class="disabled-button position-relative">
+            <div class="cx">
+              <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="100"/>
+            </div>
+            <div class="file-spinner">
+              <p-progressSpinner [style]="{width: '45px', height: '45px'}"></p-progressSpinner>
+            </div>
+            <div class="cx text-center-x text-small">
+              <div>{{file}}</div>
+            </div>
+          </div>
+        </div>
+        <div *ngFor="let file of getFilesOfGroup(selectedFileGroup)" class="file">
+          <div *ngIf="file.kind == 'Фото'" (click)="openFile(file.url)">
+            <img [src]="file.url" height="120px" width="150px">
+          </div>
+          <div *ngIf="file.kind != 'Фото'" (click)="openFile(file.url)">
+            <div class="cx">
+              <img [src]="'assets/task/' + getFileExtensionIcon(file.name)" height="100"/>
+            </div>
+            <div class="cx text-center-x text-small word-break">
+              <div>{{file.name}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
 
 <!--  <div class="">-->

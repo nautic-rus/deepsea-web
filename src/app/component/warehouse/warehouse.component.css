@@ -16,7 +16,7 @@
 .files{
   background-color: #F0F0F2;
   width: 100%;
-  padding: 30px;
+  padding: 10px;
   border-radius: 8px;
 }
 .min-text {
@@ -75,4 +75,25 @@
   color: white;
   font-size: 16px;
   font-weight: bold;
+}
+.file{
+  height: 150px;
+  width: 150px;
+  margin: 5px;
+  cursor: pointer;
+}
+.text-small{
+  font-size: 12px;
+}
+.drag-over{
+  background-color: #0e364a;
+}
+.no-events{
+  pointer-events: none;
+}
+.file-spinner{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

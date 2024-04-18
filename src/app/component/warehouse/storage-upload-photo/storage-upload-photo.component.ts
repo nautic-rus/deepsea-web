@@ -22,7 +22,7 @@ export class StorageUploadPhotoComponent implements OnInit {
         this.storageId = +params['storageId'];
         this.s.getStorageFiles().subscribe(res => {
           console.log(res);
-          this.storageFiles = res.filter((x: any) => x.removed == 0 && x.kind == 'photo');
+          this.storageFiles = res.filter((x: any) => x.removed == 0 && x.kind == 'Фото');
           this.imgs = this.storageFiles.filter((x: any) => x.unit_id == this.storageId).map((x: any) => x.url);
         });
       }
@@ -34,7 +34,7 @@ export class StorageUploadPhotoComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           let id = this.generateId(8);
-          let fileName = 'photo' + id  + '.' + file.name.split('.').pop();
+          let fileName = 'photo-' + id  + '.' + file.name.split('.').pop();
           this.awaitForLoad.push(fileName);
           this.s.uploadFile(file, fileName).subscribe(res => {
             this.awaitForLoad.splice(this.awaitForLoad.indexOf(fileName), 1);
@@ -43,7 +43,7 @@ export class StorageUploadPhotoComponent implements OnInit {
               id: 0,
               name: fileName,
               url: res,
-              kind: 'photo',
+              kind: 'Фото',
               unit_id: this.storageId,
               removed: 0
             });
