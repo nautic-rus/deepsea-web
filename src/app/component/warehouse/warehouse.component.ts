@@ -44,6 +44,20 @@ export class WarehouseComponent implements OnInit {
       }
     });
   }
+  checkNewPhotos(){
+    setTimeout(() => {
+      this.s.getStorageFiles().subscribe(res => {
+        let photos = res.filter((x: any) => x.removed == 0 && x.unit_id == this.storageId && x.kind == 'Фото');
+        photos.forEach((p: any) => {
+          let find = this.storageFiles.find(x => x.url == p.url);
+          if (find == null){
+            this.storageFiles.push(p);
+          }
+        });
+      });
+      this.checkNewPhotos();
+    }, 5000);
+  }
   fillFiles(){
     this.s.getStorageFiles().subscribe(res => {
       this.storageFiles = res.filter((x: any) => x.removed == 0 && x.unit_id == this.storageId);
