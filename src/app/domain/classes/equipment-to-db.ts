@@ -8,4 +8,6 @@ export class EquipmentToDB {
   department_id: string;
   comment: string;
   status_id: number = 1;
+  parent_id: number = 0;
+  sfi_unit: string = '';
 }
