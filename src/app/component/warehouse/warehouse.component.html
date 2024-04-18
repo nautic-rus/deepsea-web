@@ -1,14 +1,17 @@
 <div class="all-page">
   <div class="df">
-    <div class="card-warehouse w-15 mr-15">
-      <div class="left-menu-text" [class.text-bold]="selectedFileGroup == 'Недавно загруженные'" (click)="selectFileGroup('Недавно загруженные')">
-        Все файлы({{getFilesOfGroup('Недавно загруженные').length}})
+    <div class="card-warehouse w-17 mr-15">
+      <div class="left-menu-text cursor-pointer my-10 cy" [class.select-text]="selectedFileGroup == 'Недавно загруженные'" (click)="selectFileGroup('Недавно загруженные')">
+        Все файлы
+        <span class="count-files">{{getFilesOfGroup('Недавно загруженные').length}}</span>
       </div>
-      <div class="left-menu-text" *ngFor="let fileGroup of fileGroups">
-        <div class="" [class.text-bold]="selectedFileGroup == fileGroup" (click)="selectFileGroup(fileGroup)">{{fileGroup}} - ({{getFilesOfGroup(fileGroup).length}})</div>
+      <div class="left-menu-text cursor-pointer my-10 cy" *ngFor="let fileGroup of fileGroups">
+        <div class="left-menu-text cursor-pointer my-10 cy w-100" [class.select-text]="selectedFileGroup == fileGroup" (click)="selectFileGroup(fileGroup)">{{fileGroup}}
+          <span class="count-files">{{getFilesOfGroup(fileGroup).length}}</span>
+        </div>
       </div>
     </div>
-    <div class="card-warehouse w-85">
+    <div class="card-warehouse w-83">
       <div class="pb-15 text-head">Информация о поставке</div>
       <div class="delivery">
         <div class="border-right">

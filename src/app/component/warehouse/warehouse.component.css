@@ -107,4 +107,19 @@
   text-transform: uppercase;
   font-size: 12px;
   color: #495057;
+  height: 30px;
+  padding: 3px;
+  border-radius: 6px;
+  transition: box-shadow .2s;
+}
+.left-menu-text:hover{
+  background-color: #E9ECEF;
+}
+.select-text{
+  background-color: #EEF2FF;
+}
+.count-files{
+  color: #a1b9d3;
+  font-size: 12px;
+  margin-left: 5px;
 }
