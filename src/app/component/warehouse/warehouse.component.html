@@ -109,7 +109,7 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let file of getFilesOfGroup(selectedFileGroup)" class="file">
+        <div *ngFor="let file of getFilesOfGroup(selectedFileGroup)" class="file" (contextmenu)="openFileMenu(file, fileContextMenu, $event)">
           <div *ngIf="file.kind == 'Фото'" (click)="openFile(file.url)">
             <img [src]="file.url" height="50px" width="50">
           </div>
@@ -166,3 +166,4 @@
 <!--    </div>-->
 <!--  </div>-->
 </div>
+<p-contextMenu #fileContextMenu [model]="fileMenu" appendTo="body"></p-contextMenu>

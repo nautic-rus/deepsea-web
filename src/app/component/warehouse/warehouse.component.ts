@@ -4,6 +4,7 @@ import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ActControlComponent} from "./act-control/act-control.component";
 import {ActivatedRoute} from "@angular/router";
 import {StorageManagerService} from "../../domain/storage-manager.service";
+import {ContextMenu} from "primeng/contextmenu";
 
 @Component({
   selector: 'app-warehouse',
@@ -30,6 +31,19 @@ export class WarehouseComponent implements OnInit {
   selectedFileGroup: string = 'Недавно загруженные';
   loadFileGroup: string = '';
   awaitForLoad: any[] = [];
+  fileMenu = [
+    {
+      label: 'Open',
+      icon: 'pi pi-fw pi-download',
+      command: (event: any) => this.downloadFile()
+    },
+    {
+      label: 'Delete',
+      icon: 'pi pi-fw pi-trash',
+      command: (event: any) => this.deleteFile()
+    },
+  ];
+  contextMenuFile: any;
 
   constructor(private dialogService: DialogService, public ref: DynamicDialogRef, public a: ActivatedRoute, public s: StorageManagerService) { }
 
@@ -39,6 +53,7 @@ export class WarehouseComponent implements OnInit {
         this.storageId = +params['storageId'];
         this.fillFiles();
         this.s.getStorageUnits().subscribe(res => {
+          console.log(res);
           this.storageUnit = res.find((x: any) => x.id == this.storageId);
         });
       }
@@ -160,4 +175,19 @@ export class WarehouseComponent implements OnInit {
     this.handleFileInput(event.dataTransfer.files);
   }
 
+  private deleteFile() {
+    this.contextMenuFile.removed = 1;
+    this.s.updateStorageFile(this.contextMenuFile).subscribe(() => {
+      this.fillFiles();
+    });
+  }
+
+  private downloadFile() {
+    window.open(this.contextMenuFile.url, '_blank');
+  }
+
+  openFileMenu(file: any, fileContextMenu: ContextMenu, event: any) {
+    this.contextMenuFile = file;
+    fileContextMenu.show(event);
+  }
 }
