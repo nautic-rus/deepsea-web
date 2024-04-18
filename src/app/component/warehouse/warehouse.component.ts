@@ -191,4 +191,15 @@ export class WarehouseComponent implements OnInit {
     this.contextMenuFile = file;
     fileContextMenu.show(event);
   }
+  getDateOnly(dateLong: number): string {
+    if (dateLong == null){
+      let date = new Date()
+      return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    }
+    if (dateLong == 0){
+      return '--/--/--';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
 }

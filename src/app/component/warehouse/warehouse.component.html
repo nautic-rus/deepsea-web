@@ -17,45 +17,45 @@
         <div class="border-right">
           <div class="df pb-15">
             <div class="parameter min-text">Наименование</div>
-            <div class="value normal-text">Опреснительная установка  FWG-8 HANSUN</div>
+            <div class="value normal-text">{{storageUnit.name}}</div>
           </div>
           <div class="df pb-15">
             <div class="parameter min-text">Номер</div>
-            <div class="value normal-text">404-405</div>
+            <div class="value normal-text">{{storageUnit.code}}</div>
           </div>
           <div class="df pb-15">
             <div class="parameter min-text">Кол-во товаров</div>
-            <div class="value normal-text">1 шт.</div>
+            <div class="value normal-text">{{storageUnit.count}} шт.</div>
           </div>
           <div class="df pb-15">
             <div class="parameter min-text">Заказ</div>
-            <div class="value normal-text">2220-2223</div>
+            <div class="value normal-text">{{storageUnit.order}}</div>
           </div>
           <div class="df pb-15">
             <div class="parameter min-text">Поставщик</div>
-            <div class="value normal-text">ООО "МБТ"</div>
+            <div class="value normal-text">{{storageUnit.supplier}}</div>
           </div>
           <div class="df">
             <div class="parameter min-text">Дата создания</div>
-            <div class="value normal-text">15.04.2024</div>
+            <div class="value normal-text">{{getDateOnly(storageUnit.date_created)}}</div>
           </div>
         </div>
         <div class="border-right pl-30">
           <div class="df pb-15">
             <div class="parameter min-text">Дата поставки</div>
-            <div class="value normal-text">30.03.2024</div>
+            <div class="value normal-text">{{getDateOnly(storageUnit.date_supply)}}</div>
           </div>
           <div class="df pb-15">
             <div class="parameter min-text">Статус</div>
-            <div class="value normal-text">Создан</div>
+            <div class="value normal-text">{{storageUnit.status}}</div>
           </div>
           <div class="df pb-15">
             <div class="parameter min-text">Упаковочный лист №</div>
-            <div class="value normal-text">003139</div>
+            <div class="value normal-text">{{storageUnit.pack_list}}</div>
           </div>
           <div class="df pb-15">
             <div class="parameter min-text">Ошибки</div>
-            <div class="value normal-text">Не хватает заглушек и гаек</div>
+            <div class="value normal-text">{{storageUnit.comment}}</div>
           </div>
         </div>
         <div class="pl-30">
