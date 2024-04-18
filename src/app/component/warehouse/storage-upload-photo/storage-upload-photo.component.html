@@ -15,11 +15,11 @@
   <input hidden #capturePhoto type="file" accept="image/*" (change)="handleFileInput(capturePhoto.files)" multiple="multiple" capture="environment">
   <div class="cx">
     <div class="images mt-20">
-      <p-virtualScroller [value]="imgs" scrollHeight="600px" [itemSize]="250">
+      <p-virtualScroller [value]="imgs" scrollHeight="600px" [itemSize]="200">
         <ng-template pTemplate="item" let-img>
           <div class="my-10 cxy position-relative">
             <p-button class="image-delete" (click)="deleteImage(img)" icon="pi pi-trash"></p-button>
-            <img height="250px" width="95%" [src]="img">
+            <img class="square-photo" [src]="img">
           </div>
         </ng-template>
       </p-virtualScroller>
