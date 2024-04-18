@@ -116,7 +116,8 @@ export class WarehouseComponent implements OnInit {
               url: res,
               kind: this.loadFileGroup,
               unit_id: this.storageId,
-              removed: 0
+              removed: 0,
+              date_created: 0
             });
             this.s.updateStorageFile(sFile).subscribe(() => {
               this.fillFiles();
