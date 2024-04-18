@@ -73,7 +73,9 @@ export class StorageUploadPhotoComponent implements OnInit {
     let find = this.storageFiles.find((x: any) => x.unit_id == this.storageId && x.url == img);
     if (find != null){
       find.removed = 1;
-      this.s.updateStorageFile(find).subscribe(() => {});
+      this.s.updateStorageFile(find).subscribe(() => {
+        this.fillImages();
+      });
     }
   }
 }
