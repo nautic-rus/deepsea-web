@@ -1,6 +1,17 @@
 /deep/.p-component {
   font-size: 13px !important;
 }
+/deep/.p-inputtext{
+  padding: 0;
+  border-radius: 0;
+}
+/deep/p-inputnumber > span > input{
+  width: 60px;
+}
+/deep/ .p-datepicker td>span {
+  width: 20px !important;
+  height: 20px !important;
+}
 .card-warehouse{
   background: rgba(255, 255, 255, 0.9);
   padding: 15px;
@@ -126,3 +137,10 @@
   font-size: 12px;
   margin-left: 5px;
 }
+.change{
+  width: 270px;
+}
+.change-number{
+  width: 60px;
+}
+
