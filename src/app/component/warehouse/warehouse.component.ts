@@ -33,12 +33,12 @@ export class WarehouseComponent implements OnInit {
   awaitForLoad: any[] = [];
   fileMenu = [
     {
-      label: 'Open',
+      label: 'Скачать',
       icon: 'pi pi-fw pi-download',
       command: (event: any) => this.downloadFile()
     },
     {
-      label: 'Delete',
+      label: 'Удалить',
       icon: 'pi pi-fw pi-trash',
       command: (event: any) => this.deleteFile()
     },

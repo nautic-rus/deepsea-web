@@ -1,0 +1,154 @@
+<div class="all-page">
+  <div class="">
+    <div class="card-head mb-20 df">
+      <div class="mr-10">
+        <p-multiSelect styleClass="width-220" placeholder="ЗАКАЗ" appendTo="body" id="orders" [options]="orders" [(ngModel)]="selectedOrders" optionLabel="name" optionValue="name"></p-multiSelect>
+      </div>
+      <!--      <div class="mr-10" >-->
+      <!--        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">-->
+      <!--        </p-dropdown>-->
+      <!--      </div>-->
+      <div class="mr-10">
+        <div class="materials-button blue-button cxy disabled-button" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top">
+          <img src="assets/icons/plus3.svg" height="18">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button pink-button cxy disabled-button" [pTooltip]="t.tr('Копировать')" tooltipPosition="top">
+          <img src="assets/icons/copy3.svg" height="18">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button yellow-button cxy disabled-button" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top">
+          <img src="assets/icons/edit.svg" height="18">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button green-button cxy disabled-button" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div class="materials-button red-button cxy disabled-button" [pTooltip]="t.tr('Удалить')" tooltipPosition="top">
+          <img src="assets/icons/trash-white.svg" height="22">
+        </div>
+      </div>
+      <div class="p-ml-auto mr-10 df">
+        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
+          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
+          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        </div>
+        <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">
+          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
+          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
+        </div>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+        </span>
+      </div>
+    </div>
+        <div>
+          <div *ngIf="loading">
+            <div class="cxy loading">
+              <div class="cxy flex-column">
+                <img src="assets/whale.gif" height="120">
+                <div class="cx loading-text">PLEASE WAIT...</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!loading && selectedView == 'tiles'" class="tile height-tiles ovf-auto">
+            <div class="dash-card" *ngFor="let st of storages; let j = index">
+              <div class="dash-card-tile cursor-pointer">
+                <div class="over-top-rows mb-10">
+                  <div class="mm-text">ЗАКАЗ {{st.order}}</div>
+                  <div class="mm-text">№ {{st.code}}</div>
+                </div>
+                <div class="top-row-docs">
+                  <div class="title-bold cursor-default">{{st.name}}</div>
+                </div>
+                <div class="four-row mt-5 mb-5">
+                  <div class="df">
+                    <img class="pr-5" src="assets/icons/del.svg" height="30">
+                    <div class="text-table-col">{{st.supplier}}</div>
+                  </div>
+                  <div class="df">
+                    <img class="pr-5" src="assets/icons/weight3.svg" height="18">
+                    <div class="text-table-col">1036кг</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+<!--          <div *ngIf="equipmentsFilled && selectedView == 'list'" class="cards">-->
+<!--            <p-table #table [value]="materials"-->
+<!--                     [scrollable]="true"-->
+<!--                     scrollHeight="calc(100vh - 226px)"-->
+<!--                     [virtualScroll]="true"-->
+<!--                     [virtualRowHeight]="30"-->
+<!--                     [reorderableColumns]="false"-->
+<!--                     [resizableColumns]="false"-->
+<!--                     styleClass="p-datatable-striped"-->
+<!--                     [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">-->
+<!--              <ng-template pTemplate="header">-->
+<!--                <tr class="df">-->
+<!--                  <th pSortableColumn="name" class="cxy min-width-220 w-27">{{t.tr('Наименование')}}-->
+<!--                    <p-sortIcon field="name"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="descr" class="cxy min-width-150 w-15">{{t.tr('Обозначение')}}-->
+<!--                    <p-sortIcon field="descr"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="statement" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}-->
+<!--                    <p-sortIcon field="statement"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="coef" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}-->
+<!--                    <p-sortIcon field="coef"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес кг')}}-->
+<!--                    <p-sortIcon field="weight"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="units" class="cxy min-width-75 w-7">{{t.tr('КЕИ')}}-->
+<!--                    <p-sortIcon field="units"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="supplier" class="cxy min-width-150 w-9">{{t.tr('Поставщик')}}-->
+<!--                    <p-sortIcon field="supplier"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="note" class="cxy min-width-190 w-9">{{t.tr('Примечания')}}-->
+<!--                    <p-sortIcon field="note"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="code" class="cxy min-width-190 w-9">{{t.tr('Stock code')}}-->
+<!--                    <p-sortIcon field="code"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--              <ng-template pTemplate="body" let-material let-i="rowIndex">-->
+<!--                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">-->
+<!--                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>-->
+<!--                  <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{getStatement(material.statem_id)}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{material.coef}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{material.weight}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{material.units}}</td>-->
+<!--                  <td class="min-width-150 w-9 text-14 cxy">{{matSupplies[material.id]}}</td>-->
+<!--                  <td class="min-width-190 w-9 text-14 cxy">{{material.note}}</td>-->
+<!--                  <td class="min-width-190 w-9 text-14 cxy">-->
+<!--                    <div class="df">-->
+<!--                      <div class="trm-materials">-->
+<!--                        <span>{{material.code}}</span>-->
+<!--                      </div>-->
+<!--                      <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">-->
+<!--                        <img src="assets/icons/trm-sup.svg" height="14">-->
+<!--                        <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--            </p-table>-->
+<!--          </div>-->
+        </div>
+
+  </div>
+</div>
+

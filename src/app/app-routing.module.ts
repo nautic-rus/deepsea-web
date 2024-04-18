@@ -68,6 +68,7 @@ import {ObjViewUrlCreateDeviceComponent} from "./component/tools/obj-view-url-cr
 import {WarehouseComponent} from "./component/warehouse/warehouse.component";
 import {MaterialsSummarySpecComponent} from "./component/materials-summary/materials-summary-spec/materials-summary-spec.component";
 import {StorageUploadPhotoComponent} from "./component/warehouse/storage-upload-photo/storage-upload-photo.component";
+import {WarehouseFullComponent} from "./component/warehouse-full/warehouse-full.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -136,6 +137,7 @@ const routes: Routes = [
   { path: '3d-url-create', component: ObjViewUrlCreateComponent, data: {animation: 'ObjViewUrlCreateComponent'}, canActivate: [AuthGuard] },
   { path: '3d-url-create-device', component: ObjViewUrlCreateDeviceComponent, data: {animation: 'ObjViewUrlCreateDeviceComponent'}, canActivate: [AuthGuard] },
   { path: 'warehouse', component: WarehouseComponent, data: {animation: 'WarehouseComponent'}, canActivate: [AuthGuard] },
+  { path: 'warehouse-full', component: WarehouseFullComponent, data: {animation: 'WarehouseFullComponent'}, canActivate: [AuthGuard] },
   { path: 'storage-upload-photo', component: StorageUploadPhotoComponent, data: {animation: 'StorageUploadPhotoComponent'} },
   // { path: 'equipments/supplier/:id', component: EditSupplierComponent },
   { path: '**', redirectTo: '/' },
