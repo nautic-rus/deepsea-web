@@ -24,6 +24,28 @@ export class WarehouseComponent implements OnInit {
     '3D модели',
     'Фото'
   ];
+  orders = [
+    '115-2223',
+    '200-1080',
+    '302-1022',
+    '401-1145',
+    '502-0078',
+  ];
+  suppliers: string[] = [
+    'ООО "МБТ"',
+    'ООО "Артек"',
+    'ООО "Формула"',
+    'ООО "Тонгдекс"',
+    'ООО "Фанпрайм"',
+    'ООО "ТвитИндастрис"',
+    'ООО "ЛонгФаурс"',
+  ];
+  statuses: string[] = [
+    'Создан',
+    'Принят',
+    'Отстуствует',
+    'Используется'
+  ];
   dragOver = '';
   storageId: number = 0;
   storageFiles: any[] = [];
@@ -44,6 +66,10 @@ export class WarehouseComponent implements OnInit {
     },
   ];
   contextMenuFile: any;
+  edit: string = '';
+  editValue: string = '';
+  minDate = new Date();
+  date_supply = new Date();
 
   constructor(private dialogService: DialogService, public ref: DynamicDialogRef, public a: ActivatedRoute, public s: StorageManagerService) { }
 
@@ -201,5 +227,34 @@ export class WarehouseComponent implements OnInit {
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
+  applyEdit() {
+    if (this.edit == 'date_supply'){
+      this.storageUnit.date_supply = this.date_supply.getTime();
+    }
+    this.edit = '';
+    this.s.updateStorageUnit(this.storageUnit).subscribe(() => {});
+  }
+
+  cancelEdit() {
+    switch (this.edit){
+      case 'name': this.storageUnit.name = this.editValue; break;
+      case 'code': this.storageUnit.code = this.editValue; break;
+      case 'count': this.storageUnit.count = this.editValue; break;
+      case 'order': this.storageUnit.order = this.editValue; break;
+      case 'supplier': this.storageUnit.supplier = this.editValue; break;
+      case 'date_supply': this.storageUnit.date_supply = this.editValue; break;
+      case 'pack_list': this.storageUnit.pack_list = this.editValue; break;
+      case 'comment': this.storageUnit.comment = this.editValue; break;
+      default: break;
+    }
+    this.edit = '';
+  }
+
+  startEdit(name: string, value: string) {
+    this.edit = name;
+    this.editValue = value;
+    this.date_supply = new Date(value);
   }
 }

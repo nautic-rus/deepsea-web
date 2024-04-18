@@ -19,6 +19,9 @@ export class StorageManagerService {
   updateStorageFile(storageFile: any) {
     return this.http.post<any>(props.http + '/updateStorageFile', storageFile);
   }
+  updateStorageUnit(storageUnit: any) {
+    return this.http.post<any>(props.http + '/updateStorageUnit', storageUnit);
+  }
   uploadFile(file: File, fileName: string = file.name) {
     const formData: FormData = new FormData();
     formData.append('file', file, fileName);

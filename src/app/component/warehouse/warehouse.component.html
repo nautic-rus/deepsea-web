@@ -13,27 +13,62 @@
     </div>
     <div class="card-warehouse w-83">
       <div class="pb-15 text-head">Информация о поставке</div>
-      <div class="delivery">
+      <div class="delivery" *ngIf="storageUnit != null">
         <div class="border-right">
           <div class="df pb-15">
-            <div class="parameter min-text">Наименование</div>
-            <div class="value normal-text">{{storageUnit.name}}</div>
+            <div class="parameter min-text">Наименование
+              <i *ngIf="edit != 'name'" [class.disabled-button]="edit != ''" (click)="startEdit('name', storageUnit.name)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'name'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'name'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'name'" class="value normal-text">{{storageUnit.name}}</div>
+            <div *ngIf="edit == 'name'" class="">
+              <input pInputText type="text" class="change normal-text" [(ngModel)]="storageUnit.name" />
+            </div>
           </div>
           <div class="df pb-15">
-            <div class="parameter min-text">Номер</div>
-            <div class="value normal-text">{{storageUnit.code}}</div>
+            <div class="parameter min-text">Номер
+              <i *ngIf="edit != 'code'" [class.disabled-button]="edit != ''" (click)="startEdit('code', storageUnit.code)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'code'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'code'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'code'" class="value normal-text">{{storageUnit.code}}</div>
+            <div *ngIf="edit == 'code'" class="">
+              <input pInputText type="text" class="change normal-text" [(ngModel)]="storageUnit.code" />
+            </div>
           </div>
           <div class="df pb-15">
-            <div class="parameter min-text">Кол-во товаров</div>
-            <div class="value normal-text">{{storageUnit.count}} шт.</div>
+            <div class="parameter min-text">Кол-во товаров
+              <i *ngIf="edit != 'count'" [class.disabled-button]="edit != ''" (click)="startEdit('count', storageUnit.count)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'count'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'count'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'count'" class="value normal-text">{{storageUnit.count}} шт.</div>
+            <div *ngIf="edit == 'count'" class="normal-text">
+              <p-inputNumber class="change-number normal-text" [(ngModel)]="storageUnit.count"></p-inputNumber>  шт.
+            </div>
           </div>
           <div class="df pb-15">
-            <div class="parameter min-text">Заказ</div>
-            <div class="value normal-text">{{storageUnit.order}}</div>
+            <div class="parameter min-text">Заказ
+              <i *ngIf="edit != 'order'" [class.disabled-button]="edit != ''" (click)="startEdit('order', storageUnit.order)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'order'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'order'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'order'" class="value normal-text">{{storageUnit.order}}</div>
+            <div *ngIf="edit == 'order'" class="normal-text">
+              <p-dropdown [options]="orders" [(ngModel)]="storageUnit.order"></p-dropdown>
+            </div>
           </div>
           <div class="df pb-15">
-            <div class="parameter min-text">Поставщик</div>
-            <div class="value normal-text">{{storageUnit.supplier}}</div>
+            <div class="parameter min-text">Поставщик
+              <i *ngIf="edit != 'supplier'" [class.disabled-button]="edit != ''" (click)="startEdit('supplier', storageUnit.supplier)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'supplier'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'supplier'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'supplier'" class="value normal-text">{{storageUnit.supplier}}</div>
+            <div *ngIf="edit == 'supplier'" class="normal-text">
+              <p-dropdown [options]="suppliers" [(ngModel)]="storageUnit.supplier"></p-dropdown>
+            </div>
           </div>
           <div class="df">
             <div class="parameter min-text">Дата создания</div>
@@ -42,20 +77,48 @@
         </div>
         <div class="border-right pl-30">
           <div class="df pb-15">
-            <div class="parameter min-text">Дата поставки</div>
-            <div class="value normal-text">{{getDateOnly(storageUnit.date_supply)}}</div>
+            <div class="parameter min-text">Дата поставки
+              <i *ngIf="edit != 'date_supply'" [class.disabled-button]="edit != ''" (click)="startEdit('date_supply', storageUnit.date_supply)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'date_supply'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'date_supply'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+          </div>
+            <div *ngIf="edit != 'date_supply'" class="value normal-text">{{getDateOnly(storageUnit.date_supply)}}</div>
+            <div *ngIf="edit == 'date_supply'" class="normal-text">
+              <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [minDate]="minDate" appendTo = "body" [(ngModel)]="date_supply" dateFormat="dd.mm.yy" styleClass="width-270"></p-calendar>
+            </div>
           </div>
           <div class="df pb-15">
-            <div class="parameter min-text">Статус</div>
-            <div class="value normal-text">{{storageUnit.status}}</div>
+            <div class="parameter min-text">Статус
+              <i *ngIf="edit != 'status'" [class.disabled-button]="edit != ''" (click)="startEdit('status', storageUnit.status)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'status'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'status'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'status'" class="value normal-text">{{storageUnit.status}}</div>
+            <div *ngIf="edit == 'status'" class="normal-text">
+              <p-dropdown [options]="statuses" [(ngModel)]="storageUnit.status"></p-dropdown>
+            </div>
           </div>
           <div class="df pb-15">
-            <div class="parameter min-text">Упаковочный лист №</div>
-            <div class="value normal-text">{{storageUnit.pack_list}}</div>
+            <div class="parameter min-text">Упаковочный лист №
+              <i *ngIf="edit != 'pack_list'" [class.disabled-button]="edit != ''" (click)="startEdit('pack_list', storageUnit.pack_list)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'pack_list'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'pack_list'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'pack_list'" class="value normal-text">{{storageUnit.pack_list}}</div>
+            <div *ngIf="edit == 'pack_list'" class="normal-text">
+              <input pInputText type="text" class="change normal-text" [(ngModel)]="storageUnit.pack_list" />
+            </div>
           </div>
           <div class="df pb-15">
-            <div class="parameter min-text">Ошибки</div>
-            <div class="value normal-text">{{storageUnit.comment}}</div>
+            <div class="parameter min-text">Ошибки
+              <i *ngIf="edit != 'comment'" [class.disabled-button]="edit != ''" (click)="startEdit('comment', storageUnit.comment)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'comment'" (click)="applyEdit()" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="edit == 'comment'" (click)="cancelEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+            </div>
+            <div *ngIf="edit != 'comment'" class="value normal-text">{{storageUnit.comment}}</div>
+            <div *ngIf="edit == 'comment'" class="normal-text">
+              <input pInputText type="text" class="change normal-text" [(ngModel)]="storageUnit.comment" />
+            </div>
           </div>
         </div>
         <div class="pl-30">
@@ -93,7 +156,7 @@
       <div class="mt-10">
         <div class="text-head pb-10">Файлы</div>
         <div class="norm-text" *ngIf="storageFiles.length == 0">Здесь будут недавно загруженные файлы</div>
-        <div class="norm-text">{{selectedFileGroup}}</div>
+        <div class="norm-text" *ngIf="storageFiles.length > 0">{{selectedFileGroup}}</div>
       </div>
       <div class="mt-10 df fw files-cont">
         <div *ngFor="let file of awaitForLoad" class="file">
