@@ -43,6 +43,7 @@ export class WarehouseComponent implements OnInit {
         });
       }
     });
+    this.checkNewPhotos();
   }
   checkNewPhotos(){
     setTimeout(() => {

@@ -3,6 +3,14 @@
     <p-button class="mx-10" (click)="selectFiles.click()" icon="pi pi-images"></p-button>
     <p-button class="mx-10" (click)="capturePhoto.click()" icon="pi pi-camera"></p-button>
   </div>
+  <div class="mt-5 mb-5" *ngIf="awaitForLoad.length > 0">
+    <div class="cx">
+      Loading files: {{awaitForLoad.length}}
+    </div>
+    <div>
+      <p-progressBar mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
+    </div>
+  </div>
   <input hidden #selectFiles type="file" accept="image/*" (change)="handleFileInput(selectFiles.files)" multiple>
   <input hidden #capturePhoto type="file" accept="image/*" (change)="handleFileInput(capturePhoto.files)" multiple="multiple" capture="environment">
   <div class="cx">

@@ -20,12 +20,14 @@ export class StorageUploadPhotoComponent implements OnInit {
     this.a.queryParams.subscribe(params => {
       if (params['storageId'] != null){
         this.storageId = +params['storageId'];
-        this.s.getStorageFiles().subscribe(res => {
-          console.log(res);
-          this.storageFiles = res.filter((x: any) => x.removed == 0 && x.kind == 'Фото');
-          this.imgs = this.storageFiles.filter((x: any) => x.unit_id == this.storageId).map((x: any) => x.url).reverse();
-        });
+        this.fillImages();
       }
+    });
+  }
+  fillImages(){
+    this.s.getStorageFiles().subscribe(res => {
+      this.storageFiles = res.filter((x: any) => x.removed == 0 && x.kind == 'Фото');
+      this.imgs = this.storageFiles.filter((x: any) => x.unit_id == this.storageId).map((x: any) => x.url).reverse();
     });
   }
   handleFileInput(files: FileList | null) {
@@ -45,9 +47,12 @@ export class StorageUploadPhotoComponent implements OnInit {
               url: res,
               kind: 'Фото',
               unit_id: this.storageId,
-              removed: 0
+              removed: 0,
+              date_created: 0
             });
-            this.s.updateStorageFile(sFile).subscribe(() => {});
+            this.s.updateStorageFile(sFile).subscribe(() => {
+              this.fillImages();
+            });
           });
         }
       }
