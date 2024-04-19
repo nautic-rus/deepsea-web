@@ -124,13 +124,13 @@
             <img src="assets/barcode.png" height="60">
           </div>
         </div>
-        <div class="pl-30">
-          <div class="min-text">Расположение на складе:</div>
-          <div class="storage-location min-text mt-15 text-bold">
+        <div class="pl-30 storage">
+          <div class="text-head">Расположение на складе:</div>
+          <div class="storage-location min-text mt-15 mb-10 text-bold">
             <div>Название</div>
             <div>Место</div>
             <div>Шт.</div>
-            <div class="cursor-pointer" (click)="addLocation()">+</div>
+            <div class="cursor-pointer transparent-button-w cxy" (click)="addLocation()">+</div>
           </div>
           <div *ngFor="let loc of storageLocations; let i = index" class="storage-location min-text">
             <div class="my-5" *ngIf="editLoc != i">{{loc.name}}</div>
@@ -140,10 +140,10 @@
             <div class="my-5" *ngIf="editLoc == i"><input pInputText type="text" class="change-loc normal-text" [(ngModel)]="loc.place" /></div>
             <div class="my-5" *ngIf="editLoc == i"><input pInputText type="text" class="change-loc normal-text" [(ngModel)]="loc.count" /></div>
             <div class="my-5 df">
-              <i *ngIf="editLoc == -1" (click)="startEditLoc(i, loc)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
-              <i *ngIf="editLoc == -1" (click)="deleteLoc(loc)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
-              <i *ngIf="editLoc == i" (click)="applyLocEdit(loc)" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
-              <i *ngIf="editLoc == i " (click)="cancelLocEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="editLoc == -1" (click)="startEditLoc(i, loc)" class="pi pi-pencil cursor-pointer" style="font-size: 12px"></i>
+              <i *ngIf="editLoc == -1" (click)="deleteLoc(loc)" class="pi pi-trash cursor-pointer ml-15" style="font-size: 12px"></i>
+              <i *ngIf="editLoc == i" (click)="applyLocEdit(loc)" class="pi pi-check-circle cursor-pointer" style="font-size: 12px"></i>
+              <i *ngIf="editLoc == i " (click)="cancelLocEdit()" class="pi pi-times-circle cursor-pointer ml-15" style="font-size: 12px"></i>
             </div>
           </div>
         </div>
