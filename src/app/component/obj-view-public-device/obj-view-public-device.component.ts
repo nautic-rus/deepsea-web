@@ -94,7 +94,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       urls.push(this.surl)
       urls.push(this.curl)
       urls.push(this.purl)
-      if (urls.length == 1){
+      if (urls.filter(x => x != '').length == 1){
         this.showFilters = false;
       }
       if (this.errorMessage == ''){
