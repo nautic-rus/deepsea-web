@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {LanguageService} from "../../domain/language.service";
 import {StorageManagerService} from "../../domain/storage-manager.service";
 import {Rights} from "../../domain/interfaces/rights";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-warehouse-full',
@@ -18,9 +18,14 @@ export class WarehouseFullComponent implements OnInit {
   loading = true;
   orders: Rights[] = [];
   selectedOrders: string[] = [];
-  constructor(public t: LanguageService, public s: StorageManagerService, public r: Router) { }
+  constructor(public t: LanguageService, public s: StorageManagerService, public a: ActivatedRoute, public r: Router) { }
 
   ngOnInit(): void {
+    this.a.queryParams.subscribe(params => {
+      if (params['navi'] == null){
+        this.r.navigate([], {queryParams: {navi: 0}});
+      }
+    });
     this.s.getStorageUnits().subscribe(storages => {
       console.log(storages);
       this.storages = storages;
@@ -29,6 +34,6 @@ export class WarehouseFullComponent implements OnInit {
   }
 
   createNew(storageId: number) {
-    window.open('/warehouse?storageId=' + storageId, '_blank');
+    window.open('/warehouse?storageId=' + storageId + '&navi=0', '_blank');
   }
 }

@@ -71,15 +71,18 @@ export class WarehouseComponent implements OnInit {
   minDate = new Date();
   date_supply = new Date();
 
-  constructor(private dialogService: DialogService, public ref: DynamicDialogRef, public a: ActivatedRoute, public s: StorageManagerService, public router: Router) { }
+  constructor(private dialogService: DialogService, public ref: DynamicDialogRef, public a: ActivatedRoute, public s: StorageManagerService, public r: Router) { }
 
   ngOnInit(): void {
     this.a.queryParams.subscribe(params => {
       if (params['storageId'] != null){
         this.storageId = +params['storageId'];
+        if (params['navi'] == null){
+          this.r.navigate([], {queryParams: {navi: 0}, queryParamsHandling: 'merge'});
+        }
         if (this.storageId == 0){
           this.s.getNewStorageUnit().subscribe(res => {
-            this.router.navigate([], {queryParams: {storageId: res.id}});
+            this.r.navigate([], {queryParams: {storageId: res.id}});
           });
         }
         else{
