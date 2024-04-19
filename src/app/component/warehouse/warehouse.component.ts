@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {DeleteComponent} from "../task/delete/delete.component";
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ActControlComponent} from "./act-control/act-control.component";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {StorageManagerService} from "../../domain/storage-manager.service";
 import {ContextMenu} from "primeng/contextmenu";
 
@@ -71,17 +71,23 @@ export class WarehouseComponent implements OnInit {
   minDate = new Date();
   date_supply = new Date();
 
-  constructor(private dialogService: DialogService, public ref: DynamicDialogRef, public a: ActivatedRoute, public s: StorageManagerService) { }
+  constructor(private dialogService: DialogService, public ref: DynamicDialogRef, public a: ActivatedRoute, public s: StorageManagerService, public router: Router) { }
 
   ngOnInit(): void {
     this.a.queryParams.subscribe(params => {
       if (params['storageId'] != null){
         this.storageId = +params['storageId'];
-        this.fillFiles();
-        this.s.getStorageUnits().subscribe(res => {
-          console.log(res);
-          this.storageUnit = res.find((x: any) => x.id == this.storageId);
-        });
+        if (this.storageId == 0){
+          this.s.getNewStorageUnit().subscribe(res => {
+            this.router.navigate([], {queryParams: {storageId: res.id}});
+          });
+        }
+        else{
+          this.fillFiles();
+          this.s.getStorageUnits().subscribe(res => {
+            this.storageUnit = res.find((x: any) => x.id == this.storageId);
+          });
+        }
       }
     });
     this.checkNewPhotos();

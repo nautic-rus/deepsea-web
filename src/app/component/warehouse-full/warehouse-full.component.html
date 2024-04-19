@@ -9,7 +9,7 @@
       <!--        </p-dropdown>-->
       <!--      </div>-->
       <div class="mr-10">
-        <div class="materials-button blue-button cxy disabled-button" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top">
+        <div (click)="createNew(0)" class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
       </div>
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div *ngIf="!loading && selectedView == 'tiles'" class="tile height-tiles ovf-auto">
-            <div class="dash-card" *ngFor="let st of storages; let j = index">
+            <div class="dash-card" *ngFor="let st of storages; let j = index" (click)="createNew(st.id)">
               <div class="dash-card-tile cursor-pointer">
                 <div class="over-top-rows mb-10">
                   <div class="mm-text">ЗАКАЗ {{st.order}}</div>

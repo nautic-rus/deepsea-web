@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {LanguageService} from "../../domain/language.service";
 import {StorageManagerService} from "../../domain/storage-manager.service";
 import {Rights} from "../../domain/interfaces/rights";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-warehouse-full',
@@ -17,7 +18,7 @@ export class WarehouseFullComponent implements OnInit {
   loading = true;
   orders: Rights[] = [];
   selectedOrders: string[] = [];
-  constructor(public t: LanguageService, public s: StorageManagerService) { }
+  constructor(public t: LanguageService, public s: StorageManagerService, public r: Router) { }
 
   ngOnInit(): void {
     this.s.getStorageUnits().subscribe(storages => {
@@ -27,4 +28,7 @@ export class WarehouseFullComponent implements OnInit {
     });
   }
 
+  createNew(storageId: number) {
+    window.open('/warehouse?storageId=' + storageId, '_blank');
+  }
 }

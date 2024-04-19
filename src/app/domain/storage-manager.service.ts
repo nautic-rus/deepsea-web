@@ -13,6 +13,9 @@ export class StorageManagerService {
   getStorageUnits() {
     return this.http.get<any>(props.http + '/storageUnits');
   }
+  getNewStorageUnit() {
+    return this.http.get<any>(props.http + '/newStorageUnit');
+  }
   getStorageFiles() {
     return this.http.get<any>(props.http + '/storageFiles');
   }
