@@ -3,6 +3,7 @@ import {LanguageService} from "../../domain/language.service";
 import {StorageManagerService} from "../../domain/storage-manager.service";
 import {Rights} from "../../domain/interfaces/rights";
 import {ActivatedRoute, Router} from "@angular/router";
+import _ from "underscore";
 
 @Component({
   selector: 'app-warehouse-full',
@@ -30,11 +31,30 @@ export class WarehouseFullComponent implements OnInit {
     this.s.getStorageUnits().subscribe(storages => {
       console.log(storages);
       this.storages = storages;
+      _.forEach(_.groupBy(this.storages, x => x.invoice_name), group => {
+        let h = group[0];
+        this.invoices.push(Object({
+          name: h.invoice_name,
+          date: this.getDateOnly(h.invoice_date),
+          storages: group
+        }));
+      });
       this.loading = false;
     });
   }
 
   createNew(storageId: number) {
     window.open('/warehouse?storageId=' + storageId + '&navi=0', '_blank');
+  }
+  getDateOnly(dateLong: number): string {
+    if (dateLong == null){
+      let date = new Date()
+      return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+    }
+    if (dateLong == 0){
+      return '--/--/--';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 }

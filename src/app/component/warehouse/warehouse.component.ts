@@ -276,6 +276,9 @@ export class WarehouseComponent implements OnInit {
     this.edit = name;
     this.editValue = value;
     this.date_supply = new Date(value);
+    if (name == 'date_supply' && +value == 0){
+      this.date_supply = new Date();
+    }
   }
 
   addLocation() {

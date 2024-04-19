@@ -60,12 +60,12 @@
           </div>
         </div>
       </div>
-      <div class="tile height-tiles ovf-auto">
+      <div class="tile height-tiles ovf-auto" *ngFor="let inv of invoices">
         <div class="invoice cy cursor-pointer">
-          <div class="title-big-w">№385</div>
-          <div class="title-bold-w">от 16.04.2024</div>
+          <div class="title-big-w">{{inv.name}}</div>
+          <div class="title-bold-w">от {{inv.date}}</div>
           <div class="title-bold-w text-uppercase">Товарная накладная</div>
-          <div class="title-bold-w">10 товаров</div>
+          <div class="title-bold-w">{{inv.storages.length}} товаров</div>
           <div class="">
             <div class="text-uppercase mini-text-w">Общая масса</div>
             <div class="title-bold-w ml-10">1032кг</div>
@@ -74,7 +74,7 @@
             <div class="width-fit" style="color: #256029; background-color: #c8e6c9; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 10px; letter-spacing: .3px;">Исполнен</div>
           </div>
         </div>
-        <div class="dash-card" *ngFor="let st of storages; let j = index" (click)="createNew(st.id)">
+        <div class="dash-card" *ngFor="let st of inv.storages; let j = index" (click)="createNew(st.id)">
           <div class="dash-card-tile cursor-pointer">
             <div class="over-top-rows mb-10">
               <div class="mm-text">ЗАКАЗ {{st.order}}</div>
@@ -95,6 +95,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
