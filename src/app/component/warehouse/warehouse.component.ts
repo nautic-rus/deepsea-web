@@ -5,6 +5,7 @@ import {ActControlComponent} from "./act-control/act-control.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StorageManagerService} from "../../domain/storage-manager.service";
 import {ContextMenu} from "primeng/contextmenu";
+import _ from "underscore";
 
 @Component({
   selector: 'app-warehouse',
@@ -49,6 +50,7 @@ export class WarehouseComponent implements OnInit {
   dragOver = '';
   storageId: number = 0;
   storageFiles: any[] = [];
+  storageLocations: any[] = [];
   storageUnit: any;
   selectedFileGroup: string = 'Недавно загруженные';
   loadFileGroup: string = '';
@@ -67,9 +69,11 @@ export class WarehouseComponent implements OnInit {
   ];
   contextMenuFile: any;
   edit: string = '';
+  editLoc: number = -1;
   editValue: string = '';
   minDate = new Date();
   date_supply = new Date();
+  editLocValue: any;
 
   constructor(private dialogService: DialogService, public ref: DynamicDialogRef, public a: ActivatedRoute, public s: StorageManagerService, public r: Router) { }
 
@@ -87,6 +91,7 @@ export class WarehouseComponent implements OnInit {
         }
         else{
           this.fillFiles();
+          this.fillLocations();
           this.s.getStorageUnits().subscribe(res => {
             this.storageUnit = res.find((x: any) => x.id == this.storageId);
           });
@@ -112,6 +117,12 @@ export class WarehouseComponent implements OnInit {
   fillFiles(){
     this.s.getStorageFiles().subscribe(res => {
       this.storageFiles = res.filter((x: any) => x.removed == 0 && x.unit_id == this.storageId);
+    });
+  }
+  fillLocations(){
+    this.s.getStorageLocations().subscribe(res => {
+      this.storageLocations = _.sortBy(res.filter((x: any) => x.removed == 0 && x.unit_id == this.storageId), x => x.id);
+      console.log(res);
     });
   }
   actControlOpen(act: string) {
@@ -265,5 +276,36 @@ export class WarehouseComponent implements OnInit {
     this.edit = name;
     this.editValue = value;
     this.date_supply = new Date(value);
+  }
+
+  addLocation() {
+    let s = new Object({
+      id: 0,
+      unit_id: this.storageId,
+      name: 'Название',
+      place: '1-A',
+      count: '1',
+      removed: 0
+    });
+    this.s.updateStorageLocation(s).subscribe(res => {
+      this.fillLocations();
+    });
+  }
+
+  startEditLoc(i: number, loc: any) {
+    this.editLoc = i;
+    this.editLocValue = JSON.parse(JSON.stringify(loc));
+  }
+
+  applyLocEdit(loc: any) {
+    this.s.updateStorageLocation(loc).subscribe(res => {
+      this.fillLocations();
+    });
+    this.editLoc = -1;
+  }
+
+  cancelLocEdit() {
+    this.fillLocations();
+    this.editLoc = -1;
   }
 }

@@ -19,6 +19,12 @@ export class StorageManagerService {
   getStorageFiles() {
     return this.http.get<any>(props.http + '/storageFiles');
   }
+  getStorageLocations() {
+    return this.http.get<any>(props.http + '/storageLocations');
+  }
+  updateStorageLocation(value: any) {
+    return this.http.post<any>(props.http + '/updateStorageLocation', value);
+  }
   updateStorageFile(storageFile: any) {
     return this.http.post<any>(props.http + '/updateStorageFile', storageFile);
   }

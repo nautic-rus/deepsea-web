@@ -143,4 +143,10 @@
 .change-number{
   width: 60px;
 }
-
+.storage-location{
+  display: grid;
+  grid-template-columns: 80px 80px 80px 10px;
+}
+.change-loc{
+  width: 70px;
+}
