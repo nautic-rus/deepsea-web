@@ -141,6 +141,7 @@
             <div class="my-5" *ngIf="editLoc == i"><input pInputText type="text" class="change-loc normal-text" [(ngModel)]="loc.count" /></div>
             <div class="my-5 df">
               <i *ngIf="editLoc == -1" (click)="startEditLoc(i, loc)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
+              <i *ngIf="editLoc == -1" (click)="deleteLoc(loc)" class="pi pi-pencil cursor-pointer ml-5" style="font-size: 12px"></i>
               <i *ngIf="editLoc == i" (click)="applyLocEdit(loc)" class="pi pi-check-circle cursor-pointer ml-5" style="font-size: 12px"></i>
               <i *ngIf="editLoc == i " (click)="cancelLocEdit()" class="pi pi-times-circle cursor-pointer ml-5" style="font-size: 12px"></i>
             </div>

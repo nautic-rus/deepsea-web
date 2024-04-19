@@ -308,4 +308,11 @@ export class WarehouseComponent implements OnInit {
     this.fillLocations();
     this.editLoc = -1;
   }
+
+  deleteLoc(loc: any) {
+    loc.removed = 1;
+    this.s.updateStorageLocation(loc).subscribe(res => {
+      this.fillLocations();
+    });
+  }
 }
