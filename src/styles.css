@@ -920,6 +920,9 @@ body,p{
 .mr-30{
   margin-right: 30px;
 }
+.mr-50{
+  margin-right: 50px;
+}
 .mr-2px{
   margin-right: 2px;
 }
@@ -1419,4 +1422,7 @@ app-materials-summary .p-virtualscroller .p-virtualscroller-content{
 }
 .hidden{
   display: none;
+}
+.text-uppercase {
+  text-transform: uppercase;
 }

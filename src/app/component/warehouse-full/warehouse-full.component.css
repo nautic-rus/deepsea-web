@@ -63,9 +63,9 @@
 }
 .card-head{
   background: rgba(255, 255, 255, 0.9);
-  padding: 12px;
-  border-radius: 8px;
-  height: 65px;
+  padding: 8px;
+  border-radius: 6px;
+  height: 56px;
   align-items: center;
   color: #323130;
   font-size: 14px;
@@ -90,11 +90,11 @@
   transition: 0.1s;
   overflow: auto;
 }
-.materials-button{
-  height: 37px;
-  width: 37px;
+.materials-button-w{
+  height: 32px;
+  width: 32px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 .materials-button-mini{
   height: 30px;
@@ -147,7 +147,7 @@
   display: none;
 }
 .height-tiles{
-  height: calc(100vh - 192px);
+  height: calc(100vh - 166px);
 }
 .cloud:hover{
   transform: scale(1.1);
@@ -282,6 +282,10 @@
   color: #7575759e;
   font-size: 12px;
 }
+.mini-text-w{
+  color: #7575759e;
+  font-size: 10px;
+}
 .select-path:hover{
   color: #00BCD4;
 }
@@ -336,4 +340,30 @@
 .over-top-rows{
   display: flex;
   justify-content: space-between;
+}
+.header-storage{
+  height: 60px;
+  background-color: #018A85;
+  color: white;
+  font-family: TTRoundsNeue-CompMedium;
+  font-size: 30px;
+}
+.invoice{
+  background-color: white;
+  width: 100%;
+  height: 60px;
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
+}
+.title-bold-w {
+  font-weight: 500;
+  font-size: 14px;
+  color: #3a3a3a;
+}
+.title-big-w {
+  font-weight: 500;
+  font-size: 24px;
+  color: #3a3a3a;
 }

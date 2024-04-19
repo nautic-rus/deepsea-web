@@ -15,6 +15,7 @@ export class WarehouseFullComponent implements OnInit {
   project = 0;
   selectedView: string = 'tiles';
   storages: any[] = [];
+  invoices: any[] = [];
   loading = true;
   orders: Rights[] = [];
   selectedOrders: string[] = [];
