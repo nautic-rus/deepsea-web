@@ -276,33 +276,41 @@ export class ElectricEspComponent implements OnInit {
         let eles = res.elements;
         let groupedEles: any[] = [];
         _.forEach(_.groupBy(eles, g => g.code), grEle => {
-          let units = '796';
           let first = grEle[0];
+          let units = first.units;
           let wgt = 0;
+          let count = 0;
           _.forEach(grEle, x => {
-            wgt += x.material.singleWeight;
-            x.weight = x.material.singleWeight;
+            count += x.weight;
           });
-          let sWeight = 1;
-          if (first.material.singleWeight != 0){
-            sWeight = first.material.singleWeight;
-          }
-          let count = grEle.length;
-          if (first.typeName == 'TRAY'){
-            units = '006';
-            count = Math.round(wgt / sWeight * 100) / 100;
+          switch (units) {
+            case '006':
+              wgt = count * first.material.singleWeight;
+              break;
+            default:
+              wgt = grEle.length;
+              break;
           }
           let userId = grEle.find(x => x.userId != '') != null ? grEle.find(x => x.userId != '').userId : '';
           let grEles: any[] = [];
           let iter = 1;
           grEle.forEach(ele => {
+            let eleWeight = ele.weight;
+            switch (ele.units) {
+              case '006':
+                eleWeight *= first.material.singleWeight;
+                break;
+              default:
+                break;
+            }
+
             grEles.push({
               pos: iter++,
               kind: ele.typeName,
               materialName: ele.material.name,
               units: ele.units,
-              count: 1,
-              weight: Math.round(ele.weight * 100) / 100,
+              count: Math.round(ele.weight * 1000) / 1000,
+              weight: Math.round(eleWeight * 1000) / 1000,
               code: ele.material.code,
               cog: ele.cog,
             });
@@ -312,7 +320,7 @@ export class ElectricEspComponent implements OnInit {
             pos: this.rlz(userId),
             eles: grEles,
             code: first.material.code,
-            count: count,
+            count: Math.round(count * 100) / 100,
             weight: Math.round(wgt * 100) / 100,
             kind: first.typeName,
             materialName: first.material.name,
