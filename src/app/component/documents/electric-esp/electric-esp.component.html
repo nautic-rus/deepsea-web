@@ -54,18 +54,29 @@
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
                 </div>
-                <div class="mt-10">
-                  <div class="df" *ngFor="let e of ele.eles">
-                    <div class="mx-10">{{e.pos}}</div>
-                    <div class="mx-10">{{e.kind}}</div>
-                    <div class="mx-10">{{e.materialName}}</div>
-                    <div class="mx-10">{{e.units}}</div>
-                    <div class="mx-10">{{e.count}}</div>
-                    <div class="mx-10">{{e.code}}</div>
-                    <div class="mx-10">
-                      <div class="df">x: {{e.cog.x}}</div>
-                      <div class="df">y: {{e.cog.y}}</div>
-                      <div class="df">z: {{e.cog.z}}</div>
+                <div>
+                  <div class="mt-10">
+                    <div class="df">
+                      <div class="mx-10">{{ele.kind}}</div>
+                      <div class="mx-10">{{ele.materialName}}</div>
+                      <div class="mx-10">{{ele.units}}</div>
+                      <div class="mx-10">{{ele.count}}</div>
+                      <div class="mx-10">{{ele.weight}}</div>
+                      <div class="mx-10">{{ele.code}}</div>
+                    </div>
+                  </div>
+                  <div class="mt-10">
+                    <div class="df" *ngFor="let e of ele.eles">
+                      <div class="mx-10">{{e.pos}}</div>
+                      <div class="mx-10">{{e.materialName}}</div>
+                      <div class="mx-10">{{e.units}}</div>
+                      <div class="mx-10">{{e.count}}</div>
+                      <div class="mx-10">{{e.weight}}</div>
+                      <div class="mx-10">
+                        <div class="df">x: {{e.cog.x}}</div>
+                        <div class="df">y: {{e.cog.y}}</div>
+                        <div class="df">z: {{e.cog.z}}</div>
+                      </div>
                     </div>
                   </div>
                 </div>

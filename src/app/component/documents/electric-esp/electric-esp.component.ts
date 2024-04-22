@@ -275,41 +275,42 @@ export class ElectricEspComponent implements OnInit {
       if (res != null && res.elements.length > 0){
         let eles = res.elements;
         let groupedEles: any[] = [];
-        _.forEach(_.groupBy(eles, x => x.userId), gr => {
-          let iter = 0;
+        _.forEach(_.groupBy(eles, g => g.code), grEle => {
+          let units = '796';
+          let first = grEle[0];
+          let wgt = 0;
+          _.forEach(grEle, x => {
+            wgt += x.material.singleWeight;
+            x.weight = x.material.singleWeight;
+          });
+          let userId = grEle.find(x => x.userId != '') != null ? grEle.find(x => x.userId != '').userId : '';
           let grEles: any[] = [];
-          _.forEach( _.groupBy(gr, g => g.code), grEle => {
-            let units = "796";
-            let first = grEle[0];
-            let singleWeight = 1;
-            if (first.material.singleWeight != 0){
-              singleWeight = first.material.singleWeight;
-            }
-            let wgt = 0;
-            _.forEach(grEle, x => {
-              wgt += x.weight;
-            });
-            switch (first){
-              case 'TRAY':
-                units = '006';
-                wgt = wgt / singleWeight;
-                break;
-              default: break;
-            }
+          let iter = 1;
+          grEle.forEach(ele => {
             grEles.push({
               pos: iter++,
-              kind: first.typeName,
-              materialName: first.material.name,
-              units: units,
-              count: Math.round(wgt * 100) / 100,
-              code: first.material.code,
-              cog: first.cog
+              kind: ele.typeName,
+              materialName: ele.material.name,
+              units: ele.units,
+              count: 1,
+              weight: Math.round(ele.weight * 100) / 100,
+              code: ele.material.code,
+              cog: ele.cog,
             });
           });
+
           groupedEles.push({
-            pos: this.rlz(gr[0].userId),
+            pos: this.rlz(userId),
             eles: grEles,
+            code: first.material.code,
+            count: grEle.length,
+            weight: Math.round(wgt * 100) / 100,
+            kind: first.typeName,
+            materialName: first.material.name,
+            units: units,
           });
+
+
         });
         this.eleGroups = groupedEles;
       }
