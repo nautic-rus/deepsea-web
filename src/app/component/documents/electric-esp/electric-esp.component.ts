@@ -283,6 +283,15 @@ export class ElectricEspComponent implements OnInit {
             wgt += x.material.singleWeight;
             x.weight = x.material.singleWeight;
           });
+          let sWeight = 1;
+          if (first.material.singleWeight != 0){
+            sWeight = first.material.singleWeight;
+          }
+          let count = grEle.length;
+          if (first.typeName == 'TRAY'){
+            units = '006';
+            count = Math.round(wgt / sWeight * 100) / 100;
+          }
           let userId = grEle.find(x => x.userId != '') != null ? grEle.find(x => x.userId != '').userId : '';
           let grEles: any[] = [];
           let iter = 1;
@@ -303,7 +312,7 @@ export class ElectricEspComponent implements OnInit {
             pos: this.rlz(userId),
             eles: grEles,
             code: first.material.code,
-            count: grEle.length,
+            count: count,
             weight: Math.round(wgt * 100) / 100,
             kind: first.typeName,
             materialName: first.material.name,
