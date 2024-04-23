@@ -275,23 +275,59 @@ export class ElectricEspComponent implements OnInit {
       if (res != null && res.elements.length > 0){
         let eles = res.elements;
         let groupedEles: any[] = [];
-        _.forEach(_.groupBy(eles, x => x.userId), gr => {
-          let iter = 0;
+        _.forEach(_.groupBy(eles, g => g.code), grEle => {
+          let first = grEle[0];
+          let units = first.units;
+          let wgt = 0;
+          let count = 0;
+          _.forEach(grEle, x => {
+            count += x.weight;
+          });
+          switch (units) {
+            case '006':
+              wgt = count * first.material.singleWeight;
+              break;
+            default:
+              wgt = grEle.length;
+              break;
+          }
+          let userId = grEle.find(x => x.userId != '') != null ? grEle.find(x => x.userId != '').userId : '';
           let grEles: any[] = [];
-          gr.forEach(ele => {
+          let iter = 1;
+          grEle.forEach(ele => {
+            let eleWeight = ele.weight;
+            switch (ele.units) {
+              case '006':
+                eleWeight *= first.material.singleWeight;
+                break;
+              default:
+                break;
+            }
+
             grEles.push({
               pos: iter++,
               kind: ele.typeName,
               materialName: ele.material.name,
               units: ele.units,
-              count: ele.weight,
-              code: ele.material.code
+              count: Math.round(ele.weight * 1000) / 1000,
+              weight: Math.round(eleWeight * 1000) / 1000,
+              code: ele.material.code,
+              cog: ele.cog,
             });
           });
+
           groupedEles.push({
-            pos: this.rlz(gr[0].userId),
+            pos: this.rlz(userId),
             eles: grEles,
+            code: first.material.code,
+            count: Math.round(count * 100) / 100,
+            weight: Math.round(wgt * 100) / 100,
+            kind: first.typeName,
+            materialName: first.material.name,
+            units: units,
           });
+
+
         });
         this.eleGroups = groupedEles;
       }
