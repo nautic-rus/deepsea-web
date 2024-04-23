@@ -121,11 +121,15 @@
             </div>
           </div>
           <div class="df pb-15">
+            <div class="parameter min-text">Кол-во коробок</div>
+            <div class="value normal-text">{{getStorageCount()}} шт.</div>
+          </div>
+          <div class="df pb-15">
             <img src="assets/barcode.png" height="60">
           </div>
         </div>
         <div class="pl-30 storage">
-          <div class="text-head">Расположение на складе:</div>
+          <div class="text-head df">Расположение на складе: <div class="ml-15 cursor-pointer" (click)="openFile('/assets/storage/locations.pdf')"><i class="pi pi-print"></i></div></div>
           <div class="storage-location min-text mt-15 mb-10 text-bold">
             <div>Название</div>
             <div>Место</div>

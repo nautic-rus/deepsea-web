@@ -47,7 +47,7 @@
         </div>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
+          <input #search pInputText type="text" (keyup)="filterInvoices(search.value)" [placeholder]="t.tr('Поиск...')" class="border" />
         </span>
       </div>
     </div>

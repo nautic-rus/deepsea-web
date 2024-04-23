@@ -17,6 +17,7 @@ export class WarehouseFullComponent implements OnInit {
   selectedView: string = 'tiles';
   storages: any[] = [];
   invoices: any[] = [];
+  invoicesSrc: any[] = [];
   loading = true;
   orders: Rights[] = [];
   selectedOrders: string[] = [];
@@ -33,11 +34,12 @@ export class WarehouseFullComponent implements OnInit {
       this.storages = storages;
       _.forEach(_.groupBy(this.storages, x => x.invoice_name), group => {
         let h = group[0];
-        this.invoices.push(Object({
+        this.invoicesSrc.push(Object({
           name: h.invoice_name,
           date: this.getDateOnly(h.invoice_date),
           storages: group
         }));
+        this.invoices = [...this.invoicesSrc];
       });
       this.loading = false;
     });
@@ -56,5 +58,9 @@ export class WarehouseFullComponent implements OnInit {
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
+  filterInvoices(value: string) {
+    this.invoices = this.invoicesSrc.filter(x => x.name.toLowerCase().includes(value.toLowerCase()));
   }
 }

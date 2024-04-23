@@ -318,4 +318,12 @@ export class WarehouseComponent implements OnInit {
       this.fillLocations();
     });
   }
+
+  getStorageCount() {
+    let r = 0;
+    this.storageLocations.forEach(l => {
+      r += +l.count;
+    });
+    return r;
+  }
 }
