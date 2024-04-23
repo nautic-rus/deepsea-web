@@ -227,6 +227,7 @@ import { ActControlComponent } from './component/warehouse/act-control/act-contr
 import { StorageUploadPhotoComponent } from './component/warehouse/storage-upload-photo/storage-upload-photo.component';
 import { CreateGroupComponent } from './component/equipments/create-group/create-group.component';
 import { EditGroupComponent } from './component/equipments/edit-group/edit-group.component';
+import { WarehouseFullComponent } from './component/warehouse-full/warehouse-full.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -395,6 +396,7 @@ Quill.register('modules/imageResize', ImageResize);
     StorageUploadPhotoComponent,
     CreateGroupComponent,
     EditGroupComponent,
+    WarehouseFullComponent,
 
   ],
   imports: [

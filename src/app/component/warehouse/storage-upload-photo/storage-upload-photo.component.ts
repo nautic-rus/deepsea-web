@@ -20,12 +20,14 @@ export class StorageUploadPhotoComponent implements OnInit {
     this.a.queryParams.subscribe(params => {
       if (params['storageId'] != null){
         this.storageId = +params['storageId'];
-        this.s.getStorageFiles().subscribe(res => {
-          console.log(res);
-          this.storageFiles = res.filter((x: any) => x.removed == 0 && x.kind == 'photo');
-          this.imgs = this.storageFiles.filter((x: any) => x.unit_id == this.storageId).map((x: any) => x.url);
-        });
+        this.fillImages();
       }
+    });
+  }
+  fillImages(){
+    this.s.getStorageFiles().subscribe(res => {
+      this.storageFiles = res.filter((x: any) => x.removed == 0 && x.kind == 'Фото');
+      this.imgs = this.storageFiles.filter((x: any) => x.unit_id == this.storageId).map((x: any) => x.url).reverse();
     });
   }
   handleFileInput(files: FileList | null) {
@@ -34,7 +36,7 @@ export class StorageUploadPhotoComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           let id = this.generateId(8);
-          let fileName = 'photo' + id  + '.' + file.name.split('.').pop();
+          let fileName = 'photo-' + id  + '.' + file.name.split('.').pop();
           this.awaitForLoad.push(fileName);
           this.s.uploadFile(file, fileName).subscribe(res => {
             this.awaitForLoad.splice(this.awaitForLoad.indexOf(fileName), 1);
@@ -43,11 +45,14 @@ export class StorageUploadPhotoComponent implements OnInit {
               id: 0,
               name: fileName,
               url: res,
-              kind: 'photo',
+              kind: 'Фото',
               unit_id: this.storageId,
-              removed: 0
+              removed: 0,
+              date_created: 0
             });
-            this.s.updateStorageFile(sFile).subscribe(() => {});
+            this.s.updateStorageFile(sFile).subscribe(() => {
+              this.fillImages();
+            });
           });
         }
       }
@@ -68,7 +73,9 @@ export class StorageUploadPhotoComponent implements OnInit {
     let find = this.storageFiles.find((x: any) => x.unit_id == this.storageId && x.url == img);
     if (find != null){
       find.removed = 1;
-      this.s.updateStorageFile(find).subscribe(() => {});
+      this.s.updateStorageFile(find).subscribe(() => {
+        this.fillImages();
+      });
     }
   }
 }

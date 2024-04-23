@@ -11,9 +11,6 @@
   font-size: 13px!important;
   padding: 8px 10px;
 }
-/deep/.p-multiselect .p-multiselect-label {
-  padding: 8px 10px;
-}
 /deep/.pi{
   font-size: 14px;
 }
@@ -26,6 +23,9 @@
   padding: 8px 10px;
 }
 /deep/.p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
+  padding: 8px 10px;
+}
+/deep/.p-multiselect .p-multiselect-label {
   padding: 8px 10px;
 }
 .header-user-card{

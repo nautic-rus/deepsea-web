@@ -1,9 +1,30 @@
+/deep/.p-component {
+  font-size: 13px !important;
+}
+/deep/.p-inputtext{
+  padding: 0;
+  border-radius: 0;
+}
+/deep/p-inputnumber > span > input{
+  width: 60px;
+}
+/deep/ .p-datepicker td>span {
+  width: 20px !important;
+  height: 20px !important;
+}
 .card-warehouse{
   background: rgba(255, 255, 255, 0.9);
   padding: 15px;
   border-radius: 8px;
-  height: calc(100vh - 106px);
+  height: calc(100vh - 90px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+.header-storage{
+  height: 60px;
+  background-color: #018A85;
+  color: white;
+  font-family: TTRoundsNeue-CompMedium;
+  font-size: 30px;
 }
 .delivery{
   background-color: #F0F0F2;
@@ -16,8 +37,10 @@
 .files{
   background-color: #F0F0F2;
   width: 100%;
-  padding: 30px;
+  padding: 10px;
   border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .min-text {
   font-size: 12px;
@@ -45,7 +68,7 @@
   color: #172b4d;
 }
 .border-right{
-  border-right: 1px solid rgba(193, 193, 193, 0.85);
+  border-right: 1px solid #D1D1D1;
 }
 .materials-button-warehouse{
   height: 35px;
@@ -58,15 +81,15 @@
   font-size: 13px;
 }
 .empty-file{
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
   background-color: white;
   cursor: pointer;
 }
 .full-file-drawing{
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
   cursor: pointer;
   background-color: #14b8a6d1;
@@ -75,4 +98,72 @@
   color: white;
   font-size: 16px;
   font-weight: bold;
+}
+.file{
+  height: 60px;
+  width: 60px;
+  margin: 5px;
+  cursor: pointer;
+}
+.text-small{
+  font-size: 12px;
+}
+.drag-over{
+  background-color: rgba(0, 0, 0, 0.25);
+}
+.no-events{
+  pointer-events: none;
+}
+.file-spinner{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.files-cont{
+  height: 230px;
+  overflow: auto;
+}
+.left-menu-text{
+  text-transform: uppercase;
+  font-size: 12px;
+  color: #495057;
+  height: 30px;
+  padding: 3px;
+  border-radius: 6px;
+  transition: box-shadow .2s;
+}
+.left-menu-text:hover{
+  background-color: #E9ECEF;
+}
+.select-text{
+  background-color: #EEF2FF;
+}
+.count-files{
+  color: #a1b9d3;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.change{
+  width: 270px;
+}
+.change-number{
+  width: 60px;
+}
+.storage-location{
+  display: grid;
+  grid-template-columns: 80px 80px 80px 10px;
+}
+.change-loc{
+  width: 70px;
+}
+.storage{
+  height: 220px;
+  overflow: auto;
+}
+.transparent-button-w{
+  border: 1px solid #ced4da;
+  height: 20px;
+  width: 20px;
+  border-radius: 6px;
 }

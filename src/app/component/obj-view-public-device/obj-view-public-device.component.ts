@@ -63,11 +63,14 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   structureVisible = true;
   traysVisible = true;
   pipesVisible = true;
+  showFilters = true;
 
   public constructor(public route: ActivatedRoute, public issues: IssueManagerService, public s: SpecManagerService) {
   }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
+
+      this.showFilters = params.filters ? (+params.filters == 1) : this.showFilters;
 
       this.hurl = params.hurl ? params.hurl : '';
       this.eurl = params.eurl ? params.eurl : '';
@@ -84,6 +87,15 @@ export class ObjViewPublicDeviceComponent implements OnInit {
 
       if (this.hurl == '' && this.eurl == '' && this.surl == ''){
         this.errorMessage = 'There is no model url';
+      }
+      let urls = [];
+      urls.push(this.hurl)
+      urls.push(this.eurl)
+      urls.push(this.surl)
+      urls.push(this.curl)
+      urls.push(this.purl)
+      if (urls.filter(x => x != '').length == 1){
+        this.showFilters = false;
       }
       if (this.errorMessage == ''){
         this.loadModel();

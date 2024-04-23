@@ -187,6 +187,9 @@ body,p{
 .w-80{
   width: 80%;
 }
+.w-82{
+  width: 82%;
+}
 .w-83{
   width: 83%;
 }
@@ -489,6 +492,9 @@ body,p{
 }
 .max-width-50{
   max-width: 50px;
+}
+.max-width-100{
+  max-width: 100px;
 }
 .max-width-150{
   max-width: 150px;
@@ -913,6 +919,9 @@ body,p{
 }
 .mr-30{
   margin-right: 30px;
+}
+.mr-50{
+  margin-right: 50px;
 }
 .mr-2px{
   margin-right: 2px;
@@ -1413,4 +1422,7 @@ app-materials-summary .p-virtualscroller .p-virtualscroller-content{
 }
 .hidden{
   display: none;
+}
+.text-uppercase {
+  text-transform: uppercase;
 }

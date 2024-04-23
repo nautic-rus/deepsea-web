@@ -3,7 +3,7 @@
     {{selectedSegment}}
   </div>
   <div [hidden]="errorMessage != ''">
-    <div class="visible">
+    <div class="visible" *ngIf="showFilters">
       <div class="df mt-5">
         <div class="mr-5">Корпус</div>
         <p-checkbox [binary]="true" [(ngModel)]="hullVisible" (ngModelChange)="changeVisible()"></p-checkbox>
