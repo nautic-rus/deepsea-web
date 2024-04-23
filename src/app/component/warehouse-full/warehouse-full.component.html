@@ -109,7 +109,7 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-st>
-            <tr class="cursor-pointer row-table-user-hover">
+            <tr class="cursor-pointer row-table-user-hover" (click)="createNew(st.id)">
               <td class="text-14 break-word">{{st.order}}</td>
               <td class="text-14 break-word">{{st.name}}</td>
               <td style="min-width: 150px; max-width: 150px" class="text-14 break-word">{{st.count}}</td>
