@@ -115,3 +115,17 @@
 .back-gray{
   background-color: #EFF0FA !important;
 }
+
+/deep/ .p-sidebar-right {
+  width: 50%;
+}
+
+.sidebar-r {
+  width: 50%;
+}
+
+.w-50rem {
+  width: 50rem;
+}
+
+

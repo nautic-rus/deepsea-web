@@ -8,5 +8,9 @@ export interface ISupplier {
   manufacturer: string,
   status: string,
   approvement: number,
-  last_update: number
+  last_update: number,
+  weight: number,
+  ele_param: string,
+  mech_param: string,
+  model: string
 }

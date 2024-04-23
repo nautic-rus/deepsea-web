@@ -18,6 +18,9 @@ import {LanguageService} from "../../domain/language.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import { TreeNode } from 'primeng/api';
+import _ from "underscore";
+import {CreateGroupComponent} from "./create-group/create-group.component";
+import {EditGroupComponent} from "./edit-group/edit-group.component";
 
 interface Column {
   field: string;
@@ -33,10 +36,17 @@ interface Column {
 
 
 export class EquipmentsComponent implements OnInit {
+  editGroupSidebarVisible = false; //cлужит для отображения сайдбара с формой редактирования группы (вылезет при клике на группу)
+  editEqSidebarVisible = false; //cлужит для отображения сайдбара с формой редактирования группы (вылезет при клике на группу)
+
+  selectedEq: any;
+  selectedGroup: IEquipment | undefined;
+
+
   equipmentsNode!: TreeNode[];
   cols!: Column[];
 
-  data:any = [];
+  data: any = [];
   projects: any[] = [];
   project = '';
   selectedProjects: string[] = [];
@@ -51,12 +61,12 @@ export class EquipmentsComponent implements OnInit {
   createEqButtonAreHidden = true;
   createSuppButtonAreHidden = true;
 
-  equipmentId:number = 0;
+  equipmentId: number = 0;
   supplierId: number = 0;
 
 
-  constructor( public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService,
-               private supplierService: SupplierService, public t: LanguageService, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService) {
+  constructor(public auth: AuthManagerService, public eqService: EquipmentsService, private dialogService: DialogService, public prService: ProjectsManagerService,
+              private supplierService: SupplierService, public t: LanguageService, private route: ActivatedRoute, private router: Router, public issueManager: IssueManagerService) {
 
     route.queryParams.subscribe(params => {
       if (params['equipmentId'] && params['supplierId']) {
@@ -76,112 +86,30 @@ export class EquipmentsComponent implements OnInit {
     })
 
     //this.departments = this.prService.departments.map(x => new LV(x.name));
-    this.departments = this.prService.departments.filter(x => x.visible_documents == 1 ).map(x => new LV(x.name));
+    this.departments = this.prService.departments.filter(x => x.visible_documents == 1).map(x => new LV(x.name));
     this.departments.forEach(department => {
       this.selectedDepartments.push(department.value)
     })
 
     this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'size', header: 'Size' },
-      { field: 'type', header: 'Type' }
+      {field: 'id', header: 'ID'},
+      {field: 'sfi', header: 'sfi'},
+      {field: 'name', header: 'name'},
+      {field: 'sfi-unit', header: 'sfi_unit'},
+      {field: 'status', header: 'status_id'},
+      {field: 'respons_name & respons_surname', header: 'respons_name'},
+      {field: 'respons_surname', header: 'respons_surname'},
+      {field: 'itt', header: 'itt'},
+      {field: 'comment', header: 'comment'},
+      {field: '', header: ''},
     ];
     //this.selectedDepartments = ['System'];
 
     this.eqService.getEquipments().subscribe(equipments => {
-
-      this.equipmentsNode =  [{
-            key: '0',
-            data: {
-              name: 'Applications',
-              size: '100kb',
-              type: 'Folder'
-            },
-            children: [
-              {
-                key: '0-0',
-                data: {
-                  name: 'React',
-                  size: '25kb',
-                  type: 'Folder'
-                },
-                children: [
-                  {
-                    key: '0-0-0',
-                    data: {
-                      name: 'react.app',
-                      size: '10kb',
-                      type: 'Application'
-                    }
-                  },
-                  {
-                    key: '0-0-1',
-                    data: {
-                      name: 'native.app',
-                      size: '10kb',
-                      type: 'Application'
-                    }
-                  },
-                  {
-                    key: '0-0-2',
-                    data: {
-                      name: 'mobile.app',
-                      size: '5kb',
-                      type: 'Application'
-                    }
-                  }
-                ]
-              },
-              {
-                key: '0-1',
-                data: {
-                  name: 'editor.app',
-                  size: '25kb',
-                  type: 'Application'
-                }
-              },
-              {
-                key: '0-2',
-                data: {
-                  name: 'settings.app',
-                  size: '50kb',
-                  type: 'Application'
-                }
-              }
-            ]
-          },
-        {
-          key: '1',
-          data: {
-            name: 'Cloud',
-            size: '20kb',
-            type: 'Folder'
-          },
-          children: [
-            {
-              key: '1-0',
-              data: {
-                name: 'backup-1.zip',
-                size: '10kb',
-                type: 'Zip'
-              }
-            },
-            {
-              key: '1-1',
-              data: {
-                name: 'backup-2.zip',
-                size: '10kb',
-                type: 'Zip'
-              }
-            }
-          ]
-        }
-        ];
-      console.log(this.equipmentsNode);
-      console.log(equipments);
+      this.equipmentsNode = []
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
 
-      if (this.equipmentId !=0 && this.supplierId != 0) {  //чтобы открыть editSupplier выполняем поиск по айдишникам
+      if (this.equipmentId != 0 && this.supplierId != 0) {  //чтобы открыть editSupplier выполняем поиск по айдишникам
 
         let equipmentById = this.equipmentsSrc.find(eq => eq.id == this.equipmentId);
         let supplierById = equipmentById?.suppliers?.find(sup => sup.id == this.supplierId);
@@ -190,10 +118,13 @@ export class EquipmentsComponent implements OnInit {
       }
 
       this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-      // this.parseEquipmentArrayForTree(this.equipments, 0);
+
+      // let resParsedArray: any[] = []
+      this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
+      console.log(this.equipmentsNode)
     });
 
-    this.eqService.getSfis().subscribe(sfis=>{
+    this.eqService.getSfis().subscribe(sfis => {
       this.sfis = sfis;
     });
 
@@ -206,8 +137,6 @@ export class EquipmentsComponent implements OnInit {
     }
   }
 
-
-
   getProjectName(project: any) {
     let res = project.name;
     if (project.rkd != '') {
@@ -216,7 +145,7 @@ export class EquipmentsComponent implements OnInit {
     return res;
   }
 
-  filterEquipments(){
+  filterEquipments() {
     this.equipments = [...this.equipmentsSrc];
     this.equipments = this.equipments.filter(x => this.selectedProjects.includes(x.project_name));
     this.equipments = this.equipments.filter(x => this.selectedDepartments.includes(x.department));
@@ -224,49 +153,62 @@ export class EquipmentsComponent implements OnInit {
       //eq.suppliers?.some
       const hasApprovedSupplier = eq.suppliers?.some((supplier) =>
         supplier.status === 'Approved');
-      eq.status = hasApprovedSupplier? 'Approved' : '-';
+      eq.status = hasApprovedSupplier ? 'Approved' : '-';
     })
   }
 
-  parseEquipmentArrayForTree(array: any[], parentId: number) {
-    interface item  {
-      key : string;
-      data: any;
-      children: any[];
-    }
-    let resParsedArray: item[] = []
-     array.forEach(group => {
-       let item;
-       if (group.parent_id === parentId) {
-         // @ts-ignore
-         item.data  = group;
-         // @ts-ignore
-         item.children = []
-         // @ts-ignore
-         resParsedArray.push(item)
-       }
-       else if (group.parent_id === 0) {
 
-       }
-     })
-    console.log(resParsedArray)
+  parseEquipmentArrayForTree(rootNodes: any[], parent_id: number, resParsedArray: any[]) {
+    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+      let nodes = this.parseEquipmentArrayForTree(rootNodes, n.id, []);
+      resParsedArray.push({
+        data: n,
+        children: nodes,
+        clicked: false,
+      })
+    })
+    return resParsedArray
   }
+
+
+  // getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
+  //   let res: any[] = [];
+  //   rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+  //     let nodes = this.getNodes(rootNodes, materials, n.id);
+  //     let nodeMaterials = materials.filter(x => x != null && x.dir_id == n.id);
+  //     nodes.forEach(n => {
+  //       n.materials.forEach((m: any) => nodeMaterials.push(m));
+  //     });
+  //     let count = nodeMaterials.length;
+  //     res.push({
+  //       data: n.id,
+  //       children: _.sortBy(nodes, x => x.label),
+  //       label: n.name + (n.project_id == 0 ? '' : (' (' + this.getProjectName(n.project_id)) + ')'),
+  //       materials: nodeMaterials,
+  //       count: count,
+  //       project: n.project_id
+  //     });
+  //   });
+  //   return res;
+  // }
+
 
   projectChanged() {
     this.filterEquipments();
   }
+
   departmentChanged() {
     this.filterEquipments();
   }
 
-  showSuppliersButtonIsDisabled(eq:IEquipment) {  //если у equipment нет suppliers, то делаем кнопку раскрытия списка disabled
+  showSuppliersButtonIsDisabled(eq: IEquipment) {  //если у equipment нет suppliers, то делаем кнопку раскрытия списка disabled
     if (eq.suppliers?.length === 0) {
       return true;
     }
     return false;
   }
 
-  editEquipmentButtonIsDisabled(eq:IEquipment) { //Редактировать карточку может автор или user_rights.rights = "edit_equ"
+  editEquipmentButtonIsDisabled(eq: IEquipment) { //Редактировать карточку может автор или user_rights.rights = "edit_equ"
     if (eq.responsible_id === this.auth.getUser().id || this.auth.getUser().permissions.includes('edit_equ')) {
       return false;
     }
@@ -274,7 +216,7 @@ export class EquipmentsComponent implements OnInit {
   };
 
   getDateOnly(dateLong: number): string {  //преобразовать поле last_update у поставщика в человеческий вид
-    if (dateLong == 0){
+    if (dateLong == 0) {
       return '--/--/--';
     }
     let date = new Date(dateLong);
@@ -282,20 +224,87 @@ export class EquipmentsComponent implements OnInit {
   }
 
 
-  addSupplier(eq:IEquipment) {
+  addSupplier(eq: IEquipment) {
     //console.log('addSupplier');
     // console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
       modal: true,
       showHeader: false,
       data: eq.id
-    }).onClose.subscribe(()=> {  //сразу выводить на страницу
+    }).onClose.subscribe(() => {  //сразу выводить на страницу
       this.eqService.getEquipments().subscribe(equips => {
         this.equipmentsSrc = equips;
         this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
       });
     })
   }
+
+  cliiick(data: any, dataGroup: any) {
+    console.log("click")
+    console.log(data)  //информация о группе, в которой находится оборудование
+    // this.selectedGroup = dataGroup.node.parent.data
+    if (data.parent_id == 0) {
+      // this.selectedGroup = data.node.parent.data
+      this.editGroupSidebarVisible = true
+      this.selectedEq = data
+      // this.editGroup(data)
+    } else if (data.parent_id != 0) {
+      this.selectedGroup = dataGroup.node.parent.data
+      this.selectedEq = data
+      console.log(this.selectedEq)
+      this.editEqSidebarVisible = true
+      //this.editEquipment(data)
+    }
+  }
+
+  closeSideBar() { //возможно нужно обновлять и не здесь (при закрытии сайд бара) лучше при клике на кнопку save
+    console.log("closed sidebar")
+    this.selectedGroup = undefined;
+    this.selectedEq = undefined;
+    this.eqService.getEquipments().subscribe(equipments => {
+      this.equipmentsNode = []
+      this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
+
+      this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+      // let resParsedArray: any[] = []
+      this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
+    });
+
+
+  }
+
+  editGroup(eq:IEquipment) {
+
+ }
+
+  // editGroup(eq:IEquipment) {
+  //   // console.log(eq);
+  //   // console.log('edit equipment');
+  //   this.dialogService.open(EditGroupComponent, {
+  //     header: this.t.tr('Редактировать группу'),
+  //     showHeader: false,
+  //     modal: true,
+  //     data: eq
+  //   }).onClose.subscribe(closed => { //сразу выводить на страницу
+  //     // console.log("this.eqService.setWaitingCreateFiles([])")
+  //     this.eqService.setWaitingCreateFiles([]);
+  //     // console.log(this.supplierService.getWaitingCreateFiles())
+  //     // console.log(closed.code);
+  //     if (closed.code === 1) {  // значит, что пользователь удалил группу в форме редактирования группы
+  //       //this.filterEquipments();
+  //       this.equipments = this.equipments.filter(eq => {
+  //         return eq.id !== closed.data
+  //       })
+  //     }
+  //     else {
+  //       this.eqService.getEquipments().subscribe(equips => {
+  //         this.equipmentsSrc = equips;
+  //         this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+  //       });
+  //     }
+  //
+  //   })
+  // }
 
   editEquipment(eq:IEquipment) {
     // console.log(eq);
@@ -354,24 +363,40 @@ export class EquipmentsComponent implements OnInit {
     })
   }
 
-  newEquipment() {
+  newGroup() {
     console.log('newEquipment')
-    this.dialogService.open(CreateEquipmentComponent, {
+    this.dialogService.open(CreateGroupComponent, {
       modal: true,
       showHeader: false
     }).onClose.subscribe(closed => { //сразу выводить на страницу
-      this.eqService.setWaitingCreateFiles([]);
-      if (closed != 'error'){
-
-        this.eqService.getEquipments().subscribe(equips => {
-          this.equipmentsSrc = equips;
-          this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-        });
+       if (closed != 'error'){
+         this.closeSideBar()  //обновляем с сервера список всего оборудования
       } else {
         console.log('newEq error');
       }
     });
   }
+  newEquipment(parent: IEquipment) {
+    console.log('newEquipment')
+    console.log(parent)
+    this.dialogService.open(CreateEquipmentComponent, {
+      modal: true,
+      showHeader: false,
+      data: {parent: parent},
+    }).onClose.subscribe(closed => { //сразу выводить на страницу
+      this.eqService.setWaitingCreateFiles([]);
+      if (closed != 'error'){
+        this.closeSideBar()
+        // this.eqService.getEquipments().subscribe(equips => {
+        //   this.equipmentsSrc = equips;
+        //   this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+        // });
+      } else {
+        console.log('newEq error');
+      }
+    });
+  }
+
 }
 
 

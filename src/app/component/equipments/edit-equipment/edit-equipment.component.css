@@ -158,3 +158,15 @@
   background-color: #EEF5FA !important;
 }
 
+.supplier_container {
+  background-color: #dee2e6;
+}
+
+.supplier_header {
+  justify-content: space-between;
+}
+
+.supplier_body {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}

@@ -5,13 +5,14 @@ import {EquipmentsService} from "../../../domain/equipments.service";
 import {ProjectsManagerService} from "../../../domain/projects-manager.service";
 import {FileAttachment} from "../../../domain/classes/file-attachment";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
-import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {EquipmentToDB} from "../../../domain/classes/equipment-to-db";
 import {Isfi} from "../../../domain/interfaces/sfi";
 import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
 import {AddFilesComponent} from "../add-files/add-files.component";
 import {AddFilesDataService} from "../../../domain/add-files-data.service";
 import {LanguageService} from "../../../domain/language.service";
+import {IEquipment} from "../../../domain/interfaces/equipments";
 
 @Component({
   selector: 'app-create-equipment',
@@ -21,13 +22,21 @@ import {LanguageService} from "../../../domain/language.service";
 export class CreateEquipmentComponent implements OnInit {
   // @ts-ignore
   equipmentForm = this.formBuilder.group({
-    sfi: ['', Validators.required],
-    project: ['', [Validators.required, this.customProjectValidator]],
-    department: ['', [Validators.required, this.customProjectValidator]],
+    sfi_unit: ['', Validators.required],
     name: ['', Validators.required],
-    description: [''],
     commentText: [''],
   });
+
+  parent: IEquipment;
+
+  // equipmentForm = this.formBuilder.group({
+  //   sfi: ['', Validators.required],
+  //   project: ['', [Validators.required, this.customProjectValidator]],
+  //   department: ['', [Validators.required, this.customProjectValidator]],
+  //   name: ['', Validators.required],
+  //   description: [''],
+  //   commentText: [''],
+  // });
   equipmentProjects: string[] = [];
    // equipmentProject = '-';
   equipmentDepartments: string[] = [];
@@ -40,10 +49,12 @@ export class CreateEquipmentComponent implements OnInit {
 
 
   constructor( public prService: ProjectsManagerService, public auth: AuthManagerService, private formBuilder: FormBuilder, public issues: IssueManagerService,
-               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService, public t: LanguageService) {
+               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService, public t: LanguageService, private dialogConfig: DynamicDialogConfig) {
   }
 
   ngOnInit(): void {
+    this.parent = this.dialogConfig.data.parent //приходит из equipment.ts, информация о родителе юнита (чтоб заполнить недостающие поля при создании)
+    console.log(this.parent.id)
     this.eqService.getSfis().subscribe(sfis=>{
       this.sfis = sfis;
     });
@@ -195,14 +206,15 @@ export class CreateEquipmentComponent implements OnInit {
     const eqFormValue = this.equipmentForm.value;
     const eqToDB = new EquipmentToDB();
     eqToDB.name = eqFormValue.name;
-    eqToDB.description = eqFormValue.description;
-    eqToDB.sfi = eqFormValue.sfi;
-    eqToDB.project_id = this.findProjectId(eqFormValue.project);
-    eqToDB.responsible_id = this.auth.getUser().id;
-    eqToDB.department_id = this.findDepartmentId(eqFormValue.department);
+    eqToDB.sfi_unit = eqFormValue.sfi_unit;
     eqToDB.comment = eqFormValue.commentText;
-    eqToDB.parent_id = 0;
-    eqToDB.sfi_unit = '-';
+    eqToDB.description = this.parent.description; //родителя
+    eqToDB.parent_id = this.parent.id; //родителя
+    eqToDB.sfi = this.parent.sfi.toString();  //родителя
+    eqToDB.project_id = this.findProjectId(this.parent.project_name);  //родителя
+    eqToDB.department_id = this.findDepartmentId(this.parent.department);  //родителя
+    eqToDB.responsible_id = this.auth.getUser().id;  //родителя
+
     // eqToDB.status_id = '-';
     console.warn(this.equipmentForm.value);
     console.log(eqToDB);

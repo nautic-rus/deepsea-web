@@ -2,7 +2,7 @@ export class EquipmentToDB {
   id: number = 0;
   name: string;
   description: string;
-  sfi: number;
+  sfi: string;
   project_id: number;
   responsible_id: number;
   department_id: string;

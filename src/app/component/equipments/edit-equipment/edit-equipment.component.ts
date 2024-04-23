@@ -1,5 +1,5 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {Component, Input, OnInit, Output} from '@angular/core';
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Equipment} from "../../../domain/classes/equipment";
 import {IEquipment} from "../../../domain/interfaces/equipments";
 import {FormBuilder, Validators} from "@angular/forms";
@@ -14,6 +14,10 @@ import {Observable} from "rxjs";
 import {AgreeModalComponent} from "../agree-modal/agree-modal.component";
 import {CloseCode} from "../../../domain/classes/close-code";
 import {LanguageService} from "../../../domain/language.service";
+import {ISupplier} from "../../../domain/interfaces/supplier";
+import {EditSupplierComponent} from "../edit-supplier/edit-supplier.component";
+import {SupplierService} from "../../../domain/supplier.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -22,16 +26,36 @@ import {LanguageService} from "../../../domain/language.service";
   styleUrls: ['./edit-equipment.component.css']
 })
 export class EditEquipmentComponent implements OnInit {
+  @Input() eq: IEquipment;
+  @Input() group: any
 
+  // @ts-ignore
+  // selectedEq = this.eq
+  //
   equipmentForm = this.formBuilder.group({
-    id: this.dialogConfig.data.id,
-    sfi: this.dialogConfig.data.sfi.toString(),
-    project: this.dialogConfig.data.project_name,
-    department: this.dialogConfig.data.department,
-    name: this.dialogConfig.data.name,
-    description: this.dialogConfig.data.description,
-    comment: this.dialogConfig.data.comment,
+    id: 0,
+    sfi: '',
+    sfi_unit: [''],
+    project: '',
+    department: '',
+    name: '',
+    description: '',
+    comment: '',
   });
+
+  isGroup: boolean = false;  //редактирую группу или юнит (группу: true, unit: false)
+
+  suppliersArray: ISupplier[] | undefined = []
+
+  // equipmentForm = this.formBuilder.group({
+  //   id: this.dialogConfig.data.id,
+  //   sfi: this.dialogConfig.data.sfi.toString(),
+  //   project: this.dialogConfig.data.project_name,
+  //   department: this.dialogConfig.data.department,
+  //   name: this.dialogConfig.data.name,
+  //   description: this.dialogConfig.data.description,
+  //   comment: this.dialogConfig.data.comment,
+  // });
 
   equipmentProjects: string[] = [];
   equipmentProject = '-';
@@ -46,11 +70,33 @@ export class EditEquipmentComponent implements OnInit {
 
   buttonsAreHidden: boolean = true;  //для просмотра формы без возможности редактирования
 
-  constructor(protected dialogConfig: DynamicDialogConfig, private formBuilder: FormBuilder, public prService: ProjectsManagerService, public auth: AuthManagerService,
-              public eqService: EquipmentsService, public ref: DynamicDialogRef,  private dialogService: DialogService, public t: LanguageService) {
+  constructor( private formBuilder: FormBuilder, public prService: ProjectsManagerService, public auth: AuthManagerService,
+              public eqService: EquipmentsService, public t: LanguageService, private dialogService: DialogService, private supplierService: SupplierService,  private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
+    console.log(this.eq)
+    console.log(this.group )
+    if (this.group === undefined) {
+      this.isGroup = true
+
+    }
+    console.log("this.isGroup" + this.isGroup)
+    this.equipmentForm = this.formBuilder.group({  //заполняем поля формы
+      id: this.eq.id,
+      sfi: this.eq.sfi.toString(),
+      sfi_unit: this.eq.sfi_unit,
+      project: this.eq.project_name,
+      department: this.eq.department,
+      name: this.eq.name,
+      description: this.eq.description,
+      comment: this.eq.comment,
+    });
+
+    this.suppliersArray = this.eq.suppliers
+    console.log("this.suppliersArray")
+    console.log(this.suppliersArray)
+
     this.eqService.getSfis().subscribe(sfis=>{
       this.sfis = sfis;
       this.changeSFI()  //изначально отрисуем значение для sfi
@@ -64,14 +110,87 @@ export class EditEquipmentComponent implements OnInit {
     this.equipmentDepartments = this.prService.departments.filter(x => x.visible_documents == 1).map((x: any) => x.name)
     this.equipmentDepartments.unshift('-')
 
-    this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe(res => {
+    this.eqService.getEquipmentFiles(this.eq.id).subscribe(res => {
       this.equipmentFilesSrc = res;
-      console.log("initial this.equipmentFilesSrc");
-      console.log(this.equipmentFilesSrc);
+      // console.log("initial this.equipmentFilesSrc");
+      // console.log(this.equipmentFilesSrc);
     });
 
-    if (this.dialogConfig.data.responsible_id == this.auth.getUser().id || this.auth.hasPerms('create_edit_equ')) {
+    if (this.eq.responsible_id == this.auth.getUser().id || this.auth.hasPerms('create_edit_equ')) {
       this.buttonsAreHidden = false;
+    }
+  }
+
+  // addFiles() {
+  //   const dialog = this.dialogService.open(AddFilesComponent, {
+  //     header: 'Uploading files',
+  //     showHeader: false,
+  //     modal: true,
+  //     data: {
+  //       isEqService: true,
+  //       service: this.eqService,
+  //       equ_id: this.equipmentForm.value.id,
+  //     }
+  //   })
+  //   dialog.onClose.subscribe(() => {
+  //     console.log(this.eqService.getCreateFiles())
+  //     this.eqService.getCreateFiles().forEach(file => {                       //добавляем файлы в БД
+  //       this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
+  //         if (res.includes('error')) {
+  //           alert(res);
+  //         }
+  //       })
+  //     })
+  //
+  //     this.eqService.getEquipmentFiles(this.selectedEq.id).subscribe(res => { //отображаем файлы на странице
+  //       this.equipmentFilesSrc = res;
+  //     });
+  //
+  //     this.eqService.setCreateFiles([])  //чистим loaded
+  //
+  //     console.log("this.equipmentFilesSrc after added")
+  //     console.log(this.equipmentFilesSrc)
+  //   })
+  //
+  // }
+
+  // deleteFile(file: EquipmentsFiles) {
+  //   console.log(file)
+  //     const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+  //       modal: true,
+  //       header: this.t.tr('Удалить файлы оборудования?'),
+  //       data: {
+  //         file: file
+  //       }
+  //     })
+  //       dialog.onClose.subscribe((res) => {
+  //       if (res) { // User clicked OK
+  //         console.log('User confirmed deleteFile');
+  //         console.log(file);
+  //         this.equipmentFilesSrc.splice(this.equipmentFilesSrc.indexOf(file), 1);  //удаляем из отображения
+  //         this.eqService.deleteEquipmentFile(file.id)  //удаляем из БД
+  //           .subscribe(
+  //             () => {
+  //               console.log('Файл оборудования  удален успешно');
+  //               console.log(file.id)
+  //             },
+  //             error => {
+  //               console.error('Ошибка при удалении файла оборудования');
+  //             }
+  //           );
+  //       }
+  //       else {
+  //         console.log('User canceled'); // User clicked Cancel
+  //       }
+  //     })
+  // }
+
+  changeSFI() {
+    let res = this.sfis.filter(item => item.code == this.equipmentForm.get('sfi')?.value);
+    if (this.t.language == 'ru') {
+      this.sfiAndName = res[0].code + ' ' + res[0].ru
+    } else if (this.t.language == 'en') {
+      this.sfiAndName = res[0].code + ' ' + res[0].eng
     }
   }
 
@@ -96,7 +215,7 @@ export class EditEquipmentComponent implements OnInit {
         })
       })
 
-      this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe(res => { //отображаем файлы на странице
+      this.eqService.getEquipmentFiles(this.eq.id).subscribe(res => { //отображаем файлы на странице
         this.equipmentFilesSrc = res;
       });
 
@@ -108,77 +227,44 @@ export class EditEquipmentComponent implements OnInit {
 
   }
 
+  getDate (dateLong: number): string{
+    if (dateLong === 0) {
+      return '-'
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear() ;
+  }
+
   deleteFile(file: EquipmentsFiles) {
     console.log(file)
-      const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
-        modal: true,
-        header: this.t.tr('Удалить файлы оборудования?'),
-        data: {
-          file: file
-        }
-      })
-        dialog.onClose.subscribe((res) => {
-        if (res) { // User clicked OK
-          console.log('User confirmed deleteFile');
-          console.log(file);
-          this.equipmentFilesSrc.splice(this.equipmentFilesSrc.indexOf(file), 1);  //удаляем из отображения
-          this.eqService.deleteEquipmentFile(file.id)  //удаляем из БД
-            .subscribe(
-              () => {
-                console.log('Файл оборудования  удален успешно');
-                console.log(file.id)
-              },
-              error => {
-                console.error('Ошибка при удалении файла оборудования');
-              }
-            );
-        }
-        else {
-          console.log('User canceled'); // User clicked Cancel
-        }
-      })
+    const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+      modal: true,
+      header: this.t.tr('Удалить файлы оборудования?'),
+      data: {
+        file: file
+      }
+    })
+    dialog.onClose.subscribe((res) => {
+      if (res) { // User clicked OK
+        console.log('User confirmed deleteFile');
+        console.log(file);
+        this.equipmentFilesSrc.splice(this.equipmentFilesSrc.indexOf(file), 1);  //удаляем из отображения
+        this.eqService.deleteEquipmentFile(file.id)  //удаляем из БД
+          .subscribe(
+            () => {
+              console.log('Файл оборудования  удален успешно');
+              console.log(file.id)
+            },
+            error => {
+              console.error('Ошибка при удалении файла оборудования');
+            }
+          );
+      }
+      else {
+        console.log('User canceled'); // User clicked Cancel
+      }
+    })
   }
-
-  changeSFI() {
-    let res = this.sfis.filter(item => item.code == this.equipmentForm.get('sfi')?.value);
-    if (this.t.language == 'ru') {
-      this.sfiAndName = res[0].code + ' ' + res[0].ru
-    } else if (this.t.language == 'en') {
-      this.sfiAndName = res[0].code + ' ' + res[0].eng
-    }
-  }
-
-  // addFiles() {
-  //   const dialog = this.dialogService.open(AddFilesComponent, {
-  //     header: 'Uploading files',
-  //     modal: true,
-  //     data: {
-  //       isEqService: true,
-  //       service: this.eqService,
-  //       equ_id: this.equipmentForm.value.id,
-  //     }
-  //   })
-  //   dialog.onClose.subscribe(() => {
-  //     this.eqService.getCreateFiles().forEach(file => {
-  //       this.equipmentFiles.push(file);
-  //       this.equipmentFilesSrc.push(file);
-  //     })
-  //     //добавляем файлы в БД
-  //     this.equipmentFiles.forEach(file => { //добавляем файлы в БД
-  //       console.log(JSON.stringify(file));
-  //       this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
-  //         if (res.includes('error')){
-  //           alert(res);
-  //         }
-  //         // else{
-  //         //   this.close();
-  //         // }
-  //       })
-  //     })
-  //     this.eqService.setCreateFiles([]);
-  //     //this.equipmentFiles = this.eqService.getCreateEqFiles();
-  //   })
-  // }
 
   getFileExtensionIcon(fileUrl: string) {
     const fileName = this.extractFileName(fileUrl);
@@ -253,38 +339,6 @@ export class EditEquipmentComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 
-  // deleteFile(file: EquipmentsFiles) {
-  //   const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
-  //     modal: true,
-  //     header: this.t.tr('Удалить файлы оборудования?'),
-  //     data: {
-  //       //title: 'Удалить файлы оборудования?',
-  //       file: file
-  //     }
-  //   })
-  //     dialog.onClose.subscribe((res) => {
-  //     if (res) { // User clicked OK
-  //       console.log('User confirmed deleteFile');
-  //       console.log(file);
-  //       // this.equipmentFiles.splice(this.equipmentFiles.indexOf(file), 1);
-  //       this.equipmentFilesSrc.splice(this.equipmentFiles.indexOf(file), 1);
-  //       this.eqService.deleteEquipmentFile(file.id)
-  //         .subscribe(
-  //           () => {
-  //             console.log('Файл оборудования  удален успешно');
-  //           },
-  //           error => {
-  //             console.error('Ошибка при удалении файла оборудования');
-  //           }
-  //         );
-  //
-  //     }
-  //     else {
-  //       console.log('User canceled'); // User clicked Cancel
-  //     }
-  //   })
-  // }
-
   findProjectId(project_name: string) {
     const project = this.prService.projects.find(project => project.name === project_name);
     return project? project.id : undefined;
@@ -295,6 +349,27 @@ export class EditEquipmentComponent implements OnInit {
     return department? department.id : undefined;
   }
 
+  editSupplier(eq: IEquipment, supplier: ISupplier) {
+    // console.log(supplier, eq);
+    this.dialogService.open(EditSupplierComponent, {
+      header: this.t.tr('Редактировать поставщика'),
+      showHeader: false,
+      width: '100vh',
+      // height: '100wh',
+      modal: true,
+      data: {
+        eq: eq,
+        supplier: supplier
+      },
+    }).onClose.subscribe(closed => {  //сразу выводить на страницу изменения после редактирования supplier
+      this.supplierService.setWaitingCreateFiles([]);
+      if (closed.code === 1 ) {   // значит, что пользователь удалил поставщика в форме редактирования поставщика
+        this.suppliersArray = this.suppliersArray?.filter( sup => {return sup.id != supplier.id})  //удалим из отображаемого массива
+      }
+      this.supplierService.setWaitingCreateFiles([]);
+      this.router.navigate(['.'], { relativeTo: this.route });
+})
+}
   editEquipment() {
     const eqFormValue = this.equipmentForm.value;
     const eqToDB = new EquipmentToDB();
@@ -303,71 +378,176 @@ export class EditEquipmentComponent implements OnInit {
     eqToDB.description = eqFormValue.description;
     eqToDB.sfi = eqFormValue.sfi;
     eqToDB.project_id = this.findProjectId(eqFormValue.project);
-    eqToDB.responsible_id = this.dialogConfig.data.responsible_id;
+    eqToDB.responsible_id = this.eq.responsible_id;
     eqToDB.department_id = this.findDepartmentId(eqFormValue.department);
     eqToDB.comment = eqFormValue.comment;
-    // console.warn(this.equipmentForm.value);
-    // console.log(JSON.stringify(eqToDB));
+    if (this.isGroup) {
+      eqToDB.parent_id = 0;
+      eqToDB.sfi_unit = '';
+    } else {
+      eqToDB.parent_id = this.eq.parent_id;
+      eqToDB.sfi_unit = eqFormValue.sfi_unit;
+    }
+    console.warn(this.equipmentForm.value);
+    console.log(JSON.stringify(eqToDB));
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {  //добавить изменения оборудования в бд
-      // console.log(eqToDB);
-      // console.log('res');
-      // console.log(res);
-      //this.eqService.setEqID(res.)
       if (res.includes('error')){
         alert(res);
       }
-      else{
-        this.equipmentForm.reset();
-        this.close();
-        //this.ref.close(res);
-      }
     });
-    // console.log('edit eq + this.equipmentFiles');
-    // console.log(this.equipmentFiles);
 
   }
 
 
-  deleteEquipment(eqId: number) {
-    console.log('delete eq with id = ' + eqId);
-    const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
-      modal: true,
-      header: this.t.tr('Удалить оборудование?'),
-      data: {
-        //title: 'Удалить оборудование?',
-        eq_id: eqId
-      }
-    })
-    dialog.onClose.subscribe((res) => {
+  // deleteEquipment(eqId: number) {
+  //   console.log('delete eq with id = ' + eqId);
+  //   const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+  //     modal: true,
+  //     header: this.t.tr('Удалить оборудование?'),
+  //     data: {
+  //       //title: 'Удалить оборудование?',
+  //       eq_id: eqId
+  //     }
+  //   })
+  //   dialog.onClose.subscribe((res) => {
+  //
+  //     if (res) { // User clicked OK
+  //       console.log('User confirmed deleteEquipment');
+  //       this.eqService.deleteEquipment(eqId)
+  //         .subscribe(
+  //           () => {
+  //             console.log('Оборудование удалено успешно');
+  //             // this.ref.close(new CloseCode(1, eqId));
+  //           },
+  //           error => {
+  //             console.error('Ошибка при удалении оборудования');
+  //           }
+  //         );
+  //       // this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
+  //       // })
+  //     }
+  //     else {
+  //       console.log('User canceled'); // User clicked Cancel
+  //       this.close();
+  //     }
+  //   })
+  // }
 
-      if (res) { // User clicked OK
-        console.log('User confirmed deleteEquipment');
-        this.eqService.deleteEquipment(eqId)
-          .subscribe(
-            () => {
-              console.log('Оборудование удалено успешно');
-              this.ref.close(new CloseCode(1, eqId));
-            },
-            error => {
-              console.error('Ошибка при удалении оборудования');
-            }
-          );
-        this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
-        })
-      }
-      else {
-        console.log('User canceled'); // User clicked Cancel
-        this.close();
-      }
-    })
-  }
+  // deleteFile(file: EquipmentsFiles) {
+  //   console.log(file)
+  //   const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+  //     modal: true,
+  //     header: this.t.tr('Удалить файлы оборудования?'),
+  //     data: {
+  //       file: file
+  //     }
+  //   })
+  //   dialog.onClose.subscribe((res) => {
+  //     if (res) { // User clicked OK
+  //       console.log('User confirmed deleteFile');
+  //       console.log(file);
+  //       this.equipmentFilesSrc.splice(this.equipmentFilesSrc.indexOf(file), 1);  //удаляем из отображения
+  //       this.eqService.deleteEquipmentFile(file.id)  //удаляем из БД
+  //         .subscribe(
+  //           () => {
+  //             console.log('Файл оборудования  удален успешно');
+  //             console.log(file.id)
+  //           },
+  //           error => {
+  //             console.error('Ошибка при удалении файла оборудования');
+  //           }
+  //         );
+  //     }
+  //     else {
+  //       console.log('User canceled'); // User clicked Cancel
+  //     }
+  //   })
+  // }
 
-  close() {
-    this.equipmentForm.reset();
-    this.ref.close(new CloseCode(0));
-    //this.ref.close();
-  }
+  // findProjectId(project_name: string) {
+  //   const project = this.prService.projects.find(project => project.name === project_name);
+  //   return project? project.id : undefined;
+  // }
+  //
+  // findDepartmentId(department_name: string) {
+  //   const department = this.prService.departments.find(department => department.name === department_name);
+  //   return department? department.id : undefined;
+  // }
+
+  // editEquipment() {
+  //   const eqFormValue = this.equipmentForm.value;
+  //   const eqToDB = new EquipmentToDB();
+  //   eqToDB.id = eqFormValue.id;
+  //   eqToDB.name = eqFormValue.name;
+  //   eqToDB.description = eqFormValue.description;
+  //   eqToDB.sfi = eqFormValue.sfi;
+  //   eqToDB.project_id = this.findProjectId(eqFormValue.project);
+  //   eqToDB.responsible_id = this.selectedEq.responsible_id;
+  //   eqToDB.department_id = this.findDepartmentId(eqFormValue.department);
+  //   eqToDB.comment = eqFormValue.comment;
+  //   // console.warn(this.equipmentForm.value);
+  //   // console.log(JSON.stringify(eqToDB));
+  //
+  //   this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {  //добавить изменения оборудования в бд
+  //     // console.log(eqToDB);
+  //     // console.log('res');
+  //     // console.log(res);
+  //     //this.eqService.setEqID(res.)
+  //     if (res.includes('error')){
+  //       alert(res);
+  //     }
+  //     else{
+  //       this.equipmentForm.reset();
+  //       // this.close();
+  //       //this.ref.close(res);
+  //     }
+  //   });
+  //   // console.log('edit eq + this.equipmentFiles');
+  //   // console.log(this.equipmentFiles);
+  //
+  // }
+
+
+  // deleteEquipment(eqId: number) {
+  //   console.log('delete eq with id = ' + eqId);
+  //   const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+  //     modal: true,
+  //     header: this.t.tr('Удалить оборудование?'),
+  //     data: {
+  //       //title: 'Удалить оборудование?',
+  //       eq_id: eqId
+  //     }
+  //   })
+  //   dialog.onClose.subscribe((res) => {
+  //
+  //     if (res) { // User clicked OK
+  //       console.log('User confirmed deleteEquipment');
+  //       this.eqService.deleteEquipment(eqId)
+  //         .subscribe(
+  //           () => {
+  //             console.log('Оборудование удалено успешно');
+  //             this.ref.close(new CloseCode(1, eqId));
+  //           },
+  //           error => {
+  //             console.error('Ошибка при удалении оборудования');
+  //           }
+  //         );
+  //       this.eqService.getEquipmentFiles(this.selectedEq.id).subscribe((res) => {  //обновим поле с файлами после удаления
+  //       })
+  //     }
+  //     else {
+  //       console.log('User canceled'); // User clicked Cancel
+  //       this.close();
+  //     }
+  //   })
+  // }
+  //
+  // close() {
+  //   this.equipmentForm.reset();
+  //   this.ref.close(new CloseCode(0));
+  //   //this.ref.close();
+  // }
 
 
 
