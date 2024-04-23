@@ -71,6 +71,12 @@
   font-size: 14px;
   font-weight: 600;
 }
+.card-warehouse-full{
+  padding: 15px 0;
+  border-radius: 8px;
+  height: calc(100vh - 146px);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
 .cards{
   overflow: auto;
   height: calc(100vh - 202px);
@@ -349,13 +355,13 @@
   font-size: 30px;
 }
 .invoice{
-  background-color: white;
+  background-color: #cfe3cb;
   width: 100%;
   height: 60px;
   border-radius: 6px;
   padding: 8px 12px;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 .title-bold-w {
   font-weight: 500;
@@ -366,4 +372,7 @@
   font-weight: 500;
   font-size: 24px;
   color: #3a3a3a;
+}
+.row-table-user-hover:hover{
+  background-color: #EEF5FA!important;
 }
