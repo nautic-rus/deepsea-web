@@ -51,6 +51,7 @@ export class SpecMaterialComponent implements OnInit {
   supply: any;
   supMatRelations: any[] [];
   supMatRelationsId = 0;
+  selectedSuplierId = 0;
 
 
   constructor(public t: LanguageService, public eqManager: EquipmentsService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
@@ -59,7 +60,13 @@ export class SpecMaterialComponent implements OnInit {
     this.action = dialog.data[2];
     this.materials = dialog.data[3];
     this.selectedSpecDirectoryId = dialog.data[4];
-    this.specDirectories = _.sortBy(this.getDirNodes(dialog.data[5]), x => x.label);
+    this.selectedSuplierId = dialog.data[5];
+
+    this.materialManager.getSpecDirectories().subscribe(specDirectories => {
+      let nodesSrc = specDirectories.filter((x: any) => x.project_id == this.project || x.project_id == 0);
+      this.specDirectories = _.sortBy(this.getDirNodes(nodesSrc), x => x.label);
+    });
+
 
     if ((this.action == 'add' || this.action == 'clone')){
       this.material.code = 'NRxxxxxxxxxxxxxx'
@@ -74,8 +81,12 @@ export class SpecMaterialComponent implements OnInit {
             manufacturer: s.name,
             supplier_id: s.id
           });
+          if (this.selectedSuplierId == this.supplies[this.supplies.length - 1].supplier_id){
+            this.supply = this.supplies[this.supplies.length - 1];
+          }
         });
       });
+      console.log(this.selectedSuplierId, this.supplies);
       this.materialManager.getSupMatRelations().subscribe(res => {
         this.supMatRelations = res;
         let find: any = this.supMatRelations.find((x: any) => x.materials_id == this.material.id);

@@ -28,6 +28,8 @@ import {DeviceDetectorService} from "ngx-device-detector";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {forkJoin, merge, zip} from "rxjs";
 import {Table} from "primeng/table";
+import {SequenceEqualOperator} from "rxjs/internal/operators/sequenceEqual";
+import {Equipment} from "../../domain/classes/equipment";
 
 @Component({
   selector: 'app-home',
