@@ -236,8 +236,27 @@ export class EquipmentsComponent implements OnInit {
     }
   }
 
+  closeSideBarFromChild() {
+    console.log("closeSideBarFromChild")
+    this.editGroupSidebarVisible = false
+    this.editEqSidebarVisible = false
+    this.selectedGroup = undefined;
+    this.selectedEq = undefined;
+    this.eqService.getEquipments().subscribe(equipments => {
+      this.equipmentsNode = []
+      this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
+
+      this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+      // let resParsedArray: any[] = []
+      this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
+    });
+  }
+
+
   closeSideBar() {
     console.log("closed sidebar")
+    this.editGroupSidebarVisible = false;
+    this.editEqSidebarVisible = false;
     this.selectedGroup = undefined;
     this.selectedEq = undefined;
     this.eqService.getEquipments().subscribe(equipments => {

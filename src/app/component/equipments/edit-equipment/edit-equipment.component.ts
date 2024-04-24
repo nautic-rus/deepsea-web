@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Equipment} from "../../../domain/classes/equipment";
 import {IEquipment} from "../../../domain/interfaces/equipments";
@@ -20,6 +20,7 @@ import {SupplierService} from "../../../domain/supplier.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 
+
 @Component({
   selector: 'app-edit-equipment',
   templateUrl: './edit-equipment.component.html',
@@ -28,6 +29,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class EditEquipmentComponent implements OnInit {
   @Input() eq: IEquipment;
   @Input() group: any
+
+
+
+  @Output() closeSidebarEvent = new EventEmitter();
+  closeSideBar() {
+    this.closeSidebarEvent.emit('teest');
+  }
 
   // @ts-ignore
   // selectedEq = this.eq
@@ -122,6 +130,14 @@ export class EditEquipmentComponent implements OnInit {
       this.buttonsAreHidden = false;
     }
   }
+
+
+
+
+  // closeSidebar() {
+  //   // @ts-ignore
+  //   this.closeSidebarEvent.emit();
+  // }
 
   // addFiles() {
   //   const dialog = this.dialogService.open(AddFilesComponent, {
@@ -410,6 +426,41 @@ export class EditEquipmentComponent implements OnInit {
       }
     });
 
+  }
+
+  deleteEquipment(eqId: number) {
+    console.log('delete eq with id = ' + eqId);
+    const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+      modal: true,
+      header: this.t.tr('Удалить оборудование?'),
+      data: {
+        //title: 'Удалить оборудование?',
+        eq_id: eqId
+      }
+    })
+    dialog.onClose.subscribe((res) => {
+
+      if (res) { // User clicked OK
+        console.log('User confirmed deleteEquipment');
+        this.eqService.deleteEquipment(eqId)
+          .subscribe(
+            () => {
+              console.log('Оборудование удалено успешно');
+
+              this.closeSideBar()
+              // this.ref.close(new CloseCode(1, eqId));
+            },
+            error => {
+              console.error('Ошибка при удалении оборудования');
+            }
+          );
+        // this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
+        // })
+      }
+      else {
+        console.log('User canceled'); // User clicked Cancel
+      }
+    })
   }
 
 

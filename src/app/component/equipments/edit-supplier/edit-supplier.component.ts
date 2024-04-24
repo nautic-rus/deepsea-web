@@ -2,7 +2,6 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {IEquipment} from "../../../domain/interfaces/equipments";
-import {ISupplier} from "../../../domain/interfaces/supplier";
 import {Supplier} from "../../../domain/classes/supplier";
 import {SupplierService} from "../../../domain/supplier.service";
 import {EquipmentsService} from "../../../domain/equipments.service";
@@ -31,8 +30,8 @@ export class EditSupplierComponent implements OnInit {
 
   parent_data: IEquipment = this.dialogConfig.data.parent;
   eq_data: IEquipment = this.dialogConfig.data.eq;
-  sup_data: ISupplier = this.dialogConfig.data.supplier;
-  prev_sup_data: ISupplier = this.dialogConfig.data.supplier;
+  sup_data: Supplier = this.dialogConfig.data.supplier;
+  prev_sup_data: Supplier = this.dialogConfig.data.supplier;
 
   supplierForm = this.formBuilder.group({
     model: this.sup_data.model,
@@ -100,6 +99,8 @@ export class EditSupplierComponent implements OnInit {
     // console.log("this.sup_data")
     // console.log(this.sup_data)
 
+    console.log("initial prev_sup_data")
+    console.log(this.prev_sup_data)
 
     this.eqService.getSupplierNames().subscribe((res) => {
       this.supplierNames = res;
@@ -147,10 +148,35 @@ export class EditSupplierComponent implements OnInit {
     this.supplierForm.get('name')?.setValue('');
   }
 
-  onSupplierSelect(id: any) {
+  onSupplierSelect(id: any): string {
     console.log(id);
     let supName: any[] = this.supplierNames.filter(name => id === name.id)
     this.supplierForm.get('name')?.setValue(supName[0].name);
+    return supName[0].name
+  }
+
+  addChangesToHistory(new_sup_data: Supplier) {
+    console.log("this.prev_sup_data")
+    console.log(this.prev_sup_data)
+    console.log("new_sup_data");
+    console.log(new_sup_data);
+    Object.keys(this.prev_sup_data).forEach(k => {
+      if ((this.prev_sup_data as any)[k] != (new_sup_data as any)[k] && !k.includes('_id')){
+        let nameValue = 'changed ' +k;
+        let prevValue = (this.prev_sup_data as any)[k];
+        let newValue =  (new_sup_data as any)[k];
+        console.log(nameValue, prevValue, newValue);
+
+        //добавляем в БД suppliers_history
+        const history = new SupplierHistory(this.auth.getUser().id, nameValue, prevValue.toString(), newValue.toString(), this.supplier_id)
+        this.eqService.addSupplierHistory( JSON.stringify(history)).subscribe((res) => {
+          this.eqService.getSupplierHistory(this.supplier_id).subscribe((res) => {  //тут можно добавлять в массив вообще-то
+            res.sort((a:any, b:any) => a.update_date - b.update_date)  //отсортируем по дате добавления
+            this.historyArray = res;
+          })
+        })
+      }
+    });
   }
 
   saveButton() {
@@ -170,9 +196,9 @@ export class EditSupplierComponent implements OnInit {
     supplierToDB.mech_param = this.supplierForm.value.mech_param;
     supplierToDB.approvement = 0;
     supplierToDB.model = this.supplierForm.value.model;
-    supplierToDB.name = '';
-    supplierToDB.status = '';
-    supplierToDB.last_update = 0;
+    supplierToDB.name = this.onSupplierSelect(this.supplierForm.value.supp_id);
+    supplierToDB.status = this.supplierForm.value.status;
+    supplierToDB.last_update = this.dialogConfig.data.supplier.last_update;
 
     console.log(supplierToDB);
 
@@ -181,7 +207,9 @@ export class EditSupplierComponent implements OnInit {
         alert(res);
       }
       else {
-          console.log('supplier with id = '+supplierToDB.id +'changed');
+        console.log('supplier with id = '+supplierToDB.id +'changed');
+        this.addChangesToHistory(supplierToDB);
+        this.prev_sup_data = supplierToDB;
           //тут надо будет в историю еще добавлять
         }
     });
@@ -318,11 +346,19 @@ export class EditSupplierComponent implements OnInit {
       case 'changed comment':
         return 'изменил(а) комментарий'
       case 'changed name':
-        return 'изменил(а) наименование'
+        return 'изменил(а) поставщика'
       case 'changed description':
         return 'изменил(а) описание'
       case 'changed status':
         return 'изменил(а) статус'
+      case 'changed model':
+        return 'изменил(а) наименование'
+      case 'changed mech_param':
+        return 'изменил(а) мех. парам'
+      case 'changed ele_param':
+        return 'изменил(а) эл. парам'
+      // case 'changed weight':
+      //   return 'изменил(а) вес'
       default:
         return title;
     }

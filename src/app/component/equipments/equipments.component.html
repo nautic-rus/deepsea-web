@@ -35,12 +35,12 @@
 </p-treeTable>
 
 <p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">
-  <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup"></app-edit-equipment>
+  <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
 </p-sidebar>
 
 
 <p-sidebar *ngIf="editEqSidebarVisible" [(visible)]="editEqSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">
-  <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup"></app-edit-equipment>
+  <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
 </p-sidebar>
 
 
