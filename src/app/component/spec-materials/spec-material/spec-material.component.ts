@@ -58,9 +58,8 @@ export class SpecMaterialComponent implements OnInit {
     this.project = dialog.data[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
     this.action = dialog.data[2];
-    this.materials = dialog.data[3];
-    this.selectedSpecDirectoryId = dialog.data[4];
-    this.selectedSuplierId = dialog.data[5];
+    this.selectedSpecDirectoryId = dialog.data[3];
+    this.selectedSuplierId = dialog.data[4];
 
     this.materialManager.getSpecDirectories().subscribe(specDirectories => {
       let nodesSrc = specDirectories.filter((x: any) => x.project_id == this.project || x.project_id == 0);
