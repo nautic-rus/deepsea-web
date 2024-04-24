@@ -181,7 +181,7 @@ export class SpecMaterialsComponent implements OnInit {
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
       modal: true,
       closable: true,
-      data: [this.project, material, action, this.materialsSrc, this.selectedNode != null ? this.selectedNode.data : '', 0]
+      data: [this.project, material, action, this.selectedNode != null ? this.selectedNode.data : '', 0]
     }).onClose.subscribe(res => {
       this.projectChanged();
       this.cd.reattach();
