@@ -225,6 +225,8 @@ import { WarehouseComponent } from './component/warehouse/warehouse.component';
 import { MaterialsSummarySpecComponent } from './component/materials-summary/materials-summary-spec/materials-summary-spec.component';
 import { ActControlComponent } from './component/warehouse/act-control/act-control.component';
 import { StorageUploadPhotoComponent } from './component/warehouse/storage-upload-photo/storage-upload-photo.component';
+import { CreateGroupComponent } from './component/equipments/create-group/create-group.component';
+import { EditGroupComponent } from './component/equipments/edit-group/edit-group.component';
 import { WarehouseFullComponent } from './component/warehouse-full/warehouse-full.component';
 
 Quill.register('modules/imageResize', ImageResize);
@@ -392,6 +394,8 @@ Quill.register('modules/imageResize', ImageResize);
     MaterialsSummarySpecComponent,
     ActControlComponent,
     StorageUploadPhotoComponent,
+    CreateGroupComponent,
+    EditGroupComponent,
     WarehouseFullComponent,
 
   ],

@@ -1,44 +1,33 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {AbstractControl, FormBuilder, Validators} from '@angular/forms';
-import {EquipmentsService} from "../../../domain/equipments.service";
-import {ProjectsManagerService} from "../../../domain/projects-manager.service";
-import {FileAttachment} from "../../../domain/classes/file-attachment";
-import {IssueManagerService} from "../../../domain/issue-manager.service";
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {EquipmentToDB} from "../../../domain/classes/equipment-to-db";
-import {Isfi} from "../../../domain/interfaces/sfi";
+import { Component, OnInit } from '@angular/core';
+import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
 import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
-import {AddFilesComponent} from "../add-files/add-files.component";
-import {AddFilesDataService} from "../../../domain/add-files-data.service";
+import {Isfi} from "../../../domain/interfaces/sfi";
+import {ProjectsManagerService} from "../../../domain/projects-manager.service";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {IssueManagerService} from "../../../domain/issue-manager.service";
+import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
+import {EquipmentsService} from "../../../domain/equipments.service";
 import {LanguageService} from "../../../domain/language.service";
-import {IEquipment} from "../../../domain/interfaces/equipments";
+import {EquipmentToDB} from "../../../domain/classes/equipment-to-db";
+import {AddFilesComponent} from "../add-files/add-files.component";
 
 @Component({
-  selector: 'app-create-equipment',
-  templateUrl: './create-equipment.component.html',
-  styleUrls: ['./create-equipment.component.css']
+  selector: 'app-create-group',
+  templateUrl: './create-group.component.html',
+  styleUrls: ['./create-group.component.css']
 })
-export class CreateEquipmentComponent implements OnInit {
-  // @ts-ignore
-  equipmentForm = this.formBuilder.group({
-    sfi_unit: ['', Validators.required],
+export class CreateGroupComponent implements OnInit {
+
+  groupForm = this.formBuilder.group({
+    sfi: ['', Validators.required],
+    project: ['', [Validators.required, this.customProjectValidator]],
+    department: ['', [Validators.required, this.customProjectValidator]],
     name: ['', Validators.required],
+    // description: [''],
     commentText: [''],
   });
-
-  parent: IEquipment;
-
-  // equipmentForm = this.formBuilder.group({
-  //   sfi: ['', Validators.required],
-  //   project: ['', [Validators.required, this.customProjectValidator]],
-  //   department: ['', [Validators.required, this.customProjectValidator]],
-  //   name: ['', Validators.required],
-  //   description: [''],
-  //   commentText: [''],
-  // });
   equipmentProjects: string[] = [];
-   // equipmentProject = '-';
+  // equipmentProject = '-';
   equipmentDepartments: string[] = [];
 
   equipmentFiles: EquipmentsFiles[] = [];  //хранит файлы для отправки на БД
@@ -49,18 +38,16 @@ export class CreateEquipmentComponent implements OnInit {
 
 
   constructor( public prService: ProjectsManagerService, public auth: AuthManagerService, private formBuilder: FormBuilder, public issues: IssueManagerService,
-               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService, public t: LanguageService, private dialogConfig: DynamicDialogConfig) {
+               public ref: DynamicDialogRef, public eqService: EquipmentsService, private dialogService: DialogService, public t: LanguageService) {
   }
-
+//
   ngOnInit(): void {
-    this.parent = this.dialogConfig.data.parent //приходит из equipment.ts, информация о родителе юнита (чтоб заполнить недостающие поля при создании)
-    console.log(this.parent.id)
     this.eqService.getSfis().subscribe(sfis=>{
       this.sfis = sfis;
     });
     this.equipmentProjects = this.prService.projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
 
-    this.equipmentForm.get('project')?.setValue(this.equipmentProjects[0]); //изначально установим значение первого пришедшего проекта (если там '-' то не даст отправить форму из-за кастом валидатор, )
+    this.groupForm.get('project')?.setValue(this.equipmentProjects[0]); //изначально установим значение первого пришедшего проекта (если там '-' то не даст отправить форму из-за кастом валидатор, )
 
 
     // this.equipmentDepartments = this.prService.departments.map((x: any) => x.name)
@@ -79,7 +66,7 @@ export class CreateEquipmentComponent implements OnInit {
   }
 
   changeSFI() {
-    let res = this.sfis.filter(item => item.code == this.equipmentForm.get('sfi')?.value);
+    let res = this.sfis.filter(item => item.code == this.groupForm.get('sfi')?.value);
     if (this.t.language == 'ru') {
       this.sfiAndName = res[0].code + ' ' + res[0].ru
     } else if (this.t.language == 'en') {
@@ -89,12 +76,14 @@ export class CreateEquipmentComponent implements OnInit {
     }
   }
 
+  findProjectId(project_name: string) {
+    const project = this.prService.projects.find(project => project.name === project_name);
+    return project? project.id : undefined;
+  }
 
-  close() {
-    console.log(this.equipmentForm.value)
-    this.eqService.setWaitingCreateFiles([]);
-    this.equipmentForm.reset();
-    this.ref.close();
+  findDepartmentId(department_name: string) {
+    const department = this.prService.departments.find(department => department.name === department_name);
+    return department? department.id : undefined;
   }
 
   addFiles() {
@@ -166,24 +155,6 @@ export class CreateEquipmentComponent implements OnInit {
     return parts[parts.length - 1];
   }
 
-  downloadFile(url: string) {
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = url;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-  getDateOnly(dateLong: number): string {  //преобразовать поле create_date в человеческий вид
-    if (dateLong == 0){
-      return '--/--/--';
-    }
-    let date = new Date(dateLong);
-    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
-  }
-
   deleteFile(file: EquipmentsFiles) {
     console.log("deleteFile file")
     console.log(file)
@@ -191,32 +162,29 @@ export class CreateEquipmentComponent implements OnInit {
     console.log(this.equipmentFiles);
   }
 
-  findProjectId(project_name: string) {
-    const project = this.prService.projects.find(project => project.name === project_name);
-    return project? project.id : undefined;
+
+  close() {
+    // console.log(this.equipmentForm.value)
+    this.eqService.setWaitingCreateFiles([]);
+    // this.equipmentForm.reset();
+    this.ref.close();
   }
 
-  findDepartmentId(department_name: string) {
-    const department = this.prService.departments.find(department => department.name === department_name);
-    return department? department.id : undefined;
-  }
-
-  createEquipment() {
-    //добавить equipment
-    const eqFormValue = this.equipmentForm.value;
+  createGroup() {
+    console.log("ctrateGroup")
+    console.log(this.groupForm.value)
+    const eqFormValue = this.groupForm.value;
     const eqToDB = new EquipmentToDB();
     eqToDB.name = eqFormValue.name;
-    eqToDB.sfi_unit = eqFormValue.sfi_unit;
+    eqToDB.description = "-";
+    eqToDB.sfi = eqFormValue.sfi;
+    eqToDB.project_id = this.findProjectId(eqFormValue.project);
+    eqToDB.responsible_id = this.auth.getUser().id;
+    eqToDB.department_id = this.findDepartmentId(eqFormValue.department);
     eqToDB.comment = eqFormValue.commentText;
-    eqToDB.description = this.parent.description; //родителя
-    eqToDB.parent_id = this.parent.id; //родителя
-    eqToDB.sfi = this.parent.sfi.toString();  //родителя
-    eqToDB.project_id = this.findProjectId(this.parent.project_name);  //родителя
-    eqToDB.department_id = this.findDepartmentId(this.parent.department);  //родителя
-    eqToDB.responsible_id = this.auth.getUser().id;  //родителя
-
-    // eqToDB.status_id = '-';
-    console.warn(this.equipmentForm.value);
+    eqToDB.parent_id = 0;
+    eqToDB.sfi_unit = '-';
+    console.warn(this.groupForm.value);
     console.log(eqToDB);
 
 
@@ -243,6 +211,7 @@ export class CreateEquipmentComponent implements OnInit {
         this.ref.close('success');
       }
     });
-    this.equipmentForm.reset();
+    this.groupForm.reset();
   }
-}
+
+ }

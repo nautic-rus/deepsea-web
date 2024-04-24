@@ -1,125 +1,153 @@
-<!--<p-treeTable [value]="equipmentsNode " [columns]="cols" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}">-->
-<!--  <ng-template pTemplate="header" let-columns>-->
-<!--    <tr>-->
-<!--      <th *ngFor="let col of columns">-->
-<!--        {{ col.header }}-->
-<!--      </th>-->
-<!--    </tr>-->
-<!--  </ng-template>-->
-<!--  <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">-->
-<!--    <tr [ttRow]="rowNode">-->
-<!--      <td *ngFor="let col of columns; let i = index">-->
-<!--        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>-->
-<!--        {{ rowData[col.field] }}-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--  </ng-template>-->
-<!--</p-treeTable>-->
-
-
-
-
-
-
-
-<div class="all-page-equip">
-  <div class="min-height-card">
-    <div class="empty-card"></div>
-    <div class="card-head df sticky-card">
-      <div [class.button-disabled]="createEqButtonAreHidden" class="eq-button blue-button cxy mr-10" (click)="newEquipment()">
-        <div class="pr-10 cxy">
-          <img src="assets/icons/plus3.svg" height="18">
-        </div>
-        <div   class="cxy">{{t.tr('Добавить оборудование')}}</div>
-      </div>
-      <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
-      </div>
-      <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
-      </div>
-      <div class="p-ml-auto mr-10 df">
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />
-      </span>
-      </div>
-    </div>
-
-    <div class="empty-card-bottom"></div>
-    <div class="card-overflow ovf-auto">
-      <p-table #dt
-               id="dt"
-               styleClass="p-datatable-striped"
-               [globalFilterFields]="['sfi','name']"
-               scrollHeight="calc(100vh - 220px)"
-               [scrollable]="true"
-               class="" [value]="equipments" dataKey="name" pRowToggler >
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="min-width: 70px; max-width: 70px" class="width-50"></th>
-            <th style="min-width: 100px; max-width: 100px" pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
-            <th pSortableColumn="sfi">Group <p-sortIcon field="sfi"></p-sortIcon></th>
-            <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
-            <th class="df" pSortableColumn="department">Department<p-sortIcon field="department"></p-sortIcon></th>
-            <th pSortableColumn="comment">Comment<p-sortIcon field="comment"></p-sortIcon></th>
-            <th pSortableColumn="respons_surname">Responsible<p-sortIcon field="respons_surname"></p-sortIcon></th>
-            <th style="min-width: 70px; max-width: 70px" pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>
-            <th style="min-width: 130px; max-width: 130px"></th>
-          </tr>
-        </ng-template>
-
-        <!--      заполняем таблицу с оборудованием-->
-        <ng-template pTemplate="body" let-eq let-expanded="expanded">
-          <tr class="equipment-tr task-row cursor-pointer">
-            <td style="min-width: 70px; max-width: 70px">
-              <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
-            </td>
-            <td style="min-width: 100px; max-width: 100px" (click)="editEquipment(eq)">{{ eq.id }}</td>
-            <td (click)="editEquipment(eq)">SFI {{ eq.sfi }}-{{ eq.name }}</td>
-            <td [innerHTML]="issueManager.localeStatus(eq.status) | safeHtml" (click)="editEquipment(eq)">{{ eq.status }}</td>
-            <td (click)="editEquipment(eq)" >{{ eq.department }}</td>
-            <td (click)="editEquipment(eq)" [innerHTML]="issueManager.trim(eq.comment)"></td>
-            <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>
-            <td style="min-width: 70px; max-width: 70px" (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>
-            <td style="min-width: 130px; max-width: 130px"><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup text-center-x cxy green-button">{{t.tr('Добавить поставку')}}</div></td>
-          </tr>
-        </ng-template>
-
-        <!--     выпадающий список suppliers-->
-        <ng-template pTemplate="rowexpansion" let-eq>
-          <tr class="back-gray" *ngIf="!showSuppliersButtonIsDisabled(eq)">
-            <p-table class="w-100 padding-10 margin-10"  [value]="eq.suppliers" dataKey="equipm_id">
-              <ng-template pTemplate="header">
-                <tr>
-                  <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
-                  <th pSortableColumn="name">Supplier<p-sortIcon field="name"></p-sortIcon></th>
-                  <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
-                  <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>
-                </tr>
-              </ng-template>
-              <ng-template class="addTable" pTemplate="body" let-supplier>
-                <tr class="task-row cursor-pointer">
-                  <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>
-                  <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>
-                  <td (click)="editSupplier(eq, supplier)" class="text-14">
-                    <span [innerHTML]="issueManager.localeStatus(supplier.status) | safeHtml"></span>
-                  </td>
-                  <td (click)="editSupplier(eq, supplier)">{{getDateOnly(supplier.last_update)}}</td>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="emptymessage">
-                <tr>
-                  <td>There are no suppliers for this equipment yet</td>
-                </tr>
-              </ng-template>
-            </p-table>
-            </tr>
-        </ng-template>
-      </p-table>
-    </div>
+<div  class="eq-button blue-button cxy mr-10" (click)="newGroup()">
+  <div class="pr-10 cxy">
+    <img src="assets/icons/plus3.svg" height="18">
   </div>
+  <div   class="cxy">{{t.tr('Добавить группу')}}</div>
 </div>
+
+<p-treeTable [value]="equipmentsNode " [columns]="cols" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th style="width: 80px"></th>
+      <th *ngFor="let col of columns" [ttSortableColumn]="col.field">
+        ↑↓ {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+      <tr [ttRow]="rowNode">
+<!--        <td *ngIf="rowData.suppliers.length != 0" (click)="rowData.clicked = !rowData.clicked" style="width: 32px">-->
+<!--          <button type="button" pButton pRipple  class="p-button-text p-button-rounded p-button-plain" [icon]="rowData.clicked ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>-->
+<!--        </td>-->
+<!--        <td *ngIf="rowData.suppliers.length == 0" style="width: 32px"></td>-->
+        <td *ngFor="let col of columns; let i = index; let last = last ">
+          <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+            <span (click)="cliiick(rowData, rowNode)">{{ rowData[col.field] }}</span>
+          <ng-container *ngIf="last" >
+            <div class="df">
+              <p-button [hidden]="rowData.parent_id != 0" (click)="newEquipment(rowData)" [style]="{ 'margin-right': '.5em' }">Обор</p-button>
+              <p-button (click)="addSupplier(rowData)" [style]="{ 'margin-right': '.5em' }" >Suppl</p-button>
+            </div>
+          </ng-container>
+        </td>
+      </tr>
+  </ng-template>
+</p-treeTable>
+
+<p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">
+  <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
+</p-sidebar>
+
+
+<p-sidebar *ngIf="editEqSidebarVisible" [(visible)]="editEqSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">
+  <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
+</p-sidebar>
+
+
+
+
+
+
+
+
+<!--      <div class="all-page-equip">-->
+<!--  <div class="min-height-card">-->
+<!--    <div class="empty-card"></div>-->
+<!--    <div class="card-head df sticky-card">-->
+<!--      <div [class.button-disabled]="createEqButtonAreHidden" class="eq-button blue-button cxy mr-10" (click)="newEquipment()">-->
+<!--        <div class="pr-10 cxy">-->
+<!--          <img src="assets/icons/plus3.svg" height="18">-->
+<!--        </div>-->
+<!--        <div   class="cxy">{{t.tr('Добавить оборудование')}}</div>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>-->
+<!--      </div>-->
+<!--      <div class="p-ml-auto mr-10 df">-->
+<!--      <span class="p-input-icon-left">-->
+<!--        <i class="pi pi-search"></i>-->
+<!--        <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />-->
+<!--      </span>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <div class="empty-card-bottom"></div>-->
+<!--    <div class="card-overflow ovf-auto">-->
+<!--      <p-table #dt-->
+<!--               id="dt"-->
+<!--               styleClass="p-datatable-striped"-->
+<!--               [globalFilterFields]="['sfi','name']"-->
+<!--               scrollHeight="calc(100vh - 220px)"-->
+<!--               [scrollable]="true"-->
+<!--               class="" [value]="equipments" dataKey="name" pRowToggler >-->
+<!--        <ng-template pTemplate="header">-->
+<!--          <tr>-->
+<!--            <th style="min-width: 70px; max-width: 70px" class="width-50"></th>-->
+<!--            <th style="min-width: 100px; max-width: 100px" pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>-->
+<!--            <th pSortableColumn="sfi">Group <p-sortIcon field="sfi"></p-sortIcon></th>-->
+<!--            <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>-->
+<!--            <th class="df" pSortableColumn="department">Department<p-sortIcon field="department"></p-sortIcon></th>-->
+<!--            <th pSortableColumn="comment">Comment<p-sortIcon field="comment"></p-sortIcon></th>-->
+<!--            <th pSortableColumn="respons_surname">Responsible<p-sortIcon field="respons_surname"></p-sortIcon></th>-->
+<!--            <th style="min-width: 70px; max-width: 70px" pSortableColumn="itt">ITT <p-sortIcon field="itt"></p-sortIcon></th>-->
+<!--            <th style="min-width: 130px; max-width: 130px"></th>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+
+<!--        &lt;!&ndash;      заполняем таблицу с оборудованием&ndash;&gt;-->
+<!--        <ng-template pTemplate="body" let-eq let-expanded="expanded">-->
+<!--          <tr class="equipment-tr task-row cursor-pointer">-->
+<!--            <td style="min-width: 70px; max-width: 70px">-->
+<!--              <button type="button" pButton pRipple [pRowToggler]="eq" class="p-button-text p-button-rounded p-button-plain" [disabled]="showSuppliersButtonIsDisabled(eq)" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>-->
+<!--            </td>-->
+<!--            <td style="min-width: 100px; max-width: 100px" (click)="editEquipment(eq)">{{ eq.id }}</td>-->
+<!--            <td (click)="editEquipment(eq)">SFI {{ eq.sfi }}-{{ eq.name }}</td>-->
+<!--            <td [innerHTML]="issueManager.localeStatus(eq.status) | safeHtml" (click)="editEquipment(eq)">{{ eq.status }}</td>-->
+<!--            <td (click)="editEquipment(eq)" >{{ eq.department }}</td>-->
+<!--            <td (click)="editEquipment(eq)" [innerHTML]="issueManager.trim(eq.comment)"></td>-->
+<!--            <td (click)="editEquipment(eq)">{{ eq.respons_name }} {{ eq.respons_surname }}</td>-->
+<!--            <td style="min-width: 70px; max-width: 70px" (click)="editEquipment(eq)">{{ eq.itt ===1? 'YES' : 'NO' }}</td>-->
+<!--            <td style="min-width: 130px; max-width: 130px"><div [class.button-disabled]="createSuppButtonAreHidden"  tabindex="10" (click)="addSupplier(eq)" class="button-add-sup text-center-x cxy green-button">{{t.tr('Добавить поставку')}}</div></td>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+
+<!--        &lt;!&ndash;     выпадающий список suppliers&ndash;&gt;-->
+<!--        <ng-template pTemplate="rowexpansion" let-eq>-->
+<!--          <tr class="back-gray" *ngIf="!showSuppliersButtonIsDisabled(eq)">-->
+<!--            <p-table class="w-100 padding-10 margin-10"  [value]="eq.suppliers" dataKey="equipm_id">-->
+<!--              <ng-template pTemplate="header">-->
+<!--                <tr>-->
+<!--                  <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>-->
+<!--                  <th pSortableColumn="name">Supplier<p-sortIcon field="name"></p-sortIcon></th>-->
+<!--                  <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>-->
+<!--                  <th pSortableColumn="last_update">Last update<p-sortIcon field="last_update"></p-sortIcon></th>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--              <ng-template class="addTable" pTemplate="body" let-supplier>-->
+<!--                <tr class="task-row cursor-pointer">-->
+<!--                  <td (click)="editSupplier(eq, supplier)">{{ supplier.id }}</td>-->
+<!--                  <td (click)="editSupplier(eq, supplier)">{{ supplier.name }}</td>-->
+<!--                  <td (click)="editSupplier(eq, supplier)" class="text-14">-->
+<!--                    <span [innerHTML]="issueManager.localeStatus(supplier.status) | safeHtml"></span>-->
+<!--                  </td>-->
+<!--                  <td (click)="editSupplier(eq, supplier)">{{getDateOnly(supplier.last_update)}}</td>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--              <ng-template pTemplate="emptymessage">-->
+<!--                <tr>-->
+<!--                  <td>There are no suppliers for this equipment yet</td>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--            </p-table>-->
+<!--            </tr>-->
+<!--        </ng-template>-->
+<!--      </p-table>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 
 

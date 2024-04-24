@@ -3,7 +3,7 @@ import {AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators}
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ISupplier} from "../../../domain/interfaces/supplier";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
-import {SupplierToDB} from "../../../domain/classes/supplier-to-db";
+import {Supplier} from "../../../domain/classes/supplier";
 import {EquipmentsService} from "../../../domain/equipments.service";
 import {AddFilesComponent} from "../add-files/add-files.component";
 import {SupplierService} from "../../../domain/supplier.service";
@@ -20,10 +20,14 @@ import {reject} from "underscore";
 })
 export class AddSupplierComponent implements OnInit {
   suppliersForm = this.formBuilder.group({
-    name: ['', [Validators.required, this.customNameValidator()]],
+    name: ['', [Validators.required, this.customNameValidator()]],  //имя поставщика
     supp_id: [''],
+    model: ['', [Validators.required]],  //это name на макете
+    manufacturer: [''],
+    weight: ['0'],
+    ele_param: [''],
+    mech_param: [''],
     description: [''],
-    manufacturer: ['', Validators.required],
   });
 
   //для добавления нового или выбора поставщика из списка
@@ -175,12 +179,29 @@ export class AddSupplierComponent implements OnInit {
   }
 
   processSupplier(supplierId: number) {  //добавляем в таблицу suppliers, history, suppliers files
-    const supplierToDB = new SupplierToDB();
+    const supplierToDB = new Supplier();
+    supplierToDB.id = 0;
     supplierToDB.sup_id = supplierId;
-    supplierToDB.equip_id = this.dialogConfig.data;
     supplierToDB.user_id = this.auth.getUser().id;
-    supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
+    supplierToDB.equip_id = this.dialogConfig.data;
     supplierToDB.description = this.suppliersForm.value.description;
+    supplierToDB.comment = '';
+    supplierToDB.status_id = 1;
+    supplierToDB.manufacturer = this.suppliersForm.value.manufacturer;
+    supplierToDB.approvement = 0;
+    supplierToDB.weight = parseInt(this.suppliersForm.value.weight);
+    supplierToDB.ele_param = this.suppliersForm.value.ele_param;
+    supplierToDB.mech_param = this.suppliersForm.value.mech_param;
+    supplierToDB.model = this.suppliersForm.value.model;
+    supplierToDB.name = '';
+    supplierToDB.status = '';
+    supplierToDB.last_update = 0;
+
+
+    console.warn(this.suppliersForm.value);
+    console.log(supplierToDB);
+
+
 
     this.eqService.addSupplier(JSON.stringify(supplierToDB)).subscribe((res) => {
       if (res.includes('error')) {
