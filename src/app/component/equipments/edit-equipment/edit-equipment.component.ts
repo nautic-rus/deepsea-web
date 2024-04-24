@@ -75,6 +75,8 @@ export class EditEquipmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     console.log(this.eq)
     console.log(this.group )
     if (this.group === undefined) {
@@ -349,7 +351,7 @@ export class EditEquipmentComponent implements OnInit {
     return department? department.id : undefined;
   }
 
-  editSupplier(eq: IEquipment, supplier: ISupplier) {
+  editSupplier(parent: IEquipment, eq: IEquipment, supplier: ISupplier) {
     // console.log(supplier, eq);
     this.dialogService.open(EditSupplierComponent, {
       header: this.t.tr('Редактировать поставщика'),
@@ -358,6 +360,7 @@ export class EditEquipmentComponent implements OnInit {
       // height: '100wh',
       modal: true,
       data: {
+        parent: parent,
         eq: eq,
         supplier: supplier
       },
@@ -366,10 +369,20 @@ export class EditEquipmentComponent implements OnInit {
       if (closed.code === 1 ) {   // значит, что пользователь удалил поставщика в форме редактирования поставщика
         this.suppliersArray = this.suppliersArray?.filter( sup => {return sup.id != supplier.id})  //удалим из отображаемого массива
       }
+      else {
+        this.eqService.getEquipment(this.eq.id).subscribe(res => {
+          this.suppliersArray = res[0].suppliers
+          console.log("getEquipment(this.eq.id)" + ' '+  this.eq.id)
+          console.log(res[0])
+          console.log(this.suppliersArray)
+        })
+      }
+
       this.supplierService.setWaitingCreateFiles([]);
       this.router.navigate(['.'], { relativeTo: this.route });
-})
-}
+    })
+  }
+
   editEquipment() {
     const eqFormValue = this.equipmentForm.value;
     const eqToDB = new EquipmentToDB();

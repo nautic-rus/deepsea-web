@@ -25,8 +25,8 @@
             <span (click)="cliiick(rowData, rowNode)">{{ rowData[col.field] }}</span>
           <ng-container *ngIf="last" >
             <div class="df">
-              <p-button (click)="newEquipment(rowData)" [style]="{ 'margin-right': '.5em' }">Обор</p-button>
-<!--              <p-button  (click)="addSupplier(eq)" [style]="{ 'margin-right': '.5em' }" >Suppl</p-button>-->
+              <p-button [hidden]="rowData.parent_id != 0" (click)="newEquipment(rowData)" [style]="{ 'margin-right': '.5em' }">Обор</p-button>
+              <p-button (click)="addSupplier(rowData)" [style]="{ 'margin-right': '.5em' }" >Suppl</p-button>
             </div>
           </ng-container>
         </td>

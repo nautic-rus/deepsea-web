@@ -1,4 +1,5 @@
 export interface ISupplier {
+  sup_id: number;
   id: number,
   user_id: number,
   equip_id: number,
@@ -12,5 +13,6 @@ export interface ISupplier {
   weight: number,
   ele_param: string,
   mech_param: string,
-  model: string
+  model: string,
+  status_id: number,
 }

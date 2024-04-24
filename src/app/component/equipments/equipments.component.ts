@@ -171,28 +171,6 @@ export class EquipmentsComponent implements OnInit {
   }
 
 
-  // getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
-  //   let res: any[] = [];
-  //   rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
-  //     let nodes = this.getNodes(rootNodes, materials, n.id);
-  //     let nodeMaterials = materials.filter(x => x != null && x.dir_id == n.id);
-  //     nodes.forEach(n => {
-  //       n.materials.forEach((m: any) => nodeMaterials.push(m));
-  //     });
-  //     let count = nodeMaterials.length;
-  //     res.push({
-  //       data: n.id,
-  //       children: _.sortBy(nodes, x => x.label),
-  //       label: n.name + (n.project_id == 0 ? '' : (' (' + this.getProjectName(n.project_id)) + ')'),
-  //       materials: nodeMaterials,
-  //       count: count,
-  //       project: n.project_id
-  //     });
-  //   });
-  //   return res;
-  // }
-
-
   projectChanged() {
     this.filterEquipments();
   }
@@ -225,17 +203,18 @@ export class EquipmentsComponent implements OnInit {
 
 
   addSupplier(eq: IEquipment) {
-    //console.log('addSupplier');
-    // console.log(eq)
+    console.log('addSupplier');
+    console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
       modal: true,
       showHeader: false,
       data: eq.id
     }).onClose.subscribe(() => {  //сразу выводить на страницу
-      this.eqService.getEquipments().subscribe(equips => {
-        this.equipmentsSrc = equips;
-        this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-      });
+      this.closeSideBar();  //обновим
+      // this.eqService.getEquipments().subscribe(equips => {
+      //   this.equipmentsSrc = equips;
+      //   this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+      // });
     })
   }
 
@@ -257,7 +236,7 @@ export class EquipmentsComponent implements OnInit {
     }
   }
 
-  closeSideBar() { //возможно нужно обновлять и не здесь (при закрытии сайд бара) лучше при клике на кнопку save
+  closeSideBar() {
     console.log("closed sidebar")
     this.selectedGroup = undefined;
     this.selectedEq = undefined;

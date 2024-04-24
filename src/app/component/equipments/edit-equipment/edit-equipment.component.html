@@ -207,10 +207,10 @@
 <!--  вывожу поставщиков -->
   <div>Поставщики</div>
   <div *ngFor="let supplier of suppliersArray" class="pb-8">
-    <div (click)="editSupplier(eq, supplier)" class="supplier_container">
+    <div (click)="editSupplier(group, eq, supplier)" class="supplier_container">
       <div class="supplier_header df">
         <div>
-          <div>ID {{supplier.id}} {{supplier.name}} - {{supplier.manufacturer}}</div>
+          <div>ID {{supplier.id}} {{supplier.model}} - {{supplier.name}} - {{supplier.manufacturer}}</div>
         </div>
         <div>{{supplier.status}}</div>
       </div>

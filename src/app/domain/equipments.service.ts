@@ -17,8 +17,12 @@ export class EquipmentsService {
   createFiles: EquipmentsFiles[] = [];
   constructor(private http: HttpClient) {}
 
-  getEquipments(): Observable<IEquipment[]> {
+  getEquipments(): Observable<IEquipment[]> {  //получить всю коллекцию оборудования
     return this.http.get<IEquipment[]>(props.http + '/equipments');
+  }
+
+  getEquipment(id: number): Observable<any> {  //передаем индекс оборудования и поучаем информацию по этому оборудованию
+    return this.http.get<string>(props.http + '/equipment', {params: {id}});
   }
 
   getSfis() :  Observable<Isfi[]> {
