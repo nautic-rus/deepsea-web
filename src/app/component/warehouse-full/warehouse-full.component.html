@@ -5,7 +5,7 @@
   <div class="">
     <div class="card-head df">
       <div class="mr-10">
-        <p-multiSelect styleClass="width-220" placeholder="ЗАКАЗ" appendTo="body" id="orders" [options]="orders" [(ngModel)]="selectedOrders" optionLabel="name" optionValue="name"></p-multiSelect>
+        <p-multiSelect (onChange)="ordersChanged()" styleClass="width-220" placeholder="ЗАКАЗ" appendTo="body" id="orders" [options]="orders" [(ngModel)]="selectedOrders"></p-multiSelect>
       </div>
       <!--      <div class="mr-10" >-->
       <!--        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">-->

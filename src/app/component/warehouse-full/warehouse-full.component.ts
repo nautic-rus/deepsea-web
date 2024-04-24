@@ -19,7 +19,7 @@ export class WarehouseFullComponent implements OnInit {
   invoices: any[] = [];
   invoicesSrc: any[] = [];
   loading = true;
-  orders: Rights[] = [];
+  orders: string[] = [];
   selectedOrders: string[] = [];
   constructor(public t: LanguageService, public s: StorageManagerService, public a: ActivatedRoute, public r: Router) { }
 
@@ -32,6 +32,12 @@ export class WarehouseFullComponent implements OnInit {
     this.s.getStorageUnits().subscribe(storages => {
       console.log(storages);
       this.storages = storages;
+      this.storages.map(x => x.order).forEach(x => {
+        if (!this.orders.includes(x)){
+          this.orders.push(x);
+        }
+      });
+      this.selectedOrders = this.orders;
       _.forEach(_.groupBy(this.storages, x => x.invoice_name), group => {
         let h = group[0];
         this.invoicesSrc.push(Object({
@@ -61,6 +67,10 @@ export class WarehouseFullComponent implements OnInit {
   }
 
   filterInvoices(value: string) {
-    this.invoices = this.invoicesSrc.filter(x => x.name.toLowerCase().includes(value.toLowerCase()));
+    this.invoices = this.invoicesSrc.filter(x => x.name.toLowerCase().includes(value.toLowerCase().trim()) || x.storages.find((y: any) => y.name.toLowerCase().includes(value.toLowerCase().trim())));
+  }
+
+  ordersChanged() {
+    this.invoices = this.invoicesSrc.filter(x => x.storages.find((y: any) => this.selectedOrders.includes(y.order)));
   }
 }
