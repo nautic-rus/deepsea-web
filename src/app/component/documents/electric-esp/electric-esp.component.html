@@ -53,7 +53,7 @@
                   <div class="materials-button-mini blue-button cxy mt-10" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" (click)="addMaterial(ele.pos)">
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
-                  <div class="materials-button-mini yellow-button cxy mt-10" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top">
+                  <div class="materials-button-mini yellow-button cxy mt-10 disabled-button" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top">
                     <img src="assets/icons/checkmark.svg" height="20">
                   </div>
                 </div>
@@ -65,18 +65,18 @@
                       <div class="mx-10 w-35 title-bold-pipe">{{ele.materialName}}</div>
                       <div class="mx-10 w-5 text-black-mini">{{ele.units}}</div>
                       <div class="mx-10 w-7 text-table-col">{{ele.count + ' '}}{{langUnits(ele.units)}}</div>
-                      <div class="w-7 mx-10 df">
+                      <div class="w-7 mx-10 df cy">
                         <div class="df">
                           <img class="pr-5" src="assets/icons/weight3.svg" height="20">
                           <div class="text-table-col df align-end">{{round(ele.weight)}}</div>
                         </div>
                       </div>
-                      <div *ngIf="ele.code.trim() != ''" class="df position-relative">
-                        <div class="trm-elec">
+                      <div *ngIf="ele.code.trim() != ''" class="df position-relative cy">
+                        <div class="trm">
                           <span [innerHTML]="ele.code | highLight: search"></span>
                         </div>
-                        <div (click)="copyTrmCode(ele.code, 's' + 'sp' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
-                          <img src="assets/icons/trm.svg" height="10">
+                        <div (click)="copyTrmCode(ele.code, 's' + 'sp' + i); $event.stopPropagation();" class="trm-copy-elec cursor-pointer cxy">
+                          <img src="assets/icons/trm.svg" height="12">
                           <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
                         </div>
                       </div>
@@ -92,14 +92,14 @@
                       <div class="mx-10 w-35 title-bold-pipe">{{e.materialName}}</div>
                       <div class="mx-10 w-5 text-black-mini">{{e.units}}</div>
                       <div class="mx-10 w-7 text-table-col">{{e.count + ' '}}{{langUnits(e.units)}}</div>
-                      <div class="w-7 mx-10 df">
+                      <div class="w-7 mx-10 df cy">
                         <div class="df">
                           <img class="pr-5" src="assets/icons/weight3.svg" height="20">
                           <div class="text-table-col df align-end">{{round(e.weight)}}</div>
                         </div>
                       </div>
 
-                      <div class="df mx-10 w-16">
+                      <div class="df mx-10 w-16 cy">
                         <div class="mr-10 m-text df align-end">COG</div>
                         <div class="df">
                           <div class="mr-10">
