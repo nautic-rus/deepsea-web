@@ -18,6 +18,10 @@ import {CreateTaskComponent} from "../../create-task/create-task.component";
 import {RelatedTask} from "../../../domain/classes/related-task";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {IEqSupRelatedMaterials} from "../../../domain/interfaces/eqSupRelatedMaterials";
+import {SpecMaterial} from "../../../domain/classes/spec-material";
+import {SpecMaterialComponent} from "../../spec-materials/spec-material/spec-material.component";
+import {ProjectsManagerService} from "../../../domain/projects-manager.service";
+import {SpecManagerService} from "../../../domain/spec-manager.service";
 
 
 @Component({
@@ -82,10 +86,11 @@ export class EditSupplierComponent implements OnInit {
   stories: string[] = [];
 
   projectNames: any[] = [];
+  projects: any[] = [];
+  materialsSrc: any;
 
-  constructor(private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService, private messageService: MessageService,
+  constructor(public prService: ProjectsManagerService, private formBuilder: FormBuilder, protected dialogConfig: DynamicDialogConfig, public eqService: EquipmentsService, public t: LanguageService, private messageService: MessageService,
               private supplierService: SupplierService, private dialogService: DialogService, public ref: DynamicDialogRef, public auth: AuthManagerService, private route: ActivatedRoute, public issueManager: IssueManagerService) {
-
     route.queryParams.subscribe(params => {
       // console.log(params)
     });
@@ -99,8 +104,19 @@ export class EditSupplierComponent implements OnInit {
     // console.log("this.sup_data")
     // console.log(this.sup_data)
 
-    console.log("initial prev_sup_data")
-    console.log(this.prev_sup_data)
+    // console.log("initial prev_sup_data")
+    // console.log(this.prev_sup_data)
+
+    this.prService.getProjectsDelails().subscribe(res => {
+      console.log(res)
+      this.projects = res;
+      console.log("this.projects");
+      console.log(this.projects);
+    });
+
+    // this.projects = this.prService.projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
+    // console.log("this.projects");
+    // console.log(this.projects);
 
     this.eqService.getSupplierNames().subscribe((res) => {
       this.supplierNames = res;
@@ -285,6 +301,33 @@ export class EditSupplierComponent implements OnInit {
         console.log('User canceled'); // User clicked Cancel
       }
     })
+  }
+
+  getProjectId(projectName: string){
+    let project = this.projects.find(x => x.name == projectName);
+    if (project != null){
+      return project.id;
+    }
+    else {
+      return '';
+    }
+  }
+
+  addMaterial(action: string = 'add', material: SpecMaterial = new SpecMaterial()) {  //почему то не предзаполяет поле с поставщиком
+    // this.cd.detach();
+    console.log("this.getProjectId(this.eq_data.project_name)")
+    console.log(this.getProjectId(this.eq_data.project_name))
+    console.log(this.sup_data.id)
+    this.dialogService.open(SpecMaterialComponent, {
+      showHeader: true,
+      header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
+      modal: true,
+      closable: true,
+      data: [this.getProjectId(this.eq_data.project_name), material, action, '', this.sup_data.id]
+    }).onClose.subscribe(res => {
+      // this.projectChanged();
+      // this.cd.reattach();
+    });
   }
 
   copySupplierUrl() {

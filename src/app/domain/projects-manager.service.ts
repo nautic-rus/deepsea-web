@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {IEquipment} from "./interfaces/equipments";
 import * as props from "../props";
+import {Isfi} from "./interfaces/sfi";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class ProjectsManagerService{
     this.http.get<any[]>(props.http + '/issueProjects').subscribe(projects => {
       this.projects = projects;
     });
+  }
+
+  getProjectsDelails() {
+    return this.http.get<Isfi[]>(props.http + '/issueProjects');
+
   }
 
   getDepartments() {

@@ -4,6 +4,9 @@
     <div>
       SUPPLIRE ID{{sup_data.id}}
     </div>
+    <div  class="task-button cxy mr-10" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
+      <img src="assets/icons/link.svg" height="20">
+    </div>
     <div class="task-header sticky">
 
 
@@ -14,6 +17,9 @@
             <div class="text-head text-bottom">ID {{parent_data.id}} - GROUP - SFI {{parent_data.sfi}} - {{parent_data.name}}</div>
           </div>
           <div class="task-buttons">
+            <div  class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
+              <img src="assets/icons/materials.svg" height="20">
+            </div>
             <div routerLink="/equipments" [queryParams]="{equipmentId: equipment_id, supplierId: supplier_id}" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку поставщика')" (click)="copySupplierUrl()">
               <img src="assets/icons/link.svg" height="20">
             </div>
@@ -40,6 +46,9 @@
             <div class="text-head text-bottom">ID {{eq_data.id}} - GROUP - SFI {{eq_data.sfi}} - {{eq_data.name}}</div>
           </div>
           <div class="task-buttons">
+            <div  class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
+              <img src="assets/icons/materials.svg" height="20">
+            </div>
             <div routerLink="/equipments" [queryParams]="{equipmentId: equipment_id, supplierId: supplier_id}" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку поставщика')" (click)="copySupplierUrl()">
               <img src="assets/icons/link.svg" height="20">
             </div>
