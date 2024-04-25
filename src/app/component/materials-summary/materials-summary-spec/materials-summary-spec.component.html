@@ -75,7 +75,7 @@
                   </div>
                 </div>
                 <div class="px-10 two-cols">
-                  <div *ngIf="material.name != ''" class="title-bold cursor-default">{{material.name}}</div>
+                  <div *ngIf="material.name != ''" class="title-bold cursor-default">{{trim(material.name)}}</div>
                   <div *ngIf="material.name == ''" class="title-bold">{{material.desc}}</div>
                   <div>
                     <div class="line"></div>

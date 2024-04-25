@@ -60,18 +60,18 @@
                 <div>
                   <div class="mt-10">
                     <div class="df">
-                      <div class="mx-10 w-5 mm-text">{{ele.kind}}</div>
+                      <div class="mx-10 w-5 mm-text cy">{{ele.kind}}</div>
                       <div class="mx-10 w-5"></div>
-                      <div class="mx-10 w-35 title-bold-pipe">{{ele.materialName}}</div>
-                      <div class="mx-10 w-5 text-black-mini">{{ele.units}}</div>
-                      <div class="mx-10 w-7 text-table-col">{{ele.count + ' '}}{{langUnits(ele.units)}}</div>
+                      <div class="mx-10 w-35 title-bold-pipe cy">{{ele.materialName}}</div>
+                      <div class="mx-10 w-5 text-black-mini cy">{{ele.units}}</div>
+                      <div class="mx-10 w-7 text-table-col cy">{{ele.count + ' '}}{{langUnits(ele.units)}}</div>
                       <div class="w-7 mx-10 df cy">
                         <div class="df">
-                          <img class="pr-5" src="assets/icons/weight3.svg" height="20">
+                          <img class="pr-5" src="assets/icons/weight3.svg" height="18">
                           <div class="text-table-col df align-end">{{round(ele.weight)}}</div>
                         </div>
                       </div>
-                      <div *ngIf="ele.code.trim() != ''" class="df position-relative cy">
+                      <div *ngIf="ele.code.trim() != ''" class="df position-relative cy mx-10">
                         <div class="trm">
                           <span [innerHTML]="ele.code | highLight: search"></span>
                         </div>
@@ -88,13 +88,13 @@
                   <div class="mt-10">
                     <div class="py-5 df" *ngFor="let e of ele.eles">
                       <div class="mx-10 w-5"></div>
-                      <div class="mx-10 w-5 text-table-col">{{e.pos}}</div>
-                      <div class="mx-10 w-35 title-bold-pipe">{{e.materialName}}</div>
-                      <div class="mx-10 w-5 text-black-mini">{{e.units}}</div>
-                      <div class="mx-10 w-7 text-table-col">{{e.count + ' '}}{{langUnits(e.units)}}</div>
+                      <div class="mx-10 w-5 text-table-col cy">{{e.pos}}</div>
+                      <div class="mx-10 w-35 title-bold-pipe cy">{{e.materialName}}</div>
+                      <div class="mx-10 w-5 text-black-mini cy">{{e.units}}</div>
+                      <div class="mx-10 w-7 text-table-col cy">{{e.count + ' '}}{{langUnits(e.units)}}</div>
                       <div class="w-7 mx-10 df cy">
                         <div class="df">
-                          <img class="pr-5" src="assets/icons/weight3.svg" height="20">
+                          <img class="pr-5" src="assets/icons/weight3.svg" height="18">
                           <div class="text-table-col df align-end">{{round(e.weight)}}</div>
                         </div>
                       </div>
