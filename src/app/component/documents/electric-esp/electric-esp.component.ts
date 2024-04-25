@@ -24,6 +24,7 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 import {EleEspGenerationWaitComponent} from "./ele-esp-generation-wait/ele-esp-generation-wait.component";
+import {LV} from "../../../domain/classes/lv";
 
 @Component({
   selector: 'app-electric-esp',
@@ -907,4 +908,17 @@ export class ElectricEspComponent implements OnInit {
     });
   }
 
+  langUnits(units: string){
+    let unitsTr = [
+      Object({units: '006', ru: 'м', en: 'm'}),
+      Object({units: '796', ru: 'шт', en: 'pcs'}),
+    ];
+    let r = unitsTr.find(x => x.units == units);
+    if (r != null){
+      return r[this.t.language];
+    }
+    else{
+      return units;
+    }
+  }
 }

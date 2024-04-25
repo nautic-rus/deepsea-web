@@ -49,33 +49,72 @@
             <div *ngFor="let ele of eleGroups; let i = index" class="card-tile">
               <div class="card-spool">
                 <div>
-                  <div>{{ele.pos}}</div>
-                  <div class="materials-button-mini blue-button cxy mt-10" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial(ele.pos)">
+                  <div class="title-bold mb-20">{{ele.pos}}</div>
+                  <div class="materials-button-mini blue-button cxy mt-10" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" (click)="addMaterial(ele.pos)">
                     <img src="assets/icons/plus3.svg" height="15">
+                  </div>
+                  <div class="materials-button-mini yellow-button cxy mt-10" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top">
+                    <img src="assets/icons/checkmark.svg" height="20">
                   </div>
                 </div>
                 <div>
                   <div class="mt-10">
                     <div class="df">
-                      <div class="mx-10">{{ele.kind}}</div>
-                      <div class="mx-10">{{ele.materialName}}</div>
-                      <div class="mx-10">{{ele.units}}</div>
-                      <div class="mx-10">{{ele.count}}</div>
-                      <div class="mx-10">{{ele.weight}}</div>
-                      <div class="mx-10">{{ele.code}}</div>
+                      <div class="mx-10 w-5 mm-text">{{ele.kind}}</div>
+                      <div class="mx-10 w-5"></div>
+                      <div class="mx-10 w-35 title-bold-pipe">{{ele.materialName}}</div>
+                      <div class="mx-10 w-5 text-black-mini">{{ele.units}}</div>
+                      <div class="mx-10 w-7 text-table-col">{{ele.count + ' '}}{{langUnits(ele.units)}}</div>
+                      <div class="w-7 mx-10 df">
+                        <div class="df">
+                          <img class="pr-5" src="assets/icons/weight3.svg" height="20">
+                          <div class="text-table-col df align-end">{{round(ele.weight)}}</div>
+                        </div>
+                      </div>
+                      <div *ngIf="ele.code.trim() != ''" class="df position-relative">
+                        <div class="trm-elec">
+                          <span [innerHTML]="ele.code | highLight: search"></span>
+                        </div>
+                        <div (click)="copyTrmCode(ele.code, 's' + 'sp' + i); $event.stopPropagation();" class="trm-copy cursor-pointer cxy">
+                          <img src="assets/icons/trm.svg" height="10">
+                          <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
+                        </div>
+                      </div>
+
+
+<!--                      <div class="mx-10 w-16">{{ele.code}}</div>-->
                     </div>
                   </div>
                   <div class="mt-10">
-                    <div class="df" *ngFor="let e of ele.eles">
-                      <div class="mx-10">{{e.pos}}</div>
-                      <div class="mx-10">{{e.materialName}}</div>
-                      <div class="mx-10">{{e.units}}</div>
-                      <div class="mx-10">{{e.count}}</div>
-                      <div class="mx-10">{{e.weight}}</div>
-                      <div class="mx-10">
-                        <div class="df">x: {{round(e.cog.x, 1)}}</div>
-                        <div class="df">y: {{round(e.cog.y, 1)}}</div>
-                        <div class="df">z: {{round(e.cog.z, 1)}}</div>
+                    <div class="py-5 df" *ngFor="let e of ele.eles">
+                      <div class="mx-10 w-5"></div>
+                      <div class="mx-10 w-5 text-table-col">{{e.pos}}</div>
+                      <div class="mx-10 w-35 title-bold-pipe">{{e.materialName}}</div>
+                      <div class="mx-10 w-5 text-black-mini">{{e.units}}</div>
+                      <div class="mx-10 w-7 text-table-col">{{e.count + ' '}}{{langUnits(e.units)}}</div>
+                      <div class="w-7 mx-10 df">
+                        <div class="df">
+                          <img class="pr-5" src="assets/icons/weight3.svg" height="20">
+                          <div class="text-table-col df align-end">{{round(e.weight)}}</div>
+                        </div>
+                      </div>
+
+                      <div class="df mx-10 w-16">
+                        <div class="mr-10 m-text df align-end">COG</div>
+                        <div class="df">
+                          <div class="mr-10">
+                            <span class="m-text mr-5">x</span>
+                            <span class="text-table-col">{{round(e.cog.x, 1)}}</span>
+                          </div>
+                          <div class="mr-10">
+                            <span class="m-text mr-5">y</span>
+                            <span class="text-table-col">{{round(e.cog.y, 1)}}</span>
+                          </div>
+                          <div>
+                            <span class="m-text mr-5">z</span>
+                            <span class="text-table-col">{{round(e.cog.z, 1)}}</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

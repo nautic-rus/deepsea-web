@@ -61,7 +61,7 @@
 .p-input-icon-left > .p-inputtext {
   padding-left: 2.5rem!important;
 }
-.card-head{
+.card-head-warehouse{
   background: rgba(255, 255, 255, 0.9);
   padding: 8px;
   border-radius: 6px;
@@ -70,11 +70,13 @@
   color: #323130;
   font-size: 14px;
   font-weight: 600;
+  position: sticky;
+  top: 75px;
 }
 .card-warehouse-full{
-  padding: 15px 0;
+  padding: 0 0 15px 0;
   border-radius: 8px;
-  height: calc(100vh - 146px);
+  height: calc(100vh - 123px);
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
 .cards{
@@ -353,6 +355,9 @@
   color: white;
   font-family: TTRoundsNeue-CompMedium;
   font-size: 30px;
+  position: sticky;
+  top: 0;
+  display: grid;grid-template-columns: 0.8fr 1fr;
 }
 .invoice{
   background-color: #cfe3cb;
@@ -375,4 +380,7 @@
 }
 .row-table-user-hover:hover{
   background-color: #EEF5FA!important;
+}
+.z-index-15{
+  z-index: 15;
 }
