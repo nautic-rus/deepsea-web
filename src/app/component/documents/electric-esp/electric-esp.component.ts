@@ -10,7 +10,7 @@ import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {LanguageService} from "../../../domain/language.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DialogService} from "primeng/dynamicdialog";
-import _ from "underscore";
+import _, {where} from "underscore";
 import {IssueMessage} from "../../../domain/classes/issue-message";
 import {UserCardComponent} from "../../employees/user-card/user-card.component";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
@@ -347,6 +347,7 @@ export class ElectricEspComponent implements OnInit {
             kind: first.typeName,
             materialName: first.material.name,
             units: units,
+            cog: first.cog
           });
         });
         _.forEach(manuals, manual => {
@@ -368,7 +369,7 @@ export class ElectricEspComponent implements OnInit {
           }
         });
 
-        this.eleGroups = _.sortBy(groupedEles, x => x.pos);
+        this.eleGroups = _.sortBy(groupedEles, x => this.orderDot(x.pos));
       }
       else{
         this.noResult = true;
@@ -962,5 +963,16 @@ export class ElectricEspComponent implements OnInit {
     this.s.deleteIssueMaterial(e.userId, this.issue.doc_number, 'ele').subscribe(res => {
       this.fillEle();
     });
+  }
+
+  orderDot(input: string){
+    return input.split('.').map(x => this.alz(x)).join('');
+  }
+  alz(input: string, length: number = 10){
+    let res = input;
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
   }
 }

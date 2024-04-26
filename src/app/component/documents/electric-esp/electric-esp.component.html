@@ -84,6 +84,25 @@
 
 <!--                      <div class="mx-10 w-16">{{ele.code}}</div>-->
                     </div>
+                    <div class="df" *ngIf="ele.kind == 'EQUIP'">
+                      <div class="df mx-10 w-16 cy">
+                        <div class="mr-10 m-text df align-end">POS</div>
+                        <div class="df">
+                          <div class="mr-10">
+                            <span class="m-text mr-5">x</span>
+                            <span class="text-table-col">{{round(ele.cog.x, 1)}}</span>
+                          </div>
+                          <div class="mr-10">
+                            <span class="m-text mr-5">y</span>
+                            <span class="text-table-col">{{round(ele.cog.y, 1)}}</span>
+                          </div>
+                          <div>
+                            <span class="m-text mr-5">z</span>
+                            <span class="text-table-col">{{round(ele.cog.z, 1)}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="mt-10">
                     <div class="py-5 df" *ngFor="let e of ele.eles">
