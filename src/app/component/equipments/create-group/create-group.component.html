@@ -9,6 +9,8 @@
   </div>
 
 
+
+
   <form style="height: 430px; width: 460px;" [formGroup]="groupForm" class="form-container">
     <div class="big-text-create mb-1">{{'SFI'}}</div>
     <p-dropdown formControlName="sfi" class="select" optionLabel="code" optionValue="code" [options]="sfis" (onChange)="changeSFI()"
@@ -39,13 +41,15 @@
       </div>
     </div>
 
+    <div class="mt-16">
+      <label class="big-text-create mb-1 mt-1" for="name">{{t.tr('Наименование')}} </label>
+      <input pInputText id="name" type="text" formControlName="name" class="w-100 font-13">
+    </div>
+    <div class="mt-16">
+      <label class="big-text-create mb-1 mt-1" for="commentText">{{t.tr('Комментарий')}} </label>
+      <input pInputText id="commentText" type="text" formControlName="commentText" class="w-100 font-13">
+    </div>
 
-    <label class="big-text-create mb-1 mt-1" for="name">{{t.tr('Наименование')}} </label>
-    <input pInputText id="name" type="text" formControlName="name">
-
-
-    <label class="big-text-create mb-1 mt-1" for="commentText">{{t.tr('Комментарий')}} </label>
-    <input class="" pInputText id="commentText" type="text" formControlName="commentText">
 
 
     <div *ngIf="equipmentFiles.length != 0" class="big-text mt-1">{{t.tr('Вложения')}}</div>

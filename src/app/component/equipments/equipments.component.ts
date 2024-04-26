@@ -44,7 +44,7 @@ export class EquipmentsComponent implements OnInit {
 
 
   equipmentsNode!: TreeNode[];
-  cols!: Column[];
+  cols!: any[];
 
   data: any = [];
   projects: any[] = [];
@@ -91,14 +91,14 @@ export class EquipmentsComponent implements OnInit {
       this.selectedDepartments.push(department.value)
     })
 
+
     this.cols = [
-      {field: 'id', header: 'ID'},
+      {field: 'id', header: 'ID' },
       {field: 'sfi', header: 'sfi'},
-      {field: 'name', header: 'name'},
-      {field: 'sfi-unit', header: 'sfi_unit'},
-      {field: 'status', header: 'status_id'},
-      {field: 'respons_name & respons_surname', header: 'respons_name'},
-      {field: 'respons_surname', header: 'respons_surname'},
+      {field: 'sfi_unit', header: 'sfi_unit'},
+      {field: 'name', header: 'name' },
+      {field: 'status', header: 'status_id' },
+      {field: 'respons_surname', header: 'Responsible'},
       {field: 'itt', header: 'itt'},
       {field: 'comment', header: 'comment'},
       {field: '', header: ''},
@@ -106,6 +106,7 @@ export class EquipmentsComponent implements OnInit {
     //this.selectedDepartments = ['System'];
 
     this.eqService.getEquipments().subscribe(equipments => {
+      console.log(equipments)
       this.equipmentsNode = []
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
 
@@ -146,6 +147,7 @@ export class EquipmentsComponent implements OnInit {
   }
 
   filterEquipments() {
+    // this.equipmentsNode = this.equipmentsNode.filter(x => this.selectedProjects.includes(x.data.project_name))
     this.equipments = [...this.equipmentsSrc];
     this.equipments = this.equipments.filter(x => this.selectedProjects.includes(x.project_name));
     this.equipments = this.equipments.filter(x => this.selectedDepartments.includes(x.department));
@@ -172,7 +174,13 @@ export class EquipmentsComponent implements OnInit {
 
 
   projectChanged() {
-    this.filterEquipments();
+    console.log(this.selectedProjects)
+    this.equipmentsNode = this.equipmentsNode.filter(x => {
+      console.log(x)
+      this.selectedProjects.includes(x.data.project_name)
+    })
+    console.log(this.equipmentsNode)
+    // this.filterEquipments();
   }
 
   departmentChanged() {
@@ -303,6 +311,7 @@ export class EquipmentsComponent implements OnInit {
   //
   //   })
   // }
+
 
   editEquipment(eq:IEquipment) {
     // console.log(eq);

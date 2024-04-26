@@ -2,7 +2,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {DialogService, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Equipment} from "../../../domain/classes/equipment";
 import {IEquipment} from "../../../domain/interfaces/equipments";
-import {FormBuilder, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, Validators} from "@angular/forms";
 import {EquipmentsFiles} from "../../../domain/classes/equipments-files";
 import {Isfi} from "../../../domain/interfaces/sfi";
 import {ProjectsManagerService} from "../../../domain/projects-manager.service";
@@ -18,6 +18,7 @@ import {ISupplier} from "../../../domain/interfaces/supplier";
 import {EditSupplierComponent} from "../edit-supplier/edit-supplier.component";
 import {SupplierService} from "../../../domain/supplier.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 
 
@@ -40,10 +41,11 @@ export class EditEquipmentComponent implements OnInit {
   // @ts-ignore
   // selectedEq = this.eq
   //
+  // @ts-ignore
   equipmentForm = this.formBuilder.group({
     id: 0,
     sfi: '',
-    sfi_unit: [''],
+    sfi_unit: ['', [Validators.required, this.sfiFormatValidator]],
     project: '',
     department: '',
     name: '',
@@ -78,7 +80,7 @@ export class EditEquipmentComponent implements OnInit {
 
   buttonsAreHidden: boolean = true;  //для просмотра формы без возможности редактирования
 
-  constructor( private formBuilder: FormBuilder, public prService: ProjectsManagerService, public auth: AuthManagerService,
+  constructor( private formBuilder: FormBuilder, public prService: ProjectsManagerService, public auth: AuthManagerService, private messageService: MessageService,
               public eqService: EquipmentsService, public t: LanguageService, private dialogService: DialogService, private supplierService: SupplierService,  private route: ActivatedRoute, private router: Router) {
   }
 
@@ -89,15 +91,14 @@ export class EditEquipmentComponent implements OnInit {
     console.log(this.group )
     if (this.group === undefined) {
       this.isGroup = true
-
     }
     console.log("this.isGroup" + this.isGroup)
     this.equipmentForm = this.formBuilder.group({  //заполняем поля формы
       id: this.eq.id,
       sfi: this.eq.sfi.toString(),
-      sfi_unit: this.eq.sfi_unit,
-      project: this.eq.project_name,
-      department: this.eq.department,
+      sfi_unit: [this.eq.sfi_unit, [Validators.required, this.sfiFormatValidator]],
+      project: [this.eq.project_name, [this.customProjectValidator]],
+      department: [this.eq.department, [this.customProjectValidator]],
       name: this.eq.name,
       description: this.eq.description,
       comment: this.eq.comment,
@@ -129,6 +130,24 @@ export class EditEquipmentComponent implements OnInit {
     if (this.eq.responsible_id == this.auth.getUser().id || this.auth.hasPerms('create_edit_equ')) {
       this.buttonsAreHidden = false;
     }
+  }
+
+
+   sfiFormatValidator(control: AbstractControl) {
+      const validFormat = /^\d{3}\.\d{3}$/.test(control.value);
+      console.log(validFormat)
+      return validFormat? null : { 'invalidSfiFormat': true };
+   }
+
+  customProjectValidator(control: AbstractControl) {
+    const validFormat = control.value != '-';
+    console.log(validFormat)
+    return validFormat? null : { 'projectInvalid': true };
+
+    // if (control.value === '-') {
+    //   return { 'projectInvalid': true };
+    // }
+    // return null;
   }
 
 
@@ -421,6 +440,7 @@ export class EditEquipmentComponent implements OnInit {
     console.log(JSON.stringify(eqToDB));
 
     this.eqService.addEquipment(JSON.stringify(eqToDB)).subscribe(res => {  //добавить изменения оборудования в бд
+      this.messageService.add({key:'equipment', severity:'success', summary:'Save changes', detail:'You have successfully updated equipment.'});
       if (res.includes('error')){
         alert(res);
       }

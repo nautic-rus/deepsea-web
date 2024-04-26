@@ -71,6 +71,12 @@ export class CreateEquipmentComponent implements OnInit {
     // console.log(this.equipmentForm.value)
   }
 
+  sfiFormatValidator(control: AbstractControl) {
+    const validFormat = /^\d{3}\.\d{3}$/.test(control.value);
+    console.log(validFormat)
+    return validFormat? null : { 'invalidSfiFormat': true };
+  }
+
   customProjectValidator(control: AbstractControl) {
     if (control.value === '-') {
       return { projectInvalid: true };
