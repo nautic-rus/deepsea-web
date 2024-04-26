@@ -369,7 +369,6 @@ export class ElectricEspComponent implements OnInit {
           let filter = _.sortBy(groupedEles.filter((x: any) => manual.userId.includes(x.pos)), x => x.pos.length).reverse();
           if (filter.length > 0){
             let addManual = filter[0];
-            console.log(manual);
             addManual.eles.push({
               pos: addManual.eles.length + 1,
               kind: 'MANUAL',
@@ -379,6 +378,7 @@ export class ElectricEspComponent implements OnInit {
               weight: manual.weight,
               code: manual.material_stock_code,
               cog: manual.cog,
+              userId: manual.userId
             });
           }
         });
@@ -937,10 +937,7 @@ export class ElectricEspComponent implements OnInit {
       modal: true,
       data: [this.docNumber, label, 'ele', this.issue.id]
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
-      });
+      this.fillEle();
     });
   }
 
@@ -973,5 +970,12 @@ export class ElectricEspComponent implements OnInit {
     else{
       return units;
     }
+  }
+
+  deleteManual(e: any) {
+    console.log(e);
+    this.s.deleteIssueMaterial(e.userId, this.issue.doc_number, 'ele').subscribe(res => {
+      this.fillEle();
+    });
   }
 }

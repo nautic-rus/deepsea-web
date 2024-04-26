@@ -99,7 +99,7 @@
                         </div>
                       </div>
 
-                      <div class="df mx-10 w-16 cy">
+                      <div class="df mx-10 w-16 cy" *ngIf="e.kind != 'MANUAL'">
                         <div class="mr-10 m-text df align-end">COG</div>
                         <div class="df">
                           <div class="mr-10">
@@ -116,6 +116,12 @@
                           </div>
                         </div>
                       </div>
+                      <div class="df mx-10 w-16 cy" *ngIf="e.kind == 'MANUAL'">
+                        <div class="df">
+                          <button (click)="deleteManual(e)">DELETE</button>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
