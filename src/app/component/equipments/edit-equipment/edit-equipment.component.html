@@ -113,38 +113,12 @@
 
 <!--форма редактирования оборудования (unit)-->
   <form *ngIf="!isGroup" [formGroup]="equipmentForm" class="form-container">
-<!--    <div class="big-text-create mb-1">{{'SFI'}}</div>-->
-<!--    <p-dropdown [disabled]="buttonsAreHidden" formControlName="sfi" class="select" optionLabel="code + ' - ' + ru" optionValue="code" placeholder="SFI" [options]="sfis" appendTo="body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en"> </p-dropdown>-->
-<!--    <p-dropdown [options]="sfis" [disabled]="buttonsAreHidden" formControlName="sfi" class="select" optionValue="code" (onChange)="changeSFI()"-->
-<!--                placeholder="SFI"  appendTo = "body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en">-->
-<!--      <ng-template pTemplate="selectedItem">-->
-<!--        <div class="flex align-items-center gap-2">-->
-<!--          {{sfiAndName}}-->
-<!--        </div>-->
-<!--      </ng-template>-->
-<!--      <ng-template let-sfi pTemplate="item">-->
-<!--        <div class="df">-->
-<!--          <div class="pr-10">{{sfi.code}}</div>-->
-<!--          <div>-->
-<!--            <div class="text-gray">{{sfi.ru}}</div>-->
-<!--            <div >{{sfi.eng}}</div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </ng-template>-->
-<!--    </p-dropdown>-->
-<!--    <div class="df space-between mt-10">-->
-<!--      <div>-->
-<!--        <div class="big-text-create mb-1">{{t.tr('Проект')}}</div>-->
-<!--        <p-dropdown formControlName="project" [disabled]="buttonsAreHidden" [options]="equipmentProjects" appendTo = "body" styleClass="width-220 font-13"></p-dropdown>-->
-<!--      </div>-->
-<!--      <div>-->
-<!--        <div class="big-text-create mb-1">{{t.tr('Отдел')}}</div>-->
-<!--        <p-dropdown [disabled]="buttonsAreHidden" formControlName="department" [options]="equipmentDepartments" appendTo = "body" styleClass="width-220 font-13"></p-dropdown>-->
-<!--      </div>-->
-<!--    </div>-->
 
     <label class="big-text-create mb-1 mt-10" for="sfi_unit">{{t.tr('SFI')}}</label>
-    <p-inputMask mask="999.999" id="sfi_unit"  formControlName="sfi_unit" placeholder="999.999"></p-inputMask>
+    <input id="sfi_unit"  formControlName="sfi_unit" placeholder="999.999">
+    <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat')">
+      Введите корректный SFI (в формате 999.999)
+    </span>
 <!--    <input [readOnly]="buttonsAreHidden" pInputText id="sfi_unit" type="text" formControlName="sfi_unit" placeholder="{{t.tr('SFI')}}">-->
 
 
@@ -162,7 +136,7 @@
 
 <!--тут кнопка добавить файл и сохранитьт изменения для обеих форм-->
   <div class="mr-5 mt-20 df justify-content-end">
-    <div tabindex="10" [hidden]="buttonsAreHidden" (click)="editEquipment()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
+    <div tabindex="10" [hidden]="buttonsAreHidden" [class.disabled-button]="!equipmentForm.valid && !this.isGroup" (click)="editEquipment()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
     <!--      <div tabindex="10" [hidden]="buttonsAreHidden" (click)="close()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>-->
   </div>
 
@@ -171,7 +145,7 @@
   </div>
 
 <!--  тут я добавляю файлы к любой из форм-->
-  <div *ngIf="equipmentFilesSrc.length != 0" class="mt-20 height-160 ovf-auto">
+  <div *ngIf="equipmentFilesSrc.length != 0" class="mt-20 ovf-auto">
     <p-table [value]="equipmentFilesSrc" styleClass="p-datatable-striped">
       <ng-template pTemplate="body" let-file>
         <!--      <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
@@ -205,7 +179,7 @@
   </div>
 
 <!--  вывожу поставщиков -->
-  <div>Поставщики</div>
+  <div *ngIf="suppliersArray?.length !=0 ">Поставщики</div>
   <div *ngFor="let supplier of suppliersArray" class="pb-8">
     <div (click)="editSupplier(group, eq, supplier)" class="supplier_container">
       <div class="supplier_header df">
@@ -241,7 +215,11 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <div style="text-align: end">
+    Создан {{getDateOnly(eq.create_date)}} Автор {{eq.respons_surname}} {{eq.respons_name}}
   </div>
 </div>
+  <p-toast key="equipment" position="bottom-center"></p-toast>
 </div>

@@ -1,0 +1,30 @@
+.header-parts{
+  border-bottom: 0 none;
+  background: #ffffff;
+  color: #323130;
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+.filter{
+  margin-left: auto;
+}
+.header-parts-text{
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.parts-button-close{
+  color: #605e5c;
+  width: 2rem;
+  height: 2rem;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.parts-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
