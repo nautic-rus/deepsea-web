@@ -333,32 +333,17 @@ export class ElectricEspComponent implements OnInit {
 
 
         });
-        _.forEach(_.groupBy(equips, g => g.userId), grEle => {
-          let first = grEle[0];
+        _.forEach(equips, grEle => {
+          let first = grEle;
           let units = first.units;
           let userId = first.userId;
-          let grEles: any[] = [];
-          let iter = 1;
-          grEle.forEach(ele => {
-            let eleWeight = first.material.singleWeight
-            grEles.push({
-              pos: iter++,
-              kind: ele.typeName,
-              materialName: ele.material.name,
-              units: ele.units,
-              count: 1,
-              weight: eleWeight,
-              code: ele.material.code,
-              cog: ele.cog,
-            });
-          });
 
           groupedEles.push({
             pos: this.rlz(userId),
-            eles: grEles,
+            eles: [],
             code: first.material.code,
-            count: grEle.length,
-            weight: grEle.length * first.material.singleWeight,
+            count: 1,
+            weight: first.material.singleWeight,
             kind: first.typeName,
             materialName: first.material.name,
             units: units,
