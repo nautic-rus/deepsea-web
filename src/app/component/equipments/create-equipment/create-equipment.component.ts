@@ -22,7 +22,7 @@ import {IEquipment} from "../../../domain/interfaces/equipments";
 export class CreateEquipmentComponent implements OnInit {
   // @ts-ignore
   equipmentForm = this.formBuilder.group({
-    sfi_unit: ['', Validators.required],
+    sfi_unit: ['', [Validators.required, this.sfiFormatValidator]],
     name: ['', Validators.required],
     commentText: [''],
   });
