@@ -276,7 +276,10 @@ export class ElectricEspComponent implements OnInit {
       if (res != null && res.elements.length > 0){
         let eles = res.elements;
         let groupedEles: any[] = [];
-        _.forEach(_.groupBy(eles, g => g.code), grEle => {
+        let traysAndTransits = eles.filter((x: any) => x.typeName == 'TRAY' || x.typeName == 'TRANSIT');
+        let equips = eles.filter((x: any) => x.typeName == 'EQUIP');
+        let manuals = eles.filter((x: any) => x.typeName == 'MANUAL');
+        _.forEach(_.groupBy(traysAndTransits, g => g.code), grEle => {
           let first = grEle[0];
           let units = first.units;
           let wgt = 0;
@@ -330,7 +333,57 @@ export class ElectricEspComponent implements OnInit {
 
 
         });
-        this.eleGroups = groupedEles;
+        _.forEach(_.groupBy(equips, g => g.userId), grEle => {
+          let first = grEle[0];
+          let units = first.units;
+          let userId = first.userId;
+          let grEles: any[] = [];
+          let iter = 1;
+          grEle.forEach(ele => {
+            let eleWeight = first.material.singleWeight
+            grEles.push({
+              pos: iter++,
+              kind: ele.typeName,
+              materialName: ele.material.name,
+              units: ele.units,
+              count: 1,
+              weight: eleWeight,
+              code: ele.material.code,
+              cog: ele.cog,
+            });
+          });
+
+          groupedEles.push({
+            pos: this.rlz(userId),
+            eles: grEles,
+            code: first.material.code,
+            count: grEle.length,
+            weight: grEle.length * first.material.singleWeight,
+            kind: first.typeName,
+            materialName: first.material.name,
+            units: units,
+          });
+        });
+        _.forEach(manuals, manual => {
+
+          let filter = _.sortBy(groupedEles.filter((x: any) => manual.userId.includes(x.pos)), x => x.pos.length).reverse();
+          if (filter.length > 0){
+            let addManual = filter[0];
+            console.log(manual);
+            addManual.eles.push({
+              pos: addManual.eles.length + 1,
+              kind: 'MANUAL',
+              materialName: manual.material.name,
+              units: manual.units,
+              count: manual.count,
+              weight: manual.weight,
+              code: manual.material_stock_code,
+              cog: manual.cog,
+            });
+          }
+        });
+
+        this.eleGroups = _.sortBy(groupedEles, x => x.pos);
       }
       else{
         this.noResult = true;
