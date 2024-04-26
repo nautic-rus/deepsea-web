@@ -922,11 +922,11 @@
   position: relative;
   width: 100%;
   display: grid;
-  grid-template-columns: 70px 1fr;
+  grid-template-columns: 80px 1fr;
 }
 .title-bold{
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   color: #3a3a3a;
 }
 .title-bold-pipe{
@@ -942,6 +942,10 @@
 .mm-text{
   color: #7575759e;
   font-size: 12px;
+}
+.m-text{
+  color: #7575759e;
+  font-size: 14px;
 }
 .one-col{
   width: 30px;
@@ -1007,11 +1011,12 @@
   border-bottom-left-radius: 4px;
   padding: 1px 4px;
   min-width: 140px;
+  height: 20px;
 }
-.trm-copy{
+.trm-copy-elec{
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  padding: 1px 4px;
+  padding: 2px 4px;
   border: 1px solid #FBC948;
   width: 30px;
 }
@@ -1056,7 +1061,7 @@
   font-weight: 600;
 }
 .text-table-col{
-  font-size: 14px;
+  font-size: 13px;
   color: #495057;
 }
 .show-model{

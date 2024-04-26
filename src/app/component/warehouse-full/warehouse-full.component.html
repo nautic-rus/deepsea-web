@@ -1,8 +1,13 @@
 <div class="header-storage cy pl-20">
-  НОРЕБО
+  <div>НОРЕБО</div>
+  <div>СКЛАД</div>
 </div>
 <div class="all-page">
   <div class="">
+    <div class="card-head-warehouse df">
+<!--      <div class="mr-10">-->
+<!--        <p-multiSelect styleClass="width-220" placeholder="ЗАКАЗ" appendTo="body" id="orders" [options]="orders" [(ngModel)]="selectedOrders" optionLabel="name" optionValue="name"></p-multiSelect>-->
+<!--      </div>-->
     <div class="card-head df">
       <div class="mr-10">
         <p-multiSelect (onChange)="ordersChanged()" styleClass="width-220" placeholder="ЗАКАЗ" appendTo="body" id="orders" [options]="orders" [(ngModel)]="selectedOrders"></p-multiSelect>
@@ -37,14 +42,18 @@
         </div>
       </div>
       <div class="p-ml-auto df">
-        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
-          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
-          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
+        <div class="mr-10 ml-10">
+          <p-dropdown class="select"  [(ngModel)]="sortPlatesValue" [options]="sortPlatesValues" (ngModelChange)="sortPlatesChanged()" styleClass="width-170 border">
+          </p-dropdown>
         </div>
-        <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">
-          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
-          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
-        </div>
+<!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
+<!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
+<!--          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">-->
+<!--        </div>-->
+<!--        <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">-->
+<!--          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">-->
+<!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
+<!--        </div>-->
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input #search pInputText type="text" (keyup)="filterInvoices(search.value)" [placeholder]="t.tr('Поиск...')" class="border" />
@@ -76,9 +85,7 @@
         </div>
 
         <p-table *ngIf="invoices.length != 0" #table [value]="inv.storages"
-                 [scrollable]="true"
                  styleClass="p-datatable-striped"
-                 responsiveLayout="scroll"
                  [globalFilterFields]="['id','doc_number','name','status']">
           <ng-template pTemplate="header">
             <tr>

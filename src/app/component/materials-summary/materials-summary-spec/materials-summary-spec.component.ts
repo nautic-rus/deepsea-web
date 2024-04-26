@@ -469,4 +469,12 @@ export class MaterialsSummarySpecComponent implements OnInit {
     }
     return res;
   }
+  trim(input: string, length: number = 150): string{
+    if (input.length <= length){
+      return input;
+    }
+    else {
+      return input.substr(0, length) + '...';
+    }
+  }
 }

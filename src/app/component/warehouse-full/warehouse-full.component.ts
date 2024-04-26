@@ -21,6 +21,26 @@ export class WarehouseFullComponent implements OnInit {
   loading = true;
   orders: string[] = [];
   selectedOrders: string[] = [];
+  sortPlatesValues: any[] = [
+    'по Заказу',
+    'by Material',
+    'by Steel Grade',
+    'by Nested Parts',
+    'by Plate Weight',
+    'by Parts Weight',
+    'by Scrap'
+  ];
+  sortPlatesValue = this.sortPlatesValues[1];
+  sortProfilesValues: any[] = [
+    'by KSE',
+    'by Section',
+    'by Material',
+    'by Profile Forecast',
+    'by Profile Usage',
+    'by Parts QTY',
+    'by Parts Weight',
+    'by Scrap'
+  ];
   constructor(public t: LanguageService, public s: StorageManagerService, public a: ActivatedRoute, public r: Router) { }
 
   ngOnInit(): void {
@@ -72,5 +92,9 @@ export class WarehouseFullComponent implements OnInit {
 
   ordersChanged() {
     this.invoices = this.invoicesSrc.filter(x => x.storages.find((y: any) => this.selectedOrders.includes(y.order)));
+  }
+
+  sortPlatesChanged() {
+
   }
 }

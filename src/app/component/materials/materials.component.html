@@ -6,7 +6,7 @@
         </p-dropdown>
       </div>
       <div class="mr-10" >
-        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">
+        <p-dropdown class="select" appendTo="body" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">
         </p-dropdown>
       </div>
       <div class="mr-10">

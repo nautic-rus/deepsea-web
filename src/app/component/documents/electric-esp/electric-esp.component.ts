@@ -24,6 +24,7 @@ import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 import {EleEspGenerationWaitComponent} from "./ele-esp-generation-wait/ele-esp-generation-wait.component";
+import {LV} from "../../../domain/classes/lv";
 
 @Component({
   selector: 'app-electric-esp',
@@ -275,7 +276,10 @@ export class ElectricEspComponent implements OnInit {
       if (res != null && res.elements.length > 0){
         let eles = res.elements;
         let groupedEles: any[] = [];
-        _.forEach(_.groupBy(eles, g => g.code), grEle => {
+        let traysAndTransits = eles.filter((x: any) => x.typeName == 'TRAY' || x.typeName == 'TRANSIT');
+        let equips = eles.filter((x: any) => x.typeName == 'EQUIP');
+        let manuals = eles.filter((x: any) => x.typeName == 'MANUAL');
+        _.forEach(_.groupBy(traysAndTransits, g => g.code), grEle => {
           let first = grEle[0];
           let units = first.units;
           let wgt = 0;
@@ -329,7 +333,42 @@ export class ElectricEspComponent implements OnInit {
 
 
         });
-        this.eleGroups = groupedEles;
+        _.forEach(equips, grEle => {
+          let first = grEle;
+          let units = first.units;
+          let userId = first.userId;
+
+          groupedEles.push({
+            pos: this.rlz(userId),
+            eles: [],
+            code: first.material.code,
+            count: 1,
+            weight: first.material.singleWeight,
+            kind: first.typeName,
+            materialName: first.material.name,
+            units: units,
+          });
+        });
+        _.forEach(manuals, manual => {
+
+          let filter = _.sortBy(groupedEles.filter((x: any) => manual.userId.includes(x.pos)), x => x.pos.length).reverse();
+          if (filter.length > 0){
+            let addManual = filter[0];
+            addManual.eles.push({
+              pos: addManual.eles.length + 1,
+              kind: 'MANUAL',
+              materialName: manual.material.name,
+              units: manual.units,
+              count: manual.count,
+              weight: manual.weight,
+              code: manual.material_stock_code,
+              cog: manual.cog,
+              userId: manual.userId
+            });
+          }
+        });
+
+        this.eleGroups = _.sortBy(groupedEles, x => x.pos);
       }
       else{
         this.noResult = true;
@@ -883,10 +922,7 @@ export class ElectricEspComponent implements OnInit {
       modal: true,
       data: [this.docNumber, label, 'ele', this.issue.id]
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
-      });
+      this.fillEle();
     });
   }
 
@@ -907,4 +943,24 @@ export class ElectricEspComponent implements OnInit {
     });
   }
 
+  langUnits(units: string){
+    let unitsTr = [
+      Object({units: '006', ru: 'м', en: 'm'}),
+      Object({units: '796', ru: 'шт', en: 'pcs'}),
+    ];
+    let r = unitsTr.find(x => x.units == units);
+    if (r != null){
+      return r[this.t.language];
+    }
+    else{
+      return units;
+    }
+  }
+
+  deleteManual(e: any) {
+    console.log(e);
+    this.s.deleteIssueMaterial(e.userId, this.issue.doc_number, 'ele').subscribe(res => {
+      this.fillEle();
+    });
+  }
 }
