@@ -137,7 +137,7 @@ export class AddMaterialToEspComponent implements OnInit {
         return;
       }
       else{
-        this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind).subscribe(res => {
+        this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone).subscribe(res => {
           this.ref.close('success');
         });
       }
