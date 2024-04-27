@@ -54,7 +54,7 @@ export class SpecMaterialsComponent implements OnInit {
   editing = false;
   newNode: SpecDirectory = new SpecDirectory();
   newNodeSuffix = '';
-  selectedView: string = '';
+  selectedView: string = 'tiles';
   // @ts-ignore
   @ViewChild('table') table: Table;
   noResult = false;
@@ -388,6 +388,7 @@ export class SpecMaterialsComponent implements OnInit {
   }
 
   searchChange() {
+    localStorage.setItem('search', this.search);
     if (this.selectedView == 'tiles'){
       this.materials = this.materialsSrc.filter(x => {
         let notNull = x != null;
@@ -402,7 +403,6 @@ export class SpecMaterialsComponent implements OnInit {
         }
         return notNull && (findInName || findInTranslate);
       });
-      console.log(this.materials);
       for (let x = 0; x < 10; x ++){
         this.materials.push(null);
       }
@@ -410,7 +410,7 @@ export class SpecMaterialsComponent implements OnInit {
     else{
       this.materials = this.materialsSrc.filter(x => {
         let notNull = x != null;
-        let findInName = ((x.name.toLowerCase() + x.description.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
+        let findInName = ((x.name.toLowerCase() + x.descr.toLowerCase() + x.code.toLowerCase())).includes(this.search.toLowerCase().trim());
         let findInTranslate = false;
         if (x.translations != null){
           x.translations.forEach((y: any) => {
@@ -421,7 +421,6 @@ export class SpecMaterialsComponent implements OnInit {
         }
         return notNull && (findInName || findInTranslate);
       });
-      console.log(this.materials);
     }
   }
 
@@ -493,6 +492,11 @@ export class SpecMaterialsComponent implements OnInit {
             this.setSelectedNode(this.nodes);
             this.setMaterialsProviders();
             this.materialsFilled = true;
+            let search = localStorage.getItem('search');
+            if (search != null){
+              this.search = search;
+            }
+            this.searchChange();
           });
           for (let x = 0; x < 10; x ++){
             this.materials.push(null);
