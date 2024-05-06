@@ -159,7 +159,8 @@
 }
 
 .supplier_container {
-  background-color: #dee2e6;
+  background-color: rgba(9, 30, 66, 0.08);
+  padding: 7px;
 }
 
 .supplier_header {
@@ -168,9 +169,47 @@
 
 .supplier_body {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr;
+  text-align: center;
+  font-size: 13px;
 }
 
 .error {
   color: red;
 }
+
+.blue {
+  color: #3B94D6;
+}
+
+.half {
+  width: 48%;
+}
+
+.width-100pr {
+  width: 100%;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  border-bottom: none;
+}
+/*чтоб убрать линии в таблице с файлами*/
+/deep/ .p-datatable table {
+  border-collapse: collapse;
+}
+
+/deep/ .p-datatable .p-datatable-tbody > tr {
+  border: none;
+}
+
+/deep/ .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: rgba(9, 30, 66, 0.08) !important
+}
+
+.eq-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+

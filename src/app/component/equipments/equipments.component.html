@@ -6,62 +6,17 @@
       </div>
       <div   class="cxy">{{t.tr('Создать новую группу')}}</div>
     </div>
-<!--    <div>-->
-<!--      <div class="p-input-icon-left">-->
-<!--        <i class="pi pi-search"></i>-->
-<!--        <input type="text" #search pInputText placeholder="Global Search" (input)="tt.filterGlobal(search.value, 'contains')" />-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="mr-10">-->
-<!--      <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>-->
-<!--    </div>-->
-<!--    <div class="mr-10">-->
-<!--      <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>-->
-<!--    </div>-->
-<!--    <div class="p-ml-auto mr-10 df">-->
-<!--      <span class="p-input-icon-left">-->
-<!--        <i class="pi pi-search"></i>-->
-<!--        <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />-->
-<!--      </span>-->
-<!--    </div>-->
   </div>
 
 
   <div class="equipments_container_table">
     <p-treeTable #tt [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">
-      <!--    <ng-template pTemplate="caption">-->
-      <!--      <div style="text-align: right">-->
-      <!--        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>-->
-      <!--        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tt.filterGlobal($event.target.value, 'contains')" style="width:auto">-->
-      <!--      </div>-->
-      <!--    </ng-template>-->
-
-
-<!--      {field: 'id', header: 'ID' },-->
-<!--      {field: 'sfi', header: 'sfi'},-->
-<!--      {field: 'sfi_unit', header: 'sfi_unit'},-->
-<!--      {field: 'name', header: 'name' },-->
-<!--      {field: 'status', header: 'status_id' },-->
-<!--      {field: 'res_surname', header: 'Responsible'},-->
-<!--      {field: 'itt', header: 'itt'},-->
-<!--      {field: 'comment', header: 'comment'},-->
       <ng-template pTemplate="header" let-columns>
-<!--        <tr>-->
-<!--          <th [ttSortableColumn]="'id'">id</th>-->
-<!--          <th [ttSortableColumn]="'sfi'">sfi</th>-->
-<!--          <th [ttSortableColumn]="'sfi_unit'">sfi_unit</th>-->
-<!--          <th [ttSortableColumn]="'name'">name</th>-->
-<!--          <th [ttSortableColumn]="'status'">status</th>-->
-<!--          <th [ttSortableColumn]="'res_surname'">Responsible</th>-->
-<!--          <th [ttSortableColumn]="'itt'">itt</th>-->
-<!--          <th [ttSortableColumn]="'comment'">comment</th>-->
-<!--          <th></th>-->
-<!--        </tr>-->
         <tr>
           <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field">
             {{ col.header }}
             <p-treeTableSortIcon *ngIf="i!= (columns.length - 1)" [field]="col.field"></p-treeTableSortIcon>
-<!--            <p-treeTableSortIcon *ngIf="col.header == 'Responsible'" [field]="'res_surname'" [ttSortableColumn]="'res_surname'"></p-treeTableSortIcon>-->
+            <!--            <p-treeTableSortIcon *ngIf="col.header == 'Responsible'" [field]="'res_surname'" [ttSortableColumn]="'res_surname'"></p-treeTableSortIcon>-->
           </th>
         </tr>
       </ng-template>
@@ -109,10 +64,6 @@
               </div>
             </span>
 
-
-<!--            <span>-->
-<!--              {{ rowData[col.field] }}-->
-<!--            </span>-->
             <ng-container *ngIf="last" >
               <div class="df">
                 <button [ngClass]="(rowData.parent_id == 0)?  'addEqu_button' : 'addEqu_button_invisible'"  (click)="newEquipment(rowData)" [style]="{ 'margin-right': '.5em' }">EQU</button>
@@ -135,6 +86,146 @@
     <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
   </p-sidebar>
 </div>
+
+
+
+<!--<div class="equipments_container">-->
+<!--  <div class="equipment_header pb-15">-->
+<!--    <div  class="eq-button blue-button cxy mr-10 w-13" (click)="newGroup()">-->
+<!--      <div class="pr-10 cxy">-->
+<!--        <img src="assets/icons/plus3.svg" height="18">-->
+<!--      </div>-->
+<!--      <div   class="cxy">{{t.tr('Создать новую группу')}}</div>-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="p-input-icon-left">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="pi pi-search"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="text" #search pInputText placeholder="Global Search" (input)="tt.filterGlobal(search.value, 'contains')" />&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="mr-10">&ndash;&gt;-->
+<!--&lt;!&ndash;      <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="mr-10">&ndash;&gt;-->
+<!--&lt;!&ndash;      <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div class="p-ml-auto mr-10 df">&ndash;&gt;-->
+<!--&lt;!&ndash;      <span class="p-input-icon-left">&ndash;&gt;-->
+<!--&lt;!&ndash;        <i class="pi pi-search"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />&ndash;&gt;-->
+<!--&lt;!&ndash;      </span>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--  </div>-->
+
+
+<!--  <div class="equipments_container_table">-->
+<!--    <p-treeTable #tt [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">-->
+<!--      &lt;!&ndash;    <ng-template pTemplate="caption">&ndash;&gt;-->
+<!--      &lt;!&ndash;      <div style="text-align: right">&ndash;&gt;-->
+<!--      &lt;!&ndash;        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>&ndash;&gt;-->
+<!--      &lt;!&ndash;        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tt.filterGlobal($event.target.value, 'contains')" style="width:auto">&ndash;&gt;-->
+<!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+<!--      &lt;!&ndash;    </ng-template>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;      {field: 'id', header: 'ID' },&ndash;&gt;-->
+<!--&lt;!&ndash;      {field: 'sfi', header: 'sfi'},&ndash;&gt;-->
+<!--&lt;!&ndash;      {field: 'sfi_unit', header: 'sfi_unit'},&ndash;&gt;-->
+<!--&lt;!&ndash;      {field: 'name', header: 'name' },&ndash;&gt;-->
+<!--&lt;!&ndash;      {field: 'status', header: 'status_id' },&ndash;&gt;-->
+<!--&lt;!&ndash;      {field: 'res_surname', header: 'Responsible'},&ndash;&gt;-->
+<!--&lt;!&ndash;      {field: 'itt', header: 'itt'},&ndash;&gt;-->
+<!--&lt;!&ndash;      {field: 'comment', header: 'comment'},&ndash;&gt;-->
+<!--      <ng-template pTemplate="header" let-columns>-->
+<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'id'">id</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'sfi'">sfi</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'sfi_unit'">sfi_unit</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'name'">name</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'status'">status</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'res_surname'">Responsible</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'itt'">itt</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th [ttSortableColumn]="'comment'">comment</th>&ndash;&gt;-->
+<!--&lt;!&ndash;          <th></th>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--        <tr>-->
+<!--          <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field">-->
+<!--            {{ col.header }}-->
+<!--            <p-treeTableSortIcon *ngIf="i!= (columns.length - 1)" [field]="col.field"></p-treeTableSortIcon>-->
+<!--&lt;!&ndash;            <p-treeTableSortIcon *ngIf="col.header == 'Responsible'" [field]="'res_surname'" [ttSortableColumn]="'res_surname'"></p-treeTableSortIcon>&ndash;&gt;-->
+<!--          </th>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--      <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">-->
+<!--        <tr [ttRow]="rowNode" [ngClass]="{childRow: rowData.parent_id != 0}" >-->
+<!--          <td *ngFor="let col of columns; let i = index; let last = last ">-->
+<!--            <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>-->
+<!--            <span (click)="cliiick(rowData, rowNode)">-->
+<!--              <div *ngIf="rowData.parent_id == 0">-->
+<!--                <div *ngIf="col.field == 'sfi'">-->
+<!--                  {{ rowData['sfi'] + ' - ' + rowData['name'] }}-->
+<!--                </div>-->
+<!--                <div *ngIf="col.field == 'name'">-->
+<!--                  - -->
+<!--                </div>-->
+<!--                <div *ngIf="col.field == 'respons_surname'">-->
+<!--                  {{ rowData['respons_name'] + ' ' + rowData['respons_surname'] }}-->
+<!--                </div>-->
+<!--                <div *ngIf="col.field == 'itt'">-->
+<!--                  {{ rowData['itt'] ===1? 'YES' : 'NO' }}-->
+<!--                </div>-->
+<!--                <div *ngIf="col.field != 'name' && col.field != 'sfi' && col.field != 'respons_surname' && col.field != 'itt'">-->
+<!--                  {{ rowData[col.field] }}-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div *ngIf="rowData.parent_id != 0">-->
+<!--                <div *ngIf="col.field == 'id'" class="pl-30">-->
+<!--                  {{ rowData[col.field] }}-->
+<!--                </div>-->
+<!--                <div *ngIf="col.field == 'sfi'">-->
+<!--                  - -->
+<!--                </div>-->
+<!--                <div *ngIf="col.field == 'name'">-->
+<!--                  {{ rowData['name'] }}-->
+<!--                </div>-->
+<!--                <div *ngIf="col.field == 'respons_surname'">-->
+<!--                  {{ rowData['respons_name'] + ' ' + rowData['respons_surname'] }}-->
+<!--                </div>-->
+<!--                <div *ngIf="col.field == 'itt'">-->
+<!--                  {{ rowData['itt'] ===1? 'YES' : 'NO' }}-->
+<!--                </div>-->
+<!--                <span *ngIf="col.field != 'name' && col.field != 'sfi' && col.field != 'respons_surname' && col.field != 'id' && col.field != 'itt'">-->
+<!--                  {{ rowData[col.field] }}-->
+<!--                </span>-->
+<!--              </div>-->
+<!--            </span>-->
+
+
+<!--&lt;!&ndash;            <span>&ndash;&gt;-->
+<!--&lt;!&ndash;              {{ rowData[col.field] }}&ndash;&gt;-->
+<!--&lt;!&ndash;            </span>&ndash;&gt;-->
+<!--            <ng-container *ngIf="last" >-->
+<!--              <div class="df">-->
+<!--                <button [ngClass]="(rowData.parent_id == 0)?  'addEqu_button' : 'addEqu_button_invisible'"  (click)="newEquipment(rowData)" [style]="{ 'margin-right': '.5em' }">EQU</button>-->
+<!--                <button class="addSup_button" (click)="addSupplier(rowData)" [style]="{ 'margin-right': '.5em' }" >SUP</button>-->
+<!--              </div>-->
+<!--            </ng-container>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </ng-template>-->
+<!--    </p-treeTable>-->
+<!--  </div>-->
+
+
+<!--  <p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">-->
+<!--    <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>-->
+<!--  </p-sidebar>-->
+
+
+<!--  <p-sidebar *ngIf="editEqSidebarVisible" [(visible)]="editEqSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">-->
+<!--    <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>-->
+<!--  </p-sidebar>-->
+<!--</div>-->
 
 
 

@@ -1,4 +1,4 @@
-<div style="height: 430px; width: 460px;">
+<div style="height: 630px; width: 460px;">
   <div class="header-parts">
     <div class="header-parts-text">{{t.tr('Добавить поставщика')}}</div>
     <div class="df">
@@ -7,9 +7,8 @@
       </div>
     </div>
   </div>
-  <div class="big-text-create mb-1 mt-1">{{t.tr('Наименование')}}</div>
 
-
+  <div class="big-text-create mb-1">{{t.tr('Наименование')}}</div>
   <form [formGroup]="suppliersForm" class="form-container ng-star-inserted">
     <div class="df">
       <input *ngIf="addedNewSupp" id="name" type="text" class="p-inputtext p-component p-element width-300 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" formControlName="name">
@@ -27,23 +26,27 @@
     <div class="big-text-create mb-1 mt-1">{{t.tr('Модель')}}</div>
     <input id="model" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="model">
 
-    <div class="df">
-      <div class="big-text-create mb-1 mt-1">{{t.tr('Производитель')}}</div>
-      <input id="manufacturer" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="manufacturer">
+    <div class="two-inputs">
+      <div>
+        <div class="big-text-create mb-1 mt-1">{{t.tr('Производитель')}}</div>
+        <input id="manufacturer" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="manufacturer">
+      </div>
 
-      <div class="big-text-create mb-1 mt-1">{{t.tr('Вес, кг')}}</div>
-      <input id="weight" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="weight">
+      <div>
+        <div class="big-text-create mb-1 mt-1">{{t.tr('Вес, кг')}}</div>
+        <input id="weight" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="weight">
+      </div>
     </div>
 
     <div class="big-text-create mb-1 mt-1">{{t.tr('Эл. парам')}}</div>
-    <textarea id="ele_param" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="ele_param"></textarea>
+    <input id="ele_param" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="ele_param">
 
     <div class="big-text-create mb-1 mt-1">{{t.tr('Мех. парам')}}</div>
-    <textarea id="mech_param" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="mech_param"></textarea>
+    <input id="mech_param" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="mech_param">
 
 
     <div class="big-text-create mb-1 mt-1">{{t.tr('Описание')}}</div>
-    <textarea id="description" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="description"></textarea>
+    <textarea id="description"  style="resize:none" class="p-inputtext p-component p-element w-100 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" type="text" formControlName="description"></textarea>
 
     <div *ngIf="supplierFiles.length != 0" class="big-text mt-1">{{t.tr('Вложения')}}</div>
     <div class="mb-15 width-400 position-relative" *ngFor="let file of supplierFiles">

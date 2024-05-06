@@ -31,17 +31,11 @@ export class EditEquipmentComponent implements OnInit {
   @Input() eq: IEquipment;
   @Input() group: any
 
-
-
   @Output() closeSidebarEvent = new EventEmitter();
   closeSideBar() {
     this.closeSidebarEvent.emit('teest');
   }
 
-  // @ts-ignore
-  // selectedEq = this.eq
-  //
-  // @ts-ignore
   equipmentForm = this.formBuilder.group({
     id: 0,
     sfi: '',
@@ -56,16 +50,6 @@ export class EditEquipmentComponent implements OnInit {
   isGroup: boolean = false;  //редактирую группу или юнит (группу: true, unit: false)
 
   suppliersArray: ISupplier[] | undefined = []
-
-  // equipmentForm = this.formBuilder.group({
-  //   id: this.dialogConfig.data.id,
-  //   sfi: this.dialogConfig.data.sfi.toString(),
-  //   project: this.dialogConfig.data.project_name,
-  //   department: this.dialogConfig.data.department,
-  //   name: this.dialogConfig.data.name,
-  //   description: this.dialogConfig.data.description,
-  //   comment: this.dialogConfig.data.comment,
-  // });
 
   equipmentProjects: string[] = [];
   equipmentProject = '-';

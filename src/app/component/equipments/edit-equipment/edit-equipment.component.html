@@ -1,33 +1,28 @@
-<div class="df" style="justify-content: center">
-<div style="width: 560px; border-radius: 6px">
-  <div class="header-parts df">
-    <div *ngIf="!isGroup" >
-      ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}
-      <div class="pt-20 info-id">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
-      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>
-    </div>
-    <div *ngIf="isGroup" >
-      ID {{this.eq.id}} - GROUP
-      <div class="pt-20 info-id">GROUP - SFI {{this.equipmentForm.value.sfi}} - {{this.equipmentForm.value.name}}</div>
-      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>
-    </div>
-<!--    <div>-->
-<!--      -->
-<!--    </div>-->
-    <div class="df pt-25">
-      <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
-        <img src="assets/icons/trash.svg" height="20">
+<div class="df" style="justify-content: center; height: 100%">
+  <div class="eq-container">
+    <div style="width: 560px; border-radius: 6px">
+      <div class="header-parts df">
+        <div *ngIf="!isGroup" >
+          ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}
+          <div class="pt-20 info-id">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
+          <!--      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>-->
+        </div>
+        <div *ngIf="isGroup" >
+          <span class="info-id">ID {{this.eq.id}}</span>
+          <div class="pt-20 text-uppercase text-bold"><span class="blue">GROUP</span> - SFI {{this.equipmentForm.value.sfi}} - {{this.equipmentForm.value.name}}</div>
+          <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
+        </div>
+        <div class="df pt-25">
+          <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
+            <img src="assets/icons/trash.svg" height="20">
+          </div>
+        </div>
       </div>
-<!--      <div class="parts-button-close cxy" (click)="close()">-->
-<!--        <i class="pi pi-times"></i>-->
-<!--      </div>-->
-    </div>
-  </div>
 
-<!--  форма редактирования группы -->
-  <form *ngIf="isGroup" [formGroup]="equipmentForm" class="form-container">
+      <!--  форма редактирования группы -->
+      <form *ngIf="isGroup" [formGroup]="equipmentForm" class="form-container">
         <div class="big-text-create mb-1">{{'SFI'}}</div>
-<!--        <p-dropdown [disabled]="buttonsAreHidden" formControlName="sfi" class="select" optionLabel="code + ' - ' + ru" optionValue="code" placeholder="SFI" [options]="sfis" appendTo="body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en"> </p-dropdown>-->
+        <!--        <p-dropdown [disabled]="buttonsAreHidden" formControlName="sfi" class="select" optionLabel="code + ' - ' + ru" optionValue="code" placeholder="SFI" [options]="sfis" appendTo="body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en"> </p-dropdown>-->
         <p-dropdown [options]="sfis" [disabled]="buttonsAreHidden" formControlName="sfi" class="select" optionValue="code" (onChange)="changeSFI()"
                     placeholder="SFI"  appendTo = "body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en">
           <ng-template pTemplate="selectedItem">
@@ -46,180 +41,175 @@
           </ng-template>
         </p-dropdown>
         <div class="df space-between mt-10">
-          <div>
+          <div class="half">
             <div class="big-text-create mb-1">{{t.tr('Проект')}}</div>
-            <p-dropdown formControlName="project" [disabled]="buttonsAreHidden" [options]="equipmentProjects" appendTo = "body" styleClass="width-220 font-13"></p-dropdown>
+            <p-dropdown class="width-100pr" formControlName="project" [disabled]="buttonsAreHidden" [options]="equipmentProjects" appendTo = "body" style="width:100%" styleClass="width-270 font-13"></p-dropdown>
           </div>
-          <div>
+          <div class="half">
             <div class="big-text-create mb-1">{{t.tr('Отдел')}}</div>
-            <p-dropdown [disabled]="buttonsAreHidden" formControlName="department" [options]="equipmentDepartments" appendTo = "body" styleClass="width-220 font-13"></p-dropdown>
+            <p-dropdown class="width-100pr" [disabled]="buttonsAreHidden" formControlName="department" [options]="equipmentDepartments" appendTo = "body" style="width:100%" styleClass="width-270 font-13"></p-dropdown>
           </div>
         </div>
 
 
-    <label class="big-text-create mb-1 mt-10" for="nameGroup">{{t.tr('Наименование')}} </label>
-    <input [readOnly]="buttonsAreHidden" pInputText id="nameGroup" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
+        <label class="big-text-create mb-1 mt-10" for="nameGroup">{{t.tr('Наименование')}} </label>
+        <input [readOnly]="buttonsAreHidden" pInputText id="nameGroup" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
 
-    <!--    <label class="big-text-create mb-1 mt-10" for="description">{{t.tr('Описание')}}</label>-->
-    <!--    <input [readOnly]="buttonsAreHidden" pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}">-->
+        <label class="big-text-create mb-1 mt-10" for="commentGroup">{{t.tr('Комментарий')}}</label>
+        <textarea [readOnly]="buttonsAreHidden" pInputText id="commentGroup" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}" style="resize: none"></textarea>
 
-    <label class="big-text-create mb-1 mt-10" for="commentGroup">{{t.tr('Комментарий')}}</label>
-    <textarea [readOnly]="buttonsAreHidden" pInputText id="commentGroup" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}"></textarea>
+      </form>
 
+      <!--форма редактирования оборудования (unit)-->
+      <form *ngIf="!isGroup" [formGroup]="equipmentForm" class="form-container">
 
-
-<!--    <div *ngIf="equipmentFilesSrc.length != 0" class="mt-20 height-160 ovf-auto">-->
-<!--      <p-table [value]="equipmentFilesSrc" styleClass="p-datatable-striped">-->
-<!--        <ng-template pTemplate="body" let-file>-->
-<!--          &lt;!&ndash;      <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">&ndash;&gt;-->
-<!--          <tr class="border-top task-row cursor-pointer">-->
-<!--            <td class="padding-5">-->
-<!--              <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
-<!--                <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>-->
-<!--                <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 10) + ' '}}</span>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--            <td class="padding-5">{{file.type_name}}</td>-->
-<!--            <td class="padding-5">REV{{file.rev}}</td>-->
-<!--            <td class="padding-5">{{this.auth.getUserNameById(file.user_id)}}</td>-->
-<!--            <td>{{this.getDateOnly(file.create_date)}}</td>-->
-<!--            <td class="padding-5">-->
-<!--              <div (click)="downloadFile(file.url)">-->
-<!--                <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
-<!--                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
-<!--                </svg>-->
-<!--              </div>-->
-<!--            <td class="padding-5" [hidden]="buttonsAreHidden">-->
-<!--              <div (click)="deleteFile(file)">-->
-<!--                <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
-<!--                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>-->
-<!--                </svg>-->
-<!--              </div>-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </ng-template>-->
-<!--      </p-table>-->
-<!--    </div>-->
-
-
-<!--    <div class="mr-5 mt-1 df justify-content-end">-->
-<!--      <div tabindex="10" [hidden]="buttonsAreHidden" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>-->
-<!--    </div>-->
-<!--    <div class="mr-5 mt-20 df justify-content-end">-->
-<!--      <div tabindex="10" [hidden]="buttonsAreHidden" (click)="editEquipment()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>-->
-<!--      &lt;!&ndash;      <div tabindex="10" [hidden]="buttonsAreHidden" (click)="close()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>&ndash;&gt;-->
-<!--    </div>-->
-  </form>
-
-<!--форма редактирования оборудования (unit)-->
-  <form *ngIf="!isGroup" [formGroup]="equipmentForm" class="form-container">
-
-    <label class="big-text-create mb-1 mt-10" for="sfi_unit">{{t.tr('SFI')}}</label>
-    <input id="sfi_unit"  formControlName="sfi_unit" placeholder="999.999">
-    <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat')">
+        <label class="big-text-create mb-1 mt-10" for="sfi_unit">{{t.tr('SFI')}}</label>
+        <input id="sfi_unit"  formControlName="sfi_unit" placeholder="999.999">
+        <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat')">
       Введите корректный SFI (в формате 999.999)
     </span>
-<!--    <input [readOnly]="buttonsAreHidden" pInputText id="sfi_unit" type="text" formControlName="sfi_unit" placeholder="{{t.tr('SFI')}}">-->
+        <!--    <input [readOnly]="buttonsAreHidden" pInputText id="sfi_unit" type="text" formControlName="sfi_unit" placeholder="{{t.tr('SFI')}}">-->
 
 
-    <label class="big-text-create mb-1 mt-10" for="name">{{t.tr('Наименование')}} </label>
-    <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
+        <label class="big-text-create mb-1 mt-10" for="name">{{t.tr('Наименование')}} </label>
+        <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
 
-<!--    <label class="big-text-create mb-1 mt-10" for="description">{{t.tr('Описание')}}</label>-->
-<!--    <input [readOnly]="buttonsAreHidden" pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}">-->
+        <!--    <label class="big-text-create mb-1 mt-10" for="description">{{t.tr('Описание')}}</label>-->
+        <!--    <input [readOnly]="buttonsAreHidden" pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}">-->
 
-    <label class="big-text-create mb-1 mt-10" for="comment">{{t.tr('Комментарий')}}</label>
-    <textarea [readOnly]="buttonsAreHidden" pInputText id="comment" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}"></textarea>
+        <label class="big-text-create mb-1 mt-10" for="comment">{{t.tr('Комментарий')}}</label>
+        <textarea [readOnly]="buttonsAreHidden" pInputText id="comment" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}"></textarea>
 
 
-  </form>
+      </form>
 
-<!--тут кнопка добавить файл и сохранитьт изменения для обеих форм-->
-  <div class="mr-5 mt-20 df justify-content-end">
-    <div tabindex="10" [hidden]="buttonsAreHidden" [class.disabled-button]="!equipmentForm.valid && !this.isGroup" (click)="editEquipment()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
-    <!--      <div tabindex="10" [hidden]="buttonsAreHidden" (click)="close()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>-->
-  </div>
-
-  <div class="mr-5 mt-1 df justify-content-end">
-    <div tabindex="10" [hidden]="buttonsAreHidden" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
-  </div>
-
-<!--  тут я добавляю файлы к любой из форм-->
-  <div *ngIf="equipmentFilesSrc.length != 0" class="mt-20 ovf-auto">
-    <p-table [value]="equipmentFilesSrc" styleClass="p-datatable-striped">
-      <ng-template pTemplate="body" let-file>
-        <!--      <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
-        <tr class="border-top task-row cursor-pointer">
-          <td class="padding-5">
-            <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
-              <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
-              <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 10) + ' '}}</span>
-            </div>
-          </td>
-          <td class="padding-5">{{file.type_name}}</td>
-          <td class="padding-5">REV{{file.rev}}</td>
-          <td class="padding-5">{{this.auth.getUserNameById(file.user_id)}}</td>
-          <td>{{this.getDateOnly(file.create_date)}}</td>
-          <td class="padding-5">
-            <div (click)="downloadFile(file.url)">
-              <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-              </svg>
-            </div>
-          <td class="padding-5" [hidden]="buttonsAreHidden">
-            <div (click)="deleteFile(file)">
-              <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-              </svg>
-            </div>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-
-<!--  вывожу поставщиков -->
-  <div *ngIf="suppliersArray?.length !=0 ">Поставщики</div>
-  <div *ngFor="let supplier of suppliersArray" class="pb-8">
-    <div (click)="editSupplier(group, eq, supplier)" class="supplier_container">
-      <div class="supplier_header df">
-        <div>
-          <div>ID {{supplier.id}} {{supplier.model}} - {{supplier.name}} - {{supplier.manufacturer}}</div>
+      <!--тут кнопка добавить файл и сохранить изменения для обеих форм-->
+      <div class="df space-between">
+        <div class="mr-5 mt-1">
+          <div tabindex="10" [hidden]="buttonsAreHidden" (click)="addFiles()" class="button-ok">{{t.tr('Добавить файлы')}}</div>
         </div>
-        <div>{{supplier.status}}</div>
-      </div>
-      <div class="supplier_body">
-        <div>
-          <p>Вес, кг</p>
-          <p>{{supplier.weight}}</p>
-        </div>
-        <div>
-          <p>Элек. парам</p>
-          <p>{{supplier.ele_param}}</p>
-        </div>
-        <div>
-          <p>Мех. парам</p>
-          <p>{{supplier.mech_param}}</p>
-        </div>
-        <div>
-          <p>Installed</p>
-          <p>-</p>
-        </div>
-        <div>
-          <p>Комментарий</p>
-          <p>{{supplier.comment}}</p>
-        </div>
-        <div>
-          <p> Последнее изменение</p>
-          <p>{{getDateOnly(supplier.last_update)}}</p>
+
+        <div class="mr-5 mt-20 ">
+          <div tabindex="10" [hidden]="buttonsAreHidden" [class.disabled-button]="!equipmentForm.valid && !this.isGroup" (click)="editEquipment()" class="button-ok cxy" style="background-color: #22c55e">{{t.tr('Сохранить')}}</div>
+          <!--      <div tabindex="10" [hidden]="buttonsAreHidden" (click)="close()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>-->
         </div>
       </div>
+
+
+      <!--  тут я добавляю файлы к любой из форм-->
+
+      <div *ngIf="equipmentFilesSrc.length != 0" class="mt-20 ovf-auto">
+        <p-table [value]="equipmentFilesSrc">
+          <ng-template pTemplate="body" let-file>
+            <tr class="border-top task-row cursor-pointer">
+              <td class="padding-5">
+                <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
+                  <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
+                  <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 10) + ' '}}</span>
+                </div>
+              </td>
+              <td class="padding-5">{{file.type_name}}</td>
+              <td class="padding-5">REV{{file.rev}}</td>
+              <td class="padding-5">{{this.auth.getUserNameById(file.user_id)}}</td>
+              <td>{{this.getDateOnly(file.create_date)}}</td>
+              <td class="padding-5">
+                <div (click)="downloadFile(file.url)">
+                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                  </svg>
+                </div>
+              <td class="padding-5" [hidden]="buttonsAreHidden">
+                <div (click)="deleteFile(file)">
+                  <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                  </svg>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <!--  первая верия с линиями и разного цвета-->
+      <!--  <div *ngIf="equipmentFilesSrc.length != 0" class="mt-20 ovf-auto">-->
+      <!--    <p-table [value]="equipmentFilesSrc" styleClass="p-datatable-striped">-->
+      <!--      <ng-template pTemplate="body" let-file>-->
+      <!--        &lt;!&ndash;      <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">&ndash;&gt;-->
+      <!--        <tr class="border-top task-row cursor-pointer">-->
+      <!--          <td class="padding-5">-->
+      <!--            <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">-->
+      <!--              <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>-->
+      <!--              <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 10) + ' '}}</span>-->
+      <!--            </div>-->
+      <!--          </td>-->
+      <!--          <td class="padding-5">{{file.type_name}}</td>-->
+      <!--          <td class="padding-5">REV{{file.rev}}</td>-->
+      <!--          <td class="padding-5">{{this.auth.getUserNameById(file.user_id)}}</td>-->
+      <!--          <td>{{this.getDateOnly(file.create_date)}}</td>-->
+      <!--          <td class="padding-5">-->
+      <!--            <div (click)="downloadFile(file.url)">-->
+      <!--              <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+      <!--                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>-->
+      <!--              </svg>-->
+      <!--            </div>-->
+      <!--          <td class="padding-5" [hidden]="buttonsAreHidden">-->
+      <!--            <div (click)="deleteFile(file)">-->
+      <!--              <svg class="icon-nest delete-button" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">-->
+      <!--                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>-->
+      <!--              </svg>-->
+      <!--            </div>-->
+      <!--          </td>-->
+      <!--        </tr>-->
+      <!--      </ng-template>-->
+      <!--    </p-table>-->
+      <!--  </div>-->
+
+      <!--  вывожу поставщиков -->
+      <div style="margin-bottom: 15px; margin-top: 15px; font-size: 15px;" class="big-text-create" *ngIf="suppliersArray?.length !=0 ">{{t.tr('Поставщики')}}</div>
+      <div *ngFor="let supplier of suppliersArray" class="pb-8">
+        <div (click)="editSupplier(group, eq, supplier)" class="supplier_container">
+          <div class="supplier_header df">
+            <div>
+              <div>ID {{supplier.id}} {{supplier.model}} - {{supplier.name}} - {{supplier.manufacturer}}</div>
+            </div>
+            <div>{{supplier.status}}</div>
+          </div>
+          <div class="supplier_body">
+            <div>
+              <p>Вес, кг</p>
+              <p>{{supplier.weight}}</p>
+            </div>
+            <div>
+              <p>Элек. парам</p>
+              <p>{{supplier.ele_param}}</p>
+            </div>
+            <div>
+              <p>Мех. парам</p>
+              <p>{{supplier.mech_param}}</p>
+            </div>
+            <div>
+              <p>Installed</p>
+              <p>-</p>
+            </div>
+            <div>
+              <p>Комментарий</p>
+              <p>{{supplier.comment}}</p>
+            </div>
+            <div>
+              <p> Последнее изменение</p>
+              <p>{{getDateOnly(supplier.last_update)}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div style="padding: 20px 0">
+    <div style="text-align: end">
+      {{t.tr('Создано')}} {{getDateOnly(eq.create_date)}} {{t.tr('Автор')}} {{eq.respons_surname}} {{eq.respons_name}}
     </div>
   </div>
 
-  <div style="text-align: end">
-    Создан {{getDateOnly(eq.create_date)}} Автор {{eq.respons_surname}} {{eq.respons_name}}
-  </div>
+
+
 </div>
   <p-toast key="equipment" position="bottom-center"></p-toast>
 </div>
