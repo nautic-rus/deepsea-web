@@ -2,12 +2,12 @@
   <div class="eq-container">
     <div style="width: 560px; border-radius: 6px">
       <div class="header-parts df">
-        <div *ngIf="!isGroup" >
+        <div *ngIf="!isGroup" class="pt-20">
           <span class="info-id">ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>
           <div class="pt-20 text-uppercase text-bold">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>-->
         </div>
-        <div *ngIf="isGroup" >
+        <div *ngIf="isGroup" class="pt-20">
           <span class="info-id">ID {{this.eq.id}}</span>
           <div class="pt-20 text-uppercase text-bold"><span class="blue">GROUP</span> - SFI {{this.equipmentForm.value.sfi}} - {{this.equipmentForm.value.name}}</div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
@@ -16,6 +16,10 @@
           <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
             <img src="assets/icons/trash.svg" height="20">
           </div>
+          <div class="task-button-close cxy" (click)="closeSideBar()">
+            <i class="pi pi-times"></i>
+          </div>
+<!--          <button (click)="closeSideBar()">close</button>-->
         </div>
       </div>
 

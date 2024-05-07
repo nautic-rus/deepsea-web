@@ -16,6 +16,23 @@
 /deep/.p-dialog .p-dialog-content {
   border-radius: 5px;
 }
+
+.task-button-close{
+  width: 2rem;
+  height: 2rem;
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+.task-button-close:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
+
 .header-parts{
   border-bottom: 0 none;
   background: #ffffff;

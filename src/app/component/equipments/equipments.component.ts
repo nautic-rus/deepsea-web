@@ -93,6 +93,7 @@ export class EquipmentsComponent implements OnInit {
 
 
     this.cols = [
+      {field: '', header: '', width: '50px'},
       {field: 'id', header: 'ID'},
       {field: 'sfi', header: 'sfi'},
       {field: 'sfi_unit', header: 'sfi_unit'},

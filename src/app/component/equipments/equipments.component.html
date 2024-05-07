@@ -13,16 +13,16 @@
     <p-treeTable #tt [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">
       <ng-template pTemplate="header" let-columns>
         <tr>
-          <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field">
+          <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width ? col.width : 'auto'">
             {{ col.header }}
-            <p-treeTableSortIcon *ngIf="i!= (columns.length - 1)" [field]="col.field"></p-treeTableSortIcon>
+            <p-treeTableSortIcon *ngIf="i!= (columns.length - 1) && i != 0" [field]="col.field"></p-treeTableSortIcon>
             <!--            <p-treeTableSortIcon *ngIf="col.header == 'Responsible'" [field]="'res_surname'" [ttSortableColumn]="'res_surname'"></p-treeTableSortIcon>-->
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
         <tr [ttRow]="rowNode" [ngClass]="{childRow: rowData.parent_id != 0}" >
-          <td *ngFor="let col of columns; let i = index; let last = last ">
+          <td *ngFor="let col of columns; let i = index; let last = last " [style.width]="col.width ? col.width : 'auto'">
             <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
             <span (click)="cliiick(rowData, rowNode)">
               <div *ngIf="rowData.parent_id == 0">
@@ -77,12 +77,18 @@
   </div>
 
 
-  <p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">
-    <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
+  <p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()" [showCloseIcon]="false">
+<!--    <ng-template pTemplate="content">-->
+      <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
+<!--    </ng-template>-->
   </p-sidebar>
 
+<!--  <p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">-->
+<!--    <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>-->
+<!--  </p-sidebar>-->
 
-  <p-sidebar *ngIf="editEqSidebarVisible" [(visible)]="editEqSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">
+
+  <p-sidebar *ngIf="editEqSidebarVisible" [(visible)]="editEqSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()" [showCloseIcon]="false">
     <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
   </p-sidebar>
 </div>
