@@ -3,12 +3,14 @@
     <div style="width: 560px; border-radius: 6px">
       <div class="header-parts df">
         <div *ngIf="!isGroup" class="pt-20">
-          <span class="info-id">ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>
-          <div class="pt-20 text-uppercase text-bold">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
+          <span class="info-id">GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>
+<!--          <span class="info-id">ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>-->
+          <div class="pt-10 text-uppercase text-bold">SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
+<!--          <div class="pt-20 text-uppercase text-bold">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>-->
           <!--      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>-->
         </div>
         <div *ngIf="isGroup" class="pt-20">
-          <span class="info-id">ID {{this.eq.id}}</span>
+<!--          <span class="info-id">ID {{this.eq.id}}</span>-->
           <div class="pt-20 text-uppercase text-bold"><span class="blue">GROUP</span> - SFI {{this.equipmentForm.value.sfi}} - {{this.equipmentForm.value.name}}</div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
         </div>
@@ -184,9 +186,10 @@
       <!--  </div>-->
 
       <!--  вывожу поставщиков -->
-      <div style="margin-bottom: 15px; margin-top: 15px; font-size: 15px;" class="big-text-create" *ngIf="suppliersArray?.length !=0 ">{{t.tr('Поставщики')}}</div>
-      <div *ngFor="let supplier of suppliersArray" class="pb-8">
-        <div (click)="editSupplier(group, eq, supplier)" class="supplier_container">
+      <label *ngIf="suppliersArray?.length !=0" class="big-text-create mb-1" for="sfi_unit">{{t.tr('Поставщики')}}</label>
+<!--      <div style="margin-bottom: 15px; margin-top: 15px; font-size: 15px;" class="big-text-create" *ngIf="suppliersArray?.length !=0 ">{{t.tr('Поставщики')}}</div>-->
+      <div *ngFor="let supplier of suppliersArray" class="pb-8" style="margin-top: 0.3rem">
+        <div (click)="editSupplier(group, eq, supplier)" class="supplier_container" style="border-radius: 6px">
           <div class="supplier_header df">
             <div>
               <div><span style="margin-right: 8px" class="text-gray">ID {{supplier.id}}</span> {{supplier.model}} - {{supplier.name}} - {{supplier.manufacturer}}</div>
@@ -200,27 +203,27 @@
           <div class="supplier_body">
             <div>
               <p class="supplier_body_header">{{t.tr('Вес, кг')}}</p>
-              <p>{{supplier.weight}}</p>
+              <p class="supplier_body_info">{{supplier.weight}}</p>
             </div>
             <div>
               <p class="supplier_body_header">{{t.tr('Эл. парам')}}</p>
-              <p>{{supplier.ele_param}}</p>
+              <p class="supplier_body_info">{{supplier.ele_param}}</p>
             </div>
             <div>
               <p class="supplier_body_header">{{t.tr('Мех. парам')}}</p>
-              <p>{{supplier.mech_param}}</p>
+              <p class="supplier_body_info">{{supplier.mech_param}}</p>
             </div>
             <div>
               <p class="supplier_body_header">{{t.tr('Installed')}}</p>
-              <p>-</p>
+              <p class="supplier_body_info">-</p>
             </div>
             <div>
               <p class="supplier_body_header">{{t.tr('Комментарий')}}</p>
-              <p>{{supplier.comment}}</p>
+              <p class="supplier_body_info">{{supplier.comment}}</p>
             </div>
             <div>
               <p class="supplier_body_header">{{t.tr('Обновлено')}}</p>
-              <p>{{getDateOnly(supplier.last_update)}}</p>
+              <p class="supplier_body_info">{{getDateOnly(supplier.last_update)}}</p>
             </div>
           </div>
         </div>

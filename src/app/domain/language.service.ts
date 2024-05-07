@@ -613,7 +613,7 @@ export class LanguageService {
           case 'Прогресс по отделам': return 'Progress by department'
           case 'Прогресс по чертежам': return 'Documents progress'
           case 'Прогресс по этапам': return 'Stage progress'
-          case 'Создать новую группу': return 'Create a new group'
+          case 'Создать группу': return 'Add group'
           case 'Создать оборудование': return 'Create equipment'
           case 'Создать новое оборудование': return 'Create a new equipment'
           case 'Редактировать оборудование': return 'Edit a equipment'
