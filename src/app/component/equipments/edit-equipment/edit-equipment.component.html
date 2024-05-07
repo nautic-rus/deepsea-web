@@ -3,8 +3,8 @@
     <div style="width: 560px; border-radius: 6px">
       <div class="header-parts df">
         <div *ngIf="!isGroup" >
-          ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}
-          <div class="pt-20 info-id">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
+          <span class="info-id">ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>
+          <div class="pt-20 text-uppercase text-bold">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>-->
         </div>
         <div *ngIf="isGroup" >
@@ -43,11 +43,11 @@
         <div class="df space-between mt-10">
           <div class="half">
             <div class="big-text-create mb-1">{{t.tr('Проект')}}</div>
-            <p-dropdown class="width-100pr" formControlName="project" [disabled]="buttonsAreHidden" [options]="equipmentProjects" appendTo = "body" style="width:100%" styleClass="width-270 font-13"></p-dropdown>
+            <p-dropdown formControlName="project" [disabled]="buttonsAreHidden" [options]="equipmentProjects" appendTo = "body" styleClass="width-270 font-13"></p-dropdown>
           </div>
           <div class="half">
             <div class="big-text-create mb-1">{{t.tr('Отдел')}}</div>
-            <p-dropdown class="width-100pr" [disabled]="buttonsAreHidden" formControlName="department" [options]="equipmentDepartments" appendTo = "body" style="width:100%" styleClass="width-270 font-13"></p-dropdown>
+            <p-dropdown [disabled]="buttonsAreHidden" formControlName="department" [options]="equipmentDepartments" appendTo = "body" styleClass="width-270 font-13"></p-dropdown>
           </div>
         </div>
 
@@ -57,22 +57,38 @@
 
         <label class="big-text-create mb-1 mt-10" for="commentGroup">{{t.tr('Комментарий')}}</label>
         <textarea [readOnly]="buttonsAreHidden" pInputText id="commentGroup" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}" style="resize: none"></textarea>
-
       </form>
 
       <!--форма редактирования оборудования (unit)-->
       <form *ngIf="!isGroup" [formGroup]="equipmentForm" class="form-container">
+        <div>
+          <div class="sfi-name">
+            <div class="df flex-column space-between width-150">
+              <label class="big-text-create mb-1" for="sfi_unit">{{t.tr('SFI')}}</label>
+              <input pInputText id="sfi_unit"  type="text" formControlName="sfi_unit" placeholder="999.999" class="sfi-name-input">
+            </div>
 
-        <label class="big-text-create mb-1 mt-10" for="sfi_unit">{{t.tr('SFI')}}</label>
-        <input id="sfi_unit"  formControlName="sfi_unit" placeholder="999.999">
-        <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat')">
-      Введите корректный SFI (в формате 999.999)
-    </span>
+            <div class="df flex-column space-between">
+              <label class="big-text-create mb-1" for="name">{{t.tr('Наименование')}} </label>
+              <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" class="sfi-name-input" placeholder="{{t.tr('Наименование')}}">
+            </div>
+          </div>
+        </div>
+        <div class="sfi-error">
+          <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat')">
+            Введите корректный SFI (в формате 999.999)
+          </span>
+        </div>
+<!--        <label class="big-text-create mb-1 mt-10" for="sfi_unit">{{t.tr('SFI')}}</label>-->
+<!--        <input pInputText id="sfi_unit"  formControlName="sfi_unit" placeholder="999.999">-->
+<!--        <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat')">-->
+<!--      Введите корректный SFI (в формате 999.999)-->
+<!--    </span>-->
         <!--    <input [readOnly]="buttonsAreHidden" pInputText id="sfi_unit" type="text" formControlName="sfi_unit" placeholder="{{t.tr('SFI')}}">-->
 
 
-        <label class="big-text-create mb-1 mt-10" for="name">{{t.tr('Наименование')}} </label>
-        <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">
+<!--        <label class="big-text-create mb-1 mt-10" for="name">{{t.tr('Наименование')}} </label>-->
+<!--        <input [readOnly]="buttonsAreHidden" pInputText id="name" type="text" formControlName="name" placeholder="{{t.tr('Наименование')}}">-->
 
         <!--    <label class="big-text-create mb-1 mt-10" for="description">{{t.tr('Описание')}}</label>-->
         <!--    <input [readOnly]="buttonsAreHidden" pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}">-->
@@ -169,33 +185,37 @@
         <div (click)="editSupplier(group, eq, supplier)" class="supplier_container">
           <div class="supplier_header df">
             <div>
-              <div>ID {{supplier.id}} {{supplier.model}} - {{supplier.name}} - {{supplier.manufacturer}}</div>
+              <div><span style="margin-right: 8px" class="text-gray">ID {{supplier.id}}</span> {{supplier.model}} - {{supplier.name}} - {{supplier.manufacturer}}</div>
             </div>
-            <div>{{supplier.status}}</div>
+            <div>
+              <span [ngClass]="{'not-approved': supplier.status_id == 3, 'approved': supplier.status_id == 2, 'new': supplier.status_id == 1}">
+                {{supplier.status}}
+              </span>
+            </div>
           </div>
           <div class="supplier_body">
             <div>
-              <p>Вес, кг</p>
+              <p class="supplier_body_header">{{t.tr('Вес, кг')}}</p>
               <p>{{supplier.weight}}</p>
             </div>
             <div>
-              <p>Элек. парам</p>
+              <p class="supplier_body_header">{{t.tr('Эл. парам')}}</p>
               <p>{{supplier.ele_param}}</p>
             </div>
             <div>
-              <p>Мех. парам</p>
+              <p class="supplier_body_header">{{t.tr('Мех. парам')}}</p>
               <p>{{supplier.mech_param}}</p>
             </div>
             <div>
-              <p>Installed</p>
+              <p class="supplier_body_header">{{t.tr('Installed')}}</p>
               <p>-</p>
             </div>
             <div>
-              <p>Комментарий</p>
+              <p class="supplier_body_header">{{t.tr('Комментарий')}}</p>
               <p>{{supplier.comment}}</p>
             </div>
             <div>
-              <p> Последнее изменение</p>
+              <p class="supplier_body_header">{{t.tr('Обновлено')}}</p>
               <p>{{getDateOnly(supplier.last_update)}}</p>
             </div>
           </div>
@@ -203,7 +223,7 @@
       </div>
   </div>
   <div style="padding: 20px 0">
-    <div style="text-align: end">
+    <div style="text-align: end; font-size: 13px">
       {{t.tr('Создано')}} {{getDateOnly(eq.create_date)}} {{t.tr('Автор')}} {{eq.respons_surname}} {{eq.respons_name}}
     </div>
   </div>
