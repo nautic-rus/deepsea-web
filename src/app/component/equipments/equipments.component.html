@@ -11,7 +11,7 @@
 
   <div class="equipments_container_table">
     <p-treeTable #tt
-                 scrollHeight="700px" [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">
+                 scrollHeight="73vh" [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width ? col.width : 'auto'">
@@ -39,7 +39,10 @@
                 <div *ngIf="col.field == 'itt'">
                   {{ rowData['itt'] ===1? 'YES' : 'NO' }}
                 </div>
-                <div *ngIf="col.field != 'name' && col.field != 'sfi' && col.field != 'respons_surname' && col.field != 'itt'">
+                <div *ngIf="col.field == 'status'" [ngClass]= "{'approved': rowData[col.field] == 'Approved'}">
+                  {{ rowData[col.field] }}
+                </div>
+                <div *ngIf="col.field != 'status' && col.field != 'name' && col.field != 'sfi' && col.field != 'respons_surname' && col.field != 'itt'" >
                   {{ rowData[col.field] }}
                 </div>
               </div>
