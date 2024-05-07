@@ -1439,3 +1439,27 @@
   height: 30px;
   align-items: center;
 }
+
+.group_info-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.group_info {
+  font-size: 14px;
+  padding-right: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgb(137, 147, 164);
+  text-transform: uppercase;
+}
+
+.big-text-create{
+  color: #5e6c84;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 600;
+}
