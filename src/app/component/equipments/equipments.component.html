@@ -10,7 +10,8 @@
 
 
   <div class="equipments_container_table">
-    <p-treeTable #tt [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">
+    <p-treeTable #tt
+                 scrollHeight="700px" [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width ? col.width : 'auto'">

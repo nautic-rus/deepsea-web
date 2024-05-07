@@ -3,7 +3,7 @@
 <!--    <div  class="task-button cxy mr-10" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">-->
 <!--      <img src="assets/icons/add-material.png"src="assets/icons/add-material.png" height="20">-->
 <!--    </div>-->
-    <div class="sticky">
+    <div class="sticky back-white" style="    height: max-content; padding: 20px 0;">
 
 
 
@@ -19,7 +19,7 @@
 <!--          </div>-->
           <div class="task-buttons">
             <div  class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
-              <img src="assets/icons/add-material.png" height="20">
+              <img src="assets/icons/add-material2.png" height="20">
             </div>
             <div routerLink="/equipments" [queryParams]="{equipmentId: equipment_id, supplierId: supplier_id}" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку поставщика')" (click)="copySupplierUrl()">
               <img src="assets/icons/link.svg" height="20">
@@ -37,7 +37,7 @@
         </div>
 
         <div>
-          <div class="pt-10 text-uppercase text-bold">SFI {{eq_data.sfi_unit}} - {{sup_data.model}} - {{sup_data.name}}</div>
+          <div class="task-name pt-10 text-uppercase text-bold">SFI {{eq_data.sfi_unit}} - {{sup_data.model}} - {{sup_data.name}}</div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
         </div>
 
@@ -57,7 +57,7 @@
 <!--          </div>-->
           <div class="task-buttons">
             <div  class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
-              <img src="assets/icons/add-material.png" height="20">
+              <img src="assets/icons/add-material2.png" height="20">
             </div>
             <div routerLink="/equipments" [queryParams]="{equipmentId: equipment_id, supplierId: supplier_id}" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку поставщика')" (click)="copySupplierUrl()">
               <img src="assets/icons/link.svg" height="20">
@@ -74,13 +74,13 @@
           </div>
         </div>
         <div class="df">
-          <div class="pt-10 text-uppercase text-bold">{{supplierForm.value.model}} - {{supplierForm.value.name}}</div>
+          <div class="pt-10 text-uppercase text-bold task-name">{{supplierForm.value.model}} - {{supplierForm.value.name}}</div>
         </div>
       </div>
     </div>
 
 
-    <div class="supplier_body pt-10">
+    <div class="supplier_body">
       <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 15px;">
         <div class="df flex-column">
           <label class="big-text-create mb-1 mt-10" for="model">{{t.tr('Наименование')}} </label>

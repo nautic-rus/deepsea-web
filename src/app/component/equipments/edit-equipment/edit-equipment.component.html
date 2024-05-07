@@ -5,13 +5,13 @@
         <div *ngIf="!isGroup" class="pt-20">
           <span class="info-id">GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>
 <!--          <span class="info-id">ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>-->
-          <div class="pt-10 text-uppercase text-bold">SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
+          <div class="pt-10 text-uppercase text-bold task-name">SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
 <!--          <div class="pt-20 text-uppercase text-bold">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>-->
           <!--      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>-->
         </div>
         <div *ngIf="isGroup" class="pt-20">
 <!--          <span class="info-id">ID {{this.eq.id}}</span>-->
-          <div class="pt-20 text-uppercase text-bold"><span class="blue">GROUP</span> - SFI {{this.equipmentForm.value.sfi}} - {{this.equipmentForm.value.name}}</div>
+          <div class="pt-20 text-uppercase text-bold task-name"><span class="blue">GROUP</span> - SFI {{this.equipmentForm.value.sfi}} - {{this.equipmentForm.value.name}}</div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
         </div>
         <div class="df pt-25">

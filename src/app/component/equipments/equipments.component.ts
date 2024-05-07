@@ -99,10 +99,10 @@ export class EquipmentsComponent implements OnInit {
       {field: 'sfi_unit', header: 'SFI-Unit', width: '8rem'},
       {field: 'name', header: 'Name' , width: '15rem'},
       {field: 'status', header: 'Status', width: '7rem' },
-      {field: 'respons_surname', header: 'Responsible', width: '15rem'},
-      {field: 'itt', header: 'ITT', width: '10rem'},
+      {field: 'respons_surname', header: 'Responsible', width: '10rem'},
+      {field: 'itt', header: 'ITT', width: '5rem'},
       {field: 'comment', header: 'Comment', width: '20rem'},
-      {field: '', header: '', width: '15rem'},
+      {field: '', header: '', width: '10rem'},
     ];
     //this.selectedDepartments = ['System'];
 
