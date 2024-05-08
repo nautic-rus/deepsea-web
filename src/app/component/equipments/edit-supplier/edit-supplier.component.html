@@ -1,24 +1,25 @@
 <form style="height: 750px;" [formGroup]="supplierForm" class="form-container">
   <div>
+<!--    <div  class="task-button cxy mr-10" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">-->
+<!--      <img src="assets/icons/add-material.png"src="assets/icons/add-material.png" height="20">-->
+<!--    </div>-->
+    <div class="sticky back-white" style="    height: max-content; padding: 20px 0;">
 
-    <div>
-      SUPPLIRE ID{{sup_data.id}}
-    </div>
-    <div  class="task-button cxy mr-10" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
-      <img src="assets/icons/link.svg" height="20">
-    </div>
-    <div class="task-header sticky">
+
 
 
 <!--      если перешли с оборудования (parent)-->
       <div *ngIf="parent_data != undefined">
-        <div class="df">
+        <div class="df group_info-buttons">
           <div class="df">
-            <div class="text-head text-bottom">ID {{parent_data.id}} - GROUP - SFI {{parent_data.sfi}} - {{parent_data.name}}</div>
+            <div class="group_info text-bottom">GROUP - SFI {{parent_data.sfi}} - {{parent_data.name}}</div>
           </div>
+<!--          <div class="df">-->
+<!--            <div class="group_info text-bottom">ID {{parent_data.id}} - GROUP - SFI {{parent_data.sfi}} - {{parent_data.name}}</div>-->
+<!--          </div>-->
           <div class="task-buttons">
             <div  class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
-              <img src="assets/icons/materials.svg" height="20">
+              <img src="assets/icons/add-material2.png" height="20">
             </div>
             <div routerLink="/equipments" [queryParams]="{equipmentId: equipment_id, supplierId: supplier_id}" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку поставщика')" (click)="copySupplierUrl()">
               <img src="assets/icons/link.svg" height="20">
@@ -34,20 +35,29 @@
             </div>
           </div>
         </div>
-        <div class="df">
-          <div class="text-head text-bottom">SFI {{eq_data.sfi_unit}} - {{sup_data.model}} - {{sup_data.name}}</div>
+
+        <div>
+          <div class="task-name pt-10 text-uppercase text-bold">SFI {{eq_data.sfi_unit}} - {{sup_data.model}} - {{sup_data.name}}</div>
+          <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
         </div>
+
+<!--        <div class="df">-->
+<!--          <div class="text-uppercase text-bold text-bottom">SFI {{eq_data.sfi_unit}} - {{sup_data.model}} - {{sup_data.name}}</div>-->
+<!--        </div>-->
       </div>
 
       <!--      если перешли с группы (eq)-->
       <div *ngIf="parent_data === undefined">
-        <div class="df ">
+        <div class="df group_info-buttons">
           <div class="df">
-            <div class="text-head text-bottom">ID {{eq_data.id}} - GROUP - SFI {{eq_data.sfi}} - {{eq_data.name}}</div>
+            <div class="group_info text-bottom">GROUP - SFI {{eq_data.sfi}} - {{eq_data.name}}</div>
           </div>
+<!--          <div class="df">-->
+<!--            <div class="group_info text-bottom">ID {{eq_data.id}} - GROUP - SFI {{eq_data.sfi}} - {{eq_data.name}}</div>-->
+<!--          </div>-->
           <div class="task-buttons">
             <div  class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">
-              <img src="assets/icons/materials.svg" height="20">
+              <img src="assets/icons/add-material2.png" height="20">
             </div>
             <div routerLink="/equipments" [queryParams]="{equipmentId: equipment_id, supplierId: supplier_id}" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать ссылку поставщика')" (click)="copySupplierUrl()">
               <img src="assets/icons/link.svg" height="20">
@@ -64,28 +74,34 @@
           </div>
         </div>
         <div class="df">
-          <div class="text-head text-bottom">{{supplierForm.value.model}} - {{supplierForm.value.name}}</div>
+          <div class="pt-10 text-uppercase text-bold task-name">{{supplierForm.value.model}} - {{supplierForm.value.name}}</div>
         </div>
       </div>
     </div>
 
 
     <div class="supplier_body">
-      <div class="df">
-        <label class="big-text-create mb-1 mt-10" for="model">{{t.tr('Наименование')}} </label>
-        <input pInputText id="model" type="text" formControlName="model" placeholder="{{t.tr('Наименование')}}">
+      <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 15px;">
+        <div class="df flex-column">
+          <label class="big-text-create mb-1 mt-10" for="model">{{t.tr('Наименование')}} </label>
+          <input pInputText id="model" type="text" formControlName="model" placeholder="{{t.tr('Наименование')}}">
+        </div>
 
-        <label class="big-text-create mb-1 mt-10" for="manufacturer">{{t.tr('Производитель')}} </label>
-        <input pInputText id="manufacturer" type="text" formControlName="manufacturer" placeholder="{{t.tr('Производитель')}}">
+        <div class="df flex-column">
+          <label class="big-text-create mb-1 mt-10" for="manufacturer">{{t.tr('Производитель')}} </label>
+          <input pInputText id="manufacturer" type="text" formControlName="manufacturer" placeholder="{{t.tr('Производитель')}}">
+        </div>
       </div>
 
-      <div class="df">
-        <div class="">
+      <div style="display: grid; grid-template-columns: 1.5fr 3.5fr; gap: 15px;" >
+        <div class="df flex-column">
+          <span class="big-text-create mb-1 mt-10" >{{t.tr('Статус')}} </span>
           <p-dropdown formControlName="status" class="select" id="status" [options]="statusTitle" appendTo = "body" styleClass="font-14 w-100"></p-dropdown>
         </div>
-        <div class="df">
-          <input *ngIf="addedNewSupp" id="name" type="text" class="p-inputtext p-component p-element width-300 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" formControlName="name">
-          <p-dropdown *ngIf="!addedNewSupp" class="select" optionLabel="name" optionValue="id"  placeholder="Выберите поставщика" [options]="supplierNames" appendTo = "body" styleClass="width-300 font-13" [filter]="true" formControlName="supp_id" filterBy="name" (onChange)="onSupplierSelect($event.value)">
+
+        <div class="df flex-column">
+          <span class="big-text-create mb-1 mt-10" >{{t.tr('Поставщик')}} </span>
+          <p-dropdown *ngIf="!addedNewSupp" class="select" optionLabel="name" optionValue="id"  placeholder="Выберите поставщика" [options]="supplierNames" appendTo = "body" styleClass="font-13 w-100" [filter]="true" formControlName="supp_id" filterBy="name" (onChange)="onSupplierSelect($event.value)">
             <ng-template  let-supplierName pTemplate="item">
               <div class="df user-select">
                 <div>{{supplierName.name}}</div>
@@ -93,33 +109,55 @@
             </ng-template>
           </p-dropdown>
         </div>
+
+<!--        <div class="df">-->
+<!--&lt;!&ndash;          <input *ngIf="addedNewSupp" id="name" type="text" class="p-inputtext p-component p-element width-300 ng-untouched ng-pristine ng-valid" (keydown.tab)="$event.preventDefault(); $event.stopPropagation()" formControlName="name">&ndash;&gt;-->
+<!--          <p-dropdown *ngIf="!addedNewSupp" class="select" optionLabel="name" optionValue="id"  placeholder="Выберите поставщика" [options]="supplierNames" appendTo = "body" styleClass="width-300 font-13" [filter]="true" formControlName="supp_id" filterBy="name" (onChange)="onSupplierSelect($event.value)">-->
+<!--            <ng-template  let-supplierName pTemplate="item">-->
+<!--              <div class="df user-select">-->
+<!--                <div>{{supplierName.name}}</div>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </p-dropdown>-->
+<!--        </div>-->
       </div>
 
-      <div>
+      <div class="df flex-column w-100">
         <label class="big-text-create mb-1 mt-10" for="comment">{{t.tr('Комментарий')}} </label>
         <input pInputText id="comment" type="text" formControlName="comment" placeholder="{{t.tr('Комментарий')}}">
       </div>
-      <div>
+      <div class="df flex-column">
         <label class="big-text-create mb-1 mt-10" for="description">{{t.tr('Описание')}} </label>
-        <input pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}">
+        <textarea style="resize: none" class="w-100 height-60" pInputText id="description" type="text" formControlName="description" placeholder="{{t.tr('Описание')}}"></textarea>
       </div>
 
-      <div class="df">
-        <label class="big-text-create mb-1 mt-10" for="ele_param">{{t.tr('Эл.парам')}} </label>
-        <input pInputText id="ele_param" type="text" formControlName="ele_param" placeholder="{{t.tr('Эл.парам')}}">
+      <div  style="display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 15px;">
+        <div class="df flex-column">
+          <label class="big-text-create mb-1 mt-10" for="ele_param">{{t.tr('Эл.парам')}} </label>
+          <input pInputText id="ele_param" type="text" formControlName="ele_param" placeholder="{{t.tr('Эл.парам')}}">
+        </div>
 
-        <label class="big-text-create mb-1 mt-10" for="mech_param">{{t.tr('Мех.парам')}} </label>
-        <input pInputText id="mech_param" type="text" formControlName="mech_param" placeholder="{{t.tr('Мех.парам')}}">
+        <div class="df flex-column">
+          <label class="big-text-create mb-1 mt-10" for="mech_param">{{t.tr('Мех.парам')}} </label>
+          <input pInputText id="mech_param" type="text" formControlName="mech_param" placeholder="{{t.tr('Мех.парам')}}">
+        </div>
 
-        <label class="big-text-create mb-1 mt-10" for="weight">{{t.tr('Вес')}} </label>
-        <input pInputText id="weight" type="text" formControlName="weight" placeholder="{{t.tr('Вес')}}">
+        <div class="df flex-column">
+          <label class="big-text-create mb-1 mt-10" for="weight">{{t.tr('Вес')}} </label>
+          <input pInputText id="weight" type="text" formControlName="weight" placeholder="{{t.tr('Вес')}}">
+        </div>
       </div>
     </div>
 
-
-    <div  class="mr-5 cy">
-      <div tabindex="10"  (click)="saveButton()" class="button-ok ml-1" >{{t.tr('Сохранить')}}</div>
+    <div class="mr-5 mt-20 " style="max-width: 70px; min-height: 2em; margin-left: auto; margin-right: 0em;">
+      <div tabindex="10" (click)="saveButton()" class="button-ok cxy" style="background-color: #22c55e">{{t.tr('Сохранить')}}</div>
+      <!--      <div tabindex="10" [hidden]="buttonsAreHidden" (click)="close()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>-->
     </div>
+
+
+<!--    <div  class="mr-5 cy">-->
+<!--      <div tabindex="10"  (click)="saveButton()" class="button-ok ml-1" >{{t.tr('Сохранить')}}</div>-->
+<!--    </div>-->
 
 
 

@@ -11,7 +11,7 @@
 
 
 
-  <form style="height: 430px; width: 460px;" [formGroup]="groupForm" class="form-container">
+  <form style="width: 460px;" [formGroup]="groupForm" class="form-container">
     <div class="big-text-create mb-1">{{'SFI'}}</div>
     <p-dropdown formControlName="sfi" class="select" optionLabel="code" optionValue="code" [options]="sfis" (onChange)="changeSFI()"
                 placeholder="SFI number" appendTo = "body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en">
@@ -72,12 +72,12 @@
     </div>
 
     <div class="mt-20 df">
-      <div tabindex="10"  [class.disabled-button]="!groupForm.valid" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+      <div tabindex="10"  [class.disabled-button]="!groupForm.valid" (click)="addFiles()" class="button-ok">{{t.tr('Добавить файлы')}}</div>
     </div>
 
 
 
-    <div class="mr-5 mt-20 mb-50 df justify-content-end">
+    <div class="mr-5 mt-20 df justify-content-end">
       <div tabindex="10" [class.disabled-button]="!groupForm.valid" (click)="createGroup()" class="button-ok cxy">{{t.tr('Создать')}}</div>
       <div tabindex="10" (click)="close()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>
     </div>

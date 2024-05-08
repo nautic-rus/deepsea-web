@@ -28,3 +28,7 @@
   border-color: transparent;
   background: #f3f2f1;
 }
+
+/deep/ .p-dialog .p-dialog-content {
+  border-radius: 6px;
+}

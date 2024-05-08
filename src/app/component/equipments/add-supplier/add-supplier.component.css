@@ -42,3 +42,10 @@
   border-color: transparent;
   background: #f3f2f1;
 }
+
+.two-inputs {
+  display: grid;
+  grid-template-columns: 2.75fr 1.25fr;
+  gap: 20px;
+}
+

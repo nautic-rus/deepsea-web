@@ -209,6 +209,7 @@ export class LanguageService {
           case 'КЕИ': return 'Units';
           case 'Маркировка': return 'Label';
           case 'Вес': return 'Weight';
+          case 'Вес, кг': return 'Weight, kg';
           case 'Продолжить': return 'Login';
           case 'РАСЧЁТ': return 'BILLING';
           case 'ТРУДОЗАТРАТЫ': return 'LABORIOUSNESS';
@@ -612,17 +613,21 @@ export class LanguageService {
           case 'Прогресс по отделам': return 'Progress by department'
           case 'Прогресс по чертежам': return 'Documents progress'
           case 'Прогресс по этапам': return 'Stage progress'
-          case 'Создать новую группу': return 'Create a new group'
+          case 'Создать группу': return 'Add group'
           case 'Создать оборудование': return 'Create equipment'
           case 'Создать новое оборудование': return 'Create a new equipment'
           case 'Редактировать оборудование': return 'Edit a equipment'
           case 'Редактировать группу': return 'Edit a group'
           case 'Добавить оборудование': return 'Add a new equipment'
+          case 'Поставщики': return 'Suppliers'
           case 'Добавить поставщика': return 'Add a new supplier'
           case 'Добавить поставку': return 'Add supply'
           case 'Создать поставщика': return 'Create a new supplier'
           case 'Редактировать поставщика': return 'Edit a supplier'
           case 'Удалить поставщика': return 'Delete a supplier'
+          case 'Модель': return 'Model'
+          case 'Эл. парам': return 'Electric. param'
+          case 'Мех. парам': return 'Mech. param'
           case 'Производитель': return 'Manufacturer'
           case 'Удалить оборудование?': return 'Delete a equipment?'
           case 'Удалить поставщика?': return 'Delete a supplier?'
@@ -640,14 +645,6 @@ export class LanguageService {
           case 'изменил(а) статус': return 'changed a status'
           case 'Загружен': return 'Uploaded'
           case 'Здесь пока нет заархивированных файлов': return 'There are no archived files here yet'
-          case '': return ''
-          case '': return ''
-          case '': return ''
-          case '': return ''
-          case '': return ''
-          case '': return ''
-          case '': return ''
-          case '': return ''
           case '': return ''
           default: return input;
         }
