@@ -146,6 +146,8 @@
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .equipments_container_table {

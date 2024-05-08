@@ -3,19 +3,29 @@
 
 
   <div class="equipment_header pb-15">
-    <div class="p-ml-auto mr-10 df">
-      <div  class="eq-button blue-button cxy mr-10" (click)="newGroup()" style="width: fit-content;">
-        <div class="pr-10 cxy">
-          <img src="assets/icons/plus3.svg" height="18">
+    <div class=" mr-10 df">
+
+        <div  class="eq-button blue-button cxy mr-10" (click)="newGroup()" style="width: fit-content;">
+          <div class="pr-10 cxy">
+            <img src="assets/icons/plus3.svg" height="18">
+          </div>
+          <div   class="cxy">{{t.tr('Создать группу')}}</div>
         </div>
-        <div   class="cxy">{{t.tr('Создать группу')}}</div>
-      </div>
+        <div class="mr-10">
+          <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+        </div>
+        <div class="mr-10">
+          <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+        </div>
+    </div>
       <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+        <input
+          type="text"
+          pInputText
+          (input)="tableref.filterGlobal(
+                   $any($event.target).value, 'contains')" placeholder="{{t.tr('Поиск')}}"/>
       </div>
-      <div class="mr-10">
-        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
-      </div>
+
 <!--      <span class="p-input-icon-left">-->
 <!--        <i class="pi pi-search"></i>-->
 <!--        <input #search pInputText type="text" (input)="tt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />-->
@@ -25,15 +35,21 @@
 <!--    <div>-->
 <!--      <input type="text" placeholder="Глобальный поиск" (input)="applyGlobalFilter($any($event.target)?.value)">-->
 <!--    </div>-->
-  </div>
+
   </div>
 
 
   <div class="equipments_container_table">
-    <p-treeTable #tt
-                 id="tt"
+    <p-treeTable #tt #tableref
+                 id="tt"  [globalFilterFields]="['id','name','sfi','sfi_unit']"
                  scrollHeight="73vh" [value]="equipmentsNode" [reorderableColumns]="true"  [columns]="cols" [scrollable]="true" [filterMode]="filterMode" >
+
+
+
 <!--      <ng-template pTemplate="caption">-->
+<!--       -->
+<!--      </ng-template>-->
+      <!--      <ng-template pTemplate="caption">-->
 <!--        <div style="text-align: right">-->
 <!--          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>-->
 <!--          <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tt.filterGlobal($any($event.target)?.value, 'contains')" style="width:auto">-->
