@@ -92,7 +92,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       urls.push(this.curl);
       urls.push(this.purl);
       if (urls.filter(x => x != '').length == 0){
-        this.errorMessage = 'There is no model url';
+        this.errorMessage = 'There is no any model to load';
       }
       if (urls.filter(x => x != '').length == 1){
         this.showFilters = false;
