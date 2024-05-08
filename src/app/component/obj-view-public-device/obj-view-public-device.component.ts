@@ -75,8 +75,8 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       this.hurl = params.hurl ? params.hurl : '';
       this.eurl = params.eurl ? params.eurl : '';
       this.surl = params.surl ? params.surl : '';
-      this.curl = params.surl ? params.curl : '';
-      this.purl = params.surl ? params.purl : '';
+      this.curl = params.curl ? params.curl : '';
+      this.purl = params.purl ? params.purl : '';
 
       this.bcol = params.bcol ? ('#' + params.bcol) : this.bcol;
       this.hcol = params.hcol ? ('#' + params.hcol) : this.hcol;
