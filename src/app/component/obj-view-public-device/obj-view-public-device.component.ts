@@ -65,6 +65,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   pipesVisible = true;
   showFilters = true;
 
+
   public constructor(public route: ActivatedRoute, public issues: IssueManagerService, public s: SpecManagerService) {
   }
   ngOnInit(): void {
@@ -91,7 +92,8 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       urls.push(this.surl);
       urls.push(this.curl);
       urls.push(this.purl);
-      if (urls.filter(x => x != '').length == 0){
+      this.groupsCount = urls.filter(x => x != '').length;
+      if (this.groupsCount == 0){
         this.errorMessage = 'There is no any model to load';
       }
       if (urls.filter(x => x != '').length == 1){
@@ -139,7 +141,6 @@ export class ObjViewPublicDeviceComponent implements OnInit {
 
 
     let group = new THREE.Group();
-    this.groupsCount = [this.hurl, this.surl, this.eurl].filter(x => x != '').length;
 
     if (this.hurl != ''){
       objLoader.load(this.hurl, (object) => {
