@@ -85,7 +85,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       this.ccol = params.ccol ? ('#' + params.ccol) : this.ccol;
       this.pcol = params.pcol ? ('#' + params.pcol) : this.pcol;
 
-      if (this.hurl == '' && this.eurl == '' && this.surl == ''){
+      if (this.hurl == '' && this.eurl == '' && this.surl == '' && this.curl == '' && this.purl == ''){
         this.errorMessage = 'There is no model url';
       }
       let urls = [];
