@@ -199,6 +199,7 @@
 }
 
 .approved {
+  width: fit-content;
   color: #256029;
   background-color: #c8e6c9;
   border-radius: 2px;
@@ -208,6 +209,23 @@
   font-size: 10px;
   letter-spacing: .3px;
   text-align: center;
+}
+
+.new {
+  color: #23547b;
+  background-color: #b3e5fc;
+  border-radius: 2px;
+  padding: 2px 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .3px;
+  width: fit-content;
+}
+
+/deep/ .p-treetable .p-treetable-tbody > tr:hover {
+  background-color: #f3f2f1 !important;
+  cursor: pointer;
 }
 
 

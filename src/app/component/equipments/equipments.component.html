@@ -1,17 +1,44 @@
 <div class="equipments_container">
+
+
+
   <div class="equipment_header pb-15">
-    <div  class="eq-button blue-button cxy mr-10" (click)="newGroup()" style="width: fit-content;">
-      <div class="pr-10 cxy">
-        <img src="assets/icons/plus3.svg" height="18">
+    <div class="p-ml-auto mr-10 df">
+      <div  class="eq-button blue-button cxy mr-10" (click)="newGroup()" style="width: fit-content;">
+        <div class="pr-10 cxy">
+          <img src="assets/icons/plus3.svg" height="18">
+        </div>
+        <div   class="cxy">{{t.tr('Создать группу')}}</div>
       </div>
-      <div   class="cxy">{{t.tr('Создать группу')}}</div>
-    </div>
+      <div class="mr-10">
+        <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>
+      </div>
+      <div class="mr-10">
+        <p-multiSelect styleClass="width-200" [options]="departments" [(ngModel)]="selectedDepartments" (ngModelChange)="departmentChanged()" optionLabel="label" optionValue="value"></p-multiSelect>
+      </div>
+<!--      <span class="p-input-icon-left">-->
+<!--        <i class="pi pi-search"></i>-->
+<!--        <input #search pInputText type="text" (input)="tt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />-->
+<!--      </span>-->
+<!--    <input #search pInputText type="text" (input)="tt.filterGlobal(search.value, 'contains')"-->
+<!--           [placeholder]="t.tr('Поиск...')" class="border"/>-->
+<!--    <div>-->
+<!--      <input type="text" placeholder="Глобальный поиск" (input)="applyGlobalFilter($any($event.target)?.value)">-->
+<!--    </div>-->
+  </div>
   </div>
 
 
   <div class="equipments_container_table">
     <p-treeTable #tt
-                 scrollHeight="73vh" [value]="equipmentsNode" [reorderableColumns]="true" [resizableColumns]="true" [columns]="cols" [scrollable]="true">
+                 id="tt"
+                 scrollHeight="73vh" [value]="equipmentsNode" [reorderableColumns]="true"  [columns]="cols" [scrollable]="true" [filterMode]="filterMode" >
+<!--      <ng-template pTemplate="caption">-->
+<!--        <div style="text-align: right">-->
+<!--          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>-->
+<!--          <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tt.filterGlobal($any($event.target)?.value, 'contains')" style="width:auto">-->
+<!--        </div>-->
+<!--      </ng-template>-->
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width ? col.width : 'auto'">
@@ -25,13 +52,13 @@
         <tr [ttRow]="rowNode" [ngClass]="{childRow: rowData.parent_id != 0}" >
           <td *ngFor="let col of columns; let i = index; let last = last " [style.width]="col.width ? col.width : 'auto'">
             <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
-            <span (click)="cliiick(rowData, rowNode)">
+            <span (click)="openSidebar(rowData, rowNode)">
               <div *ngIf="rowData.parent_id == 0">
                 <div *ngIf="col.field == 'sfi'">
-                  {{ rowData['sfi'] + ' - ' + rowData['name'] }}
+                  {{ rowData['sfi'] }}
                 </div>
                 <div *ngIf="col.field == 'name'">
-                  -
+                  {{rowData['name'] }}
                 </div>
                 <div *ngIf="col.field == 'respons_surname'">
                   {{ rowData['respons_name'] + ' ' + rowData['respons_surname'] }}
@@ -39,8 +66,9 @@
                 <div *ngIf="col.field == 'itt'">
                   {{ rowData['itt'] ===1? 'YES' : 'NO' }}
                 </div>
-                <div *ngIf="col.field == 'status'" [ngClass]= "{'approved': rowData[col.field] == 'Approved'}">
-                  {{ rowData[col.field] }}
+                <div *ngIf="col.field == 'status'" [ngClass]= "{'approved': rowData[col.field] == 'Approved', 'new': rowData[col.field] == '-'}">
+                  {{ rowData['status'] === '-'? 'New' : rowData[col.field] }}
+<!--                  {{ rowData[col.field] }}-->
                 </div>
                 <div *ngIf="col.field != 'status' && col.field != 'name' && col.field != 'sfi' && col.field != 'respons_surname' && col.field != 'itt'" >
                   {{ rowData[col.field] }}

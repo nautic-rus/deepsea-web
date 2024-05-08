@@ -299,4 +299,13 @@
   position: relative;
 }
 
+.trash-close {
+  max-width: 8em;
+  min-height: 2em;
+  margin-left: auto;
+  margin-right: 0;
+  justify-content: end;
+  position: relative;
+  left: 25px;
+}
 
