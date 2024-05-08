@@ -228,5 +228,10 @@
   cursor: pointer;
 }
 
+/deep/ .p-treetable .p-treetable-tbody > tr:focus {
+  outline: none;
+  /*outline-offset: -0.15rem;*/
+}
+
 
 
