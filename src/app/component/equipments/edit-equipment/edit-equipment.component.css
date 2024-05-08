@@ -292,7 +292,7 @@
 }
 
 .task-name{
-  font-size: x-large;
+  font-size: large;
   font-weight: 600;
   border-radius: 3px;
   text-align: justify;
@@ -307,5 +307,13 @@
   justify-content: end;
   position: relative;
   left: 25px;
+}
+
+.f {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  /* width: 100%; */
+  align-items: center;
 }
 

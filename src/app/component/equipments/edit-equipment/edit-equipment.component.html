@@ -1,26 +1,47 @@
 <div class="df" style="justify-content: center; height: 100%">
   <div class="eq-container">
     <div style="width: 560px; border-radius: 6px">
-      <div class="trash-close df pt-10">
-        <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
-          <img src="assets/icons/trash.svg" height="20">
-        </div>
-        <div class="task-button-close cxy" (click)="closeSideBar()">
-          <i class="pi pi-times"></i>
-        </div>
-        <!--          <button (click)="closeSideBar()">close</button>-->
-      </div>
+
       <div class="header-parts df">
-        <div *ngIf="!isGroup" >
-          <span class="info-id">GROUP <span>- SFI {{this.group.sfi}}</span> <span>- {{this.group.name}}</span></span>
+        <div *ngIf="!isGroup" style="width: 100%">
+          <div class="f">
+            <span style="text-align: left; height: 17px" class="info-id">GROUP <span>- SFI {{this.group.sfi}}</span> <span>- {{this.group.name}}</span></span>
+
+            <div class=" df pt-10">
+              <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
+                <img src="assets/icons/trash.svg" height="20">
+              </div>
+              <div class="task-button-close cxy" (click)="closeSideBar()">
+                <i class="pi pi-times"></i>
+              </div>
+              <!--          <button (click)="closeSideBar()">close</button>-->
+            </div>
+          </div>
+
 <!--          <span class="info-id">ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>-->
-          <div class="pt-10 text-uppercase text-bold task-name"><span>SFI </span><span>{{this.equipmentForm.value.sfi_unit}}</span><span> - {{this.eq.name}}</span> </div>
+          <div style="text-align: left" class="pt-10 text-uppercase text-bold task-name"><span class="blue">UNIT </span>- SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}} </div>
 <!--          <div class="pt-20 text-uppercase text-bold">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>-->
           <!--      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>-->
         </div>
-        <div *ngIf="isGroup" >
+
+
+
+        <div *ngIf="isGroup" style="width: 100%">
+          <div class="f">
+            <div style="text-align: left; height: 17px" class="info-id"></div>
+            <div class="trash-close df pt-10">
+              <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
+                <img src="assets/icons/trash.svg" height="20">
+              </div>
+              <div class="task-button-close cxy" (click)="closeSideBar()">
+                <i class="pi pi-times"></i>
+              </div>
+              <!--          <button (click)="closeSideBar()">close</button>-->
+            </div>
+          </div>
+
 <!--          <span class="info-id">ID {{this.eq.id}}</span>-->
-          <div class=" text-uppercase text-bold task-name"><span class="blue">GROUP</span><span> - SFI {{this.equipmentForm.value.sfi}}</span><span> - {{this.equipmentForm.value.name}}</span></div>
+          <div style="text-align: left" class=" text-uppercase text-bold task-name  pt-10"><span class="blue">GROUP</span><span> - SFI {{this.equipmentForm.value.sfi}}</span><span> - {{this.equipmentForm.value.name}}</span></div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
         </div>
       </div>
