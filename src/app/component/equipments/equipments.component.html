@@ -106,7 +106,10 @@
                 <div *ngIf="col.field == 'itt'">
                   {{ rowData['itt'] ===1? 'YES' : 'NO' }}
                 </div>
-                <span *ngIf="col.field != 'name' && col.field != 'sfi' && col.field != 'respons_surname' && col.field != 'id' && col.field != 'itt'">
+                <div *ngIf="col.field == 'status'" [ngClass]= "{'approved': rowData[col.field] == 'Approved', 'new': rowData[col.field] == '-'}">
+                  {{ rowData['status'] === '-'? 'New' : rowData[col.field] }}
+                </div>
+                <span *ngIf="col.field != 'status' && col.field != 'name' && col.field != 'sfi' && col.field != 'respons_surname' && col.field != 'id' && col.field != 'itt'">
                   {{ rowData[col.field] }}
                 </span>
               </div>
