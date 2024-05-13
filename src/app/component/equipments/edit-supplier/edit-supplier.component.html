@@ -327,7 +327,7 @@
                 <span class="text-date">{{getDate(history.update_date)}}</span>
               </div>
             </div>
-            <div class="pb-20 history-text"  *ngIf="history.name_value == 'added file'">
+            <div class="history-text"  *ngIf="history.name_value == 'added file'">
               <div class="df">
                 <div class="pt-5 mr-10">
                   <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
@@ -356,7 +356,7 @@
                 </div>
               </div>
             </div>
-            <div class="pb-20 history-text" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
+            <div class="history-text" *ngIf="history.name_value != 'created' && history.name_value != 'added file'">
               <div class="df">
                 <div class="pt-5 mr-10">
                   <img src="{{auth.getUserAvatarId(history.author)}}" height="32" width="32" style="border-radius: 16px; cursor:pointer;">
@@ -377,6 +377,7 @@
                 </div>
               </div>
             </div>
+            <div class="height-20" ></div>
           </ng-template>
         </p-table>
       </div>
