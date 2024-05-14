@@ -179,7 +179,7 @@ export class AddMaterialToEspComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
-    if (this.kind == 'ele'){
+    if (this.kind == 'ele' || this.kind == 'hull'){
       if (this.label.includes('#')){
         alert('Вы не указали номер позиции');
         return;
