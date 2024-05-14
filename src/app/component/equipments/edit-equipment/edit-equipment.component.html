@@ -1,27 +1,48 @@
 <div class="df" style="justify-content: center; height: 100%">
   <div class="eq-container">
     <div style="width: 560px; border-radius: 6px">
+
       <div class="header-parts df">
-        <div *ngIf="!isGroup" class="pt-20">
-          <span class="info-id">GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>
+        <div *ngIf="!isGroup" style="width: 100%">
+          <div class="f">
+            <span style="text-align: left; height: 17px" class="info-id">GROUP <span>- SFI {{this.group.sfi}}</span> <span>- {{this.group.name}}</span></span>
+
+            <div class=" df pt-10">
+              <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
+                <img src="assets/icons/trash.svg" height="20">
+              </div>
+              <div class="task-button-close cxy" (click)="closeSideBar()">
+                <i class="pi pi-times"></i>
+              </div>
+              <!--          <button (click)="closeSideBar()">close</button>-->
+            </div>
+          </div>
+
 <!--          <span class="info-id">ID {{this.group.id}} - GROUP - SFI {{this.group.sfi}} - {{this.group.name}}</span>-->
-          <div class="pt-10 text-uppercase text-bold task-name">SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>
+          <div style="text-align: left" class="pt-10 text-uppercase text-bold task-name"><span class="blue">UNIT </span>- SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}} </div>
 <!--          <div class="pt-20 text-uppercase text-bold">ID {{this.equipmentForm.value.id}} - SFI {{this.equipmentForm.value.sfi_unit}} - {{this.eq.name}}</div>-->
           <!--      <div class="header-parts-text">{{t.tr('Редактировать оборудование')}}</div>-->
         </div>
-        <div *ngIf="isGroup" class="pt-20">
+
+
+
+        <div *ngIf="isGroup" style="width: 100%">
+          <div class="f">
+            <div style="text-align: left; height: 17px" class="info-id"></div>
+            <div class="trash-close df pt-10">
+              <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
+                <img src="assets/icons/trash.svg" height="20">
+              </div>
+              <div class="task-button-close cxy" (click)="closeSideBar()">
+                <i class="pi pi-times"></i>
+              </div>
+              <!--          <button (click)="closeSideBar()">close</button>-->
+            </div>
+          </div>
+
 <!--          <span class="info-id">ID {{this.eq.id}}</span>-->
-          <div class="pt-20 text-uppercase text-bold task-name"><span class="blue">GROUP</span> - SFI {{this.equipmentForm.value.sfi}} - {{this.equipmentForm.value.name}}</div>
+          <div style="text-align: left" class=" text-uppercase text-bold task-name  pt-10"><span class="blue">GROUP</span><span> - SFI {{this.equipmentForm.value.sfi}}</span><span> - {{this.equipmentForm.value.name}}</span></div>
           <!--      <div class="header-parts-text">{{t.tr('Редактировать группу')}}</div>-->
-        </div>
-        <div class="df pt-25">
-          <div class="task-button cxy mr-20" tooltipPosition="top" [pTooltip]="t.tr('Удалить оборудование')" (click)="deleteEquipment(this.equipmentForm.value.id)" [class.button-disabled]="buttonsAreHidden">
-            <img src="assets/icons/trash.svg" height="20">
-          </div>
-          <div class="task-button-close cxy" (click)="closeSideBar()">
-            <i class="pi pi-times"></i>
-          </div>
-<!--          <button (click)="closeSideBar()">close</button>-->
         </div>
       </div>
 
@@ -71,7 +92,7 @@
           <div class="sfi-name">
             <div class="df flex-column space-between width-150">
               <label class="big-text-create mb-1" for="sfi_unit">{{t.tr('SFI')}}</label>
-              <input pInputText id="sfi_unit"  type="text" formControlName="sfi_unit" placeholder="999.999" class="sfi-name-input">
+              <input pInputText id="sfi_unit"  type="text" formControlName="sfi_unit" placeholder="SFI-Unit" class="sfi-name-input">
             </div>
 
             <div class="df flex-column space-between">
@@ -82,7 +103,7 @@
         </div>
         <div class="sfi-error">
           <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat')">
-            Введите корректный SFI (в формате 999.999)
+            Введите корректный SFI
           </span>
         </div>
 <!--        <label class="big-text-create mb-1 mt-10" for="sfi_unit">{{t.tr('SFI')}}</label>-->
@@ -189,7 +210,7 @@
       <label *ngIf="suppliersArray?.length !=0" class="big-text-create mb-1" for="sfi_unit">{{t.tr('Поставщики')}}</label>
 <!--      <div style="margin-bottom: 15px; margin-top: 15px; font-size: 15px;" class="big-text-create" *ngIf="suppliersArray?.length !=0 ">{{t.tr('Поставщики')}}</div>-->
       <div *ngFor="let supplier of suppliersArray" class="pb-8" style="margin-top: 0.3rem">
-        <div (click)="editSupplier(group, eq, supplier)" class="supplier_container" style="border-radius: 6px">
+        <div (click)="editSupplier(group, eq, supplier)" class="supplier_container" style="border-radius: 6px; cursor: pointer">
           <div class="supplier_header df">
             <div>
               <div><span style="margin-right: 8px" class="text-gray">ID {{supplier.id}}</span> {{supplier.model}} - {{supplier.name}} - {{supplier.manufacturer}}</div>
