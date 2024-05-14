@@ -72,7 +72,9 @@ export class CreateEquipmentComponent implements OnInit {
   }
 
   sfiFormatValidator(control: AbstractControl) {
-    const validFormat = /^\d{3}\.\d{3}$/.test(control.value);
+    const validFormat = /^\d{3}\..*/.test(control.value);
+  // ^\d{3}\.\d{3}$|^\d{3}\.\d{2}\.\d{2}$|^\d{3}\..*$
+
     console.log(validFormat)
     return validFormat? null : { 'invalidSfiFormat': true };
   }
@@ -83,6 +85,7 @@ export class CreateEquipmentComponent implements OnInit {
     }
     return null;
   }
+// <input type="text" pattern="^999\..*" title="Please enter a string starting with '999.'">
 
   changeSFI() {
     let res = this.sfis.filter(item => item.code == this.equipmentForm.get('sfi')?.value);

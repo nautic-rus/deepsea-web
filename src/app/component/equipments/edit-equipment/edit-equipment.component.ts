@@ -118,7 +118,7 @@ export class EditEquipmentComponent implements OnInit {
 
 
    sfiFormatValidator(control: AbstractControl) {
-      const validFormat = /^\d{3}\.\d{3}$/.test(control.value);
+      const validFormat = /^\d{3}\..*/.test(control.value);
       console.log(validFormat)
       return validFormat? null : { 'invalidSfiFormat': true };
    }
