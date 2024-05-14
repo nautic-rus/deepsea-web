@@ -14,6 +14,7 @@ import {SpecManagerService} from "../../../../domain/spec-manager.service";
 import {LV} from "../../../../domain/classes/lv";
 import _ from "underscore";
 import {IssueManagerService} from "../../../../domain/issue-manager.service";
+import {SpecMaterial} from "../../../../domain/classes/spec-material";
 
 @Component({
   selector: 'app-add-material-to-esp',
@@ -208,7 +209,7 @@ export class AddMaterialToEspComponent implements OnInit {
       this.selectedNodePath = this.getNodePath(this.selectedNode);
       //this.selectedNodeCode = this.getNodeCode(this.selectedNode);
       this.selectedNodeCode = this.selectedNode.data;
-      this.materials = this.materialsSrc.filter(x => x.code.startsWith(this.selectedNodeCode));
+      this.materials = this.selectedNode.materials;
     }
   }
 
