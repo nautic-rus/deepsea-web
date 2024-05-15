@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {LV} from "../../domain/classes/lv";
 import {AuthManagerService} from "../../domain/auth-manager.service";
 import {EquipmentsService} from "../../domain/equipments.service";
@@ -21,6 +21,7 @@ import { TreeNode } from 'primeng/api';
 import _ from "underscore";
 import {CreateGroupComponent} from "./create-group/create-group.component";
 import {EditGroupComponent} from "./edit-group/edit-group.component";
+import {TreeTable} from "primeng/treetable";
 
 interface Column {
   field: string;
@@ -44,7 +45,9 @@ export class EquipmentsComponent implements OnInit {
 
 
   equipmentsNode!: TreeNode[];
-  cols!: Column[];
+  cols!: any[];
+  filterMode = 'Strict'
+  @ViewChild('tt') treeTable!: TreeTable;
 
   data: any = [];
   projects: any[] = [];
@@ -91,21 +94,24 @@ export class EquipmentsComponent implements OnInit {
       this.selectedDepartments.push(department.value)
     })
 
+
     this.cols = [
-      {field: 'id', header: 'ID'},
-      {field: 'sfi', header: 'sfi'},
-      {field: 'name', header: 'name'},
-      {field: 'sfi-unit', header: 'sfi_unit'},
-      {field: 'status', header: 'status_id'},
-      {field: 'respons_name & respons_surname', header: 'respons_name'},
-      {field: 'respons_surname', header: 'respons_surname'},
-      {field: 'itt', header: 'itt'},
-      {field: 'comment', header: 'comment'},
-      {field: '', header: ''},
+      {field: '', header: '', width: '3rem'},
+      {field: 'id', header: 'ID', width: '5rem'},
+      {field: 'sfi', header: 'SFI-Group', width: '8rem'},
+      {field: 'name', header: 'Name' , width: '15rem'},
+      {field: 'sfi_unit', header: 'SFI-Unit', width: '8rem'},
+
+      {field: 'status', header: 'Status', width: '7rem' },
+      {field: 'respons_surname', header: 'Responsible', width: '10rem'},
+      {field: 'itt', header: 'ITT', width: '5rem'},
+      {field: 'comment', header: 'Comment', width: '20rem'},
+      {field: '', header: '', width: '10rem'},
     ];
     //this.selectedDepartments = ['System'];
 
     this.eqService.getEquipments().subscribe(equipments => {
+      console.log(equipments)
       this.equipmentsNode = []
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
 
@@ -120,8 +126,8 @@ export class EquipmentsComponent implements OnInit {
       this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
 
       // let resParsedArray: any[] = []
-      this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
-      console.log(this.equipmentsNode)
+      // this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
+       console.log(this.equipmentsNode)
     });
 
     this.eqService.getSfis().subscribe(sfis => {
@@ -137,6 +143,11 @@ export class EquipmentsComponent implements OnInit {
     }
   }
 
+  applyGlobalFilter(filterValue: string) {
+    console.log(filterValue)
+    this.treeTable.filterGlobal(filterValue, 'contains');
+  }
+
   getProjectName(project: any) {
     let res = project.name;
     if (project.rkd != '') {
@@ -146,9 +157,16 @@ export class EquipmentsComponent implements OnInit {
   }
 
   filterEquipments() {
+    this.equipmentsNode = []
+    // this.equipmentsNode = this.equipmentsNode.filter(x => this.selectedProjects.includes(x.data.project_name))
     this.equipments = [...this.equipmentsSrc];
     this.equipments = this.equipments.filter(x => this.selectedProjects.includes(x.project_name));
     this.equipments = this.equipments.filter(x => this.selectedDepartments.includes(x.department));
+    this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode)
+    // this.equipmentsNode = this.equipmentsNode.filter(x => {
+    //   //x.data.id = 115
+    // })
+    console.log(this.equipmentsNode)
     this.equipments.forEach((eq) => {
       //eq.suppliers?.some
       const hasApprovedSupplier = eq.suppliers?.some((supplier) =>
@@ -170,9 +188,33 @@ export class EquipmentsComponent implements OnInit {
     return resParsedArray
   }
 
+  // filterEquipments(){
+  //   this.equipments = [...this.equipmentsSrc];
+  //   this.equipments = this.equipments.filter(x => this.selectedProjects.includes(x.project_name));
+  //   this.equipments = this.equipments.filter(x => this.selectedDepartments.includes(x.department));
+  //   this.equipments.forEach((eq) => {
+  //     //eq.suppliers?.some
+  //     const hasApprovedSupplier = eq.suppliers?.some((supplier) =>
+  //       supplier.status === 'Approved');
+  //     eq.status = hasApprovedSupplier? 'Approved' : '-';
+  //   })
+  // }
+
+
 
   projectChanged() {
     this.filterEquipments();
+    // this.equipmentsNode = []
+    // console.log(this.selectedProjects)
+    // // this.equipmentsNode.forEach(i => {
+    // //   console.log(i.data.project_name)
+    // // })
+    // this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode).filter(x => this.selectedProjects.includes(x.data.project_name))
+    // // this.equipmentsNode = this.equipmentsNode.filter(x => {
+    // //   //x.data.id = 115
+    // // })
+    // console.log(this.equipmentsNode)
+    // this.filterEquipments();
   }
 
   departmentChanged() {
@@ -218,7 +260,7 @@ export class EquipmentsComponent implements OnInit {
     })
   }
 
-  cliiick(data: any, dataGroup: any) {
+  openSidebar(data: any, dataGroup: any) {
     console.log("click")
     console.log(data)  //информация о группе, в которой находится оборудование
     // this.selectedGroup = dataGroup.node.parent.data
@@ -236,25 +278,10 @@ export class EquipmentsComponent implements OnInit {
     }
   }
 
-  closeSideBarFromChild() {
-    console.log("closeSideBarFromChild")
-    this.editGroupSidebarVisible = false
-    this.editEqSidebarVisible = false
-    this.selectedGroup = undefined;
-    this.selectedEq = undefined;
-    this.eqService.getEquipments().subscribe(equipments => {
-      this.equipmentsNode = []
-      this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
-
-      this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-      // let resParsedArray: any[] = []
-      this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
-    });
-  }
-
 
   closeSideBar() {
-    console.log("closed sidebar")
+    const expandedStates = this.equipmentsNode.map (obj => obj.expanded)  //для определения и сохраниения раскрытых (объектов где expanded = true)
+
     this.editGroupSidebarVisible = false;
     this.editEqSidebarVisible = false;
     this.selectedGroup = undefined;
@@ -263,74 +290,17 @@ export class EquipmentsComponent implements OnInit {
       this.equipmentsNode = []
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
 
-      this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
+       this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
       // let resParsedArray: any[] = []
-      this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
+      // this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
+
+      this.equipmentsNode.forEach((obj, index) => {  //проверяем с сохраненным состояние раскрытых и если что добавляем  obj.expanded = true
+        if (expandedStates[index]) {
+          obj.expanded = true
+        }
+      })
+      console.log(this.equipmentsNode)
     });
-
-
-  }
-
-  editGroup(eq:IEquipment) {
-
- }
-
-  // editGroup(eq:IEquipment) {
-  //   // console.log(eq);
-  //   // console.log('edit equipment');
-  //   this.dialogService.open(EditGroupComponent, {
-  //     header: this.t.tr('Редактировать группу'),
-  //     showHeader: false,
-  //     modal: true,
-  //     data: eq
-  //   }).onClose.subscribe(closed => { //сразу выводить на страницу
-  //     // console.log("this.eqService.setWaitingCreateFiles([])")
-  //     this.eqService.setWaitingCreateFiles([]);
-  //     // console.log(this.supplierService.getWaitingCreateFiles())
-  //     // console.log(closed.code);
-  //     if (closed.code === 1) {  // значит, что пользователь удалил группу в форме редактирования группы
-  //       //this.filterEquipments();
-  //       this.equipments = this.equipments.filter(eq => {
-  //         return eq.id !== closed.data
-  //       })
-  //     }
-  //     else {
-  //       this.eqService.getEquipments().subscribe(equips => {
-  //         this.equipmentsSrc = equips;
-  //         this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-  //       });
-  //     }
-  //
-  //   })
-  // }
-
-  editEquipment(eq:IEquipment) {
-    // console.log(eq);
-    // console.log('edit equipment');
-    this.dialogService.open(EditEquipmentComponent, {
-      header: this.t.tr('Редактировать оборудование'),
-      showHeader: false,
-      modal: true,
-      data: eq
-    }).onClose.subscribe(closed => { //сразу выводить на страницу
-      // console.log("this.eqService.setWaitingCreateFiles([])")
-      this.eqService.setWaitingCreateFiles([]);
-      // console.log(this.supplierService.getWaitingCreateFiles())
-      // console.log(closed.code);
-      if (closed.code === 1) {  // значит, что пользователь удалил оборудование в форме редактирования оборудования
-        //this.filterEquipments();
-        this.equipments = this.equipments.filter(eq => {
-          return eq.id !== closed.data
-        })
-      }
-      else {
-        this.eqService.getEquipments().subscribe(equips => {
-          this.equipmentsSrc = equips;
-          this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-        });
-      }
-
-    })
   }
 
   editSupplier(eq: IEquipment, supplier: ISupplier) {

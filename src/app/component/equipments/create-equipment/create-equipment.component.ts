@@ -22,7 +22,7 @@ import {IEquipment} from "../../../domain/interfaces/equipments";
 export class CreateEquipmentComponent implements OnInit {
   // @ts-ignore
   equipmentForm = this.formBuilder.group({
-    sfi_unit: ['', Validators.required],
+    sfi_unit: ['', [Validators.required, this.sfiFormatValidator]],
     name: ['', Validators.required],
     commentText: [''],
   });
@@ -71,12 +71,21 @@ export class CreateEquipmentComponent implements OnInit {
     // console.log(this.equipmentForm.value)
   }
 
+  sfiFormatValidator(control: AbstractControl) {
+    const validFormat = /^\d{3}\..*/.test(control.value);
+  // ^\d{3}\.\d{3}$|^\d{3}\.\d{2}\.\d{2}$|^\d{3}\..*$
+
+    console.log(validFormat)
+    return validFormat? null : { 'invalidSfiFormat': true };
+  }
+
   customProjectValidator(control: AbstractControl) {
     if (control.value === '-') {
       return { projectInvalid: true };
     }
     return null;
   }
+// <input type="text" pattern="^999\..*" title="Please enter a string starting with '999.'">
 
   changeSFI() {
     let res = this.sfis.filter(item => item.code == this.equipmentForm.get('sfi')?.value);

@@ -9,12 +9,25 @@
   </div>
 
 
-  <form style="height: 430px; width: 460px;" [formGroup]="equipmentForm" class="form-container">
-    <label class="big-text-create mb-1 mt-10" for="sfi_unit">{{t.tr('SFI')}}</label>
-    <p-inputMask mask="999.999" id="sfi_unit"  formControlName="sfi_unit" placeholder="999.999"></p-inputMask>
+  <form style="width: 460px;" [formGroup]="equipmentForm" class="form-container">
+    <div class="sfi-name">
+      <div class="df flex-column space-between width-150">
+        <label class="big-text-create mb-1" for="sfi_unit">{{t.tr('SFI')}}</label>
+        <input pInputText id="sfi_unit"  type="text" formControlName="sfi_unit" placeholder="SFI-Unit" class="sfi-name-input">
+      </div>
 
-    <label class="big-text-create mb-1 mt-1" for="name">{{t.tr('Наименование')}} </label>
-    <input class="" pInputText id="name" type="text" formControlName="name">
+      <div class="df flex-column space-between">
+        <label class="big-text-create mb-1" for="name">{{t.tr('Наименование')}} </label>
+        <input pInputText id="name" type="text" formControlName="name" class="sfi-name-input">
+      </div>
+    </div>
+    <div class="sfi-error">
+      <span class="error cx" *ngIf="equipmentForm.get('sfi_unit')?.hasError('invalidSfiFormat') && equipmentForm.get('sfi_unit')?.value">
+        Введите корректный SFI
+      </span>
+    </div>
+
+
 
     <label class="big-text-create mb-1 mt-1" for="commentText">{{t.tr('Комментарий')}} </label>
     <input class="" pInputText id="commentText" type="text" formControlName="commentText">
@@ -40,7 +53,7 @@
     </div>
 
     <div class="mt-20 df">
-      <div tabindex="10"  [class.disabled-button]="!equipmentForm.valid" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+      <div tabindex="10"  [class.disabled-button]="!equipmentForm.valid" (click)="addFiles()" class="button-ok">{{t.tr('Добавить файлы')}}</div>
     </div>
 
 
@@ -51,7 +64,7 @@
     <!--</div>-->
 
 
-    <div class="mr-5 mt-20 mb-50 df justify-content-end">
+    <div class="mr-5 mt-20 df justify-content-end">
       <!--  <div tabindex="10" [class.disabled-button]="!equipmentForm.valid  && (equipmentForm.get('project')?.value == '-')" (click)="createEquipment()" class="button-ok cxy">{{t.tr('Создать')}}</div>-->
       <!--  <div tabindex="10" (click)="close()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>-->
 

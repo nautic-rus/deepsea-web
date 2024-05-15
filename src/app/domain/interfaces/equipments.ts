@@ -17,6 +17,8 @@ export interface IEquipment {
   status: string;
   parent_id: number;
   sfi_unit: string;
+  create_date: number;
+
 }
 
 // export interface ISuppliersInEq{

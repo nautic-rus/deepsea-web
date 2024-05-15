@@ -44,7 +44,9 @@ export class AddSupplierComponent implements OnInit {
 
   ngOnInit(): void {
     this.eqService.getSupplierNames().subscribe((res) => {
-      this.supplierNames = res;
+      this.supplierNames = res
+      console.log(this.supplierNames.sort((a: any, b: any) => a.name > b.name ? 1 : -1)
+      )
     })
   }
 

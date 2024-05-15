@@ -9,7 +9,9 @@
   </div>
 
 
-  <form style="height: 430px; width: 460px;" [formGroup]="groupForm" class="form-container">
+
+
+  <form style="width: 460px;" [formGroup]="groupForm" class="form-container">
     <div class="big-text-create mb-1">{{'SFI'}}</div>
     <p-dropdown formControlName="sfi" class="select" optionLabel="code" optionValue="code" [options]="sfis" (onChange)="changeSFI()"
                 placeholder="SFI number" appendTo = "body" styleClass="w-100 font-13" [filter]="true" filterBy="code,ru,en">
@@ -39,13 +41,15 @@
       </div>
     </div>
 
+    <div class="mt-16">
+      <label class="big-text-create mb-1 mt-1" for="name">{{t.tr('Наименование')}} </label>
+      <input pInputText id="name" type="text" formControlName="name" class="w-100 font-13">
+    </div>
+    <div class="mt-16">
+      <label class="big-text-create mb-1 mt-1" for="commentText">{{t.tr('Комментарий')}} </label>
+      <input pInputText id="commentText" type="text" formControlName="commentText" class="w-100 font-13">
+    </div>
 
-    <label class="big-text-create mb-1 mt-1" for="name">{{t.tr('Наименование')}} </label>
-    <input pInputText id="name" type="text" formControlName="name">
-
-
-    <label class="big-text-create mb-1 mt-1" for="commentText">{{t.tr('Комментарий')}} </label>
-    <input class="" pInputText id="commentText" type="text" formControlName="commentText">
 
 
     <div *ngIf="equipmentFiles.length != 0" class="big-text mt-1">{{t.tr('Вложения')}}</div>
@@ -68,12 +72,12 @@
     </div>
 
     <div class="mt-20 df">
-      <div tabindex="10"  [class.disabled-button]="!groupForm.valid" (click)="addFiles()" class="button-ok ml-1">{{t.tr('Добавить файлы')}}</div>
+      <div tabindex="10"  [class.disabled-button]="!groupForm.valid" (click)="addFiles()" class="button-ok">{{t.tr('Добавить файлы')}}</div>
     </div>
 
 
 
-    <div class="mr-5 mt-20 mb-50 df justify-content-end">
+    <div class="mr-5 mt-20 df justify-content-end">
       <div tabindex="10" [class.disabled-button]="!groupForm.valid" (click)="createGroup()" class="button-ok cxy">{{t.tr('Создать')}}</div>
       <div tabindex="10" (click)="close()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>
     </div>

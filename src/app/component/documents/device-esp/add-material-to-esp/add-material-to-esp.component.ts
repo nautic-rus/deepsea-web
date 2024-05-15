@@ -12,6 +12,9 @@ import {ContextMenu} from "primeng/contextmenu";
 import * as XLSX from "xlsx";
 import {SpecManagerService} from "../../../../domain/spec-manager.service";
 import {LV} from "../../../../domain/classes/lv";
+import _ from "underscore";
+import {IssueManagerService} from "../../../../domain/issue-manager.service";
+import {SpecMaterial} from "../../../../domain/classes/spec-material";
 
 @Component({
   selector: 'app-add-material-to-esp',
@@ -22,6 +25,7 @@ export class AddMaterialToEspComponent implements OnInit {
 
   search: string = '';
   nodes: any = [];
+  nodesSrc: any[] = [];
   layers: any = [];
   materials: any [] = [];
   materialsSrc: any [] = [];
@@ -29,8 +33,9 @@ export class AddMaterialToEspComponent implements OnInit {
   selectedNodePath = '';
   selectedNodeCode = '';
   tooltips: string[] = [];
-  projects: string[] = ['200101', '210101'];
+  projects: any[] = [];
   project = '';
+  projectId = 0;
   selectedMaterial: Material = new Material();
   units: string = "796";
   count: number = 1;
@@ -58,7 +63,10 @@ export class AddMaterialToEspComponent implements OnInit {
   forLabel = '';
   kind = '';
   issueId = 0;
-  constructor(public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
+  materialsFilled = false;
+  specStatements: any[] = [];
+
+  constructor(public issues: IssueManagerService, public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
     this.selectedMaterial.name = '';
@@ -78,15 +86,38 @@ export class AddMaterialToEspComponent implements OnInit {
       this.issueId = this.dialog.data[3];
     }
     this.zone = this.dialog.data[3];
-    this.materialManager.getMaterials(this.project).then(res => {
-      this.materials = res;
-      this.materialsSrc = res;
-      this.materialManager.getMaterialNodes(this.project).then(res => {
-        this.nodes = this.getNodes(res, this.materialsSrc, '');
-        this.setParents(this.nodes, '');
+    this.fill();
+  }
+  fill(){
+    this.issues.getSpecProjects().subscribe(projects => {
+      this.materialManager.getSpecStatements().subscribe(specStatements => {
+        console.log(this.specStatements);
+        this.specStatements = specStatements;
+        this.projects = projects.filter(x => specStatements.find((y: any) => y.project_id == x.id) != null);
+        if (this.projects.length > 0){
+          this.projectId = this.projects[0].id;
+        }
+        this.projectChanged();
       });
     });
   }
+  projectChanged() {
+    this.materialManager.getSpecMaterials().subscribe(resMaterials => {
+      resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
+      resMaterials.forEach((m: any) => m.path = []);
+      let projectStatements = this.specStatements.filter(x => x.project_id == this.projectId).map(x => x.id);
+      this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
+      this.materialsSrc = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
+      this.materialManager.getSpecDirectories().subscribe(specDirectories => {
+        console.log(specDirectories);
+        console.log(this.project);
+        this.nodesSrc = specDirectories.filter((x: any) => x.project_id == this.projectId || x.project_id == 0);
+        this.nodes = _.sortBy(this.getNodes(this.nodesSrc, this.materials, 0), x => x.label);
+        this.materialsFilled = true;
+      });
+    });
+  }
+
   createNode(node: any){
     this.addNew = true;
     this.newNode = {};
@@ -97,17 +128,34 @@ export class AddMaterialToEspComponent implements OnInit {
 
     console.log(this.newNode);
   }
-  getNodes(rootNodes: MaterialNode[], materials: Material[], parent: string = ''){
+  getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
     let res: any[] = [];
-    rootNodes.filter(x => x.data.length == parent.length + 3 && x.data.startsWith(parent)).forEach(n => {
+    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
+      let nodes = this.getNodes(rootNodes, materials, n.id);
+      let nodeMaterials = materials.filter(x => x != null && x.dir_id == n.id);
+      nodes.forEach(n => {
+        n.materials.forEach((m: any) => nodeMaterials.push(m));
+      });
+      let count = nodeMaterials.length;
       res.push({
-        data: n.data,
-        children: this.getNodes(rootNodes, materials, n.data),
-        label: n.label,
-        count: materials.filter(x => x.code.startsWith(n.data)).length
+        data: n.id,
+        children: _.sortBy(nodes, x => x.label),
+        label: n.name + (n.project_id == 0 ? '' : (' (' + this.getProjectName(n.project_id)) + ')'),
+        materials: nodeMaterials,
+        count: count,
+        project: n.project_id
       });
     });
     return res;
+  }
+  getProjectName(id: number){
+    let project = this.projects.find(x => x.id == id);
+    if (project != null){
+      return project.name;
+    }
+    else{
+      return '';
+    }
   }
   setParents(nodes: any[], parent: any){
     nodes.forEach(node => {
@@ -131,13 +179,13 @@ export class AddMaterialToEspComponent implements OnInit {
     return this.tooltips.includes(index);
   }
   addMaterial() {
-    if (this.kind == 'ele'){
+    if (this.kind == 'ele' || this.kind == 'hull'){
       if (this.label.includes('#')){
         alert('Вы не указали номер позиции');
         return;
       }
       else{
-        this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind).subscribe(res => {
+        this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone).subscribe(res => {
           this.ref.close('success');
         });
       }
@@ -161,7 +209,7 @@ export class AddMaterialToEspComponent implements OnInit {
       this.selectedNodePath = this.getNodePath(this.selectedNode);
       //this.selectedNodeCode = this.getNodeCode(this.selectedNode);
       this.selectedNodeCode = this.selectedNode.data;
-      this.materials = this.materialsSrc.filter(x => x.code.startsWith(this.selectedNodeCode));
+      this.materials = this.selectedNode.materials;
     }
   }
 
@@ -176,37 +224,7 @@ export class AddMaterialToEspComponent implements OnInit {
     });
   }
 
-  contextMenu(event: any, contextMenu: ContextMenu) {
-    if (event.node.data.length >= 12){
-      this.items = [
-        this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
-          label: 'Remove',
-          icon: 'pi pi-fw pi-trash',
-          command: () => this.alertNodeContains()
-        } : {
-          label: 'Remove',
-          icon: 'pi pi-fw pi-trash',
-          command: () => this.removeNode(event.node)
-        }
-      ];
-    }
-    this.items = [
-      {
-        label: 'New Folder',
-        icon: 'pi pi-fw pi-plus',
-        command: () => this.createNode(event.node)
-      },
-      this.materials.filter(x => x.code.startsWith(event.node.data)).length > 0 ? {
-        label: 'Remove',
-        icon: 'pi pi-fw pi-trash',
-        command: (event: any) => this.alertNodeContains()
-      } : {
-        label: 'Remove',
-        icon: 'pi pi-fw pi-trash',
-        command: () => this.removeNode(event.node)
-      }
-    ];
-  }
+
   copyTrmCode(code: string, index: string) {
     navigator.clipboard.writeText(code);
     this.tooltips.push(index);
@@ -216,14 +234,6 @@ export class AddMaterialToEspComponent implements OnInit {
     //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
   }
 
-  removeNode(node: any) {
-    this.materialManager.updateMaterialNode(this.project, node.data, node.label, this.auth.getUser().login, 1).then(resStatus => {
-      this.materialManager.getMaterialNodes(this.project).then(res => {
-        this.nodes = this.getNodes(res, this.materialsSrc, '');
-        this.setParents(this.nodes, '');
-      });
-    });
-  }
 
   alertNodeContains(){
     this.messageService.add({key:'task', severity:'error', summary:'Folder is not empty', detail:'Cant delete non empty folder'});

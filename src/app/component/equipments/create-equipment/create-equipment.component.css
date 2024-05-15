@@ -111,3 +111,18 @@
   font-family: inherit;
   font-weight: 600;
 }
+
+.sfi-name {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 20px;
+}
+
+.sfi-name-input {
+  width: 100%
+}
+
+.sfi-error {
+  margin-top: 0.3rem;
+  display: flex;
+}

@@ -65,6 +65,7 @@ export class ObjViewPublicDeviceComponent implements OnInit {
   pipesVisible = true;
   showFilters = true;
 
+
   public constructor(public route: ActivatedRoute, public issues: IssueManagerService, public s: SpecManagerService) {
   }
   ngOnInit(): void {
@@ -75,8 +76,8 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       this.hurl = params.hurl ? params.hurl : '';
       this.eurl = params.eurl ? params.eurl : '';
       this.surl = params.surl ? params.surl : '';
-      this.curl = params.surl ? params.curl : '';
-      this.purl = params.surl ? params.purl : '';
+      this.curl = params.curl ? params.curl : '';
+      this.purl = params.purl ? params.purl : '';
 
       this.bcol = params.bcol ? ('#' + params.bcol) : this.bcol;
       this.hcol = params.hcol ? ('#' + params.hcol) : this.hcol;
@@ -85,15 +86,16 @@ export class ObjViewPublicDeviceComponent implements OnInit {
       this.ccol = params.ccol ? ('#' + params.ccol) : this.ccol;
       this.pcol = params.pcol ? ('#' + params.pcol) : this.pcol;
 
-      if (this.hurl == '' && this.eurl == '' && this.surl == ''){
-        this.errorMessage = 'There is no model url';
-      }
       let urls = [];
-      urls.push(this.hurl)
-      urls.push(this.eurl)
-      urls.push(this.surl)
-      urls.push(this.curl)
-      urls.push(this.purl)
+      urls.push(this.hurl);
+      urls.push(this.eurl);
+      urls.push(this.surl);
+      urls.push(this.curl);
+      urls.push(this.purl);
+      this.groupsCount = urls.filter(x => x != '').length;
+      if (this.groupsCount == 0){
+        this.errorMessage = 'There is no any model to load';
+      }
       if (urls.filter(x => x != '').length == 1){
         this.showFilters = false;
       }
@@ -139,7 +141,6 @@ export class ObjViewPublicDeviceComponent implements OnInit {
 
 
     let group = new THREE.Group();
-    this.groupsCount = [this.hurl, this.surl, this.eurl].filter(x => x != '').length;
 
     if (this.hurl != ''){
       objLoader.load(this.hurl, (object) => {

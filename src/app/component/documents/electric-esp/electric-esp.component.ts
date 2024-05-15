@@ -10,7 +10,7 @@ import {SpecManagerService} from "../../../domain/spec-manager.service";
 import {LanguageService} from "../../../domain/language.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {DialogService} from "primeng/dynamicdialog";
-import _ from "underscore";
+import _, {where} from "underscore";
 import {IssueMessage} from "../../../domain/classes/issue-message";
 import {UserCardComponent} from "../../employees/user-card/user-card.component";
 import {mouseWheelZoom} from "mouse-wheel-zoom";
@@ -276,7 +276,10 @@ export class ElectricEspComponent implements OnInit {
       if (res != null && res.elements.length > 0){
         let eles = res.elements;
         let groupedEles: any[] = [];
-        _.forEach(_.groupBy(eles, g => g.code), grEle => {
+        let traysAndTransits = eles.filter((x: any) => x.typeName == 'TRAY' || x.typeName == 'TRANSIT');
+        let equips = eles.filter((x: any) => x.typeName == 'EQUIP');
+        let manuals = eles.filter((x: any) => x.typeName == 'MANUAL');
+        _.forEach(_.groupBy(traysAndTransits, g => g.code), grEle => {
           let first = grEle[0];
           let units = first.units;
           let wgt = 0;
@@ -330,7 +333,43 @@ export class ElectricEspComponent implements OnInit {
 
 
         });
-        this.eleGroups = groupedEles;
+        _.forEach(equips, grEle => {
+          let first = grEle;
+          let units = first.units;
+          let userId = first.userId;
+
+          groupedEles.push({
+            pos: this.rlz(userId),
+            eles: [],
+            code: first.material.code,
+            count: 1,
+            weight: first.material.singleWeight,
+            kind: first.typeName,
+            materialName: first.material.name,
+            units: units,
+            cog: first.cog
+          });
+        });
+        _.forEach(manuals, manual => {
+
+          let filter = _.sortBy(groupedEles.filter((x: any) => manual.userId.includes(x.pos)), x => x.pos.length).reverse();
+          if (filter.length > 0){
+            let addManual = filter[0];
+            addManual.eles.push({
+              pos: addManual.eles.length + 1,
+              kind: 'MANUAL',
+              materialName: manual.material.name,
+              units: manual.units,
+              count: manual.count,
+              weight: manual.weight,
+              code: manual.material_stock_code,
+              cog: manual.cog,
+              userId: manual.userId
+            });
+          }
+        });
+
+        this.eleGroups = _.sortBy(groupedEles, x => this.orderDot(x.pos));
       }
       else{
         this.noResult = true;
@@ -884,10 +923,7 @@ export class ElectricEspComponent implements OnInit {
       modal: true,
       data: [this.docNumber, label, 'ele', this.issue.id]
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
-      });
+      this.fillEle();
     });
   }
 
@@ -920,5 +956,23 @@ export class ElectricEspComponent implements OnInit {
     else{
       return units;
     }
+  }
+
+  deleteManual(e: any) {
+    console.log(e);
+    this.s.deleteIssueMaterial(e.userId, this.issue.doc_number, 'ele').subscribe(res => {
+      this.fillEle();
+    });
+  }
+
+  orderDot(input: string){
+    return input.split('.').map(x => this.alz(x)).join('');
+  }
+  alz(input: string, length: number = 10){
+    let res = input;
+    while (res.length < length){
+      res = '0' + res;
+    }
+    return res;
   }
 }

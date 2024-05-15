@@ -26,6 +26,7 @@ import {GroupedParts} from "./interfaces/grouped-parts";
 import {GenerateEspComponent} from "./generate-esp/generate-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 import {AddHullMaterialToEspComponent} from "./add-hull-material-to-esp/add-hull-material-to-esp.component";
+import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -216,6 +217,7 @@ export class HullEspComponent implements OnInit {
         if (findProject != null) {
           this.project = findProject.foran;
         }
+        console.log(findProject, projects);
         console.log(this.project);
         if (this.issue.id == 0){
           this.fillRevisions();
@@ -1364,10 +1366,10 @@ export class HullEspComponent implements OnInit {
     let sorted = _.sortBy(this.parts, (x: any) => x.PART_CODE);
     let label = sorted.length > 0 ? (+sorted.reverse()[0].PART_CODE + 1) : 1;
 
-    this.dialogService.open(AddHullMaterialToEspComponent, {
+    this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, this.issue.id, label]
+      data: [this.docNumber, label, 'hull', this.issue.id]
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.s.createHullEsp(this.project, this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
@@ -1375,6 +1377,18 @@ export class HullEspComponent implements OnInit {
         });
       }
     });
+
+    // this.dialogService.open(AddHullMaterialToEspComponent, {
+    //   showHeader: false,
+    //   modal: true,
+    //   data: [this.docNumber, this.issue.id, label]
+    // }).onClose.subscribe(res => {
+    //   if (res == 'success'){
+    //     this.s.createHullEsp(this.project, this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
+    //       this.fillParts();
+    //     });
+    //   }
+    // });
   }
 
   deleteMaterial(pos: string) {
