@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {LanguageService} from "../../domain/language.service";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
-import {MessageService} from "primeng/api";
+import { MessageService} from "primeng/api";
 import _ from "underscore";
 import {Table} from "primeng/table";
 import * as XLSX from "xlsx";
@@ -12,6 +12,7 @@ import {LV} from "../../domain/classes/lv";
 import {UntieComponent} from "../task/untie/untie.component";
 import {DownloadAllDocsComponent} from "./download-all-docs/download-all-docs.component";
 import {DialogService} from "primeng/dynamicdialog";
+import * as events from "events";
 
 @Component({
   selector: 'app-doclist',
@@ -31,18 +32,22 @@ export class DoclistComponent implements OnInit {
   selectedTaskStages: string[] = [];
   issuesSrc: Issue[] = [];
   issues: Issue[] = [];
+  issuesCorrection: any[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
   taskType = '';
   taskTypes: LV[] = ['RKD', 'PDSP', 'ED', 'PSD', 'ITT', 'MSH'].map(x => new LV(x));
   taskStages: LV[] = [];
-  statuses: string[] = [];
+  statuses: any[] = [];
   status = '';
   showWithFilesOnly = true;
   loading = false;
   revisionFiles: any[] = [];
   zipDocsUrl = '';
   searchValue = '';
+
+
+
   constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService) { }
 
 
@@ -50,6 +55,29 @@ export class DoclistComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.statuses = [
+      {label: 'Delivered', value: 'Delivered'},
+      {label: 'Joined', value: 'Joined'},
+      {label: 'New', value: 'New'},
+      {label: 'AssignedTo', value: 'AssignedTo'},
+      {label: 'ANY', value: 'ANY'},
+      {label: 'In Work', value: 'In Work'},
+      {label: 'Resolved', value: 'Resolved'},
+      {label: 'Not resolved', value: 'Not resolved'},
+      {label: 'Check', value: 'Check'},
+      {label: 'Not Approved', value: 'Not Approved'},
+      {label: 'Closed', value: 'Closed'},
+      {label: 'Send to RS', value: 'Send to RS'},
+      {label: 'Ready to Delivery', value: 'Ready to Delivery'},
+      {label: 'Send to RS', value: 'Send to RS'},
+      {label: 'Hold', value: 'Hold'},
+      {label: 'Approved by RS', value: 'Approved by RS'},
+      {label: 'Cancel', value: 'Cancel'},
+      {label: 'Closed', value: 'Closed'},
+    ]
+
+
     this.selectedTaskTypes = this.taskTypes.map(x => x.value);
     // this.issueManager.getIssueProjects().then(projects => {
     //   this.projects = projects;
@@ -60,9 +88,23 @@ export class DoclistComponent implements OnInit {
     //   this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
     // });
     this.loading = true;
+
+
     this.issueManager.getIssues('op').then(res => {
-      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
-      this.issuesSrc = this.issuesSrc.filter(x => this.auth.getUser().visible_projects.includes(x.project));
+
+      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null).sort((a, b) => a.id > b.id ? 1 : -1);
+      this.issuesSrc = this.issuesSrc.filter(x => this.auth.getUser().visible_projects.includes(x.project)).sort((a, b) => a.id > b.id ? 1 : -1);
+
+      console.log("all issues")
+      console.log(this.issuesSrc)
+
+      this.issueManager.getIssuesCorrection().subscribe(res => {
+        this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
+        console.log("all issues correction")
+        console.log(this.issuesCorrection)
+        this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection)
+        console.log(this.issuesSrc)
+      })
 
       this.issues = this.issuesSrc;
       this.issueManager.getRevisionFiles().then(revisionFiles => {
@@ -103,6 +145,22 @@ export class DoclistComponent implements OnInit {
     //   this.selectedDepartments = [...this.departments.map(x => x.name)];
     //   this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
     // });
+  }
+
+
+  addCorrection(arr1: any[], arr2: any[]) {
+    return arr1.map(item1 => {
+      item1.contract_due_date = new Date(item1.contract_due_date)
+      item1.last_update = new Date(item1.last_update)
+      const matchingItem = arr2.find(item2 => item2.id === item1.id);
+      if (matchingItem) {
+        // Если найден элемент с таким же id, добавляем поле correction с значением 1
+        return { ...item1, correction: true };
+      } else {
+        // Если не найден, добавляем поле correction с значением 0
+        return { ...item1, correction: false };
+      }
+    });
   }
 
   getNumber(text: string){
@@ -160,6 +218,8 @@ export class DoclistComponent implements OnInit {
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
+
+
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
     let foranProject = project.replace('NR', 'N');
     let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
@@ -205,13 +265,15 @@ export class DoclistComponent implements OnInit {
     this.issues = this.issues.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
     this.issues = this.issues.filter(x => this.selectedTaskStages.includes(x.period));
     this.issues = this.issues.filter(x => (x.id + x.doc_number + x.name))
-    this.issues = _.sortBy(this.issues, x => x.doc_number);
+    // this.issues = _.sortBy(this.issues, x => x.doc_number);
 
     setTimeout(() => {
       if (this.searchValue != ''){
         this.table.filterGlobal(this.searchValue, 'contains');
       }
     }, 100);
+    console.log("printed this.issues")
+    console.log(this.issues)
   }
 
   copyUrl(issueId: number, project: string, docNumber: string, department: string){
