@@ -93,7 +93,16 @@
 <!--              </p-columnFilter>-->
             </th>
             <th *ngIf="auth.getUser().permissions.includes('visible_doc_status')" pSortableColumn="status" class="cxy w-100">{{t.tr('Статус')}}
-              <p-sortIcon field="status"></p-sortIcon>
+              <p-columnFilter field="status" matchMode="equals" display="menu">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
+                    <ng-template let-option pTemplate="item">
+                      <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                    </ng-template>
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+<!--         <p-sortIcon field="status"></p-sortIcon>-->
 <!--              <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
 <!--                <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
 <!--                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">-->
@@ -109,11 +118,25 @@
             </th>
             <th style="min-width: 120px; max-width: 120px" pSortableColumn="contract_due_date" class="lxy w-100">{{t.tr('Срок исполнения')}}
               <p-sortIcon field="contract_due_date"></p-sortIcon>
+              <p-columnFilter class="filter" type="date" field="contract_due_date" display="menu"></p-columnFilter>
+<!--              <p-columnFilter type="date" field="contract_due_date" display="menu" >-->
+<!--&lt;!&ndash;                <input type="text" (input)="transformInput($event)">&ndash;&gt;-->
+<!--              </p-columnFilter>-->
+
+<!--              <p-columnFilter type="text" field="contract_due_date" display="menu"  ></p-columnFilter>-->
             </th>
             <th style="min-width: 120px; max-width: 120px" pSortableColumn="last_update" class="lxy w-100">{{t.tr('Обновлено')}}
               <p-sortIcon field="last_update"></p-sortIcon>
+              <p-columnFilter class="filter" type="date" field="last_update" display="menu"></p-columnFilter>
             </th>
-            <th style="min-width: 180px" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{t.tr('Комментарий')}}</th>
+            <th style="min-width: 180px" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{t.tr('Комментарий')}}
+<!--              <p-sortIcon field="issue_comment"></p-sortIcon>-->
+              <p-columnFilter type="text" field="issue_comment" display="menu"></p-columnFilter>
+            </th>
+            <th style="min-width: 180px; max-width: 220px" pSortableColumn="correction" class="lxy w-100">{{t.tr('Корректировка')}}
+              <p-sortIcon field="correction"></p-sortIcon>
+              <p-columnFilter style="padding-left: 5px" type="boolean" field="correction"></p-columnFilter>
+            </th>
             <th style="min-width: 50px; max-width: 50px" class="w-5">{{t.tr('Файл')}}</th>
           </tr>
         </ng-template>
@@ -133,6 +156,8 @@
             <td style="min-width: 120px; max-width: 120px" class="text-14 w-100">{{getDate(issue.contract_due_date)}}</td>
             <td style="min-width: 120px; max-width: 120px" class="text-14 w-100">{{getDate(issue.last_update)}}</td>
             <td style="min-width: 180px" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="text-14 w-100 break-word">{{issue.issue_comment}}</td>
+<!--            <td style="min-width: 100px; max-width: 100px" class="text-14 w-100">{{issue.correction}}</td>-->
+            <td style="min-width: 150px; display: flex; justify-content: center"><img *ngIf="issue.correction" style="min-width: 15px; max-width: 15px" src="assets/icons/attention1.svg" alt=""></td>
             <td style="min-width: 50px; max-width: 50px" class="text-14 w-5">
 <!--              <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">-->
 <!--                <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">-->

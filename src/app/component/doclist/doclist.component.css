@@ -268,3 +268,9 @@
   cursor: pointer;
   padding: 10px;
 }
+
+.correction{
+  background-image: url("../../../assets/icons/attention1.svg");
+  width: 12px;
+  height: 12px;
+}
