@@ -647,7 +647,7 @@ export class HullEspComponent implements OnInit {
     });
   }
   round(input: number) {
-    return Math.round(input * 100) / 100;
+    return Math.round(input * 1000) / 1000;
   }
   openFile(file: FileAttachment, cmapFormat = 'cnc') {
     if (file.group == 'Cutting Map'){
