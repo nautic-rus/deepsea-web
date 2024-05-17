@@ -93,11 +93,11 @@
 <!--              </p-columnFilter>-->
             </th>
             <th  style="min-width: 110px; max-width: 110px" *ngIf="auth.getUser().permissions.includes('visible_doc_status')" pSortableColumn="status" class="cxy w-100">{{t.tr('Статус')}}
-              <p-columnFilter field="status" matchMode="equals" display="menu">
+              <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                 <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                   <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
                     <ng-template let-option pTemplate="item">
-                      <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                      <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>
                     </ng-template>
                   </p-dropdown>
                 </ng-template>
@@ -113,8 +113,8 @@
             <th style="min-width: 110px; max-width: 120px" pSortableColumn="revision" class="lxy w-100">{{t.tr('Ревизия')}}
               <p-sortIcon field="revision"></p-sortIcon>
             </th>
-            <th style="min-width: 100px; max-width: 100px" pSortableColumn="stage" class="lxy w-100">{{t.tr('Этап')}}
-              <p-sortIcon field="stage"></p-sortIcon>
+            <th style="min-width: 100px; max-width: 100px" pSortableColumn="period" class="lxy w-100">{{t.tr('Этап')}}
+              <p-sortIcon field="period"></p-sortIcon>
             </th>
             <th style="min-width: 150px; max-width: 150px" pSortableColumn="contract_due_date" class="lxy w-100">{{t.tr('Срок исполнения')}}
               <p-sortIcon field="contract_due_date"></p-sortIcon>

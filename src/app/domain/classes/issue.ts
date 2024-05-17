@@ -60,4 +60,5 @@ export class Issue {
   recommended_response_date: Date;
   started_date_as_date: Date;
   removed = 0;
+  correction: any;
 }

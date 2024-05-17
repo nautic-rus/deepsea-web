@@ -61,20 +61,13 @@ export class DoclistComponent implements OnInit {
       {label: 'Joined', value: 'Joined'},
       {label: 'New', value: 'New'},
       {label: 'AssignedTo', value: 'AssignedTo'},
-      {label: 'ANY', value: 'ANY'},
       {label: 'In Work', value: 'In Work'},
-      {label: 'Resolved', value: 'Resolved'},
-      {label: 'Not resolved', value: 'Not resolved'},
       {label: 'Check', value: 'Check'},
-      {label: 'Not Approved', value: 'Not Approved'},
-      {label: 'Closed', value: 'Closed'},
       {label: 'Send to RS', value: 'Send to RS'},
       {label: 'Ready to Delivery', value: 'Ready to Delivery'},
       {label: 'Send to RS', value: 'Send to RS'},
       {label: 'Hold', value: 'Hold'},
       {label: 'Approved by RS', value: 'Approved by RS'},
-      {label: 'Cancel', value: 'Cancel'},
-      {label: 'Closed', value: 'Closed'},
     ]
 
 
@@ -190,11 +183,17 @@ export class DoclistComponent implements OnInit {
       data.push({
         'Doc number': issue.doc_number,
         'Title': issue.name,
+        'Type': issue.issue_type,
+        'Project': issue.project,
+        'Contract': issue.contract,
         'Department': issue.department,
+        'Status': issue.status,
+        'Revision': issue.revision,
         'Stage': issue.period,
         'Contract due date': this.getDateOnly(issue.contract_due_date),
         'Last update': this.getDateOnly(issue.last_update),
-        'Comment': issue.issue_comment
+        'Comment': issue.issue_comment,
+        'Correction': issue.correction
       })
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
