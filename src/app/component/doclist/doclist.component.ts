@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Issue} from "../../domain/classes/issue";
 import {Router} from "@angular/router";
 import {LanguageService} from "../../domain/language.service";
@@ -41,21 +41,20 @@ export class DoclistComponent implements OnInit {
   statuses: any[] = [];
   status = '';
   showWithFilesOnly = true;
-  loading = false;
+  loading = true;
   revisionFiles: any[] = [];
   zipDocsUrl = '';
   searchValue = '';
 
 
 
-  constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService) { }
+  constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService, public cd: ChangeDetectorRef) { }
 
 
   @ViewChild('table') table: Table;
 
 
   ngOnInit(): void {
-
     this.statuses = [
       {label: 'Delivered', value: 'Delivered'},
       {label: 'Joined', value: 'Joined'},
@@ -82,21 +81,18 @@ export class DoclistComponent implements OnInit {
     // });
     this.loading = true;
 
+    setTimeout(() => {
+      this.cd.detach();
+    }, 100);
 
     this.issueManager.getIssues('op').then(res => {
-
       this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null).sort((a, b) => a.id > b.id ? 1 : -1);
       this.issuesSrc = this.issuesSrc.filter(x => this.auth.getUser().visible_projects.includes(x.project)).sort((a, b) => a.id > b.id ? 1 : -1);
 
-      console.log("all issues")
-      console.log(this.issuesSrc)
 
       this.issueManager.getIssuesCorrection().subscribe(res => {
         this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
-        console.log("all issues correction")
-        console.log(this.issuesCorrection)
         this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection)
-        console.log(this.issuesSrc)
       })
 
       this.issues = this.issuesSrc;
@@ -104,6 +100,7 @@ export class DoclistComponent implements OnInit {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
         this.loading = false;
+        this.cd.reattach();
       });
 
       this.projects = _.sortBy(_.uniq(this.issues.map(x => x.project)), x => x).map(x => new LV(x));
@@ -132,6 +129,9 @@ export class DoclistComponent implements OnInit {
       this.taskStages = _.sortBy(_.uniq(this.issues.map(x => x.period)), x => this.getNumber(x)).map(x => new LV(x));
       this.selectedTaskStages = this.taskStages.map(x => x.value);
       this.selectedTaskStages = localStorage.getItem('selectedTaskStages') != null ? JSON.parse(localStorage.getItem('selectedTaskStages')!) : this.selectedTaskStages;
+
+
+
     });
     // this.issueManager.getDepartments().subscribe(departments => {
     //   this.departments = departments.filter(x => x.visible_documents == 1);
@@ -271,8 +271,6 @@ export class DoclistComponent implements OnInit {
         this.table.filterGlobal(this.searchValue, 'contains');
       }
     }, 100);
-    console.log("printed this.issues")
-    console.log(this.issues)
   }
 
   copyUrl(issueId: number, project: string, docNumber: string, department: string){

@@ -60,13 +60,14 @@
       </div>
 
       <div style="width: 100%">
-        <p-table *ngIf="issues.length != 0" #table [value]="issues"
+        <p-table *ngIf="!loading" #table [value]="issues"
                  [scrollable]="true"
                  [virtualRowHeight]="40"
                  scrollHeight="calc(100vh - 220px)"
                  [tableStyle]="{'min-width': '50em'}"
                  styleClass="p-datatable-striped"
                  responsiveLayout="scroll"
+                 [virtualScroll]="true"
                  [globalFilterFields]="['id','doc_number','name','status']">
           <ng-template pTemplate="header">
             <tr>
@@ -108,18 +109,12 @@
               <th style="flex: 0 0 6%; min-width: 150px" pSortableColumn="contract_due_date" class="lxy  ">{{t.tr('Срок исполнения')}}
                 <p-sortIcon field="contract_due_date"></p-sortIcon>
                 <p-columnFilter class="filter" type="date" field="contract_due_date" display="menu"></p-columnFilter>
-                <!--              <p-columnFilter type="date" field="contract_due_date" display="menu" >-->
-                <!--&lt;!&ndash;                <input type="text" (input)="transformInput($event)">&ndash;&gt;-->
-                <!--              </p-columnFilter>-->
-
-                <!--              <p-columnFilter type="text" field="contract_due_date" display="menu"  ></p-columnFilter>-->
               </th>
               <th style="flex: 0 0 6%;   min-width: 150px" pSortableColumn="last_update" class="lxy  ">{{t.tr('Обновлено')}}
                 <p-sortIcon field="last_update"></p-sortIcon>
                 <p-columnFilter class="filter" type="date" field="last_update" display="menu"></p-columnFilter>
               </th>
               <th style="flex: 0 0 8%;  min-width: 140px; max-width: 140px" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{t.tr('Комментарий')}}
-                <!--              <p-sortIcon field="issue_comment"></p-sortIcon>-->
                 <p-columnFilter type="text" field="issue_comment" display="menu"></p-columnFilter>
               </th>
               <th style="flex: 0 0 6%;  min-width: 170px; max-width: 170px" pSortableColumn="correction" class="lxy  ">{{t.tr('Корректировка')}}
@@ -130,81 +125,6 @@
             </tr>
           </ng-template>
 
-
-<!--          <ng-template pTemplate="header">-->
-<!--            <tr>-->
-<!--              <th style="flex: 0 0 10%;  min-width: 150px" pSortableColumn="doc_number" class="lxy  ">{{t.tr('Номер чертежа')}}-->
-<!--                <p-sortIcon field="doc_number"></p-sortIcon>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 10%;  min-width: 150px" pSortableColumn="name" class="lxy">{{t.tr('Название')}}-->
-<!--                <p-sortIcon field="name"></p-sortIcon>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%;  max-width: 80px" pSortableColumn="doc_number" class="lxy  ">{{t.tr('Тип')}}-->
-<!--                <p-sortIcon field="doc_number"></p-sortIcon>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%;  min-width: 90px" pSortableColumn="project" class="lxy  ">{{t.tr('Проект')}}-->
-<!--                <p-sortIcon field="project"></p-sortIcon>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%;  min-width: 100px" pSortableColumn="contract" class="lxy  ">{{t.tr('Договор')}}-->
-<!--                <p-sortIcon field="contract"></p-sortIcon>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%;  min-width: 91px" pSortableColumn="department" class="cxy  ">{{t.tr('Отдел')}}-->
-<!--                <p-sortIcon field="department"></p-sortIcon>-->
-<!--                &lt;!&ndash;              <p-columnFilter class="filter" [field]="'department'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">&ndash;&gt;-->
-<!--                &lt;!&ndash;                <ng-template pTemplate="filter" let-value let-filter="filterCallback">&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.department" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">&ndash;&gt;-->
-<!--                &lt;!&ndash;                  </p-multiSelect>&ndash;&gt;-->
-<!--                &lt;!&ndash;                </ng-template>&ndash;&gt;-->
-<!--                &lt;!&ndash;              </p-columnFilter>&ndash;&gt;-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%;  min-width: 92px" *ngIf="auth.getUser().permissions.includes('visible_doc_status')" pSortableColumn="status" class="cxy  ">{{t.tr('Статус')}}-->
-<!--                <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
-<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
-<!--                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">-->
-<!--                      <ng-template let-option pTemplate="item">-->
-<!--                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
-<!--                      </ng-template>-->
-<!--                    </p-dropdown>-->
-<!--                  </ng-template>-->
-<!--                </p-columnFilter>-->
-<!--                &lt;!&ndash;         <p-sortIcon field="status"></p-sortIcon>&ndash;&gt;-->
-<!--                &lt;!&ndash;              <p-columnFilter class="filter" [field]="'status'" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">&ndash;&gt;-->
-<!--                &lt;!&ndash;                <ng-template pTemplate="filter" let-value let-filter="filterCallback">&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <p-multiSelect [displaySelectedLabel]="false" [ngModel]="value" [options]="filters.status" optionValue="value" optionLabel="label" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">&ndash;&gt;-->
-<!--                &lt;!&ndash;                  </p-multiSelect>&ndash;&gt;-->
-<!--                &lt;!&ndash;                </ng-template>&ndash;&gt;-->
-<!--                &lt;!&ndash;              </p-columnFilter>&ndash;&gt;-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%; min-width: 97px" pSortableColumn="revision" class="lxy  ">{{t.tr('Ревизия')}}-->
-<!--                <p-sortIcon field="revision"></p-sortIcon>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%; max-width: 85px" pSortableColumn="period" class="lxy  ">{{t.tr('Этап')}}-->
-<!--                <p-sortIcon field="period"></p-sortIcon>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%; min-width: 150px" pSortableColumn="contract_due_date" class="lxy  ">{{t.tr('Срок исполнения')}}-->
-<!--                <p-sortIcon field="contract_due_date"></p-sortIcon>-->
-<!--                <p-columnFilter class="filter" type="date" field="contract_due_date" display="menu"></p-columnFilter>-->
-<!--                &lt;!&ndash;              <p-columnFilter type="date" field="contract_due_date" display="menu" >&ndash;&gt;-->
-<!--                &lt;!&ndash;&lt;!&ndash;                <input type="text" (input)="transformInput($event)">&ndash;&gt;&ndash;&gt;-->
-<!--                &lt;!&ndash;              </p-columnFilter>&ndash;&gt;-->
-
-<!--                &lt;!&ndash;              <p-columnFilter type="text" field="contract_due_date" display="menu"  ></p-columnFilter>&ndash;&gt;-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%;   min-width: 150px" pSortableColumn="last_update" class="lxy  ">{{t.tr('Обновлено')}}-->
-<!--                <p-sortIcon field="last_update"></p-sortIcon>-->
-<!--                <p-columnFilter class="filter" type="date" field="last_update" display="menu"></p-columnFilter>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 10%;  min-width: 140px; max-width: 140px" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{t.tr('Комментарий')}}-->
-<!--                &lt;!&ndash;              <p-sortIcon field="issue_comment"></p-sortIcon>&ndash;&gt;-->
-<!--                <p-columnFilter type="text" field="issue_comment" display="menu"></p-columnFilter>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%;  min-width: 170px; max-width: 170px" pSortableColumn="correction" class="lxy  ">{{t.tr('Корректировка')}}-->
-<!--                <p-sortIcon field="correction"></p-sortIcon>-->
-<!--                <p-columnFilter style="padding-left: 5px" type="boolean" field="correction"></p-columnFilter>-->
-<!--              </th>-->
-<!--              <th style="flex: 0 0 6%" class="w-5">{{t.tr('Файл')}}</th>-->
-<!--            </tr>-->
-<!--          </ng-template>-->
           <ng-template pTemplate="body" let-issue>
             <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
               <td style="flex: 0 0 10%;  min-width: 150px"  class="text-14  break-word">{{issue.doc_number}}</td>
