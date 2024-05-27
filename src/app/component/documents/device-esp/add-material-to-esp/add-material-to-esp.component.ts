@@ -191,11 +191,11 @@ export class AddMaterialToEspComponent implements OnInit {
       }
     }
     else{
-      console.log(this.label);
       if (this.label.toString().includes('#')){
         this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
         return;
       }
+      console.log(this.docNumber, this.selectedMaterial.code, this.units, this.count, this.label, this.forLabel, this.addText, this.zone);
       this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel, this.addText, this.zone).then(res => {
         this.ref.close('success');
       });
