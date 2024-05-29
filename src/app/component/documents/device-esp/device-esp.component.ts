@@ -953,10 +953,14 @@ export class DeviceEspComponent implements OnInit {
     });
   }
   addMaterial(label: string = '', userId: string = '') {
+    let sorted = _.sortBy(this.devices.filter((x: any) => x.userId.includes(label + '.')), (x: any) => +x.userId.split('.').pop());
+    let labelNew = label + '.' + (sorted.length > 0 ? (+sorted.reverse()[0].userId.split('.').pop() + 1) : 1);
+
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label, userId, '']
+      data: [this.docNumber, labelNew, 'NEW', '']
+      //data: [this.docNumber, label, userId, '']
     }).onClose.subscribe(res => {
       if (res == 'success'){
         this.s.createDeviceEsp(this.foranProject, this.issue.doc_number, this.revEspNoDate, this.auth.getUser().login, 'device', this.issue.id).subscribe(res => {
