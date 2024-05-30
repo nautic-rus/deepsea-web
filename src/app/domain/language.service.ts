@@ -152,7 +152,7 @@ export class LanguageService {
           case 'Ревизия': return 'Revision';
           case 'Дата поставки': return 'Delivery date';
           case 'Родительская задача': return 'Parent task';
-          case 'Примечение': return 'Note';
+          case 'Примечание': return 'Note';
           case 'сообщение': return 'message';
           case 'Текущая ревизия': return 'Current revision';
           case 'Предыдущие ревизии': return 'Previous revisions';
