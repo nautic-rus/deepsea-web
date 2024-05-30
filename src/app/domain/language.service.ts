@@ -644,6 +644,7 @@ export class LanguageService {
           case 'изменил(а) эл. парам': return 'changed a elec. param'
           case 'изменил(а) статус': return 'changed a status'
           case 'Загружен': return 'Uploaded'
+          case 'Корректировка': return 'Correction'
           case 'Здесь пока нет заархивированных файлов': return 'There are no archived files here yet'
           case '': return ''
           default: return input;

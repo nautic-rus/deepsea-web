@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Issue} from "../../domain/classes/issue";
 import {Router} from "@angular/router";
 import {LanguageService} from "../../domain/language.service";
 import {IssueManagerService} from "../../domain/issue-manager.service";
 import {AuthManagerService} from "../../domain/auth-manager.service";
-import {MessageService} from "primeng/api";
+import { MessageService} from "primeng/api";
 import _ from "underscore";
 import {Table} from "primeng/table";
 import * as XLSX from "xlsx";
@@ -12,6 +12,7 @@ import {LV} from "../../domain/classes/lv";
 import {UntieComponent} from "../task/untie/untie.component";
 import {DownloadAllDocsComponent} from "./download-all-docs/download-all-docs.component";
 import {DialogService} from "primeng/dynamicdialog";
+import * as events from "events";
 
 @Component({
   selector: 'app-doclist',
@@ -31,25 +32,44 @@ export class DoclistComponent implements OnInit {
   selectedTaskStages: string[] = [];
   issuesSrc: Issue[] = [];
   issues: Issue[] = [];
+  issuesCorrection: any[] = [];
   filters:  { status: any[],  revision: any[], department: any[] } = { status: [], revision: [], department: [] };
   projectNames: any[] = [];
   taskType = '';
   taskTypes: LV[] = ['RKD', 'PDSP', 'ED', 'PSD', 'ITT', 'MSH'].map(x => new LV(x));
   taskStages: LV[] = [];
-  statuses: string[] = [];
+  statuses: any[] = [];
   status = '';
   showWithFilesOnly = true;
-  loading = false;
+  loading = true;
   revisionFiles: any[] = [];
   zipDocsUrl = '';
   searchValue = '';
-  constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService) { }
+
+
+
+  constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService, public cd: ChangeDetectorRef) { }
 
 
   @ViewChild('table') table: Table;
 
 
   ngOnInit(): void {
+    this.statuses = [
+      {label: 'Delivered', value: 'Delivered'},
+      {label: 'Joined', value: 'Joined'},
+      {label: 'New', value: 'New'},
+      {label: 'AssignedTo', value: 'AssignedTo'},
+      {label: 'In Work', value: 'In Work'},
+      {label: 'Check', value: 'Check'},
+      {label: 'Send to RS', value: 'Send to RS'},
+      {label: 'Ready to Delivery', value: 'Ready to Delivery'},
+      {label: 'Send to RS', value: 'Send to RS'},
+      {label: 'Hold', value: 'Hold'},
+      {label: 'Approved by RS', value: 'Approved by RS'},
+    ]
+
+
     this.selectedTaskTypes = this.taskTypes.map(x => x.value);
     // this.issueManager.getIssueProjects().then(projects => {
     //   this.projects = projects;
@@ -60,15 +80,27 @@ export class DoclistComponent implements OnInit {
     //   this.showWithFilesOnly = localStorage.getItem('showWithFilesOnly') != null ? localStorage.getItem('showWithFilesOnly')! == 'true' : this.showWithFilesOnly;
     // });
     this.loading = true;
+
+    setTimeout(() => {
+      this.cd.detach();
+    }, 100);
+
     this.issueManager.getIssues('op').then(res => {
-      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
-      this.issuesSrc = this.issuesSrc.filter(x => this.auth.getUser().visible_projects.includes(x.project));
+      this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null).sort((a, b) => a.id > b.id ? 1 : -1);
+      this.issuesSrc = this.issuesSrc.filter(x => this.auth.getUser().visible_projects.includes(x.project)).sort((a, b) => a.id > b.id ? 1 : -1);
+
+
+      this.issueManager.getIssuesCorrection().subscribe(res => {
+        this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
+        this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection)
+      })
 
       this.issues = this.issuesSrc;
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
         this.loading = false;
+        this.cd.reattach();
       });
 
       this.projects = _.sortBy(_.uniq(this.issues.map(x => x.project)), x => x).map(x => new LV(x));
@@ -97,12 +129,31 @@ export class DoclistComponent implements OnInit {
       this.taskStages = _.sortBy(_.uniq(this.issues.map(x => x.period)), x => this.getNumber(x)).map(x => new LV(x));
       this.selectedTaskStages = this.taskStages.map(x => x.value);
       this.selectedTaskStages = localStorage.getItem('selectedTaskStages') != null ? JSON.parse(localStorage.getItem('selectedTaskStages')!) : this.selectedTaskStages;
+
+
+
     });
     // this.issueManager.getDepartments().subscribe(departments => {
     //   this.departments = departments.filter(x => x.visible_documents == 1);
     //   this.selectedDepartments = [...this.departments.map(x => x.name)];
     //   this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
     // });
+  }
+
+
+  addCorrection(arr1: any[], arr2: any[]) {
+    return arr1.map(item1 => {
+      item1.contract_due_date = new Date(item1.contract_due_date)
+      item1.last_update = new Date(item1.last_update)
+      const matchingItem = arr2.find(item2 => item2.id === item1.id);
+      if (matchingItem) {
+        // Если найден элемент с таким же id, добавляем поле correction с значением 1
+        return { ...item1, correction: true };
+      } else {
+        // Если не найден, добавляем поле correction с значением 0
+        return { ...item1, correction: false };
+      }
+    });
   }
 
   getNumber(text: string){
@@ -132,11 +183,17 @@ export class DoclistComponent implements OnInit {
       data.push({
         'Doc number': issue.doc_number,
         'Title': issue.name,
+        'Type': issue.issue_type,
+        'Project': issue.project,
+        'Contract': issue.contract,
         'Department': issue.department,
+        'Status': issue.status,
+        'Revision': issue.revision,
         'Stage': issue.period,
         'Contract due date': this.getDateOnly(issue.contract_due_date),
         'Last update': this.getDateOnly(issue.last_update),
-        'Comment': issue.issue_comment
+        'Comment': issue.issue_comment,
+        'Correction': issue.correction
       })
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
@@ -160,6 +217,8 @@ export class DoclistComponent implements OnInit {
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
+
+
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
     let foranProject = project.replace('NR', 'N');
     let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
@@ -205,7 +264,7 @@ export class DoclistComponent implements OnInit {
     this.issues = this.issues.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null);
     this.issues = this.issues.filter(x => this.selectedTaskStages.includes(x.period));
     this.issues = this.issues.filter(x => (x.id + x.doc_number + x.name))
-    this.issues = _.sortBy(this.issues, x => x.doc_number);
+    // this.issues = _.sortBy(this.issues, x => x.doc_number);
 
     setTimeout(() => {
       if (this.searchValue != ''){
