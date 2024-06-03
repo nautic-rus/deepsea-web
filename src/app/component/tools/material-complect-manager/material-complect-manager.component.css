@@ -23,9 +23,8 @@
 }
 .complect-header{
   display: grid;
-  grid-template-columns: 280px 60px 20px;
+  grid-template-columns: 120px 60px 140px 20px 20px;
   font-size: 16px;
-  font-weight: bold;
 }
 .complect-content{
   font-size: 12px;

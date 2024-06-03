@@ -25,6 +25,7 @@ import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-m
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 import {EleEspGenerationWaitComponent} from "./ele-esp-generation-wait/ele-esp-generation-wait.component";
 import {LV} from "../../../domain/classes/lv";
+import {AddComplectToEspComponent} from "./add-complect-to-esp/add-complect-to-esp.component";
 
 @Component({
   selector: 'app-electric-esp',
@@ -919,6 +920,15 @@ export class ElectricEspComponent implements OnInit {
 
   addMaterial(label: string = '') {
     this.dialogService.open(AddMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, label, 'ele', this.issue.id]
+    }).onClose.subscribe(res => {
+      this.fillEle();
+    });
+  }
+  addComplect(label: string = '') {
+    this.dialogService.open(AddComplectToEspComponent, {
       showHeader: false,
       modal: true,
       data: [this.docNumber, label, 'ele', this.issue.id]
