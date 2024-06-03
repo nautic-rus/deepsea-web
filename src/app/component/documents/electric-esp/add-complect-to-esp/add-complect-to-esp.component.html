@@ -1,9 +1,80 @@
-<div class="dialog df">
+<div class="dialog">
+  <div class="close-button" (click)="close()">
+    <i class="pi pi-times"></i>
+  </div>
   <div class="w-100 df">
-    <div class="w-40">
-      <div *ngFor="let c of complects">
-        <div>{{c.name}}</div>
-      </div>
+    <div class="w-40 complects">
+      <p-table [value]="complects" [scrollable]="true" [virtualScroll]="true" [virtualRowHeight]="20" [scrollHeight]="'56vh'" [(selection)]="selectedComplects" [globalFilterFields]="['name']" #complectsTable>
+        <ng-template pTemplate="caption">
+          <div class="flex">
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input #searchMaterials pInputText type="text" (input)="complectsTable.filterGlobal(searchMaterials.value, 'contains')" placeholder="Поиск" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>User</th>
+            <th>Kind</th>
+            <th>Count</th>
+            <th>Amount</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-complect>
+          <tr>
+            <td>{{complect.name}}</td>
+            <td>{{auth.getUserNameById(complect.user_id)}}</td>
+            <td>{{complect.kind}}</td>
+            <td>{{complect.materials.length}} pcs</td>
+            <td>
+              <p-inputNumber (ngModelChange)="amountChanged()" inputStyleClass="width-50 padding-none" [(ngModel)]="complect.count" [showButtons]="true"></p-inputNumber>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
     </div>
+    <div class="w-60 materials">
+      <p-table [value]="complectMaterials" [scrollable]="true" [virtualScroll]="true" [virtualRowHeight]="20" [scrollHeight]="'56vh'" [(selection)]="selectedComplects" [globalFilterFields]="['name']" #complectsTable>
+        <ng-template pTemplate="caption">
+          <div class="flex">
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input #searchMaterials pInputText type="text" (input)="complectsTable.filterGlobal(searchMaterials.value, 'contains')" placeholder="Поиск" />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>Stock code</th>
+            <th>Units</th>
+            <th>Count</th>
+            <th>Label</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-material>
+          <tr>
+            <td>{{material.name}}</td>
+            <td>{{material.code}}</td>
+            <td>{{material.units}}</td>
+            <td>
+              <p-inputNumber inputStyleClass="width-50 padding-none" [(ngModel)]="material.count" [showButtons]="true"></p-inputNumber>
+            </td>
+            <td>
+              <input pInputText type="text" [(ngModel)]="material.label"/>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+
+  </div>
+  <div class="df">
+    <button (click)="commit()">Подтвердить</button>
+    <button (click)="close()">Отмена</button>
   </div>
 </div>

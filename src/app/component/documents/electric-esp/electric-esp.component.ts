@@ -927,11 +927,16 @@ export class ElectricEspComponent implements OnInit {
       this.fillEle();
     });
   }
-  addComplect(label: string = '') {
+  addComplect(label: string, eles: any[]) {
+    let elesSorted = _.sortBy(eles, e => e.pos);
+    let count = 1;
+    if (elesSorted.length > 0){
+      count = elesSorted[elesSorted.length - 1].pos + 1;
+    }
     this.dialogService.open(AddComplectToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label, 'ele', this.issue.id]
+      data: [this.docNumber, label, count, 'ele', this.issue.id]
     }).onClose.subscribe(res => {
       this.fillEle();
     });
