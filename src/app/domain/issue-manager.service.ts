@@ -20,6 +20,7 @@ import {Weather} from "./classes/weather";
 import {IssueCheck} from "./classes/issue-check";
 import {DailyTask} from "./interfaces/daily-task";
 import {EquipmentsFiles} from "./classes/equipments-files";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -580,5 +581,20 @@ export class IssueManagerService {
   }
   getProjectStats(project: string, docType: string){
     return this.http.get(props.http + '/projectStats', {params: {project, docType}});
+  }
+
+  getFilters(userId: number): Observable<any>{
+    // @ts-ignore
+    return this.http.get(props.httpD + `/filtersSaved?userId=${userId}`);
+    // return this.http.get(`http://localhost:5055/filtersSaved?userId=${userId}`);
+  }
+
+  deleteFilterSaved(id: number): Observable<any>{
+    // @ts-ignore
+    return this.http.get(props.httpD + `/deleteFilterSaved?id=${id}`);
+  }
+
+  saveFilters(filters: any) {
+    return this.http.post<string>(props.httpD + `/saveFilters`, filters);
   }
 }

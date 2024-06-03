@@ -228,6 +228,7 @@ import { StorageUploadPhotoComponent } from './component/warehouse/storage-uploa
 import { CreateGroupComponent } from './component/equipments/create-group/create-group.component';
 import { EditGroupComponent } from './component/equipments/edit-group/edit-group.component';
 import { WarehouseFullComponent } from './component/warehouse-full/warehouse-full.component';
+import { FilterNameComponent } from './component/home/filter-name/filter-name.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -397,6 +398,7 @@ Quill.register('modules/imageResize', ImageResize);
     CreateGroupComponent,
     EditGroupComponent,
     WarehouseFullComponent,
+    FilterNameComponent,
 
   ],
   imports: [

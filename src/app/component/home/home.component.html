@@ -87,14 +87,64 @@
               {{t.tr('(Всего:')}} {{dt.value.length}})
             </div>
 
-            <div class="df c p-ml-auto hidden">
-              <div class="df c y cursor-pointer" (click)="saveFilters(dt)">
-                SAVE
+<!--            <div class="df c p-ml-auto">-->
+<!--              <div class="df c y cursor-pointer" (click)="saveFilters(dt)">-->
+<!--                SAVE-->
+<!--              </div>-->
+<!--              <div class="mx-10">-->
+<!--                <p-dropdown [options]="savedFilters" [(ngModel)]="selectedFilter" (ngModelChange)="loadFilter(dt)" [editable]="true"></p-dropdown>-->
+<!--              </div>-->
+<!--            </div>-->
+
+            <div class="df c p-ml-auto">
+              <div class="mr-10">
+                <div class="materials-button-home blue-button cxy" (click)="saveFilters()">
+                  <div class="cxy">{{t.tr('Сохранить фильтр')}}</div>
+                </div>
               </div>
-              <div class="mx-10">
-                <p-dropdown [options]="savedFilters" [(ngModel)]="selectedFilter" (ngModelChange)="loadFilter(dt)" [editable]="true"></p-dropdown>
+
+              <div class="mr-10">
+                <div class="materials-button-home blue-button cxy" (click)="cleanFilter(); filtersValues = null">
+                  <div class="cxy">{{t.tr('Сбросить фильтр')}}</div>
+                </div>
               </div>
+              <!--              <div class="mx-10">-->
+              <p-dropdown #dd [options]="savedFilters1" optionLabel="name" placeholder="No filter" [(ngModel)]="filtersValues">
+                <ng-template let-filter pTemplate="item">
+                  <div class="df filter-item"  style="position: relative; z-index: 8000" (click)="loadFilter(dt, filter)">
+<!--                    <div class="pr-10">{{filter.id}}</div>-->
+                    <div>{{filter.name}} </div>
+                    <div style="margin-left: 40px; position: relative; z-index: 8000" tooltipPosition="top" [pTooltip]="t.tr('Удалить фильтр')" (click)="deleteFilter(dt, filter.id, $event)">
+                      <img src="assets/icons/trash.svg" height="20">
+                    </div>
+<!--                    <button style="margin-left: 40px; position: relative; z-index: 8000" (click)="deleteFilter(dt, filter.id, $event)">Delete</button>-->
+                  </div>
+
+                </ng-template>
+              </p-dropdown>
+              <!--              </div>-->
             </div>
+
+<!--            <div class="df c p-ml-auto">-->
+<!--              <div class="mr-10">-->
+<!--                <div class="materials-button-home blue-button cxy" (click)="saveFilters()">-->
+<!--                  <div class="cxy">{{t.tr('Сохранить фильтр')}}</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <button style="margin-left: 20px; position: relative; z-index: 8000" (click)="cleanFilter()">X</button>-->
+<!--&lt;!&ndash;              <div class="mx-10">&ndash;&gt;-->
+<!--                <p-dropdown [options]="savedFilters1" optionLabel="field" (onChange)="loadFilter(dt, $event.value)">-->
+<!--                  <ng-template let-filter pTemplate="item">-->
+<!--                    <div class="df user-select">-->
+<!--                      <div class="pr-10">{{filter.id}}</div>-->
+<!--                      <div class="pr-10">{{filter.name}}</div>-->
+<!--                      <button style="margin-left: 40px; position: relative; z-index: 8000" (click)="deleteFilter(dt, filter.id, $event)">Delete</button>-->
+<!--                    </div>-->
+
+<!--                  </ng-template>-->
+<!--                </p-dropdown>-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            </div>-->
 
             <span class="p-input-icon-left p-ml-auto">
             <i class="pi pi-search"></i>
@@ -109,6 +159,7 @@
               <div class="header">
                 {{t.tr(col.header)}}
                 <p-sortIcon [style]="{display: 'inline-flex'}" *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+<!--                date created-->
                 <p-columnFilter class="filter" type="date" [field]="col.field" display="menu" *ngIf="col.date == true"></p-columnFilter>
                 <p-columnFilter class="filter" *ngIf="col.filter == true && col.date == false" [field]="col.field" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                   <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -175,3 +226,4 @@
   </div>
 </div>
 <p-toast position="bottom-center" key="home"></p-toast>
+<p-toast key="filterName" position="bottom-center"></p-toast>
