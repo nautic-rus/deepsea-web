@@ -10,15 +10,15 @@
     <p-multiSelect *ngIf="issuesSrc.length > 0" appendTo="body" class="mr-10" filterBy="id,issue_name,doc_number" optionLabel="id" [options]="issuesSrc" [(ngModel)]="selectedIssues" (ngModelChange)="issueSelected()" [filter]="true" [selectedItemsLabel]="'{0} items selected'"
                    styleClass="w-100" [virtualScroll]="true" [itemSize]="50" optionValue="id" [maxSelectedLabels]="9">
       <ng-template let-issue pTemplate="item">
-        <div class="df">
-          <div>
-            <div class="task">
-              <div class="min-text">{{issue.id}}</div>
-              <div class="min-text">{{issue.issue_type}}</div>
-              <div class="min-text">{{issue.project}}</div>
-              <div class="min-text">{{issue.doc_number}}</div>
+        <div class="df w-100">
+          <div class="w-100">
+            <div class="df w-100">
+              <div class="min-text w-20">{{issue.id}}</div>
+              <div class="min-text w-20">{{issue.issue_type}}</div>
+              <div class="min-text w-30">{{issue.project}}</div>
+              <div class="min-text w-30">{{issue.doc_number}}</div>
             </div>
-            <div class="issue-name">{{trimName(issue.issue_name)}}</div>
+            <div class="">{{trimName(issue.issue_name)}}</div>
           </div>
         </div>
       </ng-template>

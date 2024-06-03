@@ -201,9 +201,10 @@ select:focus {
   max-height: 300px !important;
   height: 300px !important;
 }
-.task{
-  display: grid;
-  grid-template-columns: 50px 80px 120px auto;
+.min-text {
+  font-size: 13px;
+  padding-right: 4px;
+  color: rgb(107 119 140);
 }
 /deep/body > div > div.p-multiselect-items-wrapper > ul > cdk-virtual-scroll-viewport{
   height: 400px !important;

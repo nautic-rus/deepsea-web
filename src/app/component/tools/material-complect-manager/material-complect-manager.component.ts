@@ -7,6 +7,7 @@ import {AddComplectComponent} from "../complect-manager/add-complect/add-complec
 import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AddMaterialComplectComponent} from "./add-material-complect/add-material-complect.component";
+import {AuthManagerService} from "../../../domain/auth-manager.service";
 
 @Component({
   selector: 'app-material-complect-manager',
@@ -17,7 +18,7 @@ export class MaterialComplectManagerComponent implements OnInit {
 
   project = 'N002';
   complects: any[] = [];
-  projects: string[] = [];
+  projects: any[] = [];
   selectedComplect: any;
   systems: any[] = [];
   selectedSystems: any[] = [];
@@ -25,48 +26,47 @@ export class MaterialComplectManagerComponent implements OnInit {
   selectedZones: any[] = [];
   materials: any[] = [];
   selectedMaterials: any[] = [];
-  constructor(public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public materialManagerService: MaterialManagerService, public issues: IssueManagerService) { }
+  specStatements: any[] = [];
+  projectId = 0;
+
+  constructor(public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public materialManager: MaterialManagerService, public issues: IssueManagerService, public auth: AuthManagerService) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.project = params.project != null ? params.project : this.project;
-      this.fillMaterials();
-      this.fillProjects();
-      this.fillComplects();
-    });
+    this.fillMaterials();
   }
 
   fillMaterials(){
-    this.issues.getIssueProjects().then(projects => {
-      let findRkd = projects.find(x => x.foran == this.project);
-      if (findRkd != null){
-        this.materialManagerService.getMaterials(findRkd.rkd).then(res => {
-          this.materials = _.sortBy(res, x => x.name);
-          console.log(this.materials);
-        });
-      }
+    this.issues.getSpecProjects().subscribe(projects => {
+      this.materialManager.getSpecStatements().subscribe(specStatements => {
+        this.specStatements = specStatements;
+        this.projects = projects.filter(x => specStatements.find((y: any) => y.project_id == x.id) != null);
+        if (this.projects.length > 0){
+          this.projectId = this.projects[0].id;
+        }
+        this.projectChanged();
+      });
     });
   }
-  fillProjects(){
-    this.s.getProjects().subscribe(res => {
-      this.projects = _.sortBy(res, x=> x);
+  projectChanged() {
+    this.materialManager.getSpecMaterials().subscribe(resMaterials => {
+      resMaterials.forEach((m: any) => m.materialCloudDirectory = '');
+      resMaterials.forEach((m: any) => m.path = []);
+      let projectStatements = this.specStatements.filter(x => x.project_id == this.projectId).map(x => x.id);
+      this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
+      this.fillComplects();
     });
   }
   fillComplects(){
-    this.materialManagerService.getMaterialComplects(this.project).subscribe(res => {
-      console.log(res);
+    this.materialManager.getMaterialComplects(this.projectId).subscribe(res => {
       this.complects = _.sortBy(res, x => x.drawingId);
+      console.log(res);
     });
   }
 
-  projectChanged() {
-    this.router.navigate([], {queryParams: {project: this.project}});
-  }
-
   save() {
-    let cMaterials = this.selectedMaterials.map(x => Object({material: x, count: x.count}));
+    let cMaterials = this.selectedMaterials.map(x => Object({material: x.code, count: x.count}));
     this.selectedComplect.materials = cMaterials;
-    this.materialManagerService.updateMaterialComplect(this.selectedComplect).subscribe(res => {
+    this.materialManager.updateMaterialComplect(this.selectedComplect).subscribe(res => {
       alert('Изменения сохранены');
       this.fillComplects();
     });
@@ -74,13 +74,11 @@ export class MaterialComplectManagerComponent implements OnInit {
 
   selectComplect(compl: any) {
     this.selectedComplect = compl;
+    this.materials.forEach(m => m.count = null);
     this.selectedComplect.materials.forEach((cMaterial: any) => {
-      let find = this.materials.find(x => x.code == cMaterial.material.code);
+      let find = this.materials.find(x => x.code == cMaterial.material);
       if (find != null){
         find.count = cMaterial.count;
-      }
-      else{
-        find.count = null;
       }
     });
     this.selectedMaterials = this.materials.filter((x: any) => x.count > 0);
@@ -91,7 +89,7 @@ export class MaterialComplectManagerComponent implements OnInit {
     this.d.open(AddMaterialComplectComponent, {
       showHeader: false,
       modal: true,
-      data: [this.project]
+      data: [this.projectId, 'elec']
     }).onClose.subscribe(event => {
       if (event == 'success'){
         this.fillComplects();
@@ -101,7 +99,7 @@ export class MaterialComplectManagerComponent implements OnInit {
 
   deleteComplect(compl: any) {
     if (confirm('Вы подтверждаете удаление комплекта "' + compl.name + '"?')){
-      this.materialManagerService.deleteMaterialComplect(compl.id).subscribe(res => {
+      this.materialManager.deleteMaterialComplect(compl.id).subscribe(res => {
         this.selectedComplect = null;
         this.fillComplects();
       });

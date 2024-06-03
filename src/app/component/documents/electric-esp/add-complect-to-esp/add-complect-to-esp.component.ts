@@ -1,27 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {Material} from "../../../../domain/classes/material";
+import {LV} from "../../../../domain/classes/lv";
+import {IssueManagerService} from "../../../../domain/issue-manager.service";
 import {LanguageService} from "../../../../domain/language.service";
+import {SpecManagerService} from "../../../../domain/spec-manager.service";
 import {MaterialManagerService} from "../../../../domain/material-manager.service";
 import {MessageService} from "primeng/api";
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AuthManagerService} from "../../../../domain/auth-manager.service";
-import {MaterialNode} from "../../../../domain/classes/material-node";
-import {AddMaterialComponent} from "../../../materials/add-material/add-material.component";
-import {RemoveConfirmationComponent} from "../../../materials/remove-confirmation/remove-confirmation.component";
-import {ContextMenu} from "primeng/contextmenu";
-import * as XLSX from "xlsx";
-import {SpecManagerService} from "../../../../domain/spec-manager.service";
-import {LV} from "../../../../domain/classes/lv";
 import _ from "underscore";
-import {IssueManagerService} from "../../../../domain/issue-manager.service";
-import {SpecMaterial} from "../../../../domain/classes/spec-material";
+import * as XLSX from "xlsx";
 
 @Component({
-  selector: 'app-add-material-to-esp',
-  templateUrl: './add-material-to-esp.component.html',
-  styleUrls: ['./add-material-to-esp.component.css']
+  selector: 'app-add-complect-to-esp',
+  templateUrl: './add-complect-to-esp.component.html',
+  styleUrls: ['./add-complect-to-esp.component.css']
 })
-export class AddMaterialToEspComponent implements OnInit {
+export class AddComplectToEspComponent implements OnInit {
+
 
   search: string = '';
   nodes: any = [];
@@ -65,6 +61,7 @@ export class AddMaterialToEspComponent implements OnInit {
   issueId = 0;
   materialsFilled = false;
   specStatements: any[] = [];
+  complects: any[] = [];
 
   constructor(public issues: IssueManagerService, public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
 
@@ -91,7 +88,6 @@ export class AddMaterialToEspComponent implements OnInit {
   fill(){
     this.issues.getSpecProjects().subscribe(projects => {
       this.materialManager.getSpecStatements().subscribe(specStatements => {
-        console.log(this.specStatements);
         this.specStatements = specStatements;
         this.projects = projects.filter(x => specStatements.find((y: any) => y.project_id == x.id) != null);
         if (this.projects.length > 0){
@@ -108,11 +104,9 @@ export class AddMaterialToEspComponent implements OnInit {
       let projectStatements = this.specStatements.filter(x => x.project_id == this.projectId).map(x => x.id);
       this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
       this.materialsSrc = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
-      this.materialManager.getSpecDirectories().subscribe(specDirectories => {
-        console.log(specDirectories);
-        console.log(this.project);
-        this.nodesSrc = specDirectories.filter((x: any) => x.project_id == this.projectId || x.project_id == 0);
-        this.nodes = _.sortBy(this.getNodes(this.nodesSrc, this.materials, 0), x => x.label);
+      this.materialManager.getMaterialComplects(this.projectId).subscribe(complects => {
+        console.log(complects);
+        this.complects = complects;
         this.materialsFilled = true;
       });
     });

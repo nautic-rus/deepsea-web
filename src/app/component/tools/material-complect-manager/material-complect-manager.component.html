@@ -5,7 +5,7 @@
         <div class="select-project df cx">
           <div class="big-text-card mb-1 cxy mx-10">Проект</div>
           <div class="mx-10">
-            <p-dropdown class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-156 font-14">
+            <p-dropdown class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionValue="id" optionLabel="name" styleClass="width-156 font-14">
             </p-dropdown>
           </div>
           <button (click)="addComplect()">ДОБАВИТЬ КОМПЛЕКТ</button>
@@ -15,10 +15,10 @@
             <div class="complect cursor-pointer" [class.selected-complect]="selectedComplect == compl" (click)="selectComplect(compl)">
               <div class="complect-header">
                 <div>{{compl.name}} {{getComplectLength(compl)}}</div>
+                <div>{{compl.kind}}</div>
+                <div>{{auth.getUserNameById(compl.user_id)}}</div>
                 <div class="complect-project">{{compl.project}}</div>
-                <div (click)="deleteComplect(compl)">
-                  DEL
-                </div>
+                <button (click)="deleteComplect(compl)">x</button>
               </div>
             </div>
           </div>
