@@ -1,0 +1,26 @@
+<div style="width: 460px;">
+  <div class="header-parts">
+    <div class="header-parts-text">{{t.tr('Создать новый фильтр')}}</div>
+    <div class="df">
+      <div class="parts-button-close cxy" (click)="close()">
+        <i class="pi pi-times"></i>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <input class="w-100" pInputText type="text" id="nameInput" name="someName" placeholder="Введите название для фильтра" [(ngModel)]="name">
+    </div>
+    <div class="mr-5 mt-20 df justify-content-end">
+      <div tabindex="10" [class.disabled-button]="!name" (click)="close()" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
+      <div tabindex="10" (click)="cancel()" class="button-cancel cxy ml-20">{{t.tr('Отмена')}}</div>
+    </div>
+<!--    <div>-->
+<!--      <button (click)="cancel()">Отмена</button>-->
+<!--      <button (click)="close()">Сохранить</button>-->
+<!--    </div>-->
+  </div>
+</div>
+
+
+

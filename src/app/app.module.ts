@@ -228,6 +228,7 @@ import { StorageUploadPhotoComponent } from './component/warehouse/storage-uploa
 import { CreateGroupComponent } from './component/equipments/create-group/create-group.component';
 import { EditGroupComponent } from './component/equipments/edit-group/edit-group.component';
 import { WarehouseFullComponent } from './component/warehouse-full/warehouse-full.component';
+import { FilterNameComponent } from './component/home/filter-name/filter-name.component';
 import { AddComplectToEspComponent } from './component/documents/electric-esp/add-complect-to-esp/add-complect-to-esp.component';
 
 Quill.register('modules/imageResize', ImageResize);
@@ -398,6 +399,7 @@ Quill.register('modules/imageResize', ImageResize);
     CreateGroupComponent,
     EditGroupComponent,
     WarehouseFullComponent,
+    FilterNameComponent,
     AddComplectToEspComponent,
 
   ],

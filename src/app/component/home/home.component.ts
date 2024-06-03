@@ -30,12 +30,29 @@ import {forkJoin, merge, zip} from "rxjs";
 import {Table} from "primeng/table";
 import {SequenceEqualOperator} from "rxjs/internal/operators/sequenceEqual";
 import {Equipment} from "../../domain/classes/equipment";
+import {FilterNameComponent} from "./filter-name/filter-name.component";
+import {Dropdown} from "primeng/dropdown";
+
+
+interface ISavedFilters {
+  id: number;
+  user_id: number;
+  field: string;
+  value: string;
+}
+
+interface IFilter {
+  field: string;
+  value: string | string[] | null;
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
+
 export class HomeComponent implements OnInit, AfterContentChecked {
   issues: Issue[] = [];
   cols: any[] = [];
@@ -49,6 +66,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showResponsible: boolean = false;
   showStartedBy: boolean = false;
   savedFilters: any[] = [];
+  savedFilters1: ISavedFilters[] = [];
+  filtersValues: any;
+  noFilters: boolean = true;
   selectedFilter = '';
 
   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public t: LanguageService) {
@@ -73,6 +93,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   ngOnInit() {
+
+    this.getSavedFilters();
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
       this.router.navigate([this.auth.getUser().visible_pages[0]]);
     }
@@ -902,27 +924,91 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  saveFilters(dt: Table) {
-    this.dt.stateKey = this.selectedFilter;
-    this.dt.saveState();
-    this.savedFilters.push(this.selectedFilter);
-    localStorage.setItem('states', JSON.stringify(this.savedFilters))
-    alert('Состояние таблицы сохранено');
+
+  saveFilters() {
+    this.dialogService.open(FilterNameComponent, {
+      showHeader: false,
+      modal: true,
+    }).onClose.subscribe(name => {
+      console.log(name)
+      if (name) {
+        let state = localStorage.getItem('state')
+        console.log(state)
+        const newFilter = {
+          id: 0,
+          user_id: this.auth.getUser().id,
+          name: name,
+          value: state
+        }
+        console.log(JSON.stringify(newFilter))
+        this.issueManager.saveFilters(newFilter).subscribe(() => {
+          this.messageService.add({key:'filterName', severity:'success', detail:'New filter added successfully'});
+          setTimeout(() => {
+            this.getSavedFilters()
+          }, 1000);
+
+
+        })
+      }
+      // this.fillIssues();
+    });
   }
-  loadFilter(dt: Table) {
-    if (this.selectedFilter == 'NORMAL'){
-      this.dt.stateKey = 'state';
-      this.dt.restoreState();
-      this.dt._filter();
-    }
-    else{
-      this.dt.stateKey = this.selectedFilter;
-      this.dt.restoreState();
-      this.dt._filter();
-    }
+
+  getSavedFilters() {
+    this.issueManager.getFilters(this.auth.getUser().id).subscribe(res => {
+      this.savedFilters1 = res;
+      console.log(this.savedFilters1)
+    })
   }
+
+  loadFilter(dt: Table, filter: any) {
+    this.noFilters = false;
+    this.cleanFilter();
+    localStorage.setItem('state', filter.value);
+    this.dt.restoreState();
+    this.dt._filter();
+  }
+
+  cleanFilter() {   //ту надо убрать хардкод
+    console.log("clean filter")
+    this.noFilters = true;
+    let a = {"sortField":"name","sortOrder":1,"filters":{"started_date":[{"value":null,"matchMode":"dateIs","operator":"and"}],"started_by":[{"value":null,"matchMode":"in","operator":"and"}],"assigned_to":[{"value":null,"matchMode":"in","operator":"and"}],"status":[{"value":null,"matchMode":"in","operator":"and"}],"priority":[{"value":null,"matchMode":"in","operator":"and"}],"responsible":[{"value":null,"matchMode":"in","operator":"and"}],"last_update":[{"value":null,"matchMode":"dateIs","operator":"and"}],"project":[{"value":null,"matchMode":"in","operator":"and"}],"department":[{"value":null,"matchMode":"in","operator":"and"}]},"columnOrder":["id","started_date","started_by","project","department","name","assigned_to","status","priority","responsible","doc_number","last_update"]}
+    localStorage.setItem('state', JSON.stringify(a))
+    // this.dt.clearState()
+    this.dt.restoreState();
+    this.dt._filter();
+  }
+
+  deleteFilter(dt: Table, id: any, event: MouseEvent) {
+      event.stopPropagation()
+      this.issueManager.deleteFilterSaved(id).subscribe(res => {})
+      this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+  }
+
+  extractFilters (data: any): IFilter[] {
+    const filters: IFilter[] = [];
+    console.log(data.sortField)
+
+    for (const key in data.filters) {
+      if (data.filters[key][0].value !== null) {
+        filters.push({ field: key, value: data.filters[key][0].value });
+      }
+    }
+    return filters
+  }
+
+  // cleanFilter(id: number) {
+  //   console.log("clean filter with id = " + id)
+  // }
+
 
   openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
   }
+
+  click(filter:any) {
+    console.log(filter)
+  }
+
+  protected readonly console = console;
 }
