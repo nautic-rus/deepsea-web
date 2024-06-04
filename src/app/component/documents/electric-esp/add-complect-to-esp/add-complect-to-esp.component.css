@@ -171,3 +171,13 @@
   border-color: transparent;
   background: #f3f2f1;
 }
+.complect{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+}
+.complects{
+  padding: 40px;
+}
+.materials{
+  padding: 40px;
+}

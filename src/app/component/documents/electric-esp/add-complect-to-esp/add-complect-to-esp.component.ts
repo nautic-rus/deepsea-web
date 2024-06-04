@@ -10,6 +10,8 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {AuthManagerService} from "../../../../domain/auth-manager.service";
 import _ from "underscore";
 import * as XLSX from "xlsx";
+import {Observable, of, zip} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-complect-to-esp',
@@ -38,21 +40,6 @@ export class AddComplectToEspComponent implements OnInit {
   label: string = '';
   addText: string = '';
   zone: string = '';
-  unitsAvailable = [
-    new LV('796 - штуки', '796'),
-    new LV('006 - метры', '006'),
-    new LV('055 - кв.м.', '055'),
-    new LV('166 - кг', '166'),
-    new LV('112 - литр', '122'),
-    new LV('113 - куб.м.', '113'),
-  ];
-  items = [
-    {
-      label: 'New Folder',
-      icon: 'pi pi-fw pi-plus',
-      command: (event: any) => this.createNode(event.item)
-    },
-  ];
   addNew = false;
   newNode: any = {};
   docNumber: string = '';
@@ -62,6 +49,8 @@ export class AddComplectToEspComponent implements OnInit {
   materialsFilled = false;
   specStatements: any[] = [];
   complects: any[] = [];
+  selectedComplects: any[] = [];
+  complectMaterials: any[] = [];
 
   constructor(public issues: IssueManagerService, public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
 
@@ -69,20 +58,10 @@ export class AddComplectToEspComponent implements OnInit {
     this.selectedMaterial.name = '';
     this.docNumber = this.dialog.data[0];
     this.project = this.docNumber.split('-')[0];
-    this.forLabel = this.dialog.data[2];
-    this.label = this.dialog.data[1] + '.#';
-    if (this.label == '-.#'){
-      this.label = '1000';
-    }
-    if (this.forLabel == 'NEW'){
-      this.forLabel = '';
-      this.label = this.dialog.data[1];
-    }
-    else{
-      this.kind = this.dialog.data[2];
-      this.issueId = this.dialog.data[3];
-    }
-    this.zone = this.dialog.data[3];
+    this.label = this.dialog.data[1];
+    this.count = this.dialog.data[2];
+    this.kind = this.dialog.data[3];
+    this.issueId = this.dialog.data[4];
     this.fill();
   }
   fill(){
@@ -103,45 +82,16 @@ export class AddComplectToEspComponent implements OnInit {
       resMaterials.forEach((m: any) => m.path = []);
       let projectStatements = this.specStatements.filter(x => x.project_id == this.projectId).map(x => x.id);
       this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
-      this.materialsSrc = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
       this.materialManager.getMaterialComplects(this.projectId).subscribe(complects => {
-        console.log(complects);
+        console.log(complects, this.materials);
+        complects.forEach(x => x.count = 0);
         this.complects = complects;
         this.materialsFilled = true;
       });
     });
   }
 
-  createNode(node: any){
-    this.addNew = true;
-    this.newNode = {};
-    this.newNode.data = node.data + '###';
-    this.newNode.label = node.label;
-    this.newNode.check = node.data;
-    this.newNode.checkChildren = node.children.map((x: any) => x.data);
 
-    console.log(this.newNode);
-  }
-  getNodes(rootNodes: any[], materials: any[], parent_id: number = 0){
-    let res: any[] = [];
-    rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
-      let nodes = this.getNodes(rootNodes, materials, n.id);
-      let nodeMaterials = materials.filter(x => x != null && x.dir_id == n.id);
-      nodes.forEach(n => {
-        n.materials.forEach((m: any) => nodeMaterials.push(m));
-      });
-      let count = nodeMaterials.length;
-      res.push({
-        data: n.id,
-        children: _.sortBy(nodes, x => x.label),
-        label: n.name + (n.project_id == 0 ? '' : (' (' + this.getProjectName(n.project_id)) + ')'),
-        materials: nodeMaterials,
-        count: count,
-        project: n.project_id
-      });
-    });
-    return res;
-  }
   getProjectName(id: number){
     let project = this.projects.find(x => x.id == id);
     if (project != null){
@@ -151,95 +101,7 @@ export class AddComplectToEspComponent implements OnInit {
       return '';
     }
   }
-  setParents(nodes: any[], parent: any){
-    nodes.forEach(node => {
-      node.parent = parent;
-      node.expandedIcon = 'pi pi-folder-open';
-      node.collapsedIcon = 'pi pi-folder';
-      node.icon = (node.children.length == 0) ? 'pi pi-tag' : '';
-      this.setParents(node.children, node);
-    });
-  }
-  getNodePath(node: any){
-    let parent = node.parent;
-    let res = node.label;
-    while (parent != null){
-      res = parent.label + "/" + res;
-      parent = parent.parent;
-    }
-    return res;
-  }
-  showTooltip(index: string) {
-    return this.tooltips.includes(index);
-  }
-  addMaterial() {
-    if (this.kind == 'ele' || this.kind == 'hull'){
-      if (this.label.includes('#')){
-        alert('Вы не указали номер позиции');
-        return;
-      }
-      else{
-        this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone).subscribe(res => {
-          this.ref.close('success');
-        });
-      }
-    }
-    else{
-      if (this.label.toString().includes('#')){
-        this.messageService.add({key:'device', severity:'error', summary:'Ошибка', detail:'Необходимо ввести номер позиции'});
-        return;
-      }
-      console.log(this.docNumber, this.selectedMaterial.code, this.units, this.count, this.label, this.forLabel, this.addText, this.zone);
-      this.s.addDeviceToSystem(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel, this.addText, this.zone).then(res => {
-        this.ref.close('success');
-      });
-    }
 
-    // console.log(this.docNumber, this.selectedMaterial.code, this.units, this.count.toString(), this.label, this.forLabel)
-  }
-
-  selectNode() {
-    if (this.selectedNode != null){
-      this.selectedNodePath = this.getNodePath(this.selectedNode);
-      //this.selectedNodeCode = this.getNodeCode(this.selectedNode);
-      this.selectedNodeCode = this.selectedNode.data;
-      this.materials = this.selectedNode.materials;
-    }
-  }
-
-  selectMaterial(material: any) {
-    this.selectedMaterial = material;
-  }
-
-  refreshNodes(rootNodes: any[], materials: Material[], parent: string = ''){
-    rootNodes.filter(x => x.data.length == parent.length + 3 && x.data.startsWith(parent)).forEach(n => {
-      n.count = materials.filter(x => x.code.startsWith(n.data)).length;
-      this.refreshNodes(n.children, materials, n.data);
-    });
-  }
-
-
-  copyTrmCode(code: string, index: string) {
-    navigator.clipboard.writeText(code);
-    this.tooltips.push(index);
-    setTimeout(() => {
-      this.tooltips.splice(this.tooltips.indexOf(index), 1);
-    }, 1500);
-    //this.messageService.add({key:'task', severity:'success', summary:'Copied', detail:'You have copied issue url.'});
-  }
-
-
-  alertNodeContains(){
-    this.messageService.add({key:'task', severity:'error', summary:'Folder is not empty', detail:'Cant delete non empty folder'});
-  }
-
-  exportXLS() {
-    let fileName = 'export_' + this.generateId(8) + '.xlsx';
-    let data: any[] = this.materials;
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-    XLSX.writeFile(workbook, fileName);
-  }
   generateId(length: number): string {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -253,5 +115,49 @@ export class AddComplectToEspComponent implements OnInit {
 
   close() {
     this.ref.close();
+  }
+
+  amountChanged() {
+    let count = this.count;
+    setTimeout(() => {
+      let complectMaterials: any[] = [];
+      this.complectMaterials = [];
+      this.complects.forEach(c => {
+        if (c.count < 0){
+          c.count = 0;
+        }
+      });
+
+      this.complects.filter(x => x.count > 0).forEach(c => {
+        c.materials.forEach((m: any) => {
+          let findMaterial = this.materials.find(x => x.code == m.material);
+          if (findMaterial != null){
+            let findInComplect = complectMaterials.find(x => x.stock == findMaterial.code);
+            if (findInComplect != null){
+              findInComplect.count = findInComplect.count + m.count * c.count;
+            }
+            else {
+              complectMaterials.push({
+                name: findMaterial.name,
+                code: findMaterial.code,
+                units: findMaterial.units,
+                count: m.count * c.count,
+                label: this.label + '.' + count++,
+                weight: findMaterial.weight
+              });
+            }
+            console.log(complectMaterials);
+          }
+        });
+      });
+      this.complectMaterials = complectMaterials;
+    }, 100);
+  }
+
+  commit() {
+    let update: Observable<any>[] = this.complectMaterials.map(m => this.s.addIssueMaterial(m.label, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone));
+    zip(...update).subscribe(res => {
+      this.ref.close('success');
+    });
   }
 }
