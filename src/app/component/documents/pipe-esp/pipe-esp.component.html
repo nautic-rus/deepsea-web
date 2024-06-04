@@ -40,6 +40,7 @@
         </div>
       </div>
       <div class="mr-10">
+
         <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="20">
         </div>
@@ -52,6 +53,11 @@
         </label>
       </div>
       <div class="p-ml-auto df mr-10">
+        <div class="mr-10">
+          <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" style="border: 3px solid #22C55E" class="materials-button cxy">
+            <img src="assets/icons/openIssue.svg" height="24">
+          </div>
+        </div>
         <div class="mr-10" *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status)) || auth.getUser().login == 'voronin'">
           <div [pTooltip]="t.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button yellow-button cxy">
             <img src="assets/icons/download-file.svg" height="24">

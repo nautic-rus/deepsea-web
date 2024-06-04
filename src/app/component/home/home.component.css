@@ -253,11 +253,3 @@ element.style {
   border-radius: 5px;
   padding: 1px 2px;
 }
-
-.noRedDate {
-  background-color: #0da21f;
-  border: 1px solid #0da21f;
-  color: #ffffff;
-  border-radius: 5px;
-  padding: 1px 2px;
-}

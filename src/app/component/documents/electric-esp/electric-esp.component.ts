@@ -26,6 +26,7 @@ import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-mult
 import {EleEspGenerationWaitComponent} from "./ele-esp-generation-wait/ele-esp-generation-wait.component";
 import {LV} from "../../../domain/classes/lv";
 import {AddComplectToEspComponent} from "./add-complect-to-esp/add-complect-to-esp.component";
+import {TaskComponent} from "../../task/task.component";
 
 @Component({
   selector: 'app-electric-esp',
@@ -947,6 +948,20 @@ export class ElectricEspComponent implements OnInit {
   }
   openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
+  }
+
+  openIssueModal(id: number) {
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
   }
 
   addFilesCommon() {

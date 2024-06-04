@@ -27,6 +27,7 @@ import {GenerateEspComponent} from "./generate-esp/generate-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
 import {AddHullMaterialToEspComponent} from "./add-hull-material-to-esp/add-hull-material-to-esp.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
+import {TaskComponent} from "../../task/task.component";
 
 @Component({
   selector: 'app-hull-esp',
@@ -1350,6 +1351,21 @@ export class HullEspComponent implements OnInit {
     }).onClose.subscribe(() => {
       this.fillRevisions();
     });
+  }
+
+
+  openIssueModal(id: number) {
+    console.log("openIssue")
+      this.issueManager.getIssueDetails(id).then(res => {
+        console.log(res);
+        if (res.id != null) {
+          this.dialogService.open(TaskComponent, {
+            showHeader: false,
+            modal: true,
+            data: res
+          })
+        }
+      });
   }
 
   addFilesCommon() {

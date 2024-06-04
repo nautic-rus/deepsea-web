@@ -20,6 +20,7 @@ import {saveAs} from "file-saver";
 import {AccommodationsEspGenerationWaitComponent} from "../accommodation-esp/accommodations-esp-generation-wait/accommodations-esp-generation-wait.component";
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
+import {TaskComponent} from "../../task/task.component";
 
 @Component({
   selector: 'app-design-esp',
@@ -734,6 +735,21 @@ export class DesignEspComponent implements OnInit {
       });
     }
   }
+
+  openIssueModal(id: number) {
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
+  }
+
   searchSpools() {
     if (this.search.trim() == '') {
       this.accommodations = this.accommodationsSrc;

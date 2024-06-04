@@ -31,6 +31,7 @@ import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-m
 import {RemoveDeviceFromSystemComponent} from "../device-esp/device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component";
 import {GenerateEspComponent} from "../hull-esp/generate-esp/generate-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
+import {TaskComponent} from "../../task/task.component";
 
 @Component({
   selector: 'app-pipe-esp',
@@ -920,6 +921,20 @@ export class PipeEspComponent implements OnInit {
     this.pipes.splice(0, this.pipes.length);
     this.pipesBySpool.splice(0, this.pipesBySpool.length);
     this.fillPipes();
+  }
+
+  openIssueModal(id: number) {
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
   }
 
   addMaterial() {

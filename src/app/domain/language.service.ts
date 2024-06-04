@@ -540,6 +540,7 @@ export class LanguageService {
           case 'Файл': return 'File';
           case 'Помощь': return 'Help';
           case 'Открыть облако': return 'Open Cloud';
+          case 'Открыть задачу': return 'Open task';
           case 'Экспорт эскизов': return 'Export Sketches';
           case 'Показать чертеж': return 'Show Drawing';
           case 'Получить спецификацию': return 'Get Spec';

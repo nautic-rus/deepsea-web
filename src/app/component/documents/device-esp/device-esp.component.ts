@@ -29,6 +29,7 @@ import {
 } from "./device-esp-generation-wait/remove-device-from-system/remove-device-from-system.component";
 import {Material} from "../../../domain/classes/material";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
+import {TaskComponent} from "../../task/task.component";
 
 @Component({
   selector: 'app-device-esp',
@@ -1089,6 +1090,20 @@ export class DeviceEspComponent implements OnInit {
   }
   openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
+  }
+
+  openIssueModal(id: number) {
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
   }
 
   addFilesCommon() {

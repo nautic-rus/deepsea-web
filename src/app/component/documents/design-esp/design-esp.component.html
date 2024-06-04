@@ -14,12 +14,23 @@
       <!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
       <!--        </div>-->
       <!--      </div>-->
-      <span class="p-ml-auto p-input-icon-left">
-        <i class="pi pi-search"></i>
-         <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+      <div class="p-ml-auto df mr-12">
+
+        <div class="mr-10">
+          <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" style="border: 3px solid #22C55E" class="materials-button cxy">
+            <img src="assets/icons/openIssue.svg" height="24">
+          </div>
+        </div>
+        <div>
+                <span class="p-ml-auto p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input [(ngModel)]="search" (ngModelChange)="searchSpools()" pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+                </span>
+        </div>
 
         <!--        <input (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />-->
-      </span>
+
+      </div>
     </div>
     <div class="w-100 df">
       <div class="card-sp-tile mr-20">

@@ -23,6 +23,7 @@ import {
 import {ClearFilesComponent} from "../hull-esp/clear-files/clear-files.component";
 import {AddMaterialToEspComponent} from "../device-esp/add-material-to-esp/add-material-to-esp.component";
 import {UploadMultipleFilesComponent} from "../upload-multiple-files/upload-multiple-files.component";
+import {TaskComponent} from "../../task/task.component";
 
 @Component({
   selector: 'app-general-esp',
@@ -808,6 +809,20 @@ export class GeneralEspComponent implements OnInit {
   }
   openIssue(id: number) {
     window.open('/?taskId=' + id, '_blank');
+  }
+
+  openIssueModal(id: number) {
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
   }
 
   addFilesCommon() {
