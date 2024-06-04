@@ -1261,6 +1261,25 @@
               </div>
             </div>
           </div>
+
+          <div class="df mt-3px" *ngIf="isVisibleAuthorComment(issue)">
+            <div class="df text-y height-30 normal-text w-35">{{t.tr('Комментарий')}}</div>
+            <div (click)="edit = 'author_comment'" *ngIf="edit != 'author_comment'" pTooltip="{{issue.author_comment}}" class="width-180 pl-3 cy df cursor-pointer description-task hover-task">{{trimMin(issue.author_comment)}}</div>
+            <textarea *ngIf="edit == 'author_comment'" type="text" pInputTextarea [autoResize]="true" [(ngModel)]="issue.author_comment" class="width-180 cy task-name-change-commit"></textarea>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'author_comment'" (click)="commitIssueEdit($event)">
+                <div class="task-name-button cxy ml-5 mr-5" >
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'author_comment'" (click)="cancelIssueEdit()">
+                <div class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="df mt-3px" *ngIf="isVisible('first_send_date')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Дата первой отправки')}}</div>
             <div class="pl-3 df text-y height-30 cursor-pointer description-task">{{getDateNoTime(issue.first_send_date)}}</div>

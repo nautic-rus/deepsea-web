@@ -93,41 +93,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  redDate(dueDate: any, stageDueDate: any) {
-    if (dueDate == 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)') {
-      return false
-    } else {
-      if (stageDueDate != 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)')
-      {
-        if ((dueDate < new Date()) || dueDate < stageDueDate) {
-          return true
-        } else
-          return false
-      }
-      else {
-        if (dueDate < new Date()) {
-          return true
-        }
-      }
-    }
-    return false
-
-
-
-    // console.log(stageDueDate);
-    // console.log((dueDate > stageDueDate) || (dueDate > new Date()));
-    // @ts-ignore
-    // if (stageDueDate != new Date(null)) {
-    //   return ((dueDate > stageDueDate) || (dueDate < new Date()))
-    // } else {
-    //   if (dueDate < new Date()) {
-    //     return false
-    //   }
-    //   else return true
-    // }
-
-  }
-
   ngOnInit() {
 
 
@@ -1022,6 +987,26 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       event.stopPropagation()
       this.issueManager.deleteFilterSaved(id).subscribe(res => {})
       this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+  }
+
+  redDate(dueDate: any, stageDueDate: any) {
+    if (dueDate == 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)') {  //почему то сравнение с new Date(null) не работает
+      return false
+    } else {
+      if (stageDueDate != 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)')
+      {
+        if ((dueDate < new Date()) || dueDate < stageDueDate) {
+          return true
+        } else
+          return false
+      }
+      else {
+        if (dueDate < new Date()) {
+          return true
+        }
+      }
+    }
+    return false
   }
 
   extractFilters (data: any): IFilter[] {

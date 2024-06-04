@@ -340,6 +340,7 @@ export class TaskComponent implements OnInit {
       setTimeout(() => {
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
+          console.log(issue)
           this.availableActions = this.getAvailableActions(issue);
           this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
             this.planIssue = resPlan[0];
@@ -1364,6 +1365,12 @@ export class TaskComponent implements OnInit {
   isVisible(value: string) {
     return this.issueTypes.find(x => this.issue.issue_type.includes(x.type_name) && x.visible_row.includes(value));
   }
+
+
+  isVisibleAuthorComment(issue: Issue) {
+    return issue.started_by === this.auth.getUser().login
+  }
+
   changePreparedness(){
     return this.auth.getUser().login != this.issue.responsible && this.auth.getUser().login != this.issue.assigned_to;
   }
