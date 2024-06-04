@@ -13,6 +13,7 @@ import {UntieComponent} from "../task/untie/untie.component";
 import {DownloadAllDocsComponent} from "./download-all-docs/download-all-docs.component";
 import {DialogService} from "primeng/dynamicdialog";
 import * as events from "events";
+import {TaskComponent} from "../task/task.component";
 
 @Component({
   selector: 'app-doclist',
@@ -140,6 +141,21 @@ export class DoclistComponent implements OnInit {
     // });
   }
 
+  openIssueModal(id: number) {
+    console.log(id)
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
+    return false
+  }
 
   addCorrection(arr1: any[], arr2: any[]) {
     return arr1.map(item1 => {
