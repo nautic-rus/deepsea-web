@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   savedFilters1: ISavedFilters[] = [];
   filtersValues: any;
   noFilters: boolean = true;
+  // redDate: boolean = false;
   selectedFilter = '';
 
   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public t: LanguageService) {
@@ -92,7 +93,45 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
 
+  redDate(dueDate: any, stageDueDate: any) {
+    if (dueDate == 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)') {
+      return false
+    } else {
+      if (stageDueDate != 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)')
+      {
+        if ((dueDate < new Date()) || dueDate < stageDueDate) {
+          return true
+        } else
+          return false
+      }
+      else {
+        if (dueDate < new Date()) {
+          return true
+        }
+      }
+    }
+    return false
+
+
+
+    // console.log(stageDueDate);
+    // console.log((dueDate > stageDueDate) || (dueDate > new Date()));
+    // @ts-ignore
+    // if (stageDueDate != new Date(null)) {
+    //   return ((dueDate > stageDueDate) || (dueDate < new Date()))
+    // } else {
+    //   if (dueDate < new Date()) {
+    //     return false
+    //   }
+    //   else return true
+    // }
+
+  }
+
   ngOnInit() {
+
+
+    console.log(new Date())
 
     this.getSavedFilters();
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){

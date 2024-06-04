@@ -245,3 +245,19 @@ element.style {
   display: grid;
   grid-template-columns: 10fr 3fr;
 }
+
+.redDate{
+  background-color: #ec1818;
+  border: 1px solid #ec1818;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 1px 2px;
+}
+
+.noRedDate {
+  background-color: #0da21f;
+  border: 1px solid #0da21f;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 1px 2px;
+}

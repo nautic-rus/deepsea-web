@@ -36,7 +36,7 @@
                            [selectedItemsLabel]="t.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="t.tr('Выберите колонки')">
             </p-multiSelect>
             <div class="mr-10">
-              <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset(); dt.clearState(); showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+              <div class="materials-button gray-button cxy" (click)="dt.clear(); dt.reset(); dt.clearState(); filtersValues = null; showStartedBy = false; showAssigned = false; showResponsible = false; showCompleted = false;" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
                 <img src="assets/icons/filter-no.svg" height="18">
               </div>
             </div>
@@ -103,11 +103,11 @@
                 </div>
               </div>
 
-              <div class="mr-10">
-                <div class="materials-button-home blue-button cxy" (click)="cleanFilter(); filtersValues = null">
-                  <div class="cxy">{{t.tr('Сбросить фильтр')}}</div>
-                </div>
-              </div>
+<!--              <div class="mr-10">-->
+<!--                <div class="materials-button-home blue-button cxy" (click)="cleanFilter(); filtersValues = null">-->
+<!--                  <div class="cxy">{{t.tr('Сбросить фильтр')}}</div>-->
+<!--                </div>-->
+<!--              </div>-->
               <!--              <div class="mx-10">-->
               <p-dropdown #dd [options]="savedFilters1" optionLabel="name" placeholder="No filter" [(ngModel)]="filtersValues">
                 <ng-template let-filter pTemplate="item">
@@ -178,10 +178,13 @@
               <div class="new-task" *ngIf="isTaskNew(issue.id)"></div>
             </td>
             <td style="width:148px" class="cursor-pointer" *ngFor="let col of columns">
-              <div *ngIf="col.skip == false && col.field != 'ready' && col.field != 'related_issues' && col.field != 'id'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
+              <div *ngIf="col.skip == false && col.field != 'ready' && col.field != 'related_issues' && col.field != 'id' && col.field != 'due_date'"><div [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div></div>
 <!--              <div *ngIf="col.skip && col.field != 'ready'" [innerHTML]="col.defaultValue"></div>-->
               <div *ngIf="col.field == 'id'" (click)="$event.stopPropagation()">
                 <a [href]="'/?taskId=' + issue[col.field]" target="_blank">{{issue[col.field]}}</a>
+              </div>
+              <div *ngIf="col.field == 'due_date'">
+                <div  [ngClass]="{redDate:redDate(issue[col.field], issue['contract_due_date'])}"  [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div>
               </div>
               <div *ngIf="col.field == 'ready'">
                 <div *ngFor="let r of defineReadyState(issue); let i = index">
