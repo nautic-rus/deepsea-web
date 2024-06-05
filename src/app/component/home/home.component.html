@@ -186,6 +186,9 @@
               <div *ngIf="col.field == 'due_date'">
                 <div  [ngClass]="{redDate:redDate(issue[col.field], issue['contract_due_date'])}"  [innerHTML]="localeColumn(this.issue[col.field], col.field, this.issue) | safeHtml"></div>
               </div>
+<!--              <div *ngIf="col.field == 'author_comment'">-->
+<!--                <div>{{issue['author_comment']}}</div>-->
+<!--              </div>-->
               <div *ngIf="col.field == 'ready'">
                 <div *ngFor="let r of defineReadyState(issue); let i = index">
                   <div class="df cy" *ngIf="i == 0">

@@ -97,6 +97,7 @@ export class DoclistComponent implements OnInit {
       })
 
       this.issues = this.issuesSrc;
+      console.log(this.issuesSrc)
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.filterIssues();

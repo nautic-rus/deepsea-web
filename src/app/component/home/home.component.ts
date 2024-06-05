@@ -326,7 +326,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'issue_comment',
-        header: 'Comment',
+        header: 'Note',
         headerLocale: 'Comment',
         sort: true,
         filter: false,
@@ -335,6 +335,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         defaultValue: '',
         hidden: false,
         date: false
+      },
+      {
+        field: 'author_comment',
+        header: 'Comment by author',
+        headerLocale: 'Comment by author',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'author_comment'),
+        defaultValue: '',
+        hidden: false,
+        date: false,
       },
       {
         field: 'ready',
@@ -427,7 +439,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
     zip(this.issueManager.getIssues(this.auth.getUser().login), this.issueManager.getIssues(this.auth.getUser().shared_access)).pipe(map((value) => value[0].concat(value[1]))).subscribe(data => {
       this.issues = data.filter(x => x.id > 0);
-      //console.log(this.issues);
+
       if (this.auth.getUser().shared_access != ''){
         this.issueManager.getIssues(this.auth.getUser().shared_access).then(resShared => {
           resShared.forEach(x => this.issues.push(x));
@@ -470,6 +482,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       this.filled = true;
       this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
         this.viewedIssues = res;
+        // console.log(this.viewedIssues)
       });
     });
 
@@ -623,7 +636,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     } else if (field == 'contract_due_date') {
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     }
+    // else if (field == 'author_comment') {
+    //   return issueElement;
+    // }
     else {
+      // console.log(issueElement)
       return issueElement;
     }
   }
@@ -888,7 +905,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         show = false;
       }
     }
-
     return show;
   }
 
@@ -961,7 +977,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   getSavedFilters() {
     this.issueManager.getFilters(this.auth.getUser().id).subscribe(res => {
       this.savedFilters1 = res;
-      console.log(this.savedFilters1)
     })
   }
 

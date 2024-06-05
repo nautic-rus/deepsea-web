@@ -1085,6 +1085,7 @@ export class TaskComponent implements OnInit {
     });
   }
   commitIssueEdit(event: MouseEvent) {
+    console.log(this.edit)
     this.updated = true;
     if (this.edit == 'plan_hours' && !event.ctrlKey){
       if (this.issue.plan_hours_locked == 1){
