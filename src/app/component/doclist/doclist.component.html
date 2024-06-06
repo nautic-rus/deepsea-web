@@ -84,21 +84,42 @@
                 <p-sortIcon field="project"></p-sortIcon>
               </th>
               <th style="flex: 0 0 5%;  min-width: 100px" pSortableColumn="contract" class="lxy  ">{{t.tr('Договор')}}
-                <p-sortIcon field="contract"></p-sortIcon>
-              </th>
-              <th style="flex: 0 0 5%;  min-width: 91px" pSortableColumn="department" class="cxy  ">{{t.tr('Отдел')}}
-                <p-sortIcon field="department"></p-sortIcon>
-              </th>
-              <th style="flex: 0 0 5%;  min-width: 92px" *ngIf="auth.getUser().permissions.includes('visible_doc_status')" pSortableColumn="status" class="cxy  ">{{t.tr('Статус')}}
-                <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
-                      <ng-template let-option pTemplate="item">
-                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>
-                      </ng-template>
+<!--                <p-sortIcon field="contract"></p-sortIcon>-->
+                <p-columnFilter field="contract" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter_contract" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="contracts" (onChange)="filter($event.value)" placeholder="Any">
+                      {{filter.value}}
+<!--                      <ng-template let-option pTemplate="item">-->
+<!--                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
+<!--                      </ng-template>-->
                     </p-dropdown>
                   </ng-template>
                 </p-columnFilter>
+              </th>
+              <th style="flex: 0 0 7%;  min-width: 91px" pSortableColumn="department" class="cxy  ">{{t.tr('Отдел')}}
+                <p-sortIcon field="department"></p-sortIcon>
+              </th>
+              <th style="flex: 0 0 5%;  min-width: 92px" *ngIf="auth.getUser().permissions.includes('visible_doc_status')" pSortableColumn="status" class="cxy  ">{{t.tr('Статус')}}
+                <p-columnFilter class="filter"  field="status" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="statuses" optionValue="value" optionLabel="label" display="chip" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                      <ng-template let-option pTemplate="item">
+                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>
+<!--                                                <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
+                                              </ng-template>
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+                <!--                <p-columnFilter field="status" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                    <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">-->
+<!--                      <ng-template let-option pTemplate="item">-->
+<!--&lt;!&ndash;                        {{option}}&ndash;&gt;-->
+<!--                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
+<!--                      </ng-template>-->
+<!--                    </p-dropdown>-->
+<!--                  </ng-template>-->
+<!--                </p-columnFilter>-->
               </th>
               <th style="flex: 0 0 5%; min-width: 97px" pSortableColumn="revision" class="lxy  ">{{t.tr('Ревизия')}}
                 <p-sortIcon field="revision"></p-sortIcon>
@@ -106,7 +127,7 @@
               <th style="flex: 0 0 5%; max-width: 85px" pSortableColumn="period" class="lxy  ">{{t.tr('Этап')}}
                 <p-sortIcon field="period"></p-sortIcon>
               </th>
-              <th style="flex: 0 0 5%; min-width: 150px" pSortableColumn="contract_due_date" class="lxy  ">{{t.tr('Срок исполнения')}}
+              <th style="flex: 0 0 5%; min-width: 130px" pSortableColumn="contract_due_date" class="lxy  ">{{t.tr('Срок исполнения')}}
                 <p-sortIcon field="contract_due_date"></p-sortIcon>
                 <p-columnFilter class="filter" type="date" field="contract_due_date" display="menu"></p-columnFilter>
               </th>

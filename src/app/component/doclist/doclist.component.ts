@@ -40,6 +40,7 @@ export class DoclistComponent implements OnInit {
   taskTypes: LV[] = ['RKD', 'PDSP', 'ED', 'PSD', 'ITT', 'MSH'].map(x => new LV(x));
   taskStages: LV[] = [];
   statuses: any[] = [];
+  contracts: any[] = [];
   status = '';
   showWithFilesOnly = true;
   loading = true;
@@ -49,27 +50,32 @@ export class DoclistComponent implements OnInit {
 
 
 
-  constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private messageService: MessageService, private dialogService: DialogService, public cd: ChangeDetectorRef) { }
+  constructor(private router: Router, public t: LanguageService, public issueManager: IssueManagerService, public auth: AuthManagerService, private issueManagerService: IssueManagerService,
+              private messageService: MessageService, private dialogService: DialogService, public cd: ChangeDetectorRef) { }
 
 
   @ViewChild('table') table: Table;
 
 
   ngOnInit(): void {
-    this.statuses = [
-      {label: 'Delivered', value: 'Delivered'},
-      {label: 'Joined', value: 'Joined'},
-      {label: 'New', value: 'New'},
-      {label: 'AssignedTo', value: 'AssignedTo'},
-      {label: 'In Work', value: 'In Work'},
-      {label: 'Check', value: 'Check'},
-      {label: 'Send to RS', value: 'Send to RS'},
-      {label: 'Ready to Delivery', value: 'Ready to Delivery'},
-      {label: 'Send to RS', value: 'Send to RS'},
-      {label: 'Hold', value: 'Hold'},
-      {label: 'Approved by RS', value: 'Approved by RS'},
-    ]
+    // this.statuses = [  //неверно, надо исправить
+    //   {label: 'Delivered', value: 'Delivered'},
+    //   {label: 'Joined', value: 'Joined'},
+    //   {label: 'New', value: 'New'},
+    //   {label: 'AssignedTo', value: 'AssignedTo'},
+    //   {label: 'In Work', value: 'In Work'},
+    //   {label: 'Check', value: 'Check'},
+    //   {label: 'Send to RS', value: 'Send to RS'},
+    //   {label: 'Ready to Delivery', value: 'Ready to Delivery'},
+    //   {label: 'Send to RS', value: 'Send to RS'},
+    //   {label: 'Hold', value: 'Hold'},
+    //   {label: 'Approved by RS', value: 'Approved by RS'},
+    // ]
 
+    // this.contracts = [  //неверно, надо исправить
+    //   {label: 'OLD', value: 'OLD'},
+    //   {label: 'NEW', value: 'NEW'},
+    // ]
 
     this.selectedTaskTypes = this.taskTypes.map(x => x.value);
     // this.issueManager.getIssueProjects().then(projects => {
@@ -87,6 +93,9 @@ export class DoclistComponent implements OnInit {
     }, 100);
 
     this.issueManager.getIssues('op').then(res => {
+      console.log(res.find(x => x.id == 17974))
+      // this.statuses = _.sortBy(_.uniq(res.map(x => x.status)).filter(x => x != ''), x => x);
+
       this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null).sort((a, b) => a.id > b.id ? 1 : -1);
       this.issuesSrc = this.issuesSrc.filter(x => this.auth.getUser().visible_projects.includes(x.project)).sort((a, b) => a.id > b.id ? 1 : -1);
 
@@ -97,7 +106,10 @@ export class DoclistComponent implements OnInit {
       })
 
       this.issues = this.issuesSrc;
-      console.log(this.issuesSrc)
+      this.statuses = this.getFilters(this.issues, 'status');
+      console.log(this.statuses)
+      this.contracts = _.sortBy(_.uniq(this.issues.map(x => x.contract)).filter(x => x != ''), x => x);
+      // console.log(this.issues)
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.filterIssues();
@@ -140,6 +152,37 @@ export class DoclistComponent implements OnInit {
     //   this.selectedDepartments = [...this.departments.map(x => x.name)];
     //   this.selectedDepartments = localStorage.getItem('selectedDepartments') != null ? JSON.parse(localStorage.getItem('selectedDepartments')!) : this.selectedDepartments;
     // });
+  }
+
+  getFilters(issues: any[], field: string): any[] {
+    let res: any[] = [];
+    let uniq = _.uniq(issues, x => x[field]);
+    uniq.forEach(x => {
+      res.push({
+        label: this.localeFilter(field, x[field]),
+        value: x[field]
+      })
+    });
+    return _.sortBy(res, x => x.label.toString().replace('Не назначен', '0').replace('Not assigned', '0'));
+  }
+
+  localeFilter(column: string, field: string): string {
+    switch (column) {
+      case 'issue_type':
+        return this.issueManager.localeTaskType(field);
+      case 'started_by':
+        return this.auth.getUserName(field);
+      case 'assigned_to':
+        return this.auth.getUserName(field);
+      case 'responsible':
+        return this.auth.getUserName(field);
+      case 'priority':
+        return this.issueManager.localeTaskPriority(field);
+      case 'status':
+        return this.issueManager.localeStatus(field, false);
+      default:
+        return field;
+    }
   }
 
   openIssueModal(id: number) {
