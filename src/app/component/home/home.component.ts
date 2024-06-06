@@ -338,8 +338,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'author_comment',
-        header: 'Comment by author',
-        headerLocale: 'Comment by author',
+        header: 'Comment',
+        headerLocale: 'Comment',
         sort: true,
         filter: false,
         skip: false,
@@ -482,7 +482,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       this.filled = true;
       this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
         this.viewedIssues = res;
-        // console.log(this.viewedIssues)
+        console.log(this.viewedIssues)
       });
     });
 
