@@ -83,7 +83,6 @@ export class AddComplectToEspComponent implements OnInit {
       let projectStatements = this.specStatements.filter(x => x.project_id == this.projectId).map(x => x.id);
       this.materials = resMaterials.filter((x: any) => projectStatements.includes(x.statem_id));
       this.materialManager.getMaterialComplects(this.projectId).subscribe(complects => {
-        console.log(complects, this.materials);
         complects.forEach(x => x.count = 0);
         this.complects = complects;
         this.materialsFilled = true;
@@ -142,7 +141,7 @@ export class AddComplectToEspComponent implements OnInit {
                 code: findMaterial.code,
                 units: findMaterial.units,
                 count: m.count * c.count,
-                label: this.label + '.' + count++,
+                label: findMaterial.label != '' ? findMaterial.label : this.label + '.' + count++,
                 weight: findMaterial.weight
               });
             }
