@@ -83,19 +83,41 @@
               <th style="flex: 0 0 5%;  min-width: 90px" pSortableColumn="project" class="lxy  ">{{t.tr('Проект')}}
                 <p-sortIcon field="project"></p-sortIcon>
               </th>
+
+
               <th style="flex: 0 0 5%;  min-width: 100px" pSortableColumn="contract" class="lxy  ">{{t.tr('Договор')}}
-<!--                <p-sortIcon field="contract"></p-sortIcon>-->
-                <p-columnFilter field="contract" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                  <ng-template pTemplate="filter_contract" let-value let-filter="filterCallback">
-                    <p-dropdown [ngModel]="value" [options]="contracts" (onChange)="filter($event.value)" placeholder="Any">
-                      {{filter.value}}
-<!--                      <ng-template let-option pTemplate="item">-->
-<!--                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
-<!--                      </ng-template>-->
-                    </p-dropdown>
-                  </ng-template>
-                </p-columnFilter>
+
+                <div class="flex justify-content-center align-items-center">
+                  <p-columnFilter field="contract" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="contracts" placeholder="Any" (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <span class="ml-1">{{option}}</span>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
               </th>
+
+
+
+<!--              <th style="flex: 0 0 5%;  min-width: 100px" pSortableColumn="contract" class="lxy  ">{{t.tr('Договор')}}-->
+<!--                <p-columnFilter field="contract" matchMode="equals" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">-->
+<!--                  <ng-template pTemplate="filter_contract" let-value let-filter="filterCallback">-->
+<!--                    <p-dropdown [ngModel]="value" [options]="contracts" (onChange)="filter($event.value)" placeholder="Any">-->
+<!--                      {{filter.value}}-->
+<!--                    </p-dropdown>-->
+<!--                  </ng-template>-->
+<!--                </p-columnFilter>-->
+<!--              </th>-->
+<!--              -->
+
+
+
+
+
               <th style="flex: 0 0 7%;  min-width: 91px" pSortableColumn="department" class="cxy  ">{{t.tr('Отдел')}}
                 <p-sortIcon field="department"></p-sortIcon>
               </th>
