@@ -338,8 +338,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'author_comment',
-        header: 'Comment by author',
-        headerLocale: 'Comment by author',
+        header: 'Comment',
+        headerLocale: 'Comment',
         sort: true,
         filter: false,
         skip: false,
@@ -482,7 +482,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       this.filled = true;
       this.issueManager.getIssuesViewed(this.auth.getUser().login).then(res => {
         this.viewedIssues = res;
-        // console.log(this.viewedIssues)
+        console.log(this.viewedIssues)
       });
     });
 
@@ -989,13 +989,23 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   cleanFilter() {   //ту надо убрать хардкод
-    console.log("clean filter")
-    this.noFilters = true;
-    let a = {"sortField":"name","sortOrder":1,"filters":{"started_date":[{"value":null,"matchMode":"dateIs","operator":"and"}],"started_by":[{"value":null,"matchMode":"in","operator":"and"}],"assigned_to":[{"value":null,"matchMode":"in","operator":"and"}],"status":[{"value":null,"matchMode":"in","operator":"and"}],"priority":[{"value":null,"matchMode":"in","operator":"and"}],"responsible":[{"value":null,"matchMode":"in","operator":"and"}],"last_update":[{"value":null,"matchMode":"dateIs","operator":"and"}],"project":[{"value":null,"matchMode":"in","operator":"and"}],"department":[{"value":null,"matchMode":"in","operator":"and"}]},"columnOrder":["id","started_date","started_by","project","department","name","assigned_to","status","priority","responsible","doc_number","last_update"]}
-    localStorage.setItem('state', JSON.stringify(a))
-    // this.dt.clearState()
-    this.dt.restoreState();
-    this.dt._filter();
+    // console.log("clean filter")
+    // this.noFilters = true;
+    // let a = {"sortField":"name","sortOrder":1,"filters":{"started_date":[{"value":null,"matchMode":"dateIs","operator":"and"}],"started_by":[{"value":null,"matchMode":"in","operator":"and"}],"assigned_to":[{"value":null,"matchMode":"in","operator":"and"}],"status":[{"value":null,"matchMode":"in","operator":"and"}],"priority":[{"value":null,"matchMode":"in","operator":"and"}],"responsible":[{"value":null,"matchMode":"in","operator":"and"}],"last_update":[{"value":null,"matchMode":"dateIs","operator":"and"}],"project":[{"value":null,"matchMode":"in","operator":"and"}],"department":[{"value":null,"matchMode":"in","operator":"and"}]},"columnOrder":["id","started_date","started_by","project","department","name","assigned_to","status","priority","responsible","doc_number","last_update"]}
+    // localStorage.setItem('state', JSON.stringify(a))
+    // // this.dt.clearState()
+    // this.dt.restoreState();
+    // this.dt._filter();
+
+    this.dt.clear();
+    this.dt.reset();
+    this.dt.clearState();
+    this.filtersValues = null;
+    this.showStartedBy = false;
+    this.showAssigned = false;
+    this.showResponsible = false;
+    this.showCompleted = false;
+
   }
 
   deleteFilter(dt: Table, id: any, event: MouseEvent) {
@@ -1048,6 +1058,4 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   click(filter:any) {
     console.log(filter)
   }
-
-  protected readonly console = console;
 }
