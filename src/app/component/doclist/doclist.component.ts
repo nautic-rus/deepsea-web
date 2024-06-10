@@ -58,25 +58,6 @@ export class DoclistComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.statuses = [  //неверно, надо исправить
-    //   {label: 'Delivered', value: 'Delivered'},
-    //   {label: 'Joined', value: 'Joined'},
-    //   {label: 'New', value: 'New'},
-    //   {label: 'AssignedTo', value: 'AssignedTo'},
-    //   {label: 'In Work', value: 'In Work'},
-    //   {label: 'Check', value: 'Check'},
-    //   {label: 'Send to RS', value: 'Send to RS'},
-    //   {label: 'Ready to Delivery', value: 'Ready to Delivery'},
-    //   {label: 'Send to RS', value: 'Send to RS'},
-    //   {label: 'Hold', value: 'Hold'},
-    //   {label: 'Approved by RS', value: 'Approved by RS'},
-    // ]
-
-    // this.contracts = [  //неверно, надо исправить
-    //   {label: 'OLD', value: 'OLD'},
-    //   {label: 'NEW', value: 'NEW'},
-    // ]
-
     this.selectedTaskTypes = this.taskTypes.map(x => x.value);
     // this.issueManager.getIssueProjects().then(projects => {
     //   this.projects = projects;
@@ -93,7 +74,7 @@ export class DoclistComponent implements OnInit {
     }, 100);
 
     this.issueManager.getIssues('op').then(res => {
-      console.log(res.find(x => x.id == 17974))
+      // console.log(res.find(x => x.id == 17974))
       // this.statuses = _.sortBy(_.uniq(res.map(x => x.status)).filter(x => x != ''), x => x);
 
       this.issuesSrc = res.filter(x => this.selectedTaskTypes.find(y => x.issue_type.includes(y)) != null).sort((a, b) => a.id > b.id ? 1 : -1);
@@ -107,7 +88,6 @@ export class DoclistComponent implements OnInit {
 
       this.issues = this.issuesSrc;
       this.statuses = this.getFilters(this.issues, 'status');
-      console.log(this.statuses)
       this.contracts = _.sortBy(_.uniq(this.issues.map(x => x.contract)).filter(x => x != ''), x => x);
       // console.log(this.issues)
       this.issueManager.getRevisionFiles().then(revisionFiles => {
@@ -285,8 +265,8 @@ export class DoclistComponent implements OnInit {
     if (findProject != null){
       foranProject = findProject.foran;
     }
-    console.log(department);
-    console.log(project);
+    // console.log(department);
+    // console.log(project);
     // let hullTasks = ['03070-532-0001', '200101-525-007'];
     // if (hullTasks.includes(docNumber)){
     //   department = 'Hull';
