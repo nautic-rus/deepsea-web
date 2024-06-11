@@ -27,6 +27,7 @@ export class Issue {
   child_issues: Issue[] = [];
   combined_issues: Issue[] = [];
   related_issues: number[] = [];
+  related_issuesStr: string[] = [];
   action: string = '';
   actions: IssueAction[] = [];
   last_update: any = 0;

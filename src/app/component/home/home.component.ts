@@ -116,12 +116,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     if (localStorage.getItem("savedFilterName")) {
       // @ts-ignore
       this.savedFilterName =  localStorage.getItem("savedFilterName")
-      console.log(this.savedFilterName)
     }
-
-    // setTimeout(() => {
-    //   this.dt.filter("Closed","status", "in")
-    // }, 3000);
 
     this.getSavedFilters();
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
@@ -130,7 +125,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     if (localStorage.getItem('states') != null){
       this.savedFilters = JSON.parse(localStorage.getItem('states')!);
     }
-    console.log(this.savedFilters)
 
     this.setCols();
     this.fillIssues();
@@ -514,7 +508,10 @@ export class HomeComponent implements OnInit, AfterContentChecked {
             related.push(otherIssue.id);
           }
         });
+        // let is = "mmm"
         issue.related_issues = related;
+        // issue.related_issuesStr = is;
+        console.log(related)
         // issue.ready = this.defineReadyState(issue);
       });
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));

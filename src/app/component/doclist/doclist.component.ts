@@ -134,6 +134,11 @@ export class DoclistComponent implements OnInit {
     // });
   }
 
+  getFilteredData() {
+    console.log(this.table.filteredValue)
+    return this.table.filteredValue;
+  }
+
   getFilters(issues: any[], field: string): any[] {
     let res: any[] = [];
     let uniq = _.uniq(issues, x => x[field]);
@@ -219,7 +224,13 @@ export class DoclistComponent implements OnInit {
   exportXLS() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
     let data: any[] = [];
-    this.issues.filter((x: any) => x != null).forEach(issue => {
+    let exportedArray = []
+    if (this.getFilteredData()) {
+      exportedArray = this.getFilteredData()
+    } else
+      exportedArray = this.issues
+
+    exportedArray.filter((x: any) => x != null).forEach(issue => {
       data.push({
         'Doc number': issue.doc_number,
         'Title': issue.name,
@@ -232,7 +243,8 @@ export class DoclistComponent implements OnInit {
         'Stage': issue.period,
         'Contract due date': this.getDateOnly(issue.contract_due_date),
         'Last update': this.getDateOnly(issue.last_update),
-        'Comment': issue.issue_comment,
+        'Note': issue.issue_comment,
+        'Comment': issue.author_comment,
         'Correction': issue.correction
       })
     });
