@@ -32,6 +32,8 @@ import {SequenceEqualOperator} from "rxjs/internal/operators/sequenceEqual";
 import {Equipment} from "../../domain/classes/equipment";
 import {FilterNameComponent} from "./filter-name/filter-name.component";
 import { ChangeDetectorRef } from '@angular/core';
+import {Dropdown} from "primeng/dropdown";
+import {AgreeModalComponent} from "../equipments/agree-modal/agree-modal.component";
 
 
 interface ISavedFilters {
@@ -73,6 +75,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showStartedBy: boolean = false;
   savedFilters: any[] = [];
   savedFilters1: ISavedFilters[] = [];
+  savedFilterName: string = '';
+
   filtersValues: any;
   noFilters: boolean = true;
   selectedStatuses: string[] = []
@@ -92,6 +96,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   // @ts-ignore
   @ViewChild('dt') dt: Table;
 
+  @ViewChild('dd') dd: Dropdown;
+
 
   @Input() get selectedColumns(): any[] {
     return this.cols.filter(col => this.selectedCols.includes(col.headerLocale));
@@ -106,6 +112,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   }
 
   ngOnInit() {
+
+    if (localStorage.getItem("savedFilterName")) {
+      // @ts-ignore
+      this.savedFilterName =  localStorage.getItem("savedFilterName")
+      console.log(this.savedFilterName)
+    }
 
     // setTimeout(() => {
     //   this.dt.filter("Closed","status", "in")
@@ -1009,11 +1021,19 @@ export class HomeComponent implements OnInit, AfterContentChecked {
           showCompleted: this.showCompleted ? 1 : 0
         }
         console.log(newFilter)
+
         this.issueManager.saveFilters(newFilter).subscribe(() => {
           this.messageService.add({key:'filterName', severity:'success', detail:'New filter added successfully'});
-          setTimeout(() => {
-            this.getSavedFilters()
-          }, 1000);
+
+          this.savedFilterName = name;
+          localStorage.setItem("savedFilterName", name)
+
+          this.getSavedFilters()
+          // this.savedFilterName = name;
+          // localStorage.setItem("savedFilterName", name)
+
+            // this.loadFilter(this.dt, newFilter)
+          // }, 1000);
 
 
         })
@@ -1024,21 +1044,30 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   getSavedFilters() {
     this.issueManager.getFilters(this.auth.getUser().id).subscribe(res => {
-      console.log(res)
+      //console.log(res)
       this.savedFilters1 = res;
+      //@ts-ignore
+      this.savedFilterName = localStorage.getItem("savedFilterName");
     })
   }
 
   loadFilter(dt: Table, filter: any) {
+
     this.noFilters = false;
     this.cleanFilter();
     localStorage.setItem('state', filter.value);
+    localStorage.setItem('savedFilterName', filter.name);
+    localStorage.setItem('showCompleted', filter.showCompleted);
     this.dt.restoreState();
     this.dt._filter();
     this.showCompleted = filter.showCompleted
   }
 
   cleanFilter() {
+    // @ts-ignore
+    localStorage.setItem('savedFilterName', null);
+    // @ts-ignore
+    this.savedFilterName = null
     this.dt.clear();
     this.dt.reset();
     this.dt.clearState();
@@ -1047,28 +1076,49 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.showAssigned = false;
     this.showResponsible = false;
     this.showCompleted = false;
+    // localStorage.setItem('savedFilterName', null);
 
   }
 
   deleteFilter(dt: Table, id: any, event: MouseEvent) {
-    event.stopPropagation()
-    this.issueManager.deleteFilterSaved(id).subscribe(res => {})
-    this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+    // event.stopPropagation()
+    // this.issueManager.deleteFilterSaved(id).subscribe(res => {})
+    // this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+    const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+      modal: true,
+      header: this.t.tr('Удалить фильтр?'),
+      data: {
+        //title: 'Удалить оборудование?',
+        id: id
+      }
+    })
+    dialog.onClose.subscribe((res) => {
+      if (res) { // User clicked OK
+        console.log('User confirmed delete filter');
+        this.issueManager.deleteFilterSaved(id).subscribe(res => {})
+        this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+        // this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
+        // })
+      }
+      else {
+        console.log('User canceled'); // User clicked Cancel
+      }
+    })
   }
 
-  redDate(dueDate: any, stageDueDate: any) {
+  redDate(dueDate: any, stageDueDate: any, status: string) {
     if (dueDate == 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)') {  //почему то сравнение с new Date(null) не работает
       return false
     } else {
       if (stageDueDate != 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)')
       {
-        if ((dueDate < new Date()) || dueDate < stageDueDate) {
+        if (((dueDate < new Date()) || dueDate < stageDueDate) && (status.includes('In Work') || status.includes('AssignedTo') || status.includes('In Rework'))) {
           return true
         } else
           return false
       }
       else {
-        if (dueDate < new Date()) {
+        if (dueDate < new Date() && (status.includes('In Work') || status.includes('AssignedTo') || status.includes('In Rework'))) {
           return true
         }
       }

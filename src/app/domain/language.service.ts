@@ -560,6 +560,8 @@ export class LanguageService {
           case 'Уведомление удалено': return 'Notification removed'
           case 'Не удалось удалить уведомление': return 'Failed to delete notification'
           case 'Сохранить изменения': return 'Save changes'
+          case 'Сохранить фильтр': return 'Save filter'
+          case 'Удалить фильтр': return 'Delete filter'
           case 'трудоёмкость': return 'man-hours'
           case 'Списано часов': return 'Actual man-hours'
           case 'Скачать все': return 'Download all'
