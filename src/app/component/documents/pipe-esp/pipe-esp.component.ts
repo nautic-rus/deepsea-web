@@ -190,6 +190,8 @@ export class PipeEspComponent implements OnInit {
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
 
   ngOnInit(): void {
+
+    console.log("pipee")
     this.route.queryParams.subscribe(params => {
       this.project = params.foranProject != null ? params.foranProject : '';
       this.docNumber = params.docNumber != null ? params.docNumber : '';

@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showStartedBy: boolean = false;
   savedFilters: any[] = [];
   savedFilters1: ISavedFilters[] = [];
-  savedFilterName: string = '';
+  savedFilterName: string | null = '';
 
   filtersValues: any;
   noFilters: boolean = true;
@@ -111,12 +111,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  ngOnInit() {
 
-    if (localStorage.getItem("savedFilterName")) {
-      // @ts-ignore
-      this.savedFilterName =  localStorage.getItem("savedFilterName")
-    }
+  ngOnInit() {
+    this.savedFilterName =  localStorage.getItem("savedFilterName")
 
     this.getSavedFilters();
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
@@ -511,7 +508,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         // let is = "mmm"
         issue.related_issues = related;
         // issue.related_issuesStr = is;
-        console.log(related)
         // issue.ready = this.defineReadyState(issue);
       });
       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
@@ -556,7 +552,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   viewTask(id: number, type: string) {
     this.setIssueViewed(id);
     this.issueManager.getIssueDetails(id).then(res => {
-      console.log(res);
+      // console.log(res);
       if (res.id != null) {
         this.dialogService.open(TaskComponent, {
           showHeader: false,
@@ -1006,7 +1002,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       showHeader: false,
       modal: true,
     }).onClose.subscribe(name => {
-      console.log(name)
+      // console.log(name)
       if (name) {
         let state = localStorage.getItem('state')
         console.log(state)
@@ -1017,34 +1013,26 @@ export class HomeComponent implements OnInit, AfterContentChecked {
           value: state,
           showCompleted: this.showCompleted ? 1 : 0
         }
-        console.log(newFilter)
+        // console.log(newFilter)
 
         this.issueManager.saveFilters(newFilter).subscribe(() => {
           this.messageService.add({key:'filterName', severity:'success', detail:'New filter added successfully'});
 
           this.savedFilterName = name;
           localStorage.setItem("savedFilterName", name)
-
           this.getSavedFilters()
-          // this.savedFilterName = name;
-          // localStorage.setItem("savedFilterName", name)
-
-            // this.loadFilter(this.dt, newFilter)
-          // }, 1000);
-
-
         })
       }
-      // this.fillIssues();
     });
   }
 
   getSavedFilters() {
     this.issueManager.getFilters(this.auth.getUser().id).subscribe(res => {
-      //console.log(res)
       this.savedFilters1 = res;
-      //@ts-ignore
-      this.savedFilterName = localStorage.getItem("savedFilterName");
+      setTimeout(() => {  //чтобы установить название только загруженного фильтра
+        // @ts-ignore
+        this.savedFilterName = localStorage.getItem("savedFilterName");
+      }, 300)
     })
   }
 
@@ -1062,9 +1050,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   cleanFilter() {
     // @ts-ignore
-    localStorage.setItem('savedFilterName', null);
+    localStorage.setItem('savedFilterName', '');
     // @ts-ignore
-    this.savedFilterName = null
+    this.savedFilterName = ''
     this.dt.clear();
     this.dt.reset();
     this.dt.clearState();

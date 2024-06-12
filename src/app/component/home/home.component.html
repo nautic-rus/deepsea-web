@@ -37,7 +37,7 @@
                              [selectedItemsLabel]="t.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="t.tr('Выберите колонки')">
               </p-multiSelect>
               <div class="df ">
-                <p-dropdown class="mr-10" #dd [options]="savedFilters1"optionLabel="name" placeholder="{{savedFilterName != null ? savedFilterName : 'No filters'}}" [(ngModel)]="savedFilterName">
+                <p-dropdown class="mr-10" #dd [options]="savedFilters1" optionLabel="name" placeholder="{{savedFilterName != '' ? savedFilterName : 'No filters'}}" [(ngModel)]="savedFilterName">
                   <ng-template let-filter pTemplate="item">
                     <div class="df filter-item" style="position: relative; z-index: 8000" (click)="loadFilter(dt, filter)">
                       <div>{{filter.name}}</div>
@@ -84,31 +84,24 @@
               </div>
             </div>
 
-<!--            <div class="mr-10">-->
-<!--              <div class="materials-button transparent-button cxy" [class.clicked]="showAssigned" (click)="showAssigned = !showAssigned" [pTooltip]="t.tr('Исполнитель')" tooltipPosition="top">-->
-<!--                <img *ngIf="showAssigned" src="assets/icons/user-assigned-white.svg" height="18">-->
-<!--                <img *ngIf="!showAssigned" src="assets/icons/user-assigned-gray.svg" height="18">-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="mr-10">-->
-<!--              <div class="materials-button transparent-button cxy" [class.clicked]="showResponsible" (click)="showResponsible = !showResponsible" [pTooltip]="t.tr('Ответственный')" tooltipPosition="top">-->
-<!--                <img *ngIf="showResponsible" src="assets/icons/user-responsible-white.svg" height="18">-->
-<!--                <img *ngIf="!showResponsible" src="assets/icons/user-responsible-gray.svg" height="18">-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <div class="mr-10">-->
-<!--              <div class="materials-button transparent-button cxy" [class.clicked]="showStartedBy" (click)="showStartedBy = !showStartedBy" [pTooltip]="t.tr('Автор')" tooltipPosition="top">-->
-<!--                <img *ngIf="showStartedBy" src="assets/icons/user-author-white.svg" height="18">-->
-<!--                <img *ngIf="!showStartedBy" src="assets/icons/user-author-gray.svg" height="18">-->
-<!--              </div>-->
-<!--            </div>-->
-
-<!--            <div class="mr-10">-->
-<!--              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted" [pTooltip]="t.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">-->
-<!--                <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">-->
-<!--                <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div class="mr-10">-->
+            <!--              <div class="materials-button transparent-button cxy" [class.clicked]="showAssigned" (click)="showAssigned = !showAssigned" [pTooltip]="t.tr('Исполнитель')" tooltipPosition="top">-->
+            <!--                <img *ngIf="showAssigned" src="assets/icons/user-assigned-white.svg" height="18">-->
+            <!--                <img *ngIf="!showAssigned" src="assets/icons/user-assigned-gray.svg" height="18">-->
+            <!--              </div>-->
+            <!--            </div>-->
+            <!--            <div class="mr-10">-->
+            <!--              <div class="materials-button transparent-button cxy" [class.clicked]="showResponsible" (click)="showResponsible = !showResponsible" [pTooltip]="t.tr('Ответственный')" tooltipPosition="top">-->
+            <!--                <img *ngIf="showResponsible" src="assets/icons/user-responsible-white.svg" height="18">-->
+            <!--                <img *ngIf="!showResponsible" src="assets/icons/user-responsible-gray.svg" height="18">-->
+            <!--              </div>-->
+            <!--            </div>-->
+            <!--            <div class="mr-10">-->
+            <!--              <div class="materials-button transparent-button cxy" [class.clicked]="showStartedBy" (click)="showStartedBy = !showStartedBy" [pTooltip]="t.tr('Автор')" tooltipPosition="top">-->
+            <!--                <img *ngIf="showStartedBy" src="assets/icons/user-author-white.svg" height="18">-->
+            <!--                <img *ngIf="!showStartedBy" src="assets/icons/user-author-gray.svg" height="18">-->
+            <!--              </div>-->
+            <!--            </div>-->
 
             <!--            <div class="mr-10">-->
             <!--              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted" [pTooltip]="t.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">-->
@@ -117,15 +110,22 @@
             <!--              </div>-->
             <!--            </div>-->
 
-              <div class="df">
-                <div class="mr-10 cxy">
-                  {{t.tr('Количество задач:')}}
-                  <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
-                  <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
-                  {{t.tr('(Всего:')}} {{dt.value.length}})
-                </div>
+            <!--            <div class="mr-10">-->
+            <!--              <div class="materials-button transparent-button cxy" [class.clicked]="showCompleted" (click)="showCompleted = !showCompleted" [pTooltip]="t.tr(showCompleted ? 'Скрыть исполненные' : 'Показать исполненные')" tooltipPosition="top">-->
+            <!--                <img *ngIf="showCompleted" src="assets/icons/check-white.svg" height="18">-->
+            <!--                <img *ngIf="!showCompleted" src="assets/icons/check-gray.svg" height="18">-->
+            <!--              </div>-->
+            <!--            </div>-->
 
-                <span class="p-input-icon-left ">
+            <div class="df">
+              <div class="mr-10 cxy">
+                {{t.tr('Количество задач:')}}
+                <div class="px-10" *ngIf="dt != null && dt.filteredValue != null && !this.showCompleted">{{dt.filteredValue != null ? dt.filteredValue.length - getCompletedLength(dt.filteredValue) : dt.value.length}}</div>
+                <div class="px-10" *ngIf="(this.showAssigned || this.showResponsible || this.showCompleted || dt != null && dt.filteredValue == null)">{{getIssuesLength()}}</div>
+                {{t.tr('(Всего:')}} {{dt.value.length}})
+              </div>
+
+              <span class="p-input-icon-left ">
                 <i class="pi pi-search"></i>
                 <input #search pInputText type="text" (input)="dt.filterGlobal(search.value, 'contains')" [placeholder]="t.tr('Поиск...')" class="border" />
               </span>
