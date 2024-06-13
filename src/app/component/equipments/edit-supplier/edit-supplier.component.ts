@@ -325,7 +325,8 @@ export class EditSupplierComponent implements OnInit {
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),
       modal: true,
       closable: true,
-      data: [this.getProjectId(this.eq_data.project_name), material, action, '', this.sup_data.id]
+      data: [this.getProjectId(this.eq_data.project_name), material, action, '', this.sup_data.id],
+      styleClass: 'mda'
     }).onClose.subscribe(res => {
       // this.projectChanged();
       // this.cd.reattach();

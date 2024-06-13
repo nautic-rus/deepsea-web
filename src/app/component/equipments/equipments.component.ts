@@ -315,6 +315,7 @@ export class EquipmentsComponent implements OnInit {
         eq: eq,
         supplier: supplier
       },
+      styleClass: 'SUPP'
     }).onClose.subscribe(closed => { //сразу выводить на страницу изменения после редактирования supplier
       this.supplierService.setWaitingCreateFiles([]);
       if (closed.code === 1 ) {   // значит, что пользователь удалил поставщика в форме редактирования поставщика

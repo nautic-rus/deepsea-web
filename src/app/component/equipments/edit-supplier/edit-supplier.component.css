@@ -1223,9 +1223,9 @@
 .ql-snow.ql-toolbar button.ql-active:hover{
   background: rgba(80, 95, 121, 0.7)!important;
 }
-.p-dialog .p-dialog-content {
-  border-radius: 5px!important;
-}
+/*.p-dialog .p-dialog-content {*/
+/*  border-radius: 5px!important;*/
+/*}*/
 .button-hover{
   width: 50px;
 }
@@ -1464,3 +1464,12 @@
   font-family: inherit;
   font-weight: 600;
 }
+
+.SUPP .p-dialog-content {
+  border-radius: 5px;
+}
+
+.mda .p-dialog-content {
+  border-radius: 0 0 5px 5px;
+}
+

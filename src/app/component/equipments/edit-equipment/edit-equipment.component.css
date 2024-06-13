@@ -13,7 +13,7 @@
 /deep/ .p-inputtext:hover {
   background-color: rgba(9, 30, 66, 0.08);
 }
-/deep/.p-dialog .p-dialog-content {
+.eq .p-dialog .p-dialog-content {
   border-radius: 5px;
 }
 
@@ -316,4 +316,8 @@
   /* width: 100%; */
   align-items: center;
 }
+
+/*/deep/ .p-dialog .p-dialog-content {*/
+/*  border-radius: 0 0 5px 5px !important;*/
+/*}*/
 
