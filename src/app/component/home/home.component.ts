@@ -1032,11 +1032,12 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       setTimeout(() => {  //чтобы установить название только загруженного фильтра
         // @ts-ignore
         this.savedFilterName = localStorage.getItem("savedFilterName");
-      }, 300)
+      }, 500)
     })
   }
 
   loadFilter(dt: Table, filter: any) {
+    console.log(this.savedFilterName)
 
     this.noFilters = false;
     this.cleanFilter();
@@ -1065,8 +1066,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   }
 
-  deleteFilter(dt: Table, id: any, event: MouseEvent) {
-    // event.stopPropagation()
+  deleteFilter(dt: Table, id: any, name: string, event: MouseEvent) {
+    console.log(this.savedFilterName)
+    event.stopPropagation()
     // this.issueManager.deleteFilterSaved(id).subscribe(res => {})
     // this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
     const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
@@ -1081,7 +1083,31 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       if (res) { // User clicked OK
         console.log('User confirmed delete filter');
         this.issueManager.deleteFilterSaved(id).subscribe(res => {})
-        this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+
+        if (name === this.savedFilterName) {
+          console.log("name == this.savedFilterName")
+          console.log(name)
+          console.log(this.savedFilterName)
+          this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+          this.cleanFilter()
+          setTimeout(() => {  //чтобы установить название только загруженного фильтра
+            // @ts-ignore
+            this.savedFilterName = ''
+          }, 300)
+
+        } else {
+          console.log(name)
+          console.log(this.savedFilterName)
+          console.log("else")
+          this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+          setTimeout(() => {  //чтобы установить название только загруженного фильтра
+            // @ts-ignore
+            this.savedFilterName = localStorage.getItem("savedFilterName");
+          }, 300)
+          // this.dt.restoreState();
+          // this.dt._filter();
+        }
+
         // this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
         // })
       }
@@ -1138,14 +1164,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 }
 
 
-
-
-
-
-
-
-
-
 // import {
 //   AfterContentChecked,
 //   AfterViewInit,
@@ -1179,7 +1197,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 // import {SequenceEqualOperator} from "rxjs/internal/operators/sequenceEqual";
 // import {Equipment} from "../../domain/classes/equipment";
 // import {FilterNameComponent} from "./filter-name/filter-name.component";
+// import { ChangeDetectorRef } from '@angular/core';
 // import {Dropdown} from "primeng/dropdown";
+// import {AgreeModalComponent} from "../equipments/agree-modal/agree-modal.component";
 //
 //
 // interface ISavedFilters {
@@ -1187,11 +1207,17 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //   user_id: number;
 //   field: string;
 //   value: string;
+//   showCompleted: Boolean;
 // }
 //
 // interface IFilter {
 //   field: string;
 //   value: string | string[] | null;
+// }
+//
+// interface StatusOption {
+//   label: string;
+//   value: string
 // }
 //
 // @Component({
@@ -1215,19 +1241,34 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //   showStartedBy: boolean = false;
 //   savedFilters: any[] = [];
 //   savedFilters1: ISavedFilters[] = [];
+//   // savedFilter: any;
+//
 //   filtersValues: any;
 //   noFilters: boolean = true;
 //   selectedStatuses: string[] = []
 //   // redDate: boolean = false;
-//   selectedFilter = '';
+//   selectedFilter: any =  {
+//     id: 0,
+//     user_id: this.auth.getUser().id,
+//     name: '',
+//     value: '',
+//     showCompleted: false
+//   } ;
 //
-//   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public t: LanguageService) {
+//   statusesOptions: StatusOption[] = [
+//     // { label: 'Active', value: 'active' },
+//     // { label: 'Inactive', value: 'inactive' }
+//   ];
+//
+//   constructor(public device: DeviceDetectorService, private config: PrimeNGConfig, private http: HttpClient, private route: ActivatedRoute, private router: Router, private messageService: MessageService, private issueManager: IssueManagerService, public auth: AuthManagerService, private dialogService: DialogService, public t: LanguageService, private cdRef: ChangeDetectorRef) {
 //   }
 //
 //   // @ts-ignore
 //   @ViewChild('search') search;
 //   // @ts-ignore
 //   @ViewChild('dt') dt: Table;
+//
+//   @ViewChild('dd') dd: Dropdown;
 //
 //
 //   @Input() get selectedColumns(): any[] {
@@ -1242,11 +1283,44 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //     }
 //   }
 //
-//   ngOnInit() {
 //
-//     // setTimeout(() => {
-//     //   this.dt.filter("Closed","status", "in")
-//     // }, 3000);
+//   ngOnInit() {
+//     const storedFilter = localStorage.getItem("selectedFilter");
+//     if (storedFilter) {
+//
+//
+//       setTimeout(() => {
+//         this.selectedFilter =  {
+//           id: 0,
+//           user_id: this.auth.getUser().id,
+//           name: storedFilter,
+//           value: '',
+//           showCompleted: false
+//         } ;
+//         console.log('mdaa')
+//       }, 1000)
+//
+//       // this.selectedFilter.name = storedFilter;
+//       console.log("nhOnInit")
+//       console.log(this.selectedFilter)
+//
+//     } else {
+//       console.log("nhOnInit ELSE")
+//       console.log(this.selectedFilter)
+//     }
+//     // if (localStorage.getItem("selectedFilter")) {
+//     //   this.selectedFilter =  JSON.parse(localStorage.getItem("selectedFilter"))
+//     //   // this.selectedFilter.name = 'mmm'
+//     //   // this.selectedFilterChanged()
+//     // }
+//
+//     // const storedFilter = localStorage.getItem("selectedFilter");
+//     // if (storedFilter) {
+//     //   console.log(storedFilter)
+//     //   this.selectedFilter = storedFilter;
+//     // } else
+//     //   this.selectedFilter = null
+//
 //
 //     this.getSavedFilters();
 //     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
@@ -1255,7 +1329,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //     if (localStorage.getItem('states') != null){
 //       this.savedFilters = JSON.parse(localStorage.getItem('states')!);
 //     }
-//     console.log(this.savedFilters)
 //
 //     this.setCols();
 //     this.fillIssues();
@@ -1282,10 +1355,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //     }
 //   }
 //
-//
-//   addShowCompletedToStorage() {
-//     console.log(localStorage.getItem('state'))
+//   clickShowComletedButton() {
+//     this.showCompleted = !this.showCompleted;
+//     if (this.showCompleted) {
+//       this.selectedStatuses.push('Resolved')
+//       console.log(this.selectedStatuses)
+//     } else {
+//       this.selectedStatuses = this.selectedStatuses.filter(x => x != 'Resolved')
+//       console.log(this.selectedStatuses)
+//     }
+//     this.setStatuses()
 //   }
+//
 //
 //   setCols() {
 //     this.cols = [
@@ -1395,7 +1476,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //         filters: this.getFilters(this.issues, 'status'),
 //         defaultValue: '',
 //         hidden: false,
-//         date: false
+//         date: false,
 //       },
 //       {
 //         field: 'priority',
@@ -1631,7 +1712,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //             related.push(otherIssue.id);
 //           }
 //         });
+//         // let is = "mmm"
 //         issue.related_issues = related;
+//         // issue.related_issuesStr = is;
 //         // issue.ready = this.defineReadyState(issue);
 //       });
 //       this.cols.forEach(col => col.filters = this.getFilters(this.issues, col.field));
@@ -1676,7 +1759,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //   viewTask(id: number, type: string) {
 //     this.setIssueViewed(id);
 //     this.issueManager.getIssueDetails(id).then(res => {
-//       console.log(res);
+//       // console.log(res);
 //       if (res.id != null) {
 //         this.dialogService.open(TaskComponent, {
 //           showHeader: false,
@@ -1699,13 +1782,17 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //     });
 //   }
 //
-//   setStatusesNotResolved(array: any) {
-//     this.selectedStatuses = array.filter((x: { value: string; }) => x.value != 'Resolved').map((x: { value: any; }) => x.value)
-//     console.log(this.selectedStatuses)
+//   setStatuses() {
+//     // this.selectedStatuses = array.filter((x: { value: string; }) => x.value != 'Resolved').map((x: { value: any; }) => x.value)
+//     // console.log(this.selectedStatuses)
 //     setTimeout(() => {
 //       this.dt.filter(this.selectedStatuses, "status", "in")
+//       // this.dt._filter();
+//       // this.dt.reset()
+//       // this.updateStatusFilterModel()
 //     }, 3000)
 //   }
+//
 //
 //
 //   getFilters(issues: any[], field: string): any[] {
@@ -1717,15 +1804,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //         value: x[field]
 //       })
 //     });
-//      if (field == 'status') {
-//        this.setStatusesNotResolved(res)
-//      }
-//      //   this.selectedStatuses = res.filter(x => x.value != 'Resolved').map((x) => x.value)
-//      //   console.log(this.selectedStatuses)
-//      //   setTimeout(() => {
-//      //       this.dt.filter(this.selectedStatuses,"status", "in")
-//      //     }, 3000);
-//      // }
+//     // if (field == 'status') {
+//     //   this.selectedStatuses = res.filter(x => x.value != 'Resolved').map((x) => x.value)
+//     //   this.setStatuses()
+//     // }
+//
 //     return _.sortBy(res, x => x.label.toString().replace('Не назначен', '0').replace('Not assigned', '0'));
 //   }
 //
@@ -1812,8 +1895,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //     } else if (field == 'contract_due_date') {
 //       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
 //     }
-//     // else if (field == 'author_comment') {
-//     //   return issueElement;
+//       // else if (field == 'author_comment') {
+//       //   return issueElement;
 //     // }
 //     else {
 //       // console.log(issueElement)
@@ -2126,7 +2209,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //       showHeader: false,
 //       modal: true,
 //     }).onClose.subscribe(name => {
-//       console.log(name)
+//       // console.log(name)
 //       if (name) {
 //         let state = localStorage.getItem('state')
 //         console.log(state)
@@ -2134,75 +2217,142 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //           id: 0,
 //           user_id: this.auth.getUser().id,
 //           name: name,
-//           value: state
+//           value: state,
+//           showCompleted: this.showCompleted ? 1 : 0
 //         }
-//         console.log(newFilter)
+//         // console.log(newFilter)
+//
 //         this.issueManager.saveFilters(newFilter).subscribe(() => {
 //           this.messageService.add({key:'filterName', severity:'success', detail:'New filter added successfully'});
-//           setTimeout(() => {
-//             this.getSavedFilters()
-//           }, 1000);
 //
-//
+//           // this.savedFilterName = name;
+//           localStorage.setItem("savedFilterName", name)
+//           this.getSavedFilters()
 //         })
 //       }
-//       // this.fillIssues();
 //     });
 //   }
 //
 //   getSavedFilters() {
 //     this.issueManager.getFilters(this.auth.getUser().id).subscribe(res => {
 //       this.savedFilters1 = res;
+//       // setTimeout(() => {  //чтобы установить название только загруженного фильтра
+//       //   // @ts-ignore
+//       //   this.savedFilterName = localStorage.getItem("savedFilterName");
+//       // }, 300)
 //     })
 //   }
 //
-//   loadFilter(dt: Table, filter: any) {
-//     this.noFilters = false;
-//     this.cleanFilter();
-//     localStorage.setItem('state', filter.value);
-//     this.dt.restoreState();
-//     this.dt._filter();
+//   selectedFilterChanged() {
+//     if (this.selectedFilter !=null) {
+//       console.log("selectedFilterChanged")
+//       console.log(this.selectedFilter)
+//       // console.log(this.savedFilterName)
+//       localStorage.setItem('selectedFilter', this.selectedFilter.name);
+//       console.log(localStorage.getItem('selectedFilter'))
+//     }
+//
 //   }
 //
-//   cleanFilter() {   //ту надо убрать хардкод
-//     // console.log("clean filter")
-//     // this.noFilters = true;
-//     // let a = {"sortField":"name","sortOrder":1,"filters":{"started_date":[{"value":null,"matchMode":"dateIs","operator":"and"}],"started_by":[{"value":null,"matchMode":"in","operator":"and"}],"assigned_to":[{"value":null,"matchMode":"in","operator":"and"}],"status":[{"value":null,"matchMode":"in","operator":"and"}],"priority":[{"value":null,"matchMode":"in","operator":"and"}],"responsible":[{"value":null,"matchMode":"in","operator":"and"}],"last_update":[{"value":null,"matchMode":"dateIs","operator":"and"}],"project":[{"value":null,"matchMode":"in","operator":"and"}],"department":[{"value":null,"matchMode":"in","operator":"and"}]},"columnOrder":["id","started_date","started_by","project","department","name","assigned_to","status","priority","responsible","doc_number","last_update"]}
-//     // localStorage.setItem('state', JSON.stringify(a))
-//     // // this.dt.clearState()
-//     // this.dt.restoreState();
-//     // this.dt._filter();
+//   loadFilter(dt: Table, filter: any) {
+//     // this.selectedFilterChanged(filter.name)
+//
+//     this.noFilters = false;
+//
+//     // this.cleanFilter();
+//     localStorage.setItem('state', filter.value);
+//     // localStorage.setItem('savedFilterName', filter.name);
+//     localStorage.setItem('showCompleted', filter.showCompleted);
+//
+//     this.dt.restoreState();
+//     this.dt._filter();
+//     this.showCompleted = filter.showCompleted
+//     setTimeout(() => {
+//       console.log(this.selectedFilter)
+//       localStorage.setItem('selectedFilter', this.selectedFilter.name)
+//     }, 100)
+//
+//
+//   }
+//
+//   cleanFilter() {
+//     // @ts-ignore
+//     // localStorage.setItem('savedFilterName', '');
+//     // @ts-ignore
 //
 //     this.dt.clear();
 //     this.dt.reset();
 //     this.dt.clearState();
+//     this.selectedFilter = null;
+//     // this.selectedFilter.name = ''
+//     // @ts-ignore
+//     localStorage.setItem('selectedFilter', '')
+//     // this.selectedFilterChanged()
+//     // this.savedFilter = null;
 //     this.filtersValues = null;
 //     this.showStartedBy = false;
 //     this.showAssigned = false;
 //     this.showResponsible = false;
 //     this.showCompleted = false;
+//     // localStorage.setItem('savedFilterName', null);
 //
 //   }
 //
-//   deleteFilter(dt: Table, id: any, event: MouseEvent) {
-//       event.stopPropagation()
-//       this.issueManager.deleteFilterSaved(id).subscribe(res => {})
-//       this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+//   deleteFilter(dt: Table, id: any, name: string, event: MouseEvent) {
+//     // console.log(this.savedFilterName)
+//     // event.stopPropagation()
+//     // this.issueManager.deleteFilterSaved(id).subscribe(res => {})
+//     // this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+//     const dialog = this.dialogService.open(AgreeModalComponent, {  //открываем модалку подтверждения удаления файла
+//       modal: true,
+//       header: this.t.tr('Удалить фильтр?'),
+//       data: {
+//         //title: 'Удалить оборудование?',
+//         id: id
+//       }
+//     })
+//     dialog.onClose.subscribe((res) => {
+//       if (res) { // User clicked OK
+//         console.log('User confirmed delete filter');
+//         this.issueManager.deleteFilterSaved(id).subscribe(res => {})
+//
+//         // if (name === this.savedFilterName) {
+//         //   console.log("name == this.savedFilterName")
+//         //   console.log(name)
+//         //   console.log(this.savedFilterName)
+//         //   this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+//         //   this.cleanFilter()
+//         // } else {
+//         //   console.log(name)
+//         //   console.log(this.savedFilterName)
+//         //   console.log("else")
+//         //   this.savedFilters1 = this.savedFilters1.filter((number) => number.id !== id)
+//         //   this.dt.restoreState();
+//         //   this.dt._filter();
+//         // }
+//
+//         // this.eqService.getEquipmentFiles(this.dialogConfig.data.id).subscribe((res) => {  //обновим поле с файлами после удаления
+//         // })
+//       }
+//       else {
+//         console.log('User canceled'); // User clicked Cancel
+//       }
+//     })
 //   }
 //
-//   redDate(dueDate: any, stageDueDate: any) {
+//   redDate(dueDate: any, stageDueDate: any, status: string) {
 //     if (dueDate == 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)') {  //почему то сравнение с new Date(null) не работает
 //       return false
 //     } else {
 //       if (stageDueDate != 'Thu Jan 01 1970 03:00:00 GMT+0300 (Москва, стандартное время)')
 //       {
-//         if ((dueDate < new Date()) || dueDate < stageDueDate) {
+//         if (((dueDate < new Date()) || dueDate < stageDueDate) && (status.includes('In Work') || status.includes('AssignedTo') || status.includes('In Rework'))) {
 //           return true
 //         } else
 //           return false
 //       }
 //       else {
-//         if (dueDate < new Date()) {
+//         if (dueDate < new Date() && (status.includes('In Work') || status.includes('AssignedTo') || status.includes('In Rework'))) {
 //           return true
 //         }
 //       }
@@ -2235,3 +2385,5 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 //     console.log(filter)
 //   }
 // }
+//
+//
