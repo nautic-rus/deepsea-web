@@ -143,6 +143,7 @@ export class LanguageService {
           case '{0} выбрано': return '{0} selected';
           case 'Выберите номер ревизии': return 'Select the revision number';
           case 'Очистить фильтры': return 'Clear filters';
+          case 'Удалить фильтр?': return 'Delete your filter?';
           case 'Скрыть исполненные': return 'Hide completed';
           case 'Показать исполненные': return 'Show completed';
           case 'Автор/ответственный': return 'Author/responsible';

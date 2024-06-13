@@ -3,6 +3,7 @@
 <!--    <div  class="task-button cxy mr-10" [pTooltip]="t.tr('Добавить материал')" [class.disabled-button]="!this.auth.hasPerms('create_material')" (click)="addMaterial()">-->
 <!--      <img src="assets/icons/add-material.png"src="assets/icons/add-material.png" height="20">-->
 <!--    </div>-->
+
     <div class="sticky back-white" style="    height: max-content; padding: 20px 0;">
 
 
@@ -143,8 +144,8 @@
         </div>
 
         <div class="df flex-column">
-          <label class="big-text-create mb-1 mt-10" for="weight">{{t.tr('Вес')}} </label>
-          <input pInputText id="weight" type="text" formControlName="weight" placeholder="{{t.tr('Вес')}}">
+          <label class="big-text-create mb-1 mt-10" for="weight">{{t.tr('Вес, кг')}} </label>
+          <input pInputText id="weight" type="text" formControlName="weight" placeholder="{{t.tr('Вес, кг')}}">
         </div>
       </div>
     </div>
@@ -178,7 +179,7 @@
             <ng-template pTemplate="body" let-file>
               <tr>
                 <td class="padding-3">
-                  <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-5 cursor-pointer">
+                  <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-3 cursor-pointer">
                     <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
                     <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
                   </div>
@@ -291,7 +292,7 @@
             <div class="" *ngFor="let material of relatedMaterials">
               <div class="related-sup-mat" [ngClass]="{ 'cursor-pointer': material.doc_number}" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">
                 <div class="pl-10">{{material.stock_code}}</div>
-                <div class="pl-2px">{{material.name}}</div>
+                <div style="padding: 3px" >{{material.name}}</div>
                 <!--              <div class="pr-10"></div>-->
                 <div class="pr-10" style="text-align: end">{{material.doc_number}}</div>
               </div>

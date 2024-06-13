@@ -1436,7 +1436,8 @@
 .related-sup-mat {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  height: 30px;
+  padding: 3px 0;
+  /*height: 30px;*/
   align-items: center;
 }
 

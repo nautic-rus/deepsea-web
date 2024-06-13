@@ -315,9 +315,11 @@ export class EditSupplierComponent implements OnInit {
 
   addMaterial(action: string = 'add', material: SpecMaterial = new SpecMaterial()) {  //почему то не предзаполяет поле с поставщиком
     // this.cd.detach();
+    material.name = this.sup_data.model
+    material.weight = this.sup_data.weight
     console.log("this.getProjectId(this.eq_data.project_name)")
     console.log(this.getProjectId(this.eq_data.project_name))
-    console.log(this.sup_data.id)
+    console.log(this.sup_data)
     this.dialogService.open(SpecMaterialComponent, {
       showHeader: true,
       header: action.replace('add', 'Добавление материала').replace('edit', 'Редактирование материала').replace('clone', 'Клонирование материала'),

@@ -531,21 +531,16 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   formatRelatedIssue(issueId: number) {
     let res = '';
-    // console.log(this.issues)
     let issueDetails: Issue | undefined = this.issues.find(x => x.id == issueId)
-    // console.log(issueDetails)
     // @ts-ignore
     if (issueDetails.responsible) {
       // @ts-ignore
       res = issueDetails.issue_type.toUpperCase().substr(0, 3) + '-' + issueDetails.responsible.toUpperCase().substr(0, 3) + '-' + issueDetails.status
-
     } else {
       // @ts-ignore
       res = issueDetails.issue_type.toUpperCase().substr(0, 3)  + '-' + issueDetails.status;
     }
-
     return res
-    // return issueId + ' miu'
   }
 
   defineReadyState(issue: Issue){
