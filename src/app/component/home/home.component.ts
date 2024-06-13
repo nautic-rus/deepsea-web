@@ -146,6 +146,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
       });
     }
+
   }
 
   clickShowComletedButton() {
@@ -526,6 +527,25 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     //     this.dt.style = {opacity: 1, transition: '0.1s'};
     //   }, 500);
     // }
+  }
+
+  formatRelatedIssue(issueId: number) {
+    let res = '';
+    // console.log(this.issues)
+    let issueDetails: Issue | undefined = this.issues.find(x => x.id == issueId)
+    // console.log(issueDetails)
+    // @ts-ignore
+    if (issueDetails.responsible) {
+      // @ts-ignore
+      res = issueDetails.issue_type.toUpperCase().substr(0, 3) + '-' + issueDetails.responsible.toUpperCase().substr(0, 3) + '-' + issueDetails.status
+
+    } else {
+      // @ts-ignore
+      res = issueDetails.issue_type.toUpperCase().substr(0, 3)  + '-' + issueDetails.status;
+    }
+
+    return res
+    // return issueId + ' miu'
   }
 
   defineReadyState(issue: Issue){
