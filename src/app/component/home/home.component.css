@@ -254,6 +254,14 @@ element.style {
   padding: 1px 2px;
 }
 
-/deep/ .p-dropdown {
+.filters {
+  color: red;
+}
+
+/deep/ .filters > p-dropdown {
+  width: 13vw;
+}
+
+/deep/ .filters .p-dropdown {
   width: 13vw;
 }

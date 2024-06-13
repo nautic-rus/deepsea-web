@@ -317,6 +317,14 @@
   align-items: center;
 }
 
+.DELETE {
+  color: red;
+}
+
+.DELETE .p-dialog-content {
+  border-radius: 0 0 5px 5px;
+}
+
 /*/deep/ .p-dialog .p-dialog-content {*/
 /*  border-radius: 0 0 5px 5px !important;*/
 /*}*/

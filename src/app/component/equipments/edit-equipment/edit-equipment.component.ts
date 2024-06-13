@@ -441,7 +441,8 @@ export class EditEquipmentComponent implements OnInit {
       data: {
         //title: 'Удалить оборудование?',
         eq_id: eqId
-      }
+      },
+      styleClass: 'DELETE'
     })
     dialog.onClose.subscribe((res) => {
 

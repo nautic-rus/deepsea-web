@@ -37,7 +37,7 @@
                              [selectedItemsLabel]="t.tr('{0} выбрано колонок')" styleClass="width-200 new-task-button p-info" [placeholder]="t.tr('Выберите колонки')">
               </p-multiSelect>
               <div class="df ">
-                <p-dropdown class="mr-10" #dd [options]="savedFilters1" optionLabel="name" placeholder="{{savedFilterName != '' ? savedFilterName : 'No filters'}}" [(ngModel)]="savedFilterName">
+                <p-dropdown class="mr-10 filters" #dd [options]="savedFilters1" optionLabel="name" placeholder="{{savedFilterName != '' ? savedFilterName : 'No filters'}}" [(ngModel)]="savedFilterName">
                   <ng-template let-filter pTemplate="item">
                     <div class="df filter-item" style="position: relative; z-index: 8000" (click)="loadFilter(dt, filter)">
                       <div>{{filter.name}}</div>
