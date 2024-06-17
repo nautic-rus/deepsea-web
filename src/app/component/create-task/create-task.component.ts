@@ -495,20 +495,39 @@ export class CreateTaskComponent implements OnInit {
     let taskExists = this.checkIssues.find(x => x.docNumber == this.taskDocNumber && x.issueType == this.taskType) != null;
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || desc.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
-      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
-      case 'PDSP': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
-      case 'ED': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
-      case 'PSD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
-      case 'ITT': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists;
-      case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || taskExists;
+      case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
+      case 'PDSP': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
+      case 'ED': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
+      case 'PSD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
+      case 'ITT': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
+      case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || taskExists || this.docNumberExist();
       case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '' || desc.trim() == '';
       case 'DEVELOPMENT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
       case 'NON-PROJECT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
       case 'APPROVAL': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
-      case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '';
+      case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '' || this.docNumberExist();
       default: return false;
     }
   }
+
+  docNumberExist() {
+    if (this.taskDocNumber === '-')
+      return true
+    console.log("this.checkIssues")
+    console.log(this.checkIssues)
+    console.log(this.taskDocNumber)
+
+    let a = this.checkIssues.find(x => x.docNumber === this.taskDocNumber.toString())
+
+    if (a) {
+      console.log(a)
+      return true;
+    } else {
+      console.log("Element not found")
+      return false;
+    }
+  }
+
   quillCreated(event: any) {
     this.editor = event;
   }

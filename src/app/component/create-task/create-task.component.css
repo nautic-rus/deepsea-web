@@ -200,3 +200,9 @@ select:focus {
 /deep/.p-multiselect-items-wrapper{
   max-height: 300px !important;
 }
+
+.error {
+  color: red;
+  font-size: 11px;
+  font-family: inherit;
+}
