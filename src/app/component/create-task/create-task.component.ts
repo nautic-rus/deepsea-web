@@ -505,7 +505,7 @@ export class CreateTaskComponent implements OnInit {
       case 'DEVELOPMENT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
       case 'NON-PROJECT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
       case 'APPROVAL': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
-      case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '' || this.docNumberExist();
+      case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '';
       default: return false;
     }
   }

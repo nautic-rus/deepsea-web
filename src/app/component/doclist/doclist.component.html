@@ -141,7 +141,7 @@
           </ng-template>
 
           <ng-template pTemplate="body" let-issue>
-            <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
+            <tr class="cursor-pointer row-table-doc-hover" (contextmenu)="openIssueModal(issue.id)" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
               <td [style]="{'flex': '0 0 150px', 'width': '150px'}" class="text-14  break-word">{{issue.doc_number}}</td>
               <td [style]="{'flex': '0 0 160px', 'width': '160px'}" class="text-14 break-word">{{issue.name}}</td>
               <td [style]="{'flex': '0 0 80px', 'width': '80px'}" class="text-14  ">{{issue.issue_type}}</td>
