@@ -130,30 +130,31 @@
               <th style="flex: 0 0 5%; max-width: 85px" pSortableColumn="period" class="lxy  ">{{t.tr('Этап')}}
                 <p-sortIcon field="period"></p-sortIcon>
               </th>
-              <th style="flex: 0 0 5%; min-width: 130px" pSortableColumn="contract_due_date" class="lxy  ">{{t.tr('Срок исполнения')}}
+              <th style="flex: 0 0 5%; min-width: 140px" pSortableColumn="contract_due_date" class="lxy  ">{{t.tr('Срок исполнения')}}
                 <p-sortIcon field="contract_due_date"></p-sortIcon>
                 <p-columnFilter class="filter" type="date" field="contract_due_date" display="menu"></p-columnFilter>
               </th>
-              <th style="flex: 0 0 4%;   min-width: 150px" pSortableColumn="last_update" class="lxy  ">{{t.tr('Обновлено')}}
-                <p-sortIcon field="last_update"></p-sortIcon>
-                <p-columnFilter class="filter" type="date" field="last_update" display="menu"></p-columnFilter>
-              </th>
-              <th style="flex: 0 0 7%;  min-width: 140px; max-width: 140px" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{t.tr('Прим.')}}
+<!--              <th style="flex: 0 0 4%;   min-width: 150px" pSortableColumn="last_update" class="lxy  ">{{t.tr('Обновлено')}}-->
+<!--                <p-sortIcon field="last_update"></p-sortIcon>-->
+<!--                <p-columnFilter class="filter" type="date" field="last_update" display="menu"></p-columnFilter>-->
+<!--              </th>-->
+              <th style="flex: 0 0 7%;  min-width: 160px; max-width: 160px" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="w-5">{{t.tr('Примечание')}}
                 <p-columnFilter type="text" field="issue_comment" display="menu"></p-columnFilter>
               </th>
               <th style="flex: 0 0 7%;  min-width: 140px; max-width: 140px"  class="w-5">{{t.tr('Комментарий')}}
                 <p-columnFilter type="text" field="author_comment" display="menu"></p-columnFilter>
               </th>
-              <th style="flex: 0 0 3%; max-width: 95px" pSortableColumn="correction" class="lxy  ">{{t.tr('Корр.')}}
-                <p-sortIcon field="correction"></p-sortIcon>
+              <th style="max-width: 170px" pSortableColumn="max_due_date" class="lxy  ">{{t.tr('Корректировка')}}
+                <p-sortIcon field="max_due_date"></p-sortIcon>
                 <p-columnFilter style="padding-left: 5px" type="boolean" field="correction"></p-columnFilter>
               </th>
-              <th style="flex: 0 0 2%" class="w-5">{{t.tr('Файл')}}</th>
+
+              <th style="flex: 0 0 5%; justify-content: center" class="w-5">{{t.tr('Файл')}}</th>
             </tr>
           </ng-template>
 
           <ng-template pTemplate="body" let-issue>
-            <tr class="cursor-pointer row-table-doc-hover" (contextmenu)="openIssueModal(issue.id)" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
+            <tr class="cursor-pointer row-table-doc-hover" (contextmenu)="openIssueModal(issue.id)"  (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
               <td style="flex: 0 0 10%;  min-width: 150px"  class="text-14  break-word">{{issue.doc_number}}</td>
               <td style="flex: 0 0 9%;  min-width: 150px"  class="text-14 break-word">{{issue.name}}</td>
               <td style="flex: 0 0 5%; max-width: 80px; display: flex; justify-content: center" class="text-14  ">{{issue.issue_type}}</td>
@@ -166,12 +167,30 @@
               <td style="flex: 0 0 5%; min-width: 97px; display: flex; justify-content: center" class="text-14  ">{{issue.revision}}</td>
               <td style="flex: 0 0 5%; max-width: 85px; display: flex; justify-content: center" class="text-14  ">{{issue.period}}</td>
               <td style="flex: 0 0 5%; min-width: 150px; display: flex; justify-content: center" class="text-14  ">{{getDate(issue.contract_due_date)}}</td>
-              <td style="flex: 0 0 4%; min-width: 150px; display: flex; justify-content: center" class="text-14  ">{{getDate(issue.last_update)}}</td>
-              <td style="flex: 0 0 7%; min-width: 140px; display: flex; justify-content: center" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="text-14   break-word">{{issue.issue_comment}}</td>
+<!--              <td style="flex: 0 0 4%; min-width: 150px; display: flex; justify-content: center" class="text-14  ">{{getDate(issue.last_update)}}</td>-->
+              <td style="flex: 0 0 7%; min-width: 160px; display: flex; justify-content: center" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="text-14   break-word">{{issue.issue_comment}}</td>
               <td style="flex: 0 0 7%; min-width: 140px; display: flex; justify-content: center" *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="text-14   break-word">{{issue.author_comment}}</td>
               <!--            <td style="min-width: 100px; max-width: 100px" class="text-14  ">{{issue.correction}}</td>-->
-              <td style="flex: 0 0 3%; min-width: 80px; max-width: 95px; display: flex; justify-content: center"><img *ngIf="issue.correction" style="min-width: 15px; max-width: 15px" src="assets/icons/attention1.svg" alt=""></td>
-              <td style="flex: 0 0 2%; " class="text-14 w-5">
+              <td style="min-width: 80px; max-width: 170px; display: flex; justify-content: center">
+                <div class="correction_container" *ngIf="!greenCorrectionSign(issue.max_due_date) && issue.correction">
+                  <img style="min-width: 15px; max-width: 15px" src="assets/icons/attention1.svg" alt="">
+                  <span>{{getDate(issue.max_due_date)}}</span>
+                </div>
+                <div class="correction_container" *ngIf="greenCorrectionSign(issue.max_due_date)  && issue.correction">
+                  <img  style="min-width: 15px; max-width: 15px" src="assets/icons/greenAttention.svg" alt="">
+                  <div style="min-width: 65px; display: flex; justify-content: center">
+                    <span>{{getDate(issue.max_due_date)}}</span>
+                  </div>
+
+                </div>
+                <div *ngIf="!issue.correction"></div>
+              </td>
+
+
+<!--              <td *ngIf="!greenCorrectionSign(issue.max_due_date) && issue.correction" style="flex: 0 0 3%; min-width: 80px; max-width: 95px; display: flex; justify-content: center"><img style="min-width: 15px; max-width: 15px" src="assets/icons/attention1.svg" alt="">{{getDate(issue.max_due_date)}}</td>-->
+<!--              <td *ngIf="greenCorrectionSign(issue.max_due_date)  && issue.correction" style="flex: 0 0 3%; min-width: 80px; max-width: 95px; display: flex; justify-content: center"><img style="min-width: 15px; max-width: 15px" src="assets/icons/greenAttention.svg" alt="">{{getDate(issue.max_due_date)}}</td>-->
+<!--              <td *ngIf="!issue.correction" style="flex: 0 0 3%; min-width: 80px; max-width: 95px; display: flex; justify-content: center"></td>-->
+              <td style="flex: 0 0 5%; justify-content: center " class="text-14 w-5">
                 <!--              <div (click)="copyUrl(issue.id, issue.project, issue.doc_number, issue.department); $event.stopPropagation()" class="">-->
                 <!--                <img pTooltip="Copy link" tooltipPosition="top" src="assets/icons/link3.png">-->
                 <!--              </div>-->

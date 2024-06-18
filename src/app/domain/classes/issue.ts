@@ -62,5 +62,6 @@ export class Issue {
   started_date_as_date: Date;
   removed = 0;
   correction: any;
+  max_due_date: any;
   author_comment: string = '';
 }

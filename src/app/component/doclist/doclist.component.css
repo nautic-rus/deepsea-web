@@ -274,3 +274,10 @@
   width: 12px;
   height: 12px;
 }
+
+.correction_container {
+  display: grid;
+  gap: 3px;
+  grid-template-columns: 1fr 2fr;
+  text-align: start;
+}

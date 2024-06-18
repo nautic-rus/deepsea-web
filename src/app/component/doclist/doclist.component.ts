@@ -83,7 +83,9 @@ export class DoclistComponent implements OnInit {
 
       this.issueManager.getIssuesCorrection().subscribe(res => {
         this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
+        // console.log(this.issuesCorrection)
         this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection)
+        console.log(this.issuesSrc)
       })
 
       this.issues = this.issuesSrc;
@@ -191,9 +193,10 @@ export class DoclistComponent implements OnInit {
       item1.contract_due_date = new Date(item1.contract_due_date)
       item1.last_update = new Date(item1.last_update)
       const matchingItem = arr2.find(item2 => item2.id === item1.id);
+      // console.log(matchingItem)
       if (matchingItem) {
         // Если найден элемент с таким же id, добавляем поле correction с значением 1
-        return { ...item1, correction: true };
+        return { ...item1, correction: true, max_due_date: matchingItem.max_due_date };
       } else {
         // Если не найден, добавляем поле correction с значением 0
         return { ...item1, correction: false };
@@ -343,11 +346,28 @@ export class DoclistComponent implements OnInit {
 
   getDate(dateLong: number): string {
     if (dateLong == 0) {
-      return '--/--/----';
+      return '--/--/--';
+    }
+    if (!dateLong) {
+      return '';
     }
     let date = new Date(dateLong);
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
+
+  greenCorrectionSign(correctionDate: number): boolean {
+    let today = new Date()
+    if (correctionDate == 0) {
+      return true
+    }
+    // @ts-ignore
+    if (correctionDate > today) {
+      return true
+    }
+    return false
+  }
+
+
 
   taskStagesChanged() {
     localStorage.setItem('selectedTaskStages', JSON.stringify(this.selectedTaskStages));
