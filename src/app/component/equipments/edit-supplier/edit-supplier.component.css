@@ -1473,3 +1473,7 @@
   border-radius: 0 0 5px 5px !important;
 }
 
+.file_item .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: white !important;
+}
+

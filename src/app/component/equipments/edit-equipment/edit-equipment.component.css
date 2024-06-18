@@ -172,9 +172,9 @@
   margin-left: 15px;
   color: #0EA97D;
 }
-.task-row:hover {
-  background-color: #EEF5FA !important;
-}
+/*.task-row:hover {*/
+/*  background-color: #EEF5FA !important;*/
+/*}*/
 
 .supplier_container {
   background-color: rgb(247 246 246);
@@ -223,8 +223,12 @@
   border: none;
 }
 
-/deep/ .p-datatable .p-datatable-tbody > tr:hover {
-  background-color: rgba(9, 30, 66, 0.08) !important
+/*/deep/ .p-datatable .p-datatable-tbody > tr:hover {*/
+/*  background-color: rgba(9, 30, 66, 0.08) !important*/
+/*}*/
+
+.file_item .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: rgba(9, 30, 66, 0.08)
 }
 
 .eq-container {

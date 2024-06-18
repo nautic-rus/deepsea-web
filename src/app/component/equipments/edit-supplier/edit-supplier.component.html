@@ -177,17 +177,17 @@
           <div class="archive-no" *ngIf="supplierFilesSrc.length == 0">Здесь пока нет добавленных файлов</div>
           <p-table *ngIf="supplierFilesSrc.length != 0" [value]="getSupFiles(supplierFilesSrc)" styleClass="p-datatable-striped" [tableStyle]="">
             <ng-template pTemplate="body" let-file>
-              <tr>
+              <tr class="file_item">
                 <td class="padding-3">
                   <div (click)="openFile(file.url)" [pTooltip]="file.name" tooltipPosition="bottom" class="attachment-issues df mb-3 cursor-pointer">
                     <img [src]="'assets/task/' + getFileExtensionIcon(file.url)" height="16"/>
                     <span class="file-name-esp mx-10 cy">{{trimFileName(file.url, 22) + ' '}}</span>
                   </div>
                 </td>
-                <td class="padding-3">{{file.type_name}}</td>
-                <td class="padding-3">rev{{file.rev}}</td>
-                <td class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>
-                <td class="padding-3">{{this.getDateOnly(file.create_date)}}</td>
+                <td style="cursor: default" class="padding-3">{{file.type_name}}</td>
+                <td style="cursor: default" class="padding-3">rev{{file.rev}}</td>
+                <td style="cursor: default" class="padding-3">{{this.auth.getUserNameById(file.user_id)}}</td>
+                <td style="cursor: default" class="padding-3">{{this.getDateOnly(file.create_date)}}</td>
                 <td class="padding-3">
                   <a [href]="file.url" [download]="file.name" (click)="$event.stopPropagation()">
                     <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
