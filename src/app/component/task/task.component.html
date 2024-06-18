@@ -1024,7 +1024,7 @@
                   <div [innerHTML]="msg.new_value | safeHtml"></div>
                 </div>
               </div>
-              <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor', 'contract_due_date', 'reason_of_changes', 'modification_of_existing', 'plan_hours'].includes(msg.name_value)">
+              <div *ngIf="!['priority', 'issue_comment', 'department', 'project', 'start_date', 'due_date', 'responsible', 'period', 'labor', 'contract_due_date', 'reason_of_changes', 'modification_of_existing', 'plan_hours', 'contract'].includes(msg.name_value)">
                 <span (click)="openUserInfo(msg.author)" class="bold-text cursor-pointer">{{getAuthor(msg.author)}}</span>
                 <span class="text-descr px-5">{{t.tr('изменил')}}{{localeGender(msg.author)}}</span>
                 <span class="bold-text">{{t.tr('информацию')}}</span>
