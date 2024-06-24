@@ -34,11 +34,12 @@ import {CombineIssuesComponent} from "./combine-issues/combine-issues.component"
 import {AssignResponsibleComponent} from "../qna/assign-responsible/assign-responsible.component";
 import {AssignQuestionComponent} from "../qna/assign-question/assign-question.component";
 import {Router} from "@angular/router";
-import {concat, forkJoin} from "rxjs";
+import {async, concat, forkJoin, Observable, of} from "rxjs";
 import {ConsumedHour} from "../work-hours/work-hours.component";
 import {ConsumedDetailsComponent} from "./consumed-details/consumed-details.component";
 import {TaskAddPlanComponent} from "./task-add-plan/task-add-plan.component";
 import {UntieComponent} from "./untie/untie.component";
+import {catchError, map} from "rxjs/operators";
 
 @Component({
   selector: 'app-task',
@@ -48,6 +49,10 @@ import {UntieComponent} from "./untie/untie.component";
 })
 export class TaskComponent implements OnInit {
   issue: Issue = new Issue();
+  trustedUsersId: any[] = [];
+  trustedS: boolean = false;
+  trustedA: boolean = false;
+  trustedR: boolean = false;
   message = '';
   answerMessage = '';
   answerMessageBeforeEdit = '';
@@ -337,28 +342,52 @@ export class TaskComponent implements OnInit {
       modal: true,
       data: this.issue
     }).onClose.subscribe(res => {
+
       setTimeout(() => {
+
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
-          console.log(issue)
           this.availableActions = this.getAvailableActions(issue);
+          console.log(this.availableActions)
           this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
             this.planIssue = resPlan[0];
           });
         });
-      }, 100);
+      }, 500);
     });
   }
   planIssue: any;
   ngOnInit(): void {
+    // this.issueManager.getTrustedUsers1(49).subscribe((res) => {
+    //   res.forEach((i: { responsible_user_id: any; }) => {
+    //     this.trustedUsersId.push(i.responsible_user_id)
+    //   })
+    //   console.log(this.trustedUsersId)
+    //   console.log("TrustedUsers")
+    // })
+
+
+
+    console.log("task component")
     this.config.setTranslation({
-      dayNamesMin: ["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],
+      dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
       weekHeader: "№",
-      monthNames: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+      monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
     });
     this.issue = this.conf.data as Issue;
+    console.log(this.auth.getUserId(this.issue.started_by))
+
+    // @ts-ignore
+    this.isTrustedS(this.auth.getUserId(this.issue.started_by));
+    console.log(this.issue)
+    console.log(this.auth.getUserId(this.issue.assigned_to))
+    console.log(this.issue.assigned_to)
+    // @ts-ignore
+    this.isTrustedA(this.auth.getUserId(this.issue.assigned_to));
+    // @ts-ignore
+    this.isTrustedR(this.auth.getUserId(this.issue.responsible));
     let findAnswer = this.issue.messages.filter(x => x.prefix == 'answer');
-    if (findAnswer.length > 0){
+    if (findAnswer.length > 0) {
       this.answerMessage = findAnswer[findAnswer.length - 1].content;
       this.answerFiles = findAnswer[findAnswer.length - 1].file_attachments;
       //console.log(this.answerMessage);
@@ -423,13 +452,16 @@ export class TaskComponent implements OnInit {
     this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
 
     let readySplit = this.issue.ready.split('|');
-    if (this.issue.ready.includes('|')){
+    if (this.issue.ready.includes('|')) {
       this.ready.model = +readySplit[0];
       this.ready.drawing = +readySplit[1];
       this.ready.nesting = +readySplit[2];
     }
 
     this.fillGroupedChecks();
+
+    // console.log("ngOnInit this.trustedS")
+    // console.log(this.trustedS)
   }
   close(){
     this.ref.close(this.updated ? 'updated' : 'exit');
@@ -488,18 +520,120 @@ export class TaskComponent implements OnInit {
     return _.sortBy(res, x => x.date != null ? x.date : x.update_date).reverse();
   }
 
+
+  // @ts-ignore
+  isTrustedS(mainId: number) {
+    if (!mainId)
+    {
+      console.log("MMMMMMMMMMAAAAAAAAAA")
+      this.trustedS = false
+      return false
+    }
+    if (mainId === this.auth.getUser().id) {
+      this.trustedS = true
+      return true
+    }
+    this.issueManager.getTrustedUsers1(mainId).subscribe((res) => {
+      let trustedUsers: number[] = [];
+      res.forEach((i: { responsible_user_id: any; }) => {
+        trustedUsers.push(i.responsible_user_id)
+      })
+      // @ts-ignore
+      if (trustedUsers.includes(this.auth.getUser().id)) {
+        this.trustedS = true
+        return true
+      } else
+        this.trustedS = false
+         return false
+    })
+  }
+
+  // @ts-ignore
+  isTrustedA(mainId: number) {
+    if (!mainId)
+    {
+      this.trustedA = false
+      return false
+    }
+    if (mainId === this.auth.getUser().id) {
+      this.trustedA = true
+      return true
+    }
+    this.issueManager.getTrustedUsers1(mainId).subscribe((res) => {
+      let trustedUsers: number[] = [];
+      res.forEach((i: { responsible_user_id: any; }) => {
+        trustedUsers.push(i.responsible_user_id)
+      })
+      // @ts-ignore
+      if (trustedUsers.includes(this.auth.getUser().id)) {
+        this.trustedA = true
+        return true
+      } else
+      this.trustedA = false
+      return false
+    })
+  }
+
+  // @ts-ignore
+  isTrustedR(mainId: number) {
+    if (!mainId)
+    {
+      this.trustedR = false
+      return false
+    }
+    if (mainId === this.auth.getUser().id) {
+      this.trustedR = true
+      return true
+    }
+    this.issueManager.getTrustedUsers1(mainId).subscribe((res) => {
+      let trustedUsers: number[] = [];
+      res.forEach((i: { responsible_user_id: any; }) => {
+        trustedUsers.push(i.responsible_user_id)
+      })
+      // @ts-ignore
+      if (trustedUsers.includes(this.auth.getUser().id)) {
+        this.trustedR = true
+        return true
+      } else
+      this.trustedR = false
+      return false
+    })
+  }
+
+
   getAvailableActions(issue: Issue) {
+    // @ts-ignore
+    // this.trustedS = this.trusted(49)
     const res: any[] = [];
     issue.actions.forEach(action => {
-      let allow = false;
+      let allow = false ;
+      let trustedS : boolean = false;
+      trustedS = this.trustedS
+      // console.log("trustedS getAvailableActions");
+      // console.log(this.trustedS);
+      // console.log(trustedS);
+
+      let trustedA : boolean = false;
+      trustedA = this.trustedA
+      // console.log("trustedA getAvailableActions");
+      // console.log(this.trustedA);
+      // console.log(trustedA);
+
+      let trustedR : boolean = false;
+      trustedR = this.trustedR
+      // console.log("trustedR getAvailableActions");
+      // console.log(this.trustedR);
+      // console.log(trustedR);
+      // let trustedS = this.trustedS
+
       let isManager = false;
       let issueDep = this.userDepartments.find(x => x.name == issue.department);
       if (issueDep != null){
         isManager = issueDep.manager.includes(this.auth.getUser().login);
       }
-      allow = action.rule.includes('r') && (issue.responsible == this.auth.getUser().login || isManager) || allow;
-      allow = action.rule.includes('a') && issue.assigned_to == this.auth.getUser().login || allow;
-      allow = action.rule.includes('s') && issue.started_by == this.auth.getUser().login || allow;
+      allow = action.rule.includes('r') && (issue.responsible == this.auth.getUser().login || isManager || trustedR) || allow;
+      allow = action.rule.includes('a') && (issue.assigned_to == this.auth.getUser().login || trustedA) || allow;
+      allow = action.rule.includes('s') && (issue.started_by == this.auth.getUser().login || trustedS) || allow;
       allow = action.rule.includes('g') && this.auth.getUser().groups.includes(issue.issue_type) || allow;
       allow = action.rule.includes('h') ? issue.child_issues.length == 0 && allow : allow;
       allow = action.rule.includes('n') ? issue.child_issues.length != 0 && allow : allow;
@@ -1116,6 +1250,7 @@ export class TaskComponent implements OnInit {
         this.messageService.add({key:'task', severity:'success', summary:'Update', detail:'You have successfully updated issue.'});
         this.issueManager.setIssueViewed(this.issue.id, this.auth.getUser().login);
         this.availableActions = this.getAvailableActions(this.issue);
+        // this.availableActions = this.getAvailableActions(this.issue);
       }
     });
   }

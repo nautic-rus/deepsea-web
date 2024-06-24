@@ -29,6 +29,10 @@ export class IssueManagerService {
   constructor(private lang: LanguageService, private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, public auth: AuthManagerService) {
 
   }
+
+  getProjectNamesD() {
+    return this.http.get<any[]>(props.httpD + '/projectNames');
+  }
   async uploadFile(file: File, user: string, fileName: string = file.name) {
     const formData: FormData = new FormData();
     formData.append('file', file, fileName);
@@ -67,6 +71,10 @@ export class IssueManagerService {
   getProjectContracts(project: string) {
     return this.http.get<string[]>(props.http + '/projectContracts', {params: {project}});
   }
+
+  getTrustedUsers(id: number) {
+    return this.http.get<any[]>(props.httpD + '/trustedUsers', {params: {id}});
+  }
   async getIssueProjects() {
     return await this.http.get<any[]>(props.http + '/issueProjects').toPromise();
   }
@@ -99,6 +107,12 @@ export class IssueManagerService {
   getIssuesAllShort() {
     return this.http.get<any[]>(props.http + '/issuesAllShort');
   }
+
+  //doclist-new
+  getDoclistByProject(project: string): Observable<any> {
+    return this.http.get<string>(props.httpD + '/projectDoclist', {params: {project}});
+  }
+
   async getQuestions(): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/questions').toPromise();
   }
@@ -581,6 +595,12 @@ export class IssueManagerService {
   }
   getProjectStats(project: string, docType: string){
     return this.http.get(props.http + '/projectStats', {params: {project, docType}});
+  }
+
+  getTrustedUsers1(userId: number): Observable<any>{
+    // @ts-ignore
+    return this.http.get(props.httpD + `/trustedUsers?id=${userId}`);
+    // return this.http.get(`http://localhost:5055/filtersSaved?userId=${userId}`);
   }
 
   getFilters(userId: number): Observable<any>{

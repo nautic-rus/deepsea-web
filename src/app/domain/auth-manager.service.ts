@@ -102,6 +102,15 @@ export class AuthManagerService {
       this.filled = true;
     });
   }
+
+  getUserId(login: string){
+    let find = this.users.find(x => x.login == login);
+    if (find != null)
+        return find.id
+    else
+      return null;
+  }
+
   getUserName(login: string){
     if (login == 'nautic-rus' || login == ''){
       return this.t.language == 'ru' ? '' : '';
