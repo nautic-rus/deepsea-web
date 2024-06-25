@@ -358,13 +358,13 @@ export class TaskComponent implements OnInit {
   }
   planIssue: any;
   ngOnInit(): void {
-    // this.issueManager.getTrustedUsers1(49).subscribe((res) => {
-    //   res.forEach((i: { responsible_user_id: any; }) => {
-    //     this.trustedUsersId.push(i.responsible_user_id)
-    //   })
-    //   console.log(this.trustedUsersId)
-    //   console.log("TrustedUsers")
-    // })
+    this.issueManager.getTrustedUsers1(47).subscribe((res) => {
+      res.forEach((i: { responsible_user_id: any; }) => {
+        this.trustedUsersId.push(i.responsible_user_id)
+      })
+      console.log(this.trustedUsersId)
+      console.log("TrustedUsers")
+    })
 
 
 
@@ -379,9 +379,9 @@ export class TaskComponent implements OnInit {
 
     // @ts-ignore
     this.isTrustedS(this.auth.getUserId(this.issue.started_by));
-    console.log(this.issue)
-    console.log(this.auth.getUserId(this.issue.assigned_to))
-    console.log(this.issue.assigned_to)
+    // console.log(this.issue)
+    // console.log(this.auth.getUserId(this.issue.assigned_to))
+    // console.log(this.issue.assigned_to)
     // @ts-ignore
     this.isTrustedA(this.auth.getUserId(this.issue.assigned_to));
     // @ts-ignore
