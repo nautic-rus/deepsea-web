@@ -201,18 +201,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         date: false
       },
       {
-        field: 'started_by',
-        header: 'Author',
-        headerLocale: 'Author',
-        sort: true,
-        filter: true,
-        filters: this.getFilters(this.issues, 'started_by'),
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false,
-      },
-      {
         field: 'project',
         header: 'Project',
         headerLocale: 'Project',
@@ -236,6 +224,19 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: false
       },
+
+      {
+        field: 'doc_number',
+        header: 'Drawing number',
+        headerLocale: 'Drawing number',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'doc_number'),
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
       {
         field: 'name',
         header: 'Title',
@@ -244,6 +245,30 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         filter: false,
         filters: this.getFilters(this.issues, 'name'),
         skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
+        field: 'started_by',
+        header: 'Author',
+        headerLocale: 'Author',
+        sort: true,
+        filter: true,
+        filters: this.getFilters(this.issues, 'started_by'),
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
+      {
+        field: 'responsible',
+        header: 'Responsible',
+        headerLocale: 'Responsible',
+        sort: true,
+        filter: true,
+        skip: false,
+        filters: this.getFilters(this.issues, 'responsible'),
         defaultValue: '',
         hidden: false,
         date: false
@@ -273,18 +298,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         date: false,
       },
       {
-        field: 'priority',
-        header: 'Priority',
-        headerLocale: 'Priority',
-        sort: true,
-        filter: true,
-        skip: false,
-        filters: this.getFilters(this.issues, 'priority'),
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
         field: 'due_date',
         header: 'Due date',
         headerLocale: 'Due date',
@@ -295,42 +308,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         defaultValue: '',
         hidden: false,
         date: true
-      },
-      {
-        field: 'overtime',
-        header: 'Overtime',
-        headerLocale: 'Overtime',
-        sort: true,
-        filter: true,
-        skip: false,
-        filters: this.getFilters(this.issues, 'overtime'),
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'responsible',
-        header: 'Responsible',
-        headerLocale: 'Responsible',
-        sort: true,
-        filter: true,
-        skip: false,
-        filters: this.getFilters(this.issues, 'responsible'),
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
-        field: 'doc_number',
-        header: 'Drawing number',
-        headerLocale: 'Drawing number',
-        sort: true,
-        filter: false,
-        skip: false,
-        filters: this.getFilters(this.issues, 'doc_number'),
-        defaultValue: '',
-        hidden: false,
-        date: false
       },
       {
         field: 'period',
@@ -345,17 +322,41 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         date: false
       },
       {
-        field: 'last_update',
-        header: 'Last update',
-        headerLocale: 'Last update',
+        field: 'contract_due_date',
+        header: 'Stage Due Date',
+        headerLocale: 'Stage Due Date',
         sort: true,
         filter: false,
         skip: false,
-        filters: this.getFilters(this.issues, 'last_update'),
+        filters: this.getFilters(this.issues, 'contract_due_date'),
         defaultValue: '',
         hidden: false,
-        date: true
+        date: true,
       },
+      {
+        field: 'priority',
+        header: 'Priority',
+        headerLocale: 'Priority',
+        sort: true,
+        filter: true,
+        skip: false,
+        filters: this.getFilters(this.issues, 'priority'),
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      // {
+      //   field: 'overtime',
+      //   header: 'Overtime',
+      //   headerLocale: 'Overtime',
+      //   sort: true,
+      //   filter: true,
+      //   skip: false,
+      //   filters: this.getFilters(this.issues, 'overtime'),
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false
+      // },
       {
         field: 'issue_comment',
         header: 'Note',
@@ -405,18 +406,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         date: false,
       },
       {
-        field: 'contract_due_date',
-        header: 'Stage Due Date',
-        headerLocale: 'Stage Due Date',
-        sort: true,
-        filter: false,
-        skip: false,
-        filters: this.getFilters(this.issues, 'contract_due_date'),
-        defaultValue: '',
-        hidden: false,
-        date: true,
-      },
-      {
         field: 'contract',
         header: 'Contract',
         headerLocale: 'Contract',
@@ -439,7 +428,31 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         defaultValue: '',
         hidden: false,
         date: false
-      }
+      },
+      {
+        field: 'it_type',
+        header: 'IT Type',
+        headerLocale: 'IT Type',
+        sort: true,
+        filter: true,
+        skip: false,
+        filters: this.getFilters(this.issues, 'it_type'),
+        defaultValue: '',
+        hidden: false,
+        date: false
+      },
+      {
+        field: 'last_update',
+        header: 'Last update',
+        headerLocale: 'Last update',
+        sort: true,
+        filter: false,
+        skip: false,
+        filters: this.getFilters(this.issues, 'last_update'),
+        defaultValue: '',
+        hidden: false,
+        date: true
+      },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -471,6 +484,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
     zip(this.issueManager.getIssues(this.auth.getUser().login), this.issueManager.getIssues(this.auth.getUser().shared_access)).pipe(map((value) => value[0].concat(value[1]))).subscribe(data => {
       this.issues = data.filter(x => x.id > 0);
+      console.log(this.issues)
 
       if (this.auth.getUser().shared_access != ''){
         this.issueManager.getIssues(this.auth.getUser().shared_access).then(resShared => {
@@ -634,6 +648,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         return this.issueManager.localeTaskPriority(field);
       case 'status':
         return this.issueManager.localeStatus(field, false);
+      // case 'it_type':
+      //   return this.issueManager.localeItType(field, true);
       default:
         return field;
     }
@@ -678,6 +694,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       }
     } else if (field == 'status') {
       return this.issueManager.localeStatus(issueElement);
+    } else if (field == 'it_type') {
+        return this.issueManager.localeItType(issueElement);
     } else if (field == 'started_date') {
       return this.getDateOnly(+issueElement);
     } else if (field == 'issue_type') {

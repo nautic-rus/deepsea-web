@@ -248,6 +248,27 @@ export class IssueManagerService {
   downloadAllDocs(docs: number[], user: string, email: string) {
     return this.http.post<string>(props.http + '/issuesFiles', docs, {params: {user, email}});
   }
+
+  localeItType(input: string, styled = true): string {
+    console.log(input)
+    switch (input) {
+      case 'FEATURE':
+        console.log("case 'FEATURE'")
+        console.log(styled)
+        return styled ? '<span style="color: #07594D; background-color: #067b6b40; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 10px; letter-spacing: .3px;">FEATURE</span>' : 'FEATURE';
+      case 'BUG':
+        console.log("case 'BUG'")
+        console.log(styled)
+        return styled ? '<span style="color: #c63737; background-color: #ffcdd2; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 10px; letter-spacing: .3px;">BUG</span>' : 'BUG';
+      case 'REQUIREMENTS':
+        console.log("case 'REQUIREMENTS'")
+        console.log(styled)
+        return styled ? '<span style="color: #23547b; background-color: #b3e5fc; border-radius: 2px; padding: 2px 4px; text-transform: uppercase; font-weight: 700; font-size: 10px; letter-spacing: .3px;">REQUIREMENTS</span>' : 'REQUIREMENTS';
+      default:
+        return input;
+    }
+  }
+
   localeStatus(input: string, styled = true): string {
     switch (this.lang.language) {
       case 'ru':{
