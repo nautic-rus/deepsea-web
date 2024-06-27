@@ -64,4 +64,5 @@ export class Issue {
   correction: any;
   max_due_date: any;
   author_comment: string = '';
+  it_type: string = ''
 }

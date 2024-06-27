@@ -43,6 +43,8 @@ export class CreateTaskComponent implements OnInit {
   onlyManagers: User[] = [];
   hideUsers = true;
   itUsers: User[] = [];
+  itTypes: string[] = ['BUG', 'FEATURE', 'REQUIREMENTS'];
+  selectedItType: string = '';
   startDate: Date = new Date();
   dueDate: Date = new Date(this.startDate.getTime() + 259200000);
   contractDueDate: Date = new Date(this.startDate.getTime() + 259200000);
@@ -326,7 +328,7 @@ export class CreateTaskComponent implements OnInit {
     issue.priority = this.taskPriority;
     issue.start_date = this.startDate.getTime();
     issue.due_date = 0;
-    //issue.due_date = this.dueDate.getTime();
+    //issue.due_date = this.dueDate.getTime();;
     issue.department = this.taskDepartment;
     issue.doc_number = this.taskDocNumber;
     issue.responsible = this.responsibleUser;
@@ -342,6 +344,8 @@ export class CreateTaskComponent implements OnInit {
     issue.modification_of_existing = this.modificationOfExisting ? 1 : 0;
     issue.modification_description = this.modificationDescription;
     issue.contract = this.taskContract;
+    issue.it_type = this.selectedItType
+    console.log(issue.it_type)
     if (!issue.issue_type.includes('RKD') && !issue.issue_type.includes('ED') && !issue.issue_type.includes('PDSP')  && !issue.issue_type.includes('PSD') && !issue.issue_type.includes('OR') && !issue.issue_type.includes('IZ')){
       issue.doc_number = '';
     }
@@ -374,6 +378,7 @@ export class CreateTaskComponent implements OnInit {
       this.issues.startIssue(issue).then(res => {
         console.log('this.issues.startIssue(issue)')
         console.log(res);
+        console.log(issue)
         if (this.action == 'combine'){
           this.issues.combineIssues(this.parent_id, +res, this.auth.getUser().login);
         }
@@ -494,7 +499,7 @@ export class CreateTaskComponent implements OnInit {
     console.log(desc);
     let taskExists = this.checkIssues.find(x => x.docNumber == this.taskDocNumber && x.issueType == this.taskType) != null;
     switch (this.taskType) {
-      case 'IT': return this.taskSummary.trim() == '' || desc.trim() == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
+      case 'IT': return this.taskSummary.trim() == '' || desc.trim() == '' || this.selectedItType == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
       case 'RKD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
       case 'PDSP': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
       case 'ED': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();

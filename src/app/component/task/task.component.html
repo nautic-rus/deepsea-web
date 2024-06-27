@@ -1179,6 +1179,28 @@
               </div>
             </div>
           </div>
+<!--         <div class="df mt-3px" *ngIf="isVisible('it_type')">   &lt;!&ndash;   с этим разобраться   &ndash;&gt;-->
+          <div class="df mt-3px" *ngIf="isVisible('it_type')">
+            <div class="df text-y height-30 normal-text w-35">{{t.tr('IT Type')}}</div>
+<!--            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'it_type'" (click)="edit = 'it_type'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.it_type}}</div>-->
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'it_type'" (click)="edit = 'it_type'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.it_type}}</div>
+            <div class="mr-5" [hidden]="edit != 'it_type'">
+              <p-dropdown class="select" [(ngModel)]="issue.it_type" [options]="itTypes" styleClass="width-180">
+              </p-dropdown>
+            </div>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'it_type'" (click)="commitIssueEdit($event)">
+                <div  class="task-name-button cxy mr-5">
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'it_type'" (click)="cancelIssueEdit()">
+                <div  class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="df mt-3px" *ngIf="isVisible('started_by')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Автор')}}</div>
             <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{auth.getUserName(issue.started_by)}}</div>

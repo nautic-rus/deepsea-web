@@ -312,18 +312,30 @@
   <div *ngIf="taskType == 'IT'">
     <div class="big-text-create mb-1 mt-1">{{t.tr('Название задачи*')}}</div>
     <input class="w-100" (keydown.tab)="$event.preventDefault(); $event.stopPropagation(); editor.focus()" type="text" pInputText [(ngModel)]="taskSummary">
-    <div>
-      <div class="big-text-create mb-1 mt-1">{{t.tr('Назначить ответственного')}}</div>
-      <p-dropdown [options]="itUsers" [(ngModel)]="responsibleUser" [filter]="true" [filterBy]="t.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="t.language == 'ru' ? 'userName' : 'userNameEn'"
-                  [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-220 max-height-150">
-        <ng-template let-user pTemplate="item">
-          <div class="df">
-            <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
-            <div *ngIf="t.language == 'ru'" class="cx cy pl-10">{{user.userName}}</div>
-            <div *ngIf="t.language == 'en'" class="cx cy pl-10">{{user.userNameEn}}</div>
-          </div>
-        </ng-template>
-      </p-dropdown>
+    <div style="display: flex">
+      <div class="mr-1">
+        <div class="big-text-create mb-1 mt-1">{{t.tr('Назначить ответственного')}}</div>
+        <p-dropdown [options]="itUsers" [(ngModel)]="responsibleUser" [filter]="true" [filterBy]="t.language == 'ru' ? 'userName' : 'userNameEn'" optionValue="login" [optionLabel]="t.language == 'ru' ? 'userName' : 'userNameEn'"
+                    [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-220 max-height-150">
+          <ng-template let-user pTemplate="item">
+            <div class="df">
+              <img src="{{user.avatar}}" width="24px" height="24px" style="border-radius: 16px"/>
+              <div *ngIf="t.language == 'ru'" class="cx cy pl-10">{{user.userName}}</div>
+              <div *ngIf="t.language == 'en'" class="cx cy pl-10">{{user.userNameEn}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div>
+        <div class="big-text-create mb-1 mt-1">{{t.tr('IT Type')}}</div>
+        <p-dropdown class="select" appendTo = "body" styleClass="width-220" [options]="itTypes" [(ngModel)]="selectedItType" [placeholder]="t.tr('IT type')"></p-dropdown>
+<!--          <p-dropdown optionLabel="label" optionValue="value" class="select" appendTo = "body" styleClass="width-220" [(ngModel)]="taskPriority" [options]="taskPriorities">-->
+          <!--        <p-dropdown [options]="itTypes" [(ngModel)]="selectedItType" [showClear]="true" [placeholder]="t.tr('Назначить')" class="p-dropdown-150" styleClass="width-220 max-height-150">-->
+<!--          <ng-template let-type pTemplate="item">-->
+<!--            <div *ngIf="t.language == 'ru'" class="cx cy pl-10">{{type}}</div>-->
+<!--          </ng-template>-->
+<!--        </p-dropdown>-->
+      </div>
     </div>
     <div class="big-text-create mb-1 mt-1">{{t.tr('Описание задачи*')}}</div>
     <quill-editor (onEditorCreated)="quillCreated($event)" [modules]="quillModules" (contextmenu)="editorClicked($event)" placeholder="" (dragover)="$event.stopPropagation(); $event.preventDefault();" (drop)="onEditorDrop($event)" [(ngModel)]="taskDetails">

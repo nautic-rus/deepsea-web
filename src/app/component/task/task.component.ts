@@ -82,6 +82,7 @@ export class TaskComponent implements OnInit {
   availableActions: any[] = [];
   reasonsOfChange: any[] = [];
   taskDepartments: string[] = [];
+  itTypes: string[] = ['BUG', 'FEATURE', 'REQUIREMENTS'];
   userDepartments: any[] = [];
   taskPriorities: LV[] = [];
   taskPeriods: LV[] = [];
