@@ -442,18 +442,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         date: false
       },
       {
-        field: 'it_type',
-        header: 'IT Type',
-        headerLocale: 'IT Type',
-        sort: true,
-        filter: true,
-        skip: false,
-        filters: this.getFilters(this.issues, 'it_type'),
-        defaultValue: '',
-        hidden: false,
-        date: false
-      },
-      {
         field: 'last_update',
         header: 'Last update',
         headerLocale: 'Last update',
