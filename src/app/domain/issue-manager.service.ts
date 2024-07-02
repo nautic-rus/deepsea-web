@@ -476,17 +476,19 @@ export class IssueManagerService {
     switch (this.lang.language) {
       case 'ru':{
         switch (input) {
-          case 'IT': return 'IT';
-          case 'OTHER': return 'Прочее';
+          case 'PSD': return 'ПСД';
+          case 'QNA': return 'ВОПРОС';
           case 'RKD': return 'РКД';
-          case 'RKD-TURK': return 'РКД-Т';
-          case 'APPROVAL': return 'Согласование';
+          case 'CORRECTION': return 'КОРРЕКТИРОВКА';
+          case 'MSH': return 'МСЧ';
+          case 'ED': return 'ЭД';
           case 'PDSP': return 'ПДСП';
-          case 'OR': return 'ОР';
-          case 'IZ': return 'ИЗ';
-          case 'CHANGES': return 'Корректировка';
-          case 'DEVELOPMENT': return 'Задание на разработку';
-          case 'ED': return 'ЕД';
+          case 'NON-PROJECT': return 'НЕ ПРОЕКТНАЯ';
+          case 'ITT': return 'ИТТ';
+          case 'APPROVAL': return 'СОГЛАСОВАНИЕ';
+          case 'IT': return 'IT';
+          case 'DEVELOPMENT': return 'ЗАДАНИЕ НА РАЗРАБОТКУ';
+          case 'OTHER': return 'ДРУГОЕ';
           default: return input;
         }
       }
