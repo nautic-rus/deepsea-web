@@ -164,7 +164,7 @@
                       <div class="w-10 pr-10 text-black-mini cy">
                         <div *ngIf="device.units == '166'">{{round(device.weight)}}</div>
                         <div *ngIf="device.fromAux != 1 && device.units == '055'">{{round(device.weight / device.count)}}</div>
-                        <div *ngIf="device.fromAux == 1 && device.units == '055'">{{round(device.count)}}</div>
+                        <div *ngIf="device.fromAux == 1 && device.units == '055'">*{{round(device.count)}}</div>
                         <div *ngIf="device.units != '166' && device.units != '055'">{{round(device.count)}}</div>
                       </div>
                       <div class="w-10 pr-10 align-center df">
