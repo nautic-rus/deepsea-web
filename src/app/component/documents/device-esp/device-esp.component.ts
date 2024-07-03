@@ -194,7 +194,10 @@ export class DeviceEspComponent implements OnInit {
 
 
       if (this.issue.id == 0){
-        this.fillRevisions();
+        this.issueManager.getIssueDetails(this.issueId).then(res => {
+          this.issue = res;
+          this.fillRevisions();
+        })
       }
     });
   }
