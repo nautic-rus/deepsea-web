@@ -69,6 +69,7 @@ import {WarehouseComponent} from "./component/warehouse/warehouse.component";
 import {MaterialsSummarySpecComponent} from "./component/materials-summary/materials-summary-spec/materials-summary-spec.component";
 import {StorageUploadPhotoComponent} from "./component/warehouse/storage-upload-photo/storage-upload-photo.component";
 import {WarehouseFullComponent} from "./component/warehouse-full/warehouse-full.component";
+import {DoclistNewComponent} from "./component/doclist-new/doclist-new.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -80,6 +81,7 @@ const routes: Routes = [
   { path: 'gantt', component: GanttComponent, canActivate: [AuthGuard], data: {animation: 'GanttComponent'} },
   { path: 'sections', component: SectionsComponent, canActivate: [AuthGuard], data: {animation: 'SectionsComponent'} },
   { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard], data: {animation: 'DocumentsComponent'} },
+  { path: 'documentsNew', component: DoclistNewComponent,  canActivate: [AuthGuard], data: {animation: 'DoclistNewComponent'} },
   { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: {animation: 'EmployeesComponent'} },
   { path: 'doc-explorer', component: DocExplorerComponent, canActivate: [AuthGuard], data: {animation: 'DocExplorerComponent'} },
   { path: 'time-control', component: TimeControlComponent, canActivate: [AuthGuard], data: {animation: 'TimeControlComponent'} },

@@ -1,0 +1,173 @@
+<div class="all-page-doc">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head df sticky-card" *ngIf="projects.length > 0">
+      <div class="mr-10 ">
+        <p-multiSelect styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
+      </div>
+      <div class="mr-10 ">
+        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+                       selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
+      </div>
+      <div class="mr-10">
+        <div *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div (click)="downloadAllDocs()" class="materials-button yellow-button cxy" [pTooltip]="t.tr('Скачать все')" tooltipPosition="top">
+          <img src="assets/icons/download-file.svg" height="26">
+        </div>
+      </div>
+      <div class="p-ml-auto mr-10 df">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input [(ngModel)]="searchValue" (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+        </span>
+      </div>
+
+    </div>
+    <div class="empty-card-bottom"></div>
+
+    <div class="card-overflow">
+      <div>
+        <p-table #table
+                 [value]="issuesSrc"
+                 [columns]="selectedColumns"
+                 [globalFilterFields]="['id','doc_number','name']"
+                 [scrollable]="true"
+                 [virtualRowHeight]="40"
+                 scrollHeight="calc(100vh - 220px)"
+                 styleClass="p-datatable-striped"
+                 responsiveLayout="scroll"
+                 [virtualScroll]="true">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field" [style.width]="col.width"  style="flex: none; padding: 10px;">
+                {{t.tr(col.header)}}
+                <p-sortIcon *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+                <div *ngIf="col.header === 'Тип'" class="flex justify-content-center align-items-center">
+                  <p-columnFilter field="issue_type" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="issue_types" placeholder="Any" (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <span class="ml-1">{{option}}</span>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
+                <div *ngIf="col.header === 'Договор'" class="flex justify-content-center align-items-center">
+                  <p-columnFilter field="contract" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="contracts" placeholder="Any" (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <span class="ml-1">{{option}}</span>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
+                <div *ngIf="col.header === 'Отдел'" class="flex justify-content-center align-items-center">
+                  <p-columnFilter field="department" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="department" placeholder="Any" (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <span class="ml-1">{{option}}</span>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
+                <p-columnFilter  *ngIf="col.header === 'Статус'" class="filter"  field="status" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="statuses" optionValue="value" optionLabel="label" display="chip" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
+                      <ng-template let-option pTemplate="item">
+                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>
+                        <!--                                                <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
+                      </ng-template>
+                    </p-multiSelect>
+                  </ng-template>
+                </p-columnFilter>
+
+                <div *ngIf="col.header === 'Ревизия'" class="flex justify-content-center align-items-center">
+                  <p-columnFilter field="revision" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="revisions" placeholder="Any" (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <span class="ml-1">{{option}}</span>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
+                <div *ngIf="col.header === 'Этап'" class="flex justify-content-center align-items-center">
+                  <p-columnFilter field="period" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="periods" placeholder="Any" (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <span class="ml-1">{{option}}</span>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+
+                <div *ngIf="col.header === 'Срок исполнения'" class="flex justify-content-center align-items-center">
+                  <p-columnFilter class="filter" type="date" field="due_date" display="menu"></p-columnFilter>
+                </div>
+
+<!--                <div *ngIf="col.header === 'Корректировка'">-->
+<!--                  <p-sortIcon field="correction"></p-sortIcon>-->
+                  <p-columnFilter *ngIf="col.header === 'Корректировка'" style="padding-left: 5px" type="boolean" field="correction"></p-columnFilter>
+<!--                </div>-->
+
+
+                <p-columnFilter *ngIf="col.header === 'Примечание'" type="text" field="issue_comment" display="menu"></p-columnFilter>
+                <p-columnFilter *ngIf="col.header === 'Комментарий'" type="text" field="author_comment" display="menu"></p-columnFilter>
+
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-issue let-columns="columns">
+            <tr (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
+              <td *ngFor="let col of columns" [style.width]="col.width" style="display: block; flex: none; padding: 10px; overflow-wrap: break-word;">
+                  <div *ngIf="auth.getUser().permissions.includes('visible_doc_status') && col.header === 'Статус'" class="text-14">
+                    <span [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></span>
+                  </div>
+                  <div *ngIf="col.header != 'Срок исполнения' && col.header != 'Статус'  && col.header != 'Корректировка'  && col.header != 'Файл'">{{issue[col.field]}}</div>
+                  <div *ngIf="col.header === 'Срок исполнения'" class="text-14  ">{{getDate(issue.due_date)}}</div>
+
+                  <div *ngIf="col.header === 'Корректировка'">
+                    <div class="correction_container" *ngIf="!greenCorrectionSign(issue.max_due_date) && issue.correction">
+                      <img style="min-width: 15px; max-width: 15px" src="assets/icons/attention1.svg" alt="">
+                      <span>{{getDate(issue.max_due_date)}}</span>
+                    </div>
+                    <div class="correction_container" *ngIf="greenCorrectionSign(issue.max_due_date)  && issue.correction">
+                      <img  style="min-width: 15px; max-width: 15px" src="assets/icons/greenAttention.svg" alt="">
+                      <div style="min-width: 65px; display: flex">
+                        <span>{{getDate(issue.max_due_date)}}</span>
+                      </div>
+                    </div>
+                    <div *ngIf="!issue.correction"></div>
+
+                  </div>
+                  <div *ngIf="col.header === 'Файл'" >
+                    <div class="correction_container" *ngIf="hasFiles(issue)">
+                      <img pTooltip="Files" tooltipPosition="top" src="assets/icons/attachment1.png" height="17">
+                      {{hasFiles(issue)}}
+                    </div>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -230,6 +230,7 @@ import { EditGroupComponent } from './component/equipments/edit-group/edit-group
 import { WarehouseFullComponent } from './component/warehouse-full/warehouse-full.component';
 import { FilterNameComponent } from './component/home/filter-name/filter-name.component';
 import { AddComplectToEspComponent } from './component/documents/electric-esp/add-complect-to-esp/add-complect-to-esp.component';
+import { DoclistNewComponent } from './component/doclist-new/doclist-new.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -401,6 +402,7 @@ Quill.register('modules/imageResize', ImageResize);
     WarehouseFullComponent,
     FilterNameComponent,
     AddComplectToEspComponent,
+    DoclistNewComponent,
 
   ],
   imports: [
