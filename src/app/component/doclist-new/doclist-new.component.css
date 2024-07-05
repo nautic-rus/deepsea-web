@@ -93,3 +93,7 @@
   grid-template-columns: 20px 2fr;
   text-align: start;
 }
+
+/deep/ .p-multiselect .p-multiselect-label {
+  min-height: 33px;
+}

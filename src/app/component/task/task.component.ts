@@ -610,22 +610,12 @@ export class TaskComponent implements OnInit {
       let allow = false ;
       let trustedS : boolean = false;
       trustedS = this.trustedS
-      // console.log("trustedS getAvailableActions");
-      // console.log(this.trustedS);
-      // console.log(trustedS);
 
       let trustedA : boolean = false;
       trustedA = this.trustedA
-      // console.log("trustedA getAvailableActions");
-      // console.log(this.trustedA);
-      // console.log(trustedA);
 
       let trustedR : boolean = false;
       trustedR = this.trustedR
-      // console.log("trustedR getAvailableActions");
-      // console.log(this.trustedR);
-      // console.log(trustedR);
-      // let trustedS = this.trustedS
 
       let isManager = false;
       let issueDep = this.userDepartments.find(x => x.name == issue.department);
