@@ -148,7 +148,7 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-issue let-columns="columns">
-            <tr class="cursor-pointer row-table-doc-hover" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
+            <tr class="cursor-pointer row-table-doc-hover" (contextmenu)="openIssueModal(issue.id)" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
               <td *ngFor="let col of columns" [style.width]="col.width" style="flex: none; padding: 10px; overflow-wrap: break-word;">
                   <div *ngIf="auth.getUser().permissions.includes('visible_doc_status') && col.header === 'Статус'" class="text-14">
                     <span [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></span>

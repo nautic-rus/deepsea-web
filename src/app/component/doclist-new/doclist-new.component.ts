@@ -10,6 +10,7 @@ import {DownloadAllDocsComponent} from "../doclist/download-all-docs/download-al
 import {DialogService} from "primeng/dynamicdialog";
 import {MessageService} from "primeng/api";
 import _ from "underscore";
+import {TaskComponent} from "../task/task.component";
 
 @Component({
   selector: 'app-doclist-new',
@@ -112,6 +113,22 @@ export class DoclistNewComponent implements OnInit {
     this._selectedColumns.splice(0, this._selectedColumns.length);
     val.forEach(col => this._selectedColumns.push(col));
     localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
+  }
+
+  openIssueModal(id: number) {
+    console.log(id)
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
+    return false
   }
 
 
