@@ -6,8 +6,21 @@
         <p-multiSelect styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
       </div>
       <div class="mr-10 ">
+<!--        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"-->
+<!--                       selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>-->
         <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
-                       selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
+                       placeholder="Choose Columns" styleClass="width-200">
+          <ng-template let-value pTemplate="selectedItems">
+            <span *ngFor="let option of value">
+              {{ t.tr(option.header) + ',' }}
+            </span>
+          </ng-template>
+          <ng-template let-col pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ t.tr(col.header) }}</div>
+            </div>
+          </ng-template>
+        </p-multiSelect>
       </div>
       <div class="mr-10">
         <div *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
@@ -22,16 +35,15 @@
       <div class="p-ml-auto mr-10 df">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input [(ngModel)]="searchValue" (input)="table.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+          <input [(ngModel)]="searchValue" (input)="tableDoclist.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
         </span>
       </div>
 
     </div>
     <div class="empty-card-bottom"></div>
-
     <div class="card-overflow">
       <div>
-        <p-table #table
+        <p-table #tableDoclist
                  [value]="issuesSrc"
                  [columns]="selectedColumns"
                  [globalFilterFields]="['id','doc_number','name']"
@@ -40,6 +52,8 @@
                  scrollHeight="calc(100vh - 220px)"
                  styleClass="p-datatable-striped"
                  responsiveLayout="scroll"
+                 stateStorage="local"
+                 stateKey="stateDoclist"
                  [virtualScroll]="true">
           <ng-template pTemplate="header" let-columns>
             <tr>
@@ -73,7 +87,7 @@
                 <div *ngIf="col.header === 'Отдел'" class="flex justify-content-center align-items-center">
                   <p-columnFilter field="department" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [ngModel]="value" [options]="department" placeholder="Any" (onChange)="filter($event.value)">
+                      <p-multiSelect [ngModel]="dep" [options]="department" placeholder="Any" (onChange)="filter($event.value)">
                         <ng-template let-option pTemplate="item">
                           <span class="ml-1">{{option}}</span>
                         </ng-template>
@@ -134,13 +148,13 @@
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-issue let-columns="columns">
-            <tr (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
-              <td *ngFor="let col of columns" [style.width]="col.width" style="display: block; flex: none; padding: 10px; overflow-wrap: break-word;">
+            <tr class="cursor-pointer row-table-doc-hover" (contextmenu)="openIssueModal(issue.id)" (click)="viewTask(issue.id, issue.project, issue.doc_number, issue.department, issue.assistant)">
+              <td *ngFor="let col of columns" [style.width]="col.width" style="flex: none; padding: 10px; overflow-wrap: break-word;">
                   <div *ngIf="auth.getUser().permissions.includes('visible_doc_status') && col.header === 'Статус'" class="text-14">
                     <span [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></span>
                   </div>
                   <div *ngIf="col.header != 'Срок исполнения' && col.header != 'Статус'  && col.header != 'Корректировка'  && col.header != 'Файл'">{{issue[col.field]}}</div>
-                  <div *ngIf="col.header === 'Срок исполнения'" class="text-14  ">{{getDate(issue.due_date)}}</div>
+                  <div *ngIf="col.header === 'Срок исполнения'" class="text-14  ">{{getDate(issue.contract_due_date)}}</div>
 
                   <div *ngIf="col.header === 'Корректировка'">
                     <div class="correction_container" *ngIf="!greenCorrectionSign(issue.max_due_date) && issue.correction">

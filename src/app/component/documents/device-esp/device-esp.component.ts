@@ -194,7 +194,10 @@ export class DeviceEspComponent implements OnInit {
 
 
       if (this.issue.id == 0){
-        this.fillRevisions();
+        this.issueManager.getIssueDetails(this.issueId).then(res => {
+          this.issue = res;
+          this.fillRevisions();
+        })
       }
     });
   }
@@ -529,7 +532,9 @@ export class DeviceEspComponent implements OnInit {
           }
         })
       });
+      console.log(this.miscIssues)
     });
+
     this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;

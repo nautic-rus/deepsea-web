@@ -10,6 +10,7 @@ import {DownloadAllDocsComponent} from "../doclist/download-all-docs/download-al
 import {DialogService} from "primeng/dynamicdialog";
 import {MessageService} from "primeng/api";
 import _ from "underscore";
+import {TaskComponent} from "../task/task.component";
 
 @Component({
   selector: 'app-doclist-new',
@@ -25,6 +26,7 @@ export class DoclistNewComponent implements OnInit {
   issuesSrc: any[] = [];
   issuesCorrection: any[] = [];
   revisionFiles: any[] = [];
+  dep: any[] = [];
 
   //for filters
   contracts: any[] = [];
@@ -47,7 +49,7 @@ export class DoclistNewComponent implements OnInit {
   }
   constructor(public issueManager: IssueManagerService, private messageService: MessageService, private dialogService: DialogService,  public auth: AuthManagerService, public t: LanguageService) { }
 
-  @ViewChild('table') table: Table;
+  @ViewChild('tableDoclist') table: Table;
   ngOnInit(): void {
     this.cols = [
       { field: 'id', header: 'Id', sort: true, width: '60px'},
@@ -60,10 +62,10 @@ export class DoclistNewComponent implements OnInit {
       { field: 'status', header: 'Статус', sort: true, width: '150px' },
       { field: 'revision', header: 'Ревизия', sort: true, width: '150px' },
       { field: 'period', header: 'Этап', sort: true, width: '150px' },
-      { field: 'due_date', header: 'Срок исполнения', sort: true, width: '150px' },
-      { field: 'issue_comment', header: 'Примечание', width: '150px' },
-      { field: 'author_comment', header: 'Комментарий', width: '150px' },
-      { field: 'correction', header: 'Корректировка', width: '150px' },
+      { field: 'contract_due_date', header: 'Срок исполнения', sort: true, width: '150px' },
+      { field: 'issue_comment', header: 'Примечание',sort: true, width: '150px' },
+      { field: 'author_comment', header: 'Комментарий',sort: true, width: '150px' },
+      { field: 'correction', header: 'Корректировка',sort: true, width: '150px' },
       { field: '', header: 'Файл', width: '150px' },
     ];
 
@@ -113,11 +115,33 @@ export class DoclistNewComponent implements OnInit {
     localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
   }
 
+  openIssueModal(id: number) {
+    console.log(id)
+    console.log("openIssue")
+    this.issueManager.getIssueDetails(id).then(res => {
+      console.log(res);
+      if (res.id != null) {
+        this.dialogService.open(TaskComponent, {
+          showHeader: false,
+          modal: true,
+          data: res
+        })
+      }
+    });
+    return false
+  }
+
 
   showProjectIssues(project: string) {
     this.issueManager.getDoclistByProject(project).subscribe(res => {
+      console.log("PLEASE!!!")
+      console.log(res)
       this.issuesSrc.push(...res)
       this.issuesSrc = this.issuesSrc.filter((x: { project: string; }) => this.auth.getUser().visible_projects.includes(x.project)).sort((a: { id: number; }, b: { id: number; }) => a.id > b.id ? 1 : -1);
+
+      console.log(this.issuesSrc)
+      console.log("typeof this.issuesSrc[1].due_date")
+      console.log(typeof this.issuesSrc[1].due_date)
 
       this.issueManager.getIssuesCorrection().subscribe(res => {
         this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
@@ -181,6 +205,9 @@ export class DoclistNewComponent implements OnInit {
   }
 
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
+    console.log(issueId)
+    console.log(assistant)
+    console.log(this.dep)
     let foranProject = project.replace('NR', 'N');
     let findProject = this.projects.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
     if (findProject != null){
@@ -194,9 +221,9 @@ export class DoclistNewComponent implements OnInit {
     // }
 
 
-    // if (this.selectedDepartments.includes(assistant)){
-    //   department = assistant;
-    // }
+    if (this.dep.includes(assistant)){
+      department = assistant;
+    }
 
     switch (department) {
       case 'Hull': window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank'); break;

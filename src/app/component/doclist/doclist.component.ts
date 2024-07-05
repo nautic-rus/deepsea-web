@@ -89,6 +89,8 @@ export class DoclistComponent implements OnInit {
       })
 
       this.issues = this.issuesSrc;
+      console.log("typeof this.issuesSrc[1].contract_due_date")
+      console.log(typeof this.issuesSrc[1].contract_due_date)
       this.statuses = this.getFilters(this.issues, 'status');
       this.contracts = _.sortBy(_.uniq(this.issues.map(x => x.contract)).filter(x => x != ''), x => x);
       // console.log(this.issues)
@@ -275,6 +277,7 @@ export class DoclistComponent implements OnInit {
 
 
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
+    console.log(issueId)
     let foranProject = project.replace('NR', 'N');
     let findProject = this.projectNames.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
     if (findProject != null){
