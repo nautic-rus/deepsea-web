@@ -8,6 +8,7 @@ import {MaterialManagerService} from "../../../domain/material-manager.service";
 import {IssueManagerService} from "../../../domain/issue-manager.service";
 import {AddMaterialComplectComponent} from "./add-material-complect/add-material-complect.component";
 import {AuthManagerService} from "../../../domain/auth-manager.service";
+import {LanguageService} from "../../../domain/language.service";
 
 @Component({
   selector: 'app-material-complect-manager',
@@ -29,7 +30,7 @@ export class MaterialComplectManagerComponent implements OnInit {
   specStatements: any[] = [];
   projectId = 0;
 
-  constructor(public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public materialManager: MaterialManagerService, public issues: IssueManagerService, public auth: AuthManagerService) { }
+  constructor(public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public materialManager: MaterialManagerService, public issues: IssueManagerService, public auth: AuthManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.fillMaterials();
@@ -73,14 +74,21 @@ export class MaterialComplectManagerComponent implements OnInit {
   }
 
   selectComplect(compl: any) {
-    this.selectedComplect = compl;
+    if (this.selectedComplect == compl){
+      this.selectedComplect = null;
+    }
+    else{
+      this.selectedComplect = compl;
+    }
     this.materials.forEach(m => m.count = null);
-    this.selectedComplect.materials.forEach((cMaterial: any) => {
-      let find = this.materials.find(x => x.code == cMaterial.material);
-      if (find != null){
-        find.count = cMaterial.count;
-      }
-    });
+    if (this.selectedComplect != null){
+      this.selectedComplect.materials.forEach((cMaterial: any) => {
+        let find = this.materials.find(x => x.code == cMaterial.material);
+        if (find != null){
+          find.count = cMaterial.count;
+        }
+      });
+    }
     this.selectedMaterials = this.materials.filter((x: any) => x.count > 0);
     this.materials = _.sortBy(this.materials, x => x.count > 0 ? '0' + x.name : '1' + x.name);
   }

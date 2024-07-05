@@ -2,44 +2,53 @@
   <div class="card-complect">
     <div class="page">
       <div class="complects">
-        <div class="select-project df cx">
-          <div class="big-text-card mb-1 cxy mx-10">Проект</div>
-          <div class="mx-10">
+        <div class="pb-15 df">
+          <div class="mr-10">
             <p-dropdown class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" optionValue="id" optionLabel="name" styleClass="width-156 font-14">
             </p-dropdown>
           </div>
-          <button (click)="addComplect()">ДОБАВИТЬ КОМПЛЕКТ</button>
+          <div class="mr-10">
+            <div class="materials-button-m blue-button cxy" (click)="addComplect()">
+              <div class="pr-10 cxy">
+                <img src="assets/icons/plus3.svg" height="18">
+              </div>
+              <div class="cxy">{{t.tr('Добавить комплект')}}</div>
+            </div>
+          </div>
+
         </div>
-        <cdk-virtual-scroll-viewport class="background-gray" style="height: 81vh" [itemSize]="40">
-          <div [style.height]="40 + 'px'" class="issues-all" *cdkVirtualFor="let compl of complects">
-            <div class="complect cursor-pointer" [class.selected-complect]="selectedComplect == compl" (click)="selectComplect(compl)">
+        <cdk-virtual-scroll-viewport class="background-gray ml-minus15" style="height: 81vh" [itemSize]="40">
+          <div [style.height]="40 + 'px'" class="issues-all" [class.selected-complect]="selectedComplect == compl" *cdkVirtualFor="let compl of complects">
+            <div class="complect cursor-pointer"  (click)="selectComplect(compl)">
               <div class="complect-header">
-                <div>{{compl.name}} {{getComplectLength(compl)}}</div>
-                <div>{{compl.kind}}</div>
-                <div>{{auth.getUserNameById(compl.user_id)}}</div>
+                <div class="title-bold-c">{{compl.name}} {{getComplectLength(compl)}}</div>
+                <div class="complect-footer systems">{{compl.kind}}</div>
+                <div>{{auth.getUserTrimNameById(compl.user_id)}}</div>
                 <div class="complect-project">{{compl.project}}</div>
-                <button (click)="deleteComplect(compl)">x</button>
+                <div class="cxy" [pTooltip]="t.tr('Удалить комплект')" tooltipPosition="top" (click)="deleteComplect(compl)">
+                  <svg class="icon-с" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
         </cdk-virtual-scroll-viewport>
       </div>
       <div>
-
+        <div class="df p-ml-auto pb-15">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input #searchMaterials pInputText type="text" (input)="materialsTable.filterGlobal(searchMaterials.value, 'contains')" placeholder="Поиск" />
+          </span>
+        </div>
         <p-table [value]="materials" [scrollable]="true" [virtualScroll]="true" [virtualRowHeight]="20" [scrollHeight]="'76vh'" [styleClass]="'p-datatable-sm'" [(selection)]="selectedMaterials" [globalFilterFields]="['name', 'code']" #materialsTable>
-          <ng-template pTemplate="caption">
-            <div class="flex">
-              <span class="p-input-icon-left ml-auto">
-                <i class="pi pi-search"></i>
-                <input #searchMaterials pInputText type="text" (input)="materialsTable.filterGlobal(searchMaterials.value, 'contains')" placeholder="Поиск" />
-            </span>
-            </div>
-          </ng-template>
+
+
+
           <ng-template pTemplate="header">
             <tr>
-              <th style="min-width: 50px; max-width: 50px">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
+              <th style="min-width: 50px; max-width: 50px"></th>
               <th style="min-width: 450px">Name</th>
               <th style="min-width: 150px">Code</th>
               <th style="min-width: 50px">Units</th>
@@ -60,7 +69,11 @@
             </tr>
           </ng-template>
         </p-table>
-        <button (click)="save()">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+
+        <div class="df justify-content-end mt-5">
+          <div tabindex="10" (click)="save()" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
+        </div>
+
       </div>
     </div>
   </div>

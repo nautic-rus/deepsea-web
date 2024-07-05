@@ -5,11 +5,11 @@
   <div class="equipment_header pb-15">
     <div class=" mr-10 df">
 
-        <div  class="eq-button blue-button cxy mr-10" (click)="newGroup()" style="width: fit-content;">
+        <div class="eq-button blue-button cxy mr-10" (click)="newGroup()" style="width: fit-content;">
           <div class="pr-10 cxy">
             <img src="assets/icons/plus3.svg" height="18">
           </div>
-          <div   class="cxy">{{t.tr('Создать группу')}}</div>
+          <div class="cxy">{{t.tr('Создать группу')}}</div>
         </div>
         <div class="mr-10">
           <p-multiSelect styleClass="width-200" [options]="projects" [(ngModel)]="selectedProjects" (ngModelChange)="projectChanged()" optionLabel="name" optionValue="name"></p-multiSelect>

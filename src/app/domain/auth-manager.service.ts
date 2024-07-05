@@ -173,6 +173,20 @@ export class AuthManagerService {
       return login;
     }
   }
+  getUserTrimNameById(id: number){
+    let find = this.users.find(x => x.id == id);
+    if (find != null){
+      if (this.t.language == 'ru'){
+        return find.surname + ' ' + find.name.substr(0,1) + '.';
+      }
+      else{
+        return tr(find.surname) + ' ' + tr(find.name).substr(0,1) + '.';
+      }
+    }
+    else{
+      return id;
+    }
+  }
   getUserAvatar(login: string){
     let find = this.users.find(x => x.login == login);
     if (find != null){
