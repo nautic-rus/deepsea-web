@@ -58,6 +58,7 @@ export class DoclistComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.auth.getUser().permissions)
     this.selectedTaskTypes = this.taskTypes.map(x => x.value);
     // this.issueManager.getIssueProjects().then(projects => {
     //   this.projects = projects;

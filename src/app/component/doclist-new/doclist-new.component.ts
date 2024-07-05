@@ -51,23 +51,32 @@ export class DoclistNewComponent implements OnInit {
 
   @ViewChild('tableDoclist') table: Table;
   ngOnInit(): void {
+
+    console.log(this.auth.getUser().permissions)
     this.cols = [
-      { field: 'id', header: 'Id', sort: true, width: '60px'},
-      { field: 'doc_number', header: 'Номер чертежа', sort: true, width: '125px'},
-      { field: 'issue_name', header: 'Название' , sort: true, width: '250px'},
-      { field: 'issue_type', header: 'Тип' , sort: true, width: '150px'},
-      { field: 'project', header: 'Проект', sort: true, width: '150px'},
-      { field: 'contract', header: 'Договор', sort: true, width: '150px'},
-      { field: 'department', header: 'Отдел', sort: true , width: '150px'},
-      { field: 'status', header: 'Статус', sort: true, width: '150px' },
-      { field: 'revision', header: 'Ревизия', sort: true, width: '150px' },
-      { field: 'period', header: 'Этап', sort: true, width: '150px' },
-      { field: 'contract_due_date', header: 'Срок исполнения', sort: true, width: '150px' },
-      { field: 'issue_comment', header: 'Примечание',sort: true, width: '150px' },
-      { field: 'author_comment', header: 'Комментарий',sort: true, width: '150px' },
-      { field: 'correction', header: 'Корректировка',sort: true, width: '150px' },
+      { field: 'id', header: 'Id', sort: true, width: '60px', visible: true},
+      { field: 'doc_number', header: 'Номер чертежа', sort: true, width: '140px', visible: true},
+      { field: 'issue_name', header: 'Название' , sort: true, width: '250px', visible: true},
+      { field: 'issue_type', header: 'Тип' , sort: true, width: '150px', visible: true},
+      { field: 'project', header: 'Проект', sort: true, width: '150px', visible: true},
+      { field: 'contract', header: 'Договор', sort: true, width: '150px', visible: true},
+      { field: 'department', header: 'Отдел', sort: true , width: '150px', visible: true},
+      { field: 'status', header: 'Статус', sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_status') },
+      { field: 'revision', header: 'Ревизия', sort: true, width: '150px', visible: true },
+      { field: 'period', header: 'Этап', sort: true, width: '150px', visible: true },
+      { field: 'contract_due_date', header: 'Срок исполнения', sort: true, width: '150px', visible: true },
+      { field: 'issue_comment', header: 'Примечание',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment') },
+      { field: 'author_comment', header: 'Комментарий',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment_auth') },
+      { field: 'correction', header: 'Корректировка',sort: true, width: '200px', visible: this.auth.getUser().permissions.includes('visible_doc_correction') },
       { field: '', header: 'Файл', width: '150px' },
     ];
+    setTimeout(() => {
+      this.cols = this.cols.filter(col => {
+        return col.visible
+      });
+    }, 500)
+
+
 
     // this._selectedColumns = this.cols;
     if (localStorage.getItem("selectedColumnsDoclist")) {
@@ -110,8 +119,14 @@ export class DoclistNewComponent implements OnInit {
   // }
 
   set selectedColumns(val: any[]) {
+    console.log(val)
     this._selectedColumns.splice(0, this._selectedColumns.length);
-    val.forEach(col => this._selectedColumns.push(col));
+    val.forEach(col => {
+      console.log(col)
+      // if (col.visible) {
+        this._selectedColumns.push(col)
+      // }
+    });
     localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
   }
 
@@ -134,19 +149,13 @@ export class DoclistNewComponent implements OnInit {
 
   showProjectIssues(project: string) {
     this.issueManager.getDoclistByProject(project).subscribe(res => {
-      console.log("PLEASE!!!")
-      console.log(res)
       this.issuesSrc.push(...res)
       this.issuesSrc = this.issuesSrc.filter((x: { project: string; }) => this.auth.getUser().visible_projects.includes(x.project)).sort((a: { id: number; }, b: { id: number; }) => a.id > b.id ? 1 : -1);
 
       console.log(this.issuesSrc)
-      console.log("typeof this.issuesSrc[1].due_date")
-      console.log(typeof this.issuesSrc[1].due_date)
 
       this.issueManager.getIssuesCorrection().subscribe(res => {
         this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
-        console.log("this.issuesCorrection")
-        console.log(this.issuesCorrection)
         this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection)
         this.contracts = _.sortBy(_.uniq(this.issuesSrc.map(x => x.contract)).filter(x => x != ''), x => x);
         this.issue_types = _.sortBy(_.uniq(this.issuesSrc.map(x => x.issue_type)).filter(x => x != ''), x => x);
