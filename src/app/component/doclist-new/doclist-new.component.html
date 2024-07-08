@@ -23,7 +23,7 @@
         </p-multiSelect>
       </div>
       <div class="mr-10">
-        <div *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXLS()">
+        <div *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXls()">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
@@ -97,7 +97,7 @@
                     </p-columnFilter>
                   </div>
 
-                  <p-columnFilter  *ngIf="col.header === 'Статус'" class="filter"  field="status" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <p-columnFilter  *ngIf="col.header === 'Статус' && auth.getUser().permissions.includes('visible_doc_status')" class="filter"  field="status" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                       <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="statuses" optionValue="value" optionLabel="label" display="chip" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                         <ng-template let-option pTemplate="item">

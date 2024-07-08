@@ -371,8 +371,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       // },
       {
         field: 'issue_comment',
-        header: 'Note',
-        headerLocale: 'Note',
+        header: 'Comment',
+        headerLocale: 'Comment',
         sort: true,
         filter: false,
         skip: false,
@@ -383,8 +383,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       },
       {
         field: 'author_comment',
-        header: 'Comment',
-        headerLocale: 'Comment',
+        header: 'Comment by author',
+        headerLocale: 'Comment by author',
         sort: true,
         filter: false,
         skip: false,

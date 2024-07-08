@@ -52,8 +52,8 @@ export class DoclistNewComponent implements OnInit {
   @ViewChild('tableDoclist') table: Table;
   ngOnInit(): void {
 
-    console.log(this.auth.getUser().permissions)
-    console.log(this.auth.hasPerms('visible_doc_comment'))
+    // console.log(this.auth.getUser().permissions)
+    // console.log(this.auth.hasPerms('visible_doc_comment'))
 
     this.cols = [
       { field: 'id', header: 'Id', sort: true, width: '60px', visible: true},
@@ -67,8 +67,8 @@ export class DoclistNewComponent implements OnInit {
       { field: 'revision', header: 'Ревизия', sort: true, width: '150px', visible: true },
       { field: 'period', header: 'Этап', sort: true, width: '150px', visible: true },
       { field: 'contract_due_date', header: 'Срок исполнения', sort: true, width: '150px', visible: true },
-      { field: 'issue_comment', header: 'Примечание',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment') },
-      { field: 'author_comment', header: 'Комментарий',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment_auth') },
+      { field: 'issue_comment', header: 'Комментарий',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment') },
+      { field: 'author_comment', header: 'Комментарий автора',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment_auth') },
       { field: 'correction', header: 'Корректировка',sort: true, width: '200px', visible: this.auth.getUser().permissions.includes('visible_doc_correction') },
       { field: '', header: 'Файл', width: '150px', visible: true  },
     ];
@@ -101,7 +101,7 @@ export class DoclistNewComponent implements OnInit {
           this.projects.push(i.name)
         }
       })
-      console.log(this.projects)
+      // console.log(this.projects)
     })
 
     // this.selectedProjects = localStorage.getItem('selectedProjects')
@@ -150,7 +150,7 @@ export class DoclistNewComponent implements OnInit {
       this.issuesSrc.push(...res)
       this.issuesSrc = this.issuesSrc.filter((x: { project: string; }) => this.auth.getUser().visible_projects.includes(x.project)).sort((a: { id: number; }, b: { id: number; }) => a.id > b.id ? 1 : -1);
 
-      console.log(this.issuesSrc)
+      // console.log(this.issuesSrc)
 
       this.issueManager.getIssuesCorrection().subscribe(res => {
         this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
@@ -338,37 +338,165 @@ export class DoclistNewComponent implements OnInit {
     return this.table.filteredValue;
   }
 
-  exportXLS() {
+  exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let issues = this.table.filteredValue;
+    if (this.table.filteredValue == null){
+      issues = this.issuesSrc;
+    }
     let data: any[] = [];
-    let exportedArray = []
-    if (this.getFilteredData()) {
-      exportedArray = this.getFilteredData()
-    } else
-      exportedArray = this.issuesSrc
+    let cols = this.selectedColumns.map(x => x.field !== '' ? x.field : null).filter(x => x !== null);
+    data.push(this.selectedColumns.map(x => x.header !== 'Файл' ? x.header : null).filter(x => x !== null));
+    issues.forEach(issue => {
+      let newIssue: Issue = JSON.parse(JSON.stringify(issue));
+      let rowData: any[] = [];
+      let findSrc = this.issuesSrc.find(x => x.id == newIssue.id);
 
-    exportedArray.filter((x: any) => x != null).forEach(issue => {
-      data.push({
-        'Doc number': issue.doc_number,
-        'Title': issue.name,
-        'Type': issue.issue_type,
-        'Project': issue.project,
-        'Contract': issue.contract,
-        'Department': issue.department,
-        'Status': issue.status,
-        'Revision': issue.revision,
-        'Stage': issue.period,
-        'Contract due date': this.getDateOnly(issue.contract_due_date),
-        'Last update': this.getDateOnly(issue.last_update),
-        'Note': issue.issue_comment,
-        'Comment': issue.author_comment,
-        'Correction': issue.correction
-      })
+      cols.forEach(c => {
+        // console.log(c)
+        if (findSrc != null && c != 'correction'){
+          // @ts-ignore
+          newIssue[c] = findSrc[c];
+          // @ts-ignore
+          rowData.push(this.localeColumnForPDF(newIssue[c], c));
+        }
+        if (c == 'name'){
+          // @ts-ignore
+          console.log(newIssue[c]);
+        }
+        // @ts-ignore
+        if (c == 'correction') {
+          // @ts-ignore
+          rowData.push(this.localeColumnForPDF(newIssue[c], c, newIssue.max_due_date));
+        }
+
+      });
+      //console.log(rowData)
+      data.push(rowData);
     });
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
     XLSX.writeFile(workbook, fileName);
   }
+
+  localeColumnForPDF(issueElement: string, field: string, coreectionDate?: any): string {
+    if (field == 'started_by') {
+      return this.auth.getUserName(issueElement);
+    } else if (field == 'assigned_to') {
+      return this.auth.getUserName(issueElement);
+    } else if (field == 'status') {
+      return this.issueManager.localeStatus(issueElement, false);
+    } else if (field == 'started_date') {
+      return this.getDateOnly(+issueElement);
+    } else if (field == 'issue_type') {
+      return this.issueManager.localeTaskType(issueElement);
+    } else if (field == 'name') {
+      return issueElement;
+    } else if (field == 'priority') {
+      return this.issueManager.localeTaskPriority(issueElement);
+    } else if (field == 'department') {
+      return this.issueManager.localeTaskDepartment(issueElement);
+    } else if (field == 'due_date') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    } else if (field == 'contract_due_date') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    } else if (field == 'last_update') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    } else if (field == 'responsible') {
+      return this.auth.getUserName(issueElement);
+    } else if (field == 'doc_number') {
+      return issueElement != '' ? issueElement : '-';
+    } else if (field == 'issue_comment') {
+      return issueElement.replace(/<[^>]+>/g, '');
+    } else if (field == 'correction') {
+      return this.formatExcelCorrection(issueElement, coreectionDate)
+    } else {
+      return issueElement;
+    }
+  }
+
+  formatExcelCorrection(issueElement: string,  coreectionDate: any): string {
+    // @ts-ignore
+    if (issueElement === true) {
+      console.log('issueElement === true')
+      let d = this.getDate(coreectionDate)
+      if (d === '--/--/--') {
+        return 'Планируется';
+      } else return 'Планируется ' + d;
+    } else {
+      return ''
+    }
+  }
+
+
+  // exportXLS() {
+  //   let fileName = 'export_' + this.generateId(8) + '.xlsx';
+  //   let data: any[] = [];
+  //   let exportedArray = []
+  //   if (this.getFilteredData()) {
+  //     exportedArray = this.getFilteredData()
+  //   } else
+  //     exportedArray = this.issuesSrc
+  //
+  //   console.log(this._selectedColumns)
+  //
+  //   exportedArray.filter((x: any) => x != null).forEach(issue => {
+  //     let rowData = {};
+  //
+  //     this._selectedColumns.forEach(column => {
+  //       switch (column.field) {
+  //         case 'id':
+  //           console.log('id')
+  //           // @ts-ignore
+  //           rowData['Doc number'] = issue.doc_number;
+  //           break;
+  //         case 'doc_number':
+  //           console.log('doc_number')
+  //           // @ts-ignore
+  //           rowData['Doc number'] = issue.doc_number;
+  //           break;
+  //         case 'name':
+  //           console.log('name')
+  //           // @ts-ignore
+  //           rowData['Title'] = issue.name;
+  //           break;
+  //         case 'issue_type':
+  //           console.log('issue_type')
+  //           // @ts-ignore
+  //           rowData['Type'] = issue.issue_type;
+  //           break;
+  //         // Добавьте другие поля, которые хотите включить...
+  //       }
+  //     });
+  //
+  //     // Добавляем только строки, содержащие хотя бы одно из выбранных полей
+  //     if (Object.keys(rowData).length > 0) {
+  //       data.push(rowData);
+  //     }
+  //
+  //     // exportedArray.filter((x: any) => x != null).forEach(issue => {
+  //     //   data.push({
+  //     //     'Doc number': issue.doc_number,
+  //     //     'Title': issue.name,
+  //     //     'Type': issue.issue_type,
+  //     //     'Project': issue.project,
+  //     //     'Contract': issue.contract,
+  //     //     'Department': issue.department,
+  //     //     'Status': issue.status,
+  //     //     'Revision': issue.revision,
+  //     //     'Stage': issue.period,
+  //     //     'Contract due date': this.getDateOnly(issue.contract_due_date),
+  //     //     'Last update': this.getDateOnly(issue.last_update),
+  //     //     'Note': issue.issue_comment,
+  //     //     'Comment': issue.author_comment,
+  //     //     'Correction': issue.correction
+  //     //   })
+  //     // });
+  //     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+  //     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+  //     XLSX.writeFile(workbook, fileName);
+  //   })
+  // }
 
   downloadAllDocs() {
     this.dialogService.open(DownloadAllDocsComponent, {
