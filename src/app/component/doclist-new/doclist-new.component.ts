@@ -51,10 +51,6 @@ export class DoclistNewComponent implements OnInit {
 
   @ViewChild('tableDoclist') table: Table;
   ngOnInit(): void {
-
-    // console.log(this.auth.getUser().permissions)
-    // console.log(this.auth.hasPerms('visible_doc_comment'))
-
     this.cols = [
       { field: 'id', header: 'Id', sort: true, width: '60px', visible: true},
       { field: 'doc_number', header: 'Номер чертежа', sort: true, width: '140px', visible: true},
@@ -78,16 +74,32 @@ export class DoclistNewComponent implements OnInit {
       });
     }, 500)
 
+    console.log(this.auth.getUser().permissions)
+
 
 
     // this._selectedColumns = this.cols;
     if (localStorage.getItem("selectedColumnsDoclist")) {
       // @ts-ignore
       this._selectedColumns = JSON.parse(localStorage.getItem("selectedColumnsDoclist"))
+      if (!this.auth.getUser().permissions.includes('visible_doc_status')) {
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'status')
+      }
+      if (!this.auth.getUser().permissions.includes('visible_doc_comment')) {
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'issue_comment')
+      }
+      if (!this.auth.getUser().permissions.includes('visible_doc_comment_auth')) {
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'auth_comment')
+      }
+      if (!this.auth.getUser().permissions.includes('visible_doc_correction')) {
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'correction')
+      }
     } else {
       this._selectedColumns = this.cols;
       localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns))
     }
+
+    console.log(this._selectedColumns)
 
 
     // console.log(this.auth.getUser().visible_projects)
