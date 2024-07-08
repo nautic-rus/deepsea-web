@@ -133,7 +133,7 @@
                   </div>
 
                   <div *ngIf="col.header === 'Срок исполнения'" class="flex justify-content-center align-items-center">
-                    <p-columnFilter class="filter" type="date" field="due_date" display="menu"></p-columnFilter>
+                    <p-columnFilter class="filter" type="date" field="contract_due_date" display="menu"></p-columnFilter>
                   </div>
 
                   <!--                <div *ngIf="col.header === 'Корректировка'">-->
@@ -144,6 +144,11 @@
 
                   <p-columnFilter *ngIf="col.header === 'Примечание'" type="text" field="issue_comment" display="menu"></p-columnFilter>
                   <p-columnFilter *ngIf="col.header === 'Комментарий'" type="text" field="author_comment" display="menu"></p-columnFilter>
+                  <p-columnFilter *ngIf="col.header === 'Файл'" style="padding-left: 5px" type="boolean" field="hasFiles"></p-columnFilter>
+<!--                  <div *ngIf="col.header === 'Файл'" class="flex justify-content-center align-items-center">-->
+<!--&lt;!&ndash;                    <p-sortIcon [field]="col.field"></p-sortIcon>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p-columnFilter class="filter" field="" display="menu"></p-columnFilter>&ndash;&gt;-->
+<!--                  </div>-->
                 </div>
 
 

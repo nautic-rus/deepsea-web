@@ -70,7 +70,7 @@ export class DoclistNewComponent implements OnInit {
       { field: 'issue_comment', header: 'Комментарий',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment') },
       { field: 'author_comment', header: 'Комментарий автора',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment_auth') },
       { field: 'correction', header: 'Корректировка',sort: true, width: '200px', visible: this.auth.getUser().permissions.includes('visible_doc_correction') },
-      { field: '', header: 'Файл', width: '150px', visible: true  },
+      { field: 'fileData', header: 'Файл', sort: true, width: '150px', visible: true  },
     ];
     setTimeout(() => {
       this.cols = this.cols.filter(col => {
@@ -165,6 +165,11 @@ export class DoclistNewComponent implements OnInit {
 
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
+        this.issuesSrc.forEach(x => {
+          x.fileData = this.getFilesData(x)
+
+        })
+        console.log(this.issuesSrc)
       });
     })
   }
@@ -300,19 +305,37 @@ export class DoclistNewComponent implements OnInit {
     }
   }
 
-
-  hasFiles(issue: Issue) {
-    let arr: any[] = this.revisionFiles.filter(x => x.issue_id == issue.id)
+  getFilesData(issue: any) {
+    let arr: any[] = this.revisionFiles.filter(x => x.issue_id == issue.id);
     if (arr.length) {
       let max = 0;
       arr.forEach(i => {
         if (i.upload_date > max) {
-          max = i.upload_date
+          max = i.upload_date;
         }
       })
-      return this.getDate(max)
+      issue.hasFiles = true;
+      return max;
+    } else {
+      issue.hasFiles = false;
+      return null;
+    }
+
+  }
+
+
+  hasFiles(issue: Issue) {
+    let arr: any[] = this.revisionFiles.filter(x => x.issue_id == issue.id);
+    if (arr.length) {
+      let max = 0;
+      arr.forEach(i => {
+        if (i.upload_date > max) {
+          max = i.upload_date;
+        }
+      })
+      return this.getDate(max);
     } else
-      return null
+      return null;
   }
 
   generateId(length: number): string {
