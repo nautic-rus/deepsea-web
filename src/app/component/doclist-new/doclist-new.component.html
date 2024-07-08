@@ -57,92 +57,95 @@
                  [virtualScroll]="true">
           <ng-template pTemplate="header" let-columns>
             <tr>
-              <th *ngFor="let col of columns" [pSortableColumn]="col.field" [style.width]="col.width"  style="flex: none; padding: 10px;">
+              <th *ngFor="let col of columns" [pSortableColumn]="col.field" [style.width]="col.width"  style="flex: none; padding: 10px; justify-content: space-between">
                 {{t.tr(col.header)}}
-                <p-sortIcon *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
-                <div *ngIf="col.header === 'Тип'" class="flex justify-content-center align-items-center">
-                  <p-columnFilter field="issue_type" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [ngModel]="value" [options]="issue_types" placeholder="Any" (onChange)="filter($event.value)">
-                        <ng-template let-option pTemplate="item">
-                          <span class="ml-1">{{option}}</span>
-                        </ng-template>
-                      </p-multiSelect>
-                    </ng-template>
-                  </p-columnFilter>
-                </div>
-
-                <div *ngIf="col.header === 'Договор'" class="flex justify-content-center align-items-center">
-                  <p-columnFilter field="contract" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [ngModel]="value" [options]="contracts" placeholder="Any" (onChange)="filter($event.value)">
-                        <ng-template let-option pTemplate="item">
-                          <span class="ml-1">{{option}}</span>
-                        </ng-template>
-                      </p-multiSelect>
-                    </ng-template>
-                  </p-columnFilter>
-                </div>
-
-                <div *ngIf="col.header === 'Отдел'" class="flex justify-content-center align-items-center">
-                  <p-columnFilter field="department" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [ngModel]="dep" [options]="department" placeholder="Any" (onChange)="filter($event.value)">
-                        <ng-template let-option pTemplate="item">
-                          <span class="ml-1">{{option}}</span>
-                        </ng-template>
-                      </p-multiSelect>
-                    </ng-template>
-                  </p-columnFilter>
-                </div>
-
-                <p-columnFilter  *ngIf="col.header === 'Статус'" class="filter"  field="status" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                    <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="statuses" optionValue="value" optionLabel="label" display="chip" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
-                      <ng-template let-option pTemplate="item">
-                        <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>
-                        <!--                                                <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
+                <div style="display: flex;justify-content: end; align-items: center;">
+                  <p-sortIcon *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+                  <div *ngIf="col.header === 'Тип'" class="flex justify-content-center align-items-center">
+                    <p-columnFilter field="issue_type" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [ngModel]="value" [options]="issue_types" placeholder="Any" (onChange)="filter($event.value)">
+                          <ng-template let-option pTemplate="item">
+                            <span class="ml-1">{{option}}</span>
+                          </ng-template>
+                        </p-multiSelect>
                       </ng-template>
-                    </p-multiSelect>
-                  </ng-template>
-                </p-columnFilter>
+                    </p-columnFilter>
+                  </div>
 
-                <div *ngIf="col.header === 'Ревизия'" class="flex justify-content-center align-items-center">
-                  <p-columnFilter field="revision" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                  <div *ngIf="col.header === 'Договор'" class="flex justify-content-center align-items-center">
+                    <p-columnFilter field="contract" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [ngModel]="value" [options]="contracts" placeholder="Any" (onChange)="filter($event.value)">
+                          <ng-template let-option pTemplate="item">
+                            <span class="ml-1">{{option}}</span>
+                          </ng-template>
+                        </p-multiSelect>
+                      </ng-template>
+                    </p-columnFilter>
+                  </div>
+
+                  <div *ngIf="col.header === 'Отдел'" class="flex justify-content-center align-items-center">
+                    <p-columnFilter field="department" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [ngModel]="dep" [options]="department" placeholder="Any" (onChange)="filter($event.value)">
+                          <ng-template let-option pTemplate="item">
+                            <span class="ml-1">{{option}}</span>
+                          </ng-template>
+                        </p-multiSelect>
+                      </ng-template>
+                    </p-columnFilter>
+                  </div>
+
+                  <p-columnFilter  *ngIf="col.header === 'Статус'" class="filter"  field="status" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                     <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [ngModel]="value" [options]="revisions" placeholder="Any" (onChange)="filter($event.value)">
+                      <p-multiSelect styleClass="width-220" [displaySelectedLabel]="false" [ngModel]="value" [options]="statuses" optionValue="value" optionLabel="label" display="chip" [placeholder]="t.tr('Все')" (onChange)="filter($event.value);">
                         <ng-template let-option pTemplate="item">
-                          <span class="ml-1">{{option}}</span>
+                          <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>
+                          <!--                                                <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
                         </ng-template>
                       </p-multiSelect>
                     </ng-template>
                   </p-columnFilter>
-                </div>
 
-                <div *ngIf="col.header === 'Этап'" class="flex justify-content-center align-items-center">
-                  <p-columnFilter field="period" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                      <p-multiSelect [ngModel]="value" [options]="periods" placeholder="Any" (onChange)="filter($event.value)">
-                        <ng-template let-option pTemplate="item">
-                          <span class="ml-1">{{option}}</span>
-                        </ng-template>
-                      </p-multiSelect>
-                    </ng-template>
-                  </p-columnFilter>
-                </div>
+                  <div *ngIf="col.header === 'Ревизия'" class="flex justify-content-center align-items-center">
+                    <p-columnFilter field="revision" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [ngModel]="value" [options]="revisions" placeholder="Any" (onChange)="filter($event.value)">
+                          <ng-template let-option pTemplate="item">
+                            <span class="ml-1">{{option}}</span>
+                          </ng-template>
+                        </p-multiSelect>
+                      </ng-template>
+                    </p-columnFilter>
+                  </div>
 
-                <div *ngIf="col.header === 'Срок исполнения'" class="flex justify-content-center align-items-center">
-                  <p-columnFilter class="filter" type="date" field="due_date" display="menu"></p-columnFilter>
-                </div>
+                  <div *ngIf="col.header === 'Этап'">
+                    <p-columnFilter field="period" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [ngModel]="value" [options]="periods" placeholder="Any" (onChange)="filter($event.value)">
+                          <ng-template let-option pTemplate="item">
+                            <span class="ml-1">{{option}}</span>
+                          </ng-template>
+                        </p-multiSelect>
+                      </ng-template>
+                    </p-columnFilter>
+                  </div>
 
-<!--                <div *ngIf="col.header === 'Корректировка'">-->
-<!--                  <p-sortIcon field="correction"></p-sortIcon>-->
+                  <div *ngIf="col.header === 'Срок исполнения'" class="flex justify-content-center align-items-center">
+                    <p-columnFilter class="filter" type="date" field="due_date" display="menu"></p-columnFilter>
+                  </div>
+
+                  <!--                <div *ngIf="col.header === 'Корректировка'">-->
+                  <!--                  <p-sortIcon field="correction"></p-sortIcon>-->
                   <p-columnFilter *ngIf="col.header === 'Корректировка'" style="padding-left: 5px" type="boolean" field="correction"></p-columnFilter>
-<!--                </div>-->
+                  <!--                </div>-->
 
 
-                <p-columnFilter *ngIf="col.header === 'Примечание'" type="text" field="issue_comment" display="menu"></p-columnFilter>
-                <p-columnFilter *ngIf="col.header === 'Комментарий'" type="text" field="author_comment" display="menu"></p-columnFilter>
+                  <p-columnFilter *ngIf="col.header === 'Примечание'" type="text" field="issue_comment" display="menu"></p-columnFilter>
+                  <p-columnFilter *ngIf="col.header === 'Комментарий'" type="text" field="author_comment" display="menu"></p-columnFilter>
+                </div>
+
 
               </th>
             </tr>

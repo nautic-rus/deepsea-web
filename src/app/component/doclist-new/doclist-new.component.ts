@@ -53,6 +53,8 @@ export class DoclistNewComponent implements OnInit {
   ngOnInit(): void {
 
     console.log(this.auth.getUser().permissions)
+    console.log(this.auth.hasPerms('visible_doc_comment'))
+
     this.cols = [
       { field: 'id', header: 'Id', sort: true, width: '60px', visible: true},
       { field: 'doc_number', header: 'Номер чертежа', sort: true, width: '140px', visible: true},
@@ -68,7 +70,7 @@ export class DoclistNewComponent implements OnInit {
       { field: 'issue_comment', header: 'Примечание',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment') },
       { field: 'author_comment', header: 'Комментарий',sort: true, width: '150px', visible: this.auth.getUser().permissions.includes('visible_doc_comment_auth') },
       { field: 'correction', header: 'Корректировка',sort: true, width: '200px', visible: this.auth.getUser().permissions.includes('visible_doc_correction') },
-      { field: '', header: 'Файл', width: '150px' },
+      { field: '', header: 'Файл', width: '150px', visible: true  },
     ];
     setTimeout(() => {
       this.cols = this.cols.filter(col => {
@@ -119,13 +121,9 @@ export class DoclistNewComponent implements OnInit {
   // }
 
   set selectedColumns(val: any[]) {
-    console.log(val)
     this._selectedColumns.splice(0, this._selectedColumns.length);
     val.forEach(col => {
-      console.log(col)
-      // if (col.visible) {
         this._selectedColumns.push(col)
-      // }
     });
     localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
   }
