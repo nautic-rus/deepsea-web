@@ -34,7 +34,7 @@ export class NaviComponent implements OnInit {
     {id: 'materials', label: 'Materials', url: 'spec-materials', icon: 'assets/icons/cube.svg', height: 17, child: [], params: {}},
     {id: 'materials-summary', label: 'Statement', url: 'statements', icon: 'assets/icons/stats1.svg', height: 17, child: [], params: {}},
     {id: 'doclist', label: 'Documents', url: 'doclist', icon: 'assets/icons/docs.svg', height: 13, child: [], params: {}},
-    {id: 'doclist-new', label: 'Documents NEW', url: 'documentsNew', icon: 'assets/icons/docs.svg', height: 13, child: [], params: {}},
+    // {id: 'doclist-new', label: 'Documents NEW', url: 'documentsNew', icon: 'assets/icons/docs.svg', height: 13, child: [], params: {}},
     // {id: 'doclist-new', label: 'Documents NEW', url: 'd', icon: 'assets/icons/docs.svg', height: 13, child: [], params: {}},
     {id: 'documents', label: 'Documents', url: '', icon: 'assets/icons/docs.svg', height: 13, params: {}, child: [
       {id: 'hull-documents', label: 'Hull', url: 'documents', icon: '', height: 1, params: {'department': 'Hull'}},
