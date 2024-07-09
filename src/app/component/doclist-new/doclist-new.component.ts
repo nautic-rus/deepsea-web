@@ -380,8 +380,10 @@ export class DoclistNewComponent implements OnInit {
       issues = this.issuesSrc;
     }
     let data: any[] = [];
-    let cols = this.selectedColumns.map(x => x.field !== '' ? x.field : null).filter(x => x !== null);
-    data.push(this.selectedColumns.map(x => x.header !== 'Файл' ? x.header : null).filter(x => x !== null));
+    let cols = this.selectedColumns.map(x => x.field);
+    data.push(this.selectedColumns.map(x => x.header));
+    // let cols = this.selectedColumns.map(x => x.field !== '' ? x.field : null).filter(x => x !== null);
+    // data.push(this.selectedColumns.map(x => x.header !== 'Файл' ? x.header : null).filter(x => x !== null));
     issues.forEach(issue => {
       let newIssue: Issue = JSON.parse(JSON.stringify(issue));
       let rowData: any[] = [];
@@ -389,7 +391,7 @@ export class DoclistNewComponent implements OnInit {
 
       cols.forEach(c => {
         // console.log(c)
-        if (findSrc != null && c != 'correction'){
+        if (findSrc != null && c != 'correction' && c != 'fileData'){
           // @ts-ignore
           newIssue[c] = findSrc[c];
           // @ts-ignore
@@ -403,6 +405,11 @@ export class DoclistNewComponent implements OnInit {
         if (c == 'correction') {
           // @ts-ignore
           rowData.push(this.localeColumnForPDF(newIssue[c], c, newIssue.max_due_date));
+        }
+
+        if (c == 'fileData') {
+          // @ts-ignore
+          rowData.push(this.localeColumnForPDF(newIssue[c], c));
         }
 
       });
@@ -437,7 +444,10 @@ export class DoclistNewComponent implements OnInit {
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
     } else if (field == 'last_update') {
       return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
-    } else if (field == 'responsible') {
+    }  else if (field == 'fileData') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    }
+    else if (field == 'responsible') {
       return this.auth.getUserName(issueElement);
     } else if (field == 'doc_number') {
       return issueElement != '' ? issueElement : '-';
