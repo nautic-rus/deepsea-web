@@ -3,7 +3,7 @@
     <div class="empty-card"></div>
     <div class="card-head df sticky-card" *ngIf="projects.length > 0">
       <div class="mr-10 ">
-        <p-multiSelect styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
+        <p-multiSelect [showToggleAll]="false" styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
       </div>
       <div class="mr-10 ">
 <!--        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"-->
@@ -23,7 +23,7 @@
         </p-multiSelect>
       </div>
       <div class="mr-10">
-        <div *ngIf="auth.getUser().permissions.includes('visible_doc_comment')" class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXls()">
+        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXls()">
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>

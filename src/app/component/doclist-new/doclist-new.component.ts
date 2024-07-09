@@ -89,7 +89,7 @@ export class DoclistNewComponent implements OnInit {
         this._selectedColumns = this._selectedColumns.filter(x => x.field != 'issue_comment')
       }
       if (!this.auth.getUser().permissions.includes('visible_doc_comment_auth')) {
-        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'auth_comment')
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'author_comment')
       }
       if (!this.auth.getUser().permissions.includes('visible_doc_correction')) {
         this._selectedColumns = this._selectedColumns.filter(x => x.field != 'correction')
