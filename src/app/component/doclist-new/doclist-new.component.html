@@ -32,7 +32,11 @@
           <img src="assets/icons/download-file.svg" height="26">
         </div>
       </div>
-      <div class="p-ml-auto mr-10 df">
+      <div class="p-ml-auto mr-10 df" style="align-items: center">
+        <div class="mr-10">
+          <span *ngIf="t.language === 'en'" class="mr-5">Number of documents: {{issuesSrc.length}}</span>
+          <span *ngIf="t.language === 'ru'" class="mr-5">Количество документов: {{issuesSrc.length}}</span>
+        </div>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input [(ngModel)]="searchValue" (input)="tableDoclist.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
