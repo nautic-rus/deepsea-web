@@ -39,7 +39,8 @@
         </div>
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input [(ngModel)]="searchValue" (input)="tableDoclist.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+<!--          <input [(ngModel)]="searchValue" (input)="tableDoclist.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />-->
+          <input [(ngModel)]="searchValue" (input)="globalFilter()" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
         </span>
       </div>
 

@@ -51,6 +51,15 @@ export class DoclistNewComponent implements OnInit {
 
   @ViewChild('tableDoclist') table: Table;
   ngOnInit(): void {
+    // console.log(this.searchValue)
+    // this.table.filterGlobal('12', 'in')
+
+    if (localStorage.getItem('globalSearchDoclist')) {
+      // @ts-ignore
+      this.searchValue = localStorage.getItem('globalSearchDoclist')
+      console.log("ngOnit this.searchValue")
+      console.log(this.searchValue)
+    }
     this.cols = [
       { field: 'id', header: 'Id', sort: true, width: '60px', visible: true},
       { field: 'doc_number', header: 'Номер чертежа', sort: true, width: '140px', visible: true},
@@ -74,9 +83,6 @@ export class DoclistNewComponent implements OnInit {
       });
     }, 500)
 
-    console.log(this.auth.getUser().permissions)
-
-
 
     // this._selectedColumns = this.cols;
     if (localStorage.getItem("selectedColumnsDoclist")) {
@@ -98,8 +104,6 @@ export class DoclistNewComponent implements OnInit {
       this._selectedColumns = this.cols;
       localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns))
     }
-
-    console.log(this._selectedColumns)
 
 
     // console.log(this.auth.getUser().visible_projects)
@@ -126,6 +130,14 @@ export class DoclistNewComponent implements OnInit {
     })
 
   }
+
+  globalFilter() {
+    console.log(this.searchValue)
+    this.table.filterGlobal(this.searchValue, 'contains')
+    localStorage.setItem('globalSearchDoclist', this.searchValue)
+  }
+
+
 
   // set selectedColumns(val: any[]) {
     // this._selectedColumns = this.cols.filter(col => val.includes(col));
@@ -181,7 +193,7 @@ export class DoclistNewComponent implements OnInit {
           x.fileData = this.getFilesData(x)
 
         })
-        console.log(this.issuesSrc)
+        // console.log(this.issuesSrc)
       });
     })
   }
@@ -554,4 +566,6 @@ export class DoclistNewComponent implements OnInit {
       }
     });
   }
+
+  protected readonly console = console;
 }
