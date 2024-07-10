@@ -622,6 +622,7 @@ export class TaskComponent implements OnInit {
       if (issueDep != null){
         isManager = issueDep.manager.includes(this.auth.getUser().login);
       }
+      //issue.responsible = 'isaev';
       allow = action.rule.includes('r') && (issue.responsible == this.auth.getUser().login || isManager || trustedR) || allow;
       allow = action.rule.includes('a') && (issue.assigned_to == this.auth.getUser().login || trustedA) || allow;
       allow = action.rule.includes('s') && (issue.started_by == this.auth.getUser().login || trustedS) || allow;
@@ -631,6 +632,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('f') ? issue.first_send_date != 0 && allow : allow;
       allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => !x.closing_status.split(',').map(x => x.trim()).includes(x.status)).length == 0 && allow : allow;
+      console.log(action, action.rule.includes('c'), allow);
       allow = action.rule.includes('t') ? this.planIssue.consumed != 0 && allow : allow;
       //allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
       allow = issue.issue_type == 'QNA' && this.auth.hasPerms('moderation-qna') && action.rule.includes('m') ? true : allow;
