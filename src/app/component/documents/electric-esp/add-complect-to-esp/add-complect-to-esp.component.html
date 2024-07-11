@@ -64,7 +64,8 @@
               <p-inputNumber inputStyleClass="width-50 padding-none" [(ngModel)]="material.count" [showButtons]="true"></p-inputNumber>
             </td>
             <td>
-              <input pInputText type="text" [(ngModel)]="material.label"/>
+              <input *ngIf="material.label != '&LABEL'" pInputText type="text" [(ngModel)]="material.label"/>
+              <input disabled *ngIf="material.label == '&LABEL'" pInputText type="text"/>
             </td>
           </tr>
         </ng-template>

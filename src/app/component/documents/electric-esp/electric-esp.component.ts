@@ -80,6 +80,7 @@ export class ElectricEspComponent implements OnInit {
   nestContentRead = false;
   foranProject: string = '';
   revUser: string = '';
+  selectedLabels: string[] = [];
   quillModules =
     {
       imageResize: {},
@@ -349,7 +350,8 @@ export class ElectricEspComponent implements OnInit {
             kind: first.typeName,
             materialName: first.material.name,
             units: units,
-            cog: first.cog
+            cog: first.cog,
+            selected: false
           });
         });
         _.forEach(manuals, manual => {
@@ -937,7 +939,7 @@ export class ElectricEspComponent implements OnInit {
     this.dialogService.open(AddComplectToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label, count, 'ele', this.issue.id]
+      data: [this.docNumber, [label], [count], 'ele', this.issue.id]
     }).onClose.subscribe(res => {
       this.fillEle();
     });
@@ -1004,5 +1006,40 @@ export class ElectricEspComponent implements OnInit {
       res = '0' + res;
     }
     return res;
+  }
+
+  addComplectToSelected() {
+    let eleGroups = this.eleGroups.filter(x => x.checked);
+    let labels: string[] = eleGroups.map(x => x.pos);
+    let counts: number[] = [];
+    labels.forEach(l => counts.push(1));
+    eleGroups.forEach(gr => {
+      let elesSorted = _.sortBy(gr.eles, e => e.pos);
+      if (elesSorted.length > 0){
+        counts[eleGroups.indexOf(gr)] = elesSorted[elesSorted.length - 1].pos + 1;
+      }
+    });
+
+    console.log(eleGroups, labels, counts);
+    this.dialogService.open(AddComplectToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, labels, counts, 'ele', this.issue.id]
+    }).onClose.subscribe(res => {
+      this.fillEle();
+    });
+  }
+
+  setSelected(pos: string) {
+    if (this.selectedLabels.includes(pos)){
+      this.selectedLabels.splice(this.selectedLabels.indexOf(pos));
+    }
+    else{
+      this.selectedLabels.push(pos);
+    }
+  }
+
+  isSelected(pos: string) {
+    this.selectedLabels.includes(pos);
   }
 }

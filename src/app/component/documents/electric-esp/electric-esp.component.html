@@ -12,6 +12,11 @@
         </div>
       </div>
       <div class="p-ml-auto df">
+        <div class=mr-10>
+          <div class="materials-button-mini yellow-button cxy" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top" (click)="addComplectToSelected()">
+            <img src="assets/icons/checkmark.svg" height="24">
+          </div>
+        </div>
         <div class="mr-10">
           <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" style="border: 3px solid #22C55E" class="materials-button cxy">
             <img src="assets/icons/openIssue.svg" height="24">
@@ -54,7 +59,10 @@
             <div *ngFor="let ele of eleGroups; let i = index" class="card-tile">
               <div class="card-spool">
                 <div>
-                  <div class="title-bold mb-20">{{ele.pos}}</div>
+                  <div class="title-bold mb-20">
+                    {{ele.pos}}
+                    <p-checkbox [(ngModel)]="ele.checked" [binary]="true" inputId="binary"></p-checkbox>
+                  </div>
                   <div class="materials-button-mini blue-button cxy mt-10" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" (click)="addMaterial(ele.pos)">
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
