@@ -32,8 +32,16 @@
       </div>
       <div class="p-ml-auto mr-10 df" style="align-items: center">
         <div class="mr-10">
-          <span *ngIf="t.language === 'en'" class="mr-5">Number of documents: {{issuesSrc.length}}</span>
-          <span *ngIf="t.language === 'ru'" class="mr-5">Количество документов: {{issuesSrc.length}}</span>
+<!--          <span>{{tableDoclist.filteredValue != null ? tableDoclist.filteredValue.length  : tableDoclist.value.length}}</span>-->
+<!--&lt;!&ndash;          <span>{{tableDoclist.filteredValue.length}}</span>&ndash;&gt;-->
+<!--          <span *ngIf="t.language === 'en'" class="mr-5">Number of documents: {{issuesSrc.length}}</span>-->
+<!--          <span *ngIf="t.language === 'ru'" class="mr-5">Количество документов: {{issuesSrc.length}}</span>-->
+          <span *ngIf="t.language === 'en'" class="mr-5">Number of documents: </span>
+          <span *ngIf="t.language === 'ru'" class="mr-5">Количество документов: </span>
+          <span>{{tableDoclist.filteredValue != null ? tableDoclist.filteredValue.length  : tableDoclist.value.length}} </span>
+          <span *ngIf="t.language === 'en'" class="mr-5">(Total: </span>
+          <span *ngIf="t.language === 'ru'" class="mr-5">(Всего: </span>
+          <span>{{issuesSrc.length}})</span>
         </div>
 <!--        <span class="p-input-icon-left">-->
 <!--          <i class="pi pi-search"></i>-->
