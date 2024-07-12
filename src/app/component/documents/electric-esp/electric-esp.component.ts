@@ -170,6 +170,7 @@ export class ElectricEspComponent implements OnInit {
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
   eleGroups: any[] = [];
+  eleGroupsSrc: any[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -371,9 +372,24 @@ export class ElectricEspComponent implements OnInit {
               userId: manual.userId
             });
           }
+          else{
+            groupedEles.push({
+              pos: manual.userId,
+              eles: [],
+              code: manual.code,
+              count: manual.count,
+              weight: manual.weight,
+              kind: 'MANUAL',
+              materialName: manual.material.name,
+              units: manual.material.units,
+              cog: manual.cog,
+              selected: false
+            });
+          }
         });
 
         this.eleGroups = _.sortBy(groupedEles, x => this.orderDot(x.pos));
+        this.eleGroupsSrc = [...this.eleGroups];
       }
       else{
         this.noResult = true;
@@ -572,7 +588,7 @@ export class ElectricEspComponent implements OnInit {
       this.wz.setSrcAndReset(url);
     });
   }
-  round(input: number, digit = 100) {
+  round(input: number, digit = 1000) {
     return Math.round(input * digit) / digit;
   }
   roundDecimal(input: number){
@@ -870,18 +886,22 @@ export class ElectricEspComponent implements OnInit {
   }
   searchSpools() {
     if (this.search.trim() == '') {
-      this.accommodations = this.accommodationsSrc;
+      this.eleGroups = this.eleGroupsSrc;
     } else {
-      this.accommodations = this.accommodationsSrc.filter((x: any) => {
+      this.eleGroups = this.eleGroupsSrc.filter((x: any) => {
         let visible = false;
-        x.values.forEach((v: any) => {
-          if (x == null || (v.spool + v.material.name + v.stock).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())){
+        if (x == null || (x.pos + x.materialName + x.code).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())){
+          visible = true;
+        }
+        x.eles.forEach((e: any) => {
+          if (x == null || (e.pos + e.materialName + e.code).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())){
             visible = true;
           }
         });
         return visible;
       });
     }
+    console.log(this.search, this.eleGroups);
   }
   showSpoolInViewer(spool: string) {
     if (!this.spoolViewEnabled){
@@ -980,6 +1000,7 @@ export class ElectricEspComponent implements OnInit {
     let unitsTr = [
       Object({units: '006', ru: 'м', en: 'm'}),
       Object({units: '796', ru: 'шт', en: 'pcs'}),
+      Object({units: '166', ru: 'кг', en: 'kg'}),
     ];
     let r = unitsTr.find(x => x.units == units);
     if (r != null){

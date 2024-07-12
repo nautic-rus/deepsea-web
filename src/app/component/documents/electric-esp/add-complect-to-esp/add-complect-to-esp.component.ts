@@ -140,7 +140,7 @@ export class AddComplectToEspComponent implements OnInit {
                 code: findMaterial.code,
                 units: findMaterial.units,
                 count: m.count * c.count,
-                label: (findMaterial.label != '' && this.labels.length == 1) ? findMaterial.label : '&LABEL',
+                label: (findMaterial.label != '') ? findMaterial.label : '&LABEL',
                 weight: findMaterial.weight
               });
             }
@@ -156,9 +156,10 @@ export class AddComplectToEspComponent implements OnInit {
     let update: Observable<any>[] = [];
     this.labels.forEach(l => {
       let count = this.counts[this.labels.indexOf(l)];
-      this.complectMaterials.forEach(m => m.label = m.label.replace('&LABEL', l) + '.' + count++);
-      this.complectMaterials.map(m => this.s.addIssueMaterial(l, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone)).forEach(x => update.push(x));
+      this.complectMaterials.forEach(m => m.label = (m.label.includes('&LABEL') ? (m.label.replace('&LABEL', l) + '.' + count++) : m.label));
+      this.complectMaterials.map(m => this.s.addIssueMaterial(m.label, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone)).forEach(x => update.push(x));
     });
+    console.log(this.complectMaterials);
     zip(...update).subscribe(res => {
       this.ref.close('success');
     });
