@@ -367,7 +367,7 @@ export class ElectricEspComponent implements OnInit {
               units: manual.units,
               count: manual.count,
               weight: manual.weight,
-              code: manual.material_stock_code,
+              code: manual.code,
               cog: manual.cog,
               userId: manual.userId
             });
@@ -390,6 +390,7 @@ export class ElectricEspComponent implements OnInit {
 
         this.eleGroups = _.sortBy(groupedEles, x => this.orderDot(x.pos));
         this.eleGroupsSrc = [...this.eleGroups];
+        console.log(this.eleGroups);
       }
       else{
         this.noResult = true;
@@ -1011,12 +1012,13 @@ export class ElectricEspComponent implements OnInit {
     }
   }
 
-  deleteManual(e: any) {
+  deleteManual(e: string) {
     console.log(e);
-    this.s.deleteIssueMaterial(e.userId, this.issue.doc_number, 'ele').subscribe(res => {
+    this.s.deleteIssueMaterial(e, this.issue.doc_number, 'ele').subscribe(res => {
       this.fillEle();
     });
   }
+
 
   orderDot(input: string){
     return input.split('.').map(x => this.alz(x)).join('');
