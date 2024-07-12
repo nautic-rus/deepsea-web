@@ -92,6 +92,11 @@
                           <img src="assets/icons/trm.svg" height="12">
                           <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
                         </div>
+                        <div class="df mx-10 w-16 cy" *ngIf="ele.kind == 'MANUAL'">
+                          <div class="df">
+                            <button (click)="deleteManual(ele)">DELETE</button>
+                          </div>
+                        </div>
                       </div>
 
 
