@@ -6,9 +6,7 @@
         <p-multiSelect [showToggleAll]="false" styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
       </div>
       <div class="mr-10 ">
-<!--        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"-->
-<!--                       selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>-->
-        <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+       <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
                        placeholder="Choose Columns" styleClass="width-200">
           <ng-template let-value pTemplate="selectedItems">
             <span *ngFor="let option of value">
@@ -37,14 +35,17 @@
           <span *ngIf="t.language === 'en'" class="mr-5">Number of documents: {{issuesSrc.length}}</span>
           <span *ngIf="t.language === 'ru'" class="mr-5">Количество документов: {{issuesSrc.length}}</span>
         </div>
+<!--        <span class="p-input-icon-left">-->
+<!--          <i class="pi pi-search"></i>-->
+<!--          <input [(ngModel)]="searchValue" (input)="globalFilter()" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />-->
+<!--        </span>-->
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-<!--          <input [(ngModel)]="searchValue" (input)="tableDoclist.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />-->
-          <input [(ngModel)]="searchValue" (input)="globalFilter()" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border width-170" />
+           <input (input)="tableDoclist.filterGlobal(search.value, 'contains')" #search pInputText type="text" [placeholder]="t.tr('Поиск...')" class="border" />
         </span>
       </div>
-
     </div>
+
     <div class="empty-card-bottom"></div>
     <div class="card-overflow">
       <div>
@@ -140,23 +141,11 @@
                   <div *ngIf="col.header === 'Срок исполнения'" class="flex justify-content-center align-items-center">
                     <p-columnFilter class="filter" type="date" field="contract_due_date" display="menu"></p-columnFilter>
                   </div>
-
-                  <!--                <div *ngIf="col.header === 'Корректировка'">-->
-                  <!--                  <p-sortIcon field="correction"></p-sortIcon>-->
                   <p-columnFilter *ngIf="col.header === 'Корректировка'" style="padding-left: 5px" type="boolean" field="correction"></p-columnFilter>
-                  <!--                </div>-->
-
-
                   <p-columnFilter *ngIf="col.header === 'Примечание'" type="text" field="issue_comment" display="menu"></p-columnFilter>
                   <p-columnFilter *ngIf="col.header === 'Комментарий'" type="text" field="author_comment" display="menu"></p-columnFilter>
                   <p-columnFilter *ngIf="col.header === 'Файл'" style="padding-left: 5px" type="boolean" field="hasFiles"></p-columnFilter>
-<!--                  <div *ngIf="col.header === 'Файл'" class="flex justify-content-center align-items-center">-->
-<!--&lt;!&ndash;                    <p-sortIcon [field]="col.field"></p-sortIcon>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p-columnFilter class="filter" field="" display="menu"></p-columnFilter>&ndash;&gt;-->
-<!--                  </div>-->
                 </div>
-
-
               </th>
             </tr>
           </ng-template>

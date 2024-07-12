@@ -20,8 +20,8 @@ import {TaskComponent} from "../task/task.component";
 export class DoclistNewComponent implements OnInit {
 
   // projects: string[] = ["NR002", "170707", "170701", '123']
-  projects: any[] = []
-  selectedProjects: string[] | null= []
+  projects: any[] = [];
+  selectedProjects: string[] | null= [];
   selectedProjectsLength: number | undefined = 0;
   issuesSrc: any[] = [];
   issuesCorrection: any[] = [];
@@ -51,15 +51,6 @@ export class DoclistNewComponent implements OnInit {
 
   @ViewChild('tableDoclist') table: Table;
   ngOnInit(): void {
-    // console.log(this.searchValue)
-    // this.table.filterGlobal('12', 'in')
-
-    if (localStorage.getItem('globalSearchDoclist')) {
-      // @ts-ignore
-      this.searchValue = localStorage.getItem('globalSearchDoclist')
-      console.log("ngOnit this.searchValue")
-      console.log(this.searchValue)
-    }
     this.cols = [
       { field: 'id', header: 'Id', sort: true, width: '60px', visible: true},
       { field: 'doc_number', header: 'Номер чертежа', sort: true, width: '140px', visible: true},
@@ -79,9 +70,10 @@ export class DoclistNewComponent implements OnInit {
     ];
     setTimeout(() => {
       this.cols = this.cols.filter(col => {
-        return col.visible
+        return col.visible;
       });
-    }, 500)
+      this.table.filterGlobal(null, 'contains');
+    }, 500);
 
 
     // this._selectedColumns = this.cols;
@@ -89,20 +81,20 @@ export class DoclistNewComponent implements OnInit {
       // @ts-ignore
       this._selectedColumns = JSON.parse(localStorage.getItem("selectedColumnsDoclist"))
       if (!this.auth.getUser().permissions.includes('visible_doc_status')) {
-        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'status')
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'status');
       }
       if (!this.auth.getUser().permissions.includes('visible_doc_comment')) {
-        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'issue_comment')
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'issue_comment');
       }
       if (!this.auth.getUser().permissions.includes('visible_doc_comment_auth')) {
-        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'author_comment')
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'author_comment');
       }
       if (!this.auth.getUser().permissions.includes('visible_doc_correction')) {
-        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'correction')
+        this._selectedColumns = this._selectedColumns.filter(x => x.field != 'correction');
       }
     } else {
       this._selectedColumns = this.cols;
-      localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns))
+      localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
     }
 
 
@@ -114,7 +106,7 @@ export class DoclistNewComponent implements OnInit {
     this.issueManager.getProjectNamesD().subscribe((res) => {
       res.forEach(i => {
         if (i.name != 'NR004') {
-          this.projects.push(i.name)
+          this.projects.push(i.name);
         }
       })
       // console.log(this.projects)
@@ -126,35 +118,29 @@ export class DoclistNewComponent implements OnInit {
     this.fill()
 
     this.selectedProjects?.forEach(project => {
-      this.showProjectIssues(project)
+      this.showProjectIssues(project);
     })
 
   }
 
-  globalFilter() {
-    console.log(this.searchValue)
-    this.table.filterGlobal(this.searchValue, 'contains')
-    localStorage.setItem('globalSearchDoclist', this.searchValue)
-  }
 
 
-
-  // set selectedColumns(val: any[]) {
-    // this._selectedColumns = this.cols.filter(col => val.includes(col));
-    // localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns))
+  // globalFilter() {
+  //   console.log(this.searchValue);
+  //   this.table.filterGlobal(this.searchValue, 'contains');
+  //   localStorage.setItem('globalSearchDoclist', this.searchValue);
   // }
+
 
   set selectedColumns(val: any[]) {
     this._selectedColumns.splice(0, this._selectedColumns.length);
     val.forEach(col => {
-        this._selectedColumns.push(col)
+        this._selectedColumns.push(col);
     });
     localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
   }
 
   openIssueModal(id: number) {
-    console.log(id)
-    console.log("openIssue")
     this.issueManager.getIssueDetails(id).then(res => {
       console.log(res);
       if (res.id != null) {
@@ -165,20 +151,20 @@ export class DoclistNewComponent implements OnInit {
         })
       }
     });
-    return false
+    return false;
   }
 
 
   showProjectIssues(project: string) {
     this.issueManager.getDoclistByProject(project).subscribe(res => {
-      this.issuesSrc.push(...res)
+      this.issuesSrc.push(...res);
       this.issuesSrc = this.issuesSrc.filter((x: { project: string; }) => this.auth.getUser().visible_projects.includes(x.project)).sort((a: { id: number; }, b: { id: number; }) => a.id > b.id ? 1 : -1);
 
       // console.log(this.issuesSrc)
 
       this.issueManager.getIssuesCorrection().subscribe(res => {
         this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
-        this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection)
+        this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection);
         this.contracts = _.sortBy(_.uniq(this.issuesSrc.map(x => x.contract)).filter(x => x != ''), x => x);
         this.issue_types = _.sortBy(_.uniq(this.issuesSrc.map(x => x.issue_type)).filter(x => x != ''), x => x);
         this.statuses = this.getFilters(this.issuesSrc, 'status');
@@ -190,18 +176,17 @@ export class DoclistNewComponent implements OnInit {
       this.issueManager.getRevisionFiles().then(revisionFiles => {
         this.revisionFiles = revisionFiles;
         this.issuesSrc.forEach(x => {
-          x.fileData = this.getFilesData(x)
-
+          x.fileData = this.getFilesData(x);
         })
-        // console.log(this.issuesSrc)
       });
     })
+    // console.log(this.table.stateKey)
   }
 
   addCorrection(arr1: any[], arr2: any[]) {
     return arr1.map(item1 => {
-      item1.contract_due_date = new Date(item1.contract_due_date)
-      item1.last_update = new Date(item1.last_update)
+      item1.contract_due_date = new Date(item1.contract_due_date);
+      item1.last_update = new Date(item1.last_update);
       const matchingItem = arr2.find(item2 => item2.id === item1.id);
       // console.log(matchingItem)
       if (matchingItem) {
@@ -216,37 +201,28 @@ export class DoclistNewComponent implements OnInit {
 
   fill() {
     // @ts-ignore
-    this.selectedProjects = localStorage.getItem('selectedProjectsDoclist').split(',')
-    this.selectedProjectsLength = this.selectedProjects?.length
+    this.selectedProjects = localStorage.getItem('selectedProjectsDoclist').split(',');
+    this.selectedProjectsLength = this.selectedProjects?.length;
   }
 
   projectChanged(e:any) {
-    // console.log(this.selectedProjectsLength)
-    // console.log(e.value)
-    // console.log(e)
     // @ts-ignore
-    localStorage.setItem('selectedProjectsDoclist', this.selectedProjects)
+    localStorage.setItem('selectedProjectsDoclist', this.selectedProjects);
     // @ts-ignore
     if (this.selectedProjectsLength < e.value.length) {  //то есть мы выбрали еще один, то
-      console.log("Добавляю новое")
-      this.showProjectIssues(e.itemValue)
+      // console.log("Добавляю новое")
+      this.showProjectIssues(e.itemValue);
     } else {  //то есть мы удалили
-      console.log("Удаляю данные проекта " + e.itemValue)
-      this.issuesSrc = this.issuesSrc.filter(x => x.project != e.itemValue)
-      console.log(this.issuesSrc)
+      // console.log("Удаляю данные проекта " + e.itemValue)
+      this.issuesSrc = this.issuesSrc.filter(x => x.project != e.itemValue);
     }
     this.fill()
-    console.log(this.selectedProjectsLength)
-    // console.log(this.selectedProjects)
   }
 
   viewTask(issueId: number, project: string, docNumber: string, department: string, assistant: string) {
-    console.log(issueId)
-    console.log(assistant)
-    console.log(this.dep)
     let foranProject = project.replace('NR', 'N');
     let findProject = this.projects.find((x: any) => x != null && (x.name == project || x.pdsp == project || x.rkd == project));
-    if (findProject != null){
+    if (findProject != null) {
       foranProject = findProject.foran;
     }
     // console.log(department);
@@ -289,13 +265,13 @@ export class DoclistNewComponent implements OnInit {
   greenCorrectionSign(correctionDate: number): boolean {
     let today = new Date()
     if (correctionDate == 0) {
-      return true
+      return true;
     }
     // @ts-ignore
     if (correctionDate > today) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   getFilters(issues: any[], field: string): any[] {
@@ -380,22 +356,15 @@ export class DoclistNewComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 
-  getFilteredData() {
-    // console.log(this.table.filteredValue)
-    return this.table.filteredValue;
-  }
-
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
     let issues = this.table.filteredValue;
-    if (this.table.filteredValue == null){
+    if (this.table.filteredValue == null) {
       issues = this.issuesSrc;
     }
     let data: any[] = [];
     let cols = this.selectedColumns.map(x => x.field);
     data.push(this.selectedColumns.map(x => x.header));
-    // let cols = this.selectedColumns.map(x => x.field !== '' ? x.field : null).filter(x => x !== null);
-    // data.push(this.selectedColumns.map(x => x.header !== 'Файл' ? x.header : null).filter(x => x !== null));
     issues.forEach(issue => {
       let newIssue: Issue = JSON.parse(JSON.stringify(issue));
       let rowData: any[] = [];
@@ -403,15 +372,11 @@ export class DoclistNewComponent implements OnInit {
 
       cols.forEach(c => {
         // console.log(c)
-        if (findSrc != null && c != 'correction' && c != 'fileData'){
+        if (findSrc != null && c != 'correction' && c != 'fileData') {
           // @ts-ignore
           newIssue[c] = findSrc[c];
           // @ts-ignore
           rowData.push(this.localeColumnForPDF(newIssue[c], c));
-        }
-        if (c == 'name'){
-          // @ts-ignore
-          console.log(newIssue[c]);
         }
         // @ts-ignore
         if (c == 'correction') {
@@ -475,85 +440,14 @@ export class DoclistNewComponent implements OnInit {
   formatExcelCorrection(issueElement: string,  coreectionDate: any): string {
     // @ts-ignore
     if (issueElement === true) {
-      console.log('issueElement === true')
-      let d = this.getDate(coreectionDate)
+      let d = this.getDate(coreectionDate);
       if (d === '--/--/--') {
         return 'Планируется';
       } else return 'Планируется ' + d;
     } else {
-      return ''
+      return '';
     }
   }
-
-
-  // exportXLS() {
-  //   let fileName = 'export_' + this.generateId(8) + '.xlsx';
-  //   let data: any[] = [];
-  //   let exportedArray = []
-  //   if (this.getFilteredData()) {
-  //     exportedArray = this.getFilteredData()
-  //   } else
-  //     exportedArray = this.issuesSrc
-  //
-  //   console.log(this._selectedColumns)
-  //
-  //   exportedArray.filter((x: any) => x != null).forEach(issue => {
-  //     let rowData = {};
-  //
-  //     this._selectedColumns.forEach(column => {
-  //       switch (column.field) {
-  //         case 'id':
-  //           console.log('id')
-  //           // @ts-ignore
-  //           rowData['Doc number'] = issue.doc_number;
-  //           break;
-  //         case 'doc_number':
-  //           console.log('doc_number')
-  //           // @ts-ignore
-  //           rowData['Doc number'] = issue.doc_number;
-  //           break;
-  //         case 'name':
-  //           console.log('name')
-  //           // @ts-ignore
-  //           rowData['Title'] = issue.name;
-  //           break;
-  //         case 'issue_type':
-  //           console.log('issue_type')
-  //           // @ts-ignore
-  //           rowData['Type'] = issue.issue_type;
-  //           break;
-  //         // Добавьте другие поля, которые хотите включить...
-  //       }
-  //     });
-  //
-  //     // Добавляем только строки, содержащие хотя бы одно из выбранных полей
-  //     if (Object.keys(rowData).length > 0) {
-  //       data.push(rowData);
-  //     }
-  //
-  //     // exportedArray.filter((x: any) => x != null).forEach(issue => {
-  //     //   data.push({
-  //     //     'Doc number': issue.doc_number,
-  //     //     'Title': issue.name,
-  //     //     'Type': issue.issue_type,
-  //     //     'Project': issue.project,
-  //     //     'Contract': issue.contract,
-  //     //     'Department': issue.department,
-  //     //     'Status': issue.status,
-  //     //     'Revision': issue.revision,
-  //     //     'Stage': issue.period,
-  //     //     'Contract due date': this.getDateOnly(issue.contract_due_date),
-  //     //     'Last update': this.getDateOnly(issue.last_update),
-  //     //     'Note': issue.issue_comment,
-  //     //     'Comment': issue.author_comment,
-  //     //     'Correction': issue.correction
-  //     //   })
-  //     // });
-  //     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-  //     const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
-  //     XLSX.writeFile(workbook, fileName);
-  //   })
-  // }
 
   downloadAllDocs() {
     this.dialogService.open(DownloadAllDocsComponent, {
@@ -561,11 +455,13 @@ export class DoclistNewComponent implements OnInit {
       modal: true,
       data: [this.issuesSrc.map(x => x.id)]
     }).onClose.subscribe(res => {
-      if (res == 'success'){
+      if (res == 'success') {
         this.messageService.add({key:'doclist', severity:'success', summary:'Please wait.', detail:'Your operation is being processed, please wait for email.'});
       }
     });
   }
 
-  protected readonly console = console;
+  // ngOnDestroy() {
+  //   console.log(this.table.stateStorage)
+  // }
 }
