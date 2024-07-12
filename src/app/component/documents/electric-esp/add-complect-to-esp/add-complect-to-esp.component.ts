@@ -155,11 +155,12 @@ export class AddComplectToEspComponent implements OnInit {
   commit() {
     let update: Observable<any>[] = [];
     this.labels.forEach(l => {
+      let complects = JSON.parse(JSON.stringify(this.complectMaterials));
       let count = this.counts[this.labels.indexOf(l)];
-      this.complectMaterials.forEach(m => m.label = (m.label.includes('&LABEL') ? (m.label.replace('&LABEL', l) + '.' + count++) : m.label));
-      this.complectMaterials.map(m => this.s.addIssueMaterial(m.label, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone)).forEach(x => update.push(x));
+      complects.forEach((m: any) => m.label = (m.label.includes('&LABEL') ? (m.label.replace('&LABEL', l) + '.' + count++) : m.label));
+      complects.map((m: any) => this.s.addIssueMaterial(m.label, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone)).forEach((x: any) => update.push(x));
     });
-    console.log(this.complectMaterials);
+    console.log(this.labels, update);
     zip(...update).subscribe(res => {
       this.ref.close('success');
     });
