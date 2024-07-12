@@ -73,7 +73,7 @@ export class DoclistNewComponent implements OnInit {
         return col.visible;
       });
       this.table.filterGlobal(null, 'contains');
-    }, 500);
+    }, 100);
 
 
     // this._selectedColumns = this.cols;
@@ -97,23 +97,13 @@ export class DoclistNewComponent implements OnInit {
       localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
     }
 
-
-    // console.log(this.auth.getUser().visible_projects)
-    // this.issueManager.getProjectNames().then(projectNames => {
-    //   console.log(projectNames)
-    //   // let findProject = projectNames;
-    // })
     this.issueManager.getProjectNamesD().subscribe((res) => {
       res.forEach(i => {
         if (i.name != 'NR004') {
           this.projects.push(i.name);
         }
       })
-      // console.log(this.projects)
     })
-
-    // this.selectedProjects = localStorage.getItem('selectedProjects')
-    // this.selectedProjectsLength = this.selectedProjects?.length
 
     this.fill()
 
@@ -122,15 +112,6 @@ export class DoclistNewComponent implements OnInit {
     })
 
   }
-
-
-
-  // globalFilter() {
-  //   console.log(this.searchValue);
-  //   this.table.filterGlobal(this.searchValue, 'contains');
-  //   localStorage.setItem('globalSearchDoclist', this.searchValue);
-  // }
-
 
   set selectedColumns(val: any[]) {
     this._selectedColumns.splice(0, this._selectedColumns.length);
@@ -160,8 +141,6 @@ export class DoclistNewComponent implements OnInit {
       this.issuesSrc.push(...res);
       this.issuesSrc = this.issuesSrc.filter((x: { project: string; }) => this.auth.getUser().visible_projects.includes(x.project)).sort((a: { id: number; }, b: { id: number; }) => a.id > b.id ? 1 : -1);
 
-      // console.log(this.issuesSrc)
-
       this.issueManager.getIssuesCorrection().subscribe(res => {
         this.issuesCorrection = res.filter(x => x.count!=0).sort((a, b) => a.id > b.id ? 1 : -1);
         this.issuesSrc = this.addCorrection(this.issuesSrc, this.issuesCorrection);
@@ -180,7 +159,6 @@ export class DoclistNewComponent implements OnInit {
         })
       });
     })
-    // console.log(this.table.stateKey)
   }
 
   addCorrection(arr1: any[], arr2: any[]) {
@@ -188,7 +166,6 @@ export class DoclistNewComponent implements OnInit {
       item1.contract_due_date = new Date(item1.contract_due_date);
       item1.last_update = new Date(item1.last_update);
       const matchingItem = arr2.find(item2 => item2.id === item1.id);
-      // console.log(matchingItem)
       if (matchingItem) {
         // Если найден элемент с таким же id, добавляем поле correction с значением 1
         return { ...item1, correction: true, max_due_date: matchingItem.max_due_date };
@@ -225,13 +202,6 @@ export class DoclistNewComponent implements OnInit {
     if (findProject != null) {
       foranProject = findProject.foran;
     }
-    // console.log(department);
-    // console.log(project);
-    // let hullTasks = ['03070-532-0001', '200101-525-007'];
-    // if (hullTasks.includes(docNumber)){
-    //   department = 'Hull';
-    // }
-
 
     if (this.dep.includes(assistant)){
       department = assistant;
@@ -460,8 +430,4 @@ export class DoclistNewComponent implements OnInit {
       }
     });
   }
-
-  // ngOnDestroy() {
-  //   console.log(this.table.stateStorage)
-  // }
 }
