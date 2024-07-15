@@ -36,8 +36,8 @@ export class AddComplectToEspComponent implements OnInit {
   projectId = 0;
   selectedMaterial: Material = new Material();
   units: string = "796";
-  count: number = 1;
-  label: string = '';
+  counts: number[] = [1];
+  labels: string[] = [];
   addText: string = '';
   zone: string = '';
   addNew = false;
@@ -58,8 +58,8 @@ export class AddComplectToEspComponent implements OnInit {
     this.selectedMaterial.name = '';
     this.docNumber = this.dialog.data[0];
     this.project = this.docNumber.split('-')[0];
-    this.label = this.dialog.data[1];
-    this.count = this.dialog.data[2];
+    this.labels = this.dialog.data[1];
+    this.counts = this.dialog.data[2];
     this.kind = this.dialog.data[3];
     this.issueId = this.dialog.data[4];
     this.fill();
@@ -117,7 +117,6 @@ export class AddComplectToEspComponent implements OnInit {
   }
 
   amountChanged() {
-    let count = this.count;
     setTimeout(() => {
       let complectMaterials: any[] = [];
       this.complectMaterials = [];
@@ -141,7 +140,7 @@ export class AddComplectToEspComponent implements OnInit {
                 code: findMaterial.code,
                 units: findMaterial.units,
                 count: m.count * c.count,
-                label: findMaterial.label != '' ? findMaterial.label : this.label + '.' + count++,
+                label: (findMaterial.label != '') ? findMaterial.label : '&LABEL',
                 weight: findMaterial.weight
               });
             }
@@ -154,7 +153,13 @@ export class AddComplectToEspComponent implements OnInit {
   }
 
   commit() {
-    let update: Observable<any>[] = this.complectMaterials.map(m => this.s.addIssueMaterial(m.label, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone));
+    let update: Observable<any>[] = [];
+    this.labels.forEach(l => {
+      let complects = JSON.parse(JSON.stringify(this.complectMaterials));
+      let count = this.counts[this.labels.indexOf(l)];
+      complects.forEach((m: any) => m.label = (m.label.includes('&LABEL') ? (m.label.replace('&LABEL', l) + '.' + count++) : m.label));
+      complects.map((m: any) => this.s.addIssueMaterial(m.label, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone)).forEach((x: any) => update.push(x));
+    });
     zip(...update).subscribe(res => {
       this.ref.close('success');
     });

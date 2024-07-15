@@ -12,6 +12,11 @@
         </div>
       </div>
       <div class="p-ml-auto df">
+        <div class=mr-10>
+          <div class="materials-button-mini yellow-button cxy" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top" (click)="addComplectToSelected()">
+            <img src="assets/icons/checkmark.svg" height="24">
+          </div>
+        </div>
         <div class="mr-10">
           <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" style="border: 3px solid #22C55E" class="materials-button cxy">
             <img src="assets/icons/openIssue.svg" height="24">
@@ -54,7 +59,10 @@
             <div *ngFor="let ele of eleGroups; let i = index" class="card-tile">
               <div class="card-spool">
                 <div>
-                  <div class="title-bold mb-20">{{ele.pos}}</div>
+                  <div class="title-bold mb-20">
+                    {{ele.pos}}
+                    <p-checkbox [(ngModel)]="ele.checked" [binary]="true" inputId="binary"></p-checkbox>
+                  </div>
                   <div class="materials-button-mini blue-button cxy mt-10" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" (click)="addMaterial(ele.pos)">
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
@@ -83,6 +91,11 @@
                         <div (click)="copyTrmCode(ele.code, 's' + 'sp' + i); $event.stopPropagation();" class="trm-copy-elec cursor-pointer cxy">
                           <img src="assets/icons/trm.svg" height="12">
                           <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
+                        </div>
+                        <div class="df mx-10 w-16 cy" *ngIf="ele.kind == 'MANUAL'">
+                          <div class="df">
+                            <button (click)="deleteManual(ele.pos)">DELETE</button>
+                          </div>
                         </div>
                       </div>
 
@@ -140,15 +153,18 @@
                           </div>
                         </div>
                       </div>
-                      <div class="df mx-10 w-16 cy" *ngIf="e.kind == 'MANUAL'">
-
-                        <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteManual(e)">
-                          <img src="assets/icons/delete-g.svg" height="20">
-                        </div>
-
-
+                      <div class="trm">
+                        <span [innerHTML]="e.code | highLight: search"></span>
                       </div>
-
+                      <div (click)="copyTrmCode(e.code, 's' + 'sp' + i); $event.stopPropagation();" class="trm-copy-elec cursor-pointer cxy">
+                        <img src="assets/icons/trm.svg" height="12">
+                        <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
+                      </div>
+                      <div class="df mx-10 w-16 cy" *ngIf="e.kind == 'MANUAL'">
+                        <div class="df">
+                          <button (click)="deleteManual(e.userId)">DELETE</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -529,7 +545,7 @@
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
                 <div class="py-10 px-10 subtask-text">
                   <span>{{childIssue.doc_number + ' '}}</span>
-                  <span class="word-break" [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
                 </div>
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>

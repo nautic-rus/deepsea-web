@@ -67,6 +67,7 @@ export class MaterialComplectManagerComponent implements OnInit {
   save() {
     let cMaterials = this.selectedMaterials.map(x => Object({material: x.code, count: x.count}));
     this.selectedComplect.materials = cMaterials;
+    console.log(this.selectedComplect);
     this.materialManager.updateMaterialComplect(this.selectedComplect).subscribe(res => {
       alert('Изменения сохранены');
       this.fillComplects();

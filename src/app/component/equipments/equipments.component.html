@@ -22,20 +22,8 @@
         <input
           type="text"
           pInputText
-          (input)="tableref.filterGlobal(
-                   $any($event.target).value, 'contains')" placeholder="{{t.tr('Поиск')}}"/>
+          (input)="tableref.filterGlobal($any($event.target).value, 'contains')" placeholder="{{t.tr('Поиск')}}"/>
       </div>
-
-<!--      <span class="p-input-icon-left">-->
-<!--        <i class="pi pi-search"></i>-->
-<!--        <input #search pInputText type="text" (input)="tt.filterGlobal(search.value, 'contains')" [placeholder]="'Поиск по SFI'" class="border width-200" />-->
-<!--      </span>-->
-<!--    <input #search pInputText type="text" (input)="tt.filterGlobal(search.value, 'contains')"-->
-<!--           [placeholder]="t.tr('Поиск...')" class="border"/>-->
-<!--    <div>-->
-<!--      <input type="text" placeholder="Глобальный поиск" (input)="applyGlobalFilter($any($event.target)?.value)">-->
-<!--    </div>-->
-
   </div>
 
 
@@ -43,18 +31,6 @@
     <p-treeTable #tt #tableref
                  id="tt"  [globalFilterFields]="['id','name','sfi','sfi_unit']"
                  scrollHeight="73vh" [value]="equipmentsNode" [reorderableColumns]="true"  [columns]="cols" [scrollable]="true" [filterMode]="filterMode" >
-
-
-
-<!--      <ng-template pTemplate="caption">-->
-<!--       -->
-<!--      </ng-template>-->
-      <!--      <ng-template pTemplate="caption">-->
-<!--        <div style="text-align: right">-->
-<!--          <i class="pi pi-search" style="margin:4px 4px 0 0"></i>-->
-<!--          <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tt.filterGlobal($any($event.target)?.value, 'contains')" style="width:auto">-->
-<!--        </div>-->
-<!--      </ng-template>-->
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columns; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width ? col.width : 'auto'">
@@ -131,14 +107,7 @@
   <p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()" [showCloseIcon]="false">
 <!--    <ng-template pTemplate="content">-->
       <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
-<!--    </ng-template>-->
   </p-sidebar>
-
-<!--  <p-sidebar *ngIf="editGroupSidebarVisible" [(visible)]="editGroupSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()">-->
-<!--    <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>-->
-<!--  </p-sidebar>-->
-
-
   <p-sidebar *ngIf="editEqSidebarVisible" [(visible)]="editEqSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()" [showCloseIcon]="false">
     <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
   </p-sidebar>

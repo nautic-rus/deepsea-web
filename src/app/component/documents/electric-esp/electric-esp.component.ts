@@ -80,6 +80,7 @@ export class ElectricEspComponent implements OnInit {
   nestContentRead = false;
   foranProject: string = '';
   revUser: string = '';
+  selectedLabels: string[] = [];
   quillModules =
     {
       imageResize: {},
@@ -169,6 +170,7 @@ export class ElectricEspComponent implements OnInit {
   spoolsArchive: any;
   spoolsArchiveContent: any[] = [];
   eleGroups: any[] = [];
+  eleGroupsSrc: any[] = [];
 
 
   constructor(public device: DeviceDetectorService, public auth: AuthManagerService, private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public t: LanguageService, public issueManager: IssueManagerService, private dialogService: DialogService, private appRef: ApplicationRef) { }
@@ -349,7 +351,8 @@ export class ElectricEspComponent implements OnInit {
             kind: first.typeName,
             materialName: first.material.name,
             units: units,
-            cog: first.cog
+            cog: first.cog,
+            selected: false
           });
         });
         _.forEach(manuals, manual => {
@@ -364,14 +367,30 @@ export class ElectricEspComponent implements OnInit {
               units: manual.units,
               count: manual.count,
               weight: manual.weight,
-              code: manual.material_stock_code,
+              code: manual.code,
               cog: manual.cog,
               userId: manual.userId
+            });
+          }
+          else{
+            groupedEles.push({
+              pos: manual.userId,
+              eles: [],
+              code: manual.code,
+              count: manual.count,
+              weight: manual.weight,
+              kind: 'MANUAL',
+              materialName: manual.material.name,
+              units: manual.material.units,
+              cog: manual.cog,
+              selected: false
             });
           }
         });
 
         this.eleGroups = _.sortBy(groupedEles, x => this.orderDot(x.pos));
+        this.eleGroupsSrc = [...this.eleGroups];
+        console.log(this.eleGroups);
       }
       else{
         this.noResult = true;
@@ -570,7 +589,7 @@ export class ElectricEspComponent implements OnInit {
       this.wz.setSrcAndReset(url);
     });
   }
-  round(input: number, digit = 100) {
+  round(input: number, digit = 1000) {
     return Math.round(input * digit) / digit;
   }
   roundDecimal(input: number){
@@ -868,18 +887,22 @@ export class ElectricEspComponent implements OnInit {
   }
   searchSpools() {
     if (this.search.trim() == '') {
-      this.accommodations = this.accommodationsSrc;
+      this.eleGroups = this.eleGroupsSrc;
     } else {
-      this.accommodations = this.accommodationsSrc.filter((x: any) => {
+      this.eleGroups = this.eleGroupsSrc.filter((x: any) => {
         let visible = false;
-        x.values.forEach((v: any) => {
-          if (x == null || (v.spool + v.material.name + v.stock).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())){
+        if (x == null || (x.pos + x.materialName + x.code).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())){
+          visible = true;
+        }
+        x.eles.forEach((e: any) => {
+          if (x == null || (e.pos + e.materialName + e.code).trim().toLowerCase().includes(this.search.toString().trim().toLowerCase())){
             visible = true;
           }
         });
         return visible;
       });
     }
+    console.log(this.search, this.eleGroups);
   }
   showSpoolInViewer(spool: string) {
     if (!this.spoolViewEnabled){
@@ -937,7 +960,7 @@ export class ElectricEspComponent implements OnInit {
     this.dialogService.open(AddComplectToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, label, count, 'ele', this.issue.id]
+      data: [this.docNumber, [label], [count], 'ele', this.issue.id]
     }).onClose.subscribe(res => {
       this.fillEle();
     });
@@ -978,6 +1001,7 @@ export class ElectricEspComponent implements OnInit {
     let unitsTr = [
       Object({units: '006', ru: 'м', en: 'm'}),
       Object({units: '796', ru: 'шт', en: 'pcs'}),
+      Object({units: '166', ru: 'кг', en: 'kg'}),
     ];
     let r = unitsTr.find(x => x.units == units);
     if (r != null){
@@ -988,12 +1012,13 @@ export class ElectricEspComponent implements OnInit {
     }
   }
 
-  deleteManual(e: any) {
-    console.log(e);
-    this.s.deleteIssueMaterial(e.userId, this.issue.doc_number, 'ele').subscribe(res => {
+  deleteManual(e: string) {
+    console.log(e, this.issue.doc_number);
+    this.s.deleteIssueMaterial(e, this.issue.doc_number, this.issue.id, 'ele').subscribe(res => {
       this.fillEle();
     });
   }
+
 
   orderDot(input: string){
     return input.split('.').map(x => this.alz(x)).join('');
@@ -1004,5 +1029,40 @@ export class ElectricEspComponent implements OnInit {
       res = '0' + res;
     }
     return res;
+  }
+
+  addComplectToSelected() {
+    let eleGroups = this.eleGroups.filter(x => x.checked);
+    let labels: string[] = eleGroups.map(x => x.pos);
+    let counts: number[] = [];
+    labels.forEach(l => counts.push(1));
+    eleGroups.forEach(gr => {
+      let elesSorted = _.sortBy(gr.eles, e => e.pos);
+      if (elesSorted.length > 0){
+        counts[eleGroups.indexOf(gr)] = elesSorted[elesSorted.length - 1].pos + 1;
+      }
+    });
+
+    console.log(eleGroups, labels, counts);
+    this.dialogService.open(AddComplectToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, labels, counts, 'ele', this.issue.id]
+    }).onClose.subscribe(res => {
+      this.fillEle();
+    });
+  }
+
+  setSelected(pos: string) {
+    if (this.selectedLabels.includes(pos)){
+      this.selectedLabels.splice(this.selectedLabels.indexOf(pos));
+    }
+    else{
+      this.selectedLabels.push(pos);
+    }
+  }
+
+  isSelected(pos: string) {
+    this.selectedLabels.includes(pos);
   }
 }
