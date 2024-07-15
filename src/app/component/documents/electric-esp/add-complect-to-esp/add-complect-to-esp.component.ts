@@ -160,7 +160,6 @@ export class AddComplectToEspComponent implements OnInit {
       complects.forEach((m: any) => m.label = (m.label.includes('&LABEL') ? (m.label.replace('&LABEL', l) + '.' + count++) : m.label));
       complects.map((m: any) => this.s.addIssueMaterial(m.label, m.units, m.weight, m.count, m.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone)).forEach((x: any) => update.push(x));
     });
-    console.log(this.labels, update);
     zip(...update).subscribe(res => {
       this.ref.close('success');
     });
