@@ -1033,6 +1033,7 @@
   padding: 2px 4px;
   border: 1px solid #FBC948;
   width: 30px;
+  height: 20px;
 }
 .copy-tooltip{
   position: absolute;

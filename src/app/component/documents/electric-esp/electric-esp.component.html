@@ -59,11 +59,9 @@
             <div *ngFor="let ele of eleGroups; let i = index" class="card-tile">
               <div class="card-spool">
                 <div>
-                  <div class="title-bold mb-20">
-                    {{ele.pos}}
-                    <p-checkbox [(ngModel)]="ele.checked" [binary]="true" inputId="binary"></p-checkbox>
-                  </div>
-                  <div class="materials-button-mini blue-button cxy mt-10" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" (click)="addMaterial(ele.pos)">
+                  <div class="title-bold mb-10">{{ele.pos}}</div>
+                  <p-checkbox [(ngModel)]="ele.checked" [binary]="true" inputId="binary"></p-checkbox>
+                  <div class="materials-button-mini blue-button cxy mt-20" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" (click)="addMaterial(ele.pos)">
                     <img src="assets/icons/plus3.svg" height="15">
                   </div>
                   <div class="materials-button-mini yellow-button cxy mt-10" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top" (click)="addComplect(ele.pos, ele.eles)">
@@ -161,8 +159,8 @@
                         <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
                       </div>
                       <div class="df mx-10 w-16 cy" *ngIf="e.kind == 'MANUAL'">
-                        <div class="df">
-                          <button (click)="deleteManual(e.userId)">DELETE</button>
+                        <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteManual(e)">
+                          <img src="assets/icons/delete-g.svg" height="20">
                         </div>
                       </div>
                     </div>
