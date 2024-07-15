@@ -141,9 +141,12 @@
                         </div>
                       </div>
                       <div class="df mx-10 w-16 cy" *ngIf="e.kind == 'MANUAL'">
-                        <div class="df">
-                          <button (click)="deleteManual(e)">DELETE</button>
+
+                        <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteManual(e)">
+                          <img src="assets/icons/delete-g.svg" height="20">
                         </div>
+
+
                       </div>
 
                     </div>
@@ -526,7 +529,7 @@
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
                 <div class="py-10 px-10 subtask-text">
                   <span>{{childIssue.doc_number + ' '}}</span>
-                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                  <span class="word-break" [innerHTML]="issueManager.trim(childIssue.name)"></span>
                 </div>
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>

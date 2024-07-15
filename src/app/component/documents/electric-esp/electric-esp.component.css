@@ -3,7 +3,7 @@
   padding: 8px 10px 8px 10px;
 }
 /deep/.p-dialog .p-dialog-content {
-  padding: 0 20px 20px 20px!important;
+  padding: 20px!important;
 }
 /deep/.p-component{
   font-size: 13px!important;
@@ -87,6 +87,20 @@
 }
 .tabs{
   background-color: #3b9ebb;
+}
+.task-button{
+  color: #605e5c;
+  border: 0 none;
+  background: transparent;
+  border-radius: 2px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  padding: 5px;
+}
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
 }
 .all-tabs{
   border-radius: 4px;

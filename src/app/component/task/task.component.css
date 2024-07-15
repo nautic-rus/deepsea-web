@@ -333,6 +333,11 @@
   cursor: pointer;
   padding: 5px;
 }
+.task-button:hover{
+  color: #605e5c;
+  border-color: transparent;
+  background: #f3f2f1;
+}
 .task-button-close{
   width: 2rem;
   height: 2rem;
@@ -344,11 +349,6 @@
   cursor: pointer;
 }
 .task-button-close:hover{
-  color: #605e5c;
-  border-color: transparent;
-  background: #f3f2f1;
-}
-.task-button:hover{
   color: #605e5c;
   border-color: transparent;
   background: #f3f2f1;
