@@ -7,21 +7,23 @@
       <div class="mr-2" *ngIf="revEsp == ''">{{'rev' + issue.revision}}</div>
       <div class="mr-2">{{revUser}}</div>
       <div class="mr-10" [pTooltip]="t.tr('Get Spec')" tooltipPosition="top" (click)="createEsp()">
-        <div class="materials-button pink-button cxy">
+        <div class="materials-button-mini pink-button cxy">
           <img src="assets/icons/list.svg" height="22">
         </div>
       </div>
+      <div class=mr-10>
+        <div class="materials-button-mini yellow-button cxy" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top" (click)="addComplectToSelected()">
+          <img src="assets/icons/checkmark.svg" height="24">
+        </div>
+      </div>
+      <div class="mr-10">
+        <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" class="materials-button-mini green-button cxy">
+          <img src="assets/icons/open.svg" height="24">
+        </div>
+      </div>
       <div class="p-ml-auto df">
-        <div class=mr-10>
-          <div class="materials-button-mini yellow-button cxy" [pTooltip]="t.tr('Добавить комплект')" tooltipPosition="top" (click)="addComplectToSelected()">
-            <img src="assets/icons/checkmark.svg" height="24">
-          </div>
-        </div>
-        <div class="mr-10">
-          <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" style="border: 3px solid #22C55E" class="materials-button cxy">
-            <img src="assets/icons/openIssue.svg" height="24">
-          </div>
-        </div>
+
+
         <div class="mr-10" *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status)) || auth.getUser().login == 'voronin'">
           <div [pTooltip]="t.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button-files yellow-button cxy">
             <img src="assets/icons/download-file.svg" height="24">
