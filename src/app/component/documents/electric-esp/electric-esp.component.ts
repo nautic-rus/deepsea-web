@@ -1013,8 +1013,8 @@ export class ElectricEspComponent implements OnInit {
   }
 
   deleteManual(e: string) {
-    console.log(e);
-    this.s.deleteIssueMaterial(e, this.issue.doc_number, 'ele').subscribe(res => {
+    console.log(e, this.issue.doc_number);
+    this.s.deleteIssueMaterial(e, this.issue.doc_number, this.issue.id, 'ele').subscribe(res => {
       this.fillEle();
     });
   }

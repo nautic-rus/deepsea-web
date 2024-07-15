@@ -1409,7 +1409,7 @@ export class HullEspComponent implements OnInit {
 
   deleteMaterial(pos: string) {
     this.parts = [];
-    this.s.deleteIssueMaterial(pos, this.issue.doc_number, 'hull').subscribe(res => {
+    this.s.deleteIssueMaterial(pos, this.issue.doc_number, this.issue.id, 'hull').subscribe(res => {
       this.s.createHullEsp(this.project, this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
         this.fillParts();
       });
