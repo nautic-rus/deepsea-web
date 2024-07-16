@@ -1096,7 +1096,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.showResponsible = false;
     this.showCompleted = false;
     // localStorage.setItem('savedFilterName', null);
-
   }
 
   deleteFilter(dt: Table, id: any, name: string, event: MouseEvent) {
