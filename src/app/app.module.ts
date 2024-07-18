@@ -232,7 +232,6 @@ import { FilterNameComponent } from './component/home/filter-name/filter-name.co
 import { AddComplectToEspComponent } from './component/documents/electric-esp/add-complect-to-esp/add-complect-to-esp.component';
 import { DoclistNewComponent } from './component/doclist-new/doclist-new.component';
 import { WeightNewComponent } from './component/weight-new/weight-new.component';
-import { AddFilesShortVersionComponent } from './component/add-files-short-version/add-files-short-version.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -406,7 +405,6 @@ Quill.register('modules/imageResize', ImageResize);
     AddComplectToEspComponent,
     DoclistNewComponent,
     WeightNewComponent,
-    AddFilesShortVersionComponent,
 
   ],
   imports: [
