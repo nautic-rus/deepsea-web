@@ -248,7 +248,7 @@ export class AppComponent {
     this.primengConfig.ripple = true;
     this.route.queryParams.subscribe(params => {
       this.naviDisabled = params.navi == 0;
-      console.log(this.naviDisabled);
+      // console.log(this.naviDisabled);
     });
   }
   prepareRoute(outlet: RouterOutlet): any {
