@@ -228,7 +228,10 @@
 
         <div class="df space-between mt-1 mb-15">
           <div class="big-text">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
-          <div *ngIf="!addFileMain" (click)="addFileButton()" class="button-ok cxy">{{t.tr('Добавить файлы')}}</div>
+          <span [class.button-disabled]="issue.responsible != auth.getUser().login && issue.started_by != auth.getUser().login && issue.assigned_to != auth.getUser().login">
+            <div *ngIf="!addFileMain" (click)="addFileButton()" class="button-ok cxy">{{t.tr('Добавить файлы')}}</div>
+          </span>
+
           <div *ngIf="addFileMain" class="task-button-close cxy" (click)="closeAddFileButton()">
             <i class="pi pi-times"></i>
           </div>

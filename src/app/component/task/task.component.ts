@@ -40,8 +40,6 @@ import {ConsumedDetailsComponent} from "./consumed-details/consumed-details.comp
 import {TaskAddPlanComponent} from "./task-add-plan/task-add-plan.component";
 import {UntieComponent} from "./untie/untie.component";
 import {catchError, map} from "rxjs/operators";
-import {AddFilesComponent} from "../equipments/add-files/add-files.component";
-import {AddFilesShortVersionComponent} from "../add-files-short-version/add-files-short-version.component";
 import {tr} from "date-fns/locale";
 
 @Component({
@@ -355,7 +353,6 @@ export class TaskComponent implements OnInit {
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
           this.availableActions = this.getAvailableActions(issue);
-          console.log(this.availableActions)
           this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
             this.planIssue = resPlan[0];
           });
@@ -372,7 +369,6 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
     });
     this.issue = this.conf.data as Issue;
-    console.log(this.auth.getUserId(this.issue.started_by))
 
     // @ts-ignore
     this.isTrustedS(this.auth.getUserId(this.issue.started_by));
