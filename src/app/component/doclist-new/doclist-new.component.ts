@@ -326,6 +326,12 @@ export class DoclistNewComponent implements OnInit {
     return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
   }
 
+  cleanFilter() {
+    this.table.clear();
+    this.table.reset();
+    this.table.clearState();
+  }
+
   exportXls() {
     let fileName = 'export_' + this.generateId(8) + '.xlsx';
     let issues = this.table.filteredValue;

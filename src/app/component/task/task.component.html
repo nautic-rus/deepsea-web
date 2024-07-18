@@ -224,7 +224,39 @@
         </div>
       </div>
 
-      <div class="big-text mt-1">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
+<!--      <div class="big-text mt-1">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>-->
+
+        <div class="df space-between mt-1 mb-15">
+          <div class="big-text">{{t.tr('Вложения')}} ({{issue.file_attachments.length}})</div>
+          <span [class.button-disabled]="issue.responsible != auth.getUser().login && issue.started_by != auth.getUser().login && issue.assigned_to != auth.getUser().login">
+            <div *ngIf="!addFileMain" (click)="addFileButton()" class="button-ok cxy">{{t.tr('Добавить файлы')}}</div>
+          </span>
+
+          <div *ngIf="addFileMain" class="task-button-close cxy" (click)="closeAddFileButton()">
+            <i class="pi pi-times"></i>
+          </div>
+        </div>
+      <div>
+        <div *ngIf="addFileMain">
+          <div [class.file-drag]="dragOver" class="upload cx cy">
+            <div class="cxy w-100"  (dragenter)="dragOver = true" (dragleave)="dragOver = false" (click)="selectFiles.click()" (drop)="$event.preventDefault(); onEditorDrop($event); dragOver = false" (dragover)="$event.stopPropagation(); $event.preventDefault()">
+              <img class="mr-1 image no-actions" src="assets/icons/upload.svg" height="28">
+              <span class="normal-text-files no-actions">{{t.tr('Перетащите файлы или нажмите для загрузки')}}</span>
+            </div>
+          </div>
+          <div class="mb-10"></div>
+          <input hidden #selectFiles type="file" (change)="handleFileInput(selectFiles.files)" multiple>
+          <div class="file-loading file-name mt-5" *ngFor="let file of awaitForLoad">
+            <img [src]="'assets/task/' + getFileExtensionIcon(file)" height="30"/>
+            <div class="cy">{{file}}</div>
+            <div class="cxy"><i *ngIf="!isLoaded(file)" class="pi pi-spin pi-spinner"></i><i *ngIf="isLoaded(file)" class="pi pi-check"></i></div>
+            <div class="cxy" (click)="remove(file)"><i class="pi pi-times cursor-pointer"></i></div>
+          </div>
+          <div (click)="submitFiles()" class="button-ok cxy" style="width: fit-content; margin: 15px 0 15px auto">{{t.tr('Загрузить файлы')}}</div>
+          <!--        <div (click)="submitFiles()">Загрузить файлы</div>-->
+        </div>
+      </div>
+
       <div class="attachments-issue">
         <div class="mr-10" *ngFor="let file of issue.file_attachments">
           <div (click)="openFile(file.url)" class="attachment-issues df mb-5 cursor-pointer">

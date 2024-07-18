@@ -484,7 +484,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
     zip(this.issueManager.getIssues(this.auth.getUser().login), this.issueManager.getIssues(this.auth.getUser().shared_access)).pipe(map((value) => value[0].concat(value[1]))).subscribe(data => {
       this.issues = data.filter(x => x.id > 0);
-      console.log(this.issues)
+      // console.log(this.issues)
 
       if (this.auth.getUser().shared_access != ''){
         this.issueManager.getIssues(this.auth.getUser().shared_access).then(resShared => {
@@ -1096,7 +1096,6 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     this.showResponsible = false;
     this.showCompleted = false;
     // localStorage.setItem('savedFilterName', null);
-
   }
 
   deleteFilter(dt: Table, id: any, name: string, event: MouseEvent) {

@@ -30,6 +30,11 @@
           <img src="assets/icons/download-file.svg" height="26">
         </div>
       </div>
+      <div class="mr-10">
+        <div class="materials-button gray-button cxy" (click)="cleanFilter()" [pTooltip]="t.tr('Очистить фильтры')" tooltipPosition="top">
+          <img src="assets/icons/filter-no.svg" height="18">
+        </div>
+      </div>
       <div class="p-ml-auto mr-10 df" style="align-items: center">
         <div class="mr-10">
           <span>{{t.language === 'ru' ? 'Количество документов: ' : 'Number of documents: '}}</span>
