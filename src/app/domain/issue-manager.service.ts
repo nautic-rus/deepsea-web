@@ -89,6 +89,9 @@ export class IssueManagerService {
   async getIssueTypes() {
     return await this.http.get<IssueType[]>(props.http + '/issueTypes').toPromise();
   }
+  getIssueTypesByProject(project_id: number) {
+    return this.http.get<any[]>(props.httpD + '/issueStages', {params: {project:project_id}});
+  }
   async getTaskPriorities() {
     return await this.http.get<string[]>(props.http + '/issuePriorities').toPromise();
   }
