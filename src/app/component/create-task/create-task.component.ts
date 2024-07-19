@@ -580,6 +580,9 @@ export class CreateTaskComponent implements OnInit {
           this.taskPeriods.push(new LV(x.stage_name));
         }
       })
+      console.log(this.taskPeriods);
+      this.taskPeriods = _.sortBy(this.taskPeriods,  'value');
+      console.log(this.taskPeriods);
     });
   }
 
