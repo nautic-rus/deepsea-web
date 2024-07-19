@@ -295,6 +295,9 @@ export class ElectricEspComponent implements OnInit {
             case '006':
               wgt = count * first.material.singleWeight;
               break;
+            case '796':
+              wgt = count * first.material.singleWeight;
+              break;
             default:
               wgt = grEle.length;
               break;
@@ -306,6 +309,9 @@ export class ElectricEspComponent implements OnInit {
             let eleWeight = ele.weight;
             switch (ele.units) {
               case '006':
+                eleWeight *= first.material.singleWeight;
+                break;
+              case '796':
                 eleWeight *= first.material.singleWeight;
                 break;
               default:
