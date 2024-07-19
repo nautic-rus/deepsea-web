@@ -22,8 +22,6 @@
         </div>
       </div>
       <div class="p-ml-auto df">
-
-
         <div class="mr-10" *ngIf="auth.hasPerms('esp-files') && (['Delivered', 'Closed', 'Ready to Delivery', 'Send to Owner', 'Send to RS'].includes(issue.status)) || auth.getUser().login == 'voronin'">
           <div [pTooltip]="t.tr('Добавить файлы')" tooltipPosition="top" (click)="addFilesCommon()" class="materials-button-files yellow-button cxy">
             <img src="assets/icons/download-file.svg" height="24">

@@ -27,9 +27,7 @@ import {Observable} from "rxjs";
 })
 export class IssueManagerService {
   constructor(private lang: LanguageService, private cookie: CookieService, private http: HttpClient, private router: Router, private messageService: MessageService, public auth: AuthManagerService) {
-
   }
-
   getProjectNamesD() {
     return this.http.get<any[]>(props.httpD + '/projectNames');
   }
@@ -37,6 +35,10 @@ export class IssueManagerService {
     const formData: FormData = new FormData();
     formData.append('file', file, fileName);
     return await this.http.post<FileAttachment>(props.http + '/createFileUrl', formData, {params: {user}}).toPromise();
+  }
+
+  addFilesInIssue(file: FileAttachment) {
+    return this.http.post<string>(props.http + '/addFilesInIssue', JSON.stringify(file));
   }
 
   async uploadEquipmentFile(file: File, user: string, fileName: string = file.name) {
@@ -108,9 +110,14 @@ export class IssueManagerService {
     return this.http.get<any[]>(props.http + '/issuesAllShort');
   }
 
-  //doclist-new
+  //doclist-new Dinara
   getDoclistByProject(project: string): Observable<any> {
     return this.http.get<string>(props.httpD + '/projectDoclist', {params: {project}});
+  }
+
+  //weight-new Dinara
+  getWeightDataByProject(project: string): Observable<any> {
+    return this.http.get<string>(props.httpD + '/weightData', {params: {project}});
   }
 
   async getQuestions(): Promise<Issue[]> {

@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Issue} from "../../domain/classes/issue";
 import * as _ from 'underscore';
@@ -40,6 +40,7 @@ import {ConsumedDetailsComponent} from "./consumed-details/consumed-details.comp
 import {TaskAddPlanComponent} from "./task-add-plan/task-add-plan.component";
 import {UntieComponent} from "./untie/untie.component";
 import {catchError, map} from "rxjs/operators";
+import {tr} from "date-fns/locale";
 
 @Component({
   selector: 'app-task',
@@ -63,11 +64,14 @@ export class TaskComponent implements OnInit {
   issueRevisions = ['-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'];
   awaitForLoad: string[] = [];
   loaded: FileAttachment[] = [];
+  loadedMain: FileAttachment[] = [];
+  addFileMain: boolean = false;
   edit = '';
   updated = false;
   image = '';
   selectedUser = '';
   showImages = false;
+  @ViewChild('mainFilesElement') mainFilesElement: ElementRef;
   // @ts-ignore
   @ViewChild('img') img;
   // @ts-ignore
@@ -349,7 +353,6 @@ export class TaskComponent implements OnInit {
         this.issueManager.getIssueDetails(this.issue.id).then(issue => {
           this.issue = issue;
           this.availableActions = this.getAvailableActions(issue);
-          console.log(this.availableActions)
           this.auth.getPlanIssue(this.issue.id).subscribe(resPlan => {
             this.planIssue = resPlan[0];
           });
@@ -359,24 +362,13 @@ export class TaskComponent implements OnInit {
   }
   planIssue: any;
   ngOnInit(): void {
-    this.issueManager.getTrustedUsers1(47).subscribe((res) => {
-      res.forEach((i: { responsible_user_id: any; }) => {
-        this.trustedUsersId.push(i.responsible_user_id)
-      })
-      console.log(this.trustedUsersId)
-      console.log("TrustedUsers")
-    })
 
-
-
-    console.log("task component")
     this.config.setTranslation({
       dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
       weekHeader: "№",
       monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
     });
     this.issue = this.conf.data as Issue;
-    console.log(this.auth.getUserId(this.issue.started_by))
 
     // @ts-ignore
     this.isTrustedS(this.auth.getUserId(this.issue.started_by));
@@ -632,7 +624,7 @@ export class TaskComponent implements OnInit {
       allow = action.rule.includes('f') ? issue.first_send_date != 0 && allow : allow;
       allow = action.rule.includes('d') ? issue.delivered_date != 0 && allow : allow;
       allow = action.rule.includes('c') ? issue.child_issues.filter(x => !x.closing_status.split(',').map(x => x.trim()).includes(x.status)).length == 0 && allow : allow;
-      console.log(action, action.rule.includes('c'), allow);
+      // console.log(action, action.rule.includes('c'), allow);
       allow = action.rule.includes('t') ? this.planIssue.consumed != 0 && allow : allow;
       //allow = action.rule.includes('m') ? this.issueProjects.find(x => x.name == issue.project).managers.includes(this.auth.getUser().login) || allow : allow;
       allow = issue.issue_type == 'QNA' && this.auth.hasPerms('moderation-qna') && action.rule.includes('m') ? true : allow;
@@ -666,6 +658,45 @@ export class TaskComponent implements OnInit {
 
   openFile(url: string) {
     window.open(url);
+  }
+
+  addFileButton() {
+    this.addFileMain = true;
+  }
+
+  closeAddFileButton() {
+    this.addFileMain = false;
+    this.loaded = [];
+    this.awaitForLoad = [];
+  }
+
+  submitFiles() {
+    this.addFileMain = false;
+    console.log(this.loaded)
+    this.loaded.forEach(file => {
+      file.issue_id = this.issue.id;
+      console.log(file)
+      this.issueManager.addFilesInIssue(file).subscribe(() =>{})
+      this.issue.file_attachments.push(file);
+    })
+    this.loaded = [];
+    this.awaitForLoad = [];
+
+    // const dialog = this.dialogService.open(AddFilesShortVersionComponent, {
+    //   header: 'Uploading files',
+    //   showHeader: false,
+    //   modal: true,
+    // })
+    // dialog.onClose.subscribe(() => {
+    //   console.log(this.eqService.getCreateFiles())
+    //   this.eqService.getCreateFiles().forEach(file => {                       //добавляем файлы в БД
+    //     this.eqService.addEquipmentFiles(JSON.stringify(file)).subscribe(res => {
+    //       if (res.includes('error')) {
+    //         alert(res);
+    //       }
+    //     })
+    //   })
+    // })
   }
 
   showComment() {
@@ -810,6 +841,8 @@ export class TaskComponent implements OnInit {
         let file = files.item(x);
         if (file != null){
           this.issueManager.uploadFile(file, this.auth.getUser().login).then(res => {
+            console.log("this.issueManager.uploadFile");
+            console.log(res);
             this.loaded.push(res);
           });
         }

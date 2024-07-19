@@ -496,7 +496,7 @@ export class CreateTaskComponent implements OnInit {
 
   isCreateTaskDisabled() {
     let desc = this.taskDetails == null ? '' : this.taskDetails;
-    console.log(desc);
+    console.log(this.responsibleUser);
     let taskExists = this.checkIssues.find(x => x.docNumber == this.taskDocNumber && x.issueType == this.taskType) != null;
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || desc.trim() == '' || this.selectedItType == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
@@ -506,10 +506,10 @@ export class CreateTaskComponent implements OnInit {
       case 'PSD': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
       case 'ITT': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.taskDocNumber == '' || taskExists || this.docNumberExist();
       case 'RKD-T': return this.taskDocNumber.trim() == '' || this.taskSummary.trim() == '' || this.responsibleUser == '' || taskExists || this.docNumberExist();
-      case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '' || desc.trim() == '';
+      case 'OTHER': return this.taskSummary.trim() == '' || this.responsibleUser == '' || this.responsibleUser == null || desc.trim() == '';
       case 'DEVELOPMENT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
-      case 'NON-PROJECT': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
-      case 'APPROVAL': return  this.taskSummary.trim() == '' || desc.trim() == '' ;
+      case 'NON-PROJECT': return  this.taskSummary.trim() == '' || desc.trim() == '' || this.responsibleUser == '' || this.responsibleUser == null;
+      case 'APPROVAL': return  this.taskSummary.trim() == '' || desc.trim() == '' || this.selectedUsers.length == 0;
       case 'CORRECTION': return this.taskDepartment.trim() == '' || this.modificationDescription == '' || this.taskDocNumber.trim() == '' || this.responsibleUser == '';
       default: return false;
     }

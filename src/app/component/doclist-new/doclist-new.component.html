@@ -97,8 +97,9 @@
                   <div *ngIf="col.header === 'Отдел'" class="flex justify-content-center align-items-center">
                     <p-columnFilter field="department" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="dep" [options]="department" placeholder="Any" (onChange)="filter($event.value)">
+                        <p-multiSelect [ngModel]="value" [options]="department" display="chip" placeholder="Any" (onChange)="filter($event.value)">
                           <ng-template let-option pTemplate="item">
+                            <!--                            <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
                             <span class="ml-1">{{option}}</span>
                           </ng-template>
                         </p-multiSelect>
