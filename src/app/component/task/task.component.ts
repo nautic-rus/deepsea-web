@@ -51,7 +51,6 @@ import {tr} from "date-fns/locale";
 export class TaskComponent implements OnInit {
   issue: Issue = new Issue();
   issueProjectId: number = -1;
-  issuePeriod: string = this.issue.period;
   trustedUsersId: any[] = [];
   trustedS: boolean = false;
   trustedA: boolean = false;
@@ -470,7 +469,7 @@ export class TaskComponent implements OnInit {
       // this.fillStageOptions();
       this.issueProjectId = this.taskProjectsFullInfo.find(project  => project.name === this.issue.project).id;  //находим айди выбранного проекта чтлбы получить допустимые
 
-      this.issueManager.getIssueTypesByProject(this.issueProjectId).subscribe(res => {  //заполняем массив с this.taskPeriods для изначального проекта
+      this.issueManager.getIssueStagesByProject(this.issueProjectId).subscribe(res => {  //заполняем массив с this.taskPeriods для изначального проекта
         let rez : LV[] = [];
         res.forEach(x => {
           if (x.issue_type === this.issue.issue_type) {
@@ -489,20 +488,7 @@ export class TaskComponent implements OnInit {
     })
 
     this.fillGroupedChecks();
-    console.log("this.taskPeriods initial");
-    console.log(this.taskPeriods);
-    this.issuePeriod = this.issue.period;
 
-    this.issueManager.getIssueTypesByProject(this.issueProjectId).subscribe(res => {
-      console.log("this.issueProjectId");
-      console.log(this.issueProjectId);
-      console.log("getIssueTypesByProject");
-      console.log(res);
-    });
-
-    // setTimeout(() => {
-    //   this.fillStageOptions();
-    // }, 200);
 
 
   }
@@ -512,7 +498,7 @@ export class TaskComponent implements OnInit {
   fillStageOptions() {
     let rez : LV[] = [];
     this.taskPeriods = [];
-    this.issueManager.getIssueTypesByProject(this.issueProjectId).subscribe(res => {
+    this.issueManager.getIssueStagesByProject(this.issueProjectId).subscribe(res => {
       res.forEach(x => {
         if (x.issue_type === this.issue.issue_type) {
           rez.push(new LV(x.stage_name));

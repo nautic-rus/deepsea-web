@@ -574,7 +574,7 @@ export class CreateTaskComponent implements OnInit {
   fillStageOptions() {
     this.taskPeriods = [];
     let prId = this.taskProjectsFullInfo.find(project  => project.name === this.taskProject).id;  //находим айди выбранного проекта чтлбы получить допустимые
-    this.issues.getIssueTypesByProject(prId).subscribe(res => {
+    this.issues.getIssueStagesByProject(prId).subscribe(res => {
       res.forEach(x => {
         if (x.issue_type === this.taskType) {
           this.taskPeriods.push(new LV(x.stage_name));
