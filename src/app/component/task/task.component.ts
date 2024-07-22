@@ -469,8 +469,23 @@ export class TaskComponent implements OnInit {
       this.taskProjects = projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
       // this.fillStageOptions();
       this.issueProjectId = this.taskProjectsFullInfo.find(project  => project.name === this.issue.project).id;  //находим айди выбранного проекта чтлбы получить допустимые
-      console.log("issueProjectId");
-      console.log(this.issueProjectId);
+
+      this.issueManager.getIssueTypesByProject(this.issueProjectId).subscribe(res => {  //заполняем массив с this.taskPeriods для изначального проекта
+        let rez : LV[] = [];
+        res.forEach(x => {
+          if (x.issue_type === this.issue.issue_type) {
+            rez.push(new LV(x.stage_name));
+            // this.taskPeriods.push(new LV(x.stage_name));
+          }
+        })
+        rez = rez = _.sortBy(rez,  x => {
+          let r = new RegExp('\\d+');
+          let sort = r.test(x.value) ? r.exec(x.value)![0] : '';
+          return +sort;
+        });
+        this.taskPeriods = rez;
+      });
+
     })
 
     this.fillGroupedChecks();
@@ -478,9 +493,16 @@ export class TaskComponent implements OnInit {
     console.log(this.taskPeriods);
     this.issuePeriod = this.issue.period;
 
-    setTimeout(() => {
-      this.fillStageOptions();
-    }, 200);
+    this.issueManager.getIssueTypesByProject(this.issueProjectId).subscribe(res => {
+      console.log("this.issueProjectId");
+      console.log(this.issueProjectId);
+      console.log("getIssueTypesByProject");
+      console.log(res);
+    });
+
+    // setTimeout(() => {
+    //   this.fillStageOptions();
+    // }, 200);
 
 
   }
@@ -508,12 +530,13 @@ export class TaskComponent implements OnInit {
       //   return +sort;
       // });
       this.taskPeriods = rez;
-      console.log(this.taskPeriods);
-      this.issue.period = this.issuePeriod;
+      console.log("this.issue.period");
+      console.log(this.issue.period);
+      // console.log(this.taskPeriods);
+      // this.issue.period = this.issuePeriod;
     });
 
-    console.log("this.issue.period");
-    console.log(this.issue.period);
+
   }
 
   taskProjectChanged(){

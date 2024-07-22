@@ -1276,7 +1276,7 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('period')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Этап')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getWithNoResult(issueManager.localeTaskPeriod(issuePeriod))}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'period'" (click)="edit = 'period'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getWithNoResult(issueManager.localeTaskPeriod(issue.period))}}</div>
             <div class="mr-5" [hidden]="edit != 'period'">
               <p-dropdown class="select" [(ngModel)]="issue.period" [options]="taskPeriods" optionValue="value" optionLabel="label" styleClass="width-180">
               </p-dropdown>
