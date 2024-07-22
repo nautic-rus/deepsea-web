@@ -1152,9 +1152,9 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('project')">
             <div class="df text-y line-text normal-text w-35">{{t.tr('Проект')}}</div>
-            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.project}}</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'project'" (click)="edit = 'project'"class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.project}}</div>
             <div [hidden]="edit != 'project'" class="mr-5">
-              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" styleClass="width-180">
+              <p-dropdown class="select" [(ngModel)]="issue.project" [options]="taskProjects" (ngModelChange)="taskProjectChanged()" styleClass="width-180">
               </p-dropdown>
             </div>
             <div class="w-15 df">

@@ -91,6 +91,7 @@ export class TaskComponent implements OnInit {
   taskPriorities: LV[] = [];
   taskPeriods: LV[] = [];
   taskProjects: string[] = [];
+  taskProjectsFullInfo: any[] = [];
   issueNameEdit = false;
   startDate: Date = new Date();
   dueDate: Date = new Date();
@@ -372,9 +373,6 @@ export class TaskComponent implements OnInit {
 
     // @ts-ignore
     this.isTrustedS(this.auth.getUserId(this.issue.started_by));
-    // console.log(this.issue)
-    // console.log(this.auth.getUserId(this.issue.assigned_to))
-    // console.log(this.issue.assigned_to)
     // @ts-ignore
     this.isTrustedA(this.auth.getUserId(this.issue.assigned_to));
     // @ts-ignore
@@ -422,15 +420,25 @@ export class TaskComponent implements OnInit {
     // this.issueManager.getIssueProjects().then(projects => {
     //   this.taskProjects = projects.filter((x: any) => x.pdsp != '').map(x => x.pdsp);
     // });
-    this.issueManager.getIssueProjects().then(projects => {
-      this.taskProjects = projects.map((x: any) => x.name);
-      // if (this.taskProjects.length > 0 && this.taskProject == '-') {
-      //   this.taskProject = this.taskProjects[0];
-      // }
-    });
+
+
+    // Так было
+    // this.issueManager.getIssueProjects().then(projects => {
+    //   this.taskProjects = projects.map((x: any) => x.name);
+    //   console.log(this.taskProjects);
+    //   // if (this.taskProjects.length > 0 && this.taskProject == '-') {
+    //   //   this.taskProject = this.taskProjects[0];
+    //   // }
+    // });
     this.issueManager.getIssuePeriods().then(periods => {
       periods.filter(x => x.project == this.issue.project).forEach(x => {
         this.taskPeriods.push(new LV(this.issueManager.localeTaskPeriod(x.name), x.name));
+      });
+      this.taskPeriods = _.sortBy(this.taskPeriods,  x => {
+        let r = new RegExp('\\d+');
+        let sort = r.test(x.value) ? r.exec(x.value)![0] : '';
+        console.log(sort);
+        return +sort;
       });
     });
     this.issueManager.getTaskPriorities().then(priorities => {
@@ -451,10 +459,50 @@ export class TaskComponent implements OnInit {
       this.ready.nesting = +readySplit[2];
     }
 
+    this.issueManager.getIssueProjects().then(projects => {
+      this.taskProjectsFullInfo = projects;
+      this.taskProjects = projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
+    })
+
     this.fillGroupedChecks();
 
     // console.log("ngOnInit this.trustedS")
     // console.log(this.trustedS)
+  }
+
+
+
+  fillStageOptions() {
+    this.taskPeriods = [];
+    let prId = this.taskProjectsFullInfo.find(project  => project.name === this.issue.project).id;  //находим айди выбранного проекта чтлбы получить допустимые
+    console.log("prId)");
+    console.log(prId);
+    this.issueManager.getIssueTypesByProject(prId).subscribe(res => {
+      res.forEach(x => {
+        if (x.issue_type === this.issue.issue_type) {
+          this.taskPeriods.push(new LV(x.stage_name));
+        }
+      })
+      console.log(this.taskPeriods);
+      this.taskPeriods = this.taskPeriods = _.sortBy(this.taskPeriods,  x => {
+        let r = new RegExp('\\d+');
+        let sort = r.test(x.value) ? r.exec(x.value)![0] : '';
+        console.log(sort);
+        return +sort;
+      });
+      console.log(this.taskPeriods);
+    });
+  }
+
+  taskProjectChanged(){
+    console.log(this.issue.project);
+    this.taskPeriods = [];
+    this.fillStageOptions();
+    // this.issueManager.getIssuePeriods().then(periods => {
+    //   periods.filter(x => x.project == this.issue.project).forEach(x => {
+    //     this.taskPeriods.push(new LV(this.issueManager.localeTaskPeriod(x.name), x.name));
+    //   });
+    // });
   }
   close(){
     this.ref.close(this.updated ? 'updated' : 'exit');

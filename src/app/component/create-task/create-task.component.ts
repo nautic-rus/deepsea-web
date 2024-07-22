@@ -573,7 +573,7 @@ export class CreateTaskComponent implements OnInit {
 
   fillStageOptions() {
     this.taskPeriods = [];
-    let prId = this.taskProjectsFullInfo.find(project  => project.name === this.taskProject).id;  //находим айти выбранного проекта чтлбы получить допустимые
+    let prId = this.taskProjectsFullInfo.find(project  => project.name === this.taskProject).id;  //находим айди выбранного проекта чтлбы получить допустимые
     this.issues.getIssueTypesByProject(prId).subscribe(res => {
       res.forEach(x => {
         if (x.issue_type === this.taskType) {
@@ -581,7 +581,12 @@ export class CreateTaskComponent implements OnInit {
         }
       })
       console.log(this.taskPeriods);
-      this.taskPeriods = _.sortBy(this.taskPeriods,  'value');
+      this.taskPeriods = _.sortBy(this.taskPeriods,  x => {
+        let r = new RegExp('\\d+');
+        let sort = r.test(x.value) ? r.exec(x.value)![0] : '';
+        console.log(sort);
+        return +sort;
+      });
       console.log(this.taskPeriods);
     });
   }
