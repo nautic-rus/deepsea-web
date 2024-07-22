@@ -3,7 +3,7 @@
     <div class="empty-card"></div>
     <div class="card-head df sticky-card" *ngIf="projects.length > 0">
       <div class="mr-10 ">
-<!--        <p-multiSelect [showToggleAll]="false" styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>-->
+        <p-multiSelect [showToggleAll]="false" styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
       </div>
       <div class="df">
         <div class="eq-button blue-button cxy mr-10" (click)="groupByFunction('department')" style="width: fit-content;">
@@ -22,80 +22,29 @@
     <p-treeTable [value]="departmentTreeArray" [columns]="cols">
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of cols">
+          <th *ngFor="let col of cols" [style.width]="col.width">
             {{ col.header }}
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
         <tr>
-          <td>
-            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-            {{rowData.name}}
-          </td>
-          <td>
-            {{rowData.status}}
-          </td>
-          <td>
-            {{rowData.perc}}
-          </td>
-          <td>
-            {{rowData.weight}}
-          </td>
-          <td>
-            {{rowData.x}}
-          </td>
-          <td>
-            {{rowData.y}}
-          </td>
-          <td>
-            {{rowData.z}}
-          </td>
-          <td>
-            {{rowData.mx}}
-          </td>
-          <td>
-            {{rowData.my}}
-          </td>
-          <td>
-            {{rowData.mz}}
-          </td>
-          <td>
-            {{rowData.modify}}
-          </td>
-          <td>
-            {{rowData.stock_code}}
+          <td *ngFor="let col of cols; let i = index"  [style.width]="col.width">
+            <span *ngIf="i == 0">
+              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+              {{ rowData.name }}
+            </span>
+            <span *ngIf="i !== 0">
+              <span *ngIf="col.field === 'modify'">
+                {{ getDateOnly(rowData[col.field]) }}
+              </span>
+              <span *ngIf="col.field !== 'modify'">
+                {{ rowData[col.field] }}
+              </span>
+            </span>
           </td>
         </tr>
-
-
-<!--        <tr [ttRow]="rowNode">-->
-<!--          <td>-->
-<!--            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>-->
-<!--            {{rowData.name}}-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            {{rowData.status}}-->
-<!--          </td>-->
-<!--        </tr>-->
       </ng-template>
     </p-treeTable>
-<!--    <p-treeTable [value]="weightData" [columns]="cols" [scrollable]="true" [tableStyle]="{'min-width':'50rem'}">-->
-<!--      <ng-template pTemplate="header" let-columns>-->
-<!--        <tr>-->
-<!--          <th *ngFor="let col of columns">-->
-<!--            {{ col.header }}-->
-<!--          </th>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--      <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">-->
-<!--        <tr [ttRow]="rowNode">-->
-<!--          <td *ngFor="let col of columns; let i = index">-->
-<!--&lt;!&ndash;            <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0" />&ndash;&gt;-->
-<!--            {{ rowData[col.field]}}-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </ng-template>-->
-<!--    </p-treeTable>-->
   </div>
 </div>
