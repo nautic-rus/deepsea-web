@@ -9,7 +9,7 @@
     <span class="">
       <div>{{t.tr('Количество часов')}}</div>
 <!--      <p-inputNumber [(ngModel)]="hoursAmount" mode="decimal" placeholder="Количество часов" [minFractionDigits]="1"></p-inputNumber>-->
-      <p-inputNumber [(ngModel)]="hoursAmount" mode="decimal" placeholder="Количество часов"></p-inputNumber>
+      <p-inputNumber [(ngModel)]="hoursAmount" mode="decimal" [min]="0" placeholder="Количество часов"></p-inputNumber>
     </span>
     <span class="p-float-label">
       <div>{{t.tr('Дата')}}</div>
