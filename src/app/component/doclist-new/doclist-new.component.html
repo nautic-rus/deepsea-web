@@ -160,7 +160,7 @@
                     <span [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></span>
                   </div>
                   <div *ngIf="col.header != 'Срок исполнения' && col.header != 'Статус'  && col.header != 'Корректировка'  && col.header != 'Файл'">{{issue[col.field]}}</div>
-                  <div *ngIf="col.header === 'Срок исполнения'" class="text-14  ">{{getDate(issue.contract_due_date)}}</div>
+                  <div *ngIf="col.header === 'Срок исполнения'" class="text-14  ">{{localeColumnForPDF(issue.contract_due_date, 'contract_due_date')}}</div>
 
                   <div *ngIf="col.header === 'Корректировка'">
                     <div class="correction_container" *ngIf="!greenCorrectionSign(issue.max_due_date) && issue.correction">
