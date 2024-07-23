@@ -400,15 +400,21 @@ export class PlanComponent implements OnInit {
     this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
       let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
       if (findIssue != null){
-        this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
-          let updIssue = upd[0];
-          findIssue.inPlan = updIssue.inPlan;
-          findIssue.available = updIssue.available;
-          findIssue.consumed = updIssue.consumed;
-          findIssue.available_limit = updIssue.available_limit;
-        });
+        if (findIssue.closing_status.split(',').includes(findIssue.status)){
+          alert('The task already closed');
+          this.loading = false;
+        }
+        else{
+          this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
+            let updIssue = upd[0];
+            findIssue.inPlan = updIssue.inPlan;
+            findIssue.available = updIssue.available;
+            findIssue.consumed = updIssue.consumed;
+            findIssue.available_limit = updIssue.available_limit;
+          });
+          this.fillPlan();
+        }
       }
-      this.fillPlan();
     });
   }
   fillNextDays() {
