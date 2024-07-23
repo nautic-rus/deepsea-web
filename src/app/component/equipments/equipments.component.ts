@@ -111,9 +111,11 @@ export class EquipmentsComponent implements OnInit {
     //this.selectedDepartments = ['System'];
 
     this.eqService.getEquipments().subscribe(equipments => {
-      console.log(equipments)
+      // console.log(equipments)
       this.equipmentsNode = []
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
+      console.log("equipments");
+      console.log(equipments);
 
       if (this.equipmentId != 0 && this.supplierId != 0) {  //чтобы открыть editSupplier выполняем поиск по айдишникам
 
@@ -127,7 +129,7 @@ export class EquipmentsComponent implements OnInit {
 
       // let resParsedArray: any[] = []
       // this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
-       console.log(this.equipmentsNode)
+      //  console.log(this.equipmentsNode)
     });
 
     this.eqService.getSfis().subscribe(sfis => {
@@ -166,7 +168,7 @@ export class EquipmentsComponent implements OnInit {
     // this.equipmentsNode = this.equipmentsNode.filter(x => {
     //   //x.data.id = 115
     // })
-    console.log(this.equipmentsNode)
+    // console.log(this.equipmentsNode)
     this.equipments.forEach((eq) => {
       //eq.suppliers?.some
       const hasApprovedSupplier = eq.suppliers?.some((supplier) =>
@@ -204,17 +206,6 @@ export class EquipmentsComponent implements OnInit {
 
   projectChanged() {
     this.filterEquipments();
-    // this.equipmentsNode = []
-    // console.log(this.selectedProjects)
-    // // this.equipmentsNode.forEach(i => {
-    // //   console.log(i.data.project_name)
-    // // })
-    // this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode).filter(x => this.selectedProjects.includes(x.data.project_name))
-    // // this.equipmentsNode = this.equipmentsNode.filter(x => {
-    // //   //x.data.id = 115
-    // // })
-    // console.log(this.equipmentsNode)
-    // this.filterEquipments();
   }
 
   departmentChanged() {
