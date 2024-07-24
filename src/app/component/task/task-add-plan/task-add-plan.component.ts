@@ -47,13 +47,14 @@ export class TaskAddPlanComponent implements OnInit {
   constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
   ngOnInit(): void {
-    this.minDate = new Date(this.minDate.getTime() - 35 * 24 * 60 * 60 * 1000);
+    this.minDate = new Date(this.minDate.getTime() - 3 * 24 * 60 * 60 * 1000);
     this.disabledDates = this.getDisabledDates(this.minDate, this.calendarDay);
     this.issue = this.conf.data as Issue;
     this.fillByDate();
   }
   fillByDate(){
-    this.auth.getPlanByDays(this.calendarDay.getTime()).subscribe(res => {
+    let prevDate = this.minDate.getTime() - 24 * 60 * 60 * 1000;
+    this.auth.getPlanByDays(prevDate).subscribe(res => {
       this.plan = res.flatMap((x: any) => x.plan);
       this.ints = res.flatMap((x: any) => x.plan.flatMap((y: any) => y.ints));
       let findUserPlan = res.find((x: any) => x.userId == this.auth.getUser().id);
@@ -74,14 +75,29 @@ export class TaskAddPlanComponent implements OnInit {
     });
   }
   commit(){
-    this.auth.addManHours(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, this.comment).subscribe(res => {
-      if (res.includes('success')){
-        this.ref.close('success');
-      }
-      else{
-        alert(res);
-      }
-    });
+    let year = this.calendarDay.getFullYear();
+    let month =  this.calendarDay.getMonth();
+    let day = this.calendarDay.getDate();
+    if (this.userPlan == null){
+      alert('План пользователя не задан');
+      return;
+    }
+    let planToday = this.userPlan.find(x => x.day == day && x.month == month && x.year == year && x.ints.find(y => y.taskId == this.issue.id) != null);
+    if (planToday){
+      this.auth.addManHours(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, this.comment).subscribe(res => {
+        if (res.includes('success')){
+          this.ref.close('success');
+        }
+        else{
+          alert(res);
+        }
+      });
+    }
+    else{
+      alert('Эта задача не запланирована в выбранный день')
+    }
+
+
     // this.auth.insertConsumedPlanInterval(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, 0).subscribe(res => {
     //   if (res.includes('success')){
     //     this.ref.close('success');
