@@ -396,15 +396,15 @@ export class PlanComponent implements OnInit {
   }
 
   deleteInterval() {
-    this.loading = true;
-    this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
-      let findIssue = this.issues.find(x => x.id == this.cmMenuInt.taskId);
-      if (findIssue != null){
-        if (findIssue.closing_status.split(',').includes(findIssue.status)){
-          alert('The task already closed');
-          this.loading = false;
-        }
-        else{
+    let findIssue = this.issuesSrc.find(x => x.id == this.cmMenuInt.taskId);
+    if (findIssue != null){
+      this.loading = true;
+      if (findIssue.closing_status.split(',').includes(findIssue.status)){
+        alert('The task already closed');
+        this.loading = false;
+      }
+      else{
+        this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
           this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
             let updIssue = upd[0];
             findIssue.inPlan = updIssue.inPlan;
@@ -413,9 +413,12 @@ export class PlanComponent implements OnInit {
             findIssue.available_limit = updIssue.available_limit;
           });
           this.fillPlan();
-        }
+        });
       }
-    });
+    }
+    else{
+      alert('Не найдено задачи по выбранному интервалу!');
+    }
   }
   fillNextDays() {
     this.loading = true;
