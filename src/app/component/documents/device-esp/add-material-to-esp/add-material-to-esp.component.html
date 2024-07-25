@@ -38,7 +38,7 @@
               <th pSortableColumn="descr" class="cy min-width-150 w-15">{{t.tr('Обозначение')}}
                 <p-sortIcon field="descr"></p-sortIcon>
               </th>
-              <th pSortableColumn="category" class="cy min-width-70 w-7">{{t.tr('КВЗ')}}
+              <th pSortableColumn="category" class="cy min-width-70 w-6">{{t.tr('КВЗ')}}
                 <p-sortIcon field="category"></p-sortIcon>
               </th>
               <th pSortableColumn="coefficient" class="cy min-width-70 w-7">{{t.tr('Коэф.')}}
@@ -47,7 +47,7 @@
               <th pSortableColumn="singleWeight" class="cy min-width-75 w-9">{{t.tr('Вес')}}
                 <p-sortIcon field="singleWeight"></p-sortIcon>
               </th>
-              <th pSortableColumn="units" class="cy min-width-70 w-7">{{t.tr('КЕИ')}}
+              <th pSortableColumn="units" class="cy min-width-50 max-width-50 w-6">{{t.tr('КЕИ')}}
                 <p-sortIcon field="units"></p-sortIcon>
               </th>
               <th pSortableColumn="provider" class="cy min-width-100 w-8">{{t.tr('Поставщик')}}
@@ -65,10 +65,10 @@
             <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
               <td class="min-width-220 w-27 text-12">{{material.name}}</td>
               <td class="min-width-150 w-15 text-12">{{material.description}}</td>
-              <td class="min-width-70 w-7 text-12">{{material.category}}</td>
+              <td class="min-width-70 w-6 text-12">{{material.category}}</td>
               <td class="min-width-70 w-7 text-12">{{material.coefficient}}</td>
               <td class="min-width-75 w-9 text-12">{{material.singleWeight}}</td>
-              <td class="min-width-70 w-7 text-12">{{material.units}}</td>
+              <td class="min-width-50 max-width-50 w-6 text-12">{{material.units}}</td>
               <td class="min-width-100 w-8 text-12">{{material.provider}}</td>
               <td class="min-width-100 w-8 text-12">{{material.note}}</td>
               <td class="min-width-160 w-9 text-12">
