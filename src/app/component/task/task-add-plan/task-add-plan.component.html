@@ -45,7 +45,10 @@
 </div>
 <div class="form-footer-labor">
   <div class="mr-5 cx">
-    <div (click)="commit()" tabindex="10" class="button-ok cxy">{{t.tr('Сохранить')}}</div>
+    <p-progressSpinner *ngIf="userPlan.length == 0" [style]="{width: '25px', height: '25px'}"></p-progressSpinner>
+    <div (click)="commit()" tabindex="10" class="button-ok cxy" [class.disabled-button]="userPlan.length == 0">
+      {{t.tr('Сохранить')}}
+    </div>
   </div>
   <div tabindex="11" (click)="close()" pButton [label]="t.tr('Отменить')" class="button-cancel ml-1"></div>
 </div>
