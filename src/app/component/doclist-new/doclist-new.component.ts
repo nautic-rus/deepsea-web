@@ -11,6 +11,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {MessageService} from "primeng/api";
 import _ from "underscore";
 import {TaskComponent} from "../task/task.component";
+import {milliseconds} from "date-fns";
 
 @Component({
   selector: 'app-doclist-new',
@@ -233,11 +234,10 @@ export class DoclistNewComponent implements OnInit {
   }
 
   greenCorrectionSign(correctionDate: number): boolean {
-    let today = new Date()
+    let today = new Date().getTime();
     if (correctionDate == 0) {
       return true;
     }
-    // @ts-ignore
     if (correctionDate > today) {
       return true;
     }

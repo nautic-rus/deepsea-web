@@ -41,51 +41,31 @@ export class WeightNewComponent implements OnInit {
     })
 
     this.cols = [
-      { field: 'name', header: 'name' },
-      { field: 'status', header: 'status' },
-      { field: 'perc', header: 'perc' },
-      { field: 'weight', header: 'weight' },
-      { field: 'x', header: 'x' },
-      { field: 'y', header: 'y' },
-      { field: 'z', header: 'z' },
-      { field: 'mx', header: 'mx' },
-      { field: 'my', header: 'my' },
-      { field: 'mz', header: 'mz' },
-      { field: 'modify', header: 'modify' },
-      { field: 'stock_code', header: 'stock_code' },
+      { field: 'name', header: 'Name', width: '300px' },
+      { field: 'status', header: 'Status', width: '80px' },
+      { field: 'perc', header: '%', width: '100px'},
+      { field: 'weight', header: 'Weight, t', width: '100px' },
+      { field: 'x', header: 'X, m', width: '100px' },
+      { field: 'y', header: 'Y, m', width: '100px' },
+      { field: 'z', header: 'Z, m', width: '100px' },
+      { field: 'mx', header: 'Mx, t*m', width: '100px' },
+      { field: 'my', header: 'My, t*m', width: '100px' },
+      { field: 'mz', header: 'Mz, t*m', width: '100px' },
+      { field: 'modify', header: 'Modify date', width: '100px' },
+      { field: 'stock_code', header: 'Stock code', width: '120px' },
       // pers: null, weight: null, x: null, y: null, z: null, mx: null, my: null, mz: null, modify: null, stock_kode: null
     ];
-    this.projectChanged()
+    // this.projectChanged()
   }
 
   // projectChanged(e:any) {
-  projectChanged() {
-    this.issueManager.getWeightDataByProject('NR002').subscribe(res => {
+  projectChanged(e:any) {
+    console.log(e.itemValue);
+    this.issueManager.getWeightDataByProject(e.itemValue).subscribe(res => {
       this.weightDataSrc = res;
       this.weightData = this.weightDataSrc;
-
-      // this.fillWeightData(this.weightData);
-
-      this.issueManager.getWeightDataByProject('170701').subscribe(res => {
-        console.log(res)
-        res.forEach((i: any) => {
-          this.weightData.push(i)
-        })
-
-        // const treeBuilder = this.parseToTreeByDepartment();
-        // console.log(treeBuilder)
-        // this.weightData.push(res)
-        // console.log(this.weightData);
-        // this.uniqueDepartments = [...new Set(this.weightData.map(obj => obj.department))];
-        // console.log(this.uniqueDepartments);
-
-
-        // this.show = this.parseToTreeByDepartment();
-        // console.log(this.show)
-        this.departmentTreeArray = this.fillWeightData(this.weightData)
-        console.log(this.departmentTreeArray)
-      })
-
+      this.departmentTreeArray = this.fillWeightData(this.weightData)
+      console.log(this.departmentTreeArray)
     })
     // console.log(e)
   }
@@ -156,8 +136,6 @@ export class WeightNewComponent implements OnInit {
 
       const docs: TreeNode[] = [];
       _.forEach(_.groupBy(groupDep, (x) => x.doc_number), (groupDocNumber) => {
-        console.log(groupDocNumber);
-        console.log(groupDocNumber[0]);
         const nameDoc = groupDocNumber[0].doc_number + ' ' + groupDocNumber[0].issue_name;
         let weightDoc = 0;
         let xDoc = 0;
@@ -226,6 +204,15 @@ export class WeightNewComponent implements OnInit {
 
     return deps;
   }
+
+  getDateOnly(dateLong: number): string{
+    if (!dateLong) {
+      return '';
+    }
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
   //
   // fillWeightData(data: any[]){
   //   let deps:any[] = [];

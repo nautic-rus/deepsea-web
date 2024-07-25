@@ -50,12 +50,15 @@ export class CreateTaskComponent implements OnInit {
   contractDueDate: Date = new Date(this.startDate.getTime() + 259200000);
   today: Date = new Date();
   taskProjects: string[] = [];
+  taskProjectsFullInfo: any[] = [];
   taskContracts: string[] = [];
   taskContract: string = '';
   sfiCodes: LV[] = [];
   taskDepartments: string[] = [];
-  taskPeriods: LV[] = [new LV('-'), new LV('Stage 1'), new LV('Stage 2'), new LV('Stage 3'), new LV('Stage 4'), new LV('Stage 5'), new LV('Stage 6'), new LV('Stage 7'), new LV('Stage 8')];
-  taskPeriod: string = this.taskPeriods[0].value;
+  taskPeriods: LV[] = [];
+  taskPeriod: string = new LV('-').value;
+  // taskPeriods: LV[] = [new LV('-'), new LV('Stage 1'), new LV('Stage 2'), new LV('Stage 3'), new LV('Stage 4'), new LV('Stage 5'), new LV('Stage 6'), new LV('Stage 7'), new LV('Stage 8')];
+  // taskPeriod: string = this.taskPeriods[0].value;
   taskTypes: any[] = [];
   taskPriorities: any[] = [];
   assignedToUser = '';
@@ -64,6 +67,7 @@ export class CreateTaskComponent implements OnInit {
   selectedUsers: string[] = [];
   awaitForLoad: string[] = [];
   taskProject = '-';
+  taskProjectId: number | null = null;
   sfiCode = '';
   taskType = 'IT';
   taskPriority = '';
@@ -148,6 +152,9 @@ export class CreateTaskComponent implements OnInit {
     }
   constructor(private config: PrimeNGConfig, public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig) { }
   ngOnInit(): void {
+    // this.getProjectId('NR002');
+
+
     this.issue = this.conf.data[0] as Issue;
     this.action = this.conf.data[1];
     this.config.setTranslation({
@@ -168,6 +175,8 @@ export class CreateTaskComponent implements OnInit {
     }
     this.itUsers = this.users.filter(x => x.department == 'IT');
     this.issues.getIssueTypes().then(types => {
+      // console.log("this.issues.getIssueTypes()");
+      // console.log(types);
       types.filter(x => this.action == '' ? x.visibility_main_form == 1 : x.visibility_subtask == 1).forEach(type => {
         let allow = true;
         if (type.type_name == 'RKD' && !this.auth.hasPerms('create_rkd_task')){
@@ -209,12 +218,12 @@ export class CreateTaskComponent implements OnInit {
       }
     });
     this.issues.getIssueProjects().then(projects => {
+      this.taskProjectsFullInfo = projects;
       this.taskProjects = projects.map((x: any) => x.name).filter(x => x != '' && this.auth.getUser().visible_projects.includes(x));
       if (this.taskProjects.length > 0 && this.taskProject == '-') {
         this.taskProject = this.taskProjects[0];
       }
       this.issues.getProjectContracts(this.taskProject).subscribe(taskContracts => {
-        console.log(taskContracts);
         this.taskContracts = ['-'].concat(taskContracts);
       });
     });
@@ -240,7 +249,6 @@ export class CreateTaskComponent implements OnInit {
     });
 
     this.issues.getDepartments().subscribe(departments => {
-      console.log(departments);
       this.taskDepartments = departments.filter(x => x.visible_task == 1).map(x => x.name);
       this.taskDepartment = '-';
     });
@@ -267,6 +275,21 @@ export class CreateTaskComponent implements OnInit {
 
 
   }
+
+  // getProjectId(projectName: String) {  //mine
+  //   this.issues.getProjectNamesD().subscribe((res) => {
+  //     console.log(res)
+  //   })
+  // }
+  //
+  // async getProjectId(projectName: string) {  //mine
+  //   const projectId = await this.issues.getProjectIdByName(projectName);
+  //   if (projectId) {
+  //     this.taskProjectId = projectId;
+  //   } else {
+  //     this.taskProjectId = null;
+  //   }
+  // }
 
   handleFileInput(files: FileList | null) {
     if (files != null){
@@ -496,7 +519,7 @@ export class CreateTaskComponent implements OnInit {
 
   isCreateTaskDisabled() {
     let desc = this.taskDetails == null ? '' : this.taskDetails;
-    console.log(this.responsibleUser);
+    // console.log(this.responsibleUser);
     let taskExists = this.checkIssues.find(x => x.docNumber == this.taskDocNumber && x.issueType == this.taskType) != null;
     switch (this.taskType) {
       case 'IT': return this.taskSummary.trim() == '' || desc.trim() == '' || this.selectedItType == '' || this.awaitForLoad.filter(x => !this.isLoaded(x)).length > 0;
@@ -518,17 +541,13 @@ export class CreateTaskComponent implements OnInit {
   docNumberExist() {
     if (this.taskDocNumber === '-')
       return true
-    console.log("this.checkIssues")
-    console.log(this.checkIssues)
-    console.log(this.taskDocNumber)
-
     let a = this.checkIssues.find(x => x.docNumber === this.taskDocNumber.toString())
 
     if (a) {
-      console.log(a)
+      // console.log(a)
       return true;
     } else {
-      console.log("Element not found")
+      // console.log("Element not found")
       return false;
     }
   }
@@ -542,15 +561,38 @@ export class CreateTaskComponent implements OnInit {
   }
 
   taskTypeChanged() {
-    if (this.taskType == 'RKD' || this.taskType == 'PDSP'){
-      this.taskProject = this.taskProjects[1];
-      this.taskProjectChanged();
-    }
+    this.taskProjectChanged();
+    // if (this.taskType == 'RKD' || this.taskType == 'PDSP'){
+    //   this.taskProject = this.taskProjects[1];
+    //   this.taskProjectChanged();
+    // }
+
     // this.assignedToUser = this.auth.getUser().login;
     // this.responsibleUser = this.auth.getUser().login;
   }
 
+  fillStageOptions() {
+    this.taskPeriods = [];
+    let prId = this.taskProjectsFullInfo.find(project  => project.name === this.taskProject).id;  //находим айди выбранного проекта чтлбы получить допустимые
+    this.issues.getIssueStagesByProject(prId).subscribe(res => {
+      res.forEach(x => {
+        if (x.issue_type === this.taskType) {
+          this.taskPeriods.push(new LV(x.stage_name));
+        }
+      })
+      console.log(this.taskPeriods);
+      this.taskPeriods = _.sortBy(this.taskPeriods,  x => {
+        let r = new RegExp('\\d+');
+        let sort = r.test(x.value) ? r.exec(x.value)![0] : '';
+        console.log(sort);
+        return +sort;
+      });
+      console.log(this.taskPeriods);
+    });
+  }
+
   taskProjectChanged() {
+
     // this.taskPeriods.splice(0, this.taskPeriods.length);
     // this.issues.getIssuePeriods().then(periods => {
     //   periods.filter(x => x.project == this.taskProject).forEach(period => {
@@ -560,9 +602,11 @@ export class CreateTaskComponent implements OnInit {
     //     this.taskPeriod = this.taskPeriods[0].value;
     //   }
     // });
+
     this.issues.getProjectContracts(this.taskProject).subscribe(taskContracts => {
       this.taskContracts = ['-'].concat(taskContracts);
     });
+    this.fillStageOptions();
     this.sfiCodeChanged();
   }
   sfiCodeChanged(){

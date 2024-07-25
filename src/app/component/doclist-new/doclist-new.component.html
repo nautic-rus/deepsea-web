@@ -55,7 +55,7 @@
         <p-table #tableDoclist
                  [value]="issuesSrc"
                  [columns]="selectedColumns"
-                 [globalFilterFields]="['id','doc_number','name']"
+                 [globalFilterFields]="['id','doc_number','issue_name']"
                  [scrollable]="true"
                  [virtualRowHeight]="40"
                  scrollHeight="calc(100vh - 220px)"
@@ -73,7 +73,7 @@
                   <div *ngIf="col.header === 'Тип'" class="flex justify-content-center align-items-center">
                     <p-columnFilter field="issue_type" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="value" [options]="issue_types" placeholder="Any" (onChange)="filter($event.value)">
+                        <p-multiSelect [ngModel]="value" [options]="issue_types" placeholder="Any" display="chip" (onChange)="filter($event.value)">
                           <ng-template let-option pTemplate="item">
                             <span class="ml-1">{{option}}</span>
                           </ng-template>
@@ -85,7 +85,7 @@
                   <div *ngIf="col.header === 'Договор'" class="flex justify-content-center align-items-center">
                     <p-columnFilter field="contract" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="value" [options]="contracts" placeholder="Any" (onChange)="filter($event.value)">
+                        <p-multiSelect [ngModel]="value" display="chip" [options]="contracts" placeholder="Any" (onChange)="filter($event.value)">
                           <ng-template let-option pTemplate="item">
                             <span class="ml-1">{{option}}</span>
                           </ng-template>
@@ -97,8 +97,9 @@
                   <div *ngIf="col.header === 'Отдел'" class="flex justify-content-center align-items-center">
                     <p-columnFilter field="department" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="dep" [options]="department" placeholder="Any" (onChange)="filter($event.value)">
+                        <p-multiSelect [ngModel]="value" [options]="department" display="chip" placeholder="Any" (onChange)="filter($event.value)">
                           <ng-template let-option pTemplate="item">
+                            <!--                            <span [innerHTML]="issueManager.localeStatus(option.label) | safeHtml"></span>-->
                             <span class="ml-1">{{option}}</span>
                           </ng-template>
                         </p-multiSelect>
@@ -120,7 +121,7 @@
                   <div *ngIf="col.header === 'Ревизия'" class="flex justify-content-center align-items-center">
                     <p-columnFilter field="revision" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="value" [options]="revisions" placeholder="Any" (onChange)="filter($event.value)">
+                        <p-multiSelect [ngModel]="value" display="chip" [options]="revisions" placeholder="Any" (onChange)="filter($event.value)">
                           <ng-template let-option pTemplate="item">
                             <span class="ml-1">{{option}}</span>
                           </ng-template>
@@ -132,7 +133,7 @@
                   <div *ngIf="col.header === 'Этап'">
                     <p-columnFilter field="period" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                       <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                        <p-multiSelect [ngModel]="value" [options]="periods" placeholder="Any" (onChange)="filter($event.value)">
+                        <p-multiSelect [ngModel]="value" [options]="periods" display="chip" placeholder="Any" (onChange)="filter($event.value)">
                           <ng-template let-option pTemplate="item">
                             <span class="ml-1">{{option}}</span>
                           </ng-template>
@@ -159,7 +160,7 @@
                     <span [innerHTML]="issueManager.localeStatus(issue.status) | safeHtml"></span>
                   </div>
                   <div *ngIf="col.header != 'Срок исполнения' && col.header != 'Статус'  && col.header != 'Корректировка'  && col.header != 'Файл'">{{issue[col.field]}}</div>
-                  <div *ngIf="col.header === 'Срок исполнения'" class="text-14  ">{{getDate(issue.contract_due_date)}}</div>
+                  <div *ngIf="col.header === 'Срок исполнения'" class="text-14  ">{{localeColumnForPDF(issue.contract_due_date, 'contract_due_date')}}</div>
 
                   <div *ngIf="col.header === 'Корректировка'">
                     <div class="correction_container" *ngIf="!greenCorrectionSign(issue.max_due_date) && issue.correction">
