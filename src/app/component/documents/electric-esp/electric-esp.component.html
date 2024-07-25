@@ -70,19 +70,38 @@
                 </div>
                 <div>
                   <div class="mt-10">
-                    <div class="df">
-                      <div class="mx-10 w-5 mm-text cy">{{ele.kind}}</div>
-                      <div class="mx-10 w-5"></div>
-                      <div class="mx-10 w-35 title-bold-pipe cy">{{ele.materialName}}</div>
-                      <div class="mx-10 w-5 text-black-mini cy">{{ele.units}}</div>
-                      <div class="mx-10 w-7 text-table-col cy">{{ele.count + ' '}}{{langUnits(ele.units)}}</div>
-                      <div class="w-7 mx-10 df cy">
+                    <div class="df w-100">
+                      <div class="px-10 w-4 mm-text cy">{{ele.kind}}</div>
+                      <div class="px-10 w-30 title-bold-pipe cy">{{ele.materialName}}</div>
+                      <div class="px-10 w-5 text-black-mini cy">{{ele.units}}</div>
+                      <div class="px-10 w-8 text-table-col cy">{{ele.count + ' '}}{{langUnits(ele.units)}}</div>
+                      <div class="w-8 px-10 df cy">
                         <div class="df">
                           <img class="pr-5" src="assets/icons/weight3.svg" height="18">
                           <div class="text-table-col df align-end">{{round(ele.weight)}}</div>
                         </div>
                       </div>
-                      <div *ngIf="ele.code.trim() != ''" class="df position-relative cy mx-10">
+                      <div class="df w-22" *ngIf="ele.kind == 'EQUIP'">
+                        <div class="df mx-10 w-16 cy">
+                          <div class="mr-10 m-text df align-end">POS</div>
+                          <div class="df">
+                            <div class="mr-10">
+                              <span class="m-text mr-5">x</span>
+                              <span class="text-table-col">{{round(ele.cog.x, 1)}}</span>
+                            </div>
+                            <div class="mr-10">
+                              <span class="m-text mr-5">y</span>
+                              <span class="text-table-col">{{round(ele.cog.y, 1)}}</span>
+                            </div>
+                            <div>
+                              <span class="m-text mr-5">z</span>
+                              <span class="text-table-col">{{round(ele.cog.z, 1)}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="df w-22" *ngIf="ele.kind != 'EQUIP'"></div>
+                      <div *ngIf="ele.code.trim() != ''" class="df position-relative cy px-10 w-18">
                         <div class="trm">
                           <span [innerHTML]="ele.code | highLight: search"></span>
                         </div>
@@ -90,51 +109,34 @@
                           <img src="assets/icons/trm.svg" height="12">
                           <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
                         </div>
-                        <div class="df mx-10 w-16 cy" *ngIf="ele.kind == 'MANUAL'">
-                          <div class="df">
-                            <button (click)="deleteManual(ele.pos)">DELETE</button>
-                          </div>
+
+                      </div>
+
+                      <div class="w-5 df px-10 cy" *ngIf="ele.kind == 'MANUAL'">
+                        <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteManual(ele.pos)">
+                          <img src="assets/icons/delete-g.svg" height="20">
                         </div>
                       </div>
+                      <div class="df px-10 w-5 cy" *ngIf="ele.kind != 'MANUAL'"></div>
 
 
 <!--                      <div class="mx-10 w-16">{{ele.code}}</div>-->
                     </div>
-                    <div class="df" *ngIf="ele.kind == 'EQUIP'">
-                      <div class="df mx-10 w-16 cy">
-                        <div class="mr-10 m-text df align-end">POS</div>
-                        <div class="df">
-                          <div class="mr-10">
-                            <span class="m-text mr-5">x</span>
-                            <span class="text-table-col">{{round(ele.cog.x, 1)}}</span>
-                          </div>
-                          <div class="mr-10">
-                            <span class="m-text mr-5">y</span>
-                            <span class="text-table-col">{{round(ele.cog.y, 1)}}</span>
-                          </div>
-                          <div>
-                            <span class="m-text mr-5">z</span>
-                            <span class="text-table-col">{{round(ele.cog.z, 1)}}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
                   </div>
                   <div class="mt-10">
-                    <div class="py-5 df" *ngFor="let e of ele.eles">
-                      <div class="mx-10 w-5"></div>
-                      <div class="mx-10 w-5 text-table-col cy">{{e.pos}}</div>
-                      <div class="mx-10 w-35 title-bold-pipe cy">{{e.materialName}}</div>
-                      <div class="mx-10 w-5 text-black-mini cy">{{e.units}}</div>
-                      <div class="mx-10 w-7 text-table-col cy">{{e.count + ' '}}{{langUnits(e.units)}}</div>
-                      <div class="w-7 mx-10 df cy">
+                    <div class="py-5 df w-100 cy" *ngFor="let e of ele.eles">
+                      <div class="px-10 w-4 text-table-col cy">{{e.pos}}</div>
+                      <div class="px-10 w-30 title-bold-pipe cy">{{e.materialName}}</div>
+                      <div class="px-10 w-5 text-black-mini cy">{{e.units}}</div>
+                      <div class="px-10 w-8 text-table-col cy">{{e.count + ' '}}{{langUnits(e.units)}}</div>
+                      <div class="px-10 w-8 df cy">
                         <div class="df">
                           <img class="pr-5" src="assets/icons/weight3.svg" height="18">
                           <div class="text-table-col df align-end">{{round(e.weight)}}</div>
                         </div>
                       </div>
-
-                      <div class="df mx-10 w-16 cy" *ngIf="e.kind != 'MANUAL'">
+                      <div class="w-22 px-10 df cy" *ngIf="e.kind != 'MANUAL'">
                         <div class="mr-10 m-text df align-end">COG</div>
                         <div class="df">
                           <div class="mr-10">
@@ -151,18 +153,24 @@
                           </div>
                         </div>
                       </div>
-                      <div class="trm">
-                        <span [innerHTML]="e.code | highLight: search"></span>
+                      <div class="w-22 df px-10 cy" *ngIf="e.kind == 'MANUAL'"></div>
+
+                      <div class="w-18 df position-relative cy px-10">
+                        <div class="trm">
+                          <span [innerHTML]="e.code | highLight: search"></span>
+                        </div>
+                        <div (click)="copyTrmCode(e.code, 's' + 'sp' + i); $event.stopPropagation();" class="trm-copy-elec cursor-pointer cxy">
+                          <img src="assets/icons/trm.svg" height="12">
+                          <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
+                        </div>
                       </div>
-                      <div (click)="copyTrmCode(e.code, 's' + 'sp' + i); $event.stopPropagation();" class="trm-copy-elec cursor-pointer cxy">
-                        <img src="assets/icons/trm.svg" height="12">
-                        <div class="copy-tooltip" [hidden]="!showTooltip('s' + 'sp' + i)">Copied!</div>
-                      </div>
-                      <div class="df mx-10 w-16 cy" *ngIf="e.kind == 'MANUAL'">
+
+                      <div class="w-5 df px-10 cy" *ngIf="e.kind == 'MANUAL'">
                         <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteManual(e)">
                           <img src="assets/icons/delete-g.svg" height="20">
                         </div>
                       </div>
+                      <div class="w-5 df px-10 cy" *ngIf="e.kind != 'MANUAL'"></div>
                     </div>
                   </div>
                 </div>
@@ -543,7 +551,7 @@
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="childIssue.issue_type"></div>
                 <div class="py-10 px-10 subtask-text">
                   <span>{{childIssue.doc_number + ' '}}</span>
-                  <span [innerHTML]="issueManager.trim(childIssue.name)"></span>
+                  <span class="break-word" [innerHTML]="issueManager.trim(childIssue.name)"></span>
                 </div>
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.responsible)"></div>
                 <div class="cy px-10 py-10 subtask-text" [innerHTML]="issueManager.getAssignedToTrim(childIssue.assigned_to)"></div>
