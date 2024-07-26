@@ -5,10 +5,10 @@
         <p-dropdown optionLabel="name" optionValue="id" placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">
         </p-dropdown>
       </div>
-<!--      <div class="mr-10" >-->
-<!--        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">-->
-<!--        </p-dropdown>-->
-<!--      </div>-->
+      <!--      <div class="mr-10" >-->
+      <!--        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">-->
+      <!--        </p-dropdown>-->
+      <!--      </div>-->
       <div class="mr-10">
         <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" [class.disabled-button]="selectedNode == null || !this.auth.hasPerms('create_material')" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
@@ -39,10 +39,10 @@
       </div>
 
       <div class="p-ml-auto mr-10 df">
-        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">
-          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">
-          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">
-        </div>
+        <!--        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">-->
+        <!--          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">-->
+        <!--          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">-->
+        <!--        </div>-->
         <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">
           <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">
           <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">
@@ -76,99 +76,6 @@
               </div>
             </div>
           </div>
-          <div *ngIf="materialsFilled && selectedView == 'tiles'" class="tile height-tiles ovf-auto">
-            <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">
-              <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">
-                <div class="dash-card" *ngFor="let material of chunk; let j = index">
-                  <div *ngIf="material != null" class="dash-card-tile cursor-pointer" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-                    <div class="top-row-doc">
-                      <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(material.name, 50)}}</div>
-                      <div class="p-ml-auto">
-                        <div *ngIf="getStatement(material.statem_id) != ''" class="kpl-flag cxy">
-                          <div class="text-center-x">
-                            <span [innerHTML]="(getStatement(material.statem_id)) | highLight: search"></span>
-                          </div>
-                        </div>
-                        <div class="coef p-ml-auto mt-5">
-                          <span class="pr-2">coef.</span>
-                          <span>{{material.coef}}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="two-row mt-5 mb-5">
-                      <div *ngIf="material.descr != ''" class="text-medium">{{trimText(material.descr, 20)}}</div>
-                      <div *ngIf="material.descr == ''" class="text-medium">/description/</div>
-                      <div class="df position-relative content-end pr-10">
-                        <div class="trm">
-                          <span [innerHTML]="material.code | highLight: search"></span>
-                        </div>
-                        <div (click)="copyTrmCode(material.code, 't' + i + '-' + j)" class="trm-copy cursor-pointer cxy">
-                          <img src="assets/icons/trm.svg" height="12">
-                          <div class="copy-tooltip" [hidden]="!showTooltip('t' + i + '-' + j)">Copied!</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="three-row df">
-                      <div class="df cy">
-                        <div class="text-table-col pr-10">{{material.units}}</div>
-                        <div class="df">
-                          <img class="pr-5" src="assets/icons/weight3.svg" height="16">
-                          <div class="text-table-col">{{material.weight}}</div>
-                        </div>
-                      </div>
-                      <div class="df ">
-                        <div class="mr-8">
-                          <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Копировать')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="cloneMaterial(material)">
-                            <img src="assets/icons/copy-2.svg" height="16">
-                          </div>
-                          <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>
-                        </div>
-                        <div class="mr-8">
-                          <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Редактировать')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="addMaterial('edit', material)">
-                            <img src="assets/icons/edit1.svg" height="15">
-                          </div>
-                          <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>
-                        </div>
-
-                        <div class="mr-8">
-                          <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="deleteMaterial(material)">
-                            <img src="assets/icons/trash-3.svg" height="17">
-                          </div>
-                          <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>
-                        </div>
-                      </div>
-
-
-                    </div>
-                    <div class="four-row mt-5 mb-5">
-                      <div>
-                        <div class="df">
-                          <img class="pr-5" src="assets/icons/delivery.svg" height="30">
-                          <div class="thick-text mt-4px">{{matSupplies[material.id]}}</div>
-                        </div>
-                      </div>
-                      <div>
-                        <div *ngIf="material.note == ''" class="df">
-                          <img class="pr-5 mt-2px" src="assets/icons/note.svg" height="16">
-                          <div class="thick-text mt-4px">notes</div>
-                        </div>
-                        <div *ngIf="material.note != ''" class="df">
-                          <img class="pr-5 mt-2px" src="assets/icons/note.svg" height="16">
-                          <div class="thick-text mt-4px">{{material.note}}</div>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="line"></div>
-                    <div class="mm-text mt-5">
-                      <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
-                    </div>
-                  </div>
-                </div>
-              </ng-template>
-            </p-virtualScroller>
-          </div>
-
 
           <div *ngIf="materialsFilled && selectedView == 'list'" class="cards">
             <p-table #table [value]="materials"
@@ -213,13 +120,25 @@
               </ng-template>
               <ng-template pTemplate="body" let-material let-i="rowIndex">
                 <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
-                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>
+<!--                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>-->
+                  <td class="min-width-220 w-27 text-14">
+                    <span style="display: flex; flex-direction: column">
+                      <div>
+                        {{getMaterialName(material)}}
+                      </div>
+                      <div class="mm-text-small mt-5">
+                        <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>
+<!--                        {{getMaterialPathStr(material)}}-->
+                      </div>
+                    </span>
+                  </td>
                   <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{getStatement(material.statem_id)}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{material.coef}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{material.weight}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{material.units}}</td>
-                  <td class="min-width-150 w-9 text-14 cxy">{{matSupplies[material.id]}}</td>
+                  <td class="min-width-150 w-9 text-14 cxy">{{material.supplier}}</td>
+<!--                  <td class="min-width-150 w-9 text-14 cxy">{{matSupplies[material.id]}}</td>-->
                   <td class="min-width-190 w-9 text-14 cxy">{{material.note}}</td>
                   <td class="min-width-190 w-9 text-14 cxy">
                     <div class="df">
@@ -262,3 +181,270 @@
     </div>
   </ng-template>
 </p-dialog>
+
+
+<!--старая версия начинается здесь-->
+<!--<div class="all-page">-->
+<!--  <div class="">-->
+<!--    <div class="card-head mb-20 df">-->
+<!--      <div class="mr-10" *ngIf="projects.length > 0">-->
+<!--        <p-dropdown optionLabel="name" optionValue="id" placeholder="PROJECT" class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-170 border">-->
+<!--        </p-dropdown>-->
+<!--      </div>-->
+<!--&lt;!&ndash;      <div class="mr-10" >&ndash;&gt;-->
+<!--&lt;!&ndash;        <p-dropdown class="select" [(ngModel)]="selectedRootNode" [options]="rootNodes" (onChange)="rootNodeChanged()" optionLabel="label" optionValue="value" styleClass="width-400 border" scrollHeight="450px">&ndash;&gt;-->
+<!--&lt;!&ndash;        </p-dropdown>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить материал')" tooltipPosition="top" [class.disabled-button]="selectedNode == null || !this.auth.hasPerms('create_material')" (click)="addMaterial()">-->
+<!--          <img src="assets/icons/plus3.svg" height="18">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button pink-button cxy" [pTooltip]="t.tr('Копировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="cloneMaterial(selectedMaterial)">-->
+<!--          <img src="assets/icons/copy3.svg" height="18">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="addMaterial('edit', selectedMaterial)">-->
+<!--          <img src="assets/icons/edit.svg" height="18">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top"  [class.disabled-button]="materials.length == 0" (click)="exportXLS()">-->
+<!--          <img src="assets/icons/xls2.svg" height="26">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button red-button cxy" [pTooltip]="t.tr('Удалить')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="deleteMaterial(selectedMaterial)">-->
+<!--          <img src="assets/icons/trash-white.svg" height="22">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        {{selectedNodePath}}-->
+<!--      </div>-->
+
+<!--      <div class="p-ml-auto mr-10 df">-->
+<!--&lt;!&ndash;        <div (click)="selectedView = 'tiles'" class="cxy mr-10 cursor-pointer">&ndash;&gt;-->
+<!--&lt;!&ndash;          <img *ngIf="selectedView == 'tiles'" src="assets/icons/tile-blue.svg" height="22">&ndash;&gt;-->
+<!--&lt;!&ndash;          <img *ngIf="selectedView != 'tiles'" src="assets/icons/tile-gray.svg" height="22">&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--        <div (click)="selectedView = 'list'" class="cxy cursor-pointer mr-10">-->
+<!--          <img *ngIf="selectedView != 'list'" src="assets/icons/list-gray.svg" height="22">-->
+<!--          <img *ngIf="selectedView == 'list'" src="assets/icons/list-blue.svg" height="22">-->
+<!--        </div>-->
+<!--        <span class="p-input-icon-left">-->
+<!--          <i class="pi pi-search"></i>-->
+<!--          <input pInputText type="text" [placeholder]="t.tr('Поиск...')" [(ngModel)]="search" (ngModelChange)="searchChange()" class="border" />-->
+<!--        </span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="w-100 df">-->
+<!--      <div class="w-100 df">-->
+<!--        <div class="w-17">-->
+<!--          <div class="menu-card" (contextmenu)="contextMenuOut($event, nodeMenu)">-->
+<!--            <p-tree #tree (onNodeExpand)="nodeExpanded($event, tree)" (onNodeCollapse)="nodeCollapsed($event)" class="tree" [value]="nodes" selectionMode="single" [(selection)]="selectedNode" [contextMenu]="nodeMenu" (onNodeContextMenuSelect)="contextMenu($event, nodeMenu);" (selectionChange)="selectNode()">-->
+<!--              <ng-template let-node pTemplate="default">-->
+<!--                <div class="df">-->
+<!--                  <div>{{node.label}}</div>-->
+<!--                  <div class="mini-notes cxy">{{node.count}}</div>-->
+<!--                </div>-->
+<!--              </ng-template>-->
+<!--            </p-tree>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="w-83">-->
+<!--          <div *ngIf="!materialsFilled">-->
+<!--            <div class="cxy loading">-->
+<!--              <div class="cxy flex-column">-->
+<!--                <img src="assets/whale.gif" height="120">-->
+<!--                <div class="cx loading-text">PLEASE WAIT...</div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div *ngIf="materialsFilled && selectedView == 'tiles'" class="tile height-tiles ovf-auto">-->
+<!--            <p-virtualScroller class="w-100" [value]="chunkMaterials(defineChunkSize())" scrollHeight="78.7vh" [itemSize]="200">-->
+<!--              <ng-template pStyleClass="cx" class="w-100 cx" pTemplate="item" let-chunk let-i="index">-->
+<!--                <div class="dash-card" *ngFor="let material of chunk; let j = index">-->
+<!--                  <div *ngIf="material != null" class="dash-card-tile cursor-pointer" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">-->
+<!--                    <div class="top-row-doc">-->
+<!--                      <div class="title-bold cursor-default" pTooltip="{{material.name}}" tooltipPosition="top">{{trimText(material.name, 50)}}</div>-->
+<!--                      <div class="p-ml-auto">-->
+<!--                        <div *ngIf="getStatement(material.statem_id) != ''" class="kpl-flag cxy">-->
+<!--                          <div class="text-center-x">-->
+<!--                            <span [innerHTML]="(getStatement(material.statem_id)) | highLight: search"></span>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                        <div class="coef p-ml-auto mt-5">-->
+<!--                          <span class="pr-2">coef.</span>-->
+<!--                          <span>{{material.coef}}</span>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="two-row mt-5 mb-5">-->
+<!--                      <div *ngIf="material.descr != ''" class="text-medium">{{trimText(material.descr, 20)}}</div>-->
+<!--                      <div *ngIf="material.descr == ''" class="text-medium">/description/</div>-->
+<!--                      <div class="df position-relative content-end pr-10">-->
+<!--                        <div class="trm">-->
+<!--                          <span [innerHTML]="material.code | highLight: search"></span>-->
+<!--                        </div>-->
+<!--                        <div (click)="copyTrmCode(material.code, 't' + i + '-' + j)" class="trm-copy cursor-pointer cxy">-->
+<!--                          <img src="assets/icons/trm.svg" height="12">-->
+<!--                          <div class="copy-tooltip" [hidden]="!showTooltip('t' + i + '-' + j)">Copied!</div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="three-row df">-->
+<!--                      <div class="df cy">-->
+<!--                        <div class="text-table-col pr-10">{{material.units}}</div>-->
+<!--                        <div class="df">-->
+<!--                          <img class="pr-5" src="assets/icons/weight3.svg" height="16">-->
+<!--                          <div class="text-table-col">{{material.weight}}</div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="df ">-->
+<!--                        <div class="mr-8">-->
+<!--                          <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Копировать')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="cloneMaterial(material)">-->
+<!--                            <img src="assets/icons/copy-2.svg" height="16">-->
+<!--                          </div>-->
+<!--                          <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>-->
+<!--                        </div>-->
+<!--                        <div class="mr-8">-->
+<!--                          <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Редактировать')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="addMaterial('edit', material)">-->
+<!--                            <img src="assets/icons/edit1.svg" height="15">-->
+<!--                          </div>-->
+<!--                          <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>-->
+<!--                        </div>-->
+
+<!--                        <div class="mr-8">-->
+<!--                          <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" *ngIf="auth.getUser().groups.includes('Nautic_Rus')" (click)="deleteMaterial(material)">-->
+<!--                            <img src="assets/icons/trash-3.svg" height="17">-->
+<!--                          </div>-->
+<!--                          <div class="width-30" *ngIf="!auth.getUser().groups.includes('Nautic_Rus')"></div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+
+
+<!--                    </div>-->
+<!--                    <div class="four-row mt-5 mb-5">-->
+<!--                      <div>-->
+<!--                        <div class="df">-->
+<!--                          <img class="pr-5" src="assets/icons/delivery.svg" height="30">-->
+<!--                          <div class="thick-text mt-4px">{{matSupplies[material.id]}}</div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div>-->
+<!--                        <div *ngIf="material.note == ''" class="df">-->
+<!--                          <img class="pr-5 mt-2px" src="assets/icons/note.svg" height="16">-->
+<!--                          <div class="thick-text mt-4px">notes</div>-->
+<!--                        </div>-->
+<!--                        <div *ngIf="material.note != ''" class="df">-->
+<!--                          <img class="pr-5 mt-2px" src="assets/icons/note.svg" height="16">-->
+<!--                          <div class="thick-text mt-4px">{{material.note}}</div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+
+<!--                    </div>-->
+<!--                    <div class="line"></div>-->
+<!--                    <div class="mm-text mt-5">-->
+<!--                      <span class="cursor-pointer select-path" *ngFor="let p of material.path" (click)="selectPath(p, material.path)">/{{p}}</span>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </ng-template>-->
+<!--            </p-virtualScroller>-->
+<!--          </div>-->
+
+
+<!--          <div *ngIf="materialsFilled && selectedView == 'list'" class="cards">-->
+<!--            <p-table #table [value]="materials"-->
+<!--                     [scrollable]="true"-->
+<!--                     scrollHeight="calc(100vh - 226px)"-->
+<!--                     [virtualScroll]="true"-->
+<!--                     [virtualRowHeight]="30"-->
+<!--                     [reorderableColumns]="false"-->
+<!--                     [resizableColumns]="false"-->
+<!--                     styleClass="p-datatable-striped"-->
+<!--                     [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">-->
+<!--              <ng-template pTemplate="header">-->
+<!--                <tr class="df">-->
+<!--                  <th pSortableColumn="name" class="cxy min-width-220 w-27">{{t.tr('Наименование')}}-->
+<!--                    <p-sortIcon field="name"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="descr" class="cxy min-width-150 w-15">{{t.tr('Обозначение')}}-->
+<!--                    <p-sortIcon field="descr"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="statement" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}-->
+<!--                    <p-sortIcon field="statement"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="coef" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}-->
+<!--                    <p-sortIcon field="coef"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес кг')}}-->
+<!--                    <p-sortIcon field="weight"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="units" class="cxy min-width-75 w-7">{{t.tr('КЕИ')}}-->
+<!--                    <p-sortIcon field="units"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="supplier" class="cxy min-width-150 w-9">{{t.tr('Поставщик')}}-->
+<!--                    <p-sortIcon field="supplier"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="note" class="cxy min-width-190 w-9">{{t.tr('Примечания')}}-->
+<!--                    <p-sortIcon field="note"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                  <th pSortableColumn="code" class="cxy min-width-190 w-9">{{t.tr('Stock code')}}-->
+<!--                    <p-sortIcon field="code"></p-sortIcon>-->
+<!--                  </th>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--              <ng-template pTemplate="body" let-material let-i="rowIndex">-->
+<!--                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">-->
+<!--                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>-->
+<!--                  <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{getStatement(material.statem_id)}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{material.coef}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{material.weight}}</td>-->
+<!--                  <td class="min-width-75 w-7 text-14 cxy">{{material.units}}</td>-->
+<!--                  <td class="min-width-150 w-9 text-14 cxy">{{matSupplies[material.id]}}</td>-->
+<!--                  <td class="min-width-190 w-9 text-14 cxy">{{material.note}}</td>-->
+<!--                  <td class="min-width-190 w-9 text-14 cxy">-->
+<!--                    <div class="df">-->
+<!--                      <div class="trm-materials">-->
+<!--                        <span>{{material.code}}</span>-->
+<!--                      </div>-->
+<!--                      <div (click)="copyTrmCode(material.code, 't' + i)" class="trm-copy-materials cursor-pointer cxy position-relative">-->
+<!--                        <img src="assets/icons/trm-sup.svg" height="14">-->
+<!--                        <div class="copy-tooltip-trm" [hidden]="!showTooltip('t' + i)">Copied!</div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--              </ng-template>-->
+<!--            </p-table>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<p-toast position="bottom-center"></p-toast>-->
+<!--<p-contextMenu #nodeMenu [model]="items"></p-contextMenu>-->
+<!--<p-dialog [(visible)]="addNew" [header]="editing ? 'Редактировать' : t.tr('Добавить')" [modal]="true" styleClass="p-fluid width-300">-->
+<!--  <ng-template pTemplate="content">-->
+<!--    <div class="">-->
+<!--      <div class="big-text-create mb-1">{{t.tr('Название папки')}}</div>-->
+<!--      <input [placeholder]="t.tr('Введите название новой папки')" type="text" pInputText [(ngModel)]="newNode.name"/>-->
+<!--      <small class="p-error" *ngIf="!newNode.name"></small>-->
+<!--      <div class="df mt-5">-->
+<!--        <div class="mr-5">*только для проекта {{getProjectName(this.project)}}</div>-->
+<!--        <p-checkbox [binary]="true" [(ngModel)]="onlyProject"></p-checkbox>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </ng-template>-->
+<!--  <ng-template pTemplate="footer">-->
+<!--    <div class="add-edit-directory-footer cx">-->
+<!--      <div tabindex="11" (click)="hide()" pButton [label]="t.tr('Отмена')" class="button-cancel ml-1"></div>-->
+<!--      <div tabindex="10" [class.disabled-button]="isSaveDisabled()" (click)="save()" pButton [label]="editing ? 'Изменить' : t.tr('Создать')" class="button-ok"></div>-->
+<!--    </div>-->
+<!--  </ng-template>-->
+<!--</p-dialog>-->

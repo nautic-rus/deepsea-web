@@ -79,7 +79,7 @@ export class MaterialManagerService {
     return this.http.post<any>(props.http + '/updateMaterialComplect', JSON.stringify(complect));
   }
   getSpecMaterials(){
-    return this.http.get<any>(props.http + '/specMaterials');
+    return this.http.get<any>(props.httpD + '/specMaterials');
   }
   updateSpecMaterial(specMaterial: SpecMaterial){
     return this.http.post<any>(props.http + '/specMaterial', JSON.stringify(specMaterial));

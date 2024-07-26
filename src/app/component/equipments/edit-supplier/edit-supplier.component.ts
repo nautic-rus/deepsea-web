@@ -317,8 +317,7 @@ export class EditSupplierComponent implements OnInit {
     // this.cd.detach();
     material.name = this.sup_data.model
     material.weight = this.sup_data.weight
-    console.log("this.getProjectId(this.eq_data.project_name)")
-    console.log(this.getProjectId(this.eq_data.project_name))
+    console.log("sup_data")
     console.log(this.sup_data)
     this.dialogService.open(SpecMaterialComponent, {
       showHeader: true,

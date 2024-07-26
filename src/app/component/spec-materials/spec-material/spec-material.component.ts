@@ -19,6 +19,7 @@ import _ from "underscore";
 })
 export class SpecMaterialComponent implements OnInit {
 
+  wasChanged: boolean = false;
   projects: string[] = [];
   project = '';
   categories = ['00002', '13112', '14109', '14122', '13124', '19127', '09003', '09004', '30000', '30005', '15107', '17108', '16101', '18123', '12116' ];
@@ -54,12 +55,14 @@ export class SpecMaterialComponent implements OnInit {
   selectedSuplierId = 0;
 
 
-  constructor(public t: LanguageService, public eqManager: EquipmentsService, public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
+  constructor(public t: LanguageService, public eqManager: EquipmentsService,  public dialog: DynamicDialogConfig, public materialManager: MaterialManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, public messageService: MessageService) {
     this.project = dialog.data[0];
     this.material = JSON.parse(JSON.stringify(dialog.data[1]));
     this.action = dialog.data[2];
     this.selectedSpecDirectoryId = dialog.data[3];
     this.selectedSuplierId = dialog.data[4];
+    console.log(this.selectedSuplierId);
+    console.log("принимаю поставшика с таким айди this.selectedSuplierId")
 
     this.materialManager.getSpecDirectories().subscribe(specDirectories => {
       let nodesSrc = specDirectories.filter((x: any) => x.project_id == this.project || x.project_id == 0);
@@ -85,6 +88,7 @@ export class SpecMaterialComponent implements OnInit {
           }
         });
       });
+      console.log("this.selectedSuplierId, this.supplies");
       console.log(this.selectedSuplierId, this.supplies);
       this.materialManager.getSupMatRelations().subscribe(res => {
         this.supMatRelations = res;
@@ -185,15 +189,25 @@ export class SpecMaterialComponent implements OnInit {
     this.material.dir_id = this.selectedSpecDirectory.data;
     this.material.user_id = this.auth.getUser().id;
     this.materialManager.updateSpecMaterial(this.material).subscribe(res => {
+      console.log("уже в создания this.supply.supplier_id");
+      console.log(this.supply.supplier_id);
       if (this.supply != null){
+        console.log(this.supMatRelationsId + ' ' + this.supply.supplier_id  + ' ' +  this.material.id);
         this.materialManager.addSupMatRelations({
           id: this.supMatRelationsId,
           supplier_id: this.supply.supplier_id,
-          materials_id: this.material.id
-        }).subscribe(() => {});
+          materials_id: res === 0 ? this.material.id : res
+          // materials_id: this.material.id
+        }).subscribe((res) => {
+          console.log("addSupMatRelations");
+          console.log(res);
+        });
       }
       this.ref.close(this.material);
+      console.log("id new material");
+      console.log(res);
     });
+    this.wasChanged = true;
   }
 
 
@@ -218,4 +232,10 @@ export class SpecMaterialComponent implements OnInit {
       default: return this.material.units;
     }
   }
+
+  // close() {
+  //
+  //   return 'close edit material';
+  // }
+
 }

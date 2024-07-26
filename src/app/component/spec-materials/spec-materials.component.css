@@ -275,6 +275,10 @@
   color: #7575759e;
   font-size: 12px;
 }
+.mm-text-small{
+  color: #7575759e;
+  font-size: 10px;
+}
 .select-path:hover{
   color: #00BCD4;
 }
