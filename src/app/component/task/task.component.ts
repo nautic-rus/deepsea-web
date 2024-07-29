@@ -364,7 +364,6 @@ export class TaskComponent implements OnInit {
   }
   planIssue: any;
   ngOnInit(): void {
-
     this.config.setTranslation({
       dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
       weekHeader: "№",

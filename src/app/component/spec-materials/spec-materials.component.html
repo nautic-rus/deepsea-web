@@ -19,11 +19,11 @@
           <img src="assets/icons/copy3.svg" height="18">
         </div>
       </div>
-      <div class="mr-10">
-        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="addMaterial('edit', selectedMaterial)">
-          <img src="assets/icons/edit.svg" height="18">
-        </div>
-      </div>
+<!--      <div class="mr-10">-->
+<!--        <div class="materials-button yellow-button cxy" [pTooltip]="t.tr('Редактировать')" tooltipPosition="top" [class.disabled-button]="selectedMaterial.id == 0 || !this.auth.hasPerms('create_material')" (click)="addMaterial('edit', selectedMaterial)">-->
+<!--          <img src="assets/icons/edit.svg" height="18">-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="mr-10">
         <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top"  [class.disabled-button]="materials.length == 0" (click)="exportXLS()">
           <img src="assets/icons/xls2.svg" height="26">
@@ -119,7 +119,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-material let-i="rowIndex">
-                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)">
+                <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)" (dblclick)="auth.hasPerms('create_material') ? addMaterial('edit', selectedMaterial) : null">
 <!--                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>-->
                   <td class="min-width-220 w-27 text-14">
                     <span style="display: flex; flex-direction: column">
@@ -137,7 +137,11 @@
                   <td class="min-width-75 w-7 text-14 cxy">{{material.coef}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{material.weight}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{material.units}}</td>
-                  <td class="min-width-150 w-9 text-14 cxy">{{material.supplier}}</td>
+<!--                  <td class="min-width-150 w-9 text-14 cxy">{{material.supplier}}</td>-->
+                  <td class="min-width-150 w-9 text-14 cxy">
+                    <a [href]="'/equipments?equipmentId=' + material.equ_id + '&supplierId=' + material.supplier_id" target="_blank">{{material.supplier}}</a>
+                  </td>
+
 <!--                  <td class="min-width-150 w-9 text-14 cxy">{{matSupplies[material.id]}}</td>-->
                   <td class="min-width-190 w-9 text-14 cxy">{{material.note}}</td>
                   <td class="min-width-190 w-9 text-14 cxy">

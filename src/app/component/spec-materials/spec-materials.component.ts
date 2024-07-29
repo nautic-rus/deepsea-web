@@ -177,8 +177,6 @@ export class SpecMaterialsComponent implements OnInit {
     }
   }
   addMaterial(action: string = 'add', material: SpecMaterial = new SpecMaterial()) {
-    console.log("edit material");
-    console.log(material);
     this.cd.detach();
     this.dialogService.open(SpecMaterialComponent, {
       showHeader: true,
@@ -187,13 +185,18 @@ export class SpecMaterialsComponent implements OnInit {
       closable: true,
       data: [this.project, material, action, this.selectedNode != null ? this.selectedNode.data : '', 0]
     }).onClose.subscribe(res => {
-      if (res) {
-        console.log("внесли изменения в материал");
+      if (res.material) {
         this.materialWasChanged = true;
         this.projectChanged();
+        if (res.newId != 0) {
+          setTimeout(() => {
+            let newCode = this.materialsSrc.find(mat => mat.id === res.newId);
+            navigator.clipboard.writeText(newCode.code);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Материал успешно добавлен. Stock code скопирован в буфер обмена' });
+          }, 400)
+        }
       }
       else {
-        console.log("просто закрыли модалку");
         this.selectNode();
       }
 
@@ -494,7 +497,8 @@ export class SpecMaterialsComponent implements OnInit {
             sfi: e.sfi,
             name: e.name,
             manufacturer: s.name,
-            supplier_id: s.id
+            supplier_id: s.id,
+            // equ_id: e.id,
           });
         });
       });
@@ -532,7 +536,15 @@ export class SpecMaterialsComponent implements OnInit {
         });
 
       });
+      console.log("this.supplies");
+      console.log(this.supplies);
     });
+  }
+
+  getEquIdBySupplierId(supplierId: number) {
+    let supp = this.supplies.find(supp => supp.supplier_id === supplierId);
+    console.log(supp);
+    return supp.id;
   }
   getMaterialPath(nodes: any[], dir_id: number){
     let res = [];

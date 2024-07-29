@@ -61,8 +61,8 @@ export class SpecMaterialComponent implements OnInit {
     this.action = dialog.data[2];
     this.selectedSpecDirectoryId = dialog.data[3];
     this.selectedSuplierId = dialog.data[4];
-    console.log(this.selectedSuplierId);
-    console.log("принимаю поставшика с таким айди this.selectedSuplierId")
+    // console.log(this.selectedSuplierId);
+    // console.log("принимаю поставшика с таким айди this.selectedSuplierId")
 
     this.materialManager.getSpecDirectories().subscribe(specDirectories => {
       let nodesSrc = specDirectories.filter((x: any) => x.project_id == this.project || x.project_id == 0);
@@ -88,8 +88,8 @@ export class SpecMaterialComponent implements OnInit {
           }
         });
       });
-      console.log("this.selectedSuplierId, this.supplies");
-      console.log(this.selectedSuplierId, this.supplies);
+      // console.log("this.selectedSuplierId, this.supplies");
+      // console.log(this.selectedSuplierId, this.supplies);
       this.materialManager.getSupMatRelations().subscribe(res => {
         this.supMatRelations = res;
         let find: any = this.supMatRelations.find((x: any) => x.materials_id == this.material.id);
@@ -189,23 +189,22 @@ export class SpecMaterialComponent implements OnInit {
     this.material.dir_id = this.selectedSpecDirectory.data;
     this.material.user_id = this.auth.getUser().id;
     this.materialManager.updateSpecMaterial(this.material).subscribe(res => {
-      console.log("уже в создания this.supply.supplier_id");
-      console.log(this.supply.supplier_id);
+      // console.log("уже в создания this.supply.supplier_id");
+      // console.log(this.supply.supplier_id);
       if (this.supply != null){
-        console.log(this.supMatRelationsId + ' ' + this.supply.supplier_id  + ' ' +  this.material.id);
         this.materialManager.addSupMatRelations({
           id: this.supMatRelationsId,
           supplier_id: this.supply.supplier_id,
           materials_id: res === 0 ? this.material.id : res
           // materials_id: this.material.id
         }).subscribe((res) => {
-          console.log("addSupMatRelations");
-          console.log(res);
+          // console.log("addSupMatRelations");
+          // console.log(res);
         });
       }
-      this.ref.close(this.material);
-      console.log("id new material");
-      console.log(res);
+      this.ref.close({material: this.material, newId: res});
+      // console.log("id new material");
+      // console.log(res);
     });
     this.wasChanged = true;
   }

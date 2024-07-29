@@ -236,36 +236,23 @@ export class EquipmentsComponent implements OnInit {
 
 
   addSupplier(eq: IEquipment) {
-    console.log('addSupplier');
-    console.log(eq)
     this.dialogService.open(AddSupplierComponent, {
       modal: true,
       showHeader: false,
       data: eq.id
     }).onClose.subscribe(() => {  //сразу выводить на страницу
       this.closeSideBar();  //обновим
-      // this.eqService.getEquipments().subscribe(equips => {
-      //   this.equipmentsSrc = equips;
-      //   this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-      // });
     })
   }
 
   openSidebar(data: any, dataGroup: any) {
-    console.log("click")
-    console.log(data)  //информация о группе, в которой находится оборудование
-    // this.selectedGroup = dataGroup.node.parent.data
     if (data.parent_id == 0) {
-      // this.selectedGroup = data.node.parent.data
       this.editGroupSidebarVisible = true
       this.selectedEq = data
-      // this.editGroup(data)
     } else if (data.parent_id != 0) {
       this.selectedGroup = dataGroup.node.parent.data
       this.selectedEq = data
-      console.log(this.selectedEq)
       this.editEqSidebarVisible = true
-      //this.editEquipment(data)
     }
   }
 
@@ -282,8 +269,6 @@ export class EquipmentsComponent implements OnInit {
       this.equipmentsSrc = equipments; //кладу в массив полученный с сервера
 
        this.filterEquipments(); //фильтрую equipments значениями по умолчанию System и NR002
-      // let resParsedArray: any[] = []
-      // this.equipmentsNode = this.parseEquipmentArrayForTree(this.equipments, 0, this.equipmentsNode);
 
       this.equipmentsNode.forEach((obj, index) => {  //проверяем с сохраненным состояние раскрытых и если что добавляем  obj.expanded = true
         if (expandedStates[index]) {
