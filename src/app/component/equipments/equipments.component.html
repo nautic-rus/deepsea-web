@@ -46,9 +46,9 @@
             <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
             <span (click)="openSidebar(rowData, rowNode)">
               <div *ngIf="rowData.parent_id == 0">
-                <div *ngIf="col.field == 'sfi'">
-                  {{ rowData['sfi'] }}
-                </div>
+<!--                <div *ngIf="col.field == 'sfi'">-->
+<!--                  {{ rowData['sfi'] }}-->
+<!--                </div>-->
                 <div *ngIf="col.field == 'name'">
                   {{rowData['name'] }}
                 </div>

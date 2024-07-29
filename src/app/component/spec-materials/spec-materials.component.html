@@ -95,17 +95,17 @@
                   <th pSortableColumn="descr" class="cxy min-width-150 w-15">{{t.tr('Обозначение')}}
                     <p-sortIcon field="descr"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="statement" class="cxy min-width-75 w-7">{{t.tr('КВЗ')}}
+                  <th pSortableColumn="statement" class="cxy min-width-75 w-7">{{t.tr('Код ведомости')}}
                     <p-sortIcon field="statement"></p-sortIcon>
                   </th>
                   <th pSortableColumn="coef" class="cxy min-width-75 w-7">{{t.tr('Коэф.')}}
                     <p-sortIcon field="coef"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес кг')}}
-                    <p-sortIcon field="weight"></p-sortIcon>
-                  </th>
                   <th pSortableColumn="units" class="cxy min-width-75 w-7">{{t.tr('КЕИ')}}
                     <p-sortIcon field="units"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="weight" class="cxy min-width-75 w-7">{{t.tr('Вес, кг')}}
+                    <p-sortIcon field="weight"></p-sortIcon>
                   </th>
                   <th pSortableColumn="supplier" class="cxy min-width-150 w-9">{{t.tr('Поставщик')}}
                     <p-sortIcon field="supplier"></p-sortIcon>
@@ -135,8 +135,8 @@
                   <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{getStatement(material.statem_id)}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{material.coef}}</td>
-                  <td class="min-width-75 w-7 text-14 cxy">{{material.weight}}</td>
                   <td class="min-width-75 w-7 text-14 cxy">{{material.units}}</td>
+                  <td class="min-width-75 w-7 text-14 cxy">{{material.weight}}</td>
 <!--                  <td class="min-width-150 w-9 text-14 cxy">{{material.supplier}}</td>-->
                   <td class="min-width-150 w-9 text-14 cxy">
                     <a [href]="'/equipments?equipmentId=' + material.equ_id + '&supplierId=' + material.supplier_id" target="_blank">{{material.supplier}}</a>

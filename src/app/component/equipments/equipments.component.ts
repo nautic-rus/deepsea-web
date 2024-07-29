@@ -98,9 +98,10 @@ export class EquipmentsComponent implements OnInit {
     this.cols = [
       {field: '', header: '', width: '3rem'},
       {field: 'id', header: 'ID', width: '5rem'},
-      {field: 'sfi', header: 'SFI-Group', width: '8rem'},
+      // {field: 'sfi', header: 'SFI-Group', width: '8rem'},
+      {field: 'sfi_unit', header: 'SFI', width: '5rem'},
       {field: 'name', header: 'Name' , width: '15rem'},
-      {field: 'sfi_unit', header: 'SFI-Unit', width: '8rem'},
+
 
       {field: 'status', header: 'Status', width: '7rem' },
       {field: 'respons_surname', header: 'Responsible', width: '10rem'},

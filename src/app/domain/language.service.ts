@@ -312,6 +312,7 @@ export class LanguageService {
           case 'Обозначение': return 'Description';
           case 'КВЗ': return 'CSS';
           case 'Коэф.': return 'Coef.';
+          case 'Код ведомости': return 'Statement code';
           case 'Примечания': return 'Notes';
           case 'Заводской код': return 'Shipyard code';
           case 'Клапаны': return 'Valves';
@@ -327,7 +328,7 @@ export class LanguageService {
           case 'Редактировать': return 'Edit';
           case 'Номер': return 'Number';
           case 'ВЕС': return 'WEIGHT';
-          case 'Вес кг': return 'weight kg';
+          case 'Вес, кг': return 'Weight, kg';
           case 'Не согласован': return 'Not approved';
           case 'Вы собираетесь навсегда удалить эту задачу, а также связанные с ней комментарии, данные и вложения.': return 'You are going to permanently delete this task, as well as related comments, data, and attachments.';
           case 'КОНТРОЛЬ ВЕСА': return 'WEIGHT CONTROL';
