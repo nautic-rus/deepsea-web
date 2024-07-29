@@ -333,3 +333,9 @@
 .add-edit-directory-footer{
   height: 50px;
 }
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px !important;
+}
