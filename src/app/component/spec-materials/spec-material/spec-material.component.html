@@ -107,7 +107,7 @@
     <div class="mr-1 cx">
       <div tabindex="10" pButton [label]="getLabel(action)" class="button-ok" (click)="createMaterial()"></div>
     </div>
-    <div tabindex="11" pButton [label]="t.tr('Отмена')" (click)="ref.close()" class="button-cancel ml-1"></div>
+    <div tabindex="11" pButton [label]="t.tr('Отмена')" (click)="ref.close({material: null})" class="button-cancel ml-1"></div>
   </div>
 </div>
 
