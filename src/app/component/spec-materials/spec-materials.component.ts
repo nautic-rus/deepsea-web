@@ -185,7 +185,7 @@ export class SpecMaterialsComponent implements OnInit {
       closable: true,
       data: [this.project, material, action, this.selectedNode != null ? this.selectedNode.data : '', 0]
     }).onClose.subscribe(res => {
-      if (res.material) {
+      if (res?.material) {
         this.materialWasChanged = true;
         this.projectChanged();
         if (res.newId != 0) {
@@ -199,7 +199,6 @@ export class SpecMaterialsComponent implements OnInit {
       else {
         this.selectNode();
       }
-
       this.cd.reattach();
     });
   }
