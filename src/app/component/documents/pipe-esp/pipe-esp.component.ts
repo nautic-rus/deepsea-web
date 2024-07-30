@@ -943,12 +943,15 @@ export class PipeEspComponent implements OnInit {
     this.dialogService.open(AddMaterialToEspComponent, {
       showHeader: false,
       modal: true,
-      data: [this.docNumber, '-', '']
+      data: [this.docNumber, '-', '', '']
     }).onClose.subscribe(res => {
-      this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-        this.issue = issue;
-        this.fillRevisions();
+      this.s.createPipeEsp(this.project, this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'pipe', this.issue.id).subscribe(res => {
+        this.fillPipes();
       });
+      // this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+      //   this.issue = issue;
+      //   this.fillRevisions();
+      // });
     });
   }
 
