@@ -293,7 +293,7 @@
           <div class="ovf-auto" *ngIf="relatedMaterials.length != 0">
             <div class="" *ngFor="let material of relatedMaterials">
               <div class="related-sup-mat" [ngClass]="{ 'cursor-pointer': material.doc_number}" (click)="viewTask(material.issue_id, material.foran,material.doc_number, material.dep_name)">
-                <div class="pl-10">{{material.stock_code}}</div>
+                <div class="pl-10 trm-equip">{{material.stock_code}}</div>
                 <div style="padding: 3px" >{{material.name}}</div>
                 <!--              <div class="pr-10"></div>-->
                 <div class="pr-10" style="text-align: end">{{material.doc_number}}</div>
