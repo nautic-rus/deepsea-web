@@ -89,19 +89,19 @@
                      [globalFilterFields]="[' ','name','description','singleWeight','provider','note','code']">
               <ng-template pTemplate="header">
                 <tr class="df">
-                  <th pSortableColumn="name" class="cxy min-width-220 w-27 table-header">{{t.tr('Наименование')}}
+                  <th pSortableColumn="name" class="cxy min-width-280 w-34 table-header">{{t.tr('Наименование')}}
                     <p-sortIcon field="name"></p-sortIcon>
                   </th>
                   <th pSortableColumn="descr" class="cxy min-width-150 w-15 table-header">{{t.tr('Обозначение')}}
                     <p-sortIcon field="descr"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="statement" class="cxy min-width-75 w-7 table-header">{{t.tr('Код ведомости')}}
+                  <th pSortableColumn="statement" class="cxy min-width-75 w-7 table-header">{{t.tr('КВЗ')}}
                     <p-sortIcon field="statement"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="coef" class="cxy min-width-75 w-7 table-header">{{t.tr('Коэф.')}}
+                  <th pSortableColumn="coef" class="cxy min-width-75 w-4 table-header">{{t.tr('Коэф.')}}
                     <p-sortIcon field="coef"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="units" class="cxy min-width-75 w-7 table-header">{{t.tr('КЕИ')}}
+                  <th pSortableColumn="units" class="cxy min-width-75 w-4 table-header">{{t.tr('КЕИ')}}
                     <p-sortIcon field="units"></p-sortIcon>
                   </th>
                   <th pSortableColumn="weight" class="cxy min-width-75 w-7 table-header">{{t.tr('Вес, кг')}}
@@ -113,7 +113,7 @@
                   <th pSortableColumn="note" class="cxy min-width-190 w-9 table-header">{{t.tr('Примечания')}}
                     <p-sortIcon field="note"></p-sortIcon>
                   </th>
-                  <th pSortableColumn="code" class="cxy min-width-190 w-9 table-header">{{t.tr('Stock code')}}
+                  <th pSortableColumn="code" class="cxy min-width-190 w-8 table-header">{{t.tr('TRM')}}
                     <p-sortIcon field="code"></p-sortIcon>
                   </th>
                 </tr>
@@ -121,7 +121,7 @@
               <ng-template pTemplate="body" let-material let-i="rowIndex">
                 <tr class="cursor-pointer row-table-doc-hover" [class.selected-material]="selectedMaterial == material" (click)="selectMaterial(material)" (dblclick)="auth.hasPerms('create_material') ? addMaterial('edit', selectedMaterial) : null">
 <!--                  <td class="min-width-220 w-27 text-14">{{getMaterialName(material)}}</td>-->
-                  <td class="min-width-220 w-27 text-14">
+                  <td class="min-width-280 w-34 text-14">
                     <span style="display: flex; flex-direction: column">
                       <div>
                         {{getMaterialName(material)}}
@@ -133,18 +133,18 @@
                     </span>
                   </td>
                   <td class="min-width-150 w-15 text-14">{{getMaterialDescription(material)}}</td>
-                  <td class="min-width-75 w-7 text-14 cxy">{{getStatement(material.statem_id)}}</td>
-                  <td class="min-width-75 w-7 text-14 cxy">{{material.coef}}</td>
-                  <td class="min-width-75 w-7 text-14 cxy">{{material.units}}</td>
-                  <td class="min-width-75 w-7 text-14 cxy">{{material.weight}}</td>
+                  <td class="min-width-75 w-7 text-14">{{getStatement(material.statem_id)}}</td>
+                  <td class="min-width-75 w-4 text-14">{{material.coef}}</td>
+                  <td class="min-width-75 w-4 text-14">{{material.units}}</td>
+                  <td class="min-width-75 w-7 text-14">{{material.weight}}</td>
 <!--                  <td class="min-width-150 w-9 text-14 cxy">{{material.supplier}}</td>-->
-                  <td class="min-width-150 w-9 text-14 cxy">
+                  <td class="min-width-150 w-9 text-14">
                     <a [href]="'/equipments?equipmentId=' + material.equ_id + '&supplierId=' + material.supplier_id" target="_blank">{{material.supplier}}</a>
                   </td>
 
 <!--                  <td class="min-width-150 w-9 text-14 cxy">{{matSupplies[material.id]}}</td>-->
-                  <td class="min-width-190 w-9 text-14 cxy">{{material.note}}</td>
-                  <td class="min-width-190 w-9 text-14 cxy">
+                  <td class="min-width-190 w-9 text-14">{{material.note}}</td>
+                  <td class="min-width-190 w-8 text-14">
                     <div class="df">
                       <div class="trm-materials">
                         <span>{{material.code}}</span>
