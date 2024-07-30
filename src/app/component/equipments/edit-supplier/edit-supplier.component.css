@@ -1476,4 +1476,13 @@
 .file_item .p-datatable .p-datatable-tbody > tr:hover {
   background-color: white !important;
 }
-
+.trm-equip{
+  background-color: #FBC948;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 1px 4px;
+  min-width: 120px;
+  width: fit-content;
+}
