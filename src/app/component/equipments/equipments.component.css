@@ -184,6 +184,7 @@
 .addEqu_button_invisible {
   opacity: 0;
   pointer-events: none;
+  display: none;
 }
 
 .addSup_button {

@@ -92,10 +92,10 @@
             </span>
 
             <ng-container *ngIf="last" >
-              <div class="df">
-                <button [ngClass]="(rowData.parent_id == 0)?  'addEqu_button' : 'addEqu_button_invisible'"  (click)="newEquipment(rowData)" [style]="{ 'margin-right': '.5em' }">EQU</button>
-                <button class="addSup_button" (click)="addSupplier(rowData)" [style]="{ 'margin-right': '.5em' }" >SUP</button>
-              </div>
+<!--              <div class="df">-->
+                <button [ngClass]="(rowData.parent_id == 0)?  'addEqu_button' : 'addEqu_button_invisible'"  (click)="newEquipment(rowData)" [style]="{ 'margin-right': '.5em' }">Add equipment</button>
+                <button [ngClass]="(rowData.parent_id != 0)?  'addSup_button' : 'addEqu_button_invisible'" (click)="addSupplier(rowData)" [style]="{ 'margin-right': '.5em' }" >Add supplier</button>
+                <!--              </div>-->
             </ng-container>
           </td>
         </tr>
