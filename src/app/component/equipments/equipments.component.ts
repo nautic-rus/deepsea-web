@@ -101,10 +101,9 @@ export class EquipmentsComponent implements OnInit {
       // {field: 'sfi', header: 'SFI-Group', width: '8rem'},
       {field: 'sfi_unit', header: 'SFI', width: '5rem'},
       {field: 'name', header: 'Name' , width: '15rem'},
-      {field: 'department', header: 'Department' , width: '15rem'},
-
-      {field: 'status', header: 'Status', width: '7rem' },
+      {field: 'department', header: 'Department' , width: '8rem'},
       {field: 'respons_surname', header: 'Responsible', width: '10rem'},
+      {field: 'status', header: 'Status', width: '7rem' },
       {field: 'itt', header: 'ITT', width: '5rem'},
       {field: 'comment', header: 'Comment', width: '20rem'},
       {field: '', header: '', width: '10rem'},
