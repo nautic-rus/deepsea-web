@@ -14,6 +14,7 @@ export interface WeightData {
   mz: number;
   date: Date;
   stock_code: string;
+  room: string;
 }
 
 export interface TreeNode {
@@ -21,10 +22,10 @@ export interface TreeNode {
     name: string;
     status?: string;
     perc?: number;
-    weight?: number;
-    x?: number;
-    y?: number;
-    z?: number;
+    t_weight?: number;
+    x_cog?: number;
+    y_cog?: number;
+    z_cog?: number;
     mx?: number;
     my?: number;
     mz?: number;

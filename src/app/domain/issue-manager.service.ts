@@ -122,6 +122,9 @@ export class IssueManagerService {
   getWeightDataByProject(project: string): Observable<any> {
     return this.http.get<string>(props.httpD + '/weightData', {params: {project}});
   }
+  getMaterialsDirectory(projectId: number): Observable<any> {
+    return this.http.get<string>(props.httpD + '/materialsDirectory', {params: {projectId}});
+  }
 
   async getQuestions(): Promise<Issue[]> {
     return await this.http.get<Issue[]>(props.http + '/questions').toPromise();
