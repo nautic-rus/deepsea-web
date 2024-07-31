@@ -162,7 +162,7 @@
                       <div class="w-20 pr-10 title-bold-pipe cy">{{getDeviceDescr(device.material)}}</div>
                       <div class="w-10 pr-10 text-black-mini cy">{{device.units}}</div>
                       <div class="w-10 pr-10 text-black-mini cy">
-                        <div *ngIf="device.units == '166'">{{round(device.count)}}</div>
+                        <div *ngIf="device.units == '166'">{{roundAny([device.count, device.weight])}}</div>
 <!--                        <div *ngIf="device.fromAux != 1 && device.units == '055'">{{round(device.weight / device.count)}}</div>-->
                         <div *ngIf="device.units == '055'">{{round(device.count)}}</div>
                         <div *ngIf="device.units == '113'">{{round(device.count)}}</div>
@@ -172,7 +172,7 @@
                         <div class="df cursor-default" [pTooltip]="t.tr('Вес')" tooltipPosition="top">
                           <img class="pr-5" src="assets/icons/weight3.svg" height="20">
                           <div *ngIf="device.units == '796'" class="text-table-col cy">{{round(device.weight * device.count)}}</div>
-                          <div *ngIf="device.units == '166'" class="text-table-col cy">{{round(device.count)}}</div>
+                          <div *ngIf="device.units == '166'" class="text-table-col cy">{{roundAny([device.count, device.weight])}}</div>
                           <div *ngIf="device.units != '796' && device.units != '166'" class="text-table-col cy">{{round(device.weight)}}</div>
                         </div>
                       </div>
