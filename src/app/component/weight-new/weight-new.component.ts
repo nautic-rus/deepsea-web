@@ -103,11 +103,11 @@ export class WeightNewComponent implements OnInit {
 
   fillWeightDataBy() {
     this.departmentTreeArray = this.fillWeightDataByDepartment(this.weightData);
-    console.log("this.departmentTreeArray");
-    console.log(this.departmentTreeArray);
+    // console.log("this.departmentTreeArray");
+    // console.log(this.departmentTreeArray);
     this.roomTreeArray = this.fillWeightDataByRooms(this.weightData);
-    console.log("this.roomTreeArray");
-    console.log(this.roomTreeArray);
+    // console.log("this.roomTreeArray");
+    // console.log(this.roomTreeArray);
     this.fillWeightDataByMaterial(this.weightData)
   }
 
@@ -179,6 +179,7 @@ export class WeightNewComponent implements OnInit {
       _.forEach(_.groupBy(groupDep, (x:any) => x.doc_number), (groupDocNumber:any) => {
         const nameDoc = groupDocNumber[0].doc_number + ' ' + groupDocNumber[0].issue_name;
         let weightDoc = 0;
+        let perDoc = 0;
         let xDoc = 0;
         let yDoc = 0;
         let zDoc = 0;
@@ -188,6 +189,7 @@ export class WeightNewComponent implements OnInit {
 
         groupDocNumber.forEach((e:any) => {
           weightDoc += e.t_weight;
+          perDoc += e.perc;
           xDoc += e.x_cog;
           yDoc += e.y_cog;
           zDoc += e.z_cog;
@@ -199,7 +201,7 @@ export class WeightNewComponent implements OnInit {
         docs.push({
           data: {
             name: nameDoc,
-            perc: weightDoc,
+            perc: perDoc,
             t_weight: weightDoc,
             x_cog: xDoc,
             y_cog: yDoc,
@@ -310,7 +312,7 @@ export class WeightNewComponent implements OnInit {
       rooms.push(roomNode);
     }
 
-    console.log(rooms);
+    // console.log(rooms);
     return rooms;
   }
 
@@ -327,21 +329,46 @@ export class WeightNewComponent implements OnInit {
 
   }
 
+
   parseMaterialDirectoryArrayToTree(rootNodes: any[], parent_id: number, resParsedArray: any[]) {
     rootNodes.filter(x => x.parent_id == parent_id).forEach(n => {
       let nodes = this.parseMaterialDirectoryArrayToTree(rootNodes, n.id, []);
       let arr = this.weightData.filter(x => x.directory_id === n.id);
-      let a = arr.map(a => {return {data: a, children: []}})
+      let a = arr.map(a => {return {data: a, children: []}});
       resParsedArray.push({
-        // data: n,...arr,
-        data: arr.length === 0 ? n : _.merge(n, this.calculateMatData(arr)),
+        data: arr.length === 0 ? _.merge(n, this.calcChildData(nodes)) : _.merge(n, this.calculateMatData(arr)),
         children: arr.length === 0 ? nodes : a
       })
     })
     return resParsedArray
   }
 
-  calculateMatData(arr: any[]) {
+  calcChildData(nodes: any[]) {  //это чтобы собрать данные по детям
+    console.log(nodes);
+    let t_weight = 0;
+    let x_cog = 0;
+    let y_cog = 0;
+    let z_cog = 0;
+    let mx = 0;
+    let my = 0;
+    let mz = 0;
+    let perc = 0;
+    nodes.forEach(node => {
+          if (node.data) {
+            t_weight += node.data.t_weight;
+            x_cog += node.data.x_cog;
+            y_cog += node.data.y_cog;
+            z_cog += node.data.z_cog;
+            mx += node.data.mx;
+            my += node.data.my;
+            mz += node.data.mz;
+            perc += node.data.perc;
+          }
+  })
+    return {t_weight: t_weight, x_cog: x_cog, y_cog: y_cog, z_cog: z_cog, mx: mx, my: my, mz: mz, perc: perc};
+  }
+
+  calculateMatData(arr: any[]) {  //это для данных по весам для конкретного ребенка
     let weight = arr.reduce((a, b) => a + b.t_weight, 0);
     let x_cog = arr.reduce((a, b) => a + b.x_cog, 0);
     let y_cog = arr.reduce((a, b) => a + b.y_cog, 0);
@@ -351,12 +378,6 @@ export class WeightNewComponent implements OnInit {
     let mz = arr.reduce((a, b) => a + b.mz, 0);
     let perc = arr.reduce((a, b) => a + b.perc, 0);
     return {t_weight: weight, x_cog: x_cog, y_cog: y_cog, z_cog: z_cog, mx: mx, my: my, mz: mz, perc: perc};
-  }
-
-  matDirChild(n: any, arr: any[]): any {
-    console.log(n);
-    console.log(arr);
-    return n;
   }
 
 
@@ -370,6 +391,7 @@ export class WeightNewComponent implements OnInit {
 
   groupByFunction(group: string) {
     this.groupBy = group;
+    // console.log(this.groupBy);
     // this.fillWeightDataBy();
   }
 
