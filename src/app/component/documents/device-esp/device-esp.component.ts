@@ -578,6 +578,15 @@ export class DeviceEspComponent implements OnInit {
     if (input < 0.01) return 0.01;
     return Math.round(input * 100) / 100;
   }
+  roundAny(input: number[]) {
+    let res = 0;
+    input.forEach(x => {
+      if (x != 0){
+        res = this.round(x);
+      }
+    });
+    return res;
+  }
   roundDecimal(input: number){
     return Math.ceil(input);
   }
