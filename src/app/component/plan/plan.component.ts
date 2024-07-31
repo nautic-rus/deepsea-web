@@ -403,6 +403,10 @@ export class PlanComponent implements OnInit {
         alert('The task already closed');
         this.loading = false;
       }
+      if (findIssue.consumed >= findIssue.inPlan){
+        alert('There are no available hours to remove from plan');
+        this.loading = false;
+      }
       else{
         this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
           this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
