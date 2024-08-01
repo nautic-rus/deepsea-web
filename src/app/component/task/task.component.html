@@ -1119,6 +1119,7 @@
           <div class="df mt-3px" *ngIf="isVisible('due_date')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Срок исполнения')}}</div>
             <div [class.no-edit]="true || !isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.due_date)}}</div>
+<!--            <div [class.no-edit]="true || !isEditable()" [hidden]="edit == 'dueDate'" (click)="edit = 'dueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.due_date)}}</div>-->
             <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'dueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="dueDate" dateFormat="dd.mm.yy" styleClass="background width-180 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'dueDate'" (click)="commitIssueEdit($event)">
@@ -1135,8 +1136,9 @@
           </div>
           <div class="df mt-3px" *ngIf="isVisible('contract_due_date')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Контрактный срок исп.')}}</div>
-            <div [class.no-edit]="true || !auth.hasPerms('contractDueDate')" [hidden]="edit == 'contractDueDate'" (click)="edit = 'contractDueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.contract_due_date)}}</div>
-            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'contractDueDate'" [minDate]="today" appendTo = "body" [(ngModel)]="contractDueDate" dateFormat="dd.mm.yy" styleClass="background width-180 mr-5"></p-calendar>
+            <div [class.no-edit]="issue.due_date !== 0 || !isEditable()" [hidden]="edit == 'contractDueDate'" (click)="edit = 'contractDueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.contract_due_date)}}</div>
+<!--            <div [class.no-edit]="true || !auth.hasPerms('contractDueDate')" [hidden]="edit == 'contractDueDate'" (click)="edit = 'contractDueDate'"  class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{getDateNoTime(issue.contract_due_date)}}</div>-->
+            <p-calendar [showWeek]="true" [firstDayOfWeek]="1" [hidden]="edit != 'contractDueDate'" appendTo = "body" [(ngModel)]="contractDueDate" dateFormat="dd.mm.yy" styleClass="background width-180 mr-5"></p-calendar>
             <div class="w-15 df">
               <div [hidden]="edit != 'contractDueDate'" (click)="commitIssueEdit($event)">
                 <div  class="task-name-button cxy mr-5">
