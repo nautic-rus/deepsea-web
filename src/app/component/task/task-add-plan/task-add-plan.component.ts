@@ -54,13 +54,15 @@ export class TaskAddPlanComponent implements OnInit {
   }
   fillByDate(){
     let prevDate = this.minDate.getTime() - 24 * 60 * 60 * 1000;
-    this.auth.getPlanByDays(prevDate).subscribe(res => {
+    this.auth.getPlanByDaysOfUser(prevDate, this.auth.getUser().id).subscribe(res => {
+      console.log(res);
       this.plan = res.flatMap((x: any) => x.plan);
       this.ints = res.flatMap((x: any) => x.plan.flatMap((y: any) => y.ints));
       let findUserPlan = res.find((x: any) => x.userId == this.auth.getUser().id);
       if (findUserPlan != null){
         this.userPlan = findUserPlan.plan;
       }
+      console.log(findUserPlan);
       let year = this.calendarDay.getFullYear();
       let month =  this.calendarDay.getMonth();
       let day = this.calendarDay.getDate();
@@ -83,7 +85,8 @@ export class TaskAddPlanComponent implements OnInit {
       return;
     }
     let planToday = this.userPlan.find(x => x.day == day && x.month == month && x.year == year && x.ints.find(y => y.taskId == this.issue.id) != null);
-    if (planToday){
+    console.log(planToday);
+    if (planToday != null){
       this.auth.addManHours(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, this.comment).subscribe(res => {
         if (res.includes('success')){
           this.ref.close('success');

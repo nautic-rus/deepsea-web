@@ -6,7 +6,8 @@
         <p-multiSelect [showToggleAll]="false" styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
       </div>
       <div class="df">
-        <div class="eq-button blue-button cxy mr-10" (click)="groupByFunction('department')" style="width: fit-content;">
+        <div class="eq-button blue-button cxy mr-10" (click)="groupBy = 'department'" style="width: fit-content;">
+<!--        <div class="eq-button blue-button cxy mr-10" (click)="groupByFunction('department')" style="width: fit-content;">-->
           <div class="cxy">{{t.tr('Отдел')}}</div>
         </div>
         <div class="eq-button blue-button cxy mr-10" (click)="groupByFunction('rooms')" style="width: fit-content;">
@@ -19,11 +20,13 @@
     </div>
   </div>
   <div class="main">
-    <p-treeTable [value]="departmentTreeArray" [columns]="cols">
+    <p-treeTable *ngIf="groupBy === 'department'" [value]="departmentTreeArray" [columns]="cols">
       <ng-template pTemplate="header">
         <tr>
           <th *ngFor="let col of cols" [style.width]="col.width">
-            {{ col.header }}
+            <span  *ngIf="col.visible" >
+              {{ col.header }}
+            </span>
           </th>
         </tr>
       </ng-template>
@@ -34,11 +37,71 @@
               <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
               {{ rowData.name }}
             </span>
-            <span *ngIf="i !== 0">
-              <span *ngIf="col.field === 'modify'">
+            <span *ngIf="i !== 0  && col.visible">
+              <span *ngIf="col.field === 'date'">
                 {{ getDateOnly(rowData[col.field]) }}
               </span>
-              <span *ngIf="col.field !== 'modify'">
+              <span *ngIf="col.field !== 'date'">
+                {{ rowData[col.field] }}
+              </span>
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+
+    <p-treeTable *ngIf="groupBy === 'rooms'" [value]="roomTreeArray" [columns]="cols">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of cols" [style.width]="col.width">
+            <span  *ngIf="col.visible" >
+              {{ col.header }}
+            </span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+          <td *ngFor="let col of cols; let i = index"  [style.width]="col.width">
+            <span *ngIf="i == 0">
+              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+              {{ rowData.name }}
+            </span>
+            <span *ngIf="i !== 0 && col.visible">
+              <span *ngIf="col.field === 'date'">
+                {{ getDateOnly(rowData[col.field]) }}
+              </span>
+              <span *ngIf="col.field !== 'date'">
+                {{ rowData[col.field] }}
+              </span>
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+
+    <p-treeTable *ngIf="groupBy === 'materials'" [value]="parsedMatDir" [columns]="cols">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of cols" [style.width]="col.width">
+            <span  *ngIf="col.visible" >
+              {{ col.header }}
+            </span>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+          <td *ngFor="let col of cols; let i = index"  [style.width]="col.width">
+            <span *ngIf="i == 0">
+              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+              {{ rowData.name }}
+            </span>
+            <span *ngIf="i !== 0  && col.visible">
+              <span *ngIf="col.field === 'date'">
+                {{ getDateOnly(rowData[col.field]) }}
+              </span>
+              <span *ngIf="col.field !== 'date'">
                 {{ rowData[col.field] }}
               </span>
             </span>

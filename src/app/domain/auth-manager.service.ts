@@ -369,6 +369,9 @@ export class AuthManagerService {
   getPlanByDays(date: number){
     return this.http.get<any>(props.http + '/planByDays',{params: {date}});
   }
+  getPlanByDaysOfUser(date: number, user_id: number){
+    return this.http.get<any>(props.http + '/planByDaysOfUser',{params: {date, user_id}});
+  }
   getUserPlan(user: number, from: number){
     return this.http.get<any>(props.http + '/plan', {params: {user, from}});
   }

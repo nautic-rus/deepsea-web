@@ -166,7 +166,7 @@
                       </div>
 
                       <div class="w-5 df px-10 cy" *ngIf="e.kind == 'MANUAL'">
-                        <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteManual(e)">
+                        <div class="task-button cxy" tooltipPosition="top" [pTooltip]="t.tr('Удалить')" (click)="deleteManual(e.userId)">
                           <img src="assets/icons/delete-g.svg" height="20">
                         </div>
                       </div>
