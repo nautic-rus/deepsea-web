@@ -400,30 +400,25 @@ export class PlanComponent implements OnInit {
     if (findIssue != null){
       this.loading = true;
       this.issueManager.getIssueDetails(findIssue.id).then(updIssue => {
-        if (findIssue.status == updIssue.status){
-          if (findIssue.closing_status.split(',').includes(findIssue.status)){
-            alert('The task already closed');
-            this.loading = false;
-          }
-          if (findIssue.consumed >= findIssue.inPlan){
-            alert('There are no available hours to remove from plan');
-            this.loading = false;
-          }
-          else{
-            this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
-              this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
-                let updIssue = upd[0];
-                findIssue.inPlan = updIssue.inPlan;
-                findIssue.available = updIssue.available;
-                findIssue.consumed = updIssue.consumed;
-                findIssue.available_limit = updIssue.available_limit;
-              });
-              this.fillPlan();
-            });
-          }
+        if (findIssue.closing_status.split(',').includes(findIssue.status) || updIssue.closing_status.split(',').includes(updIssue.status)){
+          alert('The task already closed');
+          this.loading = false;
+        }
+        if (findIssue.consumed >= findIssue.inPlan){
+          alert('There are no available hours to remove from plan');
+          this.loading = false;
         }
         else{
-          this.fillPlan();
+          this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
+            this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
+              let updIssue = upd[0];
+              findIssue.inPlan = updIssue.inPlan;
+              findIssue.available = updIssue.available;
+              findIssue.consumed = updIssue.consumed;
+              findIssue.available_limit = updIssue.available_limit;
+            });
+            this.fillPlan();
+          });
         }
       });
 
