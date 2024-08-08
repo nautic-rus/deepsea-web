@@ -400,11 +400,13 @@ export class PlanComponent implements OnInit {
     if (findIssue != null){
       this.loading = true;
       this.issueManager.getIssueDetails(findIssue.id).then(updIssue => {
+        console.log(findIssue);
+        console.log(updIssue);
         if (findIssue.closing_status.split(',').includes(findIssue.status) || updIssue.closing_status.split(',').includes(updIssue.status)){
           alert('The task already closed');
           this.loading = false;
         }
-        if (findIssue.consumed >= findIssue.inPlan){
+        else if (findIssue.consumed >= findIssue.inPlan){
           alert('There are no available hours to remove from plan');
           this.loading = false;
         }
