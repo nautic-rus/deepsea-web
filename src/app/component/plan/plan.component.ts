@@ -397,7 +397,19 @@ export class PlanComponent implements OnInit {
 
   deleteInterval() {
     let findIssue = this.issuesSrc.find(x => x.id == this.cmMenuInt.taskId);
-    if (findIssue != null){
+    if (this.cmMenuInt.taskId < 0){
+      this.auth.deleteInterval(this.cmMenuInt.id, this.auth.getUser().login).subscribe(res => {
+        this.auth.getPlanIssue(findIssue.id).subscribe(upd => {
+          let updIssue = upd[0];
+          findIssue.inPlan = updIssue.inPlan;
+          findIssue.available = updIssue.available;
+          findIssue.consumed = updIssue.consumed;
+          findIssue.available_limit = updIssue.available_limit;
+        });
+        this.fillPlan();
+      });
+    }
+    else if (findIssue != null){
       this.loading = true;
       this.issueManager.getIssueDetails(findIssue.id).then(updIssue => {
         console.log(findIssue);
