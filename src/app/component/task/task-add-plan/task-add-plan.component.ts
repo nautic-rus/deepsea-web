@@ -50,6 +50,10 @@ export class TaskAddPlanComponent implements OnInit {
     this.minDate = new Date(this.minDate.getTime() - 3 * 24 * 60 * 60 * 1000);
     this.disabledDates = this.getDisabledDates(this.minDate, this.calendarDay);
     this.issue = this.conf.data as Issue;
+    if (this.auth.getUser().login.includes('zagumen')){
+      this.minDate = new Date(0);
+      this.disabledDates = [];
+    }
     this.fillByDate();
   }
   fillByDate(){
