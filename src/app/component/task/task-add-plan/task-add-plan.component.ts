@@ -48,6 +48,9 @@ export class TaskAddPlanComponent implements OnInit {
 
   ngOnInit(): void {
     this.minDate = new Date(this.minDate.getTime() - 3 * 24 * 60 * 60 * 1000);
+    // while (this.minDate.getDay() == 0 || this.minDate.getDay() == 6){
+    //   this.minDate = new Date(this.minDate.getTime() - 1 * 24 * 60 * 60 * 1000);
+    // }
     this.disabledDates = this.getDisabledDates(this.minDate, this.calendarDay);
     this.issue = this.conf.data as Issue;
     if (this.auth.getUser().login.includes('zagumen')){
