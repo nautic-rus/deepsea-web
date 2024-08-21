@@ -43,6 +43,7 @@ export class TaskAddPlanComponent implements OnInit {
   planToday: PlanByDays;
   plannedTodayWarning = false;
   minDate = new Date();
+  zag = this.auth.getUser().login.includes('zagumen');
 
   constructor(public t: LanguageService, public ref: DynamicDialogRef, private issues: IssueManagerService, private auth: AuthManagerService, public conf: DynamicDialogConfig, private messageService: MessageService, public dialogService: DialogService) { }
 
@@ -51,9 +52,10 @@ export class TaskAddPlanComponent implements OnInit {
     // while (this.minDate.getDay() == 0 || this.minDate.getDay() == 6){
     //   this.minDate = new Date(this.minDate.getTime() - 1 * 24 * 60 * 60 * 1000);
     // }
+
     this.disabledDates = this.getDisabledDates(this.minDate, this.calendarDay);
     this.issue = this.conf.data as Issue;
-    if (this.auth.getUser().login.includes('zagumen')){
+    if (this.zag){
       this.minDate = new Date(0);
       this.disabledDates = [];
     }
@@ -93,7 +95,7 @@ export class TaskAddPlanComponent implements OnInit {
     }
     let planToday = this.userPlan.find(x => x.day == day && x.month == month && x.year == year && x.ints.find(y => y.taskId == this.issue.id) != null);
     console.log(planToday);
-    if (planToday != null){
+    if (planToday != null || this.zag){
       this.auth.addManHours(this.issue.id, this.auth.getUser().id, this.calendarDay.getTime(), this.hoursAmount, this.comment).subscribe(res => {
         if (res.includes('success')){
           this.ref.close('success');
