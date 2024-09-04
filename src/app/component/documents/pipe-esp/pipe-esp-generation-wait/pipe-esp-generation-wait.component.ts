@@ -22,7 +22,7 @@ export class PipeEspGenerationWaitComponent implements OnInit {
   generationWait = false;
 
   resUrls: string[] = [];
-  revs = ['0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
+  revs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
   rev: string = this.revs[0];
   updateRevision = false;
   langs = ['Primary', 'Secondary'];

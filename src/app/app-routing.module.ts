@@ -81,7 +81,7 @@ const routes: Routes = [
   { path: 'spec-materials', component: SpecMaterialsComponent, canActivate: [AuthGuard], data: {animation: 'SpecMaterialsComponent'} },
   { path: 'gantt', component: GanttComponent, canActivate: [AuthGuard], data: {animation: 'GanttComponent'} },
   { path: 'sections', component: SectionsComponent, canActivate: [AuthGuard], data: {animation: 'SectionsComponent'} },
-  //{ path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard], data: {animation: 'DocumentsComponent'} },
+  { path: 'documents', component: DocumentsComponent, canActivate: [AuthGuard], data: {animation: 'DocumentsComponent'} },
   { path: 'doclist', component: DoclistNewComponent,  canActivate: [AuthGuard], data: {animation: 'DoclistNewComponent'} },
   { path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard], data: {animation: 'EmployeesComponent'} },
   { path: 'doc-explorer', component: DocExplorerComponent, canActivate: [AuthGuard], data: {animation: 'DocExplorerComponent'} },
