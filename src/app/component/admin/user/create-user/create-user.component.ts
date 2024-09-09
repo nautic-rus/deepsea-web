@@ -68,7 +68,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   generatePassword() {
-    return Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz~!@-#$").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
+    return Array(10).fill("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#").map(function(x) { return x[Math.floor(Math.random() * x.length)] }).join('');
   }
 
   getDepartmentId(name: any): any {
