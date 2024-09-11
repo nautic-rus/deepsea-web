@@ -74,6 +74,7 @@ export class SpecMaterialsComponent implements OnInit {
   supplies: any[] = [];
   supMatRelations: any[] = [];
   matSupplies: any = Object();
+  materialChecks: string[] = [];
 
   constructor(public t: LanguageService, public cd: ChangeDetectorRef, public eqManager: EquipmentsService, public issues: IssueManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, private dialogService: DialogService, public auth: AuthManagerService) { }
 
@@ -91,6 +92,9 @@ export class SpecMaterialsComponent implements OnInit {
         }
         this.projectChanged();
       });
+    });
+    this.materialManager.getMaterialChecks().subscribe(res => {
+      this.materialChecks = res;
     });
   }
   setPath(code: string, length = 3){
@@ -613,6 +617,22 @@ export class SpecMaterialsComponent implements OnInit {
         }
       }
       this.matSupplies[m.id] = supplier;
+    });
+  }
+
+  getMaterialCheck(code: string) {
+    return this.materialChecks.includes(code);
+  }
+
+  addMaterialCheck(code: string) {
+    this.materialManager.addMaterialChecks(code).subscribe((res) => {
+      this.materialChecks.push(code);
+    });
+  }
+
+  removeMaterialCheck(code: string) {
+    this.materialManager.deleteMaterialChecks(code).subscribe((res) => {
+      this.materialChecks.splice(this.materialChecks.indexOf(code), 1);
     });
   }
 }

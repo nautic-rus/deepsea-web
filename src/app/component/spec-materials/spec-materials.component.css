@@ -339,3 +339,14 @@
   justify-content: space-between;
   padding: 10px 10px !important;
 }
+.material-check{
+  width: 25px;
+  height: 25px;
+  border-radius: 20%;
+}
+.material-check-active{
+  background-color: #0EA97D;
+  width: 25px;
+  height: 25px;
+  border-radius: 20%;
+}

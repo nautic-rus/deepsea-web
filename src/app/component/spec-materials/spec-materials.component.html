@@ -113,6 +113,8 @@
                   <th pSortableColumn="note" class="cxy min-width-190 w-9 table-header">{{t.tr('Примечания')}}
                     <p-sortIcon field="note"></p-sortIcon>
                   </th>
+                  <th *ngIf="auth.getUser().login == 'pella-user'" pSortableColumn="check" class="cxy min-width-75 w-8 table-header">{{t.tr('Check')}}
+                  </th>
                   <th pSortableColumn="code" class="cxy min-width-190 w-8 table-header">{{t.tr('Stock code')}}
                     <p-sortIcon field="code"></p-sortIcon>
                   </th>
@@ -144,6 +146,14 @@
 
 <!--                  <td class="min-width-150 w-9 text-14 cxy">{{matSupplies[material.id]}}</td>-->
                   <td class="min-width-190 w-9 text-14">{{material.note}}</td>
+                  <td *ngIf="auth.getUser().login == 'pella-user'" class="min-width-75 w-9 text-14">
+                    <div class="cursor-pointer material-check cxy" *ngIf="!getMaterialCheck(material.code)" (click)="addMaterialCheck(material.code)">
+                      <i class="pi pi-check" ></i>
+                    </div>
+                    <div class="cursor-pointer material-check-active cxy" *ngIf="getMaterialCheck(material.code)" (click)="removeMaterialCheck(material.code)">
+                      <i class="pi pi-check"></i>
+                    </div>
+                  </td>
                   <td class="min-width-190 w-8 text-14">
                     <div class="df">
                       <div class="trm-materials">
