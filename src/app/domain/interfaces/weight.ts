@@ -12,7 +12,7 @@ export interface WeightData {
   mx: number;
   my: number;
   mz: number;
-  date: Date;
+  modify_date: number;
   stock_code: string;
   room: string;
 }

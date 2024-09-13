@@ -38,10 +38,10 @@
               {{ rowData.name }}
             </span>
             <span *ngIf="i !== 0  && col.visible">
-              <span *ngIf="col.field === 'date'">
+              <span *ngIf="col.field === 'modify_date'">
                 {{ getDateOnly(rowData[col.field]) }}
               </span>
-              <span *ngIf="col.field !== 'date'">
+              <span *ngIf="col.field !== 'modify_date'">
                 {{ rowData[col.field] }}
               </span>
             </span>
@@ -68,10 +68,10 @@
               {{ rowData.name }}
             </span>
             <span *ngIf="i !== 0 && col.visible">
-              <span *ngIf="col.field === 'date'">
+              <span *ngIf="col.field === 'modify_date'">
                 {{ getDateOnly(rowData[col.field]) }}
               </span>
-              <span *ngIf="col.field !== 'date'">
+              <span *ngIf="col.field !== 'modify_date'">
                 {{ rowData[col.field] }}
               </span>
             </span>
@@ -98,10 +98,10 @@
               {{ rowData.name }}
             </span>
             <span *ngIf="i !== 0  && col.visible">
-              <span *ngIf="col.field === 'date'">
+              <span *ngIf="col.field === 'modify_date'">
                 {{ getDateOnly(rowData[col.field]) }}
               </span>
-              <span *ngIf="col.field !== 'date'">
+              <span *ngIf="col.field !== 'modify_date'">
                 {{ rowData[col.field] }}
               </span>
             </span>

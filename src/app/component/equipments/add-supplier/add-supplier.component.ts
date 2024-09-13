@@ -44,19 +44,17 @@ export class AddSupplierComponent implements OnInit {
 
   ngOnInit(): void {
     this.eqService.getSupplierNames().subscribe((res) => {
-      this.supplierNames = res
-      console.log(this.supplierNames.sort((a: any, b: any) => a.name > b.name ? 1 : -1)
-      )
+      this.supplierNames = res;
+      console.log(this.supplierNames.sort((a: any, b: any) => a.name > b.name ? 1 : -1));
     })
   }
 
   toggleCheckbox() { //если галочка снята, то чистим поле с name (в ином случае будет проходить валидацию без галочки и без выбранного из списка )
-    this.addedNewSupp = !this.addedNewSupp
+    this.addedNewSupp = !this.addedNewSupp;
     this.suppliersForm.get('name')?.setValue('');
   }
 
   onSupplierSelect(id: any) {
-    console.log(id);
     let supName: any[] = this.supplierNames.filter(name => id === name.id)
     this.suppliersForm.get('name')?.setValue(supName[0].name);
   }

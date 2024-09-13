@@ -55,7 +55,7 @@ export class WeightNewComponent implements OnInit {
       { field: 'mx', header: 'Mx, t*m', visible: true, width: '100px' },
       { field: 'my', header: 'My, t*m', visible: true, width: '100px' },
       { field: 'mz', header: 'Mz, t*m', visible: true, width: '100px' },
-      { field: 'date', header: 'Modify date', visible: true, width: '100px' },
+      { field: 'modify_date', header: 'Modify date', visible: true, width: '100px' },
       { field: 'stock_code', header: 'Stock code', visible: true, width: '120px' },
       // pers: null, weight: null, x: null, y: null, z: null, mx: null, my: null, mz: null, modify: null, stock_kode: null
     ];
@@ -94,6 +94,7 @@ export class WeightNewComponent implements OnInit {
     console.log("showWeightData");
     this.issueManager.getWeightDataByProject(project).subscribe(res => {
       this.weightData.push( ...res);
+      console.log("this.weightData");
       console.log(this.weightData);
       this.fillWeightDataBy()
 
@@ -103,11 +104,11 @@ export class WeightNewComponent implements OnInit {
 
   fillWeightDataBy() {
     this.departmentTreeArray = this.fillWeightDataByDepartment(this.weightData);
-    // console.log("this.departmentTreeArray");
-    // console.log(this.departmentTreeArray);
+    console.log("this.departmentTreeArray");
+    console.log(this.departmentTreeArray);
     this.roomTreeArray = this.fillWeightDataByRooms(this.weightData);
-    // console.log("this.roomTreeArray");
-    // console.log(this.roomTreeArray);
+    console.log("this.roomTreeArray");
+    console.log(this.roomTreeArray);
     this.fillWeightDataByMaterial(this.weightData)
   }
 
@@ -143,7 +144,7 @@ export class WeightNewComponent implements OnInit {
         mx: i.mx,
         my: i.my,
         mz: i.mz,
-        date: i.date,
+        modify_date: i.modify_date,
         stock_code: i.stock_code,
       },
     }));
@@ -222,7 +223,7 @@ export class WeightNewComponent implements OnInit {
               mx: ch.mx,
               my: ch.my,
               mz: ch.mz,
-              date: ch.date,
+              modify_date: ch.modify_date,
               stock_code: ch.stock_code,
             },
           })),
@@ -303,7 +304,7 @@ export class WeightNewComponent implements OnInit {
             mx: ch.mx,
             my: ch.my,
             mz: ch.mz,
-            date: ch.date,
+            modify_date: ch.modify_date,
             stock_code: ch.stock_code,
           },
         })),
@@ -344,7 +345,6 @@ export class WeightNewComponent implements OnInit {
   }
 
   calcChildData(nodes: any[]) {  //это чтобы собрать данные по детям
-    console.log(nodes);
     let t_weight = 0;
     let x_cog = 0;
     let y_cog = 0;
