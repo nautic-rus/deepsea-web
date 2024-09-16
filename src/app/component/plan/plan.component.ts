@@ -143,6 +143,7 @@ export class PlanComponent implements OnInit {
   issueSpentTime: DailyTask[] = [];
   showWithoutPlan = false;
   showAssigned = false;
+  showNew = false;
   dragValues = Object();
   vacation = 0;
   medical = 0;
@@ -159,6 +160,7 @@ export class PlanComponent implements OnInit {
   constructor(public route: ActivatedRoute, public issueManager: IssueManagerService, public t: LanguageService, public auth: AuthManagerService, private dialogService: DialogService, private issueManagerService: IssueManagerService, public ref: DynamicDialogRef, public cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.showNew = localStorage.getItem('showNew') != null ? (+localStorage.getItem('showNew')! == 1) : this.showNew;
     this.route.queryParams.subscribe(params => {
       this.taskId = params.taskId != null ? params.taskId : 0;
     });
@@ -193,7 +195,10 @@ export class PlanComponent implements OnInit {
   }
   fillIssues(){
     this.loadingIssues = true;
-    this.auth.getPlanIssues().subscribe(res => {
+    console.time('issues');
+    console.log(this.showNew);
+    this.auth.getPlanIssues(this.showNew ? 1 : 0).subscribe(res => {
+      console.timeLog('issues');
       this.issuesSrc = res;
       this.issues = res.filter(x => x.removed == 0).filter(x => ['QNA', 'RKD', 'OTHER', 'CORRECTION', 'IT', 'PDSP', 'PSD', 'ED'].includes(x.issue_type));
       this.issues = _.sortBy(this.issues, x => x.doc_number);
@@ -476,6 +481,10 @@ export class PlanComponent implements OnInit {
     localStorage.setItem('showAssigned', this.showAssigned ? '1' : '0');
     this.filterIssues();
   }
+  showNewChanged(){
+    localStorage.setItem('showNew', this.showNew ? '1' : '0');
+    location.reload();
+  }
   showWithoutPlanChanged(){
     localStorage.setItem('showWithoutPlan', this.showWithoutPlan ? '1' : '0');
     this.filterIssues();
@@ -625,7 +634,9 @@ export class PlanComponent implements OnInit {
   }
 
   private fillPlan() {
+    console.time('plan');
     this.auth.getPlanByDays(this.today.getTime()).subscribe(res => {
+      console.timeLog('plan');
       this.planByDays = res;
       this.users.forEach(user => {
         let findUserPlan = this.planByDays.find(x => x.userId == user.id);

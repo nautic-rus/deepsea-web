@@ -360,8 +360,8 @@ export class AuthManagerService {
   getPlan(){
     return this.http.get<any>(props.http + '/plan');
   }
-  getPlanIssues(){
-    return this.http.get<Issue[]>(props.http + '/planIssues');
+  getPlanIssues(short: number){
+    return this.http.get<Issue[]>(props.http + '/planIssues', {params: {short}});
   }
   getPlanIssue(id: number){
     return this.http.get<any[]>(props.http + '/planIssue',{params: {id}});

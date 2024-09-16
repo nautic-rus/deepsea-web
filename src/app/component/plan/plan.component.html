@@ -80,7 +80,13 @@
                 <span class="checkmark"></span>
               </label>
             </div>
-
+            <div>
+              <label class="container margin-bottom-none">
+                <span class="text-checkbox">{{t.tr('Только новые')}}</span>
+                <input (change)="showNewChanged()" type="checkbox" [(ngModel)]="showNew">
+                <span class="checkmark"></span>
+              </label>
+            </div>
           </div>
         </div>
 
