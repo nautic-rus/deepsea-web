@@ -19,7 +19,7 @@ export class GenerationWaitComponent implements OnInit {
   generationWait = false;
 
   resUrls: string[] = [];
-  revs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
+  revs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'NO REV'];
   rev: string = this.revs[0];
 
   constructor(private route: ActivatedRoute, private router: Router, private s: SpecManagerService, public l: LanguageService, public conf: DynamicDialogConfig, public t: LanguageService, public ref: DynamicDialogRef) { }
