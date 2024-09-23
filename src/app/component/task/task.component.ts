@@ -451,6 +451,7 @@ export class TaskComponent implements OnInit {
     });
     this.issueManager.getIssueTypes().then(res => {
       this.issueTypes = res;
+      console.log(res);
     });
     this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
     this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();

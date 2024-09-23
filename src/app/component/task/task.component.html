@@ -1235,6 +1235,26 @@
               </div>
             </div>
           </div>
+          <div class="df mt-3px" *ngIf="auth.hasPerms('edit_issue_type')">
+            <div class="df text-y height-30 normal-text w-35">Тип задачи</div>
+            <div [class.no-edit]="!isEditable()" [hidden]="edit == 'issue_type'" (click)="edit = 'issue_type'" class="pl-3 pt-6 height-30 cursor-pointer description-task hover-task width-180">{{issue.issue_type}}</div>
+            <div class="mr-5" [hidden]="edit != 'issue_type'">
+              <p-dropdown class="select" [(ngModel)]="issue.issue_type" [options]="issueTypes" optionValue="type_name" optionLabel="type_name" styleClass="width-180">
+              </p-dropdown>
+            </div>
+            <div class="w-15 df">
+              <div [hidden]="edit != 'issue_type'" (click)="commitIssueEdit($event)">
+                <div  class="task-name-button cxy mr-5">
+                  <img src="assets/icons/tick.svg">
+                </div>
+              </div>
+              <div [hidden]="edit != 'issue_type'" (click)="cancelIssueEdit()">
+                <div  class="task-name-button cxy">
+                  <img src="assets/icons/cancel.svg">
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="df mt-3px" *ngIf="isVisible('started_by')">
             <div class="df text-y height-30 normal-text w-35">{{t.tr('Автор')}}</div>
             <div class="pl-3 df text-y height-30 cursor-pointer description-task w-45">{{auth.getUserName(issue.started_by)}}</div>
