@@ -629,6 +629,7 @@ export class PlanComponent implements OnInit {
   }
 
   saveSelectedDepartments() {
+    this.loading = true;
     localStorage.setItem('selectedDepartments', JSON.stringify(this.selectedDepartments));
     this.fill();
   }
