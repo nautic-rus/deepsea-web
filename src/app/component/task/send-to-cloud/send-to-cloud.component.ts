@@ -24,7 +24,7 @@ export class SendToCloudComponent implements OnInit {
   selectedUsers: string[] = ['isaev'];
   issue: Issue = new Issue();
   users: User[] = [];
-  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'F'];
+  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'F'];
   rev = '-';
   constructor(public t: LanguageService, public issues: IssueManagerService, public auth: AuthManagerService, public ref: DynamicDialogRef, private appRef: ApplicationRef, public conf: DynamicDialogConfig, private dialogService: DialogService) {
     this.issue = conf.data;

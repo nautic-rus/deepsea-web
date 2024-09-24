@@ -21,7 +21,7 @@ export class GenerateEspComponent implements OnInit {
   generationWait = false;
 
   resUrls: string[] = [];
-  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'NO REV'];
+  revs = ['-', '0', '1', '2', '3', '4', '5', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'NO REV'];
   rev: string = this.revs[0];
   isFinal = false;
   project = '';
