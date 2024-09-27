@@ -65,6 +65,14 @@ export class AddMaterialToEspComponent implements OnInit {
   issueId = 0;
   materialsFilled = false;
   specStatements: any[] = [];
+  edit = false;
+  deleteInfo = {
+    pos: '',
+    kind: '',
+    doc_number: '',
+    issue_id: 0
+  };
+  selectedMaterialCode = '';
 
   constructor(public issues: IssueManagerService, public t: LanguageService, public s: SpecManagerService, private materialManager: MaterialManagerService, private messageService: MessageService, public ref: DynamicDialogRef, public dialog: DynamicDialogConfig, public auth: AuthManagerService) { }
 
@@ -86,6 +94,18 @@ export class AddMaterialToEspComponent implements OnInit {
       this.issueId = this.dialog.data[3];
     }
     this.zone = this.dialog.data[3];
+    if (this.dialog.data.length > 4){
+      this.edit = this.dialog.data[4] == 'edit';
+      this.deleteInfo = {
+        pos: this.dialog.data[1],
+        kind: this.dialog.data[2],
+        doc_number: this.dialog.data[0],
+        issue_id: this.dialog.data[3]
+      };
+      this.label = this.dialog.data[1];
+      this.selectedMaterialCode = this.dialog.data[5];
+      this.count = this.dialog.data[6];
+    }
     this.fill();
   }
   fill(){
@@ -114,6 +134,9 @@ export class AddMaterialToEspComponent implements OnInit {
         this.nodesSrc = specDirectories.filter((x: any) => x.project_id == this.projectId || x.project_id == 0);
         this.nodes = _.sortBy(this.getNodes(this.nodesSrc, this.materials, 0), x => x.label);
         this.materialsFilled = true;
+        if (this.selectedMaterialCode != ''){
+          this.selectedMaterial = this.materials.find(x => x.code == this.selectedMaterialCode);
+        }
       });
     });
   }
@@ -185,9 +208,18 @@ export class AddMaterialToEspComponent implements OnInit {
         return;
       }
       else{
-        this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone).subscribe(res => {
-          this.ref.close('success');
-        });
+        if (this.edit){
+          this.s.deleteIssueMaterial(this.deleteInfo.pos, this.deleteInfo.doc_number, this.deleteInfo.issue_id, this.deleteInfo.kind).subscribe(res => {
+            this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone).subscribe(res => {
+              this.ref.close('success');
+            });
+          });
+        }
+        else{
+          this.s.addIssueMaterial(this.label, this.units, this.selectedMaterial.singleWeight, this.count, this.selectedMaterial.code, this.auth.getUser().id, this.docNumber, this.issueId, this.addText, this.kind, this.zone).subscribe(res => {
+            this.ref.close('success');
+          });
+        }
       }
     }
     else{

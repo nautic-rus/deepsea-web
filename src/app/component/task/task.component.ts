@@ -714,6 +714,9 @@ export class TaskComponent implements OnInit {
       if (issue.issue_type == 'QNA' && (this.auth.getUser().login == 'stropilov' || this.auth.getUser().login == 'voronin')){
         allow = true;
       }
+      if (this.auth.hasPerms('any_status')){
+        allow = true;
+      }
       if (allow){
         res.push({label: this.issueManager.localeStatusAsButton(action.action, false), value: action.action});
       }

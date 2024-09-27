@@ -1415,4 +1415,21 @@ export class HullEspComponent implements OnInit {
       });
     });
   }
+
+  editMaterial(part: any) {
+    let pos = part.PART_CODE;
+    let stock = part.STOCK_CODE;
+    let qty = part.QTY;
+    this.dialogService.open(AddMaterialToEspComponent, {
+      showHeader: false,
+      modal: true,
+      data: [this.docNumber, pos, 'hull', this.issue.id, 'edit', stock, qty]
+    }).onClose.subscribe(res => {
+      if (res == 'success'){
+        this.s.createHullEsp(this.project, this.issue.doc_number, this.issue.revision, this.auth.getUser().login, 'hull', this.issue.id).subscribe(res => {
+          this.fillParts();
+        });
+      }
+    });
+  }
 }

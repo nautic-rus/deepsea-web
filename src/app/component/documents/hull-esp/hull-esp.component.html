@@ -158,6 +158,9 @@
             <tr [class.select-row]="selectedPart == part" class="cursor-pointer task-row" (click)="selectPart(part)">
               <td class="w-15 text-14">
                 {{part.PART_CODE}}
+                <div class="ml-15 pt-2 cxy" *ngIf="part.ELEM_TYPE == 'MANUAL'" (click)="editMaterial(part)">
+                  <img src="assets/icons/edit1.svg" height="12">
+                </div>
                 <div class="ml-15 pt-2 cxy" *ngIf="part.ELEM_TYPE == 'MANUAL'" (click)="deleteMaterial(part.PART_CODE)">
                   <img src="assets/icons/trash-3.svg" height="12">
                 </div>
