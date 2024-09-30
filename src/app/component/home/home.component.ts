@@ -993,6 +993,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     if (issue.issue_type == 'QNA' && issue.status == 'Resolved' && issue.started_by != this.auth.getUser().login){
       show = false;
     }
+    if (issue.issue_type == 'QNA' && issue.started_by != this.auth.getUser().login && issue.responsible != this.auth.getUser().login && issue.assigned_to != this.auth.getUser().login){
+      show = false;
+    }
     return show;
   }
 
