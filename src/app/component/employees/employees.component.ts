@@ -166,9 +166,9 @@ export class EmployeesComponent implements OnInit {
       this.auth.getPlanNotOrdinary(day.getTime()).subscribe(planNotOrdinary => {
         console.log(planNotOrdinary);
         let usersPlan = Object();
-        this.users.forEach(u => {
+        this.usersSrc.forEach(u => {
           let findPlan = planNotOrdinary.find(x => x.userId == u.id);
-          if (findPlan != 0){
+          if (findPlan != null){
             usersPlan[u.id] = findPlan.plan;
           }
           else{
