@@ -71,6 +71,7 @@ import {StorageUploadPhotoComponent} from "./component/warehouse/storage-upload-
 import {WarehouseFullComponent} from "./component/warehouse-full/warehouse-full.component";
 import {DoclistNewComponent} from "./component/doclist-new/doclist-new.component";
 import {WeightNewComponent} from "./component/weight-new/weight-new.component";
+import {EleNodesComponent} from "./component/ele-nodes/ele-nodes.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -143,6 +144,8 @@ const routes: Routes = [
   { path: 'warehouse', component: WarehouseComponent, data: {animation: 'WarehouseComponent'}, canActivate: [AuthGuard] },
   { path: 'warehouse-full', component: WarehouseFullComponent, data: {animation: 'WarehouseFullComponent'}, canActivate: [AuthGuard] },
   { path: 'storage-upload-photo', component: StorageUploadPhotoComponent, data: {animation: 'StorageUploadPhotoComponent'} },
+  { path: 'ele-nodes', component: EleNodesComponent, data: {animation: 'EleNodesComponent'}, canActivate: [AuthGuard] },
+
   // { path: 'equipments/supplier/:id', component: EditSupplierComponent },
   { path: '**', redirectTo: '/' },
 ];

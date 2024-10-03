@@ -197,4 +197,10 @@ export class SpecManagerService {
   getEleEspCurrent(foranProject: string, docNumber: string, rev: string, user: string, taskId: number) {
     return this.http.get<any>(props.httpSpec + '/eleEspCurrent', {params: {foranProject, docNumber, rev, user, taskId}}).toPromise();
   }
+  getEleNodes(project: string) {
+    return this.http.get<any>(props.httpSpec + '/eleNodes', {params: {project}});
+  }
+  getEleNodeCables(project: string, node: number) {
+    return this.http.get<any>(props.httpSpec + '/eleNodeCables', {params: {project, node}});
+  }
 }
