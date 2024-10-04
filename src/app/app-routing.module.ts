@@ -71,6 +71,7 @@ import {StorageUploadPhotoComponent} from "./component/warehouse/storage-upload-
 import {WarehouseFullComponent} from "./component/warehouse-full/warehouse-full.component";
 import {DoclistNewComponent} from "./component/doclist-new/doclist-new.component";
 import {WeightNewComponent} from "./component/weight-new/weight-new.component";
+import {EleComponent} from "./component/ele/ele.component";
 import {EleNodesComponent} from "./component/ele-nodes/ele-nodes.component";
 
 const routes: Routes = [
@@ -100,6 +101,7 @@ const routes: Routes = [
   { path: 'dxf-view', component: DxfViewComponent, canActivate: [AuthGuard], data: {animation: 'DxfViewComponent'} },
   { path: 'pdf-view', component: PdfViewComponent, canActivate: [AuthGuard], data: {animation: 'PdfViewComponent'} },
   { path: 'elec-cables', component: ElecCablesComponent, canActivate: [AuthGuard], data: {animation: 'ElecCablesComponent'} },
+  { path: 'ele', component: EleComponent, canActivate: [AuthGuard] },
   { path: 'nesting', component: NestingComponent, canActivate: [AuthGuard], data: {animation: 'NestingComponent'} },
   { path: 'nesting-pipe', component: NestingPipeComponent, canActivate: [AuthGuard], data: {animation: 'NestingPipeComponent'} },
   { path: 'gcode', component: GCodeComponent, canActivate: [AuthGuard], data: {animation: 'GCodeComponent'} },
