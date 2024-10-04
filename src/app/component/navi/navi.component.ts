@@ -49,6 +49,7 @@ export class NaviComponent implements OnInit {
     ]},
     {id: 'tools', label: 'Tools', url: 'tools', icon: 'assets/icons/wrench.svg', height: 13, child: [], params: {}},
     {id: 'ele-nodes', label: 'Ele Nodes', url: 'ele-nodes', icon: 'assets/icons/wrench.svg', height: 13, child: [], params: {}},
+    {id: 'ele-cables', label: 'Ele Cables', url: 'ele', icon: 'assets/icons/wrench.svg', height: 13, child: [], params: {}},
     {id: 'eleccables', label: 'Cables', url: 'elec-cables', icon: 'assets/icons/elec.svg', height: 14, child: [], params: {}},
     {id: 'nesting', label: 'Nesting', url: 'nesting', icon: 'assets/icons/cut2.svg', height: 17, child: [], params: {}},
     // {id: 'nesting', label: 'Nesting', url: '', icon: 'assets/icons/nesting.svg', height: 20, child: [
