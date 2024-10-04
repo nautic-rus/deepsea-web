@@ -233,6 +233,7 @@ import { AddComplectToEspComponent } from './component/documents/electric-esp/ad
 import { DoclistNewComponent } from './component/doclist-new/doclist-new.component';
 import { WeightNewComponent } from './component/weight-new/weight-new.component';
 import { EleComponent } from './component/ele/ele.component';
+import { EleNodesComponent } from './component/ele-nodes/ele-nodes.component';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -407,6 +408,7 @@ Quill.register('modules/imageResize', ImageResize);
     DoclistNewComponent,
     WeightNewComponent,
     EleComponent,
+    EleNodesComponent,
 
   ],
   imports: [
