@@ -50,7 +50,26 @@
         <div>diam:</div>
         <div>{{cable.diam}}</div>
       </div>
+      <div *ngIf="cablesLoading == '' && eleNodeCables.length == 0">
+        В выбранном узле не проходят кабели
+      </div>
+    </div>
+  </div>
+  <div *ngIf="eleNodePNG">
+    <div>Схема узла {{selectedEleNode.node}}</div>
+    <div *ngIf="cablesLoading">
+      {{cablesLoading}}
+    </div>
+    <div *ngIf="cablesLoading == '' && eleNodeCables.length > 0">
+      <div class="cursor-pointer" (click)="previewImage(eleNodePNG.png_url)">
+        <div *ngIf="eleNodePNG.png_url == 'not enough space for cables'">Недостаточно места для размещения модулей всех кабелей</div>
+        <div *ngIf="eleNodePNG.png_url != 'not enough space for cables'">
+          <img class="ele-node-png" [src]="eleNodePNG.png_url">
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
+<div class="preview-image" *ngIf="previewImagePNG != ''" (click)="previewImagePNG = ''">
+  <img class="preview-image-png" [src]="previewImagePNG">
+</div>

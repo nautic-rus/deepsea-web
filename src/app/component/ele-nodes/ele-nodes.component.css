@@ -25,3 +25,24 @@
   margin: 2px;
   padding: 5px;
 }
+.ele-node-png{
+  max-width: 30vw;
+  max-height: 85vh;
+}
+.node-png{
+  width: 30vw;
+  overflow: auto;
+  height: 86vh;
+}
+.preview-image{
+  position: absolute;
+  left: 190px;
+  top: 85px;
+  height: 89vh;
+  width: 89vw;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+.preview-image-png{
+  max-height: 89vh;
+  max-width: 89vw;
+}

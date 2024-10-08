@@ -13,9 +13,11 @@ export class EleNodesComponent implements OnInit {
   eleNodes: any[] = [];
   eleNodesSrc: any[] = [];
   eleNodeCables: any[] =[];
+  eleNodePNG: any;
   selectedEleNode: any;
   search = '';
   cablesLoading = '';
+  previewImagePNG = '';
   constructor(public s: SpecManagerService) { }
 
   ngOnInit(): void {
@@ -33,11 +35,20 @@ export class EleNodesComponent implements OnInit {
     this.s.getEleNodeCables(this.project, node.node_id).subscribe(nodeCables => {
       console.log(nodeCables);
       this.eleNodeCables = _.sortBy(nodeCables, x => x.cable_id);
-      this.cablesLoading = '';
+      this.s.getEleNodePNG(this.project, node.node_id).subscribe(eleNodePNG => {
+        console.log(eleNodePNG);
+        this.eleNodePNG = eleNodePNG;
+        this.cablesLoading = '';
+      });
     });
   }
 
   searchNode() {
     this.eleNodes = this.eleNodesSrc.filter(x => x.node.toLowerCase().includes(this.search.toLowerCase().trim()));
+  }
+
+  previewImage(png_url: string) {
+    this.previewImagePNG = png_url;
+    console.log(this.previewImagePNG);
   }
 }
