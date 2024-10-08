@@ -28,11 +28,12 @@ export class EleComponent implements OnInit {
   cablesSrc = [];
   eleCablesNode:any[] = [];
   cols!: any[];
-
+  loading: boolean = true;
 
 
   constructor(private eleCablesService: EleCablesService, public t: LanguageService) {
     this.eleCablesService.getCables().subscribe(res => {
+      this.loading = true;
       this.cablesSrc = res;
       // console.log(new Set(res.map((x: any) => x.routed_status)))
       this.eleCablesNode = this.refactorCableData(this.cablesSrc);
@@ -42,10 +43,19 @@ export class EleComponent implements OnInit {
   ngOnInit(): void {
     this.cols = [
       // {field: '', header: ''},
-      {field: 'name', header: 'Name'},
-      {field: 'segregation', header: 'Segregation'},
-      {field: 'cable_spec', header: 'Cable spec'},
-      {field: 'routed_status', header: 'Routed status'},
+      {field: 'name', header: 'Name', sort: true, width: '15rem'},
+      {field: 'routed_status', header: 'Routed status', width: '5rem'},
+      {field: 'from_zone', header: 'From zone', width: '5rem'},
+      {field: 'to_zone', header: 'To zone', width: '5rem'},
+      {field: 'from_eq', header: 'From eq', width: '5rem'},
+      {field: 'to_eq', header: 'To eq', width: '5rem'},
+      {field: 'segregation', header: 'Segregation', width: '4rem'},
+      // {field: 'cable_spec', header: 'Cable spec'},
+
+      {field: 'section', header: 'Section', width: '3rem'},
+      {field: 'system', header: 'System', width: '10rem'},
+      {field: 'total_length', header: 'Total length', width: '4rem'},
+
     ];
   }
 
@@ -74,6 +84,7 @@ export class EleComponent implements OnInit {
     }
   }
 
+
   refactorCableData(data: IEleCable[]): any[] {
     const zone: any[] = [];
     const zoneSet = new Set(data.map(x => x.to_zone_id || x.from_zone_id));
@@ -89,6 +100,13 @@ export class EleComponent implements OnInit {
           segregation: '',
           cable_spec: '',
           routed_status: '',
+          from_zone: '',
+          to_zone: '',
+          from_eq: '',
+          to_eq: '',
+          system: '',
+          section: '',
+          total_length: ''
         },
         children: []
       };
@@ -101,13 +119,27 @@ export class EleComponent implements OnInit {
             segregation: '',
             cable_spec: '',
             routed_status: '',
+            from_zone: '',
+            to_zone: '',
+            from_eq: '',
+            to_eq: '',
+            system: '',
+            section: '',
+            total_length: ''
           },
           children: groupEq.map((ch: any) => ({
             data: {
               name: ch.cable_id,
               segregation: ch.segregation,
               cable_spec: ch.cable_spec,
-              routed_status: this.getRoutedStatus(ch.routed_status)
+              routed_status: this.getRoutedStatus(ch.routed_status),
+              from_zone: ch.from_zone_id + ' ',
+              to_zone: ch.to_zone_id + ' ',
+              from_eq: ch.from_e_name,
+              to_eq: ch.to_e_name,
+              system: ch.system,
+              section: ch.section,
+              total_length:  Math.round(ch.total_length * 100) / 100
             },
           }))
         };
@@ -116,6 +148,8 @@ export class EleComponent implements OnInit {
 
       zone.push(zoneItem);
     });
+    this.loading = false;
+    console.log(zone);
     return zone;
   }
 

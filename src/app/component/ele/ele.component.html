@@ -8,6 +8,14 @@
         </span>
     </div>
     <div class="empty-card-bottom"></div>
+<!--    <div class="card cxy">-->
+<!--      <div class="cxy loading">-->
+<!--        <div class="cxy flex-column">-->
+<!--          <img src="assets/whale.gif" height="120">-->
+<!--          <div class="cx loading-text">PLEASE WAIT...</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="card-overflow">
       <div>
         <p-treeTable  #tt [value]="eleCablesNode"
@@ -20,23 +28,27 @@
                       [globalFilterFields]="['name','segregation','cable_spec','routed_status']">
           <ng-template pTemplate="header" let-columns>
             <tr>
-              <th *ngFor="let col of cols">
+              <th *ngFor="let col of cols; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width" style="flex: none; padding: 10px; justify-content: space-between">
                 {{ col.header }}
-                <!--        <p-columnFilter type="text" field="{{col.field}}" display="menu"></p-columnFilter>-->
+                <p-treeTableSortIcon *ngIf="i == 0" [field]="col.field"></p-treeTableSortIcon>
+<!--                <input *ngIf="col.field === 'routed_status'" pInputText type="text" (input)="tt.filter('Routed', col.field, col.filterMatchMode)"-->
               </th>
             </tr>
           </ng-template>
 
           <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
             <tr>
-              <td *ngFor="let col of cols; let i = index"  [style.width]="col.width">
-        <span *ngIf="i == 0">
-          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-          {{ rowData.name }}
-        </span>
-                <span *ngIf="i !== 0">
-          {{ rowData[col.field] }}
-        </span>
+              <td *ngFor="let col of cols; let i = index"  [style.width]="col.width" style="flex: none; padding: 5px; justify-content: space-between; font-size: 13px;">
+                <span *ngIf="i == 0">
+                  <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                  {{ rowData.name }}
+                </span>
+                <span *ngIf="i !== 0 && col.field != 'total_length'">
+                  {{ rowData[col.field] }}
+                </span>
+                <span *ngIf="i !== 0 && col.field === 'total_length'">
+                  {{ rowData['total_length'] === '' ? '' : rowData['total_length'] + ' m.' }}
+                </span>
               </td>
             </tr>
           </ng-template>
