@@ -38,19 +38,21 @@
       <div *ngIf="cablesLoading">
         {{cablesLoading}}
       </div>
-      <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
-        <div>cable_id:</div>
-        <div>{{cable.cable_id}}</div>
-        <div>nom_section:</div>
-        <div>{{cable.nom_section}}</div>
-        <div>spec:</div>
-        <div>{{cable.spec}}</div>
-        <div>code:</div>
-        <div>{{cable.code}}</div>
-        <div>diam:</div>
-        <div>{{cable.diam}}</div>
+      <div *ngIf="!cablesLoading">
+        <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
+          <div>cable_id:</div>
+          <div>{{cable.cable_id}}</div>
+          <div>nom_section:</div>
+          <div>{{cable.nom_section}}</div>
+          <div>spec:</div>
+          <div>{{cable.spec}}</div>
+          <div>code:</div>
+          <div>{{cable.code}}</div>
+          <div>diam:</div>
+          <div>{{cable.diam}}</div>
+        </div>
       </div>
-      <div *ngIf="cablesLoading == '' && eleNodeCables.length == 0">
+      <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
         В выбранном узле не проходят кабели
       </div>
     </div>
@@ -60,7 +62,7 @@
     <div *ngIf="cablesLoading">
       {{cablesLoading}}
     </div>
-    <div *ngIf="cablesLoading == '' && eleNodeCables.length > 0">
+    <div *ngIf="!cablesLoading && eleNodeCables.length > 0">
       <div class="cursor-pointer" (click)="previewImage(eleNodePNG.png_url)">
         <div *ngIf="eleNodePNG.png_url == 'not enough space for cables'">Недостаточно места для размещения модулей всех кабелей</div>
         <div *ngIf="eleNodePNG.png_url != 'not enough space for cables'">
