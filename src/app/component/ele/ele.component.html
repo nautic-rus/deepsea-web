@@ -24,7 +24,7 @@
                  styleClass="p-datatable-striped"
                  responsiveLayout="scroll"
                  [virtualScroll]="true"
-                 [globalFilterFields]="['cable_id','system']">
+                 [globalFilterFields]="['cable_id','system', 'from_zone_id', 'to_zone_id']">
           <ng-template pTemplate="header">
             <tr>
               <th pSortableColumn="cable_id" class="item_th">
@@ -144,7 +144,7 @@
 <!--          </ng-template>-->
           <ng-template pTemplate="body" let-cable>
             <tr>
-              <td *ngFor="let col of cols" class="item_td">
+              <td *ngFor="let col of cols" class="item_td" [style.width]="col.width">
                 <span *ngIf="col.field != 'total_length' && col.field != 'routed_status'">
                   {{cable[col.field]}}
                 </span>
