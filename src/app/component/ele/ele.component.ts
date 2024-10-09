@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {EleCablesService} from "../../domain/ele-cables.service";
 import {TreeNode, WeightData} from "../../domain/interfaces/weight";
 import _ from "underscore";
 import {LanguageService} from "../../domain/language.service";
+import {Table} from "primeng/table";
 
 interface IEleCable {
   cable_id: string,
@@ -25,6 +26,7 @@ interface IEleCable {
   styleUrls: ['./ele.component.css']
 })
 export class EleComponent implements OnInit {
+  @ViewChild('tt') table: Table;
   cablesSrc = [];
   eleCablesNode:any[] = [];
   cols!: any[];
@@ -41,6 +43,7 @@ export class EleComponent implements OnInit {
       this.SGRs = new Set(res.map((x: any) => x.segregation));
       console.log(this.routedStatuses);
       console.log(this.SGRs);
+      this.table.filterGlobal(null, 'contains');
       // console.log(new Set(res.map((x: any) => x.routed_status)))
       // this.eleCablesNode = this.refactorCableData(this.cablesSrc);
     })
