@@ -2,58 +2,231 @@
   <div class="min-height-card">
     <div class="empty-card"></div>
     <div class="card-head df sticky-card justify-content-end">
+      <div class="mr-10">
+        <span>{{t.language === 'ru' ? 'Количество кабелей: ' : 'Number of cables: '}}</span>
+        <span>{{tt.filteredValue != null ? tt.filteredValue.length  : tt.value.length}} </span>
+        <span>{{t.language === 'ru' ? '(Всего: ' : '(Total: '}}</span>
+        <span>{{cablesSrc.length}})</span>
+      </div>
         <span class="p-input-icon-left ">
           <i class="pi pi-search"></i>
           <input #search pInputText type="text" (input)="tt.filterGlobal(search.value, 'contains')" [placeholder]="t.tr('Поиск...')" class="border" />
         </span>
     </div>
     <div class="empty-card-bottom"></div>
-<!--    <div class="card cxy">-->
-<!--      <div class="cxy loading">-->
-<!--        <div class="cxy flex-column">-->
-<!--          <img src="assets/whale.gif" height="120">-->
-<!--          <div class="cx loading-text">PLEASE WAIT...</div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
     <div class="card-overflow">
       <div>
-        <p-treeTable  #tt [value]="eleCablesNode"
-                      [columns]="cols"
-                      [scrollable]="true"
-                      scrollHeight="73vh"
-                      styleClass="p-datatable-striped"
-                      responsiveLayout="scroll"
-                      [virtualScroll]="true"
-                      [globalFilterFields]="['name','segregation','cable_spec','routed_status']">
-          <ng-template pTemplate="header" let-columns>
+        <p-table #tt [value]="cablesSrc"
+                 stateStorage="local"
+                 stateKey="stateEleCables"
+                 [scrollable]="true"
+                 scrollHeight="73vh"
+                 styleClass="p-datatable-striped"
+                 responsiveLayout="scroll"
+                 [virtualScroll]="true"
+                 [globalFilterFields]="['cable_id','system']">
+          <ng-template pTemplate="header">
             <tr>
-              <th *ngFor="let col of cols; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width" style="flex: none; padding: 10px; justify-content: space-between">
-                {{ col.header }}
-                <p-treeTableSortIcon *ngIf="i == 0" [field]="col.field"></p-treeTableSortIcon>
-<!--                <input *ngIf="col.field === 'routed_status'" pInputText type="text" (input)="tt.filter('Routed', col.field, col.filterMatchMode)"-->
+              <th pSortableColumn="cable_id" class="item_th">
+                <div>
+                  Name
+                  <p-sortIcon field="cable_id"></p-sortIcon>
+                  <p-columnFilter type="text" field="cable_id" display="menu"></p-columnFilter>
+                </div>
               </th>
+              <th class="item_th">
+                <div>
+                  Routed status
+                  <p-columnFilter field="routed_status" matchMode="in" display="menu"
+                                  [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="routedStatuses" placeholder="Any"
+                                     (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <div class="p-multiselect-representative-option">
+                            <span class="p-ml-1">{{getRoutedStatus(option)}}</span>
+                          </div>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="from_zone_id" class="item_th">
+                <div>
+                  From zone
+                  <p-sortIcon field="from_zone_id"></p-sortIcon>
+                  <p-columnFilter type="text" field="from_zone_id" display="menu"></p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="to_zone_id" class="item_th">
+                <div>
+                  To zone
+                  <p-sortIcon field="to_zone_id"></p-sortIcon>
+                  <p-columnFilter type="text" field="to_zone_id" display="menu"></p-columnFilter>
+                </div>
+              </th>
+              <th class="item_th">
+                <div class="p-jc-between p-ai-center">
+                  From eq
+                  <p-columnFilter type="text" field="from_e_id" display="menu"></p-columnFilter>
+                </div>
+              </th>
+              <th class="item_th">
+                <div class="p-jc-between p-ai-center">
+                  To eq
+                  <p-columnFilter type="text" field="to_e_id" display="menu"></p-columnFilter>
+                </div>
+              </th>
+              <th class="item_th">
+                <div class="p-jc-between p-ai-center">
+                  SGR
+                  <p-columnFilter field="segregation" matchMode="in" display="menu" [showMatchModes]="false"
+                                  [showOperator]="false" [showAddButton]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                      <p-multiSelect [ngModel]="value" [options]="SGRs" placeholder="Any"
+                                     (onChange)="filter($event.value)">
+                        <ng-template let-option pTemplate="item">
+                          <div class="p-multiselect-representative-option">
+                            <span class="p-ml-1">{{option}}</span>
+                          </div>
+                        </ng-template>
+                      </p-multiSelect>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+              </th>
+              <th class="item_th">
+                <div class="p-jc-between p-ai-center">
+                  Section
+                </div>
+              </th>
+              <th class="item_th">
+                <div class="p-jc-between p-ai-center">
+                  System
+                  <p-columnFilter type="text" field="system" display="menu"></p-columnFilter>
+                </div>
+              </th>
+              <th pSortableColumn="total_length" class="item_th">
+                <div class="p-jc-between p-ai-center">
+                  Total length
+                  <p-sortIcon field="total_length"></p-sortIcon>
+                </div>
+              </th>
+<!--              <th style="width: 8rem">-->
+<!--                <div class="p-jc-between p-ai-center">-->
+<!--                  Verified-->
+<!--                  <p-columnFilter type="boolean" field="verified" display="menu"></p-columnFilter>-->
+<!--                </div>-->
+<!--              </th>-->
             </tr>
           </ng-template>
-
-          <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+<!--          <ng-template pTemplate="header">-->
+<!--            <tr>-->
+<!--              <th [pSortableColumn]="col.field" *ngFor="let col of cols">-->
+<!--                {{col.header}}-->
+<!--                <p-sortIcon [field]="col.field"></p-sortIcon>-->
+<!--                <p-columnFilter *ngIf="col.field === 'routed_status'" field="routed_status" matchMode="in" display="menu" [showMatchModes]="false"-->
+<!--                                [showOperator]="false" [showAddButton]="false">-->
+<!--                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">-->
+<!--                    <p-multiSelect [ngModel]="value" [options]="routedStatuses" placeholder="Any"-->
+<!--                                   (onChange)="filter($event.value)">-->
+<!--                      <ng-template let-option pTemplate="item">-->
+<!--                        <div class="p-multiselect-representative-option">-->
+<!--                          <span class="p-ml-1">{{option}}</span>-->
+<!--                        </div>-->
+<!--                      </ng-template>-->
+<!--                    </p-multiSelect>-->
+<!--                  </ng-template>-->
+<!--                </p-columnFilter>-->
+<!--              </th>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+          <ng-template pTemplate="body" let-cable>
             <tr>
-              <td *ngFor="let col of cols; let i = index"  [style.width]="col.width" style="flex: none; padding: 5px; justify-content: space-between; font-size: 13px;">
-                <span *ngIf="i == 0">
-                  <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-                  {{ rowData.name }}
+              <td *ngFor="let col of cols" class="item_td">
+                <span *ngIf="col.field != 'total_length' && col.field != 'routed_status'">
+                  {{cable[col.field]}}
                 </span>
-                <span *ngIf="i !== 0 && col.field != 'total_length'">
-                  {{ rowData[col.field] }}
+                <span *ngIf="col.field === 'total_length'">
+                  {{refactorTotalLength(cable[col.field])   + ' m.'}}
                 </span>
-                <span *ngIf="i !== 0 && col.field === 'total_length'">
-                  {{ rowData['total_length'] === '' ? '' : rowData['total_length'] + ' m.' }}
+                <span *ngIf="col.field === 'routed_status'">
+                  {{getRoutedStatus(cable[col.field])}}
                 </span>
               </td>
             </tr>
           </ng-template>
-        </p-treeTable>
+        </p-table>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+          <!--treeTable-->
+
+<!--<div class="all-page-doc">-->
+<!--  <div class="min-height-card">-->
+<!--    <div class="empty-card"></div>-->
+<!--    <div class="card-head df sticky-card justify-content-end">-->
+<!--        <span class="p-input-icon-left ">-->
+<!--          <i class="pi pi-search"></i>-->
+<!--          <input #search pInputText type="text" (input)="tt.filterGlobal(search.value, 'contains')" [placeholder]="t.tr('Поиск...')" class="border" />-->
+<!--        </span>-->
+<!--    </div>-->
+<!--    <div class="empty-card-bottom"></div>-->
+<!--&lt;!&ndash;    <div class="card cxy">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="cxy loading">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="cxy flex-column">&ndash;&gt;-->
+<!--&lt;!&ndash;          <img src="assets/whale.gif" height="120">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="cx loading-text">PLEASE WAIT...</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--    <div class="card-overflow">-->
+<!--      <div>-->
+<!--        <p-treeTable  #tt [value]="eleCablesNode"-->
+<!--                      [columns]="cols"-->
+<!--                      [scrollable]="true"-->
+<!--                      scrollHeight="73vh"-->
+<!--                      styleClass="p-datatable-striped"-->
+<!--                      responsiveLayout="scroll"-->
+<!--                      [virtualScroll]="true"-->
+<!--                      [globalFilterFields]="['name','segregation','cable_spec','routed_status']">-->
+<!--          <ng-template pTemplate="header" let-columns>-->
+<!--            <tr>-->
+<!--              <th *ngFor="let col of cols; let i = index" [ttSortableColumn]="col.field" [style.width]="col.width" style="flex: none; padding: 10px; justify-content: space-between">-->
+<!--                {{ col.header }}-->
+<!--                <p-treeTableSortIcon *ngIf="col.sort" [field]="col.field"></p-treeTableSortIcon>-->
+<!--&lt;!&ndash;                <input *ngIf="col.field === 'routed_status'" pInputText type="text" (input)="tt.filter('Routed', col.field, col.filterMatchMode)"&ndash;&gt;-->
+<!--              </th>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+
+<!--          <ng-template pTemplate="body" let-rowNode let-rowData="rowData">-->
+<!--            <tr>-->
+<!--              <td *ngFor="let col of cols; let i = index"  [style.width]="col.width" style="flex: none; padding: 5px; justify-content: space-between; font-size: 13px;" [ngClass]="{'t-center': col.field === 'segregation' || col.field === 'total_length'}">-->
+<!--                <span *ngIf="i == 0">-->
+<!--                  <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>-->
+<!--                  {{ rowData.name }}-->
+<!--                </span>-->
+<!--                <span *ngIf="i !== 0 && col.field != 'total_length' && col.field != 'segregation'">-->
+<!--                  {{ rowData[col.field] }}-->
+<!--                </span>-->
+<!--                <span *ngIf="i !== 0 && col.field === 'total_length'">-->
+<!--                  {{ rowData['total_length'] === '' ? '' : rowData['total_length'] + ' m.' }}-->
+<!--                </span>-->
+<!--                <span *ngIf="i !== 0 && col.field === 'segregation'" style="text-align: center">-->
+<!--                  {{ rowData['segregation'] }}-->
+<!--                </span>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--        </p-treeTable>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
