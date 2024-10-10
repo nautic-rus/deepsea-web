@@ -34,7 +34,7 @@
   </div>
   <div *ngIf="selectedEleNode">
     Содержимое узла {{selectedEleNode.node}}
-    <div class="ele-node-cables">
+    <div class="ele-node-cables mt-2">
       <div *ngIf="cablesLoading">
         {{cablesLoading}}
       </div>
@@ -58,17 +58,33 @@
     </div>
   </div>
   <div *ngIf="eleNodePNG">
+    Спецификация узла {{selectedEleNode.node}}
+    <div class="ele-node-spec mt-2">
+      <div *ngIf="cablesLoading">
+        {{cablesLoading}}
+      </div>
+      <div *ngIf="!cablesLoading">
+        <div class="cursor-pointer" *ngFor="let text of eleNodePNG.specText">
+          <div class="ele-node-spec-text">{{text}}</div>
+        </div>
+      </div>
+      <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
+        В выбранном узле не проходят кабели
+      </div>
+    </div>
+  </div>
+  <div *ngIf="eleNodePNG">
     <div>Схема узла {{selectedEleNode.node}}</div>
     <div *ngIf="cablesLoading">
       {{cablesLoading}}
     </div>
-    <div *ngIf="!cablesLoading && eleNodeCables.length > 0">
+    <div class="mt-2" *ngIf="!cablesLoading && eleNodeCables.length > 0">
       <div class="cursor-pointer" (click)="previewImage(eleNodePNG.png_url)">
-        <div *ngIf="eleNodePNG.png_url.includes('not enough space for cables')">
-          <div>Недостаточно места для размещения модулей всех кабелей</div>
+        <div *ngIf="eleNodePNG.png_url.includes('error')">
+          <div>ОШИБКА</div>
           <div>{{eleNodePNG.png_url}}</div>
         </div>
-        <div *ngIf="!eleNodePNG.png_url.includes('not enough space for cables')">
+        <div *ngIf="!eleNodePNG.png_url.includes('error')">
           <img class="ele-node-png" [src]="eleNodePNG.png_url">
         </div>
       </div>
