@@ -2,58 +2,61 @@
   Поиск узла <input [(ngModel)]="search" (ngModelChange)="searchNode()">
 </div>
 <div class="df">
-  <div class="ele-nodes">
-    <div class="ele-node cursor-pointer" [class.__selected]="selectedEleNode == node" (click)="selectNode(node)" *ngFor="let node of eleNodes">
-      <div>node:</div>
-      <div>{{node.node}}</div>
-      <div>code:</div>
-      <div>{{node.code}}</div>
-      <div>descr:</div>
-      <div>{{node.descr}}</div>
-      <div>frames:</div>
-      <div>{{node.frames}}</div>
-      <div>height:</div>
-      <div>{{node.iheight}}</div>
-      <div>width:</div>
-      <div>{{node.iwidth}}</div>
-      <div>lengths:</div>
-      <div>{{node.length}}</div>
-      <div>cols:</div>
-      <div>{{node.ncolumns}}</div>
-      <div>rows:</div>
-      <div>{{node.nrows}}</div>
-      <div>seal:</div>
-      <div>{{node.seal}}</div>
-      <div>rout area:</div>
-      <div>{{node.rout_area}}</div>
-      <div>transit size:</div>
-      <div>{{node.transit_size}}</div>
-      <div>code:</div>
-      <div>{{node.stock}}</div>
+  <div>
+    Узлы
+    <div class="ele-nodes mt-2">
+      <div class="ele-node cursor-pointer" [class.__selected]="selectedEleNode == node" (click)="selectNode(node)" *ngFor="let node of eleNodes">
+        <div>node:</div>
+        <div>{{node.node}}</div>
+        <div>code:</div>
+        <div>{{node.code}}</div>
+        <div>descr:</div>
+        <div>{{node.descr}}</div>
+        <div>frames:</div>
+        <div>{{node.frames}}</div>
+        <div>height:</div>
+        <div>{{node.iheight}}</div>
+        <div>width:</div>
+        <div>{{node.iwidth}}</div>
+        <div>lengths:</div>
+        <div>{{node.length}}</div>
+        <div>cols:</div>
+        <div>{{node.ncolumns}}</div>
+        <div>rows:</div>
+        <div>{{node.nrows}}</div>
+        <div>seal:</div>
+        <div>{{node.seal}}</div>
+        <div>rout area:</div>
+        <div>{{node.rout_area}}</div>
+        <div>transit size:</div>
+        <div>{{node.transit_size}}</div>
+        <div>code:</div>
+        <div>{{node.stock}}</div>
+      </div>
     </div>
-  </div>
-  <div *ngIf="selectedEleNode">
-    Содержимое узла {{selectedEleNode.node}}
-    <div class="ele-node-cables mt-2">
-      <div *ngIf="cablesLoading">
-        {{cablesLoading}}
-      </div>
-      <div *ngIf="!cablesLoading">
-        <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
-          <div>cable_id:</div>
-          <div>{{cable.cable_id}}</div>
-          <div>nom_section:</div>
-          <div>{{cable.nom_section}}</div>
-          <div>spec:</div>
-          <div>{{cable.spec}}</div>
-          <div>code:</div>
-          <div>{{cable.code}}</div>
-          <div>diam:</div>
-          <div>{{cable.diam}}</div>
+    <div *ngIf="selectedEleNode">
+      Содержимое узла {{selectedEleNode.node}}
+      <div class="ele-node-cables mt-2">
+        <div *ngIf="cablesLoading">
+          {{cablesLoading}}
         </div>
-      </div>
-      <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
-        В выбранном узле не проходят кабели
+        <div *ngIf="!cablesLoading">
+          <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
+            <div>cable_id:</div>
+            <div>{{cable.cable_id}}</div>
+            <div>nom_section:</div>
+            <div>{{cable.nom_section}}</div>
+            <div>spec:</div>
+            <div>{{cable.spec}}</div>
+            <div>code:</div>
+            <div>{{cable.code}}</div>
+            <div>diam:</div>
+            <div>{{cable.diam}}</div>
+          </div>
+        </div>
+        <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
+          В выбранном узле не проходят кабели
+        </div>
       </div>
     </div>
   </div>
@@ -75,7 +78,7 @@
   </div>
   <div *ngIf="eleNodePNG">
     <div>Схема узла {{selectedEleNode.node}}</div>
-    <div *ngIf="cablesLoading">
+    <div class="mt-2" *ngIf="cablesLoading">
       {{cablesLoading}}
     </div>
     <div class="mt-2" *ngIf="!cablesLoading && eleNodeCables.length > 0">
