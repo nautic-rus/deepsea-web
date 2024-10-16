@@ -8,6 +8,7 @@
 <div class="df">
   <div>
     Узлы
+    Ошибок: {{getErrors()}}
     <div class="ele-nodes mt-2">
       <div [class.__error]="node.error.includes('error')" [class.__ok]="node.error == 'ok'" class="ele-node cursor-pointer" [class.__selected]="selectedEleNode == node" (click)="selectNode(node)" *ngFor="let node of eleNodes">
         <div>node:</div>

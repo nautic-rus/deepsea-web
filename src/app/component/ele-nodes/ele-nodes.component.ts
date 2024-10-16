@@ -65,7 +65,14 @@ export class EleNodesComponent implements OnInit {
         if (findNode) {
           findNode.error = res[0].error;
         }
+        if (this.loaded == this.eleNodesSrc.length) {
+          this.loaded = -1;
+        }
       }
     )).subscribe();
+  }
+
+  getErrors() {
+    return this.eleNodes.filter(x => x.error.includes('error')).length;
   }
 }
