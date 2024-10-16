@@ -12,6 +12,12 @@
   &.__selected{
     background-color: rgba(13, 51, 73, 0.11);
   }
+  &.__error{
+    background-color: rgba(255, 0, 0, 0.11);
+  }
+  &.__ok{
+    background-color: rgba(0, 128, 0, 0.11);
+  }
 }
 .ele-node-cables{
   height: 84vh;

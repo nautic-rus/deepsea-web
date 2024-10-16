@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {SpecManagerService} from "../../domain/spec-manager.service";
 import _ from "underscore";
+import {tap} from "rxjs/operators";
+import {concat, Observable, of} from "rxjs";
 
 @Component({
   selector: 'app-ele-nodes',
@@ -18,6 +20,7 @@ export class EleNodesComponent implements OnInit {
   search = '';
   cablesLoading = '';
   previewImagePNG = '';
+  loaded = -1;
   constructor(public s: SpecManagerService) { }
 
   ngOnInit(): void {
@@ -50,5 +53,19 @@ export class EleNodesComponent implements OnInit {
   previewImage(png_url: string) {
     this.previewImagePNG = png_url;
     console.log(this.previewImagePNG);
+  }
+
+  checkStatus() {
+    this.loaded = 0;
+    let observables = this.eleNodesSrc.map(x => this.s.checkEleNodePNG(this.project, x.node_id));
+    concat(...observables).pipe(
+      tap(res => {
+        this.loaded++;
+        let findNode = this.eleNodes.find(x => x.node_id == res[0].node_id);
+        if (findNode) {
+          findNode.error = res[0].error;
+        }
+      }
+    )).subscribe();
   }
 }
