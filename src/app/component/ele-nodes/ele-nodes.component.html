@@ -96,15 +96,15 @@
       {{cablesLoading}}
     </div>
     <div class="mt-2" *ngIf="!cablesLoading && eleNodeCables.length > 0">
-      <div class="cursor-pointer" (click)="previewImage(eleNodePNG.png_url)">
+      <div class="cursor-pointer">
         <div *ngIf="eleNodePNG.png_url.includes('error')">
           <div>ОШИБКА</div>
           <div>{{eleNodePNG.png_url}}</div>
-          <div *ngIf="eleNodePNG.png_url.includes('not enough')">
+          <div *ngIf="eleNodePNG.png_url.includes('not enough')" (click)="previewImage(eleNodePNG.error_png_url)">
             <img class="ele-node-png" [src]="eleNodePNG.error_png_url">
           </div>
         </div>
-        <div *ngIf="!eleNodePNG.png_url.includes('error')">
+        <div *ngIf="!eleNodePNG.png_url.includes('error')" (click)="previewImage(eleNodePNG.png_url)">
           <img class="ele-node-png" [src]="eleNodePNG.png_url">
         </div>
       </div>
