@@ -184,6 +184,9 @@ export class UploadMultipleFilesComponent implements OnInit {
     if (this.issue.assistant != '' && this.issue.assistant != dep){
       dep = this.issue.assistant;
     }
+    if (this.issue.doc_number == '200101-422-001'){
+      dep = 'Hull';
+    }
     switch (dep) {
       case 'Hull': this.fileGroups = this.hullFileGroups; break;
       case 'System': this.fileGroups = this.pipeFileGroups; break;

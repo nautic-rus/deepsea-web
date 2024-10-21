@@ -75,4 +75,11 @@ export class EleNodesComponent implements OnInit {
   getErrors() {
     return this.eleNodes.filter(x => x.error.includes('error')).length;
   }
+
+  createPdf() {
+    this.s.getEleNodePDF(this.project, this.selectedEleNode.node_id).subscribe(pdf => {
+      console.log(pdf);
+      window.open(pdf, '_blank');
+    });
+  }
 }
