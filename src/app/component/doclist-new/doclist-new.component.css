@@ -105,3 +105,21 @@
   padding: 0 10px;
   color: white;
 }
+
+.filter-item {
+  display: grid;
+  grid-template-columns: 10fr 3fr;
+}
+
+
+.filters {
+  color: red;
+}
+
+/deep/ .filters > p-dropdown {
+  width: 13vw;
+}
+
+/deep/ .filters .p-dropdown {
+  width: 13vw;
+}
