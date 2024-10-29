@@ -20,6 +20,42 @@
           </ng-template>
         </p-multiSelect>
       </div>
+      <div class="df ">
+        <p-dropdown class="mr-10 filters" #dd [options]="savedFiltersDoclist" optionLabel="name" placeholder="{{savedFilterNameDoclist != '' ? savedFilterNameDoclist : 'No filters'}}" [(ngModel)]="savedFilterNameDoclist">
+          <ng-template let-filter pTemplate="item">
+            <div class="df filter-item" style="position: relative; z-index: 8000" (click)="loadFilter(table, filter)">
+              <div>{{filter.name}}</div>
+              <div style="margin-left: 40px; position: relative; z-index: 8000" tooltipPosition="top" [pTooltip]="t.tr('Удалить фильтр')" (click)="deleteFilter(table, filter.id, filter.name, $event)">
+                <img src="assets/icons/trash.svg" height="20">
+              </div>
+            </div>
+
+          </ng-template>
+        </p-dropdown>
+        <div class="mr-50">
+          <div class="materials-button-home blue-button cxy" (click)="saveFilters()">
+            <div class="cxy">{{t.tr('Сохранить фильтр')}}</div>
+          </div>
+        </div>
+      </div>
+<!--      <div class="df">-->
+<!--        <p-dropdown class="mr-10 filters" #dd [options]="savedFiltersDoclist" optionLabel="name" placeholder='No filters' [(ngModel)]="savedFilterNameDoclist">-->
+<!--&lt;!&ndash;        <p-dropdown class="mr-10 filters" #dd [options]="savedFiltersDoclist" optionLabel="name" placeholder="{{savedFilterNameDoclist != '' ? savedFilterNameDoclist : 'No filters'}}" [(ngModel)]="savedFilterNameDoclist">&ndash;&gt;-->
+<!--          <ng-template let-filter pTemplate="item">-->
+<!--            <div class="df filter-item" style="position: relative; z-index: 8000" (click)="loadFilter(tableDoclist, filter)">-->
+<!--            <div>{{filter.name}}</div>-->
+<!--              <div style="margin-left: 40px; position: relative; z-index: 8000" tooltipPosition="top" [pTooltip]="t.tr('Удалить фильтр')" (click)="deleteFilter(tableDoclist, filter.id, filter.name, $event)">-->
+<!--                <img src="assets/icons/trash.svg" height="20">-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--        </p-dropdown>-->
+<!--        <div class="mr-50">-->
+<!--          <div class="materials-button-home blue-button cxy" (click)="saveFilters()">-->
+<!--            <div class="cxy">{{t.tr('Сохранить фильтр')}}</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="mr-10">
         <div class="materials-button green-button cxy" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" (click)="exportXls()">
           <img src="assets/icons/xls2.svg" height="26">

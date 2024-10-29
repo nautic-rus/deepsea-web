@@ -34,15 +34,16 @@ import {FilterNameComponent} from "./filter-name/filter-name.component";
 import { ChangeDetectorRef } from '@angular/core';
 import {Dropdown} from "primeng/dropdown";
 import {AgreeModalComponent} from "../equipments/agree-modal/agree-modal.component";
+import {IFilterSaved} from "../../domain/interfaces/filter-saved";
 
 
-interface ISavedFilters {
-  id: number;
-  user_id: number;
-  field: string;
-  value: string;
-  showCompleted: Boolean;
-}
+// interface ISavedFilters {
+//   id: number;
+//   user_id: number;
+//   field: string;
+//   value: string;
+//   showCompleted: Boolean;
+// }
 
 interface IFilter {
   field: string;
@@ -74,7 +75,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   showResponsible: boolean = false;
   showStartedBy: boolean = false;
   savedFilters: any[] = [];
-  savedFilters1: ISavedFilters[] = [];
+  savedFilters1: IFilterSaved[] = [];
   savedFilterName: string | null = '';
 
   filtersValues: any;
@@ -113,7 +114,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
 
   ngOnInit() {
-    this.savedFilterName =  localStorage.getItem("savedFilterName")
+    this.savedFilterName =  localStorage.getItem("savedFilterName");
 
     this.getSavedFilters();
     if (!this.auth.getUser().visible_pages.includes('home') && this.auth.getUser().visible_pages.length > 0){
@@ -1045,12 +1046,13 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       if (name) {
         let state = localStorage.getItem('state')
         console.log(state)
-        const newFilter = {
+        const newFilter: IFilterSaved = {
           id: 0,
           user_id: this.auth.getUser().id,
           name: name,
-          value: state,
-          showCompleted: this.showCompleted ? 1 : 0
+          value: state!,
+          showCompleted: this.showCompleted ? 1 : 0,
+          page: 'home'
         }
         // console.log(newFilter)
 
@@ -1067,7 +1069,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
 
   getSavedFilters() {
     this.issueManager.getFilters(this.auth.getUser().id).subscribe(res => {
-      this.savedFilters1 = res;
+      this.savedFilters1 = res.filter((filter: IFilterSaved) => filter.page === 'home');
+      console.log(res);
       setTimeout(() => {  //чтобы установить название только загруженного фильтра
         // @ts-ignore
         this.savedFilterName = localStorage.getItem("savedFilterName");
@@ -1092,7 +1095,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     // @ts-ignore
     localStorage.setItem('savedFilterName', '');
     // @ts-ignore
-    this.savedFilterName = ''
+    this.savedFilterName = '';
     this.dt.clear();
     this.dt.reset();
     this.dt.clearState();
