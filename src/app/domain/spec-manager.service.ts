@@ -209,4 +209,7 @@ export class SpecManagerService {
   checkEleNodePNG(project: string, node: number) {
     return this.http.get<any>(props.httpSpec + '/eleNodesError', {params: {project, node}});
   }
+  getEleNodePDF(project: string, node: number) {
+    return this.http.get<any>(props.httpSpec + '/eleNodePdf', {params: {project, node}});
+  }
 }

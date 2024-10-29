@@ -4,11 +4,16 @@
     <button *ngIf="loaded == -1" (click)="checkStatus()">Определить статус узлов</button>
     <div *ngIf="loaded != -1">Загружено {{loaded}} из {{eleNodes.length}} узлов</div>
   </div>
+  <div class="ml-2">
+    <button (click)="createPdf()">Сделать PDF</button>
+  </div>
 </div>
 <div class="df">
   <div>
-    Узлы
-    Ошибок: {{getErrors()}}
+    <div>
+      Узлы
+      Ошибок: {{getErrors()}}
+    </div>
     <div class="ele-nodes mt-2">
       <div [class.__error]="node.error.includes('error')" [class.__ok]="node.error == 'ok'" class="ele-node cursor-pointer" [class.__selected]="selectedEleNode == node" (click)="selectNode(node)" *ngFor="let node of eleNodes">
         <div>node:</div>
@@ -43,29 +48,29 @@
         <div>{{node.error}}</div>
       </div>
     </div>
-    <div *ngIf="selectedEleNode">
-      Содержимое узла {{selectedEleNode.node}}
-      <div class="ele-node-cables mt-2">
-        <div *ngIf="cablesLoading">
-          {{cablesLoading}}
+  </div>
+  <div *ngIf="selectedEleNode">
+    Содержимое узла {{selectedEleNode.node}}
+    <div class="ele-node-cables mt-2">
+      <div *ngIf="cablesLoading">
+        {{cablesLoading}}
+      </div>
+      <div *ngIf="!cablesLoading">
+        <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
+          <div>cable_id:</div>
+          <div>{{cable.cable_id}}</div>
+          <div>nom_section:</div>
+          <div>{{cable.nom_section}}</div>
+          <div>spec:</div>
+          <div>{{cable.spec}}</div>
+          <div>code:</div>
+          <div>{{cable.code}}</div>
+          <div>diam:</div>
+          <div>{{cable.diam}}</div>
         </div>
-        <div *ngIf="!cablesLoading">
-          <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
-            <div>cable_id:</div>
-            <div>{{cable.cable_id}}</div>
-            <div>nom_section:</div>
-            <div>{{cable.nom_section}}</div>
-            <div>spec:</div>
-            <div>{{cable.spec}}</div>
-            <div>code:</div>
-            <div>{{cable.code}}</div>
-            <div>diam:</div>
-            <div>{{cable.diam}}</div>
-          </div>
-        </div>
-        <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
-          В выбранном узле не проходят кабели
-        </div>
+      </div>
+      <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
+        В выбранном узле не проходят кабели
       </div>
     </div>
   </div>
@@ -91,12 +96,15 @@
       {{cablesLoading}}
     </div>
     <div class="mt-2" *ngIf="!cablesLoading && eleNodeCables.length > 0">
-      <div class="cursor-pointer" (click)="previewImage(eleNodePNG.png_url)">
+      <div class="cursor-pointer">
         <div *ngIf="eleNodePNG.png_url.includes('error')">
           <div>ОШИБКА</div>
           <div>{{eleNodePNG.png_url}}</div>
+          <div *ngIf="eleNodePNG.png_url.includes('not enough')" (click)="previewImage(eleNodePNG.error_png_url)">
+            <img class="ele-node-png" [src]="eleNodePNG.error_png_url">
+          </div>
         </div>
-        <div *ngIf="!eleNodePNG.png_url.includes('error')">
+        <div *ngIf="!eleNodePNG.png_url.includes('error')" (click)="previewImage(eleNodePNG.png_url)">
           <img class="ele-node-png" [src]="eleNodePNG.png_url">
         </div>
       </div>
