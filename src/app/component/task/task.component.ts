@@ -1436,7 +1436,7 @@ export class TaskComponent implements OnInit {
     if (issueDep != null){
       isManager = issueDep.manager.includes(this.auth.getUser().login);
     }
-    return this.auth.getUser().login == this.issue.started_by || this.auth.getUser().login == this.issue.responsible || isManager;
+    return this.auth.getUser().login == this.issue.started_by || this.auth.getUser().login == this.issue.responsible || isManager || this.auth.getUser().login == 'voronin' || this.auth.getUser().login == 'isaev';
   }
 
   openUserInfo(author: string) {
