@@ -2,6 +2,7 @@
   <div class="min-height-card">
     <div class="empty-card"></div>
     <div class="card-head df sticky-card justify-content-end">
+      <div (click)="createPdf()">PDF</div>
       <div class="mr-10">
         <span>{{t.language === 'ru' ? 'Количество кабелей: ' : 'Number of cables: '}}</span>
         <span>{{tt.filteredValue != null ? tt.filteredValue.length  : tt.value.length}} </span>
@@ -14,6 +15,19 @@
         </span>
     </div>
     <div class="empty-card-bottom"></div>
+<!--    <div *ngIf="loading">-->
+<!--      <div class="cxy loading">-->
+<!--        <div class="cxy card-height">-->
+<!--          <img src="assets/whale.gif" height="120">-->
+<!--          <div class="cx loading-text">PLEASE WAIT...</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div *ngIf="!loading && cablesSrc.length == 0">-->
+<!--      <div class="cxy card-height">-->
+<!--        <div class="cx loading-text">There is no data there. You need to specify bundle or select another one.</div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="card-overflow">
       <div>
         <p-table #tt [value]="cablesSrc"

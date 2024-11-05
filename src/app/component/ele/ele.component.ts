@@ -181,6 +181,18 @@ export class EleComponent implements OnInit {
     return zone;
   }
 
+  createPdf() {
+    this.eleCablesService.getPdfUrl().subscribe((url) => {
+      console.log("PDF res");
+      console.log(url);
+      let fileURL = 'https://deep-sea.ru/rest-d' + url;
+      console.log(fileURL);
+      window.open(fileURL, '_blank');
+      // this.eleCablesService.getPdfFileByUrl(url).subscribe((res) => {
+      //   window.open(fileURL, '_blank');
+      // });
+    })
+  }
 }
 
 

@@ -28,5 +28,15 @@ export class EleCablesService {
     return this.http.get(props.httpD + '/cables');
   }
 
+  getPdfUrl(): Observable<any> {
+    return this.http.get(props.httpD + '/cablesPdfUrl');
+  }
+
+  getPdfFileByUrl(url: string): Observable<any> {
+    // let fullUrl = 'https://${origin}/rest-d' + url
+    // return this.http.get(props.httpD + '/files', {params: {url}});
+    const fullUrl = `${props.httpD}${url}`;
+    return this.http.get(fullUrl)
+  }
 
 }
