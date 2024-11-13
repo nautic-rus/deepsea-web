@@ -33,6 +33,7 @@ export class EleComponent implements OnInit {
   loading: boolean = true;
   routedStatuses: any = [];
   SGRs: any = [];
+  pdfLoading: boolean = false
 
 
   constructor(private eleCablesService: EleCablesService, public t: LanguageService) {
@@ -182,15 +183,15 @@ export class EleComponent implements OnInit {
   }
 
   createPdf() {
+    this.pdfLoading = true;
     this.eleCablesService.getPdfUrl().subscribe((url) => {
       console.log("PDF res");
       console.log(url);
-      let fileURL = 'https://deep-sea.ru/rest-d' + url;
-      console.log(fileURL);
-      window.open(fileURL, '_blank');
-      // this.eleCablesService.getPdfFileByUrl(url).subscribe((res) => {
-      //   window.open(fileURL, '_blank');
-      // });
+      window.open("/rest-d" +url, '_blank');
+      this.pdfLoading = false;
+      // let fileURL = 'https://deep-sea.ru/rest-d' + url;
+      // console.log(fileURL);
+      // window.open(fileURL, '_blank');
     })
   }
 }

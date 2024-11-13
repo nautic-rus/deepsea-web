@@ -98,3 +98,16 @@
   padding: 5px 5px !important;
   font-size: 12px;
 }
+
+.loading-animation {
+  animation: rotate 3s infinite linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
