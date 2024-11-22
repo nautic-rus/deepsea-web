@@ -207,7 +207,7 @@
                     <div class="w-7 pr-10 df">
                       <div class="df">
                         <div class="attribute mr-5 cy">L</div>
-                        <div class="text-table-col cy">{{round(pipe.length)}}</div>
+                        <div [class.red-text]="pipe.length <= '3'" class="text-table-col cy">{{round(pipe.length)}}</div>
                       </div>
                     </div>
                     <div class="w-8 pr-10 align-center df">

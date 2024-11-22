@@ -29,10 +29,10 @@
                 </div>
               </div>
               <span class="p-input-icon-left p-ml-auto">
-            <i class="pi pi-search"></i>
-            <input #search pInputText type="text" (input)="usr.filterGlobal(search.value, 'contains')"
+                <i class="pi pi-search"></i>
+                <input #search pInputText type="text" (input)="usr.filterGlobal(search.value, 'contains')"
                    [placeholder]="t.tr('Поиск...')" class="border"/>
-          </span>
+              </span>
             </div>
           </ng-template>
 
@@ -148,7 +148,7 @@
               <td class="text-14">{{user.surname}}</td>
               <td class="text-14">{{user.profession}}</td>
               <td class="text-14">{{this.getDepartmentName(user.id_department)}}</td>
-              <td class="text-14">{{user.groups}}</td>
+              <td class="text-14 break-word">{{user.groups}}</td>
               <td *ngIf="user.removed == 0" class="text-14">{{t.tr('Нет')}}</td>
               <td *ngIf="user.removed == 1" class="text-14">{{t.tr('Да')}}</td>
             </tr>
