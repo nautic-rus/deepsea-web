@@ -95,4 +95,15 @@ export class ComplectManagerComponent implements OnInit {
       });
     }
   }
+
+  createPdf(compl: any) {
+    console.log(compl)
+    console.log(this.selectedComplect)
+    this.s.createEleComplectPDF(compl.drawingId).subscribe((url) => {
+      console.log("PDF res");
+      console.log(url);
+      window.open("/rest-d" +url, '_blank');
+      // this.pdfLoading = false;
+    })
+  }
 }

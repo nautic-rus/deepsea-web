@@ -189,9 +189,6 @@ export class EleComponent implements OnInit {
       console.log(url);
       window.open("/rest-d" +url, '_blank');
       this.pdfLoading = false;
-      // let fileURL = 'https://deep-sea.ru/rest-d' + url;
-      // console.log(fileURL);
-      // window.open(fileURL, '_blank');
     })
   }
 }

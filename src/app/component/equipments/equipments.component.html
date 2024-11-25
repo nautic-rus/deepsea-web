@@ -1,10 +1,15 @@
 <div class="equipments_container">
-
-
-
+  <div class="card cxy" *ngIf="equipmentsSrc.length == 0">
+    <div class="cxy loading">
+      <div class="cxy flex-column">
+        <img src="assets/whale.gif" height="120">
+        <div class="cx loading-text">PLEASE WAIT...</div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="equipmentsSrc.length !== 0">
   <div class="equipment_header pb-15">
     <div class=" mr-10 df">
-
         <div class="eq-button blue-button cxy mr-10" (click)="newGroup()" style="width: fit-content;">
           <div class="pr-10 cxy">
             <img src="assets/icons/plus3.svg" height="18">
@@ -111,6 +116,7 @@
   <p-sidebar *ngIf="editEqSidebarVisible" [(visible)]="editEqSidebarVisible" position="right" [style]="{width:'40rem'}" (onHide)="closeSideBar()" [showCloseIcon]="false">
     <app-edit-equipment [eq]="selectedEq" [group]="selectedGroup" (closeSidebarEvent)="closeSideBar()"></app-edit-equipment>
   </p-sidebar>
+  </div>
 </div>
 
 

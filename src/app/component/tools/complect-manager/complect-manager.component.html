@@ -22,6 +22,9 @@
                   <div class="title-bold-c">{{compl.drawingId}}</div>
                   <div class="df">
                     <div class="title-bold-c mr-20">{{compl.project}}</div>
+                    <div (click)="createPdf(compl)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+                      <img src="assets/icons/pdf2.svg" height="26">
+                    </div>
                     <div class="cxy" [pTooltip]="t.tr('Удалить комплект')" tooltipPosition="top" (click)="deleteComplect(compl)">
                       <svg class="icon-с" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -75,6 +78,11 @@
                   </td>
                   <td>{{syst.code}}</td>
                   <td>{{syst.name}}</td>
+<!--                  <td style="width: 20px">-->
+<!--                    <div (click)="createPdf(syst.code)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">-->
+<!--                      <img src="assets/icons/pdf2.svg" height="26">-->
+<!--                    </div>-->
+<!--                  </td>-->
                 </tr>
               </ng-template>
             </p-table>
