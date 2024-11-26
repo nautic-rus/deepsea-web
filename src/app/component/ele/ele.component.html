@@ -10,15 +10,15 @@
   <div class="min-height-card">
     <div class="empty-card"></div>
     <div class="card-head df sticky-card justify-content-end">
-      <div [ngClass]="{hidden: !pdfLoading}" class="mr-10 df align-center">
-        <img class="mr-5 loading-animation" src="assets/icons/loading.png" height="26">
-        <span>Идет формирование PDF</span>
-      </div>
-      <div class="mr-10">
-        <div (click)="createPdf()" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
-          <img src="assets/icons/pdf2.svg" height="26">
-        </div>
-      </div>
+<!--      <div [ngClass]="{hidden: !pdfLoading}" class="mr-10 df align-center">-->
+<!--        <img class="mr-5 loading-animation" src="assets/icons/loading.png" height="26">-->
+<!--        <span>Идет формирование PDF</span>-->
+<!--      </div>-->
+<!--      <div class="mr-10">-->
+<!--        <div (click)="createPdf()" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">-->
+<!--          <img src="assets/icons/pdf2.svg" height="26">-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="mr-10">
         <span>{{t.language === 'ru' ? 'Количество кабелей: ' : 'Number of cables: '}}</span>
         <span>{{tt.filteredValue != null ? tt.filteredValue.length  : tt.value.length}} </span>

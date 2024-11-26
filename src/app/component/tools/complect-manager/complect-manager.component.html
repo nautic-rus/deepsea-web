@@ -1,8 +1,8 @@
 <div class="all-page">
   <div class="card-complect">
-    <div class="page-c">
-      <div class="complects">
-        <div class="df mb-10">
+    <div class="card-head df sticky-card" *ngIf="projects.length > 0">
+      <div class="df mb-10 header">
+        <div class="df">
           <div class="mr-10">
             <p-dropdown class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-156 font-14">
             </p-dropdown>
@@ -14,6 +14,22 @@
             <div class="cxy">{{t.tr('Добавить комплект')}}</div>
           </div>
         </div>
+        <div class="df">
+          <div [ngClass]="{hidden: !pdfLoading}" class="mr-10 df align-center">
+            <img class="mr-5 loading-animation" src="assets/icons/loading.png" height="26">
+            <span>Идет формирование PDF</span>
+          </div>
+          <div class="mr-10">
+            <div (click)="createPdfAllCablesWithNodes()" [pTooltip]="t.tr('КЖ маг.каб')" tooltipPosition="top" class="materials-button red-button cxy">
+              <img src="assets/icons/pdf2.svg" height="26">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="empty-card-bottom"></div>
+    <div class="page-c">
+      <div class="complects">
         <div class="background-gray ml-minus15">
           <cdk-virtual-scroll-viewport  style="height: 81vh" [itemSize]="110">
             <div [class.selected-complect]="selectedComplect == compl" (click)="selectComplect(compl)" [style.height]="120 + 'px'" class="issues-all" *cdkVirtualFor="let compl of complects">
@@ -22,7 +38,7 @@
                   <div class="title-bold-c">{{compl.drawingId}}</div>
                   <div class="df">
                     <div class="title-bold-c mr-20">{{compl.project}}</div>
-                    <div (click)="createPdf(compl)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
+                    <div *ngIf="compl.zoneNames.length != 0" (click)="createPdf(compl)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
                       <img src="assets/icons/pdf2.svg" height="26">
                     </div>
                     <div class="cxy" [pTooltip]="t.tr('Удалить комплект')" tooltipPosition="top" (click)="deleteComplect(compl)">

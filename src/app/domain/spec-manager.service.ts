@@ -146,6 +146,9 @@ export class SpecManagerService {
   createHullEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createHullEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
+  createHullEspPostgres(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
+    return this.http.get<string>(props.httpD + '/createHullEspPostgres', {params: {project, docNumber, rev, user, kind, taskId}});
+  }
   createPipeEsp(project: string, docNumber: string, rev: string, user: string, kind: string, taskId: number){
     return this.http.get<string>(props.httpSpec + '/createPipeEsp', {params: {project, docNumber, rev, user, kind, taskId}});
   }
@@ -211,5 +214,9 @@ export class SpecManagerService {
   }
   getEleNodePDF(project: string, node: number) {
     return this.http.get<any>(props.httpSpec + '/eleNodePdf', {params: {project, node}});
+  }
+
+  createEleComplectPDF(drawingId: string) {
+    return this.http.get<any>(props.httpD + '/complectPdf', {params: {drawingId}});
   }
 }

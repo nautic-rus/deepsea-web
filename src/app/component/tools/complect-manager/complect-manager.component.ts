@@ -5,6 +5,7 @@ import _, {any} from "underscore";
 import {DialogService} from "primeng/dynamicdialog";
 import {AddComplectComponent} from "./add-complect/add-complect.component";
 import {LanguageService} from "../../../domain/language.service";
+import {EleCablesService} from "../../../domain/ele-cables.service";
 
 @Component({
   selector: 'app-complect-manager',
@@ -21,7 +22,8 @@ export class ComplectManagerComponent implements OnInit {
   selectedSystems: any[] = [];
   zones: any[] = [];
   selectedZones: any[] = [];
-  constructor(public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public t: LanguageService) { }
+  pdfLoading = false;
+  constructor(private eleCablesService: EleCablesService, public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -97,13 +99,24 @@ export class ComplectManagerComponent implements OnInit {
   }
 
   createPdf(compl: any) {
+    this.pdfLoading = true;
     console.log(compl)
     console.log(this.selectedComplect)
     this.s.createEleComplectPDF(compl.drawingId).subscribe((url) => {
       console.log("PDF res");
       console.log(url);
       window.open("/rest-d" +url, '_blank');
-      // this.pdfLoading = false;
+      this.pdfLoading = false;
+    })
+  }
+
+  createPdfAllCablesWithNodes() {
+    this.pdfLoading = true;
+    this.eleCablesService.getPdfUrl().subscribe((url) => {
+      console.log("PDF res");
+      console.log(url);
+      window.open("/rest-d" +url, '_blank');
+      this.pdfLoading = false;
     })
   }
 }
