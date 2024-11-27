@@ -763,7 +763,7 @@ export class PipeEspComponent implements OnInit {
   }
 
   isGS(values: any[]) {
-    return values.find((x: any) => x.smat.toLowerCase().includes('gs')) != null;
+    return values.find((x: any) => x.smat.toLowerCase().includes('sg1')) != null;
   }
 
   lockSpool(pipeSpool: any) {
