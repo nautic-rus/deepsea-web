@@ -590,9 +590,16 @@
               </div>
               <span class="file-name-esp mx-10 min-width-150 cy">{{trimFileName(file.name, 30) + ' '}}</span>
               <span class="cy pl-5">{{this.auth.getUserTrimName(file.removed_by) + ' ' + getDate(file.removed_date)}}</span>
-              <div class="cxy ml-10 load-cloud" >
+<!--              <div class="cxy ml-10 load-cloud" *ngIf="file.name.includes('.dxf')" >-->
+<!--                <div class="cxy ml-10" (click)="openFile(file)">-->
+<!--                  <img src="assets/icons/download-arrow.png">-->
+<!--                </div>-->
+<!--              </div>-->
+              <div class="cxy ml-10 load-cloud">
                 <div class="cxy ml-10" (click)="openFile(file)">
-                  <img src="assets/icons/download-arrow.png">
+                  <svg class="icon-nest" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                  </svg>
                 </div>
               </div>
             </div>
