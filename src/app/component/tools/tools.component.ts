@@ -27,7 +27,7 @@ export class ToolsComponent implements OnInit {
 
 
   trayBundlesProject = 'P701';
-  trayBundlesProjects = ['P701', 'P707'];
+  trayBundlesProjects = ['P701', 'P707', 'P702'];
   selectedTrayBundle: any;
   trayBundles: any[] = [];
 
@@ -75,6 +75,8 @@ export class ToolsComponent implements OnInit {
   }
   trayBundleProjectChanged(){
     this.s.getTrayBundles(this.trayBundlesProject).then(res => {
+      console.log(res)
+      console.log(this.trayBundlesProject)
       this.trayBundles = _.sortBy(res.filter((x: any) => x.drawingId != null && x.drawingId != ''), x => x.drawingId);
       if (this.trayBundles.length > 0){
         this.selectedTrayBundle = this.trayBundles[0].drawingId;
