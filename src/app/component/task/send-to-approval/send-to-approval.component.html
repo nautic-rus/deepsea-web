@@ -64,8 +64,8 @@
   </div>
 
   <div class="big-text-create mb-1 mt-1">{{t.tr('Назначить ответственного')}}</div>
-  <p-multiSelect *ngIf="!hideUsers" appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-220 border max-height-150" [maxSelectedLabels]="5" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
-  <p-multiSelect *ngIf="hideUsers" appendTo = "body" optionValue="login" optionLabel="userName" [options]="onlyManagers" styleClass="width-220 border max-height-150" [maxSelectedLabels]="5" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
+  <p-multiSelect *ngIf="!hideUsers" appendTo = "body" optionValue="login" optionLabel="userName" [options]="users" styleClass="width-220 border max-height-150" [maxSelectedLabels]="3" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
+  <p-multiSelect *ngIf="hideUsers" appendTo = "body" optionValue="login" optionLabel="userName" [options]="onlyManagers" styleClass="width-220 border max-height-150" [maxSelectedLabels]="3" [selectedItemsLabel]="t.tr('{0} выбрано')" [(ngModel)]="selectedUsers"></p-multiSelect>
   <div class="df">
     <div class="mr-5">*только руководители</div>
     <p-checkbox [binary]="true" [(ngModel)]="hideUsers"></p-checkbox>

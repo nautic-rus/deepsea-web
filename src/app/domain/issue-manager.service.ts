@@ -602,6 +602,9 @@ export class IssueManagerService {
   }
 
   localeTaskPeriod(stage_name: string) {
+    if (stage_name == null){
+      return '';
+    }
     if (this.lang.language == 'ru'){
       return stage_name.replace("Stage", "Этап");
     }
