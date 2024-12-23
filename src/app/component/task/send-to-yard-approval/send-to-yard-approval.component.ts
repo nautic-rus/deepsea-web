@@ -18,7 +18,7 @@ export class SendToYardApprovalComponent implements OnInit {
   dragOver = false;
   loaded: FileAttachment[] = [];
   awaitForLoad: string[] = [];
-  selectedUsers: string[] = ['lvov', 'n.novikov'];
+  selectedUsers: string[] = ['lvov', 'n.novikov', 'voronin'];
   issue: Issue = new Issue();
   users: User[] = [];
 
