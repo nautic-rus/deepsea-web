@@ -110,6 +110,20 @@ export class PlanComponent implements OnInit {
     Object({day: 28, month: 12, year: 2024, hours: 8}),
     Object({day: 30, month: 12, year: 2024, hours: 0}),
     Object({day: 31, month: 12, year: 2024, hours: 0}),
+
+    Object({day: 7, month: 3, year: 2025, hours: 7}),
+    Object({day: 30, month: 4, year: 2025, hours: 7}),
+    Object({day: 1, month: 5, year: 2025, hours: 0}),
+    Object({day: 2, month: 5, year: 2025, hours: 0}),
+    Object({day: 8, month: 5, year: 2025, hours: 0}),
+    Object({day: 9, month: 5, year: 2025, hours: 0}),
+    Object({day: 11, month: 6, year: 2025, hours: 7}),
+    Object({day: 12, month: 6, year: 2025, hours: 0}),
+    Object({day: 13, month: 6, year: 2025, hours: 0}),
+    Object({day: 1, month: 11, year: 2025, hours: 7}),
+    Object({day: 3, month: 11, year: 2025, hours: 0}),
+    Object({day: 4, month: 11, year: 2025, hours: 0}),
+    Object({day: 31, month: 12, year: 2025, hours: 0}),
   ];
   usersSrc: User[] = [];
   users: User[] = [];
