@@ -454,6 +454,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: true
       },
+      {
+        field: 'actual_man_hours',
+        header: 'Actual man-hours',
+        headerLocale: 'Actual man-hours',
+        sort: true,
+        filter: false,
+        filters: this.getFilters(this.issues, 'actual_man_hours'),
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -523,6 +535,15 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         });
         // let is = "mmm"
         issue.related_issues = related;
+
+        //добавить столбец с трудозатратами на задачу (чтобы он появился в файлике exel)
+        this.auth.getPlanIssue(issue.id).subscribe(planIssue => {
+          console.log(issue.actual_man_hours );
+          issue.actual_man_hours = planIssue[0].consumed;
+
+        });
+
+        // console.log(this.issues)
         // issue.related_issuesStr = is;
         // issue.ready = this.defineReadyState(issue);
       });
@@ -632,7 +653,9 @@ export class HomeComponent implements OnInit, AfterContentChecked {
     //   this.setStatuses()
     // }
 
-    return _.sortBy(res, x => x.label.toString().replace('Не назначен', '0').replace('Not assigned', '0'));
+    return _.sortBy(res, x => {
+      x.label ? x.label.toString().replace('Не назначен', '0').replace('Not assigned', '0') : ''
+    });
   }
 
   localeFilter(column: string, field: string): string {
@@ -649,6 +672,8 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         return this.issueManager.localeTaskPriority(field);
       case 'status':
         return this.issueManager.localeStatus(field, false);
+      // case 'actual_man_hours':
+      //   return field?.toString();
       // case 'it_type':
       //   return this.issueManager.localeItType(field, true);
       default:
@@ -840,7 +865,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
       let newIssue: Issue = JSON.parse(JSON.stringify(issue));
       let rowData: any[] = [];
       let findSrc = this.issues.find(x => x.id == newIssue.id);
-      console.log(findSrc);
+      // console.log(findSrc);
 
       cols.forEach(c => {
         if (findSrc != null){

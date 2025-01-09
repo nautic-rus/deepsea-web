@@ -65,4 +65,5 @@ export class Issue {
   max_due_date: any;
   author_comment: string = '';
   it_type: string = ''
+  actual_man_hours: number = 0;
 }
