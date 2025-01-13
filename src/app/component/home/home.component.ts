@@ -454,18 +454,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: true
       },
-      {
-        field: 'actual_man_hours',
-        header: 'Actual man-hours',
-        headerLocale: 'Actual man-hours',
-        sort: true,
-        filter: false,
-        filters: this.getFilters(this.issues, 'actual_man_hours'),
-        skip: false,
-        defaultValue: '',
-        hidden: false,
-        date: false,
-      },
+      // {
+      //   field: 'actual_man_hours',
+      //   header: 'Actual man-hours',
+      //   headerLocale: 'Actual man-hours',
+      //   sort: true,
+      //   filter: false,
+      //   filters: this.getFilters(this.issues, 'actual_man_hours'),
+      //   skip: false,
+      //   defaultValue: '',
+      //   hidden: false,
+      //   date: false,
+      // },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -537,11 +537,11 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         issue.related_issues = related;
 
         //добавить столбец с трудозатратами на задачу (чтобы он появился в файлике exel)
-        this.auth.getPlanIssue(issue.id).subscribe(planIssue => {
-          console.log(issue.actual_man_hours );
-          issue.actual_man_hours = planIssue[0].consumed;
-
-        });
+        // this.auth.getPlanIssue(issue.id).subscribe(planIssue => {
+        //   console.log(issue.actual_man_hours );
+        //   issue.actual_man_hours = planIssue[0].consumed;
+        //
+        // });
 
         // console.log(this.issues)
         // issue.related_issuesStr = is;
