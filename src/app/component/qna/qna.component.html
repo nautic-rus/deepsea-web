@@ -27,6 +27,13 @@
         </p-dropdown>
       </div>
 
+<!--      lvov, dulanova -->
+      <div *ngIf="auth.getUser().id == 25 || auth.getUser().id == 323" class="mr-10">
+        <div (click)="exportXls()" [pTooltip]="t.tr('Экспорт XLS')" tooltipPosition="top" class="materials-button green-button cxy">
+          <img src="assets/icons/xls2.svg" height="26">
+        </div>
+      </div>
+
 
       <div class="p-ml-auto mr-10 df">
         <div class="mr-10 cxy">

@@ -15,6 +15,7 @@ import {AssignQuestionComponent} from "./assign-question/assign-question.compone
 import {TaskComponent} from "../task/task.component";
 import {Table} from "primeng/table";
 import {formatCurrency} from "@angular/common";
+import * as XLSX from "xlsx";
 
 
 @Component({
@@ -299,5 +300,94 @@ export class QnaComponent implements OnInit {
   getIssuesDueDateLength() {
     let ques = this.questionsSrc.filter(x => x.status == 'AssignedTo' || x.status == 'In Work' || x.status == 'In Rework' || x.status == 'Assign responsible' || x.status == 'Paused')
     return ques.filter(x => x.due_date.getTime() == 0).length;
+  }
+
+  getDateOnly(dateLong: number): string {
+    let date = new Date(dateLong);
+    return ('0' + date.getDate()).slice(-2) + "." + ('0' + (date.getMonth() + 1)).slice(-2) + "." + date.getFullYear();
+  }
+
+  localeColumnForPDF(issueElement: string, field: string): string {
+    if (field == 'started_by') {
+      return this.auth.getUserName(issueElement);
+    } else if (field == 'assigned_to') {
+      return this.auth.getUserName(issueElement);
+    } else if (field == 'status') {
+      return this.issueManager.localeStatus(issueElement, false);
+    } else if (field == 'started_date') {
+      return this.getDateOnly(+issueElement);
+    } else if (field == 'issue_type') {
+      return this.issueManager.localeTaskType(issueElement);
+    } else if (field == 'name') {
+      return issueElement;
+    } else if (field == 'priority') {
+      return this.issueManager.localeTaskPriority(issueElement);
+    } else if (field == 'department') {
+      return this.issueManager.localeTaskDepartment(issueElement);
+    } else if (field == 'due_date') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    } else if (field == 'contract_due_date') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    } else if (field == 'last_update') {
+      return +issueElement == 0 ? '-' : this.getDateOnly(+issueElement);
+    } else if (field == 'responsible') {
+      return this.auth.getUserName(issueElement);
+    } else if (field == 'doc_number') {
+      return issueElement != '' ? issueElement : '-';
+    } else if (field == 'issue_comment') {
+      return issueElement.replace(/<[^>]+>/g, '');
+    } else {
+      return issueElement;
+    }
+  }
+
+  exportXls() {
+    let fileName = 'export_' + this.generateId(8) + '.xlsx';
+    let questionListForImport: Issue[] = [];
+    if (this.table.filteredValue!) {
+      questionListForImport = this.table.filteredValue;
+    } else {
+      questionListForImport = this.questions;
+    }
+    let data: any[] = [];
+    let cols = ['id', 'project', 'department','status','doc_number','name','started_by','responsible','assigned_to','started_date_as_date','due_date','priority', 'actual_man_hours'];
+    let colsHeaders = ['Id', 'Project', 'Department','Status','Document','Topic','Author','Resp.','Assign to','Date created','Due date','Priority', 'Actual man-hours'];
+    data.push(colsHeaders);
+    questionListForImport.forEach(issue => {
+      let newIssue: Issue = JSON.parse(JSON.stringify(issue));
+      let rowData: any[] = [];
+      let findSrc = this.questionsSrc.find(x => x.id == newIssue.id);
+      // console.log(findSrc);
+
+      cols.forEach(c => {
+        if (findSrc != null){
+          // @ts-ignore
+          newIssue[c] = findSrc[c];
+        }
+        if (c == 'name'){
+          // @ts-ignore
+          console.log(newIssue[c]);
+        }
+
+        // @ts-ignore
+        rowData.push(this.localeColumnForPDF(newIssue[c], c));
+      });
+      data.push(rowData);
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {Sheets: {'data': worksheet}, SheetNames: ['data']};
+    XLSX.writeFile(workbook, fileName);
+  }
+
+  generateId(length: number): string {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() *
+        charactersLength));
+    }
+    return result;
   }
 }
