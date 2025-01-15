@@ -1095,7 +1095,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   getSavedFilters() {
     this.issueManager.getFilters(this.auth.getUser().id).subscribe(res => {
       this.savedFilters1 = res.filter((filter: IFilterSaved) => filter.page === 'home');
-      console.log(res);
+      // console.log(res);
       setTimeout(() => {  //чтобы установить название только загруженного фильтра
         // @ts-ignore
         this.savedFilterName = localStorage.getItem("savedFilterName");

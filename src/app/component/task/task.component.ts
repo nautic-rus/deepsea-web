@@ -370,7 +370,7 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
     });
     this.issue = this.conf.data as Issue;
-    console.log(this.issue);
+    // console.log(this.issue);
 
     // @ts-ignore
     this.isTrustedS(this.auth.getUserId(this.issue.started_by));
@@ -451,7 +451,7 @@ export class TaskComponent implements OnInit {
     });
     this.issueManager.getIssueTypes().then(res => {
       this.issueTypes = res;
-      console.log(res);
+      // console.log(res);
     });
     this.startDate = this.issue.start_date != 0 ? new Date(this.issue.start_date) : new Date();
     this.dueDate = this.issue.due_date != 0 ? new Date(this.issue.due_date) : new Date();
