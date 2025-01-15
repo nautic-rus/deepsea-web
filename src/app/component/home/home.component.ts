@@ -454,18 +454,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: true
       },
-      // {
-      //   field: 'actual_man_hours',
-      //   header: 'Actual man-hours',
-      //   headerLocale: 'Actual man-hours',
-      //   sort: true,
-      //   filter: false,
-      //   filters: this.getFilters(this.issues, 'actual_man_hours'),
-      //   skip: false,
-      //   defaultValue: '',
-      //   hidden: false,
-      //   date: false,
-      // },
+      {
+        field: 'actual_man_hours',
+        header: 'Actual man-hours',
+        headerLocale: 'Actual man-hours',
+        sort: true,
+        filter: false,
+        filters: this.getFilters(this.issues, 'actual_man_hours'),
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
