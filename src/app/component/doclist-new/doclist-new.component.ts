@@ -130,13 +130,14 @@ export class DoclistNewComponent implements OnInit {
       localStorage.setItem("selectedColumnsDoclist", JSON.stringify(this._selectedColumns));
     }
 
-    this.issueManager.getProjectNamesD().subscribe((res) => {
-      res.forEach(i => {
-        if (i.name != 'NR004') {
-          this.projects.push(i.name);
-        }
-      })
-    })
+    this.projects = this.auth.getUser().visible_projects;
+    // this.issueManager.getProjectNamesD().subscribe((res) => {
+    //   res.forEach(i => {
+    //     if (i.name != 'NR004') {
+    //       this.projects.push(i.name);
+    //     }
+    //   })
+    // })
 
     this.fill()
 

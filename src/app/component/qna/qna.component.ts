@@ -59,7 +59,6 @@ export class QnaComponent implements OnInit {
   }
   viewTask(id: number, type: string) {
     this.issueManager.getIssueDetails(id).then(res => {
-      console.log(res);
       if (res.id != null) {
         this.dialogService.open(TaskComponent, {
           showHeader: false,

@@ -370,6 +370,10 @@ export class TaskComponent implements OnInit {
       monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
     });
     this.issue = this.conf.data as Issue;
+    if (this.issue.issue_type !== 'QNA' && this.auth.getUser().groups.includes("Pella")) {
+      this.ref.close();
+      this.router.navigate(['/doclist']);
+    }
     // console.log(this.issue);
 
     // @ts-ignore

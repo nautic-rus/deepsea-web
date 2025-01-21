@@ -69,8 +69,15 @@ export class MaterialsSummarySpecComponent implements OnInit {
 
   ngOnInit(): void {
     this.issueManager.getIssueProjects().then(res => {
-      this.projects = res;
+      res.forEach(pr => {
+        if (this.auth.getUser().visible_projects.includes(pr.name)) {
+          this.projects.push(pr);
+        }
+      })
     });
+    // this.issueManager.getIssueProjects().then(res => {
+    //   this.projects = res;
+    // });
     this.innerWidth = window.innerWidth;
     setTimeout(() => {
       this.selectedView = 'list';
