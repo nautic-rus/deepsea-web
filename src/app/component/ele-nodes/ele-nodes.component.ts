@@ -3,6 +3,7 @@ import {SpecManagerService} from "../../domain/spec-manager.service";
 import _ from "underscore";
 import {tap} from "rxjs/operators";
 import {concat, Observable, of} from "rxjs";
+import {LanguageService} from "../../domain/language.service";
 
 @Component({
   selector: 'app-ele-nodes',
@@ -21,7 +22,7 @@ export class EleNodesComponent implements OnInit {
   cablesLoading = '';
   previewImagePNG = '';
   loaded = -1;
-  constructor(public s: SpecManagerService) { }
+  constructor(public s: SpecManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
     this.s.getEleNodes(this.project).subscribe(eleNodes => {

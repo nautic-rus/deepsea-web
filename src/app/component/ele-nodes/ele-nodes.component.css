@@ -1,5 +1,53 @@
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  min-height: 55px;
+}
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+/deep/.p-tree .p-tree-container .p-treenode .p-treenode-content {
+  padding: 3px;
+  font-size: 13px;
+}
+/deep/.pi {
+  font-size: 13px;
+}
+/deep/.p-tree{
+  height: calc(100vh - 237px);
+  overflow: auto;
+  padding: 10px;
+  border: none;
+}
+/deep/.p-dialog .p-dialog-content {
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding: 0 20px 30px 20px;
+}
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 12px;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 14px 6px;
+  font-weight: 500;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
+/deep/.p-dialog .p-dialog-footer {
+  margin-top: -10px;
+}
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem!important;
+}
 .ele-nodes{
-  height: 84vh;
+  height: 79vh;
   overflow: auto;
   width: 20vw;
 }
@@ -60,4 +108,28 @@
 .preview-image-png{
   max-height: 89vh;
   max-width: 89vw;
+}
+.card-head{
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  height: fit-content;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+}
+.materials-button-ele{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: #fff;
+}
+.materials-button {
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  border-radius: 6px;
 }
