@@ -1,7 +1,7 @@
 <div class="all-page">
-  <div class="card-complect">
+  <div class="">
     <div class="card-head df sticky-card" *ngIf="projects.length > 0">
-      <div class="df mb-10 header">
+      <div class="df header">
         <div class="df">
           <div class="mr-10">
             <p-dropdown class="select" [(ngModel)]="project" [options]="projects" (ngModelChange)="projectChanged()" styleClass="width-156 font-14">
@@ -30,16 +30,16 @@
     <div class="empty-card-bottom"></div>
     <div class="page-c">
       <div class="complects">
-        <div class="background-gray ml-minus15">
-          <cdk-virtual-scroll-viewport  style="height: 81vh" [itemSize]="110">
+        <div class="">
+          <cdk-virtual-scroll-viewport  style="height: 79vh" [itemSize]="110">
             <div [class.selected-complect]="selectedComplect == compl" (click)="selectComplect(compl)" [style.height]="120 + 'px'" class="issues-all" *cdkVirtualFor="let compl of complects">
               <div class="complect cursor-pointer">
                 <div class="complect-header pb-5">
                   <div class="title-bold-c">{{compl.drawingId}}</div>
                   <div class="df">
                     <div class="title-bold-c mr-20">{{compl.project}}</div>
-                    <div *ngIf="compl.zoneNames.length != 0" (click)="createPdf(compl)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="materials-button red-button cxy">
-                      <img src="assets/icons/pdf2.svg" height="26">
+                    <div *ngIf="compl.zoneNames.length != 0" (click)="createPdf(compl)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="cxy">
+                      <img src="assets/icons/pdf3.svg" height="26">
                     </div>
                     <div class="cxy" [pTooltip]="t.tr('Удалить комплект')" tooltipPosition="top" (click)="deleteComplect(compl)">
                       <svg class="icon-с" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
@@ -62,12 +62,12 @@
           </cdk-virtual-scroll-viewport>
         </div>
       </div>
-      <div>
+      <div class="back-white">
         <div class="df">
-          <div class="width-620 pl-20 head-text-c">Системы</div>
-          <div class="cx width-150 pl-20 head-text-c">Помещения</div>
+          <div class="w-100 pl-20 head-text-c pt-10">Системы</div>
+          <div class="w-100 pl-20 head-text-c pt-10">Помещения</div>
         </div>
-        <div class="df cx pt-20">
+        <div class="df cx pt-10">
           <div class="systems-table">
             <p-table [class.disabled-button]="selectedComplect == null" [globalFilterFields]="['code', 'name']" [value]="systems" [(selection)]="selectedSystems" dataKey="code" styleClass="p-datatable-sm" #systemsTable>
               <ng-template pTemplate="caption">
@@ -134,7 +134,7 @@
             </p-table>
           </div>
         </div>
-        <div class="df justify-content-end mt-20 mr-20">
+        <div class="df justify-content-end mb-10 mt-15 mr-20">
           <div tabindex="10" (click)="save()" class="button-ok cxy">{{t.tr('Сохранить изменения')}}</div>
         </div>
       </div>

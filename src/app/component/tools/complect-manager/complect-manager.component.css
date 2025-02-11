@@ -1,19 +1,29 @@
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+}
 .all-page-doc{
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
   padding: 0 20px;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
 }
-
 .sticky-card{
   position: sticky;
   top: 20px;
   z-index: 8;
 }
-
 .min-height-card{
   min-height: calc(100vh - 77px);
 }
-
 .empty-card{
   height: 20px;
   background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
@@ -52,23 +62,10 @@
   width: 100%;
 }
 
-/deep/.p-component{
-  font-size: 13px!important;
-}
-/deep/.p-inputtext{
-  font-size: 13px!important;
-}
-/deep/.p-inputtext{
-  font-size: 13px!important;
-  padding: 8px 10px 8px 10px;
-}
-/deep/.p-multiselect .p-multiselect-label {
-  padding: 8px 10px 8px 10px;
-}
+
 .page-c{
   display: grid;
   grid-template-columns: 400px auto;
-  padding: 15px;
 }
 .card-complect{
   background: rgba(255, 255, 255, 0.9);
@@ -83,7 +80,7 @@
   background-color: white;
   cursor: pointer;
   font-size: 12px;
-  margin: 10px 5px 10px 10px;
+  margin-bottom: 10px;
   border-radius: 10px;
   padding: 8px;
 }
@@ -128,13 +125,13 @@
   background-color: #EEF5FA;
 }
 .systems-table{
-  width: 620px;
-  height: 680px;
+  width: 100%;
+  height: 69vh;
   overflow: auto;
 }
 .zones-table{
-  width: 620px;
-  height: 680px;
+  width: 100%;
+  height: 69vh;
   overflow: auto;
 }
 .title-bold-c{
@@ -163,6 +160,18 @@
   width: 35px;
   cursor: pointer;
   border-radius: 6px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.loading-animation {
+  animation: rotate 3s infinite linear;
 }
 
 @keyframes rotate {

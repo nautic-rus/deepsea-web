@@ -22,6 +22,7 @@ export class EleNodesComponent implements OnInit {
   cablesLoading = '';
   previewImagePNG = '';
   loaded = -1;
+  tooltips: string[] = [];
   constructor(public s: SpecManagerService, public t: LanguageService) { }
 
   ngOnInit(): void {
@@ -83,4 +84,15 @@ export class EleNodesComponent implements OnInit {
       window.open(pdf, '_blank');
     });
   }
+  copyTrmCode(code: string, index: string) {
+    navigator.clipboard.writeText(code);
+    this.tooltips.push(index);
+    setTimeout(() => {
+      this.tooltips.splice(this.tooltips.indexOf(index), 1);
+    }, 1500);
+  }
+  showTooltip(index: string) {
+    return this.tooltips.includes(index);
+  }
+
 }

@@ -1,125 +1,147 @@
 <div class="all-page">
-  <div class="card-head">
-    <div class="search df">
+  <div class="min-height-card">
+    <div class="card-head">
+      <div class="search df">
       <span class="p-input-icon-left mr-10">
         <i class="pi pi-search"></i>
         <input pInputText type="text" [placeholder]="t.tr('Поиск узла')" [(ngModel)]="search" (ngModelChange)="searchNode()" class="border" />
       </span>
-    </div>
-    <div class="mr-10 min-width-200">
-      <div class="blue-button materials-button-ele cxy" *ngIf="loaded == -1" (click)="checkStatus()">Определить статус узлов</div>
-      <div *ngIf="loaded != -1">Загружено {{loaded}} из {{eleNodes.length}} узлов</div>
-    </div>
-    <div class="mr-10">
-      <div class="red-button materials-button cxy" (click)="createPdf()">
-        <img src="assets/icons/pdf2.svg" height="26">
       </div>
-    </div>
-    <div class="mr-10 ml-20">
-      <div class="">Узлы Ошибок: {{getErrors()}}</div>
-    </div>
-  </div>
-  <div class="df">
-    <div>
-      <div class="ele-nodes mt-2">
-        <div [class.__error]="node.error.includes('error')" [class.__ok]="node.error == 'ok'" class="ele-node cursor-pointer" [class.__selected]="selectedEleNode == node" (click)="selectNode(node)" *ngFor="let node of eleNodes">
-          <div>node:</div>
-          <div>{{node.node}}</div>
-          <div>code:</div>
-          <div>{{node.code}}</div>
-          <div>descr:</div>
-          <div>{{node.descr}}</div>
-          <div>frames:</div>
-          <div>{{node.frames}}</div>
-          <div>height:</div>
-          <div>{{node.iheight}}</div>
-          <div>width:</div>
-          <div>{{node.iwidth}}</div>
-          <div>lengths:</div>
-          <div>{{node.length}}</div>
-          <div>cols:</div>
-          <div>{{node.ncolumns}}</div>
-          <div>rows:</div>
-          <div>{{node.nrows}}</div>
-          <div>seal:</div>
-          <div>{{node.seal}}</div>
-          <div>rout area:</div>
-          <div>{{node.rout_area}}</div>
-          <div>transit size:</div>
-          <div>{{node.transit_size}}</div>
-          <div>code:</div>
-          <div>{{node.stock}}</div>
-          <div></div>
-          <div></div>
-          <div>status:</div>
-          <div>{{node.error}}</div>
+      <div class="mr-10 min-width-200">
+        <div class="blue-button materials-button-ele cxy" *ngIf="loaded == -1" (click)="checkStatus()">Определить статус узлов</div>
+        <div *ngIf="loaded != -1">Загружено {{loaded}} из {{eleNodes.length}} узлов</div>
+      </div>
+      <div class="mr-10">
+        <div class="red-button materials-button cxy" (click)="createPdf()">
+          <img src="assets/icons/pdf2.svg" height="26">
         </div>
       </div>
+      <div class="mr-10 ml-20">
+        <div class="">Узлы Ошибок: {{getErrors()}}</div>
+      </div>
     </div>
-    <div *ngIf="selectedEleNode">
-      Содержимое узла {{selectedEleNode.node}}
-      <div class="ele-node-cables mt-2">
-        <div *ngIf="cablesLoading">
-          {{cablesLoading}}
-        </div>
-        <div *ngIf="!cablesLoading">
-          <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
-            <div>cable_id:</div>
-            <div>{{cable.cable_id}}</div>
-            <div>nom_section:</div>
-            <div>{{cable.nom_section}}</div>
-            <div>spec:</div>
-            <div>{{cable.spec}}</div>
-            <div>code:</div>
-            <div>{{cable.code}}</div>
-            <div>diam:</div>
-            <div>{{cable.diam}}</div>
+    <div class="df">
+      <div>
+        <div class="ele-nodes mt-2">
+          <div [class.__error]="node.error.includes('error')" [class.__ok]="node.error == 'ok'" class="ele-node cursor-pointer" [class.__selected]="selectedEleNode == node" (click)="selectNode(node)" *ngFor="let node of eleNodes let i = index">
+            <div class="position-relative one-row-node df space-between">
+              <div class="title-bold">{{node.node}}</div>
+              <div class="df trm-node">
+                <div class="trm">
+                  <span>{{node.stock}}</span>
+                </div>
+                <div (click)="copyTrmCode(node.stock, 't' + i)" class="trm-copy cursor-pointer cxy position-relative">
+                  <img src="assets/icons/trm.svg" height="14">
+                  <div class="copy-tooltip" [hidden]="!showTooltip('t' + i)">Copied!</div>
+                </div>
+              </div>
+            </div>
+            <div class="two-row-node">
+              <div class="text-mini-gray">{{node.code}}</div>
+            </div>
+
+
+
+            <!--          <div>node:</div>-->
+            <!--          <div>{{node.node}}</div>-->
+            <!--          <div>code:</div>-->
+            <!--          <div>{{node.code}}</div>-->
+            <!--          <div>descr:</div>-->
+            <!--          <div>{{node.descr}}</div>-->
+            <!--          <div>frames:</div>-->
+            <!--          <div>{{node.frames}}</div>-->
+            <!--          <div>height:</div>-->
+            <!--          <div>{{node.iheight}}</div>-->
+            <!--          <div>width:</div>-->
+            <!--          <div>{{node.iwidth}}</div>-->
+            <!--          <div>lengths:</div>-->
+            <!--          <div>{{node.length}}</div>-->
+            <!--          <div>cols:</div>-->
+            <!--          <div>{{node.ncolumns}}</div>-->
+            <!--          <div>rows:</div>-->
+            <!--          <div>{{node.nrows}}</div>-->
+            <!--          <div>seal:</div>-->
+            <!--          <div>{{node.seal}}</div>-->
+            <!--          <div>rout area:</div>-->
+            <!--          <div>{{node.rout_area}}</div>-->
+            <!--          <div>transit size:</div>-->
+            <!--          <div>{{node.transit_size}}</div>-->
+            <!--          <div>code:</div>-->
+            <!--          <div>{{node.stock}}</div>-->
+            <!--          <div></div>-->
+            <!--          <div></div>-->
+            <!--          <div>status:</div>-->
+            <!--          <div>{{node.error}}</div>-->
           </div>
         </div>
-        <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
-          В выбранном узле не проходят кабели
-        </div>
       </div>
-    </div>
-    <div *ngIf="eleNodePNG">
-      Спецификация узла {{selectedEleNode.node}}
-      <div class="ele-node-spec mt-2">
-        <div *ngIf="cablesLoading">
-          {{cablesLoading}}
-        </div>
-        <div *ngIf="!cablesLoading">
-          <div class="cursor-pointer" *ngFor="let text of eleNodePNG.specText">
-            <div class="ele-node-spec-text">{{text}}</div>
+      <div class="ml-15" *ngIf="selectedEleNode">
+        <div class="text-m mt-15">Содержимое узла {{selectedEleNode.node}}</div>
+
+        <div class="ele-node-cables mt-5">
+          <div *ngIf="cablesLoading">
+            {{cablesLoading}}
           </div>
-        </div>
-        <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
-          В выбранном узле не проходят кабели
-        </div>
-      </div>
-    </div>
-    <div *ngIf="eleNodePNG">
-      <div>Схема узла {{selectedEleNode.node}}</div>
-      <div class="mt-2" *ngIf="cablesLoading">
-        {{cablesLoading}}
-      </div>
-      <div class="mt-2" *ngIf="!cablesLoading && eleNodeCables.length > 0">
-        <div class="cursor-pointer">
-          <div *ngIf="eleNodePNG.png_url.includes('error')">
-            <div>ОШИБКА</div>
-            <div>{{eleNodePNG.png_url}}</div>
-            <div *ngIf="eleNodePNG.png_url.includes('not enough')" (click)="previewImage(eleNodePNG.error_png_url)">
-              <img class="ele-node-png" [src]="eleNodePNG.error_png_url">
+          <div *ngIf="!cablesLoading">
+            <div class="ele-node-cable cursor-pointer" *ngFor="let cable of eleNodeCables">
+              <div>cable_id:</div>
+              <div>{{cable.cable_id}}</div>
+              <div>nom_section:</div>
+              <div>{{cable.nom_section}}</div>
+              <div>spec:</div>
+              <div>{{cable.spec}}</div>
+              <div>code:</div>
+              <div>{{cable.code}}</div>
+              <div>diam:</div>
+              <div>{{cable.diam}}</div>
             </div>
           </div>
-          <div *ngIf="!eleNodePNG.png_url.includes('error')" (click)="previewImage(eleNodePNG.png_url)">
-            <img class="ele-node-png" [src]="eleNodePNG.png_url">
+          <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
+            В выбранном узле не проходят кабели
+          </div>
+        </div>
+      </div>
+      <div class="ml-15" *ngIf="eleNodePNG">
+        <div class="text-m mt-15">Спецификация узла {{selectedEleNode.node}}</div>
+
+        <div class="ele-node-spec mt-5">
+          <div *ngIf="cablesLoading">
+            {{cablesLoading}}
+          </div>
+          <div *ngIf="!cablesLoading">
+            <div class="cursor-pointer" *ngFor="let text of eleNodePNG.specText">
+              <div class="ele-node-spec-text">{{text}}</div>
+            </div>
+          </div>
+          <div *ngIf="!cablesLoading && eleNodeCables.length == 0">
+            В выбранном узле не проходят кабели
+          </div>
+        </div>
+      </div>
+      <div class="ml-15 max-height-80vh" *ngIf="eleNodePNG">
+        <div class="text-m mt-15">Схема узла {{selectedEleNode.node}}</div>
+        <div class="mt-5" *ngIf="cablesLoading">
+          {{cablesLoading}}
+        </div>
+        <div class="mt-5" *ngIf="!cablesLoading && eleNodeCables.length > 0">
+          <div class="cursor-pointer">
+            <div *ngIf="eleNodePNG.png_url.includes('error')">
+              <div>ОШИБКА</div>
+              <div>{{eleNodePNG.png_url}}</div>
+              <div *ngIf="eleNodePNG.png_url.includes('not enough')" (click)="previewImage(eleNodePNG.error_png_url)">
+                <img class="ele-node-png" [src]="eleNodePNG.error_png_url">
+              </div>
+            </div>
+            <div *ngIf="!eleNodePNG.png_url.includes('error')" (click)="previewImage(eleNodePNG.png_url)">
+              <img class="ele-node-png" [src]="eleNodePNG.png_url">
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="preview-image" *ngIf="previewImagePNG != ''" (click)="previewImagePNG = ''">
-    <img class="preview-image-png" [src]="previewImagePNG">
+    <div class="preview-image" *ngIf="previewImagePNG != ''" (click)="previewImagePNG = ''">
+      <img class="preview-image-png" [src]="previewImagePNG">
+    </div>
   </div>
 
 </div>
