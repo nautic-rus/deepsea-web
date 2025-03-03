@@ -466,6 +466,18 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         hidden: false,
         date: false,
       },
+      {
+        field: 'plan_hours',
+        header: 'Plan man-hours',
+        headerLocale: 'Plan man-hours',
+        sort: true,
+        filter: false,
+        filters: this.getFilters(this.issues, 'plan_hours'),
+        skip: false,
+        defaultValue: '',
+        hidden: false,
+        date: false,
+      },
     ];
     this.colHeaders = this.cols.map(x => x.headerLocale);
     let selectedColsValue = localStorage.getItem('selectedCols');
@@ -543,7 +555,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         //
         // });
 
-        // console.log(this.issues)
+        console.log(this.issues)
         // issue.related_issuesStr = is;
         // issue.ready = this.defineReadyState(issue);
       });

@@ -349,8 +349,8 @@ export class QnaComponent implements OnInit {
       questionListForImport = this.questions;
     }
     let data: any[] = [];
-    let cols = ['id', 'project', 'department','status','doc_number','name','started_by','responsible','assigned_to','started_date_as_date','due_date','priority', 'actual_man_hours'];
-    let colsHeaders = ['Id', 'Project', 'Department','Status','Document','Topic','Author','Resp.','Assign to','Date created','Due date','Priority', 'Actual man-hours'];
+    let cols = ['id', 'project', 'department','status','doc_number','name','started_by','responsible','assigned_to','started_date_as_date','due_date','priority', 'actual_man_hours', 'plan_hours'];
+    let colsHeaders = ['Id', 'Project', 'Department','Status','Document','Topic','Author','Resp.','Assign to','Date created','Due date','Priority', 'Actual man-hours', 'Plan man-hours'];
     data.push(colsHeaders);
     questionListForImport.forEach(issue => {
       let newIssue: Issue = JSON.parse(JSON.stringify(issue));
