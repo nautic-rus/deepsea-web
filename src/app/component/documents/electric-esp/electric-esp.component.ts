@@ -534,40 +534,43 @@ export class ElectricEspComponent implements OnInit {
     return this.device.isDesktop() && window.innerWidth > 1296;
   }
   fillRevisions(){
-    this.miscIssues.splice(0, this.miscIssues.length);
-    this.issueManager.getIssues('op').then(issues => {
-      //issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
-      this.miscIssues.push(this.issue);
-      issues.filter(x => this.issue.combined_issues.map(y => y.id).includes(x.id)).forEach(x => {
-        if (this.miscIssues.find(y => y.id == x.id) == null){
-          this.miscIssues.push(x);
-        }
-      });
-      issues.filter(x => this.issue.child_issues.map(y => y.id).includes(x.id)).forEach(x => {
-        if (this.miscIssues.find(y => y.id == x.id) == null){
-          this.miscIssues.push(x);
-        }
-      });
-      this.miscIssues.forEach(x => {
-        issues.filter(y => y.parent_id == x.id).forEach(ch => {
-          if (this.miscIssues.find(y => y.id == ch.id) == null){
-            this.miscIssues.push(ch);
-          }
-        })
-      });
-    });
-    this.issueRevisions.splice(0, this.issueRevisions.length);
     this.issueManager.getIssueDetails(this.issueId).then(res => {
       this.issue = res;
-      this.issueRevisions.push(this.issue.revision);
-      this.issue.revision_files.map(x => x.revision).forEach(gr => {
-        if (!this.issueRevisions.includes(gr)){
-          this.issueRevisions.push(gr);
-        }
+      this.miscIssues.splice(0, this.miscIssues.length);
+      this.issueManager.getIssues('op').then(issues => {
+        //issues.filter(x => x.doc_number == this.issue.doc_number).forEach(x => this.miscIssues.push(x));
+        this.miscIssues.push(this.issue);
+        issues.filter(x => this.issue.combined_issues.map(y => y.id).includes(x.id)).forEach(x => {
+          if (this.miscIssues.find(y => y.id == x.id) == null){
+            this.miscIssues.push(x);
+          }
+        });
+        issues.filter(x => this.issue.child_issues.map(y => y.id).includes(x.id)).forEach(x => {
+          if (this.miscIssues.find(y => y.id == x.id) == null){
+            this.miscIssues.push(x);
+          }
+        });
+        this.miscIssues.forEach(x => {
+          issues.filter(y => y.parent_id == x.id).forEach(ch => {
+            if (this.miscIssues.find(y => y.id == ch.id) == null){
+              this.miscIssues.push(ch);
+            }
+          })
+        });
       });
-      this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
+      this.issueRevisions.splice(0, this.issueRevisions.length);
+      this.issueManager.getIssueDetails(this.issueId).then(res => {
+        this.issue = res;
+        this.issueRevisions.push(this.issue.revision);
+        this.issue.revision_files.map(x => x.revision).forEach(gr => {
+          if (!this.issueRevisions.includes(gr)){
+            this.issueRevisions.push(gr);
+          }
+        });
+        this.issueRevisions = _.sortBy(this.issueRevisions, x => x).reverse();
 
-      this.fillEle();
+        this.fillEle();
+      });
     });
   }
   editorClicked(event: any) {
