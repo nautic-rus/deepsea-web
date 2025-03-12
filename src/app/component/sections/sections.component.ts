@@ -17,7 +17,7 @@ import * as _ from "underscore";
 })
 export class SectionsComponent implements OnInit {
   issues: Issue[] = [];
-  projects: string[] = ['NR002', 'NR004'];
+  projects: string[] = ['NR002', 'NR004', 'NR008'];
   project = this.projects[0];
   nestingFiles: any[] = [];
 
@@ -41,6 +41,8 @@ export class SectionsComponent implements OnInit {
     this.issueManager.getIssues('op').then(data => {
       this.issueManager.getNestingFiles().then(nestingFiles => {
         this.issues = data;
+        let m = new Set(this.issues.map(x => x.project))
+        console.log(m)
         this.nestingFiles = nestingFiles;
       });
     });
@@ -166,6 +168,21 @@ export class SectionsComponent implements OnInit {
     return this.device.isDesktop() && window.innerWidth > 1200;
   }
   viewTask(issueId: number) {
+    // this.issueManager.getIssueDetails(issueId)
+    //   .then(rez => {
+    //     let issue = rez;
+    //     console.log(issue);
+    //     if (issue != null){
+    //       let foranProject = issue.project.replace('NR', 'N');
+    //       let department = issue.department;
+    //       let docNumber = issue.doc_number;
+    //       console.log(issueId);
+    //       console.log(foranProject);
+    //       console.log(docNumber);
+    //       console.log(department);
+    //       window.open(`/hull-esp?issueId=${issueId}&foranProject=${foranProject}&docNumber=${docNumber}&department=${department}&nc=1`, '_blank');
+    //     }
+    //   })
     let issue = this.issues.find(x => x.id == issueId);
     if (issue != null){
       let foranProject = issue.project.replace('NR', 'N');

@@ -92,8 +92,6 @@
 }
 
 
-
-
 @media (max-width: 1770px){
   .ship-002 {
     background: url("../../../assets/63m1350.png") 0 0 no-repeat;
@@ -470,4 +468,21 @@
 .status-text{
   color: #3a3a3a;
   font-weight: 600;
+}
+
+.ship-008{
+  background: url("../../../assets/NR008_1500x735.png") 0 0 no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.sections-008{
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  padding-top: 120px;
+  display: grid;
+  grid-template-columns: 13% 9% 9% 9% 8% 10% 8% 9% 7% 8%;
+  grid-template-rows: 236px 59px 52px 106px 90px 67px;
+  position: relative;
+  width: 1650px;
 }
