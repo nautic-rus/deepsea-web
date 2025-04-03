@@ -11,12 +11,12 @@
 <!--          <i class="pi pi-refresh" style="font-size: 2.5rem"></i>-->
 <!--        </div>-->
 <!--      </div>-->
-      <div class="mr-10" [pTooltip]="t.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">
+      <div *ngIf="!auth.getUser().groups.includes('Pella')" class="mr-10" [pTooltip]="t.tr('Spool List')" tooltipPosition="top" (click)="createEsp('1')">
         <div class="materials-button pink-button cxy">
           <img src="assets/icons/list.svg" height="22">
         </div>
       </div>
-      <div class="mr-10" [pTooltip]="t.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">
+      <div *ngIf="!auth.getUser().groups.includes('Pella')" class="mr-10" [pTooltip]="t.tr('Spool List All')" tooltipPosition="top" (click)="createEsp('0')">
         <div class="materials-button violet-button cxy">
           <img src="assets/icons/lists.svg" height="24">
         </div>
