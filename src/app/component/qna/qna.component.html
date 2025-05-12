@@ -9,10 +9,10 @@
           <div class="cxy">{{t.tr('Задать вопрос')}}</div>
         </div>
       </div>
-      <div class="mr-10">
+      <div class="mr-10" *ngIf="projects.length > 0">
         <p-dropdown optionLabel="label" class="select" optionValue="value" [(ngModel)]="project" (ngModelChange)="changedProject()" [options]="projects" styleClass="width-170" [placeholder]="t.tr('Проект')"></p-dropdown>
       </div>
-      <div class="mr-10">
+      <div class="mr-10" *ngIf="departments.length > 0">
         <p-dropdown class="select" optionValue="value" [(ngModel)]="department" (ngModelChange)="changedDepartment()" [options]="departments" styleClass="width-170" [placeholder]="t.tr('Отдел')">
           <ng-template pTemplate="selectedItem">
             <div class="flex align-items-center gap-2">
