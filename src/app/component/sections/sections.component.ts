@@ -17,7 +17,7 @@ import * as _ from "underscore";
 })
 export class SectionsComponent implements OnInit {
   issues: Issue[] = [];
-  projects: string[] = ['NR002', 'NR004', 'NR008'];
+  projects: string[] = ['NR002', 'NR004', '210101'];
   project = this.projects[0];
   nestingFiles: any[] = [];
 
