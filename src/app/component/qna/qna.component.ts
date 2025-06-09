@@ -88,7 +88,9 @@ export class QnaComponent implements OnInit {
         this.questionsSrc = _.sortBy(res, x => x.started_date).reverse();
         this.questions = _.sortBy(res, x => x.started_date).reverse();
 
-        this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x)).map(x => new LV(this.getProject(x), x));
+        const excludedProjectNames = ['01701-LEV', '01701-ORION', '03095-ANDROMEDA'];  //эти проекты исключаются из списка проектов на вывод (список)
+
+        this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x) && !excludedProjectNames.includes(x)).map(x => new LV(this.getProject(x), x));
         //this.projects = _.sortBy(_.uniq(projects.map(x => x.project.name)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x)).map(x => new LV(this.getProject(x), x));
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
         this.filters.status = _.sortBy(_.uniq(res.map(x => x.status)), x => x).map(x => new LV(x));
