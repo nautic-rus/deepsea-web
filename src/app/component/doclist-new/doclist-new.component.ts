@@ -66,7 +66,7 @@ export class DoclistNewComponent implements OnInit {
       {field: 'issue_name', header: 'Название', sort: true, width: '250px', visible: true},
       {field: 'issue_type', header: 'Тип', sort: true, width: '150px', visible: true},
       {field: 'project', header: 'Проект', sort: true, width: '150px', visible: true},
-      {field: 'contract', header: 'Договор', sort: true, width: '150px', visible: true},
+      {field: 'contract', header: 'Договор', sort: true, width: '150px', visible: !this.auth.getUser().groups.includes('MR')},
       {field: 'department', header: 'Отдел', sort: true, width: '150px', visible: true},
       {
         field: 'status',
@@ -76,8 +76,8 @@ export class DoclistNewComponent implements OnInit {
         visible: this.auth.getUser().permissions.includes('visible_doc_status')
       },
       {field: 'revision', header: 'Ревизия', sort: true, width: '150px', visible: true},
-      {field: 'period', header: 'Этап', sort: true, width: '150px', visible: true},
-      {field: 'contract_due_date', header: 'Срок исполнения', sort: true, width: '150px', visible: true},
+      {field: 'period', header: 'Этап', sort: true, width: '150px', visible: !this.auth.getUser().groups.includes('MR')},
+      {field: 'contract_due_date', header: 'Срок исполнения', sort: true, width: '150px', visible: !this.auth.getUser().groups.includes('MR')},
       {
         field: 'issue_comment',
         header: 'Комментарий',
@@ -174,6 +174,14 @@ export class DoclistNewComponent implements OnInit {
 
   showProjectIssues(project: string) {
     this.issueManager.getDoclistByProject(project).subscribe(res => {
+      console.log(res);
+      if (this.auth.getUser().groups.includes('MR')) {
+        // @ts-ignore
+        res = res.filter(issue => {
+          return issue.issue_type === 'RKD' && issue.project == 'NR002' && issue.department == 'Electric' && issue.status === "Delivered";
+        })
+      }
+      console.log(res)
       this.issuesSrc.push(...res);
       this.issuesSrc = this.issuesSrc.filter((x: {
         project: string;

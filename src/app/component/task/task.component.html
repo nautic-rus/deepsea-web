@@ -18,13 +18,13 @@
 <!--        </div>-->
 <!--        <p-menu #menu id="config_menu" [popup]="true" [model]="viewers"></p-menu>-->
 <!--      </div>-->
-      <div [class.button-disabled]="issue.responsible != auth.getUser().login && issue.started_by != auth.getUser().login && issue.assigned_to != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
+      <div *ngIf="this.auth.getUser().groups.includes('Nautic')" [class.button-disabled]="issue.responsible != auth.getUser().login && issue.started_by != auth.getUser().login && issue.assigned_to != auth.getUser().login" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Чек-лист')" (click)="createCheckList()">
         <img src="assets/icons/checklist.png" height="20">
       </div>
-      <div [class.button-disabled]="!issue.closing_status.includes(issue.status)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать связанную задачу')" (click)="createCombined()">
+      <div *ngIf="this.auth.getUser().groups.includes('Nautic')" [class.button-disabled]="!issue.closing_status.includes(issue.status)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать связанную задачу')" (click)="createCombined()">
         <img class="rotate-90" src="assets/icons/linktask.svg" height="20">
       </div>
-      <div [class.button-disabled]="issue.closing_status.includes(issue.status)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
+      <div *ngIf="this.auth.getUser().groups.includes('Nautic')" [class.button-disabled]="issue.closing_status.includes(issue.status) && this.auth.getUser().groups.includes('Nautic')" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Создать подзадачу')" (click)="createChildIssue()">
         <img src="assets/icons/subtask.svg" height="20">
       </div>
       <div [class.button-disabled]="!(this.auth.getUser().login == issue.assigned_to)" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Добавить часы')" (click)="openLaboriousness()">
@@ -36,7 +36,7 @@
       <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Копировать задачу')" (click)="copyIssue()">
         <img src="assets/icons/copy.svg" height="20">
       </div>
-      <div class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Перейти к плану')" (click)="goToPlan(this.issue.id)">
+      <div *ngIf="this.auth.getUser().groups.includes('Nautic')" class="task-button cxy mr-10" tooltipPosition="top" [pTooltip]="t.tr('Перейти к плану')" (click)="goToPlan(this.issue.id)">
         <img class="rotate-90" src="assets/icons/planner.svg" height="20">
       </div>
       <div class="task-button cxy mr-2" tooltipPosition="top" [pTooltip]="t.tr('Удалить задачу')" (click)="removeIssue()" [class.button-disabled]="!(auth.hasPerms('remove_issues') || this.auth.getUser().login == issue.started_by) || issue.labor > 0 || actualManHours > 0">
@@ -337,7 +337,7 @@
 <!--          </label>-->
         </div>
       </div>
-      <div class="big-text mt-1">{{t.tr('Чек-лист')}}</div>
+      <div  class="big-text mt-1">{{t.tr('Чек-лист')}}</div>
       <div *ngFor="let checkGroup of groupedChecks" class="checklist">
         <div class="mb-5">{{checkGroup[0].check_group}}</div>
         <div *ngFor="let check of checkGroup">
@@ -398,7 +398,7 @@
         </div>
       </div>
 
-      <div class="df space-between mt-1 mb-5">
+      <div *ngIf="this.auth.getUser().groups.includes('Nautic')" class="df space-between mt-1 mb-5">
         <div class="big-text">{{t.tr('Связанные задачи')}}</div>
         <div (click)="addCombinedIssue()" class="button-ok cxy">{{t.tr('Привязать задачу')}}</div>
       </div>

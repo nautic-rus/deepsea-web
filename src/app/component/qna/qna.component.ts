@@ -84,6 +84,15 @@ export class QnaComponent implements OnInit {
     this.issueManagerService.getIssueProjects().then(projects => {
       this.projectDefs = projects;
       this.issueManagerService.getQuestions().then(res => {
+        console.log(res)
+        if (this.auth.getUser().groups.includes('MR')) {
+          res = res.filter(issue => {
+            // issue.department === 'Electric';
+            const author = this.auth.users.find(user => user.login === issue.started_by);  //проверяем что только те задачи, где автор тоже из роли EMO_PELLA
+
+            return  author?.groups?.includes('MR') && issue.department === 'Electric'
+          });
+        }
 
         this.questionsSrc = _.sortBy(res, x => x.started_date).reverse();
         this.questions = _.sortBy(res, x => x.started_date).reverse();
@@ -93,9 +102,16 @@ export class QnaComponent implements OnInit {
         this.projects = _.sortBy(_.uniq(res.map(x => x.project)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x) && !excludedProjectNames.includes(x)).map(x => new LV(this.getProject(x), x));
         //this.projects = _.sortBy(_.uniq(projects.map(x => x.project.name)), x => x).filter(x => this.auth.getUser().visible_projects.includes(x)).map(x => new LV(this.getProject(x), x));
         this.departments = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
+        if (this.auth.getUser().groups.includes('MR')) {
+          this.departments = this.departments.filter(dep => dep.value === 'Electric')
+        }
         this.filters.status = _.sortBy(_.uniq(res.map(x => x.status)), x => x).map(x => new LV(x));
         this.filters.project = _.sortBy(_.uniq(res.map(x => x.project)), x => x).map(x => new LV(x));
-        this.filters.department = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));
+        this.filters.department = _.sortBy(_.uniq(res.map(x => x.department)), x => x).map(x => new LV(x));  //это фильтр на фильтр в шапке таблицы
+        if (this.auth.getUser().groups.includes('MR')) {
+          this.filters.department = this.filters.department.filter(dep => dep.value === 'Electric')
+        }
+
         this.filters.author = _.sortBy(_.uniq(res.map(x => x.started_by)), x => x).map(x => new LV(this.auth.getUserName(x), x));
         this.filters.responsible = _.sortBy(_.uniq(res.map(x => x.responsible)), x => x).map(x => new LV(this.auth.getUserName(x), x));
         this.filters.assigned_to = _.sortBy(_.uniq(res.map(x => x.assigned_to)), x => x).map(x => new LV(this.auth.getUserName(x), x));

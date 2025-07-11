@@ -1067,17 +1067,19 @@ export class TaskComponent implements OnInit {
     });
   }
   untieIssue(idFirst: number, idSecond: number) {
-    this.dialogService.open(UntieComponent, {
-      showHeader: false,
-      modal: true,
-      data: [idFirst, idSecond]
-    }).onClose.subscribe(res => {
-      if (res == 'success'){
-        this.issueManager.getIssueDetails(this.issue.id).then(issue => {
-          this.issue = issue;
-        });
-      }
-    });
+    if (this.auth.getUser().groups.includes('Nautic')) {
+      this.dialogService.open(UntieComponent, {
+        showHeader: false,
+        modal: true,
+        data: [idFirst, idSecond]
+      }).onClose.subscribe(res => {
+        if (res == 'success'){
+          this.issueManager.getIssueDetails(this.issue.id).then(issue => {
+            this.issue = issue;
+          });
+        }
+      });
+    }
   }
   openLaboriousness(){
     //this.dialogService.open(LaboriousnessComponent, {
@@ -1394,7 +1396,10 @@ export class TaskComponent implements OnInit {
   }
 
   openIssue(id: number) {
-    window.open('/?taskId=' + id, '_blank');
+    if (this.auth.getUser().groups.includes('Nautic')) {
+      window.open('/?taskId=' + id, '_blank');
+    }
+
   }
 
   copyIssueUrl() {

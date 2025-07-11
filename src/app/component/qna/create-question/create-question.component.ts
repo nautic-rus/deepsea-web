@@ -147,7 +147,17 @@ export class CreateQuestionComponent implements OnInit {
     this.issues.getIssueProjects().then(projects => {
       this.projectDefs = projects;
       this.issues.getIssuesAllShort().subscribe(res => {
+        console.log(res);
+        if (this.auth.getUser().groups.includes('MR')) {
+          res = res.filter(issue => {
+            // issue.department === 'Electric';
+            const author = this.auth.users.find(user => user.login === issue.started_by);  //проверяем что только те задачи, где автор тоже из роли MR
+            return  issue.department === 'Electric' && issue.issue_type === 'RKD' && issue.status === 'Delivered'
+          });
+        }
+        console.log(res);
         this.issuesSrc = res.filter(x => x.removed == 0).filter(x => this.issueTypes.includes(x.issue_type)).filter(x => this.projects.includes(x.project));
+
         this.issueSelected();
       });
     });
