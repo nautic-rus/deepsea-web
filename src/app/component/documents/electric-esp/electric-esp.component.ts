@@ -81,6 +81,8 @@ export class ElectricEspComponent implements OnInit {
   foranProject: string = '';
   revUser: string = '';
   selectedLabels: string[] = [];
+  duplicateUserIds: { [key: string]: number } = {}; // проверка на то, чтоу нас есть элементы с одинковыми iserId
+  hasDuplicatedUserId : boolean = false;  //красный флажок, что есть элементы с одинковыми iserId
   quillModules =
     {
       imageResize: {},
@@ -396,12 +398,34 @@ export class ElectricEspComponent implements OnInit {
 
         this.eleGroups = _.sortBy(groupedEles, x => this.orderDot(x.pos));
         this.eleGroupsSrc = [...this.eleGroups];
+
+        this.setDuplicateUserIds();  //заполняем хешмапку с дубликатами по userId ждя каждого элемента
         console.log(this.eleGroups);
       }
       else{
         this.noResult = true;
       }
     });
+  }
+
+  setDuplicateUserIds() {
+    this.eleGroups.forEach(gr => {
+      gr.eles.forEach((el: { userId: string; }) => {
+        if (el.userId && el.userId.trim() !== '') {
+          if (this.duplicateUserIds[el.userId] === undefined) {
+            this.duplicateUserIds[el.userId] = 1;
+          } else {
+            this.hasDuplicatedUserId = true;
+            this.duplicateUserIds[el.userId]++;
+          }
+        }
+      });
+    });
+    console.log(this.duplicateUserIds);
+  }
+
+  isDublicateIserId(userId: string) {
+    return this.duplicateUserIds[userId] > 1
   }
 
   rlz(input: any){
@@ -1061,6 +1085,9 @@ export class ElectricEspComponent implements OnInit {
       this.fillEle();
     });
   }
+
+
+
 
   setSelected(pos: string) {
     if (this.selectedLabels.includes(pos)){

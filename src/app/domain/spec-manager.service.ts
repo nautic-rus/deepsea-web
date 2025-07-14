@@ -216,7 +216,7 @@ export class SpecManagerService {
     return this.http.get<any>(props.httpSpec + '/eleNodePdf', {params: {project, node}});
   }
 
-  createEleComplectPDF(drawingId: string) {
-    return this.http.get<any>(props.httpD + '/complectPdf', {params: {drawingId}});
+  createEleComplectPDF(drawingId: string, rev: number) {
+    return this.http.get<any>(props.httpD + '/complectPdf', {params: {drawingId, rev}});
   }
 }

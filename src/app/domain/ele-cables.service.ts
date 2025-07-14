@@ -28,8 +28,8 @@ export class EleCablesService {
     return this.http.get(props.httpD + '/cables');
   }
 
-  getPdfUrl(): Observable<any> {
-    return this.http.get(props.httpD + '/cablesPdfUrl');
+  getPdfUrl(rev: number = 1): Observable<any> {
+    return this.http.get(props.httpD + '/cablesPdfUrl', {params: {rev}});
   }
 
   getPdfFileByUrl(url: string): Observable<any> {

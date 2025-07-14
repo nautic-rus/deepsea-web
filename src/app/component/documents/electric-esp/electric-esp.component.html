@@ -1,7 +1,11 @@
 <div class="all-page h-100">
   <div class="all-card">
     <div class="card-head df">
-      <div class="mr-2 width-600">{{issue.name}}</div>
+      <div class="mr-2 width-600">
+        {{issue.name}}
+        <div *ngIf="hasDuplicatedUserId" style="color: rgb(228 34 34)">!В документе есть дубликаты (позиции)</div>
+      </div>
+
       <div class="mr-2">{{issue.doc_number}}</div>
       <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
       <div class="mr-2" *ngIf="revEsp == ''">{{'rev' + issue.revision}}</div>
@@ -71,7 +75,7 @@
                 <div>
                   <div class="mt-10">
                     <div class="df w-100">
-                      <div class="px-10 w-4 mm-text cy">{{ele.kind}}</div>
+                      <div class="px-10 w-4 mm-text cy" style="width: 100px">{{ele.kind}}</div>
                       <div class="px-10 w-30 title-bold-pipe cy">{{ele.materialName}}</div>
                       <div class="px-10 w-5 text-black-mini cy">{{ele.units}}</div>
                       <div class="px-10 w-8 text-table-col cy">{{ele.count + ' '}}{{langUnits(ele.units)}}</div>
@@ -125,8 +129,8 @@
 
                   </div>
                   <div class="mt-10">
-                    <div class="py-5 df w-100 cy" *ngFor="let e of ele.eles">
-                      <div class="px-10 w-4 text-table-col cy">{{e.pos}}</div>
+                    <div class="py-5 df w-100 cy" *ngFor="let e of ele.eles" [ngStyle]="this.isDublicateIserId(e.userId) ? {'background-color': '#f0c3c3'} : {}">
+                      <div class="px-10 w-4 text-table-col cy" style="width: 100px">{{e.userId}}</div>
                       <div class="px-10 w-30 title-bold-pipe cy">{{e.materialName}}</div>
                       <div class="px-10 w-5 text-black-mini cy">{{e.units}}</div>
                       <div class="px-10 w-8 text-table-col cy">{{e.count + ' '}}{{langUnits(e.units)}}</div>

@@ -38,6 +38,9 @@
                   <div class="title-bold-c">{{compl.drawingId}}</div>
                   <div class="df">
                     <div class="title-bold-c mr-20">{{compl.project}}</div>
+<!--                    <div *ngIf="compl.zoneNames.length != 0" (click)="createPdf(compl)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="cxy">-->
+<!--                      <img src="assets/icons/pdf3.svg" height="26">-->
+<!--                    </div>-->
                     <div *ngIf="compl.zoneNames.length != 0" (click)="createPdf(compl)" [pTooltip]="t.tr('Экспорт PDF')" tooltipPosition="top" class="cxy">
                       <img src="assets/icons/pdf3.svg" height="26">
                     </div>
@@ -139,5 +142,18 @@
         </div>
       </div>
     </div>
+
+
+    <p-dialog header="Номер ревизии" [modal]="true" [(visible)]="visibleRevDialog" [style]="{ width: '25rem' }">
+      <span class="p-text-secondary block mb-5">Введите номер ревизии</span>
+      <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Rev</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="rev"/>
+      </div>
+      <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="visibleRevDialog = false"></p-button>
+        <p-button label="Save" (onClick)="onSaveRev()"></p-button>
+      </div>
+    </p-dialog>
   </div>
 </div>

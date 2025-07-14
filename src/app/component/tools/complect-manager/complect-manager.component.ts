@@ -23,6 +23,8 @@ export class ComplectManagerComponent implements OnInit {
   zones: any[] = [];
   selectedZones: any[] = [];
   pdfLoading = false;
+  visibleRevDialog: boolean = false;
+  rev: number | undefined;
   constructor(private eleCablesService: EleCablesService, public route: ActivatedRoute, public router: Router, public s: SpecManagerService, public d: DialogService, public t: LanguageService) { }
 
   ngOnInit(): void {
@@ -99,15 +101,29 @@ export class ComplectManagerComponent implements OnInit {
   }
 
   createPdf(compl: any) {
+    this.selectedComplect = compl;
+    this.visibleRevDialog = true;
+  }
+
+  onSaveRev() {
+    this.visibleRevDialog = false;
+    this.getPdf();
+  }
+
+
+  getPdf() {
     this.pdfLoading = true;
-    console.log(compl)
-    console.log(this.selectedComplect)
-    this.s.createEleComplectPDF(compl.drawingId).subscribe((url) => {
-      console.log("PDF res");
-      console.log(url);
-      window.open("/rest-d" +url, '_blank');
-      this.pdfLoading = false;
-    })
+    console.log(this.selectedComplect);
+    console.log(this.rev)
+    // this.visibleRevDialog = true;
+    if (this.rev) {
+      this.s.createEleComplectPDF(this.selectedComplect.drawingId, this.rev).subscribe((url) => {
+        console.log("PDF res");
+        console.log(url);
+        window.open("/rest-d" +url, '_blank');
+        this.pdfLoading = false;
+      })
+    }
   }
 
   createPdfAllCablesWithNodes() {
@@ -119,4 +135,6 @@ export class ComplectManagerComponent implements OnInit {
       this.pdfLoading = false;
     })
   }
+
+  protected readonly console = console;
 }
