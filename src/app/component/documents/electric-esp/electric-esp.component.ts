@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import {ApplicationRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Issue} from "../../../domain/classes/issue";
 import {FileAttachment} from "../../../domain/classes/file-attachment";
@@ -83,6 +84,9 @@ export class ElectricEspComponent implements OnInit {
   selectedLabels: string[] = [];
   duplicateUserIds: { [key: string]: number } = {}; // проверка на то, чтоу нас есть элементы с одинковыми iserId
   hasDuplicatedUserId : boolean = false;  //красный флажок, что есть элементы с одинковыми iserId
+  newPos = '';  //редактирование Pos
+  prevPos: string = '';
+  editing: number = 0;
   quillModules =
     {
       imageResize: {},
@@ -271,7 +275,6 @@ export class ElectricEspComponent implements OnInit {
   }
   fillEle(){
     this.s.getEleEspCurrent(this.project, this.docNumber, this.issue.revision, this.auth.getUser().login, this.issue.id).then(res => {
-      console.log(res);
       if (res != null){
         this.revEsp = res.rev + ' (' + this.getDateModify(res.date) + ')';
         this.revEspNoDate = res.rev;
@@ -321,6 +324,7 @@ export class ElectricEspComponent implements OnInit {
             }
 
             grEles.push({
+              _uid: uuidv4(),
               pos: iter++,
               kind: ele.typeName,
               materialName: ele.material.name,
@@ -333,6 +337,7 @@ export class ElectricEspComponent implements OnInit {
           });
 
           groupedEles.push({
+            _uid: uuidv4(),
             pos: this.rlz(userId),
             eles: grEles,
             code: first.material.code,
@@ -351,6 +356,7 @@ export class ElectricEspComponent implements OnInit {
           let userId = first.userId;
 
           groupedEles.push({
+            _uid: uuidv4(),
             pos: this.rlz(userId),
             eles: [],
             code: first.material.code,
@@ -369,6 +375,7 @@ export class ElectricEspComponent implements OnInit {
           if (filter.length > 0){
             let addManual = filter[0];
             addManual.eles.push({
+              _uid: uuidv4(),
               pos: addManual.eles.length + 1,
               kind: 'MANUAL',
               materialName: manual.material.name,
@@ -382,6 +389,7 @@ export class ElectricEspComponent implements OnInit {
           }
           else{
             groupedEles.push({
+              _uid: uuidv4(),
               pos: manual.userId,
               eles: [],
               code: manual.code,
@@ -408,7 +416,39 @@ export class ElectricEspComponent implements OnInit {
     });
   }
 
-  setDuplicateUserIds() {
+  saveEditing(_uid: string, code: string, count: number, docNumber: string, prevPos: string, newPos: string) {
+    console.log(this.newPos);
+    console.log(code, count, docNumber, prevPos, newPos)
+    this.s.updatePosEleEsp(code, count, docNumber, prevPos, newPos).subscribe((res) => {
+      console.log(res)
+      if (res === "success") {
+        console.log(this.eleGroups)
+        this.updateUserIdByUid(_uid, newPos);
+        console.log(this.eleGroups)
+        // this.fillRevisions();
+      }
+      // this.fillRevisions();
+    })
+    this.editing = 0
+  }
+
+  // Передаём новый userId, искаемый _uid, и массив eleGroups
+  updateUserIdByUid(targetUid: string, newUserId: string) {
+    this.eleGroups = this.eleGroups.map(group => ({
+      ...group,
+      eles: group.eles.map((ele: { _uid: string; }) =>
+        ele._uid === targetUid
+          ? { ...ele, userId: newUserId }
+          : ele
+      )
+    }));
+  }
+
+
+  // updateUserIdByUid(eleGroups, "b10e6d62-6fa2-4922-81bd-178357510fbf", "Новый userId");
+
+
+  setDuplicateUserIds() {  //заполняем хешмапку с дубликатами по userId ждя каждого элемента
     this.eleGroups.forEach(gr => {
       gr.eles.forEach((el: { userId: string; }) => {
         if (el.userId && el.userId.trim() !== '') {
@@ -424,7 +464,7 @@ export class ElectricEspComponent implements OnInit {
     console.log(this.duplicateUserIds);
   }
 
-  isDublicateIserId(userId: string) {
+  isDublicateIserId(userId: string) {  //доп функция проверить что
     return this.duplicateUserIds[userId] > 1
   }
 
@@ -974,6 +1014,8 @@ export class ElectricEspComponent implements OnInit {
       });
     });
   }
+
+
 
   addMaterial(label: string = '') {
     this.dialogService.open(AddMaterialToEspComponent, {

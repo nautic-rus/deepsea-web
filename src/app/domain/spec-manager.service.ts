@@ -219,4 +219,13 @@ export class SpecManagerService {
   createEleComplectPDF(drawingId: string, rev: number) {
     return this.http.get<any>(props.httpD + '/complectPdf', {params: {drawingId, rev}});
   }
+
+  updatePosEleEsp(code: string, count: number, docNumber: string, prevPos: string, newPos: string){
+    return this.http.post<string>(
+      props.httpSpec + '/updatePosEleEsp',
+      null, // или {}, если требуется body
+      { params: { code, count, docNumber, prevPos, newPos } }
+    )
+
+  }
 }
