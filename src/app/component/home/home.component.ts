@@ -555,7 +555,7 @@ export class HomeComponent implements OnInit, AfterContentChecked {
         //
         // });
 
-        console.log(this.issues)
+        // console.log(this.issues)
         // issue.related_issuesStr = is;
         // issue.ready = this.defineReadyState(issue);
       });
@@ -615,13 +615,15 @@ export class HomeComponent implements OnInit, AfterContentChecked {
   viewTask(id: number, type: string) {
     this.setIssueViewed(id);
     this.issueManager.getIssueDetails(id).then(res => {
-      // console.log(res);
+      console.log("res");
+      console.log(res);
       if (res.id != null) {
         this.dialogService.open(TaskComponent, {
           showHeader: false,
           modal: true,
-          data: res
+          data: res as Issue
         }).onClose.subscribe(res => {
+          console.log("data passed to dialog:", res);
           if (this.dt != null) {
             this.dt.resetScrollTop = function() { }
           }

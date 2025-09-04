@@ -106,6 +106,10 @@ export class IssueManagerService {
     return this.http.get<any[]>(props.http + '/issues-correction');
   }
 
+  getIssuesTechSupport() {
+    return this.http.get<any[]>(props.http + '/issues-techsupport');
+  }
+
   getIssuesAll() {
     return this.http.get<any[]>(props.http + '/issuesAll');
   }

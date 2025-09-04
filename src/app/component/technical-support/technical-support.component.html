@@ -1,0 +1,55 @@
+<div class="all-page-doc">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head df sticky-card">
+      <div class="mr-10 ">
+        <p-multiSelect [showToggleAll]="false" styleClass="width-180" [options]="projects" [(ngModel)]="selectedProjects" (onChange)="projectChanged($event)"></p-multiSelect>
+      </div>
+
+    </div>
+
+    <div class="empty-card-bottom"></div>
+    <div class="card-overflow">
+      <div>
+        <p-table class="test" #tableTechSupportIssues
+                 [value]="issues"
+                 [columns]="cols"
+                 [globalFilterFields]="['id','doc_number','issue_name']"
+                 [scrollable]="true"
+                 [virtualRowHeight]="40"
+                 scrollHeight="calc(100vh - 220px)"
+                 styleClass="p-datatable-striped"
+                 responsiveLayout="scroll"
+                 stateStorage="local"
+                 stateKey="stateDoclist"
+                 [virtualScroll]="true">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns"
+                  [pSortableColumn]="col.field"
+                  [style.width]="col.width"
+                  style="flex: none; padding: 10px; justify-content: space-between">
+                {{ t.tr(col.header) }}
+                <div style="display: flex;justify-content: end; align-items: center;">
+                  <p-sortIcon *ngIf="col.sort == true" [field]="col.field"></p-sortIcon>
+                </div>
+                <!--        <p-sortIcon *ngIf="col.sort" [field]="col.field"></p-sortIcon>-->
+                <!--        <p-columnFilter *ngIf="col.filter" field="{{col.field}}" [display]="'menu'"-->
+                <!--                        matchMode="contains"></p-columnFilter>-->
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-issue let-columns="columns">
+            <tr class="cursor-pointer row-table-doc-hover">
+              <td *ngFor="let col of columns" [style.width]="col.width" style="flex: none; padding: 10px; overflow-wrap: break-word;">
+                {{ issue[col.field] }}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    </div>
+  </div>
+

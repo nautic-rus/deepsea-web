@@ -6,7 +6,7 @@
       <div class="mr-2" *ngIf="revEsp != ''">{{'rev' + revEsp}}</div>
       <div class="mr-2" *ngIf="revEsp == ''">{{'rev' + issue.revision}}</div>
       <div class="mr-2">{{revUser}}</div>
-      <div class="mr-10">
+      <div *ngIf="this.auth.getUser().groups.includes('Nautic')" class="mr-10">
         <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addNextMaterial()">
           <img src="assets/icons/plus3.svg" height="18">
         </div>
@@ -47,11 +47,11 @@
           <img src="assets/icons/xls2.svg" height="26">
         </div>
       </div>
-      <div class="mr-10" *ngIf="project == 'N004'">
+      <div class="mr-10" *ngIf="this.auth.getUser().groups.includes('Nautic') && project == 'N004'">
         <div *ngIf="!cloudLoading" [pTooltip]="t.tr('Открыть облако')" tooltipPosition="top" (click)="openCloud()" class="materials-button violet-button cxy">
           <img src="assets/icons/cloud01.svg" height="18">
         </div>
-        <div *ngIf="cloudLoading" [pTooltip]="t.tr('Открыть облако')" tooltipPosition="top" class="materials-button green-button cxy">
+        <div  *ngIf="cloudLoading" [pTooltip]="t.tr('Открыть облако')" tooltipPosition="top" class="materials-button green-button cxy">
           <p-progressSpinner [style]="{width: '35px', height: '35px'}" styleClass="custom-spinner" strokeWidth="3" fill="#fff" animationDuration="1s"></p-progressSpinner>
         </div>
       </div>
@@ -62,7 +62,7 @@
       </div>
 
       <div class="p-ml-auto df mr-12">
-        <div class="mr-10">
+        <div *ngIf="this.auth.getUser().groups.includes('Nautic')" class="mr-10">
           <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" style="border: 3px solid #22C55E" class="materials-button cxy">
             <img src="assets/icons/openIssue.svg" height="24">
           </div>

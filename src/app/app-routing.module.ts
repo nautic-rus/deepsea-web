@@ -73,6 +73,8 @@ import {DoclistNewComponent} from "./component/doclist-new/doclist-new.component
 import {WeightNewComponent} from "./component/weight-new/weight-new.component";
 import {EleComponent} from "./component/ele/ele.component";
 import {EleNodesComponent} from "./component/ele-nodes/ele-nodes.component";
+import {TechnicalSupportComponent} from "./component/technical-support/technical-support.component";
+import {CompareExcelStatementsComponent} from "./component/compare-excel-statements/compare-excel-statements.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard], data: {animation: 'HomeComponent'} },
@@ -147,7 +149,8 @@ const routes: Routes = [
   { path: 'warehouse-full', component: WarehouseFullComponent, data: {animation: 'WarehouseFullComponent'}, canActivate: [AuthGuard] },
   { path: 'storage-upload-photo', component: StorageUploadPhotoComponent, data: {animation: 'StorageUploadPhotoComponent'} },
   { path: 'ele-nodes', component: EleNodesComponent, data: {animation: 'EleNodesComponent'}, canActivate: [AuthGuard] },
-
+  { path: 'tech-support', component: TechnicalSupportComponent , data: {animation: 'TechnicalSupportComponent '}, canActivate: [AuthGuard] },
+  { path: 'compare-excel-statements', component: CompareExcelStatementsComponent , data: {animation: 'CompareExcelStatementsComponent'}, canActivate: [AuthGuard] },
   // { path: 'equipments/supplier/:id', component: EditSupplierComponent },
   { path: '**', redirectTo: '/' },
 ];

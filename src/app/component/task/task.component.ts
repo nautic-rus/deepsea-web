@@ -369,12 +369,23 @@ export class TaskComponent implements OnInit {
       weekHeader: "№",
       monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
     });
-    this.issue = this.conf.data as Issue;
+    // console.log("this.conf.data")
+    // console.log(this.conf.data)
+    // console.log("conf.data.reason_of_changes:", this.conf.data.reason_of_changes);
+    this.issue = Object.assign(new Issue(), this.conf.data);
+    // console.log("issue.reason_of_changes immediately after assign:", this.issue.reason_of_changes);
+
+    // this.issue = this.conf.data as Issue;
+    this.issue = Object.assign(new Issue(), this.conf.data);
+    // console.log('reason_of_changes (immediate):', this.issue.reason_of_changes);
+    // console.log('issue snapshot:', JSON.parse(JSON.stringify(this.issue)));
+    // console.log(this.issue.reason_of_changes)
+    // console.log(this.issue);
     if (this.issue.issue_type !== 'QNA' && this.auth.getUser().groups.includes("Pella")) {
       this.ref.close();
       this.router.navigate(['/doclist']);
     }
-    // console.log(this.issue);
+    console.log(this.issue);
 
     // @ts-ignore
     this.isTrustedS(this.auth.getUserId(this.issue.started_by));

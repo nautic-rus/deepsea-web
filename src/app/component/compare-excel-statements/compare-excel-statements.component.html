@@ -1,0 +1,176 @@
+
+<div class="all-page-doc">
+  <div class="min-height-card">
+    <div class="empty-card"></div>
+    <div class="card-head sticky-card">
+      <div class="mr-10 df">
+        <div class="mr-50">
+          <input type="file" id="fileInput1" (change)="onFileChange($event, 1)" accept=".xlsx, .xls" hidden />
+          <label for="fileInput1" class="materials-button-home blue-button cxy">Выберите файл №1</label>
+          <span *ngIf="selectedFileName1">
+            {{ selectedFileName1 }}
+            <button type="button" class="clear-file-btn" (click)="clearFile(1)">×</button>
+          </span>
+        </div>
+
+        <div class="mr-50">
+          <input type="file" id="fileInput2" (change)="onFileChange($event, 2)" accept=".xlsx, .xls" hidden />
+          <label for="fileInput2" class="materials-button-home blue-button cxy">Выберите файл №2</label>
+          <span *ngIf="selectedFileName2">
+            {{ selectedFileName2 }}
+            <button type="button" class="clear-file-btn" (click)="clearFile(2)">×</button>
+          </span>
+        </div>
+
+     </div>
+
+      <div class="mr-10">
+<!--        <button (click)="compare()">Compare</button>-->
+<!--        <button (click)="exportExcel()">Export Excel</button>-->
+        <button *ngIf="data1 && data2" (click)="compare()">Compare</button>
+        <button *ngIf="json1 && json2" (click)="exportExcel()">Export Excel</button>
+      </div>
+    </div>
+
+
+    <div class="empty-card-bottom"></div>
+    <div class="card-overflow">
+      <div>
+        <div class=" right-content-card mt-20">
+          <div class="df tabs-header">
+            <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Init'" [class.selectedTab]="selectedHeadTab ==  'Init'">Ведомость</div>
+            <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Added'" [class.selectedTab]="selectedHeadTab ==  'Added'">Добавлено</div>
+            <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Removed'" [class.selectedTab]="selectedHeadTab ==  'Removed'">Удалено</div>
+            <div class="all-tabs cursor-pointer" (click)="selectedHeadTab = 'Changed'" [class.selectedTab]="selectedHeadTab ==  'Changed'">Изменено</div>
+
+          </div>
+
+
+          <div *ngIf="selectedHeadTab == 'Init'" class="card-tabs mt-20">
+            <p-table
+              [columns]="cols" [value]="json2"
+              [scrollable]="true"
+              [virtualRowHeight]="40"
+              scrollHeight="calc(100vh - 220px)"
+              styleClass="p-datatable-striped"
+              responsiveLayout="scroll"
+              stateStorage="local"
+              stateKey="stateDoclist"
+              [virtualScroll]="true">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [style.width]="col.width"  style="flex: none; padding: 10px; justify-content: space-between" class="text-14">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns" [style.width]="col.width" style="flex: none; padding: 10px; overflow-wrap: break-word;"
+                       class="text-14">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+          </div>
+
+          <div *ngIf="selectedHeadTab == 'Added'" class="card-tabs mt-20">
+            <p-table
+              [columns]="cols" [value]="added"
+              [scrollable]="true"
+              [virtualRowHeight]="40"
+              scrollHeight="calc(100vh - 220px)"
+              styleClass="p-datatable-striped"
+              responsiveLayout="scroll"
+              stateStorage="local"
+              stateKey="stateDoclist"
+              [virtualScroll]="true">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [style.width]="col.width"  style="flex: none; padding: 10px; justify-content: space-between" class="text-14">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns" [style.width]="col.width" style="flex: none; padding: 10px; overflow-wrap: break-word;"
+                      class="text-14">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+          </div>
+
+          <div *ngIf="selectedHeadTab == 'Removed'" class="card-tabs mt-20">
+            <p-table
+              [columns]="cols" [value]="removed"
+              [scrollable]="true"
+              [virtualRowHeight]="40"
+              scrollHeight="calc(100vh - 220px)"
+              styleClass="p-datatable-striped"
+              responsiveLayout="scroll"
+              stateStorage="local"
+              stateKey="stateDoclist"
+              [virtualScroll]="true">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [style.width]="col.width"  style="flex: none; padding: 10px; justify-content: space-between" class="text-14">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns" [style.width]="col.width" style="flex: none; padding: 10px; overflow-wrap: break-word;"
+                      class="text-14">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+          </div>
+
+          <div *ngIf="selectedHeadTab == 'Changed'" class="card-tabs mt-20">
+            <p-table
+              [columns]="colsChanged" [value]="changedNewItems"
+              [scrollable]="true"
+              [virtualRowHeight]="40"
+              scrollHeight="calc(100vh - 220px)"
+              styleClass="p-datatable-striped"
+              responsiveLayout="scroll"
+              stateStorage="local"
+              stateKey="stateDoclist"
+              [virtualScroll]="true">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [style.width]="col.width"  style="flex: none; padding: 10px; justify-content: space-between" class="text-14">
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns" [style.width]="col.width" style="flex: none; padding: 10px; overflow-wrap: break-word;"
+                      [ngClass]="{'changed-cell': isCellChanged(rowData, col.field)}" class="text-14">
+                    {{ rowData[col.field] }}
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

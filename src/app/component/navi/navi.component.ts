@@ -66,6 +66,7 @@ export class NaviComponent implements OnInit {
     {id: 'labor', label: 'Man hours', url: 'labor', icon: 'assets/icons/man-hours.svg', height: 16, child: [], params: {}},
     // {id: 'labor-costs', label: 'Labor costs', url: 'labor-costs', icon: 'assets/icons/labor.svg', height: 22, child: [], params: {}},
     {id: 'diary', label: 'Calendar', url: 'diary', icon: 'assets/icons/calendar.svg', height: 14, child: [], params: {}},
+    {id: 'tech-support', label: 'Tech report', url: 'tech-support', icon: 'assets/icons/calendar.svg', height: 14, child: [], params: {}},
     {id: 'employees', label: 'Daily Reports', url: 'employees', icon: 'assets/icons/clock1.svg', height: 14, child: [], params: {}},
     {id: 'work-hours', label: 'Planer', url: 'work-hours', icon: 'assets/icons/planner1.svg', height: 12, child: [], params: {}},
     {id: 'reports', label: 'Reports', url: '', icon: 'assets/icons/stats.svg', height: 14, child: [

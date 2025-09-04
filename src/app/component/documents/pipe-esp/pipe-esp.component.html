@@ -39,7 +39,7 @@
           <img src="assets/icons/rotation.svg" height="26">
         </div>
       </div>
-      <div class="mr-10">
+      <div *ngIf="this.auth.getUser().groups.includes('Nautic')" class="mr-10">
 
         <div class="materials-button blue-button cxy" [pTooltip]="t.tr('Добавить')" tooltipPosition="top" (click)="addMaterial()">
           <img src="assets/icons/plus3.svg" height="20">
@@ -53,7 +53,7 @@
         </label>
       </div>
       <div class="p-ml-auto df mr-10">
-        <div class="mr-10">
+        <div *ngIf="this.auth.getUser().groups.includes('Nautic')" class="mr-10">
           <div [pTooltip]="t.tr('Открыть задачу')" tooltipPosition="top" (click)="openIssueModal(issueId)" style="border: 3px solid #22C55E" class="materials-button cxy">
             <img src="assets/icons/openIssue.svg" height="24">
           </div>

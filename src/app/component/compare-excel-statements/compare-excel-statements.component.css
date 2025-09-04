@@ -1,0 +1,243 @@
+.changed-cell {
+  background-color: #acf1a7;
+  font-weight: bold;
+}
+
+.all-page-doc{
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  padding: 0 20px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+
+.sticky-card{
+  position: sticky;
+  top: 20px;
+  z-index: 8;
+}
+
+.min-height-card{
+  min-height: calc(100vh - 77px);
+}
+
+.empty-card{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+.empty-card-bottom{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 77px;
+  z-index: 7;
+}
+.card-head{
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  height: fit-content;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.materials-button-home{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+}
+
+
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/ .p-datatable-scrollable-header-box{
+  padding-right: 0!important;
+}
+/deep/.pi{
+  font-size: 13px;
+}
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 10px!important;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 10px;
+  border-width: 1px 0 1px 0;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+  font-size: 13px;
+}
+
+.all-page-doc{
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  padding: 0 20px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+
+.sticky-card{
+  position: sticky;
+  top: 20px;
+  z-index: 8;
+}
+
+.min-height-card{
+  min-height: calc(100vh - 77px);
+}
+
+.empty-card{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+.empty-card-bottom{
+  height: 20px;
+  background: linear-gradient(90deg, rgba(237,237,249,1) 0%, rgba(246,249,252,1) 49%, rgba(236,236,249,1) 100%);
+  position: sticky;
+  top: 77px;
+  z-index: 7;
+}
+.card-head{
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  height: fit-content;
+  align-items: center;
+  color: #323130;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card-overflow{
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0 20px 20px 20px;
+  border-radius: 8px;
+  height: calc(100vh - 200px);
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+
+.materials-button{
+  height: 37px;
+  width: 37px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+/deep/.p-component{
+  font-size: 13px!important;
+}
+/deep/.p-inputtext{
+  font-size: 13px!important;
+  padding: 8px 10px 8px 10px;
+}
+/deep/ .p-datatable-scrollable-header-box{
+  padding-right: 0!important;
+}
+/deep/.pi{
+  font-size: 13px;
+}
+/deep/.p-datatable .p-datatable-tbody > tr > td{
+  padding: 10px!important;
+}
+/deep/.p-datatable .p-datatable-thead > tr > th{
+  padding: 10px;
+  border-width: 1px 0 1px 0;
+}
+/deep/.p-datatable .p-datatable-header {
+  padding: 0.75rem 0 0.75rem 0;
+}
+/deep/.p-multiselect .p-multiselect-label {
+  padding: 8px 10px 8px 10px;
+  font-size: 13px;
+}
+
+.correction{
+  background-image: url("../../../assets/icons/attention1.svg");
+  width: 12px;
+  height: 12px;
+}
+
+.correction_container {
+  display: grid;
+  gap: 3px;
+  grid-template-columns: 20px 2fr;
+  text-align: start;
+}
+
+/deep/ .p-multiselect .p-multiselect-label {
+  min-height: 33px;
+}
+
+.materials-button-home{
+  height: 35px;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 0 10px;
+  color: white;
+}
+
+.filter-item {
+  display: grid;
+  grid-template-columns: 10fr 3fr;
+}
+
+
+.filters {
+  color: red;
+}
+
+/deep/ .filters > p-dropdown {
+  width: 13vw;
+}
+
+/deep/ .filters .p-dropdown {
+  width: 13vw;
+}
+
+.tabs{
+  background-color: #3b9ebb;
+}
+.all-tabs{
+  border-radius: 4px;
+  border-color: #ffffff;
+  padding: 12px;
+  font-weight: 600;
+  transition: box-shadow 0.15s;
+  margin: 0 2px 4px 2px;
+  color: #6c757d;
+  background-color: #dce6f5;
+  width: 100px;
+}
+.all-tabs:hover{
+  background-color: #cfd9ec;
+}
+.selectedTab{
+  border-color: #dfe1e6 #dfe1e6 #ffffff #dfe1e6;
+  color: #495057;
+  font-weight: 600;
+  background-color: #ffffff!important;
+  margin: 0 2px 0 2px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.tabs-header{
+  background: transparent;
+  border-width: 0 0 1px 0;
+  font-size: 13px;
+  position: relative;
+}
+
