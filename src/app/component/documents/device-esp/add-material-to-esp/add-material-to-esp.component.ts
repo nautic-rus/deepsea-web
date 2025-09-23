@@ -115,7 +115,7 @@ export class AddMaterialToEspComponent implements OnInit {
         this.specStatements = specStatements;
         this.projects = projects.filter(x => specStatements.find((y: any) => y.project_id == x.id) != null);
         if (this.projects.length > 0){
-          this.projectId = this.projects[0].id;
+          this.projectId = this.projects.find(pr => pr.rkd === this.project).id;
         }
         this.projectChanged();
       });
